@@ -1,0 +1,903 @@
+{% if current_language == 'en' %}
+{% set breadcrumb_items = [{
+  'href': '/consumer-tools/retirement/',
+  'title': 'Planning for Retirement'
+}]%}
+{% endif %}
+
+{% extends 'layout-full.html' %}
+
+{% block title %}
+  {{ _("Planning your Social Security claiming age") }} | {{ _("Consumer Financial Protection Bureau") }}
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+  <!--[if lt IE 9]>
+      <link rel="stylesheet" href="{{ static("retirement/css/main.ie.css") }}">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="{{ static('apps/retirement/css/main.css') }}">
+  <!--<![endif]-->
+{% endblock %}
+
+{% block content_main %}
+
+{% set YES = _("Yes") %}
+{% set NO = _("No") %}
+{% set NOTSURE = _("Not Sure") %}
+{% set STEP = _("Step") %}
+
+  <div id="claiming-social-security" class="claiming-social-security">
+      <div class="intro block block__flush-top">
+        <div class="content-l">
+          <div class="content-l_col content-l_col-2-3">
+            <h1>{{ _("Planning your Social Security claiming age") }}</h1>
+            <p class="lead-paragraph">
+              {{ _("The age you claim Social Security affects your lifetime income. We’ll help you think through this decision.") }}
+            </p>
+            <p>
+              {% if current_language == 'es' %}
+              <a href="../">View page in English</a>
+              {% else %}
+              <a href="es/">Ver página en español</a>
+              {% endif %}
+              </p>
+          </div>
+          <div class="content-l_col content-l_col-1-3">
+              <div class="img"></div>
+          </div>
+        </div>
+      </div>
+      <div class="step-one
+                  block
+                  block__padded-top
+                  block__border-top
+                  block__flush-bottom">
+          <div class="content-l">
+          <h2 class="content-l_col content-l_col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
+          <form id="step-one-form" name="step-one-form" action="#" class="content-l_col content-l_col-2-3">
+            <p class="h3 step-one-instructions">{{ _("Enter your information below to calculate your estimated benefits.") }}</p>
+            <div class="m-notification m-notification__warning">
+              {{ svg_icon('warning-round') }}
+              <div class="m-notification_content">
+                <div class="h4 m-notification_message">Error message.</div>
+              </div>
+            </div>
+            <div class="content-l">
+              <div class="content-l_col content-l_col-1-3 birthdate-inputs">
+                <p>{{ _("Date of birth") }}</p>
+                <label for="bd-month" class="input-labels"><input id="bd-month" type="text" maxlength="2" placeholder="{{ _('MM') }}" value="" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false"></label>
+                <label for="bd-day" class="input-labels"><input id="bd-day" type="text" maxlength="2" placeholder="{{ _('DD') }}" value="" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false"></label>
+                <label for="bd-year" class="input-labels"><input id="bd-year" type="text" maxlength="4" placeholder="{{ _('YYYY') }}" value="" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false"></label>
+              </div>
+              <div class="content-l_col content-l_col-1-3">
+                <label for="salary-input" class="input-labels">
+                  <span class="input-labels_block">{{ _("Highest annual work income") }} <span data-tooltip-target="salary" aria-describedby="salary-tooltip">{{ svg_icon('help-round') }}</span></span>
+                <input id="salary-input" type="text" placeholder="$" value="" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false"></label>
+                <div class="tooltip-content" id="salary-tooltip" data-tooltip-name="salary" role="tooltip" aria-haspopup="true">
+                  <p>{{ _("Enter your total work income before taxes and other deductions. If your work income is 0 (zero) because you are now retired or unemployed, enter the income for the last full year in which you worked.") }}</p>
+                </div>
+              </div>
+              <div class="content-l_col content-l_col-1-3">
+                <button type="submit" id="get-your-estimates" class="get-your-estimates a-btn a-btn__disabled" disabled>
+                  {{ _("Get your estimates") }}
+                    <span id="api-data-loading-indicator">
+                      {{ svg_icon('updating') }}
+                    </span>
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="content-l_col content-l_col-1-3 estimate-info">
+            <p>
+              {{ _("The calculator bases your benefit estimate on current formulas from the Social Security Administration. Your answers are anonymous. Because we do not access or use your Social Security earnings record, these are rough estimates.") }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="estimated-benefits-description" class="estimated-benefits-description h3 step-one-hidden">
+        <p><strong>{{ _("Your estimated benefits:") }}</strong></p>
+        <p>{{ _("Select claiming ages on the graph to see how your estimated benefit changes.") }}</p>
+      </div>
+
+      <div id="graph-container" class="content-l step-one-hidden">
+        <div class="content-l_col content-l_col-1-3">
+          <div class="selected-retirement-age-container">
+            <p class="h3 selected-retirement-age">
+              <span class="selected-retirement-age__not-fra">
+                {{ _("Claiming at age") }}
+              </span>
+              <span class="selected-retirement-age__fra">
+                {{ _("Age") }}
+              </span>
+              <span id="selected-retirement-age-value" class="selected-retirement-age-value">
+                67
+              </span>
+              <span class="benefit-modification-text">
+                {{ _("is your full benefit claiming age.") }}
+              </span>
+            </p>
+            <p class="compared-to-full explainer">{{ _("Compared to claiming at your full benefit claiming age.") }}</p>
+          </div>
+          <div class="total-benefits-container">
+            <p class="total-benefits-text h4"><strong>{{ _("By age 85, an average lifespan, your total benefits will be") }}</strong></p>
+            <p>
+              <span id="lifetime-benefits-value" class="lifetime-benefits-value h3"></span>&nbsp;<span class="todays-dollars explainer">({{ _("in today's dollars") }})</span>
+            </p>
+          </div>
+          <div class="graph-content">
+            <div class="content-container">
+              <p>{{ _("Social Security retirement benefits are not designed to be your sole source of retirement income, but waiting even one month will increase your benefits.") }}<p>
+            </div>
+            <div class="content-container max-retirement">
+              <h3 class="retirement-age">{{ _("About your maximum benefit claiming age:") }}</h3>
+              <ul>
+                <li>{{ _("Always 70.") }}</li>
+                <li>{{ _("At this age, you will get the maximum possible monthly benefit.") }}</li>
+              </ul>
+            </div>
+            <div class="content-container full-retirement">
+              <h3 class="retirement-age">{{ _("About your full benefit claiming age:") }}</h3>
+              <ul>
+                <li>{{ _("It is based on the year you were born.") }}</li>
+                <li>{{ _("At this age, you will receive your full benefit with no reductions.") }}</li>
+              </ul>
+            </div>
+            <div class="content-container early-retirement">
+              <h3 class="retirement-age">{{ _("About your early benefit claiming age:") }}</h3>
+              <ul>
+                <li>{{ _("Earliest age you can claim your benefit is 62.") }}</li>
+                <li>{{ _("If you claim your benefit before your full claiming age, it will be reduced.") }}</li>
+              </ul>
+            </div>
+            <p>{{ _("Remember, claiming age here refers only to your Social Security retirement benefit, and not when you decide to stop working or apply for Medicare.") }}</p>
+          </div>
+
+          <p class="learn-how">
+            <a href="/consumer-tools/retirement/before-you-claim/about/{{ 'es/' if language == 'es' }}" target="_blank" rel="noopener noreferrer">
+              {{ _("Where do these numbers come from?") }}
+            </a>
+          </p>
+
+        </div>
+        <div class="content-l_col content-l_col-2-3 canvas-container">
+          <div id="estimated-benefits-input" class="estimated-benefits-input h4 step-one-hidden">
+            <span>{{ _("View estimated benefits as:") }}</span><span><label><input type="radio" name="benefits-display" value="monthly" checked> {{ _("monthly income") }}</label> <label><input type="radio" name="benefits-display" value="annual"> {{ _("annual income") }}</label> </span>
+          </div>
+          <!--[if lte IE 9]><div id="claim-canvas" class="claim-canvas claim-canvas__no-slider"><![endif]-->
+          <!--[if gt IE 9]><!--><div id="claim-canvas" class="claim-canvas"><!--<![endif]-->
+            <div class="graph__element graph__background" data-bg-bar-number="1"></div>
+            <div class="graph__element graph__background" data-bg-bar-number="2"></div>
+            <div class="graph__element graph__background" data-bg-bar-number="3"></div>
+            <div class="graph__element graph__background" data-bg-bar-number="4"></div>
+            <div class="graph__element graph__background" data-bg-bar-number="5"></div>
+            <div class="graph__element graph__bar" data-bar_age="62"></div>
+            <div class="graph__element graph__bar" data-bar_age="63"></div>
+            <div class="graph__element graph__bar" data-bar_age="64"></div>
+            <div class="graph__element graph__bar" data-bar_age="65"></div>
+            <div class="graph__element graph__bar" data-bar_age="66"></div>
+            <div class="graph__element graph__bar" data-bar_age="67"></div>
+            <div class="graph__element graph__bar" data-bar_age="68"></div>
+            <div class="graph__element graph__bar" data-bar_age="69"></div>
+            <div class="graph__element graph__bar" data-bar_age="70"></div>
+            <div id="benefits-text" class="h3">
+            </div>
+            <div id="full-age-benefits-text" class="h3">
+            </div>
+            <div class="graph_slider">
+              <label for="graph_slider-input" class="u-visually-hidden">Select a claiming age</label>
+              <input id="graph_slider-input" type="range" min="62" max="70" step="1">
+            </div>
+          </div>
+          <p class="y-axis-label">{{ _("Estimated benefits") }}</p>
+          <p class="x-axis-label">{{ _("Claiming age") }}</p>
+        </div>
+      </div>
+      <hr class="before-step-two">
+      <div class="content-l step-two">
+        <div class="content-l_col content-l_col-1-3">
+          <h2><strong>{{STEP}} 2: </strong>{{ _("Learn tips specific to your situation") }}</h2>
+          <p class="question h3">{{ _("Picture your life in retirement to receive claiming tips.") }}</p>
+        </div>
+        <div class="content-l_col content-l_col-1-3 question question-married">
+          <img src="{{ static("apps/retirement/img/lifestyle-married.png") }}" class="lifestyle-img" alt="">
+          <div class="lifestyle-question_container">
+            <hr>
+            <h3 class="lifestyle-question">{{ _("Are you married?") }}</h3>
+            <div class="m-btn-group">
+              <button class="lifestyle-btn a-btn" data-base-value="yes" value="yes">{{YES}}</button>
+              <button class="lifestyle-btn a-btn" data-base-value="no" value="no">{{NO}}</button>
+              <button class="lifestyle-btn a-btn" data-base-value="notsure" value="widowed">{{ _("Widowed") }}</button>
+            </div>
+          </div>
+          <div class="lifestyle-response" data-responds-to="yes">
+            <h4>{{ _("You can protect the financial security of your surviving spouse.") }}</h4>
+            <p>
+              {% block questions_lifestyle_answer_yes %}
+                Your decision of when to claim your Social Security could affect
+                the benefits your spouse will receive after you die. Surviving
+                spouses can keep either their own benefit or choose to keep
+                their spouse's benefit, whichever is higher. If you are married,
+                and are the higher earner in the household, claiming at your
+                full benefit age will ensure your spouse will receive the higher
+                benefit. Talk to your spouse about your claiming options so you
+                can make this important decision together.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="no">
+            <h4>{{ _("Claiming at your full retirement age or later permanently increases your benefit.") }}</h4>
+            <p>
+              {% block questions_lifestyle_answer_no %}
+                If you claim at your full Social Security benefit age or later,
+                you will avoid a reduction in your monthly benefit. In addition,
+                if you choose to wait to claim past your full benefit age until
+                age 70, you can get an increase for every month that you wait.
+                If you are divorced, your former spouse's claiming decision will
+                not affect your benefit, so it should not affect your decision
+                of when to claim.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="widowed">
+            <h4>{{ _("Your claiming age matters for your own retirement benefits and your survivor's benefits.") }}</h4>
+            <p>
+              {% block questions_lifestyle_answer_widowed %}
+                You may qualify for a survivor benefit if your deceased spouse
+                qualified for Social Security. You can wait until age 70 to
+                claim your survivor benefit and get the maximum amount possible,
+                or you can claim a reduced survivor benefit as early as age 60.
+                You may also qualify for a retirement benefit based on your own
+                earnings record, but you will only receive one benefit at a
+                time. If you expect your own retirement benefit to be higher
+                than the survivor benefit, you may want to consider claiming
+                the survivor benefit first. That way, you can start receiving
+                some money from Social Security as your own retirement benefit
+                continues to grow.
+              {% endblock %}
+            </p>
+          </div>
+        </div>
+        <div class="content-l_col content-l_col-1-3 question question-working age-split">
+          <img src="{{ static("apps/retirement/img/lifestyle-working.png") }}" class="lifestyle-img" alt="">
+          <div class="lifestyle-question_container">
+            <hr>
+            <h3 class="lifestyle-question">{{ _("Do you plan to continue working in your 60s?") }}</h3>
+            <div class="m-btn-group">
+              <button class="lifestyle-btn a-btn age-split" data-base-value="yes" value="yes">{{YES}}</button>
+              <button class="lifestyle-btn a-btn age-split" data-base-value="no" value="no">{{NO}}</button>
+              <button class="lifestyle-btn a-btn age-split" data-base-value="notsure" value="notsure">{{NOTSURE}}</button>
+            </div>
+          </div>
+          <div class="lifestyle-response" data-responds-to="yes-under50">
+            <h4>{{ _("Working in your 60s will help you maximize your income and savings.") }}</h4>
+            <p>
+              {% block questions_sixties_answer_yes_under_50 %}
+                Your benefits are based on your highest 35 years of earnings.
+                Each year of work can add higher earnings to your record by
+                replacing years with low earnings such as those when you were
+                a student, were unemployed, or took time off to care for
+                someone. When you work and wait to claim until age 70, you can
+                increase your monthly benefit by more than 75 percent!
+                <span data-tooltip-target="claim_early_and_work">
+                  {{ svg_icon("help-round") }}
+                </span>
+                Working in your 60s also gives you more time to save on your own
+                for retirement.
+                <a class="a-link a-link__icon" href="https://secure.ssa.gov/RIL/SiView.action" rel="noopener noreferrer" target="_blank">
+                  <span class="a-link_text">Review your earnings record on <i>my</i> SocialSecurity</span>
+                </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="yes-over50">
+            <h4>{{ _("Working in your 60s will help you maximize your income and savings.") }}</h4>
+            <p>
+              {% block questions_sixties_answer_yes_over_50 %}
+                Your benefits are based on your highest 35 years of earnings.
+                Each year of work can add higher earnings to your record by
+                replacing years with low earnings such as those when you were
+                a student, were unemployed, or took time off to care for
+                someone. When you work and wait to claim until age 70, you can
+                increase your monthly benefit by more than 75 percent!
+                <span data-tooltip-target="claim_early_and_work">
+                  {{ svg_icon("help-round") }}
+                </span>
+                Working in your 60s also gives you more time to save on your own
+                for retirement.
+                <a class="a-link a-link__icon" href="https://secure.ssa.gov/RIL/SiView.action" rel="noopener noreferrer" target="_blank">
+                  <span class="a-link_text">Review your earnings record on <i>my</i> SocialSecurity</span>
+                </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="no-under50">
+            <h4>{{ _("You can maximize your benefits even if you work fewer hours or stop working.") }}</h4>
+            <p>
+              {% block questions_sixties_answer_no_under_50 %}
+                You may choose to work fewer hours or stop working in your 60s.
+                If you decide to do so, you could use a portion of your
+                retirement savings such as your 401(k)
+                <span data-tooltip-target="401k">
+                  {{ svg_icon("help-round") }}
+                </span> or Individual Retirement Account (IRA)
+                <span data-tooltip-target="iras">
+                  {{ svg_icon("help-round") }}
+                </span>
+                 to supplement your income in your early 60s until you reach
+                 your full Social Security benefit claiming age. If you can
+                 continue working in your 60s, you may add higher earnings to
+                 your record, getting you a higher monthly benefit. Remember,
+                 your monthly benefit will be significantly higher when you
+                 claim at your full benefit age or later. The age at which you
+                 decide to stop working doesn't have to be the same as your
+                 claiming age.
+                 <a class="a-link a-link__icon" href="https://www.ssa.gov/planners/retire/whileworking.html" rel="noopener noreferrer" target="_blank">
+                  <span class="a-link_text">Learn more about working and collecting Social Security benefits</span>
+                </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="no-over50">
+            <h4>{{ _("You can maximize your benefits even if you work fewer hours or stop working.") }}</h4>
+            <p>
+              {% block questions_sixties_answer_no_over_50 %}
+                You may choose to work fewer hours or stop working in your 60s.
+                If you decide to do so, you could use a portion of your
+                retirement savings such as your 401(k)
+                <span data-tooltip-target="401k">
+                  {{ svg_icon("help-round") }}
+                </span> or Individual Retirement Account (IRA)
+                <span data-tooltip-target="iras">
+                  {{ svg_icon("help-round") }}
+                </span> to supplement your income in your early 60s until you
+                reach your full Social Security benefit claiming age. If you
+                can continue working in your 60s, you may add higher earnings
+                to your record, getting you a higher monthly benefit. Remember,
+                your monthly benefit will be significantly higher when you claim
+                at your full benefit age or later. The age at which you decide
+                to stop working doesn't have to be the same as your claiming
+                age.
+                <a class="a-link a-link__icon" href="https://www.ssa.gov/planners/retire/whileworking.html" rel="noopener noreferrer" target="_blank">
+                  <span class="a-link_text">
+                    Learn more about working and collecting Social Security benefits
+                  </span>
+                </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="notsure-under50">
+            <h4>{{ _("Consider working in your 60s for an extra boost to your income and savings.") }}</h4>
+            <p>
+              {% block questions_sixties_answer_notsure_under_50 %}
+                Working in your 60s may increase your monthly benefit in a few
+                ways. Because your benefits are based on your highest 35 years
+                of earnings, each year of work can add higher earnings to your
+                record by replacing years with low earnings, such as those when
+                you were a student, were unemployed, or took time off. When you
+                work and wait to claim until age 70, you can increase your
+                monthly benefit by more than 75 percent!
+                <span data-tooltip-target="claim_early_and_work">
+                  {{ svg_icon("help-round") }}
+                </span>
+                Working in your 60s also gives you more time to save on your own
+                for retirement.
+                <a class="a-link a-link__icon" href="https://www.ssa.gov/planners/retire/whileworking.html" rel="noopener noreferrer" target="_blank">
+                  <span class="a-link_text">Learn more about working and collecting Social Security benefits</span>
+                </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="notsure-over50">
+            <h4>{{ _("Consider working extra years in your 60s for an extra boost to your income and savings") }}</h4>
+            <p>
+              {% block questions_sixties_answer_notsure_over_50 %}
+              Working in your 60s may add higher earnings to your record,
+              getting you a higher monthly benefit. Remember, your monthly
+              benefit will be significantly higher when you claim at your full
+              Social Security benefit age or later. If you need to work fewer
+              hours, you could use a portion of your retirement savings such as
+              your 401(k)
+              <span data-tooltip-target="401k">
+                {{ svg_icon("help-round") }}
+              </span>
+              or Individual Retirement Account (IRA)
+              <span data-tooltip-target="iras">
+                {{ svg_icon("help-round") }}
+              </span>
+              to supplement your income until full retirement age. However,
+              this may not be an option if it eliminates your savings
+              completely.
+              <a class="a-link a-link__icon" href="https://www.ssa.gov/planners/retire/whileworking.html" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Learn more about working and collecting Social Security benefits</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="tooltip-content" data-tooltip-name="working-longer" role="tooltip" aria-haspopup="true">
+            <p>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
+          </div>
+          <div class="tooltip-content" data-tooltip-name="401k" role="tooltip" aria-haspopup="true">
+            <p>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</p>
+          </div>
+          <div class="tooltip-content" data-tooltip-name="iras" role="tooltip" aria-haspopup="true">
+            <p>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</p>
+          </div>
+          <div class="tooltip-content" data-tooltip-name="claim_early_and_work" role="tooltip" aria-haspopup="true">
+            <p>{{ _("If you claim before full retirement age and continue to work, your benefits could be temporarily reduced if you earn over a certain amount. Any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="content-l step-two">
+        <div class="content-l_col content-l_col-1-3 question question-expenses age-split">
+          <img src="{{ static("apps/retirement/img/lifestyle-expenses.png") }}" class="lifestyle-img" alt="">
+          <div class="lifestyle-question_container">
+            <hr>
+            <h3 class="lifestyle-question">{{ _("Will your expenses decrease after you retire?") }}</h3>
+            <div class="m-btn-group">
+              <button class="lifestyle-btn a-btn age-split" data-base-value="yes" value="yes">{{YES}}</button>
+              <button class="lifestyle-btn a-btn age-split" data-base-value="no" value="no">{{NO}}</button>
+              <button class="lifestyle-btn a-btn age-split" data-base-value="notsure" value="notsure">{{NOTSURE}}</button>
+            </div>
+          </div>
+          <div class="lifestyle-response" data-responds-to="yes-under50">
+            <h4>{{ _("Retirement could be more expensive than you expect.") }}</h4>
+            <p>
+              {% block questions_expenses_answer_yes_under_50 %}
+              If you're planning an active retirement or carry a mortgage or
+              other debt, retirement may be more expensive than you expect.
+              Some regular expenses like your out-of-pocket health care costs
+              will likely increase as you get older. You can protect your
+              retirement lifestyle by reducing your largest expenses. You can
+              also increase your regular income by claiming at your full Social
+              Security benefit age or later. If you claim earlier, your monthly
+              benefit could be reduced by as much as 30 percent.
+              <a class="a-link a-link__icon" data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf" href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Create a retirement budget</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="yes-over50">
+            <h4>{{ _("Retirement could be more expensive than you expect.") }}</h4>
+            <p>
+              {% block questions_expenses_answer_yes_over_50 %}
+              If you're planning an active retirement or carry a mortgage or
+              other debt, retirement may be more expensive than you expect.
+              Some regular expenses like your out-of-pocket health care costs
+              will likely increase as you get older. You can protect your
+              retirement lifestyle by reducing your largest expenses. You can
+              also increase your regular income by claiming at your full Social
+              Security benefit age or later. If you claim earlier, your monthly
+              benefit could be reduced by as much as 30 percent.
+              <a class="a-link a-link__icon" data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf" href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Create a retirement budget</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="no-under50">
+            <h4>{{ _("Maintain your lifestyle by planning ahead.") }}</h4>
+            <p>
+              {% block questions_expenses_answer_no_under_50 %}
+              Future expenses are difficult to predict. Some regular expenses
+              like out-of-pocket health care costs will likely increase as you
+              get older. You can protect your retirement lifestyle by reducing
+              your largest expenses. Consider downsizing or paying off your
+              mortgage before you retire. You can also increase your regular
+              income by claiming at your full Social Security benefit age or
+              later. If you claim earlier, your monthly benefit could be reduced
+              by as much as 30 percent.
+              <a class="a-link a-link__icon" data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf" href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Create a retirement budget</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="no-over50">
+            <h4>{{ _("Maintain your lifestyle by planning ahead.") }}</h4>
+            <p>
+              {% block questions_expenses_answer_no_over_50 %}
+              Future expenses are difficult to predict. Some regular expenses
+              like out-of-pocket health care costs will likely increase as you
+              get older. You can protect your retirement lifestyle by reducing
+              your largest expenses. Consider downsizing or paying off your
+              mortgage before you retire. You can also increase your regular
+              income by claiming at your full Social Security benefit age or
+              later. If you claim earlier, your monthly benefit could be reduced
+              by as much as 30 percent.
+              <a class="a-link a-link__icon" data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf" href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Create a retirement budget</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="notsure-under50">
+            <h4>{{ _("Many people find retirement is more expensive than expected.") }}</h4>
+            <p>
+              {% block questions_expenses_answer_notsure_under_50 %}
+              Future expenses are difficult to predict. Some regular expenses
+              like out-of-pocket health care costs will likely increase as you
+              get older. You can protect your retirement lifestyle by reducing
+              your largest expenses. Consider downsizing or paying off your
+              mortgage before you retire. You can also increase your regular
+              income by claiming at your full Social Security benefit age or
+              later. If you claim earlier, your monthly benefit could be reduced
+              by as much as 30 percent.
+              <a class="a-link a-link__icon" data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf" href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Create a retirement budget</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="notsure-over50">
+            <h4>{{ _("Many people find retirement is more expensive than expected.") }}</h4>
+            <p>
+              {% block questions_expenses_answer_notsure_over_50 %}
+              Future expenses are difficult to predict. Some regular expenses
+              like out-of-pocket health care costs will likely increase as you
+              get older. You can protect your retirement lifestyle by reducing
+              your largest expenses. Consider downsizing or paying off your
+              mortgage before you retire. You can also increase your regular
+              income by claiming at your full Social Security benefit age or
+              later. If you claim earlier, your monthly benefit could be reduced
+              by as much as 30 percent.
+              <a class="a-link a-link__icon" data-pretty-href="https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf" href="/external-site/?ext_url=https%3A%2F%2Fwww.aarp.org%2Fcontent%2Fdam%2Faarp%2Fmoney%2Fbudgeting_savings%2F2014-08%2Fbudgeting-worksheet-aarp.pdf&amp;signature=PrLS6xEKsfqGjFZ19xI0jctonlw" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Create a retirement budget</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+        </div>
+        <div class="content-l_col content-l_col-1-3 question question-income age-split">
+          <img src="{{ static("apps/retirement/img/lifestyle-income.png") }}" class="lifestyle-img" alt="">
+          <div class="lifestyle-question_container">
+            <hr>
+            <h3 class="lifestyle-question">{{ _("Do you expect to have additional sources of retirement income beyond Social Security?") }}</h3>
+            <div class="m-btn-group">
+              <button class="lifestyle-btn a-btn age-split" data-base-value="yes" value="yes">{{YES}}</button>
+              <button class="lifestyle-btn a-btn age-split" data-base-value="no" value="no">{{NO}}</button>
+              <button class="lifestyle-btn a-btn age-split" data-base-value="notsure" value="notsure">{{NOTSURE}}</button>
+            </div>
+          </div>
+          <div class="lifestyle-response" data-responds-to="yes-under50">
+            <h4>{{ _("Continue saving in the coming years.") }}</h4>
+            <p>
+              {% block questions_income_answer_yes_under_50 %}
+              Social Security won't replace all of your pre-retirement income.
+              On average, Social Security replaces 40 percent of a worker's
+              income. That means your retirement savings, pension
+              <span data-tooltip-target="pensions">
+                {{ svg_icon("help-round") }}
+              </span>, 401(k)
+              <span data-tooltip-target="401k">
+                {{ svg_icon("help-round") }}
+              </span>, or Individual Retirement Account (IRA)
+              <span data-tooltip-target="iras">
+                {{ svg_icon("help-round") }}
+              </span> will need to fill the gap. Claiming at your full Social
+              Security benefit age or later (up to age 70) can minimize this
+              gap and maximize your monthly benefit. If you claim before your
+              full retirement age, your monthly benefit could be reduced by as
+              much as 30 percent.
+              <a class="a-link a-link__icon" data-pretty-href="https://americasaves.org/for-savers/set-a-goal-what-to-save-for/save-for-retirement" href="/external-site/?ext_url=https%3A%2F%2Famericasaves.org%2Ffor-savers%2Fset-a-goal-what-to-save-for%2Fsave-for-retirement&amp;signature=cWAKF3R5TYhmLgV5uR4O8EneMgc" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Learn more about saving for retirement</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="yes-over50">
+            <h4>{{ _("You have an opportunity to continue growing your money.") }}</h4>
+            <p>
+              {% block questions_income_answer_yes_over_50 %}
+              If you can, get the highest monthly Social Security benefit
+              possible by claiming at your full Social Security benefit age or
+              later. If you claim before your full retirement age, your monthly
+              benefit could be permanently reduced by as much as 30 percent.
+              Also, take advantage of catch-up contributions
+              <span data-tooltip-target="catchup-contributions">
+                {{ svg_icon("help-round") }}
+              </span> to your 401(k)
+              <span data-tooltip-target="401k">
+                {{ svg_icon("help-round") }}
+              </span> or Individual Retirement Account (IRA)
+              <span data-tooltip-target="iras">
+                {{ svg_icon("help-round") }}
+              </span>.
+              Lastly, avoid losing your retirement savings to unnecessary tax
+              penalties. If you withdraw your 401(k) or IRA savings before age
+              59½, you will likely face an early withdrawal penalty.
+              <a class="a-link a-link__icon" data-pretty-href="https://tools.finra.org/savings_calculator/" href="/external-site/?ext_url=https%3A%2F%2Ftools.finra.org%2Fsavings_calculator%2F&amp;signature=7FMS0xp5_UDS7Zl_P2o8e1WBRfw" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Learn more about how retirement savings grow</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="no-under50">
+            <h4>{{ _("It's a perfect time to start saving.") }}</h4>
+            <p>
+              {% block questions_income_answer_no_under_50 %}
+              You could save through your employer's 401(k)
+              <span data-tooltip-target="401k">
+                {{ svg_icon("help-round") }}
+              </span> or an Individual Retirement Account (IRA)
+              <span data-tooltip-target="iras">
+                {{ svg_icon("help-round") }}
+              </span> to fill the gap. Maximize an employer match if one is
+              offered. Some employers match the money you put in your 401(k)
+              plan which helps to grow your retirement savings.  Even if you're
+              unable to save as much as you'd like, your small savings today
+              will grow over time and can become extra income or emergency
+              savings in the future. If you expect Social Security to be your
+              only source of income, you can still make the most out of it by
+              claiming at your full Social Security benefit age or later. If you
+              claim before your full retirement age, your monthly benefit could
+              be reduced by as much as 30 percent. On the other hand, you can
+              get extra increases for every month that you wait to claim past
+              your full benefit age until age 70.
+              <a class="a-link a-link__icon" data-pretty-href="https://tools.finra.org/savings_calculator/" href="/external-site/?ext_url=https%3A%2F%2Ftools.finra.org%2Fsavings_calculator%2F&amp;signature=7FMS0xp5_UDS7Zl_P2o8e1WBRfw" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Learn more about how retirement savings grow</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="no-over50">
+            <h4>{{ _("It's never too late to start saving!") }}</h4>
+            <p>
+              {% block questions_income_answer_no_over_50 %}
+              You could save through your employer's 401(k)
+              <span data-tooltip-target="401k">
+                {{ svg_icon("help-round") }}
+              </span> or an Individual Retirement Account (IRA)
+              <span data-tooltip-target="iras">
+                {{ svg_icon("help-round") }}
+              </span>. Make sure to maximize an employer match if one is offered.
+              Some employers match some of the money you put in your 401(k) plan
+              which helps to grow your retirement savings faster. You can also
+              make additional contributions to these accounts called catch-up
+              contributions
+              <span data-tooltip-target="catchup-contributions">
+                {{ svg_icon("help-round") }}
+              </span>.
+              If you expect Social Security to be your only source of income, you
+              can still make the most out of it by waiting to claim at your full
+              Social Security benefit age or later. When you claim before your
+              full retirement age, your monthly benefit could be reduced by as
+              much as 30 percent.
+              <a class="a-link a-link__icon" data-pretty-href="https://americasaves.org/blog/1345-the-faqs-of-iras" href="/external-site/?ext_url=https%3A%2F%2Famericasaves.org%2Fblog%2F1345-the-faqs-of-iras&amp;signature=oZIRnzF_POHLeSGv1VTHdOCon68" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Learn more about starting an IRA</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="notsure-under50">
+            <h4>{{ _("There are many ways to plan for a secure retirement outside of Social Security.") }}</h4>
+            <p>
+              {% block questions_income_answer_notsure_under_50 %}
+              You may be able to save through your employer's 401(k) plan
+              <span data-tooltip-target="401k">
+
+              </span> or an Individual Retirement Account (IRA)
+              <span data-tooltip-target="iras">
+
+              </span>. Maximize an employer match if one is offered. Some
+              employers match some of the money you put in your 401(k)
+              retirement plan, helping you grow your retirement savings faster.
+              Your decision about when to claim your Social Security benefits is
+              especially important if you cannot or did not save as much as you
+              would like. When you claim at your full Social Security benefit
+              age or later, you avoid a reduction in your monthly benefit. You
+              will also get increases for every month that you wait to claim
+              past your full benefit age until age 70.
+              <a class="a-link a-link__icon" data-pretty-href="https://americasaves.org/blog/1345-the-faqs-of-iras" href="/external-site/?ext_url=https%3A%2F%2Famericasaves.org%2Fblog%2F1345-the-faqs-of-iras&amp;signature=oZIRnzF_POHLeSGv1VTHdOCon68" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Learn more about starting an IRA</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="notsure-over50">
+            <h4>{{ _("It's never too late to start saving!") }}</h4>
+            <p>
+              {% block questions_income_answer_notsure_over_50 %}
+              You may be able to save through your employer's retirement plan or
+              an Individual Retirement Account (IRA
+              <span data-tooltip-target="iras">
+
+              </span>).
+              Maximize an employer match if one is offered. This will help you
+              grow your retirement savings faster.  You can also make additional
+              contributions to these accounts called catch-up contributions
+              <span data-tooltip-target="catchup-contributions">
+
+              </span>.
+              Your decision about when to claim your Social Security benefits is
+              especially important if you cannot or did not save as much as you
+              would like.  When you claim at your full Social Security benefit
+              age or later, you avoid a reduction in your monthly benefit. You
+              will also get increases for every month that you wait to claim
+              past your full benefit age until age 70.
+              <a class="a-link a-link__icon" href="https://www.ssa.gov/planners/retire/whileworking.html" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Learn more about working and collecting Social Security benefits</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="tooltip-content" data-tooltip-name="working-longer" role="tooltip" aria-haspopup="true">
+            <p>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
+          </div>
+          <div class="tooltip-content" data-tooltip-name="pensions" role="tooltip" aria-haspopup="true">
+            <p>{{ _("Your Social Security benefits could be reduced if you receive federal, state, or local government pensions that are based on work where you did not pay Social Security taxes.") }}</p>
+          </div>
+          <div class="tooltip-content" data-tooltip-name="401k" role="tooltip" aria-haspopup="true">
+            <p>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</p>
+          </div>
+          <div class="tooltip-content" data-tooltip-name="iras" role="tooltip" aria-haspopup="true">
+            <p>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</p>
+          </div>
+          <div class="tooltip-content" data-tooltip-name="catchup-contributions" role="tooltip" aria-haspopup="true">
+            <p>{{ _("Catch-up contributions are additional contributions that individuals who are age 50 or older can make to their 401(k) or IRA accounts to help them boost their savings as they approach retirement.") }}</p>
+          </div>
+        </div>
+        <div class="content-l_col content-l_col-1-3 question question-longevity">
+          <img src="{{ static("apps/retirement/img/lifestyle-longevity.png") }}" class="lifestyle-img" alt="">
+          <div class="lifestyle-question_container">
+            <hr>
+            <h3 class="lifestyle-question">{{ _("Do you expect to live a long life?") }}</h3>
+            <div class="m-btn-group">
+              <button class="lifestyle-btn a-btn" data-base-value="yes" value="yes">{{YES}}</button>
+              <button class="lifestyle-btn a-btn" data-base-value="no" value="no">{{NO}}</button>
+              <button class="lifestyle-btn a-btn" data-base-value="notsure" value="notsure">{{NOTSURE}}</button>
+            </div>
+          </div>
+          <div class="lifestyle-response" data-responds-to="yes">
+            <h4>{{ _("Many people live longer than they expect.") }}</h4>
+            <p>
+              {% block questions_longlife_answer_yes %}
+              Because Social Security provides guaranteed income for life, it's
+              especially valuable to you when you reach age 80 and beyond.
+              Claiming benefits at your full Social Security benefit age or
+              later could be a good way to secure your monthly income during
+              your later years.  Your benefit increases the longer you wait to
+              claim, up to age 70, and is adjusted annually with the cost of
+              living. If you live into your 80s but claim at age 62 instead of
+              your full retirement age or later, your total lifetime benefits
+              will be lower by thousands of dollars.
+              <a class="a-link a-link__icon" href="https://www.ssa.gov/oact/population/longevity.html" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Calculate your expected longevity</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="no">
+            <h4>{{ _("Claiming at your full benefit age could still make sense for you.") }}</h4>
+            <p>
+              {% block questions_longlife_answer_no %}
+              We understand it's difficult to make predictions. You may want to
+              plan for the possibility that you (or your spouse) may spend 20
+              or more years in retirement. On average, a woman reaching age 65
+              today will live to age 87, and a man will live to age 84. Waiting
+              to claim as long as you can could still make sense for you if you
+              are married, are the higher earner in the household, and want your
+              surviving spouse to keep the highest monthly benefit after you
+              die. Remember, you can claim at any point between age 62 and 70.
+              Each additional month that you wait to claim gives you a permanent
+              increase in your monthly benefit which becomes more valuable as
+              you age.
+              <a class="a-link a-link__icon" href="https://www.ssa.gov/oact/population/longevity.html" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Calculate your longevity</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+          <div class="lifestyle-response" data-responds-to="notsure">
+            <h4>{{ _("There's a good chance that you'll live into your 80s and beyond.") }}</h4>
+            <p>
+              {% block questions_longlife_answer_notsure %}
+              We understand it's difficult to make predictions. You may want to
+              plan for the possibility that you (or your spouse) may spend 20 or
+              more years in retirement. On average, a woman reaching age 65
+              today will live to age 87, and a man will live to age 84. Claiming
+              benefits at your full Social Security benefit age or later could
+              be a good way to secure your monthly income during your later
+              years. Your monthly benefit increases the longer you wait to
+              claim, up to age 70, and is adjusted annually with the cost of
+              living. If you live into your 80s but claim at age 62 instead of
+              your full retirement age or later, your total lifetime benefits
+              will be lower by thousands of dollars.
+              <a class="a-link a-link__icon" href="https://www.ssa.gov/oact/population/longevity.html" rel="noopener noreferrer" target="_blank">
+                <span class="a-link_text">Calculate your longevity</span>
+              </a>.
+              {% endblock %}
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr class="before-step-three">
+      <div class="step-three">
+        <h2><strong>{{STEP}} 3: </strong>{{ _("Learn your next steps") }}</h2>
+        <div class="hidden-content">
+          <h3>{{ _("Select the age you plan to start collecting your Social Security retirement benefits.") }}</h3>
+            <p class="explainer step-three-note">
+              {{ _("(This will not affect your Social Security account or eligibility and it will not begin an application.)") }}
+            </p>
+
+            <div class="m-form-field m-form-field__select">
+              <div class="a-select">
+                <select id="retirement-age-selector">
+                  <option value="">{{ _("Choose age") }}</option>
+                  <option value="62">62</option>
+                  <option value="63">63</option>
+                  <option value="64">64</option>
+                  <option value="65">65</option>
+                  <option value="66">66</option>
+                  <option value="67">67</option>
+                  <option value="68">68</option>
+                  <option value="69">69</option>
+                  <option value="70">70</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="age-selector-response">
+              <hr>
+              <div class="next-step-description next-steps_max">
+                <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is your maximum Social Security benefit claiming age.") }}</h3>
+                <p>{{ _("This means you will get your maximum possible monthly benefit! Here are a few things to keep in mind in the next few years.") }}</p>
+              </div>
+              <div class="next-step-description next-steps_over">
+                <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is later than your Social Security full retirement claiming age.") }}</h3>
+                <p>{{ _("This means you will get an increase in your monthly benefits!  Here are a few things to keep in mind in the next few years.") }}</p>
+              </div>
+              <div class="next-step-description next-steps_equal">
+                <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is your Social Security full retirement claiming age.") }}</h3>
+                <p>{{ _("That means you’ll receive your full benefit with no reductions! Here are a few things to keep in mind in the next few years.") }}</p>
+              </div>
+              <div class="next-step-description next-steps_under">
+                <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is earlier than your Social Security full retirement claiming age.") }}</h3>
+                <p>{{ _("If you start collecting at this age you will receive less than your full benefit amount. Here are a few things to keep in mind in the next few years.") }}</p>
+              </div>
+              <ol class="next-steps content-l">
+                <li class="content-l_col content-l_col-1-3 next-step-one">
+                  {% block next_step_one %}
+                  Create a <a class="a-link a-link__icon" href="http://www.ssa.gov/myaccount/" rel="noopener noreferrer" target="_blank"><span class="a-link_text"><em>my</em> Social Security account</span></a> to review your expected benefits based on your actual Social Security record. You will also find additional information about your eligibility and other benefits including disability and survivor benefits.
+                  {% endblock %}
+                </li>
+                <li class="content-l_col content-l_col-1-3 next-step-three">
+                  {{ _("If your income, employment, or marital status changes, you may need to reconsider the age you want to start collecting your benefits. Visit us again!") }}
+                </li>
+              </ol>
+              <p class="h3">{{ _("Was this page helpful in thinking about when to start collecting benefits?") }}</p>
+                <div class="m-btn-group">
+                  <button class="helpful-btn a-btn" value="yes">{{YES}}</button>
+                  <button class="helpful-btn a-btn" value="no">{{NO}}</button>
+                </div>
+              <p class="thank-you">{{ _("Thank you for your feedback!") }}</p>
+              <h5>{{ _("Legal Disclaimer:") }}</h5>
+              <p>{{ _("The content on this page provides general consumer information. It is not legal advice or regulatory guidance. The CFPB updates this information periodically. This information may include links or references to third-party resources or content. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.") }}</p>
+            </div>
+        </div>
+      </div>
+      <div id="tooltip-container">
+        <div class="outertip"> </div>
+        <div class="innertip"> </div>
+        <div class="content">content</div>
+      </div>
+  </div>
+{% endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/retirement/js/index.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

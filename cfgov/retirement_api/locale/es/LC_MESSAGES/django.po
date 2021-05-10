@@ -1,0 +1,865 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: retirement\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+#: footer legal disclaimer heading
+msgid "Legal Disclaimer:"
+msgstr "Aviso legal:"
+
+#: footer legal disclaimer text
+msgid "The content on this page provides general consumer information. It is not legal advice or regulatory guidance. The CFPB updates this information periodically. This information may include links or references to third-party resources or content. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs."
+msgstr "El contenido en esta página proporciona información general sobre asuntos del consumidor. Dicha información no constituye consejo legal ni orientación sobre las normas. El CFPB actualiza esta información periódicamente. La información puede incluir enlaces o referencias a recursos o contenido de terceros. No avalamos a terceros ni garantizamos la exactitud de esta información de terceros. Puede haber otros recursos que también satisfagan sus necesidades."
+
+#: templates/claiming.html:4
+msgid "Yes"
+msgstr "Sí"
+
+#: templates/claiming.html:5
+msgid "No"
+msgstr "No"
+
+#: templates/claiming.html:6
+msgid "Not Sure"
+msgstr "No sé"
+
+#: templates/claiming.html:28
+msgid "Consumer Financial Protection Bureau"
+msgstr "Oficina para la Protección Financiera del Consumidor"
+
+#: templates/claiming.html
+msgid "Claiming Social Security—choices to fit your needs"
+msgstr "Reclamando Seguridad Social– una opción para adaptarse a su estilo de vida"
+
+#: templates/claiming.html
+msgid "The age you claim your benefits matters for your lifetime income. We'll help you think through this important decision."
+msgstr "La edad en la que solicita afectará los beneficios de Seguro Social que recibirá a lo largo de su vida. Le ayudaremos a decidir."
+
+#: templates/claiming.html
+msgid "Explore how the age you start collecting Social Security affects your retirement benefits"
+msgstr "Vea cómo la edad en la que solicita afecta sus beneficios de Seguro Social por jubilación."
+
+#: templates/claiming.html
+msgid "Enter your information below to calculate your estimated benefits."
+msgstr "Ingrese sus datos para ver los cálculos aproximados de sus beneficios."
+
+#: templates/claiming.html
+msgid "The calculator bases your benefit estimate on current formulas from the Social Security Administration. Your answers are anonymous. Because we do not access or use your Social Security earnings record, these are rough estimates."
+msgstr "Usamos las fórmulas de la Administración del Seguro Social para calcular sus beneficios. Sus respuestas son anónimas. Ya que no tenemos acceso a su registro de ingresos del Seguro Social, las cantidades que demostramos son un cálculo aproximado de sus beneficios."
+
+#: templates/claiming.html:224
+msgid "Date of birth"
+msgstr "Fecha de nacimiento"
+
+#: templates/claiming.html:230
+msgid "Highest annual work income"
+msgstr "Ingreso anual de su trabajo"
+
+#: templates/claiming.html:233
+msgid "Get your estimates"
+msgstr "Obtenga su estimado"
+
+#: templates/claiming.html:244
+msgid "View estimated benefits as:"
+msgstr "Vea su estimado como:"
+
+#: templates/claiming.html:244
+msgid "monthly income"
+msgstr "ingreso mensual"
+
+#: templates/claiming.html:244
+msgid "annual income"
+msgstr "ingreso anual"
+
+#: templates/claiming.html:250
+msgid "is your full benefit claiming age."
+msgstr "años de edad es su plena edad de jubilación."
+
+#: templates/claiming.html:251
+msgid "Total lifetime benefits at age 85"
+msgstr "Total de beneficios de por vida a los 85 años"
+
+#: templates/claiming.html:427
+msgid "Choose age"
+msgstr "Elija la edad"
+
+#: templates/claiming.html:440
+msgid "You’ve chosen age"
+msgstr "Usted seleccionó"
+
+#: templates/claiming.html:440
+msgid "Here are some steps to help you in the next few years."
+msgstr "Aquí hay algunos pasos que le ayudarán en los próximos años."
+
+#:
+msgid "Social Security retirement benefits are not designed to be your sole source of retirement income, but waiting even one month will increase your benefits."
+msgstr "Beneficios de jubilación del Seguro Social no están diseñados para ser su única fuente de ingresos de jubilación, pero esperando ni un solo mes se aumentar sus beneficios."
+
+#:
+msgid "Learn how estimates are calculated."
+msgstr "Más sobre cómo calculamos sus estimados."
+
+#:
+msgid "Learn tips to make your claiming decision"
+msgstr "Aprenda consejos para tomar su decisión alegando"
+
+#:
+msgid "Learn your next steps"
+msgstr "Conozca sus próximos pasos"
+
+#:
+msgid "Select the age you plan to start collecting your Social Security retirement benefits."
+msgstr "Seleccione la edad en la que planifica solicitar sus beneficios de Seguro Social"
+
+#:
+msgid "Tell us about your lifestyle for personalized information."
+msgstr "Háblenos de su estilo de vida para información personalizada."
+
+#:
+msgid "Are you married?"
+msgstr "¿Está casado?"
+
+#:
+msgid "Do you plan to continue working in your 60s?"
+msgstr "¿Piensa seguir trabajando después de cumplir sus 60 años?"
+
+#:
+msgid "Will your expenses decrease after you retire?"
+msgstr "¿Espera que sus gastos se reduzcan después de que se jubile? "
+
+#:
+msgid "Will you have sources of income in addition to Social Security benefits?"
+msgstr "¿Va a tener fuentes de ingresos, además de los beneficios del Seguro Social?"
+
+#:
+msgid "Do you expect to live a long life?"
+msgstr "¿Espera vivir una larga vida?"
+
+#:
+msgid "(This will not affect your Social Security account or eligibility and it will not begin an application.)"
+msgstr "(Su selección no afectará sus beneficios, ni tampoco iniciará una solicitud para beneficios)."
+
+#:
+msgid "Create a <a href=\"http://www.ssa.gov/myaccount/\" target=\"_blank\" rel=\"noopener noreferrer\">my Social Security account</a> to review your actual earnings history and expected benefits."
+msgstr "Crear un <a href=\"http://www.ssa.gov/myaccount/\" target=\"_blank\" rel=\"noopener noreferrer\">mi cuenta de Seguro Social</a> que revise su historial de ganancias reales y los beneficios esperados."
+
+#:
+msgid "Visit us again if your income, employment, or marital status changes.\n"
+"Was this page helpful in thinking about your claiming age decision?"
+msgstr "Visítenos de nuevo si los cambios de ingresos, empleo o estado civil.\n"
+"Útil para pensar acerca de su decisión de edad alegando ¿Ha sido esta página"
+
+#:
+msgid "Based on the year you’ve chosen, make any necessary changes to your retirement savings plans, like adding catch-up contributions."
+msgstr "Basado en el año elegido, hacer los cambios necesarios en sus planes de ahorro para la jubilación, como la adición de contribuciones para ponerse al día."
+
+#:
+msgid "Was this page helpful in thinking about when to start collecting benefits?"
+msgstr "¿Le resultó útil esta información?"
+
+#:
+msgid "Visit us again if your income, employment, or marital status changes."
+msgstr "Si sus ingresos, situación laboral o estado civil cambian, es posible que deba reconsiderar la edad en la que solicitará sus beneficios de Seguro Social. ¡Vuelva a visitarnos!"
+
+#:
+msgid "Thank you for your feedback!"
+msgstr "¡Gracias por sus comentarios!"
+
+#: templates/claiming.html
+msgid "The age you claim will affect your benefits, as well as your spouse’s."
+msgstr "La edad usted reclama afectará sus beneficios, así como de su cónyuge."
+
+#: templates/claiming.html
+msgid "If you or your spouse wait until full retirement age to claim, you will have claiming options such as “file and suspend” and “restricted application”. Additionally, if you are the higher earner in the household, it’s particularly important to wait until full retirement age because your spouse will receive a higher survivor benefit."
+msgstr "Si usted o su cónyuge espera hasta la edad de jubilación completa para reclamar, tendrá que reclamar opciones como \"archivo y suspender\" y \"aplicación restringida\". Además, si usted es la fuente de ingresos más altos en el hogar, es particularmente importante que esperar hasta la edad de jubilación completa debido a que su cónyuge recibirá un beneficio de sobreviviente superior."
+
+#: templates/claiming.html
+msgid "The longer you delay claiming, the higher your monthly Social Security benefit will be."
+msgstr "Cuanto más tiempo se demora alegando, mayor será el beneficio mensual de la Seguridad Social será."
+
+#: templates/claiming.html
+msgid "Because you’re unmarried, your claiming decision is simpler. For every year that you wait until age 70, you will get a permanent increase in your benefits, protecting you from running out of money in retirement."
+msgstr "Porque usted es soltero, su decisión afirmando es más simple. Por cada año que espere hasta los 70 años, obtendrá un aumento permanente de sus beneficios, que le protege de quedarse sin dinero en la jubilación."
+
+#: templates/claiming.html
+msgid "Stay on track for a secure retirement."
+msgstr "Mantenerse en el camino para una jubilación segura."
+
+#: templates/claiming.html
+msgid "Working longer will help you maximize your Social Security benefits. Because your benefit is based on your highest 35 years of earnings, working longer can add higher earnings to your record by replacing years with low earnings. This might be especially helpful if there were years you were a student, were unemployed, or were taking time off to care for someone. When you work and wait to claim, you can nearly double your benefits by age 70!"
+msgstr "Trabajar más tiempo le ayudará a maximizar sus beneficios de Seguro Social. Debido a que su beneficio se basa en sus más altas de 35 años de ganancias, trabajando ya puede agregar mayores ganancias a su registro mediante la sustitución de años con bajos ingresos. Esto puede ser especialmente útil si hubo años que eras un estudiante, estaba desempleado, o estaba tomando el tiempo libre para cuidar de alguien. Cuando usted trabaja y esperar a reclamar, se puede casi duplicar sus beneficios a los 70 años!"
+
+#: templates/claiming.html
+msgid "Working longer will help you maximize your retirement income."
+msgstr "Trabajar más tiempo le ayudará a maximizar sus ingresos de jubilación."
+
+#: templates/claiming.html
+msgid "Because your Social Security benefit is based on your highest 35 years of earnings, working longer can add higher earnings to your record by replacing years with low earnings. This might be helpful if there were years you were a student, were unemployed, or took time off to care for someone. When you work and wait to claim, you can nearly double your benefits by age 70! Additionally, now’s a good time to take advantage of annual catch-up contributions to 401(k)s or other retirement savings."
+msgstr "Debido a sus beneficios de Seguro Social se basa en sus más altas de 35 años de ganancias, trabajando ya puede agregar mayores ganancias a su registro mediante la sustitución de años con bajos ingresos. Esto puede ser útil si hubo años que eras un estudiante, estaba desempleado, o tomó tiempo libre para cuidar a alguien. Cuando usted trabaja y esperar a reclamar, se puede casi duplicar sus beneficios a los 70 años! Además, ahora es un buen momento para tomar ventaja de las contribuciones anuales de puesta al día de 401 (k) s u otros ahorros de jubilación."
+
+#: templates/claiming.html
+msgid "Working longer can help you maximize your benefits."
+msgstr "Trabajando ya puede ayudarle a maximizar sus beneficios."
+
+#: templates/claiming.html
+msgid "Because most people make more money later in their careers, working longer can increase your monthly benefit. Your benefit is based on your highest 35 years of earnings, so working longer can add higher earnings to your record by replacing years with low earnings. This might be especially helpful if there were years you were a student, were unemployed, or were taking time off to care for someone. When you work and wait to claim, you can nearly double your benefits by age 70!"
+msgstr "Porque la mayoría de la gente hace más dinero más adelante en sus carreras, trabajar más tiempo puede aumentar su beneficio mensual. Su beneficio se basa en sus más altas de 35 años de los ingresos, por lo que trabajar más tiempo, puede añadir mayores ganancias a su registro mediante la sustitución de años con bajos ingresos. Esto puede ser especialmente útil si hubo años que eras un estudiante, estaba desempleado, o estaba tomando el tiempo libre para cuidar de alguien. Cuando usted trabaja y esperar a reclamar, se puede casi duplicar sus beneficios a los 70 años!"
+
+#: templates/claiming.html
+msgid "Consider working fewer hours or changing careers."
+msgstr "Considere trabajar menos horas o cambiar de carrera."
+
+#: templates/claiming.html
+msgid "Waiting to claim increases your monthly benefits every year until age 70. Working full-time is not the only option in your 60s. Many people plan a career change or work part-time. If you stop or reduce your work hours, it’s still possible to increase your Social Security benefits by waiting to claim. You could use a portion of your 401(k) or other retirement savings to supplement your earnings. You’ll need to decide whether doing this is financially possible."
+msgstr "Esperando a reclamar aumenta sus beneficios mensuales cada año hasta la edad de 70. Trabajo a tiempo completo no es la única opción en sus 60s. Muchas personas planean un cambio de carrera o trabajan a tiempo parcial. Si detiene o reduce sus horas de trabajo, todavía es posible aumentar sus beneficios de Seguro Social por la espera de reclamar. Usted podría utilizar una parte de su plan 401 (k) u otros ahorros de jubilación para complementar sus ingresos. Tendrá que decidir si hacer esto es financieramente posible."
+
+#: templates/claiming.html
+msgid "Working longer will help you maximize your Social Security benefits. Because most people make more money later in their careers, working longer can increase your monthly benefit. When you work and wait to claim, you can nearly double your benefits by age 70! Did you know that your Social Security benefit is based on your highest 35 years of earnings? Working longer can add higher earnings to your record by replacing years with low and no earnings."
+msgstr "Trabajar más tiempo le ayudará a maximizar sus beneficios de Seguro Social. Porque la mayoría de la gente hace más dinero más adelante en sus carreras, trabajar más tiempo puede aumentar su beneficio mensual. Cuando usted trabaja y esperar a reclamar, se puede casi duplicar sus beneficios por 70 años! ¿Sabía usted que su beneficio de Seguro Social se basa en sus más altas de 35 años de ganancias? Trabajando ya puede agregar mayores ganancias a su registro mediante la sustitución de año con bajos y no hay ganancias."
+
+#: templates/claiming.html
+msgid "Waiting to claim increases your monthly benefits every year until age 70. Working full-time is not the only option in your 60s. Many people plan a career change or work part-time. When you work and wait to claim, you can nearly double your benefits by age 70!Did you know that your Social Security benefit is based on your highest 35 years of earnings? Working longer can add higher earnings to your record by replacing years with low and no earnings."
+msgstr "Esperando a reclamar aumenta sus beneficios mensuales cada año hasta la edad de 70. Trabajo a tiempo completo no es la única opción en sus 60s. Muchas personas planean un cambio de carrera o trabajan a tiempo parcial. Cuando usted trabaja y esperar a reclamar, se puede casi duplicar sus beneficios por 70 años! ¿Sabía usted que su beneficio de Seguro Social se basa en sus más altas de 35 años de ganancias? Trabajando ya puede agregar mayores ganancias a su registro mediante la sustitución de año con bajos y no hay ganancias."
+
+#: templates/claiming.html
+msgid "Many people find retirement is more expensive than expected."
+msgstr "Para muchos la jubilación tiene más gastos de los que habían previsto."
+
+#: templates/claiming.html
+msgid "You’re likely to spend 20 years in retirement and income needs are difficult to predict. During that time, you’ll need savings to pay for expenses like home repairs, medical bills, or even buying a car. Out-of-pocket health care costs will likely increase as you get older. You can make adjustments, like downsizing or paying off your mortgage before you retire. You can also wait to claim Social Security up to age 70, which increases your benefits, creating a buffer against future increases in expenses."
+msgstr "Es probable que pasar 20 años en la jubilación y las necesidades de ingresos son difíciles de predecir. Durante ese tiempo, tendrá ahorros para pagar gastos como reparaciones en el hogar, gastos médicos, o incluso la compra de un coche. Fuera de su bolsillo los costos de atención de salud es probable que aumente a medida que envejece. Puede realizar ajustes, como la reducción o el pago de su hipoteca antes de jubilarse. También puede esperar para reclamar la Seguridad Social hasta los 70 años, lo que aumenta sus beneficios, creando un amortiguador frente a futuros aumentos en los gastos."
+
+#: templates/claiming.html
+msgid "You’re likely to spend 20 years in retirement and income needs are difficult to predict. During that time, you’ll need savings to pay for expenses like home repairs, medical bills, or even buying a car. Additionally, out-of-pocket health care costs are likely to increase as you get older. One solution is to wait to claim Social Security up to age 70, which increases your benefits. This will help other retirement savings, like 401(k)s, last longer."
+msgstr "Es probable que pasar 20 años en la jubilación y las necesidades de ingresos son difíciles de predecir. Durante ese tiempo, tendrá ahorros para pagar gastos como reparaciones en el hogar, gastos médicos, o incluso la compra de un coche. Además, fuera de su propio bolsillo los costos de atención de salud es probable que aumenten a medida que envejece. Una solución es esperar para reclamar la Seguridad Social hasta los 70 años, lo que aumenta sus beneficios. Esto ayudará a otros ahorros para la jubilación, como 401 (k) s, duran más."
+
+#: templates/claiming.html
+msgid "Retirement could be more expensive than you expect."
+msgstr "Planificar con tiempo es una buena idea."
+
+#: templates/claiming.html
+msgid "You’re likely to spend 20 years in retirement and income needs are difficult to predict. Creating a buffer against future increases in expenses will help. You can maximize your Social Security benefit by waiting to claim (up to age 70), and at the same time help maintain other retirement savings, like 401(k)s. Other things to consider are downsizing your home or paying off your mortgage before you retire."
+msgstr "Es probable que pasar 20 años en la jubilación y las necesidades de ingresos son difíciles de predecir. Creación de un amortiguador frente a futuros aumentos de los gastos será de ayuda. Usted puede maximizar sus beneficios de Seguro Social por la espera de reclamar (hasta 70 años), y al mismo tiempo ayudar a mantener otros ahorros para la jubilación, como 401 (k) s. Otras cosas a considerar están reduciendo su hogar o pagando su hipoteca antes de jubilarse."
+
+#: templates/claiming.html
+msgid "Continue to save for a secure retirement."
+msgstr "Continuar para ahorrar para una jubilación segura."
+
+#: templates/claiming.html
+msgid "Social Security was never intended to be your only source of retirement income. That means your other sources, like savings, a 401(k) or an IRA will need to fill the gap. Waiting to claim your benefits (up to age 70) will ensure that this gap is as small as possible. If you claim before your full retirement age, your monthly benefit is permanently reduced by as much as 30 percent. Claiming early means that you will need to save more on your own for a secure retirement."
+msgstr "Seguridad Social nunca fue pensado para ser su única fuente de ingresos de jubilación. Eso significa que sus otras fuentes, como el ahorro, un plan 401 (k) o un IRA tendrá que llenar el vacío. Esperando para reclamar sus beneficios (hasta 70 años) se asegurará de que esta brecha es tan pequeño como sea posible. Si usted reclama antes de que su plena edad de jubilación, su beneficio mensual se reduce de forma permanente hasta en un 30 por ciento. Reclamar temprano significa que usted tendrá que ahorrar más en su propia para una jubilación segura."
+
+#: templates/claiming.html
+msgid "Take advantage of catch-up contributions."
+msgstr "Tome ventaja de las contribuciones para ponerse al día."
+
+#: templates/claiming.html
+msgid "Social Security was never intended to be your only source of retirement income. That means your other sources will need to fill this gap. Two steps you can take to ensure that this gap is as small as possible: 1) wait to claim your Social Security benefits (up to age 70) and 2) after age 50, take advantage of 401(k) annual catch-up contributions.Did you know retirement savings plans including 401(k)s come with penalties if you take your money out before age 59½? Consider accessing your 401(k) assets later in retirement."
+msgstr "Seguridad Social nunca fue pensado para ser su única fuente de ingresos de jubilación. Eso significa que sus otras fuentes necesitarán para llenar este vacío. Dos pasos que puede tomar para asegurarse de que esta brecha es tan pequeño como sea posible: 1) esperar para reclamar sus beneficios de Seguro Social (hasta 70 años) y 2), después de 50 años de edad, se aproveche de 401 (k) las contribuciones anuales para ponerse al día .Did sabes planes de ahorro para la jubilación, incluyendo 401 (k) s vienen con sanciones si te tomas tu dinero antes de 59 años y medio? Considere la posibilidad de acceder a sus 401 (k) los activos después de la jubilación."
+
+#: templates/claiming.html
+msgid "You have time and options to save."
+msgstr "Usted tiene tiempo y opciones para guardar."
+
+#: templates/claiming.html
+msgid "You could save through your employer’s retirement plan or IRA. Make sure to take an employer match if one is offered. We understand you may not be able to save as much as you’d like, so your decision about when to claim Social Security benefits is even more important. Waiting to claim as long as possible (up to age 70) can nearly double your monthly benefit."
+msgstr "Usted podría ahorrar a través del plan de jubilación de su empleador o IRA. Asegúrese de tomar un partido de empleador si uno se ofrece. Entendemos que usted puede no ser capaz de ahorrar tanto como desee, por lo que su decisión sobre cuándo reclamar los beneficios del Seguro Social es aún más importante. Esperando para reclamar el mayor tiempo posible (hasta 70 años) casi puede duplicar su beneficio mensual."
+
+#: templates/claiming.html
+msgid "It's never too late to start saving!"
+msgstr "¡Nunca es demasiado tarde para comenzar a ahorrar!"
+
+#: templates/claiming.html
+msgid "You could save through your employer’s retirement plan or IRA. After age 50, you have the opportunity to catch-up on saving for retirement through annual catch-up contributions. We understand you may not be able to save as much as you’d like, so your decision about when to claim Social Security benefits is even more important. Waiting to claim as long as possible (up to age 70) can nearly double your monthly benefit.You can also cut costs by downsizing to a smaller home or paying off your mortgage."
+msgstr "Usted podría ahorrar a través del plan de jubilación de su empleador o IRA. Después de 50 años de edad, usted tiene la oportunidad de ponerse al día en el ahorro para la jubilación a través de contribuciones anuales para ponerse al día. Entendemos que usted puede no ser capaz de ahorrar tanto como desee, por lo que su decisión sobre cuándo reclamar los beneficios del Seguro Social es aún más importante. Esperando para reclamar el mayor tiempo posible (hasta 70 años) puede casi duplicar su benefit.You mensual también puede reducir los costos mediante la reducción a una casa más pequeña o el pago de su hipoteca."
+
+#: templates/claiming.html
+msgid "Delaying claiming of your Social Security benefits is the best way to protect yourself in old age."
+msgstr "Retrasar reivindicación de sus beneficios de Seguro Social es la mejor manera de protegerse en la vejez."
+
+#: templates/claiming.html
+msgid "The average life expectancy is 84 for men and 87 for women. Because Social Security provides lifetime guaranteed income, it is especially valuable to you in your 80s and beyond. Waiting to claim your Social Security benefits is the best way to cover expenses if you live a long time. Your benefit increases the longer you wait to claim, up to age 70, and are adjusted every year to keep up with the cost of living."
+msgstr "La esperanza media de vida es de 84 para los hombres y 87 para las mujeres. Debido a que la Seguridad Social ofrece renta garantizada de por vida, es especialmente valioso para usted en sus años 80 y más allá. Esperando a reclamar sus beneficios de Seguro Social es la mejor forma de cubrir los gastos si vives mucho tiempo. Su beneficio aumenta cuanto más tiempo espere para reclamar, hasta los 70 años, y se ajustan cada año para mantenerse al día con el costo de vida."
+
+#: templates/claiming.html
+msgid "There’s a good chance that you may live into your 80s."
+msgstr "Hay una buena probabilidad de que usted puede vivir en sus 80s."
+
+#: templates/claiming.html
+msgid "Only you know your personal circumstances. The best way to think about this is to look at your health and family history. You may want to plan for the possibility that you (or your spouse) may live a long time. The average life expectancy is 84 for men and 87 for women. Waiting to claim your Social Security benefits is the best way to cover expenses if you live a long time. Your benefit increases the longer you wait to claim, up to age 70, and are adjusted every year to keep up with the cost of living."
+msgstr "Sólo usted sabe sus circunstancias personales. La mejor manera de pensar es tener en cuenta su salud y su historia familiar. Quizá quieras prever la posibilidad de que usted (o su cónyuge) puede vivir por mucho tiempo. La esperanza media de vida es 84 para los hombres y 87 para las mujeres. Esperar para reclamar sus beneficios de Seguro Social es la mejor manera de cubrir los gastos si usted vive mucho tiempo. Su beneficio aumenta cuanto más tiempo espera para reclamar, hasta los años 70 y se ajustan cada año para mantenerse al día con el costo de vida."
+
+#: templates/claiming.html
+msgid "We understand it’s difficult to predict how long you will live. The best way to think about this is to look at your health and family history. You may want to plan for the possibility that you (or your spouse) may live a long time. The average life expectancy is 84 for men and 87 for women. Waiting to claim your Social Security benefits is the best way to cover expenses if you live a long time. Your benefit increases the longer you wait to claim, up to age 70, and are adjusted every year to keep up with the cost of living."
+msgstr "Entendemos que es difícil predecir cuánto tiempo vivirá. La mejor manera de pensar es tener en cuenta su salud y su historia familiar. Quizá quieras prever la posibilidad de que usted (o su cónyuge) puede vivir por mucho tiempo. La esperanza media de vida es 84 para los hombres y 87 para las mujeres. Esperar para reclamar sus beneficios de Seguro Social es la mejor manera de cubrir los gastos si usted vive mucho tiempo. Su beneficio aumenta cuanto más tiempo espera para reclamar, hasta los años 70 y se ajustan cada año para mantenerse al día con el costo de vida."
+
+#:
+msgid "Contact us"
+msgstr "Contáctenos"
+
+#:
+msgid "We calculate benefit estimates based on the Social Security Administration's <a href=\"http://www.socialsecurity.gov/OACT/quickcalc/index.html\">Quick Calculator</a>. The SSA uses the date of birth and current income values to build an average lifetime earnings history and calculate benefits. The benefit estimates we provide are only approximations, and are intended solely as a way to show how different claiming dates can affect monthly benefits. Social Security will calculate more accurate benefits estimates based on your actual lifetime earnings if you go to <a href=\"https://secure.ssa.gov/RIL/SiView.do\">Social Security's sign-up page</a> and create an account."
+msgstr "Calculamos beneficio estimaciones basadas en la administración de la Seguridad Social <a href=\"http://www.socialsecurity.gov/OACT/quickcalc/index.html\">Calculadora rápida</a>. La SSA utiliza la fecha de nacimiento y los valores actuales de ingreso a construir un historial de ganancias promedio de por vida y calcular beneficios. Las estimaciones de beneficios que ofrecemos son sólo aproximaciones y están destinadas únicamente como una manera de demostrar cómo diferentes fechas de reclamación puede afectar beneficios mensuales.\n"
+"Seguridad social calculará beneficios más precisas las estimaciones se basan en sus ganancias de por vida real si ir a la  <a href=\"https://secure.ssa.gov/RIL/SiView.do\">página de inscripción de la Seguridad Social</a> y crear una cuenta."
+
+#:
+msgid "Full retirement age varies between 66 and 67 depending on your date of birth. This is the age at which you will receive your full benefit with no reductions."
+msgstr "Plena edad de jubilación varía entre 66 y 67 dependiendo de su fecha de nacimiento. Esta es la edad en la cual usted recibirá su beneficio completo con sin reducciones."
+
+#:
+msgid "Early retirement refers to claiming benefits before your full retirement age. If you claim your benefits early, they will be permanently reduced. The earliest age you can claim your retirement benefit is 62."
+msgstr "La jubilación anticipada se refiere a reclamar beneficios antes de su plena edad de jubilación. Si usted reclamar sus beneficios temprano, ellos serán permanentemente reducidos. La más temprana edad puede reclamar el beneficio de jubilación es 62."
+
+#:
+msgid "The maximum retirement age is 70. This is the age at which you will get the maximum possible benefit. You should not claim your benefit after this age."
+msgstr "La edad de jubilación máxima es de 70. Esta es la edad en la cual obtendrá el máximo beneficio posible. No deberá solicitar su beneficio después de esta edad."
+
+#:
+msgid "Age 66 to 67, depending on your birthdate"
+msgstr "Edad 66 a 67, dependiendo de su fecha de nacimiento"
+
+#:
+msgid "If you and your spouse are full retirement age, you can apply for benefits but have the payments suspended. This allows your spouse to file for spousal benefits without affecting your personal benefits. For details, see <a href=\"http://www.socialsecurity.gov/planners/retire/suspend.html\" target=\"_blank\" rel=\"noopener noreferrer\">Social Security's guide</a>."
+msgstr "Si usted y su cónyuge son plena edad de jubilación, usted puede solicitar beneficios pero han suspendido los pagos. Esto permite que su cónyuge para solicitar beneficios cónyuge sin afectar sus beneficios personales. Para obtener más información, consulte <a href=\"http://www.socialsecurity.gov/planners/retire/suspend.html\" target=\"_blank\" rel=\"noopener noreferrer\">a guía de la Seguridad Social.</a>"
+
+#:
+msgid "Age"
+msgstr " "
+
+#:
+msgid "Compared to your full retirement age."
+msgstr "Comparado con su plena edad de jubilación."
+
+#:
+msgid "Full retirement age"
+msgstr "Plena edad de jubilación"
+
+#:
+msgid "Age you receive a full benefit without reduction"
+msgstr "Recibe un beneficio completo sin reducción de la edad"
+
+#:
+msgid "Early retirement age"
+msgstr "Edad de la jubilación anticipada"
+
+#:
+msgid "Any time before your full retirement age"
+msgstr "Cualquier momento antes de su plena edad de jubilación"
+
+#:
+msgid "62 is the earliest age you can claim your retirement benefit"
+msgstr "62 es la más temprana edad puede reclamar el beneficio de jubilación"
+
+#:
+msgid "Claiming before your full retirement age will permanently reduce your benefits"
+msgstr "Reclamar antes de su plena edad de jubilación permanentemente reducirá sus beneficios"
+
+#:
+msgid "This refers to your Social Security claiming decision, not the age you decide to stop working."
+msgstr "Esto se refiere a su decisión que la Seguridad Social, no la edad que decide dejar de trabajar."
+
+#:
+msgid "Show my estimated benefits"
+msgstr "Beneficios estimados"
+
+#:
+msgid "Slide to explore claiming age"
+msgstr "Diapositiva para explorar edad reivindicativos"
+
+#:
+msgid "Step"
+msgstr "Paso"
+
+#:
+msgid "Today's dollars"
+msgstr "Dólares de hoy"
+
+#:
+msgid "Claiming Social Security"
+msgstr "Reclamando Seguridad Social"
+
+#:
+msgid "Enter your total work income before taxes and other deductions. If your work income is 0 (zero) because you are now retired or unemployed, enter the income for the last full year in which you worked."
+msgstr "Entre el ingreso total de su trabajo antes de descontar los impuestos y otras deducciones. Si el ingreso de su trabajo es cero (0) porque ya está jubilado, o se encuentra desempleado, ingrese el total del ingreso que obtuvo el último año que trabajó."
+
+#:
+msgid "Widowed"
+msgstr "Viudo(a)"
+
+#:
+msgid "Consider these five factors"
+msgstr "Tener en cuenta estos cinco factores"
+
+#:
+msgid "Take your next steps"
+msgstr "Tomar sus siguientes pasos"
+
+#:
+msgid "<span class=\"header-line\">Planning your Social Security claiming age</span>"
+msgstr "<span class=\"header-line\">Planifique para su Jubilación:</span>Antes de solicitar"
+
+#:
+msgid "The age you claim Social Security affects your lifetime income. We’ll help you think through this decision."
+msgstr "La edad en la que solicita afectará los beneficios de Seguro Social que recibirá a lo largo de su vida. Le ayudaremos a decidir."
+
+#:
+msgid "Your estimated benefits:"
+msgstr "Sus estimados:"
+
+#:
+msgid "Select claiming ages on the graph to see how your estimated benefit changes."
+msgstr "Seleccione las edades en la gráfica para ver cómo aumentan o disminuyen sus beneficios. "
+
+#:
+msgid "Learn tips specific to your situation"
+msgstr "Lea estos consejos"
+
+#:
+msgid "Picture your life in retirement to receive claiming tips."
+msgstr "Imagine su situación durante su jubilación y lea estos consejos sobre cuándo solicitar sus beneficios."
+
+#:
+msgid "Do you expect to have additional sources of retirement income beyond Social Security?"
+msgstr "¿Espera tener otras fuentes de ingresos además de los beneficios del Seguro Social?"
+
+#:
+msgid "Sorry, we cannot provide an estimate because your entered annual income is less than the minimum needed to make the estimate."
+msgstr "Lo sentimos. No podemos generar un estimado de sus beneficios, ya que su ingreso anual es menor que la cantidad necesaria para poder generar un cálculo aproximado de sus beneficios."
+
+#:
+msgid "Estimated benefits"
+msgstr "Beneficio estimado"
+
+#:
+msgid "Claiming age"
+msgstr "Edad de jubilación"
+
+#:
+msgid "You can protect the financial security of your surviving spouse."
+msgstr "Usted puede proteger las finanzas de su cónyuge sobreviviente."
+
+#:
+msgid "Your decision of when to claim your Social Security could affect the benefits your spouse will receive after you die. Surviving spouses can keep either their own benefit or choose to keep their spouse's benefit, whichever is higher. If you are married, and are the higher earner in the household, claiming at your full benefit age will ensure your spouse will receive the higher benefit. Talk to your spouse about your claiming options so you can make this important decision together. <a href=\"https://www.ssa.gov/planners/retire/applying7.html#h2\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about spousal benefits</a>."
+msgstr "Su decisión sobre cuándo solicitar sus beneficios de Seguro Social podría afectar la cantidad de los beneficios que recibirá su esposo(a) cuando usted fallezca. Su cónyuge sobreviviente puede recibir los beneficios como sobreviviente basados en el registro de ganancias de su cónyuge o los beneficios basados en el registro de ganancias de usted, dependiendo de cuál de los dos beneficios sea el más alto. Si usted está casado, y tiene los ingresos más altos de la familia, al solicitar sus beneficios a su plena edad de jubilación, usted garantizará que su cónyuge reciba el beneficio más alto. Tenga una conversación con su esposo(a) sobre sus opciones para que juntos puedan tomar esta decisión."
+
+#:
+msgid "Claiming at your full retirement age or later permanently increases your benefit."
+msgstr "Sus beneficios aumentarán permanentemente al solicitarlos a su plena edad de jubilación o después."
+
+#:
+msgid "If you claim at your full Social Security benefit age or later, you will avoid a reduction in your monthly benefit. In addition, if you choose to wait to claim past your full benefit age until age 70, you can get an increase for every month that you wait. If you are divorced, your former spouse's claiming decision will not affect your benefit, so it should not affect your decision of when to claim. <a href=\"https://www.ssa.gov/planners/retire/applying7.html#h4\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about your Social Security benefits after a divorce</a>."
+msgstr "Si solicita sus beneficios de Seguro Social cuando cumpla su plena edad de jubilación evitará una reducción en su beneficio mensual. Además, si elige solicitar sus beneficios a los 70 años, puede obtener un aumento por cada mes que haya esperado después de haber cumplido su plena edad de jubilación. Si está divorciado(a), la decisión que tome su ex cónyuge de cuándo solicitar los beneficios, no afectará la cantidad de los beneficios a los que usted tenga derecho bajo el registro de ganancias de su ex cónyuge. Por lo tanto, la decisión de su ex cónyuge no debería influir su decisión de cuándo solicitar sus beneficios."
+
+#:
+msgid "Your claiming age matters for your own retirement benefits and your survivor's benefits."
+msgstr "Su decisión importa para sus propios beneficios de jubilación y como sobreviviente."
+
+#:
+msgid "You may qualify for a survivor benefit if your deceased spouse qualified for Social Security. You can wait until age 70 to claim your survivor benefit and get the maximum amount possible, or you can claim a reduced survivor benefit as early as age 60. You may also qualify for a retirement benefit based on your own earnings record, but you will only receive one benefit at a time. If you expect your own retirement benefit to be higher than the survivor benefit, you may want to consider claiming the survivor benefit first. That way, you can start receiving some money from Social Security as your own retirement benefit continues to grow. <a href=\"https://www.ssa.gov/planners/survivors/ifyou.html#h2\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about Social Security survivor benefits</a>."
+msgstr "Es posible que tenga derecho a recibir los beneficios como cónyuge sobreviviente, si su cónyuge fallecido tenía derecho a recibir beneficios de Seguro Social. Usted tiene la opción de esperar hasta cumplir los 70 años para solicitar los beneficios como cónyuge sobreviviente y recibir la cantidad máxima posible de los beneficios, o puede solicitarlos tan temprano como a los 60 años de edad y recibir una cantidad reducida. Es posible que también tenga derecho a recibir los beneficios por jubilación bajo el registro de ganancias de usted. No obstante, sólo puede recibir uno de los dos tipos de beneficios a la vez. Si usted sabe que su beneficio por jubilación bajo su propio registro de ganancias será más alto que el beneficio como sobreviviente, puede solicitar primero el beneficio como sobreviviente. Así podrá comenzar a recibir algún beneficio mientras que los beneficios de jubilación bajo su propio registro de ganancias siguen aumentando."
+
+#:
+msgid "Your benefits are based on your highest 35 years of earnings. Each year of work can add higher earnings to your record by replacing years with low earnings such as those when you were a student, were unemployed, or took time off to care for someone. When you work and wait to claim until age 70, you can increase your monthly benefit by more than 75 percent! <span data-tooltip-target=\"claim_early_and_work\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> Working in your 60s also gives you more time to save on your own for retirement. <a href=\"https://secure.ssa.gov/RIL/SiView.action\" target=\"_blank\" rel=\"noopener noreferrer\">Review your earnings record on <i>my</i> SocialSecurity</a>."
+msgstr "Sus beneficios de Seguro Social se calculan usando los 35 años con los ingresos más altos. Por lo tanto, cada año que trabaje en sus sesentas podría añadirle a su registro de ganancias del Seguro Social un año más de ingresos altos. Estos años pueden compensar por los años en los que sus ingresos fueron bajos o no tuvo ingresos, tales como cuando era estudiante, estuvo desempleado o dejó de trabajar para cuidar a un ser querido. Si sigue trabajando y espera hasta los 70 años para solicitar sus beneficios, puede hacer que su beneficio mensual aumente más de un 75%. El trabajar en sus sesentas también le da más tiempo para ahorrar para su jubilación por su propia cuenta."
+
+#:
+msgid "Working in your 60s will help you maximize your income and savings."
+msgstr "Trabajar en sus sesentas le ayudará a aumentar sus ingresos y sus ahorros."
+
+#:
+msgid "which is earlier than your Social Security full retirement claiming age."
+msgstr " años, que es antes de su edad de plena jubilación."
+
+#:
+msgid "If you start collecting at this age you will receive less than your full benefit amount. Here are a few things to keep in mind in the next few years."
+msgstr "Por lo tanto la cantidad de sus beneficios será reducida. Estos son pasos que le ayudarán en los próximos años:"
+
+#:
+msgid "Create a <a href=\"http://www.ssa.gov/myaccount/\" target=\"_blank\" rel=\"noopener noreferrer\"><em>my</em> Social Security account</a> to review your expected benefits based on your actual Social Security record. You will also find additional information about your eligibility and other benefits including disability and survivor benefits."
+msgstr "Visite el <a href=\"http://www.ssa.gov/espanol/jubilacion2/calculadora.html\" target=\"_blank\" rel=\"noopener noreferrer\">Calculador del Seguro Social</a> para ver la cantidad aproximada de sus beneficios basados en su propio registro de ganancias del Seguro Social. También encontrará información adicional sobre otros beneficios, incluyendo los beneficios por discapacidad y para sobrevivientes."
+
+#:
+msgid "Your retirement income outside of Social Security will help you cover your expenses. You can increase your contributions to your retirement savings plans, or open and contribute to an <a href=\"https://www.irs.gov/retirement-plans/individuals-retirement-arrangements-getting-started\" target=\"_blank\" rel=\"noopener noreferrer\">IRA</a> plan."
+msgstr "Sus ahorros le ayudarán a cubrir sus gastos durante su jubilación. Usted puede aumentar sus contribuciones a sus planes de jubilación, o abrir una <a href=\"https://www.irs.gov/retirement-plans/individuals-retirement-arrangements-getting-started\" target=\"_blank\" rel=\"noopener noreferrer\">cuenta IRA</a> (en inglés) y hacer contribuciones a estas cuentas."
+
+#:
+msgid "If your income, employment, or marital status changes, you may need to reconsider the age you want to start collecting your benefits. Visit us again!"
+msgstr "Si sus ingresos, situación laboral o estado civil cambian, es posible que deba reconsiderar la edad en la que solicitará sus beneficios de Seguro Social. ¡Vuelva a visitarnos!"
+
+#:
+msgid "which is your Social Security full retirement claiming age."
+msgstr " años, que es su plena edad de jubilación."
+
+#:
+msgid "While you wait to claim your benefits, you can continue growing your savings by making <a href=\"https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-catch-up-contributions\" target=\"_blank\" rel=\"noopener noreferrer\">catchup contributions</a> to your existing accounts. You may also be able to open and contribute to an <a href=\"https://www.irs.gov/retirement-plans/individuals-retirement-arrangements-getting-started\" target=\"_blank\" rel=\"noopener noreferrer\">IRA</a>."
+msgstr "Puede seguir aumentando sus ahorros y hacer contribuciones adicionales a las cuentas que ya tiene mientras espera para solicitar sus beneficios. También podría abrir una <a href=\"https://www.irs.gov/retirement-plans/individuals-retirement-arrangements-getting-started\" target=\"_blank\" rel=\"noopener noreferrer\">cuenta IRA</a> (en inglés) y hacer contribuciones a esta cuenta."
+
+#:
+msgid ", which is later than your Social Security full retirement claiming age."
+msgstr ", que es la edad máxima para reclamar sus beneficios de Seguro Social."
+
+#:
+msgid "While you let your benefits continue to grow, you can keep working if you want. You can also stop working and use a portion of your savings to cover your needs. <a href=\"https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-required-minimum-distributions-rmds\" target=\"_blank\" rel=\"noopener noreferrer\">Learn the rules about withdrawing money</a> from your retirement accounts."
+msgstr "Si lo desea, usted puede seguir trabajando mientras sus beneficios siguen aumentando. También puede dejar de trabajar y utilizar una parte de sus ahorros para cubrir sus necesidades económicas. Infórmese mejor sobre las normas para <a href=\"https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-required-minimum-distributions-rmds\" target=\"_blank\" rel=\"noopener noreferrer\">retirar dinero</a> (en inglés) de sus cuentas para la jubilación."
+
+#:
+msgid "Working in your 60s may increase your monthly benefit in a few ways. Because your benefits are based on your highest 35 years of earnings, each year of work can add higher earnings to your record by replacing years with low earnings, such as those when you were a student, were unemployed, or took time off. When you work and wait to claim until age 70, you can increase your monthly benefit by more than 75 percent! <span data-tooltip-target=\"claim_early_and_work\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> Working in your 60s also gives you more time to save on your own for retirement. <a href=\"https://www.ssa.gov/planners/retire/whileworking.html\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about working and collecting Social Security benefits</a>."
+msgstr "Trabajar en sus sesentas puede ayudarle a aumentar su beneficio mensual de varias maneras.<span data-tooltip-target=\"claim_early_and_work\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> Ya que sus beneficios se calculan usando los 35 años con los ingresos más altos, cada año que trabaje en sus sesentas podría añadirle a su registro de ganancias del Seguro Social un año más de ingresos. Estos años pueden compensar por los años en los que sus ingresos fueron bajos o no tuvo ingresos, tales como cuando era estudiante, estuvo desempleado o dejó de trabajar para cuidar a un ser querido. Si solicita sus beneficios cuando cumpla su plena edad de jubilación, es posible que su beneficio mensual aumente un 25% o más. Trabajar en sus sesentas también le da más tiempo para ahorrar para su jubilación por su propia cuenta."
+
+#:
+msgid "You can maximize your benefits even if you work fewer hours or stop working."
+msgstr "Es posible que pueda recibir un beneficio más alto, incluso si trabaja menos horas o deja de trabajar."
+
+#:
+msgid "You may choose to work fewer hours or stop working in your 60s. If you decide to do so, you could use a portion of your retirement savings such as your 401(k) <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> or Individual Retirement Account (IRA) <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> to supplement your income in your early 60s until you reach your full Social Security benefit claiming age. If you can continue working in your 60s, you may add higher earnings to your record, getting you a higher monthly benefit. Remember, your monthly benefit will be significantly higher when you claim at your full benefit age or later. The age at which you decide to stop working doesn't have to be the same as your claiming age. <a href=\"https://www.ssa.gov/planners/retire/whileworking.html\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about working and collecting Social Security benefits</a>."
+msgstr "Si decide trabajar menos horas o dejar de trabajar por completo, podría usar una parte de sus ahorros, como por ejemplo su plan 401(k) <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> o su cuenta IRA <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> para suplementar sus ingresos hasta que cumpla su plena edad de jubilación. Si puede seguir trabajando en sus sesentas, podrá añadir años adicionales de ingresos a su registro de ganancias del Seguro Social para así recibir un  beneficio mensual más alto. Recuerde que su beneficio mensual será mucho más alto si lo solicita a su plena edad de jubilación o después. La edad en la que decida dejar de trabajar no tiene por qué ser la misma edad en la que decida solicitar sus beneficios."
+
+#:
+msgid "Consider working in your 60s for an extra boost to your income and savings."
+msgstr "Considere trabajar en sus sesentas para recibir un aumento adicional en sus ingresos y sus ahorros."
+
+#:
+msgid "Consider working extra years in your 60s for an extra boost to your income and savings"
+msgstr "Considere trabajar en sus sesentas para recibir un aumento adicional en sus ingresos y sus ahorros."
+
+#:
+msgid "Working in your 60s may add higher earnings to your record, getting you a higher monthly benefit. Remember, your monthly benefit will be significantly higher when you claim at your full Social Security benefit age or later. If you need to work fewer hours, you could use a portion of your retirement savings such as your 401(k) <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> or Individual Retirement Account (IRA) <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> to supplement your income until full retirement age. However, this may not be an option if it eliminates your savings completely. <a href=\"https://www.ssa.gov/planners/retire/whileworking.html\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about working and collecting Social Security benefits</a>."
+msgstr "Si trabaja en sus sesentas podrá añadir años adicionales de ingresos a su registro de ganancias del Seguro Social y recibir una cantidad mayor de beneficios mensuales. Recuerde que su beneficio mensual será mucho más alto si lo solicita cuando cumpla su plena edad de jubilación o después. Si decide trabajar menos horas, podría usar una parte de sus ahorros, como por ejemplo su plan 401(k) <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> o su cuenta IRA <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> para suplementar sus ingresos hasta que cumpla su plena edad de jubilación. Sin embargo, ésta no podría ser una opción si con ella usa todos sus ahorros."
+
+#:
+msgid "If you're planning an active retirement or carry a mortgage or other debt, retirement may be more expensive than you expect. Some regular expenses like your out-of-pocket health care costs will likely increase as you get older. You can protect your retirement lifestyle by reducing your largest expenses. You can also increase your regular income by claiming at your full Social Security benefit age or later. If you claim earlier, your monthly benefit could be reduced by as much as 30 percent. <a href=\"https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">Create a retirement budget</a>."
+msgstr "Si está planificando estar activo después de jubilarse o si todavía debe su préstamo hipotecario u otra deuda, sus primeros años de jubilación podrían ser más costosos de lo que usted espera. Algunos gastos regulares, tales como los costos médicos, probablemente aumentarán a medida que usted envejece. Usted puede proteger su estilo de vida durante la jubilación reduciendo sus gastos más grandes, poco a poco o antes de jubilarse. También puede aumentar sus ingresos regulares al solicitar sus beneficios de Seguro Social una vez cumpla su plena edad de jubilación o después. Si solicita sus beneficios antes de cumplir su plena edad de jubilación, su beneficio mensual podría reducirse hasta un 30%."
+
+#:
+msgid "Maintain your lifestyle by planning ahead."
+msgstr "Usted puede proteger su estilo de vida si planifica con tiempo."
+
+#:
+msgid "Future expenses are difficult to predict. Some regular expenses like out-of-pocket health care costs will likely increase as you get older. You can protect your retirement lifestyle by reducing your largest expenses. Consider downsizing or paying off your mortgage before you retire. You can also increase your regular income by claiming at your full Social Security benefit age or later. If you claim earlier, your monthly benefit could be reduced by as much as 30 percent. <a href=\"https://www.aarp.org/content/dam/aarp/money/budgeting_savings/2014-08/budgeting-worksheet-aarp.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">Create a retirement budget</a>."
+msgstr "Es difícil predecir los gastos que tendrá en el futuro. Algunos gastos regulares, tales como los costos médicos, probablemente aumentan a medida que usted envejece. Usted puede proteger su estilo de vida durante la jubilación reduciendo sus gastos más grandes poco a poco o antes de jubilarse. Considere reducir su préstamo hipotecario o terminar de pagarlo antes de jubilarse. También puede aumentar sus ingresos regulares al solicitar sus beneficios de Seguro Social una vez cumpla su plena edad de jubilación. Si solicita sus beneficios antes de cumplir su plena edad de jubilación, su beneficio mensual podría reducirse hasta un 30%."
+
+#:
+msgid "You have an opportunity to continue growing your money."
+msgstr "Siga ahorrando en los próximos años."
+
+#:
+msgid "Continue saving in the coming years."
+msgstr "Siga ahorrando en los próximos años."
+
+#:
+msgid "Social Security won't replace all of your pre-retirement income. On average, Social Security replaces 40 percent of a worker's income. That means your retirement savings, pension <span data-tooltip-target=\"pensions\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>, 401(k) <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>, or Individual Retirement Account (IRA) <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> will need to fill the gap. Claiming at your full Social Security benefit age or later (up to age 70) can minimize this gap and maximize your monthly benefit. If you claim before your full retirement age, your monthly benefit could be reduced by as much as 30 percent. <a href=\"https://americasaves.org/for-savers/set-a-goal-what-to-save-for/save-for-retirement\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about saving for retirement</a>."
+msgstr "El Seguro Social no sustituirá todo sus ingresos cuando se jubile. Los beneficios de Seguro Social sustituyen un promedio de 40% de los ingresos de un trabajador. Eso significa que, para que pueda disfrutar de una jubilación libre de preocupaciones, el resto de sus ingresos tendrá que suplementarse con su pensión <span data-tooltip-target=\"pensions\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> y sus ahorros para la jubilación en su plan 401(k) <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> o su IRA <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. Usted puede reducir esa diferencia al solicitar sus beneficios de Seguro Social una vez cumpla su plena edad de jubilación ya que recibirá una cantidad mensual más alta de beneficios. Si solicita sus beneficios antes de cumpla su plena edad de jubilación, su beneficio de Seguro Social podría reducirse hasta un 30%."
+
+#:
+msgid "If you can, get the highest monthly Social Security benefit possible by claiming at your full Social Security benefit age or later. If you claim before your full retirement age, your monthly benefit could be permanently reduced by as much as 30 percent. Also, take advantage of catch-up contributions <span data-tooltip-target=\"catchup-contributions\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> to your 401(k) <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> or Individual Retirement Account (IRA) <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. Lastly, avoid losing your retirement savings to unnecessary tax penalties. If you withdraw your 401(k) or IRA savings before age 59½, you will likely face an early withdrawal penalty. <a href=\"https://tools.finra.org/savings_calculator/\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about how retirement savings grow</a>."
+msgstr "Si puede, obtenga el beneficio mensual posible más alto al solicitar su Seguro Social a la plena edad de jubilación o a una edad mayor. Si solicita sus beneficios antes de su plena edad de jubilación, su beneficio mensual podría reducirse hasta un 30%. Además, aproveche las contribuciones adicionales permitidas (conocidas en inglés como \"catch-up contributions\") <span data-tooltip-target=\"catchup-contributions\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> a su plan 401(k) <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> o su cuenta IRA <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> a partir de los 50 años de edad. Por último, evite pagar penalidades innecesarias. Por ejemplo, si usted retira sus ahorros de su plan 401(k) o su cuenta IRA antes de cumplir los 59 años y medio, es probable que deba pagar una penalidad por retiro anticipado."
+
+#:
+msgid "It's a perfect time to start saving."
+msgstr "Es el momento perfecto para comenzar a ahorrar."
+
+#:
+msgid "You could save through your employer's 401(k) <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> or an Individual Retirement Account (IRA) <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> to fill the gap. Maximize an employer match if one is offered. Some employers match the money you put in your 401(k) plan which helps to grow your retirement savings.  Even if you're unable to save as much as you'd like, your small savings today will grow over time and can become extra income or emergency savings in the future. If you expect Social Security to be your only source of income, you can still make the most out of it by claiming at your full Social Security benefit age or later. If you claim before your full retirement age, your monthly benefit could be reduced by as much as 30 percent. On the other hand, you can get extra increases for every month that you wait to claim past your full benefit age until age 70. <a href=\"https://tools.finra.org/savings_calculator/\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about how retirement savings grow</a>."
+msgstr "Podría ahorrar a través del plan 401(k) de su empleador <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> o una cuenta IRA <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. Si su empleador también aporta a su cuenta, sáquele el máximo provecho a esas contribuciones. Algunas compañías depositan en su plan 401(k) una cantidad basada en la contribución que usted haga y esto ayuda a que sus ahorros para la jubilación crezcan más rápido. Incluso en el caso de que usted no pudiera ahorrar tanto como quisiera, lo poco que ahorre hoy crecerá con el tiempo y en el futuro podría convertirse en un ingreso extra o en ahorros para emergencias. Si espera que el Seguro Social sea su única fuente de ingreso, de todas formas puede obtener el máximo provecho solicitando su Seguro Social a la plena edad de jubilación o a una edad mayor. Si solicita sus beneficios antes, su beneficio mensual podría reducirse hasta un 30%. Por otra parte, su beneficio mensual aumenta por cada mes que usted espere después de cumplir su plena edad de jubilación hasta los 70 años."
+
+#:
+msgid "You could save through your employer's 401(k) <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> or an Individual Retirement Account (IRA) <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. Make sure to maximize an employer match if one is offered. Some employers match some of the money you put in your 401(k) plan which helps to grow your retirement savings faster. You can also make additional contributions to these accounts called catch-up contributions <span data-tooltip-target=\"catchup-contributions\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. If you expect Social Security to be your only source of income, you can still make the most out of it by waiting to claim at your full Social Security benefit age or later. When you claim before your full retirement age, your monthly benefit could be reduced by as much as 30 percent. <a href=\"https://americasaves.org/blog/1345-the-faqs-of-iras\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about starting an IRA</a>."
+msgstr "Podría ahorrar a través del plan 401(k) de su empleador <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> o una cuenta IRA <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. Si su empleador también aporta a su cuenta, sáquele el máximo provecho a esas contribuciones. Algunas compañías aportan a su plan 401(k) una cantidad basada en la contribución que usted haga y esto ayuda a que sus ahorros para la jubilación crezcan más rápido. Usted también puede hacer contribuciones adicionales a estas cuentas (conocidas en inglés como “catch-up contributions”) <span data-tooltip-target=\"catchup-contributions\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. Aún si espera que el Seguro Social sea su única fuente de ingreso, puede obtener el máximo provecho solicitando sus beneficios del Seguro Social a la plena edad de jubilación o a una edad mayor. Si solicita sus beneficios antes, su beneficio mensual podría reducirse hasta un 30%. Por otra parte, su beneficio mensual aumenta por cada mes que usted espere después de cumplir su plena edad de jubilación hasta los 70 años."
+
+#:
+msgid "Many people live longer than they expect."
+msgstr "Protéjase para que no sobreviva sus recursos."
+
+#:
+msgid "Claiming at your full benefit age could still make sense for you."
+msgstr "Posiblemente tenga sentido el solicitar sus beneficios al cumplir su plena edad de jubilación."
+
+#:
+msgid "We understand it's difficult to make predictions. You may want to plan for the possibility that you (or your spouse) may spend 20 or more years in retirement. On average, a woman reaching age 65 today will live to age 87, and a man will live to age 84. Waiting to claim as long as you can could still make sense for you if you are married, are the higher earner in the household, and want your surviving spouse to keep the highest monthly benefit after you die. Remember, you can claim at any point between age 62 and 70. Each additional month that you wait to claim gives you a permanent increase in your monthly benefit which becomes more valuable as you age. <a href=\"https://www.ssa.gov/oact/population/longevity.html\" target=\"_blank\" rel=\"noopener noreferrer\">Calculate your longevity</a>."
+msgstr "Entendemos que es difícil hacer predicciones. Tal vez quiera planificar para la posibilidad de que usted (o su cónyuge) tenga una larga expectativa de vida. La expectativa promedio de una mujer que cumple sus 65 años de edad es 87 años, mientras que la de un hombre es 84 años. Si está casado, y sus ingresos son mayores que los de su cónyuge, y desea que su cónyuge sobreviviente reciba un beneficio mensual más alto después de que usted fallezca, entonces considere no solicitar sus beneficios hasta el último momento posible. Recuerde que puede solicitar sus beneficios por jubilación en cualquier momento a partir de los 62 años de edad hasta los 70 años de edad. Cada mes adicional que usted espere para solicitar los beneficios resultará en un aumento permanente en sus beneficios, lo cual será más valioso a medida que envejece."
+
+#:
+msgid "There's a good chance that you'll live into your 80s and beyond."
+msgstr "Existe una gran posibilidad de que usted viva pasado sus 80 años de edad."
+
+#:
+msgid "We understand it's difficult to make predictions. You may want to plan for the possibility that you (or your spouse) may spend 20 or more years in retirement. On average, a woman reaching age 65 today will live to age 87, and a man will live to age 84. Claiming benefits at your full Social Security benefit age or later could be a good way to secure your monthly income during your later years. Your monthly benefit increases the longer you wait to claim, up to age 70, and is adjusted annually with the cost of living. If you live into your 80s but claim at age 62 instead of your full retirement age or later, your total lifetime benefits will be lower by thousands of dollars. <a href=\"https://www.ssa.gov/oact/population/longevity.html\" target=\"_blank\" rel=\"noopener noreferrer\">Calculate your longevity</a>."
+msgstr "Tal vez quiera planificar para la posibilidad de que usted (o su cónyuge) tenga una larga expectativa de vida. La expectativa promedio de una mujer que cumple sus 65 años de edad es 87 años, mientras que la de un hombre es 84 años. Solicitar los beneficios del Seguro Social a su plena edad de jubilación o después podría ser una buena manera de asegurar que su ingreso básico sea suficiente cuando llegue a una edad avanzada. Su beneficio mensual aumenta con cada mes que usted espera para solicitarlo, y también se ajusta anualmente de acuerdo con el cambio en el costo de vida. Si usted vive sobre los 80 años de edad, pero solicita sus beneficios a los 62 años de edad, en vez de esperar hasta cumplir su plena edad de jubilación o una edad mayor, el monto total de beneficios de Seguro Social que recibirá a lo largo de su vida será miles de dólares menor."
+
+#:
+msgid "Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age."
+msgstr "Cuando cumpla su plena edad de jubilación según el Seguro Social, podrá seguir trabajando y sus ingresos del trabajo no afectarán sus beneficios. Si solicita sus beneficios de jubilación antes de cumplir su plena edad y continúa trabajando a la misma vez, sus beneficios podrían reducirse temporalmente si su ingreso pasa de cierto límite. Cualquier reducción le será acreditada de nuevo una vez que usted alcance su plena edad de jubilación."
+
+#:
+msgid "A type of retirement savings account offered by employers to help their employees save for retirement."
+msgstr "Es un tipo de cuenta de ahorros que ofrecen los empleadores para ayudar a sus empleados a ahorrar para su jubilación."
+
+#:
+msgid "Your Social Security benefits could be reduced if you receive federal, state, or local government pensions that are based on work where you did not pay Social Security taxes."
+msgstr "La cantidad de sus beneficios de Seguro Social podría reducirse, si usted recibe una pensión del gobierno federal, estatal o local por un trabajo en el que usted no hizo contribuciones al Seguro Social."
+
+#:
+msgid "IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments."
+msgstr "Son planes de ahorros para la jubilación que gozan de incentivos especiales. En estos planes, el total de sus ahorros equivale a lo que usted contribuya, más las ganancias o las pérdidas de sus inversiones."
+
+#:
+msgid "Catch-up contributions are additional contributions that individuals who are age 50 or older can make to their 401(k) or IRA accounts to help them boost their savings as they approach retirement."
+msgstr "Estas son contribuciones adicionales que las personas mayores de 50 años pueden hacer a su plan 401(k) o su cuenta IRA con el fin de aumentar sus ahorros a medida que se acercan a su jubilación."
+
+#:
+msgid "If you claim before full retirement age and continue to work, your benefits could be temporarily reduced if you earn over a certain amount. Any reductions you receive will be credited back to you once you reach full retirement age."
+msgstr "Cuando cumpla su plena edad de jubilación según el Seguro Social, podrá seguir trabajando y sus ingresos del trabajo no afectarán sus beneficios. Si solicita sus beneficios de jubilación antes de cumplir su plena edad y continúa trabajando a la misma vez, sus beneficios podrían reducirse temporalmente si su ingreso pasa de cierto límite. Cualquier reducción le será acreditada de nuevo una vez que usted alcance su plena edad de jubilación."
+
+#:
+msgid "There are many ways to plan for a secure retirement outside of Social Security."
+msgstr "Existen otras maneras de planificar para una jubilación libre de preocupaciones."
+
+#:
+msgid "That means you’ll receive your full benefit with no reductions! Here are a few things to keep in mind in the next few years."
+msgstr "Eso significa que recibirá sus beneficios de Seguro Social completos, sin ninguna reducción. Estos son pasos que le ayudarán en los próximos años:"
+
+#:
+msgid "This means you will get an increase in your monthly benefits!  Here are a few things to keep in mind in the next few years."
+msgstr "Eso significa que recibirá sus beneficios de Seguro Social completos, sin ninguna reducción. Estos son pasos que le ayudarán en los próximos años:"
+
+#:
+msgid "Remember, claiming age here refers only to your Social Security retirement benefit, and not when you decide to stop working or apply for Medicare."
+msgstr "Recuerde que la plena edad de jubilación es un término que el Seguro Social usa para referirse a sus beneficios por jubilación, y no a la edad a la que usted decide dejar de trabajar o se inscribe en el programa Medicare."
+
+#:
+msgid "in today's dollars"
+msgstr "sin ajustes por inflación"
+
+#:
+msgid "Compared to claiming at your full benefit claiming age."
+msgstr "en comparación con su plena edad de jubilación."
+
+#:
+msgid "By age 85, an average lifespan, your total benefits will be"
+msgstr "La expectativa de vida promedio es 85 años de edad, a esa edad el total de sus beneficios será"
+
+#:
+msgid "About your maximum benefit claiming age:"
+msgstr "Más sobre la edad máxima:"
+
+#:
+msgid "Always 70."
+msgstr "Siempre es 70 años."
+
+#:
+msgid "At this age, you will get the maximum possible monthly benefit."
+msgstr "A esta edad usted obtendrá el beneficio mensual más alto."
+
+#:
+msgid "About your full benefit claiming age:"
+msgstr "Más sobre la plena edad de jubilación:"
+
+#:
+msgid "It is based on the year you were born."
+msgstr "Está basada en su año de nacimiento."
+
+#:
+msgid "At this age, you will receive your full benefit with no reductions."
+msgstr "A esta edad recibirá su beneficio mensual sin reducciones."
+
+#:
+msgid "About your early benefit claiming age:"
+msgstr "Más sobre la edad temprana:"
+
+#:
+msgid "Earliest age you can claim your benefit is 62."
+msgstr "Lo más temprano que puede solicitar sus beneficios es a los 62 años de edad."
+
+#:
+msgid "If you claim your benefit before your full claiming age, it will be reduced."
+msgstr "Si solicita sus beneficios antes de cumplir su plena edad de jubilación, sus beneficios se reducirán."
+
+#:
+msgid "Because Social Security provides guaranteed income for life, it's especially valuable to you when you reach age 80 and beyond. Claiming benefits at your full Social Security benefit age or later could be a good way to secure your monthly income during your later years.  Your benefit increases the longer you wait to claim, up to age 70, and is adjusted annually with the cost of living. If you live into your 80s but claim at age 62 instead of your full retirement age or later, your total lifetime benefits will be lower by thousands of dollars. <a href=\"https://www.ssa.gov/oact/population/longevity.html\" target=\"_blank\" rel=\"noopener noreferrer\">Calculate your expected longevity</a>."
+msgstr "El Seguro Social es especialmente valioso a partir de los 80 años de edad, ya que le garantiza un ingreso por vida. Solicitar los beneficios del Seguro Social a su plena edad de jubilación o después podría ser una buena manera de asegurar que su ingreso básico sea suficiente cuando llegue a una edad avanzada. Sus beneficios aumentan por cada mes que usted espere el solicitar sus beneficios, hasta que cumpla la edad de 70 años. Sus beneficios también se ajustan anualmente de acuerdo con el cambio en el costo de vida. Si usted vive sobre los 80 años de edad, pero solicita sus beneficios a los 62 años en vez de esperar hasta cumplir su plena edad de jubilación o una edad mayor, el monto total de los beneficios que recibirá a lo largo de su vida será miles de dólares menor."
+
+#:
+msgid "You may be able to save through your employer's 401(k) plan <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> or an Individual Retirement Account (IRA) <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. Maximize an employer match if one is offered. Some employers match some of the money you put in your 401(k) retirement plan, helping you grow your retirement savings faster.  Your decision about when to claim your Social Security benefits is especially important if you cannot or did not save as much as you would like. When you claim at your full Social Security benefit age or later, you avoid a reduction in your monthly benefit. You will also get increases for every month that you wait to claim past your full benefit age until age 70. <a href=\"https://americasaves.org/blog/1345-the-faqs-of-iras\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about starting an IRA</a>."
+msgstr "Podría ahorrar a través del plan 401(k) de su empleador <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> o una cuenta IRA <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. Si su empleador también aporta a su cuenta, sáquele el máximo provecho a esas contribuciones. Algunas compañías aportan a su plan 401(k) una cantidad basada en la contribución que usted haga y esto ayuda a que sus ahorros para la jubilación crezcan más rápido. Su decisión sobre cuándo solicitar sus beneficios de Seguro Social es especialmente importante si usted no puede ahorrar o no ahorró tanto como hubiera querido. Al solicitar sus beneficios de Seguro Social a su plena edad de jubilación, evita una reducción en su beneficio mensual. Además, la cantidad mensual de sus beneficios aumenta por cada mes que usted espere después de cumplir su plena edad de jubilación hasta los 70 años de edad."
+
+#:
+msgid "You may be able to save through your employer's retirement plan or an Individual Retirement Account (IRA <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>). Maximize an employer match if one is offered. This will help you grow your retirement savings faster.  You can also make additional contributions to these accounts called catch-up contributions <span data-tooltip-target=\"catchup-contributions\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. Your decision about when to claim your Social Security benefits is especially important if you cannot or did not save as much as you would like.  When you claim at your full Social Security benefit age or later, you avoid a reduction in your monthly benefit. You will also get increases for every month that you wait to claim past your full benefit age until age 70. <a href=\"https://www.ssa.gov/planners/retire/whileworking.html\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more about working and collecting Social Security benefits</a>."
+msgstr "Podría ahorrar a través del plan 401(k) de su empleador <span data-tooltip-target=\"401k\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span> o una cuenta IRA <span data-tooltip-target=\"iras\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. Si su empleador también aporta a su cuenta, sáquele el máximo provecho. Algunas compañías depositan en su plan 401(k) una cantidad basada en la contribución que usted haga y esto ayuda a que sus ahorros para la jubilación crezcan más rápido. Usted también puede hacer contribuciones adicionales a estas cuentas (conocidas en inglés como “catch-up contributions”) <span data-tooltip-target=\"catchup-contributions\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1200\" class=\"cf-icon-svg\"><path d=\"M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm59.5 816.2c-6.5 15.2-18.6 27.3-33.7 33.7l-.3.1c-7.7 3.2-15.9 4.9-24.2 4.9-25.8.2-49.2-15.1-59.3-38.9-10.2-23.7-4.8-51.2 13.6-69.3 6-5.7 12.9-10.3 20.6-13.4 7.9-3.3 16.5-5 25.1-5 8.3 0 16.5 1.7 24.2 5l.2.1c7.5 3.2 14.3 7.7 20.2 13.4 18.3 18.2 23.6 45.6 13.6 69.4zm115.7-430.5c-4.1 15.2-10.1 29.9-17.7 43.7-7 12.4-15.1 24.2-24.2 35.1-8.8 10.4-17.3 20.3-25.4 29.5-.4.4-.8.8-1.2 1.3-7.6 8-14.6 15.6-20.8 22.9-6.6 7.6-12.4 15.9-17.4 24.7-5.2 9.2-9.1 19.1-11.8 29.3-2.8 10.7-4.3 23.2-4.3 37.2v2.2c0 27.4-22.4 49.8-50 49.8s-50-22.4-50-50v-2.2c0-22.7 2.6-43.8 7.6-62.9 4.9-18.6 12.1-36.4 21.6-53.2 8.2-14.3 17.7-27.8 28.5-40.3 7.1-8.3 15.1-17 23.6-26 7.3-8.3 15.1-17.3 23.1-26.8 5.2-6.3 9.8-13 13.8-20.1 3.6-6.7 6.4-13.8 8.4-21.2 1.4-5.1 3.1-14.1 3.1-28.4a80.7 80.7 0 0 0-6.2-32.5c-4.1-10.1-10.1-19.2-17.7-27-7.5-7.6-16.5-13.7-26.4-17.8-9.7-4.2-20.1-6.2-30.7-6-10.9-.2-21.7 1.9-31.7 6.2-20.5 8.5-36.7 24.8-45.2 45.3-4.3 10-6.4 20.9-6.2 31.8v1.2c0 27.6-22.4 50-50 50s-50-22.4-50-50v-1.3c0-25.5 4.7-48.8 14.3-71.2 18.5-44 53.5-79 97.4-97.6 22.4-9.7 45.8-14.4 71.3-14.4 24.2-.2 48.3 4.7 70.5 14.4 43.7 18.7 78.3 53.7 96.4 97.6 9.5 22.5 14.1 45.8 14.1 71.4 0 20.5-2.3 39.1-6.8 55.3z\"></path></svg></span>. Su decisión sobre cuándo solicitar sus beneficios de Seguro Social es especialmente importante si usted no puede ahorrar o no ahorró tanto como hubiera querido. Al solicitar sus beneficios a su plena edad de jubilación, evita una reducción en su beneficio mensual. Además, la cantidad mensual de sus beneficios aumenta por cada mes que usted espere después de cumplir su plena edad de jubilación hasta los 70 años de edad."
+
+#:
+msgid "https://www.ssa.gov/OACT/quickcalc/faqs.html#8"
+msgstr "https://www.ssa.gov/OACT/quickcalc/faqs-esp.html"
+
+#:
+msgid "Planning your Social Security claiming age"
+msgstr "Planifique para su Jubilación: Antes de solicitar"
+
+#:
+msgid "YYYY"
+msgstr "AAAA"
+
+#:
+msgid "DD"
+msgstr "DD"
+
+#:
+msgid "MM"
+msgstr "MM"
+
+#:
+msgid "en-US"
+msgstr "es"
+
+#:
+msgid "en"
+msgstr "es"
+
+#:
+msgid "Claiming at age"
+msgstr "A los"
+
+#:
+msgid "Where do these numbers come from?"
+msgstr "¿De dónde salen estos números?"
+
+#:
+msgid "We generate your estimates by applying current Social Security formulas based on the numbers you enter for your date of birth and for your “highest annual work income.” We use the Social Security Administration’s Quick Calculator to produce a rough estimate of your benefit at your “full retirement age,” which ranges from age 66 to 67, depending on the year you were born. This is the age at which you would receive 100 percent of your scheduled Social Security benefit under current law. If you start claiming your Social Security retirement benefits after you reach your “full retirement age,” you will receive an increased benefit, and if you start claiming Social Security before you reach your “full retirement age,” you will receive a reduced benefit. You will not receive any additional increases for claiming after age 70, and age 62 is the earliest age you can claim your benefits."
+msgstr "Obtenemos un cálculo aproximado de sus beneficios mediante la aplicación de fórmulas actuales del Seguro Social  y basado en la fecha de nacimiento y el \"ingreso anual de trabajo” que usted ha introducido. Utilizamos la Calculadora Rápida de la Administración del Seguro Social (SSA) para producir una estimación aproximada de su beneficio a lo que se conoce como su \"plena edad de jubilación,\" que va desde los 66 años a 67 años, dependiendo del año en que usted nació. Esta es la edad en la que usted recibiría 100 por ciento de su beneficio de Seguro Social previsto por la ley vigente. Si usted comienza a reclamar su beneficio de jubilación después de cumplir su \"plena edad de jubilación,\" usted recibirá un beneficio mayor, y si comienza a reclamar su beneficio antes de cumplir su \"plena edad de jubilación,\" usted recibirá un beneficio menor. No recibirá ningún incremento adicional si decide reclamar después de los 70 años de edad, y los 62 años de edad es la edad más temprana que puede reclamar sus beneficios."
+
+#:
+msgid "Based on the numbers you enter for your date of birth and “highest annual work income,” our tool uses SSA’s Quick Calculator to estimate your benefit at “full retirement age” and your Social Security earnings record. Our tool then applies the appropriate monthly credits for claiming after your “full retirement age” and the appropriate monthly reductions for claiming before your “full retirement age.” The amounts of these credits and reductions are set by SSA. We use the same estimated earnings record to estimate your benefit at each age. In real life, your earnings record could be the same or different at each age, depending on whether you keep working until your “full retirement age,” and whether additional years of work replace earlier years of lower earnings in your record."
+msgstr "Según los números que usted introduce para su fecha de nacimiento y su \" ingreso anual de trabajo,\" nuestra herramienta utiliza la Calculadora Rápida de la Administración del Seguro Social (SSA) para estimar su beneficio a la \"plena edad de jubilación \" y su registro de ingresos del Seguro Social. Nuestra herramienta aplica los créditos mensuales correspondientes para estimar los beneficios si reclama después de su \"plena edad de jubilación \" y las reducciones mensuales correspondientes para estimar los beneficios si reclama antes de su \"plena edad de jubilación.\" Las cantidades de estos créditos y reducciones son establecidas por la Administración del Seguro Social."
+
+#:
+msgid "How do we generate your estimates?"
+msgstr "¿Cómo obtenemos su cálculo aproximado?"
+
+#:
+msgid "We use the same estimated earnings record to estimate your benefit at each age. In real life, your earnings record could be the same or different at each age, depending on whether you keep working until your “full retirement age,” and whether additional years of work replace earlier years of lower earnings in your record."
+msgstr "Usamos el mismo registro de ingresos para calcular su beneficio en cada edad. En la vida real, su registro de ingresos podría ser el mismo o diferente en cada edad, dependiendo de si se sigue trabajando hasta cumplir su \"plena edad de jubilación,\" y si los años adicionales de trabajo reemplazan años anteriores de menores ingresos en su registro."
+
+#:
+msgid "We do not access any of your actual Social Security benefit information, and the information you provide in our tool is anonymous. Therefore, your actual benefits are likely to be different from the estimate if you have had large changes in work income throughout your career, or if you had several years when you did not work."
+msgstr "No accedemos a ninguna información de su registro real de beneficios del Seguro Social, y la información que usted proporciona en nuestra herramienta es anónima. Por lo tanto, sus beneficios reales son probablemente diferentes de la estimación que le proveemos, especialmente si ha tenido grandes cambios en sus ingresos de trabajo a lo largo de su carrera, o si  tenía varios años en los que no trabajó."
+
+#:
+msgid "We provide a lifetime estimate of your benefits based on the average life expectancy of a 65-year-old today, which is age 85. Assuming a life expectancy of age 85, this rough lifetime estimate of benefits changes as your claiming age changes. This feature shows how claiming at different ages would affect the cumulative amount you will receive if you live to that expected age. If you live longer than the average person, your estimated lifetime benefits will be higher for all claiming ages. We do not apply any discount rate or make any assumptions about how different people may value money differently than others over time. In addition, all estimates are given in today’s dollars (without adjusting for inflation)."
+msgstr "Proporcionamos un estimado de la cantidad total de beneficios en base a la esperanza de vida media de una persona de 65 años, hoy en día, actualmente 85 años. Suponiendo una esperanza de vida de 85 años, esta estimación aproximada de beneficios de por vida cambiará a medida que su edad de reclamo de beneficios cambia. Este cálculo muestra cómo al reclamar a diferentes edades afectar la cantidad total que recibirá si alcanza  esa edad promedio. Si usted vive más tiempo que la persona promedio, sus beneficios estimados de por vida serán mayores para todas las  edades de reclamo. Al generar estos estimados no aplicamos ninguna tasa de descuento ni hicimos suposiciones acerca de cómo diferentes personas pueden valorar el dinero de manera diferente a los demás a través del tiempo. Además, todas las estimaciones se dan en dólares actuales (sin ajustar por inflación)."
+
+#:
+msgid "The estimates that you see in our tool may be different from the estimates shown in the Social Security Administration’s “<em>my</em> Social Security” accounts, “Retirement Estimator,” or the paper statements that you receive from the Social Security Administration. The reason for the difference may be that these tools use your <em>actual</em> earnings record to generate an estimate."
+msgstr "Las estimaciones que se ven en nuestra herramienta pueden ser diferentes de las estimaciones que se muestran en las cuentas de la Administración del Seguridad Social  llamadas \"my Social Security\",  \"Calculador de Beneficios de Jubilación \", o los estados de cuenta en papel que recibe de la Administración del Seguro Social. La razón por la diferencia puede ser que estas herramientas utilizan sus ingresos reales  para generar una estimación."
+
+#:
+msgid "The monthly and annual benefit amounts that are shown in the tool represent what we estimate you will get for the rest of your life on a monthly and annual basis from each claiming age moving forward."
+msgstr "El total de los beneficios mensuales y anuales que se muestran en la herramienta representan lo que se estima que usted obtendrá mensualmente y anualmente durante el resto de su vida a partir de cada edad."
+
+#:
+msgid "In reality, if you claim after your “full retirement age” but before you turn 70 years old, SSA will begin applying the monthly credits <a href=\"https://www.ssa.gov/oact/quickcalc/early_late.html\">in January of the year after you claim</a>.  Until then, you receive the monthly amount that you would have received if you claimed at “full retirement age.” If you claim at age 70 or later, however, your credits are applied immediately when you claim."
+msgstr "En realidad, si usted reclama sus beneficios después de su \"plena edad de jubilación\", pero antes de cumplir los 70 años de edad, la Administración del Seguro Social comenzará la aplicación de los créditos <a href=\"https://www.ssa.gov/oact/quickcalc/early_late.html\">en enero del año siguiente al que reclama</a> (en inglés). Hasta entonces, usted recibirá la cantidad mensual que habría recibido si reclamó en \"plena edad de jubilación.\" Si por otro lado usted reclama a los 70 años o después, sus créditos se aplican inmediatamente al reclamar."
+
+#:
+msgid "The tool does not provide estimates of retirement benefits for consumers under age 22 or over age 70 (i.e., the claiming age at which you get the maximum possible benefit). Additionally, the tool cannot provide an estimate if the amount entered under “highest annual work income” is too low to generate an estimate."
+msgstr "La herramienta no proporciona estimaciones de los beneficios de retiro para los consumidores menores de 22 años o mayores de 70 años (es decir, la edad en el que se obtiene el beneficio máximo posible). Además, la herramienta no puede proporcionar una estimación si la cantidad que introduce bajo \"ingreso anual de trabajo” es demasiado baja para generar una estimación."
+
+#:
+msgid "Your estimate will be more accurate if it is based on your own actual earnings record, especially if you have had fluctuations in your income or gaps in employment over your career. To get an estimate based on your actual earnings record, you may want to open a <a href=\"https://www.ssa.gov/myaccount/\">“<em>my</em> Social Security” account</a> or visit the <a href=\"https://www.ssa.gov/retire/estimator.html\">Social Security Administration’s Retirement Estimator</a>."
+msgstr "Su estimación será más precisa si se basa en su propio registro de ingresos, especialmente si ha tenido fluctuaciones en sus ingresos o si hubo años a lo largo de su carrera en los que no trabajó. Para obtener una estimación basada en su registro de ingresos reales, es posible que desee acceder al <a href=\"https://www.ssa.gov/espanol/jubilacion2/calculadora.html\">Calculador de Beneficios de Jubilación</a> de la Administración del Seguro Social o abrir una cuenta de <a href=\"https://www.ssa.gov/myaccount/\">“<em>my</em> Social Security”</a> (disponible en inglés solamente)."
+
+#:
+msgid "Other things to know"
+msgstr "Otras cosas que debe saber"
+
+#:
+msgid "Our tool does not show other Social Security benefits, like spousal benefits, survivors’ benefits, or disability benefits that can be paid on your earnings record. You can get estimates for these benefits at the Social Security Administration’s <a href=\"https://www.ssa.gov/retire/estimator.html\">Retirement Estimator</a> or by opening or accessing your <a href=\"https://www.ssa.gov/myaccount/\">“<em>my</em> Social Security ” account</a>."
+msgstr "Nuestra herramienta no muestra los otros beneficios del Seguro Social, tales como los beneficios conyugales, beneficios para sobrevivientes, y beneficios de incapacidad que se pueden pagar bajo su registro de ingresos. Usted puede obtener un cálculo aproximado de estos beneficios a través del <a href=\"https://www.ssa.gov/espanol/jubilacion2/calculadora.html\">Calculador de Beneficios de Jubilación</a> de la Administración del Seguro Social o abriendo una cuenta de <a href=\"https://www.ssa.gov/myaccount/\">“<em>my</em> Social Security”</a> (disponible en inglés solamente)."
+
+#:
+msgid "You must meet some <a href=\"https://www.ssa.gov/planners/retire/creditsa.html\">minimum working and age requirements</a> to be eligible to receive retirement benefits from your own working record."
+msgstr "Usted debe cumplir con <a href=\"https://www.ssa.gov/espanol/jubilacion2/creditosa.htm\">ciertos requisitos</a> de trabajo y tener la edad mínima para ser elegible para recibir los beneficios de jubilación bajo su propio registro de trabajo."
+
+#:
+msgid "Other sources of retirement income like a <a href=\"https://www.ssa.gov/planners/retire/wep.html\">pension from a state or local government for which you did not pay Social Security taxes</a> may affect the amount of benefits that you will receive."
+msgstr "Otras <a href=\"https://www.ssa.gov/espanol/jubilacion2/eliminacion.htm\">fuentes de ingresos de jubilación</a>, tales como una pensión de un gobierno estatal o local para el cual usted no pagó impuestos de Seguro Social, pueden afectar la cantidad de beneficios que recibirá."
+
+#:
+msgid "You’ve chosen age 70, which is your maximum Social Security benefit claiming age."
+msgstr "Usted seleccionó 70, que es la edad máxima para reclamar sus beneficios de Seguro Social."
+
+#:
+msgid "This means you will get your maximum possible monthly benefit! Here are a few things to keep in mind in the next few years."
+msgstr "Eso significa que obtendrá el beneficio mensual más alto. Estos son pasos que le ayudarán en los próximos años:"
+
+#:
+msgid "You've chosen"
+msgstr "Usted seleccionó"
+
+#:
+msgid "which is later than your Social Security full retirement claiming age."
+msgstr "que es después de su plena edad de jubilación."
+
+#:
+msgid "which is your maximum Social Security benefit claiming age."
+msgstr "que es la edad máxima para reclamar sus beneficios de Seguro Social."
+
+#:
+msgid "Visit my Social Security"
+msgstr "Visite my Social Security"
+
+#:
+msgid "Get in touch"
+msgstr "MANTÉNGASE EN CONTACTO"
+
+#:
+msgid "Create a <em>my</em> Social Security account to review your expected benefits based on your actual Social Security record."
+msgstr "Abra una cuenta de <em>my</em> Social Security para ver un estimado de sus beneficios basados en su propio registro de ganancias del Seguro Social."
+
+#:
+msgid "You can send feedback or questions to"
+msgstr "Envíe sus comentarios o preguntas a"
+
+#:
+msgid "As you approach retirement, we recommend that you contact the Social Security Administration for an estimate based on your actual earnings history"
+msgstr "Al acercarse a su jubilación, le recomendamos que se comunique con la Administración del Seguro Social para obtener una estimación de sus beneficios basada en su registro real de ingresos"
+
+#:
+msgid "How we calculate your estimates"
+msgstr "Cómo calculamos sus estimados"
+
+#:
+msgid "These are rough estimates"
+msgstr "Estos son cálculos aproximados"
+
+#:
+msgid "Your lifetime benefits are also a rough estimate"
+msgstr "El total cumulativo de sus beneficios también es un cálculo aproximado"
+
+#:
+msgid "Your estimates from this tool may also be different from estimates that SSA’s tools provide"
+msgstr "Las estimaciones de esta herramienta también pueden ser diferentes de las estimaciones de las herramientas que la Administración del Seguro Social proporciona"
+
+#:
+msgid "We show monthly and annualized benefits"
+msgstr "Mostramos los beneficios mensuales y anuales"
+
+#:
+msgid "Our tool applies increases in your estimated benefits immediately"
+msgstr "Nuestra herramienta aplica aumentos en sus beneficios estimados inmediatamente"
+
+#:
+msgid "The tool gives estimates for people ages 22 to 70"
+msgstr "La herramienta proporciona estimaciones para las personas entre las edades de 22 a 70 años"
+
+#:
+msgid "Planning for Retirement: Before you claim"
+msgstr "Planifique para su Jubilación: Antes de solicitar"
+
+#:
+msgid "About this tool"
+msgstr "Más sobre esta herramienta"
