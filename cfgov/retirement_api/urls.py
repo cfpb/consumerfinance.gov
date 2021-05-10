@@ -1,5 +1,7 @@
-from core.views import TranslatedTemplateView
 from retirement_api.views import estimator
+
+from core.views import TranslatedTemplateView
+
 
 try:
     from django.urls import re_path

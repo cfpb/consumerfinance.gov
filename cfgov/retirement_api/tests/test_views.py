@@ -6,10 +6,7 @@ from django.http import HttpRequest
 from django.test import TestCase
 
 from retirement_api.views import (
-    estimator,
-    get_full_retirement_age,
-    income_check,
-    param_check,
+    estimator, get_full_retirement_age, income_check, param_check
 )
 
 
