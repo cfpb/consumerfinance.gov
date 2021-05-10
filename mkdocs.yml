@@ -24,11 +24,11 @@ nav:
     - Split Testing: split-testing.md
     - Translation: translation.md
 - Testing:
-    - Browser/Acceptance Testing: browser-acceptance-tests.md
     - JavaScript Unit Testing: javascript-unit-tests.md
     - Python Unit Testing: python-unit-tests.md
     - Functional Testing: functional-testing.md
     - Profiling Django: profiling-django.md
+    - Other Front-end Testing: other-front-end-testing.md
 - Contributing:
     - Branching and Merging: branching-merging.md
     - Contributing to the Docs: contributing-docs.md
