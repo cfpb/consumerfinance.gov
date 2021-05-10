@@ -736,4 +736,4 @@ Testing user interaction with simulated pointer events, keystrokes,
 or form submissions is best handled via browser tests, not unit tests.
 User interaction in a unit test could falsely pass
 if the component wasn’t visible on the page, for instance.
-[Read more about how we run browser tests.](../browser-acceptance-tests/)
+[Read more about how we run browser tests with Cypress.](../functional-testing/)
