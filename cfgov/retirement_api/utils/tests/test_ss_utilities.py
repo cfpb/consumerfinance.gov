@@ -1,12 +1,9 @@
 import copy
 import datetime
-import json
 import os
 import sys
 import unittest
 from datetime import date, timedelta
-
-import django
 
 import mock
 import requests
