@@ -22,9 +22,6 @@ from retirement_api.utils.ss_utilities import (
     age_map, get_current_age, get_delay_bonus, get_months_past_birthday,
     get_months_until_next_birthday, get_retirement_age, past_fra_test, yob_test
 )
-from retirement_api.utils.ssa_check import (
-    assemble_test_params, check_results, get_test_params
-)
 
 
 # ,
