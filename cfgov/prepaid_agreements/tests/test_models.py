@@ -17,46 +17,67 @@ class TestPrepaidProducts(TestCase):
 
 
 class TestMostRecentAgreement(TestCase):
-    """ Test that the latest agreement is based on its created date.
+    """ Test that the latest agreement is based on effective date.
 
-    A product can have multiple agreements with the same effective date,
-    but the most recent one is considered the one created last.
+    The most_recent_agreement method on a PrepaidProduct should return the
+    agreement with the latest effective_date.
 
-    An individual agreement is considered most recent if it was
-    created last among its product's agreements.
+    If multiple agreements exist for a product with the same effective_date,
+    return the one with the latest created_time.
     """
 
     def setUp(self):
-        self.product = PrepaidProduct()
-        self.product.save()
+        march_1 = date(month=3, day=1, year=2021)
+        april_1 = date(month=4, day=1, year=2021)
+        now = timezone.now()
+        earlier = now - timedelta(hours=1)
 
-        effective_date = date(month=2, day=3, year=2019)
-        self.agreement_old = PrepaidAgreement(
-            effective_date=effective_date,
-            created_time=timezone.now() - timedelta(hours=1),
-            product=self.product,
+        # Agreements with same created_time and different effective_date
+        self.product_1 = PrepaidProduct()
+        self.product_1.save()
+        self.agreement_1 = PrepaidAgreement(
+            effective_date=april_1,
+            created_time=now,
+            product=self.product_1,
         )
-        self.agreement_old.save()
-        self.agreement_older = PrepaidAgreement(
-            effective_date=effective_date,
-            created_time=timezone.now() - timedelta(hours=2),
-            product=self.product,
+        self.agreement_1.save()
+
+        self.effective_earlier = PrepaidAgreement(
+            effective_date=march_1,
+            created_time=now,
+            product=self.product_1,
         )
-        self.agreement_older.save()
-        self.agreement_new = PrepaidAgreement(
-            effective_date=effective_date,
-            created_time=timezone.now(),
-            product=self.product,
+        self.effective_earlier.save()
+
+        # Agreements with same effective_date and different created_time
+        self.product_2 = PrepaidProduct()
+        self.product_2.save()
+        self.agreement_2 = PrepaidAgreement(
+            effective_date=april_1,
+            created_time=now,
+            product=self.product_2,
         )
-        self.agreement_new.save()
+        self.agreement_2.save()
+        self.created_earlier = PrepaidAgreement(
+            effective_date=april_1,
+            created_time=earlier,
+            product=self.product_2,
+        )
+        self.created_earlier.save()
 
     def test_product_most_recent_agreement(self):
         self.assertEqual(
-            self.product.most_recent_agreement,
-            self.agreement_new
+            self.product_1.most_recent_agreement,
+            self.agreement_1
+        )
+        self.assertEqual(
+            self.product_2.most_recent_agreement,
+            self.agreement_2
         )
 
     def test_agreement_is_most_recent(self):
-        self.assertEqual(self.agreement_old.is_most_recent, False)
-        self.assertEqual(self.agreement_older.is_most_recent, False)
-        self.assertEqual(self.agreement_new.is_most_recent, True)
+        self.assertTrue(self.agreement_1.is_most_recent)
+        self.assertTrue(self.agreement_2.is_most_recent)
+
+        self.assertFalse(self.created_earlier.is_most_recent)
+        self.assertFalse(self.effective_earlier.is_most_recent)

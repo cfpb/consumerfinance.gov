@@ -49,4 +49,4 @@ class PrepaidAgreement(models.Model):
         return self == self.product.most_recent_agreement
 
     class Meta:
-        ordering = ['-created_time']
+        ordering = ['-effective_date', '-created_time']

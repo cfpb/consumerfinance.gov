@@ -80,7 +80,6 @@
     "xdr": "0.5.3"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "7.1.0",
     "babel-jest": "26.6.3",
     "chai": "4.3.4",
     "chai-as-promised": "7.1.1",
@@ -92,10 +91,7 @@
     "minimist": "1.2.5",
     "protractor": "7.0.0",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
-    "protractor-cucumber-framework": "8.0.2",
     "protractor-retry": "2.0.1",
-    "sauce-connect-tunnel": "0.2.1",
-    "selenium-webdriver": "4.0.0-alpha.5",
     "snyk": "1.530.0",
     "through2": "4.0.2",
     "wcag": "0.3.0"
