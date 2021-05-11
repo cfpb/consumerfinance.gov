@@ -105,11 +105,6 @@ class AkamaiBackend(BaseBackend):
     def purge_all(self):
         self.post_all('invalidate')
 
-    def purge_batch(self, url):
-        batch = PurgeBatch()
-        batch.add_urls(url)
-        batch.purge()
-
 
 @receiver(post_save, sender=Document)
 @receiver(post_save, sender=CFGOVRendition)
