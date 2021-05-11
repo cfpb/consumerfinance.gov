@@ -1,26 +1,16 @@
 {% extends 'content-base.html' %}
 
-{% block pre_content scoped -%}
-    {# TODO: Remove non-wagtail logic once old pages have been converted #}
-    {% if page %}
-        {% if not breadcrumb_items %}
-        {% set breadcrumb_items = page.get_breadcrumbs(request) %}
-        {% endif %}
-        {% if breadcrumb_items | length > 0 %}
-            <div class="content_wrapper">
-                {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
-                {{ breadcrumbs.render(breadcrumb_items) }}
-            </div>
-        {% endif %}
-    {% else %}
-        {% if breadcrumb_items | length > 0 %}
-            <div class="content_wrapper">
-                {%- import 'breadcrumbs.html' as breadcrumbs -%}
-                {{ breadcrumbs.render(breadcrumb_items, 'breadcrumbs__main-first') }}
-            </div>
-        {% endif %}
-    {% endif %}
-{%- endblock %}
+{% if page and not breadcrumb_items %}
+{% set breadcrumb_items = page.get_breadcrumbs(request) %}
+{% endif %}
+
+{{ breadcrumb_items | length }}
+{% if breadcrumb_items | length > 0 %}
+    <div class="content_wrapper">
+        {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
+        {{ breadcrumbs.render(breadcrumb_items) }}
+    </div>
+{% endif %}
 
 {% block body_content scoped %}
 <div class="wrapper content_wrapper">

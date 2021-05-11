@@ -1,5 +1,14 @@
 {% extends 'layout-side-nav.html' %}
 
+{% set breadcrumb_items = [{
+  "title": "Educator Tools",
+  "href": "/consumer-tools/educator-tools/"
+},
+{
+  "title": "Resources for Youth Employment Programs",
+  "href": "/consumer-tools/educator-tools/resources-youth-employment-programs/",
+}] %}
+
 {% block css -%}
 {{ super() }}
 <link rel="stylesheet" href="{{ static('apps/youth-employment-success/css/main.css') }}">
@@ -16,20 +25,6 @@ This tool helps youth plan how to get to work, budget for transportation costs, 
 {% block content_main_modifiers -%}
 {{ super() }} content__1-3 yes-transit-tool
 {%- endblock %}
-
-{% block pre_content %}
-<div class="content_wrapper">
-    <nav class="breadcrumbs" aria-label="Breadcrumbs">
-        {{ svg_icon('left') }}
-        <a class="breadcrumbs_link" href="/consumer-tools/educator-tools/">
-            Educator Tools
-        </a>
-        <a class="breadcrumbs_link" href="/consumer-tools/educator-tools/resources-youth-employment-programs/">
-            Resources for Youth Employment Programs
-        </a>
-    </nav>
-</div>
-{% endblock %}
 
 {% block content_sidebar scoped -%}
 {% include "side-nav.html" %}

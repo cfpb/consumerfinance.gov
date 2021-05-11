@@ -1,5 +1,10 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% set breadcrumb_items = [{
+    "title": _('Back to the questionnaire'),
+    "href": url('fwb_home_' + current_language),
+}] %}
+
 {% block meta_viewport %}
     {{ super() }}
     <meta name="robots" content="noindex">
@@ -203,17 +208,6 @@
             }
         }
     </style>
-{% endblock %}
-
-{% block pre_content %}
-    <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="{{ _('Breadcrumbs') }}">
-            <a class="breadcrumbs_link" id="results-link" href="{{ url('fwb_home_' + current_language) }}">
-                {{ svg_icon( 'left' ) }}
-                {{ _('Back to the questionnaire') }}
-            </a>
-        </nav>
-    </div>
 {% endblock %}
 
 {% set user_pct = user_score.pct if user_score else 0 %}
