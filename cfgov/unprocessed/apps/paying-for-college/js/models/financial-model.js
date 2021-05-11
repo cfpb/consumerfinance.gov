@@ -167,13 +167,21 @@ const financialModel = {
   _enforceLimits: () => {
     let unsubCap = 0;
     const errors = {};
+    const yearMap = {
+      n: 'yearOne',
+      0: 'yearOne',
+      1: 'yearTwo',
+      a: 'yearThree',
+      2: 'yearThree'
+    };
 
-    // get the caps from the constants model
+    // Determine progress, set "year" variable
+    const year = yearMap[getStateValue( 'programProgress' )];
 
     // First, enforce subsidized cap
     const subResult = enforceRange( financialModel.values.fedLoan_directSub,
       0,
-      getConstantsValue( 'subCaps' ).yearOne );
+      getConstantsValue( 'subCaps' )[year] );
     if ( subResult !== false ) {
       financialModel.values.fedLoan_directSub = subResult.value;
       // Reserve for later error handling
@@ -181,6 +189,7 @@ const financialModel = {
         errors.fedLoan_directSub = subResult.error;
       }
     }
+
 
     // Calculate unsubsidized loan cap based on subsidized loan amount
     if ( getStateValue( 'programType' ) === 'graduate' ) {
@@ -195,9 +204,9 @@ const financialModel = {
       financialModel.values.fellowAssist_assistantship = 0;
 
       if ( getStateValue( 'programDependency' ) === 'independent' ) {
-        unsubCap = Math.max( 0, getConstantsValue( 'totalIndepCaps' ).yearOne );
+        unsubCap = Math.max( 0, getConstantsValue( 'totalIndepCaps' )[year] );
       } else {
-        unsubCap = Math.max( 0, getConstantsValue( 'totalCaps' ).yearOne );
+        unsubCap = Math.max( 0, getConstantsValue( 'totalCaps' )[year] );
       }
     }
 
