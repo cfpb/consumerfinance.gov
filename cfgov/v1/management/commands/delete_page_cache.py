@@ -1,23 +1,18 @@
-from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from v1.models.caching import AkamaiBackend
+from wagtail.contrib.frontend_cache.utils import purge_url_from_cache
 
 
 class Command(BaseCommand):
-    help = "Delete the cache of pages by full URLs"
+    help = "Delete the cache of a page by its full URL"
 
     def add_arguments(self, parser):
         parser.add_argument(
             "--url",
             required=True,
-            nargs="+",
-            help=(
-                "The full URL for the page cache to delete "
-                "(can specify multiple)"
-            )
+            help="The full URL for the page you wish to delete its cache",
         )
 
     def handle(self, *args, **options):
-        AkamaiBackend(
-            settings.WAGTAILFRONTENDCACHE["akamai"]).delete(options["url"])
+        page_url = options["url"]
+        purge_url_from_cache(page_url)
