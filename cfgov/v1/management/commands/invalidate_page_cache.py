@@ -1,7 +1,6 @@
-from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from v1.models.caching import AkamaiBackend
+from wagtail.contrib.frontend_cache.utils import PurgeBatch
 
 
 class Command(BaseCommand):
@@ -19,5 +18,6 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        AkamaiBackend(
-            settings.WAGTAILFRONTENDCACHE["akamai"]).purge(options["url"])
+        batch = PurgeBatch()
+        batch.add_urls(options["url"])
+        batch.purge()
