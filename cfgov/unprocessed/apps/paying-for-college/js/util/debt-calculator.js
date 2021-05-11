@@ -56,6 +56,7 @@ function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLeng
 
   // Determine percent of borrowing versus caps
   percentSub = directSub / subCaps[yearMap[progress]];
+  percentUnsub = directUnsub / totalCaps[yearMap[progress]];
 
   /* Iterate through each year of the program
      Note that "progress" refers to number of years completed, thus a user has 0 progress
@@ -75,14 +76,16 @@ function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLeng
       unsubInterest += directUnsub * rateUnsub * programLength;
     } else if ( progressNumber === 1 ) {
       const subAmount = percentSub * subCaps.yearTwo;
+      const unsubAmount = percentUnsub * totalCaps.yearTwo;
       subPrincipal += subAmount;
-      unsubPrincipal += directUnsub;
-      unsubInterest += directUnsub * rateUnsub * ( programLength - x );
+      unsubPrincipal += unsubAmount;
+      unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
     } else {
       const subAmount = percentSub * subCaps.yearThree;
+      const unsubAmount = percentUnsub * totalCaps.yearThree;
       subPrincipal += subAmount;
-      unsubPrincipal += directUnsub;
-      unsubInterest += directUnsub * rateUnsub * ( programLength - x );
+      unsubPrincipal += unsubAmount;
+      unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
     }
   }
 
