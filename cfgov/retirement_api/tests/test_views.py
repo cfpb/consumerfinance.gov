@@ -33,8 +33,6 @@ PARAMS = {
 
 
 class ViewTests(TestCase):
-    fixtures = ["retiredata.json"]
-
     req_good = HttpRequest()
     req_good.GET["dob"] = "1955-05-05"
     req_good.GET["income"] = "40000"
@@ -47,7 +45,7 @@ class ViewTests(TestCase):
     return_keys = ["data", "error"]
 
     def test_base_view(self):
-        url = reverse("retirement_api:claiming")
+        url = reverse("retirement_api:claiming_en")
         response = self.client.get(url)
         self.assertTrue(response.status_code == 200)
         url = reverse("retirement_api:claiming_es")
@@ -126,9 +124,9 @@ class ViewTests(TestCase):
         self.assertTrue(response.status_code == 400)
 
     def test_about_pages(self):
-        url = reverse("retirement_api:about")
+        url = reverse("retirement_api:retirement_about_en")
         response = self.client.get(url)
         self.assertTrue(response.status_code == 200)
-        url = reverse("retirement_api:about_es", kwargs={"language": "es"})
+        url = reverse("retirement_api:retirement_about_es")
         response = self.client.get(url)
         self.assertTrue(response.status_code == 200)
