@@ -1,9 +1,9 @@
-import 'regenerator-runtime/runtime';
-import * as complaints from '../../../mocks/complaints';
-import * as sut from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap.js';
-import Analytics from '../../../../../cfgov/unprocessed/js/modules/Analytics';
-import TileMap from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap';
-import chartMock from '../../../mocks/chartMock';
+import 'regenerator-runtime/runtime.js';
+import * as complaints from '../../../mocks/complaints.js';
+import * as sut from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap';
+import Analytics from '../../../../../cfgov/unprocessed/js/modules/Analytics.js';
+import TileMap from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap.js';
+import chartMock from '../../../mocks/chartMock.js';
 
 jest.mock( '../../../../../cfgov/unprocessed/js/modules/Analytics' );
 

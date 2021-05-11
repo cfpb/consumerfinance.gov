@@ -1,5 +1,5 @@
-import ClearableInput from '../../../../cfgov/unprocessed/js/modules/ClearableInput';
-import { simulateEvent } from '../../../util/simulate-event';
+import ClearableInput from '../../../../cfgov/unprocessed/js/modules/ClearableInput.js';
+import { simulateEvent } from '../../../util/simulate-event.js';
 
 let baseDom;
 let clearBtnDom;

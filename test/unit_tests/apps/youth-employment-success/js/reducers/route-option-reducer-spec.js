@@ -1,4 +1,4 @@
-import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/models/route';
+import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/models/route.js';
 import routeOptionReducer, {
   addRouteOptionAction,
   clearAverageCostAction,
@@ -18,15 +18,18 @@ import routeOptionReducer, {
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction,
   updateTransportationAction
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import { UNDEFINED } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer.js';
+import UNDEFINED from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util.js';
+import {
+  PLAN_TYPES
+} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items.js';
 
 // Arbitrary value to ensure reducer is updating properly
 const nextValue = '15';
 
 describe( 'routeOptionReducer', () => {
-  it( 'returns an initial state when it recevives an unsupported action type', () => {
+  it( 'returns an initial state when it ' +
+      'receives an unsupported action type', () => {
     const state = routeOptionReducer( UNDEFINED, { type: null } );
 
     expect( state ).toEqual( initialState );
@@ -39,32 +42,42 @@ describe( 'routeOptionReducer', () => {
   } );
 
   it( 'exposes a selector to decouple state form state shape', () => {
-    const initialRoutes = routeOptionReducer( UNDEFINED, addRouteOptionAction( createRoute() ) );
+    const initialRoutes = routeOptionReducer(
+      UNDEFINED, addRouteOptionAction( createRoute() )
+    );
     const appState = {
       routes: initialRoutes
     };
 
     expect( typeof routeSelector === 'function' ).toBeTruthy();
-    expect( routeSelector( appState.routes, 0 ) ).toEqual( initialRoutes.routes[0] );
-    expect( routeSelector( appState.routes, 1 ) ).toStrictEqual( {} );
+    expect( routeSelector( appState.routes, 0 ) )
+      .toEqual( initialRoutes.routes[0] );
+    expect( routeSelector( appState.routes, 1 ) )
+      .toStrictEqual( {} );
 
   } );
 
-  it( 'exposes a helper to determine if a given plan type if in a route action plan', () => {
-    const initialRoutes = routeOptionReducer( UNDEFINED, addRouteOptionAction( createRoute( {
-      actionPlanItems: [ PLAN_TYPES.MILES ]
-    } ) ) );
+  it( 'exposes a helper to determine if a given ' +
+      'plan type if in a route action plan', () => {
+    const initialRoutes = routeOptionReducer(
+      UNDEFINED, addRouteOptionAction( createRoute( {
+        actionPlanItems: [ PLAN_TYPES.MILES ]
+      } ) ) );
     const route = initialRoutes.routes[0];
 
-    expect( hasTodo( route.actionPlanItems, PLAN_TYPES.MILES ) ).toBe( true );
-    expect( hasTodo( route.actionPlanItems, PLAN_TYPES.AVERAGE_COST ) ).toBe( false );
+    expect( hasTodo( route.actionPlanItems, PLAN_TYPES.MILES ) )
+      .toBe( true );
+    expect( hasTodo( route.actionPlanItems, PLAN_TYPES.AVERAGE_COST ) )
+      .toBe( false );
   } );
 
   describe( 'updating a specific route', () => {
     let initial;
 
     beforeEach( () => {
-      initial = routeOptionReducer( UNDEFINED, addRouteOptionAction( createRoute() ) );
+      initial = routeOptionReducer(
+        UNDEFINED, addRouteOptionAction( createRoute() )
+      );
     } );
 
     it( 'reduces .updateAverageCostAction', () => {
@@ -78,7 +91,8 @@ describe( 'routeOptionReducer', () => {
       const { averageCost, ...rest } = state.routes[0];
 
       expect( averageCost ).toBe( nextValue );
-      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initial.routes[0][key] )
+      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value )
+        .toBe( initial.routes[0][key] )
       );
     } );
 
@@ -93,7 +107,8 @@ describe( 'routeOptionReducer', () => {
 
       expect( daysPerWeek ).toBe( nextValue );
 
-      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initial.routes[0][key] )
+      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value )
+        .toBe( initial.routes[0][key] )
       );
     } );
 
@@ -108,7 +123,8 @@ describe( 'routeOptionReducer', () => {
 
       expect( miles ).toBe( nextValue );
 
-      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value ).toBe( initial.routes[0][key] )
+      Object.entries( rest ).forEach( ( [ key, value ] ) => expect( value )
+        .toBe( initial.routes[0][key] )
       );
     } );
 
@@ -136,10 +152,15 @@ describe( 'routeOptionReducer', () => {
 
     it( 'does not reduce routes for which it did not receive an index', () => {
       const transportationType = 'Walk';
-      const state = routeOptionReducer( {
-        routes: [ createRoute(), createRoute() ]
-      },
-      updateTransportationAction( { routeIndex: 0, value: transportationType } )
+      const state = routeOptionReducer(
+        {
+          routes: [ createRoute(), createRoute() ]
+        },
+        updateTransportationAction(
+          {
+            routeIndex: 0, value: transportationType
+          }
+        )
       );
 
       expect( state.routes[0].transportation ).toBe( transportationType );
@@ -214,7 +235,8 @@ describe( 'routeOptionReducer', () => {
       expect( todos[0] ).toBe( PLAN_TYPES.MILES );
     } );
 
-    it( 'reduces the state of actionPlanItems when a mismatching type is supplied', () => {
+    it( 'reduces the state of actionPlanItems ' +
+        'when a mismatching type is supplied', () => {
       const state = routeOptionReducer(
         {
           routes: [

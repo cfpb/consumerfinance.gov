@@ -1,10 +1,11 @@
-import { simulateEvent } from '../../../../util/simulate-event';
+import { simulateEvent } from '../../../../util/simulate-event.js';
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
 
 const HTML_SNIPPET = `
   <ul id="regs3k-notices"></ul>
 `;
 
+/* eslint-disable camelcase */
 const TEST_DATA = {
   results: [
     {
@@ -21,6 +22,7 @@ const TEST_DATA = {
     }
   ]
 };
+/* eslint-enable camelcase */
 
 // Back up global xhr
 const xhr = global.XMLHttpRequest;
@@ -48,16 +50,19 @@ describe( 'The Regs3K search page', () => {
 
   it( 'should process a notice', () => {
     const notice = {
+      // eslint-disable-next-line camelcase
       html_url: 'https://federalregister.gov/',
       title: 'Really great notice'
     };
     const processedNotice = app.processNotice( notice );
     expect( processedNotice.constructor.name ).toEqual( 'HTMLLIElement' );
     expect( processedNotice.className ).toEqual( 'm-list_link' );
-    expect( processedNotice.querySelector( 'a' ).href ).toEqual( 'https://federalregister.gov/' );
+    expect( processedNotice.querySelector( 'a' ).href )
+      .toEqual( 'https://federalregister.gov/' );
   } );
 
   it( 'should process notices', () => {
+    /* eslint-disable camelcase */
     const notices = [
       {
         html_url: 'https://federalregister.gov/1',
@@ -68,9 +73,11 @@ describe( 'The Regs3K search page', () => {
         title: 'Another really great notice'
       }
     ];
+    /* eslint-enable camelcase */
     const processedNotices = app.processNotices( notices );
     expect( processedNotices.querySelectorAll( 'li' ).length ).toEqual( 3 );
-    expect( processedNotices.querySelectorAll( 'a' )[2].textContent ).toContain( 'More' );
+    expect( processedNotices.querySelectorAll( 'a' )[2].textContent )
+      .toContain( 'More' );
   } );
 
   it( 'should load recent notices', () => {
@@ -113,6 +120,7 @@ describe( 'The Regs3K search page', () => {
     mockXHR.onreadystatechange();
 
     setTimeout( () => {
+      // eslint-disable-next-line no-console
       expect( console.error ).toBeCalled();
       done();
     }, 100 );

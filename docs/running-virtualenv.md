@@ -127,9 +127,8 @@ yarn run gulp build           # Concatenate, optimize, and copy source files to 
 yarn run gulp clean           # Remove the contents of the production /dist/ directory.
 yarn run gulp lint            # Lint the scripts and build files.
 yarn run gulp docs            # Generate JSDocs from the scripts.
-yarn run gulp test            # Run linting, unit and acceptance tests (see below).
+yarn run gulp test            # Run linting, unit, and functional tests (see below).
 yarn run gulp test:unit       # Run only unit tests on source code.
-yarn run gulp test:acceptance # Run only acceptance (in-browser) tests on production code.
 ```
 
 ### Reinstalling the virtual environment

@@ -17,7 +17,7 @@ import {
 } from '../dispatchers/update-view.js';
 
 const urlVals = [
-  'pid', 'programHousing', 'programType', 'programLength',
+  'pid', 'programHousing', 'programType', 'programProgress', 'programLength',
   'programRate', 'programDependency', 'costsQuestion', 'expensesRegion',
   'impactOffer', 'impactLoans', 'utmSource', 'utm_medium', 'utm_campaign'
 ];
@@ -27,6 +27,7 @@ const stateModel = {
   values: {
     activeSection: false,
     constantsLoaded: false,
+    hoursToCoverPaymentText: '',
     showSchoolErrors: false,
     schoolSelected: false,
     gotStarted: false,
@@ -39,6 +40,7 @@ const stateModel = {
     programRate: 'not-selected',
     programHousing: 'not-selected',
     programDependency: 'not-selected',
+    programProgress: 'not-selected',
     repayMeterCohort: 'cohortRankByHighestDegree',
     repayMeterCohortName: 'U.S.'
   },
@@ -106,6 +108,7 @@ const stateModel = {
       schoolSelected: getSchoolValue( 'schoolID' ) === false,
       programTypeSelected: smv.programType === 'not-selected',
       programLengthSelected: smv.programLength === 'not-selected',
+      programProgressSelected: smv.programProgress === 'not-selected',
       rateSelected: smv.programRate === 'not-selected' && control === 'Public',
       housingSelected: smv.programHousing === 'not-selected',
       dependencySelected:  smv.programLevel === 'undergrad' && smv.programDependency === 'not-selected'
@@ -164,9 +167,10 @@ const stateModel = {
    * @param {string} property  What property to update based on
    */
   _updateApplicationState: property => {
-    const urlParams = [ 'pid', 'programHousing', 'programType', 'programLength',
-      'programRate', 'programDependency', 'costsQuestion', 'expensesRegion',
-      'impactOffer', 'impactLoans', 'utmSource', 'utm_medium', 'utm_campaign' ];
+    const urlParams = [ 'pid', 'programHousing', 'programType', 'programProgress',
+      'programLength', 'programRate', 'programDependency', 'costsQuestion',
+      'expensesRegion', 'impactOffer', 'impactLoans', 'utmSource', 'utm_medium',
+      'utm_campaign' ];
 
     const finUpdate = [ 'programType', 'programRate', 'programDependency',
       'programLength', 'programHousing' ];
