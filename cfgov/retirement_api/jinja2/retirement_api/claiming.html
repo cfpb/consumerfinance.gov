@@ -13,12 +13,7 @@
 
 {% block css %}
 {{ super() }}
-  <!--[if lt IE 9]>
-      <link rel="stylesheet" href="{{ static("retirement/css/main.ie.css") }}">
-  <![endif]-->
-  <!--[if gt IE 8]><!-->
-  <link rel="stylesheet" href="{{ static('apps/retirement/css/main.css') }}">
-  <!--<![endif]-->
+<link rel="stylesheet" href="{{ static('apps/retirement/css/main.css') }}">
 {% endblock %}
 
 {% block content_main %}
