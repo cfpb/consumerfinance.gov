@@ -34,12 +34,17 @@ const hooks = {
 
   ccpi_quarterLabels() {
     const { x, y, series } = this;
+    const [ quarter, year ] = hooks.ccpi_dateToQuarter( x );
+    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Percentile: ${ Math.round( y ) }`;
+  },
+
+  ccpi_dateToQuarter( x ) {
     const d = new Date( x ).toLocaleString(
       'en-US', { dateStyle: 'medium', timeZone: 'UTC' }
     ).split( ', ' );
     const quarter = `${ ccpi_quarterMap[d[0]] }: ${ ccpi_quarterRange[d[0]] }`;
     const year = d[1];
-    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Percentile: ${ Math.round( y ) }`;
+    return [ quarter, year ];
   },
 
   ccpi_tickPositioner() {

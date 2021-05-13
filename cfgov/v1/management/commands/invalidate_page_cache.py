@@ -1,18 +1,23 @@
 from django.core.management.base import BaseCommand
 
-from wagtail.contrib.frontend_cache.utils import purge_url_from_cache
+from wagtail.contrib.frontend_cache.utils import PurgeBatch
 
 
 class Command(BaseCommand):
-    help = "Invalidate the cache of a page by its full URL"
+    help = "Invalidate the cache of pages by full URLs"
 
     def add_arguments(self, parser):
         parser.add_argument(
             "--url",
             required=True,
-            help="The full URL for the page you wish to invalidate its cache",
+            nargs="+",
+            help=(
+                "The full URL for the page cache to invalidate "
+                "(can specify multiple)"
+            )
         )
 
     def handle(self, *args, **options):
-        page_url = options["url"]
-        purge_url_from_cache(page_url)
+        batch = PurgeBatch()
+        batch.add_urls(options["url"])
+        batch.purge()
