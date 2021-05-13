@@ -761,8 +761,7 @@ function buildChart( chartNode ) {
 
     const chart = chartMaker(
       target,
-      makeChartOptions( data, target ),
-      fixViewbox
+      makeChartOptions( data, target )
     );
     const mediaQueryList = window.matchMedia( 'print' );
     mediaQueryList.addListener( function() {
