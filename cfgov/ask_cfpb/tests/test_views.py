@@ -85,14 +85,33 @@ class AnswerPagePreviewTestCase(TestCase):
         )
 
     @mock.patch("ask_cfpb.views.ServeView.serve")
-    def test_preview_page(self, mock_serve):
+    def test_live_plus_draft_with_sharing(self, mock_serve):
         from ask_cfpb.views import view_answer
 
         test_request = self.factory.get(
             "/", HTTP_HOST="preview.localhost", SERVER_PORT=8000
         )
-        view_answer(test_request, "test-question1", "en", self.test_answer.pk)
+        page = self.test_answer.english_page
+        page.title += " more title"
+        page.save_revision(user=None)
+        slug = page.slug
+        pk = page.answer_base.pk
+        view_answer(test_request, slug, "en", pk)
         self.assertEqual(mock_serve.call_count, 1)
+
+    @mock.patch("ask_cfpb.views.ServeView.serve")
+    def test_live_plus_draft_no_sharing(self, mock_serve):
+        from ask_cfpb.views import view_answer
+
+        test_request = self.factory.get("/")
+        page = self.test_answer.english_page
+        page.title += " more title"
+        page.save_revision(user=None)
+        slug = page.slug
+        pk = page.answer_base.pk
+        response = view_answer(test_request, slug, "en", pk)
+        self.assertEqual(mock_serve.call_count, 0)
+        self.assertEqual(response.status_code, 200)
 
     def test_answer_page_not_live(self):
         from ask_cfpb.views import view_answer
@@ -102,7 +121,7 @@ class AnswerPagePreviewTestCase(TestCase):
         test_request = self.factory.get("/")
         with self.assertRaises(Http404):
             view_answer(
-                test_request, "test-question", "en", self.test_answer.pk
+                test_request, page.slug, "en", page.answer_base.pk
             )
 
     @mock.patch("ask_cfpb.views.ServeView.serve")
