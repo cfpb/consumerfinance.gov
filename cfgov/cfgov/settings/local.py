@@ -85,6 +85,14 @@ CACHES = {
     for k in ("default", "post_preview")
 }
 
+# Optionally enable default cache
+if os.environ.get("ENABLE_DEFAULT_CACHE"):
+    CACHES["default"] = {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "default_cache",
+        "TIMEOUT": None,
+    }
+
 # Optionally enable cache for post_preview
 if os.environ.get("ENABLE_POST_PREVIEW_CACHE"):
     CACHES["post_preview"] = {

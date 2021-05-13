@@ -1,4 +1,4 @@
-import validate from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/validators/route-option';
+import validate from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/validators/route-option.js';
 
 describe( '.validate', () => {
   const data = {

@@ -1,8 +1,8 @@
-import 'regenerator-runtime/runtime';
+import 'regenerator-runtime/runtime.js';
 import * as sinon from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/node_modules/sinon';
 import Chart from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart.js';
 import landingMap from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/landing-map.js';
-import { simulateEvent } from '../../../../util/simulate-event';
+import { simulateEvent } from '../../../../util/simulate-event.js';
 
 
 jest.mock( '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart.js' );

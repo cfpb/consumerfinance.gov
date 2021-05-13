@@ -1,5 +1,10 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% set breadcrumb_items = [{
+    "title": "Diversity and Inclusion at the Bureau",
+    "href": "/about-us/diversity-and-inclusion/",
+}] %}
+
 {% block meta_viewport %}
     {{ super() }}
     <meta name="robots" content="noindex">
@@ -16,13 +21,6 @@
 {% block og_desc -%}
     The Privacy Act statement for the CFPB’s voluntary diversity assessment onboarding form.
 {%- endblock %}
-
-{% block css %}
-    {{ super() }}
-    <style>
-
-    </style>
-{% endblock %}
 
 {% block content_main %}
     <div class="block block__flush-top">

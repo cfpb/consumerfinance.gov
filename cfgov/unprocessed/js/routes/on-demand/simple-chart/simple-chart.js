@@ -254,7 +254,38 @@ function attachTilemapFilter( node, chart, data ) {
     const formatted = formatSeries( data );
     const updated = getMapConfig( formatted, evt.target.value );
     chart.update( updated );
+    updateTilemapLegend( chart.renderTo, updated, chart.options.legend.title );
   } );
+}
+
+
+/**
+ * Makes a legend for the tilemap
+ * @param {object} node The chart node
+ * @param {object} data The data object
+ * @param {string } legendTitle The legend title
+*/
+function updateTilemapLegend( node, data, legendTitle ) {
+  const classes = data.colorAxis.dataClasses;
+  const legend = node.parentNode.getElementsByClassName( 'o-simple-chart_tilemap_legend' )[0];
+  legend.innerHTML = '';
+  const colors = [];
+  const labels = [];
+  const title = document.createElement( 'p' );
+  title.innerText = legendTitle;
+  classes.forEach( v => {
+    const color = document.createElement( 'div' );
+    const label = document.createElement( 'div' );
+    color.className = 'legend-color';
+    label.className = 'legend-label';
+    color.style.backgroundColor = v.color;
+    label.innerText = v.name;
+    colors.push( color );
+    labels.push( label );
+  } );
+  legend.appendChild( title );
+  colors.forEach( v => legend.appendChild( v ) );
+  labels.forEach( v => legend.appendChild( v ) );
 }
 
 
@@ -281,47 +312,33 @@ function getMapConfig( series, date ) {
   } );
   min = Math.floor( min );
   max = Math.ceil( max );
-  const step = Math.round( ( max - min ) / 4 );
+  const step = Math.round( ( max - min ) / 5 );
   const step1 = min + step;
   const step2 = step1 + step;
   const step3 = step2 + step;
+  const step4 = step3 + step;
   return {
     colorAxis: {
-      dataClasses: [ {
-        from: min,
-        to: step1,
-        color: '#e2efd8',
-        name: `${ min } - ${ step1 }`
-      }, {
-        from: step1,
-        to: step2,
-        color: '#bae0a2',
-        name: `${ step1 } - ${ step2 }`
-      }, {
-        from: step2,
-        to: step3,
-        color: '#66c368',
-        name: `${ step2 } - ${ step3 }`
-      }, {
-        from: step3,
-        color: '#1fa040',
-        name: `${ step3 } - ${ max }`
-      } ]},
-    series: [ { data: added } ]
+      dataClasses: [
+        { from: min, to: step1, color: '#addc91', name: `${ min } - ${ step1 }` },
+        { from: step1, to: step2, color: '#f0f8eb', name: `${ step1 } - ${ step2 }` },
+        { from: step2, to: step3, color: '#ffffff', name: `${ step2 } - ${ step3 }` },
+        { from: step3, to: step4, color: '#d6e8fa', name: `${ step3 } - ${ max }` },
+        { from: step4, color: '#7eb7e8', name: `${ step4 } - ${ max }` }
+      ]},
+    series: [ { clip: false, borderColor: '#919395', borderWidth: 1, data: added } ]
   };
 }
 
 /**
  * Overrides default chart options using provided Wagtail configurations
  * @param {object} data The data to provide to the chart
- * @param {object} dataProps (destructured) data-* props attached to the chart HTML
+ * @param {target} target The target simple chart node
  * @returns {object} The configured style object
  */
-function makeChartOptions(
-  data,
-  { chartType, styleOverrides, description, xAxisData, xAxisLabel,
-    yAxisLabel, filters }
-) {
+function makeChartOptions( data, target ) {
+  const { chartType, styleOverrides, description, xAxisData, xAxisLabel,
+    yAxisLabel, filters } = target.dataset;
   let defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
 
   if ( styleOverrides ) {
@@ -338,6 +355,9 @@ function makeChartOptions(
       ...defaultObj,
       ...getMapConfig( formattedSeries )
     };
+    const legend = target.parentNode.getElementsByClassName( 'o-simple-chart_tilemap_legend' )[0];
+    legend.style.display = 'block';
+    updateTilemapLegend( target, defaultObj, defaultObj.legend.title );
 
   } else {
     defaultObj.series = formattedSeries;
@@ -377,7 +397,7 @@ function alignMargin( defaultObj, chartType ) {
     marg = 100;
     y = 19;
   }
-  defaultObj.chart.marginTop = marg;
+  if ( !defaultObj.chart.marginTop ) defaultObj.chart.marginTop = marg;
   defaultObj.legend.y = y;
 }
 
@@ -488,7 +508,7 @@ function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
   options.forEach( option => {
     const opt = document.createElement( 'option' );
     opt.value = option;
-    if ( selectLabel ) opt.innerText = processDate( option );
+    if ( selectLabel ) opt.innerText = processDate( option, filter );
     else opt.innerText = option;
     select.appendChild( opt );
   } );
@@ -507,9 +527,14 @@ function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
 
 /**
  * @param {number} option The JS-date formatted option
+ * @param {object} filter The filter object
  * @returns {string} Specially formatted date
  */
-function processDate( option ) {
+function processDate( option, filter ) {
+  if ( filter && filter.key === 'tilemap' ) {
+    const [ quarter, year ] = chartHooks.ccpi_dateToQuarter( option );
+    return `${ quarter } ${ year }`;
+  }
   const d = new Date( option );
   return d.toLocaleDateString( 'en-US', {
     dateStyle: 'medium',
@@ -704,6 +729,20 @@ function buildChart( chartNode ) {
   const target = chartNode.getElementsByClassName( 'o-simple-chart_target' )[0];
   const { source, transform, chartType } = target.dataset;
 
+  /**
+   * Fixes tilemap clipping
+   **/
+  function fixViewbox() {
+    const chartSVG = target.getElementsByClassName( 'highcharts-root' )[0];
+    const width = chartSVG.width.animVal.value;
+    let height = 550;
+    if ( width <= 660 ) height = 450;
+    chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height }` );
+    setTimeout( () => {
+      chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height }` );
+    }, 500 );
+  }
+
   resolveData( source.trim() ).then( raw => {
     const series = extractSeries( raw, target.dataset );
     const transformed = transform && chartHooks[transform] ?
@@ -722,7 +761,8 @@ function buildChart( chartNode ) {
 
     const chart = chartMaker(
       target,
-      makeChartOptions( data, target.dataset )
+      makeChartOptions( data, target ),
+      fixViewbox
     );
     const mediaQueryList = window.matchMedia( 'print' );
     mediaQueryList.addListener( function() {
@@ -732,6 +772,8 @@ function buildChart( chartNode ) {
     if ( chartType === 'tilemap' ) {
       makeTilemapSelect( chartNode, chart, data,
         transform && chartHooks[transform] );
+      window.addEventListener( 'resize', fixViewbox );
+      fixViewbox();
     } else {
       initFilters(
         target.dataset, chartNode, chart, data,
