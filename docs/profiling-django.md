@@ -90,7 +90,7 @@ the total time for the Django request/response cycle.
 
 For example:
 
-![Example SnakeViz Icicle view showing a class-based view call stack](/img/profiling-django-snakeviz.png)
+![Example SnakeViz Icicle view showing a class-based view call stack](img/profiling-django-snakeviz.png)
 
 This visualization shows the request/response cycle 
 took 27.2s in the root view. 

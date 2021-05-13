@@ -58,12 +58,6 @@ class AkamaiBackend(BaseBackend):
             'objects': [obj]
         }
 
-    def delete(self, url):
-        self.post(url, 'delete')
-
-    def delete_all(self):
-        self.post_all('delete')
-
     def post_all(self, action):
         obj = os.environ['AKAMAI_OBJECT_ID']
         resp = requests.post(
