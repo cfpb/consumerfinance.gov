@@ -19,14 +19,17 @@ function setInnerWidth(width) {
  * so some elements won't be expanded by default.
  */
 function beforeExpandableTransitionInit() {
-  document.querySelectorAll( '.' + MOBILE_COLLAPSED_CLASS ).forEach( el => {
+  const nodeList = document.querySelectorAll( '.' + MOBILE_COLLAPSED_CLASS );
+
+  // IE11 lacks NodeList.forEach
+  [].forEach.call(nodeList, el => {
     if ( getInnerWidth() <= MOBILE_WIDTH ) {
       el.classList.remove( ExpandableTransition.CLASSES.OPEN_DEFAULT );
     }
 
     // Always clean up this class, just used at init time
     el.classList.remove( MOBILE_COLLAPSED_CLASS );
-  } );
+  });
 }
 
 export { setInnerWidth, MOBILE_COLLAPSED_CLASS };
