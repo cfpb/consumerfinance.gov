@@ -49,32 +49,33 @@ def annotate_links(answer_text):
 def view_answer(request, slug, language, answer_id):
     answer_page = get_object_or_404(
         AnswerPage, language=language, answer_base__id=answer_id)
-
-    # We don't want to call answer_page.serve(request) here because that
-    # would bypass wagtail-sharing logic that allows for review of draft
-    # revisions via a sharing site.
+    # We can't call answer_page.serve(request) yet because that would bypass
+    # wagtail-sharing, which provides views of unpublished revisions.
+    # First, we see if a sharing site is present in the request:
     try:
         sharing_site = SharingSite.find_for_request(request)
     except SharingSite.DoesNotExist:
         sharing_site = None
-
-    if answer_page.live is False and sharing_site is None:
-        raise Http404
-
+    # handle draft pages first
+    if answer_page.live is False:
+        if sharing_site is None:
+            raise Http404
+        else:
+            return ServeView.serve(answer_page, request, [], {})
+    # page is live
+    # redirect if so configured
     if answer_page.redirect_to_page:
         new_page = answer_page.redirect_to_page
         return redirect(new_page.url, permanent=True)
-
+    # handle pages that have unpublished revisions
+    if answer_page.status_string == "live + draft":
+        if sharing_site:
+            return ServeView.serve(answer_page, request, [], {})
+        else:
+            return answer_page.serve(request)
+    # page is live with no revisions. heal the URL if necessary
     if f"{slug}-{language}-{answer_id}" != answer_page.slug:
         return redirect(answer_page.url, permanent=True)
-
-    if sharing_site is not None:
-        page, args, kwargs = ServeView.route(
-            sharing_site.site,
-            request,
-            request.path
-        )
-        ServeView.serve(page, request, args, kwargs)
 
     return answer_page.serve(request)
 
