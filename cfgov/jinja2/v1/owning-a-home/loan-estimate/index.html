@@ -1,4 +1,10 @@
-{% extends "base.html" %}
+{% extends "content-base.html" %}
+
+{% set breadcrumb_items = [{
+    "title": "Buying a House",
+    "href": "/owning-a-home/",
+}] %}
+
 {% import "molecules/social-media.html" as social_media with context %}
 {% set page={"search_description":"A Loan Estimate tells you important details about a mortgage loan you have requested. Use this tool to make sure it’s accurate—and what you expected."} %}
 {% set active_page = "loan-estimate" %}
@@ -20,29 +26,8 @@
           href="{{ static('apps/owning-a-home/css/main.css') }}">
 {% endblock css %}
 
-{% block javascript %}
-    {{ super() }}
-     <script async>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-          {# Include site-wide JavaScript. #}
-          var s = [
-            '{{ static('apps/owning-a-home/js/common.js') }}',
-            '{{ static('apps/owning-a-home/js/form-explainer/index.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
-    </script>
-{% endblock javascript %}
-
 {% block content %}
-<main class="content">
-    <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            <a href="/owning-a-home/" class="breadcrumbs_link">Buying a House</a>
-        </nav>
-    </div>
+    {{ super() }}
     <div class="content_wrapper">
         <div class="content_main">
 
@@ -117,5 +102,20 @@
     }
     ] %}
   {{ brand_footer.render(footer_links) }}
-</main>
 {% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+     <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/owning-a-home/js/common.js') }}',
+            '{{ static('apps/owning-a-home/js/form-explainer/index.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}
