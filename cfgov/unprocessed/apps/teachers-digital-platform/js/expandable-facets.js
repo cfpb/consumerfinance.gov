@@ -5,9 +5,6 @@
 // polyfill for ie9 compatibility
 require( 'classlist-polyfill' );
 
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-
-import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import AtomicComponent from '@cfpb/cfpb-atomic-component/src/components/AtomicComponent.js';
 import ExpandableFacetTransition from './ExpandableFacetTransition';
 
