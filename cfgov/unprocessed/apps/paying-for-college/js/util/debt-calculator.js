@@ -35,6 +35,7 @@ function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLeng
   };
   let progress = getStateValue( 'programProgress' );
   let percentSub = 1;
+  let percentUnsub = 1;
   let subPrincipal = 0;
   let unsubPrincipal = 0;
   let unsubInterest = 0;
