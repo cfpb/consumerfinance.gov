@@ -5,6 +5,7 @@
 import { calcInterestAtGrad, calcMonthlyPayment } from './debt-utils.js';
 import { getConstantsValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { financialModel } from '../models/financial-model.js';
+import { stringToNum } from '../util/number-utils.js';
 
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
@@ -24,6 +25,13 @@ function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLeng
   const progressMap = {
     n: 0,
     a: 2
+  };
+  const yearMap = {
+    n: 'yearOne',
+    0: 'yearOne',
+    1: 'yearTwo',
+    a: 'yearThree',
+    2: 'yearThree'
   };
   let progress = getStateValue( 'programProgress' );
   let percentSub = 1;
@@ -48,34 +56,34 @@ function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLeng
   }
 
   // Determine percent of borrowing versus caps
-  percentSub = directSub / subCaps.yearOne;
-  percentUnsub = directUnsub / ( totalCaps.yearOne - directSub );
+  percentSub = directSub / subCaps[yearMap[progress]];
+  percentUnsub = directUnsub / totalCaps[yearMap[progress]];
 
-
-  // Iterate through each year of the program
-  // Note that "progress" refers to number of years completed, thus a user has 0 progress
-  // until they start their second year. An associate's degree represents 2 years of school,
-  // so when progress = 'a' (for Associates), then progress is set to '2'
+  /* Iterate through each year of the program
+     Note that "progress" refers to number of years completed, thus a user has 0 progress
+     until they start their second year. An associate's degree represents 2 years of school,
+     so when progress = 'a' (for Associates), then progress is set to '2' */
 
   // Translate progress value to number where necessary
   if ( progressMap.hasOwnProperty( progress ) ) {
-    progress = progressMap[ progress ];
+    progress = progressMap[progress];
   }
 
   for ( let x = 0; x < programLength; x++ ) {
-    if ( x + progress === 0 ) {
+    const progressNumber = stringToNum( progress ) + x;
+    if ( progressNumber === 0 ) {
       subPrincipal += directSub;
       unsubPrincipal += directUnsub;
       unsubInterest += directUnsub * rateUnsub * programLength;
-    } else if ( x + progress === 1 ) {
+    } else if ( progressNumber === 1 ) {
       const subAmount = percentSub * subCaps.yearTwo;
-      const unsubAmount = percentUnsub * ( totalCaps.yearTwo - subAmount );
+      const unsubAmount = percentUnsub * totalCaps.yearTwo;
       subPrincipal += subAmount;
       unsubPrincipal += unsubAmount;
       unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
     } else {
       const subAmount = percentSub * subCaps.yearThree;
-      const unsubAmount = percentUnsub * ( totalCaps.yearThree - subAmount );
+      const unsubAmount = percentUnsub * totalCaps.yearThree;
       subPrincipal += subAmount;
       unsubPrincipal += unsubAmount;
       unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
