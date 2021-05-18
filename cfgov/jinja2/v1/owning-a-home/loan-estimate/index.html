@@ -14,7 +14,9 @@
     Loan Estimate Explainer | Consumer Financial Protection Bureau
 {%- endblock %}
 
-{% block metadescription %}Use the CFPB's tool to review your Loan Estimate to make sure it reflects what you discussed with the lender.{% endblock metadescription %}
+{% block metadescription %}
+Use the CFPB's tool to review your Loan Estimate to make sure it reflects what you discussed with the lender.
+{% endblock %}
 
 {% block banner_top %}
     {% include "_templates/brand-header.html" %}
@@ -24,10 +26,9 @@
     {{ super() }}
     <link rel="stylesheet"
           href="{{ static('apps/owning-a-home/css/main.css') }}">
-{% endblock css %}
+{% endblock %}
 
-{% block content %}
-    {{ super() }}
+{% block body_content %}
     <div class="content_wrapper">
         <div class="content_main">
 
@@ -39,10 +40,10 @@
                         <h1>Loan Estimate Explainer</h1>
                         <p class="lead">A Loan Estimate tells you important details about a mortgage loan you have requested. Use this tool to review your Loan Estimate to make sure it reflects what you discussed with the lender. If something looks different from what you expected, ask why. Request multiple Loan Estimates from different lenders so you can compare and choose the loan that's right for you.</p>
                         <div class="block
-                                block__flush-top
-                                block__padded-top
-                                block__flush-bottom
-                                u-right-on-desktop">
+                                    block__flush-top
+                                    block__padded-top
+                                    block__flush-bottom
+                                    u-right-on-desktop">
                             {{ social_media.render( {
                                 "twitter_text": "Use the @CFPB's interactive tool to review your Loan Estimate and get definitions for unfamiliar terms.",
                                 "email_title": "Review your Loan Estimate with the CFPB",
@@ -55,8 +56,8 @@
                     </div>
                     <div class="content-l_col-1-3">
                         <img src="{{ static('apps/owning-a-home/img/ill-form-explainer-loan-est.png') }}"
-                            alt=""
-                            class="illustration">
+                             alt=""
+                             class="illustration">
                     </div>
                 </div>
                 {# Import the form explainer macros #}
@@ -101,7 +102,7 @@
         is_jump_link: true
     }
     ] %}
-  {{ brand_footer.render(footer_links) }}
+    {{ brand_footer.render(footer_links) }}
 {% endblock %}
 
 {% block javascript %}
