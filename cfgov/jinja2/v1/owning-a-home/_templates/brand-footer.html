@@ -62,10 +62,11 @@
    Render a link.
 
    link: An object, containing:
-          - img:         img for link section
-          - text:        link text
-          - label:       link accessible label
-          - url:         link url
+          - intro: text of link section
+          - img:   img for link section
+          - text:  link text
+          - label: link accessible label
+          - url:   link url
 
    ========================================================================== #}
 
@@ -75,6 +76,9 @@
         <img src="{{ link.img }}" alt="{{ link.label }}">
     </a>
 </div>
+{% if link.intro %}
+<p>{{ link.intro | safe }}</p>
+{% endif %}
 {% if link.is_jump_link %}
 <a class="a-link
           a-link__jump
