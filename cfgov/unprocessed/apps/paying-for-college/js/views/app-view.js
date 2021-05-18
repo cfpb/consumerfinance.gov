@@ -53,7 +53,7 @@ const appView = {
 
   _handleCopyLinkBtn: event => {
     if ( navigator.clipboard ) {
-      navigator.clipboard.writeText( window.location.href ).then( function () {
+      navigator.clipboard.writeText( window.location.href ).then( function() {
         const target = event.target;
         const btn = closest( target, 'button' );
         const copyBtnDefaultText = btn.querySelector( '#default-text' );

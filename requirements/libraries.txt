@@ -29,7 +29,7 @@ regdown==1.0.3
 requests==2.22.0
 requests_aws4auth==0.8.0
 requests_toolbelt==0.8.0
-urllib3==1.25.2
+urllib3==1.25.11
 wagtail-autocomplete==0.6.3
 wagtail-flags==5.1.0
 wagtail-inventory==1.2.0
