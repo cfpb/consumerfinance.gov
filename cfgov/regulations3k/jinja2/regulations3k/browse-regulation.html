@@ -93,7 +93,7 @@
                 <ul class="m-list m-list__links">
                     {% if num_versions > 1 %}
                     <li class="m-list_item">
-                        <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label) }}">
+                        <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label.lower()) }}">
                             {{ svg_icon('date') }}
                             View all versions of this regulation
                         </a>
@@ -121,7 +121,7 @@
                         {% if requested_version.effective_date > current_version.effective_date %}
                             You are viewing a future version of this regulation with amendments that will go into effect on
                         {% endif %}
-                        {{ ap_date(requested_version.effective_date) }}. <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label) }}">View all versions of this regulation</a>
+                        {{ ap_date(requested_version.effective_date) }}. <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label.lower()) }}">View all versions of this regulation</a>
                         </p>
                     </div>
                 </div>
@@ -173,9 +173,9 @@
             <li>
                 {% if section_label %}
                     {% if version.effective_date == current_version.effective_date  %}
-                        <a href="{{ routablepageurl(page, 'section', section_label=section_label) }}">
+                        <a href="{{ routablepageurl(page, 'section', section_label=section_label.lower()) }}">
                     {% else %}
-                        <a href="{{ routablepageurl(page, 'section', date_str=version.date_str, section_label=section_label) }}">
+                        <a href="{{ routablepageurl(page, 'section', date_str=version.date_str, section_label=section_label.lower()) }}">
                     {% endif %}
                 {% else %}
                     <a href="{{ routablepageurl(page, 'index', version.date_str) }}">
@@ -235,13 +235,13 @@
                     <ul class="m-list m-list__links m-full-width-text">
                         {% if requested_version == current_version %}
                             <li class="m-list_item">
-                                <a class="m-list_link" href="{{ routablepageurl(page, 'section', section_label=sections[0].label) }}">
+                                <a class="m-list_link" href="{{ routablepageurl(page, 'section', section_label=sections[0].label.lower()) }}">
                                     View current regulation
                                 </a>
                             </li>
                         {% else %}
                             <li class="m-list_item">
-                                <a class="m-list_link" href="{{ routablepageurl(page, 'section', date_str=date_str, section_label=sections[0].label) }}">
+                                <a class="m-list_link" href="{{ routablepageurl(page, 'section', date_str=date_str, section_label=sections[0].label.lower()) }}">
                                     View this version
                                 </a>
                             </li>

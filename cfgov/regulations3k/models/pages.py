@@ -461,7 +461,13 @@ class RegulationPage(
             kwargs['date_str'] = date_str
 
         try:
-            section = section_query.get(label=section_label)
+            section = section_query.get(label__iexact=section_label)
+            if re.search('[A-Z]+', section_label):
+                return redirect(
+                    self.url + self.reverse_subpage(
+                        "index", kwargs=kwargs
+                    ) + section_label.lower() + '/'
+                )
         except Section.DoesNotExist:
             return redirect(
                 self.url + self.reverse_subpage(
@@ -558,7 +564,7 @@ def get_secondary_nav_items(request, current_page, sections=[], date_str=None):
         # Create the section dictionary for navigation
         section_dict = {
             'title': section.title,
-            'url': get_section_url(current_page, section, date_str=date_str),
+            'url': get_section_url(current_page, section, date_str=date_str).lower(),
             'active': section.label == current_label,
             'expanded': True,
             'section': section,
