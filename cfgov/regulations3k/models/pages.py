@@ -564,7 +564,9 @@ def get_secondary_nav_items(request, current_page, sections=[], date_str=None):
         # Create the section dictionary for navigation
         section_dict = {
             'title': section.title,
-            'url': get_section_url(current_page, section, date_str=date_str).lower(),
+            'url': get_section_url(
+                current_page, section, date_str=date_str
+            ).lower(),
             'active': section.label == current_label,
             'expanded': True,
             'section': section,

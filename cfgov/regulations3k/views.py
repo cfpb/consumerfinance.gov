@@ -209,7 +209,8 @@ def redirect_eregs(request, **kwargs):
                 appendix = INTERP_APPENDIX_DEFAULTS.get(part, 'A')
                 if version_date:
                     return redirect(
-                        f"{new_base}{part}/{version_date}/interp-{appendix.lower()}/",
+                        f"{new_base}{part}/{version_date}"
+                        f"/interp-{appendix.lower()}/",
                         permanent=True
                     )
                 else:
@@ -221,7 +222,8 @@ def redirect_eregs(request, **kwargs):
                 section = INTERP_SECTION_DEFAULTS.get(part, '1')
                 if version_date:
                     return redirect(
-                        f"{new_base}{part}/{version_date}/interp-{section.lower()}/",
+                        f"{new_base}{part}/{version_date}"
+                        f"/interp-{section.lower()}/",
                         permanent=True
                     )
                 else:
