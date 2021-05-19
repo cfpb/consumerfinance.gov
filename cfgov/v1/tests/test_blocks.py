@@ -4,6 +4,8 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from django.utils.safestring import SafeText
 
+import wagtail
+
 from v1.blocks import AbstractFormBlock, AnchorLink, PlaceholderCharBlock
 
 
@@ -91,37 +93,38 @@ class TestAnchorLink(TestCase):
 
 
 class TestPlaceholderBlock(TestCase):
-    def test_render_no_placeholder_provided(self):
-        block = PlaceholderCharBlock()
-        html = block.render_form('Hello world!')
-        self.assertInHTML(
-            (
-                '<input id="" name="" placeholder="" '
-                'type="text" value="Hello world!" />'
-            ),
-            html
-        )
+    def setUp(self):
+        self.block = PlaceholderCharBlock()
+        self.char_block = PlaceholderCharBlock(placeholder='Hi there!')
 
-    def test_render_no_placeholder_returns_safetext(self):
-        block = PlaceholderCharBlock()
-        html = block.render_form('Hello world!')
-        self.assertIsInstance(html, SafeText)
+    if wagtail.VERSION < (2, 13):
+        def test_render_no_placeholder_provided(self):
+            html = self.block.render_form('Hello world!')
+            self.assertInHTML(
+                (
+                    '<input id="" name="" placeholder="" '
+                    'type="text" value="Hello world!" />'
+                ),
+                html
+            )
 
-    def test_render_with_placeholder(self):
-        block = PlaceholderCharBlock(placeholder='Hi there!')
-        html = block.render_form('Hello world!')
-        self.assertIn(
-            (
-                '<input id="" name="" placeholder="Hi there!" '
-                'type="text" value="Hello world!"/>'
-            ),
-            html
-        )
+        def test_render_no_placeholder_returns_safetext(self):
+            html = self.block.render_form('Hello world!')
+            self.assertIsInstance(html, SafeText)
 
-    def test_render_returns_safetext(self):
-        block = PlaceholderCharBlock(placeholder='Hi there!')
-        html = block.render_form('Hello world!')
-        self.assertIsInstance(html, SafeText)
+        def test_render_with_placeholder(self):
+            html = self.char_block.render_form('Hello world!')
+            self.assertIn(
+                (
+                    '<input id="" name="" placeholder="Hi there!" '
+                    'type="text" value="Hello world!"/>'
+                ),
+                html
+            )
+
+        def test_render_returns_safetext(self):
+            html = self.char_block.render_form('Hello world!')
+            self.assertIsInstance(html, SafeText)
 
     def test_replace_placeholder(self):
         html = '<input id="foo" placeholder="a" />'

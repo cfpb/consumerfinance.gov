@@ -2,6 +2,7 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
 
+import wagtail
 from wagtail.core import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 
@@ -189,8 +190,41 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
         return SafeText(soup)
 
 
-class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
-    pass
+if wagtail.VERSION >= (2, 13):
+    class PlaceholderStreamBlock(blocks.StreamBlock):
+        def __init__(self, *args, **kwargs):
+            super(PlaceholderStreamBlock, self).__init__(*args, **kwargs)
+            self.placeholder = kwargs.pop('placeholder', None)
+
+        def render_form(self, *args, **kwargs):
+            html = super(
+                PlaceholderStreamBlock, self
+            ).render_form(*args, **kwargs)
+
+            if self.placeholder is not None:
+                html = self.replace_placeholder(html, self.placeholder)
+
+            return html
+
+        @staticmethod
+        def replace_placeholder(html, placeholder):
+            soup = BeautifulSoup(html, 'html.parser')
+            inputs = soup.findAll('input')
+
+            if 1 != len(inputs):
+                raise ValueError('block must contain a single input tag')
+
+            inputs[0]['placeholder'] = placeholder
+
+            return SafeText(soup)
+
+
+if wagtail.VERSION < (2, 13):
+    class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
+        pass
+else:
+    class PlaceholderCharBlock(PlaceholderStreamBlock, blocks.StreamBlock):
+        pass
 
 
 class ReusableTextChooserBlock(SnippetChooserBlock):
