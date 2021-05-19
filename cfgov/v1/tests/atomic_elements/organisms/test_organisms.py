@@ -3,6 +3,7 @@ from django.core.files import File
 from django.core.files.base import ContentFile
 from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
+import wagtail
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
 from wagtail.images.tests.utils import get_test_image_file
@@ -459,57 +460,64 @@ class FeaturedContentTests(TestCase):
 
 class TestInfoUnitGroup(TestCase):
     def setUp(self):
+        self.block = InfoUnitGroup()
         self.image = CFGOVImage.objects.create(
             title='test',
             file=get_test_image_file()
         )
 
     def test_no_heading_or_intro_ok(self):
-        block = InfoUnitGroup()
-        value = block.to_python({})
+        value = self.block.to_python({})
 
-        try:
-            block.clean(value)
-        except ValidationError:  # pragma: nocover
-            self.fail('no heading and no intro should not fail validation')
+        if wagtail.VERSION < (2, 13):
+            try:
+                self.block.clean(value)
+            except ValidationError:  # pragma: nocover
+                self.fail('no heading and no intro should not fail validation')
+        else:
+            with self.assertRaises(ValidationError):
+                self.block.clean(value)
 
     def test_heading_only_ok(self):
-        block = InfoUnitGroup()
-        value = block.to_python({
+        value = self.block.to_python({
             'heading': {
                 'text': 'Heading'
             }
         })
-
-        try:
-            block.clean(value)
-        except ValidationError:  # pragma: nocover
-            self.fail('heading alone should not fail validation')
+        if wagtail.VERSION < (2, 13):
+            try:
+                self.block.clean(value)
+            except ValidationError:  # pragma: nocover
+                self.fail('heading alone should not fail validation')
+        else:
+            with self.assertRaises(ValidationError):
+                self.block.clean(value)
 
     def test_intro_only_fails_validation(self):
-        block = InfoUnitGroup()
-        value = block.to_python({'intro': '<p>Only an intro</p>'})
+        value = self.block.to_python({'intro': '<p>Only an intro</p>'})
 
         with self.assertRaises(ValidationError):
-            block.clean(value)
+            self.block.clean(value)
 
     def test_heading_and_intro_ok(self):
-        block = InfoUnitGroup()
-        value = block.to_python({
+        value = self.block.to_python({
             'heading': {
                 'text': 'Heading'
             },
             'intro': '<p>Rich txt</p>'
         })
+        if wagtail.VERSION < (2, 13):
+            try:
+                self.block.clean(value)
+            except ValidationError:  # pragma: nocover
+                self.fail('heading with intro should not fail validation')
+        else:
+            with self.assertRaises(ValidationError):
+                self.block.clean(value)
 
-        try:
-            block.clean(value)
-        except ValidationError:  # pragma: nocover
-            self.fail('heading with intro should not fail validation')
 
     def test_2575_with_image_ok(self):
-        block = InfoUnitGroup()
-        value = block.to_python({
+        value = self.block.to_python({
             'format': '25-75',
             'info_units': [
                 {
@@ -522,13 +530,12 @@ class TestInfoUnitGroup(TestCase):
         })
 
         try:
-            block.clean(value)
+            self.block.clean(value)
         except ValidationError:  # pragma: nocover
             self.fail('25-75 group with info unit that has an image validates')
 
     def test_2575_with_no_images_fails_validation(self):
-        block = InfoUnitGroup()
-        value = block.to_python({
+        value = self.block.to_python({
             'format': '25-75',
             'info_units': [
                 {
@@ -540,11 +547,10 @@ class TestInfoUnitGroup(TestCase):
         })
 
         with self.assertRaises(ValidationError):
-            block.clean(value)
+            self.block.clean(value)
 
     def test_2575_with_some_images_fails(self):
-        block = InfoUnitGroup()
-        value = block.to_python({
+        value = self.block.to_python({
             'format': '25-75',
             'info_units': [
                 {
@@ -562,7 +568,7 @@ class TestInfoUnitGroup(TestCase):
         })
 
         with self.assertRaises(ValidationError):
-            block.clean(value)
+            self.block.clean(value)
 
 
 class VideoPlayerTests(SimpleTestCase):
