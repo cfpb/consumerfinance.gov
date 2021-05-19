@@ -4,6 +4,8 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from django.utils.safestring import SafeText
 
+import wagtail
+
 from v1.blocks import (
     AbstractFormBlock, AnchorLink, PlaceholderCharBlock, RAFToolBlock
 )

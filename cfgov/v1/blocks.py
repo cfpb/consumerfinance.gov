@@ -178,23 +178,20 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
         self.placeholder = kwargs.pop('placeholder', None)
 
     def render_form(self, *args, **kwargs):
-        if wagtail.VERSION < (2, 13):
-            html = super(
-                PlaceholderFieldBlock, self).render_form(*args, **kwargs)
-        else:  # pragma: no cover
-            prefix = ''
-            value = '{}'.format(*args)
-            html = render_to_string('wagtailadmin/block_forms/field.html', {
-                'name': self.name,
-                'classes': getattr(
-                    self.meta, 'form_classname', self.meta.classname),
-                'widget': self.field.widget.render(
-                    prefix,
-                    self.field.prepare_value(self.value_for_form(value)),
-                    attrs={'id': format(prefix), 'placeholder': self.label}),
-                'field': self.field,
-                'errors': None
-            })
+        # pragma: no cover
+        prefix = ''
+        value = '{}'.format(*args)
+        html = render_to_string('wagtailadmin/block_forms/field.html', {
+            'name': self.name,
+            'classes': getattr(
+                self.meta, 'form_classname', self.meta.classname),
+            'widget': self.field.widget.render(
+                prefix,
+                self.field.prepare_value(self.value_for_form(value)),
+                attrs={'id': format(prefix), 'placeholder': self.label}),
+            'field': self.field,
+            'errors': None
+        })
 
         if self.placeholder is not None:
             html = self.replace_placeholder(html, self.placeholder)
@@ -220,6 +217,38 @@ class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
         form_template = (
             'admin/form_templates/struct_block_with_render_form.html'
         )
+
+
+class PlaceholderStreamBlock(blocks.StreamBlock):
+    def __init__(self, *args, **kwargs):
+        super(PlaceholderStreamBlock, self).__init__(*args, **kwargs)
+        self.placeholder = kwargs.pop('placeholder', None)
+
+    def render_form(self, *args, **kwargs):
+        html = super(
+            PlaceholderStreamBlock, self
+        ).render_form(*args, **kwargs)
+
+        if self.placeholder is not None:
+            html = self.replace_placeholder(html, self.placeholder)
+
+        return html
+
+    @staticmethod
+    def replace_placeholder(html, placeholder):
+        soup = BeautifulSoup(html, 'html.parser')
+        inputs = soup.findAll('input')
+
+        if 1 != len(inputs):
+            raise ValueError('block must contain a single input tag')
+
+        inputs[0]['placeholder'] = placeholder
+
+        return SafeText(soup)
+
+
+class PlaceholderCharBlock(PlaceholderStreamBlock, blocks.StreamBlock):
+    pass
 
 
 class ReusableTextChooserBlock(SnippetChooserBlock):
