@@ -6,12 +6,14 @@ import {
   getStateValue
 } from '../dispatchers/get-model-values.js';
 import {
+  recalculateFinancials,
   refreshExpenses,
   updateFinancial,
   updateSchoolData
 } from '../dispatchers/update-models.js';
 import {
   updateFinancialView,
+  updateFinancialViewAndFinancialCharts,
   updateGradMeterChart,
   updateRepaymentMeterChart
 } from '../dispatchers/update-view.js';
@@ -266,6 +268,8 @@ function _handleResultButtonClick( event ) {
 function _handleProgramRadioClick( event ) {
   const container = closest( event.target, '.m-form-field' );
   const input = container.querySelector( 'input' );
+  const recalcProps = [ 'programProgress', 'programLength', 'programType',
+    'programDependency' ];
 
   // Update the model with program info
   const prop = input.getAttribute( 'name' );
@@ -273,6 +277,11 @@ function _handleProgramRadioClick( event ) {
   updateState.byProperty( prop, value );
   if ( prop === 'programType' ) {
     schoolView._updateProgramList();
+  }
+
+  if ( recalcProps.indexOf( prop ) !== -1 ) {
+    recalculateFinancials();
+    updateFinancialViewAndFinancialCharts();
   }
 }
 

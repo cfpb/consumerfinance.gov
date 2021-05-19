@@ -70,13 +70,21 @@
                 aria-label="{{ nav_title | safe }}"
                 {% endif %}>
                 {% if nav_depth == 1 -%}
-                    {% set complaint_url = '/es/enviar-una-queja/' if language == 'es' else '/complaint/' %}
-                    {% set complaint_item = {
-                        'text': 'Submit a Complaint',
-                        'url': complaint_url,
-                        'icon_pre': 'complaint'
-                    }
-                    %}
+                    {% if language == 'es' %}
+                        {% set complaint_item = {
+                            'text': 'Enviar una queja',
+                            'url': '/es/enviar-una-queja/',
+                            'icon_pre': 'complaint'
+                        }
+                        %}
+                    {% else %}
+                        {% set complaint_item = {
+                            'text': 'Submit a Complaint',
+                            'url': '/complaint/',
+                            'icon_pre': 'complaint'
+                        }
+                        %}
+                    {% endif %}
                     {{ _nav_item( nav_depth, complaint_item, language ) }}
                 {%- endif %}
                 {%- for item in group.nav_items %}

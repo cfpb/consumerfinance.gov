@@ -20,6 +20,10 @@
    value.is_bordered:     Whether the Expandable has a bottom border or not.
                           Default is false.
 
+   value.is_collapsed_for_mobile: Whether the Expandable is always initially
+                          collapsed below 800px.
+                          Default is false.
+
    value.is_midtone:      Whether the Expandable is gray or not.
                           Default is false.
 
@@ -65,7 +69,9 @@
 
     <div class="o-expandable_content
                 {{ 'o-expandable_content__onload-open'
-                    if value.is_expanded else '' }}">
+                    if value.is_expanded else '' }}
+                {{ 'o-expandable__mobile-collapsed'
+                    if value.is_collapsed_for_mobile else '' }}">
         {% if caller is defined %}
             {{ caller() }}
         {% else %}

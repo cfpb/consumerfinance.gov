@@ -7,12 +7,19 @@ const tilemap = {
     tilemap: {
       tileShape: 'square',
       pointRange: 0.8,
+      pointPadding: 3,
       dataLabels: {
         enabled: true,
-        format: '{point.state}',
+        formatter: function() { return `${ this.point.state }<br/><span style="font-weight:100">${ Math.round( this.point.value ) }</span>`; },
         color: '#101820',
         style: {
-          textOutline: false
+          textOutline: false,
+          fontSize: '12px'
+        }
+      },
+      states: {
+        hover: {
+          color: 'rgba(100,210,100,.3)'
         }
       }
     }
@@ -29,12 +36,15 @@ const tilemap = {
   },
   tooltip: { formatter: function() { return `${ this.point.name }<br/>Index value: <b>${ this.point.value }</b>`; } },
   legend: {
-    ...styles.legend
+    enabled: false,
+    title: 'Index value'
   },
   chart: {
     maxWidth: 670,
     height: 550,
-    spacingBottom: -325,
+    marginLeft: 0,
+    marginRight: 0,
+    spacingBottom: -290,
     type: 'tilemap'
   },
   responsive: {
@@ -45,8 +55,9 @@ const tilemap = {
         },
         chartOptions: {
           chart: {
+            animation: false,
             height: 450,
-            spacingBottom: -275
+            spacingBottom: -240
           }
         }
       }
