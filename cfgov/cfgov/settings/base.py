@@ -549,6 +549,7 @@ CSP_SCRIPT_SRC = (
     "*.consumerfinance.gov",
     "*.google-analytics.com",
     "*.googletagmanager.com",
+    "*.googleoptimize.com",
     "tagmanager.google.com",
     "optimize.google.com",
     "ajax.googleapis.com",
