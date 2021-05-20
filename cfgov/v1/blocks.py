@@ -196,16 +196,6 @@ if wagtail.VERSION >= (2, 13):
             super(PlaceholderStreamBlock, self).__init__(*args, **kwargs)
             self.placeholder = kwargs.pop('placeholder', None)
 
-        def render_form(self, *args, **kwargs):
-            html = super(
-                PlaceholderStreamBlock, self
-            ).render_form(*args, **kwargs)
-
-            if self.placeholder is not None:
-                html = self.replace_placeholder(html, self.placeholder)
-
-            return html
-
         @staticmethod
         def replace_placeholder(html, placeholder):
             soup = BeautifulSoup(html, 'html.parser')
@@ -223,7 +213,7 @@ if wagtail.VERSION < (2, 13):
     class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
         pass
 else:
-    class PlaceholderCharBlock(PlaceholderStreamBlock, blocks.StreamBlock):
+    class PlaceholderCharBlock(PlaceholderStreamBlock, blocks.CharBlock):
         pass
 
 
