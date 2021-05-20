@@ -165,15 +165,24 @@ class HeadingBlock(blocks.StructBlock):
 
 
 class PlaceholderFieldBlock(blocks.FieldBlock):
+    """
+    Provides a render_form method that outputs a block
+    placeholder, for use in a custom form_template.
+    """
     def __init__(self, *args, **kwargs):
         super(PlaceholderFieldBlock, self).__init__(*args, **kwargs)
         self.placeholder = kwargs.pop('placeholder', None)
 
     def render_form(self, *args, **kwargs):
-        html = super(PlaceholderFieldBlock, self).render_form(*args, **kwargs)
-
-        if self.placeholder is not None:
-            html = self.replace_placeholder(html, self.placeholder)
+        if wagtail.VERSION < (2, 13):
+            html = super(
+                PlaceholderFieldBlock, self).render_form(*args, **kwargs)
+            if self.placeholder is not None:
+                html = self.replace_placeholder(html, self.placeholder)
+        else:
+            from wagtail.core.blocks.struct_block import PlaceholderBoundBlock
+            html = PlaceholderBoundBlock(
+                PlaceholderFieldBlock, self).render_form(**kwargs)
 
         return html
 
@@ -190,31 +199,13 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
         return SafeText(soup)
 
 
-if wagtail.VERSION >= (2, 13):
-    class PlaceholderStreamBlock(blocks.StreamBlock):
-        def __init__(self, *args, **kwargs):
-            super(PlaceholderStreamBlock, self).__init__(*args, **kwargs)
-            self.placeholder = kwargs.pop('placeholder', None)
-
-        @staticmethod
-        def replace_placeholder(html, placeholder):
-            soup = BeautifulSoup(html, 'html.parser')
-            inputs = soup.findAll('input')
-
-            if 1 != len(inputs):
-                raise ValueError('block must contain a single input tag')
-
-            inputs[0]['placeholder'] = placeholder
-
-            return SafeText(soup)
-
-
-if wagtail.VERSION < (2, 13):
-    class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
-        pass
-else:
-    class PlaceholderCharBlock(PlaceholderStreamBlock, blocks.CharBlock):
-        pass
+class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
+    if wagtail.VERSION >= (2, 13):
+        class Meta:
+            icon = 'placeholder'
+            form_template = (
+                'admin/form_templates/struct_block_with_render_form.html'
+            )
 
 
 class ReusableTextChooserBlock(SnippetChooserBlock):
