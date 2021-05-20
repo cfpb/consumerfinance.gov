@@ -1,5 +1,7 @@
 import datetime
+
 from django.test import RequestFactory, TestCase, override_settings
+
 from model_bakery import baker
 
 from regulations3k.models import (
