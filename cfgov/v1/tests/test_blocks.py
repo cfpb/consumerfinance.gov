@@ -94,12 +94,12 @@ class TestAnchorLink(TestCase):
 
 class TestPlaceholderBlock(TestCase):
     def setUp(self):
-        self.block = PlaceholderCharBlock()
-        self.char_block = PlaceholderCharBlock(placeholder='Hi there!')
+        self.char_block = PlaceholderCharBlock()
+        self.placeholder = PlaceholderCharBlock(placeholder='Hi there!')
 
     if wagtail.VERSION < (2, 13):
         def test_render_no_placeholder_provided(self):
-            html = self.block.render_form('Hello world!')
+            html = self.char_block.render_form('Hello world!')
             self.assertInHTML(
                 (
                     '<input id="" name="" placeholder="" '
@@ -108,12 +108,8 @@ class TestPlaceholderBlock(TestCase):
                 html
             )
 
-        def test_render_no_placeholder_returns_safetext(self):
-            html = self.block.render_form('Hello world!')
-            self.assertIsInstance(html, SafeText)
-
         def test_render_with_placeholder(self):
-            html = self.char_block.render_form('Hello world!')
+            html = self.placeholder.render_form('Hello world!')
             self.assertIn(
                 (
                     '<input id="" name="" placeholder="Hi there!" '
@@ -122,9 +118,13 @@ class TestPlaceholderBlock(TestCase):
                 html
             )
 
-        def test_render_returns_safetext(self):
-            html = self.char_block.render_form('Hello world!')
-            self.assertIsInstance(html, SafeText)
+    def test_render_no_placeholder_returns_safetext(self):
+        html = self.char_block.render_form('Hello world!')
+        self.assertIsInstance(html, SafeText)
+
+    def test_render_returns_safetext(self):
+        html = self.placeholder.render_form('Hello world!')
+        self.assertIsInstance(html, SafeText)
 
     def test_replace_placeholder(self):
         html = '<input id="foo" placeholder="a" />'
