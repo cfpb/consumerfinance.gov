@@ -466,7 +466,7 @@ class RegulationPage(
                 return redirect(
                     self.url + self.reverse_subpage(
                         "index", kwargs=kwargs
-                    ) + section_label.lower() + '/'
+                    ) + section.url_path + '/'
                 )
         except Section.DoesNotExist:
             return redirect(
@@ -567,7 +567,7 @@ def get_secondary_nav_items(request, current_page, sections=[], date_str=None):
             'url': get_section_url(
                 current_page, section, date_str=date_str
             ).lower(),
-            'active': section.label == current_label,
+            'active': section.url_path == current_label,
             'expanded': True,
             'section': section,
         }
