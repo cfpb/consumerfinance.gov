@@ -54,7 +54,7 @@ describe( 'Summary', () => {
     targetDom = summaryDom.querySelector( '.o-summary_btn' );
     contentDom = summaryDom.querySelector( '.o-summary_content' );
     contentLinkDom = summaryDom.querySelector( 'a' );
-    expandableContentDom = summaryDom.querySelector( 'details' )
+    expandableContentDom = summaryDom.querySelector( 'details' );
 
     summary = new Summary( summaryDom );
   } );
@@ -112,13 +112,13 @@ describe( 'Summary', () => {
       simulateEvent( 'click', targetDom );
 
       const spy = jest.spyOn( contentDom, 'scrollHeight', 'get' );
-      expect(spy).not.toHaveBeenCalled();
+      expect( spy ).not.toHaveBeenCalled();
 
       simulateEvent( 'click', contentLinkDom );
-      expect(spy).not.toHaveBeenCalled();
+      expect( spy ).not.toHaveBeenCalled();
 
       simulateEvent( 'click', expandableContentDom );
-      expect(spy).toHaveBeenCalled();
+      expect( spy ).toHaveBeenCalled();
     } );
 
   } );
