@@ -80,8 +80,8 @@ class PagesRegulations3kTestCase(TestCase):
 
     def test_redirect_uppercase(self):
         response = self.client.get(
-            '/policy-compliance/rulemaking/regulations/1002/Interp-2/'
+            '/reg-landing/1002/Interp-2/'
         )
         self.assertEqual(
             response.get('location'),
-            '/policy-compliance/rulemaking/regulations/1002/interp-2/')
+            '/reg-landing/1002/interp-2/')
