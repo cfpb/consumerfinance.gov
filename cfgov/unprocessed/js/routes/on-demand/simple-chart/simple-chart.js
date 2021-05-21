@@ -317,13 +317,15 @@ function getMapConfig( series, date ) {
   const step2 = step1 + step;
   const step3 = step2 + step;
   const step4 = step3 + step;
+  const trimTenth = v => Math.round( ( v - 0.1 ) * 10
+  ) / 10;
   return {
     colorAxis: {
       dataClasses: [
-        { from: min, to: step1, color: '#addc91', name: `${ min } - ${ step1 }` },
-        { from: step1, to: step2, color: '#f0f8eb', name: `${ step1 } - ${ step2 }` },
-        { from: step2, to: step3, color: '#ffffff', name: `${ step2 } - ${ step3 }` },
-        { from: step3, to: step4, color: '#d6e8fa', name: `${ step3 } - ${ max }` },
+        { from: min, to: step1, color: '#addc91', name: `${ min } - ${ trimTenth( step1 ) }` },
+        { from: step1, to: step2, color: '#f0f8eb', name: `${ step1 } - ${ trimTenth( step2 ) }` },
+        { from: step2, to: step3, color: '#ffffff', name: `${ step2 } - ${ trimTenth( step3 ) }` },
+        { from: step3, to: step4, color: '#d6e8fa', name: `${ step3 } - ${ trimTenth( step4 ) }` },
         { from: step4, color: '#7eb7e8', name: `${ step4 } - ${ max }` }
       ]},
     series: [ { clip: false, borderColor: '#919395', borderWidth: 1, data: added } ]
@@ -375,6 +377,17 @@ function makeChartOptions( data, target ) {
     defaultObj.xAxis.min = defaultObj.series[0].data[0].x;
   }
 
+  if ( defaultObj.series.length === 1 ) {
+    defaultObj.plotOptions.series = {
+      ...defaultObj.plotOptions.series,
+      events: {
+        legendItemClick: function() {
+          return false;
+        }
+      }
+    };
+  }
+
   alignMargin( defaultObj, chartType );
 
   return defaultObj;
@@ -398,7 +411,7 @@ function alignMargin( defaultObj, chartType ) {
     y = 19;
   }
   if ( !defaultObj.chart.marginTop ) defaultObj.chart.marginTop = marg;
-  defaultObj.legend.y = y;
+  if ( !defaultObj.legend.y ) defaultObj.legend.y = y;
 }
 
 
