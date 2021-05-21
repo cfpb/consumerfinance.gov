@@ -34,7 +34,7 @@ const tilemap = {
     tickAmount: 15,
     title: {}
   },
-  tooltip: { formatter: function() { return `${ this.point.name }<br/>Index value: <b>${ this.point.value }</b>`; } },
+  tooltip: { formatter: function() { return `${ this.point.name }<br/>Index value: <b>${ Math.round( this.point.value * 10 ) / 10 }</b>`; } },
   legend: {
     enabled: false,
     title: 'Index value'
