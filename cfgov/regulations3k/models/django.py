@@ -241,7 +241,7 @@ class Section(models.Model):
         FieldPanel('contents'),
     ]
 
-    @property
+    @cached_property
     def url_path(self):
         """
         Lowercase label for proper url rendering

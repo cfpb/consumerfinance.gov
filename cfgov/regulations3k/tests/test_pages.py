@@ -82,6 +82,9 @@ class PagesRegulations3kTestCase(TestCase):
         response = self.client.get(
             '/reg-landing/1002/Interp-2/'
         )
+        # Check for permanent redirect
+        self.assertEqual(response.status_code, 301)
+        # Check for lowercase location
         self.assertEqual(
             response.get('location'),
             '/reg-landing/1002/interp-2/')

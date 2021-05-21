@@ -466,7 +466,8 @@ class RegulationPage(
                 return redirect(
                     self.url + self.reverse_subpage(
                         "index", kwargs=kwargs
-                    ) + section.url_path + '/'
+                    ) + section.url_path + '/',
+                    permanent=True
                 )
         except Section.DoesNotExist:
             return redirect(
