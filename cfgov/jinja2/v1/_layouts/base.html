@@ -176,7 +176,7 @@
     {# Schema data in JSON-LD format #}
     {% if schema_json %}
     <script type="application/ld+json">
-{{ schema_json | tojson(indent=2) }}
+    {{ schema_json | tojson(indent=2) }}
     </script>
     {% endif %}
 
