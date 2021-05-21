@@ -35,7 +35,13 @@ const hooks = {
   ccpi_quarterLabels() {
     const { x, y, series } = this;
     const [ quarter, year ] = hooks.ccpi_dateToQuarter( x );
-    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Percentile: ${ Math.round( y ) }`;
+    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Index value: ${ Math.round( y * 10 ) / 10 }`;
+  },
+
+  ccpi_shareLabels() {
+    const { x, y, series } = this;
+    const [ quarter, year ] = hooks.ccpi_dateToQuarter( x );
+    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Share: ${ Math.round( y * 10 ) / 10 }%`;
   },
 
   ccpi_dateToQuarter( x ) {

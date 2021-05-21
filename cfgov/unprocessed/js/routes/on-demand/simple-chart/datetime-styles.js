@@ -7,8 +7,7 @@ const datetime = {
   chart: {
     ...styles.chart,
     spacingTop: 0,
-    spacingBottom: 0,
-    marginTop: 100
+    spacingBottom: 0
   },
   xAxis: {
     ...styles.xAxis,
@@ -120,8 +119,8 @@ const datetime = {
         },
         chartOptions: {
           chart: {
-            marginTop: 150,
-            spacingBottom: 60
+            spacingBottom: 60,
+            marginTop: 165
           },
           xAxis: {
             labels: {
