@@ -621,6 +621,7 @@ CSP_FRAME_SRC = (
     "*.consumerfinance.gov",
     "*.googletagmanager.com",
     "*.google-analytics.com",
+    "*.googleoptimize.com",
     "optimize.google.com",
     "www.youtube.com",
     "*.doubleclick.net",
