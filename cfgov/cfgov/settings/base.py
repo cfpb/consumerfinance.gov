@@ -647,6 +647,7 @@ CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
     "*.google-analytics.com",
+    "*.googleoptimize.com",
     "*.tiles.mapbox.com",
     "api.mapbox.com",
     "bam.nr-data.net",
