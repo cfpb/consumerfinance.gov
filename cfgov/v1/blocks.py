@@ -1,3 +1,4 @@
+from django.template.loader import render_to_string
 from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
@@ -128,6 +129,8 @@ class Feedback(AbstractFormBlock):
 
 class HeadingIconBlock(blocks.CharBlock):
     classname = 'heading-icon-block'
+    if wagtail.VERSION >= (2, 13):
+        form_classname = 'heading-icon-block'
 
 
 class HeadingLevelBlock(blocks.ChoiceBlock):
@@ -137,10 +140,14 @@ class HeadingLevelBlock(blocks.ChoiceBlock):
         ('h4', 'H4'),
     ]
     classname = 'heading-level-block'
+    if wagtail.VERSION >= (2, 13):
+        form_classname = 'heading-level-block'
 
 
 class HeadingTextBlock(blocks.CharBlock):
     classname = 'heading-text-block'
+    if wagtail.VERSION >= (2, 13):
+        form_classname = 'heading-text-block'
 
 
 class HeadingBlock(blocks.StructBlock):
@@ -177,12 +184,22 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
         if wagtail.VERSION < (2, 13):
             html = super(
                 PlaceholderFieldBlock, self).render_form(*args, **kwargs)
-            if self.placeholder is not None:
-                html = self.replace_placeholder(html, self.placeholder)
-        else:
-            from wagtail.core.blocks.struct_block import PlaceholderBoundBlock
-            html = PlaceholderBoundBlock(
-                PlaceholderFieldBlock, self).render_form(**kwargs)
+        else:  # pragma: no cover
+            prefix = ''
+            html = render_to_string('wagtailadmin/block_forms/field.html', {
+                'name': self.name,
+                'classes': getattr(
+                    self.meta, 'form_classname', self.meta.classname),
+                'widget': self.field.widget.render(
+                    prefix,
+                    self.field.prepare_value(self.value_for_form(*args)),
+                    attrs={'id': prefix, 'placeholder': self.label}),
+                'field': self.field,
+                'errors': None
+            })
+
+        if self.placeholder is not None:
+            html = self.replace_placeholder(html, self.placeholder)
 
         return html
 
