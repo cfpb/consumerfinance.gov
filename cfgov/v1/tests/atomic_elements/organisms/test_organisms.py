@@ -474,7 +474,7 @@ class TestInfoUnitGroup(TestCase):
                 self.block.clean(value)
             except ValidationError:  # pragma: nocover
                 self.fail('no heading and no intro should not fail validation')
-        else:  # pragma: no cover
+        else:  # pragma: nocover
             with self.assertRaises(ValidationError):
                 self.block.clean(value)
 
@@ -489,7 +489,7 @@ class TestInfoUnitGroup(TestCase):
                 self.block.clean(value)
             except ValidationError:  # pragma: nocover
                 self.fail('heading alone should not fail validation')
-        else:  # pragma: no cover
+        else:  # pragma: nocover
             with self.assertRaises(ValidationError):
                 self.block.clean(value)
 
@@ -511,7 +511,7 @@ class TestInfoUnitGroup(TestCase):
                 self.block.clean(value)
             except ValidationError:  # pragma: nocover
                 self.fail('heading with intro should not fail validation')
-        else:  # pragma: no cover
+        else:  # pragma: nocover
             with self.assertRaises(ValidationError):
                 self.block.clean(value)
 
