@@ -4,7 +4,7 @@
 
 <article class="results_item">
     <h4>
-      <a href="{{ result.url }}">{{ result.label }}</a>
+      <a href="{{ result.url.lower() }}">{{ result.label }}</a>
     </h4>
     <p>{{ result.snippet }}</p>
     <div class="tags tags__hide-heading">
