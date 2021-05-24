@@ -201,14 +201,18 @@ let _keyupDelay;
 function _handleInputChange( event ) {
   clearTimeout( _keyupDelay );
   _keyupDelay = setTimeout( function() {
-    const searchTerm = schoolView._searchBox.value;
+    const searchTerm = schoolView._searchBox.value.trim();
     // TODO - clean up searchbox text, remove non-alphanumeric characters
-    schoolSearch( searchTerm )
-      .then( resp => {
-        _formatSearchResults( resp.responseText );
-      }, error => {
-        console.log( error );
-      } );
+    if ( !searchTerm ) {
+      schoolView._searchResults.classList.remove( 'active' );
+    } else if ( searchTerm.length > 2 ) {
+      schoolSearch( searchTerm )
+        .then( resp => {
+          _formatSearchResults( resp.responseText );
+        }, error => {
+          console.log( error );
+        } );
+    }
   }, 500 );
 }
 
