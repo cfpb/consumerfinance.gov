@@ -537,10 +537,10 @@ def get_section_url(page, section, date_str=None):
         section_kwargs['date_str'] = date_str
 
     section_kwargs['section_label'] = section.label
-    return page.url + page.reverse_subpage(
+    return (page.url + page.reverse_subpage(
         'section',
         kwargs=section_kwargs
-    )
+    )).lower()
 
 
 def get_secondary_nav_items(request, current_page, sections=[], date_str=None):
@@ -567,7 +567,7 @@ def get_secondary_nav_items(request, current_page, sections=[], date_str=None):
             'title': section.title,
             'url': get_section_url(
                 current_page, section, date_str=date_str
-            ).lower(),
+            ),
             'active': section.url_path == current_label,
             'expanded': True,
             'section': section,
