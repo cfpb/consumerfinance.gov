@@ -129,8 +129,7 @@ class Feedback(AbstractFormBlock):
 
 class HeadingIconBlock(blocks.CharBlock):
     classname = 'heading-icon-block'
-    if wagtail.VERSION >= (2, 13):
-        form_classname = 'heading-icon-block'
+    form_classname = 'heading-icon-block'
 
 
 class HeadingLevelBlock(blocks.ChoiceBlock):
@@ -140,14 +139,12 @@ class HeadingLevelBlock(blocks.ChoiceBlock):
         ('h4', 'H4'),
     ]
     classname = 'heading-level-block'
-    if wagtail.VERSION >= (2, 13):
-        form_classname = 'heading-level-block'
+    form_classname = 'heading-level-block'
 
 
 class HeadingTextBlock(blocks.CharBlock):
     classname = 'heading-text-block'
-    if wagtail.VERSION >= (2, 13):
-        form_classname = 'heading-text-block'
+    form_classname = 'heading-text-block'
 
 
 class HeadingBlock(blocks.StructBlock):
@@ -217,12 +214,11 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
 
 
 class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
-    if wagtail.VERSION >= (2, 13):
-        class Meta:
-            icon = 'placeholder'
-            form_template = (
-                'admin/form_templates/struct_block_with_render_form.html'
-            )
+    class Meta:
+        icon = 'placeholder'
+        form_template = (
+            'admin/form_templates/struct_block_with_render_form.html'
+        )
 
 
 class ReusableTextChooserBlock(SnippetChooserBlock):
