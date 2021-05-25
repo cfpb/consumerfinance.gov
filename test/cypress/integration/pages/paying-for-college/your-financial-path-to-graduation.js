@@ -29,7 +29,7 @@ describe( 'Paying For College', () => {
       page.enter( 'American' );
       page.searchResults().should( 'be.visible' );
     } );
-    it.only( 'Selecting college should add its details to the DOM', () => {
+    it( 'Selecting college should add its details to the DOM', () => {
       page.clickGetStarted( );
       page.enter( 'Harvard University' );
       page.searchResults().should( 'be.visible' );
