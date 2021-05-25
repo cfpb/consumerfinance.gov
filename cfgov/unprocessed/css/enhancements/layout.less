@@ -321,6 +321,49 @@
 }
 
 
+// Center content and bleed full-width images into gutters
+// Used on our story pages
+.content__center-image-bleed {
+
+    & > section {
+        margin: 0 auto;
+        max-width: 41.875rem;
+
+        .o-full-width-text-group {
+            overflow: inherit;
+        }
+
+        img.bleed-image {
+            @half-gutter-width: @grid_gutter-width / 2;
+            @two-gutter-widths: @grid_gutter-width * 2;
+
+            left: 50%;
+            right: 50%;
+            margin-left: ~"calc( -50vw + @{half-gutter-width} )";
+            margin-right: ~"calc( -50vw + @{half-gutter-width} )";
+            max-width: ~"calc( 100vw - @{grid_gutter-width} )";
+            width: ~"calc( 100vw - @{grid_gutter-width} )";
+            position: relative;
+
+            .respond-to-min( @bp-sm-min, {
+                margin-left: ~"calc( -50vw + @{grid_gutter-width} )";
+                margin-right: ~"calc( -50vw + @{grid_gutter-width} )";
+                max-width: ~"calc( 100vw - @{two-gutter-widths} )";
+                width: ~"calc( 100vw - @{two-gutter-widths} )";
+            } );
+
+            .respond-to-min( @bp-xl-min, {
+                margin-left: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
+                margin-right: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
+                max-width: @grid_wrapper-width - @two-gutter-widths;
+                width: @grid_wrapper-width - @two-gutter-widths;
+            } );
+        }
+    }
+
+}
+
+
 /* topdoc
   name: EOF
   eof: true

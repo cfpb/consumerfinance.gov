@@ -1,0 +1,36 @@
+{% extends "layout-full.html" %}
+
+{% block hero %}
+    {% for block in page.header %}
+        {% if block.block_type == 'features' %}
+            <section class="wrapper
+                            wrapper__match-content
+                            block
+                            block__bg
+                            block__border
+                            block__flush-top
+                            u-mb0">
+                {% include_block block %}
+            </section>
+        {% else %}
+            {% include_block block %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block content_main_modifiers -%}
+  {{ super() }} content__center-image-bleed
+{%- endblock %}
+
+{% block content_main %}
+    {% for block in page.content -%}
+        {% if 'featured_content' in block.block_type %}
+            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+                {% include_block block %}
+            </div>
+        {% else %}
+            {% import 'templates/render_block.html' as render_block with context %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+{% endblock %}
