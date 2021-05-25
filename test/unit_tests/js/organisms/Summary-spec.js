@@ -6,7 +6,16 @@ const HTML_SNIPPET = `
      data-js-hook="behavior_flyout-menu">
     <div class="o-summary_content"
          data-js-hook="behavior_flyout-menu_content">
-        Content
+        <a href="#">Content</a>
+        <details>
+            <summary>
+                I have keys but no doors.
+                I have space but no room.
+                You can enter but can’t leave.
+                What am I?
+            </summary>
+            A keyboard.
+        </details>
     </div>
     <button class="o-summary_btn u-hidden"
             data-js-hook="behavior_flyout-menu_trigger">
@@ -19,6 +28,8 @@ let summary;
 let summaryDom;
 let targetDom;
 let contentDom;
+let contentLinkDom;
+let expandableContentDom;
 
 /**
  * Change the viewport to width x height. Mocks window.resizeTo( w, h ).
@@ -41,6 +52,8 @@ describe( 'Summary', () => {
     summaryDom = document.querySelector( '.o-summary__mobile' );
     targetDom = summaryDom.querySelector( '.o-summary_btn' );
     contentDom = summaryDom.querySelector( '.o-summary_content' );
+    contentLinkDom = summaryDom.querySelector( 'a' );
+    expandableContentDom = summaryDom.querySelector( 'details' );
 
     summary = new Summary( summaryDom );
   } );
@@ -89,5 +102,23 @@ describe( 'Summary', () => {
       expect( targetDom.classList.contains( 'u-hidden' ) ).toBe( true );
       windowResizeTo( 1200 );
     } );
+
+    it( 'should refresh height when non-link content is clicked', () => {
+      jest.spyOn( contentDom, 'offsetHeight', 'get' )
+        .mockImplementation( () => 200 );
+      summary.init();
+      windowResizeTo( 300 );
+      simulateEvent( 'click', targetDom );
+
+      const spy = jest.spyOn( contentDom, 'scrollHeight', 'get' );
+      expect( spy ).not.toHaveBeenCalled();
+
+      simulateEvent( 'click', contentLinkDom );
+      expect( spy ).not.toHaveBeenCalled();
+
+      simulateEvent( 'click', expandableContentDom );
+      expect( spy ).toHaveBeenCalled();
+    } );
+
   } );
 } );
