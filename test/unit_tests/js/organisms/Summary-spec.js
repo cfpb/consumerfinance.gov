@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime.js';
 import Summary from '../../../../cfgov/unprocessed/js/organisms/Summary.js';
 import { simulateEvent } from '../../../util/simulate-event.js';
 
