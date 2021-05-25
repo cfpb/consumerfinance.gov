@@ -29,6 +29,16 @@ describe( 'Paying For College', () => {
       page.enter( 'American' );
       page.searchResults().should( 'be.visible' );
     } );
+    it.only( 'Selecting college should add its details to the DOM', () => {
+      page.clickGetStarted( );
+      page.enter( 'Harvard University' );
+      page.searchResults().should( 'be.visible' );
+      page.clickSearchResult( 'Harvard University' );
+      cy.get( '[data-school-item="school"]' ).should( 'contain', 'Harvard University' );
+      cy.get( '[data-school-item="city"]' ).should( 'contain', 'Cambridge' );
+      cy.get( '[data-school-item="state"]' ).should( 'contain', 'MA' );
+      cy.get( '[data-school-item="control"]' ).should( 'contain', 'Private' );
+    } );
     it( 'certificate should display total_costs', () => {
       page.clickGetStarted( );
       page.enter( 'Harvard University' );
