@@ -21,7 +21,7 @@ describe( 'Paying For College', () => {
       page.clickGetStarted( );
       page.enter( 'uni' );
       page.searchResults().should( 'be.visible' );
-      page.typeText( 'search__school-input', `{backspace}` )
+      page.typeText( 'search__school-input', '{backspace}' );
       page.searchResults().should( 'not.be.visible' );
     } );
     it( 'American college search should return results', () => {
