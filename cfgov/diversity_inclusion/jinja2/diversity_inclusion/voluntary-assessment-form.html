@@ -1,7 +1,12 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% set breadcrumb_items = [{
+    "title": "Diversity and Inclusion at the Bureau",
+    "href": "/about-us/diversity-and-inclusion/",
+}] %}
+
 {% block title -%}
-    Voluntary Diversity Assessment Onboarding Form
+    Voluntary Diversity Assessment Onboarding Form | Consumer Financial Protection Bureau
 {%- endblock %}
 
 {% block desc -%}
@@ -11,24 +16,6 @@
 {% block og_desc -%}
     The CFPB’s voluntary diversity assessment onboarding form allows financial institutions to submit diversity and inclusion assessments.
 {%- endblock %}
-
-{% block css -%}
-    {{ super() }}
-    <style>
-
-    </style>
-{%- endblock %}
-
-{% block pre_content %}
-    <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            {{ svg_icon('left') }}
-            <a class="breadcrumbs_link" href="/about-us/diversity-and-inclusion/">
-                Diversity and inclusion at the Bureau
-            </a>
-        </nav>
-    </div>
-{% endblock %}
 
 {% block content_main -%}
     <div class="block block__flush-top">
@@ -55,11 +42,11 @@
                 {% import 'molecules/notification.html' as notification %}
                 <div class="u-mb15">
                     {% for error in form.non_field_errors() %}
-                        {{- notification.render('error', true, error | richtext ) }}
+                        {{- notification.render( 'error', true, error | richtext ) }}
                     {% endfor %}
                     {% for field in form %}
                         {% for error in field.errors %}
-                            {{- notification.render('error', true, error) }}
+                            {{- notification.render( 'error', true, error ) }}
                         {% endfor %}
                     {% endfor %}
                 </div>
@@ -182,7 +169,6 @@
                 </div>
             </div>
             <div class="o-form_group">
-                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 <div class="m-btn-group">
                     <input class="a-btn"
                            type="submit"

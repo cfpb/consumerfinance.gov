@@ -1,7 +1,7 @@
 const hud = require( './hud-util' );
 
-const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.js';
-const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.css';
+const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js';
+const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css';
 
 // Settings stored in the template from the backend.
 const mapboxAccessToken = window.cfpbHudSettings.mapbox_access_token;
@@ -62,8 +62,9 @@ function initializeMap() {
   const fcm = document.querySelector( '#hud_search_container' );
   fcm.classList.remove( 'no-js' );
   window.L.mapbox.accessToken = mapboxAccessToken;
-  map = window.L.mapbox.map( 'hud_hca_api_map_container', 'mapbox.streets' )
-    .setView( [ 40, -80 ], 2 );
+  map = window.L.mapbox.map( 'hud_hca_api_map_container' )
+    .setView( [ 40, -80 ], 2 )
+    .addLayer( window.L.mapbox.styleLayer( 'mapbox://styles/mapbox/streets-v11' ) );
 
   if ( hudData.counseling_agencies ) {
     updateMap( hudData );

@@ -23,9 +23,9 @@ The standard technology stack for development of consumerfinance.gov within the 
 
 - [Elasticsearch](https://www.elastic.co):
   Used for full-text search capabilities and content indexing.
-- [Node 12](http://nodejs.org) and [yarn](https://yarnpkg.com/):
+- [Node](http://nodejs.org) and [yarn](https://yarnpkg.com/):
   Used for downloading and managing front-end dependencies and assets. Front-end dependencies are listed in the project's [package.json](https://github.com/cfpb/consumerfinance.gov/blob/main/package.json) file.
-- [Gulp 4](https://gulpjs.com/) for running tasks, including compiling front-end assets and running acceptance and unit tests.
+- [Gulp](https://gulpjs.com/) for running tasks, including compiling front-end assets and running front-end tests.
 - [virtualenv](https://virtualenv.pypa.io/en/stable/)
 - [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
 

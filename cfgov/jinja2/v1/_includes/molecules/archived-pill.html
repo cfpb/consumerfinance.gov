@@ -1,3 +1,23 @@
-{% if page and page.is_archived %}
-	<div class="m-archived-pill">Archived</div>
+{# =========================================================================
+
+   archived_pill.render()
+
+   =========================================================================
+
+   Description:
+
+   Creates an archived pill when given:
+
+   page_object:    The page object to check for archived state.
+
+   ========================================================================= #}
+
+{% macro render( page_object ) %}
+
+{% if page_object and page_object.archived %}
+	<div class="m-archived-pill">
+	    Archived
+	</div>
 {% endif %}
+
+{% endmacro %}

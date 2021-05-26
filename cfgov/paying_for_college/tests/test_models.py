@@ -17,7 +17,7 @@ from paying_for_college.models import (
     StudentLoanQuizPage, get_region, make_divisible_by_6
 )
 from v1.models import HomePage
-from v1.util.migrations import set_stream_data
+from v1.util.migrations import set_streamfield_data
 
 
 class MakeDivisibleTest(TestCase):
@@ -75,13 +75,13 @@ class PageModelsTest(TestCase):
         when quiz structure is decided.
         """
         page = self.loan_quiz_page
-        stream_data = [{
+        data = [{
             'type': 'guided_quiz',
             'id': '12345',
             'value': {
                 'question': '?',
                 'answer': 'huh?'}}]
-        set_stream_data(page, 'content', stream_data)
+        set_streamfield_data(page, 'content', data)
         self.assertEqual(
             page.get_template(HttpRequest()),
             'paying-for-college/choose-a-student-loan.html')
@@ -196,7 +196,6 @@ class SchoolModelsTest(TestCase):
         self.assertTrue(isinstance(p, Program))
         self.assertIn(p.program_name, p.__str__())
         self.assertIn(p.program_name, p.as_json())
-        self.assertIn('Bachelor', p.get_level())
         noti = self.create_notification(s)
         self.assertTrue(isinstance(noti, Notification))
         self.assertIn(noti.oid, noti.__str__())
@@ -441,7 +440,7 @@ class ProgramCodesTest(TestCase):
 
     def test_program_codes_deliver_no_undergrad(self):
         programs = self.school.program_codes
-        self.assertEqual(len(programs.get('undergrad')), 0)
+        self.assertEqual(len(programs.get('undergrad')), 1)
 
     def test_grad_program_codes(self):
         programs = self.school.program_codes

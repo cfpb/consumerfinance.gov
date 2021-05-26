@@ -1,7 +1,7 @@
 // Required modules.
-import * as treeTraversal from '../modules/util/tree-traversal';
-import EventObserver from '../modules/util/EventObserver';
-import MoveTransition from '../modules/transition/MoveTransition';
+import * as treeTraversal from '../modules/util/tree-traversal.js';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
 
 /**
  * MegaMenuDesktop
@@ -40,7 +40,7 @@ function MegaMenuDesktop( baseClass, menus ) {
 
     /* Get the immediate parent of the 1st level menu links.
        We'll use this later to check if we're still over the links,
-       on mouse move. */
+       when clicking to close the menu. */
     const firstLevelMenus = _menus.getAllAtLevel( 1 );
     if ( firstLevelMenus.length > 0 ) {
       _firstLevelDom = firstLevelMenus[0].data.getDom().container.parentNode;
@@ -110,8 +110,7 @@ function MegaMenuDesktop( baseClass, menus ) {
    */
   function _handleBodyClick( event ) {
     // If we've clicked outside the parent of the current menu, close it.
-    if ( !_firstLevelDom.contains( event.target ) ||
-         event.target.parentNode.classList.contains( `${ baseClass }_content-1-list` ) ) {
+    if ( !_firstLevelDom.contains( event.target ) ) {
       _updateMenuState( null );
     }
   }

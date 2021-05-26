@@ -2,12 +2,10 @@
  * The file interfaces between our application and the studentDebtCalculator package
  */
 
-import studentDebtCalculator from 'student-debt-calc';
 import { calcInterestAtGrad, calcMonthlyPayment } from './debt-utils.js';
-import { getConstantsValue, getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { constantsModel } from '../models/constants-model.js';
+import { getConstantsValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { financialModel } from '../models/financial-model.js';
-import { updateFinancial, updateFinancialsFromSchool } from '../dispatchers/update-models.js';
+import { stringToNum } from '../util/number-utils.js';
 
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
@@ -23,7 +21,19 @@ import { updateFinancial, updateFinancialsFromSchool } from '../dispatchers/upda
  */
 function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLength ) {
   const level = getStateValue( 'programLevel' );
-  const dependency = getStateValue( 'programStudentType' );
+  const dependency = getStateValue( 'programDependency' );
+  const progressMap = {
+    n: 0,
+    a: 2
+  };
+  const yearMap = {
+    n: 'yearOne',
+    0: 'yearOne',
+    1: 'yearTwo',
+    a: 'yearThree',
+    2: 'yearThree'
+  };
+  let progress = getStateValue( 'programProgress' );
   let percentSub = 1;
   let percentUnsub = 1;
   let subPrincipal = 0;
@@ -46,24 +56,34 @@ function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLeng
   }
 
   // Determine percent of borrowing versus caps
-  percentSub = directSub / subCaps.yearOne;
-  percentUnsub = directUnsub / ( totalCaps.yearOne - directSub );
+  percentSub = directSub / subCaps[yearMap[progress]];
+  percentUnsub = directUnsub / totalCaps[yearMap[progress]];
 
-  // Iterate through each year of the program
+  /* Iterate through each year of the program
+     Note that "progress" refers to number of years completed, thus a user has 0 progress
+     until they start their second year. An associate's degree represents 2 years of school,
+     so when progress = 'a' (for Associates), then progress is set to '2' */
+
+  // Translate progress value to number where necessary
+  if ( progressMap.hasOwnProperty( progress ) ) {
+    progress = progressMap[progress];
+  }
+
   for ( let x = 0; x < programLength; x++ ) {
-    if ( x === 0 ) {
+    const progressNumber = stringToNum( progress ) + x;
+    if ( progressNumber === 0 ) {
       subPrincipal += directSub;
       unsubPrincipal += directUnsub;
       unsubInterest += directUnsub * rateUnsub * programLength;
-    } else if ( x === 1 ) {
+    } else if ( progressNumber === 1 ) {
       const subAmount = percentSub * subCaps.yearTwo;
-      const unsubAmount = percentUnsub * ( totalCaps.yearTwo - subAmount );
+      const unsubAmount = percentUnsub * totalCaps.yearTwo;
       subPrincipal += subAmount;
       unsubPrincipal += unsubAmount;
       unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
     } else {
       const subAmount = percentSub * subCaps.yearThree;
-      const unsubAmount = percentUnsub * ( totalCaps.yearThree - subAmount );
+      const unsubAmount = percentUnsub * totalCaps.yearThree;
       subPrincipal += subAmount;
       unsubPrincipal += unsubAmount;
       unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
@@ -85,7 +105,7 @@ function debtCalculator() {
   const plusLoans = [ 'gradPlus', 'parentPlus' ];
   const publicLoans = [ 'state', 'institutional', 'nonprofit' ];
   const privateLoans = [ 'privateLoan1' ];
-  const allLoans = fedLoans.concat( plusLoans, publicLoans, privateLoans );
+  const newLoans = fedLoans.concat( plusLoans, publicLoans, privateLoans );
   const fin = financialModel.values;
   const debts = {
     totalAtGrad: 0,
@@ -172,7 +192,7 @@ function debtCalculator() {
     interest[key] = int;
   } );
 
-  allLoans.forEach( key => {
+  newLoans.forEach( key => {
     interest.totalAtGrad += interest[key];
     debts.totalAtGrad += debts[key];
 
@@ -212,8 +232,35 @@ function debtCalculator() {
 
   } );
 
-  debts.programInterest = interest.totalAtGrad;
-  debts.tenYearInterest = debts.tenYearTotal - debts.totalAtGrad;
+  // set the program-level debts before current debt is added
+  debts.programInterestAtGrad = interest.totalAtGrad;
+  debts.programDebtAtGrad = debts.totalAtGrad;
+
+  // calculate existing loan debt interest during program
+
+  let existingDebtInterest = fin.existingDebt_amount * fin.rate_existingDebt * fin.other_programLength;
+
+  if ( isNaN( existingDebtInterest ) ) {
+    existingDebtInterest = 0;
+  }
+
+  const existingDebtTotalAtGrad = fin.existingDebt_amount + existingDebtInterest;
+  const existingDebtMonthly = calcMonthlyPayment(
+    existingDebtTotalAtGrad, fin.rate_existingDebt, 10 );
+
+  debts.existingDebtInterestAtGrad = existingDebtInterest;
+
+  totalBorrowing += fin.existingDebt_amount;
+  interest.totalAtGrad += existingDebtInterest;
+  debts.totalAtGrad += existingDebtTotalAtGrad;
+
+  debts.tenYearMonthly += existingDebtMonthly;
+  debts.tenYearTotal += existingDebtMonthly * 120;
+
+  // Calculate totals
+  debts.totalInterestAtGrad = interest.totalAtGrad;
+  debts.tenYearInterest = debts.tenYearTotal - debts.totalAtGrad - existingDebtInterest;
+
   debts.twentyFiveYearInterest = debts.twentyFiveYearTotal - debts.totalAtGrad;
   debts.repayHours = debts.tenYearMonthly / 15;
   debts.repayWorkWeeks = debts.repayHours / 40;

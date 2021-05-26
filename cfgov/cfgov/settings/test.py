@@ -72,7 +72,7 @@ STATICFILES_FINDERS += [
 ]
 
 STATICFILES_DIRS += [
-    PROJECT_ROOT.child('core', 'testutils', 'staticfiles'),
+    PROJECT_ROOT.joinpath('core', 'testutils', 'staticfiles'),
 ]
 
 MOCK_STATICFILES_PATTERNS = {
@@ -92,3 +92,22 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'cfgov', 'tests', 'test-media')
 HAYSTACK_CONNECTIONS["default"]["INDEX_NAME"] = (
     "test_" + HAYSTACK_CONNECTIONS["default"]["INDEX_NAME"]
 )
+
+ELASTICSEARCH_DSL_AUTO_REFRESH = False
+ELASTICSEARCH_DSL_AUTOSYNC = False
+
+if os.getenv('SKIP_DJANGO_MIGRATIONS'):
+    class _NoMigrations:
+        def __contains__(self, item):
+            return True
+
+        def __getitem__(self, item):
+            return None
+
+
+    MIGRATION_MODULES = _NoMigrations()
+
+for search_backend_settings in WAGTAILSEARCH_BACKENDS.values():
+    search_backend_settings['AUTO_UPDATE'] = False
+
+DEPLOY_ENVIRONMENT = 'test'

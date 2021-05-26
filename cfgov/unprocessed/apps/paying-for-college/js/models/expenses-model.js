@@ -1,5 +1,9 @@
 // This file contains the model for after-college expenses
-import { updateAffordingChart, updateCostOfBorrowingChart, updateExpensesView, updateFinancialView, updateUrlQueryString } from '../dispatchers/update-view.js';
+import {
+  updateAffordingChart,
+  updateCostOfBorrowingChart,
+  updateExpensesView,
+  updateUrlQueryString } from '../dispatchers/update-view.js';
 import { getExpenses } from '../dispatchers/get-api-values.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
 import { stringToNum } from '../util/number-utils.js';
@@ -28,9 +32,9 @@ const expensesModel = {
       }
     }
 
-    totalExpenses += getFinancialValue( 'debt_tenYearMonthly' );
     expensesModel.values.total_expenses = totalExpenses;
-    expensesModel.values.total_remainder = getFinancialValue( 'salary_monthly' ) - totalExpenses;
+    expensesModel.values.total_remainder = getFinancialValue( 'salary_monthly' ) - totalExpenses -
+      getFinancialValue( 'debt_tenYearMonthly' );
     if ( expensesModel.values.total_remainder > 0 ) {
       updateState.byProperty( 'expensesRemainder', 'surplus' );
     } else if ( expensesModel.values.total_remainder < 0 ) {
@@ -55,6 +59,7 @@ const expensesModel = {
       updateExpensesView();
       updateCostOfBorrowingChart();
       updateAffordingChart();
+      updateUrlQueryString();
     }
   },
 
@@ -112,16 +117,23 @@ const expensesModel = {
 
     for ( const key in propertyTranslator ) {
       if ( propertyTranslator.hasOwnProperty( key ) ) {
-        let value = stringToNum(
-          expensesModel.rawData[key][region][salaryRange]
-        );
-        value = Math.round( value / 12 );
-        expensesModel.values[propertyTranslator[key]] = value;
+        const data = expensesModel.rawData[key];
+        if ( data ) {
+          let value = stringToNum(
+            expensesModel.rawData[key][region][salaryRange]
+          );
+          value = Math.round( value / 12 );
+          expensesModel.values[propertyTranslator[key]] = value;
+        }
       }
     }
 
     if ( typeof expensesModel.values.item_childcare === 'undefined' ) {
       expensesModel.values.item_childcare = 0;
+    }
+
+    if ( typeof expensesModel.values.item_currentDebts === 'undefined' ) {
+      expensesModel.values.item_currentDebts = 0;
     }
 
     expensesModel.calculateTotals();

@@ -5,7 +5,7 @@
  */
 
 // Required modules.
-const checkDom = require( '../../../js/modules/util/atomic-helpers' ).checkDom;
+const checkDom = require( '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js' ).checkDom;
 
 /**
  * ClearableInput

@@ -17,9 +17,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import hooks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import (
-    Orderable, Page, PageManager, PageQuerySet, Site
-)
+from wagtail.core.models import Page, PageManager, PageQuerySet, Site
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
@@ -112,10 +110,17 @@ class CFGOVPage(Page):
         ),
     )
 
-    is_archived = models.BooleanField(
-        default=False,
-        blank=True,
-        verbose_name='Mark this page as archived'
+    is_archived = models.CharField(
+        max_length=16,
+        choices=[
+            ('no', 'No'),
+            ('yes', 'Yes'),
+            ('never', 'Never'),
+        ],
+        default='no',
+        verbose_name='This page is archived',
+        help_text='If "Never" is selected, the page will not be archived '
+                  'automatically after a certain period of time.'
     )
 
     archived_at = models.DateField(
@@ -179,6 +184,11 @@ class CFGOVPage(Page):
         ObjectList(sidefoot_panels, heading='Sidebar/Footer'),
         ObjectList(settings_panels, heading='Configuration'),
     ])
+
+    default_exclude_fields_in_copy = Page.default_exclude_fields_in_copy + [
+        'tags',
+        'authors'
+    ]
 
     def clean(self):
         super(CFGOVPage, self).clean()
@@ -248,7 +258,13 @@ class CFGOVPage(Page):
         return
 
     def get_meta_description(self):
-        """Deliver a meta_description, following a preference order."""
+        """Determine what the page's meta and OpenGraph description should be
+
+        Checks several different possible fields in order of preference.
+        If none are found, returns an empty string, which is preferable to a
+        generic description repeated on many pages.
+        """
+
         preference_order = [
             'search_description',
             'header_hero_body',
@@ -258,6 +274,7 @@ class CFGOVPage(Page):
             'header_item_intro',
         ]
         candidates = {}
+
         if self.search_description:
             candidates['search_description'] = self.search_description
         if hasattr(self, 'header'):
@@ -273,9 +290,11 @@ class CFGOVPage(Page):
         if hasattr(self, 'content'):
             candidates['content_text_intro'] = self.get_streamfield_content(
                 self.content, 'text_introduction', 'intro')
+
         for entry in preference_order:
             if candidates.get(entry):
                 return candidates[entry]
+
         return ''
 
     def get_context(self, request, *args, **kwargs):
@@ -418,10 +437,20 @@ class CFGOVPage(Page):
     def post_preview_cache_key(self):
         return 'post_preview_{}'.format(self.id)
 
+    @property
+    def archived(self):
+        if self.is_archived == 'yes':
+            return True
 
-class CFGOVPageCategory(Orderable):
+        return False
+
+
+class CFGOVPageCategory(models.Model):
     page = ParentalKey(CFGOVPage, related_name='categories')
     name = models.CharField(max_length=255, choices=ref.categories)
+
+    class Meta:
+        ordering = ['name']
 
     panels = [
         FieldPanel('name'),

@@ -30,13 +30,18 @@ jobs:
         - 5432:5432
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      elasticsearch:
+        image: elasticsearch:7.10.1
+        ports:
+        - 9200/tcp
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
         
     steps:
       - uses: actions/checkout@v2
 
-      # Make sure we have gettext installed for the translation validation
-      - run: |
-          sudo apt-get install gettext
+      - name: Install gettext for translation validation
+        if: matrix.toxenv == 'validate-translations'
+        run: sudo apt-get install gettext
 
       - name: Set up Python
         uses: actions/setup-python@v1
@@ -53,6 +58,7 @@ jobs:
           tox -e ${{ matrix.toxenv }}
         env:
           TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner
+          ES_PORT: ${{ job.services.elasticsearch.ports[9200] }}
 
       - name: Prepare test coverage
         if: matrix.toxenv == 'unittest-current'

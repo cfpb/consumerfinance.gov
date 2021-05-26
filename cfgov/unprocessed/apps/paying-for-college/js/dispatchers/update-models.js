@@ -1,7 +1,6 @@
 /**
  * Update the values of models
  */
-
 import { expensesModel } from '../models/expenses-model.js';
 import { financialModel } from '../models/financial-model.js';
 import { financialView } from '../views/financial-view.js';
@@ -10,102 +9,29 @@ import { getSchoolData } from '../dispatchers/get-api-values.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 import { isNumeric, stringToNum } from '../util/number-utils.js';
-import { getConstantsValue, getProgramInfo, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { updateGradMeterChart, updateRepaymentMeterChart, updateSchoolView } from './update-view.js';
+import {
+  getProgramInfo,
+  getSchoolValue,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
+import { updateSchoolView } from './update-view.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
-
-
-const _urlParamsToModelVars = {
-  'iped': 'schoolModel.schoolID',
-  'oid': 'schoolModel.oid',
-
-  'pid': 'stateModel.pid',
-  'houp': 'stateModel.programHousing',
-  'typp': 'stateModel.programType',
-  'lenp': 'stateModel.programLength',
-  'ratp': 'stateModel.programRate',
-  'depp': 'stateModel.programStudentType',
-  'cobs': 'stateModel.costsQuestion',
-  'regs': 'stateModel.expensesRegion',
-  'iqof': 'stateModel.impactOffer',
-  'iqlo': 'stateModel.impactLoans',
-
-  'utm_source': 'stateModel.utmSource',
-  'utm_medium': 'stateModel.utm_medium',
-  'utm_campaign': 'stateModel.utm_campaign',
-
-  'tuit': 'financialModel.dirCost_tuition',
-  'hous': 'financialModel.dirCost_housing',
-  'diro': 'financialModel.dirCost_other',
-
-  'book': 'financialModel.indiCost_books',
-  'indo': 'financialModel.indiCost_other',
-  'nda':  'financialModel.indiCost_added',
-  'tran': 'financialModel.indiCost_transportation',
-
-  'pelg': 'financialModel.grant_pell',
-  'seog': 'financialModel.grant_seog',
-  'fedg': 'financialModel.grant_federal',
-  'stag': 'financialModel.grant_state',
-  'schg': 'financialModel.grant_school',
-  'othg': 'financialModel.grant_other',
-
-  'mta': 'financialModel.mil_milTuitAssist',
-  'gi': 'financialModel.mil_GIBill',
-  'othm': 'financialModel.mil_other',
-
-  'stas': 'financialModel.scholarship_state',
-  'schs': 'financialModel.scholarship_school',
-  'oths': 'financialModel.scholarship_other',
-
-  'wkst': 'financialModel.workStudy_workStudy',
-
-  'fell': 'financialModel.fund_fellowship',
-  'asst': 'financialModel.fund_assistantship',
-
-  'subl': 'financialModel.fedLoan_directSub',
-  'unsl': 'financialModel.fedLoan_directUnsub',
-
-  'insl': 'financialModel.publicLoan_institutional',
-  'insr': 'financialModel.rate_institutional',
-  'insf': 'financialModel.fee_institutional',
-  'stal': 'financialModel.publicLoan_state',
-  'star': 'financialModel.rate_stateLoan',
-  'staf': 'financialModel.fee_stateLoan',
-  'npol': 'financialModel.publicLoan_nonprofit',
-  'npor': 'financialModel.rate_nonprofit',
-  'npof': 'financialModel.fee_nonprofit',
-
-  'pers': 'financialModel.savings_personal',
-  'fams': 'financialModel.savings_family',
-  '529p': 'financialModel.savings_collegeSavings',
-
-  'offj': 'financialModel.income_jobOffCampus',
-  'onj': 'financialModel.income_jobOnCampus',
-  'eta': 'financialModel.income_employerAssist',
-  'othf': 'financialModel.income_otherFunding',
-
-  'pvl1': 'financialModel.privLoan_privLoan1',
-  'pvr1': 'financialModel.privloan_privLoanRate1',
-  'pvf1': 'financialModel.privloan_privLoanFee1',
-
-  'plus': 'financialModel.fedLoan_parentPlus',
-
-  'houx': 'expensesModel.item_housing',
-  'fdx': 'expensesModel.item_food',
-  'clhx': 'expensesModel.item_clothing',
-  'trnx': 'expensesModel.item_transportation',
-  'hltx': 'expensesModel.item_healthcare',
-  'entx': 'expensesModel.item_entertainment',
-  'retx': 'expensesModel.item_retirement',
-  'taxx': 'expensesModel.item_taxes',
-  'chcx': 'expensesModel.item_childcare',
-  'othx': 'expensesModel.item_other',
-  'dbtx': 'expensesModel.item_currentDebt'
-};
+import { updateState } from '../dispatchers/update-state.js';
+import { urlParameters } from '../util/url-parameter-utils.js';
 
 /**
- * initializeFinancialModel - Create financial model values based on the input
+ * initializeExpenseValues - Create financial model values based on the input
+ * fields that exist in the DOM
+ */
+function initializeExpenseValues() {
+  const expenseItems = document.querySelectorAll( '[data-expenses-item]' );
+  expenseItems.forEach( elem => {
+    expensesModel.setValue( elem.dataset.expensesItem, 0, false );
+  } );
+}
+
+/**
+ * initializeFinancialValues - Create financial model values based on the input
  * fields that exist in the DOM
  */
 function initializeFinancialValues() {
@@ -167,6 +93,13 @@ function updateRegion( region ) {
 }
 
 /**
+ * refreshExpenses - Update the expenses with stored values
+ */
+function refreshExpenses() {
+  expensesModel.setValuesByRegion( schoolModel.values.region );
+}
+
+/**
   * updateSchoolData - Fetch API data for school and update the model
   * @param {String} iped - The id of the school
   * @returns {Object} Promise of the XHR request
@@ -191,22 +124,38 @@ const updateSchoolData = function( iped ) {
 
         // If we have a pid, validate it
         const pid = getStateValue( 'pid' );
+        let programInfo = false;
         if ( pid !== false && pid !== null ) {
-          const programInfo = getProgramInfo( pid );
+          programInfo = getProgramInfo( pid );
           if ( programInfo === false ) {
             stateModel.setValue( 'pid', false );
           }
         }
 
         // Take only the top 3 programs
-        const topThreeArr = schoolModel.values.programsPopular.slice( 0, 3 );
-        schoolModel.values.programsTopThree = topThreeArr.join( ', ' );
+        const programsPopular = schoolModel.values.programsPopular;
+        schoolModel.values.programsTopThree = '';
+        if ( programsPopular !== null ) {
+          const topThreeArr = programsPopular.slice( 0, 3 );
+          schoolModel.values.programsTopThree = topThreeArr.join( ', ' );
+        }
 
         // add the full state name to the schoolModel
         schoolModel.values.stateName = getStateByCode( schoolModel.values.state );
 
         // Some values must migrate to the financial model
-        financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
+        if ( programInfo ) {
+          financialModel.setValue( 'salary_annual', stringToNum( programInfo.salary ) );
+          updateState.byProperty( 'programName', programInfo.name );
+        } else {
+          financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
+        }
+
+        // Update expenses by
+        if ( schoolModel.values.hasOwnProperty( 'region' ) ) {
+          document.querySelector( '#expenses__region' ).value = schoolModel.values.region;
+          updateRegion( schoolModel.values.region );
+        }
 
         updateSchoolView();
         updateUrlQueryString();
@@ -246,6 +195,7 @@ function updateModelsFromQueryString( queryObj ) {
   if ( queryObj.hasOwnProperty( 'oid' ) ) {
     queryObj.cobs = 'o';
   }
+
   // If we have no cobs, check if there are costs values
   if ( !queryObj.hasOwnProperty( 'cobs' ) ) {
     const costKeys = [ 'tuit', 'hous', 'diro', 'book', 'indo', 'nda', 'tran' ];
@@ -262,8 +212,8 @@ function updateModelsFromQueryString( queryObj ) {
   }
 
   for ( const key in queryObj ) {
-    if ( _urlParamsToModelVars.hasOwnProperty( key ) ) {
-      const match = _urlParamsToModelVars[key].split( '.' );
+    if ( urlParameters.hasOwnProperty( key ) ) {
+      const match = urlParameters[key].split( '.' );
       modelMatch[match[0]]( match[1], queryObj[key], false );
 
       // plus can mean either type of loan (they are mutually exclusive)
@@ -285,9 +235,11 @@ function updateModelsFromQueryString( queryObj ) {
 
 export {
   createFinancial,
+  initializeExpenseValues,
   initializeFinancialValues,
   recalculateExpenses,
   recalculateFinancials,
+  refreshExpenses,
   updateExpense,
   updateFinancial,
   updateFinancialsFromSchool,

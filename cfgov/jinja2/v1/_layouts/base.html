@@ -159,11 +159,34 @@
   If you come across a script that makes a convincing case to be included in
   the head, then file an issue or PR to discuss including it.
 #}
+    {% if flag_enabled('AB_TESTING') %}
+    {# Begin Google Optimize #}
+    {# Optimize anti-flicker snippet. #}
+    <style>.async-hide { opacity: 0 !important} </style>
+    <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+    h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+    (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+    })(window,document.documentElement,'async-hide','dataLayer',4000,
+    {'GTM-KMMLRS':true});</script>
+    {#
+      NOTE: We don't include the googleoptimize.com/optimize.js script call here
+      because we are including optimize via GTM.
+    #}
+    {# End Google Optimize #}
+    {% endif %}
+
+    {# Begin Google Tag Manager #}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+    {# End Google Tag Manager #}
 
     {# Schema data in JSON-LD format #}
     {% if schema_json %}
     <script type="application/ld+json">
-{{ schema_json | tojson(indent=2) }}
+    {{ schema_json | tojson(indent=2) }}
     </script>
     {% endif %}
 
@@ -176,48 +199,10 @@
     </script>
     {% endblock javascript_loader %}
 
-    {% if flag_enabled('AB_TESTING') %}
-    {# Google Optimize page-hiding snippet #}
-    <style>
-        .optimize-loading { opacity: 0 !important; }
-    </style>
-    <script>
-        (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
-        h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
-        (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
-        })(window,document.documentElement,'optimize-loading','dataLayer',5000,
-        {'GTM-KHB8MB':true});
-    {# end Google Optimize page-hiding snippet #}
-
-    {# Google Analytics/Optimize snippet #}
-    {#
-      The last line in the script requires Optimize.
-      Pageview call removed, because pagviews are sent to Analytics via
-      the Google Tag Manager tag (code included below).
-    #}
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-54439736-1', 'auto');
-        ga('require', 'GTM-KHB8MB');
-    </script>
-    {# end Google Analytics/Optimize snippet #}
-    {% endif %}
-
-    {# Google Tag Manager #}
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
-    {# end Google Tag Manager #}
-
     {% include "v1/modernizr.html" %}
 </head>
 
-<body{% block body_classes %}{% if page and page.is_archived %} class="archived-page" {% endif %}{% endblock body_classes %}>
+<body{% block body_classes %}{% if page and page.archived %} class="archived-page" {% endif %}{% endblock body_classes %}>
 
 {#
   =========
@@ -256,11 +241,17 @@
         ) }}
     {% endblock header %}
 
-    {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
-    {{ wagtailuserbar() }}
+    {% block wagtailuserbar %}
+        {#
+          WAGTAILUSERBAR IN-PAGE VIEW CONTROLS
+          If you _don't_ want this to show up in a particular template,
+          add an empty wagtailuserbar block to that template.
+        #}
+        {{ wagtailuserbar() }}
+    {% endblock %}
 
     {% block banner_top %}
-        {% if page and page.is_archived %}
+        {% if page and page.archived %}
             {% include 'molecules/archived-banner.html' %}
         {% endif %}
     {% endblock %}
@@ -337,9 +328,6 @@
           {% if js_source | length > 0 %}
             s.push( '{{ static('js/routes/' + app_page_url(request) + 'index.js') }}' );
           {% endif %}
-          {% if flag_enabled('TURBOLINKS') %}
-            s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );
-          {% endif %}
           {# Pass scripts to JavaScript loader. #}
           jsl(s);
         }();
@@ -366,15 +354,24 @@
     {% block font_tracker %}
     <!--[if gt IE 8]><!-->
     {#
-        The invalid media attribute is intentional. It forces the browser to
-        download the stylesheet without blocking rendering and is updated after
-        the stylesheet is downloaded.
+      Media type (print) doesn't match the current environment,
+      so browser decides it's not that important and loads the stylesheet
+      asynchronously (without delaying page rendering).
+      On load, we change media type so that the stylesheet
+      gets applied to screens.
+
+      See https://stackoverflow.com/questions/32759272/how-to-load-css-asynchronously/46750893#46750893
     #}
     <link rel="stylesheet"
           href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50"
-          media="none"
-          onload="media='all'">
-    <noscript><link rel="stylesheet" href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50">
+          media="print"
+          onload="this.media='all'">
+    {#
+      Fallback that only gets inserted when JavaScript is disabled,
+      in which case we can't load CSS asynchronously.
+    #}
+    <noscript>
+      <link rel="stylesheet" href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50">
     </noscript>
     <!--<![endif]-->
     {% endblock font_tracker %}

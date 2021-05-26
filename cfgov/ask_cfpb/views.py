@@ -1,10 +1,10 @@
 import json
 from urllib.parse import urljoin
 
+from django.core.exceptions import ValidationError
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
-from haystack.query import SearchQuerySet
 
 from wagtail.core.models import Site
 from wagtailsharing.models import SharingSite
@@ -12,7 +12,8 @@ from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
 
-from ask_cfpb.models import AnswerPage, AnswerResultsPage, AskSearch
+from ask_cfpb.forms import AutocompleteForm, SearchForm, legacy_facet_validator
+from ask_cfpb.models import AnswerPage, AnswerPageSearch, AnswerResultsPage
 
 
 def annotate_links(answer_text):
@@ -48,34 +49,43 @@ def annotate_links(answer_text):
 def view_answer(request, slug, language, answer_id):
     answer_page = get_object_or_404(
         AnswerPage, language=language, answer_base__id=answer_id)
-    if answer_page.live is False:
-        raise Http404
-    if answer_page.redirect_to_page:
-        new_page = answer_page.redirect_to_page
-        return redirect(new_page.url, permanent=True)
-    if "{}-{}-{}".format(slug, language, answer_id) != answer_page.slug:
-        return redirect(answer_page.url, permanent=True)
-
-    # We don't want to call answer_page.serve(request) here because that
-    # would bypass wagtail-sharing logic that allows for review of draft
-    # revisions via a sharing site.
+    # We can't call answer_page.serve(request) yet because that would bypass
+    # wagtail-sharing, which provides views of unpublished revisions.
+    # First, we see if a sharing site is present in the request:
     try:
         sharing_site = SharingSite.find_for_request(request)
     except SharingSite.DoesNotExist:
-        return answer_page.serve(request)
+        sharing_site = None
+    # handle draft pages first
+    if answer_page.live is False:
+        if sharing_site is None:
+            raise Http404
+        else:
+            return ServeView.serve(answer_page, request, [], {})
+    # page is live
+    # redirect if so configured
+    if answer_page.redirect_to_page:
+        new_page = answer_page.redirect_to_page
+        return redirect(new_page.url, permanent=True)
+    # handle pages that have unpublished revisions
+    if answer_page.status_string == "live + draft":
+        if sharing_site:
+            return ServeView.serve(answer_page, request, [], {})
+        else:
+            return answer_page.serve(request)
+    # page is live with no revisions. heal the URL if necessary
+    if f"{slug}-{language}-{answer_id}" != answer_page.slug:
+        return redirect(answer_page.url, permanent=True)
 
-    page, args, kwargs = ServeView.route(
-        sharing_site.site,
-        request,
-        request.path
-    )
-
-    return ServeView.serve(page, request, args, kwargs)
+    return answer_page.serve(request)
 
 
 def ask_search(request, language='en', as_json=False):
     if 'selected_facets' in request.GET:
         return redirect_ask_search(request, language=language)
+
+    search_form = SearchForm(request.GET, initial={'q': '', 'correct': True})
+
     language_map = {
         'en': 'ask-cfpb-search-results',
         'es': 'respuestas'
@@ -87,21 +97,30 @@ def ask_search(request, language='en', as_json=False):
     )
 
     # If there's no query string, don't search
-    search_term = request.GET.get('q', '')
-    if not search_term:
+    if not search_form.is_valid():
         results_page.query = ''
         results_page.result_query = ''
         return results_page.serve(request)
 
-    search = AskSearch(search_term=search_term, language=language)
-    if search.queryset.count() == 0:
-        search.suggest(request=request)
+    search_term = search_form.cleaned_data['q']
+    page = AnswerPageSearch(search_term, language=language)
+    response = page.search()
+
+    # Check if we want to use the suggestion or not
+    suggest = search_form.cleaned_data['correct']
+
+    # Provide a suggestion only when no results are found
+    if not response.get('results') and suggest:
+        response = page.suggest()
+        suggestion = response.get('suggestion')
+    else:
+        suggestion = search_term
 
     if as_json:
-        results = {
+        payload = {
             'query': search_term,
-            'result_query': search.search_term,
-            'suggestion': search.suggestion,
+            'result_query': search_term.strip(),
+            'suggestion': suggestion.strip(),
             'results': [
                 {
                     'question': result.autocomplete,
@@ -109,37 +128,32 @@ def ask_search(request, language='en', as_json=False):
                     'text': result.text,
                     'preview': result.preview,
                 }
-                for result in search.queryset
+                for result in response.get('results')
             ]
         }
-        json_results = json.dumps(results)
+        json_results = json.dumps(payload)
         return HttpResponse(json_results, content_type='application/json')
 
     results_page.query = search_term
-    results_page.result_query = search.search_term
-    results_page.suggestion = search.suggestion
+    results_page.result_query = response.get('search_term')
+    results_page.suggestion = response.get('suggestion')
     results_page.answers = [
         (result.url, result.autocomplete, result.preview)
-        for result in search.queryset
+        for result in response['results']
     ]
     return results_page.serve(request)
 
 
 def ask_autocomplete(request, language='en'):
-    term = request.GET.get(
-        'term', '').strip().replace('<', '')
-    if not term:
+    autocomplete_form = AutocompleteForm(request.GET)
+
+    if not autocomplete_form.is_valid():
         return JsonResponse([], safe=False)
 
+    term = autocomplete_form.cleaned_data['term']
     try:
-        sqs = SearchQuerySet().models(AnswerPage)
-        sqs = sqs.autocomplete(
-            autocomplete=term,
-            language=language
-        )
-        results = [{'question': result.autocomplete,
-                    'url': result.url}
-                   for result in sqs[:20]]
+        results = AnswerPageSearch(
+            search_term=term, language=language).autocomplete()
         return JsonResponse(results, safe=False)
     except IndexError:
         return JsonResponse([], safe=False)
@@ -169,44 +183,57 @@ def redirect_ask_search(request, language='en'):
     category_facet = 'category_exact:'
     audience_facet = 'audience_exact:'
     tag_facet = 'tag_exact:'
-    if request.GET.get('q'):
-        querystring = request.GET.get('q').strip()
-        if not querystring:
-            return redirect('/ask-cfpb/search/', permanent=True)
+
+    search_form = SearchForm(request.GET)
+    if search_form.is_valid():
+        query = search_form.cleaned_data['q']
         return redirect(
-            '/ask-cfpb/search/?q={query}'.format(
-                query=querystring), permanent=True)
+            f'/ask-cfpb/search/?q={query}',
+            permanent=True
+        )
     else:
         facets = request.GET.getlist('selected_facets')
+
         if not facets or not facets[0]:
             return redirect(
                 '/ask-cfpb/search/', permanent=True)
 
+        try:
+            for facet in facets:
+                legacy_facet_validator(facets)
+        except ValidationError:
+            raise Http404
+
         def redirect_to_category(category, language):
             if language == 'es':
                 return redirect(
-                    '/es/obtener-respuestas/categoria-{category}/'.format(
-                        category=category), permanent=True)
+                    f'/es/obtener-respuestas/categoria-{category}/',
+                    permanent=True
+                )
             return redirect(
-                '/ask-cfpb/category-{category}/'.format(
-                    category=category), permanent=True)
+                f'/ask-cfpb/category-{category}/',
+                permanent=True
+            )
 
         def redirect_to_audience(audience):
             """We currently only offer audience pages to English users."""
             return redirect(
-                '/ask-cfpb/audience-{audience}/'.format(
-                    audience=audience), permanent=True)
+                f'/ask-cfpb/audience-{audience}/',
+                permanent=True
+            )
 
         def redirect_to_tag(tag, language):
             """Handle tags passed with underscore separators."""
             if language == 'es':
                 return redirect(
-                    '/es/obtener-respuestas/buscar-por-etiqueta/{tag}/'.format(
-                        tag=tag), permanent=True)
+                    f'/es/obtener-respuestas/buscar-por-etiqueta/{tag}/',
+                    permanent=True
+                )
             else:
                 return redirect(
-                    '/ask-cfpb/search-by-tag/{tag}/'.format(
-                        tag=tag), permanent=True)
+                    f'/ask-cfpb/search-by-tag/{tag}/',
+                    permanent=True
+                )
 
         # Redirect by facet value, if there is one, starting with category.
         # We want to exhaust facets each time, so we need three loops.

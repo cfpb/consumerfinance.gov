@@ -20,6 +20,11 @@ NON_CFPB_LINKS = re.compile(
 DOWNLOAD_LINKS = re.compile(
     r'(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
 )
+ASK_CFPB_LINKS = re.compile(
+    # https://regexr.com/5opro
+    r'(https?:\/\/(www\.)?(cfpb|consumerfinance)\.gov)?\/ask\-cfpb\/([-\w]{1,244})-(en)-(?P<ask_id>\d{1,6})\/?$'  # noqa: E501
+)
+
 LINK_ICON_CLASSES = ['a-link', 'a-link__icon']
 
 LINK_ICON_TEXT_CLASSES = ['a-link_text']
@@ -72,6 +77,12 @@ def signed_redirect(url):
     return ("{0}?{1}".format(reverse("external-site"), urlencode(query_args)))
 
 
+def ask_short_url(url):
+    match = ASK_CFPB_LINKS.search(url)
+    ask_id = match.groupdict().get('ask_id')
+    return ("cfpb.gov/askcfpb/{}".format(ask_id))
+
+
 def extract_answers_from_request(request):
     answers = [(param.split('_')[1], value) for param, value in
                request.POST.items() if param.startswith('questionid')]
@@ -100,8 +111,10 @@ def get_link_tags(html):
 def add_link_markup(tag, request_path):
     """Add necessary markup to the given link and return if modified.
 
-    Add an external link icon if the input is not a CFPB (internal) link.
-    Add an external link redirect if the input is not a gov link.
+    If it's a jump link, return the tag with the page's path removed.
+    If it's an Ask CFPB link, return the tag with the shortened Ask URL.
+    If it's an external link, add an external icon and sign the redirect.
+    If it's a non-CFPB govt link, add external icon and sign the redirect.
     If it contains a descendent that should not get an icon, return the link.
     If not, add a download icon if the input is a file.
     Otherwise (internal link that is not a file), return None.
@@ -127,6 +140,11 @@ def add_link_markup(tag, request_path):
             tag['href'] = tag['href'].replace(request_path, '')
             return str(tag)
 
+    if ASK_CFPB_LINKS.match(tag['href']):
+        # Use short URL when printing Ask CFPB links
+        tag['data-pretty-href'] = ask_short_url(tag['href'])
+        return str(tag)
+
     if tag['href'].startswith('/external-site/?'):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = 'external-link'
@@ -134,6 +152,8 @@ def add_link_markup(tag, request_path):
         arguments = parse_qs(components.query)
         if 'ext_url' in arguments:
             external_url = arguments['ext_url'][0]
+            # Add pretty URL for print styles
+            tag['data-pretty-href'] = external_url
             # Add the redirect notice as well
             tag['href'] = signed_redirect(external_url)
 
@@ -141,6 +161,8 @@ def add_link_markup(tag, request_path):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = 'external-link'
         if NON_GOV_LINKS.match(tag['href']):
+            # Add pretty URL for print styles
+            tag['data-pretty-href'] = tag['href']
             # Add the redirect notice as well
             tag['href'] = signed_redirect(tag['href'])
 

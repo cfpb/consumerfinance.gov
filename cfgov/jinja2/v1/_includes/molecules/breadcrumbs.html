@@ -8,13 +8,13 @@
 
    Create breadcrumb markup when given:
 
-   items:              An array of tuples used to display nav items.
-                       format: (href, id, caption)
+   breadcrumbs:        An array of tuples used to display nav items.
+                       Format: (href, live, title)
 
    ========================================================================== #}
 
 {% macro render( breadcrumbs ) %}
-    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+    <nav class="breadcrumbs" aria-label="{{ _('Breadcrumbs') }}">
         {{ svg_icon('left') }}
         {% for crumb in breadcrumbs %}
             {% if crumb.href or crumb.live %}
@@ -25,7 +25,7 @@
                 <span class="breadcrumbs_text">{{ crumb.title | e }}</span>
             {% endif %}
         {% endfor %}
-        {% if page and page.is_archived %}
+        {% if page and page.archived %}
           <span class="breadcrumbs_link">Archive</span>
         {% endif %}
     </nav>

@@ -4,47 +4,53 @@ const admin = new AdminPage();
 
 describe( 'Admin', () => {
 
-  beforeEach( () => {
+  before( () => {
     admin.open();
     admin.login();
+  } );
+
+  beforeEach( () => {
+    /* Preserve the 'sessionid' cookie so it will not be cleared
+       before the NEXT test starts. */
+    Cypress.Cookies.preserveOnce( 'sessionid' );
   } );
 
   it( 'should login', () => {
     cy.contains( 'Welcome' );
   } );
 
-  it( 'should be able to edit a page', () => {
+  it( 'should be able to publish a page', () => {
     admin.openMostRecentPage();
     admin.publishPage();
     admin.successBanner().should( 'be.visible' );
   } );
 
-  it( 'should be able to open the image gallery', () => {
+  it( 'should be able to open the Images library', () => {
     admin.openImageGallery();
     admin.getImages().should( 'be.visible' );
     admin.tags().should( 'contain', 'Mortgages' );
   } );
 
-  it( 'should be able to open the document library', () => {
+  it( 'should be able to open the Documents library', () => {
     admin.openDocumentsLibrary();
     admin.getFirstDocument().should( 'be.visible' );
   } );
 
-  it( 'should support our snippet libraries', () => {
+  it( 'should add a Contact Snippet', () => {
     admin.openContacts();
     admin.addContact();
     admin.successBanner().should( 'be.visible' );
   } );
 
-  it( 'should have mortage constants stored', () => {
-    admin.openMortgageConstants();
-    admin.addMortgageConstant();
+  it( 'should add mortage constant', () => {
+    admin.openMortgageData( 'performance constants' );
+    admin.addMortgageData( 'dataconstant' );
     admin.successBanner().should( 'be.visible' );
   } );
 
-  it( 'should have mortgage metadata', () => {
-    admin.openMortgageMetadata();
-    admin.addMortgageMetadata();
+  it( 'should add mortgage metadata', () => {
+    admin.openMortgageData( 'metadata' );
+    admin.addMortgageData( 'metadata' );
     admin.successBanner().should( 'be.visible' );
   } );
 
@@ -68,7 +74,7 @@ describe( 'Admin', () => {
     admin.successBanner().should( 'be.visible' );
   } );
 
-  it( 'should be able to modify tdp activities', () => {
+  it( 'should be able to modify TDP activities', () => {
     admin.openBuildingBlockActivity();
     admin.editBuildingBlock();
     admin.successBanner().should( 'be.visible' );
@@ -88,47 +94,51 @@ describe( 'Admin', () => {
     admin.flagHeading().should( 'contain', 'enabled when any condition is met.' );
   } );
 
-  it( 'should support the block inventory', () => {
+  it( 'should use Block Inventory to search for blocks', () => {
     admin.openBlockInventory();
     admin.searchBlocks();
     admin.searchResults().should( 'be.visible' );
   } );
 
-  it( 'Should support external links', () => {
+  it( 'Should be able to search for external links', () => {
     admin.openExternalLinks();
     admin.searchExternalLink( 'https://www.federalreserve.gov' );
     admin.searchResults().should( 'be.visible' );
   } );
 
-  it( 'should open the django admin', () => {
-    admin.openDjangoAdmin();
-    cy.url().should( 'contain', 'django-admin' );
-  } );
-
-  it( 'should include the page metadata report', () => {
+  it( 'should run Page Metadata report', () => {
     admin.getPageMetadataReports().its( 'length' ).should( 'be.gt', 2 );
   } );
 
-  describe( 'Editor Table', () => {
-    beforeEach( () => {
-      admin.openCFGovPage();
+  it( 'should open the Django Admin', () => {
+    admin.openDjangoAdmin();
+    cy.url().should( 'contain', 'django-admin' );
+    cy.visit( '/admin/' );
+  } );
+
+  describe( 'Custom TableBlock', () => {
+    before( () => {
       admin.addBlogChildPage();
-      admin.addFullWidthTextElement();
+      admin.addFullWidthText();
       admin.addTable();
     } );
 
-    it( 'should be able to create and edit a table', () => {
+    beforeEach( () => {
       admin.selectFirstTableCell();
-      admin.selectTableEditorTextbox();
-      admin.selectTableEditorButton( 'unordered-list-item' );
-      admin.typeTableEditorTextbox( 'test cell text' );
+    } );
+
+    afterEach( () => {
+      admin.closeTableEditor();
+    } );
+
+    it( 'should be able to create and edit a table', () => {
+      const text = 'test cell text';
+      admin.typeTableEditorTextbox( text );
       admin.saveTableEditor();
-      cy.get( 'td' ).contains( 'test cell text' ).should( 'be.visible' );
+      admin.searchFirstTableCell( text ).should( 'be.visible' );
     } );
 
     it( 'should be able to select all standard edit buttons in table', () => {
-      admin.selectFirstTableCell();
-      admin.selectTableEditorTextbox();
       admin.selectTableEditorButton( 'BOLD' );
       admin.selectTableEditorButton( 'ITALIC' );
       admin.selectTableEditorButton( 'header-three' );
@@ -140,21 +150,18 @@ describe( 'Admin', () => {
       admin.selectTableEditorButton( 'redo' );
     } );
 
-    it( 'should be able to use link button', () => {
-      admin.selectFirstTableCell();
+    it( 'should be able to use link buttons', () => {
       admin.selectTableEditorButton( 'LINK' );
       admin.selectInternalLink( 'CFGov' );
-      admin.saveTableEditor();
-      cy.get( 'td' ).contains( 'CFGov' ).should( 'be.visible' );
-    } );
-
-    it( 'should be able to use document button', () => {
       const documentName = 'cfpb_interested-vendor-instructions_fy2020.pdf';
-      admin.selectFirstTableCell();
       admin.selectTableEditorButton( 'DOCUMENT' );
       admin.selectDocumentLink( documentName );
+    } );
+
+    it( 'should be able to save an empty cell', () => {
+      admin.typeTableEditorTextbox( '{selectall}{backspace}' );
       admin.saveTableEditor();
-      cy.get( 'td' ).contains( documentName ).should( 'be.visible' );
+      admin.getFirstTableCell().should( 'be.empty' );
     } );
   } );
 } );

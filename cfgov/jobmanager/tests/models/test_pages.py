@@ -139,6 +139,7 @@ class JobListingPageFormTests(TestCase, WagtailTestUtils):
             'usajobs_application_links-TOTAL_FORMS': 0,
             'language': 'en',
             'schema_json': 'null',
+            'is_archived': 'no'
         }
 
         post_data.update(kwargs)
@@ -238,4 +239,4 @@ class JobListingPageTests(TestCase):
         self.assertEqual(context['grades'], ['53'])
 
     def test_page_includes_extra_js(self):
-        self.assertIn('read-more.js', JobListingPage().page_js)
+        self.assertIn('summary.js', JobListingPage().page_js)

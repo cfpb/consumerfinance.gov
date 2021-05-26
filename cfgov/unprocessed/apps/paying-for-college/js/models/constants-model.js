@@ -1,7 +1,6 @@
 import { updateFinancial } from '../dispatchers/update-models.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { getConstants } from '../dispatchers/get-api-values.js';
-import { updateFinancialView } from '../dispatchers/update-view.js';
 
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
@@ -22,7 +21,8 @@ const constantsModel = {
       yearOne: 0,
       yearTwo: 0,
       yearThree: 0
-    }
+    },
+    existingDebtRate: 0.04
   },
   nonNumeric: [ 'constantsYear' ],
   financialValues: {
@@ -33,7 +33,8 @@ const constantsModel = {
     rate_gradPlus: 'gradPlusRate',
     fee_gradPlus: 'plusOriginationFee',
     rate_parentPlus: 'parentplusRate',
-    fee_parentPlus: 'plusOriginationFee'
+    fee_parentPlus: 'plusOriginationFee',
+    rate_existingDebt: 'existingDebtRate'
   },
 
   init: function() {

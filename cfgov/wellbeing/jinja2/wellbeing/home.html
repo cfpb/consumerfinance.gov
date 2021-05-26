@@ -1,7 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% block title -%}
-    {{ _('Find out your financial well-being') }}
+    {{ _('Find out your financial well-being') }} | {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
 
 {% block desc -%}
@@ -927,8 +927,6 @@
             </div>
         </div>
 
-        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
         <div class="o-form_group">
             <input class="submit-quiz a-btn"
                    id="submit-quiz"
@@ -1047,3 +1045,18 @@
         </p>
     </div>
 {%- endblock %}
+
+{% block javascript scoped %}
+{{ super() }}
+<script async>
+  if (document.body.parentElement.className.indexOf('no-js') === -1) {
+    !function () {
+      {# Include site - wide JavaScript. #}
+      var s = [
+            '{{ static('apps/financial-well-being/js/home.js') }}'
+          ];
+      jsl(s);
+    }()
+  }
+</script>
+{% endblock %}

@@ -61,6 +61,24 @@
 
 <a class="skip-filters u-visually-hidden{% if not activities %} skip-filters__hidden{% endif %}" href="#tdp-search-results">Skip to search results</a>
 
+{% if page.results.total_results and page.results.total_results > 0 %}
+    <div class="results_count block__padded-bottom u-hide-on-med u-hide-on-lg u-hide-on-xl" data-results-count="{{ page.results.total_results }}">
+        <h3>
+            {% if page.results.total_activities > page.results.total_results %}
+                Showing {{ page.results.total_results }}
+                match{% if page.results.total_results > 1 %}es{% endif %}
+                out of
+            {% endif %}
+            {{ page.results.total_activities }} activities
+        </h3>
+    </div>
+{% else %}
+    <div class="results_count results_count__empty" data-results-count="0">
+        <h3>No results match your search.</h3>
+        <p class="u-mb15">Try a <a href="/consumer-tools/educator-tools/youth-financial-education/teach/activities/">new search</a> with different terms or filters.</p>
+    </div>
+{% endif %}
+
 <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters{% if not activities %} filters__hidden{% endif %}">
     <h3 class="h2">Filter results by</h3>
     <p class="u-hide-on-xs u-hide-on-sm">Narrow your search by selecting specific activity features.</p>
@@ -79,6 +97,7 @@
             {% endif %}
             {% set expandable_settings = {
                 'label': 'Building block',
+                'is_collapsed_for_mobile': true,
                 'is_expanded': is_expanded,
                 'is_midtone': true,
                 'hide_cue_label': true
@@ -108,6 +127,7 @@
             {% endif %}
             {% set expandable_settings = {
                 'label': 'School subject',
+                'is_collapsed_for_mobile': true,
                 'is_expanded': is_expanded,
                 'is_midtone': true,
                 'hide_cue_label': true
@@ -150,7 +170,7 @@
         {% endif %}
         {% if facets.grade_level or facets.age_range or facets.student_characteristics %}
             <h3 class="u-hide-on-xs u-hide-on-sm u-mt45">Audience</h3>
-            <div class="filter-section">
+            <div class="filter-section filter-section__second">
         {% endif %}
         {% if facets.grade_level %}
             {% if 'grade_level' in page.results.expanded_facets %}
@@ -181,6 +201,7 @@
             </div>
             {% endcall %}
         {% endif %}
+        <div class="u-hide-on-xs u-hide-on-sm">
         {% if facets.age_range %}
             {% if 'age_range' in page.results.expanded_facets %}
                 {% set is_expanded = true %}
@@ -210,6 +231,8 @@
             </div>
             {% endcall %}
         {% endif %}
+        </div>
+        <div class="u-hide-on-xs u-hide-on-sm">
         {% if facets.student_characteristics %}
             {% if 'student_characteristics' in page.results.expanded_facets %}
                 {% set is_expanded = true %}
@@ -239,12 +262,13 @@
             </div>
             {% endcall %}
         {% endif %}
+        </div>
         {% if facets.grade_level or facets.age_range or facets.student_characteristics %}
             </div>
         {% endif %}
         {% if facets.activity_type or facets.teaching_strategy or facets.blooms_taxonomy_level or facets.activity_duration %}
             <h3 class="u-hide-on-xs u-hide-on-sm u-mt45">Activity characteristics</h3>
-            <div class="filter-section u-hide-on-xs u-hide-on-sm">
+            <div class="filter-section filter-section__third">
         {% endif %}
         {% if facets.activity_type %}
             {% if 'activity_type' in page.results.expanded_facets %}
@@ -304,6 +328,7 @@
             </div>
             {% endcall %}
         {% endif %}
+        <div class="u-hide-on-xs u-hide-on-sm">
         {% if facets.blooms_taxonomy_level %}
             {% if 'blooms_taxonomy_level' in page.results.expanded_facets %}
                 {% set is_expanded = true %}
@@ -333,6 +358,7 @@
             </div>
             {% endcall %}
         {% endif %}
+        </div>
         {% if facets.activity_duration %}
             {% if 'activity_duration' in page.results.expanded_facets %}
                 {% set is_expanded = true %}
@@ -433,12 +459,13 @@
         <input type="hidden" value="{% if page.results.search_query: %}{{ page.results.search_query }}{% endif %}" name="q">
         <button class="a-btn u-mb15 u-hide-on-js">Apply filters</button>
     </form>
+
 </aside>
 <section id="tdp-search-results" class="content_main content__flush-all-on-small content__flush-bottom results{% if not activities %} results__full{% endif %}" tabindex="-1">
     <a class="u-visually-hidden" id="content_main"></a>
     <div class="results_header">
         {% if page.results.total_results and page.results.total_results > 0 %}
-            <div class="results_count" data-results-count="{{ page.results.total_results }}">
+            <div class="results_count u-hide-on-sm u-hide-on-xs" data-results-count="{{ page.results.total_results }}">
                 <h3>
                     {% if page.results.total_activities > page.results.total_results %}
                         Showing {{ page.results.total_results }}
@@ -451,7 +478,7 @@
         {% else %}
             <div class="results_count results_count__empty" data-results-count="0">
                 <h3>No results match your search.</h3>
-                <p class="u-mb15">Try a <a href="/practitioner-resources/youth-financial-education/teach/activities">new search</a> with different terms or filters.</p>
+                <p class="u-mb15">Try a <a href="/consumer-tools/educator-tools/youth-financial-education/teach/activities/">new search</a> with different terms or filters.</p>
             </div>
         {% endif %}
         {% if show_filters %}

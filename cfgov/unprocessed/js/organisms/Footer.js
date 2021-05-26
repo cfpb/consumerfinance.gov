@@ -1,6 +1,6 @@
 // Required modules.
 import * as footerButton from '../modules/footer-button';
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 
 /**
  * Footer

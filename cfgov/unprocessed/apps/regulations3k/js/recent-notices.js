@@ -1,5 +1,5 @@
 import { fetch } from './regs3k-utils';
-import { queryOne as find } from '../../../js/modules/util/dom-traverse';
+import { queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 const NOTICES_URL = './recent-notices-json';
 const CFPB_NOTICES = 'https://www.federalregister.gov/agencies/consumer-financial-protection-bureau';

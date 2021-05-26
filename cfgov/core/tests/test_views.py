@@ -1,12 +1,12 @@
 import json
 import re
+from unittest.mock import Mock, patch
 from urllib.parse import urlencode
 
 from django.http import Http404, QueryDict
 from django.test import RequestFactory, TestCase, override_settings
 from django.urls import reverse
 
-from mock import Mock, patch
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from core.govdelivery import MockGovDelivery
@@ -340,21 +340,6 @@ class TestExternalURLNoticeView(TestCase):
     def test_invalid_get_returns_404(self):
         view = ExternalURLNoticeView.as_view()
         request = self.factory.get("/?ext_url=https://bar.com")
-        with self.assertRaises(Http404):
-            view(request)
-
-    def test_valid_post_returns_redirect(self):
-        view = ExternalURLNoticeView.as_view()
-        request = self.factory.post("/", {"ext_url": "https://foo.com"})
-        response = view(request)
-        self.assertEqual(
-            (response.status_code, response["Location"]),
-            (302, "https://foo.com"),
-        )
-
-    def test_invalid_post_returns_404(self):
-        view = ExternalURLNoticeView.as_view()
-        request = self.factory.post("/")
         with self.assertRaises(Http404):
             view(request)
 

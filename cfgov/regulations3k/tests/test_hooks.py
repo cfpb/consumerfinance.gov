@@ -10,6 +10,7 @@ from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart
 )
 from regulations3k.models.pages import RegulationLandingPage, RegulationPage
+from regulations3k.wagtail_hooks import RegsURLHelper
 
 
 class TestRegs3kHooks(TestCase, WagtailTestUtils):
@@ -105,3 +106,22 @@ class TestRegs3kHooks(TestCase, WagtailTestUtils):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'View live', response.content)
         self.assertIn(b'View draft', response.content)
+
+    def test_regs_url_helper(self):
+        helper = RegsURLHelper(Section)
+
+        self.assertNotIn(
+            self.subpart.__str__(),
+            helper.crumb(
+                parent_field="subpart",
+                parent_instance=self.subpart,
+                specific_instance=self.section_num4,
+            )[1],
+        )
+
+        self.assertEqual(
+            self.section_num4.__str__(),
+            helper.crumb(
+                specific_instance=self.section_num4,
+            )[1],
+        )

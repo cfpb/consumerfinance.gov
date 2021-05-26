@@ -63,6 +63,7 @@
    ========================================================================== #}
 
 {% import 'macros/time.html' as time %}
+{% import 'molecules/archived-pill.html' as archived_pill %}
 
 {% macro render(
     post,
@@ -102,8 +103,8 @@
                     {{ date_desc }}
                     {% if 'EventPage' in post.specific_class.__name__ %}
                         {{ time.render(post.specific.start_dt, {'date':true}) }}
-		    {% elif 'EnforcementAction' in post.specific_class.__name__ and post.date_filed %}
-                        {{ time.render(post.date_filed, {'date':true}) }}
+                    {% elif 'EnforcementAction' in post.specific_class.__name__ and post.specific.initial_filing_date %}
+                        {{ time.render(post.specific.initial_filing_date, {'date':true}) }}
                     {% else %}
                         {{ time.render(post.date_published, {'date':true}) }}
                     {% endif %}
@@ -131,7 +132,7 @@
                     {% endif %}
                 </div>
             {% endif %}
-        {% elif post.preview_image %}
+        {% elif post.preview_image and not post.archived %}
             {% set photo = image(post.preview_image, 'original') %}
             <div class="o-post-preview_image-container">
                 <img class="o-post-preview_image"
@@ -156,6 +157,7 @@
             <h3 class="o-post-preview_title">
                 <a href="{{ post_url }}">
                     {{ post.preview_title | safe if post.preview_title else post.title }}
+                    {{ archived_pill.render( post ) }}
                 </a>
             </h3>
 

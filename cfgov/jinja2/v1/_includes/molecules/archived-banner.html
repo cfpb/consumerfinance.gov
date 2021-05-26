@@ -1,14 +1,9 @@
-{% import 'macros/util/format/datetime.html' as dt %}
 <div class="m-archived-banner">
   <div class="content_wrapper">
     {{ svg_icon( 'information-round' ) }}
     <div class="m-archived-banner_content">
-    <h4>
-      {% if page.archived_at %}
-        This content was archived on <time datetime='{{ page.archived_at }}'>{{ dt.format_date(page.archived_at, True) }}</time>.
-      {% else %}
-        This content is archived
-      {% endif %}
+    <h4 class="u-mb0">
+      This page has been archived.
     </h4>
     </div>
   </div>

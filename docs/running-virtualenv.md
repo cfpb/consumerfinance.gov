@@ -127,16 +127,14 @@ yarn run gulp build           # Concatenate, optimize, and copy source files to 
 yarn run gulp clean           # Remove the contents of the production /dist/ directory.
 yarn run gulp lint            # Lint the scripts and build files.
 yarn run gulp docs            # Generate JSDocs from the scripts.
-yarn run gulp test            # Run linting, unit and acceptance tests (see below).
+yarn run gulp test            # Run linting, unit, and functional tests (see below).
 yarn run gulp test:unit       # Run only unit tests on source code.
-yarn run gulp test:acceptance # Run only acceptance (in-browser) tests on production code.
-yarn run gulp audit           # Run code quality audits.
 ```
 
 ### Reinstalling the virtual environment
 
-To remove an existing virtual environment for 
-[a reinstall of consumerfinance.gov](../installation/#stand-alone-installation), 
+To remove an existing virtual environment for
+[a reinstall of consumerfinance.gov](../installation/#stand-alone-installation),
 first deactivate the virtual environment if it is active:
 
 ```bash
@@ -149,6 +147,6 @@ Then remove the existing virtual environment:
 rmvirtualenv consumerfinance.gov
 ```
 
-After this, you may follow 
+After this, you may follow
 [the installation instructions](installation/#stand-alone-installation)
 again.

@@ -1,32 +1,18 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% set breadcrumb_items = [{
+    "title": "Diversity and Inclusion at the Bureau",
+    "href": "/about-us/diversity-and-inclusion/",
+}] %}
+
 {% block meta_viewport %}
     {{ super() }}
     <meta name="robots" content="noindex">
 {% endblock %}
 
 {% block title -%}
-    Your voluntary diversity assessment onboarding has been submitted
+    Your voluntary diversity assessment onboarding has been submitted | Consumer Financial Protection Bureau
 {%- endblock %}
-
-{% block css %}
-    {{ super() }}
-    <style>
-
-    </style>
-{% endblock %}
-
-{% block pre_content %}
-    <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            {{ svg_icon('left') }}
-            <a class="breadcrumbs_link" href="/about-us/diversity-and-inclusion/">
-                Diversity and Inclusion at the Bureau
-            </a>
-        </nav>
-    </div>
-{% endblock %}
-
 
 {% block content_main %}
     <div class="block block__flush-top">

@@ -1,17 +1,20 @@
-from django.test import RequestFactory, TestCase
+from io import StringIO
+from unittest import mock
+
+from django.test import RequestFactory, TestCase, override_settings
 
 from wagtail.core.blocks import StreamValue
-from wagtail.core.models import Site
-
-import mock
+from wagtail.core.models import Page, Site
 
 from scripts._atomic_helpers import filter_controls
+from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.models import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.filterable_list_mixins import FilterableListMixin
 
 
 class TestFilterableListMixin(TestCase):
+
     def setUp(self):
         self.mixin = FilterableListMixin()
         self.factory = RequestFactory()
@@ -56,9 +59,7 @@ class TestFilterableListMixin(TestCase):
             def get_site(self):
                 return None
 
-        self.assertFalse(
-            MockPageInDefaultSite().get_filterable_queryset().exists()
-        )
+        self.assertIsNone(MockPageInDefaultSite().get_filterable_search())
 
     # FilterableListMixin.set_do_not_index tests
     def test_do_not_index_is_false_by_default(self):
@@ -85,7 +86,42 @@ class TestFilterableListMixin(TestCase):
         assert self.mixin.do_not_index is False
 
 
-class FilterableRoutesTestCase(TestCase):
+class FilterableListContextTestCase(ElasticsearchTestsMixin, TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")
+        self.root = Site.objects.get(is_default_site=True).root_page
+        self.home_page = Page(title="Home")
+        self.root.add_child(instance=self.home_page)
+        self.home_page.add_child(instance=self.filterable_page)
+        self.page = BlogPage(title="Child test page", live=True)
+        self.archived_page = BlogPage(
+            title="Archive test page",
+            live=True,
+            is_archived='yes'
+        )
+        self.filterable_page.add_child(instance=self.page)
+        self.filterable_page.add_child(instance=self.archived_page)
+
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
+
+    def test_get_context_has_archived_posts(self):
+        context = self.filterable_page.get_context(
+            request=self.factory.get("/test/")
+        )
+        self.assertTrue(context['has_archived_posts'])
+
+    @override_settings(
+        FLAGS={"HIDE_ARCHIVE_FILTER_OPTIONS": [("boolean", True)]}
+    )
+    def test_get_context_has_archived_posts_with_hide_archive_flag_on(self):
+        context = self.filterable_page.get_context(
+            request=self.factory.get("/test/")
+        )
+        self.assertFalse(context['has_archived_posts'])
+
+
+class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
 
     def setUp(self):
         self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")
@@ -98,6 +134,8 @@ class FilterableRoutesTestCase(TestCase):
             live=True,
         )
         self.filterable_page.add_child(instance=self.page)
+
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_index_route(self):
         response = self.client.get("/test/")
@@ -114,7 +152,7 @@ class FilterableRoutesTestCase(TestCase):
         )
 
 
-class FilterableListRelationsTestCase(TestCase):
+class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
 
     def setUp(self):
         self.filter_controls = filter_controls
@@ -127,11 +165,18 @@ class FilterableListRelationsTestCase(TestCase):
 
         self.child_page = BlogPage(title="Child test page", live=True)
         self.sibling_page = BlogPage(title="Sibling test page", live=True)
-        self.archived_sibling_page = BlogPage(title="Archive test page", live=True,
-                                         is_archived=True)
+        self.archived_sibling_page = BlogPage(
+            title="Archive test page",
+            live=True,
+            is_archived='yes'
+        )
         self.filterable_page.add_child(instance=self.child_page)
         self.filterable_page.get_parent().add_child(instance=self.sibling_page)
-        self.filterable_page.get_parent().add_child(instance=self.archived_sibling_page)
+        self.filterable_page.get_parent().add_child(
+            instance=self.archived_sibling_page
+        )
+
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def set_filterable_controls(self, value):
         self.filterable_page.content = StreamValue(
@@ -143,30 +188,17 @@ class FilterableListRelationsTestCase(TestCase):
 
     def test_get_filterable_children_pages(self):
         filter_controls['value']['filter_children'] = True
-        filter_controls['value']['filter_siblings'] = False
-        filter_controls['value']['filter_archive'] = False
         self.set_filterable_controls(self.filter_controls)
 
-        qs = self.filterable_page.get_filterable_queryset()
+        filterable_search = self.filterable_page.get_filterable_search()
+        qs = filterable_search.search()
         self.assertEqual(qs.count(), 1)
         self.assertEqual(qs[0].pk, self.child_page.pk)
+        self.assertEqual("/test/", self.filterable_page.get_filterable_root())
 
-    def test_get_filterable_siblings_pages(self):
+    def test_get_filterable_root_site_wide(self):
         filter_controls['value']['filter_children'] = False
-        filter_controls['value']['filter_siblings'] = True
-        filter_controls['value']['filter_archive'] = False
         self.set_filterable_controls(self.filter_controls)
 
-        qs = self.filterable_page.get_filterable_queryset()
-        self.assertEqual(qs.count(), 1)
-        self.assertEqual(qs[0].pk, self.sibling_page.pk)
-
-    def test_get_filterable_archived_pages(self):
-        filter_controls['value']['filter_children'] = False
-        filter_controls['value']['filter_siblings'] = True
-        filter_controls['value']['filter_archive'] = True
-        self.set_filterable_controls(self.filter_controls)
-
-        qs = self.filterable_page.get_filterable_queryset()
-        self.assertEqual(qs.count(), 1)
-        self.assertEqual(qs[0].pk, self.archived_sibling_page.pk)
+        root = self.filterable_page.get_filterable_root()
+        self.assertEqual("/", root)

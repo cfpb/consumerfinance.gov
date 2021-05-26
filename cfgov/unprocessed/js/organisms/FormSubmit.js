@@ -1,9 +1,9 @@
 // Required modules.
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import AlphaTransition from '../modules/transition/AlphaTransition';
-import BaseTransition from '../modules/transition/BaseTransition';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import AlphaTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/AlphaTransition';
+import BaseTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/BaseTransition';
 import ERROR_MESSAGES from '../config/error-messages-config';
-import EventObserver from '../modules/util/EventObserver';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import Notification from '../molecules/Notification';
 import { scrollIntoView } from '../modules/util/scroll';
 

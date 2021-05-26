@@ -1,25 +1,23 @@
 import os
+import secrets
+from pathlib import Path
 
-import django
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
-
-import wagtail
 
 import dj_database_url
 from elasticsearch7 import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
-from unipath import DIRS, Path
 
 from cfgov.util import admin_emails
 
 
 # Repository root is 4 levels above this file
-REPOSITORY_ROOT = Path(__file__).ancestor(4)
+REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
 # This is the root of the Django project, 'cfgov'
-PROJECT_ROOT = REPOSITORY_ROOT.child("cfgov")
-V1_TEMPLATE_ROOT = PROJECT_ROOT.child("jinja2", "v1")
+PROJECT_ROOT = REPOSITORY_ROOT.joinpath("cfgov")
+V1_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2", "v1")
 
 SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(32))
 
@@ -103,7 +101,6 @@ INSTALLED_APPS = (
     "django_elasticsearch_dsl",
 
     # Satellites
-    "comparisontool",
     "retirement_api",
     "ratechecker",
     "countylimits",
@@ -144,12 +141,11 @@ MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
-    "flags.middleware.FlagConditionsMiddleware",
     "core.middleware.SelfHealingMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
@@ -176,7 +172,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # Look for Django templates in these directories
-        "DIRS": [PROJECT_ROOT.child("templates")],
+        "DIRS": [PROJECT_ROOT.joinpath("templates")],
         # Look for Django templates in each app under a templates subdirectory
         "APP_DIRS": True,
         "OPTIONS": {
@@ -195,9 +191,9 @@ TEMPLATES = [
         # Look for Jinja2 templates in these directories
         "DIRS": [
             V1_TEMPLATE_ROOT,
-            V1_TEMPLATE_ROOT.child("_includes"),
-            V1_TEMPLATE_ROOT.child("_layouts"),
-            PROJECT_ROOT.child("static_built"),
+            V1_TEMPLATE_ROOT.joinpath("_includes"),
+            V1_TEMPLATE_ROOT.joinpath("_layouts"),
+            PROJECT_ROOT.joinpath("static_built"),
         ],
         # Look for Jinja2 templates in each app under a jinja2 subdirectory
         "APP_DIRS": True,
@@ -278,12 +274,14 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 # Used to include directories not traditionally found,
 # app-specific 'static' directories.
 STATICFILES_DIRS = [
-    PROJECT_ROOT.child("static_built"),
-    PROJECT_ROOT.child("templates", "wagtailadmin"),
+    PROJECT_ROOT.joinpath("static_built"),
+    PROJECT_ROOT.joinpath("templates", "wagtailadmin"),
 ]
 
 # Also include any directories under static.in
-STATICFILES_DIRS += REPOSITORY_ROOT.child("static.in").listdir(filter=DIRS)
+STATICFILES_DIRS += [
+    d for d in REPOSITORY_ROOT.joinpath("static.in").iterdir() if d.is_dir()
+]
 
 ALLOWED_HOSTS = ["*"]
 
@@ -303,10 +301,11 @@ TAGGIT_CASE_INSENSITIVE = True
 WAGTAIL_USER_CREATION_FORM = "v1.auth_forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "v1.auth_forms.UserEditForm"
 
+ES_PORT = os.getenv("ES_PORT", "9200")
 SHEER_ELASTICSEARCH_SERVER = (
     os.environ.get("ES_HOST", "localhost")
     + ":"
-    + os.environ.get("ES_PORT", "9200")
+    + ES_PORT
 )
 SHEER_ELASTICSEARCH_INDEX = os.environ.get(
     "SHEER_ELASTICSEARCH_INDEX", "content"
@@ -339,9 +338,6 @@ SHEER_ELASTICSEARCH_SETTINGS = {
 
 
 # LEGACY APPS
-
-STATIC_VERSION = ""
-
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
 
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
@@ -424,26 +420,30 @@ ELASTICSEARCH_INDEX_SETTINGS = {
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
 # ElasticSearch 7 Configuration
-ELASTICSEARCH_DSL_AUTO_REFRESH = False
-ELASTICSEARCH_DSL_AUTOSYNC = False
+ES7_HOST = os.getenv('ES7_HOST', 'localhost')
 
 if os.environ.get('USE_AWS_ES', False):
-    awsauth = AWS4Auth(os.environ.get('AWS_ES_ACCESS_KEY'), os.environ.get('AWS_ES_SECRET_KEY'), 'us-east-1', 'es')
-    host = os.environ.get('ES7_HOST', '')
-    ELASTICSEARCH_DSL={
+    awsauth = AWS4Auth(
+        os.environ.get('AWS_ES_ACCESS_KEY'),
+        os.environ.get('AWS_ES_SECRET_KEY'),
+        'us-east-1',
+        'es'
+    )
+    ELASTICSEARCH_DSL = {
         'default': {
-            'hosts': [{'host': host, 'port': 443}],
+            'hosts': [{'host': ES7_HOST, 'port': 443}],
             'http_auth': awsauth,
             'use_ssl': True,
-            'connection_class': RequestsHttpConnection
+            'connection_class': RequestsHttpConnection,
+            'timeout': 60
         },
     }
 else:
-    ELASTICSEARCH_DSL={
-        'default': {
-            'hosts': os.environ.get('ES7_HOST', 'localhost:9200')
-        },
+    ELASTICSEARCH_DSL = {
+        "default": {"hosts": f"http://{ES7_HOST}:{ES_PORT}"}
     }
+
+ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'search.elasticsearch_helpers.WagtailSignalProcessor'
 
 # S3 Configuration
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
@@ -461,6 +461,7 @@ if os.environ.get("S3_ENABLED", "False") == "True":
         AWS_S3_CUSTOM_DOMAIN = os.environ["AWS_S3_CUSTOM_DOMAIN"]
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     MEDIA_URL = os.path.join(os.environ.get("AWS_S3_URL"), AWS_LOCATION, "")
+
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
@@ -548,6 +549,7 @@ CSP_SCRIPT_SRC = (
     "*.consumerfinance.gov",
     "*.google-analytics.com",
     "*.googletagmanager.com",
+    "*.googleoptimize.com",
     "tagmanager.google.com",
     "optimize.google.com",
     "ajax.googleapis.com",
@@ -610,6 +612,7 @@ CSP_IMG_SRC = (
     "www.facebook.com",
     "www.gravatar.com",
     "*.qualtrics.com",
+    "*.mouseflow.com",
 )
 
 # These specify what URL's we allow to appear in frames/iframes
@@ -618,6 +621,7 @@ CSP_FRAME_SRC = (
     "*.consumerfinance.gov",
     "*.googletagmanager.com",
     "*.google-analytics.com",
+    "*.googleoptimize.com",
     "optimize.google.com",
     "www.youtube.com",
     "*.doubleclick.net",
@@ -643,13 +647,16 @@ CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
     "*.google-analytics.com",
+    "*.googleoptimize.com",
     "*.tiles.mapbox.com",
+    "api.mapbox.com",
     "bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",
     "n2.mouseflow.com",
     "api.iperceptions.com",
     "*.qualtrics.com",
+    "raw.githubusercontent.com",
 )
 
 # These specify valid media sources (e.g., MP3 files)
@@ -667,8 +674,8 @@ FLAGS = {
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results
     "ASK_SEARCH_TYPOS": [],
-    # Ask CFPB date label	
-    # When enabled, date label will be changed from 'updated' to 'last reviewed'	
+    # Ask CFPB date label
+    # When enabled, date label will be changed from 'updated' to 'last reviewed'
     "ASK_UPDATED_DATE_LABEL": [],
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
@@ -714,11 +721,6 @@ FLAGS = {
     # Email popups.
     "EMAIL_POPUP_OAH": [("boolean", True)],
     "EMAIL_POPUP_DEBT": [("boolean", True)],
-    # Search.gov API-based site-search
-    "SEARCH_DOTGOV_API": [],
-    # Turbolinks is a JS library that speeds up page loads
-    # https://github.com/turbolinks/turbolinks
-    "TURBOLINKS": [],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # SPLIT TESTING FLAGS
@@ -730,10 +732,6 @@ FLAGS = {
     "BETA_EXTERNAL_TESTING": [],
     # Used to hide new youth employment success pages prior to public launch
     "YOUTH_EMPLOYMENT_SUCCESS": [],
-    # Release of prepaid agreements database search
-    "PREPAID_AGREEMENTS_SEARCH": [],
-    # Used to hide CCDB landing page updates prior to public launch
-    "CCDB_CONTENT_UPDATES": [],
     # During a Salesforce system outage, the following flag should be enabled
     # to alert users that the Collect community is down.
     "COLLECT_OUTAGE": [
@@ -766,36 +764,23 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
-    # Used to enable use of django-elasticsearch-dsl and disable use of Haystack
-    # This will be used in the ask_cfpb and regulations applications
-    "ELASTIC_SEARCH_DSL": [("boolean", False)],
-    # Used to enable django-elasticsearch-dsl and disable haystack within the regulations app.
-    "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
+    # Hide archive filter options in the filterable UI
+    "HIDE_ARCHIVE_FILTER_OPTIONS": [],
+    # Expand ES Filterable List Search
+    "EXPAND_FILTERABLE_LIST_SEARCH": [],
 }
 
-
-# Watchman tokens, used to authenticate global status endpoint
-WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS", os.urandom(32))
+# Watchman tokens, a comma-separated string of tokens used to authenticate
+# global status endpoint. The Watchman status URL endpoint is only included if
+# WATCHMAN_TOKENS is defined as an environment variable. A blank value for
+# WATCHMAN_TOKENS will make the status endpoint accessible without a token.
+WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS")
 
 # This specifies what checks Watchman should run and include in its output
 # https://github.com/mwarkentin/django-watchman#custom-checks
 WATCHMAN_CHECKS = (
-    "watchman.checks.databases",
-    "watchman.checks.storage",
-    "watchman.checks.caches",
-    "alerts.checks.check_clock_drift",
+    "alerts.checks.elasticsearch_health",
 )
-
-# Used to check server's time against in check_clock_drift
-NTP_TIME_SERVER = "north-america.pool.ntp.org"
-
-# If server's clock drifts from NTP by more than specified offset
-# (in seconds), check_clock_drift will fail
-MAX_ALLOWED_TIME_OFFSET = 5
-
-# Search.gov values
-SEARCH_DOT_GOV_AFFILIATE = os.environ.get("SEARCH_DOT_GOV_AFFILIATE")
-SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get("SEARCH_DOT_GOV_ACCESS_KEY")
 
 # We want the ability to serve the latest drafts of some pages on beta
 # This value is read by v1.wagtail_hooks
@@ -846,6 +831,11 @@ PARSE_LINKS_EXCLUSION_LIST = [
     r"^/login/",
     # Regulations pages that have their own link markup
     r"^/policy-compliance/rulemaking/regulations/\d+/",
+    # DjangoRestFramework API pages where link icons are intrusive
+    r"^/oah-api/",
+    # External site interstitial (if we're here, the links have already been
+    # parsed)
+    r"^/external-site/",
 ]
 
 # Required by django-extensions to determine the execution directory used by
@@ -875,3 +865,20 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
         },
     },
 }
+
+# Serialize Decimal(3.14) as 3.14, not "3.14"
+REST_FRAMEWORK = {
+    "COERCE_DECIMAL_TO_STRING": False
+}
+
+# We require CSRF only on authenticated paths. This setting is handled by our
+# core.middleware.PathBasedCsrfViewMiddleware.
+#
+# Any paths listed here that are public-facing will receive an "
+# "Edge-Control: no-store" header from our
+# core.middleware.DownstreamCacheControlMiddleware and will not be cached.
+CSRF_REQUIRED_PATHS = (
+    "/login",
+    "/admin",
+    "/django-admin",
+)

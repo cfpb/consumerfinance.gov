@@ -4,9 +4,19 @@ of college, grants, loans, etc. It also includes debt calculations
 based on these costs.
 */
 
-import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { initializeFinancialValues, recalculateExpenses } from '../dispatchers/update-models.js';
-import { updateAffordingChart, updateCostOfBorrowingChart, updateFinancialView, updateFinancialViewAndFinancialCharts, updateMakePlanChart, updateMaxDebtChart, updateUrlQueryString } from '../dispatchers/update-view.js';
+import {
+  getConstantsValue,
+  getSchoolValue,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
+import {
+  initializeFinancialValues,
+  recalculateExpenses
+} from '../dispatchers/update-models.js';
+import {
+  updateFinancialViewAndFinancialCharts,
+  updateUrlQueryString
+} from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { debtCalculator } from '../util/debt-calculator.js';
 import { enforceRange, stringToNum } from '../util/number-utils.js';
@@ -44,12 +54,19 @@ const financialModel = {
    * subfunctions
    */
   recalculate: () => {
+    financialModel.rate_existingDebt = getConstantsValue( 'existingDebtRate' );
     financialModel._updateRates();
     financialModel._calculateTotals();
     debtCalculator();
 
     // set monthly salary value
     financialModel.values.salary_monthly = financialModel.values.salary_annual / 12;
+
+    // set text of "hours to cover payment"
+    const hours = Math.floor( financialModel.values.debt_repayHours * 100 ) / 100;
+    const weeks = Math.floor( financialModel.values.debt_repayWorkWeeks * 100 ) / 100;
+    const coverString = hours + 'hours, or ' + weeks + 'forty-hour work weeks';
+    updateState.byProperty( 'hoursToCoverPaymentText' );
 
     recalculateExpenses();
 
@@ -58,6 +75,7 @@ const financialModel = {
         Math.abs( financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual );
 
     financialModel._updateStateWithFinancials();
+
   },
 
   /**
@@ -135,10 +153,6 @@ const financialModel = {
     vals.total_gap = Math.round( vals.total_costs - vals.total_funding );
     vals.total_excessFunding = Math.round( vals.total_funding - vals.total_costs );
 
-    /* Borrowing total
-       TODO - Update this once year-by-year DIRECT borrowing is in place */
-    vals.total_borrowingAtGrad = vals.total_borrowing * vals.other_programLength;
-
     if ( vals.total_gap < 0 ) {
       vals.total_gap = 0;
     }
@@ -153,13 +167,21 @@ const financialModel = {
   _enforceLimits: () => {
     let unsubCap = 0;
     const errors = {};
+    const yearMap = {
+      n: 'yearOne',
+      0: 'yearOne',
+      1: 'yearTwo',
+      a: 'yearThree',
+      2: 'yearThree'
+    };
 
-    // get the caps from the constants model
+    // Determine progress, set "year" variable
+    const year = yearMap[getStateValue( 'programProgress' )];
 
     // First, enforce subsidized cap
     const subResult = enforceRange( financialModel.values.fedLoan_directSub,
       0,
-      getConstantsValue( 'subCaps' ).yearOne );
+      getConstantsValue( 'subCaps' )[year] );
     if ( subResult !== false ) {
       financialModel.values.fedLoan_directSub = subResult.value;
       // Reserve for later error handling
@@ -167,6 +189,7 @@ const financialModel = {
         errors.fedLoan_directSub = subResult.error;
       }
     }
+
 
     // Calculate unsubsidized loan cap based on subsidized loan amount
     if ( getStateValue( 'programType' ) === 'graduate' ) {
@@ -180,15 +203,13 @@ const financialModel = {
       financialModel.values.fellowAssist_fellowship = 0;
       financialModel.values.fellowAssist_assistantship = 0;
 
-      if ( getStateValue( 'programStudentType' ) === 'independent' ) {
-        unsubCap = Math.max( 0, getConstantsValue( 'totalIndepCaps' ).yearOne -
-          financialModel.values.fedLoan_directSub );
-
+      if ( getStateValue( 'programDependency' ) === 'independent' ) {
+        unsubCap = Math.max( 0, getConstantsValue( 'totalIndepCaps' )[year] );
       } else {
-        unsubCap = Math.max( 0, getConstantsValue( 'totalCaps' ).yearOne -
-          financialModel.values.fedLoan_directSub );
+        unsubCap = Math.max( 0, getConstantsValue( 'totalCaps' )[year] );
       }
     }
+
     // enforce unsub range
     const unsubResult = enforceRange( financialModel.values.fedLoan_directUnsub,
       0,

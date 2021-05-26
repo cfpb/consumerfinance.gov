@@ -33,8 +33,7 @@ module.exports = {
     test: [
       paths.test + '/cypress/**/*.js',
       paths.test + '/util/**/*.js',
-      paths.test + '/unit_tests/**/*.js',
-      paths.test + '/browser_tests/**/*.js'
+      paths.test + '/unit_tests/**/*.js'
     ],
     build: [
       'config/**/*.js',
@@ -67,6 +66,7 @@ module.exports = {
       compress: true
     },
     otherBuildTriggerFiles: [
+      paths.unprocessed + '/css/**/*.css',
       paths.unprocessed + '/css/**/*.less',
       paths.modules,
       './config/**/*.js',

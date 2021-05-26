@@ -1,6 +1,8 @@
-import { simulateEvent } from '../../../../util/simulate-event';
+import { simulateEvent } from '../../../../util/simulate-event.js';
 
-const app = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js' );
+const search = require(
+  '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js'
+);
 
 const HTML_SNIPPET = `
 
@@ -156,14 +158,12 @@ describe( 'The TDP search page', () => {
     global.XMLHttpRequest = xhr;
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
-    // Fire `load` event
-    const event = document.createEvent( 'Event' );
-    event.initEvent( 'load', true, true );
-    window.dispatchEvent( event );
+    // Fire init
+    search.init();
   } );
 
   it( 'should not throw any errors on init', () => {
-    expect( () => app ).not.toThrow();
+    expect( () => search.init() ).not.toThrow();
   } );
 
   it( 'should handle search form submissions', () => {
@@ -247,23 +247,36 @@ describe( 'The TDP search page', () => {
     };
     global.XMLHttpRequest = jest.fn( () => mockXHR );
     const parentCheckbox = document.querySelector( '#topic--earn' );
-    const form = document.querySelector( 'form#filter-form' );
 
-    let numChecked = document.querySelectorAll( '.o-expandable-facets .a-checkbox:checked' ).length;
+    let numChecked = document.querySelectorAll(
+      '.o-expandable-facets .a-checkbox:checked'
+    ).length;
     expect( numChecked ).toEqual( 1 );
 
     parentCheckbox.checked = true;
     simulateEvent( 'change', parentCheckbox );
-    numChecked = document.querySelectorAll( '.o-expandable-facets .a-checkbox:checked' ).length;
+    numChecked = document.querySelectorAll(
+      '.o-expandable-facets .a-checkbox:checked'
+    ).length;
     expect( numChecked ).toEqual( 3 );
-    expect( window.location.href ).toEqual( 'http://localhost/?q=executive&building_block=1&topic=1&topic=4&topic=2' );
+    expect(
+      window.location.href
+    ).toEqual(
+      'http://localhost/?q=executive&building_block=1&topic=1&topic=4&topic=2'
+    );
 
     const childCheckbox = document.querySelector( '#topic--getting-paid' );
     childCheckbox.checked = false;
     simulateEvent( 'change', childCheckbox );
-    numChecked = document.querySelectorAll( '.o-expandable-facets .a-checkbox:checked' ).length;
+    numChecked = document.querySelectorAll(
+      '.o-expandable-facets .a-checkbox:checked'
+    ).length;
     expect( numChecked ).toEqual( 1 );
-    expect( window.location.href ).toEqual( 'http://localhost/?q=executive&building_block=1&topic=2' );
+    expect(
+      window.location.href
+    ).toEqual(
+      'http://localhost/?q=executive&building_block=1&topic=2'
+    );
 
   } );
 
@@ -281,6 +294,7 @@ describe( 'The TDP search page', () => {
 
     simulateEvent( 'click', clearIcon );
     setTimeout( () => {
+      // eslint-disable-next-line no-console
       expect( console.error ).toBeCalled();
       done();
     }, 100 );

@@ -43,6 +43,8 @@ BASE = 'https://www.consumerfinance.gov'
 S3_URI = 'https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json'  # noqa: E501
 
 # Fall-back list of top 25 URLs, as of July 2, 2020, from hubcap/wiki
+# All URLs in the list should be canonical locations of the given pages,
+# not redirects.
 TOP = [
     '/',  # home page
     '/about-us/blog/guide-covid-19-economic-stimulus-checks/',
@@ -67,28 +69,30 @@ TOP = [
     '/about-us/blog/guide-coronavirus-mortgage-relief-options/#relief-options/',  # noqa: E501
     '/coronavirus/managing-your-finances/economic-impact-payment-prepaid-debit-cards/',  # noqa: E501
     '/ask-cfpb/how-can-i-tell-who-owns-my-mortgage-en-214/',
-    '/policy-compliance/rulemaking/regulations/',
+    '/rules-policy/regulations/',
     '/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/',  # noqa: E501
 ]
 
 # URLs for cfgov sub-apps that are expected to be present
+# All URLs in the list should be canonical locations of the given pages,
+# not redirects.
 APPS = [
     '/about-us/budget-strategy/',
-    '/about-us/payments-harmed-consumers/',
+    '/enforcement/payments-harmed-consumers/',
     '/about-us/blog/',
     '/about-us/newsroom/',
     '/about-us/events/',
     '/about-us/careers/',
     '/about-us/careers/current-openings/',
     '/about-us/doing-business-with-us/',
-    '/about-us/innovation/',
+    '/rules-policy/innovation/',
     '/activity-log/',
-    '/ask-cfpb/'
+    '/ask-cfpb/',
     '/your-story/',
     '/es/',
     '/es/obtener-respuestas/',
     '/students/',
-    '/practitioner-resources/servicemembers/',
+    '/consumer-tools/educator-tools/servicemembers/',
     '/know-before-you-owe/',
     '/fair-lending/',
     '/paying-for-college/',
@@ -101,15 +105,15 @@ APPS = [
     '/consumer-tools/prepaid-cards/',
     '/consumer-tools/sending-money/',
     '/mortgagehelp/',
-    '/practitioner-resources/your-money-your-goals/',
-    '/adult-financial-education/',
-    '/practitioner-resources/youth-financial-education/',
-    '/practitioner-resources/library-resources/',
-    '/practitioner-resources/resources-for-tax-preparers/',
+    '/consumer-tools/educator-tools/your-money-your-goals/',
+    '/consumer-tools/educator-tools/adult-financial-education/',
+    '/consumer-tools/educator-tools/youth-financial-education/',
+    '/consumer-tools/educator-tools/library-resources/',
+    '/consumer-tools/educator-tools/resources-for-tax-preparers/',
     '/consumer-tools/money-as-you-grow/',
     '/empowerment/',
-    '/practitioner-resources/resources-for-older-adults/',
-    '/practitioner-resources/youth-financial-education/',  # TDP
+    '/consumer-tools/educator-tools/resources-for-older-adults/',
+    '/consumer-tools/educator-tools/youth-financial-education/',  # TDP
     '/data-research/',
     '/data-research/research-reports/',
     '/data-research/cfpb-research-conference/',
@@ -121,15 +125,15 @@ APPS = [
     '/data-research/cfpb-researchers/',
     '/data-research/mortgage-performance-trends/',
     '/policy-compliance/',
-    '/policy-compliance/rulemaking/',
-    '/policy-compliance/guidance/',
-    '/policy-compliance/guidance/implementation-guidance/',
-    '/policy-compliance/enforcement/',
-    '/policy-compliance/notice-opportunities-comment/',
-    '/policy-compliance/amicus/',
-    '/policy-compliance/guidance/implementation-guidance/hmda-implementation/',
-    '/policy-compliance/guidance/implementation-guidance/mortserv/',
-    '/policy-compliance/guidance/implementation-guidance/tila-respa-disclosure-rule/',  # noqa: E501
+    '/rules-policy/',
+    '/compliance/',
+    '/compliance/implementation-guidance/',
+    '/enforcement/',
+    '/rules-policy/notice-opportunities-comment/',
+    '/compliance/amicus/',
+    '/compliance/implementation-guidance/hmda-implementation/',
+    '/compliance/implementation-guidance/mortserv/',
+    '/compliance/implementation-guidance/tila-respa-disclosure-rule/'
 ]
 
 # call `set` on the combined list to weed out dupes

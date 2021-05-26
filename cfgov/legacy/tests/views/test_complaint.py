@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
+from unittest.mock import patch
 
 from django.test import RequestFactory, TestCase, override_settings
 
 from complaint_search import views as ComplaintViews
-from mock import patch
 from rest_framework.response import Response
 
 from legacy.views.complaint import ComplaintLandingView

@@ -13,14 +13,14 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=12.x"
+    "node": ">=14.x"
   },
   "dependencies": {
     "amortize": "1.1.0",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "date-format": "3.0.0",
     "es6-promise": "4.2.8",
-    "fastdom": "1.0.9",
+    "fastdom": "1.0.10",
     "format-usd": "1.0.1",
     "handlebars": "4.7.6",
     "handlebars-loader": "git+https://github.com/Waavi/handlebars-loader.git",

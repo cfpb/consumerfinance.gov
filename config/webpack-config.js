@@ -21,14 +21,11 @@ const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
 
-    /* The `exclude` rule is a double negative.
-       It excludes all of `node_modules/` but it then un-excludes modules that
-       start with `cf-` and `cfpb-` (CF components and cfpb-chart-builder).
-       Regex test: https://regex101.com/r/zizz3V/5 */
-    exclude: {
-      test: /node_modules/,
-      exclude: /node_modules\/(?:cf-.+|cfpb-.+)|@cfpb.+/
-    },
+    /* Exclude modules from transpiling.
+       The below regex will match and exclude all node modules
+       except those that start with `@cfpb/` or `cfpb-`.
+       Regex test: https://regex101.com/r/zizz3V/9 */
+    exclude: /node_modules\/(?!(?:@cfpb\/.+|cfpb\-.+)).+/,
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
@@ -41,13 +38,16 @@ const COMMON_MODULE_CONFIG = {
         } ] ]
       }
     }
+  },
+  {
+    test: /\.svg$/,
+    loader: 'svg-inline-loader'
   } ]
 };
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
-  cache: true,
   parallel: true,
   extractComments: false,
   terserOptions: {

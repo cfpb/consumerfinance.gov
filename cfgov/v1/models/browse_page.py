@@ -23,11 +23,13 @@ class BrowsePage(CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('featured_content', organisms.FeaturedContent()),
+        ('notification', molecules.Notification()),
     ], blank=True)
 
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('info_unit_group', organisms.InfoUnitGroup()),
+        ('simple_chart', organisms.SimpleChart()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('expandable', organisms.Expandable()),
         ('well', organisms.Well()),
@@ -47,7 +49,6 @@ class BrowsePage(CFGOVPage):
         ('mortgage_downloads_block', MortgageDataDownloads()),
         ('data_snapshot', organisms.DataSnapshot()),
         ('job_listing_table', JobListingTable()),
-        ('bureau_structure', organisms.BureauStructure()),
         ('yes_checklist', YESChecklist()),
     ], blank=True)
 

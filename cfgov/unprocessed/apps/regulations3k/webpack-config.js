@@ -22,7 +22,6 @@ const MANIFEST_DEST = `${ paths.processed }/apps/${ APP_NAME }/${ MANIFEST_FILEN
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
-  cache: true,
   parallel: true,
   extractComments: false,
   terserOptions: {
@@ -70,13 +69,13 @@ const SERVICE_WORKER_CONFIG = {
     `apps/${ APP_NAME }/css/main.css`,
     `apps/${ APP_NAME }/js/index.js`
   ],
-  modifyUrlPrefix: {
+  modifyURLPrefix: {
     'apps/': '/static/apps/'
   },
   runtimeCaching: [
     {
       urlPattern: new RegExp( `/${ APP_PATH }/` ),
-      handler: 'staleWhileRevalidate',
+      handler: 'StaleWhileRevalidate',
       options: {
         cacheName: `${ APP_NAME }-content`,
         expiration: {
@@ -86,7 +85,7 @@ const SERVICE_WORKER_CONFIG = {
     },
     {
       urlPattern: new RegExp( `/static/apps/${ APP_NAME }` ),
-      handler: 'staleWhileRevalidate',
+      handler: 'StaleWhileRevalidate',
       options: {
         cacheName: `${ APP_NAME }-assets`,
         expiration: {
@@ -96,7 +95,7 @@ const SERVICE_WORKER_CONFIG = {
     },
     {
       urlPattern: new RegExp( '/static/(css|js|fonts|img)' ),
-      handler: 'staleWhileRevalidate',
+      handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'cfpb-assets',
         expiration: {

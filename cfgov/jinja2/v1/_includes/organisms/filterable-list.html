@@ -35,24 +35,22 @@
 
    show_post_tags: Whether to render the tags in post previews.
 
+   has_unfiltered_results: Whether the filterable list has anything to filter.
+
    ========================================================================== #}
 
 {% import 'organisms/filterable-list-controls.html' as filterable_list_controls with context %}
 {% import 'molecules/notification.html' as notification with context %}
 
 {# SHOW A NOTIFICATION IF THERE'S NOTHING TO FILTER. #}
-
-{% set has_unfiltered_results = filter_data.form.filterable_pages.first() %}
-
 {% if not has_unfiltered_results and value.no_posts_message %}
     {{ notification.render(
-        'default',
+        'information',
         true,
         value.no_posts_message,
         value.no_posts_explanation
     ) }}
 {% elif has_unfiltered_results %}
-
     <div class="o-filterable-list">
         {% set form = filter_data.form %}
         {% set posts = filter_data.page_set %}
@@ -150,10 +148,6 @@
                             <div class="content-l_col
                                         content-l_col-1-2">
                                 {% set post_url = pageurl(post) %}
-                                {% set heading = '<h2 class="h3">' ~
-                                                 post.preview_title ~
-                                                 '</h2>'
-                                if post.preview_title else null %}
                                 {% if post.secondary_link_url and post.secondary_link_text %}
                                     {% set links = [
                                         {
@@ -163,13 +157,17 @@
                                     ] %}
                                 {% endif %}
 
-                                {{ info_unit( 
+                                {{ info_unit(
                                     {
                                         'image': {
-                                        'upload': post.preview_image,
-                                        'alt': post.preview_image.alt if post.preview_image.alt else '',
+                                            'upload': post.preview_image,
+                                            'alt': post.preview_image.alt if post.preview_image.alt else ''
                                         } if post.preview_image else {},
-                                        'heading': heading,
+                                        'heading': {
+                                            'text': post.preview_title,
+                                            'level': 'h2',
+                                            'level_class': 'h3'
+                                        } if post.preview_title else null,
                                         'body': post.preview_description,
                                         'links': links or null,
                                     },

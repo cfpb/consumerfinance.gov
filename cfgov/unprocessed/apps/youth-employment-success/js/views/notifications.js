@@ -1,5 +1,5 @@
 import { toggleCFNotification } from '../util';
-import { checkDom, setInitFlag } from '../../../../js/modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import { getBitmask } from '../data-types/notifications';
 import buildAlertRules from '../details-notification-rules';
 

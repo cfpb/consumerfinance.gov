@@ -3,6 +3,9 @@ from django.template.response import TemplateResponse
 
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
+from flags.state import flag_enabled
+
+from v1.documents import FilterablePagesDocumentSearch
 from v1.feeds import FilterableFeed
 from v1.forms import FilterableListForm
 from v1.models.learn_page import AbstractFilterPage
@@ -19,6 +22,10 @@ class FilterableListMixin(RoutablePageMixin):
     do_not_index = False
     """Determines whether we tell crawlers to index the page or not."""
 
+    filterable_categories = None
+    """Used for activity-log and newsroom to determine
+       which pages to render when sitewide"""
+
     @staticmethod
     def get_model_class():
         return AbstractFilterPage
@@ -27,55 +34,39 @@ class FilterableListMixin(RoutablePageMixin):
     def get_form_class():
         return FilterableListForm
 
+    @staticmethod
+    def get_search_class():
+        return FilterablePagesDocumentSearch
+
     def get_filterable_list_wagtail_block(self):
         return next(
             (b for b in self.content if b.block_type == 'filter_controls'),
             None
         )
 
-    def get_filterable_queryset(self):
-        """Return the queryset of pages to be filtered by this page.
+    def get_filterable_root(self):
+        filterable_list_block = self.get_filterable_list_wagtail_block()
+        if filterable_list_block is None:
+            return '/'
 
-        By default this includes only live pages and pages that live in the
-        same Wagtail Site as this page. If this page cannot be mapped to a
-        Wagtail site (for example, if it does not live under a site root),
-        then it will not return any filterable results.
+        if filterable_list_block.value['filter_children']:
+            return self.get_url()
 
-        The filter_children attribute determines whether this page filters
-        pages that are direct children of this page. By default this is True;
-        set this to False to allow this page to filter pages that are not
-        direct children of this page.
+        return '/'
 
-        The filter_siblings attribute determines whether this page filters
-        pages that are siblings of this page. By default this is False.
-
-        The filter_archive attribute determines whether this page filters
-        pages that are archived. By default this is False, and archived pages
-        will be excluded. If this is True, only archived pages will be
-        filtered.
-        """
+    def get_filterable_search(self):
+        """Return a FilterablePagesDocumentSearch object"""
         site = self.get_site()
 
         if not site:
-            return self.get_model_class().objects.none()
+            return None
 
-        queryset = self.get_model_class().objects.in_site(site).live()
+        return self.get_search_class()(
+            prefix=self.get_filterable_root()
+        )
 
-        filterable_list_block = self.get_filterable_list_wagtail_block()
-        if filterable_list_block is None:
-            return queryset
-
-        if filterable_list_block.value['filter_children']:
-            queryset = queryset.child_of(self)
-        elif filterable_list_block.value['filter_siblings']:
-            queryset = queryset.sibling_of(self)
-
-        if filterable_list_block.value['filter_archive']:
-            queryset = queryset.filter(is_archived=True)
-        else:
-            queryset = queryset.filter(is_archived=False)
-
-        return queryset
+    def get_cache_key_prefix(self):
+        return self.url
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(
@@ -83,16 +74,32 @@ class FilterableListMixin(RoutablePageMixin):
         )
 
         form_data, has_active_filters = self.get_form_data(request.GET)
+        filterable_search = self.get_filterable_search()
+        has_unfiltered_results = filterable_search.count() > 0
         form = self.get_form_class()(
             form_data,
-            filterable_pages=self.get_filterable_queryset(),
             wagtail_block=self.get_filterable_list_wagtail_block(),
+            filterable_categories=self.filterable_categories,
+            filterable_search=filterable_search,
+            cache_key_prefix=self.get_cache_key_prefix(),
         )
+        filter_data = self.process_form(request, form)
+
+        # flag check to enable or disable archive filter options
+        if flag_enabled('HIDE_ARCHIVE_FILTER_OPTIONS', request=request):
+            has_archived_posts = False
+        else:
+            has_archived_posts = any(
+                result for result in form.all_filterable_results
+                if result.is_archived == 'yes'
+            )
 
         context.update({
-            'filter_data': self.process_form(request, form),
+            'filter_data': filter_data,
             'get_secondary_nav_items': get_secondary_nav_items,
             'has_active_filters': has_active_filters,
+            'has_archived_posts': has_archived_posts,
+            'has_unfiltered_results': has_unfiltered_results,
         })
 
         return context
@@ -117,6 +124,7 @@ class FilterableListMixin(RoutablePageMixin):
         else:
             paginator = Paginator([], self.filterable_per_page_limit)
             filter_data['page_set'] = paginator.page(1)
+
         filter_data['form'] = form
         return filter_data
 
@@ -128,10 +136,10 @@ class FilterableListMixin(RoutablePageMixin):
     # Set up the form's data either with values from the GET request
     # or with defaults based on whether it's a dropdown/list or a text field
     def get_form_data(self, request_dict):
-        form_data = {}
+        form_data = {'archived': 'include'}
         has_active_filters = False
         for field in self.get_form_class().declared_fields:
-            if field in ['categories', 'topics', 'authors', 'statuses']:
+            if field in ['categories', 'topics', 'authors', 'statuses', 'products']:  # noqa: E501
                 value = request_dict.getlist(field, [])
             else:
                 value = request_dict.get(field, '')
@@ -154,9 +162,6 @@ class FilterableListMixin(RoutablePageMixin):
             context
         )
 
-        # Set a shorter TTL in Akamai
-        response['Edge-Control'] = 'cache-maxage=10m'
-
         # Set noindex for crawlers if needed
         if self.do_not_index:
             response['X-Robots-Tag'] = 'noindex'
@@ -177,7 +182,7 @@ class CategoryFilterableMixin:
     filterable_categories = []
     """Determines page categories to be filtered; see filterable_pages."""
 
-    def get_filterable_queryset(self):
+    def get_filterable_search(self):
         """Return the queryset of pages to be filtered by this page.
 
         The class property filterable_categories can be set to a list of page
@@ -185,6 +190,9 @@ class CategoryFilterableMixin:
         will only filter pages that are tagged with a tag in those categories.
         By default this is an empty list and all page tags are eligible.
         """
-        queryset = super().get_filterable_queryset()
         category_names = get_category_children(self.filterable_categories)
-        return queryset.filter(categories__name__in=category_names)
+        filterable_search = self.get_search_class()(
+            prefix=self.get_filterable_root()
+        )
+        filterable_search.filter_categories(categories=category_names)
+        return filterable_search

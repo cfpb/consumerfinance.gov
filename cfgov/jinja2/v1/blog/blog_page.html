@@ -36,11 +36,15 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    {{ streamfield_sidefoot.render(page.sidefoot) }}
-    {% if rss_feed %}
-    <div class="block block__sub">
-        {% import 'molecules/rss-feed.html' as rss %}
-        {{ rss.render(rss_feed) }}
-    </div>
+    {% if page and page.archived %}
+        {% include 'molecules/archived-related-content.html' %}
+    {% else %}
+        {{ streamfield_sidefoot.render(page.sidefoot) }}
+        {% if rss_feed %}
+        <div class="block block__sub">
+            {% import 'molecules/rss-feed.html' as rss %}
+            {{ rss.render(rss_feed) }}
+        </div>
+        {% endif %}
     {% endif %}
 {% endblock %}

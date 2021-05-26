@@ -16,7 +16,6 @@ from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.core.rich_text import expand_db_html
-from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images import blocks as images_blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.utils.widgets import WidgetWithScript
@@ -415,43 +414,6 @@ class SidebarContactInfo(MainContactInfo):
         template = '_includes/organisms/sidebar-contact-info.html'
 
 
-class BureauStructurePosition(blocks.StructBlock):
-    name = blocks.CharBlock()
-    title = blocks.TextBlock(required=False)
-
-
-class BureauStructureOffice(blocks.StructBlock):
-    name = blocks.CharBlock()
-    leads = blocks.ListBlock(BureauStructurePosition())
-
-
-class BureauStructureOffices(BureauStructureOffice):
-    offices = blocks.ListBlock(BureauStructureOffice())
-
-
-class BureauStructureDivision(BureauStructureOffices):
-    overview_page = blocks.CharBlock()
-
-
-class BureauStructure(blocks.StructBlock):
-    last_updated_date = blocks.DateBlock(required=False)
-    download_image = DocumentChooserBlock(icon='image', required=False)
-    director = blocks.CharBlock()
-    divisions = blocks.ListBlock(BureauStructureDivision())
-    office_of_the_director = blocks.ListBlock(
-        BureauStructureOffices(),
-        label='Office of the Director'
-    )
-
-    class Meta:
-        icon = None
-        template = '_includes/organisms/bureau-structure.html'
-        icon = "table"
-
-    class Media:
-        js = ['bureau-structure.js']
-
-
 class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
     def __init__(self, table_options=None, attrs=None):
         super(RichTextTableInput, self).__init__(attrs=attrs)
@@ -586,6 +548,109 @@ class ModelBlock(blocks.StructBlock):
 
     def get_limit(self, value):
         return self.limit
+
+
+class SimpleChart(blocks.StructBlock):
+    title = blocks.CharBlock(required=True)
+    subtitle = blocks.CharBlock(required=False)
+    figure = blocks.CharBlock(required=False)
+
+    chart_type = blocks.ChoiceBlock(
+        choices=[
+            ('bar', 'Bar'),
+            ('datetime', 'Datetime'),
+            ('line', 'Line'),
+            ('tilemap', 'Tilemap')
+        ],
+        default='datetime',
+        required=True
+    )
+
+    data_source = blocks.TextBlock(
+        required=True,
+        help_text='URL of the chart\'s data source or an array of JSON data'
+    )
+
+    data_series = blocks.TextBlock(
+        required=False,
+        help_text='A string or array of keys (JSON) or headers (CSV) to '
+        'include as data in the chart. Labels may be included via: '
+        '{"key": <key>, "label": <label>}'
+    )
+
+    x_axis_data = blocks.TextBlock(
+        required=False,
+        help_text='A string for a key/column or data array to include as '
+        'categories or x values, depending on chart type.'
+    )
+
+    description = blocks.CharBlock(
+        required=True,
+        help_text='Accessible description of the chart content'
+    )
+
+    y_axis_label = blocks.CharBlock(
+        required=True,
+        help_text='y-axis label'
+    )
+
+    x_axis_label = blocks.CharBlock(
+        required=False,
+        help_text='x-axis label, if needed'
+    )
+
+    transform = blocks.CharBlock(
+        required=False,
+        help_text='Name of the javascript function in chart-hooks.js to run '
+        'on the provided data before handing it to the chart'
+    )
+
+    filters = blocks.CharBlock(
+        required=False,
+        help_text='Array of JSON objects of the form {"key": <key>, '
+        '"label": <label>} to filter the underlying chart data on'
+    )
+
+    style_overrides = blocks.TextBlock(
+        required=False,
+        help_text='A JSON object with style overrides for the underlying '
+        'Highcharts chart. No object merging is done, nested objects should '
+        'be referenced with dot notation: {"tooltip.shape": "circle"}'
+    )
+
+    credits = blocks.CharBlock(
+        required=False,
+        help_text='Attribution for the data source'
+    )
+
+    date_published = blocks.CharBlock(
+        required=False,
+        help_text='When the underlying data was published'
+    )
+
+    download_file = blocks.CharBlock(
+        required=False,
+        help_text='Location of a file to download, if different from the '
+        'data source'
+    )
+
+    download_text = blocks.CharBlock(
+        required=False,
+        help_text='Custom text for the chart download field'
+    )
+
+    notes = blocks.TextBlock(
+        required=False,
+        help_text='General chart information'
+    )
+
+    class Meta:
+        label = 'Simple Chart'
+        icon = 'image'
+        template = '_includes/organisms/simple-chart.html'
+
+    class Media:
+        js = ['simple-chart/simple-chart.js']
 
 
 class FullWidthText(blocks.StreamBlock):
@@ -776,9 +841,19 @@ class FilterableList(BaseExpandable):
         required=True,
         help_text='Whether to include a dropdown in the filter controls '
                   'for "Topics"')
-
+    order_by = blocks.ChoiceBlock(
+        choices=[
+            ('-date_published', 'Date Published'),
+            ('_score', 'Relevance')
+        ],
+        required=True,
+        help_text='How to order results',
+        default='-date_published'
+    )
     statuses = blocks.BooleanBlock(default=False, required=False,
                                    label='Filter Enforcement Statuses')
+    products = blocks.BooleanBlock(default=False, required=False,
+                                   label='Filter Enforcement Products')
     authors = blocks.BooleanBlock(default=True, required=False,
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,
@@ -799,23 +874,6 @@ class FilterableList(BaseExpandable):
             "If checked this list will only filter its child pages. "
             "If both children and siblings are checked, only child pages will "
             "be filtered."
-        ),
-    )
-    filter_siblings = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text=(
-            "If checked this list will only filter its sibling pages. "
-            "If both children and siblings are checked, only child pages will "
-            "be filtered."
-        ),
-    )
-    filter_archive = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text=(
-            "If checked this list will only filter archived pages."
-            "If unchecked this list will exclude archive pages."
         ),
     )
 
@@ -1013,7 +1071,7 @@ class FeaturedContentStructValue(blocks.StructValue):
 
 class FeaturedContent(blocks.StructBlock):
     heading = blocks.CharBlock()
-    body = blocks.RichTextBlock()
+    body = blocks.TextBlock(help_text="Line breaks will be ignored.")
 
     post = blocks.PageChooserBlock(required=False)
     show_post_link = blocks.BooleanBlock(required=False,

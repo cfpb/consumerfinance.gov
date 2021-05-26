@@ -1,0 +1,71 @@
+{# ==========================================================================
+
+   Chart
+
+   ==========================================================================
+
+   Description:
+
+   Create a chart organism with data
+
+   ========================================================================== #}
+{% macro make_download_name(download_source, download_text) -%}
+  {% if download_text %}
+    {{download_text}}
+  {% else %}
+    {{download_source}}
+  {% endif %}
+{%- endmacro %}
+
+{% if request.served_by_wagtail_sharing %}
+{% set data_location = value.data_source.replace('production', 'staging') %}
+{% else %}
+{% set data_location = value.data_source %}
+{% endif %}
+
+
+<div class="o-simple-chart">
+    {% if value.figure %}
+    <h5>Figure {{ value.figure }}</h5>
+    {% endif %}
+
+    {% if value.title %}
+    <a class="chart-anchor" id="chart-{{value.title}}" href="#chart-{{ value.title}}"><h2 class="o-simple-chart_title">{{ value.title }}</h2></a>
+    {% endif %}
+
+    {% if value.subtitle %}
+    <p class="o-simple-chart_subtitle">{{ value.subtitle }}</p>
+    {% endif %}
+
+    <div data-title="{{value.title}}" class="o-simple-chart_selects"></div>
+
+    <div class="o-simple-chart_target"
+         data-chart-type="{{ value.chart_type }}"
+         data-source='{{ data_location }}'
+         data-series='{{ value.data_series }}'
+         data-x-axis-data='{{ value.x_axis_data }}'
+         data-description="{{ value.description }}"
+         data-y-axis-label="{{ value.y_axis_label }}"
+         {% if value.x_axis_label %}
+              data-x-axis-label="{{ value.x_axis_label }}"
+         {% endif %}
+         {% if value.transform %}data-transform="{{ value.transform }}"{% endif %}
+         {% if value.filters %}data-filters='{{ value.filters }}'{% endif %}
+         {% if value.style_overrides %}data-style-overrides='{{ value.style_overrides }}'{% endif %}
+         >
+    </div>
+    <div class="o-simple-chart_tilemap_legend"></div>
+    {% set download_source = value.download_file %}
+
+    <p class="m-chart-footnote block__sub block__border-top block short-desc">
+        {% if value.credits %}<strong>Source:</strong> {{value.credits}}<br>{% endif %}
+        {% if value.date_published %}<strong>Date Published:</strong> {{value.date_published}}<br>{% endif %}
+        {% if download_source %}
+          <strong>Download:</strong>
+          <a class="icon-link icon-link__download"
+             href="{{ download_source }}">
+            <span class="icon-link_text">{{make_download_name(download_source, value.download_text)}}</span></a><br>
+        {% endif %}
+        {% if value.notes%}<strong>Notes:</strong> {{value.notes}}{% endif %}
+    </p>
+</div>

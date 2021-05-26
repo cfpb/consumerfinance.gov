@@ -1,14 +1,17 @@
 <section class="college-costs_tool-section college-costs_tool-section__affording" data-tool-section="affording-your-loans">
-    <h2>Can I afford my payment?</h2>
+    <h1>Can I afford my payment?</h1>
 
-    <p> Skipping monthly loan payments can cause financial and legal problems. Default—missing too many payments—can result in low credit scores, additional fees, wage garnishment, and ineligibility for further federal student aid. This page gives you two ways to estimate the affordability of your projected monthly payment.</p>
+    <p class="lead-paragraph">Making loan payments on time can help you avoid financial and legal problems. Default—missing too many payments—can result in low credit scores, additional fees, wage garnishment, and ineligibility for further federal student aid.</p>
 
+    <h2><strong>Your estimated monthly payment is <span data-financial-item="debt_tenYearMonthly">$XYZ</span> (including any current debt you have, if you entered it on a previous page)</strong></h2>
+
+    <h2>1. Check out two ways to help you decide if you can afford this payment</h2>
 
     <div class="affording-loans-choices block block__sub">
         {{
             radio.render({
               'name':  "affording-display-radio",
-              'label': 'My payment in terms of hourly wages',
+              'label': 'How many work hours?',
               'value': 'hourly',
               'id': 'affording-loans-choices_hourly',
               'class': 'm-form-field__lg-target'
@@ -17,7 +20,7 @@
         {{
             radio.render({
               'name':  "affording-display-radio",
-              'label': 'My payment within a monthly budget',
+              'label': 'Does it fit in a typical budget?',
               'value': 'monthly',
               'id': 'affording-loans-choices_monthly',
               'class': 'm-form-field__lg-target'
@@ -26,78 +29,47 @@
     </div>
 
     <div data-state-based-visibility="expenses-hourly-wages">
-        <p>If you make about $15 an hour, how many hours would you have to work to cover your estimated monthly payment(s)?</p>
+        <h2>2. See how much of your time at work each month would go towards covering your loan payment</h2>
 
-        {{ number_callout.render({
-                'header': 'Estimated monthly loan payment',
-                'data_attribute': 'data-financial-item="debt_tenYearMonthly"',
-                'additional_classes': 'number-callout__large number-callout__border-top',
-                'value': '$0.00'
-            }) 
-        }}
-
-        <div class="number-callout number-callout__large number-callout__divisor">
-            <div class="number-callout_value">
-              <span>&divide; $15</span>
-            </div>
+        <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Estimated monthly loan payment',
+                    'value': '$0',
+                    'type': 'text',
+                    'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
+                })
+            }}
         </div>
 
-        <div class="number-callout number-callout__large">
-            <div class="number-callout_value">
-              About <span data-financial-item="debt_repayHours" data-is-number="true">??</span> hours, or <span data-financial-item="debt_repayWorkWeeks" data-is-number="true">?</span> forty-hour work weeks
-            </div>
+        <div class="equation-row equation-row__bottom-line">
+            {{
+                text_item.render({
+                    'label': 'Divided by $15 an hour after taxes',
+                    'value': '&divide; $15',
+                    'type': 'text'
+                })
+            }}            
         </div>
 
-        <p>Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years; other plans with lower monthly payments (and higher total costs of borrowing) are available.</p>
+        <div class="equation-row total-hours">
+            {{
+                text_item.render({
+                    'label': 'Work needed to cover payment',
+                    'value': '$0',
+                    'type': 'text',
+                    'data_attribute': 'data-financial-item="debt_repayHours"'
+                })
+            }}
+        </div>
+
+        <h2 class="affording-loans-choices_about">About your estimated payment</h2>
+
+        <p>Your actual payment will depend on how much you actually borrow and which repayment plan you choose for federal loans. This estimate assumes a standard repayment plan, where you pay the same amount every month for 10 years. Other plans with lower monthly payments are available, but the total costs of borrowing will be higher.</p>
 
     </div>
     <div data-state-based-visibility="expenses-monthly-budget">
-        <div id="affording-your-loans_chart"></div>
-
-        {{ number_callout.render({
-                'header': 'Estimated monthly loan payment',
-                'data_attribute': 'data-financial-item="debt_tenYearMonthly"',
-                'additional_classes': 'number-callout__large number-callout__border-top',
-                'value': '$0.00'
-            }) 
-        }}
-        <p>Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years; other plans with lower monthly payments (and higher total costs of borrowing) are available.</p>
-
-        <div class="undergrad-content">
-            {{ number_callout.render({
-                    'header': 'Monthly median salary for this school\'s recent students',
-                    'data_attribute': 'data-financial-item="salary_monthly"',
-                    'additional_classes': 'number-callout__large number-callout__border-top',
-                    'value': '$0.00'
-                })
-            }}
-        </div>
-        <div data-state-based-visibility="program-is-selected">
-            {{ number_callout.render({
-                    'header': 'Monthly median first-year salary for this program\'s graduates',
-                    'data_attribute': 'data-financial-item="salary_monthly"',
-                    'additional_classes': 'number-callout__large number-callout__border-top',
-                    'value': '$0.00'
-                })
-            }}
-        </div>
-
-        {{ number_callout.render({
-                'header': 'Average monthly spending at this salary',
-                'data_attribute': 'data-expenses-item="total_expenses"',
-                'additional_classes': 'number-callout__large number-callout__border-top',
-                'value': '$4,016.67'
-            }) 
-        }}
-
-         <p>Your actual monthly salary will depend on many different factors, including your field of work and where you will live. To get more information about the salary levels of different careers, visit the <a href="https://dev2.demo.cfpb.gov/paying-for-college-beta/college-costs/" class="link-external">BLS Wage Data website</a>.</p>
-
-        {{ notification.render(
-            'default',
-            true,
-            '',
-            'Students tend to overestimate their starting salaries. Remember that medians are the middle &mdash; half of students make more, but half make less.' | safe
-        ) }}
+         <h2>2. See if the monthly payment fits in an average monthly budget for this <span data-state-based-visibility="no-program-selected">school</span><span data-state-based-visibility="program-is-selected">program</span>'s salary and region</h2>
 
         <div class="m-form-field m-form-field__select">
             <label class="a-label a-label__heading" for="expenses__region">
@@ -113,7 +85,85 @@
             </div>
         </div>
 
-        <h3 class="h4 u-mt30 u-mb30">If you know your living expenses, adjust these averages to match your situation.</h3>
+        <div class="college-costs_chart" id="affording-your-loans_chart"></div>
+
+        <p class="median-salary-note"><strong>Note:</strong> Median salary is for financially-aided students working and not enrolled in school 6 years after starting at this school. It includes students who did not graduate. Students tend to overestimate their starting salaries. A median is the middle&mdash;half of the students make more, but half make less.</p>
+
+        <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Median monthly salary of this <span data-state-based-visibility="no-program-selected">school</span><span data-state-based-visibility="program-is-selected">program</span>\'s students',
+                    'value': '$0',
+                    'type': 'text',
+                    'helper_text': 'Your actual monthly salary will depend on many different factors, including your field of work and where you will live. To get more information about the salary levels of different careers, visit the <a href="https://www.bls.gov/bls/blswage.htm" class="link-external">Bureau of Labor Statistics\' Wage Data website</a>.',
+                    'data_attribute': 'data-financial-item="salary_monthly"'
+                })
+            }}
+        </div>
+
+        <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Estimated monthly loan payment',
+                    'value': '$0',
+                    'type': 'text',
+                    'helper_text': 'Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years. Other plans with lower monthly payments (and higher total costs of borrowing) are available.',
+                    'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
+                })
+            }}
+        </div>
+
+        <div class="equation-row equation-row__bottom-line">
+            {{
+                text_item.render({
+                    'label': 'Average monthly expenses for this salary and region',
+                    'value': '$0',
+                    'type': 'text',
+                    'helper_text': 'From the Bureau of Labor Statistics\' Consumer Expenditure Survey' ,
+                    'data_attribute': 'data-expenses-item="total_expenses"'
+                })
+            }}
+        </div>
+
+        <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Total money left',
+                    'value': '$0',
+                    'type': 'text',
+                    'data_attribute': 'data-expenses-item="total_remainder"'
+                })
+            }}
+        </div>
+
+        <div data-state-based-visibility="expenses-shortage">
+            {{ notification.render(
+                'caution',
+                true,
+                '',
+                'The estimate leaves you with a shortage of <span class="gap" data-expenses-item="total_remainder">$373</span>. Try adjusting the expenses to balance your budget.' | safe
+            ) }}
+        </div>
+        <div data-state-based-visibility='expenses-surplus'>
+            {{ notification.render(
+            'information',
+            true,
+            '',
+            'The estimate leaves you with a surplus of <span class="gap" data-expenses-item="total_remainder">$373</span>, increasing your savings.' | safe
+        ) }}
+        </div>
+
+        <h2>3. Does this budget work for you? Adjust specific expenses, like rent and groceries, below</h2>
+
+        <p>Check out the average expenses reported by people living in this <span data-state-based-visibility="no-program-selected">school</span><span data-state-based-visibility="program-is-selected">program</span>'s region and salary. Enter your actual expenses if you know them, or research reasonable figures for the lifestyle you plan to have.</p>
+
+        {% set expandable_settings = {
+            'label': 'Average monthly expenses',
+            'value': '$0',
+            'is_editable': 'True',
+            'data_attribute': 'data-expenses-item="total_expenses"'
+        } %}
+        {% call() expandable(expandable_settings) %}
         {{
             input.render({
                 'label': 'Housing',
@@ -186,6 +236,14 @@
                 'data_attribute': 'data-expenses-item="item_childcare"'
             })
         }}
+       {{
+            input.render({
+                'label': 'Current debt payments',
+                'id': 'expenses__currentDebts',
+                'value': '$0',
+                'data_attribute': 'data-expenses-item="item_currentDebts"'
+            })
+        }}
         {{
             input.render({
                 'label': 'Other',
@@ -200,25 +258,9 @@
                 'data_attribute': 'data-expenses-item="total_remainder"',
                 'additional_classes': 'number-callout__large number-callout__border-top',
                 'value': '$373'
-            }) 
+            })
         }}
-
-        <div data-state-based-visibility="expenses-shortage">
-            {{ notification.render(
-            'caution',
-            true,
-            '',
-            'The estimate leaves you with a shortage of <span class="gap" data-expenses-item="total_remainder">$373</span>. Try adjusting the expenses to balance your budget.' | safe
-        ) }}
-        </div>
-        <div data-state-based-visibility='expenses-surplus'>
-            {{ notification.render(
-            'default',
-            true,
-            '',
-            'The estimate leaves you with a surplus of <span class="gap" data-expenses-item="total_remainder">$373</span>, increasing your savings.' | safe
-        ) }}
-        </div>
+        {% endcall %}
     </div>
 
 </section>

@@ -1,16 +1,15 @@
 /* This file handles view items which apply only to the "state" of the
 application, and are otherwise inappropriate for the
 other views. */
-import { replaceStateInHistory, updateState } from '../dispatchers/update-state.js';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { buildUrlQueryString } from '../util/url-parameter-utils.js';
-import { closest } from '../../../../js/modules/util/dom-traverse';
-import { getAllStateValues } from '../dispatchers/get-model-values.js';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { recalculateFinancials } from '../dispatchers/update-models.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
+import { updateState } from '../dispatchers/update-state.js';
+import { getStateValue } from '../dispatchers/get-model-values.js';
 
-
+const HIDDEN_CLASS = 'u-hidden';
 const appView = {
   _actionPlanChoices: null,
   _didThisHelpChoices: null,
@@ -18,44 +17,9 @@ const appView = {
   _saveForLaterBtn: null,
   _saveLinks: null,
   _sendLinkBtn: null,
-
-  /**
-   * Listeners for buttons
-   */
-  _addButtonListeners: function() {
-    appView._didThisHelpChoices.forEach( elem => {
-      bindEvent( elem, { click: this._handleDidThisHelpClick } );
-    } );
-
-    appView._actionPlanChoices.forEach( elem => {
-      bindEvent( elem, { click: this._handleActionPlanClick } );
-    } );
-
-    bindEvent( appView._restartBtn, { click: appView._handleRestartBtn } );
-    bindEvent( appView._saveForLaterBtn, { click: appView._handleSaveForLaterBtn } );
-    bindEvent( appView._sendLinkBtn, { click: appView._handleSendLinkBtn } );
-    bindEvent( appView._includeParentPlusBtn, { click: appView._handleIncludeParentPlusBtn } );
-  },
-
-  /**
-   * Event handling for action-plan choice clicks
-   * @param {Object} event - Triggering event
-   */
-  _handleActionPlanClick: function( event ) {
-    const target = event.target;
-    updateState.byProperty( 'actionPlan', target.value );
-  },
-
-  /**
-   * Handle the click of buttons on final page
-   * @param {Object} event - Click event object
-   */
-  _handleDidThisHelpClick: event => {
-    const button = event.target;
-    const parent = closest( button, '.o-form_fieldset' );
-    sendAnalyticsEvent( 'Impact question click: ' + parent.dataset.impact, event.target.value );
-    updateState.byProperty( parent.dataset.impact, event.target.value );
-  },
+  _copyLinkBtn: null,
+  _copyBtnDefaultText: null,
+  _copyBtnSuccessText: null,
 
   /**
    * Handle the click of the Include Parent Plus checkbox
@@ -66,6 +30,7 @@ const appView = {
     updateState.byProperty( 'includeParentPlus', target.checked );
     recalculateFinancials();
     updateFinancialViewAndFinancialCharts();
+    appView.setUrlQueryString();
   },
 
   /**
@@ -86,14 +51,29 @@ const appView = {
     updateState.byProperty( 'save-for-later', 'active' );
   },
 
-  _handleSendLinkBtn: event => {
-    sendAnalyticsEvent( 'Email your link click', window.location.search );
+  _handleCopyLinkBtn: event => {
+    if ( navigator.clipboard ) {
+      navigator.clipboard.writeText( window.location.href ).then( function() {
+        const target = event.target;
+        const btn = closest( target, 'button' );
+        const copyBtnDefaultText = btn.querySelector( '#default-text' );
+        const copyBtnSuccessText = btn.querySelector( '#success-text' );
+        copyBtnDefaultText.classList.add( HIDDEN_CLASS );
+        copyBtnSuccessText.classList.remove( HIDDEN_CLASS );
+        setTimeout( function() {
+          copyBtnSuccessText.classList.add( HIDDEN_CLASS );
+          copyBtnDefaultText.classList.remove( HIDDEN_CLASS );
+        }, 3000 );
+      } );
+    } else if ( window.clipboardData && window.clipboardData.setData ) {
+      window.clipboardData.setData( 'Text', window.location.href );
+    }
+  },
 
-    const target = event.target;
-    let href = 'mailto:' + document.querySelector( '#finish_email' ).value;
-    href += '?subject=Link: Your financial path to graduation&body=';
-    href += window.location.href;
-    target.setAttribute( 'href', href );
+  _handleCopyLinkBtnKeypress: event => {
+    if ( event.keyCode === 13 ) {
+      appView._handleCopyLinkBtn( event );
+    }
   },
 
   /**
@@ -110,6 +90,11 @@ const appView = {
    */
   updateView: () => {
     appView._updateSaveLink();
+  },
+
+
+  updateUI: () => {
+    appView._includeParentPlusBtn.checked = getStateValue( 'includeParentPlus' ) ? true : false;
   },
 
   /**
@@ -129,12 +114,55 @@ const appView = {
     appView._restartBtn = document.querySelector( '[data-app-button="restart"]' );
     appView._saveForLaterBtn = document.querySelector( '[data-app-button="save-and-finish-later"]' );
     appView._saveLinks = document.querySelectorAll( '[data-app-save-link]' );
-    appView._sendLinkBtn = document.querySelector( '#email-your-link' );
+    appView._copyLinkBtn = document.querySelectorAll( '.copy-your-link' );
     appView._includeParentPlusBtn = document.querySelector( '#plan__parentPlusFeeRepay' );
 
-    appView._addButtonListeners();
+    _addButtonListeners();
   }
 };
+
+/**
+ * Listeners for buttons.
+ */
+function _addButtonListeners() {
+  appView._didThisHelpChoices.forEach( elem => {
+    elem.addEventListener( 'click', _handleDidThisHelpClick );
+  } );
+
+  appView._actionPlanChoices.forEach( elem => {
+    elem.addEventListener( 'click', _handleActionPlanClick );
+  } );
+
+  appView._restartBtn.addEventListener( 'click', appView._handleRestartBtn );
+  appView._saveForLaterBtn.addEventListener( 'click', appView._handleSaveForLaterBtn );
+  appView._copyLinkBtn.forEach( elem => {
+    elem.addEventListener( 'click', appView._handleCopyLinkBtn );
+  } );
+  appView._copyLinkBtn.forEach( elem => {
+    elem.addEventListener( 'keyup', appView._handleCopyLinkBtnKeypress );
+  } );
+  appView._includeParentPlusBtn.addEventListener( 'click', appView._handleIncludeParentPlusBtn );
+}
+
+/**
+ * Handle the click of buttons on final page.
+ * @param {MouseEvent} event - Click event object.
+ */
+function _handleDidThisHelpClick( event ) {
+  const button = event.target;
+  const parent = closest( button, '.o-form_fieldset' );
+  sendAnalyticsEvent( 'Impact question click: ' + parent.dataset.impact, event.target.value );
+  updateState.byProperty( parent.dataset.impact, event.target.value );
+}
+
+/**
+ * Event handling for action-plan choice clicks.
+ * @param {MouseEvent} event - Triggering event.
+ */
+function _handleActionPlanClick( event ) {
+  const target = event.target;
+  updateState.byProperty( 'actionPlan', target.value );
+}
 
 export {
   appView

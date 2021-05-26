@@ -1,10 +1,9 @@
 import json
 from collections import OrderedDict
+from pathlib import Path
 
-from unipath import Path
 
-
-FIXTURES_DIR = Path(__file__).ancestor(3)
+FIXTURES_DIR = Path(__file__).resolve().parents[2]
 NAT_DATA_FILE = '{0}/fixtures/national_stats.json'.format(FIXTURES_DIR)
 BACKUP_FILE = '{0}/fixtures/national_stats_backup.json'.format(FIXTURES_DIR)
 # source for BLS_FILE: http://www.bls.gov/cex/#tables_long

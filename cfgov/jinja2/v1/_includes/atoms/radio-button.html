@@ -28,7 +28,7 @@
 
 {% macro render(value) -%}
 
-{%- set id = value.id or get_unique_id('input_', '_') ~ slugify( value.label ) -%}
+{%- set id = value.id or 'input_' ~ unique_id_in_context() ~ '_' ~ slugify( value.label ) -%}
 {%- set el = value.el_wrapper if value.el_wrapper else 'div' -%}
 {%- set val = value.value if value.value else id -%}
 {%- set name = value.name if value.name else id -%}

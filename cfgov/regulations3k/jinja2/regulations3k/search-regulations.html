@@ -1,6 +1,6 @@
 {% extends 'layout-full.html' %}
 {% import 'atoms/checkbox.html' as checkbox %}
-{% import 'atoms/radio-button.html' as radio %}
+{% import 'atoms/radio-button.html' as radio with context %}
 {% import 'atoms/tag.html' as tag %}
 {% import 'regulations3k/regulations3k-search-bar.html' as search_bar %}
 {% import 'regulations3k/regulations3k-search-result-item.html' as search_item %}
@@ -48,10 +48,6 @@
 
 
 {# BODY items #}
-
-{% block body_classes %}
-    {{ super() }}
-{% endblock body_classes %}
 
 {% block content_main_modifiers -%}
     content__1-3

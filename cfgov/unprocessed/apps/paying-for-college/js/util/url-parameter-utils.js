@@ -3,6 +3,105 @@ import { financialModel } from '../models/financial-model.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 
+const urlParameters = {
+  'iped': 'schoolModel.schoolID',
+  'oid': 'schoolModel.oid',
+
+  'pid': 'stateModel.pid',
+  'houp': 'stateModel.programHousing',
+  'typp': 'stateModel.programType',
+  'prop': 'stateModel.programProgress',
+  'lenp': 'stateModel.programLength',
+  'ratp': 'stateModel.programRate',
+  'depp': 'stateModel.programDependency',
+  'cobs': 'stateModel.costsQuestion',
+  'regs': 'stateModel.expensesRegion',
+  'iqof': 'stateModel.impactOffer',
+  'iqlo': 'stateModel.impactLoans',
+  'utm_source': 'stateModel.utmSource',
+  'utm_medium': 'stateModel.utm_medium',
+  'utm_campaign': 'stateModel.utm_campaign',
+  'inpp': 'stateModel.includeParentPlus',
+
+  'tuit': 'financialModel.dirCost_tuition',
+  'hous': 'financialModel.dirCost_housing',
+  'diro': 'financialModel.dirCost_other',
+
+  'book': 'financialModel.indiCost_books',
+  'indo': 'financialModel.indiCost_other',
+  'tran': 'financialModel.indiCost_transportation',
+  'nda': 'financialModel.otherCost_additional',
+
+  'pelg': 'financialModel.grant_pell',
+  'seog': 'financialModel.grant_seog',
+  'fedg': 'financialModel.grant_otherFederal',
+  'stag': 'financialModel.grant_state',
+  'schg': 'financialModel.grant_school',
+  'tuig': 'financialModel.grant_tuition',
+  'othg': 'financialModel.grant_other',
+
+  'mta': 'financialModel.grant_mta',
+  'gi': 'financialModel.grant_gibill',
+  'othm': 'financialModel.grant_servicememberOther',
+
+  'stas': 'financialModel.scholarship_state',
+  'schs': 'financialModel.scholarship_school',
+  'oths': 'financialModel.scholarship_other',
+
+  'wkst': 'financialModel.workStudy_workStudy',
+
+  'fell': 'financialModel.fund_fellowship',
+  'asst': 'financialModel.fund_assistantship',
+
+  'subl': 'financialModel.fedLoan_directSub',
+  'unsl': 'financialModel.fedLoan_directUnsub',
+
+  'insl': 'financialModel.publicLoan_institutional',
+  'insr': 'financialModel.rate_institutional',
+  'insf': 'financialModel.fee_institutional',
+  'stal': 'financialModel.publicLoan_state',
+  'star': 'financialModel.rate_state',
+  'staf': 'financialModel.fee_state',
+  'npol': 'financialModel.publicLoan_nonprofit',
+  'npor': 'financialModel.rate_nonprofit',
+  'npof': 'financialModel.fee_nonprofit',
+
+  'pers': 'financialModel.savings_personal',
+  'fams': 'financialModel.savings_family',
+  '529p': 'financialModel.savings_collegeSavings',
+
+  'offj': 'financialModel.income_jobOffCampus',
+  'onj': 'financialModel.income_jobOnCampus',
+  'eta': 'financialModel.income_employerAssist',
+  'othf': 'financialModel.income_otherFunding',
+
+  'pvl1': 'financialModel.privLoan_privLoan1',
+  'pvr1': 'financialModel.privloan_privLoanRate1',
+  'pvf1': 'financialModel.privloan_privLoanFee1',
+
+  'plus': 'financialModel.plusLoan_parentPlus',
+
+  'cdbt': 'financialModel.existingDebt_amount',
+
+  'houx': 'expensesModel.item_housing',
+  'fdx': 'expensesModel.item_food',
+  'clhx': 'expensesModel.item_clothing',
+  'trnx': 'expensesModel.item_transportation',
+  'hltx': 'expensesModel.item_healthcare',
+  'entx': 'expensesModel.item_entertainment',
+  'retx': 'expensesModel.item_retirement',
+  'taxx': 'expensesModel.item_taxes',
+  'chcx': 'expensesModel.item_childcare',
+  'othx': 'expensesModel.item_other',
+  'dbtx': 'expensesModel.item_currentDebt'
+};
+
+const models = {
+  expensesModel: expensesModel,
+  financialModel: financialModel,
+  schoolModel: schoolModel,
+  stateModel: stateModel
+};
 
 /**
  * getQueryVariables - Check the url for queryString and interpret it into an object
@@ -29,120 +128,26 @@ function getQueryVariables() {
  * @returns {String} a formatted query string based on model values
  */
 function buildUrlQueryString() {
-  const expensesValues = expensesModel.values;
-  const financialValues = financialModel.values;
-  const schoolValues = schoolModel.values;
-  const stateValues = stateModel.values;
   let query = '?';
 
-  /* TODO: This list of URL variables should be authoritative, and not repeated in the
-     update-models.js file. */
-  const variables = {
-    'iped': schoolValues.schoolID,
-    'oid': schoolValues.oid,
-
-    'pid': stateValues.pid,
-    'houp': stateValues.programHousing,
-    'typp': stateValues.programType,
-    'lenp': stateValues.programLength,
-    'ratp': stateValues.programRate,
-    'depp': stateValues.programStudentType,
-    'cobs': stateValues.costsQuestion,
-    'regs': stateValues.expensesRegion,
-    'iqof': stateValues.impactOffer,
-    'iqlo': stateValues.impactLoans,
-    'utm_source': stateValues.utmSource,
-    'utm_medium': stateValues.utm_medium,
-    'utm_campaign': stateValues.utm_campaign,
-
-    'tuit': financialValues.dirCost_tuition,
-    'hous': financialValues.dirCost_housing,
-    'diro': financialValues.dirCost_other,
-
-    'book': financialValues.indiCost_books,
-    'indo': financialValues.indiCost_other,
-    'tran': financialValues.indiCost_transportation,
-    'nda': financialValues.indiCost_added,
-
-    'pelg': financialValues.grant_pell,
-    'seog': financialValues.grant_seog,
-    'fedg': financialValues.grant_federal,
-    'stag': financialValues.grant_state,
-    'schg': financialValues.grant_school,
-    'othg': financialValues.grant_other,
-
-    'mta': financialValues.mil_milTuitAssist,
-    'gi': financialValues.mil_GIBill,
-    'othm': financialValues.mil_other,
-
-    'stas': financialValues.scholarship_state,
-    'schs': financialValues.scholarship_school,
-    'oths': financialValues.scholarship_other,
-
-    'wkst': financialValues.workStudy_workStudy,
-
-    'fell': financialValues.fund_fellowship,
-    'asst': financialValues.fund_assistantship,
-
-    'subl': financialValues.fedLoan_directSub,
-    'unsl': financialValues.fedLoan_directUnsub,
-
-    'insl': financialValues.publicLoan_institutional,
-    'insr': financialValues.rate_institutional,
-    'insf': financialValues.fee_institutional,
-    'stal': financialValues.publicLoan_state,
-    'star': financialValues.rate_state,
-    'staf': financialValues.fee_state,
-    'npol': financialValues.publicLoan_nonprofit,
-    'npor': financialValues.rate_nonprofit,
-    'npof': financialValues.fee_nonprofit,
-
-    'pers': financialValues.savings_personal,
-    'fams': financialValues.savings_family,
-    '529p': financialValues.savings_collegeSavings,
-
-    'offj': financialValues.income_jobOffCampus,
-    'onj': financialValues.income_jobOnCampus,
-    'eta': financialValues.income_employerAssist,
-    'othf': financialValues.income_other,
-
-    'pvl1': financialValues.privLoan_privLoan1,
-    'pvr1': financialValues.privloan_privLoanRate1,
-    'pvf1': financialValues.privloan_privLoanFee1,
-
-    'plus': financialValues.plusLoan_parentPlus
-  };
-
-  const expensesVariables = {
-    houx: expensesValues.item_housing,
-    fdx: expensesValues.item_food,
-    clhx: expensesValues.item_clothing,
-    trnx: expensesValues.item_transportation,
-    hltx: expensesValues.item_healthcare,
-    entx: expensesValues.item_entertainment,
-    retx: expensesValues.item_retirement,
-    taxx: expensesValues.item_taxes,
-    chcx: expensesValues.item_childcare,
-    othx: expensesValues.item_other,
-    dbtx: expensesValues.item_currentDebt
-  };
-
-  if ( stateValues.programLevel === 'graduate' ) {
-    variables.plus = financialValues.plusLoan_gradPlus;
+  if ( models.stateModel.values.programLevel === 'graduate' ) {
+    urlParameters.plus = 'financialModel.plusLoan_gradPlus';
   }
 
   /* TODO: Don't bother putting expenses in the URL if they equal the default
-     for ( let val in expensesVariables ) {
+     for ( let val in expensesurlParameters ) {
      CHECK IF THE VALUE HAS CHANGED FROM THE DEFAULT
      } */
 
-  Object.assign( variables, expensesVariables );
+  for ( const key in urlParameters ) {
+    const variable = urlParameters[key];
+    const model = models[variable.split( '.' )[0]].values;
+    const value = model[variable.split( '.' )[1]];
 
-  for ( const key in variables ) {
-    if ( typeof variables[key] !== 'undefined' && variables[key] !== 0 &&
-                variables[key] !== null && variables[key] !== false ) {
+    if ( typeof value !== 'undefined' && value !== 0 && value !== null &&
+          value !== false && value !== 'not-selected' ) {
       if ( query.length > 1 ) query += '&';
-      query += key + '=' + variables[key];
+      query += key + '=' + value;
     }
   }
 
@@ -154,5 +159,6 @@ function buildUrlQueryString() {
 
 export {
   buildUrlQueryString,
-  getQueryVariables
+  getQueryVariables,
+  urlParameters
 };

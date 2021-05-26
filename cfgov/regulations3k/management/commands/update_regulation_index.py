@@ -9,15 +9,17 @@ from regulations3k.models import Part, Section
 logger = logging.getLogger(__name__)
 
 
-def _run_haystack_update():
-    """Update the Haystack index after prepping section paragraphs."""
-    call_command('update_index', 'regulations3k', '--remove')
+def _run_elasticsearch_rebuild():
+    """Rebuild the Elasticsearch index after prepping section paragraphs."""
+    call_command(
+        'search_index', '--rebuild', '-f', '--models', 'regulations3k'
+    )
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        """Extract paragraphs and run Haystack's `update_index` command."""
+        """Extract paragraphs and run `search_index` Elasticsearch command."""
         counter = {
             'created': 0,
             'deleted': 0,
@@ -46,4 +48,4 @@ class Command(BaseCommand):
         if dupes:
             logger.info("These paragraph IDs were dupes: \n{}".format(
                 "\n".join(dupes)))
-        _run_haystack_update()
+        _run_elasticsearch_rebuild()

@@ -1,44 +1,58 @@
-<section class="college-costs_tool-section" data-tool-section="cost-of-borrowing">
-    <h2>What will interest cost me?</h2>
-    <p> This page depicts the total cost of borrowing if you repay your debt over 10 years on the standard repayment plan.</p>
+<section class="college-costs_tool-section college-costs_tool-section__cost-of-borrowing" data-tool-section="cost-of-borrowing">
+    <h1>What will interest cost me?</h1>
+    <p class="lead-paragraph"> This page shows the total cost of borrowing if you repay your debt over 10 years on the standard repayment plan. Other plans may be available with lower monthly payments, but the total cost of borrowing will be higher.</p>
 
-    <div id="cost-of-borrowing_chart"></div>
+    <h2>Estimated total cost of these loans with a standard 10-year repayment plan: <strong><span data-financial-item="debt_tenYearTotal"></span></strong></h2>
+
+    <div class="college-costs_chart" id="cost-of-borrowing_chart"></div>
+
+    <p class="median-salary-note"><strong>Note:</strong> Median salary is for financially-aided students working and not enrolled in school 6 years after starting at this school. It includes students who did not graduate. Students tend to overestimate their starting salaries. A median is the middle&mdash;half of the students make more, but half make less.</p>
+
     <div class="block block__mid">
-        <h3 class="u-border-bottom">Cost of borrowing your loans</h3>
-
-        {{
-            text_item.render({
-                'label': 'Total money borrowed',
-                'value': '$0',
-                'type': 'text',
-                'data_attribute': 'data-financial-item="total_borrowingAtGrad"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Interest accrued while in school ',
-                'value': '$0',
-                'type': 'text',
-                'data_attribute': 'data-financial-item="debt_programInterest"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Interest over 10-year repayment plan',
-                'value': '$0',
-                'type': 'text',
-                'data_attribute': 'data-financial-item="debt_tenYearInterest"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Total cost of borrowing',
-                'value': '$0',
-                'type': 'subtotal',
-                'status': 'warning',
-                'data_attribute': 'data-financial-item="debt_tenYearTotal"'
-            })
-        }}
+        <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Estimated total money borrowed at graduation',
+                    'value': '$0',
+                    'type': 'text',
+                    'helper_text': 'Includes any current debt from previous schooling, if you entered it on the previous page',
+                    'data_attribute': 'data-financial-item="total_borrowingAtGrad"'
+                })
+            }}
+        </div>
+        <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Interest estimated to accrue while you\'re in school ',
+                    'value': '$0',
+                    'type': 'text',
+                    'helper_text': 'Assumes approximate interest rate of <span data-financial-item="rate_existingDebt"></span>  on any current debt from previous schooling, based on recent rate',
+                    'data_attribute': 'data-financial-item="debt_totalInterestAtGrad"'
+                })
+            }}
+        </div>
+        <div class="equation-row equation-row__bottom-line">
+            {{
+                text_item.render({
+                    'label': 'Estimated interest over a 10-year repayment plan',
+                    'value': '$0',
+                    'type': 'text',
+                    'helper_text': 'Assumes approximate interest rate of <span data-financial-item="rate_existingDebt"></span>  on any current debt from previous schooling, based on recent rate',
+                    'data_attribute': 'data-financial-item="debt_tenYearInterest"'
+                })
+            }}            
+        </div>
+        <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Total cost of borrowing',
+                    'value': '$0',
+                    'type': 'subtotal',
+                    'status': 'warning',
+                    'data_attribute': 'data-financial-item="debt_tenYearTotal"'
+                })
+            }}
+        </div>
 
         {{ notification.render(
             'money-tips',

@@ -1,44 +1,34 @@
-{% extends "base.html" %}
+{% extends "content-base.html" %}
+
+{% set breadcrumb_items = [{
+    "title": "Buying a House",
+    "href": "/owning-a-home/",
+}] %}
+
 {% import "molecules/social-media.html" as social_media with context %}
 {% set page = {"search_description":"Use this tool to double-check that all the details about your loan are correct on your Closing Disclosure. If something looks incorrect or unexpected, ask why."} %}
 {% set active_page = "closing-disclosure" %}
 {% set page_js = "closing-disclosure" %}
-{% block title %}Closing Disclosure Explainer{% endblock title %}
-{% block metadescription %}Use the CFPB's tool to double-check that all the details about your loan are correct on your Closing Disclosure.{% endblock metadescription %}
+
+{% block title %}
+    Closing Disclosure Explainer | Consumer Financial Protection Bureau
+{% endblock %}
+
+{% block desc %}
+Use the CFPB's tool to double-check that all the details about your loan are correct on your Closing Disclosure.
+{% endblock %}
 
 {% block banner_top %}
 {% include "_templates/brand-header.html" %}
 {% endblock %}
 
 {% block css %}
+    {{ super() }}
     <link rel="stylesheet"
           href="{{ static('apps/owning-a-home/css/main.css') }}">
-    {{ super() }}
-{% endblock css %}
+{% endblock %}
 
-{% block javascript %}
-    {{ super() }}
-     <script async>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-          {# Include site-wide JavaScript. #}
-          var s = [
-            '{{ static('apps/owning-a-home/js/common.js') }}',
-            '{{ static('apps/owning-a-home/js/form-explainer/index.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
-    </script>
-{% endblock javascript %}
-
-{% block content %}
-<main class="content" id="main">
-    <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            <a href="/owning-a-home/" class="breadcrumbs_link">Buying a House</a>
-        </nav>
-    </div>
+{% block body_content %}
     <div class="content_wrapper">
         <div class="content_main">
 
@@ -66,8 +56,8 @@
                     </div>
                     <div class="content-l_col-1-3">
                         <img src="{{ static('img/ill-form-explainer-closing-disc.png') }}"
-                            alt=""
-                            class="illustration">
+                             alt=""
+                             class="illustration">
                     </div>
                 </div>
 
@@ -115,5 +105,20 @@
     }
     ] %}
     {{ brand_footer.render(footer_links) }}
-</main>
 {% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+     <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/owning-a-home/js/common.js') }}',
+            '{{ static('apps/owning-a-home/js/form-explainer/index.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

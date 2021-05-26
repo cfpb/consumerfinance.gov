@@ -1,8 +1,7 @@
 from datetime import date
+from unittest.mock import patch
 
 from django.test import TestCase
-
-from mock import patch
 
 from jobmanager.models.django import JobCategory
 from jobmanager.models.pages import JobListingPage

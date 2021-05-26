@@ -14,10 +14,10 @@
   "private": "true",
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=12.x"
+    "node": ">=14.x"
   },
   "dependencies": {
-    "workbox-build": "^3.4.1"
+    "workbox-build": "6.0.2"
   },
   "devDependencies": {}
 }

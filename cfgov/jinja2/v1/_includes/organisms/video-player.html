@@ -54,19 +54,12 @@
         <div class="o-video-player_video-container
                     {{- ' o-video-player_video-container__flexible' if not is_fcm else '' }}
                     u-show-on-video-playing">
-            <div class="o-video-player_iframe-container">
-                <iframe class="o-video-player_iframe"
-                    width="100%"
-                    src="{{ video_url }}"
-                    frameborder="0"
-                    allow="autoplay"
-                    allowfullscreen="true"
-                    scrolling="no">
-                </iframe>
-            </div>
             <div class="o-video-player_video-actions-container">
                 <div class="o-video-player_video-actions">
-                    <button class="a-btn o-video-player_close-btn" href="/">
+                    <button class="a-btn o-video-player_close-btn"
+                        href="/"
+                        aria-label="Close video"
+                        tabindex="-1">
                         Close {{ svg_icon('close-round') }}
                     </button>
                 </div>
@@ -81,6 +74,17 @@
                     } ) }}
                 {% endif %}
             </div>
+            <div class="o-video-player_iframe-container">
+                <iframe class="o-video-player_iframe"
+                    width="100%"
+                    src="{{ video_url }}"
+                    frameborder="0"
+                    allow="autoplay"
+                    allowfullscreen="true"
+                    scrolling="no"
+                    tabindex="-1">
+                </iframe>
+            </div>
         </div>
         <div class="o-video-player_image-container
                     u-hide-on-video-playing">
@@ -91,7 +95,7 @@
                href="{{ video_url }}"
                target="_blank"
                rel="noopener noreferrer"
-               aria-label="Play video on YouTube">
+               aria-label="{{ _('Play video on YouTube') }}">
                 {{ svg_icon('play') }}
             </a>
 
@@ -103,7 +107,7 @@
             <button class="o-video-player_play-btn
                            o-video-player_play-btn__{{ button_pos }}
                            u-hidden"
-                    aria-label="Play video">
+                    aria-label="{{ _('Play video') }}">
                 {{ svg_icon('play') }}
             </button>
 
@@ -116,13 +120,18 @@
             #}
             {%- set image_url =
                 thumbnail_url or
-                static( 'img/cfpb_video_cover_card_1380x776.png' )
+                static( 'img/cfpb_video_cover_card_954x200.png' )
             %}
             <img class="o-video-player_image
                         {{- ' o-video-player_image__thumbnail' if thumbnail_url else '' }}
                         {{- ' o-featured-content-module_img' if is_fcm else '' }}"
                  alt=""
                  src="{{ image_url }}">
+
+            {#
+                Provide a duration timestamp in the corner of the video.
+            #}
+            <time class="o-video-player_duration u-hidden"></time>
         </div>
     </div>
 {%- endmacro %}

@@ -10,7 +10,9 @@ Disallow: /hud-api-replace
 Disallow: /yourstory
 Disallow: /ask-cfpb/search/
 Disallow: /ask-cfpb/search-by-tag/
+Disallow: /askcfpb/search/
 Disallow: /es/obtener-respuestas/buscar/
 Disallow: /es/obtener-respuestas/buscar-por-etiqueta/
+Disallow: /consumer-tools/educator-tools/youth-financial-education/curriculum-review/tool/*
 
 sitemap: https://www.consumerfinance.gov/sitemap.xml

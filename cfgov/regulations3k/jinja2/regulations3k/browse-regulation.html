@@ -73,10 +73,6 @@
 
 {# BODY items #}
 
-{% block body_classes %}
-    {{ super() }}
-{% endblock body_classes %}
-
 {% block content_modifiers -%}
     {{ super() }} content__hide-horizontal-overflow
 {%- endblock %}
@@ -137,7 +133,7 @@
         {% endif %}
 
         <section class="block block__flush-top">
-            <div class="o-regulations-wayfinder" aria-hidden="true" data-section="{{section}}">
+            <div class="o-regulations-wayfinder" aria-hidden="true" data-section="{{section.title}}">
                 <div class="wrapper content_wrapper">
                     <div class="content_sidebar content__flush-top content__flush-bottom">
                         <span class="h4">

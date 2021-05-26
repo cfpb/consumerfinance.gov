@@ -1,16 +1,11 @@
-import {
-  scrollIntoView,
-  scrollTo
-} from '../../../js/modules/util/scroll';
+import { scrollIntoView } from '../../../js/modules/util/scroll';
 import DT from '../../owning-a-home/js/form-explainer/dom-tools';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 import { assign } from '../../../js/modules/util/assign';
-import { closest } from '../../../js/modules/util/dom-traverse';
-import throttle from 'lodash.throttle';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 
 const CSS = {
-  EXPLAIN_PAGE_FIXED:    'explain_page__fixed',
-  EXPLAIN_PAGE_ABSOLUTE: 'explain_page__absolute',
   HAS_ATTENTION:         'has-attention',
   HOVER_HAS_ATTENTION:   'hover-has-attention'
 };
@@ -35,9 +30,6 @@ class FormExplainer {
   constructor( element, options = {} ) {
     this.currentPage = options.currentPage || 1;
     this.elements = {};
-    this.elements.base = element;
-    this.pageName = 'form';
-    this.resized = false;
   }
 
   /**
@@ -48,7 +40,6 @@ class FormExplainer {
     this.setPageCount();
     this.setCurrentPage( this.currentPage, UNDEFINED, false );
     this.setUIElements();
-    this.setTabIndex();
     this.initializeUI( this.elements );
     this.initializeEvents();
 
@@ -68,45 +59,18 @@ class FormExplainer {
       elements.pages,
       ( value, index ) => {
         const _index = index + 1;
-        this.updateImageUI( _index, true );
+        if ( _index > 1 ) {
+          // Hide all but the first parge
+          const _page = this.getPageEl( _index );
+          DT.hide( _page );
+        }
       }
     );
 
     // eslint-disable-next-line global-require
-    require( '@cfpb/cfpb-expandables/src/Expandable' ).init();
+    Expandable.init();
   }
 
-  /**
-   * Update the image UI for the current page.
-   * @param {number} pageNum - Current page number.
-   * @param {boolean} isPageLoad - Whether this is the initial page load.
-   */
-  updateImageUI( pageNum, isPageLoad ) {
-    const elements = this.getPageElements( pageNum );
-
-    if ( window.innerWidth > 600 ) {
-
-      /* update widths & position on larger screens
-         we only pass in the pageNum on pageLoad, when
-         pages after the first will be hidden once they're
-         fully loaded & we've calculated their widths */
-      this.fitAndStickToWindow( elements, isPageLoad ? pageNum : null );
-    } else if ( !isPageLoad ) {
-
-      /* if this is called on screen resize instead of page load,
-         remove width values & call unstick on the imageWrapper */
-      elements.imageMapWrapper.style.width = '';
-      DT.removeClass( elements.imageMapWrapper, CSS.EXPLAIN_PAGE_FIXED );
-      elements.imageMap.style.width = '';
-      elements.imageMapImage.style.width = '';
-      DT.applyAll( elements.terms, element => ( element.style.width = '' ) );
-      DT.removeClass( elements.imageMapWrapper, CSS.EXPLAIN_PAGE_FIXED );
-    } else if ( pageNum > 1 ) {
-
-      // on page load, hide pages except first
-      DT.hide( elements.page );
-    }
-  }
 
   /**
    * Update the pagination UI.
@@ -124,19 +88,6 @@ class FormExplainer {
         DT.addClass( PAGE_BTN_CTR + ' .next', BTN_DISABLED );
       }
     }
-  }
-
-
-  /**
-   * Update the image position, with possible delay.
-   * @param {number} delay - Time delay before updating the image position.
-   */
-  updateImagePositionAfterAnimation( delay = 0 ) {
-    setTimeout( () => {
-      if ( window.innerWidth > 600 ) {
-        DT.nextFrame( this.updateStickiness.bind( this ) );
-      }
-    }, delay );
   }
 
   /* Update attention classes based on the expandable or image overlay
@@ -193,23 +144,6 @@ class FormExplainer {
   }
 
   /**
-   * Return page elements based on the page number.
-   * @param {Object} pageNum - Current page number.
-   * @returns {Object} DOM elements for the page.
-   */
-  getPageElements( pageNum ) {
-    const element = this.getPageEl( pageNum );
-
-    return {
-      page: element,
-      imageMap: element.querySelector( '.image-map' ),
-      imageMapImage: element.querySelector( '.image-map_image' ),
-      imageMapWrapper: element.querySelector( '.image-map_wrapper' ),
-      terms: element.querySelectorAll( '.terms' )
-    };
-  }
-
-  /**
    * Set the UI elements for the page
    * @returns {Object} DOM elements for the page.
    */
@@ -244,145 +178,6 @@ class FormExplainer {
   }
 
   /**
-   * Calculate the new image width based on the height of the window.
-   * @param {number} imageWidth - Width of the image.
-   * @param {number} imageHeight - Height of the image.
-   * @param {number} windowHeight - Height of the window.
-   * @returns {Object} Page DOM element.
-   */
-  calculateNewImageWidth( imageWidth, imageHeight, windowHeight ) {
-    const imageMapImageRatio = ( imageWidth + 2 ) / ( imageHeight + 2 );
-
-    return ( ( windowHeight - 60 ) * imageMapImageRatio ) + 30;
-  }
-
-  /**
-   * Resize the image map and corresponding images, based on window size.
-   * @param {HTMLNodes} elements - Current page DOM elements.
-   * @param {boolean} windowResize - Whether the images are being resized
-   * based on a window resize event.
-   */
-  resizeImage( elements, windowResize ) {
-    const pageWidth = elements.page.clientWidth;
-    const imageMapImage = elements.imageMapImage;
-    const currentHeight = imageMapImage.clientHeight;
-    const currentWidth = imageMapImage.clientWidth;
-    const actualWidth = imageMapImage.getAttribute( 'data-actual-width' );
-    const actualHeight = imageMapImage.getAttribute( 'data-actual-height' );
-    const windowHeight = window.innerHeight - 60;
-    let newWidth;
-    let newWidthPercentage;
-
-    /* If the image is too tall for the window, resize it proportionally,
-       then update the adjacent terms column width to fit.
-       On window resize, also check if image is now too small & resize,
-       but only if we've stored the actual image dimensions for comparison. */
-    if ( ( currentHeight > windowHeight ) ||
-         ( windowResize && actualWidth && actualHeight ) ) {
-      // determine new width
-      newWidth = this.calculateNewImageWidth(
-        currentWidth, currentHeight, window.innerHeight
-      );
-
-      if ( actualWidth && newWidth > actualWidth ) {
-        newWidth = actualWidth;
-      }
-
-      // update element widths
-      newWidthPercentage = newWidth / pageWidth * 100;
-
-      /* on screen less than 800px wide, the terms need a minimum 33%
-         width or they become too narrow to read */
-      if ( window.innerWidth <= 800 && newWidthPercentage > 67 ) {
-
-        newWidthPercentage = 67;
-      }
-
-      elements.imageMap.style.width = newWidthPercentage + '%';
-
-      DT.applyAll(
-        elements.terms,
-        element => ( element.style.width = 100 - newWidthPercentage + '%' )
-      );
-    }
-  }
-
-  /**
-   * Set the image map and image map widths, in pixels.
-   * @param {HTMLNodes} elements - Current page DOM elements.
-   */
-  setImageElementWidths( elements ) {
-
-    /* When the image position is set to `fixed`,
-       it no longer constrained to its parent.
-       To fix this we will give it its own width that is equal to the parent.
-       (IE8 wants a width on the wrapper too) */
-    const containerWidth = elements.imageMap.clientWidth + 'px';
-    elements.imageMapImage.style.width = containerWidth;
-    elements.imageMapWrapper.style.width = containerWidth;
-  }
-
-  /**
-   * Store the image widths in data attributes.
-   * @param {Object} image - Current form explainer image map.
-   */
-  storeImageDimensions( image ) {
-    image.setAttribute( 'data-actual-width', image.clientWidth );
-    image.setAttribute( 'data-actual-height', image.clientHeight );
-  }
-
-  /**
-   * Limit .image-map_image to the height of the window and then adjust the two
-   * columns to match.
-   * @param {HTMLNodes} elements - Current page DOM elements.
-   * @param {number} pageNum - Current page number.
-  */
-  fitAndStickToWindow( elements, pageNum ) {
-    if ( pageNum ) {
-      this.storeImageDimensions( elements.imageMapImage );
-    }
-
-    this.resizeImage( elements, !pageNum );
-
-    // set width values on image elements
-    this.setImageElementWidths( elements );
-
-    this.updateStickiness();
-
-    // show the first page
-    if ( pageNum > 1 ) {
-      DT.hide( elements.page );
-    }
-  }
-
-  /**
-   * Modify the image position if the viewport has been scrolled past
-   * current page, so that the sticky element does not overlap
-   * content that comes after current page.
-   */
-  updateStickiness( ) {
-    const imageMapWrapper = this.elements.imageMapWrapper;
-    const page = this.elements.currentPage;
-    const pageBottom = window.pageYOffset +
-                       page.getBoundingClientRect().bottom -
-                       imageMapWrapper.offsetHeight;
-    const yPos = imageMapWrapper.parentNode.getBoundingClientRect().top;
-
-    if ( yPos < 30 ) {
-      if ( window.pageYOffset >= pageBottom ) {
-        DT.removeClass( imageMapWrapper, CSS.EXPLAIN_PAGE_FIXED );
-        DT.addClass( imageMapWrapper, CSS.EXPLAIN_PAGE_ABSOLUTE );
-      } else {
-        DT.removeClass( imageMapWrapper, CSS.EXPLAIN_PAGE_ABSOLUTE );
-        DT.addClass( imageMapWrapper, CSS.EXPLAIN_PAGE_FIXED );
-      }
-    } else {
-      DT.removeClass( imageMapWrapper, CSS.EXPLAIN_PAGE_FIXED );
-      DT.removeClass( imageMapWrapper, CSS.EXPLAIN_PAGE_ABSOLUTE );
-    }
-  }
-
-  /**
    * Paginate through the various form pages.
    * @param {string} direction - 'next' or 'prev'.
    */
@@ -412,8 +207,6 @@ class FormExplainer {
       '.form-explainer_page-link[data-page="' + pageNum + '"]';
 
     this.currentPage = parseInt( pageNum, 10 );
-    this.elements.currentPage = this.getPageEl( pageNum );
-    assign( this.elements, this.getPageElements( pageNum ) );
 
     DT.removeClass( PAGE_LINK, CURRENT_PAGE );
     DT.addClass( CURRENT_PAGE_LINK, CURRENT_PAGE );
@@ -450,65 +243,14 @@ class FormExplainer {
       DT.fadeOut( this.getPageEl( currentPage ), 600,
         () => {
           DT.fadeIn( this.getPageEl( newPage ), 700 );
-          this.updateImageUI( newPage );
         } );
     } );
-  }
-
-  /**
-   * Unset the image position by removing the appropriate classes.
-   */
-  unStickImage() {
-    const element = this.getPageEl( this.currentPage );
-
-    DT.removeClass( element, CSS.EXPLAIN_PAGE_FIXED );
-    DT.removeClass( element, CSS.EXPLAIN_PAGE_ABSOLUTE );
-  }
-
-  /**
-   * Add the scroll event listener and set the image position.
-   */
-  stickImage() {
-    window.removeEventListener( 'scroll', this.onScroll );
-    if ( window.innerWidth > 600 ) {
-      this.onScroll = throttle( () => {
-        this.updateStickiness();
-      }, 100 );
-      window.addEventListener( 'scroll', this.onScroll );
-    } else {
-      this.unStickImage();
-    }
-  }
-
-
-  /**
-   * Set the tab index to 0 for all form explainer links.
-   */
-  setTabIndex() {
-    const elements = DT.getEls(
-      '.o-expandable__form-explainer .o-expandable_content a'
-    );
-
-    DT.applyAll(
-      elements,
-      element => element.setAttribute( 'tabindex', 0 )
-    );
   }
 
   /* Initialize the DOM events for the entire explainer UI. */
   initializeEvents() {
     const uiElements = this.elements;
     const delay = 700;
-
-    this.stickImage();
-
-    window.addEventListener(
-      'resize',
-      throttle( () => {
-        this.updateImageUI( this.currentPage );
-        this.stickImage();
-      }, 250 )
-    );
 
     if ( this.pageCount > 1 ) {
 
@@ -598,7 +340,6 @@ class FormExplainer {
           );
 
           this.updateAttention( closestFormExplainer, CSS.HAS_ATTENTION );
-          this.updateImagePositionAfterAnimation( 600 );
         }
       }
     );

@@ -3,8 +3,6 @@ import warnings
 
 import django
 
-from unipath import DIRS
-
 from .base import *
 
 
@@ -25,7 +23,7 @@ INSTALLED_APPS += (
     "wagtail.contrib.styleguide",
 )
 
-STATIC_ROOT = REPOSITORY_ROOT.child("collectstatic")
+STATIC_ROOT = REPOSITORY_ROOT.joinpath("collectstatic")
 
 ALLOW_ADMIN_URL = DEBUG or os.environ.get("ALLOW_ADMIN_URL", False)
 
@@ -87,6 +85,14 @@ CACHES = {
     for k in ("default", "post_preview")
 }
 
+# Optionally enable default cache
+if os.environ.get("ENABLE_DEFAULT_CACHE"):
+    CACHES["default"] = {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "default_cache",
+        "TIMEOUT": None,
+    }
+
 # Optionally enable cache for post_preview
 if os.environ.get("ENABLE_POST_PREVIEW_CACHE"):
     CACHES["post_preview"] = {
@@ -107,3 +113,10 @@ WAGTAIL_PLACEHOLDERIMAGES_SOURCE = "//placekitten.com/{width}/{height}"
 CSP_IMG_SRC += (
     "placekitten.com",
 )
+
+ELASTICSEARCH_SYNONYMS_HOME = './search/resources'
+
+# Add django-cprofile-middleware to enable lightweight local profiling.
+# The middleware's profiling is only available if DEBUG=True
+MIDDLEWARE += ("django_cprofile_middleware.middleware.ProfilerMiddleware",)
+DJANGO_CPROFILE_MIDDLEWARE_REQUIRE_STAFF = False

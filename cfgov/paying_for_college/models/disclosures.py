@@ -392,22 +392,27 @@ class School(models.Model):
 
     @property
     def program_codes(self):
-        # We're only insterested in program data with salary and level info
+        # We're only insterested in program data with salary included
+        payload = {}
         live_programs = self.program_set.filter(
             test=False).exclude(level='').exclude(salary=None)
         graduate = [p for p in live_programs if int(p.level) > 3]
-        # We're initially providing only graduate program details
-        undergrad = []  # [p for p in live_programs if p not in graduate]
-        return {
-            'graduate': [{
-                'code': p.program_code,
-                'name': p.program_name.strip('.'),
-                'level': PROGRAM_LEVELS.get(p.level),
-                'salary': p.salary}
-                for p in graduate
-            ],
-            'undergrad': undergrad,
+        undergrad = [p for p in live_programs if p not in graduate]
+        program_sets = {
+            'graduate': graduate,
+            'undergrad': undergrad
         }
+        for level in program_sets:
+            payload.update({
+                level: [{
+                    'code': p.program_code,
+                    'name': p.program_name.strip('.'),
+                    'level': PROGRAM_LEVELS.get(p.level),
+                    'salary': p.salary}
+                    for p in program_sets[level]
+                ]
+            })
+        return payload
 
     def get_predominant_degree(self):
         predominant = ''

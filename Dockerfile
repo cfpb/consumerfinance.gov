@@ -25,7 +25,7 @@ RUN yum -y install \
         centos-release-scl \
         epel-release && \
     rpm -i https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
-    curl -sL https://rpm.nodesource.com/setup_12.x | bash - && \
+    curl -sL https://rpm.nodesource.com/setup_14.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     yum -y update && \
     yum -y install \
@@ -68,6 +68,7 @@ ENV ALLOWED_HOSTS '["*"]'
 # See .dockerignore for details on which files are included
 COPY . .
 
+# Install Node.js version curled earlier in this file from rpm.nodesource.com
 RUN yum -y install nodejs yarn && \
     ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
@@ -87,6 +88,7 @@ ENV APACHE_PROCESS_COUNT 4
 ENV ACCESS_LOG /dev/stdout
 ENV ERROR_LOG /dev/stderr
 ENV STATIC_PATH ${APP_HOME}/cfgov/static/
+ENV LIMIT_REQUEST_BODY 0
 
 # mod_wsgi settings
 ENV CFGOV_PATH ${APP_HOME}
@@ -124,14 +126,13 @@ USER apache
 
 # Build frontend, cleanup excess file, and setup filesystem
 # - cfgov/f/ - Wagtail file uploads
-# - /tmp/eregs_cache/ - Django file-based cache
 RUN ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
     ln -s ${SCL_HTTPD_ROOT}/etc/httpd/run ${APACHE_SERVER_ROOT}/run && \
     rm -rf cfgov/apache/www cfgov/unprocessed && \
-    mkdir -p cfgov/f /tmp/eregs_cache
+    mkdir -p cfgov/f
 
 # Healthcheck retry set high since database loads take a while
-HEALTHCHECK --start-period=15s --interval=30s --retries=30 \
+HEALTHCHECK --start-period=300s --interval=30s --retries=30 \
             CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
 
 CMD ["httpd", "-d", "cfgov/apache", "-D", "FOREGROUND"]

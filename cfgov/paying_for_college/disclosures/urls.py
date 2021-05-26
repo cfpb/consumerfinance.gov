@@ -3,7 +3,7 @@ from django.urls import re_path
 from paying_for_college.views import (
     BaseTemplateView, ConstantsRepresentation, ExpenseRepresentation,
     FeedbackView, OfferView, ProgramRepresentation, SchoolRepresentation,
-    StatsRepresentation, VerifyView, school_search_api
+    StatsRepresentation, VerifyView, school_autocomplete
 )
 
 
@@ -22,11 +22,13 @@ urlpatterns = [
 
     re_path(r"^about-this-tool/$",
             BaseTemplateView.as_view(
-                template_name="paying_for_college/disclosure_technote.html"),
+                template_name="paying-for-college/disclosure_technote.html"),
             name="pfc-technote"),
 
-    re_path(r"^api/search-schools.json", school_search_api,
-            name="school_search"),
+    re_path(
+        r"^api/search-schools.json",
+        school_autocomplete,
+        name="school_search"),
 
     re_path(r"^api/program/([^/]+)/$", ProgramRepresentation.as_view(),
             name="program-json"),

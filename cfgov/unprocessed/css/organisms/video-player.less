@@ -26,6 +26,11 @@
 .o-video-player {
     overflow: hidden;
     background: @white;
+
+    // When JavaScript is disabled add a border to stand-alone videos.
+    .no-js &:not( .o-featured-content-module_visual ) {
+        border: 1px solid @gray-40;
+    }
 }
 
 .o-video-player.video-playing {
@@ -48,11 +53,29 @@
 
 .o-video-player_image-container {
     position: relative;
-    // @black not used because it's not totally black.
-    background-color: #000;
+    background-color: #fff;
     text-align: center;
     height: 100%;
-    width: 100%;
+    display: flex;
+
+    // Create an aspect ratio box, see https://css-tricks.com/aspect-ratio-boxes/#the-psuedo-element-tactic
+    &:before {
+        content: '';
+        width: 1px;
+        margin-left: -1px;
+        float: left;
+        height: 0;
+        // Calculate padding to set the height of the container proportionally
+        // so that we end up with a 16:9 aspect ratio.
+        padding-top: 9 / 16 * 100%;
+    }
+
+    // To clear float.
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
 }
 
 .o-video-player_image {
@@ -60,12 +83,44 @@
     display: block;
     opacity: 0;
     transition: opacity .25s;
+    // Needed for IE11 to not stretch the image.
+    flex-shrink: 0;
+    align-self: center;
+
+    // Using the default CFPB cover card image.
+    &[src^="/static/img/cfpb_video_cover_card_954x200"] {
+        padding: unit( 60px / @base-font-size-px, em );
+        box-sizing: border-box;
+
+        // Overrides values set in featured-content-module.less file in the DS.
+        &.o-featured-content-module_img {
+            max-width: 100%;
+            height: auto;
+            padding: unit( 15px / @base-font-size-px, em );
+            left: 0;
+            transform: none;
+        }
+    }
 
     .no-js &,
     &-loaded,
     &__thumbnail {
         opacity: 1;
     }
+}
+
+.o-video-player_duration {
+    color: @white;
+    background: rgba( 0, 0, 0, 0.4 );
+    z-index: 1;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: unit( 16px / @base-font-size-px, rem );
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 
 .o-video-player_play-btn {

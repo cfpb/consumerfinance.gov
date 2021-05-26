@@ -1,6 +1,6 @@
 {% macro _filter_selectable(type, label_text, id, name, value, required=None, group=None) %}
-    <li class="m-form-field m-form-field__checkbox">
-        <input class="{{ 'a-checkbox' if type == 'checkbox' else 'a-radio' }}"
+    <li class="m-form-field m-form-field__{{ type }}">
+        <input class="a-{{ type }}"
                type="{{ type }}"
                value="{{ value }}"
                id="filter_{{ id }}"
@@ -14,7 +14,7 @@
     </li>
 {% endmacro %}
 
-{% macro _render_filter_fields(value, form) -%}
+{% macro _render_filter_fields(value, form, show_archive_filter=False) -%}
     {% if value.title %}
         <div class="content-l_col
                     content-l_col-1">
@@ -22,7 +22,11 @@
                 <div class="m-form-field">
                     <label class="a-label a-label__heading"
                            for="{{ form.title.id_for_label }}">
-                        Item name
+                        {% if flag_enabled('EXPAND_FILTERABLE_LIST_SEARCH') %}
+                            Search by keyword(s)
+                        {% else %}
+                            Item name
+                        {% endif %}
                     </label>
                     {{ form.title }}
                 </div>
@@ -81,6 +85,20 @@
                         </div>
                     </div>
                 {% endif %}
+                {% if value.products %}
+                    <div class="content-l_col
+                                content-l_col-1-2">
+                        <div class="o-form_group">
+                            <div class="m-form-field">
+                                <label class="a-label a-label__heading"
+                                       for="{{ form.products.id_for_label }}">
+                                    Product
+                                </label>
+                                {{ form.products }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
                 {% if value.authors %}
                     <div class="content-l_col
                                 content-l_col-1-2">
@@ -132,18 +150,41 @@
             </div>
         </div>
     {% endif %}
+    {% if show_archive_filter %}
+        <div class="content-l_col
+                    content-l_col-1-2">
+            <div class="o-form_group">
+                <fieldset class="o-form_fieldset">
+                    <legend class="a-legend">
+                        Archived items
+                    </legend>
+                    <ul class="m-list m-list__unstyled" role="group">
+                    {%- for radio in form.archived %}
+                        {{ _filter_selectable(
+                            'radio',
+                            radio.choice_label,
+                            'archived_'+radio.data.value,
+                            'archived',
+                            radio.data.value
+                        ) }}
+                    {% endfor -%}
+                    </ul>
+                </fieldset>
+            </div>
+        </div>
+    {% endif %}
 {% endmacro %}
 
 {% macro _filters_form(value, form) %}
     <form method="get" action=".">
         <div class="content-l">
-            {{ _render_filter_fields(value, form) }}
+            {{ _render_filter_fields(value, form, has_archived_posts) }}
             <div class="content-l_col
                         content-l_col-1
                         m-btn-group">
-                <input class="a-btn"
-                       type="submit"
-                       value="Apply filters">
+                <button class="a-btn" type="submit">
+                    Apply filters
+                </button>
                 <a class="a-btn a-btn__link a-btn__warning"
                    href="{{ request.path }}">
                     Clear filters

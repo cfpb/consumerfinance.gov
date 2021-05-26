@@ -4,19 +4,19 @@ import os
 import zipfile
 from collections import OrderedDict
 from csv import DictReader as cdr, writer as csw
+from pathlib import Path
 from subprocess import call
 
 from django.contrib.humanize.templatetags.humanize import intcomma
 
 import requests
-from unipath import Path
 
 from paying_for_college.models import Alias, School
 from paying_for_college.views import get_school
 
 
 SCRIPT = os.path.basename(__file__).partition('.')[0]
-PFC_ROOT = Path(__file__).ancestor(3)
+PFC_ROOT = Path(__file__).resolve().parents[2]
 
 # DATA_YEAR specifies first year of an academic-year pair.
 # Normally we'd run this script early in a calendar year, which will be

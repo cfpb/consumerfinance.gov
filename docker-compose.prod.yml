@@ -18,10 +18,11 @@ services:
             SECRET_KEY: abcdefghijklmnopqrstuvwxyz
             MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
             PGPASSWORD: cfpb
+            WATCHMAN_TOKENS: "token"
+            APACHE_STATUS_ALLOW_FROM: 127.0.0.1
         ports:
             - "8000:8000"
         volumes:
             - ./cfgov/apache/conf/:/src/consumerfinance.gov/cfgov/apache/conf/
             - ./cfgov/apache/conf.d/:/src/consumerfinance.gov/cfgov/apache/conf.d/
             - ./cfgov/apache/conf.modules.d/:/src/consumerfinance.gov/cfgov/apache/conf.modules.d/
-        

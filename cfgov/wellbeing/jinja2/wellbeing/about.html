@@ -1,7 +1,13 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% set link_text =  _('Back to the questionnaire') %}
+{% set breadcrumb_items = [{
+    "title": link_text,
+    "href": url('fwb_home_' + current_language),
+}] %}
+
 {% block title -%}
-    {{ _('Why financial well-being?') }}
+    {{ _('Why financial well-being?') }} | {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
 
 {% block desc -%}
@@ -17,19 +23,6 @@
         <meta property="twitter:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
         <meta name="twitter:card" content="summary_large_image">
 {% endblock %}
-
-
-{% block pre_content %}
-    <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            <a class="breadcrumbs_link" id="results-link" href="{{ url('fwb_home_' + current_language) }}">
-                {{ svg_icon( 'left' ) }}
-                {{ _('Back to the questionnaire') }}
-            </a>
-        </nav>
-    </div>
-{% endblock %}
-
 
 {% block content_main %}
 
@@ -92,10 +85,25 @@
         {{ _('The tool allows you to compare your financial well-being score to other adults in the United States.') }}
         {{ _('The comparison of your score to others’ scores is made possible by our national survey. In late 2016, we collected responses to our financial well-being scale in a nationwide survey of U.S. adults for the first time.') }}
     </p>
-    <a class="a-link__jump"
-       href="/data-research/research-reports/financial-well-being-america/">
-        <span class="a-link_text">{{ _('See the report') }}</span>
-    </a>
+    <ul class="m-list m-list__links">
+        <li class="m-list_item">
+            <a class="m-list_link" href="/data-research/research-reports/financial-well-being-america/">
+                {{ _('See the report') }}
+            </a>
+        </li>
+    </ul>
+    {% if (current_language == 'es') %}
+    <p>
+        También puede comparar su puntuación con la de otros Hispanos o Latinos en el 2018.
+    </p>
+    <ul class="m-list m-list__links">
+        <li class="m-list_item">
+            <a class="m-list_link" href="/data-research/research-reports/measuring-financial-well-being-hispanics-2018-benchmarks/">
+                {{ _('See the report') }}
+            </a>
+        </li>
+    </ul>
+    {% endif %}
 {% endblock %}
 
 {% block content_sidebar %}
@@ -105,7 +113,7 @@
             <h2 class="a-heading">For further reading and research</h2>
         </header>
         <p>
-            <a href="/practitioner-resources/financial-well-being-resources/">See how to use financial well-being with the people you serve.</a>
+            <a href="/consumer-tools/educator-tools/financial-well-being-resources/">See how to use financial well-being with the people you serve.</a>
         </p>
         <p>
             <a href="/data-research/research-reports/financial-well-being/">Learn more about financial well-being</a>

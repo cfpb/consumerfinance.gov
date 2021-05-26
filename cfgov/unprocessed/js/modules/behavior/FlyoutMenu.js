@@ -3,10 +3,13 @@ import {
   BEHAVIOR_PREFIX,
   JS_HOOK,
   noopFunct
-} from '../../modules/util/standard-type';
-import BaseTransition from '../../modules/transition/BaseTransition';
-import EventObserver from '../../modules/util/EventObserver';
-import { checkBehaviorDom } from '../../modules/util/behavior';
+} from '@cfpb/cfpb-atomic-component/src/utilities/standard-type.js';
+import BaseTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/BaseTransition.js';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+import { checkBehaviorDom } from '../../modules/util/behavior.js';
+
+const BASE_CLASS = BEHAVIOR_PREFIX + 'flyout-menu';
+const SEL_PREFIX = '[' + JS_HOOK + '=' + BASE_CLASS;
 
 /**
  * FlyoutMenu
@@ -32,10 +35,6 @@ import { checkBehaviorDom } from '../../modules/util/behavior';
  * @returns {FlyoutMenu} An instance.
  */
 function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
-
-  const BASE_CLASS = BEHAVIOR_PREFIX + 'flyout-menu';
-  const SEL_PREFIX = '[' + JS_HOOK + '=' + BASE_CLASS;
-
   // Verify that the expected dom attributes are present.
   const _dom = checkBehaviorDom( element, BASE_CLASS );
   const _triggerDoms = _findTriggers( element );
@@ -115,11 +114,12 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     return triggersList;
   }
 
-  // TODO: Add param to set the FlyoutMenu open at initialization-time.
   /**
    * @returns {FlyoutMenu} An instance.
+   * @param {boolean} isExpanded - Whether the flyout menu is expanded at
+   *   initialization-time or collapsed.
    */
-  function init() {
+  function init( isExpanded = false ) {
     const handleTriggerClickedBinded = _handleTriggerClicked.bind( this );
     const handleTriggerOverBinded = _handleTriggerOver.bind( this );
     const handleTriggerOutBinded = _handleTriggerOut.bind( this );
@@ -129,7 +129,13 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       triggerDom = _triggerDoms[i];
 
       // Set initial aria attributes to false.
-      _setAriaAttr( 'expanded', triggerDom, 'false' );
+      if ( isExpanded ) {
+        _setAriaAttr( 'expanded', triggerDom, 'true' );
+        _setAriaAttr( 'expanded', _contentDom, 'true' );
+      } else {
+        _setAriaAttr( 'expanded', triggerDom, 'false' );
+        _setAriaAttr( 'expanded', _contentDom, 'false' );
+      }
 
       triggerDom.addEventListener( 'click', handleTriggerClickedBinded );
       triggerDom.addEventListener( 'touchstart', _handleTouchStart );

@@ -2,11 +2,10 @@ from django.db import models
 from django.utils.safestring import mark_safe
 
 from wagtail.admin.edit_handlers import (
-    FieldPanel, InlinePanel, ObjectList, TabbedInterface
+    FieldPanel, InlinePanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.admin.forms import (
-    WagtailAdminModelFormMetaclass, WagtailAdminPageForm
-)
+from wagtail.core.blocks import StreamBlock
+from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable, PageManager
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -14,37 +13,32 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
+from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 
 
-# These classes are used to add support for nested InlinePanels, and are
-# referenced by HomePage.base_form_class. This workaround comes from
-# https://github.com/wagtail/wagtail/issues/5511. Proper support for nested
-# inline panels in Wagtail won't be added until version 2.8, see
-# https://github.com/wagtail/wagtail/pull/5566.
-class HomePageFormMetaclass(WagtailAdminModelFormMetaclass):
-    @classmethod
-    def child_form(cls):
-        return HomePageForm
+class HomePageContentBlock(StreamBlock):
+    jumbo_hero = molecules.JumboHero()
+    features = organisms.InfoUnitGroup()
 
-
-class HomePageForm(WagtailAdminPageForm, metaclass=HomePageFormMetaclass):
-    pass
+    class Meta:
+        block_counts = {
+            'jumbo_hero': {'max_num': 1},
+            'features': {'max_num': 1},
+        }
 
 
 class HomePage(CFGOVPage):
+    content = StreamField(HomePageContentBlock, blank=True)
+
     card_heading = models.CharField(max_length=40, null=True, blank=True)
 
     # Tab handler interface
     edit_handler = TabbedInterface([
+        ObjectList([StreamFieldPanel('content')], heading='Content'),
         ObjectList([
             InlinePanel(
-                'carousel_items', min_num=4, max_num=4, label="Carousel Item"
-            ),
-        ], heading='Carousel'),
-        ObjectList([
-            InlinePanel(
-                'info_units', min_num=6, max_num=6, label="Info Unit"
+                'info_units', min_num=3, max_num=6, label="Info Unit"
             ),
         ], heading='Info Units'),
         ObjectList([
@@ -66,17 +60,10 @@ class HomePage(CFGOVPage):
 
     objects = PageManager()
 
-    base_form_class = HomePageForm
-
-    @property
-    def page_js(self):
-        return super(HomePage, self).page_js + ['home-page.js']
-
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
 
         context.update({
-            'carousel_items': self.carousel_items.select_related('image'),
             'info_units': [
                 info_unit.as_info_unit()
                 for info_unit in
@@ -87,40 +74,6 @@ class HomePage(CFGOVPage):
         })
 
         return context
-
-
-class HomePageCarouselItem(Orderable):
-    page = ParentalKey(
-        'v1.HomePage', on_delete=models.CASCADE, related_name='carousel_items'
-    )
-    title = models.CharField(max_length=45, help_text=(
-        "45 characters maximum (including spaces). "
-        "Sentence case, unless proper noun."
-    ))
-    body = models.TextField(max_length=160, help_text=(
-        "160 characters maximum (including spaces)."
-    ))
-    link_text = models.CharField(max_length=35, help_text=(
-        "35 characters maximum (including spaces). "
-        "Lead with a verb, and be specific."
-    ))
-    # TODO: Change this to use a URLField that also allows relative links.
-    # https://code.djangoproject.com/ticket/10896
-    link_url = models.CharField("Link URL", max_length=255)
-    image = models.ForeignKey(
-        get_image_model_string(),
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name='+'
-    )
-
-    panels = [
-        FieldPanel('title'),
-        FieldPanel('body'),
-        FieldPanel('link_text'),
-        FieldPanel('link_url'),
-        ImageChooserPanel('image'),
-    ]
 
 
 class HomePageInfoUnit(Orderable, ClusterableModel):
@@ -162,7 +115,11 @@ class HomePageInfoUnit(Orderable, ClusterableModel):
             'image': {
                 'upload': self.image,
             },
-            'heading': '<h3>%s</h3>' % self.title,
+            'heading': {
+                'text': self.title,
+                'level': 'h2',
+                'level_class': 'h3',
+            },
             'body': self.body,
             'links': [
                 {

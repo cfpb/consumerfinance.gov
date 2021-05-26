@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content scoped %}
-    {%- import 'macros/accessible-languages.html' as accessible_languages with context-%}
     <main class="content {% block content_modifiers -%}{%- endblock %}"
-          id="main"
-          {{ accessible_languages.render() }}>
+          id="main">
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
             {% if breadcrumb_items | length > 0 %}
-                <div class="wrapper">
-                {%- import 'breadcrumbs.html' as breadcrumbs -%}
+                <div class="wrapper content_wrapper">
+                {%- import 'molecules/breadcrumbs.html' as breadcrumbs -%}
                 {{ breadcrumbs.render(breadcrumb_items) }}
                 </div>
             {% endif %}

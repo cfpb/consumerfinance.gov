@@ -27,7 +27,7 @@ from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
 from v1.template_debug import (
-    featured_content_test_cases, notification_test_cases,
+    featured_content_test_cases, heading_test_cases, notification_test_cases,
     register_template_debug, video_player_test_cases
 )
 from v1.util import util
@@ -101,10 +101,22 @@ def editor_js():
     return js_includes
 
 
+@hooks.register('insert_global_admin_js')
+def global_admin_js():
+    js_files = ['js/admin/global.js']
+
+    js_includes = format_html_join(
+        '\n',
+        '<script src="{0}{1}"></script>',
+        ((settings.STATIC_URL, filename) for filename in js_files)
+    )
+
+    return js_includes
+
+
 @hooks.register('insert_editor_css')
 def editor_css():
     css_files = [
-        'css/bureau-structure.css',
         'css/form-explainer.css',
         'css/general-enhancements.css',
         'css/heading-block.css',
@@ -125,6 +137,7 @@ def editor_css():
 def global_admin_css():
     css_files = [
         'css/model-admin.css',
+        'css/global.css',
     ]
 
     css_includes = format_html_join(
@@ -409,11 +422,6 @@ def register_span_feature(features):
     features.default_features.append('span')
 
 
-@hooks.register('before_serve_shared_page')
-def set_served_by_wagtail_sharing(page, request, args, kwargs):
-    setattr(request, 'served_by_wagtail_sharing', True)
-
-
 @hooks.register('register_permissions')
 def add_export_feedback_permission_to_wagtail_admin_group_view():
     return Permission.objects.filter(
@@ -428,6 +436,14 @@ register_template_debug(
     '_includes/organisms/featured-content.html',
     featured_content_test_cases,
     extra_js=['featured-content-module.js']
+)
+
+
+register_template_debug(
+    'v1',
+    'heading',
+    '_includes/blocks/heading.html',
+    heading_test_cases
 )
 
 

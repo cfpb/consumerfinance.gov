@@ -1,4 +1,5 @@
 import unittest
+from unittest import mock
 
 from django.test import (
     RequestFactory, SimpleTestCase, TestCase, override_settings
@@ -9,13 +10,9 @@ from wagtail.core.whitelist import Whitelister as Allowlister
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
 
-import mock
-
 from v1.models.base import CFGOVPage
 from v1.models.resources import Resource
-from v1.wagtail_hooks import (
-    form_module_handlers, get_resource_tags, set_served_by_wagtail_sharing
-)
+from v1.wagtail_hooks import form_module_handlers, get_resource_tags
 
 
 class TestFormModuleHandlers(TestCase):
@@ -215,14 +212,3 @@ class TestAllowlistOverride(SimpleTestCase):
         input_html = '<scan class="id">Consumer <embed>Finance</embed></scan>'
         output_html = self.allowlister.clean(input_html)
         self.assertHTMLEqual(output_html, 'Consumer Finance')
-
-
-class TestSetServedByWagtailSharing(TestCase):
-
-    def setUp(self):
-        self.factory = RequestFactory()
-
-    def test_set_served_by_wagtail_sharing(self):
-        request = self.factory.get('/an-url')
-        set_served_by_wagtail_sharing(None, request, [], {})
-        self.assertTrue(request.served_by_wagtail_sharing)

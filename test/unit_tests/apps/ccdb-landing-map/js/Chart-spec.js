@@ -1,4 +1,5 @@
-import Chart from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart';
+import 'regenerator-runtime/runtime.js';
+import Chart from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart.js';
 
 describe( 'chart constructor', () => {
   beforeEach( () => {
