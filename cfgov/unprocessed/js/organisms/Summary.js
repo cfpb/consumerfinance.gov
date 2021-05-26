@@ -58,7 +58,26 @@ function Summary( element ) {
       window.addEventListener( 'orientationchange', _resizeHandler );
     }
 
+    /* When we click inside the content area we may be changing the size,
+       such as when a video player expands on being clicked.
+       So, let's refresh the transition to recalculate the max-height,
+       just in case. */
+    _contentDom.addEventListener( 'click', _contentClicked );
+
     return this;
+  }
+
+  /**
+   * Handler for when the content area is clicked.
+   * Refresh the transition to recalculate the max-height.
+   * @param {MouseEvent} evt - the mouse event object.
+   */
+  function _contentClicked( evt ) {
+    /* We don't need to refresh if a link was clicked as we'll be navigating
+       to another page. */
+    if ( evt.target.tagName !== 'A' ) {
+      _transition.refresh();
+    }
   }
 
   /**
