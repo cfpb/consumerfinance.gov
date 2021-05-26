@@ -183,7 +183,7 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
                 PlaceholderFieldBlock, self).render_form(*args, **kwargs)
         else:  # pragma: no cover
             prefix = ''
-            value = "{}".format(*args)
+            value = '{}'.format(*args)
             html = render_to_string('wagtailadmin/block_forms/field.html', {
                 'name': self.name,
                 'classes': getattr(
@@ -191,7 +191,7 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
                 'widget': self.field.widget.render(
                     prefix,
                     self.field.prepare_value(self.value_for_form(value)),
-                    attrs={'id': prefix, 'placeholder': self.label}),
+                    attrs={'id': format(prefix), 'placeholder': self.label}),
                 'field': self.field,
                 'errors': None
             })
