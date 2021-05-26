@@ -35,6 +35,8 @@ export class PfcFinancialPathToGraduation {
 
   typeText( name, value ) {
     cy.get( `#${ name }` ).type( value );
+  clickLeftNav( name ) {
+    cy.get( `[data-nav_item="${ name }"]` ).click();
   }
 
   setText( name, value ) {
