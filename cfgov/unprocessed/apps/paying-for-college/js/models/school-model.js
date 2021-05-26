@@ -93,7 +93,7 @@ const schoolModel = {
       return false;
     }
 
-    return schoolModel.values.programCodes[level][pid];
+    return schoolModel.values.programList[level][pid];
   }
 
 };
