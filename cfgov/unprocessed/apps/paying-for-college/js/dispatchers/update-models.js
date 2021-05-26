@@ -136,60 +136,52 @@ function setSchoolValues( data ) {
   */
 function updateSchoolData( iped ) {
   return new Promise( ( resolve, reject ) => {
-    if ( iped !== null && typeof iped !== 'undefined' ) {
-      getSchoolData( iped )
-        .then( resp => {
-          const data = JSON.parse( resp.responseText );
-          setSchoolValues( data );
-          const pid = getStateValue( 'pid' );
-          const programInfo = getProgramInfo( pid );
+    getSchoolData( iped )
+      .then( resp => {
+        const data = JSON.parse( resp.responseText );
+        setSchoolValues( data );
+        const pid = getStateValue( 'pid' );
 
-          // Create objects of programs keyed by program ID
-          schoolModel.createProgramLists();
+        // Create objects of programs keyed by program ID
+        schoolModel.createProgramLists();
+        const programInfo = getProgramInfo( pid );
 
-          // If we have a pid, validate it has info
-          if ( !programInfo ) {
-            stateModel.setValue( 'pid', false );
-          }
+        // If we have a pid, validate it has info
+        if ( !programInfo ) {
+          stateModel.setValue( 'pid', false );
+        }
 
-          // Take only the top 3 programs
-          schoolModel.values.programsTopThree =
-            getTopThreePrograms( schoolModel.values.programsPopular );
+        // Take only the top 3 programs
+        schoolModel.values.programsTopThree =
+          getTopThreePrograms( schoolModel.values.programsPopular );
 
-          // add the full state name to the schoolModel
-          schoolModel.values.stateName =
-            getStateByCode( schoolModel.values.state );
+        // add the full state name to the schoolModel
+        schoolModel.values.stateName =
+          getStateByCode( schoolModel.values.state );
 
-          // Some values must migrate to the financial model
-          if ( programInfo ) {
-            financialModel.setValue( 'salary_annual', stringToNum( programInfo.salary ) );
-            updateState.byProperty( 'programName', programInfo.name );
-          } else {
-            financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
-          }
+        // Some values must migrate to the financial model
+        if ( programInfo ) {
+          financialModel.setValue( 'salary_annual', stringToNum( programInfo.salary ) );
+          updateState.byProperty( 'programName', programInfo.name );
+        } else {
+          financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
+        }
 
-          // Update expenses by region
-          if ( schoolModel.values.hasOwnProperty( 'region' ) ) {
-            document.querySelector( '#expenses__region' ).value = schoolModel.values.region;
-            updateRegion( schoolModel.values.region );
-          }
+        // Update expenses by region
+        if ( schoolModel.values.hasOwnProperty( 'region' ) ) {
+          document.querySelector( '#expenses__region' ).value = schoolModel.values.region;
+          updateRegion( schoolModel.values.region );
+        }
 
-          updateSchoolView();
+        updateSchoolView();
 
-          resolve( true );
+        resolve( true );
 
-        } )
-        .catch( function( error ) {
-          reject( error );
-          console.log( 'An error occurred when accessing school data for ' + iped, error );
-        } );
-
-    } else {
-      // invalid iped
-      reject( new Error( 'updateSchoolData error: Invalid iped' ) );
-    }
-
-
+      } )
+      .catch( function( error ) {
+        reject( error );
+        console.log( 'An error occurred when accessing school data for ' + iped, error );
+      } );
   } );
 }
 
@@ -262,10 +254,12 @@ function updateModelsFromQueryString( queryObj ) {
   }
 
   parseQueryParameters( queryObj );
-  updateSchoolData( queryObj.iped )
-    .then( () => {
-      updateExpensesFromQueryObj( queryObj );
-    } );
+  if ( queryObj.hasOwnProperty( 'iped' ) ) {
+    updateSchoolData( queryObj.iped )
+      .then( () => {
+        updateExpensesFromQueryObj( queryObj );
+      } );
+  }
 }
 
 /**

@@ -93,7 +93,7 @@ const urlParameters = {
   'taxx': 'expensesModel.item_taxes',
   'chcx': 'expensesModel.item_childcare',
   'othx': 'expensesModel.item_other',
-  'dbtx': 'expensesModel.item_currentDebt'
+  'dbtx': 'expensesModel.item_currentDebts'
 };
 
 const models = {

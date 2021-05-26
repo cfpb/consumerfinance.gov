@@ -237,8 +237,7 @@ const stateModel = {
     // In case this method gets used to update activeSection...
     if ( name === 'activeSection' ) {
       stateModel.setActiveSection( value );
-    }
-    if ( name === 'programLength' ) {
+    } else if ( name === 'programLength' ) {
       updateFinancial( 'other_programLength', value, true );
     }
     stateModel.values[name] = value;

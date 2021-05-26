@@ -79,11 +79,10 @@ const schoolView = {
     const errorChecks = [ 'programType', 'programProgress', 'programLength',
       'programLevel', 'programRate', 'programHousing', 'programDependency' ];
 
-    const searchBox = document.querySelector( '#search__school-input' );
     if ( getStateValue( 'schoolSelected' ) === false ) {
-      searchBox.classList.add( 'a-text-input__warning' );
+      schoolView._searchBox.classList.add( 'a-text-input__warning' );
     } else {
-      searchBox.classList.remove( 'a-text-input__warning' );
+      schoolView._searchBox.classList.remove( 'a-text-input__warning' );
     }
   },
 
@@ -261,9 +260,11 @@ function _handleResultButtonClick( event ) {
   // If there's a school_id, then proceed with schoolInfo
   if ( typeof button.dataset.school_id !== 'undefined' ) {
     const iped = button.dataset.school_id;
+    if ( iped !== null && typeof iped !== 'undefined') {
+      // Add schoolData to schoolModel
+      updateSchoolData( iped );
+    }
 
-    // Add schoolData to schoolModel
-    updateSchoolData( iped );
   }
 }
 

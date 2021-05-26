@@ -23,7 +23,7 @@ const expensesModel = {
     item_retirement: 0,
     item_taxes: 0,
     item_transportation: 0,
-    item_othe: 0,
+    item_other: 0,
     item_childcare: 0,
     item_currentDebts: 0
   },
