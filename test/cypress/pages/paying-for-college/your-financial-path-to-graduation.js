@@ -33,6 +33,10 @@ export class PfcFinancialPathToGraduation {
     cy.get( '#search-results' ).should( 'not.be.visible' );
   }
 
+  typeText( name, value ) {
+    cy.get( `#${ name }` ).type( value );
+  }
+
   setText( name, value ) {
     cy.get( `#${ name }` ).clear().type( value );
   }

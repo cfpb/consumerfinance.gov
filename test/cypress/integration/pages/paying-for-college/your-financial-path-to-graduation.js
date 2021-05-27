@@ -7,10 +7,37 @@ describe( 'Paying For College', () => {
     cy.visit( '/paying-for-college/your-financial-path-to-graduation/' );
   } );
   describe( 'Your Financial Path To Graduation', () => {
+    it( '2 character college search should not show results', () => {
+      page.clickGetStarted( );
+      page.enter( 'un' );
+      page.searchResults().should( 'not.be.visible' );
+    } );
+    it( '3 character college search should show results', () => {
+      page.clickGetStarted( );
+      page.enter( 'uni' );
+      page.searchResults().should( 'be.visible' );
+    } );
+    it( 'deleting to 2 characters in college search should hide results', () => {
+      page.clickGetStarted( );
+      page.enter( 'uni' );
+      page.searchResults().should( 'be.visible' );
+      page.typeText( 'search__school-input', '{backspace}' );
+      page.searchResults().should( 'not.be.visible' );
+    } );
     it( 'American college search should return results', () => {
       page.clickGetStarted( );
       page.enter( 'American' );
       page.searchResults().should( 'be.visible' );
+    } );
+    it( 'Selecting college should add its details to the DOM', () => {
+      page.clickGetStarted( );
+      page.enter( 'Harvard University' );
+      page.searchResults().should( 'be.visible' );
+      page.clickSearchResult( 'Harvard University' );
+      cy.get( '[data-school-item="school"]' ).should( 'contain', 'Harvard University' );
+      cy.get( '[data-school-item="city"]' ).should( 'contain', 'Cambridge' );
+      cy.get( '[data-school-item="state"]' ).should( 'contain', 'MA' );
+      cy.get( '[data-school-item="control"]' ).should( 'contain', 'Private' );
     } );
     it( 'certificate should display total_costs', () => {
       page.clickGetStarted( );

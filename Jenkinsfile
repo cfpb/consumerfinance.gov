@@ -24,7 +24,7 @@ pipeline {
         // Elasticsearch image tag should be the same as that defined in Dockerfile
         IMAGE_ES_TAG = '7.10.1'
         // Cypress image tag should be the same as that defined in Dockerfile
-        CYPRESS_IMAGE_TAG = '7.3.0'
+        CYPRESS_IMAGE_TAG = '7.4.0'
         // Only Python image tag changes for every build
         PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
