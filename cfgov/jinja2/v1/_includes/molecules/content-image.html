@@ -40,7 +40,7 @@
 <figure class="m-full-width-media
                {{- ' m-inset__bottom-rule' if value.is_bottom_rule else '' }}">
     <img class="m-full-width-media_image
-                {{- ' bleed-image' if value.image_width == 'bleed' else '' }}"
+                {{- ' image-bleed' if value.image_width == 'bleed' else '' }}"
          src="{{ image_inset.url }}"
          alt="{{ image_alt_value(value.image) }}">
 {%- if value.text %}
