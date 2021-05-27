@@ -346,10 +346,10 @@
             right: 50%;
 
             .respond-to-min( @bp-sm-min, {
+                width: ~'calc( 100vw - @{two-gutter-widths} )';
+                max-width: ~'calc( 100vw - @{two-gutter-widths} )';
                 margin-left: ~'calc( -50vw + @{grid_gutter-width} )';
                 margin-right: ~'calc( -50vw + @{grid_gutter-width} )';
-                max-width: ~'calc( 100vw - @{two-gutter-widths} )';
-                width: ~'calc( 100vw - @{two-gutter-widths} )';
             } );
 
             .respond-to-min( @bp-xl-min, {
