@@ -23,14 +23,9 @@
 {%- endblock %}
 
 {% block content_main %}
-    {% for block in page.content -%}
-        {% if 'featured_content' in block.block_type %}
-            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
-                {% include_block block %}
-            </div>
-        {% else %}
-            {% import 'templates/render_block.html' as render_block with context %}
-            {{ render_block.render(block, loop.index) }}
-        {% endif %}
-    {%- endfor %}
+    {% for block in page.content %}
+        <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+            {% include_block block %}
+        </div>
+    {% endfor %}
 {% endblock %}
