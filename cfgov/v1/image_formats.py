@@ -6,6 +6,6 @@ register_image_format(
         'bleed',
         'Bleed into left/right margins',
         'richtext-image image-bleed',
-        'original'
+        'width-1170'
     )
 )
