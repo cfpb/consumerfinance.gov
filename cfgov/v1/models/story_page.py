@@ -1,7 +1,7 @@
 from wagtail.admin.edit_handlers import (
     ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.core.blocks import StreamBlock
+from wagtail.core.blocks import RawHTMLBlock, StreamBlock
 from wagtail.core.fields import StreamField
 from wagtail.core.models import PageManager
 
@@ -26,6 +26,7 @@ class StoryContent(StreamBlock):
     full_width_text = organisms.FullWidthText()
     image = molecules.ContentImage()
     info_unit_group = organisms.InfoUnitGroup()
+    raw_html_block = RawHTMLBlock(label='Raw HTML block')
     text_introduction = molecules.TextIntroduction()
     video_player = organisms.VideoPlayer()
 
