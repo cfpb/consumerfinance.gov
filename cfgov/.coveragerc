@@ -1,5 +1,5 @@
 [run]
-omit = 
+omit =
     *wsgi.py
     */admin/*
     */migrations/*
@@ -9,10 +9,11 @@ omit =
     *settings/*
     */ask_cfpb/scripts/*
     */paying_for_college/data_sources/bls_processing.py
+    */retirement_api/tests/*
 data_file = ../.coverage
 
 [report]
-exclude_lines = 
+exclude_lines =
     pragma: no cover
     if __name__ == .__main__.:
     if .__main__. == __name__:
