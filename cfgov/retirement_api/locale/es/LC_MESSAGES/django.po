@@ -502,7 +502,7 @@ msgstr "Puede seguir aumentando sus ahorros y hacer contribuciones adicionales a
 
 #:
 msgid ", which is later than your Social Security full retirement claiming age."
-msgstr " años, que es la edad máxima para reclamar sus beneficios de Seguro Social."
+msgstr " años, que es después de su plena edad de jubilación."
 
 #:
 msgid "While you let your benefits continue to grow, you can keep working if you want. You can also stop working and use a portion of your savings to cover your needs. <a href=\"https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-required-minimum-distributions-rmds\" target=\"_blank\" rel=\"noopener noreferrer\">Learn the rules about withdrawing money</a> from your retirement accounts."
