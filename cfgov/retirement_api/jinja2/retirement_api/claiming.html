@@ -29,8 +29,7 @@
             <div class="content-l_col content-l_col-2-3">
                 <h1>{{ _("Planning your Social Security claiming age") }}</h1>
                 <p class="lead-paragraph">
-                    {{ _("The age you claim Social Security affects your lifetime income. We’ll help you think through
-                    this decision.") }}
+                    {{ _("The age you claim Social Security affects your lifetime income. We’ll help you think through this decision.") }}
                 </p>
                 <p>
                     {% if current_language == 'es' %}
@@ -51,11 +50,9 @@
               block__border-top
               block__flush-bottom">
         <div class="content-l">
-            <h2 class="content-l_col content-l_col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start
-                collecting Social Security affects your retirement benefits") }}</h2>
+            <h2 class="content-l_col content-l_col-2-3"><strong>{{STEP}} 1: </strong>{{ _("Explore how the age you start collecting Social Security affects your retirement benefits") }}</h2>
             <form id="step-one-form" name="step-one-form" action="#" class="content-l_col content-l_col-2-3">
-                <p class="h3 step-one-instructions">{{ _("Enter your information below to calculate your estimated
-                    benefits.") }}</p>
+                <p class="h3 step-one-instructions">{{ _("Enter your information below to calculate your estimated benefits.") }}</p>
                 <div class="m-notification m-notification__warning">
                     {{ svg_icon('warning-round') }}
                     <div class="m-notification_content">
@@ -84,9 +81,7 @@
                                 autocomplete="off" autocorrect="off" spellcheck="false"></label>
                         <div class="tooltip-content" id="salary-tooltip" data-tooltip-name="salary" role="tooltip"
                             aria-haspopup="true">
-                            <p>{{ _("Enter your total work income before taxes and other deductions. If your work income
-                                is 0 (zero) because you are now retired or unemployed, enter the income for the last
-                                full year in which you worked.") }}</p>
+                            <p>{{ _("Enter your total work income before taxes and other deductions. If your work income is 0 (zero) because you are now retired or unemployed, enter the income for the last full year in which you worked.") }}</p>
                         </div>
                     </div>
                     <div class="content-l_col content-l_col-1-3">
@@ -102,9 +97,7 @@
             </form>
             <div class="content-l_col content-l_col-1-3 estimate-info">
                 <p>
-                    {{ _("The calculator bases your benefit estimate on current formulas from the Social Security
-                    Administration. Your answers are anonymous. Because we do not access or use your Social Security
-                    earnings record, these are rough estimates.") }}
+                    {{ _("The calculator bases your benefit estimate on current formulas from the Social Security Administration. Your answers are anonymous. Because we do not access or use your Social Security earnings record, these are rough estimates.") }}
                 </p>
             </div>
         </div>
@@ -136,8 +129,7 @@
                 </p>
             </div>
             <div class="total-benefits-container">
-                <p class="total-benefits-text h4"><strong>{{ _("By age 85, an average lifespan, your total benefits will
-                        be") }}</strong></p>
+                <p class="total-benefits-text h4"><strong>{{ _("By age 85, an average lifespan, your total benefits will be") }}</strong></p>
                 <p>
                     <span id="lifetime-benefits-value" class="lifetime-benefits-value h3"></span>&nbsp;<span
                         class="todays-dollars explainer">({{ _("in today's dollars") }})</span>
@@ -145,9 +137,7 @@
             </div>
             <div class="graph-content">
                 <div class="content-container">
-                    <p>{{ _("Social Security retirement benefits are not designed to be your sole source of retirement
-                        income, but waiting even one month will increase your benefits.") }}
-                    <p>
+                    <p>{{ _("Social Security retirement benefits are not designed to be your sole source of retirement income, but waiting even one month will increase your benefits.") }}</p>
                 </div>
                 <div class="content-container max-retirement">
                     <h3 class="retirement-age">{{ _("About your maximum benefit claiming age:") }}</h3>
@@ -170,8 +160,7 @@
                         <li>{{ _("If you claim your benefit before your full claiming age, it will be reduced.") }}</li>
                     </ul>
                 </div>
-                <p>{{ _("Remember, claiming age here refers only to your Social Security retirement benefit, and not
-                    when you decide to stop working or apply for Medicare.") }}</p>
+                <p>{{ _("Remember, claiming age here refers only to your Social Security retirement benefit, and not when you decide to stop working or apply for Medicare.") }}</p>
             </div>
 
             <p class="learn-how">
@@ -464,24 +453,16 @@
                 </p>
             </div>
             <div class="tooltip-content" data-tooltip-name="working-longer" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you
-                    want and your benefits will not be reduced. If you claim before this age and continue to work, your
-                    benefits could be temporarily reduced if you earn over a certain limit, but any reductions you
-                    receive will be credited back to you once you reach full retirement age.") }}</p>
+                <p>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
             </div>
             <div class="tooltip-content" data-tooltip-name="401k" role="tooltip" aria-haspopup="true">
-                <p>{{ _("A type of retirement savings account offered by employers to help their employees save for
-                    retirement.") }}</p>
+                <p>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</p>
             </div>
             <div class="tooltip-content" data-tooltip-name="iras" role="tooltip" aria-haspopup="true">
-                <p>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your
-                    savings equal the contributions that you make to the account plus the gains or losses of your
-                    investments.") }}</p>
+                <p>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</p>
             </div>
             <div class="tooltip-content" data-tooltip-name="claim_early_and_work" role="tooltip" aria-haspopup="true">
-                <p>{{ _("If you claim before full retirement age and continue to work, your benefits could be
-                    temporarily reduced if you earn over a certain amount. Any reductions you receive will be credited
-                    back to you once you reach full retirement age.") }}</p>
+                <p>{{ _("If you claim before full retirement age and continue to work, your benefits could be temporarily reduced if you earn over a certain amount. Any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
             </div>
         </div>
     </div>
@@ -629,8 +610,7 @@
             <img src="{{ static("apps/retirement/img/lifestyle-income.png") }}" class="lifestyle-img" alt="">
             <div class="lifestyle-question_container">
                 <hr>
-                <h3 class="lifestyle-question">{{ _("Do you expect to have additional sources of retirement income
-                    beyond Social Security?") }}</h3>
+                <h3 class="lifestyle-question">{{ _("Do you expect to have additional sources of retirement income beyond Social Security?") }}</h3>
                 <div class="m-btn-group">
                     <button class="lifestyle-btn a-btn age-split" data-base-value="yes" value="yes">{{YES}}</button>
                     <button class="lifestyle-btn a-btn age-split" data-base-value="no" value="no">{{NO}}</button>
@@ -816,28 +796,19 @@
                 </p>
             </div>
             <div class="tooltip-content" data-tooltip-name="working-longer" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you
-                    want and your benefits will not be reduced. If you claim before this age and continue to work, your
-                    benefits could be temporarily reduced if you earn over a certain limit, but any reductions you
-                    receive will be credited back to you once you reach full retirement age.") }}</p>
+                <p>{{ _("Once you reach your full retirement benefits claiming age, you can work and earn as much as you want and your benefits will not be reduced. If you claim before this age and continue to work, your benefits could be temporarily reduced if you earn over a certain limit, but any reductions you receive will be credited back to you once you reach full retirement age.") }}</p>
             </div>
             <div class="tooltip-content" data-tooltip-name="pensions" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Your Social Security benefits could be reduced if you receive federal, state, or local
-                    government pensions that are based on work where you did not pay Social Security taxes.") }}</p>
+                <p>{{ _("Your Social Security benefits could be reduced if you receive federal, state, or local government pensions that are based on work where you did not pay Social Security taxes.") }}</p>
             </div>
             <div class="tooltip-content" data-tooltip-name="401k" role="tooltip" aria-haspopup="true">
-                <p>{{ _("A type of retirement savings account offered by employers to help their employees save for
-                    retirement.") }}</p>
+                <p>{{ _("A type of retirement savings account offered by employers to help their employees save for retirement.") }}</p>
             </div>
             <div class="tooltip-content" data-tooltip-name="iras" role="tooltip" aria-haspopup="true">
-                <p>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your
-                    savings equal the contributions that you make to the account plus the gains or losses of your
-                    investments.") }}</p>
+                <p>{{ _("IRAs are types of retirement savings plans with special tax incentives. In these plans, your savings equal the contributions that you make to the account plus the gains or losses of your investments.") }}</p>
             </div>
             <div class="tooltip-content" data-tooltip-name="catchup-contributions" role="tooltip" aria-haspopup="true">
-                <p>{{ _("Catch-up contributions are additional contributions that individuals who are age 50 or older
-                    can make to their 401(k) or IRA accounts to help them boost their savings as they approach
-                    retirement.") }}</p>
+                <p>{{ _("Catch-up contributions are additional contributions that individuals who are age 50 or older can make to their 401(k) or IRA accounts to help them boost their savings as they approach retirement.") }}</p>
             </div>
         </div>
         <div class="content-l_col content-l_col-1-3 question question-longevity">
@@ -925,8 +896,7 @@
                 {{ _("Select the age you plan to start collecting your Social Security retirement benefits.") }}
             </h3>
             <p class="explainer step-three-note">
-                {{ _("(This will not affect your Social Security account or eligibility and it will not begin an
-                application.)") }}
+                {{ _("(This will not affect your Social Security account or eligibility and it will not begin an application.)") }}
             </p>
 
             <div class="m-form-field m-form-field__select">
@@ -949,28 +919,20 @@
             <div id="age-selector-response">
                 <hr>
                 <div class="next-step-description next-steps_max">
-                    <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is your
-                        maximum Social Security benefit claiming age.") }}</h3>
-                    <p>{{ _("This means you will get your maximum possible monthly benefit! Here are a few things to
-                        keep in mind in the next few years.") }}</p>
+                    <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is your maximum Social Security benefit claiming age.") }}</h3>
+                    <p>{{ _("This means you will get your maximum possible monthly benefit! Here are a few things to keep in mind in the next few years.") }}</p>
                 </div>
                 <div class="next-step-description next-steps_over">
-                    <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is later than
-                        your Social Security full retirement claiming age.") }}</h3>
-                    <p>{{ _("This means you will get an increase in your monthly benefits! Here are a few things to keep
-                        in mind in the next few years.") }}</p>
+                    <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is later than your Social Security full retirement claiming age.") }}</h3>
+                    <p>{{ _("This means you will get an increase in your monthly benefits! Here are a few things to keep in mind in the next few years.") }}</p>
                 </div>
                 <div class="next-step-description next-steps_equal">
-                    <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is your
-                        Social Security full retirement claiming age.") }}</h3>
-                    <p>{{ _("That means you’ll receive your full benefit with no reductions! Here are a few things to
-                        keep in mind in the next few years.") }}</p>
+                    <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is your Social Security full retirement claiming age.") }}</h3>
+                    <p>{{ _("That means you’ll receive your full benefit with no reductions! Here are a few things to keep in mind in the next few years.") }}</p>
                 </div>
                 <div class="next-step-description next-steps_under">
-                    <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is earlier
-                        than your Social Security full retirement claiming age.") }}</h3>
-                    <p>{{ _("If you start collecting at this age you will receive less than your full benefit amount.
-                        Here are a few things to keep in mind in the next few years.") }}</p>
+                    <h3>{{ _("You’ve chosen age") }} <span class="age-response-value"></span>, {{ _("which is earlier than your Social Security full retirement claiming age.") }}</h3>
+                    <p>{{ _("If you start collecting at this age you will receive less than your full benefit amount. Here are a few things to keep in mind in the next few years.") }}</p>
                 </div>
                 <ol class="next-steps content-l">
                     <li class="content-l_col content-l_col-1-3 next-step-one">
@@ -983,8 +945,7 @@
                         {% endblock %}
                     </li>
                     <li class="content-l_col content-l_col-1-3 next-step-three">
-                        {{ _("If your income, employment, or marital status changes, you may need to reconsider the age
-                        you want to start collecting your benefits. Visit us again!") }}
+                        {{ _("If your income, employment, or marital status changes, you may need to reconsider the age you want to start collecting your benefits. Visit us again!") }}
                     </li>
                 </ol>
                 <p class="h3">{{ _("Was this page helpful in thinking about when to start collecting benefits?") }}</p>
@@ -995,11 +956,7 @@
                 <p class="thank-you">{{ _("Thank you for your feedback!") }}</p>
                 <h5>{{ _("Legal Disclaimer:") }}</h5>
                 <p>
-                    {{ _("The content on this page provides general consumer information. It is not legal advice or
-                    regulatory guidance. The CFPB updates this information periodically. This information may include
-                    links or references to third-party resources or content. We do not endorse the third-party or
-                    guarantee the accuracy of this third-party information. There may be other resources that also serve
-                    your needs.") }}
+                    {{ _("The content on this page provides general consumer information. It is not legal advice or regulatory guidance. The CFPB updates this information periodically. This information may include links or references to third-party resources or content. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.") }}
                 </p>
             </div>
         </div>
