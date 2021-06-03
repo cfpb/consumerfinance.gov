@@ -282,9 +282,7 @@ set up the full website.</p>
 <ul>
 <li><a href="https://github.com/cfpb/ccdb5-api">ccdb5-api</a></li>
 <li><a href="https://github.com/cfpb/ccdb5-ui">ccdb5-ui</a></li>
-<li><a href="https://github.com/cfpb/django-college-costs-comparison">django-college-costs-comparison</a></li>
 <li><a href="https://github.com/cfpb/owning-a-home-api">owning-a-home-api</a></li>
-<li><a href="https://github.com/cfpb/retirement">retirement</a></li>
 <li><a href="https://github.com/cfpb/teachers-digital-platform">teachers-digital-platform</a></li>
 </ul>
 <p>These satellite apps are imported into consumerfinance.gov as part of the project
@@ -315,7 +313,7 @@ contains the CFPB development guidelines used on these projects.</p>
 <p>Developers working on changes to satellite apps or other Python packages often
 want or need to test their work as part of the larger consumerfinance.gov project.</p>
 <p>The standard <a href="../installation/">installation</a> process for consumerfinance.gov
-includes whatever versions of these packages are specified in project 
+includes whatever versions of these packages are specified in project
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt">requirements files</a>.
 Developers may want to temporarily or permanently replace those with a local
 copy of package source code.</p>
@@ -327,6 +325,8 @@ can be used to swap out package versions.</p>
 <a href="https://pip.pypa.io/en/stable/reference/pip_install/#editable-installs">"editable"</a>
 mode, replacing the satellite app version installed from requirements files
 with your local copy:</p>
+<p>!!! note The retirement app used in this example is deprecated
+    and is shown for illustration purpooses only.</p>
 <pre class="highlight"><code class="language-sh"># In a local virtual environment, after installing consumerfinance.gov.
 # Python packages have been installed from requirements files.
 # This includes, for example, the retirement satellite app:
@@ -368,14 +368,14 @@ other repositories are not.</p>
 subdirectory as place to put local copies of Python packages.</p>
 <p>Any packages put there (e.g. via a <code>git clone</code> of a satellite apps' repo)
 will be automatically added to the
-<a href="https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH">PYTHONPATH</a> 
+<a href="https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH">PYTHONPATH</a>
 in the Python containers.
 Apps located within will be importable from Python running in the Docker
 containers, and will take precedence over any versions installed from
 requirements files as part of the Docker images.</p>
 <p>To switch back to the default version of a Python package, removing the use
 of a local copy, simply delete the copy from the <code>develop-apps</code> directory.</p>
-<p>For any satellite apps that provide front-end assets that need to be built, 
+<p>For any satellite apps that provide front-end assets that need to be built,
 you will need to run that step seperately:</p>
 <pre class="highlight"><code class="language-bash"># Check out the retirement satellite app into develop-apps:
 cd develop-apps
@@ -385,8 +385,8 @@ git clone git@github.com:cfpb/retirement.git
 cd retirement
 ./frontendbuild.sh</code></pre>
 
-<p>If the satellite app needs any Python requirements that are not specified in 
-<a href="https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/">the consumerfinance.gov requirements</a>, 
+<p>If the satellite app needs any Python requirements that are not specified in
+<a href="https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/">the consumerfinance.gov requirements</a>,
 they will need to be installed seperately by accessing the Python container shell
 and using <code>pip</code>:</p>
 <pre class="highlight"><code class="language-bash">docker-compose exec python bash
