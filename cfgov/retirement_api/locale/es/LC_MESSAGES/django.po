@@ -473,7 +473,7 @@ msgid "Working in your 60s will help you maximize your income and savings."
 msgstr "Trabajar en sus sesentas le ayudará a aumentar sus ingresos y sus ahorros."
 
 #:
-msgid "which is earlier than your Social Security full retirement claiming age."
+msgid ", which is earlier than your Social Security full retirement claiming age."
 msgstr " años, que es antes de su edad de plena jubilación."
 
 #:
@@ -493,7 +493,7 @@ msgid "If your income, employment, or marital status changes, you may need to re
 msgstr "Si sus ingresos, situación laboral o estado civil cambian, es posible que deba reconsiderar la edad en la que solicitará sus beneficios de Seguro Social. ¡Vuelva a visitarnos!"
 
 #:
-msgid "which is your Social Security full retirement claiming age."
+msgid ", which is your Social Security full retirement claiming age."
 msgstr " años, que es su plena edad de jubilación."
 
 #:
@@ -502,7 +502,7 @@ msgstr "Puede seguir aumentando sus ahorros y hacer contribuciones adicionales a
 
 #:
 msgid ", which is later than your Social Security full retirement claiming age."
-msgstr ", que es la edad máxima para reclamar sus beneficios de Seguro Social."
+msgstr " años, que es la edad máxima para reclamar sus beneficios de Seguro Social."
 
 #:
 msgid "While you let your benefits continue to grow, you can keep working if you want. You can also stop working and use a portion of your savings to cover your needs. <a href=\"https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-required-minimum-distributions-rmds\" target=\"_blank\" rel=\"noopener noreferrer\">Learn the rules about withdrawing money</a> from your retirement accounts."
@@ -625,7 +625,7 @@ msgid "That means you’ll receive your full benefit with no reductions! Here ar
 msgstr "Eso significa que recibirá sus beneficios de Seguro Social completos, sin ninguna reducción. Estos son pasos que le ayudarán en los próximos años:"
 
 #:
-msgid "This means you will get an increase in your monthly benefits!  Here are a few things to keep in mind in the next few years."
+msgid "This means you will get an increase in your monthly benefits! Here are a few things to keep in mind in the next few years."
 msgstr "Eso significa que recibirá sus beneficios de Seguro Social completos, sin ninguna reducción. Estos son pasos que le ayudarán en los próximos años:"
 
 #:
@@ -789,10 +789,6 @@ msgid "Other sources of retirement income like a <a href=\"https://www.ssa.gov/p
 msgstr "Otras <a href=\"https://www.ssa.gov/espanol/jubilacion2/eliminacion.htm\">fuentes de ingresos de jubilación</a>, tales como una pensión de un gobierno estatal o local para el cual usted no pagó impuestos de Seguro Social, pueden afectar la cantidad de beneficios que recibirá."
 
 #:
-msgid "You’ve chosen age 70, which is your maximum Social Security benefit claiming age."
-msgstr "Usted seleccionó 70, que es la edad máxima para reclamar sus beneficios de Seguro Social."
-
-#:
 msgid "This means you will get your maximum possible monthly benefit! Here are a few things to keep in mind in the next few years."
 msgstr "Eso significa que obtendrá el beneficio mensual más alto. Estos son pasos que le ayudarán en los próximos años:"
 
@@ -801,12 +797,8 @@ msgid "You've chosen"
 msgstr "Usted seleccionó"
 
 #:
-msgid "which is later than your Social Security full retirement claiming age."
-msgstr "que es después de su plena edad de jubilación."
-
-#:
-msgid "which is your maximum Social Security benefit claiming age."
-msgstr "que es la edad máxima para reclamar sus beneficios de Seguro Social."
+msgid ", which is your maximum Social Security benefit claiming age."
+msgstr " años, que es la edad máxima para reclamar sus beneficios de Seguro Social."
 
 #:
 msgid "Visit my Social Security"
