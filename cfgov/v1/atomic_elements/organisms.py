@@ -450,6 +450,8 @@ class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
 
     @staticmethod
     def json_dict_apply(value, callback):
+        if not value:
+            return
         value = json.loads(value)
 
         for row in (value or {}).get('data') or []:
