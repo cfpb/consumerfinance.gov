@@ -373,12 +373,12 @@ class AnswerPageDocument(Document):
 
 <h3 id="building-the-index">Building the index<a class="headerlink" href="#building-the-index" title="Permanent link">¶</a></h3>
 <p>With the <code>Document</code> class created for your model in a <code>documents.py</code> module within a Django app listed in <code>INSTALLED_APPS</code>, all that is left to do is to use the <a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/management.html">django-elasticsearch-dsl management commands</a> to rebuild the index:</p>
-<pre class="highlight"><code class="language-shell">./cfgov/manage.py search_index --create --models [app.Model]</code></pre>
+<pre class="highlight"><code class="language-shell">./cfgov/manage.py search_index --create --models [app]</code></pre>
 
-<p>The index for that model can also be rebuilt at any time:</p>
-<pre class="highlight"><code class="language-shell">./cfgov/manage.py search_index --rebuild -f --models [app.Model]</code></pre>
+<p>The index for that app's models can also be rebuilt at any time:</p>
+<pre class="highlight"><code class="language-shell">./cfgov/manage.py search_index --rebuild -f --models [app]</code></pre>
 
-<p>Finally, the indexes for all models can be rebuilt using:</p>
+<p>Finally, the indexes for all apps can be rebuilt using:</p>
 <pre class="highlight"><code class="language-shell">./cfgov/manage.py search_index --rebuild --parallel -f</code></pre>
 
 <h2 id="searching">Searching<a class="headerlink" href="#searching" title="Permanent link">¶</a></h2>
