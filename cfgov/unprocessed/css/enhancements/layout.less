@@ -321,6 +321,58 @@
 }
 
 
+// Center content and bleed full-width images into gutters
+// Used on our story pages
+.content__center-image-bleed {
+
+    .content_main-inner {
+        max-width: 41.875rem;
+        margin: 0 auto;
+
+        .o-full-width-text-group {
+            overflow: inherit;
+        }
+
+        .image-bleed {
+            @half-gutter-width: @grid_gutter-width / 2;
+            @two-gutter-widths: @grid_gutter-width * 2;
+
+            width: ~'calc( 100vw - @{grid_gutter-width} )';
+            max-width: ~'calc( 100vw - @{grid_gutter-width} )';
+            margin-left: ~'calc( -50vw + @{half-gutter-width} )';
+            margin-right: ~'calc( -50vw + @{half-gutter-width} )';
+            position: relative;
+            left: 50%;
+            right: 50%;
+
+            .respond-to-min( @bp-sm-min, {
+                width: ~'calc( 100vw - @{two-gutter-widths} )';
+                max-width: ~'calc( 100vw - @{two-gutter-widths} )';
+                margin-left: ~'calc( -50vw + @{grid_gutter-width} )';
+                margin-right: ~'calc( -50vw + @{grid_gutter-width} )';
+            } );
+
+            .respond-to-min( @bp-xl-min, {
+                width: @grid_wrapper-width - @two-gutter-widths;
+                max-width: @grid_wrapper-width - @two-gutter-widths;
+                margin-left: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
+                margin-right: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
+            } );
+        }
+    }
+
+}
+
+// Increase the size of all headings by one level
+// Used on our story pages
+// @TODO: Expose heading class modifiers in wagtail
+.content__supersize-headings {
+    .o-full-width-text-group h2 {
+        .h1();
+    }
+}
+
+
 /* topdoc
   name: EOF
   eof: true

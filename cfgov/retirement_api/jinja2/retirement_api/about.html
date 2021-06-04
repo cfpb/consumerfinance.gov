@@ -1,0 +1,107 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block title %}
+  {{ _('About this tool') }} | {{ _('Consumer Financial Protection Bureau') }}
+{% endblock %}
+
+{% block content_main %}
+<h1>
+    {{ _( "About this tool" ) }}
+</h1>
+<h2>
+    {{ _( "Planning your Social Security claiming age" ) }}
+</h2>
+<h3>
+    {{ _( "How do we generate your estimates?" ) }}
+</h3>
+<p>
+    {{ _( "We generate your estimates by applying current Social Security formulas based on the numbers you enter for your date of birth and for your “highest annual work income.” We use the Social Security Administration’s Quick Calculator to produce a rough estimate of your benefit at your “full retirement age,” which ranges from age 66 to 67, depending on the year you were born. This is the age at which you would receive 100 percent of your scheduled Social Security benefit under current law. If you start claiming your Social Security retirement benefits after you reach your “full retirement age,” you will receive an increased benefit, and if you start claiming Social Security before you reach your “full retirement age,” you will receive a reduced benefit. You will not receive any additional increases for claiming after age 70, and age 62 is the earliest age you can claim your benefits." ) }}
+</p>
+<p>
+    {{ _( 'Based on the numbers you enter for your date of birth and “highest annual work income,” our tool uses SSA’s Quick Calculator to estimate your benefit at “full retirement age” and your Social Security earnings record. Our tool then applies the appropriate monthly credits for claiming after your “full retirement age” and the appropriate monthly reductions for claiming before your “full retirement age.” The amounts of these credits and reductions are set by SSA. We use the same estimated earnings record to estimate your benefit at each age. In real life, your earnings record could be the same or different at each age, depending on whether you keep working until your “full retirement age,” and whether additional years of work replace earlier years of lower earnings in your record.' ) }}
+
+</p>
+<h4>
+    {{ _( "These are rough estimates" ) }}
+</h4>
+<p>
+    {{ _( "We do not access any of your actual Social Security benefit information, and the information you provide in our tool is anonymous. Therefore, your actual benefits are likely to be different from the estimate if you have had large changes in work income throughout your career, or if you had several years when you did not work." ) }}
+</p>
+<h4>
+    {{ _( "Your lifetime benefits are also a rough estimate" ) }}
+</h4>
+<p>
+    {{ _( "We provide a lifetime estimate of your benefits based on the average life expectancy of a 65-year-old today, which is age 85. Assuming a life expectancy of age 85, this rough lifetime estimate of benefits changes as your claiming age changes. This feature shows how claiming at different ages would affect the cumulative amount you will receive if you live to that expected age. If you live longer than the average person, your estimated lifetime benefits will be higher for all claiming ages. We do not apply any discount rate or make any assumptions about how different people may value money differently than others over time. In addition, all estimates are given in today’s dollars (without adjusting for inflation)." ) }}
+</p>
+<h4>
+    {{ _( "Your estimates from this tool may also be different from estimates that SSA’s tools provide" ) }}
+</h4>
+<p>
+    {{ _( 'The estimates that you see in our tool may be different from the estimates shown in the Social Security Administration’s “<em>my</em> Social Security” accounts, “Retirement Estimator,” or the paper statements that you receive from the Social Security Administration. The reason for the difference may be that these tools use your <em>actual</em> earnings record to generate an estimate.' ) }}
+</p>
+<h4>
+    {{ _( "We show monthly and annualized benefits" ) }}
+</h4>
+<p>
+    {{ _( "The monthly and annual benefit amounts that are shown in the tool represent what we estimate you will get for the rest of your life on a monthly and annual basis from each claiming age moving forward." ) }}
+</p>
+<h4>
+    {{ _( "Our tool applies increases in your estimated benefits immediately" ) }}
+</h4>
+<p>
+    {{ _( 'In reality, if you claim after your “full retirement age” but before you turn 70 years old, SSA will begin applying the monthly credits <a href="https://www.ssa.gov/oact/quickcalc/early_late.html">in January of the year after you claim</a>.  Until then, you receive the monthly amount that you would have received if you claimed at “full retirement age.” If you claim at age 70 or later, however, your credits are applied immediately when you claim.' ) }}
+</p>
+<h4>
+    {{ _( "The tool gives estimates for people ages 22 to 70" ) }}
+</h4>
+<p>
+    {{ _( 'The tool does not provide estimates of retirement benefits for consumers under age 22 or over age 70 (i.e., the claiming age at which you get the maximum possible benefit). Additionally, the tool cannot provide an estimate if the amount entered under “highest annual work income” is too low to generate an estimate.' ) }}
+</p>
+<h4>
+    {{ _( "As you approach retirement, we recommend that you contact the Social Security Administration for an estimate based on your actual earnings history" ) }}
+</h4>
+<p>
+    {{ _( 'Your estimate will be more accurate if it is based on your own actual earnings record, especially if you have had fluctuations in your income or gaps in employment over your career. To get an estimate based on your actual earnings record, you may want to open a <a href="https://www.ssa.gov/myaccount/">“<em>my</em> Social Security” account</a> or visit the <a href="https://www.ssa.gov/retire/estimator.html">Social Security Administration’s Retirement Estimator</a>.' ) }}
+</p>
+<h4>
+    {{ _( "Other things to know" ) }}
+</h4>
+<ul>
+    <li>
+        {{ _( 'Our tool does not show other Social Security benefits, like spousal benefits, survivors’ benefits, or disability benefits that can be paid on your earnings record. You can get estimates for these benefits at the Social Security Administration’s <a href="https://www.ssa.gov/retire/estimator.html">Retirement Estimator</a> or by opening or accessing your <a href="https://www.ssa.gov/myaccount/">“<em>my</em> Social Security ” account</a>.' ) }}
+    </li>
+    <li>
+        {{ _( 'You must meet some <a href="https://www.ssa.gov/planners/retire/creditsa.html">minimum working and age requirements</a> to be eligible to receive retirement benefits from your own working record.' ) }}
+    </li>
+    <li>
+        {{ _( 'Other sources of retirement income like a <a href="https://www.ssa.gov/planners/retire/wep.html">pension from a state or local government for which you did not pay Social Security taxes</a> may affect the amount of benefits that you will receive.' ) }}
+    </li>
+</ul>
+{% endblock %}
+
+{% block content_sidebar %}
+<div class="block block__flush-top">
+    <h2 class="header-slug">
+        <span class="header-slug_inner">
+            my Social Security
+        </span>
+    </h2>
+    <p class="short-desc">
+        {{ _( "Create a <em>my</em> Social Security account to review your expected benefits based on your actual Social Security record." ) }}
+    </p>
+    <a href="https://www.ssa.gov/myaccount/" class="a-btn a-btn__full">
+        {{ _( "Visit my Social Security" ) }}
+    </a>
+</div>
+<div class="block block__flush-bottom">
+    <h2 class="header-slug">
+        <span class="header-slug_inner">
+            {{ _( "Get in touch" ) }}
+        </span>
+
+    </h2>
+    <p class="short-desc">
+        {{ _( "You can send feedback or questions to" ) }} <a href="mailto:olderamericans@cfpb.gov">olderamericans@cfpb.gov</a>.
+    </p>
+</div>
+{% endblock %}
