@@ -129,16 +129,16 @@ from search.elasticsearch_helpers import (
 With the `Document` class created for your model in a `documents.py` module within a Django app listed in `INSTALLED_APPS`, all that is left to do is to use the [django-elasticsearch-dsl management commands](https://django-elasticsearch-dsl.readthedocs.io/en/latest/management.html) to rebuild the index:
 
 ```shell
-./cfgov/manage.py search_index --create --models [app.Model]
+./cfgov/manage.py search_index --create --models [app]
 ```
 
-The index for that model can also be rebuilt at any time:
+The index for that app's models can also be rebuilt at any time:
 
 ```shell
-./cfgov/manage.py search_index --rebuild -f --models [app.Model]
+./cfgov/manage.py search_index --rebuild -f --models [app]
 ```
 
-Finally, the indexes for all models can be rebuilt using:
+Finally, the indexes for all apps can be rebuilt using:
 
 ```shell
 ./cfgov/manage.py search_index --rebuild --parallel -f
