@@ -1,0 +1,391 @@
+{% set current_language = 'es' %}
+{% set breadcrumb_items = [{
+  'href': '/consumer-tools/retirement/',
+  'title': 'Planifique para su Jubilación (en inglés)'
+}]%}
+
+{% extends 'claiming.html' %}
+
+{% block questions_lifestyle_answer_yes %}
+Su decisión sobre cuándo solicitar sus beneficios de Seguro Social podría
+afectar la cantidad de los beneficios que recibirá su esposo(a) cuando usted
+fallezca. Su cónyuge sobreviviente puede recibir los beneficios como
+sobreviviente basados en el registro de ganancias de su cónyuge o los beneficios
+basados en el registro de ganancias de usted, dependiendo de cuál de los dos
+beneficios sea el más alto. Si usted está casado, y tiene los ingresos más altos
+de la familia, al solicitar sus beneficios a su plena edad de jubilación, usted
+garantizará que su cónyuge reciba el beneficio más alto. Tenga una conversación
+con su esposo(a) sobre sus opciones para que juntos puedan tomar esta decisión.
+{% endblock %}
+
+{% block questions_lifestyle_answer_no %}
+Si solicita sus beneficios de Seguro Social cuando cumpla su plena edad de
+jubilación evitará una reducción en su beneficio mensual. Además, si elige
+solicitar sus beneficios a los 70 años, puede obtener un aumento por cada mes
+que haya esperado después de haber cumplido su plena edad de jubilación. Si
+está divorciado(a), la decisión que tome su ex cónyuge de cuándo solicitar los
+beneficios, no afectará la cantidad de los beneficios a los que usted tenga
+derecho bajo el registro de ganancias de su ex cónyuge. Por lo tanto, la
+decisión de su ex cónyuge no debería influir su decisión de cuándo solicitar
+sus beneficios.
+{% endblock %}
+
+{% block questions_lifestyle_answer_widowed %}
+Es posible que tenga derecho a recibir los beneficios como cónyuge
+sobreviviente, si su cónyuge fallecido tenía derecho a recibir beneficios de
+Seguro Social. Usted tiene la opción de esperar hasta cumplir los 70 años para
+solicitar los beneficios como cónyuge sobreviviente y recibir la cantidad máxima
+posible de los beneficios, o puede solicitarlos tan temprano como a los 60 años
+de edad y recibir una cantidad reducida. Es posible que también tenga derecho a
+recibir los beneficios por jubilación bajo el registro de ganancias de usted.
+No obstante, sólo puede recibir uno de los dos tipos de beneficios a la vez. Si
+usted sabe que su beneficio por jubilación bajo su propio registro de ganancias
+será más alto que el beneficio como sobreviviente, puede solicitar primero el
+beneficio como sobreviviente. Así podrá comenzar a recibir algún beneficio
+mientras que los beneficios de jubilación bajo su propio registro de ganancias
+siguen aumentando.
+{% endblock %}
+
+{% block questions_sixties_answer_yes_under_50 %}
+Sus beneficios de Seguro Social se calculan usando los 35 años con los ingresos
+más altos. Por lo tanto, cada año que trabaje en sus sesentas podría añadirle a
+su registro de ganancias del Seguro Social un año más de ingresos altos. Estos
+años pueden compensar por los años en los que sus ingresos fueron bajos o no
+tuvo ingresos, tales como cuando era estudiante, estuvo desempleado o dejó de
+trabajar para cuidar a un ser querido. Si sigue trabajando y espera hasta los
+70 años para solicitar sus beneficios, puede hacer que su beneficio mensual
+aumente más de un 75%. El trabajar en sus sesentas también le da más tiempo
+para ahorrar para su jubilación por su propia cuenta.
+{% endblock %}
+
+{% block questions_sixties_answer_yes_over_50 %}
+Sus beneficios de Seguro Social se calculan usando los 35 años con los ingresos
+más altos. Por lo tanto, cada año que trabaje en sus sesentas podría añadirle a
+su registro de ganancias del Seguro Social un año más de ingresos altos. Estos
+años pueden compensar por los años en los que sus ingresos fueron bajos o no
+tuvo ingresos, tales como cuando era estudiante, estuvo desempleado o dejó de
+trabajar para cuidar a un ser querido. Si sigue trabajando y espera hasta los
+70 años para solicitar sus beneficios, puede hacer que su beneficio mensual
+aumente más de un 75%. El trabajar en sus sesentas también le da más tiempo
+para ahorrar para su jubilación por su propia cuenta.
+{% endblock %}
+
+{% block questions_sixties_answer_no_under_50 %}
+Si decide trabajar menos horas o dejar de trabajar por completo, podría usar una
+parte de sus ahorros, como por ejemplo su plan 401(k)
+<span data-tooltip-target="401k">
+  {{ svg_icon("help-round") }}
+</span> o su cuenta IRA
+<span data-tooltip-target="iras">
+  {{ svg_icon("help-round") }}
+</span>
+para suplementar sus ingresos hasta que cumpla su plena edad de jubilación.
+Si puede seguir trabajando en sus sesentas, podrá añadir años adicionales de
+ingresos a su registro de ganancias del Seguro Social para así recibir un
+beneficio mensual más alto. Recuerde que su beneficio mensual será mucho más
+alto si lo solicita a su plena edad de jubilación o después. La edad en la que
+decida dejar de trabajar no tiene por qué ser la misma edad en la que decida
+solicitar sus beneficios.
+{% endblock %}
+
+{% block questions_sixties_answer_no_over_50 %}
+Si decide trabajar menos horas o dejar de trabajar por completo, podría usar
+una parte de sus ahorros, como por ejemplo su plan 401(k)
+<span data-tooltip-target="401k">
+  {{ svg_icon("help-round") }}
+</span> o su cuenta IRA
+<span data-tooltip-target="iras">
+  {{ svg_icon("help-round") }}
+</span>
+para suplementar sus ingresos hasta que cumpla su plena edad de jubilación.
+Si puede seguir trabajando en sus sesentas, podrá añadir años adicionales de
+ingresos a su registro de ganancias del Seguro Social para así recibir un
+beneficio mensual más alto. Recuerde que su beneficio mensual será mucho más
+alto si lo solicita a su plena edad de jubilación o después. La edad en la que
+decida dejar de trabajar no tiene por qué ser la misma edad en la que decida
+solicitar sus beneficios.
+{% endblock %}
+
+{% block questions_sixties_answer_notsure_under_50 %}
+Trabajar en sus sesentas puede ayudarle a aumentar su beneficio mensual de
+varias maneras. <span data-tooltip-target="claim_early_and_work">{{ svg_icon("help-round") }}</span>
+Ya que sus beneficios se calculan usando los 35 años con los ingresos más altos,
+cada año que trabaje en sus sesentas podría añadirle a su registro de ganancias
+del Seguro Social un año más de ingresos. Estos años pueden compensar por los
+años en los que sus ingresos fueron bajos o no tuvo ingresos, tales como cuando
+era estudiante, estuvo desempleado o dejó de trabajar para cuidar a un ser
+querido. Si solicita sus beneficios cuando cumpla su plena edad de jubilación,
+es posible que su beneficio mensual aumente un 25% o más. Trabajar en sus
+sesentas también le da más tiempo para ahorrar para su jubilación por su propia
+cuenta.
+{% endblock %}
+
+{% block questions_sixties_answer_notsure_over_50 %}
+Si trabaja en sus sesentas podrá añadir años adicionales de ingresos a su
+registro de ganancias del Seguro Social y recibir una cantidad mayor de
+beneficios mensuales. Recuerde que su beneficio mensual será mucho más alto si
+lo solicita cuando cumpla su plena edad de jubilación o después. Si decide
+trabajar menos horas, podría usar una parte de sus ahorros, como por ejemplo su
+plan 401(k)
+<span data-tooltip-target="401k">
+  {{ svg_icon("help-round") }}
+</span>
+o su cuenta IRA
+<span data-tooltip-target="iras">
+  {{ svg_icon("help-round") }}
+</span>
+para suplementar sus ingresos hasta que cumpla su plena edad de jubilación.
+Sin embargo, ésta no podría ser una opción si con ella usa todos sus ahorros.
+{% endblock %}
+
+{% block questions_expenses_answer_yes_under_50 %}
+Si está planificando estar activo después de jubilarse o si todavía debe su
+préstamo hipotecario u otra deuda, sus primeros años de jubilación podrían ser
+más costosos de lo que usted espera. Algunos gastos regulares, tales como los
+costos médicos, probablemente aumentarán a medida que usted envejece. Usted
+puede proteger su estilo de vida durante la jubilación reduciendo sus gastos
+más grandes, poco a poco o antes de jubilarse. También puede aumentar sus
+ingresos regulares al solicitar sus beneficios de Seguro Social una vez cumpla
+su plena edad de jubilación o después. Si solicita sus beneficios antes de
+cumplir su plena edad de jubilación, su beneficio mensual podría reducirse
+hasta un 30%.
+{% endblock %}
+
+{% block questions_expenses_answer_yes_over_50 %}
+Si está planificando estar activo después de jubilarse o si todavía debe su
+préstamo hipotecario u otra deuda, sus primeros años de jubilación podrían ser
+más costosos de lo que usted espera. Algunos gastos regulares, tales como los
+costos médicos, probablemente aumentarán a medida que usted envejece. Usted
+puede proteger su estilo de vida durante la jubilación reduciendo sus gastos
+más grandes, poco a poco o antes de jubilarse. También puede aumentar sus
+ingresos regulares al solicitar sus beneficios de Seguro Social una vez cumpla
+su plena edad de jubilación o después. Si solicita sus beneficios antes de
+cumplir su plena edad de jubilación, su beneficio mensual podría reducirse
+hasta un 30%.
+{% endblock %}
+
+{% block questions_expenses_answer_no_under_50 %}
+Es difícil predecir los gastos que tendrá en el futuro. Algunos gastos
+regulares, tales como los costos médicos, probablemente aumentan a medida que
+usted envejece. Usted puede proteger su estilo de vida durante la jubilación
+reduciendo sus gastos más grandes poco a poco o antes de jubilarse. Considere
+reducir su préstamo hipotecario o terminar de pagarlo antes de jubilarse.
+También puede aumentar sus ingresos regulares al solicitar sus beneficios de
+Seguro Social una vez cumpla su plena edad de jubilación. Si solicita sus
+beneficios antes de cumplir su plena edad de jubilación, su beneficio mensual
+podría reducirse hasta un 30%.
+{% endblock %}
+
+{% block questions_expenses_answer_no_over_50 %}
+Es difícil predecir los gastos que tendrá en el futuro. Algunos gastos
+regulares, tales como los costos médicos, probablemente aumentan a medida que
+usted envejece. Usted puede proteger su estilo de vida durante la jubilación
+reduciendo sus gastos más grandes poco a poco o antes de jubilarse. Considere
+reducir su préstamo hipotecario o terminar de pagarlo antes de jubilarse.
+También puede aumentar sus ingresos regulares al solicitar sus beneficios de
+Seguro Social una vez cumpla su plena edad de jubilación. Si solicita sus
+beneficios antes de cumplir su plena edad de jubilación, su beneficio mensual
+podría reducirse hasta un 30%.
+{% endblock %}
+
+{% block questions_expenses_answer_notsure_under_50 %}
+Es difícil predecir los gastos que tendrá en el futuro. Algunos gastos
+regulares, tales como los costos médicos, probablemente aumentan a medida que
+usted envejece. Usted puede proteger su estilo de vida durante la jubilación
+reduciendo sus gastos más grandes poco a poco o antes de jubilarse. Considere
+reducir su préstamo hipotecario o terminar de pagarlo antes de jubilarse.
+También puede aumentar sus ingresos regulares al solicitar sus beneficios de
+Seguro Social una vez cumpla su plena edad de jubilación. Si solicita sus
+beneficios antes de cumplir su plena edad de jubilación, su beneficio mensual
+podría reducirse hasta un 30%.
+{% endblock %}
+
+{% block questions_expenses_answer_notsure_over_50 %}
+Es difícil predecir los gastos que tendrá en el futuro. Algunos gastos
+regulares, tales como los costos médicos, probablemente aumentan a medida que
+usted envejece. Usted puede proteger su estilo de vida durante la jubilación
+reduciendo sus gastos más grandes poco a poco o antes de jubilarse. Considere
+reducir su préstamo hipotecario o terminar de pagarlo antes de jubilarse.
+También puede aumentar sus ingresos regulares al solicitar sus beneficios de
+Seguro Social una vez cumpla su plena edad de jubilación. Si solicita sus
+beneficios antes de cumplir su plena edad de jubilación, su beneficio mensual
+podría reducirse hasta un 30%.
+{% endblock %}
+
+{% block questions_income_answer_yes_under_50 %}
+El Seguro Social no sustituirá todo sus ingresos cuando se jubile. Los
+beneficios de Seguro Social sustituyen un promedio de 40% de los ingresos de un
+trabajador. Eso significa que, para que pueda disfrutar de una jubilación libre
+de preocupaciones, el resto de sus ingresos tendrá que suplementarse con su
+pensión
+<span data-tooltip-target="pensions">
+  {{ svg_icon("help-round") }}
+</span> y sus ahorros para la jubilación en su plan 401(k)
+<span data-tooltip-target="401k">
+  {{ svg_icon("help-round") }}
+</span> o su IRA
+ <span data-tooltip-target="iras">
+  {{ svg_icon("help-round") }}
+ </span>.
+ Usted puede reducir esa diferencia al solicitar sus beneficios de Seguro
+ Social una vez cumpla su plena edad de jubilación ya que recibirá una cantidad
+ mensual más alta de beneficios. Si solicita sus beneficios antes de cumpla su
+ plena edad de jubilación, su beneficio de Seguro Social podría reducirse hasta
+ un 30%.
+{% endblock %}
+
+{% block questions_income_answer_yes_over_50 %}
+Si puede, obtenga el beneficio mensual posible más alto al solicitar su Seguro
+Social a la plena edad de jubilación o a una edad mayor. Si solicita sus
+beneficios antes de su plena edad de jubilación, su beneficio mensual podría
+reducirse hasta un 30%. Además, aproveche las contribuciones adicionales
+permitidas (conocidas en inglés como "catch-up contributions")
+<span data-tooltip-target="catchup-contributions">
+  {{ svg_icon("help-round") }}
+</span> a su plan 401(k)
+<span data-tooltip-target="401k">
+  {{ svg_icon("help-round") }}
+</span> o su cuenta IRA
+<span data-tooltip-target="iras">
+  {{ svg_icon("help-round") }}
+</span> a partir de los 50 años de edad. Por último, evite pagar penalidades
+innecesarias. Por ejemplo, si usted retira sus ahorros de su plan 401(k) o su
+cuenta IRA antes de cumplir los 59 años y medio, es probable que deba pagar una
+penalidad por retiro anticipado.
+{% endblock %}
+
+{% block questions_income_answer_no_under_50 %}
+Podría ahorrar a través del plan 401(k) de su empleador
+<span data-tooltip-target="401k">
+  {{ svg_icon("help-round") }}
+</span> o una cuenta IRA
+<span data-tooltip-target="iras">
+  {{ svg_icon("help-round") }}
+</span>. Si su empleador también aporta a su cuenta, sáquele el máximo provecho
+a esas contribuciones. Algunas compañías depositan en su plan 401(k) una
+cantidad basada en la contribución que usted haga y esto ayuda a que sus ahorros
+para la jubilación crezcan más rápido. Incluso en el caso de que usted no
+pudiera ahorrar tanto como quisiera, lo poco que ahorre hoy crecerá con el
+tiempo y en el futuro podría convertirse en un ingreso extra o en ahorros para
+emergencias. Si espera que el Seguro Social sea su única fuente de ingreso, de
+todas formas puede obtener el máximo provecho solicitando su Seguro Social a la
+plena edad de jubilación o a una edad mayor. Si solicita sus beneficios antes,
+su beneficio mensual podría reducirse hasta un 30%. Por otra parte, su beneficio
+mensual aumenta por cada mes que usted espere después de cumplir su plena edad
+de jubilación hasta los 70 años.
+{% endblock %}
+
+{% block questions_income_answer_no_over_50 %}
+Podría ahorrar a través del plan 401(k) de su empleador
+<span data-tooltip-target="401k">
+  {{ svg_icon("help-round") }}
+</span> o una cuenta IRA
+<span data-tooltip-target="iras">
+  {{ svg_icon("help-round") }}
+</span>. Si su empleador también aporta a su cuenta, sáquele el máximo provecho
+a esas contribuciones. Algunas compañías aportan a su plan 401(k) una cantidad
+basada en la contribución que usted haga y esto ayuda a que sus ahorros para la
+jubilación crezcan más rápido. Usted también puede hacer contribuciones
+adicionales a estas cuentas (conocidas en inglés como “catch-up contributions”)
+<span data-tooltip-target="catchup-contributions">
+  {{ svg_icon("help-round") }}
+</span>. Aún si espera que el Seguro Social sea su única fuente de ingreso,
+puede obtener el máximo provecho solicitando sus beneficios del Seguro Social a
+la plena edad de jubilación o a una edad mayor. Si solicita sus beneficios
+antes, su beneficio mensual podría reducirse hasta un 30%. Por otra parte, su
+beneficio mensual aumenta por cada mes que usted espere después de cumplir su
+plena edad de jubilación hasta los 70 años.
+{% endblock %}
+
+{% block questions_income_answer_notsure_under_50 %}
+Podría ahorrar a través del plan 401(k) de su empleador
+<span data-tooltip-target="401k">
+  {{ svg_icon("help-round") }}
+</span> o una cuenta IRA
+<span data-tooltip-target="iras">
+  {{ svg_icon("help-round") }}
+</span>.
+Si su empleador también aporta a su cuenta, sáquele el máximo provecho a esas
+contribuciones. Algunas compañías aportan a su plan 401(k) una cantidad basada
+en la contribución que usted haga y esto ayuda a que sus ahorros para la
+jubilación crezcan más rápido. Su decisión sobre cuándo solicitar sus beneficios
+de Seguro Social es especialmente importante si usted no puede ahorrar o no
+ahorró tanto como hubiera querido. Al solicitar sus beneficios de Seguro Social
+a su plena edad de jubilación, evita una reducción en su beneficio mensual.
+Además, la cantidad mensual de sus beneficios aumenta por cada mes que usted
+espere después de cumplir su plena edad de jubilación hasta los 70 años de edad.
+{% endblock %}
+
+{% block questions_income_answer_notsure_over_50 %}
+Podría ahorrar a través del plan 401(k) de su empleador
+<span data-tooltip-target="401k">
+  {{ svg_icon("help-round") }}
+</span> o una cuenta IRA
+<span data-tooltip-target="iras">
+  {{ svg_icon("help-round") }}
+</span>.
+Si su empleador también aporta a su cuenta, sáquele el máximo provecho. Algunas
+compañías depositan en su plan 401(k) una cantidad basada en la contribución que
+usted haga y esto ayuda a que sus ahorros para la jubilación crezcan más rápido.
+Usted también puede hacer contribuciones adicionales a estas cuentas (conocidas
+en inglés como “catch-up contributions”)
+<span data-tooltip-target="catchup-contributions">
+  {{ svg_icon("help-round") }}
+</span>.
+Su decisión sobre cuándo solicitar sus beneficios de Seguro Social es
+especialmente importante si usted no puede ahorrar o no ahorró tanto como
+hubiera querido. Al solicitar sus beneficios a su plena edad de jubilación,
+evita una reducción en su beneficio mensual. Además, la cantidad mensual de sus
+beneficios aumenta por cada mes que usted espere después de cumplir su plena
+edad de jubilación hasta los 70 años de edad.
+{% endblock %}
+
+{% block questions_longlife_answer_yes %}
+El Seguro Social es especialmente valioso a partir de los 80 años de edad, ya
+que le garantiza un ingreso por vida. Solicitar los beneficios del Seguro
+Social a su plena edad de jubilación o después podría ser una buena manera de
+asegurar que su ingreso básico sea suficiente cuando llegue a una edad avanzada.
+Sus beneficios aumentan por cada mes que usted espere el solicitar sus
+beneficios, hasta que cumpla la edad de 70 años. Sus beneficios también se
+ajustan anualmente de acuerdo con el cambio en el costo de vida. Si usted vive
+sobre los 80 años de edad, pero solicita sus beneficios a los 62 años en vez de
+esperar hasta cumplir su plena edad de jubilación o una edad mayor, el monto
+total de los beneficios que recibirá a lo largo de su vida será miles de dólares
+menor.
+{% endblock %}
+
+{% block questions_longlife_answer_no %}
+Entendemos que es difícil hacer predicciones. Tal vez quiera planificar para la
+posibilidad de que usted (o su cónyuge) tenga una larga expectativa de vida. La
+expectativa promedio de una mujer que cumple sus 65 años de edad es 87 años,
+mientras que la de un hombre es 84 años. Si está casado, y sus ingresos son
+mayores que los de su cónyuge, y desea que su cónyuge sobreviviente reciba un
+beneficio mensual más alto después de que usted fallezca, entonces considere no
+solicitar sus beneficios hasta el último momento posible. Recuerde que puede
+solicitar sus beneficios por jubilación en cualquier momento a partir de los 62
+años de edad hasta los 70 años de edad. Cada mes adicional que usted espere para
+solicitar los beneficios resultará en un aumento permanente en sus beneficios,
+lo cual será más valioso a medida que envejece.
+{% endblock %}
+
+{% block questions_longlife_answer_notsure %}
+Tal vez quiera planificar para la posibilidad de que usted (o su cónyuge) tenga
+una larga expectativa de vida. La expectativa promedio de una mujer que cumple
+sus 65 años de edad es 87 años, mientras que la de un hombre es 84 años.
+Solicitar los beneficios del Seguro Social a su plena edad de jubilación o
+después podría ser una buena manera de asegurar que su ingreso básico sea
+suficiente cuando llegue a una edad avanzada. Su beneficio mensual aumenta con
+cada mes que usted espera para solicitarlo, y también se ajusta anualmente de
+acuerdo con el cambio en el costo de vida. Si usted vive sobre los 80 años de
+edad, pero solicita sus beneficios a los 62 años de edad, en vez de esperar
+hasta cumplir su plena edad de jubilación o una edad mayor, el monto total de
+beneficios de Seguro Social que recibirá a lo largo de su vida será miles de
+dólares menor.
+{% endblock %}
+
+{% block next_step_one %}
+Crear un
+<a class="a-link a-link__icon" href="http://www.ssa.gov/myaccount/" rel="noopener noreferrer" target="_blank">
+  <span class="a-link_text">mi cuenta de Seguro Social</span>
+</a> que revise su historial de ganancias reales y los beneficios esperados.
+{% endblock %}
