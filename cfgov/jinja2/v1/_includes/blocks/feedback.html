@@ -4,9 +4,20 @@
 
 {% set form = settings.form %}
 
+{% set messages = get_messages(request) %}
+
 {# JS-disabled result handling #}
 
 <div class="o-feedback block">
+    {% if messages.__len__() %}
+    <!-- JS-disabled Form POST return -->
+    <div class="u-mb15">
+        {% for message in messages %}
+            {{ notification.render( message.tags.split(' ')[0], true, message.message ) }}
+        {% endfor %}
+    </div>
+    {% else %}
+    <!-- JS and JS-disabled Form -->
     <form method="post"
           action="."
           class="o-form
@@ -18,19 +29,21 @@
                  {% endif %}"
           novalidate>
         <div class="u-mb15">
-            {% if get_messages(request) %}
-            {% for message in get_messages(request) %}
+            <!-- JS Enabled Form Alerts -->
+            {% if messages %}
+            {% for message in messages %}
                 {{ notification.render( message.tags.split(' ')[0], true, message.message ) }}
             {% endfor %}
             {% else %}
                 {{ notification.render( 'information', false, '' ) }}
             {% endif %}
         </div>
+
         <input type="hidden" name="form_id" value="{{ form_id }}">
         <input type="hidden" name="referrer" value="{{ settings.referrer }}">
         <input type="hidden" name="language" value="{{ page.language }}">
 
-        {% if value.was_it_helpful_text %}
+        {% if value.was_it_helpful_text and not messages.__len__() %}
         <div class="o-form_group">
             <h3>
                 {{ _(value.was_it_helpful_text) }}
@@ -45,8 +58,7 @@
                                    id="is_helpful_1"
                                    type="radio"
                                    name="is_helpful"
-                                   value='1'
-                                   {{ 'checked' if request.POST.is_helpful == '1' else '' }}>
+                                   value='1'>
                             <label class="a-label"
                                    for="is_helpful_1">
                                 {{ _('Yes') }}
@@ -61,8 +73,7 @@
                                        id="is_helpful_0"
                                        type="radio"
                                        name="is_helpful"
-                                       value="0"
-                                       {{ 'checked' if request.POST.is_helpful == '0' else '' }}>
+                                       value="0">
                                 <label class="a-label" for="is_helpful_0">
                                     No
                                 </label>
@@ -74,8 +85,7 @@
         </div>
         {% else %}
         <input type="hidden"
-               name="is_helpful"
-               value="{{ request.GET.get('is_helpful') }}">
+               name="is_helpful">
         {% endif %}
 
         <div class="o-form_group">
@@ -99,9 +109,7 @@
                           rows="6"
                           {%- if not value.was_it_helpful_text %}
                           required
-                          {% endif -%}>
-                    {{- form.comment.value() | default('', true) -}}
-                </textarea>
+                          {% endif -%}></textarea>
             </div>
         </div>
 
@@ -200,5 +208,6 @@
             {% if page.language == 'es' %}Enviar{% else %}{{ value.button_text }}{% endif %}
         </button>
     </form>
+    {% endif %}
 </div>
 {% endmacro %}
