@@ -552,8 +552,12 @@ class ModelBlock(blocks.StructBlock):
 
 class SimpleChart(blocks.StructBlock):
     title = blocks.CharBlock(required=True)
-    subtitle = blocks.CharBlock(required=False)
-    figure = blocks.CharBlock(required=False)
+    subtitle = blocks.TextBlock(required=False)
+    description = blocks.TextBlock(
+        required=True,
+        help_text='Accessible description of the chart content'
+    )
+    figure_number = blocks.CharBlock(required=False)
 
     chart_type = blocks.ChoiceBlock(
         choices=[
@@ -573,24 +577,19 @@ class SimpleChart(blocks.StructBlock):
 
     data_series = blocks.TextBlock(
         required=False,
-        help_text='A string or array of keys (JSON) or headers (CSV) to '
-        'include as data in the chart. Labels may be included via: '
-        '{"key": <key>, "label": <label>}'
+        help_text='A list of column headers (CSV) or keys (JSON) to include '
+        'as data in the chart in the format [<key>, <key>, <key>]. '
+        'Other labels may be included via: {"key": <key>, "label": <label>}'
     )
 
-    x_axis_data = blocks.TextBlock(
+    x_axis_source = blocks.TextBlock(
         required=False,
-        help_text='A string for a key/column or data array to include as '
-        'categories or x values, depending on chart type.'
-    )
-
-    description = blocks.CharBlock(
-        required=True,
-        help_text='Accessible description of the chart content'
+        help_text='The column header (CSV), key or data array (JSON) '
+        'to include as the source of x-axis values.'
     )
 
     y_axis_label = blocks.CharBlock(
-        required=True,
+        required=False,
         help_text='y-axis label'
     )
 

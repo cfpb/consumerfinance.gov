@@ -1,4 +1,4 @@
-/* eslint complexity: ["error", 10] */
+/* eslint complexity: ["error", 12] */
 /* eslint max-statements: ["error", 30] */
 /* eslint max-params: ["error", 9] */
 /* eslint consistent-return: [0] */
@@ -117,7 +117,7 @@ function applyOverrides( styleOverrides, obj, data ) {
  * @param {string} x_axis_data Key or array of categories
  * @returns {array} Series data
  */
-function extractSeries( rawData, { series, xAxisData, chartType } ) {
+function extractSeries( rawData, { series, xAxisSource, chartType } ) {
   if ( series ) {
     if ( series.match( /^\[/ ) ) {
       series = JSON.parse( series );
@@ -126,7 +126,7 @@ function extractSeries( rawData, { series, xAxisData, chartType } ) {
     }
 
     if ( chartType === 'datetime' ) {
-      if ( !xAxisData ) xAxisData = 'x';
+      if ( !xAxisSource ) xAxisSource = 'x';
     }
 
     const seriesData = [];
@@ -149,7 +149,7 @@ function extractSeries( rawData, { series, xAxisData, chartType } ) {
         let d = Number( obj[key] );
         if ( chartType === 'datetime' ) {
           d = {
-            x:  Number( new Date( obj[xAxisData] ) ),
+            x:  Number( new Date( obj[xAxisSource] ) ),
             y: d
           };
         }
@@ -339,7 +339,7 @@ function getMapConfig( series, date ) {
  * @returns {object} The configured style object
  */
 function makeChartOptions( data, target ) {
-  const { chartType, styleOverrides, description, xAxisData, xAxisLabel,
+  const { chartType, styleOverrides, description, xAxisSource, xAxisLabel,
     yAxisLabel, filters } = target.dataset;
   let defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
 
@@ -347,8 +347,8 @@ function makeChartOptions( data, target ) {
     applyOverrides( styleOverrides, defaultObj, data );
   }
 
-  if ( xAxisData && chartType !== 'datetime' ) {
-    defaultObj.xAxis.categories = resolveKey( data.raw, xAxisData );
+  if ( xAxisSource && chartType !== 'datetime' ) {
+    defaultObj.xAxis.categories = resolveKey( data.raw, xAxisSource );
   }
 
   const formattedSeries = formatSeries( data );
@@ -369,10 +369,10 @@ function makeChartOptions( data, target ) {
   defaultObj.accessibility.description = description;
   defaultObj.yAxis.title.text = yAxisLabel;
   if ( xAxisLabel ) defaultObj.xAxis.title.text = xAxisLabel;
-  if ( !defaultObj.tooltip.formatter ) {
+  if ( !defaultObj.tooltip.formatter && yAxisLabel ) {
     defaultObj.tooltip.formatter = makeFormatter( yAxisLabel );
   }
-  if ( isDateFilter( filters, xAxisData ) ) {
+  if ( isDateFilter( filters, xAxisSource ) ) {
     defaultObj.navigator.enabled = false;
     defaultObj.xAxis.min = defaultObj.series[0].data[0].x;
   }
@@ -637,11 +637,11 @@ function attachFilter(
 
 /**
  * @param {string} filters The filters data key
- * @param {string} xAxisData The xAxis data key
+ * @param {string} xAxisSource The xAxis data key
  * @returns {boolean} Whethere the filter is data-based or date-based
  */
-function isDateFilter( filters, xAxisData ) {
-  return xAxisData && filters && filters.match( xAxisData );
+function isDateFilter( filters, xAxisSource ) {
+  return xAxisSource && filters && filters.match( xAxisSource );
 }
 
 /**
@@ -691,7 +691,7 @@ function initFilters( dataset, chartNode, chart, data, transform ) {
 
     filters = JSON.parse( filters );
 
-    if ( isDateFilter( filters, dataset.xAxisData ) ) {
+    if ( isDateFilter( filters, dataset.xAxisSource ) ) {
       const options =
         getOptions( filters, data, 1 );
       const startNode = makeFilterDOM( options, chartNode,
