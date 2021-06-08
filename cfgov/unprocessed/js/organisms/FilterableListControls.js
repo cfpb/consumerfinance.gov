@@ -55,7 +55,7 @@ function FilterableListControls( element ) {
     _expandable = _expandables[0];
 
     // This is used for checking if the content is expanded.
-    _expandableContent = _expandable.element.querySelector( '.o-expandable_content' )
+    _expandableContent = _expandable.element.querySelector( '.o-expandable_content' );
 
     // If multiselects exist on the form, iterate over them.
     multiSelects.forEach( multiSelect => {
