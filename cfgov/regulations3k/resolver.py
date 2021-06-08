@@ -81,7 +81,7 @@ def get_url_resolver(page, date_str=None):
             section_url=page.reverse_subpage(
                 'section',
                 kwargs=section_kwargs
-            ),
+            ).lower(),
             paragraph_label=dest_paragraph_label
         )
 

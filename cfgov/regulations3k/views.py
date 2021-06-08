@@ -197,36 +197,38 @@ def redirect_eregs(request, **kwargs):
             if pattern == INTERP_INTRO_RE:
                 if version_date:
                     return redirect(
-                        f"{new_base}{part}/{version_date}/h1-Interp/",
+                        f"{new_base}{part}/{version_date}/h1-interp/",
                         permanent=True
                     )
                 else:
                     return redirect(
-                        f"{new_base}{part}/Interp-0/",
+                        f"{new_base}{part}/interp-0/",
                         permanent=True
                     )
             if pattern == INTERP_APPENDIX_RE:
                 appendix = INTERP_APPENDIX_DEFAULTS.get(part, 'A')
                 if version_date:
                     return redirect(
-                        f"{new_base}{part}/{version_date}/Interp-{appendix}/",
+                        f"{new_base}{part}/{version_date}"
+                        f"/interp-{appendix.lower()}/",
                         permanent=True
                     )
                 else:
                     return redirect(
-                        f"{new_base}{part}/Interp-{appendix}/",
+                        f"{new_base}{part}/interp-{appendix.lower()}/",
                         permanent=True
                     )
             if pattern == INTERP_SECTION_RE:
                 section = INTERP_SECTION_DEFAULTS.get(part, '1')
                 if version_date:
                     return redirect(
-                        f"{new_base}{part}/{version_date}/Interp-{section}/",
+                        f"{new_base}{part}/{version_date}"
+                        f"/interp-{section.lower()}/",
                         permanent=True
                     )
                 else:
                     return redirect(
-                        f"{new_base}{part}/Interp-{section}/",
+                        f"{new_base}{part}/interp-{section.lower()}/",
                         permanent=True
                     )
     # catch-all: we have a valid part, but we can't decipher more than that
