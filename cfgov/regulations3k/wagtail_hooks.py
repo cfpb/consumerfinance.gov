@@ -59,7 +59,7 @@ class SectionPreviewIndexView(TreeIndexView):
 
             preview_url = page.url + page.reverse_subpage(
                 'section',
-                kwargs={'date_str': date_str, 'section_label': obj.label}
+                kwargs={'date_str': date_str, 'section_label': obj.url_path}
             )
             preview_button = {
                 'url': preview_url,
