@@ -67,7 +67,7 @@ class CFGOVPage(Page):
     tags = ClusterTaggableManager(through=CFGOVTaggedPages, blank=True,
                                   related_name='tagged_pages')
     language = models.CharField(
-        choices=ref.supported_languagues, default='en', max_length=2
+        choices=ref.supported_languagues, default='en', max_length=7
     )
     social_sharing_image = models.ForeignKey(
         'v1.CFGOVImage',
