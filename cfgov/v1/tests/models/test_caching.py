@@ -1,3 +1,6 @@
+from unittest import mock
+import os
+
 from django.core.files.base import ContentFile
 from django.test import TestCase, override_settings
 
@@ -8,11 +11,20 @@ import boto3
 import moto
 
 from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
-from v1.models.caching import AkamaiBackend, cloudfront_cache_invalidation
+from v1.models.caching import (
+    AkamaiBackend, AkamaiDeletingBackend, cloudfront_cache_invalidation
+)
 from v1.models.images import CFGOVImage
 
 
 class TestAkamaiBackend(TestCase):
+    def setUp(self):
+        self.credentials = {
+            "CLIENT_TOKEN": "token",
+            "CLIENT_SECRET": "secret",
+            "ACCESS_TOKEN": "access token",
+        }
+
     def test_no_credentials_raises(self):
         credentials = {
             'CLIENT_TOKEN': None,
@@ -32,15 +44,84 @@ class TestAkamaiBackend(TestCase):
             AkamaiBackend(credentials)
 
     def test_all_credentials_get_set(self):
-        credentials = {
-            'CLIENT_TOKEN': 'token',
-            'CLIENT_SECRET': 'secret',
-            'ACCESS_TOKEN': 'access token',
-        }
-        akamai_backend = AkamaiBackend(credentials)
+        akamai_backend = AkamaiBackend(self.credentials)
         self.assertEqual(akamai_backend.client_token, 'token')
         self.assertEqual(akamai_backend.client_secret, 'secret')
         self.assertEqual(akamai_backend.access_token, 'access token')
+
+    @mock.patch("requests.post")
+    @mock.patch.dict(os.environ, {
+        "AKAMAI_OBJECT_ID": "12345",
+        "AKAMAI_PURGE_ALL_URL": "http://purge",
+    })
+    def test_post_all(self, mock_post):
+        mock_post.return_value.status_code.return_value = 200
+        mock_post.return_value.text = "response text"
+        akamai_backend = AkamaiBackend(self.credentials)
+        akamai_backend.post_all("invalidate")
+        mock_post.assert_called_once_with(
+            "http://purge",
+            headers=akamai_backend.headers,
+            data='{"action": "invalidate", "objects": ["12345"]}',
+            auth=akamai_backend.auth,
+        )
+
+    @mock.patch("requests.post")
+    @mock.patch.dict(os.environ, {
+        "AKAMAI_OBJECT_ID": "12345",
+        "AKAMAI_FAST_PURGE_URL": "http://fast_purge",
+    })
+    def test_post(self, mock_post):
+        mock_post.return_value.status_code.return_value = 200
+        mock_post.return_value.text = "response text"
+        akamai_backend = AkamaiBackend(self.credentials)
+        akamai_backend.post("http://my/url", "invalidate")
+        mock_post.assert_called_once_with(
+            "http://fast_purge",
+            headers=akamai_backend.headers,
+            data='{"action": "invalidate", "objects": ["http://my/url"]}',
+            auth=akamai_backend.auth,
+        )
+
+    def test_purge(self):
+        akamai_backend = AkamaiBackend(self.credentials)
+        with mock.patch.object(AkamaiBackend, "post") as mock_post:
+            akamai_backend.purge("http://my/url")
+        mock_post.assert_called_once_with(
+            "http://my/url",
+            "invalidate"
+        )
+
+    def test_purge_all(self):
+        akamai_backend = AkamaiBackend(self.credentials)
+        with mock.patch.object(AkamaiBackend, "post_all") as mock_post_all:
+            akamai_backend.purge_all()
+        mock_post_all.assert_called_once_with(
+            "invalidate"
+        )
+
+
+class TestAkamaiDeletingBackend(TestCase):
+    def setUp(self):
+        self.credentials = {
+            "CLIENT_TOKEN": "token",
+            "CLIENT_SECRET": "secret",
+            "ACCESS_TOKEN": "access token",
+        }
+
+    def test_purge(self):
+        akamai_backend = AkamaiDeletingBackend(self.credentials)
+        with mock.patch.object(AkamaiDeletingBackend, "post") as mock_post:
+            akamai_backend.purge("http://my/url")
+        mock_post.assert_called_once_with(
+            "http://my/url",
+            "delete"
+        )
+
+    def test_purge_all(self):
+        akamai_backend = AkamaiDeletingBackend(self.credentials)
+        with self.assertRaises(NotImplementedError):
+            akamai_backend.purge_all()
 
 
 @override_settings(
