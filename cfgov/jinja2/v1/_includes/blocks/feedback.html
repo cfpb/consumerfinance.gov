@@ -11,11 +11,9 @@
 <div class="o-feedback block">
     {% if messages.__len__() %}
     <!-- JS-disabled Form POST return -->
-    <div class="u-mb15">
         {% for message in messages %}
             {{ notification.render( message.tags.split(' ')[0], true, message.message ) }}
         {% endfor %}
-    </div>
     {% else %}
     <!-- JS and JS-disabled Form -->
     <form method="post"
