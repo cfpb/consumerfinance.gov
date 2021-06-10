@@ -23,6 +23,8 @@ describe( 'Filterable Page shows all results when no filter selected', () => {
     cy.visit( '/rules-policy/final-rules/' );
     // But I do not select a filter
     cy.url().should( 'not.include', '?' );
+    // Then open the filterable list controls.
+    filterableList.open();
     // Then I should not see filtered results
     filterableList.notification().should( 'not.be.visible' );
     // When I select the first checkbox in the Category list
