@@ -149,6 +149,7 @@ supported_languagues = [
     ('ru', 'Russian'),
     ('ar', 'Arabic'),
     ('ht', 'Haitian Creole'),
+    ('zh-Hans', 'Chinese (Simplified)')
 ]
 
 
