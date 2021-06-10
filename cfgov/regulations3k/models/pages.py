@@ -125,7 +125,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 'snippet': snippet,
                 'url': "{}{}/{}/#{}".format(
                     self.parent().url, hit.part,
-                    hit.section_label, hit.paragraph_id),
+                    hit.section_label.lower(), hit.paragraph_id),
             }
             payload['results'].append(hit_payload)
 
@@ -461,7 +461,14 @@ class RegulationPage(
             kwargs['date_str'] = date_str
 
         try:
-            section = section_query.get(label=section_label)
+            section = section_query.get(label__iexact=section_label)
+            if re.search('[A-Z]+', section_label):
+                return redirect(
+                    self.url + self.reverse_subpage(
+                        "index", kwargs=kwargs
+                    ) + section.url_path + '/',
+                    permanent=True
+                )
         except Section.DoesNotExist:
             return redirect(
                 self.url + self.reverse_subpage(
@@ -530,10 +537,10 @@ def get_section_url(page, section, date_str=None):
         section_kwargs['date_str'] = date_str
 
     section_kwargs['section_label'] = section.label
-    return page.url + page.reverse_subpage(
+    return (page.url + page.reverse_subpage(
         'section',
         kwargs=section_kwargs
-    )
+    )).lower()
 
 
 def get_secondary_nav_items(request, current_page, sections=[], date_str=None):
@@ -558,8 +565,10 @@ def get_secondary_nav_items(request, current_page, sections=[], date_str=None):
         # Create the section dictionary for navigation
         section_dict = {
             'title': section.title,
-            'url': get_section_url(current_page, section, date_str=date_str),
-            'active': section.label == current_label,
+            'url': get_section_url(
+                current_page, section, date_str=date_str
+            ),
+            'active': section.url_path == current_label,
             'expanded': True,
             'section': section,
         }

@@ -1,36 +1,21 @@
-# -*- coding: utf-8 -*-
 import datetime
 
-from django.test import TestCase, override_settings
+from django.test import RequestFactory, TestCase, override_settings
 
 from model_bakery import baker
-from regdown import DEFAULT_RENDER_BLOCK_REFERENCE, regdown
 
 from regulations3k.models import (
     EffectiveVersion, Part, RegulationLandingPage, RegulationPage, Section,
     Subpart
 )
-from regulations3k.resolver import (
-    get_contents_resolver, get_url_resolver, resolve_reference
-)
 
 
-# Our setup and tests use as close to regulation examples as possible.
-# Override the default settings to let us map old-eRegs-style labels to new
-# Regulations3k sections and paragraphs.
-@override_settings(
-    REGULATIONS_REFERENCE_MAPPING=[
-        (
-            r'(?P<label>(?P<section>[\w]+))-(?P<paragraph>[\w-]*-Interp)',
-            'Interp-{section}',
-            '{paragraph}'
-        )
-    ]
-)
-class ReferenceResolutionTestCase(TestCase):
+@override_settings(FLAGS={'REGULATIONS3K': [('boolean', True)]})
+class PagesRegulations3kTestCase(TestCase):
 
     def setUp(self):
         from v1.models import HomePage
+        self.factory = RequestFactory()
         self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.landing_page = RegulationLandingPage(
             title='Reg Landing', slug='reg-landing')
@@ -88,43 +73,18 @@ class ReferenceResolutionTestCase(TestCase):
             slug='1002')
         self.landing_page.add_child(instance=self.reg_page)
 
-    def test_resolve_reference(self):
-        section, paragraph = resolve_reference('2-c-Interp')
-        self.assertEqual(section, 'Interp-2')
-        self.assertEqual(paragraph, 'c-Interp')
-
-    def test_resolve_reference_no_match(self):
-        section, paragraph = resolve_reference('foo')
-        self.assertIsNone(section)
-        self.assertIsNone(paragraph)
-
-    def test_get_contents_resolver(self):
-        contents_resolver = get_contents_resolver(
-            self.reg_page.regulation.effective_version
-        )
-        result = regdown(
-            self.section_2.contents,
-            contents_resolver=contents_resolver,
-            render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE
-        )
-        self.assertIn('Interpreting adverse action', result)
-
-    def test_get_contents_resolver_reference_doesnt_exist(self):
-        contents_resolver = get_contents_resolver(
-            self.reg_page.regulation.effective_version
-        )
-        result = regdown(
-            self.section_3.contents,
-            contents_resolver=contents_resolver,
-            render_block_reference=DEFAULT_RENDER_BLOCK_REFERENCE
-        )
+    def test_url_path(self):
         self.assertEqual(
-            result,
-            '<p class="regdown-block level-0" data-label="b" id="b">'
-            'Securities credit.</p>'
+            self.section_interp2.url_path, self.section_interp2.label.lower()
         )
 
-    def test_get_url_resolver(self):
-        url_resolver = get_url_resolver(self.reg_page)
-        result = url_resolver('2-c-Interp')
-        self.assertEqual(result, '/reg-landing/1002/interp-2/#c-Interp')
+    def test_redirect_uppercase(self):
+        response = self.client.get(
+            '/reg-landing/1002/Interp-2/'
+        )
+        # Check for permanent redirect
+        self.assertEqual(response.status_code, 301)
+        # Check for lowercase location
+        self.assertEqual(
+            response.get('location'),
+            '/reg-landing/1002/interp-2/')
