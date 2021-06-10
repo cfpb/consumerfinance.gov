@@ -1,5 +1,5 @@
-from unittest import mock
 import os
+from unittest import mock
 
 from django.core.files.base import ContentFile
 from django.test import TestCase, override_settings

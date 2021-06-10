@@ -112,7 +112,7 @@ class AkamaiDeletingBackend(AkamaiBackend):
 
     def purge_all(self):
         raise NotImplementedError(
-            "Purging all by deletion is intentionall not supported through "
+            "Purging all by deletion is intentionally not supported through "
             "this backend. Please use the Akamai Control Center."
         )
 
