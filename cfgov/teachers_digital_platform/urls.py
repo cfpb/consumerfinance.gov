@@ -1,19 +1,21 @@
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 
-from teachers_digital_platform.forms import get_pages
-from teachers_digital_platform.views import SurveyWizard
+from .forms import form_lists
+from .views import AssessmentWizard
 
 from wagtailsharing.views import ServeView
 
 
-pages = get_pages('gr3')
-
-contact_wizard = SurveyWizard.as_view(
-    form_list=pages['form_list'],
-    url_name='survey_step',
-    template_name='teachers_digital_platform/survey-page.html',
-)
+# Create view wrappers for our assessments. Note the AssessmentWizard
+# won't be instantiated until the view needs it.
+wizards = {}
+for k, form_list in form_lists.items():
+    wizards[k] = AssessmentWizard.as_view(
+        form_list=form_list,
+        url_name='survey_step',
+        template_name='teachers_digital_platform/survey-page.html',
+    )
 
 urlpatterns = [
     re_path(
@@ -23,20 +25,19 @@ urlpatterns = [
         )
     ),
 
+    # TODO figure out how to parse out the <elem>
     path(
-        'survey/results/',
+        'assess/elem/results/',
         TemplateView.as_view(
-            template_name='teachers_digital_platform/survey-results.html'
+            template_name='teachers_digital_platform/survey-results.html',
         )
     ),
-
     re_path(
-        r'^survey/(?P<step>.+)/$',
-        contact_wizard,
+        r'^assess/elem/(?P<step>.+)/$',
+        wizards['elem'],
         name='survey_step'
     ),
-
-    path('survey/', contact_wizard, name='survey'),
+    path('assess/elem/', wizards['elem'], name='survey'),
 
     re_path(
         r'^$',

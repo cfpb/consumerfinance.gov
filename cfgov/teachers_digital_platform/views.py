@@ -1,34 +1,38 @@
+import time
+
 from django.http.response import HttpResponseRedirect
 from formtools.wizard.views import NamedUrlCookieWizardView
 
-from teachers_digital_platform.forms import get_pages
+from .assessments import Assessment, assessments
+from . import urlEncode
 
 
-surveys_dict = {}
-surveys_dict['gr3'] = get_pages('gr3')['question_dict']
-
-class SurveyWizard(NamedUrlCookieWizardView):
+class AssessmentWizard(NamedUrlCookieWizardView):
     def done(self, form_list, **kwargs):
+        # Find assessment based on hidden "_k" question in page1
         first_page = self.get_form('page1')
-        survey_key = first_page.fields['_sk'].initial
-        
-        data = self.get_all_cleaned_data()
-        total = 0
-        answers = []
+        assessment_key = first_page.fields['_k'].initial
+        if not isinstance(assessment_key, str) or not assessment_key in assessments.keys():
+            # Hmm this isn't right
+            response = HttpResponseRedirect('../')
+            response.delete_cookie('resultUrl')
+            response.delete_cookie('wizard_survey_wizard')
+            return response
 
-        for key, question in surveys_dict[survey_key].items():
-            answer = int(data[key])
-            answers.append(str(answer))
-            total += question.scores[answer]
+        assessment: Assessment = assessments[assessment_key]
 
-        encoded = ''.join(answers) + ':' + str(total)
-        
+        # Calc score and encode in URL
+        score = assessment.get_score(self.get_all_cleaned_data())
+        encoded = urlEncode.dumps(assessment, score['subtotals'], time.time())
+
+        # Send to results page
         response = HttpResponseRedirect('../results/')
         response.set_signed_cookie('resultUrl', encoded)
+        response.delete_cookie('wizard_survey_wizard')
         return response
 
     def process_step(self, form):
         # By default, the big CSRF tokens get needlessly stored in the cookie and
         # take up a lot of space. This is bad because cookies have a small limit.
         dict = self.get_form_step_data(form)
-        return {key:val for key, val in dict.items() if key != 'csrfmiddlewaretoken'}
+        return {key: val for key, val in dict.items() if key != 'csrfmiddlewaretoken'}
