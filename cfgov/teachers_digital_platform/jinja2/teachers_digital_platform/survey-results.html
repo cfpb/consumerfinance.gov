@@ -1,0 +1,30 @@
+{% extends 'content-base.html' %}
+{% from 'organisms/expandable.html' import expandable with context %}
+
+{% block title -%}
+    Results | Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+
+    <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
+{%- endblock css %}
+
+{% block pre_content scoped -%}
+{%- endblock %}
+
+{% block body_content scoped %}
+    <div class="content_wrapper">
+        You're done.
+    </div>
+{% endblock body_content %}
+
+{% block javascript %}
+    {{ super() }}
+
+    {# Conditional comment used to block IE8 and under from receiving JS #}
+    <!--[if gt IE 8]><!-->
+        <script src="{{ static('apps/teachers-digital-platform/js/index.js') }}"></script>
+    <!--<![endif]-->
+{% endblock javascript %}

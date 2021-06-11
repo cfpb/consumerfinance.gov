@@ -1,0 +1,62 @@
+{% extends 'content-base.html' %}
+{% from 'organisms/expandable.html' import expandable with context %}
+
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block title -%}
+    Survey | Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+
+    <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
+{%- endblock css %}
+
+{% block pre_content scoped -%}
+{%- endblock %}
+
+{% block body_content scoped %}
+    <div class="content_wrapper">
+        <h1>Survey Page {{ wizard.steps.step1 }}</h1>
+        {% if wizard.steps.prev %}
+            <p><a href="../{{ wizard.steps.prev }}/">Previous</a></p>
+        {% endif %}
+        <form action="" method="post"> {{ csrf_input }}
+        <table>
+        {{ wizard.management_form }}
+        {% if wizard.form.forms %}
+            {{ wizard.form.management_form }}
+            {% for form in wizard.form.forms %}
+                {{ form }}
+            {% endfor %}
+        {% else %}
+            {{ wizard.form }}
+        {% endif %}
+        </table>
+        {% if wizard.steps.next %}
+            <input type="submit" value="Continue..."/>
+        {% else %}
+            <input type="submit" value="Finish"/>
+        {% endif %}
+        </form>
+        <hr>
+        Navigation: 
+        <nav>
+            {% for name in wizard.steps.all %}
+                <li><a href="../{{ name }}/">{{ name }}</a></li>
+            {% endfor %}
+        </nav>
+    </div>
+{% endblock body_content %}
+
+{% block javascript %}
+    {{ super() }}
+
+    {# Conditional comment used to block IE8 and under from receiving JS #}
+    <!--[if gt IE 8]><!-->
+        <script src="{{ static('apps/teachers-digital-platform/js/index.js') }}"></script>
+    <!--<![endif]-->
+{% endblock javascript %}
