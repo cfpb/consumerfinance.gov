@@ -28,6 +28,8 @@ urlpatterns = [
     # TODO figure out how to parse out the <elem>
     path(
         'assess/elem/results/',
+        # TODO I think we'll need a formal view for the logic to read the
+        # cookie, etc.
         TemplateView.as_view(
             template_name='teachers_digital_platform/survey-results.html',
         )
