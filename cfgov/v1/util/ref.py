@@ -142,14 +142,14 @@ categories = [
 supported_languagues = [
     ('en', 'English'),
     ('es', 'Spanish'),
-    ('zh', 'Chinese'),
     ('vi', 'Vietnamese'),
     ('ko', 'Korean'),
     ('tl', 'Tagalog'),
     ('ru', 'Russian'),
     ('ar', 'Arabic'),
     ('ht', 'Haitian Creole'),
-    ('zh-Hans', 'Chinese (Simplified)')
+    ('zh-Hans', 'Chinese (Simplified)'),
+    ('zh-Hant', 'Chinese (Traditional)')
 ]
 
 
