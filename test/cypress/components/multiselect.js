@@ -1,15 +1,20 @@
 export class Multiselect {
 
-  constructor() {
+  constructor( label ) {
+    if ( label ) {
+      this.el = cy.contains( 'label[for^=o-filterable-list-controls]', label ).next( '.o-multiselect' );
+    } else {
+      this.el = cy.get( '.o-multiselect' ).first();
+    }
     this.selectedTags = [];
   }
 
-  click() {
-    return cy.get( '.o-expandable_target' ).click( { force: true } );
+  clickAway() {
+    return cy.get( '.o-expandable_content' ).click( { force: true } );
   }
 
   multiSelect( name ) {
-    return cy.get( `.o-multiselect_${ name }` ).first();
+    return this.el.find( `.o-multiselect_${ name }` );
   }
 
   choices() {
@@ -54,17 +59,17 @@ export class Multiselect {
   }
 
   dropDownValue( value ) {
-    return cy.get( `li[data-option="${ value }"].u-filter-match` );
+    return this.el.find( `li[data-option="${ value }"].u-filter-match` );
   }
 
   async dropDownHasValue( value ) {
     const selector = `li[data-option="${ value }"].u-filter-match`;
-    const selectedTagsCount = await cy.get( selector ).length;
+    const selectedTagsCount = await this.el.find( selector ).length;
     return selectedTagsCount > 0;
   }
 
   choicesElement() {
-    return cy.get( '.o-multiselect_choices label' );
+    return this.el.find( '.o-multiselect_choices label' );
   }
 
   choicesElementClick() {
@@ -72,11 +77,11 @@ export class Multiselect {
   }
 
   dropDown() {
-    return cy.get( '.o-multiselect .u-filter-match' );
+    return this.el.find( '.o-multiselect .u-filter-match' );
   }
 
   dropDownLabel() {
-    return cy.get( '.o-multiselect_options li .o-multiselect_label' );
+    return this.el.find( '.o-multiselect_options li .o-multiselect_label' );
   }
 
   firstChoicesElement() {
@@ -91,10 +96,10 @@ export class Multiselect {
   }
 
   displayedTag() {
-    return cy.get( '.o-multiselect_choices li' );
+    return this.el.find( '.o-multiselect_choices li' );
   }
 
   isRendered() {
-    return cy.get( '.o-multiselect' ).first().should( 'be.visible' );
+    return this.el.should( 'be.visible' );
   }
 }
