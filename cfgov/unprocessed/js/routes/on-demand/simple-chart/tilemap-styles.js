@@ -44,6 +44,7 @@ const tilemap = {
     height: 550,
     marginLeft: 0,
     marginRight: 0,
+    marginTop: -1,
     spacingBottom: -290,
     type: 'tilemap'
   },
