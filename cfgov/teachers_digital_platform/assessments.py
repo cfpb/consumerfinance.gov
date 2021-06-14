@@ -9,6 +9,7 @@ class ChoiceList:
     """
     To save mem, we'll only need a couple of these objects in practice
     """
+
     def __init__(self, labels: List[str]):
         self.labels = labels
         self.choices = tuple(
@@ -20,6 +21,7 @@ class Question:
     """
     Base question
     """
+
     def __init__(self, key: str):
         self.key = key
 
@@ -34,6 +36,7 @@ class ChoiceQuestion(Question):
     """
     Choice question
     """
+
     def __init__(self, key: str, label: str, choice_list: ChoiceList, answer_values: List[float]):
         super().__init__(key)
         self.choice_list = choice_list
@@ -65,6 +68,7 @@ class AssessmentPage:
     """
     Page of an assessment
     """
+
     def __init__(self, heading: str, questions: List[Question]):
         self.heading = heading
         self.questions = questions
@@ -114,6 +118,7 @@ class Assessment:
     """
     A full assessment
     """
+
     def __init__(self, key: str, pages: List[AssessmentPage]):
         self.key = key
         self.pages = pages
@@ -184,7 +189,15 @@ class Assessment:
         return Assessment(key, pages)
 
 
-# TODO avoid holding these in memory, maybe LRU cache
-assessments: Dict[str, Assessment] = {
-    'elem': Assessment.factory('elem')
-}
+available_assessments = ('elem')
+
+
+def get_assessment(key) -> Assessment:
+    assert key in available_assessments
+    return Assessment.factory('elem')
+
+
+def get_all_assessments() -> Dict[str, Assessment]:
+    return {
+        'elem': get_assessment('elem')
+    }

@@ -1,7 +1,7 @@
 from typing import List
 
 from . import base36
-from .assessments import Assessment, assessments
+from .assessments import Assessment, available_assessments, get_assessment
 
 # We won't need timestamps before this time
 # DO NOT CHANGE THIS
@@ -53,10 +53,10 @@ def loads(encoded: str):
     subtotals_enc = parts[1].split('.')
     time_enc = parts[2]
 
-    if key not in assessments.keys():
+    if key not in available_assessments:
         return None
 
-    assessment = assessments[key]
+    assessment = get_assessment(key)
     subtotals = map(lambda x: _decode_num(x), subtotals_enc)
     time = _decode_time(time_enc)
 

@@ -3,7 +3,7 @@ import time
 from django.http.response import HttpResponseRedirect
 from formtools.wizard.views import NamedUrlCookieWizardView
 
-from .assessments import Assessment, assessments
+from .assessments import available_assessments, get_assessment
 from . import urlEncode
 
 
@@ -12,14 +12,14 @@ class AssessmentWizard(NamedUrlCookieWizardView):
         # Find assessment based on hidden "_k" question in page1
         first_page = self.get_form('page1')
         assessment_key = first_page.fields['_k'].initial
-        if not isinstance(assessment_key, str) or not assessment_key in assessments.keys():
+        if not isinstance(assessment_key, str) or not assessment_key in available_assessments:
             # Hmm this isn't right
             response = HttpResponseRedirect('../')
             response.delete_cookie('resultUrl')
             response.delete_cookie('wizard_survey_wizard')
             return response
 
-        assessment: Assessment = assessments[assessment_key]
+        assessment = get_assessment(assessment_key)
 
         # Calc score and encode in URL
         score = assessment.get_score(self.get_all_cleaned_data())

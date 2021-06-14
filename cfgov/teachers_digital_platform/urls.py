@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 
-from .forms import form_lists
+from .forms import get_form_lists
 from .views import AssessmentWizard
 
 from wagtailsharing.views import ServeView
@@ -10,7 +10,7 @@ from wagtailsharing.views import ServeView
 # Create view wrappers for our assessments. Note the AssessmentWizard
 # won't be instantiated until the view needs it.
 wizards = {}
-for k, form_list in form_lists.items():
+for k, form_list in get_form_lists().items():
     wizards[k] = AssessmentWizard.as_view(
         form_list=form_list,
         url_name='survey_step',
