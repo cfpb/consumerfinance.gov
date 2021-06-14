@@ -49,7 +49,7 @@ describe( 'I should be able to select using the multiselect', () => {
     // When I enter "students" in the search input
     multiselect.enterSearchInput( 'students' );
     // Then the multiselect dropdown shouldn't display "mortgages"
-    multiselect.dropDownValue( 'mortgages' ).should( 'have.length', 0 );
+    multiselect.dropDownValue( 'mortgages' ).should( 'not.be.visible' );
     // And the multiselect dropdown length should be 1
     multiselect.dropDown().should( 'have.length', 1 );
   } );

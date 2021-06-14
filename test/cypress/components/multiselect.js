@@ -1,11 +1,7 @@
 export class Multiselect {
 
   constructor( label ) {
-    if ( label ) {
-      this.el = cy.contains( 'label[for^=o-filterable-list-controls]', label ).next( '.o-multiselect' );
-    } else {
-      this.el = cy.get( '.o-multiselect' ).first();
-    }
+    this.label = label;
     this.selectedTags = [];
   }
 
@@ -14,7 +10,9 @@ export class Multiselect {
   }
 
   multiSelect( name ) {
-    return this.el.find( `.o-multiselect_${ name }` );
+    return cy.contains( 'label[for^=o-filterable-list-controls]', this.label )
+             .next( '.o-multiselect' )
+             .find( `.o-multiselect_${ name }` );
   }
 
   choices() {
@@ -59,17 +57,17 @@ export class Multiselect {
   }
 
   dropDownValue( value ) {
-    return this.el.find( `li[data-option="${ value }"].u-filter-match` );
+    return cy.get( `li[data-option="${ value }"]` );
   }
 
   async dropDownHasValue( value ) {
     const selector = `li[data-option="${ value }"].u-filter-match`;
-    const selectedTagsCount = await this.el.find( selector ).length;
+    const selectedTagsCount = await cy.get( selector ).length;
     return selectedTagsCount > 0;
   }
 
   choicesElement() {
-    return this.el.find( '.o-multiselect_choices label' );
+    return this.multiSelect( 'choices' ).find( 'label' );
   }
 
   choicesElementClick() {
@@ -77,11 +75,11 @@ export class Multiselect {
   }
 
   dropDown() {
-    return this.el.find( '.o-multiselect .u-filter-match' );
+    return cy.get( '.o-multiselect .u-filter-match' );
   }
 
   dropDownLabel() {
-    return this.el.find( '.o-multiselect_options li .o-multiselect_label' );
+    return this.multiSelect( 'options' ).find( 'li .o-multiselect_label' );
   }
 
   firstChoicesElement() {
@@ -96,10 +94,10 @@ export class Multiselect {
   }
 
   displayedTag() {
-    return this.el.find( '.o-multiselect_choices li' );
+    return this.multiSelect( 'choices' ).find( 'li' );
   }
 
   isRendered() {
-    return this.el.should( 'be.visible' );
+    return this.multiSelect( 'search' ).should( 'be.visible' );
   }
 }
