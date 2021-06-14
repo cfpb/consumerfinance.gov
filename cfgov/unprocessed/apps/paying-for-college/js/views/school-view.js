@@ -201,14 +201,20 @@ let _keyupDelay;
 function _handleInputChange( event ) {
   clearTimeout( _keyupDelay );
   _keyupDelay = setTimeout( function() {
-    const searchTerm = schoolView._searchBox.value;
+    const searchTerm = schoolView._searchBox.value.trim();
     // TODO - clean up searchbox text, remove non-alphanumeric characters
-    schoolSearch( searchTerm )
-      .then( resp => {
-        _formatSearchResults( resp.responseText );
-      }, error => {
-        console.log( error );
-      } );
+    // Searches of less than 3 characters are prevented in the API fetch, so
+    // we represent that visually by hiding the search results DIV
+    if ( searchTerm.length < 3 ) {
+      schoolView._searchResults.classList.remove( 'active' );
+    } else {
+      schoolSearch( searchTerm )
+        .then( resp => {
+          _formatSearchResults( resp.responseText );
+        }, error => {
+          console.log( error );
+        } );
+    }
   }, 500 );
 }
 

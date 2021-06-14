@@ -298,10 +298,11 @@ class ContactHyperlink(blocks.StructBlock):
 class ContentImage(blocks.StructBlock):
     image = atoms.ImageBasic()
     image_width = blocks.ChoiceBlock(
-        choices=[('full', 'full'),
+        choices=[('full', 'Full width'),
                  (470, '470px'),
                  (270, '270px'),
-                 (170, '170px')],
+                 (170, '170px'),
+                 ('bleed', 'Bleed into left/right margins')],
         default='full',)
     image_position = blocks.ChoiceBlock(
         choices=[('right', 'right'),

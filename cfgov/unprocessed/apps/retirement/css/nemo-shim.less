@@ -1,0 +1,165 @@
+// Style our hamburger icon
+.toggle-menu {
+  display: none;
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  font-size: 18px;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+
+#subnav {
+  padding: 0;
+}
+
+#subnav nav h5 {
+  text-transform: none;
+}
+
+#header nav a {
+  font-weight: 500;
+}
+
+#subnav nav h5,
+strong {
+  font-weight: 600;
+}
+
+#header {
+  border-bottom: 5px solid #333;
+}
+
+#header nav {
+  margin: 10px 0 0;
+}
+
+@media screen and (min-width: 865px) {
+  .horizontal-list-item {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+@media screen and (max-width: 1060px) {
+
+  // Shrink font size of menu if viewport isn't huge
+  #header nav {
+    font-size: 80%;
+  }
+
+}
+
+@media screen and (max-width: 865px) {
+
+  // The nav items are crazy ugly when bumped to two lines
+  // Aligning them to the left helps a little
+  #header nav ul li a {
+    text-align: left;
+  }
+
+}
+
+@media screen and (max-width: 1100px) {
+
+  .wrapper-container,
+  .split {
+    max-width: 100%;
+  }
+  // Hide the multi-language banner
+  .wrapper-container .language-banner {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 660px) {
+
+  // Scale the logo a bit
+  #header .logo,
+  #header h1 {
+    margin-left: 60px;
+  }
+
+  // Show the menu icon
+  .toggle-menu {
+    display: block;
+  }
+
+  #header {
+    .toggle-menu,
+    .toggle-menu:link,
+    .toggle-menu:visited {
+      color: #75787B;
+    }
+
+    .toggle-menu:hover,
+    .toggle-menu:active,
+    .toggle-menu:focus {
+        color: #75787B;
+        background: #E3E4E4;
+      }
+    }
+
+  // Reset font size
+  #header nav {
+    font-size: 100%;
+  }
+
+  // Simplify subnav styles for mobiles
+  #subnav nav {
+    border: 0;
+    width: 100%;
+    ul {
+      margin: 0;
+      width: auto;
+    }
+  }
+
+  // Move the nav items into a vertical list
+  #header nav ul {
+    display: none;
+    &.vis {
+      display: block;
+    }
+    li {
+      display: block;
+    }
+  }
+
+  // Reset the phone number and search form positioning
+  p.lang,
+  #search_form {
+    display: none; // hide until we make a search toggle
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  // remove us flag
+  .official-website {
+    padding-right: 0;
+    background: none;
+  }
+
+  // Reset the footer navs
+  #footer > div {
+    > a,
+    > nav {
+      width: auto;
+      display: block;
+      min-height: 0;
+    }
+  }
+
+  .split-right {
+    position: static;
+    margin-right: 0;
+    margin-left: 10px;
+    text-align: right;
+  }
+
+}

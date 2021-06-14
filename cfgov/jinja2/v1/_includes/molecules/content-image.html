@@ -35,11 +35,12 @@
 {%- set image_inset = image(value.image.upload, 'original') -%}
 {%- set image_mobile = image(value.image.upload, 'width-1200') -%}
 
-{%- if value.image_width == 'full' -%}
+{%- if value.image_width == 'full' or value.image_width == 'bleed' -%}
 
 <figure class="m-full-width-media
                {{- ' m-inset__bottom-rule' if value.is_bottom_rule else '' }}">
-    <img class="m-full-width-media_image"
+    <img class="m-full-width-media_image
+                {{- ' image-bleed' if value.image_width == 'bleed' else '' }}"
          src="{{ image_inset.url }}"
          alt="{{ image_alt_value(value.image) }}">
 {%- if value.text %}

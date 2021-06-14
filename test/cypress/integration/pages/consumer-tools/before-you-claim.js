@@ -3,7 +3,7 @@ import { BeforeYouClaim } from '../../../pages/consumer-tools/before-you-claim';
 const claim = new BeforeYouClaim();
 
 describe( 'Planning your Social Security', () => {
-  it( 'should display esxtimated benefits', () => {
+  it( 'should display estimated benefits', () => {
     claim.open();
     claim.setBirthDate( '1', '1', '1980' );
     claim.setHighestAnnualSalary( '115000' );

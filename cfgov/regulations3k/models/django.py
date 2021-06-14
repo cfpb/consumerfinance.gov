@@ -241,6 +241,13 @@ class Section(models.Model):
         FieldPanel('contents'),
     ]
 
+    @cached_property
+    def url_path(self):
+        """
+        Lowercase label for proper url rendering
+        """
+        return self.label.lower()
+
     def __str__(self):
         return str(self.subpart) + ", " + self.title
 
