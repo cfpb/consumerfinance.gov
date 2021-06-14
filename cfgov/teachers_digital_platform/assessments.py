@@ -1,8 +1,14 @@
 from typing import Dict, List, Tuple
 
 from django import forms
+from os.path import dirname
+
+from django.forms import widgets
+
+from .TemplateField import TemplateField
 
 import hashlib
+import json
 
 
 class ChoiceList:
@@ -73,10 +79,14 @@ class AssessmentPage:
         self.heading = heading
         self.questions = questions
 
-    def get_fields(self):
+    def get_fields(self, prefix_tpls: Dict[str, str]):
         fields = {}
 
         for question in self.questions:
+            if question.key in prefix_tpls:
+                fields[f'before_{question.key}'] = TemplateField(
+                    prefix_tpls[question.key])
+
             obj = question.get_field()
             fields[obj['key']] = obj['field']
 
@@ -93,8 +103,8 @@ class AssessmentPage:
             'total': total,
         }
 
-    def get_form_class(self, name: str, inserted_key_field: str):
-        fields = self.get_fields()
+    def get_form_class(self, name: str, inserted_key_field: str, prefix_tpls: Dict[str, str]):
+        fields = self.get_fields(prefix_tpls)
 
         # Put a hidden "_k" field in the form to tell the Assessment
         # wizard can figure out what assessment it's working with
@@ -119,9 +129,10 @@ class Assessment:
     A full assessment
     """
 
-    def __init__(self, key: str, pages: List[AssessmentPage]):
+    def __init__(self, key: str, pages: List[AssessmentPage], prefix_tpls: Dict[str, str]):
         self.key = key
         self.pages = pages
+        self.prefix_tpls = prefix_tpls
 
     def get_score(self, all_cleaned_data) -> float:
         subtotals: List[float] = []
@@ -150,23 +161,18 @@ class Assessment:
             classname = 'FormPage' + hash.hexdigest()
 
             page_classes.append((name, page.get_form_class(
-                classname, inserted_key_field)))
+                classname, inserted_key_field, self.prefix_tpls)))
 
         return tuple(page_classes)
 
     @staticmethod
     def factory(key: str):
-        # Will get pulled from JSON based on key
-        data = [
-            [
-                "Who is your hero?",
-                "If you could live anywhere, where would it be?",
-            ],
-            [
-                "What is your favorite family vacation?",
-                "What really makes you angry?",
-            ],
-        ]
+        assert key in available_assessments
+
+        path = f'{dirname(__file__)}/assessment-data/{key}.json'
+        print(f'Reading {path} ...')
+        with open(path) as json_file:
+            data = json.load(json_file)
 
         q = 0
 
@@ -174,7 +180,7 @@ class Assessment:
 
         pages: List[AssessmentPage] = []
 
-        for page_i, labels in enumerate(data):
+        for page_i, labels in enumerate(data['questions']):
             questions: List[Question] = []
 
             for label in labels:
@@ -186,7 +192,7 @@ class Assessment:
             page = AssessmentPage('Page ' + str(page_i + 1), questions)
             pages.append(page)
 
-        return Assessment(key, pages)
+        return Assessment(key, pages, data['prefix_tpls'])
 
 
 available_assessments = ('elem')

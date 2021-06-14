@@ -1,0 +1,21 @@
+{
+    "prefix_tpls": {
+        "q0": "elem/q0.html",
+        "q3": "elem/q3.html"
+    },
+    "questions": [
+        [
+            "Who is your hero?",
+            "If you could live anywhere, where would it be?",
+            "What is your favorite family vacation?",
+            "What really makes you angry?"
+        ],
+        [
+            "Who is your hero?",
+            "If you could live anywhere, where would it be?",
+            "What is your favorite family vacation?",
+            "What really makes you angry?"
+        ]
+    ]
+}
+

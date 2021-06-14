@@ -25,17 +25,15 @@
             <p><a href="../{{ wizard.steps.prev }}/">Previous</a></p>
         {% endif %}
         <form action="" method="post"> {{ csrf_input }}
-        <table>
         {{ wizard.management_form }}
         {% if wizard.form.forms %}
             {{ wizard.form.management_form }}
             {% for form in wizard.form.forms %}
-                {{ form }}
+                {{ form.as_p() }}
             {% endfor %}
         {% else %}
-            {{ wizard.form }}
+            {{ wizard.form.as_p() }}
         {% endif %}
-        </table>
         {% if wizard.steps.next %}
             <input type="submit" value="Continue..."/>
         {% else %}

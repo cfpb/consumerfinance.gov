@@ -7,3 +7,4 @@ def get_form_lists():
     for k, assessment in get_all_assessments().items():
         form_lists[k] = assessment.get_form_list(k)
     return form_lists
+
