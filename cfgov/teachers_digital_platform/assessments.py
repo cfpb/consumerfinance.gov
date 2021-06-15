@@ -4,6 +4,7 @@ from django import forms
 from os.path import dirname
 
 from .TemplateField import TemplateField
+from .forms import AssessmentForm, markup
 
 import hashlib
 import json
@@ -26,8 +27,9 @@ class Question:
     Base question
     """
 
-    def __init__(self, key: str, section: str):
-        self.key = key
+    def __init__(self, num: int, section: str):
+        self.key = f'q{num}'
+        self.num = num
         self.section = section
 
     def get_score(self):
@@ -59,12 +61,22 @@ class ChoiceQuestion(Question):
         return self.answer_values[answer]
 
     def get_field(self):
+        label = ''.join([
+            markup('<strong class="question-num">'),
+            str(self.num),
+            '.',
+            markup('</strong>'),
+            ' ',
+            self.label,
+        ])
         return {
             'key': self.key,
             'field': forms.ChoiceField(
-                widget=forms.RadioSelect,
+                widget=forms.RadioSelect({
+                    'class': 'ChoiceField'
+                }),
                 choices=self.choice_list.choices,
-                label=self.label,
+                label=label,
                 required=True,
             ),
         }
@@ -124,7 +136,7 @@ class AssessmentPage:
 
         return type(
             name,
-            (forms.Form,),
+            (AssessmentForm,),
             fields,
         )
 
@@ -177,6 +189,7 @@ class Assessment:
 
     @staticmethod
     def factory(key: str):
+        """Build an assessment from JSON"""
         assert key in available_assessments
 
         path = f'{dirname(__file__)}/assessment-data/{key}.json'
@@ -184,7 +197,7 @@ class Assessment:
         with open(path) as json_file:
             data = json.load(json_file)
 
-        q = 0
+        q = 1
 
         numbers = ChoiceList(['Zero', 'One', 'Two'])
 
@@ -194,10 +207,9 @@ class Assessment:
             questions: List[Question] = []
 
             for obj in objs:
-                q_key = 'q' + str(q)
-                q += 1
                 question = ChoiceQuestion(
-                    q_key, obj['S'], obj['Q'], numbers, [0, 10, 20])
+                    q, obj['S'], obj['Q'], numbers, [0, 10, 20])
+                q += 1
                 questions.append(question)
 
             page = AssessmentPage('Page ' + str(page_i + 1), questions)
