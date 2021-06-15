@@ -19,22 +19,22 @@ def _decode_time(b36: str):
 
 def _encode_num(score: float):
     parts = str(score).split('.')
-    parts = map(lambda x: base36.dumps(int(x)), parts)
+    parts = (base36.dumps(int(x)) for x in parts)
     return '.'.join(parts)
 
 
 def _decode_num(encoded: str):
     parts = encoded.split('.')
-    nums = map(lambda x: base36.loads(x), parts)
+    nums = [base36.loads(x) for x in parts]
     nums = nums[0:2]
-    return float('.'.join(nums))
+    return float('.'.join(str(x) for x in nums))
 
 
 def dumps(assessment: Assessment, subtotals: List[float], time: int):
     '''
     Encode info to a string
     '''
-    subtotal_strs = map(lambda x: _encode_num(x), subtotals)
+    subtotal_strs = (_encode_num(x) for x in subtotals)
     time_str = _encode_time(time)
 
     return assessment.key + '|' + str(':'.join(subtotal_strs)) + '|' + time_str
@@ -50,14 +50,14 @@ def loads(encoded: str):
         return None
 
     key = parts[0]
-    subtotals_enc = parts[1].split('.')
+    subtotals_enc = parts[1].split(':')
     time_enc = parts[2]
 
     if key not in available_assessments:
         return None
 
     assessment = get_assessment(key)
-    subtotals = map(lambda x: _decode_num(x), subtotals_enc)
+    subtotals = tuple(_decode_num(x) for x in subtotals_enc)
     time = _decode_time(time_enc)
 
     return {

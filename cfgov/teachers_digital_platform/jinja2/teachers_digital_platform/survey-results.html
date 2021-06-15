@@ -17,6 +17,14 @@
 {% block body_content scoped %}
     <div class="content_wrapper">
         You're done.
+
+        <pre>
+            {{ assessment.key }}
+            {{ time }}
+            {% for subtotal in subtotals %}
+                {{ subtotal }}
+            {% endfor %}
+        </pre>
     </div>
 {% endblock body_content %}
 

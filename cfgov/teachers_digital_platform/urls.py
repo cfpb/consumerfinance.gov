@@ -1,21 +1,11 @@
+import re
 from django.urls import path, re_path
+from django.urls.conf import include
 from django.views.generic import TemplateView
-
-from .forms import get_form_lists
-from .views import AssessmentWizard
 
 from wagtailsharing.views import ServeView
 
-
-# Create view wrappers for our assessments. Note the AssessmentWizard
-# won't be instantiated until the view needs it.
-wizards = {}
-for k, form_list in get_form_lists().items():
-    wizards[k] = AssessmentWizard.as_view(
-        form_list=form_list,
-        url_name='survey_step',
-        template_name='teachers_digital_platform/survey-page.html',
-    )
+from . import views
 
 urlpatterns = [
     re_path(
@@ -25,24 +15,34 @@ urlpatterns = [
         )
     ),
 
-    # TODO figure out how to parse out the <elem>
-    path(
-        'assess/elem/results/',
-        # TODO I think we'll need a formal view for the logic to read the
-        # cookie, etc.
-        TemplateView.as_view(
-            template_name='teachers_digital_platform/survey-results.html',
-        )
-    ),
-    re_path(
-        r'^assess/elem/(?P<step>.+)/$',
-        wizards['elem'],
-        name='survey_step'
-    ),
-    path('assess/elem/', wizards['elem'], name='survey'),
-
     re_path(
         r'^$',
         lambda request: ServeView.as_view()(request, request.path)
-    )
+    ),
+
+    # Handle results (assumes you have signed cookie "resultsUrl")
+    re_path(
+        r'^assess/results/$',
+        views.assessment_results,
+        name='assessment_results'
+    ),
 ]
+
+# Our wizards are set up here. For each assessment, it's created from
+# loading JSON, its questions are burned into attributes on new form
+# classes for each page, and a view is created from those form classes.
+# Below we set up paths for each assessment view
+for key, assessment_view in views.AssessmentWizard.build_views().items():
+    urlpatterns.append(
+        # Base URL for this assessment
+        path(f'assess/{key}/', include([
+            # Handle redirect to step1
+            path('', assessment_view, name=f'assessment_{key}'),
+            # URLs for particular steps
+            re_path(
+                r'^(?P<step>.+)/$',
+                assessment_view,
+                name=f'assessment_{key}_step'
+            ),
+        ]))
+    )
