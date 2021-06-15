@@ -1,4 +1,3 @@
-import json
 import re
 import time
 
@@ -10,7 +9,8 @@ from django.template.loader import render_to_string
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
-from .assessments import Question, available_assessments, get_assessment, get_form_lists
+from .assessments import (
+    Question, available_assessments, get_assessment, get_form_lists)
 from . import urlEncode
 
 
@@ -19,7 +19,8 @@ class AssessmentWizard(NamedUrlCookieWizardView):
         # Find assessment based on hidden "_k" question in page1
         first_page = self.get_form('page1')
         assessment_key = first_page.fields['_k'].initial
-        if not isinstance(assessment_key, str) or not assessment_key in available_assessments:
+        if (not isinstance(assessment_key, str) or
+                assessment_key not in available_assessments):
             # Hmm this isn't right
             response = HttpResponseRedirect('../')
             response.delete_cookie('resultUrl')
@@ -49,10 +50,13 @@ class AssessmentWizard(NamedUrlCookieWizardView):
         return response
 
     def process_step(self, form):
-        # By default, the big CSRF tokens get needlessly stored in the cookie and
-        # take up a lot of space. This is bad because cookies have a small limit.
+        # By default, the big CSRF tokens get needlessly stored in the cookie
+        # and take up a lot of space. This is bad because cookies have a
+        # small limit.
         dict = self.get_form_step_data(form)
-        return {key: val for key, val in dict.items() if key != 'csrfmiddlewaretoken'}
+        return {
+            key: val for key, val in dict.items() if (
+                key != 'csrfmiddlewaretoken')}
 
     @staticmethod
     def build_views():
@@ -75,7 +79,7 @@ def assessment_results(request: HttpRequest):
         result_url = request.get_signed_cookie('resultUrl')
         if (result_url is None):
             raise
-    except:
+    except:  # noqa: E722
         return HttpResponseRedirect('../')
 
     res = urlEncode.loads(result_url)

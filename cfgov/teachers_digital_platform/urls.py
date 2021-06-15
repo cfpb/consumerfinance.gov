@@ -1,4 +1,3 @@
-import re
 from django.urls import path, re_path
 from django.urls.conf import include
 from django.views.generic import TemplateView

@@ -3,8 +3,6 @@ from typing import Dict, List, Tuple
 from django import forms
 from os.path import dirname
 
-from django.forms import widgets
-
 from .TemplateField import TemplateField
 
 import hashlib
@@ -44,7 +42,8 @@ class ChoiceQuestion(Question):
     Choice question
     """
 
-    def __init__(self, key: str, section: str, label: str, choice_list: ChoiceList, answer_values: List[float]):
+    def __init__(self, key: str, section: str, label: str,
+                 choice_list: ChoiceList, answer_values: List[float]):
         super().__init__(key, section)
         self.choice_list = choice_list
         self.label = label
@@ -108,7 +107,8 @@ class AssessmentPage:
             'question_scores': question_scores,
         }
 
-    def get_form_class(self, name: str, inserted_key_field: str, prefix_tpls: Dict[str, str]):
+    def get_form_class(self, name: str, inserted_key_field: str,
+                       prefix_tpls: Dict[str, str]):
         fields = self.get_fields(prefix_tpls)
 
         # Put a hidden "_k" field in the form to tell the Assessment
@@ -134,7 +134,8 @@ class Assessment:
     A full assessment
     """
 
-    def __init__(self, key: str, pages: List[AssessmentPage], prefix_tpls: Dict[str, str]):
+    def __init__(self, key: str, pages: List[AssessmentPage],
+                 prefix_tpls: Dict[str, str]):
         self.key = key
         self.pages = pages
         self.prefix_tpls = prefix_tpls

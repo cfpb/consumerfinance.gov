@@ -7,7 +7,7 @@ __all__ = ['dumps', 'loads']
 
 
 if sys.version_info.major == 2:  # pragma: no cover
-    integer_types = (int, long)
+    integer_types = (int, long)  # noqa: F821
 else:  # pragma: no cover
     integer_types = (int,)
 

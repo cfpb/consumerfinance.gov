@@ -22,7 +22,8 @@ class TemplateWidget(Input):
 class TemplateField(Field):
     '''
     Field that simply renders a given template. The template name is prepended
-    with TemplateWidget.tpl_prefix (default "teachers_digital_platform/template-field/")
+    with TemplateWidget.tpl_prefix (
+    default "teachers_digital_platform/template-field/")
 
     E.g. TemplateField('hello-world.html') will render the template
          "teachers_digital_platform/template-field/hello-world.html"
