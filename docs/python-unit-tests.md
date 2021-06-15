@@ -138,7 +138,14 @@ From the root of `consumerfinance.gov`.
 
 ### Coverage
 
-To see Python code coverage information, run
+To see Python code coverage information immediately following a test run, 
+you can add the `coverage` env to the list of envs for tox to run:
+
+```sh
+tox -e lint -e unittest -e coverage
+```
+
+You can also run coverage directly to see coverage information from a previous test run:
 
 ```sh
 coverage report -m
