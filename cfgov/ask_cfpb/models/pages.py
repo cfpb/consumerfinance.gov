@@ -456,7 +456,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
             (page.url, page.question, page.answer_content_preview())
             for page in base_query if tag in page.clean_search_tags
         ]
-        paginator = Paginator(answer_tuples, 20)
+        paginator = Paginator(answer_tuples, 25)
         page_number = validate_page_number(request, paginator)
         page = paginator.page(page_number)
         context = self.get_context(request)
