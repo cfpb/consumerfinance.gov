@@ -28,8 +28,9 @@ class Question:
     Base question
     """
 
-    def __init__(self, key: str):
+    def __init__(self, key: str, section: str):
         self.key = key
+        self.section = section
 
     def get_score(self):
         return 0
@@ -43,8 +44,8 @@ class ChoiceQuestion(Question):
     Choice question
     """
 
-    def __init__(self, key: str, label: str, choice_list: ChoiceList, answer_values: List[float]):
-        super().__init__(key)
+    def __init__(self, key: str, section: str, label: str, choice_list: ChoiceList, answer_values: List[float]):
+        super().__init__(key, section)
         self.choice_list = choice_list
         self.label = label
         self.answer_values = answer_values
@@ -94,13 +95,17 @@ class AssessmentPage:
 
     def get_score(self, all_cleaned_data):
         total = 0
+        question_scores = {}
 
         for question in self.questions:
             answer = all_cleaned_data[question.key]
-            total += question.get_score(answer)
+            score = question.get_score(answer)
+            total += score
+            question_scores[question] = score
 
         return {
             'total': total,
+            'question_scores': question_scores,
         }
 
     def get_form_class(self, name: str, inserted_key_field: str, prefix_tpls: Dict[str, str]):
@@ -135,16 +140,20 @@ class Assessment:
         self.prefix_tpls = prefix_tpls
 
     def get_score(self, all_cleaned_data) -> float:
-        subtotals: List[float] = []
         total = 0
+        question_scores = {}
+        page_scores = {}
 
         for page in self.pages:
-            subtotal = page.get_score(all_cleaned_data)['total']
+            score = page.get_score(all_cleaned_data)
+            subtotal = score['total']
+            page_scores[page] = subtotal
+            question_scores.update(score['question_scores'])
             total += subtotal
-            subtotals.append(subtotal)
 
         return {
-            'subtotals': subtotals,
+            'question_scores': question_scores,
+            'page_scores': page_scores,
             'total': total,
         }
 
@@ -180,13 +189,14 @@ class Assessment:
 
         pages: List[AssessmentPage] = []
 
-        for page_i, labels in enumerate(data['questions']):
+        for page_i, objs in enumerate(data['questions']):
             questions: List[Question] = []
 
-            for label in labels:
+            for obj in objs:
                 q_key = 'q' + str(q)
                 q += 1
-                question = ChoiceQuestion(q_key, label, numbers, [0, 10, 20])
+                question = ChoiceQuestion(
+                    q_key, obj['S'], obj['Q'], numbers, [0, 10, 20])
                 questions.append(question)
 
             page = AssessmentPage('Page ' + str(page_i + 1), questions)
@@ -207,6 +217,7 @@ def get_all_assessments() -> Dict[str, Assessment]:
     return {
         'elem': get_assessment('elem')
     }
+
 
 def get_form_lists():
     form_lists = {}

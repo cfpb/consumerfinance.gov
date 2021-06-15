@@ -1,4 +1,8 @@
+import json
+import re
 import time
+
+from typing import Dict
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http.request import HttpRequest
@@ -6,7 +10,7 @@ from django.template.loader import render_to_string
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
-from .assessments import Assessment, available_assessments, get_assessment, get_form_lists
+from .assessments import Question, available_assessments, get_assessment, get_form_lists
 from . import urlEncode
 
 
@@ -25,8 +29,18 @@ class AssessmentWizard(NamedUrlCookieWizardView):
         assessment = get_assessment(assessment_key)
 
         # Calc score and encode in URL
-        score = assessment.get_score(self.get_all_cleaned_data())
-        encoded = urlEncode.dumps(assessment, score['subtotals'], time.time())
+        question_scores: Dict[Question, float] = assessment.get_score(
+            self.get_all_cleaned_data())['question_scores']
+        part_scores: Dict[str, float] = {}
+
+        for question, score in question_scores.items():
+            part = re.match(r'^\d+', question.section)[0]
+            if part not in part_scores:
+                part_scores[part] = 0
+            part_scores[part] += score
+
+        subtotals = (v for k, v in sorted(part_scores.items()))
+        encoded = urlEncode.dumps(assessment, subtotals, time.time())
 
         # Send to results page
         response = HttpResponseRedirect('../../results/')
@@ -63,7 +77,7 @@ def assessment_results(request: HttpRequest):
             raise
     except:
         return HttpResponseRedirect('../')
-    
+
     res = urlEncode.loads(result_url)
     if res is None:
         return HttpResponseRedirect('../')
