@@ -374,7 +374,11 @@ that need to be fixed. To automatically fix import sort issues, run:</p>
 
 <p>From the root of <code>consumerfinance.gov</code>.</p>
 <h3 id="coverage">Coverage<a class="headerlink" href="#coverage" title="Permanent link">¶</a></h3>
-<p>To see Python code coverage information, run</p>
+<p>To see Python code coverage information immediately following a test run, 
+you can add the <code>coverage</code> env to the list of envs for tox to run:</p>
+<pre class="highlight"><code class="language-sh">tox -e lint -e unittest -e coverage</code></pre>
+
+<p>You can also run coverage directly to see coverage information from a previous test run:</p>
 <pre class="highlight"><code class="language-sh">coverage report -m</code></pre>
 
 <p>To see coverage for a limited number of files,
