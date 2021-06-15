@@ -334,7 +334,7 @@ class PortalSearchPage(
             len(response['results']),
             self.get_heading(),
             search.search_term)
-        paginator = Paginator(results, 10)
+        paginator = Paginator(results, 25)
         page_number = validate_page_number(request, paginator)
         context.update({
             'search_term': search.search_term,
