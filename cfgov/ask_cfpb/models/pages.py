@@ -405,7 +405,7 @@ class AnswerResultsPage(CFGOVPage):
         context = super(
             AnswerResultsPage, self).get_context(request, **kwargs)
         context.update(**kwargs)
-        paginator = Paginator(self.answers, 20)
+        paginator = Paginator(self.answers, 25)
         page_number = validate_page_number(request, paginator)
         results = paginator.page(page_number)
         context['current_page'] = page_number
