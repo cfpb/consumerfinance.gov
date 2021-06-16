@@ -37,21 +37,22 @@ def dumps(assessment: Assessment, subtotals: List[float], time: int):
     subtotal_strs = (_encode_num(x) for x in subtotals)
     time_str = _encode_time(time)
 
-    return assessment.key + '|' + str(':'.join(subtotal_strs)) + '|' + time_str
+    return f'v1_{assessment.key}_{str(":".join(subtotal_strs))}_{time_str}'
 
 
 def loads(encoded: str):
     '''
     Decode from string
     '''
-    parts = encoded.split('|')
+    parts = encoded.split('_')
 
-    if len(parts) != 3:
+    if len(parts) != 4:
         return None
 
-    key = parts[0]
-    subtotals_enc = parts[1].split(':')
-    time_enc = parts[2]
+    # version = parts[0]
+    key = parts[1]
+    subtotals_enc = parts[2].split(':')
+    time_enc = parts[3]
 
     if key not in available_assessments:
         return None

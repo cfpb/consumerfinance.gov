@@ -3,15 +3,20 @@ import time
 
 from typing import Dict
 
+from django.core import signing
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http.request import HttpRequest
 from django.template.loader import render_to_string
+from django.urls import reverse
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
 from .assessments import (
     Question, available_assessments, get_assessment, get_form_lists)
 from . import urlEncode
+
+
+signer = signing.Signer()
 
 
 class AssessmentWizard(NamedUrlCookieWizardView):
@@ -43,9 +48,14 @@ class AssessmentWizard(NamedUrlCookieWizardView):
         subtotals = (v for k, v in sorted(part_scores.items()))
         encoded = urlEncode.dumps(assessment, subtotals, time.time())
 
+        # We can't use set_signed_cookie() because we need to unsign the
+        # query string using Signer() and for some reason the raw cookie
+        # value fails to pass the sig check.
+        signed = signer.sign(encoded)
+
         # Send to results page
         response = HttpResponseRedirect('../../results/')
-        response.set_signed_cookie('resultUrl', encoded)
+        response.set_cookie('resultUrl', signed)
         response.delete_cookie('wizard_survey_wizard')
         return response
 
@@ -71,30 +81,59 @@ class AssessmentWizard(NamedUrlCookieWizardView):
         return wizard_views
 
 
-def assessment_results(request: HttpRequest):
-    if request.method != 'GET':
-        return HttpResponse(status=404)
-
-    try:
-        result_url = request.get_signed_cookie('resultUrl')
-        if (result_url is None):
-            raise
-    except:  # noqa: E722
-        return HttpResponseRedirect('../')
-
-    res = urlEncode.loads(result_url)
+def _handle_result_url(request: HttpRequest, raw: str, code: str,
+                       is_student: bool):
+    res = urlEncode.loads(code)
     if res is None:
         return HttpResponseRedirect('../')
-
-    print(res)
 
     rendered = render_to_string(
         'teachers_digital_platform/survey-results.html',
         {
+            'is_student': is_student,
             'request': request,
+            'r_param': raw,
             'assessment': res['assessment'],
             'subtotals': res['subtotals'],
-            'time': res['time'],
+            'time': time.gmtime(res['time']),
         },
     )
     return HttpResponse(status=200, content=rendered)
+
+
+def student_results(request: HttpRequest):
+    """
+    Student results page
+    """
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+
+    raw = request.COOKIES['resultUrl']
+    if not isinstance(raw, str):
+        return HttpResponseRedirect('../')
+
+    try:
+        result_url = signing.Signer().unsign(raw)
+    except signing.BadSignature:
+        return HttpResponseRedirect('../')
+
+    return _handle_result_url(request, raw, result_url, True)
+
+
+def show_results(request: HttpRequest):
+    """
+    Show results page
+    """
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+
+    raw = request.GET['r']
+    if not isinstance(raw, str):
+        return HttpResponseRedirect('../')
+
+    try:
+        result_url = signing.Signer().unsign(raw)
+    except signing.BadSignature:
+        return HttpResponseRedirect('../')
+
+    return _handle_result_url(request, raw, result_url, False)

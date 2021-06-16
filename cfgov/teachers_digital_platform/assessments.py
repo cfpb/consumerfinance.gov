@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Any
 
 from django import forms
 from os.path import dirname
@@ -146,9 +146,10 @@ class Assessment:
     A full assessment
     """
 
-    def __init__(self, key: str, pages: List[AssessmentPage],
-                 prefix_tpls: Dict[str, str]):
+    def __init__(self, key: str, meta: Dict[str, Any],
+                 pages: List[AssessmentPage], prefix_tpls: Dict[str, str]):
         self.key = key
+        self.meta = meta
         self.pages = pages
         self.prefix_tpls = prefix_tpls
 
@@ -215,7 +216,7 @@ class Assessment:
             page = AssessmentPage('Page ' + str(page_i + 1), questions)
             pages.append(page)
 
-        return Assessment(key, pages, data['prefix_tpls'])
+        return Assessment(key, data['meta'], pages, data['prefix_tpls'])
 
 
 available_assessments = ('elem')

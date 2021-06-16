@@ -6,6 +6,8 @@
 {%- endblock %}
 
 {% block css -%}
+    <!-- TODO Why doesn't this work? -->
+    <script>window['ga-disable-GTM-KMMLRS'] = true;</script>    
     {{ super() }}
 
     <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
@@ -15,16 +17,26 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-    <div class="content_wrapper">
-        You're done.
+    <div class="content_wrapper tdp-assessment-results">
+        {% if is_student %}
+        <h1>Congrats!</h1>
+        {% else %}
+        <h1>Results for <code>(initials)</code></h1>
+        {% endif %}
 
-        <pre>
-            {{ assessment.key }}
-            {{ time }}
+        <h2>Assessment: {{ assessment.meta.name }}</h2>
+        <h3>Part scores</h3>
+        <ul>
             {% for subtotal in subtotals %}
-                {{ subtotal }}
+            <li>{{ subtotal }}</li>
             {% endfor %}
-        </pre>
+        </ul>
+
+        {% if is_student %}
+        <h2>Share URL</h2>
+        <input hidden readonly type="text" onclick="this.select()" value=""
+            class="share-input" data-rparam="{{ r_param }}">
+        {% endif %}
     </div>
 {% endblock body_content %}
 

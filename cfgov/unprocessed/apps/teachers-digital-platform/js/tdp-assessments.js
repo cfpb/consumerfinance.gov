@@ -1,18 +1,16 @@
-const Cookies = require( 'js-cookie' );
-
 const assessments = {
-  init: () => {
+  init: () => {   
     const patt = /\/youth-financial-education\/assess\/results\//;
     const m = location.href.match(patt);
     if (!m) {
       return;
     }
 
-    const resultUrl = Cookies.get('resultUrl');
-
-    if (resultUrl) {
-      alert('resultUrl:' + resultUrl);
-    }
+    var input = document.querySelector('.share-input');
+    var a = document.createElement('a');
+    a.href = '../show/?r=' + encodeURIComponent(input.dataset.rparam);
+    input.value = a.href;
+    input.hidden = false;
   }
 };
 

@@ -19,11 +19,18 @@ urlpatterns = [
         lambda request: ServeView.as_view()(request, request.path)
     ),
 
-    # Handle results (assumes you have signed cookie "resultsUrl")
+    # Handle results (expects signed cookie "resultsUrl")
     re_path(
         r'^assess/results/$',
-        views.assessment_results,
-        name='assessment_results'
+        views.student_results,
+        name='tdp_assess_student_results',
+    ),
+
+    # Show results (expects ?r=...signed value)
+    re_path(
+        r'^assess/show/$',
+        views.show_results,
+        name='tdp_assess_show_results',
     ),
 ]
 
