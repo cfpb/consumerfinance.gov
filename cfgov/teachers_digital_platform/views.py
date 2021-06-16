@@ -76,7 +76,7 @@ class AssessmentWizard(NamedUrlCookieWizardView):
             wizard_views[k] = AssessmentWizard.as_view(
                 form_list=form_list,
                 url_name=f'assessment_{k}_step',
-                template_name='teachers_digital_platform/assess-page.html',
+                template_name='teachers_digital_platform/assess/single-page.html',
             )
         return wizard_views
 
@@ -88,7 +88,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
         return HttpResponseRedirect('../')
 
     rendered = render_to_string(
-        'teachers_digital_platform/assess-results.html',
+        'teachers_digital_platform/assess/results.html',
         {
             'is_student': is_student,
             'request': request,
@@ -108,12 +108,12 @@ def student_results(request: HttpRequest):
     if request.method != 'GET':
         return HttpResponse(status=404)
 
-    raw = request.COOKIES['resultUrl']
-    if not isinstance(raw, str):
+    if 'resultUrl' not in request.COOKIES:
         return HttpResponseRedirect('../')
 
+    raw = request.COOKIES['resultUrl']
     try:
-        result_url = signing.Signer().unsign(raw)
+        result_url = signer.unsign(raw)
     except signing.BadSignature:
         return HttpResponseRedirect('../')
 
@@ -132,7 +132,7 @@ def show_results(request: HttpRequest):
         return HttpResponseRedirect('../')
 
     try:
-        result_url = signing.Signer().unsign(raw)
+        result_url = signer.unsign(raw)
     except signing.BadSignature:
         return HttpResponseRedirect('../')
 

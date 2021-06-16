@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.urls import path, re_path
 from django.urls.conf import include
 from django.views.generic import TemplateView
@@ -19,14 +20,14 @@ urlpatterns = [
         lambda request: ServeView.as_view()(request, request.path)
     ),
 
-    # Handle results (expects signed cookie "resultsUrl")
+    # Handle all results (expects signed cookie "resultsUrl")
     re_path(
         r'^assess/results/$',
         views.student_results,
         name='tdp_assess_student_results',
     ),
 
-    # Show results (expects ?r=...signed value)
+    # Show all results (expects ?r=...signed value)
     re_path(
         r'^assess/show/$',
         views.show_results,
@@ -42,8 +43,19 @@ for key, assessment_view in views.AssessmentWizard.build_views().items():
     urlpatterns.append(
         # Base URL for this assessment
         path(f'assess/{key}/', include([
-            # Handle redirect to step1
-            path('', assessment_view, name=f'assessment_{key}'),
+            # Handle redirect to assessment intro
+            path(
+                '',
+                lambda x: HttpResponseRedirect('intro/'),
+                name=f'assessment_{key}'
+            ),
+            path(
+                'intro/',
+                TemplateView.as_view(
+                    template_name=f'teachers_digital_platform/assess/intro-{key}.html'
+                ),
+                name=f'assessment_{key}_intro',
+            ),
             # URLs for particular steps
             re_path(
                 r'^(?P<step>.+)/$',

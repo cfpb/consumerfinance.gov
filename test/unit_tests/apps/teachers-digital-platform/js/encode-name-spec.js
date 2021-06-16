@@ -56,12 +56,4 @@ describe( 'encode-name module', () => {
     expect( decodeNameFromUrl( altered1 ) ).toBeNull();
   } );
 
-  it( 'can store/fetch/forget the name', () => {
-    expect( module.recallName() ).toBeNull();
-    module.storeName( testName );
-    expect( module.recallName() ).toEqual( testName );
-    module.forgetName();
-    expect( module.recallName() ).toBeNull();
-  } );
-
 } );

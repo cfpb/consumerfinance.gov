@@ -194,7 +194,6 @@ class Assessment:
         assert key in available_assessments
 
         path = f'{dirname(__file__)}/assessment-data/{key}.json'
-        print(f'Reading {path} ...')
         with open(path) as json_file:
             data = json.load(json_file)
 

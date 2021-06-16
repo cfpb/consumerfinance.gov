@@ -19,7 +19,7 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-    <div class="content_wrapper">
+    <div class="content_wrapper tdp-assessment-page">
         <h1>Survey Page {{ wizard.steps.step1 }}</h1>
         {% if wizard.steps.prev %}
             <p><a href="../{{ wizard.steps.prev }}/">Previous</a></p>
@@ -41,7 +41,7 @@
         {% endif %}
         </form>
         <hr>
-        Navigation: 
+        Navigation:
         <nav>
             {% for name in wizard.steps.all %}
                 <li><a href="../{{ name }}/">{{ name }}</a></li>

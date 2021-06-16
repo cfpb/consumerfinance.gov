@@ -51,7 +51,7 @@ const atob = xtoy.replace( x, a ).replace( y, b );
 
 /**
  * Encode string randomly with checksum
- * 
+ *
  * -> base64("<base32(xorKey)>.<hash>.<xoredString>")
  *
  * @param {string} input Input
@@ -114,33 +114,6 @@ function decode( encoded ) {
 }
 
 /**
- * Store name in session storage
- *
- * @param {string} name Name
- */
-function storeName( name ) {
-  sessionStorage.setItem( 'tdp-name', encode( name ) );
-}
-
-/**
- * Retrieve validated name from session storage
- *
- * @returns {string | null} Name, if set and valid
- */
-function recallName() {
-  const str = sessionStorage.getItem( 'tdp-name' );
-
-  return str === null ? null : decode( str );
-}
-
-/**
- * Remove encoded name from session storage
- */
-function forgetName() {
-  sessionStorage.removeItem( 'tdp-name' );
-}
-
-/**
  * Encode name as a URL hash
  *
  * @param {string} url URL
@@ -162,9 +135,6 @@ function decodeNameFromUrl( url ) {
 }
 
 export {
-  storeName,
-  recallName,
-  forgetName,
   encodeNameInUrl,
   decodeNameFromUrl
 };
