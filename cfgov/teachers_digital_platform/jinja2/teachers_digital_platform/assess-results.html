@@ -7,7 +7,7 @@
 
 {% block css -%}
     <!-- TODO Why doesn't this work? -->
-    <script>window['ga-disable-GTM-KMMLRS'] = true;</script>    
+    <script>window['ga-disable-GTM-KMMLRS'] = true;</script>
     {{ super() }}
 
     <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
@@ -21,7 +21,9 @@
         {% if is_student %}
         <h1>Congrats!</h1>
         {% else %}
-        <h1>Results for <code>(initials)</code></h1>
+        <h1>Results
+            <span hidden class="show-initials">for <strong></strong></span>
+        </h1>
         {% endif %}
 
         <h2>Assessment: {{ assessment.meta.name }}</h2>
@@ -34,8 +36,18 @@
 
         {% if is_student %}
         <h2>Share URL</h2>
-        <input hidden readonly type="text" onclick="this.select()" value=""
-            class="share-input" data-rparam="{{ r_param }}">
+        <form class="share-url-form">
+            <div class="share-customize">
+                <label>Enter your initials:
+                    <input name="initials" type="text" maxlength="4">
+                    <button>Create URL</button>
+                </label>
+            </div>
+            <div class="share-output" hidden>
+                <input readonly type="text" onclick="this.select()" value=""
+                       class="shared-url" data-rparam="{{ r_param }}">
+            </div>
+        </form>
         {% endif %}
     </div>
 {% endblock body_content %}
