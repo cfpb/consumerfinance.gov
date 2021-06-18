@@ -468,15 +468,10 @@ class TestInfoUnitGroup(TestCase):
 
     def test_no_heading_or_intro_ok(self):
         value = self.block.to_python({})
-
-        if wagtail.VERSION < (2, 13):
-            try:
-                self.block.clean(value)
-            except ValidationError:  # pragma: nocover
-                self.fail('no heading and no intro should not fail validation')
-        else:  # pragma: nocover
-            with self.assertRaises(ValidationError):
-                self.block.clean(value)
+        try:
+            self.block.clean(value)
+        except ValidationError:  # pragma: nocover
+            self.fail('no heading and no intro should not fail validation')
 
     def test_heading_only_ok(self):
         value = self.block.to_python({
@@ -484,14 +479,10 @@ class TestInfoUnitGroup(TestCase):
                 'text': 'Heading'
             }
         })
-        if wagtail.VERSION < (2, 13):
-            try:
-                self.block.clean(value)
-            except ValidationError:  # pragma: nocover
-                self.fail('heading alone should not fail validation')
-        else:  # pragma: nocover
-            with self.assertRaises(ValidationError):
-                self.block.clean(value)
+        try:
+            self.block.clean(value)
+        except ValidationError:  # pragma: nocover
+            self.fail('heading alone should not fail validation')
 
     def test_intro_only_fails_validation(self):
         value = self.block.to_python({'intro': '<p>Only an intro</p>'})
@@ -506,14 +497,10 @@ class TestInfoUnitGroup(TestCase):
             },
             'intro': '<p>Rich txt</p>'
         })
-        if wagtail.VERSION < (2, 13):
-            try:
-                self.block.clean(value)
-            except ValidationError:  # pragma: nocover
-                self.fail('heading with intro should not fail validation')
-        else:  # pragma: nocover
-            with self.assertRaises(ValidationError):
-                self.block.clean(value)
+        try:
+            self.block.clean(value)
+        except ValidationError:  # pragma: nocover
+            self.fail('heading with intro should not fail validation')
 
 
     def test_2575_with_image_ok(self):

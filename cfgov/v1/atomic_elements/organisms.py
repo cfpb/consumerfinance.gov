@@ -73,7 +73,7 @@ class InfoUnitGroup(blocks.StructBlock):
         help_text='Choose the number and width of info unit columns.',
     )
 
-    heading = v1_blocks.HeadingBlock(required=False)
+    heading = v1_blocks.HeadingBlock(required=False, blank=True)
 
     intro = blocks.RichTextBlock(
         required=False,
@@ -103,7 +103,7 @@ class InfoUnitGroup(blocks.StructBlock):
                    'units.')
     )
 
-    info_units = blocks.ListBlock(molecules.InfoUnit())
+    info_units = blocks.ListBlock(molecules.InfoUnit(), default=list())
 
     sharing = blocks.StructBlock([
         ('shareable', blocks.BooleanBlock(label='Include sharing links?',
@@ -121,7 +121,7 @@ class InfoUnitGroup(blocks.StructBlock):
         cleaned = super(InfoUnitGroup, self).clean(value)
 
         # Intro paragraph may only be specified with a heading.
-        if cleaned.get('intro') and not cleaned.get('heading'):
+        if cleaned.get('intro') and not cleaned.get('heading').get('text'):
             raise ValidationError(
                 'Validation error in InfoUnitGroup: intro with no heading',
                 params={'heading': ErrorList([
