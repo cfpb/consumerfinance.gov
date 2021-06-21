@@ -122,6 +122,10 @@ msgstr "Enviar una queja"
 msgid "Search"
 msgstr "Buscar"
 
+#: jinja2/v1/_includes/molecules/global-search.html:26
+msgid "Search the consumerfinance.gov website"
+msgstr "Busque en el sitio web consumerfinance.gov"
+
 #: jinja2/v1/_includes/molecules/global-search.html:33
 msgid "Close"
 msgstr "Cerrar"
@@ -223,6 +227,10 @@ msgstr "/es/obtener-respuestas/buscar/"
 #: jinja2/v1/_includes/organisms/ask-search.html:39
 msgid "Search for your question"
 msgstr "Busca su pregunta"
+
+#: jinja2/v1/_includes/organisms/ask-search.html:63
+msgid "Search Ask CFPB for your question"
+msgstr "Busque Pregunte a CFPB por su pregunta"
 
 #: jinja2/v1/_includes/organisms/email-signup.html:53
 msgid "Email address"
