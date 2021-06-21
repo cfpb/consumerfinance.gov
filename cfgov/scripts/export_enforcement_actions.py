@@ -48,7 +48,7 @@ def assemble_output():
                 d.docket_number for d in page.docket_numbers.all()),
             'Initial Filing Date': page.initial_filing_date,
             'Statuses': ','.join(
-                d.status for d in page.statuses.all()),
+                d.get_status_display() for d in page.statuses.all()),
             'Products': ','.join(
                 d.product for d in page.products.all()),
             'URL': url
