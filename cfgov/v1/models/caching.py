@@ -29,6 +29,8 @@ class CDNHistory(models.Model):
 
 
 class AkamaiBackend(BaseBackend):
+    """ Akamai backend that performs an 'invalidate' purge """
+
     def __init__(self, params):
         self.client_token = params.get('CLIENT_TOKEN')
         self.client_secret = params.get('CLIENT_SECRET')
@@ -98,6 +100,21 @@ class AkamaiBackend(BaseBackend):
 
     def purge_all(self):
         self.post_all('invalidate')
+
+
+class AkamaiDeletingBackend(AkamaiBackend):
+    """ Akamai backend that performs a 'delete' purge
+
+    This is a special-case backend, and should not be globally configured. """
+
+    def purge(self, url):
+        self.post(url, 'delete')
+
+    def purge_all(self):
+        raise NotImplementedError(
+            "Purging all by deletion is intentionally not supported through "
+            "this backend. Please use the Akamai Control Center."
+        )
 
 
 @receiver(post_save, sender=Document)

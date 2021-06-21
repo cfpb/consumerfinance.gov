@@ -139,16 +139,17 @@ categories = [
     )),
 ]
 
-supported_languagues = [
-    ('en', 'English'),
-    ('es', 'Spanish'),
-    ('zh', 'Chinese'),
-    ('vi', 'Vietnamese'),
-    ('ko', 'Korean'),
-    ('tl', 'Tagalog'),
-    ('ru', 'Russian'),
+supported_languages = [
     ('ar', 'Arabic'),
+    ('zh-Hans', 'Chinese (Simplified)'),
+    ('zh-Hant', 'Chinese (Traditional)'),
+    ('en', 'English'),
     ('ht', 'Haitian Creole'),
+    ('ko', 'Korean'),
+    ('ru', 'Russian'),
+    ('es', 'Spanish'),
+    ('tl', 'Tagalog'),
+    ('vi', 'Vietnamese'),
 ]
 
 

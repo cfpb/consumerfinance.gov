@@ -1,34 +1,26 @@
 import csv
 import datetime
-import html
-import re
 
 from django.http import HttpResponse
-from django.utils import html as html_util
+
+from bs4 import BeautifulSoup
 
 from v1.models.enforcement_action_page import EnforcementActionPage
-from v1.util.migrations import get_streamfield_data
 
 
 HEADINGS = [
-    'Matter name',
-    'Date filed',
-    'URL',
-    'Status',
-    'Category',
-    'File number',
+    'Title',
     'Content',
-    'Preview text'
+    'Forum',
+    'Docket Numbers',
+    'Initial Filing Date',
+    'Statuses',
+    'Products',
+    'URL'
 ]
 
 
-def clean_and_strip(data):
-    unescaped = html.unescape(data)
-    return html_util.strip_tags(unescaped).strip()
-
-
 def assemble_output():
-    strip_tags = re.compile(r'<[^<]+?>')
     rows = []
     for page in EnforcementActionPage.objects.all():
         if not page.live:
@@ -38,33 +30,31 @@ def assemble_output():
             continue
         page_categories = ','.join(
             c.get_name_display() for c in page.categories.all())
+        content = ''
+        soup = BeautifulSoup(str(page.content), 'html.parser')
+        para = soup.findAll(['p', 'h5'])
+        for p in para:
+            content += p.get_text()
+            link = p.find('a', href=True)
+            if link:
+                content += ': '
+                content += link['href']
+            content += '\n'
         row = {
-            'Matter name': page.title,
-            'URL': url,
-            'Category': page_categories,
-            'Preview text': clean_and_strip(page.preview_description)
+            'Title': page.title,
+            'Content': content,
+            'Forum': page_categories,
+            'Docket Numbers': ','.join(
+                d.docket_number for d in page.docket_numbers.all()),
+            'Initial Filing Date': page.initial_filing_date,
+            'Statuses': ','.join(
+                d.get_status_display() for d in page.statuses.all()),
+            'Products': ','.join(
+                d.get_product_display() for d in page.products.all()),
+            'URL': url
         }
-        data = get_streamfield_data(page, 'sidefoot')
-        for field in data:
-            if field['type'] == 'related_metadata':
-                field_content = field['value']['content']
-                for block in field_content:
-                    if block['value'].get('heading', '') == 'Date filed':
-                        row['Date filed'] = str(block['value'].get('date'))
-                    elif block['value'].get('heading', '') == 'Status':
-                        row['Status'] = strip_tags.sub(
-                            '', block['value'].get('blob', ''))
-                    elif block['value'].get('heading', '') == 'File number':
-                        row['File number'] = strip_tags.sub(
-                            '', block['value'].get('blob', ''))
-        data_content = get_streamfield_data(page, 'content')
-        for field in data_content:
-            if field['type'] == 'full_width_text':
-                field_full_width_text = field['value']
-                for block in field_full_width_text:
-                    if block['type'] == 'content':
-                        row['Content'] = clean_and_strip(block['value'])
         rows.append(row)
+
     return rows
 
 
@@ -92,7 +82,7 @@ def export_actions(path='/tmp', http_response=False):
         write_questions_to_csv(response)
         return response
     file_path = '{}/{}'.format(path, slug).replace('//', '/')
-    with open(file_path, 'w', encoding='windows-1252') as f:
+    with open(file_path, 'w', encoding='utf-8') as f:
         write_questions_to_csv(f)
 
 
