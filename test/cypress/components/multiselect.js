@@ -11,8 +11,8 @@ export class Multiselect {
 
   multiSelect( name ) {
     return cy.contains( 'label[for^=o-filterable-list-controls]', this.label )
-             .next( '.o-multiselect' )
-             .find( `.o-multiselect_${ name }` );
+      .next( '.o-multiselect' )
+      .find( `.o-multiselect_${ name }` );
   }
 
   choices() {

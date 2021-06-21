@@ -42,7 +42,11 @@
                             for="{{ form.categories.id_for_label }}">
                         Category
                     </label>
-                    <select name="categories" id="o-filterable-list-controls_categories" class="o-multiselect" data-placeholder="Search for categories" multiple>
+                    <select name="categories"
+                            id="o-filterable-list-controls_categories"
+                            class="o-multiselect"
+                            data-placeholder="Search for categories"
+                            multiple>
                     {% for slug, name in choices_for_page_type(value.categories.page_type) %}
                         <option value="{{ slug }}"
                                 {{ 'selected' if is_filter_selected('categories', slug) else '' }}>
