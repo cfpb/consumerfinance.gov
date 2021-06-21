@@ -41,7 +41,7 @@
 
     {% call _category_link(href, classes) %}
         {% set cat = category_label(category) or category %}
-        {{ category_icon.render(cat) | safe }}
+        {{ category_icon.render(cat) }}
         <span class="u-visually-hidden">Category:</span>
         {{ cat | safe }}
     {% endcall %}
