@@ -50,7 +50,7 @@ def assemble_output():
             'Statuses': ','.join(
                 d.get_status_display() for d in page.statuses.all()),
             'Products': ','.join(
-                d.product for d in page.products.all()),
+                d.get_product_display() for d in page.products.all()),
             'URL': url
         }
         rows.append(row)
