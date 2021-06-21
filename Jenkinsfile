@@ -35,7 +35,7 @@ pipeline {
         IS_ES_IMAGE_UPDATED = 'false'
         // Determines if Cypress image should be updated
         IS_CYPRESS_IMAGE_UPDATED = 'false'
-        DOCKER_HUB_REGISTRY = 'https://registry.hub.docker.com'
+        DOCKER_HUB_REGISTRY = 'https://hub.docker.com'
     }
 
     parameters {
@@ -129,7 +129,7 @@ pipeline {
                             usernameVariable: 'DOCKER_HUB_USER'
                         )
                     ]) {
-                        sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
+                        sh 'docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
                         String dockerToken = sh(
                             returnStdout: true,
                             script: 'curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/ | jq -r .token'
