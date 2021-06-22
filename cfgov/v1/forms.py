@@ -335,7 +335,12 @@ class EnforcementActionsFilterForm(FilterableListForm):
     statuses = forms.MultipleChoiceField(
         required=False,
         choices=enforcement_action_page.enforcement_statuses,
-        widget=widgets.CheckboxSelectMultiple()
+        widget=widgets.SelectMultiple(attrs={
+            'id': 'o-filterable-list-controls_statuses',
+            'class': 'o-multiselect',
+            'data-placeholder': 'Search for statuses',
+            'multiple': 'multiple',
+        })
     )
 
     products = forms.MultipleChoiceField(
