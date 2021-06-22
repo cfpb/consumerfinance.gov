@@ -143,6 +143,8 @@ pipeline {
                                 IS_ES_IMAGE_UPDATED = 'false'
                             }
                         }
+                        echo "IS_ES_IMAGE_UPDATED: ${IS_ES_IMAGE_UPDATED}"
+
                         List<String> cypressTags = sh(
                             returnStdout: true,
                             script: 'curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags | jq -r \'.results|.[]|.name\''
@@ -152,6 +154,7 @@ pipeline {
                                 IS_CYPRESS_IMAGE_UPDATED = 'false'
                             }
                         }
+                        echo "IS_CYPRESS_IMAGE_UPDATED: ${IS_CYPRESS_IMAGE_UPDATED}"
                     }
 
                     withCredentials([
@@ -246,6 +249,7 @@ pipeline {
 
                         // Sets fully-qualified image name
                         env.CFGOV_PYTHON_IMAGE = image.imageName()
+                        echo "CFGOV_PYTHON_IMAGE: ${CFGOV_PYTHON_IMAGE}"
                     }
                     docker.withRegistry("${DOCKER_HUB_REGISTRY}", 'docker-hub-cfpb') {
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
@@ -253,12 +257,14 @@ pipeline {
                             image.push()
                         }
                         env.CFGOV_ES_IMAGE = image.imageName()
+                        echo "CFGOV_ES_IMAGE: ${CFGOV_ES_IMAGE}"
 
                         image = docker.image(env.IMAGE_NAME_CYPRESS_LOCAL)
                         if (IS_CYPRESS_IMAGE_UPDATED == 'true') {
                             image.push()
                         }
                         env.CYPRESS_IMAGE = image.imageName()
+                        echo "CYPRESS_IMAGE: ${CYPRESS_IMAGE}"
                     }
                 }
             }
