@@ -1,5 +1,9 @@
 export class Multiselect {
 
+  /**
+   * @param {string} label - The text within the `<label>` tag of the
+   * multiselect you'd like to select. e.g. "Category" or "Topic"
+   */
   constructor( label ) {
     this.label = label;
     this.selectedTags = [];
