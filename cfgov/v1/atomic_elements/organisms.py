@@ -1043,7 +1043,8 @@ class FeaturedContentStructValue(blocks.StructValue):
         # We want to pass a single list of links to the template when the
         # FeaturedContent organism is rendered. So we consolidate any links
         # that have been specified: the post link and any other links. We
-        # also normalize them each to have URL and text attributes.
+        # also normalize them each to have URL, text,
+        # and (optionally) aria-label attributes.
         links = []
 
         # We want to pass the post URL into the template so that it can be
@@ -1061,9 +1062,10 @@ class FeaturedContentStructValue(blocks.StructValue):
         for hyperlink in self.get('links') or []:
             url = hyperlink.get('url')
             text = hyperlink.get('text')
+            aria_label = hyperlink.get('aria_label')
 
             if url and text:
-                links.append({'url': url, 'text': text})
+                links.append({'url': url, 'text': text, 'aria_label': aria_label})
 
         return links
 
