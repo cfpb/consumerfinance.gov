@@ -251,6 +251,7 @@ pipeline {
                         env.CFGOV_PYTHON_IMAGE = image.imageName()
                         echo "CFGOV_PYTHON_IMAGE: ${CFGOV_PYTHON_IMAGE}"
                     }
+                    echo "Did 1/3 of the things"
                     docker.withRegistry("${DOCKER_HUB_REGISTRY}", 'docker-hub-cfpb') {
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
                         if (IS_ES_IMAGE_UPDATED == 'true') {
