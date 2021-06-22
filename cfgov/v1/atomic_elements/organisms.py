@@ -1065,7 +1065,11 @@ class FeaturedContentStructValue(blocks.StructValue):
             aria_label = hyperlink.get('aria_label')
 
             if url and text:
-                links.append({'url': url, 'text': text, 'aria_label': aria_label})
+                links.append({
+                    'url': url,
+                    'text': text,
+                    'aria_label': aria_label
+                })
 
         return links
 
