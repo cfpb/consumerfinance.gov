@@ -19,7 +19,7 @@
    ========================================================================== #}
 <a class="a-link a-link__jump"
    href="{{ value.url }}"
-   aria-label="{{ value.aria_label }}">
+   {% if value.aria_label %}aria-label="{{ value.aria_label }}"{% endif %}>
     <span class="a-link_text">
         {{ value.text }}
     </span>

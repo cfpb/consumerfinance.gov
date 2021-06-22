@@ -41,8 +41,8 @@
                 <li class="m-list_item">
                     <a class="m-list_link"
                        href="{{ link.url }}"
-                       aria-label="{{ link.aria_label }}">
-                        {{- link.text | default( link.url ) -}}
+                       {% if link.aria_label %}aria-label="{{ link.aria_label }}"{% endif %}>
+                       {{- link.text | default( link.url ) -}}
                     </a>
                 </li>
             {% endfor %}
