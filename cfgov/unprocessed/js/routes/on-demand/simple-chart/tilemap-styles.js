@@ -34,14 +34,18 @@ const tilemap = {
     tickAmount: 15,
     title: {}
   },
-  tooltip: { formatter: function() { return `${ this.point.name }<br/>Index value: <b>${ Math.round( this.point.value * 10 ) / 10 }</b>`; } },
+  tooltip: {
+    style: {
+      fontSize: '16px'
+    },
+    formatter: function() { return `${ this.point.name }<br/>Index value: <b>${ Math.round( this.point.value * 10 ) / 10 }</b>`; } },
   legend: {
     enabled: false,
     title: 'Index value'
   },
   chart: {
     maxWidth: 670,
-    height: 550,
+    height: 450,
     marginLeft: 0,
     marginRight: 0,
     marginTop: -1,

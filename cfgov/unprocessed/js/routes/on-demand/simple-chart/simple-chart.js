@@ -748,8 +748,7 @@ function buildChart( chartNode ) {
   function fixViewbox() {
     const chartSVG = target.getElementsByClassName( 'highcharts-root' )[0];
     const width = chartSVG.width.animVal.value;
-    let height = 550;
-    if ( width <= 660 ) height = 450;
+    const height = 450;
     chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height }` );
     setTimeout( () => {
       chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height }` );
