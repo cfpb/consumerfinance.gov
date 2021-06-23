@@ -1,15 +1,22 @@
 export class Multiselect {
 
-  constructor() {
+  /**
+   * @param {string} label - The text within the `<label>` tag of the
+   * multiselect you'd like to select. e.g. "Category" or "Topic"
+   */
+  constructor( label ) {
+    this.label = label;
     this.selectedTags = [];
   }
 
-  click() {
-    return cy.get( '.o-expandable_target' ).click( { force: true } );
+  clickAway() {
+    return cy.get( '.o-expandable_content' ).click( { force: true } );
   }
 
   multiSelect( name ) {
-    return cy.get( `.o-multiselect_${ name }` ).first();
+    return cy.contains( 'label[for^=o-filterable-list-controls]', this.label )
+      .next( '.o-multiselect' )
+      .find( `.o-multiselect_${ name }` );
   }
 
   choices() {
@@ -54,7 +61,7 @@ export class Multiselect {
   }
 
   dropDownValue( value ) {
-    return cy.get( `li[data-option="${ value }"].u-filter-match` );
+    return cy.get( `li[data-option="${ value }"]` );
   }
 
   async dropDownHasValue( value ) {
@@ -64,7 +71,7 @@ export class Multiselect {
   }
 
   choicesElement() {
-    return cy.get( '.o-multiselect_choices label' );
+    return this.multiSelect( 'choices' ).find( 'label' );
   }
 
   choicesElementClick() {
@@ -76,7 +83,7 @@ export class Multiselect {
   }
 
   dropDownLabel() {
-    return cy.get( '.o-multiselect_options li .o-multiselect_label' );
+    return this.multiSelect( 'options' ).find( 'li .o-multiselect_label' );
   }
 
   firstChoicesElement() {
@@ -91,10 +98,10 @@ export class Multiselect {
   }
 
   displayedTag() {
-    return cy.get( '.o-multiselect_choices li' );
+    return this.multiSelect( 'choices' ).find( 'li' );
   }
 
   isRendered() {
-    return cy.get( '.o-multiselect' ).first().should( 'be.visible' );
+    return this.multiSelect( 'search' ).should( 'be.visible' );
   }
 }
