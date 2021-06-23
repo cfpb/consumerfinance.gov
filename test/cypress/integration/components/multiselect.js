@@ -1,10 +1,11 @@
 import { Multiselect } from '../../components/multiselect';
 
-const multiselect = new Multiselect();
+let multiselect;
 
 describe( 'I should be able to select using the multiselect', () => {
   beforeEach( () => {
     cy.visit( '/about-us/blog/' );
+    multiselect = new Multiselect( 'Topic' );
   } );
   it( 'State on page load', () => {
     // Then the multiselect should be rendered
@@ -30,7 +31,7 @@ describe( 'I should be able to select using the multiselect', () => {
     // When I focus on the multiselect search input
     multiselect.searchInput().focus();
     // And I click away from the search input
-    multiselect.click();
+    multiselect.clickAway();
     // Then the multiselect dropdown shouldn't be visible
     multiselect.fieldSet().should( 'not.be.visible' );
     // And the multiselect dropdown length should be 0
@@ -48,7 +49,7 @@ describe( 'I should be able to select using the multiselect', () => {
     // When I enter "students" in the search input
     multiselect.enterSearchInput( 'students' );
     // Then the multiselect dropdown shouldn't display "mortgages"
-    multiselect.dropDownValue( 'mortgages' ).should( 'have.length', 0 );
+    multiselect.dropDownValue( 'mortgages' ).should( 'not.be.visible' );
     // And the multiselect dropdown length should be 1
     multiselect.dropDown().should( 'have.length', 1 );
   } );
