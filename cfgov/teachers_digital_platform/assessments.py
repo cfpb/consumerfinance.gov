@@ -175,7 +175,7 @@ class Assessment:
         page_classes = []
 
         for page_i, page in enumerate(self.pages):
-            name = 'page' + str(page_i + 1)
+            name = str(page_i + 1)
             inserted_key_field = self.key if page_i == 0 else ''
 
             # Unique class name for each assessment + page (not technically
@@ -218,17 +218,17 @@ class Assessment:
         return Assessment(key, data['meta'], pages, data['prefix_tpls'])
 
 
-available_assessments = ('elem')
+available_assessments = ('3-5')
 
 
 def get_assessment(key) -> Assessment:
     assert key in available_assessments
-    return Assessment.factory('elem')
+    return Assessment.factory('3-5')
 
 
 def get_all_assessments() -> Dict[str, Assessment]:
     return {
-        'elem': get_assessment('elem')
+        '3-5': get_assessment('3-5')
     }
 
 

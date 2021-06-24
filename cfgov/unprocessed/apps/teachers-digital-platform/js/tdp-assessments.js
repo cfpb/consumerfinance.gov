@@ -31,7 +31,7 @@ const assessments = {
           const initials = $( '.share-customize [name=initials]' ).value.trim();
           const output = $( '.shared-url' );
           const a = document.createElement( 'a' );
-          a.href = '../show/?r=' + encodeURIComponent( output.dataset.rparam );
+          a.href = '../view/?r=' + encodeURIComponent( output.dataset.rparam );
           // Read property gives you full URL
           const shareUrl = a.href;
           output.value = encodeName.encodeNameInUrl( shareUrl, initials );

@@ -27,11 +27,11 @@ urlpatterns = [
         name='tdp_assess_student_results',
     ),
 
-    # Show all results (expects ?r=...signed value)
+    # View a shared results page (expects ?r=...signed value)
     re_path(
-        r'^assess/show/$',
-        views.show_results,
-        name='tdp_assess_show_results',
+        r'^assess/view/$',
+        views.view_results,
+        name='tdp_assess_view_results',
     ),
 ]
 
@@ -46,11 +46,6 @@ for key, assessment_view in views.AssessmentWizard.build_views().items():
             # Handle redirect to assessment intro
             path(
                 '',
-                lambda x: HttpResponseRedirect('intro/'),
-                name=f'assessment_{key}'
-            ),
-            path(
-                'intro/',
                 TemplateView.as_view(
                     template_name=f'teachers_digital_platform/assess/intro-{key}.html'
                 ),

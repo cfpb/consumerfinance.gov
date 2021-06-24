@@ -22,7 +22,7 @@ signer = signing.Signer()
 class AssessmentWizard(NamedUrlCookieWizardView):
     def done(self, form_list, **kwargs):
         # Find assessment based on hidden "_k" question in page1
-        first_page = self.get_form('page1')
+        first_page = self.get_form('1')
         assessment_key = first_page.fields['_k'].initial
         if (not isinstance(assessment_key, str) or
                 assessment_key not in available_assessments):
@@ -120,9 +120,9 @@ def student_results(request: HttpRequest):
     return _handle_result_url(request, raw, result_url, True)
 
 
-def show_results(request: HttpRequest):
+def view_results(request: HttpRequest):
     """
-    Show results page
+    View results page
     """
     if request.method != 'GET':
         return HttpResponse(status=404)

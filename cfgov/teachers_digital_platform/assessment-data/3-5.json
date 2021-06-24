@@ -3,8 +3,8 @@
     "name": "Grade 3-5 Assessment"
   },
   "prefix_tpls": {
-    "q0": "elem/q0.html",
-    "q3": "elem/q3.html"
+    "q1": "3-5/q1.html",
+    "q3": "3-5/q3.html"
   },
   "questions": [
     [
