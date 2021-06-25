@@ -29,6 +29,11 @@ export class Filter {
     return this.checkCategoryId( name.split( ' ' ).join( '-' ).toLowerCase() );
   }
 
+  clickCategory( name ) {
+    const category = name.split( ' ' ).join( '-' ).toLowerCase();
+    return cy.get( `#categories-${ category }` ).click( { force: true } );
+  }
+
   clickTopic( name ) {
     const topic = name.split( ' ' ).join( '-' ).toLowerCase();
     return cy.get( `#topics-${ topic }` ).click( { force: true } );
