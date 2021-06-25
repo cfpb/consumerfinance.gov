@@ -26,6 +26,12 @@ class IntegerBlock(blocks.FieldBlock):
 
 class Hyperlink(blocks.StructBlock):
     text = blocks.CharBlock(required=False)
+    aria_label = blocks.CharBlock(
+        required=False,
+        help_text='Add an ARIA label if the link text does not describe the '
+                  'destination of the link (e.g. has ambiguous text like '
+                  '"Learn more" that is not descriptive on its own).'
+    )
     url = blocks.CharBlock(default='/', required=False)
 
     def __init__(self, required=True):
