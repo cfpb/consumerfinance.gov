@@ -334,7 +334,7 @@ class PortalSearchPage(
             len(response['results']),
             self.get_heading(),
             search.search_term)
-        paginator = Paginator(results, 10)
+        paginator = Paginator(results, 25)
         page_number = validate_page_number(request, paginator)
         context.update({
             'search_term': search.search_term,
@@ -405,7 +405,7 @@ class AnswerResultsPage(CFGOVPage):
         context = super(
             AnswerResultsPage, self).get_context(request, **kwargs)
         context.update(**kwargs)
-        paginator = Paginator(self.answers, 20)
+        paginator = Paginator(self.answers, 25)
         page_number = validate_page_number(request, paginator)
         results = paginator.page(page_number)
         context['current_page'] = page_number
@@ -456,7 +456,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
             (page.url, page.question, page.answer_content_preview())
             for page in base_query if tag in page.clean_search_tags
         ]
-        paginator = Paginator(answer_tuples, 20)
+        paginator = Paginator(answer_tuples, 25)
         page_number = validate_page_number(request, paginator)
         page = paginator.page(page_number)
         context = self.get_context(request)
