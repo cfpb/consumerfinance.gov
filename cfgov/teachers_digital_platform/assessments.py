@@ -220,8 +220,7 @@ class Assessment:
         path = f'{dirname(__file__)}/assessment-data/answer-types.csv'
         with open(path, encoding='utf-8') as csv_file:
             reader = csv.DictReader(csv_file)
-            for row in reader:
-                row = _answer_types_row(row)
+            for row in (_answer_types_row(row) for row in reader):
                 choice_lists[row['k']] = ChoiceList.from_string(row['c'])
 
     @staticmethod
@@ -244,8 +243,7 @@ class Assessment:
         path = f'{dirname(__file__)}/assessment-data/{key}.csv'
         with open(path, encoding='utf-8') as csv_file:
             reader = csv.DictReader(csv_file)
-            for row in reader:
-                row = _question_row(row)
+            for row in (_question_row(row) for row in reader):
                 if last_page is None:
                     last_page = row['p']
                 if row['p'] != last_page:
