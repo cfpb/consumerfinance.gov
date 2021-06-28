@@ -414,8 +414,8 @@ class FeaturedContentTests(TestCase):
 
         self.assertEqual(value.links, [
             {'url': self.page.url, 'text': 'This is a post'},
-            {'url': '/foo/', 'text': 'A link'},
-            {'url': '/bar/', 'text': 'Another link'},
+            {'url': '/foo/', 'text': 'A link', 'aria_label': None},
+            {'url': '/bar/', 'text': 'Another link', 'aria_label': None},
         ])
 
     def test_render(self):
@@ -446,7 +446,8 @@ class FeaturedContentTests(TestCase):
             ('/bar/', 'Another link'),
         ):
             self.assertIn(
-                f'<a class="m-list_link" href="{url}">{text}</a>',
+                f'<a class="m-list_link"\n                       '
+                f'href="{url}"\n                       >{text}</a>',
                 html
             )
 
