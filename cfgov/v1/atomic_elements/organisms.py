@@ -73,7 +73,7 @@ class InfoUnitGroup(blocks.StructBlock):
         help_text='Choose the number and width of info unit columns.',
     )
 
-    heading = v1_blocks.HeadingBlock(required=False, blank=True)
+    heading = v1_blocks.HeadingBlock(required=False)
 
     intro = blocks.RichTextBlock(
         required=False,
