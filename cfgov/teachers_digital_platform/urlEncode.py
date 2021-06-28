@@ -62,6 +62,7 @@ def loads(encoded: str):
     time = _decode_time(time_enc)
 
     return {
+        'key': key,
         'assessment': assessment,
         'subtotals': subtotals,
         'time': time,

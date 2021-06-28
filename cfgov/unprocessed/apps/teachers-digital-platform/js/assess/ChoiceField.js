@@ -32,17 +32,29 @@ ChoiceField.get = ( name ) => {
 
 ChoiceField.restoreFromSession = ( key ) => {
   const store = JSON.parse( sessionStorage.getItem( key ) || '{}' );
+  let update = false;
 
   Object.entries( ChoiceField.cache ).forEach( ( [ name, grp ] ) => {
+    if (grp.value !== null && typeof store[name] === 'undefined') {
+      // Sync pre-selected radio to storage (for testing locally)
+      store[name] = grp.value;
+      update = true;
+    }
+
     if (grp.value === null && typeof store[name] !== 'undefined') {
+      // Sync storage to radio button
       grp.changeValue( store[name] );
     }
   } );
 
+  if ( update ) {
+    sessionStorage.setItem( key, JSON.stringify( store ) );
+  }
+
   return store;
 };
 
-ChoiceField.watchAndStore = ( key, store ) => {
+ChoiceField.watchAndStore = ( key, store, onStoreUpdate ) => {
   document.addEventListener( 'change', e => {
     const t = e.target;
     if (t instanceof HTMLInputElement && t.classList.contains( 'ChoiceField' )) {
@@ -50,6 +62,9 @@ ChoiceField.watchAndStore = ( key, store ) => {
         ChoiceField.get( t.name ).value = t.value;
         store[t.name] = t.value;
         sessionStorage.setItem( key, JSON.stringify( store ) );
+        if ( onStoreUpdate ) {
+          onStoreUpdate();
+        }
       }
     }
   } );

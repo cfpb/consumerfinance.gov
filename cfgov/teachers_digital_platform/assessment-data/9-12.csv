@@ -1,17 +1,41 @@
 Page,Part,Section,Unique ID,Question,Answer type,Answer worth
-1,1,1A,,"When I have a problem to solve, I try to gather as much information as possible.",A,4 3 2 1 0
-1,1,1A,,I try to think of many different approaches when I’m solving a problem.,A,4 3 2 1 0
-1,1,1A,,"When I make a decision, I usually go with my ""gut feeling"" and I don’t think too much about the consequences.",A,0 1 2 3 4
-1,1,1B,,Living for the moment is less important to me than planning for a good future.,A,4 3 2 1 0
-2,1,1B,,I spend a lot of time thinking about how what I do today will affect me in the future.,A,4 3 2 1 0
-2,1,1B,,I’d rather save money for an important purchase than spend it now on something unimportant.,A,4 3 2 1 0
-2,1,1C,,I will give up what I want today to get what I want in the future.,A,4 3 2 1 0
-2,1,1C,,I finish my homework on or before the due date.,A,4 3 2 1 0
-3,1,1C,,I try to save money in case of an emergency.,A,4 3 2 1 0
-3,1,1C,,It’s hard for me to resist buying things I can’t afford.,A,0 1 2 3 4
-3,2,2A,,"When my parents buy me things, I try to “pay them back"" by helping them out.",A,4 3 2 1 0
-3,2,2A,,I feel personal responsibility when spending my parents' money.,A,4 3 2 1 0
-3,2,2A,,I don’t care if other people have more money than I do.,A,4 3 2 1 0
-4,2,2A,,I think it’s important to save money for things I want to buy or have.,A,4 3 2 1 0
-4,2,2A,,I think it’s important to save money for my education and my future.,A,4 3 2 1 0
-4,2,2A,,Buying things makes me happy.,A,0 1 2 3 4
+1,1,1A,1,"When I have a problem to solve, I try to gather as much information as possible.",A,4 3 2 1 0
+1,1,1A,2,I try to think of many different approaches when I’m solving a problem.,A,4 3 2 1 0
+1,1,1A,3,"When I make a decision, I usually go with my ""gut feeling"" and I don’t think too much about the consequences.",A,0 1 2 3 4
+1,1,1B,4,Living for the moment is less important to me than planning for a good future.,A,4 3 2 1 0
+1,1,1B,5,I spend a lot of time thinking about how what I do today will affect me in the future.,A,4 3 2 1 0
+1,1,1B,6,I’d rather save money for an important purchase than spend it now on something unimportant.,A,4 3 2 1 0
+1,1,1C,7,I will give up what I want today to get what I want in the future.,A,4 3 2 1 0
+1,1,1C,8,I finish my homework on or before the due date.,A,4 3 2 1 0
+1,1,1C,9,I try to save money in case of an emergency.,A,4 3 2 1 0
+1,1,1C,10,It’s hard for me to resist buying things I can’t afford.,A,0 1 2 3 4
+2,2,2A,11,"When my parents buy me things, I try to “pay them back"" by helping them out.",A,4 3 2 1 0
+2,2,2A,12,I feel personal responsibility when spending my parents' money.,A,4 3 2 1 0
+2,2,2A,13,I don’t care if other people have more money than I do.,A,4 3 2 1 0
+2,2,2A,14,I think it’s important to save money for things I want to buy or have.,A,4 3 2 1 0
+2,2,2A,15,I think it’s important to save money for my education and my future.,A,4 3 2 1 0
+2,2,2A,16,Buying things makes me happy.,A,0 1 2 3 4
+2,2,2B,17,I am able to save money.,C2,4 3 2 1 0
+2,2,2B,18,"If I don’t have enough money to buy something I really want with cash, I try to buy it anyway.",C2,0 1 2 3 4
+2,2,2B,19,"When I shop, I compare brands and other options.",C2,4 3 2 1 0
+2,2,2B,20,I keep track of how much money I spend.,C2,4 3 2 1 0
+3,2,2B,21,I ask myself if something is a need or a want before buying it.,C2,4 3 2 1 0
+3,2,2C,22,I say no to spending money on things I think are wrong or unnecessary.,C2,4 3 2 1 0
+3,2,2C,23,"If I really want something, I work hard to get it.",C2,4 3 2 1 0
+3,2,2C,24,I spend money on things that aren’t important to me because my friends are doing it.,C2,0 1 2 3 4
+3,2,2D,25,I’m confident in my ability to achieve a financial goal I set.,C2,4 3 2 1 0
+3,2,2D,26,"When I’m in trouble or have a challenge to deal with, I can usually find a solution.",C2,4 3 2 1 0
+3,2,2D,27,I consider myself a “smart spender.”,C2,4 3 2 1 0
+3,2,2D,28,I can save money for things I really want.,C2,4 3 2 1 0
+3,2,2D,29,I’m good at making money decisions and managing money.,C2,4 3 2 1 0
+3,3,3A,30,How would you compare yourself to your close friends regarding your overall knowledge of financial topics?,B,4 3 2 1 0
+4,3,3A,31,My credit rating will not be affected by how much I charge on my credit cards.,D,0 1 2 3 4
+4,3,3A,32,A good rule to live by is to have an emergency fund that covers two to six months of my expenses.,D,4 3 2 1 0
+4,3,3A,33,"With compound interest, I’ll earn interest on my principal and my interest.",D,4 3 2 1 0
+4,3,3A,34,"As a result of compound interest, the earlier I start saving for retirement, the more money I’ll have.",D,4 3 2 1 0
+4,3,3A,35,"If I use my home as collateral for a loan, there is no chance of losing my home.",D,0 1 2 3 4
+4,3,3A,36,"If the interest rate goes up on an adjustable-rate mortgage, my monthly mortgage payments will go up.",D,4 3 2 1 0
+4,3,3B,37,"For information I find on the Internet, knowing the author can help me judge if it is a reliable source.",C2,4 3 2 1 0
+4,3,3B,38,"Before I trust information I find in my research, it’s important to make sure it’s factual and objective.",C2,4 3 2 1 0
+4,3,3B,39,"Knowing the intended purpose of published information (for example, is it selling something?) can help me judge its reliability.",C2,4 3 2 1 0
+4,3,3B,40,Product research and comparison shopping can help me make informed buying decisions.,C2,4 3 2 1 0

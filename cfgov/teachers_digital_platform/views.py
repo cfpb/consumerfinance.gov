@@ -1,4 +1,3 @@
-import re
 import time
 
 from typing import Dict
@@ -40,13 +39,12 @@ class AssessmentWizard(NamedUrlCookieWizardView):
         part_scores: Dict[str, float] = {}
 
         for question, score in question_scores.items():
-            part = re.match(r'^\d+', question.section)[0]
-            if part not in part_scores:
-                part_scores[part] = 0
-            part_scores[part] += score
+            if question.part not in part_scores:
+                part_scores[question.part] = 0
+            part_scores[question.part] += score
 
-        subtotals = (v for k, v in sorted(part_scores.items()))
-        encoded = urlEncode.dumps(assessment, subtotals, time.time())
+        subtotals = list(v for k, v in sorted(part_scores.items()))
+        encoded = urlEncode.dumps(assessment, subtotals, int(time.time()))
 
         # We can't use set_signed_cookie() because we need to unsign the
         # query string using Signer() and for some reason the raw cookie
@@ -68,6 +66,23 @@ class AssessmentWizard(NamedUrlCookieWizardView):
             key: val for key, val in dict.items() if (
                 key != 'csrfmiddlewaretoken')}
 
+    def render(self, form=None, **kwargs):
+        # Overriding so we can inject useful data
+        form = form or self.get_form()
+        context = self.get_context_data(form=form, **kwargs)
+
+        # Push the assessment and active page into template
+        first_page = self.get_form('1')
+        assessment_key = first_page.fields['_k'].initial
+        if assessment_key in available_assessments:
+            page_idx = int(context['step']) - 1
+            assessment = get_assessment(assessment_key)
+            context['assessment'] = assessment
+            context['page_idx'] = page_idx
+            context['questions_by_page'] = assessment.num_questions_by_page()
+
+        return self.render_to_response(context)
+
     @staticmethod
     def build_views():
         # Create view wrappers for our assessments.
@@ -87,14 +102,18 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
     if res is None:
         return HttpResponseRedirect('../')
 
+    total = sum(res['subtotals'])
+    adjusted = total * res['assessment'].get_score_multiplier()
+
     rendered = render_to_string(
-        f'{tdp}/assess/results.html',
+        f'{tdp}/assess/results-{res["key"]}.html',
         {
             'is_student': is_student,
             'request': request,
             'r_param': raw,
             'assessment': res['assessment'],
             'subtotals': res['subtotals'],
+            'score': adjusted,
             'time': time.gmtime(res['time']),
         },
     )

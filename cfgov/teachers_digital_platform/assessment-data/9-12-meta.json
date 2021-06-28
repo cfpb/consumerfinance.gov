@@ -1,9 +1,10 @@
 {
-  "meta": {
-    "name": "Grade 9-12 Assessment"
-  },
+  "name": "Grade 9-12 Assessment",
   "prefix_tpls": {
     "q1": "9-12/q1.html",
-    "q3": "9-12/q3.html"
-  }
+    "q11": "9-12/q11.html",
+    "q30": "9-12/q30.html",
+    "q31": "9-12/q31.html"
+  },
+  "score_multiplier": 0.625
 }

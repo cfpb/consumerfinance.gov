@@ -19,11 +19,14 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-    <div class="content_wrapper tdp-assessment-page">
+    <div class="content_wrapper tdp-assessment-page"
+         data-page-idx="{{ page_idx|tojson|forceescape }}"
+         data-questions-by-page="{{ questions_by_page|tojson|forceescape }}">
         <h1>Survey Page {{ wizard.steps.step1 }}</h1>
         {% if wizard.steps.prev %}
             <p><a href="../{{ wizard.steps.prev }}/">Previous</a></p>
         {% endif %}
+
         <form action="" method="post"> {{ csrf_input }}
         {{ wizard.management_form }}
         {% if wizard.form.forms %}

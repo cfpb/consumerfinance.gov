@@ -10,12 +10,15 @@ import csv
 import hashlib
 import json
 
+PREFILL_ANSWERS = False
+
 
 def _question_row(row: Dict[str, str]):
     return {
         'q': row['Question'],
         's': row['Section'],
-        'p': row['Page'],
+        'pt': row['Part'],
+        'pg': row['Page'],
         'a': row['Answer type'],
         'w': row['Answer worth'],
     }
@@ -30,7 +33,7 @@ def _answer_types_row(row: Dict[str, str]):
 
 class ChoiceList:
     """
-    To save mem, we'll only need a couple of these objects in practice
+    To save mem, we'll only need a few of these objects in practice
     """
 
     def __init__(self, labels: List[str]):
@@ -53,12 +56,12 @@ class Question:
     Base question
     """
 
-    def __init__(self, num: int, section: str):
+    def __init__(self, num: int, part: str):
         self.key = f'q{num}'
         self.num = num
-        self.section = section
+        self.part = part
 
-    def get_score(self):
+    def get_score(self, answer):
         return 0
 
     def get_field(self):
@@ -70,9 +73,9 @@ class ChoiceQuestion(Question):
     Choice question
     """
 
-    def __init__(self, num: int, section: str, label: str,
+    def __init__(self, num: int, part: str, label: str,
                  choice_list: ChoiceList, answer_values: List[float]):
-        super().__init__(num, section)
+        super().__init__(num, part)
         self.choice_list = choice_list
         self.label = label
         self.answer_values = answer_values
@@ -95,6 +98,11 @@ class ChoiceQuestion(Question):
             ' ',
             self.label,
         ])
+
+        initial = None
+        if PREFILL_ANSWERS:
+            initial = self.answer_values.index(max(self.answer_values))
+
         return {
             'key': self.key,
             'field': forms.ChoiceField(
@@ -104,6 +112,7 @@ class ChoiceQuestion(Question):
                 choices=self.choice_list.choices,
                 label=label,
                 required=True,
+                initial=initial,
             ),
         }
 
@@ -178,6 +187,9 @@ class Assessment:
         self.meta = meta
         self.pages = pages
 
+    def num_questions_by_page(self) -> List[int]:
+        return list(len(page.questions) for page in self.pages)
+
     def get_score(self, all_cleaned_data) -> float:
         total = 0
         question_scores = {}
@@ -195,6 +207,11 @@ class Assessment:
             'page_scores': page_scores,
             'total': total,
         }
+
+    def get_score_multiplier(self) -> float:
+        if 'score_multiplier' in self.meta:
+            return self.meta['score_multiplier']
+        return 1
 
     def get_form_list(self, assessment_key: str):
         page_classes = []
@@ -245,15 +262,19 @@ class Assessment:
             reader = csv.DictReader(csv_file)
             for row in (_question_row(row) for row in reader):
                 if last_page is None:
-                    last_page = row['p']
-                if row['p'] != last_page:
+                    last_page = row['pg']
+                if row['pg'] != last_page:
                     end_page(last_page)
 
-                last_page = row['p']
+                last_page = row['pg']
 
                 values = list(int(x.strip()) for x in row['w'].split(' '))
+                if row['a'] not in choice_lists:
+                    msg = f'Unknown answer type {row["a"]}'
+                    raise NameError(msg)
+
                 question = ChoiceQuestion(
-                    q, row['s'], row['q'], choice_lists[row['a']], values)
+                    q, row['pt'], row['q'], choice_lists[row['a']], values)
                 questions.append(question)
                 q += 1
         end_page(last_page)

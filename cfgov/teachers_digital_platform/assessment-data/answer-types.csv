@@ -2,6 +2,7 @@ Key,Column heading,Choices
 A,This statement describes me,Completely | Very well | Somewhat | Very little | Not at all
 B,,I know much more than my friends. | I know a little more than my friends. | I know the same amount as my friends. | My friends know a little more than I do. | My friends know much more than I do.
 C,This statement applies to me,Always | Often | Sometimes | Rarely | Never
+C2,This statement applies to me,Always | Often | Sometimes | Rarely | Not at all
 D,I think this statement is,Always true | Often true | Sometimes true | Rarely true | Never true
 E,,Strongly agree | Agree | Disagree | Strongly disagree | I don’t know
 F,,Always | Sometimes | Never | I don’t know
