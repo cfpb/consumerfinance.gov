@@ -14,6 +14,21 @@
     </li>
 {% endmacro %}
 
+{% macro _filter_multiselect( label, data ) %}
+    <div class="content-l_col
+                content-l_col-1-3">
+        <div class="o-form_group">
+            <div class="m-form-field">
+                <label class="a-label a-label__heading"
+                        for="{{ data.id_for_label }}">
+                    {{ label }}
+                </label>
+                {{ data }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
 {% macro _render_filter_fields(value, form, show_archive_filter=False) -%}
     {% if value.title %}
         <div class="content-l_col
@@ -33,6 +48,7 @@
             </div>
         </div>
     {% endif %}
+
     {% if value.categories.filter_category %}
         <div class="content-l_col
                     content-l_col-1-3">
@@ -58,106 +74,85 @@
             </div>
         </div>
     {% endif %}
-    {% if show_topic_filter or value.authors or value.statuses or value.date_range %}
+
+    {% if show_topic_filter %}
+        {{ _filter_multiselect( 'Topics', form.topics ) }}
+    {% endif %}
+
+    {% if value.authors %}
+        {{ _filter_multiselect( 'Author', form.authors ) }}
+    {% endif %}
+
+    {% if value.statuses and form.statuses %}
         <div class="content-l_col
-                    content-l_col-2-3">
-            <div class="content-l">
-                {% if value.statuses and form.statuses %}
-                    <div class="content-l_col
-                                content-l_col-1-2">
-                        <div class="o-form_group">
-                            <fieldset class="o-form_fieldset">
-                                <legend class="a-legend">
-                                   Status
-                                </legend>
-                                <ul class="m-list m-list__unstyled" role="group">
-                                {% for slug, name in form.statuses.field.choices %}
-                                    {{ _filter_selectable('checkbox', name, 'statuses_' ~ slug, 'statuses', slug) }}
-                                {% endfor %}
-                                </ul>
-                            </fieldset>
-                        </div>
-                    </div>
-                {% endif %}
-                {% if show_topic_filter %}
-                    <div class="content-l_col
-                                content-l_col-1-2">
-                        <div class="o-form_group">
-                            <div class="m-form-field">
-                                <label class="a-label a-label__heading"
-                                       for="{{ form.topics.id_for_label }}">
-                                    Topic
-                                </label>
-                                {{ form.topics }}
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                {% if value.products %}
-                    <div class="content-l_col
-                                content-l_col-1-2">
-                        <div class="o-form_group">
-                            <div class="m-form-field">
-                                <label class="a-label a-label__heading"
-                                       for="{{ form.products.id_for_label }}">
-                                    Product
-                                </label>
-                                {{ form.products }}
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                {% if value.authors %}
-                    <div class="content-l_col
-                                content-l_col-1-2">
-                        <div class="o-form_group">
-                            <div class="m-form-field">
-                                <label class="a-label a-label__heading"
-                                       for="{{ form.authors.id_for_label }}">
-                                    Author
-                                </label>
-                                {{ form.authors }}
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                {% if value.date_range %}
-                    <div class="content-l_col
-                                content-l_col-1">
-                        <div class="o-form_group">
-                            <fieldset class="o-form_fieldset">
-                                <legend class="a-legend">
-                                    Date range
-                                </legend>
-                                <div class="content-l">
-                                    <div class="content-l_col
-                                                content-l_col-1-2">
-                                        <div class="m-form-field">
-                                            <label class="a-label a-label__heading"
-                                                   for="{{ form.from_date.id_for_label }}">
-                                                From:
-                                            </label>
-                                            {{ form.from_date }}
-                                        </div>
-                                    </div>
-                                    <div class="content-l_col
-                                                content-l_col-1-2">
-                                        <div class="m-form-field">
-                                            <label class="a-label a-label__heading"
-                                                   for="{{ form.to_date.id_for_label }}">
-                                                To:
-                                            </label>
-                                            {{ form.to_date }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                {% endif %}
+                    content-l_col-1-3">
+            <div class="o-form_group">
+                <fieldset class="o-form_fieldset">
+                    <legend class="a-legend">
+                    Status
+                    </legend>
+                    <ul class="m-list m-list__unstyled" role="group">
+                    {% for slug, name in form.statuses.field.choices %}
+                        {{ _filter_selectable('checkbox', name, 'statuses_' ~ slug, 'statuses', slug) }}
+                    {% endfor %}
+                    </ul>
+                </fieldset>
             </div>
         </div>
     {% endif %}
+
+    {% if value.products %}
+        {{ _filter_multiselect( 'Product', form.products ) }}
+    {% endif %}
+
+    {% if value.date_range %}
+        {# Ensures the dates appear on their own line #}
+        <div class="content-l_col
+                    content-l_col-1">
+            <div class="content-l">
+
+                <div class="content-l_col
+                            content-l_col-2-3">
+                    <div class="content-l">
+                        <div class="content-l_col
+                                    content-l_col-1">
+                            <div class="o-form_group">
+                                <fieldset class="o-form_fieldset">
+                                    <legend class="a-legend">
+                                        Date range
+                                    </legend>
+                                    <div class="content-l">
+                                        <div class="content-l_col
+                                                    content-l_col-1-2">
+                                            <div class="m-form-field">
+                                                <label class="a-label a-label__heading"
+                                                        for="{{ form.from_date.id_for_label }}">
+                                                    From:
+                                                </label>
+                                                {{ form.from_date }}
+                                            </div>
+                                        </div>
+                                        <div class="content-l_col
+                                                    content-l_col-1-2">
+                                            <div class="m-form-field">
+                                                <label class="a-label a-label__heading"
+                                                        for="{{ form.to_date.id_for_label }}">
+                                                    To:
+                                                </label>
+                                                {{ form.to_date }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+    {% endif %}
+
     {% if show_archive_filter %}
         <div class="content-l_col
                     content-l_col-1-2">
