@@ -26,8 +26,8 @@ describe( 'Filter Blog Posts based on content', () => {
     cy.url().should( 'include', 'title=loan' );
   } );
   it( 'Select a single category', () => {
-    // When I select the first checkbox in the Category list
-    filter.checkCategoryName( 'At the CFPB' );
+    // When I select the first option in the Category multiselect
+    filter.clickCategory( 'At the CFPB' );
     // And I click "Apply filters" button
     blog.applyFilters();
     // Then I should see only results in that category
@@ -36,12 +36,12 @@ describe( 'Filter Blog Posts based on content', () => {
     cy.url().should( 'include', 'categories=at-the-cfpb' );
   } );
   it( 'Select multiple categories', () => {
-    // When I select all five checkboxes in the Category list
-    filter.checkCategoryName( 'At the CFPB' );
-    filter.checkCategoryId( 'directors-notebook' );
-    filter.checkCategoryId( 'policy_compliance' );
-    filter.checkCategoryId( 'data-research-reports' );
-    filter.checkCategoryName( 'Info for consumers' );
+    // When I select all options checkboxes in the Category multiselect
+    filter.clickCategory( 'at-the-cfpb' );
+    filter.clickCategory( 'directors-notebook' );
+    filter.clickCategory( 'policy_compliance' );
+    filter.clickCategory( 'data-research-reports' );
+    filter.clickCategory( 'info-for-consumers' );
     // And I click "Apply filters" button
     blog.applyFilters();
     // Then I should see only results that are in at least one of the selected categories
@@ -139,7 +139,7 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Select category and topic', () => {
     // When I select a checkbox in the Category list
-    filter.checkCategoryId( 'policy_compliance' );
+    filter.clickCategory( 'policy_compliance' );
     // When I select a checkbox in the Topic list
     filter.clickTopic( 'Students' );
     // And I click "Apply filters" button
@@ -154,8 +154,8 @@ describe( 'Filter Blog Posts based on content', () => {
     cy.url().should( 'include', 'topics=students' );
   } );
   it( 'Clear filters', () => {
-    // When I select the last checkbox in the Category list
-    filter.checkCategoryName( 'Info for consumers' );
+    // When I select the last option in the Category multiselect
+    filter.clickCategory( 'Info for consumers' );
     // When I select a checkbox in the Topic list
     filter.clickTopic( 'Consumer complaints' );
     // And I click "Apply filters" button
@@ -240,8 +240,8 @@ describe( 'Filter Blog Posts based on content', () => {
   it( 'Item name search plus category', () => {
     // When I type "loans" in the item name input box
     blog.filterItemName( 'loans' );
-    // And I select the last checkbox in the Category list
-    filter.checkCategoryName( 'Info for consumers' );
+    // And I select the last option in the Category multiselect
+    filter.clickCategory( 'Info for consumers' );
     // And I click "Apply filters" button
     blog.applyFilters();
     // Then I should see only results in the selected category with "loans" in the post title

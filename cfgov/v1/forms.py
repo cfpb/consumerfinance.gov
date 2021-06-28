@@ -82,7 +82,12 @@ class FilterableListForm(forms.Form):
     categories = forms.MultipleChoiceField(
         required=False,
         choices=ref.page_type_choices,
-        widget=widgets.CheckboxSelectMultiple()
+        widget=widgets.SelectMultiple(attrs={
+            'id': 'o-filterable-list-controls_categories',
+            'class': 'o-multiselect',
+            'data-placeholder': 'Search for categories',
+            'multiple': 'multiple',
+        })
     )
 
     topics = forms.MultipleChoiceField(

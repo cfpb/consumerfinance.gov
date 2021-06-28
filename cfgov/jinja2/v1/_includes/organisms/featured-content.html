@@ -16,9 +16,11 @@
 
    value.links:     List of links to render with:
 
-        link.url:       Link URL.
+        link.url:        Link URL.
 
-        link.text:      (Optional) Link text.
+        link.text:       (Optional) Link text.
+
+        link.aria_label: (Optional) Assistive ARIA text for screenreaders.
 
    value.image:     (Optional) An ImageBasic atom.
 
@@ -37,8 +39,10 @@
         <ul class="m-list m-list__links">
             {% for link in value.links %}
                 <li class="m-list_item">
-                    <a class="m-list_link" href="{{ link.url }}">
-                        {{- link.text | default( link.url ) -}}
+                    <a class="m-list_link"
+                       href="{{ link.url }}"
+                       {% if link.aria_label %}aria-label="{{ link.aria_label }}"{% endif %}>
+                       {{- link.text | default( link.url ) -}}
                     </a>
                 </li>
             {% endfor %}

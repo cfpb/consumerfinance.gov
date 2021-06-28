@@ -37,16 +37,24 @@
         <div class="content-l_col
                     content-l_col-1-3">
             <div class="o-form_group">
-                <fieldset class="o-form_fieldset">
-                    <legend class="a-legend">
+                <div class="m-form-field">
+                    <label class="a-label a-label__heading"
+                           for="{{ form.categories.id_for_label }}">
                         Category
-                    </legend>
-                    <ul class="m-list m-list__unstyled" role="group">
+                    </label>
+                    <select name="categories"
+                            id="o-filterable-list-controls_categories"
+                            class="o-multiselect"
+                            data-placeholder="Search for categories"
+                            multiple>
                     {% for slug, name in choices_for_page_type(value.categories.page_type) %}
-                        {{ _filter_selectable('checkbox', category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
+                        <option value="{{ slug }}"
+                                {{ 'selected' if is_filter_selected('categories', slug) else '' }}>
+                            {{ name }}
+                        </option>
                     {% endfor %}
-                    </ul>
-                </fieldset>
+                    </select>
+                </div>
             </div>
         </div>
     {% endif %}
