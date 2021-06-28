@@ -9,7 +9,8 @@ describe( 'Filterable List', () => {
     filterableList.filterForm().should( 'be.visible' );
   } );
   it( 'should apply filters to the results', () => {
-    filterableList.selectFilter( 'Consumer complaint' );
+    filterableList.openTopics();
+    filterableList.selectTopic( 'Open government' );
     filterableList.applyFilters();
     filterableList.filterNotification().should( 'be.visible' );
     filterableList.clearFilters();

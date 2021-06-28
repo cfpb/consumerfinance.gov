@@ -28,7 +28,7 @@ describe( 'Filterable Page shows all results when no filter selected', () => {
     // Then I should not see filtered results
     filterableList.notification().should( 'not.be.visible' );
     // When I select the first checkbox in the Category list
-    filter.checkCategoryId( 'interim-final-rule' );
+    filter.clickCategory( 'interim-final-rule' );
     // When I select a checkbox in the Topic list
     filter.clickTopic( 'Rulemaking' );
     // When I enter "01/01/2017" in the From date entry field
