@@ -1,0 +1,14 @@
+Key,Column heading,Choices
+A,This statement describes me,Completely | Very well | Somewhat | Very little | Not at all
+B,,I know much more than my friends. | I know a little more than my friends. | I know the same amount as my friends. | My friends know a little more than I do. | My friends know much more than I do.
+C,This statement applies to me,Always | Often | Sometimes | Rarely | Never
+D,I think this statement is,Always true | Often true | Sometimes true | Rarely true | Never true
+E,,Strongly agree | Agree | Disagree | Strongly disagree | I don’t know
+F,,Always | Sometimes | Never | I don’t know
+GameThink,,Think about why having the game is important to you and why you should buy it. | Think about what you’d have to give up to buy the game or why it may not be worth spending the money. | Think about both the reasons to buy the game and the reasons not to buy the game. | I don’t know.
+GetGame,,Get the game now and borrow money from your friend (you will need to pay back the money to your friend). | Wait until the game goes on sale so you can pay for it with your savings. | Get a different game now and forget about the game you want. | I don’t know.
+BPImportant,,Find the style of backpack you like the best. | Count all the money you’ve saved. | Ask your friends which backpack they like more. | I don’t know.
+BPDecide,,Compare the price of the two backpacks and buy the less expensive one. | Compare the price of the two backpacks and buy the more expensive one. | Buy the same backpack that most of your friends have. | I don’t know.
+DSSetup,,"A, B, C | B, C, A | C, A, B | I don’t know."
+BikeSteps,,"A, B, C | B, C, A | C, B, A | I don’t know."
+MoneySafe,,Under your school desk | In your coat pocket | In a bank or credit union | I don’t know.

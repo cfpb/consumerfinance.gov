@@ -7,7 +7,6 @@ from django.core import signing
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http.request import HttpRequest
 from django.template.loader import render_to_string
-from django.urls import reverse
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
@@ -17,6 +16,7 @@ from . import urlEncode
 
 
 signer = signing.Signer()
+tdp = 'teachers_digital_platform'
 
 
 class AssessmentWizard(NamedUrlCookieWizardView):
@@ -76,7 +76,7 @@ class AssessmentWizard(NamedUrlCookieWizardView):
             wizard_views[k] = AssessmentWizard.as_view(
                 form_list=form_list,
                 url_name=f'assessment_{k}_step',
-                template_name='teachers_digital_platform/assess/single-page.html',
+                template_name=f'{tdp}/assess/single-page.html',
             )
         return wizard_views
 
@@ -88,7 +88,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
         return HttpResponseRedirect('../')
 
     rendered = render_to_string(
-        'teachers_digital_platform/assess/results.html',
+        f'{tdp}/assess/results.html',
         {
             'is_student': is_student,
             'request': request,

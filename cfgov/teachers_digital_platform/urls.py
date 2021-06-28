@@ -1,4 +1,3 @@
-from django.http import HttpResponseRedirect
 from django.urls import path, re_path
 from django.urls.conf import include
 from django.views.generic import TemplateView
@@ -7,11 +6,14 @@ from wagtailsharing.views import ServeView
 
 from . import views
 
+
+tdp = 'teachers_digital_platform'
+
 urlpatterns = [
     re_path(
         r'^journey',
         TemplateView.as_view(
-            template_name='teachers_digital_platform/bb-tool.html'
+            template_name=f'{tdp}/bb-tool.html'
         )
     ),
 
@@ -47,7 +49,7 @@ for key, assessment_view in views.AssessmentWizard.build_views().items():
             path(
                 '',
                 TemplateView.as_view(
-                    template_name=f'teachers_digital_platform/assess/intro-{key}.html'
+                    template_name=f'{tdp}/assess/intro-{key}.html'
                 ),
                 name=f'assessment_{key}_intro',
             ),

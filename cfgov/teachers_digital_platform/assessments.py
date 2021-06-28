@@ -6,8 +6,26 @@ from os.path import dirname
 from .TemplateField import TemplateField
 from .forms import AssessmentForm, markup
 
+import csv
 import hashlib
 import json
+
+
+def _question_row(row: Dict[str, str]):
+    return {
+        'q': row['Question'],
+        's': row['Section'],
+        'p': row['Page'],
+        'a': row['Answer type'],
+        'w': row['Answer worth'],
+    }
+
+
+def _answer_types_row(row: Dict[str, str]):
+    return {
+        'k': row['Key'],
+        'c': row['Choices'],
+    }
 
 
 class ChoiceList:
@@ -20,6 +38,14 @@ class ChoiceList:
         self.choices = tuple(
             (str(k), v) for k, v in enumerate(labels)
         )
+
+    @staticmethod
+    def from_string(s: str):
+        labels = list(x.strip() for x in s.split('|'))
+        return ChoiceList(labels)
+
+
+choice_lists: Dict[str, ChoiceList] = {}
 
 
 class Question:
@@ -44,9 +70,9 @@ class ChoiceQuestion(Question):
     Choice question
     """
 
-    def __init__(self, key: str, section: str, label: str,
+    def __init__(self, num: int, section: str, label: str,
                  choice_list: ChoiceList, answer_values: List[float]):
-        super().__init__(key, section)
+        super().__init__(num, section)
         self.choice_list = choice_list
         self.label = label
         self.answer_values = answer_values
@@ -147,11 +173,10 @@ class Assessment:
     """
 
     def __init__(self, key: str, meta: Dict[str, Any],
-                 pages: List[AssessmentPage], prefix_tpls: Dict[str, str]):
+                 pages: List[AssessmentPage]):
         self.key = key
         self.meta = meta
         self.pages = pages
-        self.prefix_tpls = prefix_tpls
 
     def get_score(self, all_cleaned_data) -> float:
         total = 0
@@ -184,51 +209,75 @@ class Assessment:
             classname = 'FormPage' + hash.hexdigest()
 
             page_classes.append((name, page.get_form_class(
-                classname, inserted_key_field, self.prefix_tpls)))
+                classname, inserted_key_field, self.meta['prefix_tpls'])))
 
         return tuple(page_classes)
 
     @staticmethod
+    def setup_choices():
+        if len(choice_lists) > 0:
+            return
+        path = f'{dirname(__file__)}/assessment-data/answer-types.csv'
+        with open(path, encoding='utf-8') as csv_file:
+            reader = csv.DictReader(csv_file)
+            for row in reader:
+                row = _answer_types_row(row)
+                choice_lists[row['k']] = ChoiceList.from_string(row['c'])
+
+    @staticmethod
     def factory(key: str):
-        """Build an assessment from JSON"""
+        """Build an assessment from CSV"""
         assert key in available_assessments
 
-        path = f'{dirname(__file__)}/assessment-data/{key}.json'
-        with open(path) as json_file:
-            data = json.load(json_file)
+        Assessment.setup_choices()
 
         q = 1
-
-        numbers = ChoiceList(['Zero', 'One', 'Two'])
-
+        last_page = None
         pages: List[AssessmentPage] = []
+        questions: List[Question] = []
 
-        for page_i, objs in enumerate(data['questions']):
-            questions: List[Question] = []
-
-            for obj in objs:
-                question = ChoiceQuestion(
-                    q, obj['S'], obj['Q'], numbers, [0, 10, 20])
-                q += 1
-                questions.append(question)
-
-            page = AssessmentPage('Page ' + str(page_i + 1), questions)
+        def end_page(last_page: str):
+            page = AssessmentPage(f'Page {last_page}', questions.copy())
             pages.append(page)
+            questions.clear()
 
-        return Assessment(key, data['meta'], pages, data['prefix_tpls'])
+        path = f'{dirname(__file__)}/assessment-data/{key}.csv'
+        with open(path, encoding='utf-8') as csv_file:
+            reader = csv.DictReader(csv_file)
+            for row in reader:
+                row = _question_row(row)
+                if last_page is None:
+                    last_page = row['p']
+                if row['p'] != last_page:
+                    end_page(last_page)
+
+                last_page = row['p']
+
+                values = list(int(x.strip()) for x in row['w'].split(' '))
+                question = ChoiceQuestion(
+                    q, row['s'], row['q'], choice_lists[row['a']], values)
+                questions.append(question)
+                q += 1
+        end_page(last_page)
+
+        path = f'{dirname(__file__)}/assessment-data/{key}-meta.json'
+        with open(path) as json_file:
+            meta = json.load(json_file)
+
+        return Assessment(key, meta, pages)
 
 
-available_assessments = ('3-5')
+available_assessments = ('9-12')
 
 
 def get_assessment(key) -> Assessment:
     assert key in available_assessments
-    return Assessment.factory('3-5')
+    return Assessment.factory('9-12')
 
 
 def get_all_assessments() -> Dict[str, Assessment]:
     return {
-        '3-5': get_assessment('3-5')
+        '9-12': get_assessment('9-12')
     }
 
 
