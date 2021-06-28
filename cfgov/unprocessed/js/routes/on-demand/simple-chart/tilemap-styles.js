@@ -36,9 +36,10 @@ const tilemap = {
   },
   tooltip: {
     style: {
+      fontFamily: 'Avenir Next',
       fontSize: '16px'
     },
-    formatter: function() { return `${ this.point.name }<br/>Index value: <b>${ Math.round( this.point.value * 10 ) / 10 }</b>`; } },
+    formatter: function() { return `<b>${ this.point.name }</b><br/>Index value: <b>${ Math.round( this.point.value * 10 ) / 10 }</b>`; } },
   legend: {
     enabled: false,
     title: 'Index value'
