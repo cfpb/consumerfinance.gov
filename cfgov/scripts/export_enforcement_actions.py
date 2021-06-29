@@ -12,6 +12,7 @@ HEADINGS = [
     'Title',
     'Content',
     'Forum',
+    'Court',
     'Docket Numbers',
     'Initial Filing Date',
     'Statuses',
@@ -44,6 +45,7 @@ def assemble_output():
             'Title': page.title,
             'Content': content,
             'Forum': page_categories,
+            'Court': page.court,
             'Docket Numbers': ','.join(
                 d.docket_number for d in page.docket_numbers.all()),
             'Initial Filing Date': page.initial_filing_date,
