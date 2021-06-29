@@ -230,7 +230,7 @@ msgstr "Busca su pregunta"
 
 #: jinja2/v1/_includes/organisms/ask-search.html:63
 msgid "Search Ask CFPB for your question"
-msgstr "Busque Pregunte a CFPB por su pregunta"
+msgstr "Busque 'Obtener Respuestas' para su cuestionamiento"
 
 #: jinja2/v1/_includes/organisms/email-signup.html:53
 msgid "Email address"
@@ -1649,7 +1649,7 @@ msgstr "Jubilado"
 #~ "span>"
 
 #~ msgid "Search for your question."
-#~ msgstr "Busca su pregunta."
+#~ msgstr "Busque su pregunta."
 
 #~ msgid "answers within"
 #~ msgstr "respuestas dentro de"
