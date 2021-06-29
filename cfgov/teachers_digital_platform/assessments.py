@@ -12,6 +12,8 @@ import json
 
 PREFILL_ANSWERS = False
 
+AVAILABLE_ASSESSMENTS = ('9-12', )
+
 
 def _question_row(row: Dict[str, str]):
     return {
@@ -154,25 +156,11 @@ class AssessmentPage:
             'question_scores': question_scores,
         }
 
-    def get_form_class(self, name: str, inserted_key_field: str,
-                       prefix_tpls: Dict[str, str]):
-        fields = self.get_fields(prefix_tpls)
-
-        # Put a hidden "_k" field in the form to tell the Assessment
-        # wizard can figure out what assessment it's working with
-        # We pull this from initial data so there's no way the client
-        # can edit this.
-        if inserted_key_field != '':
-            fields['_k'] = forms.CharField(
-                widget=forms.HiddenInput,
-                initial=inserted_key_field,
-                disabled=True,
-            )
-
+    def get_form_class(self, name: str, prefix_tpls: Dict[str, str]):
         return type(
             name,
             (AssessmentForm,),
-            fields,
+            self.get_fields(prefix_tpls),
         )
 
 
@@ -213,20 +201,19 @@ class Assessment:
             return self.meta['score_multiplier']
         return 1
 
-    def get_form_list(self, assessment_key: str):
+    def get_form_list(self):
         page_classes = []
 
         for page_i, page in enumerate(self.pages):
             name = str(page_i + 1)
-            inserted_key_field = self.key if page_i == 0 else ''
 
             # Unique class name for each assessment + page (not technically
             # required but feels safer)
-            hash = hashlib.md5((assessment_key + '|' + name).encode())
+            hash = hashlib.md5((self.key + '|' + name).encode())
             classname = 'FormPage' + hash.hexdigest()
 
             page_classes.append((name, page.get_form_class(
-                classname, inserted_key_field, self.meta['prefix_tpls'])))
+                classname, self.meta['prefix_tpls'])))
 
         return tuple(page_classes)
 
@@ -243,7 +230,7 @@ class Assessment:
     @staticmethod
     def factory(key: str):
         """Build an assessment from CSV"""
-        assert key in available_assessments
+        assert key in AVAILABLE_ASSESSMENTS
 
         Assessment.setup_choices()
 
@@ -286,22 +273,6 @@ class Assessment:
         return Assessment(key, meta, pages)
 
 
-available_assessments = ('9-12')
-
-
 def get_assessment(key) -> Assessment:
-    assert key in available_assessments
-    return Assessment.factory('9-12')
-
-
-def get_all_assessments() -> Dict[str, Assessment]:
-    return {
-        '9-12': get_assessment('9-12')
-    }
-
-
-def get_form_lists():
-    form_lists = {}
-    for k, assessment in get_all_assessments().items():
-        form_lists[k] = assessment.get_form_list(k)
-    return form_lists
+    assert key in AVAILABLE_ASSESSMENTS
+    return Assessment.factory(key)

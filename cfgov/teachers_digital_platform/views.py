@@ -9,8 +9,7 @@ from django.template.loader import render_to_string
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
-from .assessments import (
-    Question, available_assessments, get_assessment, get_form_lists)
+from .assessments import Question, AVAILABLE_ASSESSMENTS, get_assessment
 from . import urlEncode
 
 
@@ -19,19 +18,10 @@ tdp = 'teachers_digital_platform'
 
 
 class AssessmentWizard(NamedUrlCookieWizardView):
-    def done(self, form_list, **kwargs):
-        # Find assessment based on hidden "_k" question in page1
-        first_page = self.get_form('1')
-        assessment_key = first_page.fields['_k'].initial
-        if (not isinstance(assessment_key, str) or
-                assessment_key not in available_assessments):
-            # Hmm this isn't right
-            response = HttpResponseRedirect('../')
-            response.delete_cookie('resultUrl')
-            response.delete_cookie('wizard_survey_wizard')
-            return response
+    assessment_key = ''
 
-        assessment = get_assessment(assessment_key)
+    def done(self, form_list, **kwargs):
+        assessment = get_assessment(self.assessment_key)
 
         # Calc score and encode in URL
         question_scores: Dict[Question, float] = assessment.get_score(
@@ -61,10 +51,9 @@ class AssessmentWizard(NamedUrlCookieWizardView):
         # By default, the big CSRF tokens get needlessly stored in the cookie
         # and take up a lot of space. This is bad because cookies have a
         # small limit.
-        dict = self.get_form_step_data(form)
-        return {
-            key: val for key, val in dict.items() if (
-                key != 'csrfmiddlewaretoken')}
+        dict = self.get_form_step_data(form).copy()
+        del dict['csrfmiddlewaretoken']
+        return dict
 
     def render(self, form=None, **kwargs):
         # Overriding so we can inject useful data
@@ -72,14 +61,11 @@ class AssessmentWizard(NamedUrlCookieWizardView):
         context = self.get_context_data(form=form, **kwargs)
 
         # Push the assessment and active page into template
-        first_page = self.get_form('1')
-        assessment_key = first_page.fields['_k'].initial
-        if assessment_key in available_assessments:
-            page_idx = int(context['step']) - 1
-            assessment = get_assessment(assessment_key)
-            context['assessment'] = assessment
-            context['page_idx'] = page_idx
-            context['questions_by_page'] = assessment.num_questions_by_page()
+        page_idx = int(context['step']) - 1
+        assessment = get_assessment(self.assessment_key)
+        context['assessment'] = assessment
+        context['page_idx'] = page_idx
+        context['questions_by_page'] = assessment.num_questions_by_page()
 
         return self.render_to_response(context)
 
@@ -87,10 +73,11 @@ class AssessmentWizard(NamedUrlCookieWizardView):
     def build_views():
         # Create view wrappers for our assessments.
         wizard_views = {}
-        for k, form_list in get_form_lists().items():
-            wizard_views[k] = AssessmentWizard.as_view(
-                form_list=form_list,
-                url_name=f'assessment_{k}_step',
+        for key in AVAILABLE_ASSESSMENTS:
+            wizard_views[key] = AssessmentWizard.as_view(
+                assessment_key=key,
+                form_list=get_assessment(key).get_form_list(),
+                url_name=f'assessment_{key}_step',
                 template_name=f'{tdp}/assess/single-page.html',
             )
         return wizard_views
