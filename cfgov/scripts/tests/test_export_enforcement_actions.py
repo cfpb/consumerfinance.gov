@@ -51,6 +51,7 @@ class TestExportEnforcementActions(TestCase):
             [{
                 'Forum': '',
                 'Title': 'Great Test Page',
+                'Court': '',
                 'Docket Numbers': '',
                 'Statuses': '',
                 'Products': '',
