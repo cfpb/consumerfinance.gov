@@ -8,14 +8,18 @@
 
    Create a hyperlink atom when given:
 
-   value:         An object with the following options for value.
+   value:            An object with the following options for value.
 
-   value.url:     A string for the URL of the link.
+   value.url:        A string for the URL of the link.
 
-   value.text:    A string for the text of the link.
+   value.text:       A string for the text of the link.
+
+   value.aria_label: An aria-label for the link, if the text is not descriptive.
 
    ========================================================================== #}
-<a class="a-link a-link__jump" href="{{ value.url }}">
+<a class="a-link a-link__jump"
+   href="{{ value.url }}"
+   {% if value.aria_label %}aria-label="{{ value.aria_label }}"{% endif %}>
     <span class="a-link_text">
         {{ value.text }}
     </span>

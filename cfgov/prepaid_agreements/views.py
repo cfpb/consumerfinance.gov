@@ -135,7 +135,7 @@ def index(request):
     current_count = products.count()
 
     # Handle pagination
-    paginator = Paginator(products.all(), 20)
+    paginator = Paginator(products.all(), 25)
     page = paginator.get_page(page_number)
 
     return TemplateResponse(request, 'prepaid_agreements/index.html', {
