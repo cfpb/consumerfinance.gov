@@ -106,7 +106,7 @@
     {% endif %}
 
     {% if value.statuses and form.statuses %}
-        {{ _filter_multiselect( 'Status', form.statuses ) }}
+        {{ _filter_multiselect( 'Status', form.statuses, filter_count ) }}
     {% endif %}
 
     {% if value.products %}
