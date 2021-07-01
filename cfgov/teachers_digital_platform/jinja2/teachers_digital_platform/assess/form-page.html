@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block title -%}
-    {{ assessment.meta.name }} | Consumer Financial Protection Bureau
+    Survey: {{ assessment.meta.name }} | Consumer Financial Protection Bureau
 {%- endblock %}
 
 {% block css -%}
@@ -40,16 +40,16 @@
         {% if wizard.steps.next %}
             <input type="submit" value="Continue..."/>
         {% else %}
-            <input type="submit" value="Finish"/>
+            <input type="submit" value="Get My Results"/>
         {% endif %}
         </form>
         <hr>
         Navigation:
-        <nav>
+        <menu>
             {% for name in wizard.steps.all %}
-                <li><a href="../{{ name }}/">{{ name }}</a></li>
+                <li><a href="../{{ name }}/">Page {{ name }}</a></li>
             {% endfor %}
-        </nav>
+        </menu>
     </div>
 {% endblock body_content %}
 

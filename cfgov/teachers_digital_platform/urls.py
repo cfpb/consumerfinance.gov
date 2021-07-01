@@ -17,21 +17,29 @@ urlpatterns = [
         )
     ),
 
-    re_path(
-        r'^$',
+    path(
+        r'',
         lambda request: ServeView.as_view()(request, request.path)
     ),
 
+    path(
+        r'assess/intro/',
+        TemplateView.as_view(
+            template_name=f'{tdp}/assess/intro.html'
+        ),
+        name='tdp_assess_intro',
+    ),
+
     # Handle all results (expects signed cookie "resultsUrl")
-    re_path(
-        r'^assess/results/$',
+    path(
+        r'assess/results/',
         views.student_results,
         name='tdp_assess_student_results',
     ),
 
     # View a shared results page (expects ?r=...signed value)
-    re_path(
-        r'^assess/view/$',
+    path(
+        r'assess/view/',
         views.view_results,
         name='tdp_assess_view_results',
     ),
@@ -45,13 +53,11 @@ for key, assessment_view in views.AssessmentWizard.build_views().items():
     urlpatterns.append(
         # Base URL for this assessment
         path(f'assess/{key}/', include([
-            # Handle redirect to assessment intro
+            # Handle redirect to grade-level intro page
             path(
                 '',
-                TemplateView.as_view(
-                    template_name=f'{tdp}/assess/intro-{key}.html'
-                ),
-                name=f'assessment_{key}_intro',
+                lambda req: views.grade_level_page(req, key),
+                name=f'assessment_{key}_grade_level',
             ),
             # URLs for particular steps
             re_path(

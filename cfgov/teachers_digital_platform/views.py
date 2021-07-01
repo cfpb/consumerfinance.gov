@@ -78,7 +78,7 @@ class AssessmentWizard(NamedUrlCookieWizardView):
                 assessment_key=key,
                 form_list=get_assessment(key).get_form_list(),
                 url_name=f'assessment_{key}_step',
-                template_name=f'{tdp}/assess/single-page.html',
+                template_name=f'{tdp}/assess/form-page.html',
             )
         return wizard_views
 
@@ -143,3 +143,14 @@ def view_results(request: HttpRequest):
         return HttpResponseRedirect('../')
 
     return _handle_result_url(request, raw, result_url, False)
+
+def grade_level_page(request: HttpRequest, key: str):
+    assessment = get_assessment(key)
+    rendered = render_to_string(
+        f'{tdp}/assess/grade-level-{key}.html',
+        {
+            'request': request,
+            'assessment': assessment,
+        },
+    )
+    return HttpResponse(status=200, content=rendered)

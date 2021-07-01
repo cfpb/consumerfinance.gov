@@ -1,0 +1,46 @@
+{% extends 'content-base.html' %}
+{% from 'organisms/expandable.html' import expandable with context %}
+
+{% block title -%}
+    Survey intro | Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+
+    <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
+{%- endblock css %}
+
+{% block pre_content scoped -%}
+{%- endblock %}
+
+{% block body_content scoped %}
+<div class="content_wrapper">
+    <section class="content_main">
+        <h1>Survey Intro</h1>
+        <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-1-3">
+                <a href="../3-5/">Grades 3-5 Survey</a>
+            </div>
+            <div class="content-l_col content-l_col-1-3 content-l_col__before-divider">
+                <a href="../6-8/">Grades 6-8 Survey</a>
+            </div>
+            <div class="content-l_col content-l_col-1-3 content-l_col__before-divider">
+                <a href="../9-12/">Grades 9-12 Survey</a>
+            </div>
+        </div>
+    </section>
+    <aside class="content_sidebar">
+        Sidebar
+    </aside>
+</div>
+{% endblock body_content %}
+
+{% block javascript %}
+    {{ super() }}
+
+    {# Conditional comment used to block IE8 and under from receiving JS #}
+    <!--[if gt IE 8]><!-->
+    <script src="{{ static('apps/teachers-digital-platform/js/index.js') }}"></script>
+    <!--<![endif]-->
+{% endblock javascript %}

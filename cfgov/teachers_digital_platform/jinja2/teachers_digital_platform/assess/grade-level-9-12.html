@@ -2,7 +2,7 @@
 {% from 'organisms/expandable.html' import expandable with context %}
 
 {% block title -%}
-    Results | Consumer Financial Protection Bureau
+    {{ assessment.meta.name }} Survey | Consumer Financial Protection Bureau
 {%- endblock %}
 
 {% block css -%}
@@ -16,7 +16,7 @@
 
 {% block body_content scoped %}
 <div class="content_wrapper tdp-assessment-intro">
-    <h1>Intro: Elementary</h1>
+    <h1>{{ assessment.meta.name }} Survey</h1>
 
     <p><a class="assess-entry-link" href="1/">Let's do it!</a></p>
 </div>
