@@ -37,16 +37,24 @@
         <h2>Share URL</h2>
         <form class="share-url-form">
             <div class="share-customize">
-                <label>Enter your initials:
-                    <input name="initials" type="text" required minlength="2" maxlength="4" autocomplete="off">
-                    <button>Create URL</button>
-                </label>
+                <input class="a-text-input"
+                   type="text"
+                   name="initials"
+                   placeholder="Enter your initials"
+                   required minlength="2" maxlength="4" autocomplete="off">
+                <button class="a-btn">Create URL</button>
             </div>
             <div class="share-output" hidden>
                 <input readonly type="text" onclick="this.select()" value=""
-                       class="shared-url" data-rparam="{{ r_param }}">
+                       class="shared-url a-text-input a-text-input__full" data-rparam="{{ r_param }}">
             </div>
         </form>
+
+        <p>
+            <a class="a-btn a-btn__warning results-start-over" href="../intro/">
+             Start Over
+            </a>
+        </p>
         {% endif %}
     </div>
 {% endblock body_content %}

@@ -11,17 +11,17 @@ const assessments = {
       return assessments.resultsPage();
     }
 
-    if ($( '.tdp-assessment-intro' )) {
-      return assessments.introPage();
+    if ($( '.tdp-assessment-grade-level' )) {
+      return assessments.gradeLevelIntroPage();
     }
 
     const el = $( '.tdp-assessment-page' );
     if (el) {
-      return this.surveyPage( el );
+      return assessments.surveyPage( el );
     }
   },
 
-  introPage() {
+  gradeLevelIntroPage() {
     // Entry links clear session before entry
     const link = $( '.assess-entry-link' );
 
@@ -82,6 +82,7 @@ const assessments = {
 
   resultsPage() {
     sessionStorage.removeItem( ANSWERS_SESS_KEY );
+    Cookie.remove( 'wizard_assessment_wizard' );
 
     const showInitials = $( '.show-initials' );
     if (showInitials) {
@@ -108,6 +109,13 @@ const assessments = {
         const shareUrl = a.href;
         output.value = encodeName.encodeNameInUrl( shareUrl, initials );
         $( '.share-output' ).hidden = false;
+      } );
+    }
+
+    const startOver = $( '.results-start-over' );
+    if (startOver) {
+      startOver.addEventListener( 'click', e => {
+        Cookie.remove( 'resultUrl' );
       } );
     }
   }

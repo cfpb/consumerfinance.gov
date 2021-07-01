@@ -24,7 +24,13 @@
          data-questions-by-page="{{ questions_by_page|tojson|forceescape }}">
         <h1>Survey Page {{ wizard.steps.step1 }}</h1>
         {% if wizard.steps.prev %}
-            <p><a href="../{{ wizard.steps.prev }}/">Previous</a></p>
+            <p>
+                <a class="a-link a-link__jump a-link__icon-before-text"
+                    href="../{{ wizard.steps.prev }}/">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 19" class="cf-icon-svg"><path d="M8.4 17.269a1.026 1.026 0 0 1-.727-.302l-6.801-6.8a1.03 1.03 0 0 1 0-1.456l6.8-6.8a1.03 1.03 0 0 1 1.456 1.455L3.055 9.439l6.073 6.073A1.03 1.03 0 0 1 8.4 17.27z"></path></svg>
+                <span class="a-link_text">Previous</span>
+            </a>
+            </p>
         {% endif %}
 
         <form action="" method="post"> {{ csrf_input }}
@@ -38,9 +44,9 @@
             {{ wizard.form.as_p() }}
         {% endif %}
         {% if wizard.steps.next %}
-            <input type="submit" value="Continue..."/>
+            <button class="a-btn" type="submit">Continue...</button>
         {% else %}
-            <input type="submit" value="Get My Results"/>
+            <button class="a-btn" type="submit">Get My Results</button>
         {% endif %}
         </form>
         <hr>
