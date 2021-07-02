@@ -61,7 +61,7 @@
     {% if show_topic_filter %}
         {% set filter_count = filter_count + 1 %}
     {% endif %}
-    {% if value.language %}
+    {% if value.language and show_topic_filter %}
         {% set filter_count = filter_count + 1 %}
     {% endif %}
     {% if value.statuses and form.statuses %}
@@ -101,7 +101,7 @@
         {{ _filter_multiselect( 'Topics', form.topics, filter_count ) }}
     {% endif %}
 
-    {% if value.language %}
+    {% if value.language and show_topic_filter %}
         {{ _filter_multiselect( 'Languages', form.language, filter_count ) }}
     {% endif %}
 
