@@ -139,7 +139,7 @@ class FilterableListMixin(RoutablePageMixin):
         form_data = {'archived': 'include'}
         has_active_filters = False
         for field in self.get_form_class().declared_fields:
-            if field in ['categories', 'topics', 'authors', 'statuses', 'products']:  # noqa: E501
+            if field in ['categories', 'topics', 'language', 'statuses', 'products']:  # noqa: E501
                 value = request_dict.getlist(field, [])
             else:
                 value = request_dict.get(field, '')

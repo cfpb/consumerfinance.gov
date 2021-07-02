@@ -855,8 +855,8 @@ class FilterableList(BaseExpandable):
                                    label='Filter Enforcement Statuses')
     products = blocks.BooleanBlock(default=False, required=False,
                                    label='Filter Enforcement Products')
-    authors = blocks.BooleanBlock(default=True, required=False,
-                                  label='Filter Authors')
+    language = blocks.BooleanBlock(default=True, required=False,
+                                  label='Filter Languages')
     date_range = blocks.BooleanBlock(default=True, required=False,
                                      label='Filter Date Range')
     output_5050 = blocks.BooleanBlock(default=False, required=False,
