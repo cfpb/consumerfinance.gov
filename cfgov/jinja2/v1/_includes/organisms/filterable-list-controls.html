@@ -101,7 +101,7 @@
         {{ _filter_multiselect( 'Topics', form.topics, filter_count ) }}
     {% endif %}
 
-    {% if value.language and show_topic_filter %}
+    {% if value.language and form.language %}
         {{ _filter_multiselect( 'Language', form.language, filter_count ) }}
     {% endif %}
 
