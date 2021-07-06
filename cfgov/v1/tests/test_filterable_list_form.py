@@ -107,10 +107,10 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.blog1)
 
-    def test_filter_by_author_names(self):
-        form = self.setUpFilterableForm(data={'authors': ['sarah-simpson']})
+    def test_filter_by_language(self):
+        form = self.setUpFilterableForm(data={'language': ['es']})
         page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 1)
+        self.assertEqual(len(page_set), 6)
         self.assertEqual(page_set[0].specific, self.blog1)
 
     def test_filter_by_title(self):
