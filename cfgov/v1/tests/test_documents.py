@@ -41,7 +41,7 @@ class FilterablePagesDocumentTest(TestCase):
         self.assertCountEqual(
             mapping.properties.properties.to_dict().keys(),
             [
-                'tags', 'categories', 'authors', 'title', 'url',
+                'tags', 'categories', 'language', 'title', 'url',
                 'is_archived', 'date_published', 'start_dt', 'end_dt',
                 'statuses', 'products', 'initial_filing_date', 'model_class',
                 'content', 'preview_description'
@@ -141,7 +141,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         )
         event.tags.add('test-topic')
         event.categories.add(CFGOVPageCategory(name='test-category'))
-        event.authors.add('test-author')
+        event.language.add('es')
         publish_page(event)
         enforcement = EnforcementActionPage(
             title="Great Test Page",
@@ -201,7 +201,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         search.filter(
             topics=['test-topic'],
             categories=['test-category'],
-            authors=['test-author'],
+            language=['es'],
             to_date=to_date,
             from_date=from_date,
             archived=['no']
@@ -219,7 +219,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         search.filter(
             topics=[],
             categories=[],
-            authors=[],
+            language=[],
             to_date=to_date,
             from_date=from_date,
             archived=None,
@@ -237,7 +237,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         search.filter(
             topics=[],
             categories=[],
-            authors=[],
+            language=[],
             to_date=to_date,
             from_date=from_date,
             statuses=['expired-terminated-dismissed'],
@@ -257,7 +257,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         search.filter(
             topics=[],
             categories=[],
-            authors=[],
+            language=[],
             to_date=to_date,
             from_date=from_date,
             statuses=[],
@@ -273,7 +273,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         search.filter(
             topics=[],
             categories=[],
-            authors=[],
+            language=[],
             to_date=None,
             from_date=None,
             archived=None
@@ -290,7 +290,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         search.filter(
             topics=[],
             categories=[],
-            authors=[],
+            language=[],
             to_date=None,
             from_date=None,
             archived=None
