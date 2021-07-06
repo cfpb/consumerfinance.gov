@@ -6,8 +6,6 @@ from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 
-from taggit.models import Tag
-
 from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
