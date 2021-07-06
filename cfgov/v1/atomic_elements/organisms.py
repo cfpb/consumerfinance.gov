@@ -856,7 +856,7 @@ class FilterableList(BaseExpandable):
     products = blocks.BooleanBlock(default=False, required=False,
                                    label='Filter Enforcement Products')
     language = blocks.BooleanBlock(
-        default=True,
+        default=False,
         required=False,
         label='Filter by Language',
         help_text='Adds a language filter. '
