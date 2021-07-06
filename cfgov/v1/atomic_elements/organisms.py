@@ -859,7 +859,8 @@ class FilterableList(BaseExpandable):
         default=False,
         required=False,
         label='Filter by Language',
-        help_text='Adds a language filter. '
+        help_text='Whether to include a "Language" filter '
+                  'in the filter controls.'
                   'Only enable if there are non-english '
                   'filterable results available.'
     )
