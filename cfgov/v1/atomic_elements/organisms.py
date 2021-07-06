@@ -801,13 +801,6 @@ class ItemIntroduction(blocks.StructBlock):
 
 
 class FilterableList(BaseExpandable):
-    title = blocks.BooleanBlock(
-        default=True,
-        required=False,
-        label='Filter by keyword',
-        help_text='Whether to include a "Search by keyword" filter '
-                  'in the filter controls.'
-    )
     no_posts_message = blocks.CharBlock(
         required=False,
         help_text=mark_safe(
@@ -826,6 +819,13 @@ class FilterableList(BaseExpandable):
         help_text='Strongly encouraged to help users understand the '
                   'action that the date of the post is linked to, '
                   'i.e. published, issued, released.')
+    title = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        label='Filter by keyword',
+        help_text='Whether to include a "Search by keyword" filter '
+                  'in the filter controls.'
+    )
     categories = blocks.StructBlock([
         ('filter_category',
          blocks.BooleanBlock(
