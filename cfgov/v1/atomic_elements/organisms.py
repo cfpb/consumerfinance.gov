@@ -801,8 +801,13 @@ class ItemIntroduction(blocks.StructBlock):
 
 
 class FilterableList(BaseExpandable):
-    title = blocks.BooleanBlock(default=True, required=False,
-                                label='Filter Title')
+    title = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        label='Filter by keyword',
+        help_text='Whether to include a "Search by keyword" filter '
+                  'in the filter controls.'
+    )
     no_posts_message = blocks.CharBlock(
         required=False,
         help_text=mark_safe(
@@ -823,7 +828,13 @@ class FilterableList(BaseExpandable):
                   'i.e. published, issued, released.')
     categories = blocks.StructBlock([
         ('filter_category',
-         blocks.BooleanBlock(default=True, required=False)),
+         blocks.BooleanBlock(
+            default=True,
+            required=False,
+            label='Filter by Category',
+            help_text='Whether to include a "Category" filter '
+                      'in the filter controls.'
+         )),
         ('show_preview_categories',
          blocks.BooleanBlock(default=True, required=False)),
         ('page_type', blocks.ChoiceBlock(
@@ -840,8 +851,8 @@ class FilterableList(BaseExpandable):
                 'Filter topics, sort topic list by number of results'),
         ],
         required=True,
-        help_text='Whether to include a dropdown in the filter controls '
-                  'for "Topics"')
+        help_text='Whether to include a "Topics" filter in the filter controls'
+    )
     order_by = blocks.ChoiceBlock(
         choices=[
             ('-date_published', 'Date Published'),
@@ -851,14 +862,33 @@ class FilterableList(BaseExpandable):
         help_text='How to order results',
         default='-date_published'
     )
-    statuses = blocks.BooleanBlock(default=False, required=False,
-                                   label='Filter Enforcement Statuses')
-    products = blocks.BooleanBlock(default=False, required=False,
-                                   label='Filter Enforcement Products')
+    statuses = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Filter by Enforcement Statuses',
+        help_text='Whether to include a "Status" filter '
+                  'in the filter controls. '
+                  'Only enable if using on an '
+                  'enforcement actions filterable list.'
+    )
+    products = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Filter by Enforcement Products',
+        help_text='Whether to include a "Product" filter '
+                  'in the filter controls. '
+                  'Only enable if using on an '
+                  'enforcement actions filterable list.'
+    )
     authors = blocks.BooleanBlock(default=True, required=False,
                                   label='Filter Authors')
-    date_range = blocks.BooleanBlock(default=True, required=False,
-                                     label='Filter Date Range')
+    date_range = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        label='Filter by Date Range',
+        help_text='Whether to include a set of "Date range" filters '
+                  'in the filter controls.'
+    )
     output_5050 = blocks.BooleanBlock(default=False, required=False,
                                       label="Render preview items as 50-50s")
     link_image_and_heading = blocks.BooleanBlock(
