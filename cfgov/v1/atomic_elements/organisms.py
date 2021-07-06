@@ -103,7 +103,7 @@ class InfoUnitGroup(blocks.StructBlock):
                    'units.')
     )
 
-    info_units = blocks.ListBlock(molecules.InfoUnit())
+    info_units = blocks.ListBlock(molecules.InfoUnit(), default=list())
 
     sharing = blocks.StructBlock([
         ('shareable', blocks.BooleanBlock(label='Include sharing links?',
@@ -121,7 +121,7 @@ class InfoUnitGroup(blocks.StructBlock):
         cleaned = super(InfoUnitGroup, self).clean(value)
 
         # Intro paragraph may only be specified with a heading.
-        if cleaned.get('intro') and not cleaned.get('heading'):
+        if cleaned.get('intro') and not cleaned.get('heading').get('text'):
             raise ValidationError(
                 'Validation error in InfoUnitGroup: intro with no heading',
                 params={'heading': ErrorList([
@@ -450,6 +450,8 @@ class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
 
     @staticmethod
     def json_dict_apply(value, callback):
+        if not value:
+            return
         value = json.loads(value)
 
         for row in (value or {}).get('data') or []:
