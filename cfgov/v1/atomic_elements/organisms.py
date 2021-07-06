@@ -828,13 +828,13 @@ class FilterableList(BaseExpandable):
     )
     categories = blocks.StructBlock([
         ('filter_category',
-         blocks.BooleanBlock(
-            default=True,
-            required=False,
-            label='Filter by Category',
-            help_text='Whether to include a "Category" filter '
-                      'in the filter controls.'
-         )),
+            blocks.BooleanBlock(
+                default=True,
+                required=False,
+                label='Filter by Category',
+                help_text='Whether to include a "Category" filter '
+                          'in the filter controls.'
+            )),
         ('show_preview_categories',
          blocks.BooleanBlock(default=True, required=False)),
         ('page_type', blocks.ChoiceBlock(
