@@ -1,0 +1,29 @@
+Key,Content
+Level0,Beginning
+Level1,Developing
+Level2,Proficient
+Level3,Advanced
+BB0,Executive function
+BB1,Financial habits and norms
+BB2,Financial knowledge and decision-making skills
+BBIntro0,"The thinking skills and abilities needed to plan ahead, focus attention, remember information, practice self-control, and juggle multiple tasks."
+BBIntro1,"The values, standards, routine practices, and rules to live by used to navigate day-to-day financial life."
+BBIntro2,The knowledge and skills needed to understand the financial world and make informed financial decisions.
+Area0,Area for growth
+Area1,On track
+Area2,Area for strength
+AreaDesc0,I need to grow in this area in order to build my financial capability.
+AreaDesc1,"I’m off to a good start, but I still have a lot to learn."
+AreaDesc2,"I have a lot of these attitudes, skills, and habits, but there’s always room to grow."
+"3-5,Levels",0 61 73 91
+"3-5,BB0",16 29 36
+"3-5,BB1",14 26 33
+"3-5,BB2",10 20 24
+"6-8,Levels",0 51 71 91
+"6-8,BB0",6 22 28
+"6-8,BB1",8 29 37
+"6-8,BB2",6 22 28
+"9-12,Levels",0 40 50 75
+"9-12,BB0",0 20 30
+"9-12,BB1",0 38 57
+"9-12,BB2",0 23 33

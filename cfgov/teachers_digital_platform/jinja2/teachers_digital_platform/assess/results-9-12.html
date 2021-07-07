@@ -16,6 +16,9 @@
 
 {% block body_content scoped %}
     <div class="content_wrapper tdp-assessment-results">
+        {% set level = content.find_level(score) %}
+        {% set bbs = content.building_blocks() %}
+
         {% if is_student %}
         <h1>Congrats!</h1>
         {% else %}
@@ -24,14 +27,15 @@
         </h1>
         {% endif %}
 
+        <p>Adjusted score: {{ score }} <b>{{ level.title }}</b></p>
+
         <h2>Viewing Assessment: {{ assessment.meta.name }}</h2>
-        <h3>Part scores</h3>
-        <ul>
-            {% for subtotal in subtotals %}
-            <li>{{ subtotal }}</li>
-            {% endfor %}
-        </ul>
-        <p>Adjusted score: {{ score }}</p>
+        {% for subtotal in subtotals %}
+        {% set area = content.find_area(loop.index0, subtotal) %}
+            <h3>{{ bbs[loop.index0].title }}</h3>
+            <p>{{ bbs[loop.index0].intro }}</p>
+            <p>{{ subtotal }} -> <b>{{ area.title }}</b>: {{ area.desc }}</p>
+        {% endfor %}
 
         {% if is_student %}
         <h2>Share URL</h2>

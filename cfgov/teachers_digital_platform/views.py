@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 from formtools.wizard.views import NamedUrlCookieWizardView
 
 from .assessments import Question, AVAILABLE_ASSESSMENTS, get_assessment
+from .resultsContent import ResultsContent
 from . import urlEncode
 
 
@@ -95,6 +96,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
     rendered = render_to_string(
         f'{tdp}/assess/results-{res["key"]}.html',
         {
+            'content': ResultsContent.factory(res['key']),
             'is_student': is_student,
             'request': request,
             'r_param': raw,
@@ -143,6 +145,7 @@ def view_results(request: HttpRequest):
         return HttpResponseRedirect('../')
 
     return _handle_result_url(request, raw, result_url, False)
+
 
 def grade_level_page(request: HttpRequest, key: str):
     assessment = get_assessment(key)
