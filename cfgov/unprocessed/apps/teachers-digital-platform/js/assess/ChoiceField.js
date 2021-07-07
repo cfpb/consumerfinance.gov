@@ -5,7 +5,7 @@ class ChoiceField {
     this.inputs = $$( `.ChoiceField[name="${ name }"]` );
     this.value = null;
     [].forEach.call( this.inputs, input => {
-      if (input.checked) {
+      if ( input.checked ) {
         this.value = input.value;
       }
     } );
@@ -14,7 +14,7 @@ class ChoiceField {
   changeValue( val ) {
     this.value = val;
     [].forEach.call( this.inputs, input => {
-      if (input.value === val) {
+      if ( input.value === val ) {
         input.checked = true;
       }
     } );
@@ -23,29 +23,31 @@ class ChoiceField {
 
 ChoiceField.cache = Object.create( null );
 
-ChoiceField.get = ( name ) => {
-  if (!ChoiceField.cache[name]) {
+ChoiceField.get = name => {
+  if ( !ChoiceField.cache[name] ) {
     ChoiceField.cache[name] = new ChoiceField( name );
   }
   return ChoiceField.cache[name];
 };
 
-ChoiceField.restoreFromSession = ( key ) => {
+ChoiceField.restoreFromSession = key => {
   const store = JSON.parse( sessionStorage.getItem( key ) || '{}' );
   let update = false;
 
-  Object.entries( ChoiceField.cache ).forEach( ( [ name, grp ] ) => {
-    if (grp.value !== null && typeof store[name] === 'undefined') {
+  const checkCache = ( [ name, grp ] ) => {
+    if ( grp.value === null ) {
+      if ( typeof store[name] !== 'undefined' ) {
+        // Sync storage to radio button
+        grp.changeValue( store[name] );
+      }
+    } else if ( typeof store[name] === 'undefined' ) {
       // Sync pre-selected radio to storage (for testing locally)
       store[name] = grp.value;
       update = true;
     }
+  };
 
-    if (grp.value === null && typeof store[name] !== 'undefined') {
-      // Sync storage to radio button
-      grp.changeValue( store[name] );
-    }
-  } );
+  Object.entries( ChoiceField.cache ).forEach( checkCache );
 
   if ( update ) {
     sessionStorage.setItem( key, JSON.stringify( store ) );
@@ -55,17 +57,19 @@ ChoiceField.restoreFromSession = ( key ) => {
 };
 
 ChoiceField.watchAndStore = ( key, store, onStoreUpdate ) => {
-  document.addEventListener( 'change', e => {
-    const t = e.target;
-    if (t instanceof HTMLInputElement && t.classList.contains( 'ChoiceField' )) {
-      if (t.checked) {
-        ChoiceField.get( t.name ).value = t.value;
-        store[t.name] = t.value;
-        sessionStorage.setItem( key, JSON.stringify( store ) );
-        if ( onStoreUpdate ) {
-          onStoreUpdate();
-        }
-      }
+  const storeValue = t => {
+    ChoiceField.get( t.name ).value = t.value;
+    store[t.name] = t.value;
+    sessionStorage.setItem( key, JSON.stringify( store ) );
+    if ( onStoreUpdate ) {
+      onStoreUpdate();
+    }
+  };
+
+  document.addEventListener( 'change', event => {
+    const t = event.target;
+    if ( t instanceof HTMLInputElement && t.classList.contains( 'ChoiceField' ) && t.checked ) {
+      storeValue( t );
     }
   } );
 };
