@@ -125,7 +125,7 @@ class FilterableListForm(forms.Form):
         self.wagtail_block = kwargs.pop('wagtail_block')
         self.filterable_categories = kwargs.pop('filterable_categories')
 
-        # This cache key is used for caching the language, topics, page_ids,
+        # This cache key is used for caching the topics, page_ids,
         # and the full set of Elasticsearch results for this form used to
         # generate them.
         # Default the cache key prefix to this form's hash if it's not
@@ -146,7 +146,7 @@ class FilterableListForm(forms.Form):
         """ Get all filterable document results from Elasticsearch
 
         This set of results is used to populate the list of all page_ids,
-        below, which is in turn used for populating topics and the language
+        below, which is in turn used for populating the topics
         relevant to those pages.
 
         This first document in this result set is also used to determine the
