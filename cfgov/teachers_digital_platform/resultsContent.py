@@ -30,19 +30,19 @@ class ResultsContent:
             })
         return bbs
 
-    def find_level(self, score: float):
-        idx = self._score_idx(f'{self.assessment_key},Levels', score)
+    def find_overall_progress(self, score: float):
+        idx = self._score_idx(f'{self.assessment_key},Progress', score)
         return {
             'idx': idx,
-            'title': self.get(f'Level{idx}'),
+            'msg_html': self.get(f'{self.assessment_key},Progress{idx}'),
         }
 
-    def find_area(self, part: int, score: float):
+    def find_bb_progress(self, part: int, score: float):
         idx = self._score_idx(f'{self.assessment_key},BB{part}', score)
+        part_keys = ['Planning', 'Habits', 'Knowledge']
         return {
             'idx': idx,
-            'title': self.get(f'Area{idx}'),
-            'desc': self.get(f'AreaDesc{idx}'),
+            'msg_html': self.get(f'{self.assessment_key},{part_keys[part]}{idx}'),
         }
 
     def _score_idx(self, key: str, score: float):
