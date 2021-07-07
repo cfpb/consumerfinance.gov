@@ -1,7 +1,8 @@
 from typing import List
 
 from . import base36
-from .assessments import Assessment, AVAILABLE_ASSESSMENTS, get_assessment
+from .assessments import AVAILABLE_ASSESSMENTS, Assessment, get_assessment
+
 
 # We won't need timestamps before this time
 # DO NOT CHANGE THIS

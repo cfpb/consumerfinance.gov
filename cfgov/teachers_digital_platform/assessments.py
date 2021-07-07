@@ -1,14 +1,14 @@
-from typing import Dict, List, Tuple, Any
-
-from django import forms
-from os.path import dirname
-
-from .TemplateField import TemplateField
-from .forms import AssessmentForm, markup
-
 import csv
 import hashlib
 import json
+from os.path import dirname
+from typing import Any, Dict, List, Tuple
+
+from django import forms
+
+from .forms import AssessmentForm, markup
+from .TemplateField import TemplateField
+
 
 PREFILL_ANSWERS = False
 

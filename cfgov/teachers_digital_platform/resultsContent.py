@@ -1,8 +1,6 @@
-from typing import Dict
-
-from os.path import dirname
-
 import csv
+from os.path import dirname
+from typing import Dict
 
 
 def _results_data_row(row: Dict[str, str]):

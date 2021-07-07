@@ -1,5 +1,4 @@
 import time
-
 from typing import Dict
 
 from django.core import signing
@@ -9,9 +8,9 @@ from django.template.loader import render_to_string
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
-from .assessments import Question, AVAILABLE_ASSESSMENTS, get_assessment
-from .resultsContent import ResultsContent
 from . import urlEncode
+from .assessments import AVAILABLE_ASSESSMENTS, Question, get_assessment
+from .resultsContent import ResultsContent
 
 
 signer = signing.Signer()
