@@ -7,7 +7,7 @@ const module = require(
 const testName = 'Iñtërnâtiô Nàlizætiøn';
 
 // Regular expression to check formal correctness of base64 encoded strings
-const b64re = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/;
+const b64re = /^(?:[A-Za-z\d+/]{4})*?(?:[A-Za-z\d+/]{2}(?:==)?|[A-Za-z\d+/]{3}=?)?$/;
 
 describe( 'encode-name module', () => {
 
@@ -21,7 +21,7 @@ describe( 'encode-name module', () => {
 
   it( 'can encode in URL, replacing hash', () => {
     const url = module.encodeNameInUrl( 'http://google.com/#foo', testName );
-    expect( /#foo/.test( url ) ).toEqual( false );
+    expect( ( /#foo/ ).test( url ) ).toEqual( false );
     const encoded = url.match( /#(.*)/ )[1];
     expect( b64re.test( encoded ) ).toEqual( true );
   } );

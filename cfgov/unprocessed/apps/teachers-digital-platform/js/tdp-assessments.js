@@ -7,29 +7,31 @@ const ANSWERS_SESS_KEY = 'tdp-assess-choices';
 
 const assessments = {
   init() {
-    if ($( '.tdp-assessment-results' )) {
+    if ( $( '.tdp-assessment-results' ) ) {
       return assessments.resultsPage();
     }
 
-    if ($( '.tdp-assessment-grade-level' )) {
+    if ( $( '.tdp-assessment-grade-level' ) ) {
       return assessments.gradeLevelIntroPage();
     }
 
     const el = $( '.tdp-assessment-page' );
-    if (el) {
+    if ( el ) {
       return assessments.surveyPage( el );
     }
+
+    return null;
   },
 
   gradeLevelIntroPage() {
     // Entry links clear session before entry
     const link = $( '.assess-entry-link' );
 
-    function forgetEverything() {
+    const forgetEverything = () => {
       Cookie.remove( 'resultUrl' );
       Cookie.remove( 'wizard_assessment_wizard' );
       sessionStorage.removeItem( ANSWERS_SESS_KEY );
-    }
+    };
 
     link.addEventListener( 'click', forgetEverything );
     link.addEventListener( 'mouseover', forgetEverything );
@@ -63,19 +65,19 @@ const assessments = {
     const store = ChoiceField.restoreFromSession( ANSWERS_SESS_KEY );
     data.numAnswered = Object.keys( store ).length;
 
-    let expectedDone = 0
-    for (let i = 0; i < data.pageIdx; i++) {
+    let expectedDone = 0;
+    for ( let i = 0; i < data.pageIdx; i++ ) {
       expectedDone += data.questionsByPage[i];
     }
-    if (data.numAnswered < expectedDone) {
+    if ( data.numAnswered < expectedDone ) {
       // User skipped a page, send them to first page
       location.href = '../1/';
       return;
     }
 
-    function onStoreUpdate() {
+    const onStoreUpdate = () => {
       data.numAnswered = Object.keys( store ).length;
-    }
+    };
 
     ChoiceField.watchAndStore( ANSWERS_SESS_KEY, store, onStoreUpdate );
   },
@@ -85,20 +87,20 @@ const assessments = {
     Cookie.remove( 'wizard_assessment_wizard' );
 
     const showInitials = $( '.show-initials' );
-    if (showInitials) {
+    if ( showInitials ) {
       // Show initials encoded in URL hash
       const initials = encodeName.decodeNameFromUrl( location.href );
-      if (initials) {
+      if ( initials ) {
         showInitials.querySelector( 'strong' ).textContent = initials;
         showInitials.hidden = false;
       }
     }
 
     const shareForm = $( '.share-url-form' );
-    if (shareForm) {
+    if ( shareForm ) {
       // Create share URL and show input once initials are entered
-      shareForm.addEventListener( 'submit', e => {
-        e.preventDefault();
+      shareForm.addEventListener( 'submit', event => {
+        event.preventDefault();
 
         // Create URL with initials
         const initials = $( '.share-customize [name=initials]' ).value.trim();
@@ -113,8 +115,8 @@ const assessments = {
     }
 
     const startOver = $( '.results-start-over' );
-    if (startOver) {
-      startOver.addEventListener( 'click', e => {
+    if ( startOver ) {
+      startOver.addEventListener( 'click', () => {
         Cookie.remove( 'resultUrl' );
       } );
     }

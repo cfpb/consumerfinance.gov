@@ -64,7 +64,7 @@ function encode( input ) {
     const hash = hashCode( input );
 
     return wwindow[btoa](
-      [keyB36, hash, xored].join( '.' )
+      [ keyB36, hash, xored ].join( '.' )
     );
   };
 
@@ -106,7 +106,7 @@ function decode( encoded ) {
     return null;
   }
 
-  const [, keyB36, hashExpected, xored] = m;
+  const [ , keyB36, hashExpected, xored ] = m;
   const key = parseInt( keyB36, 36 );
   const plain = xor( xored, key );
 
