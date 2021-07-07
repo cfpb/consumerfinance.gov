@@ -141,7 +141,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         )
         event.tags.add('test-topic')
         event.categories.add(CFGOVPageCategory(name='test-category'))
-        event.language.add('es')
+        event.language = 'es'
         publish_page(event)
         enforcement = EnforcementActionPage(
             title="Great Test Page",
