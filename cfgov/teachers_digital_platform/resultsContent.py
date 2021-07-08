@@ -31,18 +31,18 @@ class ResultsContent:
         return bbs
 
     def find_overall_progress(self, score: float):
-        idx = self._score_idx(f'{self.assessment_key},Progress', score)
+        idx = self._score_idx(f'{self.assessment_key} Progress', score)
         return {
             'idx': idx,
-            'msg_html': self.get(f'{self.assessment_key},Progress{idx}'),
+            'msg_html': self.get(f'{self.assessment_key} Progress{idx}'),
         }
 
     def find_bb_progress(self, part: int, score: float):
-        idx = self._score_idx(f'{self.assessment_key},BB{part}', score)
+        idx = self._score_idx(f'{self.assessment_key} BB{part}', score)
         word = ['Planning', 'Habits', 'Knowledge'][part]
         return {
             'idx': idx,
-            'msg_html': self.get(f'{self.assessment_key},{word}{idx}'),
+            'msg_html': self.get(f'{self.assessment_key} {word}{idx}'),
         }
 
     def _score_idx(self, key: str, score: float):
