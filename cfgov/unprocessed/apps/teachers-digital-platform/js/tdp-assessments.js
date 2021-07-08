@@ -71,7 +71,7 @@ const assessments = {
     }
     if ( data.numAnswered < expectedDone ) {
       // User skipped a page, send them to first page
-      location.href = '../1/';
+      location.href = '../p1/';
       return;
     }
 

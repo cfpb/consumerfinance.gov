@@ -1,3 +1,4 @@
+import re
 import time
 from typing import Dict
 
@@ -61,7 +62,7 @@ class AssessmentWizard(NamedUrlCookieWizardView):
         context = self.get_context_data(form=form, **kwargs)
 
         # Push the assessment and active page into template
-        page_idx = int(context['step']) - 1
+        page_idx = int(re.sub(r'\D+', '', context['step'])) - 1
         assessment = get_assessment(self.assessment_key)
         context['assessment'] = assessment
         context['page_idx'] = page_idx

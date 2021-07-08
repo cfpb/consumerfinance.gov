@@ -22,8 +22,9 @@ urlpatterns = [
         lambda request: ServeView.as_view()(request, request.path)
     ),
 
+    # Temporary, remove after wagtail page added
     path(
-        r'assess/intro/',
+        r'surveys/',
         TemplateView.as_view(
             template_name=f'{tdp}/assess/intro.html'
         ),
@@ -32,14 +33,14 @@ urlpatterns = [
 
     # Handle all results (expects signed cookie "resultsUrl")
     path(
-        r'assess/results/',
+        r'surveys/results/',
         views.student_results,
         name='tdp_assess_student_results',
     ),
 
     # View a shared results page (expects ?r=...signed value)
     path(
-        r'assess/view/',
+        r'surveys/view/',
         views.view_results,
         name='tdp_assess_view_results',
     ),
@@ -52,7 +53,7 @@ urlpatterns = [
 for key, assessment_view in views.AssessmentWizard.build_views().items():
     urlpatterns.append(
         # Base URL for this assessment
-        path(f'assess/{key}/', include([
+        path(f'surveys/{key}/', include([
             # Handle redirect to grade-level intro page
             path(
                 '',

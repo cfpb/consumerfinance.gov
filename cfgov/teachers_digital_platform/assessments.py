@@ -205,7 +205,7 @@ class Assessment:
         page_classes = []
 
         for page_i, page in enumerate(self.pages):
-            name = str(page_i + 1)
+            name = f'p{page_i + 1}'
 
             # Unique class name for each assessment + page (not technically
             # required but feels safer)
