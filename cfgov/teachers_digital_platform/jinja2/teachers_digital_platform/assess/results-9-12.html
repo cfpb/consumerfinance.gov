@@ -19,16 +19,21 @@
         {% set overall = content.find_overall_progress(score) %}
         {% set bbs = content.building_blocks() %}
 
-        {% if is_student %}
-            <h1>Your money journey results</h1>
-            <h2>Congratulations, you've completed the survey! Now let's review your results.</h2>
-        {% else %}
-            <h1>Results
-                <span hidden class="show-initials">for <strong></strong></span>
-            </h1>
-            <p>{{ assessment.meta.name }}</p>
-            <p>Adjusted score: {{ score }}</p>
+        {% if not is_student %}
+            <article class="m-card">
+                <h3>Summary <span hidden class="show-initials">for <strong></strong></span></h3>
+                <p>{{ assessment.meta.name }}. Score: {{ "%d" % (score) }}%</p>
+                <ul>
+                {% for subtotal in subtotals %}
+                    {% set progress = content.find_bb_progress(loop.index0, subtotals[loop.index0]) %}
+                    <li>{{ bbs[loop.index0].title }}: {{ "%d" % (subtotal) }} pts, level {{ progress.idx + 1 }}</li>
+                {% endfor %}
+                </ul>
+            </article>
         {% endif %}
+
+        <h1>Your money journey results</h1>
+        <h2>Congratulations, you've completed the survey! Now let's review your results.</h2>
 
         <article class="m-card">
             <h2 class="m-card_heading">
@@ -73,9 +78,9 @@
         <p>The survey questions...</p>
         <p>The three building blocks are:</p>
         <ul>
-            {% for subtotal in subtotals %}
+        {% for subtotal in subtotals %}
             <li><strong>{{ bbs[loop.index0].title }}:</strong> {{ bbs[loop.index0].intro }}</li>
-            {% endfor %}
+        {% endfor %}
         </ul>
 
         <h4>Here's how your results break down for each of the building blocks.</h4>

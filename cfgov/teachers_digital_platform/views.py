@@ -91,12 +91,13 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
 
     total = sum(res['subtotals'])
     adjusted = total * res['assessment'].get_score_multiplier()
+    student_view = False if 'share_view' in request.GET else is_student
 
     rendered = render_to_string(
         f'{tdp}/assess/results-{res["key"]}.html',
         {
             'content': ResultsContent.factory(res['key']),
-            'is_student': is_student,
+            'is_student': student_view,
             'request': request,
             'r_param': raw,
             'assessment': res['assessment'],
