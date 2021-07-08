@@ -12,7 +12,7 @@ from .TemplateField import TemplateField
 
 PREFILL_ANSWERS = False
 
-AVAILABLE_ASSESSMENTS = ('9-12', )
+AVAILABLE_ASSESSMENTS = ('3-5', '6-8', '9-12')
 
 
 def _question_row(row: Dict[str, str]):
