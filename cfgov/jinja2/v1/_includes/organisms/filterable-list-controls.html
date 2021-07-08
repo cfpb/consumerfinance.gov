@@ -97,7 +97,7 @@
         </div>
     {% endif %}
 
-    {% if show_topic_filter %}
+    {% if show_topic_filter and form.topics %}
         {{ _filter_multiselect( 'Topics', form.topics, filter_count ) }}
     {% endif %}
 
@@ -109,7 +109,7 @@
         {{ _filter_multiselect( 'Status', form.statuses, filter_count ) }}
     {% endif %}
 
-    {% if value.products %}
+    {% if value.products and form.products %}
         {{ _filter_multiselect( 'Product', form.products, filter_count ) }}
     {% endif %}
 
