@@ -20,45 +20,167 @@
         {% set bbs = content.building_blocks() %}
 
         {% if is_student %}
-        <h1>Congrats!</h1>
+            <h1>Your money journey results</h1>
+            <h2>Congratulations, you've completed the survey! Now let's review your results.</h2>
         {% else %}
-        <h1>Results
-            <span hidden class="show-initials">for <strong></strong></span>
-        </h1>
+            <h1>Results
+                <span hidden class="show-initials">for <strong></strong></span>
+            </h1>
+            <p>{{ assessment.meta.name }}</p>
+            <p>Adjusted score: {{ score }}</p>
         {% endif %}
 
-        <p>Adjusted score: {{ score }} -> idx={{ overall.idx }}: {{ overall.msg_html|safe }}</p>
+        <article class="m-card">
+            <h2 class="m-card_heading">
+                <a href="#">
+                    <div class="m-card_icon">
+<!--                    % include icons/star.svg %}-->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19" class="cf-icon-svg"><path d="m12.673 10.779.798 4.02c.221 1.11-.407 1.566-1.395 1.013L8.5 13.81l-3.576 2.002c-.988.553-1.616.097-1.395-1.013l.397-2.001.401-2.02-1.51-1.397-1.498-1.385c-.832-.769-.592-1.507.532-1.64l2.026-.24 2.044-.242 1.717-3.722c.474-1.028 1.25-1.028 1.724 0l1.717 3.722 2.044.242 2.026.24c1.124.133 1.364.871.533 1.64L14.184 9.38z"></path></svg>
+                    </div>
+                    <span>Your money journey results</span>
+                </a>
+            </h2>
 
-        <h2>Viewing Assessment: {{ assessment.meta.name }}</h2>
-        {% for subtotal in subtotals %}
-        {% set progress = content.find_bb_progress(loop.index0, subtotal) %}
-            <h3>{{ bbs[loop.index0].title }}</h3>
-            <p>{{ bbs[loop.index0].intro }}</p>
-            <p>{{ subtotal }} -> idx={{ progress.idx }}: {{ progress.msg_html|safe }}</p>
-        {% endfor %}
+            <p>{{ overall.msg_html|safe }}</p>
+
+            <p>[CAR]</p>
+
+            <p>[SHARES]</p>
+            {% if is_student %}
+                <form class="share-url-form">
+                    <div class="share-customize">
+                        <input class="a-text-input"
+                               type="text"
+                               name="initials"
+                               placeholder="Enter your initials"
+                               required minlength="2" maxlength="4" autocomplete="off">
+                        <button class="a-btn">Create URL</button>
+                    </div>
+                    <div class="share-output" hidden>
+                        <input readonly type="text" onclick="this.select()" value=""
+                               class="shared-url a-text-input a-text-input__full" data-rparam="{{ r_param }}">
+                    </div>
+                </form>
+            {% endif %}
+
+            <h3>Tips to get further down the road on your money journey:</h3>
+            <ol>
+                <li>[LIST]</li>
+            </ol>
+        </article>
+
+        <h2>Explore your results</h2>
+        <p>The survey questions...</p>
+        <p>The three building blocks are:</p>
+        <ul>
+            {% for subtotal in subtotals %}
+            <li><strong>{{ bbs[loop.index0].title }}:</strong> {{ bbs[loop.index0].intro }}</li>
+            {% endfor %}
+        </ul>
+
+        <h4>Here's how your results break down for each of the building blocks.</h4>
+
+        <div class="o-expandable-group">
+            <div class="o-expandable o-expandable__padded">
+                <button class="o-expandable_header o-expandable_target"
+                        title="Expand content">
+                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                        [ICON] Your results for planning and self-control
+                    </h3>
+                    <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_cue o-expandable_cue-open">
+                    <span class="u-visually-hidden-on-mobile">Show</span>
+                    <!-- % include icons/plus-round.svg %}-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg"><path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V6.12a.792.792 0 1 0-1.583 0V9.5H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 0 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791z"></path></svg>
+                </span>
+                <span class="o-expandable_cue o-expandable_cue-close">
+                    <span class="u-visually-hidden-on-mobile">Hide</span>
+                    <!-- % include icons/minus-round.svg %}-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg"><path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H4.32a.792.792 0 0 0 0 1.583h8.346a.792.792 0 0 0 .792-.791z"></path></svg>
+                </span>
+            </span>
+                </button>
+                <!-- TODO: Add o-expandable_content__onload-open if !is_student -->
+                <div class="o-expandable_content">
+                    {% set bb = 0 %}
+                    {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
+                    <p>[CAR based on subtotal: {{ subtotals[bb] }}, level {{ progress.idx + 1 }} of 3]</p>
+                    <p>{{ progress.msg_html|safe }} Extra content...</p>
+                    <p>[LISTS]</p>
+                </div>
+            </div>
+            <div class="o-expandable o-expandable__padded">
+                <button class="o-expandable_header o-expandable_target"
+                        title="Expand content">
+                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                        [ICON] Your results for money habits and values
+                    </h3>
+                    <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_cue o-expandable_cue-open">
+                    <span class="u-visually-hidden-on-mobile">Show</span>
+                    <!-- % include icons/plus-round.svg %}-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg"><path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V6.12a.792.792 0 1 0-1.583 0V9.5H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 0 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791z"></path></svg>
+                </span>
+                <span class="o-expandable_cue o-expandable_cue-close">
+                    <span class="u-visually-hidden-on-mobile">Hide</span>
+                    <!-- % include icons/minus-round.svg %}-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg"><path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H4.32a.792.792 0 0 0 0 1.583h8.346a.792.792 0 0 0 .792-.791z"></path></svg>
+                </span>
+            </span>
+                </button>
+                <!-- TODO: Add o-expandable_content__onload-open if !is_student -->
+                <div class="o-expandable_content">
+                    {% set bb = 1 %}
+                    {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
+                    <p>[CAR based on subtotal: {{ subtotals[bb] }}, level {{ progress.idx + 1 }} of 3]</p>
+                    <p>{{ progress.msg_html|safe }} Extra content...</p>
+                    <p>[LISTS]</p>
+                </div>
+            </div>
+            <div class="o-expandable o-expandable__padded">
+                <button class="o-expandable_header o-expandable_target"
+                        title="Expand content">
+                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                        [ICON] Your results for money knowledge and choices
+                    </h3>
+                    <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_cue o-expandable_cue-open">
+                    <span class="u-visually-hidden-on-mobile">Show</span>
+                    <!-- % include icons/plus-round.svg %}-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg"><path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V6.12a.792.792 0 1 0-1.583 0V9.5H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 0 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791z"></path></svg>
+                </span>
+                <span class="o-expandable_cue o-expandable_cue-close">
+                    <span class="u-visually-hidden-on-mobile">Hide</span>
+                    <!-- % include icons/minus-round.svg %}-->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg"><path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H4.32a.792.792 0 0 0 0 1.583h8.346a.792.792 0 0 0 .792-.791z"></path></svg>
+                </span>
+            </span>
+                </button>
+                <!-- TODO: Add o-expandable_content__onload-open if !is_student -->
+                <div class="o-expandable_content">
+                    {% set bb = 2 %}
+                    {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
+                    <p>[CAR based on subtotal: {{ subtotals[bb] }}, level {{ progress.idx + 1 }} of 3]</p>
+                    <p>{{ progress.msg_html|safe }} Extra content...</p>
+                    <p>[LISTS]</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>What does it all mean?</h2>
+        <p>Keep in mind that...</p>
+        <h4>Want to learn more? Check out these tools:</h4>
+        <p>Remember, come back...</p>
+        <ul>
+            <li>[LIST]</li>
+        </ul>
 
         {% if is_student %}
-        <h2>Share URL</h2>
-        <form class="share-url-form">
-            <div class="share-customize">
-                <input class="a-text-input"
-                   type="text"
-                   name="initials"
-                   placeholder="Enter your initials"
-                   required minlength="2" maxlength="4" autocomplete="off">
-                <button class="a-btn">Create URL</button>
-            </div>
-            <div class="share-output" hidden>
-                <input readonly type="text" onclick="this.select()" value=""
-                       class="shared-url a-text-input a-text-input__full" data-rparam="{{ r_param }}">
-            </div>
-        </form>
-
-        <p>
-            <a class="a-btn a-btn__warning results-start-over" href="../intro/">
-             Start Over
-            </a>
-        </p>
+            <p>
+                <a class="a-btn a-btn__warning results-start-over" href="../intro/">
+                    Start Over
+                </a>
+            </p>
         {% endif %}
     </div>
 {% endblock body_content %}
