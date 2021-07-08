@@ -880,8 +880,15 @@ class FilterableList(BaseExpandable):
                   'Only enable if using on an '
                   'enforcement actions filterable list.'
     )
-    authors = blocks.BooleanBlock(default=True, required=False,
-                                  label='Filter Authors')
+    language = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Filter by Language',
+        help_text='Whether to include a "Language" filter '
+                  'in the filter controls.'
+                  'Only enable if there are non-english '
+                  'filterable results available.'
+    )
     date_range = blocks.BooleanBlock(
         default=True,
         required=False,

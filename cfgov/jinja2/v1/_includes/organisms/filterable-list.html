@@ -93,7 +93,7 @@
             {% set count = posts.paginator.count %}
             {% if count == 0 %}
                 {# The if statement here allows access to the
-                    notification_opts variable outside of the for loop.
+                   notification_opts variable outside of the for loop.
                 #}
                 {% if notification_opts.update({
                     'type': 'warning',

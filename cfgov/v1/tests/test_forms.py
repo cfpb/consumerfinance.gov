@@ -11,17 +11,6 @@ from v1.forms import FilterableDateField, FilterableListForm
 class TestFilterableListForm(TestCase):
 
     @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('taggit.models.Tag.objects')
-    def test_set_authors_filters_tags_on_pageids(self, mock_tag_objects, mock_init):
-        mock_init.return_value = None
-        page_ids = [1, 2, 3, 4, 5]
-        form = FilterableListForm()
-        form.cache_key_prefix = 'test'
-        form.fields = {'authors': mock.Mock()}
-        form.set_authors(page_ids=page_ids)
-        mock_tag_objects.filter.assert_called_with(v1_cfgovauthoredpages_items__content_object__id__in=page_ids)
-
-    @mock.patch('v1.forms.FilterableListForm.__init__')
     @mock.patch('builtins.super')
     def test_clean_returns_cleaned_data_if_in_future(self, mock_super, mock_init):
         mock_init.return_value = None
