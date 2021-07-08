@@ -147,7 +147,7 @@ def view_results(request: HttpRequest):
     return _handle_result_url(request, raw, result_url, False)
 
 
-def grade_level_page(request: HttpRequest, key: str):
+def _grade_level_page(request: HttpRequest, key: str):
     assessment = get_assessment(key)
     rendered = render_to_string(
         f'{tdp}/assess/grade-level-{key}.html',
@@ -157,3 +157,8 @@ def grade_level_page(request: HttpRequest, key: str):
         },
     )
     return HttpResponse(status=200, content=rendered)
+
+
+def create_grade_level_page_handler(key: str):
+    # Critically this captures the key in the closure for later invocation.
+    return lambda request: _grade_level_page(request, key)

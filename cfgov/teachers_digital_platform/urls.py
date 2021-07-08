@@ -56,7 +56,7 @@ for key, assessment_view in views.AssessmentWizard.build_views().items():
             # Handle redirect to grade-level intro page
             path(
                 '',
-                lambda req: views.grade_level_page(req, key),
+                views.create_grade_level_page_handler(key),
                 name=f'assessment_{key}_grade_level',
             ),
             # URLs for particular steps
