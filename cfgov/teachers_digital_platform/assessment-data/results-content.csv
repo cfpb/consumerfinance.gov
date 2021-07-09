@@ -5,27 +5,27 @@ BB2,Money knowledge and choices
 BBIntro0,"The skill to plan ahead, focus, and practice self-control."
 BBIntro1,Behaviors and beliefs that guide the way you spend and save money.
 BBIntro2,The knowledge and skills to make money decisions that good for you and your goals.
-3-5 Progress,0 33 66
-3-5 BB0,0 29 36
-3-5 BB1,0 26 33
-3-5 BB2,0 20 24
-6-8 Progress,0 33 66
-6-8 BB0,0 22 28
-6-8 BB1,0 29 37
-6-8 BB2,0 22 28
-9-12 Progress,0 33 66
-9-12 BB0,0 20 30
-9-12 BB1,0 38 57
-9-12 BB2,0 23 33
-3-5 Progress0,You’re <strong>starting out!</strong> This means that you’re beginning to learn the important money skills and behaviors you’ll need now and in the future.
-6-8 Progress0,You’re <strong>starting out!</strong> This means that you’re beginning to learn the important money skills and behaviors you’ll need to manage your money now and in the future.
-9-12 Progress0,You’re <strong>starting out!</strong> This means that you’re beginning to learn the important money skills and behaviors you’ll need now and in the future.
-3-5 Progress1,"You’re <strong>on the road!</strong> This means you have some important money habits and skills, but you can still learn more."
-6-8 Progress1,"You’re <strong>on the road!</strong> This means you have some important money habits and skills, but you can still learn more."
-9-12 Progress1,"You’re <strong>on the road!</strong> This means you have some important money habits and skills, but you can still learn more."
-3-5 Progress2,You’re <strong>well on your way!</strong> This means you use many types of skills and behaviors that help you manage your money. But remember that we can always continue to improve.
-6-8 Progress2,You’re <strong>well on your way!</strong> This means you use many types of skills and behaviors that help you manage your money. But remember that everyone can always continue to improve.
-9-12 Progress2,You’re <strong>well on your way!</strong> This means you use many types of skills and behaviors that help you manage your money. But remember that we can always continue to improve.
+3-5 Overall,40 50 64 73 82 92
+3-5 BB0,0 8 16 24 32 40
+3-5 BB1,0 8 16 24 32 40
+3-5 BB2,0 8 16 24 32 40
+6-8 Overall,40 50 64 73 82 92
+6-8 BB0,0 8 16 24 32 40
+6-8 BB1,0 8 16 24 32 40
+6-8 BB2,0 8 16 24 32 40
+9-12 Overall,40 50 64 73 82 92
+9-12 BB0,0 8 16 24 32 40
+9-12 BB1,0 8 16 24 32 40
+9-12 BB2,0 8 16 24 32 40
+3-5 Overall0,You’re <strong>starting out!</strong> This means that you’re beginning to learn the important money skills and behaviors you’ll need now and in the future.
+6-8 Overall0,You’re <strong>starting out!</strong> This means that you’re beginning to learn the important money skills and behaviors you’ll need to manage your money now and in the future.
+9-12 Overall0,You’re <strong>starting out!</strong> This means that you’re beginning to learn the important money skills and behaviors you’ll need now and in the future.
+3-5 Overall1,"You’re <strong>on the road!</strong> This means you have some important money habits and skills, but you can still learn more."
+6-8 Overall1,"You’re <strong>on the road!</strong> This means you have some important money habits and skills, but you can still learn more."
+9-12 Overall1,"You’re <strong>on the road!</strong> This means you have some important money habits and skills, but you can still learn more."
+3-5 Overall2,You’re <strong>well on your way!</strong> This means you use many types of skills and behaviors that help you manage your money. But remember that we can always continue to improve.
+6-8 Overall2,You’re <strong>well on your way!</strong> This means you use many types of skills and behaviors that help you manage your money. But remember that everyone can always continue to improve.
+9-12 Overall2,You’re <strong>well on your way!</strong> This means you use many types of skills and behaviors that help you manage your money. But remember that we can always continue to improve.
 3-5 Planning0,You’re <strong>starting out</strong> in your journey to develop your planning and self-control skills!
 6-8 Planning0,You’re <strong>starting out</strong> on your journey to develop your planning and self-control skills!
 9-12 Planning0,You’re <strong>starting out</strong> in your journey to develop your planning and self-control skills!

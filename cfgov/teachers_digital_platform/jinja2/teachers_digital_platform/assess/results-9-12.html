@@ -29,7 +29,7 @@
                 <ul>
                 {% for subtotal in subtotals %}
                     {% set progress = content.find_bb_progress(loop.index0, subtotals[loop.index0]) %}
-                    <li>{{ bbs[loop.index0].title }}: {{ "%d" % (subtotal) }} pts, level {{ progress.idx + 1 }}</li>
+                    <li>{{ bbs[loop.index0].title }}: {{ "%d" % (subtotal) }} pts, level {{ progress.level_idx + 1 }}</li>
                 {% endfor %}
                 </ul>
                 -->
@@ -51,7 +51,7 @@
 
             <p>{{ overall.msg_html|safe }}</p>
 
-            <p>[CAR]</p>
+            <p>[CAR in position {{ overall.position_idx }}]</p>
 
             <p>[SHARES]</p>
             {% if is_student %}
@@ -109,7 +109,7 @@
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
                     {% set bb = 0 %}
                     {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
-                    <p>[CAR based on subtotal: {{ subtotals[bb] }}, level {{ progress.idx + 1 }} of 3]</p>
+                    <p>[CAR in position {{ progress.position_idx }}]</p>
                     <p>{{ progress.msg_html|safe }} Extra content...</p>
                     <p>[LISTS]</p>
                 </div>
@@ -134,7 +134,7 @@
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
                     {% set bb = 1 %}
                     {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
-                    <p>[CAR based on subtotal: {{ subtotals[bb] }}, level {{ progress.idx + 1 }} of 3]</p>
+                    <p>[CAR in position {{ progress.position_idx }}]</p>
                     <p>{{ progress.msg_html|safe }} Extra content...</p>
                     <p>[LISTS]</p>
                 </div>
@@ -159,7 +159,7 @@
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
                     {% set bb = 2 %}
                     {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
-                    <p>[CAR based on subtotal: {{ subtotals[bb] }}, level {{ progress.idx + 1 }} of 3]</p>
+                    <p>[CAR in position {{ progress.position_idx }}]</p>
                     <p>{{ progress.msg_html|safe }} Extra content...</p>
                     <p>[LISTS]</p>
                 </div>

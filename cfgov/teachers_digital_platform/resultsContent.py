@@ -15,7 +15,7 @@ class ResultsContent:
 
     def __init__(self, store: Dict[str, str], assessment_key: str):
         self.store = store
-        self.assessment_key = assessment_key
+        self.key = assessment_key
 
     def get(self, key: str):
         return self.store[key] if key in self.store else None
@@ -30,19 +30,31 @@ class ResultsContent:
             })
         return bbs
 
+    def level_from_position(self, pos_idx: int):
+        '''Map 6 car positions to 3 progress levels'''
+        return [0, 0, 1, 1, 1, 2][pos_idx]
+
     def find_overall_progress(self, score: float):
-        idx = self._score_idx(f'{self.assessment_key} Progress', score)
+        # Six positions map to 3 progress levels
+        pos_idx = self._score_idx(f'{self.key} Overall', score)
+        level_idx = self.level_from_position(pos_idx)
+
         return {
-            'idx': idx,
-            'msg_html': self.get(f'{self.assessment_key} Progress{idx}'),
+            'level_idx': level_idx,
+            'position_idx': pos_idx,
+            'msg_html': self.get(f'{self.key} Overall{level_idx}'),
         }
 
     def find_bb_progress(self, part: int, score: float):
-        idx = self._score_idx(f'{self.assessment_key} BB{part}', score)
+        # Six positions map to 3 progress levels
+        pos_idx = self._score_idx(f'{self.key} BB{part}', score)
+        level_idx = self.level_from_position(pos_idx)
         word = ['Planning', 'Habits', 'Knowledge'][part]
+
         return {
-            'idx': idx,
-            'msg_html': self.get(f'{self.assessment_key} {word}{idx}'),
+            'level_idx': level_idx,
+            'position_idx': pos_idx,
+            'msg_html': self.get(f'{self.key} {word}{level_idx}'),
         }
 
     def _score_idx(self, key: str, score: float):
