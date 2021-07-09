@@ -25,7 +25,7 @@ export class FilterableListControl {
   }
 
   resultsContent() {
-    return cy.get( '.o-post-preview_content' );
+    return cy.get( '.o-filterable-list_results .o-post-preview_content' );
   }
 
   firstResultContent() {

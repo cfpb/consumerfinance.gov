@@ -8,9 +8,15 @@ export class Filter {
     cy.get( '.a-btn__warning' ).click( { force: true } );
   }
 
-  clickAuthor( name ) {
-    const author = name.split( ' ' ).join( '-' ).toLowerCase();
-    return cy.get( `#authors-${ author }` ).click( { force: true } );
+  typeAheadLanguage( name ) {
+    return cy.get( `#o-filterable-list-controls_language` ).type( name );
+  }
+
+  clickLanguage( name ) {
+    cy.get( '#o-filterable-list-controls_language' ).click();
+    return cy.get( `label[for="language-${ name }"]` )
+      .scrollIntoView()
+      .click();
   }
 
   checkArchivedItem( name ) {
@@ -34,9 +40,16 @@ export class Filter {
     return cy.get( `#categories-${ category }` ).click( { force: true } );
   }
 
+  typeAheadTopic( name ) {
+    return cy.get( `#o-filterable-list-controls_topics` ).type( name );
+  }
+
   clickTopic( name ) {
     const topic = name.split( ' ' ).join( '-' ).toLowerCase();
-    return cy.get( `#topics-${ topic }` ).click( { force: true } );
+    cy.get( '#o-filterable-list-controls_topics' ).click();
+    return cy.get( `label[for="topics-${ topic }"]` )
+      .scrollIntoView()
+      .click();
   }
 
   expandable() {
