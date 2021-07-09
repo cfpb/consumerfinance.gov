@@ -32,9 +32,9 @@ def _decode_num(encoded: str):
 
 
 def dumps(survey: Survey, subtotals: List[float], time: int):
-    '''
+    """
     Encode info to a string
-    '''
+    """
     subtotal_strs = (_encode_num(x) for x in subtotals)
     time_str = _encode_time(time)
 
@@ -42,9 +42,9 @@ def dumps(survey: Survey, subtotals: List[float], time: int):
 
 
 def loads(encoded: str):
-    '''
+    """
     Decode from string
-    '''
+    """
     parts = encoded.split('_')
 
     if len(parts) != 4:

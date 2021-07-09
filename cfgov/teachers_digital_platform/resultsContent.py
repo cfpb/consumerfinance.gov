@@ -32,7 +32,7 @@ class ResultsContent:
         return bbs
 
     def level_from_position(self, pos_idx: int):
-        '''Map 6 car positions to 3 progress levels'''
+        """Map 6 car positions to 3 progress levels"""
         return [0, 0, 1, 1, 1, 2][pos_idx]
 
     def find_overall_progress(self, score: float):
