@@ -21,15 +21,19 @@
    is_subsection: Boolean; whether to mark up the form label with an h3 to fit
                   into an exisitng section or with an h2 to be its own section
 
+    max_length:   The maximum length of a query string, in characters
+
    ========================================================================== #}
 
+{# TODO: Should max_length be hardcoded? #}
 {% macro render(
     ask_query='',
     language='en',
     show_label=True,
     autocomplete=True,
     placeholder='',
-    is_subsection=True
+    is_subsection=True,
+    max_length=50
 ) %}
 <div class="o-search-bar">
     <form method="get" action="{{ _('/ask-cfpb/search/') }}">
@@ -54,7 +58,9 @@
                                name="q"
                                id="o-search-bar_query"
                                value="{{ ask_query }}"
-                               placeholder="{{ placeholder }}">
+                               placeholder="{{ placeholder }}"
+                               maxlength="{{ max_length }}"
+                               aria-describedby="o-search-bar-error_message">
                     </div>
                 </div>
                 <div class="o-form__input-w-btn_btn-container">
@@ -63,6 +69,20 @@
                             aria-label="{{ _('Search Ask CFPB for your question') }}">
                         {{ _('Search') }}
                     </button>
+                </div>
+                {# TODO: Refactor inline notification #}
+                <div style="margin-left: 15px;" class="a-form-alert a-form-alert__error u-hidden" id="o-search-bar-error_message" role="alert">
+                    {{ svg_icon('error-round') }}
+                    <p class="a-form-alert_text">
+                        You've enetered 50 characters for your search.
+                        If you're trying to submit a complaint
+                        instead of searching frequently asked questions,
+                        please
+                        <a href="/complaint/getting-started/">
+                            start a new complaint
+                        </a>, where you can enter your
+                        personal complaint information.
+                    </p>
                 </div>
             </div>
         </div>

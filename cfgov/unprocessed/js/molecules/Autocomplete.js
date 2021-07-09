@@ -45,6 +45,7 @@ function Autocomplete( element, opts ) {
   // Settings
   const _settings = {
     minChars: 2,
+    maxChars: 50, /* TODO Get this from the input's maxlength attribute */
     delay: 300,
     url: '',
     list: [],
@@ -128,6 +129,16 @@ function Autocomplete( element, opts ) {
   function _bindEvents() {
     _input.addEventListener( 'input', function() {
       _searchTerm = this.value;
+      // TODO: Refactor the max length stuff
+      if ( _searchTerm.length >= _settings.maxChars ) {
+        _input.classList.add( 'a-text-input__error' );
+        _input.blur();
+        document.getElementById( 'o-search-bar-error_message' ).classList.remove( 'u-hidden' );
+        return;
+      } else if ( _searchTerm.length <= _settings.maxChars ) {
+        _input.classList.remove( 'a-text-input__error' );
+        document.getElementById( 'o-search-bar-error_message' ).classList.add( 'u-hidden' );
+      }
       if ( _searchTerm.length >= _settings.minChars ) {
         if ( _settings.url ) {
           _throttleFetch();
