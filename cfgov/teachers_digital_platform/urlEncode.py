@@ -1,7 +1,7 @@
 from typing import List
 
 from . import base36
-from .assessments import AVAILABLE_ASSESSMENTS, Assessment, get_assessment
+from .surveys import AVAILABLE_SURVEYS, Survey, get_survey
 
 
 # We won't need timestamps before this time
@@ -31,14 +31,14 @@ def _decode_num(encoded: str):
     return float('.'.join(str(x) for x in nums))
 
 
-def dumps(assessment: Assessment, subtotals: List[float], time: int):
+def dumps(survey: Survey, subtotals: List[float], time: int):
     '''
     Encode info to a string
     '''
     subtotal_strs = (_encode_num(x) for x in subtotals)
     time_str = _encode_time(time)
 
-    return f'v1_{assessment.key}_{str(":".join(subtotal_strs))}_{time_str}'
+    return f'v1_{survey.key}_{str(":".join(subtotal_strs))}_{time_str}'
 
 
 def loads(encoded: str):
@@ -55,16 +55,16 @@ def loads(encoded: str):
     subtotals_enc = parts[2].split(':')
     time_enc = parts[3]
 
-    if key not in AVAILABLE_ASSESSMENTS:
+    if key not in AVAILABLE_SURVEYS:
         return None
 
-    assessment = get_assessment(key)
+    survey = get_survey(key)
     subtotals = tuple(_decode_num(x) for x in subtotals_enc)
     time = _decode_time(time_enc)
 
     return {
         'key': key,
-        'assessment': assessment,
+        'survey': survey,
         'subtotals': subtotals,
         'time': time,
     }

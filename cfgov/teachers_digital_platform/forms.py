@@ -32,7 +32,7 @@ def _replace_tokens(html: str) -> SafeData:
     return mark_safe(html)
 
 
-class AssessmentForm(Form):
+class SurveyForm(Form):
     def as_p(self):
         "Return this form rendered as HTML <p>s."
         output = self._html_output(

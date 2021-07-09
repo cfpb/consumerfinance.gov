@@ -1,23 +1,23 @@
 const Cookie = require( 'js-cookie' );
 const encodeName = require( './encode-name' );
-const ChoiceField = require( './assess/ChoiceField' );
+const ChoiceField = require( './survey/ChoiceField' );
 
 const $ = document.querySelector.bind( document );
-const ANSWERS_SESS_KEY = 'tdp-assess-choices';
+const ANSWERS_SESS_KEY = 'tdp-survey-choices';
 
-const assessments = {
+const surveys = {
   init() {
-    if ( $( '.tdp-assessment-results' ) ) {
-      return assessments.resultsPage();
+    if ( $( '.tdp-survey-results' ) ) {
+      return surveys.resultsPage();
     }
 
-    if ( $( '.tdp-assessment-grade-level' ) ) {
-      return assessments.gradeLevelIntroPage();
+    if ( $( '.tdp-survey-grade-level' ) ) {
+      return surveys.gradeLevelIntroPage();
     }
 
-    const el = $( '.tdp-assessment-page' );
+    const el = $( '.tdp-survey-page' );
     if ( el ) {
-      return assessments.surveyPage( el );
+      return surveys.surveyPage( el );
     }
 
     return null;
@@ -25,11 +25,11 @@ const assessments = {
 
   gradeLevelIntroPage() {
     // Entry links clear session before entry
-    const link = $( '.assess-entry-link' );
+    const link = $( '.survey-entry-link' );
 
     const forgetEverything = () => {
       Cookie.remove( 'resultUrl' );
-      Cookie.remove( 'wizard_assessment_wizard' );
+      Cookie.remove( 'wizard_survey_wizard' );
       sessionStorage.removeItem( ANSWERS_SESS_KEY );
     };
 
@@ -84,7 +84,7 @@ const assessments = {
 
   resultsPage() {
     sessionStorage.removeItem( ANSWERS_SESS_KEY );
-    Cookie.remove( 'wizard_assessment_wizard' );
+    Cookie.remove( 'wizard_survey_wizard' );
 
     const showInitials = $( '.show-initials' );
     if ( showInitials ) {
@@ -123,4 +123,4 @@ const assessments = {
   }
 };
 
-module.exports = assessments;
+module.exports = surveys;

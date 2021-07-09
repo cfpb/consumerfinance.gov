@@ -9,7 +9,7 @@ const scroll = require( './scroll' );
 const search = require( './search' );
 const sticky = require( './sticky' );
 const analytics = require( './tdp-analytics' );
-const assessments = require( './tdp-assessments' );
+const surveys = require( './tdp-surveys' );
 
 const app = {
   init: () => {
@@ -25,7 +25,7 @@ const app = {
 
     scroll.init();
     sticky.init();
-    assessments.init();
+    surveys.init();
     analytics.bindAnalytics();
   }
 };

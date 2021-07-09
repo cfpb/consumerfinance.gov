@@ -15,7 +15,7 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-    <div class="content_wrapper tdp-assessment-results">
+    <div class="content_wrapper tdp-survey-results">
         {% set overall = content.find_overall_progress(score) %}
         {% set bbs = content.building_blocks() %}
 
@@ -25,7 +25,7 @@
                     <span>Shared results <span hidden class="show-initials">for <strong></strong></span></span>
                 </h2>
                 <!-- TODO figure out if something like this will be desired.
-                <p>{{ assessment.meta.name }}. Score: {{ "%d" % (score) }}%</p>
+                <p>{{ survey.meta.name }}. Score: {{ "%d" % (score) }}%</p>
                 <ul>
                 {% for subtotal in subtotals %}
                     {% set progress = content.find_bb_progress(loop.index0, subtotals[loop.index0]) %}

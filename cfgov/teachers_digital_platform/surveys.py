@@ -6,13 +6,13 @@ from typing import Any, Dict, List, Tuple
 
 from django import forms
 
-from .forms import AssessmentForm, markup
+from .forms import SurveyForm, markup
 from .TemplateField import TemplateField
 
 
 PREFILL_ANSWERS = False
 
-AVAILABLE_ASSESSMENTS = ('3-5', '6-8', '9-12')
+AVAILABLE_SURVEYS = ('3-5', '6-8', '9-12')
 
 
 def _question_row(row: Dict[str, str]):
@@ -119,9 +119,9 @@ class ChoiceQuestion(Question):
         }
 
 
-class AssessmentPage:
+class SurveyPage:
     """
-    Page of an assessment
+    Page of an survey
     """
 
     def __init__(self, heading: str, questions: List[Question]):
@@ -159,18 +159,18 @@ class AssessmentPage:
     def get_form_class(self, name: str, prefix_tpls: Dict[str, str]):
         return type(
             name,
-            (AssessmentForm,),
+            (SurveyForm,),
             self.get_fields(prefix_tpls),
         )
 
 
-class Assessment:
+class Survey:
     """
-    A full assessment
+    A full survey
     """
 
     def __init__(self, key: str, meta: Dict[str, Any],
-                 pages: List[AssessmentPage]):
+                 pages: List[SurveyPage]):
         self.key = key
         self.meta = meta
         self.pages = pages
@@ -207,7 +207,7 @@ class Assessment:
         for page_i, page in enumerate(self.pages):
             name = f'p{page_i + 1}'
 
-            # Unique class name for each assessment + page (not technically
+            # Unique class name for each survey + page (not technically
             # required but feels safer)
             hash = hashlib.md5((self.key + '|' + name).encode())
             classname = 'FormPage' + hash.hexdigest()
@@ -221,7 +221,7 @@ class Assessment:
     def setup_choices():
         if len(choice_lists) > 0:
             return
-        path = f'{dirname(__file__)}/assessment-data/answer-types.csv'
+        path = f'{dirname(__file__)}/survey-data/answer-types.csv'
         with open(path, encoding='utf-8') as csv_file:
             reader = csv.DictReader(csv_file)
             for row in (_answer_types_row(row) for row in reader):
@@ -229,22 +229,22 @@ class Assessment:
 
     @staticmethod
     def factory(key: str):
-        """Build an assessment from CSV"""
-        assert key in AVAILABLE_ASSESSMENTS
+        """Build an survey from CSV"""
+        assert key in AVAILABLE_SURVEYS
 
-        Assessment.setup_choices()
+        Survey.setup_choices()
 
         q = 1
         last_page = None
-        pages: List[AssessmentPage] = []
+        pages: List[SurveyPage] = []
         questions: List[Question] = []
 
         def end_page(last_page: str):
-            page = AssessmentPage(f'Page {last_page}', questions.copy())
+            page = SurveyPage(f'Page {last_page}', questions.copy())
             pages.append(page)
             questions.clear()
 
-        path = f'{dirname(__file__)}/assessment-data/{key}.csv'
+        path = f'{dirname(__file__)}/survey-data/{key}.csv'
         with open(path, encoding='utf-8') as csv_file:
             reader = csv.DictReader(csv_file)
             for row in (_question_row(row) for row in reader):
@@ -266,13 +266,13 @@ class Assessment:
                 q += 1
         end_page(last_page)
 
-        path = f'{dirname(__file__)}/assessment-data/{key}-meta.json'
+        path = f'{dirname(__file__)}/survey-data/{key}-meta.json'
         with open(path) as json_file:
             meta = json.load(json_file)
 
-        return Assessment(key, meta, pages)
+        return Survey(key, meta, pages)
 
 
-def get_assessment(key) -> Assessment:
-    assert key in AVAILABLE_ASSESSMENTS
-    return Assessment.factory(key)
+def get_survey(key) -> Survey:
+    assert key in AVAILABLE_SURVEYS
+    return Survey.factory(key)

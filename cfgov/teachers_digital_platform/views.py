@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from formtools.wizard.views import NamedUrlCookieWizardView
 
 from . import urlEncode
-from .assessments import AVAILABLE_ASSESSMENTS, Question, get_assessment
+from .surveys import AVAILABLE_SURVEYS, Question, get_survey
 from .resultsContent import ResultsContent
 
 
@@ -18,14 +18,14 @@ signer = signing.Signer()
 tdp = 'teachers_digital_platform'
 
 
-class AssessmentWizard(NamedUrlCookieWizardView):
-    assessment_key = ''
+class SurveyWizard(NamedUrlCookieWizardView):
+    survey_key = ''
 
     def done(self, form_list, **kwargs):
-        assessment = get_assessment(self.assessment_key)
+        survey = get_survey(self.survey_key)
 
         # Calc score and encode in URL
-        question_scores: Dict[Question, float] = assessment.get_score(
+        question_scores: Dict[Question, float] = survey.get_score(
             self.get_all_cleaned_data())['question_scores']
         part_scores: Dict[str, float] = {}
 
@@ -35,7 +35,7 @@ class AssessmentWizard(NamedUrlCookieWizardView):
             part_scores[question.part] += score
 
         subtotals = list(v for k, v in sorted(part_scores.items()))
-        encoded = urlEncode.dumps(assessment, subtotals, int(time.time()))
+        encoded = urlEncode.dumps(survey, subtotals, int(time.time()))
 
         # We can't use set_signed_cookie() because we need to unsign the
         # query string using Signer() and for some reason the raw cookie
@@ -61,25 +61,25 @@ class AssessmentWizard(NamedUrlCookieWizardView):
         form = form or self.get_form()
         context = self.get_context_data(form=form, **kwargs)
 
-        # Push the assessment and active page into template
+        # Push the survey and active page into template
         page_idx = int(re.sub(r'\D+', '', context['step'])) - 1
-        assessment = get_assessment(self.assessment_key)
-        context['assessment'] = assessment
+        survey = get_survey(self.survey_key)
+        context['survey'] = survey
         context['page_idx'] = page_idx
-        context['questions_by_page'] = assessment.num_questions_by_page()
+        context['questions_by_page'] = survey.num_questions_by_page()
 
         return self.render_to_response(context)
 
     @staticmethod
     def build_views():
-        # Create view wrappers for our assessments.
+        # Create view wrappers for our surveys.
         wizard_views = {}
-        for key in AVAILABLE_ASSESSMENTS:
-            wizard_views[key] = AssessmentWizard.as_view(
-                assessment_key=key,
-                form_list=get_assessment(key).get_form_list(),
-                url_name=f'assessment_{key}_step',
-                template_name=f'{tdp}/assess/form-page.html',
+        for key in AVAILABLE_SURVEYS:
+            wizard_views[key] = SurveyWizard.as_view(
+                survey_key=key,
+                form_list=get_survey(key).get_form_list(),
+                url_name=f'survey_{key}_step',
+                template_name=f'{tdp}/survey/form-page.html',
             )
         return wizard_views
 
@@ -91,17 +91,17 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
         return HttpResponseRedirect('../')
 
     total = sum(res['subtotals'])
-    adjusted = total * res['assessment'].get_score_multiplier()
+    adjusted = total * res['survey'].get_score_multiplier()
     student_view = False if 'share_view' in request.GET else is_student
 
     rendered = render_to_string(
-        f'{tdp}/assess/results-{res["key"]}.html',
+        f'{tdp}/survey/results-{res["key"]}.html',
         {
             'content': ResultsContent.factory(res['key']),
             'is_student': student_view,
             'request': request,
             'r_param': raw,
-            'assessment': res['assessment'],
+            'survey': res['survey'],
             'subtotals': res['subtotals'],
             'score': adjusted,
             'time': time.gmtime(res['time']),
@@ -149,12 +149,12 @@ def view_results(request: HttpRequest):
 
 
 def _grade_level_page(request: HttpRequest, key: str):
-    assessment = get_assessment(key)
+    survey = get_survey(key)
     rendered = render_to_string(
-        f'{tdp}/assess/grade-level-{key}.html',
+        f'{tdp}/survey/grade-level-{key}.html',
         {
             'request': request,
-            'assessment': assessment,
+            'survey': survey,
         },
     )
     return HttpResponse(status=200, content=rendered)

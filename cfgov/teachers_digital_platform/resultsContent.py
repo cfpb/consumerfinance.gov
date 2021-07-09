@@ -13,9 +13,9 @@ def _results_data_row(row: Dict[str, str]):
 class ResultsContent:
     """Helps supply result page template with content"""
 
-    def __init__(self, store: Dict[str, str], assessment_key: str):
+    def __init__(self, store: Dict[str, str], survey_key: str):
         self.store = store
-        self.key = assessment_key
+        self.key = survey_key
 
     def get(self, key: str):
         return self.store[key] if key in self.store else None
@@ -70,12 +70,12 @@ class ResultsContent:
         return idx
 
     @staticmethod
-    def factory(assessment_key: str):
+    def factory(survey_key: str):
         store: Dict[str, str] = {}
-        path = f'{dirname(__file__)}/assessment-data/results-content.csv'
+        path = f'{dirname(__file__)}/survey-data/results-content.csv'
         with open(path, encoding='utf-8') as csv_file:
             reader = csv.DictReader(csv_file)
             for row in (_results_data_row(row) for row in reader):
                 store[row['k']] = row['v']
 
-        return ResultsContent(store, assessment_key)
+        return ResultsContent(store, survey_key)
