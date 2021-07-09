@@ -7,6 +7,7 @@ from typing import Any, Dict, List, Tuple, Optional
 from django import forms
 
 from .forms import SurveyForm, markup
+from .ChoiceWidget import ChoiceWidget
 from .TemplateField import TemplateField
 
 
@@ -85,9 +86,11 @@ class ChoiceQuestion(Question):
     """
 
     def __init__(self, num: int, part: str, label: str,
-                 choice_list: ChoiceList, answer_values: List[float]):
+                 choice_list: ChoiceList, answer_values: List[float],
+                 opts_list: Optional[ChoiceList] = None):
         super().__init__(num, part)
         self.choice_list = choice_list
+        self.opts_list = opts_list
         self.label = label
         self.answer_values = answer_values
 
@@ -117,9 +120,10 @@ class ChoiceQuestion(Question):
         return {
             'key': self.key,
             'field': forms.ChoiceField(
-                widget=forms.RadioSelect({
-                    'class': 'ChoiceField'
-                }),
+                widget=ChoiceWidget(
+                    {'class': 'tdp-survey__choice-question'},
+                    opts_list=self.opts_list
+                ),
                 choices=self.choice_list.choices,
                 label=label,
                 required=True,
@@ -260,8 +264,15 @@ class Survey:
                     msg = f'Unknown answer type {row["a"]}'
                     raise NameError(msg)
 
+                choices_key = row['a']
+                opts_key = f'{choices_key}-opts'
+                opts_list = None
+                if opts_key in choice_lists:
+                    opts_list = choice_lists[opts_key].labels
+
                 question = ChoiceQuestion(
-                    q, row['pt'], row['q'], choice_lists[row['a']], values)
+                    q, row['pt'], row['q'], choice_lists[choices_key],
+                    values, opts_list)
                 questions.append(question)
                 q += 1
         end_page(last_page)

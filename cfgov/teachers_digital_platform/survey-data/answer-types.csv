@@ -11,6 +11,8 @@ GetGame,,Get the game now and borrow money from your friend (you will need to pa
 BPImportant,,Find the style of backpack you like the best. | Count all the money you’ve saved. | Ask your friends which backpack they like more. | I don’t know.
 BPDecide,,Compare the price of the two backpacks and buy the less expensive one. | Compare the price of the two backpacks and buy the more expensive one. | Buy the same backpack that most of your friends have. | I don’t know.
 DSSetup,,"A, B, C | B, C, A | C, A, B | I don’t know."
+DSSetup-opts,,A. Make and sell drinks. | B. Borrow money to buy drink ingredients and cups. | C. Buy ingredients and cups to make drinks.
 BikeSteps,,"A, B, C | B, C, A | C, B, A | I don’t know."
+BikeSteps-opts,,A. Buy your bicycle after saving $100 from selling drinks. | B. Return the money you borrowed to make the drinks. | C. Keep track of the money you earned and spent selling drinks.
 MoneySafe,,Under your school desk | In your coat pocket | In a bank or credit union | I don’t know.
 G,,Very important | Somewhat important | Not important | I don't know
