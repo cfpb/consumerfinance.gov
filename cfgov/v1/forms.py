@@ -6,8 +6,6 @@ from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 
-from taggit.models import Tag
-
 from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
@@ -82,7 +80,12 @@ class FilterableListForm(forms.Form):
     categories = forms.MultipleChoiceField(
         required=False,
         choices=ref.page_type_choices,
-        widget=widgets.CheckboxSelectMultiple()
+        widget=widgets.SelectMultiple(attrs={
+            'id': 'o-filterable-list-controls_categories',
+            'class': 'o-multiselect',
+            'data-placeholder': 'Search for categories',
+            'multiple': 'multiple',
+        })
     )
 
     topics = forms.MultipleChoiceField(
@@ -96,13 +99,13 @@ class FilterableListForm(forms.Form):
         })
     )
 
-    authors = forms.MultipleChoiceField(
+    language = forms.MultipleChoiceField(
         required=False,
         choices=[],
         widget=widgets.SelectMultiple(attrs={
-            'id': 'o-filterable-list-controls_authors',
+            'id': 'o-filterable-list-controls_language',
             'class': 'o-multiselect',
-            'data-placeholder': 'Search for authors',
+            'data-placeholder': 'Search for language',
             'multiple': 'multiple',
         })
     )
@@ -122,9 +125,9 @@ class FilterableListForm(forms.Form):
         self.wagtail_block = kwargs.pop('wagtail_block')
         self.filterable_categories = kwargs.pop('filterable_categories')
 
-        # This cache key is used for caching authors, topics, page_ids, and
-        # the full set of Elasticsearch results for this form used to generate
-        # them.
+        # This cache key is used for caching the topics, page_ids,
+        # and the full set of Elasticsearch results for this form used to
+        # generate them.
         # Default the cache key prefix to this form's hash if it's not
         # provided.
         self.cache_key_prefix = kwargs.pop('cache_key_prefix', hash(self))
@@ -136,13 +139,14 @@ class FilterableListForm(forms.Form):
         self.all_filterable_results = self.get_all_filterable_results()
         page_ids = self.get_all_page_ids()
         self.set_topics(page_ids)
-        self.set_authors(page_ids)
+        # Populate language choices
+        self.fields['language'].choices = ref.supported_languages
 
     def get_all_filterable_results(self):
         """ Get all filterable document results from Elasticsearch
 
         This set of results is used to populate the list of all page_ids,
-        below, which is in turn used for populating topics and authors
+        below, which is in turn used for populating the topics
         relevant to those pages.
 
         This first document in this result set is also used to determine the
@@ -197,7 +201,7 @@ class FilterableListForm(forms.Form):
         self.filterable_search.filter(
             topics=self.cleaned_data.get('topics'),
             categories=categories,
-            authors=self.cleaned_data.get('authors'),
+            language=self.cleaned_data.get('language'),
             to_date=self.cleaned_data.get('to_date'),
             from_date=self.cleaned_data.get('from_date'),
             archived=self.cleaned_data.get('archived'),
@@ -240,19 +244,6 @@ class FilterableListForm(forms.Form):
                 cache.set(f"{self.cache_key_prefix}-topics", topics)
 
             self.fields['topics'].choices = topics
-
-    # Populate Authors' choices
-    def set_authors(self, page_ids):
-        # Cache the authors for this filterable list form to avoid
-        # repeated database lookups of the same data.
-        options = cache.get(f"{self.cache_key_prefix}-authors")
-        if options is None:
-            authors = Tag.objects.filter(
-                v1_cfgovauthoredpages_items__content_object__id__in=page_ids
-            ).values_list('slug', 'name')
-            options = self.prepare_options(arr=authors)
-            cache.set(f"{self.cache_key_prefix}-authors", options)
-        self.fields['authors'].choices = options
 
     def clean(self):
         cleaned_data = super(FilterableListForm, self).clean()
@@ -335,7 +326,12 @@ class EnforcementActionsFilterForm(FilterableListForm):
     statuses = forms.MultipleChoiceField(
         required=False,
         choices=enforcement_action_page.enforcement_statuses,
-        widget=widgets.CheckboxSelectMultiple()
+        widget=widgets.SelectMultiple(attrs={
+            'id': 'o-filterable-list-controls_statuses',
+            'class': 'o-multiselect',
+            'data-placeholder': 'Search for statuses',
+            'multiple': 'multiple',
+        })
     )
 
     products = forms.MultipleChoiceField(
@@ -353,7 +349,7 @@ class EnforcementActionsFilterForm(FilterableListForm):
         self.filterable_search.filter(
             topics=self.cleaned_data.get('topics'),
             categories=self.cleaned_data.get('categories'),
-            authors=self.cleaned_data.get('authors'),
+            language=self.cleaned_data.get('language'),
             to_date=self.cleaned_data.get('to_date'),
             from_date=self.cleaned_data.get('from_date'),
             statuses=self.cleaned_data.get('statuses'),
@@ -371,7 +367,7 @@ class EventArchiveFilterForm(FilterableListForm):
         self.filterable_search.filter(
             topics=self.cleaned_data.get('topics'),
             categories=self.cleaned_data.get('categories'),
-            authors=self.cleaned_data.get('authors'),
+            language=self.cleaned_data.get('language'),
             to_date=self.cleaned_data.get('to_date'),
             from_date=self.cleaned_data.get('from_date'),
         )

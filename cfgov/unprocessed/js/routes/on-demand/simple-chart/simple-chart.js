@@ -328,7 +328,7 @@ function getMapConfig( series, date ) {
         { from: step3, to: step4, color: '#d6e8fa', name: `${ step3 } - ${ trimTenth( step4 ) }` },
         { from: step4, color: '#7eb7e8', name: `${ step4 } - ${ max }` }
       ]},
-    series: [ { clip: false, borderColor: '#919395', borderWidth: 1, data: added } ]
+    series: [ { clip: false, borderColor: '#919395', borderWidth: 1, data: added, rowsize: 1, colsize: 1 } ]
   };
 }
 
@@ -748,8 +748,7 @@ function buildChart( chartNode ) {
   function fixViewbox() {
     const chartSVG = target.getElementsByClassName( 'highcharts-root' )[0];
     const width = chartSVG.width.animVal.value;
-    let height = 550;
-    if ( width <= 660 ) height = 450;
+    const height = 450;
     chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height }` );
     setTimeout( () => {
       chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height }` );

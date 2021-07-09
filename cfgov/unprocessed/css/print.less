@@ -58,17 +58,14 @@
     }
 
     a.o-header_logo-img:after,
-    a[href*="?authors"]:after,
     a.m-info-unit_heading-link:after,
     .m-info-unit_content h4 a:after {
-        // Don't append hrefs to the logo, author links or info unit headings.
+        // Don't append hrefs to the logo or info unit headings.
         content: none;
     }
 
-    a[href^="#"],
-    a[href*="?authors"]{
-        // Style in-page anchor links (like page TOCs) and author links
-        // to not look like links.
+    a[href^="#"]{
+        // Style in-page anchor links (like page TOCs) to not look like links.
         color: @gray-dark;
         border-bottom-width: 0;
     }
