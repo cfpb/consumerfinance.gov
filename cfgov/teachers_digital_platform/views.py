@@ -10,8 +10,8 @@ from django.template.loader import render_to_string
 from formtools.wizard.views import NamedUrlCookieWizardView
 
 from . import urlEncode
-from .surveys import AVAILABLE_SURVEYS, Question, get_survey
 from .resultsContent import ResultsContent
+from .surveys import AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
 
 
 signer = signing.Signer()
@@ -74,10 +74,11 @@ class SurveyWizard(NamedUrlCookieWizardView):
     def build_views():
         # Create view wrappers for our surveys.
         wizard_views = {}
+        choice_lists = ChoiceList.get_all()
         for key in AVAILABLE_SURVEYS:
             wizard_views[key] = SurveyWizard.as_view(
                 survey_key=key,
-                form_list=get_survey(key).get_form_list(),
+                form_list=get_survey(key, choice_lists).get_form_list(),
                 url_name=f'survey_{key}_step',
                 template_name=f'{tdp}/survey/form-page.html',
             )

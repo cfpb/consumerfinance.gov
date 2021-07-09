@@ -2,7 +2,7 @@ import csv
 import hashlib
 import json
 from os.path import dirname
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Optional
 
 from django import forms
 
@@ -49,8 +49,17 @@ class ChoiceList:
         labels = list(x.strip() for x in s.split('|'))
         return ChoiceList(labels)
 
+    @staticmethod
+    def get_all():
+        ret: Dict[str, ChoiceList] = {}
 
-choice_lists: Dict[str, ChoiceList] = {}
+        path = f'{dirname(__file__)}/survey-data/answer-types.csv'
+        with open(path, encoding='utf-8') as csv_file:
+            reader = csv.DictReader(csv_file)
+            for row in (_answer_types_row(row) for row in reader):
+                ret[row['k']] = ChoiceList.from_string(row['c'])
+
+        return ret
 
 
 class Question:
@@ -218,21 +227,12 @@ class Survey:
         return tuple(page_classes)
 
     @staticmethod
-    def setup_choices():
-        if len(choice_lists) > 0:
-            return
-        path = f'{dirname(__file__)}/survey-data/answer-types.csv'
-        with open(path, encoding='utf-8') as csv_file:
-            reader = csv.DictReader(csv_file)
-            for row in (_answer_types_row(row) for row in reader):
-                choice_lists[row['k']] = ChoiceList.from_string(row['c'])
-
-    @staticmethod
-    def factory(key: str):
+    def factory(key: str, choice_lists: Optional[Dict] = None):
         """Build an survey from CSV"""
         assert key in AVAILABLE_SURVEYS
 
-        Survey.setup_choices()
+        if choice_lists is None:
+            choice_lists = ChoiceList.get_all()
 
         q = 1
         last_page = None
@@ -273,6 +273,6 @@ class Survey:
         return Survey(key, meta, pages)
 
 
-def get_survey(key) -> Survey:
+def get_survey(key, choice_lists: Optional[Dict] = None) -> Survey:
     assert key in AVAILABLE_SURVEYS
-    return Survey.factory(key)
+    return Survey.factory(key, choice_lists)

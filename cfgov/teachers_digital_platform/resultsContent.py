@@ -18,7 +18,8 @@ class ResultsContent:
         self.key = survey_key
 
     def get(self, key: str):
-        return self.store[key] if key in self.store else None
+        assert key in self.store
+        return self.store[key]
 
     def building_blocks(self):
         bbs = []
