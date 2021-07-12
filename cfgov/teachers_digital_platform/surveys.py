@@ -121,7 +121,7 @@ class ChoiceQuestion(Question):
             'key': self.key,
             'field': forms.ChoiceField(
                 widget=ChoiceWidget(
-                    {'class': 'tdp-survey__choice-question'},
+                    {'class': 'ChoiceField tdp-survey__choice-question'},
                     opts_list=self.opts_list
                 ),
                 choices=self.choice_list.choices,
