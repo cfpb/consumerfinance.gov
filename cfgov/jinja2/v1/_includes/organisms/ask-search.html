@@ -62,6 +62,20 @@
                                maxlength="{{ max_length }}"
                                aria-describedby="o-search-bar-error_message">
                     </div>
+                    {# TODO: Refactor inline notification #}
+                    <div class="a-form-alert a-form-alert__error u-hidden" id="o-search-bar-error_message" role="alert">
+                        {{ svg_icon('error-round') }}
+                        <p class="a-form-alert_text">
+                            You've enetered 50 characters for your search.
+                            If you're trying to submit a complaint
+                            instead of searching frequently asked questions,
+                            please
+                            <a href="/complaint/getting-started/">
+                                start a new complaint
+                            </a>, where you can enter your
+                            personal complaint information.
+                        </p>
+                    </div>
                 </div>
                 <div class="o-form__input-w-btn_btn-container">
                     <button class="a-btn"
@@ -69,20 +83,6 @@
                             aria-label="{{ _('Search Ask CFPB for your question') }}">
                         {{ _('Search') }}
                     </button>
-                </div>
-                {# TODO: Refactor inline notification #}
-                <div style="margin-left: 15px;" class="a-form-alert a-form-alert__error u-hidden" id="o-search-bar-error_message" role="alert">
-                    {{ svg_icon('error-round') }}
-                    <p class="a-form-alert_text">
-                        You've enetered 50 characters for your search.
-                        If you're trying to submit a complaint
-                        instead of searching frequently asked questions,
-                        please
-                        <a href="/complaint/getting-started/">
-                            start a new complaint
-                        </a>, where you can enter your
-                        personal complaint information.
-                    </p>
                 </div>
             </div>
         </div>

@@ -134,10 +134,12 @@ function Autocomplete( element, opts ) {
         _input.classList.add( 'a-text-input__error' );
         _input.blur();
         document.getElementById( 'o-search-bar-error_message' ).classList.remove( 'u-hidden' );
+        document.querySelector( '.o-form__input-w-btn_btn-container button[type="submit"]' ).setAttribute( 'disabled', 'true' );
         return;
       } else if ( _searchTerm.length <= _settings.maxChars ) {
         _input.classList.remove( 'a-text-input__error' );
         document.getElementById( 'o-search-bar-error_message' ).classList.add( 'u-hidden' );
+        document.querySelector( '.o-form__input-w-btn_btn-container button[type="submit"]' ).removeAttribute( 'disabled' );
       }
       if ( _searchTerm.length >= _settings.minChars ) {
         if ( _settings.url ) {
