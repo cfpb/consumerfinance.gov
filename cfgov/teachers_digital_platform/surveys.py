@@ -87,8 +87,10 @@ class ChoiceQuestion(Question):
 
     def __init__(self, num: int, part: str, label: str,
                  choice_list: ChoiceList, answer_values: List[float],
-                 opts_list: Optional[ChoiceList] = None):
+                 opts_list: Optional[ChoiceList] = None,
+                 meta: Optional[Dict] = None):
         super().__init__(num, part)
+        self.meta = {} if meta is None else meta
         self.choice_list = choice_list
         self.opts_list = opts_list
         self.label = label
@@ -117,11 +119,16 @@ class ChoiceQuestion(Question):
         if PREFILL_ANSWERS:
             initial = self.answer_values.index(max(self.answer_values))
 
+        classes = ['ChoiceField', 'tdp-survey__choice-question']
+        if 'atype' in self.meta:
+            atype = self.meta["atype"]
+            classes.append(f'tdp-survey__atype-{atype}')
+
         return {
             'key': self.key,
             'field': forms.ChoiceField(
                 widget=ChoiceWidget(
-                    {'class': 'ChoiceField tdp-survey__choice-question'},
+                    {'class': ' '.join(classes)},
                     opts_list=self.opts_list
                 ),
                 choices=self.choice_list.choices,
@@ -260,11 +267,12 @@ class Survey:
                 last_page = row['pg']
 
                 values = list(int(x.strip()) for x in row['w'].split(' '))
-                if row['a'] not in choice_lists:
-                    msg = f'Unknown answer type {row["a"]}'
-                    raise NameError(msg)
 
                 choices_key = row['a']
+                if choices_key not in choice_lists:
+                    msg = f'Unknown answer type {choices_key}'
+                    raise NameError(msg)
+
                 opts_key = f'{choices_key}-opts'
                 opts_list = None
                 if opts_key in choice_lists:
@@ -272,7 +280,7 @@ class Survey:
 
                 question = ChoiceQuestion(
                     q, row['pt'], row['q'], choice_lists[choices_key],
-                    values, opts_list)
+                    values, opts_list, {'atype': choices_key})
                 questions.append(question)
                 q += 1
         end_page(last_page)
