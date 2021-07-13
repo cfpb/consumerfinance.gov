@@ -252,7 +252,7 @@ pipeline {
                 }
                 echo "Running functional tests against https://${CFGOV_HOSTNAME}"
                 build job: 'cf.gov-functional-tests', parameters: [
-                    [$class: 'StringParameterValue', name: 'BASE_URL', value: env.CFGOV_HOSTNAME],
+                    [$class: 'StringParameterValue', name: 'BASE_URL', value: "https://${env.CFGOV_HOSTNAME}/"],
                     [$class: 'StringParameterValue', name: 'GIT_TAG', value: env.GIT_COMMIT],
                 ]
                 postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
@@ -277,7 +277,7 @@ pipeline {
                 changeUrl = env.CHANGE_URL ? env.CHANGE_URL : env.GIT_URL
 
                 if (env.DEPLOY_SUCCESS == false) {
-                    postGitHubStatus("jenkins/deploy", "failure", "Failed", "https://${env.CFGOV_HOSTNAME}/")
+                    postGitHubStatus("jenkins/deploy", "failure", "Failed", env.RUN_DISPLAY_URL)
                     postGitHubStatus("jenkins/functional-tests", "error", "Cancelled", env.RUN_DISPLAY_URL)
                     deployText = "failed" 
                 } else {
