@@ -244,6 +244,20 @@ pipeline {
                 postGitHubStatus("jenkins/deploy", "success", "Deployed", env.RUN_DISPLAY_URL)
             }
         }
+
+        stage('Run functional tests') {
+            steps {
+                script{
+                    LAST_STAGE = env.STAGE_NAME
+                }
+                echo "Running functional tests against https://${CFGOV_HOSTNAME}"
+                build job: 'cf.gov-functional-tests', parameters: [
+                    [$class: 'StringParameterValue', name: 'BASE_URL', value: env.CFGOV_HOSTNAME],
+                    [$class: 'StringParameterValue', name: 'GIT_TAG', value: env.GIT_COMMIT],
+                ]
+                postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
+            }
+        }
     }
 
     post {
@@ -261,12 +275,20 @@ pipeline {
             script{
                 author = env.CHANGE_AUTHOR ? "by ${env.CHANGE_AUTHOR}" : "branch"
                 changeUrl = env.CHANGE_URL ? env.CHANGE_URL : env.GIT_URL
-                deployText = DEPLOY_SUCCESS ? "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed" : "failed"
+
+                if (env.DEPLOY_SUCCESS == false) {
+                    postGitHubStatus("jenkins/deploy", "failure", "Failed", "https://${env.CFGOV_HOSTNAME}/")
+                    postGitHubStatus("jenkins/functional-tests", "error", "Cancelled", env.RUN_DISPLAY_URL)
+                    deployText = "failed" 
+                } else {
+                    postGitHubStatus("jenkins/functional-tests", "failure", "Failed", env.RUN_DISPLAY_URL)
+                    deployText = "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed" 
+                }
+
                 notify("${NOTIFICATION_CHANNEL}",
                     """:x: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author $deployText at stage **${LAST_STAGE}**
                     \n:jenkins-devil: [Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})    :docker-dance: [Stack URL](${env.STACK_URL}) """)
 
-                postGitHubStatus("jenkins/deploy", "failure", "Failed", env.RUN_DISPLAY_URL)
             }
         }
     }
