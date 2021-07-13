@@ -132,7 +132,7 @@ function Autocomplete( element, opts ) {
       // TODO: Refactor the max length stuff
       if ( _searchTerm.length >= _settings.maxChars ) {
         _input.classList.add( 'a-text-input__error' );
-        _input.blur();
+        _hide();
         document.getElementById( 'o-search-bar-error_message' ).classList.remove( 'u-hidden' );
         document.querySelector( '.o-form__input-w-btn_btn-container button[type="submit"]' ).setAttribute( 'disabled', 'true' );
         return;
