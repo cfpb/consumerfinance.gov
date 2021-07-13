@@ -9,7 +9,7 @@ export class Filter {
   }
 
   typeAheadLanguage( name ) {
-    return cy.get( `#o-filterable-list-controls_language` ).type( name );
+    return cy.get( '#o-filterable-list-controls_language' ).type( name );
   }
 
   clickLanguage( name ) {
@@ -41,7 +41,7 @@ export class Filter {
   }
 
   typeAheadTopic( name ) {
-    return cy.get( `#o-filterable-list-controls_topics` ).type( name );
+    return cy.get( '#o-filterable-list-controls_topics' ).type( name );
   }
 
   clickTopic( name ) {
