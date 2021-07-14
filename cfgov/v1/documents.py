@@ -27,10 +27,7 @@ class FilterablePagesDocument(Document):
     categories = fields.ObjectField(properties={
         'name': fields.KeywordField()
     })
-    authors = fields.ObjectField(properties={
-        'name': fields.TextField(),
-        'slug': fields.KeywordField()
-    })
+    language = fields.KeywordField()
 
     title = fields.TextField(attr='title')
     is_archived = fields.KeywordField(attr='is_archived')
@@ -138,11 +135,11 @@ class FilterablePagesDocumentSearch:
                 categories__name=categories
             )
 
-    def filter_authors(self, authors=[]):
-        if authors not in ([], '', None):
+    def filter_language(self, language=[]):
+        if language not in ([], '', None):
             self.search_obj = self.search_obj.filter(
                 "terms",
-                authors__slug=authors
+                language=language
             )
 
     def filter_date(self, from_date=None, to_date=None):
@@ -186,12 +183,12 @@ class FilterablePagesDocumentSearch:
         """ Sort results by the given field """
         self.search_obj = self.search_obj.sort(order_by)
 
-    def filter(self, topics=[], categories=[], authors=[], to_date=None,
+    def filter(self, topics=[], categories=[], language=[], to_date=None,
                from_date=None, archived=None):
         """ Filter the results based on the given keyword arguments """
         self.filter_topics(topics=topics)
         self.filter_categories(categories=categories)
-        self.filter_authors(authors=authors)
+        self.filter_language(language=language)
         self.filter_date(from_date=from_date, to_date=to_date)
         self.filter_archived(archived=archived)
 

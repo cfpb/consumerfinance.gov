@@ -31,7 +31,7 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         blog1.categories.add(CFGOVPageCategory(name='bar'))
         blog1.tags.add('foo')
         blog1.authors.add('richa-agarwal')
-        blog1.authors.add('sarah-simpson')
+        blog1.language = 'es'
         blog2 = BlogPage(title='another test page')
         blog2.categories.add(CFGOVPageCategory(name='bar'))
         blog2.tags.add('blah')
@@ -107,8 +107,8 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.blog1)
 
-    def test_filter_by_author_names(self):
-        form = self.setUpFilterableForm(data={'authors': ['sarah-simpson']})
+    def test_filter_by_language(self):
+        form = self.setUpFilterableForm(data={'language': ['es']})
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.blog1)
