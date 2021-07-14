@@ -615,7 +615,7 @@ import { stateToHTML } from 'draft-js-export-html';
           }
         ],
         enableHorizontalRule: false,
-        enableLineBreak: false,
+        enableLineBreak: true,
         inlineStyles: [
           {
             type: 'BOLD',
