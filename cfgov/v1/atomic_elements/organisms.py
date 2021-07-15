@@ -77,8 +77,6 @@ class InfoUnitGroup(blocks.StructBlock):
 
     intro = blocks.RichTextBlock(
         required=False,
-        help_text='If this field is not empty, '
-                  'the Heading field must also be set.'
     )
 
     link_image_and_heading = blocks.BooleanBlock(
