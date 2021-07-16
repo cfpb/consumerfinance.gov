@@ -2,9 +2,8 @@
   "name": "Grade 9-12",
   "prefix_tpls": {
     "q1": "9-12/q1.html",
-    "q11": "9-12/q11.html",
-    "q30": "9-12/q30.html",
-    "q31": "9-12/q31.html"
+    "q9": "9-12/q9.html",
+    "q21": "9-12/q21.html"
   },
-  "score_multiplier": 0.625
+  "score_multiplier": [2, "/", 3]
 }

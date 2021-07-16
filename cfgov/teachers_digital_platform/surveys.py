@@ -216,10 +216,19 @@ class Survey:
             'total': total,
         }
 
-    def get_score_multiplier(self) -> float:
-        if 'score_multiplier' in self.meta:
-            return self.meta['score_multiplier']
-        return 1
+    def adjust_total_score(self, total) -> float:
+        if 'score_multiplier' not in self.meta:
+            return total
+
+        expr = self.meta['score_multiplier']
+
+        if isinstance(expr, (float, int)):
+            return total * expr
+
+        if type(expr) is list and len(expr) == 3 and expr[1] == '/':
+            return total * expr[0] / expr[2]
+
+        raise ValueError(f'score_multiplier {expr} is unsupported')
 
     def get_form_list(self):
         page_classes = []

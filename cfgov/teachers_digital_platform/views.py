@@ -92,7 +92,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
         return HttpResponseRedirect('../')
 
     total = sum(res['subtotals'])
-    adjusted = total * res['survey'].get_score_multiplier()
+    adjusted = res['survey'].adjust_total_score(total)
     student_view = False if 'share_view' in request.GET else is_student
 
     rendered = render_to_string(
