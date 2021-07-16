@@ -22,16 +22,7 @@
     <div class="content_wrapper tdp-survey-page"
          data-page-idx="{{ page_idx|tojson|forceescape }}"
          data-questions-by-page="{{ questions_by_page|tojson|forceescape }}">
-        <h1>Survey Page {{ wizard.steps.step1 }}</h1>
-        {% if wizard.steps.prev %}
-            <p>
-                <a class="a-link a-link__jump a-link__icon-before-text"
-                    href="../{{ wizard.steps.prev }}/">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 19" class="cf-icon-svg"><path d="M8.4 17.269a1.026 1.026 0 0 1-.727-.302l-6.801-6.8a1.03 1.03 0 0 1 0-1.456l6.8-6.8a1.03 1.03 0 0 1 1.456 1.455L3.055 9.439l6.073 6.073A1.03 1.03 0 0 1 8.4 17.27z"></path></svg>
-                <span class="a-link_text">Previous</span>
-            </a>
-            </p>
-        {% endif %}
+        {# <h1>Survey Page {{ wizard.steps.step1 }}</h1> #}
 
         <form action="" method="post"> {{ csrf_input }}
         {{ wizard.management_form }}
@@ -43,19 +34,29 @@
         {% else %}
             {{ wizard.form.as_p() }}
         {% endif %}
-        {% if wizard.steps.next %}
-            <button class="a-btn" type="submit">Continue...</button>
-        {% else %}
-            <button class="a-btn" type="submit">Get My Results</button>
-        {% endif %}
+
+            <p>
+            {% if wizard.steps.prev %}
+                <a class="a-btn" href="../{{ wizard.steps.prev }}/">
+                    {% include 'icons/left.svg' %} |
+                    <span class="a-link_text">Previous</span>
+                </a>
+            {% endif %}
+            {% if wizard.steps.next %}
+                <button class="a-btn" type="submit">
+                    Continue | {% include 'icons/right.svg' %}
+                </button>
+            {% else %}
+                <button class="a-btn" type="submit">
+                    Get My Results | {% include 'icons/right.svg' %}
+                </button>
+            {% endif %}
+                {# TODO wire this up #}
+                <a href="#">Reset survey and start over</a>
+            </p>
         </form>
-        <hr>
-        Navigation:
-        <menu>
-            {% for name in wizard.steps.all %}
-                <li><a href="../{{ name }}/">Page {{ name }}</a></li>
-            {% endfor %}
-        </menu>
+
+        {# wizard.steps.all is a list of 'p1', 'p2', ... #}
     </div>
 {% endblock body_content %}
 

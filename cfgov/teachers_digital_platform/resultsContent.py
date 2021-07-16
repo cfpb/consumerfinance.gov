@@ -39,11 +39,13 @@ class ResultsContent:
         # Six positions map to 3 progress levels
         pos_idx = self._score_idx(f'{self.key} Overall', score)
         level_idx = self.level_from_position(pos_idx)
+        heading, msg = self.get(f'{self.key} Overall{level_idx}').split('|')
 
         return {
             'level_idx': level_idx,
             'position_idx': pos_idx,
-            'msg_html': self.get(f'{self.key} Overall{level_idx}'),
+            'heading_html': heading,
+            'msg_html': msg,
         }
 
     def find_bb_progress(self, part: int, score: float):

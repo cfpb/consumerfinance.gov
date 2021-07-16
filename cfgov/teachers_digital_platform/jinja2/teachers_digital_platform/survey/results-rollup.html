@@ -1,0 +1,9 @@
+<!-- UNUSED -->
+
+<p>{{ survey.meta.name }}. Score: {{ "%d" % (score) }}%</p>
+<ul>
+{% for subtotal in subtotals %}
+    {% set progress = content.find_bb_progress(loop.index0, subtotals[loop.index0]) %}
+    <li>{{ bbs[loop.index0].title }}: {{ "%d" % (subtotal) }} pts, level {{ progress.level_idx + 1 }}</li>
+{% endfor %}
+</ul>

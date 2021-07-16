@@ -24,76 +24,44 @@
                 <h2 class="m-card_heading">
                     <span>Shared results <span hidden class="show-initials">for <strong></strong></span></span>
                 </h2>
-                <!-- TODO figure out if something like this will be desired.
-                <p>{{ survey.meta.name }}. Score: {{ "%d" % (score) }}%</p>
-                <ul>
-                {% for subtotal in subtotals %}
-                    {% set progress = content.find_bb_progress(loop.index0, subtotals[loop.index0]) %}
-                    <li>{{ bbs[loop.index0].title }}: {{ "%d" % (subtotal) }} pts, level {{ progress.level_idx + 1 }}</li>
-                {% endfor %}
-                </ul>
-                -->
             </article>
         {% endif %}
 
         <h1>Your money journey results</h1>
-        <h2>Congratulations, you've completed the survey! Now let's review your results.</h2>
+        <h2>Congratulations, {{ overall.heading_html|safe }}</h2>
+        <p>{{ overall.msg_html|safe }}</p>
 
-        <article class="m-card">
-            <h2 class="m-card_heading">
-                <a href="#">
-                    <div class="m-card_icon">
-                        {% include 'icons/star.svg' %}
-                    </div>
-                    <span>Your money journey results</span>
-                </a>
-            </h2>
+        <p>[CAR in position {{ overall.position_idx }}]</p>
 
-            <p>{{ overall.msg_html|safe }}</p>
+        <p>[SHARES]</p>
+        {% if is_student %}
+            <form class="share-url-form">
+                <div class="share-customize">
+                    <input class="a-text-input"
+                           type="text"
+                           name="initials"
+                           placeholder="Enter your initials"
+                           required minlength="2" maxlength="4" autocomplete="off">
+                    <button class="a-btn">Create URL</button>
+                </div>
+                <div class="share-output" hidden>
+                    <input readonly type="text" onclick="this.select()" value=""
+                           class="shared-url a-text-input a-text-input__full" data-rparam="{{ r_param }}">
+                </div>
+            </form>
+        {% endif %}
 
-            <p>[CAR in position {{ overall.position_idx }}]</p>
-
-            <p>[SHARES]</p>
-            {% if is_student %}
-                <form class="share-url-form">
-                    <div class="share-customize">
-                        <input class="a-text-input"
-                               type="text"
-                               name="initials"
-                               placeholder="Enter your initials"
-                               required minlength="2" maxlength="4" autocomplete="off">
-                        <button class="a-btn">Create URL</button>
-                    </div>
-                    <div class="share-output" hidden>
-                        <input readonly type="text" onclick="this.select()" value=""
-                               class="shared-url a-text-input a-text-input__full" data-rparam="{{ r_param }}">
-                    </div>
-                </form>
-            {% endif %}
-
-            <h3>Tips to get further down the road on your money journey:</h3>
-            <ol>
-                <li>[LIST]</li>
-            </ol>
-        </article>
-
-        <h2>Explore your results</h2>
-        <p>The survey questions...</p>
-        <p>The three building blocks are:</p>
-        <ul>
-        {% for subtotal in subtotals %}
-            <li><strong>{{ bbs[loop.index0].title }}:</strong> {{ bbs[loop.index0].intro }}</li>
-        {% endfor %}
-        </ul>
-
-        <h4>Here's how your results break down for each of the building blocks.</h4>
+        <h2>Exploring your results</h2>
+        <p>Your overall result is based...</p>
 
         <div class="o-expandable-group">
+            {% set bb = 0 %}
+            {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
             <div class="o-expandable o-expandable__padded">
                 <button class="o-expandable_header o-expandable_target"
                         title="Expand content">
                     <h3 class="h4 o-expandable_header-left o-expandable_label">
-                        [ICON] Your results for planning and self-control
+                        [ICON] {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_header-right o-expandable_link">
                 <span class="o-expandable_cue o-expandable_cue-open">
@@ -107,18 +75,18 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
-                    {% set bb = 0 %}
-                    {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
                     <p>[CAR in position {{ progress.position_idx }}]</p>
                     <p>{{ progress.msg_html|safe }} Extra content...</p>
                     <p>[LISTS]</p>
                 </div>
             </div>
+            {% set bb = 1 %}
+            {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
             <div class="o-expandable o-expandable__padded">
                 <button class="o-expandable_header o-expandable_target"
                         title="Expand content">
                     <h3 class="h4 o-expandable_header-left o-expandable_label">
-                        [ICON] Your results for money habits and values
+                        [ICON] {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_header-right o-expandable_link">
                 <span class="o-expandable_cue o-expandable_cue-open">
@@ -132,18 +100,18 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
-                    {% set bb = 1 %}
-                    {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
                     <p>[CAR in position {{ progress.position_idx }}]</p>
                     <p>{{ progress.msg_html|safe }} Extra content...</p>
                     <p>[LISTS]</p>
                 </div>
             </div>
+            {% set bb = 2 %}
+            {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
             <div class="o-expandable o-expandable__padded">
                 <button class="o-expandable_header o-expandable_target"
                         title="Expand content">
                     <h3 class="h4 o-expandable_header-left o-expandable_label">
-                        [ICON] Your results for money knowledge and choices
+                        [ICON] {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_header-right o-expandable_link">
                 <span class="o-expandable_cue o-expandable_cue-open">
@@ -157,8 +125,6 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
-                    {% set bb = 2 %}
-                    {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
                     <p>[CAR in position {{ progress.position_idx }}]</p>
                     <p>{{ progress.msg_html|safe }} Extra content...</p>
                     <p>[LISTS]</p>
@@ -176,8 +142,8 @@
 
         {% if is_student %}
             <p>
-                <a class="a-btn a-btn__warning results-start-over" href="../">
-                    Start Over
+                <a class="results-start-over a-btn a-btn__link a-btn__warning" href="../">
+                    Reset survey and start over
                 </a>
             </p>
         {% endif %}
