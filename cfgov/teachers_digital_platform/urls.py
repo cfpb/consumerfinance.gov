@@ -24,7 +24,7 @@ urlpatterns = [
 
     # Temporary, remove after wagtail page added
     path(
-        r'surveys/',
+        r'survey/',
         TemplateView.as_view(
             template_name=f'{tdp}/survey/intro.html'
         ),
@@ -33,14 +33,14 @@ urlpatterns = [
 
     # Handle all results (expects signed cookie "resultsUrl")
     path(
-        r'surveys/results/',
+        r'survey/results/',
         views.student_results,
         name='tdp_survey_student_results',
     ),
 
     # View a shared results page (expects ?r=...signed value)
     path(
-        r'surveys/view/',
+        r'survey/view/',
         views.view_results,
         name='tdp_survey_view_results',
     ),
@@ -53,7 +53,7 @@ urlpatterns = [
 for key, survey_view in views.SurveyWizard.build_views().items():
     urlpatterns.append(
         # Base URL for this survey
-        path(f'surveys/{key}/', include([
+        path(f'survey/{key}/', include([
             # Handle redirect to grade-level intro page
             path(
                 '',
