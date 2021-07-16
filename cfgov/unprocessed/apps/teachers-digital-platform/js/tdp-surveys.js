@@ -1,6 +1,8 @@
 const Cookie = require( 'js-cookie' );
 const encodeName = require( './encode-name' );
 const ChoiceField = require( './survey/ChoiceField' );
+const modals = require( './modals' );
+const initials = require( './survey/initials' );
 
 const $ = document.querySelector.bind( document );
 const ANSWERS_SESS_KEY = 'tdp-survey-choices';
@@ -83,39 +85,51 @@ const surveys = {
   },
 
   resultsPage() {
+    modals.init();
     sessionStorage.removeItem( ANSWERS_SESS_KEY );
     Cookie.remove( 'wizard_survey_wizard' );
+    initials.init();
 
-    const showInitials = $( '.show-initials' );
-    if ( showInitials ) {
-      // Show initials encoded in URL hash
-      const initials = encodeName.decodeNameFromUrl( location.href );
-      if ( initials ) {
-        showInitials.querySelector( 'strong' ).textContent = initials;
-        showInitials.hidden = false;
-      }
-    }
+    document.addEventListener( 'input', event => {
+      const t = event.target;
+      if (t.hasAttribute( 'data-initials-setter' )) {
+        const fixed = String( t.value ).toUpperCase().trim().substr( 0, 3 );
 
-    const shareForm = $( '.share-url-form' );
-    if ( shareForm ) {
-      // Create share URL and show input once initials are entered
-      shareForm.addEventListener( 'submit', event => {
-        event.preventDefault();
+        initials.update( fixed );
 
-        // Create URL with initials
-        const initials = $( '.share-customize [name=initials]' ).value.trim();
-        const output = $( '.shared-url' );
+        // Set value on all setters!
+        const allSetters = document.querySelectorAll('[data-initials-setter]');
+        [].forEach.call(allSetters, input => input.value = fixed);
+
+        t.value = fixed;
+
+        // Show shared URL
+        const shareUrlOutput = $( '.shared-url' );
         const a = document.createElement( 'a' );
-        a.href = '../view/?r=' + encodeURIComponent( output.dataset.rparam );
-        // Read property gives you full URL
+        a.href = '../view/?r=' + encodeURIComponent(
+          shareUrlOutput.dataset.rparam
+        );
+        // href property read gives you full URL
         const shareUrl = a.href;
-        output.value = encodeName.encodeNameInUrl( shareUrl, initials );
+        shareUrlOutput.value = encodeName.encodeNameInUrl(
+          shareUrl, initials.get()
+        );
         $( '.share-output' ).hidden = false;
-      } );
-    }
+      }
+    } );
+
+    document.addEventListener( 'click', event => {
+      const t = event.target;
+      const id = t.dataset.closePrint;
+      if ( id ) {
+        event.stopPropagation();
+        modals.close( id );
+        window.print();
+      }
+    } );
 
     const startOver = $( '.results-start-over' );
-    if ( startOver ) {
+    if (startOver) {
       startOver.addEventListener( 'click', () => {
         Cookie.remove( 'resultUrl' );
       } );

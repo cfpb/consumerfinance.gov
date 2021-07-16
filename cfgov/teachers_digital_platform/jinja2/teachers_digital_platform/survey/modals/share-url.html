@@ -1,0 +1,42 @@
+{% set id = 'modal-share-url' %}
+<div class="o-modal"
+     id="{{ id }}"
+     tabindex="0"
+     aria-hidden="true"
+     role="alertdialog"
+     aria-labelledby="{{ id }}_title"
+     aria-describedby="{{ id }}_desc">
+  <div class="o-modal_backdrop"></div>
+  <div class="o-modal_container">
+    <div class="o-modal_content">
+      <div class="o-modal_body">
+        <button class="o-modal_close a-btn a-btn__link" type="button">
+          Close<span class="a-icon a-icon__large a-icon__space-before">{% include 'icons/close-round.svg' %}</span>
+        </button>
+        <h2 id="{{ id }}_title" class="h3">Sharable Link</h2>
+        <div id="{{ id }}_desc">
+          <form class="share-url-form">
+            <div class="share-customize">
+              <label class="a-label a-label__heading" for="share-url-initials-input">
+                Enter your initials to get the shareable link:
+              </label>
+              <input class="a-text-input"
+                     type="text"
+                     id="share-url-initials-input"
+                     data-initials-setter
+                     placeholder="Enter your initials"
+                     required maxlength="3" autocomplete="off">
+            </div>
+            <div class="share-output" hidden>
+              <input readonly type="text" onclick="this.select()" value=""
+                     class="shared-url a-text-input a-text-input__full" data-rparam="{{ r_param }}">
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="o-modal_footer">
+        <button class="a-btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
