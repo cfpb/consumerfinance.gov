@@ -485,12 +485,6 @@ class TestInfoUnitGroup(TestCase):
         except ValidationError:  # pragma: nocover
             self.fail('heading alone should not fail validation')
 
-    def test_intro_only_fails_validation(self):
-        value = self.block.to_python({'intro': '<p>Only an intro</p>'})
-
-        with self.assertRaises(ValidationError):
-            self.block.clean(value)
-
     def test_heading_and_intro_ok(self):
         value = self.block.to_python({
             'heading': {
