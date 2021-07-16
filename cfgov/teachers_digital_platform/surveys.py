@@ -19,11 +19,11 @@ AVAILABLE_SURVEYS = ('3-5', '6-8', '9-12')
 def _question_row(row: Dict[str, str]):
     return {
         'q': row['Question'],
-        's': row['Section'],
         'pt': row['Part'],
         'pg': row['Page'],
         'a': row['Answer type'],
         'w': row['Answer worth'],
+        's': row['Section'],
     }
 
 
