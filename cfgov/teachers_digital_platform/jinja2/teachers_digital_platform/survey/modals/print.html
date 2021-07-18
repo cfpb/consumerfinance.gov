@@ -15,22 +15,19 @@
         </button>
         <h2 id="{{ id }}_title" class="h3">Print</h2>
         <div id="{{ id }}_desc">
-          <form class="share-url-form">
-            <div class="share-customize">
-              <label class="a-label a-label__heading" for="print-initials-input">
-                Enter your initials to add them to the page:
-              </label>
-              <input class="a-text-input"
-                     type="text"
-                     id="print-initials-input"
-                     data-initials-setter
-                     placeholder="Enter your initials"
-                     required maxlength="3" autocomplete="off">
-            </div>
-            <p>
-              <a href="#" data-close-print="{{ id }}">Print</a>
-            </p>
-          </form>
+          <div class="share-customize">
+            <label class="a-label a-label__heading" for="print-initials-input">
+              Enter your initials to add them to the page:
+            </label>
+            <input class="a-text-input"
+                   type="text"
+                   id="print-initials-input"
+                   data-initials-setter
+                   required maxlength="3" autocomplete="off">
+          </div>
+          <p>
+            <a href="#" data-close-print="{{ id }}">Print</a>
+          </p>
         </div>
       </div>
       <div class="o-modal_footer">

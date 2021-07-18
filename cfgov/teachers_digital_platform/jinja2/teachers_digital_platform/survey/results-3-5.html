@@ -19,13 +19,11 @@
         {% set overall = content.find_overall_progress(score) %}
         {% set bbs = content.building_blocks() %}
 
-        {% if not is_student %}
-            <article class="m-card">
-                <h2 class="m-card_heading">
-                    <span>Shared results <span hidden class="show-initials">for <strong></strong></span></span>
-                </h2>
-            </article>
-        {% endif %}
+        <article aria-hidden="true" style="display:none" class="m-card initials-display">
+            <h2 class="m-card_heading">
+                <span>Survey completed by <span class="initials-value"></span></span>
+            </h2>
+        </article>
 
         <h1>Your money journey results</h1>
         <h2>Congratulations, {{ overall.heading_html|safe }}</h2>
@@ -34,22 +32,24 @@
         <p>[CAR in position {{ overall.position_idx }}]</p>
 
         <p>[SHARES]</p>
+        <p>
         {% if is_student %}
-            <form class="share-url-form">
-                <div class="share-customize">
-                    <input class="a-text-input"
-                           type="text"
-                           name="initials"
-                           placeholder="Enter your initials"
-                           required minlength="2" maxlength="4" autocomplete="off">
-                    <button class="a-btn">Create URL</button>
-                </div>
-                <div class="share-output" hidden>
-                    <input readonly type="text" onclick="this.select()" value=""
-                           class="shared-url a-text-input a-text-input__full" data-rparam="{{ r_param }}">
-                </div>
-            </form>
+            <button type="button" class="a-btn" data-open-modal="modal-share-url">
+                Share results
+            </button>
+            <button type="button" class="a-btn" data-open-modal="modal-print">
+                Print results
+            </button>
+        {% else %}
+            <button type="button" class="a-btn" onclick="window.print()">
+                Print results
+            </button>
         {% endif %}
+        </p>
+
+        {# modal content #}
+        {% include './modals/share-url.html' %}
+        {% include './modals/print.html' %}
 
         <h2>Exploring your results</h2>
         <p>Your overall result is based...</p>

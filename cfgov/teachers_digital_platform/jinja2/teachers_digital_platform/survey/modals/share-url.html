@@ -15,23 +15,24 @@
         </button>
         <h2 id="{{ id }}_title" class="h3">Sharable Link</h2>
         <div id="{{ id }}_desc">
-          <form class="share-url-form">
-            <div class="share-customize">
-              <label class="a-label a-label__heading" for="share-url-initials-input">
-                Enter your initials to get the shareable link:
-              </label>
-              <input class="a-text-input"
-                     type="text"
-                     id="share-url-initials-input"
-                     data-initials-setter
-                     placeholder="Enter your initials"
-                     required maxlength="3" autocomplete="off">
+          <div class="share-customize">
+            <label class="a-label a-label__heading" for="share-url-initials-input">
+              Enter your initials to get the shareable link:
+            </label>
+            <input class="a-text-input"
+                   type="text"
+                   id="share-url-initials-input"
+                   data-initials-setter
+                   required maxlength="3" autocomplete="off">
+          </div>
+          <div class="share-output" hidden>
+            <input readonly type="text" onclick="this.select()" value=""
+                   class="shared-url" data-rparam="{{ r_param }}">
+            <div class="share-output__right">
+              <button type="button">Copy</button>
             </div>
-            <div class="share-output" hidden>
-              <input readonly type="text" onclick="this.select()" value=""
-                     class="shared-url a-text-input a-text-input__full" data-rparam="{{ r_param }}">
-            </div>
-          </form>
+          </div>
+          <div class="share-output__copied"> </div>
         </div>
       </div>
       <div class="o-modal_footer">

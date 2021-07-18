@@ -1,3 +1,5 @@
+require( './CustomEvent-polyfill' );
+
 let openModals = [];
 
 class Modal {
@@ -12,13 +14,34 @@ class Modal {
 
   open() {
     const el = this.getElement();
+
+    let event = new CustomEvent('modal:open:before', {
+      bubbles: true,
+      detail: { modal: this },
+    });
+    el.dispatchEvent(event);
+
     // Allow screen readers to see dialog
     el.setAttribute( 'aria-hidden', 'false' );
     el.classList.add( 'o-modal__visible' );
-    el.focus();
+    const desc = document.querySelector( `#${this.id}_desc` );
+    const focusableSelector = [
+      'button',
+      'a',
+      'input:not([type="hidden"])',
+      'select',
+      'textarea',
+      '[tabindex]:not([tabindex="-1"])',
+    ].join( ',' );
+    const focusable = desc.querySelector( focusableSelector );
+    if ( focusable ) {
+      focusable.focus();
+    }
 
     this.isOpen = true;
     openModals.push( this );
+
+    // TODO if needed, add a modal:open:after event.
   }
 
   close() {
