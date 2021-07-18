@@ -2,12 +2,12 @@ import csv
 import hashlib
 import json
 from os.path import dirname
-from typing import Any, Dict, List, Tuple, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from django import forms
 
-from .forms import SurveyForm, markup
 from .ChoiceWidget import ChoiceWidget
+from .forms import SurveyForm, markup
 from .TemplateField import TemplateField
 
 
