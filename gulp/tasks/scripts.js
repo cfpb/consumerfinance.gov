@@ -222,15 +222,21 @@ gulp.task( 'scripts',
   )
 );
 
-function setScriptsAppFilter(path) {
+/**
+ * If Chokidar gives us an app path, set up filtering in scriptsApp() so
+ * only that app is rebuilt.
+ *
+ * @param {string} chokidarPath Path given by Chokidar file watcher
+ */
+function setScriptsAppFilter( chokidarPath ) {
   const base = ( paths.unprocessed + '/apps/' ).replace( /^\.\//, '' );
   let appName = '';
-  if (path.indexOf( base ) === 0) {
-    [ appName ] = path.substr( base.length ).split( '/' );
+  if ( chokidarPath.indexOf( base ) === 0 ) {
+    [ appName ] = chokidarPath.substr( base.length ).split( '/' );
   }
 
   if ( appName ) {
-    console.log( `Limiting scripts:apps builds to: ${appName}` );
+    console.log( `Limiting scripts:apps builds to: ${ appName }` );
     scriptsAppsFilter = appName;
   }
 }
@@ -243,9 +249,7 @@ gulp.task( 'scripts:watch', function() {
 
   const watcher = gulp.watch(
     paths.unprocessed + '/apps/**/js/**/*.js',
-    {
-      delay: 500,
-    },
+    { delay: 500 },
     gulp.parallel( 'scripts:apps' )
   );
   // We'll just rebuild the app modified
