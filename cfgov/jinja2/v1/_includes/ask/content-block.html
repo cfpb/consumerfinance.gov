@@ -19,6 +19,10 @@
     {% endif %}
     {% if block.block_type == 'text' %}
         {{ block.value.content | richtext | safe }}
+    {% elif block.block_type == 'table_block' %}
+        {% autoescape off %}
+            {% include_block block %}
+        {% endautoescape %}
     {% else %}
         {% include_block block %}
     {% endif %}
