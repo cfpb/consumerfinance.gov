@@ -9,13 +9,13 @@ from django.template.loader import render_to_string
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
-from . import urlEncode
+from .UrlEncoder import UrlEncoder
 from .resultsContent import ResultsContent
 from .surveys import AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
 
 
-signer = signing.Signer()
-tdp = 'teachers_digital_platform'
+_tdp = 'teachers_digital_platform'
+_signer = signing.Signer()
 
 
 class SurveyWizard(NamedUrlCookieWizardView):
@@ -35,12 +35,14 @@ class SurveyWizard(NamedUrlCookieWizardView):
             part_scores[question.part] += score
 
         subtotals = list(v for k, v in sorted(part_scores.items()))
-        encoded = urlEncode.dumps(survey, subtotals, int(time.time()))
+
+        url_encoder = UrlEncoder(AVAILABLE_SURVEYS)
+        encoded = url_encoder.dumps(survey.key, subtotals, int(time.time()))
 
         # We can't use set_signed_cookie() because we need to unsign the
         # query string using Signer() and for some reason the raw cookie
         # value fails to pass the sig check.
-        signed = signer.sign(encoded)
+        signed = _signer.sign(encoded)
 
         # Send to results page
         response = HttpResponseRedirect('../../results/')
@@ -52,9 +54,9 @@ class SurveyWizard(NamedUrlCookieWizardView):
         # By default, the big CSRF tokens get needlessly stored in the cookie
         # and take up a lot of space. This is bad because cookies have a
         # small limit.
-        dict = self.get_form_step_data(form).copy()
-        del dict['csrfmiddlewaretoken']
-        return dict
+        data = self.get_form_step_data(form).copy()
+        del data['csrfmiddlewaretoken']
+        return data
 
     def render(self, form=None, **kwargs):
         # Overriding so we can inject useful data
@@ -80,29 +82,31 @@ class SurveyWizard(NamedUrlCookieWizardView):
                 survey_key=key,
                 form_list=get_survey(key, choice_lists).get_form_list(),
                 url_name=f'survey_{key}_step',
-                template_name=f'{tdp}/survey/form-page.html',
+                template_name=f'{_tdp}/survey/form-page.html',
             )
         return wizard_views
 
 
 def _handle_result_url(request: HttpRequest, raw: str, code: str,
                        is_student: bool):
-    res = urlEncode.loads(code)
+    url_encoder = UrlEncoder(AVAILABLE_SURVEYS)
+    res = url_encoder.loads(code)
     if res is None:
         return HttpResponseRedirect('../')
 
+    survey = get_survey(res['key'])
     total = sum(res['subtotals'])
-    adjusted = res['survey'].adjust_total_score(total)
+    adjusted = survey.adjust_total_score(total)
     student_view = False if 'share_view' in request.GET else is_student
 
     rendered = render_to_string(
-        f'{tdp}/survey/results-{res["key"]}.html',
+        f'{_tdp}/survey/results-{res["key"]}.html',
         {
             'content': ResultsContent.factory(res['key']),
             'is_student': student_view,
             'request': request,
             'r_param': raw,
-            'survey': res['survey'],
+            'survey': survey,
             'subtotals': res['subtotals'],
             'score': adjusted,
             'time': time.gmtime(res['time']),
@@ -123,7 +127,7 @@ def student_results(request: HttpRequest):
 
     raw = request.COOKIES['resultUrl']
     try:
-        result_url = signer.unsign(raw)
+        result_url = _signer.unsign(raw)
     except signing.BadSignature:
         return HttpResponseRedirect('../')
 
@@ -142,7 +146,7 @@ def view_results(request: HttpRequest):
         return HttpResponseRedirect('../')
 
     try:
-        result_url = signer.unsign(raw)
+        result_url = _signer.unsign(raw)
     except signing.BadSignature:
         return HttpResponseRedirect('../')
 
@@ -152,7 +156,7 @@ def view_results(request: HttpRequest):
 def _grade_level_page(request: HttpRequest, key: str):
     survey = get_survey(key)
     rendered = render_to_string(
-        f'{tdp}/survey/grade-level-{key}.html',
+        f'{_tdp}/survey/grade-level-{key}.html',
         {
             'request': request,
             'survey': survey,

@@ -7,13 +7,13 @@ from wagtailsharing.views import ServeView
 from . import views
 
 
-tdp = 'teachers_digital_platform'
+_tdp = 'teachers_digital_platform'
 
 urlpatterns = [
     re_path(
         r'^journey',
         TemplateView.as_view(
-            template_name=f'{tdp}/bb-tool.html'
+            template_name=f'{_tdp}/bb-tool.html'
         )
     ),
 
@@ -26,7 +26,7 @@ urlpatterns = [
     path(
         r'survey/',
         TemplateView.as_view(
-            template_name=f'{tdp}/survey/intro.html'
+            template_name=f'{_tdp}/survey/intro.html'
         ),
         name='tdp_survey_intro',
     ),
