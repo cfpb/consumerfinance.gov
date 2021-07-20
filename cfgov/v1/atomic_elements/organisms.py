@@ -12,10 +12,13 @@ from django.template.loader import render_to_string
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 
-from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.contrib.table_block.blocks import (
+    TableBlock, TableInput, TableInputAdapter
+)
 from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.core.rich_text import expand_db_html
+from wagtail.core.telepath import register
 from wagtail.images import blocks as images_blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.utils.widgets import WidgetWithScript
@@ -402,52 +405,63 @@ class SidebarContactInfo(MainContactInfo):
         template = '_includes/organisms/sidebar-contact-info.html'
 
 
-class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
-    def __init__(self, table_options=None, attrs=None):
-        super(RichTextTableInput, self).__init__(attrs=attrs)
-        self.table_options = table_options
+# class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
+#     def __init__(self, table_options=None, attrs=None):
+#         super(RichTextTableInput, self).__init__(attrs=attrs)
+#         self.table_options = table_options
+#
+#     def render(self, name, value, attrs=None):
+#         value = self.json_dict_apply(
+#             value,
+#             expand_db_html
+#         )
+#
+#         html = super(RichTextTableInput, self).render(name, value, attrs)
+#         return Markup(render_to_string('wagtailadmin/table_input.html', {
+#             'original_field_html': html,
+#             'attrs': attrs,
+#             'value': value,
+#         }))
+#
+#     def render_js_init(self, id_, name, value):
+#         return "initRichTextTable({0}, {1});".format(
+#             json.dumps(id_),
+#             json.dumps(self.table_options)
+#         )
+#
+#     def value_from_datadict(self, data, files, name):
+#         value = super(RichTextTableInput, self).value_from_datadict(
+#             data, files, name
+#         )
+#
+#         try:
+#             return self.json_dict_apply(value, DbWhitelister.clean)
+#         except NameError:
+#             return value
+#
+#     @staticmethod
+#     def json_dict_apply(value, callback):
+#         if not value:
+#             return
+#         value = json.loads(value)
+#
+#         for row in (value or {}).get('data') or []:
+#             for i, cell in enumerate(row or []):
+#                 if cell:
+#                     row[i] = callback(cell)
+#
+#         return json.dumps(value)
 
-    def render(self, name, value, attrs=None):
-        value = self.json_dict_apply(
-            value,
-            expand_db_html
-        )
 
-        html = super(RichTextTableInput, self).render(name, value, attrs)
-        return Markup(render_to_string('wagtailadmin/table_input.html', {
-            'original_field_html': html,
-            'attrs': attrs,
-            'value': value,
-        }))
+class RichTextTableInput(TableInput):
+    pass
 
-    def render_js_init(self, id_, name, value):
-        return "initRichTextTable({0}, {1});".format(
-            json.dumps(id_),
-            json.dumps(self.table_options)
-        )
 
-    def value_from_datadict(self, data, files, name):
-        value = super(RichTextTableInput, self).value_from_datadict(
-            data, files, name
-        )
+class RichTextTableInputAdapter(TableInputAdapter):
+    pass
 
-        try:
-            return self.json_dict_apply(value, DbWhitelister.clean)
-        except NameError:
-            return value
 
-    @staticmethod
-    def json_dict_apply(value, callback):
-        if not value:
-            return
-        value = json.loads(value)
-
-        for row in (value or {}).get('data') or []:
-            for i, cell in enumerate(row or []):
-                if cell:
-                    row[i] = callback(cell)
-
-        return json.dumps(value)
+register(RichTextTableInputAdapter(), RichTextTableInput)
 
 
 class AtomicTableBlock(TableBlock):
@@ -482,9 +496,6 @@ class AtomicTableBlock(TableBlock):
         icon = 'table'
         template = '_includes/organisms/table.html'
         label = 'Table'
-
-    class Media:
-        js = ['table.js']
 
 
 class ModelBlock(blocks.StructBlock):
