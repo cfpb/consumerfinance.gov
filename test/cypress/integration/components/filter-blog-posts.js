@@ -100,7 +100,7 @@ describe( 'Filter Blog Posts based on content', () => {
   it( 'Select multiple topics', () => {
     // When I select five checkboxes in the Topic list
     filter.clickTopic( 'Student loans' );
-    filter.clickTopic( 'Financial Education' );
+    filter.clickTopic( 'Financial education' );
     filter.clickTopic( 'Mortgages' );
     filter.clickTopic( 'Consumer complaints' );
     filter.clickTopic( 'Financial well-being' );

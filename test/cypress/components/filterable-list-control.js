@@ -65,7 +65,7 @@ export class FilterableListControl {
   }
 
   applyFilters() {
-    return cy.get( 'form[action="."]' ).submit();
+    return cy.get( '#o-filterable-list-controls button[type="submit"]' ).click();
   }
 
   clearFilters() {

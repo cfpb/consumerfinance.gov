@@ -14,30 +14,14 @@ export class Filter {
 
   clickLanguage( name ) {
     cy.get( '#o-filterable-list-controls_language' ).click();
-    return cy.get( `label[for="language-${ name }"]` )
-      .scrollIntoView()
-      .click();
-  }
-
-  checkArchivedItem( name ) {
-    return cy.get( `#filter_archived_${ name }"]` ).check( { force: true } );
-  }
-
-  checkCategoryId( id ) {
-    return cy.get( `#filter_categories_${ id }` ).check( { force: true } );
-  }
-
-  categoryLabel( id ) {
-    return cy.get( `label[for="filter_categories_${ id }"]` );
-  }
-
-  checkCategoryName( name ) {
-    return this.checkCategoryId( name.split( ' ' ).join( '-' ).toLowerCase() );
+    return cy.get( `label.o-multiselect_label[for="language-${ name }"]` ).click();
   }
 
   clickCategory( name ) {
     const category = name.split( ' ' ).join( '-' ).toLowerCase();
-    return cy.get( `#categories-${ category }` ).click( { force: true } );
+    const sel = `.o-multiselect_label[for="categories-${ category }"]`;
+    cy.get( '#o-filterable-list-controls_categories' ).click();
+    return cy.get( sel ).click();
   }
 
   typeAheadTopic( name ) {
@@ -47,9 +31,7 @@ export class Filter {
   clickTopic( name ) {
     const topic = name.split( ' ' ).join( '-' ).toLowerCase();
     cy.get( '#o-filterable-list-controls_topics' ).click();
-    return cy.get( `label[for="topics-${ topic }"]` )
-      .scrollIntoView()
-      .click();
+    return cy.get( `label.o-multiselect_label[for="topics-${ topic }"]` ).click();
   }
 
   expandable() {
