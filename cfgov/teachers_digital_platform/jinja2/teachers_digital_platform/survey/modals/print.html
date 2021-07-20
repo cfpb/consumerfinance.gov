@@ -1,0 +1,38 @@
+{% set id = 'modal-print' %}
+<div class="o-modal"
+     id="{{ id }}"
+     tabindex="0"
+     aria-hidden="true"
+     role="alertdialog"
+     aria-labelledby="{{ id }}_title"
+     aria-describedby="{{ id }}_desc">
+  <div class="o-modal_backdrop"></div>
+  <div class="o-modal_container">
+    <div class="o-modal_content">
+      <div class="o-modal_body">
+        <button class="o-modal_close a-btn a-btn__link" type="button">
+          Close<span class="a-icon a-icon__large a-icon__space-before">{% include 'icons/close-round.svg' %}</span>
+        </button>
+        <h2 id="{{ id }}_title" class="h3">Print</h2>
+        <div id="{{ id }}_desc">
+          <div class="share-customize">
+            <label class="a-label a-label__heading" for="print-initials-input">
+              Enter your initials to add them to the page:
+            </label>
+            <input class="a-text-input"
+                   type="text"
+                   id="print-initials-input"
+                   data-initials-setter
+                   required maxlength="3" autocomplete="off">
+          </div>
+          <p>
+            <a href="#" data-close-print="{{ id }}">Print</a>
+          </p>
+        </div>
+      </div>
+      <div class="o-modal_footer">
+        <button class="a-btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

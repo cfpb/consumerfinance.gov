@@ -4,6 +4,42 @@
     }
 
     .share-output {
+        background: #eeeeee;
         margin-top: 1rem;
+        padding: .5rem 1rem;
+        position: relative;
+
+        input {
+            background: none;
+            border: 0;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+    }
+
+    .share-output__right {
+        background: rgb(238,238,238);
+        background: linear-gradient(90deg, rgba(238,238,238,0) 0%, rgba(238,238,238,1) 50%, rgba(238,238,238,1) 100%);
+        bottom: 0;
+        display: flex;
+        position: absolute;
+        padding-left: 7rem;
+        right: 0;
+        top: 0;
+
+        button {
+            background: none;
+            border: 0;
+            color: #0072ce;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+        }
+    }
+
+    .share-output__copied {
+        margin: 0.5rem 0 0;
+        text-align: right;
     }
 }

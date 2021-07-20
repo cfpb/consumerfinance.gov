@@ -72,8 +72,8 @@ class ResultsContent:
             idx = i
         return idx
 
-    @staticmethod
-    def factory(survey_key: str):
+    @classmethod
+    def factory(cls, survey_key: str):
         store: Dict[str, str] = {}
         path = f'{dirname(__file__)}/survey-data/results-content.csv'
         with open(path, encoding='utf-8') as csv_file:
@@ -81,4 +81,4 @@ class ResultsContent:
             for row in (_results_data_row(row) for row in reader):
                 store[row['k']] = row['v']
 
-        return ResultsContent(store, survey_key)
+        return cls(store, survey_key)

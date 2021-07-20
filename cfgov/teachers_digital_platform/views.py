@@ -70,13 +70,13 @@ class SurveyWizard(NamedUrlCookieWizardView):
 
         return self.render_to_response(context)
 
-    @staticmethod
-    def build_views():
+    @classmethod
+    def build_views(cls):
         # Create view wrappers for our surveys.
         wizard_views = {}
         choice_lists = ChoiceList.get_all()
         for key in AVAILABLE_SURVEYS:
-            wizard_views[key] = SurveyWizard.as_view(
+            wizard_views[key] = cls.as_view(
                 survey_key=key,
                 form_list=get_survey(key, choice_lists).get_form_list(),
                 url_name=f'survey_{key}_step',
