@@ -25,7 +25,7 @@ export class FilterableListControl {
   }
 
   resultsContent() {
-    return cy.get( '.o-post-preview_content' );
+    return cy.get( '.o-filterable-list_results .o-post-preview_content' );
   }
 
   firstResultContent() {
@@ -65,7 +65,7 @@ export class FilterableListControl {
   }
 
   applyFilters() {
-    return cy.get( 'form[action="."]' ).submit();
+    return cy.get( '#o-filterable-list-controls button[type="submit"]' ).click();
   }
 
   clearFilters() {
