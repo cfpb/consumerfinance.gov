@@ -23,17 +23,20 @@
          data-page-idx="{{ page_idx|tojson|forceescape }}"
          data-questions-by-page="{{ questions_by_page|tojson|forceescape }}">
         {# <h1>Survey Page {{ wizard.steps.step1 }}</h1> #}
-
-        <form action="" method="post"> {{ csrf_input }}
-        {{ wizard.management_form }}
-        {% if wizard.form.forms %}
-            {{ wizard.form.management_form }}
-            {% for form in wizard.form.forms %}
-                {{ form.as_p() }}
-            {% endfor %}
-        {% else %}
-            {{ wizard.form.as_p() }}
-        {% endif %}
+        <form action="" method="post"> 
+            
+            {{ csrf_input }}
+        
+            {{ wizard.management_form }}
+            {% if wizard.form.forms %}
+            
+                {{ wizard.form.management_form }}
+                {% for form in wizard.form.forms %}
+                    {{ form.as_p() }}
+                {% endfor %}
+            {% else %}
+                {{ wizard.form.as_p() }}
+            {% endif %}
 
             <p>
             {% if wizard.steps.prev %}
