@@ -1,6 +1,7 @@
+import base36
+
 from typing import List
 
-from . import base36
 from .surveys import AVAILABLE_SURVEYS, Survey, get_survey
 
 
