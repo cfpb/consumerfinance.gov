@@ -3,12 +3,15 @@ import { FilterableList } from '../../components/filterable-lists';
 const filterableList = new FilterableList();
 
 describe( 'Filterable List', () => {
+  beforeEach( () => {
+    cy.visit( '/data-research/research-reports/' );
+  } );
   it( 'should display filters when opened', () => {
-    filterableList.open();
     filterableList.showFilters();
     filterableList.filterForm().should( 'be.visible' );
   } );
   it( 'should apply filters to the results', () => {
+    filterableList.showFilters();
     filterableList.openTopics();
     filterableList.selectTopic( 'Open government' );
     filterableList.applyFilters();
@@ -16,7 +19,6 @@ describe( 'Filterable List', () => {
     filterableList.clearFilters();
   } );
   it( 'should filter by date-range', () => {
-    filterableList.open();
     filterableList.showFilters();
     filterableList.filterForm().should( 'be.visible' );
     filterableList.setFromDate( '2010-01-01' );
@@ -25,7 +27,6 @@ describe( 'Filterable List', () => {
     filterableList.filterNotification().should( 'be.visible' );
   } );
   it( 'should filter by topics', () => {
-    filterableList.open();
     filterableList.showFilters();
     filterableList.openTopics();
     filterableList.selectTopic( 'Open government' );

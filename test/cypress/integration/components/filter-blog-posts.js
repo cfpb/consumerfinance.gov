@@ -2,7 +2,7 @@
 This includes at least one post that contains the word "loan" in the title, one post without the word "loan" in the title,
 posts published both before and after the date 12/31/2020. The posts should be in several different categories,
 and tagged with several different topic tags, including at least one with the tag "mortgages" and at least one without the "mortgages" tag.
-The posts should also have several different authors, including at least one with the author "CFPB Web Team". */
+The posts should also have several different languages, including at least one in Spanish and one in Tagalog. */
 import { Filter } from '../../components/filter';
 import { FilterableListControl } from '../../components/filterable-list-control';
 import { Pagination } from '../../components/pagination';
@@ -100,7 +100,7 @@ describe( 'Filter Blog Posts based on content', () => {
   it( 'Select multiple topics', () => {
     // When I select five checkboxes in the Topic list
     filter.clickTopic( 'Student loans' );
-    filter.clickTopic( 'Financial Education' );
+    filter.clickTopic( 'Financial education' );
     filter.clickTopic( 'Mortgages' );
     filter.clickTopic( 'Consumer complaints' );
     filter.clickTopic( 'Financial well-being' );
@@ -122,18 +122,21 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Type-ahead topics', () => {
     // When I type "mortgage" in the topic input box
-    filter.clickTopic( 'Mortgages' );
-    // Then the list of topics should show only tags that contain the word "mortgage"
-    blog.resultsContent().should( 'contain', 'mortgage' );
+    filter.typeAheadTopic( 'Mortgages' );
+    // And when I select a topic in the list
+    filter.clickTopic( 'Reverse mortgages' );
+    // And when I type "Dervicemembers" in the topic input box
+    filter.typeAheadTopic( 'Servicemembers' );
     // And when I select a topic in the list
     filter.clickTopic( 'Servicemembers' );
     // And I click "Apply filters" button
     blog.applyFilters();
     // Then I should see only results tagged with the selected topic
     blog.notification().should( 'be.visible' );
-    blog.resultsContent().should( 'contain', 'service' );
-    // And the page url should contain "topics=mortgages"
-    cy.url().should( 'include', 'topics=mortgages' );
+    blog.resultsContent().should( 'contain', 'Reverse mortgages' );
+    blog.resultsContent().should( 'contain', 'Servicemembers' );
+    // And the page url should contain "topics=reverse-mortgages"
+    cy.url().should( 'include', 'topics=reverse-mortgages' );
     // And the page url should contain "topics=servicemembers"
     cy.url().should( 'include', 'topics=servicemembers' );
   } );
@@ -183,59 +186,49 @@ describe( 'Filter Blog Posts based on content', () => {
     // Then there is no visible notification
     blog.notification().should( 'not.be.visible' );
   } );
-  it( 'Select a single author', () => {
-    // When I select a checkbox in the Author list
-    filter.clickAuthor( 'CFPB Web Team' );
+  it( 'Select a single language', () => {
+    // When I select a checkbox in the Language list
+    filter.clickLanguage( 'es' );
     // And I click "Apply filters" button
     blog.applyFilters();
-    // Then I should see only results posted by the selected author
+    // Then I should see only results posted by the selected language
     blog.notification().should( 'be.visible' );
-    blog.resultsContent().should( 'contain', 'CFPB Web Team' );
-    // And the page url should contain "authors=cfpb-web-team"
-    cy.url().should( 'include', 'authors=cfpb-web-team' );
-    // And the page url should not contain "authors=cfpb-research-team"
-    cy.url().should( 'not.include', 'authors=cfpb-research-team' );
+    blog.resultsContent().should( 'contain', 'Estafas con beneficios' );
+    // And the page url should contain "language=es"
+    cy.url().should( 'include', 'language=es' );
+    // And the page url should not contain "language=en"
+    cy.url().should( 'not.include', 'language=en' );
   } );
-  it( 'Select multiple authors', () => {
-    // When I select five checkboxes in the Author list
-    filter.clickAuthor( 'CFPB Web Team' );
-    filter.clickAuthor( 'CFPB Research Team' );
-    filter.clickAuthor( 'Owning a Home Team' );
-    filter.clickAuthor( 'Office of Enforcement' );
-    filter.clickAuthor( 'Adam Scott' );
+  it( 'Select multiple languages', () => {
+    // When I select two checkboxes in the Language list
+    filter.clickLanguage( 'es' );
+    filter.clickLanguage( 'tl' );
     // And I click "Apply filters" button
     blog.applyFilters();
-    // Then I should see only results posted by at least one of the two selected authors
+    // Then I should see only results posted by at least one of the two selected languages
     blog.notification().should( 'be.visible' );
-    blog.resultsContent().should( 'contain', 'CFPB' );
-    // And the page url should contain "authors=cfpb-web-team"
-    cy.url().should( 'include', 'authors=cfpb-web-team' );
-    // And the page url should contain "authors=cfpb-research-team"
-    cy.url().should( 'include', 'authors=cfpb-research-team' );
-    // And the page url should contain "authors=owning-a-home-team"
-    cy.url().should( 'include', 'authors=owning-a-home-team' );
-    // And the page url should contain "authors=office-of-enforcement"
-    cy.url().should( 'include', 'authors=office-of-enforcement' );
-    // And the page url should contain "authors=adam-scott"
-    cy.url().should( 'include', 'authors=adam-scott' );
+    blog.resultsContent().should( 'contain', 'Estafas con beneficios' );
+    blog.resultsContent().should( 'contain', 'Paano tutulungan' );
+    // And the page url should contain "language=es"
+    cy.url().should( 'include', 'language=es' );
+    // And the page url should contain "language=ar"
+    cy.url().should( 'include', 'language=tl' );
   } );
-  it( 'Type-ahead authors', () => {
-    // When I type "CFPB" in the Author input box
-    filter.clickAuthor( 'CFPB' );
-    // Then the list of authors should show only items that contain "CFPB"
-    blog.resultsContent().should( 'contain', 'CFPB' );
-    // And when I select the first checkbox in the Author list
-    filter.clickAuthor( 'CFPB Research Team' );
+  it( 'Type-ahead languages', () => {
+    // When I type "Spanish" in the Language input box
+    filter.typeAheadLanguage( 'Spanish' );
+    // And when I select the first checkbox in the Language list
+    filter.clickLanguage( 'es' );
     // And I click "Apply filters" button
     blog.applyFilters();
-    // Then I should see only results posted by the selected author
+    // Then I should see only results posted by the selected language
     blog.notification().should( 'be.visible' );
-    blog.resultsContent().should( 'contain', 'CFPB Research Team' );
-    blog.resultsContent().should( 'not.contain', 'CFPB Web Team' );
-    // And the page url should contain "authors=cfpb-research-team"
-    cy.url().should( 'include', 'authors=cfpb-research-team' );
-    // And the page url should not contain "authors=cfpb-web-team"
-    cy.url().should( 'not.include', 'authors=cfpb-web-team' );
+    blog.resultsContent().should( 'contain', 'Estafas con beneficios' );
+    blog.resultsContent().should( 'not.contain', 'Summary of the 2021' );
+    // And the page url should contain "language=es"
+    cy.url().should( 'include', 'language=es' );
+    // And the page url should not contain "language=en"
+    cy.url().should( 'not.include', 'language=en' );
   } );
   it( 'Item name search plus category', () => {
     // When I type "loans" in the item name input box
@@ -285,20 +278,20 @@ describe( 'Filter Blog Posts based on content', () => {
     // And the page url should contain "from_date=2020-01-01"
     cy.url().should( 'include', 'from_date=2020-01-01' );
   } );
-  it( 'Item name search plus author', () => {
+  it( 'Item name search plus language', () => {
     // When I type "loans" in the item name input box
     blog.filterItemName( 'loans' );
-    // And I select a checkbox in the Author list
-    filter.clickAuthor( 'CFPB Web Team' );
+    // And I select a checkbox in the Languages list
+    filter.clickLanguage( 'es' );
     // And I click "Apply filters" button
     blog.applyFilters();
-    // Then I should see only results posted by the select author with "loans" in the post title
+    // Then I should see only results posted by the select language with "loans" in the post title
     blog.notification().should( 'be.visible' );
-    blog.resultsContent().should( 'contain', 'CFPB Web Team' );
+    blog.resultsContent().should( 'contain', 'Qué necesita saber sobre' );
     blog.resultsContent().should( 'contain', 'loans' );
     // And the page url should contain "title=loans"
     cy.url().should( 'include', 'title=loans' );
-    // And the page url should contain "authors=cfpb-web-team"
-    cy.url().should( 'include', 'authors=cfpb-web-team' );
+    // And the page url should contain "language=es"
+    cy.url().should( 'include', 'language=es' );
   } );
 } );

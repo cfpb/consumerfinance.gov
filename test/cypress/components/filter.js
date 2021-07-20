@@ -8,35 +8,30 @@ export class Filter {
     cy.get( '.a-btn__warning' ).click( { force: true } );
   }
 
-  clickAuthor( name ) {
-    const author = name.split( ' ' ).join( '-' ).toLowerCase();
-    return cy.get( `#authors-${ author }` ).click( { force: true } );
+  typeAheadLanguage( name ) {
+    return cy.get( '#o-filterable-list-controls_language' ).type( name );
   }
 
-  checkArchivedItem( name ) {
-    return cy.get( `#filter_archived_${ name }"]` ).check( { force: true } );
-  }
-
-  checkCategoryId( id ) {
-    return cy.get( `#filter_categories_${ id }` ).check( { force: true } );
-  }
-
-  categoryLabel( id ) {
-    return cy.get( `label[for="filter_categories_${ id }"]` );
-  }
-
-  checkCategoryName( name ) {
-    return this.checkCategoryId( name.split( ' ' ).join( '-' ).toLowerCase() );
+  clickLanguage( name ) {
+    cy.get( '#o-filterable-list-controls_language' ).click();
+    return cy.get( `label.o-multiselect_label[for="language-${ name }"]` ).click();
   }
 
   clickCategory( name ) {
     const category = name.split( ' ' ).join( '-' ).toLowerCase();
-    return cy.get( `#categories-${ category }` ).click( { force: true } );
+    const sel = `.o-multiselect_label[for="categories-${ category }"]`;
+    cy.get( '#o-filterable-list-controls_categories' ).click();
+    return cy.get( sel ).click();
+  }
+
+  typeAheadTopic( name ) {
+    return cy.get( '#o-filterable-list-controls_topics' ).type( name );
   }
 
   clickTopic( name ) {
     const topic = name.split( ' ' ).join( '-' ).toLowerCase();
-    return cy.get( `#topics-${ topic }` ).click( { force: true } );
+    cy.get( '#o-filterable-list-controls_topics' ).click();
+    return cy.get( `label.o-multiselect_label[for="topics-${ topic }"]` ).click();
   }
 
   expandable() {

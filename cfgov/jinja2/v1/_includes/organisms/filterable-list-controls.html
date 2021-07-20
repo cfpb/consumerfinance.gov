@@ -61,7 +61,7 @@
     {% if show_topic_filter %}
         {% set filter_count = filter_count + 1 %}
     {% endif %}
-    {% if value.authors %}
+    {% if value.language and form.language %}
         {% set filter_count = filter_count + 1 %}
     {% endif %}
     {% if value.statuses and form.statuses %}
@@ -97,19 +97,19 @@
         </div>
     {% endif %}
 
-    {% if show_topic_filter %}
+    {% if show_topic_filter and form.topics %}
         {{ _filter_multiselect( 'Topics', form.topics, filter_count ) }}
     {% endif %}
 
-    {% if value.authors %}
-        {{ _filter_multiselect( 'Author', form.authors, filter_count ) }}
+    {% if value.language and form.language %}
+        {{ _filter_multiselect( 'Language', form.language, filter_count ) }}
     {% endif %}
 
     {% if value.statuses and form.statuses %}
         {{ _filter_multiselect( 'Status', form.statuses, filter_count ) }}
     {% endif %}
 
-    {% if value.products %}
+    {% if value.products and form.products %}
         {{ _filter_multiselect( 'Product', form.products, filter_count ) }}
     {% endif %}
 
