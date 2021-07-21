@@ -23,7 +23,7 @@ services:
         volumes:
             - ./cfgov/search/resources/:/usr/share/elasticsearch/config/synonyms
     kibana:
-        image: blacktop/kibana:7.10.1
+        image: elasticsearch/kibana:7.13.3
         depends_on:
             - elasticsearch
         ports:

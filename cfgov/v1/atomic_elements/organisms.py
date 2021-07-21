@@ -77,8 +77,6 @@ class InfoUnitGroup(blocks.StructBlock):
 
     intro = blocks.RichTextBlock(
         required=False,
-        help_text='If this field is not empty, '
-                  'the Heading field must also be set.'
     )
 
     link_image_and_heading = blocks.BooleanBlock(
@@ -119,16 +117,6 @@ class InfoUnitGroup(blocks.StructBlock):
 
     def clean(self, value):
         cleaned = super(InfoUnitGroup, self).clean(value)
-
-        # Intro paragraph may only be specified with a heading.
-        if cleaned.get('intro') and not cleaned.get('heading').get('text'):
-            raise ValidationError(
-                'Validation error in InfoUnitGroup: intro with no heading',
-                params={'heading': ErrorList([
-                    'Required if paragraph is not empty. (If it looks empty, '
-                    'click into it and hit the delete key a bunch of times.)'
-                ])}
-            )
 
         # If 25/75, info units must have images.
         if cleaned.get('format') == '25-75':

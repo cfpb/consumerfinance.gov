@@ -1,24 +1,15 @@
 export class FilterableList {
 
-  open() {
-    cy.visit( '/data-research/research-reports/' );
-  }
-
   showFilters() {
     cy.get( '#o-filterable-list-controls' ).find( 'button' ).first().click();
   }
 
   filterForm() {
-    return cy.get( 'form[action="."]' );
-  }
-
-  selectFilter( category ) {
-    const id = `#filter_categories_${ category.split( ' ' ).join( '-' ) }`.toLowerCase();
-    cy.get( id ).check( { force: true } );
+    return cy.get( '#o-filterable-list-controls form[action="."]' );
   }
 
   applyFilters() {
-    this.filterForm().submit();
+    cy.get( '#o-filterable-list-controls button[type="submit"]' ).click();
   }
 
   filterNotification() {

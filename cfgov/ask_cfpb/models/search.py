@@ -1,3 +1,5 @@
+from elasticsearch7.exceptions import RequestError
+
 from ask_cfpb.documents import AnswerPageDocument
 
 
@@ -22,13 +24,19 @@ class AnswerPageSearch:
         self.suggestion = None
 
     def autocomplete(self):
-        s = AnswerPageDocument.search().filter(
-            "term", language=self.language).query(
-            'match', autocomplete=self.search_term)
-        results = [
-            {'question': result.autocomplete, 'url': result.url}
-            for result in s[:20]
-        ]
+        try:
+            s = AnswerPageDocument.search().filter(
+                "term", language=self.language
+            ).query(
+                'match', autocomplete=self.search_term
+            )
+        except RequestError:
+            results = []
+        else:
+            results = [
+                {'question': result.autocomplete, 'url': result.url}
+                for result in s[:20]
+            ]
         return results
 
     def search(self):
