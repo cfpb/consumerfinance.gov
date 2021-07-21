@@ -78,7 +78,7 @@ class Feedback(models.Model):
     comment = models.TextField(blank=True, null=True)
     language = models.CharField(max_length=8, blank=True, null=True)
     referrer = models.CharField(max_length=255, blank=True, null=True)
-    is_helpful = models.NullBooleanField()
+    is_helpful = models.BooleanField(blank=True, null=True)
     expect_to_buy = models.CharField(max_length=255, blank=True, null=True)
     currently_own = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(max_length=250, blank=True, null=True)

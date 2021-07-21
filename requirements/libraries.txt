@@ -11,7 +11,7 @@ django-flags==5.0.5
 django-haystack==3.0
 django-localflavor==2.2
 django-mptt==0.12.0
-django-storages==1.7.1
+django-storages==1.11.1
 django-treebeard==4.2.0
 django-watchman==0.15.0
 edgegrid-python==1.0.10

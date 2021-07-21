@@ -12,7 +12,7 @@ from core.utils import (
 VALID_LINK_MARKUP = re.compile(
 r'<a class="a-link a-link__icon" '  # noqa: E122
    r'data-pretty-href="https://example.com(/[\w\.]+)?" '  # noqa: E121
-   r'href="/external-site/\?ext_url=https%3A%2F%2Fexample.com(%2F[\w\.]+)?&amp;signature=\w+">'  # noqa: E501
+   r'href="/external-site/\?ext_url=https%3A%2F%2Fexample.com(%2F[\w\.]+)?&amp;signature=[\w-]+">'  # noqa: E501
     r'<span class="a-link_text">foo</span> '  # noqa: E131
     r'<svg class="cf-icon-svg".*>.+</svg>'  # noqa: E501
 r'\n?</a>'  # noqa: E122

@@ -1,4 +1,4 @@
-{% load static from staticfiles %}
+{% load static %}
 <a href="https://www.facebook.com/sharer.php?u={% firstof share_uri request.build_absolute_uri|urlencode %}{% if utm_campaign %}%3Futm_campaign={{ utm_campaign }}{% endif %}" class="share-facebook"><img src="{% static 'nemo/_/img/icon_small_facebook.png' %}" alt="Share on Facebook"></a>
 <a href="https://twitter.com/share?url={% firstof share_uri request.build_absolute_uri|urlencode %}{% if utm_campaign %}%3Futm_campaign={{ utm_campaign }}{% endif %}&text={% firstof tweet_text pagetitle "CFPB" %}&via=CFPB&lang=en" class="share-twitter"><img src="{% static 'nemo/_/img/icon_small_twitter.png' %}" alt="Share on Twitter"></a>
 <a class="addthis_button_email share-email" href="https://api.addthis.com/oexchange/0.8/forward/email/offer?url={% firstof share_uri request.build_absolute_uri|urlencode %}{% if utm_campaign %}%3Futm_campaign={{ utm_campaign }}{% endif %}&title={% firstof email_title "CFPB" %}&pubid=ra-4da354ee346886d2"><img src="{% static 'nemo/_/img/icon_small_email.png' %}" alt="Share via email"></a>

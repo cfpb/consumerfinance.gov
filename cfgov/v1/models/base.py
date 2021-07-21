@@ -1,7 +1,6 @@
 import re
 
 from django.contrib.auth.models import User
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import F, Value
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -81,7 +80,7 @@ class CFGOVPage(Page):
             'Maximum size: 4096w x 4096h.'
         )
     )
-    schema_json = JSONField(
+    schema_json = models.JSONField(
         null=True,
         blank=True,
         verbose_name='Schema JSON',

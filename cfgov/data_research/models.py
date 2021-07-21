@@ -1,6 +1,5 @@
 import logging
 
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from wagtail.core.models import PageManager
@@ -46,7 +45,7 @@ class ConferenceRegistration(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     govdelivery_code = models.CharField(max_length=250)
-    details = JSONField()
+    details = models.JSONField()
 
     objects = ConferenceRegistrationQuerySet.as_manager()
 
@@ -87,7 +86,7 @@ class MortgageMetaData(models.Model):
     Metadata values, stored as json, and made available in the API.
     """
     name = models.CharField(max_length=255)
-    json_value = JSONField(blank=True, null=True)
+    json_value = models.JSONField(blank=True, null=True)
     note = models.TextField(blank=True)
     updated = models.DateField(auto_now=True)
 
@@ -107,12 +106,12 @@ class State(models.Model):
     abbr = models.CharField(max_length=2)
     ap_abbr = models.CharField(
         max_length=20, help_text="The AP Stylebook's state abbreviation")
-    counties = JSONField(
+    counties = models.JSONField(
         blank=True, help_text='FIPS list of counties in the state')
-    non_msa_counties = JSONField(
+    non_msa_counties = models.JSONField(
         blank=True,
         help_text='FIPS list of counties in the state that are not in an MSA')
-    msas = JSONField(
+    msas = models.JSONField(
         blank=True, help_text='FIPS list of MSAs in the state')
     non_msa_valid = models.BooleanField(default=False)
 
@@ -150,9 +149,9 @@ class MetroArea(models.Model):
     """Model for Metropolitan Statistical Areas, or MSAs."""
     fips = models.CharField(max_length=6, blank=True, db_index=True)
     name = models.CharField(max_length=128, blank=True)
-    counties = JSONField(
+    counties = models.JSONField(
         blank=True, help_text='FIPS list of counties in the MSA')
-    states = JSONField(
+    states = models.JSONField(
         blank=True, help_text='FIPS list of states touched by MSA')
     valid = models.BooleanField()
 
