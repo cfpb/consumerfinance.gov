@@ -225,3 +225,11 @@ class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
 class ReusableTextChooserBlock(SnippetChooserBlock):
     class Meta:
         template = '_includes/snippets/reusable_text.html'
+
+
+class ERAPToolBlock(blocks.StaticBlock):
+    class Meta:
+        icon = 'cog'
+        label = 'ERAP Tool'
+        admin_text = '{label} has no options to configure'.format(label=label)
+        template = '_includes/blocks/erap_tool.html'
