@@ -82,6 +82,7 @@ class SurveyWizard(NamedUrlCookieWizardView):
                 url_name=f'survey_{key}_step',
                 template_name=f'{tdp}/survey/form-page.html',
             )
+            print(get_survey(key, choice_lists).__dict__)
         return wizard_views
 
 

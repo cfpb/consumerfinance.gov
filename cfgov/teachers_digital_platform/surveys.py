@@ -2,12 +2,12 @@ import csv
 import hashlib
 import json
 from os.path import dirname
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple, Optional
 
 from django import forms
 
-from .ChoiceWidget import ChoiceWidget
 from .forms import SurveyForm, markup
+from .ChoiceWidget import ChoiceWidget
 from .TemplateField import TemplateField
 
 
@@ -45,20 +45,20 @@ class ChoiceList:
             (str(k), v) for k, v in enumerate(labels)
         )
 
-    @classmethod
-    def from_string(cls, s: str):
+    @staticmethod
+    def from_string(s: str):
         labels = list(x.strip() for x in s.split('|'))
-        return cls(labels)
+        return ChoiceList(labels)
 
-    @classmethod
-    def get_all(cls):
+    @staticmethod
+    def get_all():
         ret: Dict[str, ChoiceList] = {}
 
         path = f'{dirname(__file__)}/survey-data/answer-types.csv'
         with open(path, encoding='utf-8') as csv_file:
             reader = csv.DictReader(csv_file)
             for row in (_answer_types_row(row) for row in reader):
-                ret[row['k']] = cls.from_string(row['c'])
+                ret[row['k']] = ChoiceList.from_string(row['c'])
 
         return ret
 
@@ -158,7 +158,7 @@ class SurveyPage:
 
             obj = question.get_field()
             fields[obj['key']] = obj['field']
-
+        print(prefix_tpls)
         return fields
 
     def get_score(self, all_cleaned_data):
@@ -243,11 +243,12 @@ class Survey:
 
             page_classes.append((name, page.get_form_class(
                 classname, self.meta['prefix_tpls'])))
+        print(page_classes)
 
         return tuple(page_classes)
 
-    @classmethod
-    def factory(cls, key: str, choice_lists: Optional[Dict] = None):
+    @staticmethod
+    def factory(key: str, choice_lists: Optional[Dict] = None):
         """Build an survey from CSV"""
         assert key in AVAILABLE_SURVEYS
 
@@ -298,7 +299,7 @@ class Survey:
         with open(path) as json_file:
             meta = json.load(json_file)
 
-        return cls(key, meta, pages)
+        return Survey(key, meta, pages)
 
 
 def get_survey(key, choice_lists: Optional[Dict] = None) -> Survey:

@@ -23,20 +23,28 @@
          data-page-idx="{{ page_idx|tojson|forceescape }}"
          data-questions-by-page="{{ questions_by_page|tojson|forceescape }}">
         {# <h1>Survey Page {{ wizard.steps.step1 }}</h1> #}
-        <form action="" method="post"> 
-            
-            {{ csrf_input }}
         
-            {{ wizard.management_form }}
-            {% if wizard.form.forms %}
-            
-                {{ wizard.form.management_form }}
-                {% for form in wizard.form.forms %}
-                    {{ form.as_p() }}
-                {% endfor %}
-            {% else %}
-                {{ wizard.form.as_p() }}
-            {% endif %}
+        
+        
+        <form action="" method="post"> {{ csrf_input }}
+        
+        {# E.g. "./6-8/before-page-2.html" #}
+        {% include './' ~ survey.key ~ '/before-page-' ~ wizard.steps.step1 ~ '.html' ignore missing %}
+
+        {{ wizard.management_form }}
+        {% if wizard.form.forms %}
+            {{ wizard.form.management_form }}
+            {% for form in wizard.form.forms %}
+                {{ form.as_p() }}
+            {% endfor %}
+        {% else %}
+            {{ wizard.form.as_p() }}
+        {% endif %}
+        {# E.g. "./6-8/after-page-2.html" #}
+        
+        {# opened by a template file, do not remove #}
+        </div>
+        
 
             <p>
             {% if wizard.steps.prev %}
