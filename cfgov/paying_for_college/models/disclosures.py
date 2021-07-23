@@ -13,8 +13,8 @@ from django.db import models
 import requests
 
 
-# Our database has a fake school for demo purposes
-# It should be discoverable via search and API calls, but should be excluded
+# Our database has fake schools for demo purposes
+# They should be discoverable via search and API calls, but should be excluded
 # from cohort calculations and from College Scorecard API updates.
 FAKE_SCHOOL_PKS = [
     999999,
