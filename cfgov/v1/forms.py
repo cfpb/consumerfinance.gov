@@ -6,7 +6,7 @@ from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 
-from v1.models import enforcement_action_page
+from v1.models import CFGOVPage, enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
@@ -125,7 +125,7 @@ class FilterableListForm(forms.Form):
         self.wagtail_block = kwargs.pop('wagtail_block')
         self.filterable_categories = kwargs.pop('filterable_categories')
 
-        # This cache key is used for caching the topics, page_ids,
+        # This cache key is used for caching the topics, language, page_ids,
         # and the full set of Elasticsearch results for this form used to
         # generate them.
         # Default the cache key prefix to this form's hash if it's not
@@ -140,13 +140,13 @@ class FilterableListForm(forms.Form):
         page_ids = self.get_all_page_ids()
         self.set_topics(page_ids)
         # Populate language choices
-        self.fields['language'].choices = ref.supported_languages
+        self.set_languages(page_ids)
 
     def get_all_filterable_results(self):
         """ Get all filterable document results from Elasticsearch
 
         This set of results is used to populate the list of all page_ids,
-        below, which is in turn used for populating the topics
+        below, which is in turn used for populating the topics and language
         relevant to those pages.
 
         This first document in this result set is also used to determine the
@@ -244,6 +244,17 @@ class FilterableListForm(forms.Form):
                 cache.set(f"{self.cache_key_prefix}-topics", topics)
 
             self.fields['topics'].choices = topics
+
+    # Populate language choices
+    def set_languages(self, page_ids):
+        # Cache the languages for this filterable list form to avoid
+        # repeated database lookups of the same data.
+        language_options = cache.get(f"{self.cache_key_prefix}-language")
+        if language_options is None:
+            language_codes = set(CFGOVPage.objects.filter(pk__in=page_ids).values_list('language', flat=True))
+            language_options = [(k, v) for k, v in dict(ref.supported_languages).items() if k in language_codes]
+            cache.set(f"{self.cache_key_prefix}-language", language_options)
+        self.fields['language'].choices = language_options
 
     def clean(self):
         cleaned_data = super(FilterableListForm, self).clean()
