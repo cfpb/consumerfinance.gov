@@ -6,7 +6,7 @@ from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 
-from v1.models import CFGOVPage, enforcement_action_page
+from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
@@ -139,8 +139,7 @@ class FilterableListForm(forms.Form):
         self.all_filterable_results = self.get_all_filterable_results()
         page_ids = self.get_all_page_ids()
         self.set_topics(page_ids)
-        # Populate language choices
-        self.set_languages(page_ids)
+        self.set_languages()
 
     def get_all_filterable_results(self):
         """ Get all filterable document results from Elasticsearch
@@ -246,13 +245,17 @@ class FilterableListForm(forms.Form):
             self.fields['topics'].choices = topics
 
     # Populate language choices
-    def set_languages(self, page_ids):
+    def set_languages(self):
         # Cache the languages for this filterable list form to avoid
         # repeated database lookups of the same data.
         language_options = cache.get(f"{self.cache_key_prefix}-language")
         if language_options is None:
-            language_codes = set(CFGOVPage.objects.filter(pk__in=page_ids).values_list('language', flat=True))
-            language_options = [(k, v) for k, v in dict(ref.supported_languages).items() if k in language_codes]
+            language_codes = set(
+                result.language for result in self.all_filterable_results)
+            language_options = [
+                (k, v) for k, v in dict(ref.supported_languages).items()
+                if k in language_codes
+            ]
             cache.set(f"{self.cache_key_prefix}-language", language_options)
         self.fields['language'].choices = language_options
 
