@@ -101,10 +101,17 @@
                     {% else %}
                         {% set link_class = 'a-btn m-info-unit_btn' if
                             value.is_button else 'm-list_link' %}
+
                         {% set link_text = link.text if link.text
                             else 'Learn More' %}
-                        {% set link = '<a class="' ~ link_class ~ '" href="' ~
-                            link.url ~ '">' ~ link_text ~ '</a>' %}
+
+                        {%- set link -%}
+                            <a class="{{ link_class }}"
+                                href="{{ link.url }}"
+                                {%- if link.aria_label -%}
+                                    aria-label="{{ link.aria_label }}"
+                                {%- endif %}>{{ link_text }}</a>
+                        {%- endset -%}
                         {{ link | safe }}
                     {% endif %}
                 </li>
