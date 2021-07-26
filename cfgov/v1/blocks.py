@@ -233,3 +233,6 @@ class ERAPToolBlock(blocks.StaticBlock):
         label = 'ERAP Tool'
         admin_text = '{label} has no options to configure'.format(label=label)
         template = '_includes/blocks/erap_tool.html'
+
+    class Media:
+        js = ['erap/main.js']
