@@ -5,7 +5,7 @@ from django.test.client import RequestFactory
 from django.utils.safestring import SafeText
 
 from v1.blocks import (
-    AbstractFormBlock, AnchorLink, ERAPToolBlock, PlaceholderCharBlock
+    AbstractFormBlock, AnchorLink, PlaceholderCharBlock, RAFToolBlock
 )
 
 
@@ -151,9 +151,9 @@ class TestPlaceholderBlock(TestCase):
             PlaceholderCharBlock.replace_placeholder(html, 'a')
 
 
-class ERAPToolBlockTestCase(TestCase):
+class RAFToolBlockTestCase(TestCase):
     def test_render_no_placeholder_provided(self):
-        erap_tool_block = ERAPToolBlock()
+        erap_tool_block = RAFToolBlock()
         html = erap_tool_block.render(None)
         self.assertInHTML(
             '<div id="erap-lookup"></div>',

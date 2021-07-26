@@ -227,12 +227,12 @@ class ReusableTextChooserBlock(SnippetChooserBlock):
         template = '_includes/snippets/reusable_text.html'
 
 
-class ERAPToolBlock(blocks.StaticBlock):
+class RAFToolBlock(blocks.StaticBlock):
     class Meta:
         icon = 'cog'
-        label = 'ERAP Tool'
+        label = 'Rental Assistance Finder Tool'
         admin_text = '{label} has no options to configure'.format(label=label)
-        template = '_includes/blocks/erap_tool.html'
+        template = '_includes/blocks/raf_tool.html'
 
     class Media:
         js = ['erap/main.js']
