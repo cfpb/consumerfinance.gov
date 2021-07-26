@@ -108,14 +108,14 @@
                 {%- else -%}
                     {%- set link_text = link.text if link.text
                         else 'Learn More' -%}
-                    {%- if link.aria_label -%}
-                        {%- set link = '<a class="m-list_link" href="' ~
-                            link.url ~ '" aria-label="' ~
-                            link.aria_label ~ '">' ~ link_text ~ '</a>' %}
-                    {%- else -%}
-                        {%- set link = '<a class="m-list_link" href="' ~
-                            link.url ~ '">' ~ link_text ~ '</a>' %}
-                    {%- endif %}
+
+                    {%- set link -%}
+                        <a class="m-list_link"
+                            href="{{ link.url }}"
+                            {%- if link.aria_label -%}
+                                aria-label="{{ link.aria_label }}"
+                            {%- endif %}>{{ link_text }}</a>
+                    {%- endset -%}
                     {{ link | safe }}
                 {%- endif %}
                 </li>
