@@ -1,7 +1,9 @@
+const $ = document.querySelector.bind( document );
 const $$ = document.querySelectorAll.bind( document );
 
 class ChoiceField {
   constructor( name ) {
+    this.name = name;
     this.inputs = $$( `.ChoiceField[name="${ name }"]` );
     this.value = null;
     [].forEach.call( this.inputs, input => {
@@ -27,22 +29,29 @@ ChoiceField.get = name => {
   if ( !ChoiceField.cache[name] ) {
     ChoiceField.cache[name] = new ChoiceField( name );
   }
+
   return ChoiceField.cache[name];
 };
 
 ChoiceField.restoreFromSession = key => {
   const store = JSON.parse( sessionStorage.getItem( key ) || '{}' );
+  const storeText = JSON.parse( sessionStorage.getItem( key + 'Text' ) || '{}' );
+
   let update = false;
 
-  const checkCache = ( [ name, grp ] ) => {
-    if ( grp.value === null ) {
+  const checkCache = ( [ name, cf ] ) => {
+    // First label is the question label
+    const label = $( `label[for="id_${ name }_0"]` );
+    storeText[name] = label ? label.textContent : '';
+
+    if ( cf.value === null ) {
       if ( typeof store[name] !== 'undefined' ) {
         // Sync storage to radio button
-        grp.changeValue( store[name] );
+        cf.changeValue( store[name] );
       }
     } else if ( typeof store[name] === 'undefined' ) {
       // Sync pre-selected radio to storage (for testing locally)
-      store[name] = grp.value;
+      store[name] = cf.value;
       update = true;
     }
   };
@@ -52,6 +61,10 @@ ChoiceField.restoreFromSession = key => {
   if ( update ) {
     sessionStorage.setItem( key, JSON.stringify( store ) );
   }
+
+  setTimeout( () => {
+    sessionStorage.setItem( key + 'Text', JSON.stringify( storeText ) );
+  }, 100 );
 
   return store;
 };
@@ -74,9 +87,12 @@ ChoiceField.watchAndStore = ( key, store, onStoreUpdate ) => {
   } );
 };
 
+ChoiceField.findUnanswered = () => Object.values( ChoiceField.cache )
+  .filter( cf => cf.value === null );
+
 ChoiceField.init = () => {
   // Find them all
-  [].forEach.call( $$( '.ChoiceField' ), input => {
+  [].forEach.call( $$( 'input.ChoiceField' ), input => {
     ChoiceField.get( input.name );
   } );
 };

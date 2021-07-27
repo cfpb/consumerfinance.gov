@@ -7,24 +7,50 @@ const { clipboardCopy } = require( '../clipboardCopy' );
 const $ = document.querySelector.bind( document );
 const ANSWERS_SESS_KEY = 'tdp-survey-choices';
 
+/**
+ * Set up results page
+ */
 function resultsPage() {
   modals.init();
   sessionStorage.removeItem( ANSWERS_SESS_KEY );
   Cookie.remove( 'wizard_survey_wizard' );
   initials.init();
+  handleInputEvents();
+  handleClicks();
 
+  // Hide the clipboard copied message when opening share modal
+  document.addEventListener( 'modal:open:before', event => {
+    if ( event.detail.modal.id === 'modal-share-url' ) {
+      $( '.share-output__copied' ).innerHTML = '&nbsp;';
+    }
+  } );
+
+  const startOver = $( '.results-start-over' );
+  if ( startOver ) {
+    startOver.addEventListener( 'click', () => {
+      Cookie.remove( 'resultUrl' );
+    } );
+  }
+}
+
+/**
+ * Set up handlers for changing initials inputs
+ */
+function handleInputEvents() {
   document.addEventListener( 'input', event => {
     const t = event.target;
 
-    if (t.hasAttribute( 'data-initials-setter' )) {
+    if ( t.hasAttribute( 'data-initials-setter' ) ) {
       const fixed = String( t.value ).toUpperCase().trim().substr( 0, 3 );
 
       initials.update( fixed );
       $( '.share-output__copied' ).textContent = '';
 
       // Set value on all setters!
-      const allSetters = document.querySelectorAll('[data-initials-setter]');
-      [].forEach.call(allSetters, input => input.value = fixed);
+      const allSetters = document.querySelectorAll( '[data-initials-setter]' );
+      [].forEach.call( allSetters, input => {
+        input.value = fixed;
+      } );
 
       t.value = fixed;
 
@@ -42,7 +68,12 @@ function resultsPage() {
       $( '.share-output' ).hidden = false;
     }
   } );
+}
 
+/**
+ * Handle all document clicking
+ */
+function handleClicks() {
   document.addEventListener( 'click', event => {
     const t = event.target;
 
@@ -59,26 +90,10 @@ function resultsPage() {
     if ( t === $( '.share-output__right button' ) ) {
       const shareUrl = $( '.shared-url' ).value;
       clipboardCopy( shareUrl ).then( success => {
-        $( '.share-output__copied' ).textContent = success
-          ? 'Link copied to clipboard.'
-          : 'Copy failed. Please copy the link yourself.';
+        $( '.share-output__copied' ).textContent = success ? 'Link copied to clipboard.' : 'Copy failed. Please copy the link yourself.';
       } );
     }
   } );
-
-  // Hide the clipboard copied message when opening share modal
-  document.addEventListener( 'modal:open:before', event => {
-    if ( event.detail.modal.id === 'modal-share-url' ) {
-      $( '.share-output__copied' ).innerHTML = '&nbsp;';
-    }
-  } );
-
-  const startOver = $( '.results-start-over' );
-  if (startOver) {
-    startOver.addEventListener( 'click', () => {
-      Cookie.remove( 'resultUrl' );
-    } );
-  }
 }
 
 export { resultsPage, ANSWERS_SESS_KEY };

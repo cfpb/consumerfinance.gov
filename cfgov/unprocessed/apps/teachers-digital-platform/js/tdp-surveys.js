@@ -34,7 +34,7 @@ const surveys = {
 
     link.addEventListener( 'click', forgetEverything );
     link.addEventListener( 'mouseover', forgetEverything );
-  },
+  }
 };
 
 module.exports = surveys;

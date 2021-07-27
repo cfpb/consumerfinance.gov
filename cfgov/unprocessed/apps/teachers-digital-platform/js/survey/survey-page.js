@@ -48,6 +48,42 @@ function surveyPage( el ) {
   };
 
   ChoiceField.watchAndStore( ANSWERS_SESS_KEY, store, onStoreUpdate );
+
+  initErrorHandling();
+}
+
+/**
+ * Set up error handling
+ */
+function initErrorHandling() {
+  // Remove the built-in HTML5 validation because we want custom errors
+  const inputs = document.querySelectorAll( '.ChoiceField input[type=radio]' );
+  [].forEach.call( inputs, input => {
+    input.removeAttribute( 'required' );
+  } );
+
+  const form = document.querySelector( '.tdp-survey-page form' );
+  if ( form ) {
+    form.addEventListener( 'submit', event => {
+      const cfs = ChoiceField.findUnanswered();
+      if ( cfs.length ) {
+        event.preventDefault();
+        showErrors( cfs );
+      }
+    } );
+  }
+}
+
+/**
+ * Show errors for unanswered radios
+ *
+ * @param {ChoiceField[]} cfs ChoiceField objects that are unanswered
+ */
+function showErrors( cfs ) {
+  // TODO display nicely
+  const nums = cfs.map( cf => cf.name.split( '-q' )[1] );
+  const msg = `Unanswered: ${ nums.join( ', ' ) }`;
+  alert( msg );
 }
 
 export { surveyPage };
