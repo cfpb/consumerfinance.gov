@@ -63,13 +63,6 @@ gulp.task( 'copy:lightbox2', () => {
   return stream;
 } );
 
-gulp.task( 'copy:erap', () => {
-  const stream = _genericCopy(
-    `${ paths.unprocessed }/erap/js/**/*`,
-    `${ paths.processed }/js/routes/on-demand/erap`
-  );
-  return stream;
-} );
 
 gulp.task( 'copy:icons',
   gulp.parallel(
@@ -83,7 +76,6 @@ gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
     'copy:lightbox2',
-    'copy:erap',
     'copy:root'
   )
 );
