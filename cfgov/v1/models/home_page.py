@@ -55,9 +55,6 @@ class HomePage(CFGOVPage):
         ),
     ])
 
-    # Sets page to only be createable at the root
-    parent_page_types = ['wagtailcore.Page']
-
     objects = PageManager()
 
     def get_context(self, request):

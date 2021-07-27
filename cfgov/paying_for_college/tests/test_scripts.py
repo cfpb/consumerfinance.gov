@@ -22,7 +22,7 @@ from paying_for_college.disclosures.scripts.notification_tester import (
     send_test_notifications
 )
 from paying_for_college.models import (
-    FAKE_SCHOOL_PK, Alias, Notification, Program, School
+    FAKE_SCHOOL_PKS, Alias, Notification, Program, School
 )
 
 
@@ -398,7 +398,7 @@ class TestScripts(django.test.TestCase):
         self.assertEqual(
             mock_get_data.call_count,
             School.objects.filter(operating=True).exclude(
-                pk=FAKE_SCHOOL_PK).count())
+                pk__in=FAKE_SCHOOL_PKS).count())
 
     def check_compile_net_prices(self, control):
         mock_api_data = self.mock_results.get('results')[0]

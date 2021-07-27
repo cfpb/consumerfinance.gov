@@ -74,8 +74,6 @@ function stylesOnDemand() {
   return gulp.src( configStyles.cwd + '/on-demand/*.less' )
     .pipe( gulpNewer( {
       dest:  configStyles.dest,
-      // ext option required because this subtask uses multiple source files
-      ext:   '.nonresponsive.css',
       extra: configStyles.otherBuildTriggerFiles
     } ) )
     .pipe( gulpLess( configStyles.settings ) )
@@ -84,17 +82,7 @@ function stylesOnDemand() {
       autoprefixer()
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulp.dest( configStyles.dest ) )
-    .pipe( gulpPostcss( [
-      postcssUnmq( {
-        width: '75em'
-      } )
-    ] ) )
-    .pipe( gulpCleanCss( { compatibility: 'ie8' } ) )
-    .pipe( gulpRename( {
-      suffix:  '.nonresponsive',
-      extname: '.css'
-    } ) )
+    .pipe( gulpCleanCss( { compatibility: '*' } ) )
     .pipe( gulp.dest( configStyles.dest ) );
 }
 
