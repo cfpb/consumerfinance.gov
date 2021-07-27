@@ -52,7 +52,10 @@ function Autocomplete( element, opts ) {
 
     /* TODO: Is this sufficient to handle autocompletes without a maxlength?
        https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute#non-existing_attributes */
-    maxChars: _input.getAttribute( 'maxlength' ),
+    // 1024 is our upper limit for Elasticsearch queries
+    maxChars: _input.getAttribute( 'maxlength' ) ?
+      _input.getAttribute( 'maxlength' ) :
+      1024,
     delay: 300,
     url: '',
     list: [],
