@@ -26,6 +26,7 @@ function Autocomplete( element, opts ) {
   const HIDDEN_CLASS = 'u-hidden';
   const AUTOCOMPLETE_CLASS = 'm-autocomplete_results';
   const SELECTED_CLASS = 'm-autocomplete_selected';
+  const ERROR_CLASS = 'a-text-input__error';
 
   // Key constants
   const ENTER = 13;
@@ -40,6 +41,8 @@ function Autocomplete( element, opts ) {
   let _isVisible;
   let _selection;
   let _maxLengthExceeded = false;
+
+  /* TODO: Is there a better way to get this to use later to dispatch the event? */
   const _this = this;
 
   // Autocomplete elements
@@ -59,6 +62,10 @@ function Autocomplete( element, opts ) {
     delay: 300,
     url: '',
     list: [],
+
+    /* TODO: Should toggling the error message on and off be handled here in the
+       autocomplete molecule, or should it move into the Ask form alongside
+       disabling the submit button? I could go either way on that. */
     errorMessage: null,
     onSubmit: function( event, selected ) {
       return selected;
@@ -141,17 +148,18 @@ function Autocomplete( element, opts ) {
     _maxLengthExceeded = _searchTerm.length >= _settings.maxChars ? true :
       false;
     if ( _maxLengthExceeded ) {
-      _input.classList.add( 'a-text-input__error' );
+      _input.classList.add( ERROR_CLASS );
+
       /* If you type fast enough, search results from a letter or two back can
          cover up the max length error, so we'll wait a bit before hiding */
       setTimeout( _hide, _settings.delay );
       if ( _settings.errorMessage ) {
-        _settings.errorMessage.classList.remove( 'u-hidden' );
+        _settings.errorMessage.classList.remove( HIDDEN_CLASS );
       }
     } else {
-      _input.classList.remove( 'a-text-input__error' );
+      _input.classList.remove( ERROR_CLASS );
       if ( _settings.errorMessage ) {
-        _settings.errorMessage.classList.add( 'u-hidden' );
+        _settings.errorMessage.classList.add( HIDDEN_CLASS );
       }
     }
     _this.dispatchEvent( 'maxCharacterChange', {
