@@ -1,6 +1,7 @@
 // Required modules.
 import { assign } from '../modules/util/assign';
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import { ajaxRequest } from '../modules/util/ajax-request';
 import * as throttle from 'lodash.throttle';
 
@@ -14,7 +15,8 @@ import * as throttle from 'lodash.throttle';
  *   The DOM element within which to search for the molecule.
  * @param {Object} opts optional params, including
  * url for suggestions endpoint or list of suggestions,
- * minChars, onSubmit, renderItem, and cleanQuery functions.
+ * minChars, maxChars, an error message onSubmit, renderItem,
+ * and cleanQuery functions.
  * @returns {Autocomplete} An instance.
  */
 function Autocomplete( element, opts ) {
@@ -37,6 +39,8 @@ function Autocomplete( element, opts ) {
   let _suggestions;
   let _isVisible;
   let _selection;
+  let _maxLengthExceeded = false;
+  const _this = this;
 
   // Autocomplete elements
   const _dom = checkDom( element, BASE_CLASS );
@@ -45,10 +49,12 @@ function Autocomplete( element, opts ) {
   // Settings
   const _settings = {
     minChars: 2,
-    maxChars: 50, /* TODO Get this from the input's maxlength attribute */
+    // TODO: Is this sufficient? https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute#non-existing_attributes
+    maxChars: _input.getAttribute( 'maxlength' ),
     delay: 300,
     url: '',
     list: [],
+    errorMessage: null,
     onSubmit: function( event, selected ) {
       return selected;
     },
@@ -123,31 +129,51 @@ function Autocomplete( element, opts ) {
   }
 
   /**
+   * Toggles the error state and message that's shown when the
+   * max search term length is hit
+   */
+  function _toggleMaxLengthError() {
+    _maxLengthExceeded = _searchTerm.length >= _settings.maxChars ? true :
+      false;
+    if ( _maxLengthExceeded ) {
+      _input.classList.add( 'a-text-input__error' );
+      _hide();
+      if ( _settings.errorMessage ) {
+        _settings.errorMessage.classList.remove( 'u-hidden' );
+      }
+      // document.querySelector( '.o-form__input-w-btn_btn-container button[type="submit"]' ).setAttribute( 'disabled', 'true' );
+    } else {
+      _input.classList.remove( 'a-text-input__error' );
+      if ( _settings.errorMessage ) {
+        _settings.errorMessage.classList.add( 'u-hidden' );
+      }
+      // document.querySelector( '.o-form__input-w-btn_btn-container button[type="submit"]' ).removeAttribute( 'disabled' );
+    }
+    _this.dispatchEvent( 'maxCharacterChange', { maxLengthExceeded: _maxLengthExceeded } );
+  }
+
+  /**
    * Binds input, blur, and keydown events on _input element and
    * resize event on window.
    */
   function _bindEvents() {
     _input.addEventListener( 'input', function() {
       _searchTerm = this.value;
-      // TODO: Refactor the max length stuff
-      if ( _searchTerm.length >= _settings.maxChars ) {
-        _input.classList.add( 'a-text-input__error' );
-        _hide();
-        document.getElementById( 'o-search-bar-error_message' ).classList.remove( 'u-hidden' );
-        document.querySelector( '.o-form__input-w-btn_btn-container button[type="submit"]' ).setAttribute( 'disabled', 'true' );
-        return;
-      } else if ( _searchTerm.length <= _settings.maxChars ) {
-        _input.classList.remove( 'a-text-input__error' );
-        document.getElementById( 'o-search-bar-error_message' ).classList.add( 'u-hidden' );
-        document.querySelector( '.o-form__input-w-btn_btn-container button[type="submit"]' ).removeAttribute( 'disabled' );
-      }
-      if ( _searchTerm.length >= _settings.minChars ) {
+      if ( _searchTerm.length >= _settings.minChars && _searchTerm.length < _settings.maxChars ) {
+        if ( _maxLengthExceeded === true ) {
+          _toggleMaxLengthError();
+        }
         if ( _settings.url ) {
           _throttleFetch();
         } else {
           _settings.filterList( _settings.list );
         }
+      } else if ( _searchTerm.length >= _settings.maxChars ) {
+        _toggleMaxLengthError();
       } else {
+        if ( _maxLengthExceeded === true ) {
+          _toggleMaxLengthError();
+        }
         _hide();
       }
     } );
@@ -320,6 +346,11 @@ function Autocomplete( element, opts ) {
     _reset();
     _hide();
   }
+
+  const eventObserver = new EventObserver();
+  this.addEventListener = eventObserver.addEventListener;
+  this.removeEventListener = eventObserver.removeEventListener;
+  this.dispatchEvent = eventObserver.dispatchEvent;
 
   this.init = init;
 

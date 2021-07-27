@@ -25,7 +25,6 @@
 
    ========================================================================== #}
 
-{# TODO: Should max_length be hardcoded? #}
 {% macro render(
     ask_query='',
     language='en',
@@ -62,8 +61,10 @@
                                maxlength="{{ max_length }}"
                                aria-describedby="o-search-bar-error_message">
                     </div>
-                    {# TODO: Refactor inline notification #}
-                    <div class="a-form-alert a-form-alert__error u-hidden" id="o-search-bar-error_message" role="alert">
+                    {# TODO: Is there a better way to render this hidden initially? #}
+                    <div class="a-form-alert a-form-alert__error u-hidden"
+                         id="o-search-bar-error_message"
+                         role="alert">
                         {{ svg_icon('error-round') }}
                         <p class="a-form-alert_text">
                             Searches are limited to 50 characters.
