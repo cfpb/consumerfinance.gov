@@ -49,7 +49,9 @@ function Autocomplete( element, opts ) {
   // Settings
   const _settings = {
     minChars: 2,
-    // TODO: Is this sufficient? https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute#non-existing_attributes
+
+    /* TODO: Is this sufficient to handle autocompletes without a maxlength?
+       https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute#non-existing_attributes */
     maxChars: _input.getAttribute( 'maxlength' ),
     delay: 300,
     url: '',
@@ -137,19 +139,21 @@ function Autocomplete( element, opts ) {
       false;
     if ( _maxLengthExceeded ) {
       _input.classList.add( 'a-text-input__error' );
-      _hide();
+      /* If you type fast enough, search results from a letter or two back can
+         cover up the max length error, so we'll wait a bit before hiding */
+      setTimeout( _hide, _settings.delay );
       if ( _settings.errorMessage ) {
         _settings.errorMessage.classList.remove( 'u-hidden' );
       }
-      // document.querySelector( '.o-form__input-w-btn_btn-container button[type="submit"]' ).setAttribute( 'disabled', 'true' );
     } else {
       _input.classList.remove( 'a-text-input__error' );
       if ( _settings.errorMessage ) {
         _settings.errorMessage.classList.add( 'u-hidden' );
       }
-      // document.querySelector( '.o-form__input-w-btn_btn-container button[type="submit"]' ).removeAttribute( 'disabled' );
     }
-    _this.dispatchEvent( 'maxCharacterChange', { maxLengthExceeded: _maxLengthExceeded } );
+    _this.dispatchEvent( 'maxCharacterChange', {
+      maxLengthExceeded: _maxLengthExceeded
+    } );
   }
 
   /**
@@ -159,7 +163,8 @@ function Autocomplete( element, opts ) {
   function _bindEvents() {
     _input.addEventListener( 'input', function() {
       _searchTerm = this.value;
-      if ( _searchTerm.length >= _settings.minChars && _searchTerm.length < _settings.maxChars ) {
+      if ( _searchTerm.length >= _settings.minChars &&
+           _searchTerm.length < _settings.maxChars ) {
         if ( _maxLengthExceeded === true ) {
           _toggleMaxLengthError();
         }

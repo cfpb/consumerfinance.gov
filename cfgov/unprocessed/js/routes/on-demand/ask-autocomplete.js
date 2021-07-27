@@ -11,9 +11,19 @@ const URLS = {
 
 const autocompleteContainer = document.querySelector( '.m-autocomplete' );
 const errorMessage = document.querySelector( '#o-search-bar-error_message' );
+const submitButton = document.querySelector( '.o-search-bar button[type="submit"]' );
 
-function handleMaxCharacters() {
-  console.log( event );
+/**
+ * Disable the submit button if the query character limit is reached
+ * @param {Object} event The maxCharacterChange event object dispatched from the
+ * autocomplete
+ */
+function handleMaxCharacters( event ) {
+  if ( event.maxLengthExceeded ) {
+    submitButton.setAttribute( 'disabled', 'true' );
+  } else {
+    submitButton.removeAttribute( 'disabled' );
+  }
 }
 
 if ( autocompleteContainer ) {
