@@ -60,12 +60,12 @@ jobs:
           ES_PORT: ${{ job.services.elasticsearch.ports[9200] }}
 
       - name: Prepare test coverage
-        if: matrix.toxenv == 'unittest-current'
+        if: matrix.toxenv == 'unittest'
         run: coverage xml
 
       - name: Store test coverage
         # Submit coverage from our prefered tox run only
-        if: matrix.toxenv == 'unittest-current'
+        if: matrix.toxenv == 'unittest'
         uses: actions/upload-artifact@v1
         with:
           name: backend_coverage
