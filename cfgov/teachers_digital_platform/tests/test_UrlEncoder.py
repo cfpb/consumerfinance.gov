@@ -12,7 +12,7 @@ class UrlEncoderTest(TestCase):
         self.encoder = UrlEncoder(['6-9'])
 
     def test_restricts_keys(self):
-        with self.assertRaises(ValueError) as cm:
+        with self.assertRaises(ValueError):
             UrlEncoder(['foo_bar'])
 
     def test_validates_key(self):

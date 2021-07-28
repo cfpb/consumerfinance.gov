@@ -64,6 +64,8 @@ for key, survey_view in views.SurveyWizard.build_views().items():
             re_path(
                 r'^(?P<step>.+)/$',
                 survey_view,
+                # Note it's important this is kept in sync with the url_name
+                # parameter in build_views()
                 name=f'survey_{key}_step'
             ),
         ]))

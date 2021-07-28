@@ -97,6 +97,7 @@ INSTALLED_APPS = (
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
+    "formtools",
     "wagtailmedia",
     "django_elasticsearch_dsl",
 
