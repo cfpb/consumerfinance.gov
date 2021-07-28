@@ -10,12 +10,11 @@ jobs:
     strategy:
       matrix:
         toxenv:
-          - lint-current
+          - lint
           - validate-migrations
           - validate-assets
           - validate-translations
-          - unittest-current
-          - unittest-future
+          - unittest
 
     services:
       postgres:
@@ -35,7 +34,7 @@ jobs:
         ports:
         - 9200/tcp
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
-        
+
     steps:
       - uses: actions/checkout@v2
 
@@ -61,12 +60,12 @@ jobs:
           ES_PORT: ${{ job.services.elasticsearch.ports[9200] }}
 
       - name: Prepare test coverage
-        if: matrix.toxenv == 'unittest-current'
+        if: matrix.toxenv == 'unittest'
         run: coverage xml
 
       - name: Store test coverage
         # Submit coverage from our prefered tox run only
-        if: matrix.toxenv == 'unittest-current'
+        if: matrix.toxenv == 'unittest'
         uses: actions/upload-artifact@v1
         with:
           name: backend_coverage
