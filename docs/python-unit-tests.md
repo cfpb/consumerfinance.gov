@@ -94,12 +94,6 @@ These default environments are:
   versions of Python, Django, and Wagtail. We require this environment to
   pass in CI.
 
-In addition, we also have this environment:
-
-- `unittest-future`, which runs unit tests against upcoming versions of
-  Python, Django, and Wagtail. We do not require this environment to pass in
-  CI.
-
 Tests will run against the default Django database as configured in settings
 using the `DATABASE_URL` environment variable.
 
