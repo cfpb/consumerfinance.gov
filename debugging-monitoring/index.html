@@ -83,6 +83,8 @@
         
             <li><a class="toctree-l4" href="#logging-database-queries-to-console">Logging database queries to console</a></li>
         
+            <li><a class="toctree-l4" href="#logging-elasticsearch-queries-to-console">Logging Elasticsearch queries to console</a></li>
+        
             <li><a class="toctree-l4" href="#monitoring-using-new-relic">Monitoring using New Relic</a></li>
         
         </ul>
@@ -300,6 +302,15 @@ to the console, and works with any Django code invoked from the shell,
 including the server and management commands:</p>
 <pre class="highlight"><code class="language-sh">$ ENABLE_SQL_LOGGING=1 ./runserver.sh
 $ ENABLE_SQL_LOGGING=1 cfgov/manage.py some_management_command</code></pre>
+
+<h3 id="logging-elasticsearch-queries-to-console">Logging Elasticsearch queries to console<a class="headerlink" href="#logging-elasticsearch-queries-to-console" title="Permanent link">¶</a></h3>
+<p>Similarly, to log Elasticsearch queries to the console when running locally,
+define the <code>ENABLE_ES_LOGGING</code> environment variable.</p>
+<p>This will log any Elasticsearch queries (and time taken to execute them)
+to the console, and works with any Django code invoked from the shell,
+including the server and management commands:</p>
+<pre class="highlight"><code class="language-sh">$ ENABLE_ES_LOGGING=1 ./runserver.sh
+$ ENABLE_ES_LOGGING=1 cfgov/manage.py some_management_command</code></pre>
 
 <h3 id="monitoring-using-new-relic">Monitoring using New Relic<a class="headerlink" href="#monitoring-using-new-relic" title="Permanent link">¶</a></h3>
 <p>This project can be configured for real-time monitoring with
