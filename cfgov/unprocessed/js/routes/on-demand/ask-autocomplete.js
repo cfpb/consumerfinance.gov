@@ -21,8 +21,10 @@ const submitButton = document.querySelector( '.o-search-bar button[type="submit"
 function handleMaxCharacters( event ) {
   if ( event.maxLengthExceeded ) {
     submitButton.setAttribute( 'disabled', 'true' );
+    errorMessage.classList.remove( 'u-hidden' );
   } else {
     submitButton.removeAttribute( 'disabled' );
+    errorMessage.classList.add( 'u-hidden' );
   }
 }
 
@@ -31,7 +33,6 @@ if ( autocompleteContainer ) {
 
   const autocomplete = new Autocomplete( autocompleteContainer, {
     url: language === 'es' ? URLS.es : URLS.en,
-    errorMessage: errorMessage,
     onSubmit: function( event, selected ) {
       const link = selected.querySelector( 'a' );
       const href = link.getAttribute( 'href' );

@@ -62,11 +62,6 @@ function Autocomplete( element, opts ) {
     delay: 300,
     url: '',
     list: [],
-
-    /* TODO: Should toggling the error message on and off be handled here in the
-       autocomplete molecule, or should it move into the Ask form alongside
-       disabling the submit button? I could go either way on that. */
-    errorMessage: null,
     onSubmit: function( event, selected ) {
       return selected;
     },
@@ -153,14 +148,8 @@ function Autocomplete( element, opts ) {
       /* If you type fast enough, search results from a letter or two back can
          cover up the max length error, so we'll wait a bit before hiding */
       setTimeout( _hide, _settings.delay );
-      if ( _settings.errorMessage ) {
-        _settings.errorMessage.classList.remove( HIDDEN_CLASS );
-      }
     } else {
       _input.classList.remove( ERROR_CLASS );
-      if ( _settings.errorMessage ) {
-        _settings.errorMessage.classList.add( HIDDEN_CLASS );
-      }
     }
     _this.dispatchEvent( 'maxCharacterChange', {
       maxLengthExceeded: _maxLengthExceeded
@@ -168,31 +157,36 @@ function Autocomplete( element, opts ) {
   }
 
   /**
+   * Event handler for input into the _input element
+   */
+  function _handleInput() {
+    _searchTerm = this.value;
+    if ( _searchTerm.length >= _settings.minChars &&
+         _searchTerm.length < _settings.maxChars ) {
+      if ( _maxLengthExceeded === true ) {
+        _toggleMaxLengthError();
+      }
+      if ( _settings.url ) {
+        _throttleFetch();
+      } else {
+        _settings.filterList( _settings.list );
+      }
+    } else if ( _searchTerm.length >= _settings.maxChars ) {
+      _toggleMaxLengthError();
+    } else {
+      if ( _maxLengthExceeded === true ) {
+        _toggleMaxLengthError();
+      }
+      _hide();
+    }
+  }
+
+  /**
    * Binds input, blur, and keydown events on _input element and
    * resize event on window.
    */
   function _bindEvents() {
-    _input.addEventListener( 'input', function() {
-      _searchTerm = this.value;
-      if ( _searchTerm.length >= _settings.minChars &&
-           _searchTerm.length < _settings.maxChars ) {
-        if ( _maxLengthExceeded === true ) {
-          _toggleMaxLengthError();
-        }
-        if ( _settings.url ) {
-          _throttleFetch();
-        } else {
-          _settings.filterList( _settings.list );
-        }
-      } else if ( _searchTerm.length >= _settings.maxChars ) {
-        _toggleMaxLengthError();
-      } else {
-        if ( _maxLengthExceeded === true ) {
-          _toggleMaxLengthError();
-        }
-        _hide();
-      }
-    } );
+    _input.addEventListener( 'input', _handleInput );
     _input.addEventListener( 'blur', function() {
       setTimeout( function() {
         const active = document.activeElement;
