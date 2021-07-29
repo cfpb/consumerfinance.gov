@@ -37,6 +37,21 @@ $ ENABLE_SQL_LOGGING=1 ./runserver.sh
 $ ENABLE_SQL_LOGGING=1 cfgov/manage.py some_management_command
 ```
 
+### Logging Elasticsearch queries to console
+
+Similarly, to log Elasticsearch queries to the console when running locally,
+define the `ENABLE_ES_LOGGING` environment variable.
+
+This will log any Elasticsearch queries (and time taken to execute them)
+to the console, and works with any Django code invoked from the shell,
+including the server and management commands:
+
+```sh
+$ ENABLE_ES_LOGGING=1 ./runserver.sh
+$ ENABLE_ES_LOGGING=1 cfgov/manage.py some_management_command
+```
+
+
 ### Monitoring using New Relic
 
 This project can be configured for real-time monitoring with

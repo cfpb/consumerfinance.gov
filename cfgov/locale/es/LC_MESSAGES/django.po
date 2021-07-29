@@ -177,6 +177,10 @@ msgstr "Página"
 msgid "Go"
 msgstr "Ir"
 
+#: jinja2/v1/_includes/molecules/related-posts.html:111
+msgid "View more related posts"
+msgstr "Ver más publicaciones relacionadas"
+
 #: jinja2/v1/_includes/molecules/related-posts.html:112
 msgid "View more"
 msgstr "Ver más"
