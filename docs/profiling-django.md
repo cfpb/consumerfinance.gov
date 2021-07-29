@@ -101,7 +101,7 @@ you see the function's file, directory,
 and line number in additional context to the left. 
 
 If that function is called multiple times, 
-other calls will also highlight in the visulization. 
+other calls will also highlight in the visualization. 
 This is a good way to identify duplication that one may wish to refactor.
 
 ## Basic workflow
