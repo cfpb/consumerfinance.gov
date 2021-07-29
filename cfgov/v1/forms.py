@@ -125,7 +125,7 @@ class FilterableListForm(forms.Form):
         self.wagtail_block = kwargs.pop('wagtail_block')
         self.filterable_categories = kwargs.pop('filterable_categories')
 
-        # This cache key is used for caching the topics, language, page_ids,
+        # This cache key is used for caching the topics, page_ids,
         # and the full set of Elasticsearch results for this form used to
         # generate them.
         # Default the cache key prefix to this form's hash if it's not
@@ -145,7 +145,7 @@ class FilterableListForm(forms.Form):
         """ Get all filterable document results from Elasticsearch
 
         This set of results is used to populate the list of all page_ids,
-        below, which is in turn used for populating the topics and language
+        below, which is in turn used for populating the topics
         relevant to those pages.
 
         This first document in this result set is also used to determine the
@@ -246,17 +246,16 @@ class FilterableListForm(forms.Form):
 
     # Populate language choices
     def set_languages(self):
-        # Cache the languages for this filterable list form to avoid
-        # repeated database lookups of the same data.
-        language_options = cache.get(f"{self.cache_key_prefix}-language")
-        if language_options is None:
-            language_codes = set(
-                result.language for result in self.all_filterable_results)
-            language_options = [
-                (k, v) for k, v in dict(ref.supported_languages).items()
-                if k in language_codes
-            ]
-            cache.set(f"{self.cache_key_prefix}-language", language_options)
+        language_codes = {
+            b.key for b in
+            self.all_filterable_results.aggregations.languages.buckets
+        }
+
+        language_options = [
+            (k, v) for k, v in dict(ref.supported_languages).items()
+            if k in language_codes
+        ]
+
         self.fields['language'].choices = language_options
 
     def clean(self):
