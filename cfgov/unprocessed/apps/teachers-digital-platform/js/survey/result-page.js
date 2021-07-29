@@ -1,16 +1,16 @@
 const Cookie = require( 'js-cookie' );
+const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } = require( './config' );
 const encodeName = require( '../encode-name' );
 const modals = require( '../modals' );
 const initials = require( './initials' );
 const { clipboardCopy } = require( '../clipboardCopy' );
 
 const $ = document.querySelector.bind( document );
-const ANSWERS_SESS_KEY = 'tdp-survey-choices';
 
 function resultsPage() {
   modals.init();
   sessionStorage.removeItem( ANSWERS_SESS_KEY );
-  Cookie.remove( 'wizard_survey_wizard' );
+  Cookie.remove( SURVEY_COOKIE );
   initials.init();
 
   document.addEventListener( 'input', event => {
@@ -76,7 +76,7 @@ function resultsPage() {
   const startOver = $( '.results-start-over' );
   if (startOver) {
     startOver.addEventListener( 'click', () => {
-      Cookie.remove( 'resultUrl' );
+      Cookie.remove( RESULT_COOKIE );
     } );
   }
 }
