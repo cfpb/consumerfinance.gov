@@ -882,3 +882,28 @@ CSRF_REQUIRED_PATHS = (
     "/admin",
     "/django-admin",
 )
+
+
+# Django 2.2 Baseline required settings
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_HSTS_SECONDS = 600
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True
+
+
+# Cache Settings
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cfgov_default_cache',
+        'TIMEOUT': None,
+    },
+    'post_preview': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'post_preview_cache',
+        'TIMEOUT': None,
+    }
+}
