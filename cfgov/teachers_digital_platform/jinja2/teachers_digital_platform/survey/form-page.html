@@ -1,4 +1,5 @@
-{% extends 'content-base.html' %}
+{% extends 'layout-2-1-bleedbar.html' %}
+
 {% from 'organisms/expandable.html' import expandable with context %}
 
 {% block head %}
@@ -19,56 +20,65 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-    <div class="content_wrapper tdp-survey-page"
+<div class="wrapper content_wrapper">
+    <div class="tdp-survey-page content_main"
          data-page-idx="{{ page_idx|tojson|forceescape }}"
          data-questions-by-page="{{ questions_by_page|tojson|forceescape }}">
         {# <h1>Survey Page {{ wizard.steps.step1 }}</h1> #}
-        
-        
-        
-        <form action="" method="post"> {{ csrf_input }}
-        
-        {# E.g. "./6-8/before-page-2.html" #}
-        {% include './' ~ survey.key ~ '/before-page-' ~ wizard.steps.step1 ~ '.html' ignore missing %}
+    
+            <form action="" method="post"> {{ csrf_input }}
+            
+                {# E.g. "./6-8/before-page-2.html" #}
+                {% include './' ~ survey.key ~ '/before-page-' ~ wizard.steps.step1 ~ '.html' ignore missing %}
 
-        {{ wizard.management_form }}
-        {% if wizard.form.forms %}
-            {{ wizard.form.management_form }}
-            {% for form in wizard.form.forms %}
-                {{ form.as_p() }}
-            {% endfor %}
-        {% else %}
-            {{ wizard.form.as_p() }}
-        {% endif %}
-        {# E.g. "./6-8/after-page-2.html" #}
-        
-        {# opened by a template file, do not remove #}
+                {{ wizard.management_form }}
+                {% if wizard.form.forms %}
+                    {{ wizard.form.management_form }}
+                    {% for form in wizard.form.forms %}
+                        {{ form.as_p() }}
+                    {% endfor %}
+                {% else %}
+                    {{ wizard.form.as_p() }}
+                {% endif %}
+                {# E.g. "./6-8/after-page-2.html" #}
+                
+                {# opened by a template file, do not remove #}
+                </div>
+                
+                <div class="block">
+
+                    <p>
+                    {% if wizard.steps.prev %}
+                        <a class="a-btn" href="../{{ wizard.steps.prev }}/">
+                            {% include 'icons/left.svg' %} |
+                            <span class="a-link_text">Previous</span>
+                        </a>
+                    {% endif %}
+                    {% if wizard.steps.next %}
+                        <button class="a-btn" type="submit">
+                            Continue | {% include 'icons/right.svg' %}
+                        </button>
+                    {% else %}
+                        <button class="a-btn" type="submit">
+                            Get My Results | {% include 'icons/right.svg' %}
+                        </button>
+                    {% endif %}
+                        {# TODO wire this up #}
+                        <p>
+                            <a href="#" class="a-btn a-btn__link a-btn__warning">Reset survey and start over</a>
+                        </p>
+                    </p>
+                </div>
+            </form>
+
         </div>
-        
-
-            <p>
-            {% if wizard.steps.prev %}
-                <a class="a-btn" href="../{{ wizard.steps.prev }}/">
-                    {% include 'icons/left.svg' %} |
-                    <span class="a-link_text">Previous</span>
-                </a>
-            {% endif %}
-            {% if wizard.steps.next %}
-                <button class="a-btn" type="submit">
-                    Continue | {% include 'icons/right.svg' %}
-                </button>
-            {% else %}
-                <button class="a-btn" type="submit">
-                    Get My Results | {% include 'icons/right.svg' %}
-                </button>
-            {% endif %}
-                {# TODO wire this up #}
-                <a href="#">Reset survey and start over</a>
-            </p>
-        </form>
 
         {# wizard.steps.all is a list of 'p1', 'p2', ... #}
+        <aside class="content_sidebar o-sidebar-content">        
+            <div class="progress">[Progress chart]</div>
+        </aside>
     </div>
+</div>
 {% endblock body_content %}
 
 {% block javascript %}

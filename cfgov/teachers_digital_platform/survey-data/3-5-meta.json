@@ -1,9 +1,5 @@
 {
   "name": "Grade 3-5",
   "prefix_tpls": {
-    "q1": "3-5/q1.html",
-    "q9": "3-5/q9.html",
-    "q16": "3-5/q16.html",
-    "q18": "3-5/q18.html"
   }
 }

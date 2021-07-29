@@ -1,4 +1,4 @@
-{% extends 'content-base.html' %}
+{% extends 'layout-2-1-bleedbar.html' %}
 {% from 'organisms/expandable.html' import expandable with context %}
 
 {% block title -%}
@@ -15,24 +15,127 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-<div class="content_wrapper">
-    <section class="content_main">
-        <h1>Survey Intro</h1>
-        <p>[This template to be replaced by wagtail page.]</p>
+<div class="block block__flush-top block__flush-top block__flush-bottom">
+
+
+<section class="m-hero m-hero__bleeding">
+    <div class="m-hero_wrapper wrapper">
+        <div class="m-hero_text">
+            <div class="block">
+                <h1 class="m-hero_heading">Map your money journey</h1>
+                <div class="m-hero_subhead">
+                    <p>Understanding how to manage money is a lifelong journey. Take this survey to see where you are on your journey today and learn about steps you can take for your future.</p>
+                </div>
+            </div>
+        </div>
+        <div class="m-hero_image-wrapper">
+        
+            <div class="m-hero_image"></div>
+        
+        </div>
+    </div>
+
+    
+    <style>
+        .m-hero {
+                background-color: #CCDFDF;
+            }
+    
+        .m-hero_image {
+            background-image: url('{{ static('apps/teachers-digital-platform/img/map.png') }}');
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                src='{{ static('apps/teachers-digital-platform/img/map.png') }}',
+                sizingMethod='scale');
+            padding-bottom: 41.48936170212766%;
+        }
+
+        @media screen and (min-width: 37.5625em) {
+            .m-hero_image {
+                background-image: url('{{ static('apps/teachers-digital-platform/img/map.png') }}');
+                filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                    src='{{ static('apps/teachers-digital-platform/img/map.png') }}',
+                    sizingMethod='scale');
+                padding-bottom: 41.48936170212766%;
+            }
+
+            .m-hero__overlay .m-hero_wrapper {
+                background-image: url('{{ static('apps/teachers-digital-platform/img/map.png') }}');
+                background-size: cover;
+                filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                    src='{{ static('apps/teachers-digital-platform/img/map.png') }}',
+                    sizingMethod='scale');
+            }
+        }
+    
+    </style>
+</section>
+    </div>
+<div class="wrapper content_wrapper">
+    <section class="tdp-survey-page content_main">
         <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-1">
+                <div class="block block__flush-top">
+                    <h2>Choose your grade level to begin! </h2>
+                </div>
+            </div>
             <div class="content-l_col content-l_col-1-3">
-                <a href="3-5/">Grades 3-5 Survey</a>
+                <div class="block block__flush-top">
+                    <a class="m-list_link" href="3-5/">
+                        <img src="{{ static('apps/teachers-digital-platform/img/grades3-5.png') }}" alt="Piggybank illustration" class="tdp-survey__thumbnail">
+                    </a>
+                </div>
+                <h3>Grades 3-5</h3>
+                <ul class="m-list m-list__links">
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="3-5/">Get started</a>
+                    </li>
+                </ul>
             </div>
-            <div class="content-l_col content-l_col-1-3 content-l_col__before-divider">
-                <a href="6-8/">Grades 6-8 Survey</a>
+            <div class="content-l_col content-l_col-1-3">
+                <div class="block block__flush-top">
+                    <a class="m-list_link" href="6-8/">
+                        <img src="{{ static('apps/teachers-digital-platform/img/grades6-8.png') }}" alt="Wallet with cash illustration" class="tdp-survey__thumbnail">
+                    </a>
+                </div>
+                <h3>Grades 6-8</h3>
+                <ul class="m-list m-list__links">
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="6-8/">Get started</a>
+                    </li>
+                </ul>
             </div>
-            <div class="content-l_col content-l_col-1-3 content-l_col__before-divider">
-                <a href="9-12/">Grades 9-12 Survey</a>
+            <div class="content-l_col content-l_col-1-3">
+                <div class="block block__flush-top">
+                    <a class="m-list_link" href="9-12/">
+                        <img src="{{ static('apps/teachers-digital-platform/img/grades9-12.png') }}" alt="Credit card illustration" class="tdp-survey__thumbnail">
+                    </a>
+                </div>
+                <h3>Grades 9-12</h3>
+                <ul class="m-list m-list__links">
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="9-12/">Get started</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-l_col content-l_col-1">
+                <div class="block">
+                    <h2>Why is this important?</h2>
+                    <p>Managing money takes more than adding and subtracting. Having strong money skills and knowledge can help you make choices that are best for you. Remember, your money journey will last your entire life and everyone can always improve!</p>
+                </div>
             </div>
         </div>
     </section>
-    <aside class="content_sidebar">
-        Sidebar
+    <aside class="content_sidebar o-sidebar-content">        
+        <h3>About Us</h3>
+        <p>
+            We're the Consumer Financial Protection Bureau (CFPB), a U.S. government
+            agency that makes sure banks, lenders, and other financial companies treat you fairly.
+        </p>
+        <ul class="m-list m-list__links">
+            <li class="m-list_item">
+                <a class="m-list_link" href="">Learn how the CFPB can help you</a>
+            </li>
+        </ul>
     </aside>
 </div>
 {% endblock body_content %}
