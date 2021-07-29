@@ -139,8 +139,7 @@ class FilterableListForm(forms.Form):
         self.all_filterable_results = self.get_all_filterable_results()
         page_ids = self.get_all_page_ids()
         self.set_topics(page_ids)
-        # Populate language choices
-        self.fields['language'].choices = ref.supported_languages
+        self.set_languages()
 
     def get_all_filterable_results(self):
         """ Get all filterable document results from Elasticsearch
@@ -244,6 +243,20 @@ class FilterableListForm(forms.Form):
                 cache.set(f"{self.cache_key_prefix}-topics", topics)
 
             self.fields['topics'].choices = topics
+
+    # Populate language choices
+    def set_languages(self):
+        language_codes = {
+            b.key for b in
+            self.all_filterable_results.aggregations.languages.buckets
+        }
+
+        language_options = [
+            (k, v) for k, v in dict(ref.supported_languages).items()
+            if k in language_codes
+        ]
+
+        self.fields['language'].choices = language_options
 
     def clean(self):
         cleaned_data = super(FilterableListForm, self).clean()
