@@ -38,12 +38,16 @@ ul.tdp-survey__choice-question {
                 width: 100%;
             }
         }
-        &:last-of-type { 
-            border: none;
-        }
     }
     &.tdp-survey__atype-GetGame,
-    &.tdp-survey__atype-GameThink {
+    &.tdp-survey__atype-GameThink,
+    &.tdp-survey__atype-DSSetup,
+    &.tdp-survey__atype-BPImportant,
+    &.tdp-survey__atype-BPDecide,
+    &.tdp-survey__atype-DSSetup-opts,
+    &.tdp-survey__atype-BikeSteps,
+    &.tdp-survey__atype-BikeSteps-opts,
+    &.tdp-survey__atype-MoneySafe {
         border-bottom: 1px solid @gray-20;
         margin: 10px 0 30px;
         padding: 0 0 20px;
@@ -51,6 +55,9 @@ ul.tdp-survey__choice-question {
             font-size: 1.125em;
             list-style: none;    
         }
+    }
+    &:last-of-type { 
+        border: none;
     }
 }
 
