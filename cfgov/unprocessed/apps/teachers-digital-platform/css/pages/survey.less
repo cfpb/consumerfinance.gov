@@ -1,36 +1,55 @@
 ul.tdp-survey__choice-question {
-    border-bottom: 1px solid @gray-20;
-    display: flex;
-    margin: 10px 0 30px;
-    padding: 0 0 20px;
-    li {
-        list-style: none;
-        width: 100%;
-        input {
-            -ms-transform: scale(1.5); /* IE 9 */
-            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
-            display: block;
-            margin-bottom: 5px;
-            transform: scale(1.5);
+    &.tdp-survey__atype-E,
+    &.tdp-survey__atype-F,
+    &.tdp-survey__atype-G, 
+    &.tdp-survey__atype-H {
+        border-bottom: 1px solid @gray-20;
+        display: flex;
+        margin: 10px 0 30px;
+        padding: 0 0 20px;
+        position: relative;
+        li {
+            list-style: none;
+            position: relative;
+            width: 100%;
+            input {
+                -ms-transform: scale(1.5); /* IE 9 */
+                -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+                display: block;
+                margin-bottom: 5px;
+                transform: scale(1.5);
+            }
+            &:last-of-type {
+                label {
+                    &::before {
+                        display: none;
+                    }
+                } 
+            }
         }
-        &:last-of-type {
-            label {
-                &::before {
-                    display: none;
-                }
-            } 
+        label {
+            &::before {
+                background-color: @gray-40;
+                content: '';
+                height: 1px;
+                left: 12px;
+                position: absolute;
+                top: 6px;
+                width: 100%;
+            }
+        }
+        &:last-of-type { 
+            border: none;
         }
     }
-    label {
-        position: relative;
-        &::before {
-            background-color: @gray-40;
-            content: '';
-            height: 1px;
-            left: 12px;
-            position: absolute;
-            top: 6px;
-            width: 164px;
+    &.tdp-survey__atype-GetGame,
+    &.tdp-survey__atype-GameThink {
+        border-bottom: 1px solid @gray-20;
+        margin: 10px 0 30px;
+        padding: 0 0 20px;
+        li {
+            font-size: 1.125em;
+            list-style: none;    
         }
     }
 }
