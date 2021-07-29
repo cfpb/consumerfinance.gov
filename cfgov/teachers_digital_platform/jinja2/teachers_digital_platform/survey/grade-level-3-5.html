@@ -29,21 +29,19 @@
                 <span class="h3"><img src="{{ static('apps/teachers-digital-platform/img/dollar.svg') }}" alt="dollar icon"></span><span class="h3" style="font-weight: 500;"> {{ survey.meta.name }}</span>
             </div>
             <h1 class="superheading">Let’s map your money journey</h1>
-            <p class="m-hero_subhead">
-                Find out about your current money skills and explore things you can do to manage your money better.
-            </p>
-            <ul>
-                <li>
-                    The survey includes 20 multiple-choice questions. 
-                </li>
-                <li>
-                    Your answers will be private.
-                </li>
+            <div class="block">
+                <p class="m-hero_subhead">
+                    Find out about your current money skills and explore things you can do to manage your money better.
+                </p>
+            </div>
+            <ul class="m-list">
+                <li class="m-list_item">The survey includes 20 multiple-choice questions.</li>
+                <li class="m-list_item">Your answers will be private.</li>
             </ul>
             <div class="block">
                 <a class="survey-entry-link a-btn a-btn__super" href="p1/">Let's do this</a>
             </div>
-            <div class="block">
+            <div class="block block__border-top block__padded-top">
                 <p style="font-weight: 500px">Privacy statement</p>
                 <p>We never collect or store the answers you provide. <a href="/privacy">See how your privacy is protected.</a></p>
             </div>
@@ -57,6 +55,7 @@
            background-color: #d4e7e6;
          }
         #hero1 .m-hero_image {
+            background-size: contain;
             background-image:
                 url('{{ static('apps/teachers-digital-platform/img/journey.png') }}');
             background-image: -webkit-image-set(
