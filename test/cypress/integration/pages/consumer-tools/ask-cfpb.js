@@ -7,7 +7,7 @@ const answerPage = new AskCfpbAnswerPage();
 describe( 'Ask CFPB', () => {
   describe( 'Search', () => {
     beforeEach( () => {
-      search.open();
+      search.open( 'en' );
     } );
 
     it( 'should autocomplete results', () => {
@@ -35,6 +35,7 @@ describe( 'Ask CFPB', () => {
       search.input().should( 'contain.class', 'a-text-input__error' )
         .and( 'have.attr', 'maxlength' );
       search.maxLengthErrorMessage().should( 'be.visible' );
+      search.submitButton().should( 'be.disabled' );
     } );
   } );
 
