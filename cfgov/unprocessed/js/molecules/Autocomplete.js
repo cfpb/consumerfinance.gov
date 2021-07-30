@@ -153,9 +153,10 @@ function Autocomplete( element, opts ) {
 
   /**
    * Event handler for input into the _input element
-   * @param {Object} event The event object
+   * @param {InputEvent} event The input event object
    */
   function _handleInput( event ) {
+    console.log(typeof(event));
     _searchTerm = event.target.value;
     if ( _searchTerm.length >= _settings.minChars &&
          _searchTerm.length < _settings.maxChars ) {
