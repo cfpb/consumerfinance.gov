@@ -8,19 +8,21 @@
 
     Creates related content markup when given:
 
-    value:               Object defined from a StreamField block.
+    value:                     Object defined from a StreamField block.
 
-    value.heading:       (Optional) The heading of the related content inset.
-                         Default is "Related content".
+    value.heading:             (Optional) Heading of the related content inset.
+                               Default is "Related content".
 
-    value.paragraph:     String for text above the links.
+    value.paragraph:           String for text above the links.
 
-    value.links:         (Optional) A list of links with the link first
-                         followed by the text of link.
+    value.links:               (Optional) A list of links with the link first
+                               followed by the text of link.
 
-    value.links[i].url:  A string for the URL of the link.
+    value.links[i].url:        A string for the URL of the link.
 
-    value.links[i].text: A string for the text of the link.
+    value.links[i].text:       A string for the text of the link.
+
+    value.links[i].aria_label: (Optional) An aria-label for the link.
 
    ========================================================================== #}
 
@@ -39,7 +41,11 @@
         <ul class="m-list m-list__links">
         {% for link in value.links %}
             <li class="m-list_item">
-                <a href="{{ link.url }}" class="m-list_link">{{ link.text }}</a>
+                <a href="{{ link.url }}"
+                   class="m-list_link"
+                   {% if link.aria_label %}aria-label="{{ link.aria_label }}"{% endif %}>
+                    {{ link.text }}
+                </a>
             </li>
         {% endfor %}
         </ul>
