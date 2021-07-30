@@ -1,7 +1,8 @@
 export class AskCfpbSearch {
 
-  open() {
-    cy.visit( '/ask-cfpb/' );
+  open( language ) {
+    const path = language === 'es' ? '/es/obtener-respuestas/' : '/ask-cfpb/';
+    cy.visit( path );
   }
 
   input() {
@@ -16,8 +17,12 @@ export class AskCfpbSearch {
     return cy.get( '.m-autocomplete_results' );
   }
 
+  submitButton() {
+    return cy.get( '.o-search-bar .a-btn' );
+  }
+
   search() {
-    cy.get( '.o-search-bar .a-btn' ).click();
+    this.submitButton().click();
   }
 
   resultsSection() {
