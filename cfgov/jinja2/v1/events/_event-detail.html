@@ -80,7 +80,7 @@
     {% if page.tags.names() | length %}
     <footer>
         {%- import 'tags.html' as tags %}
-        {{ tags.render( page.related_metadata_tags(), is_wagtail=True) }}
+        {{ tags.render(page.related_metadata_tags()) }}
     </footer>
     {% endif %}
 </article>

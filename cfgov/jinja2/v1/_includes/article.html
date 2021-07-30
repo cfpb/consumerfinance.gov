@@ -74,7 +74,7 @@
     </div>
     {% if page.tags.all() | length %}
         <footer>
-            {{ tags.render( page.related_metadata_tags(), is_wagtail=True) }}
+            {{ tags.render(page.related_metadata_tags()) }}
         </footer>
     {% endif %}
 </article>
