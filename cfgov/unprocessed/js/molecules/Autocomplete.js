@@ -41,9 +41,7 @@ function Autocomplete( element, opts ) {
   let _isVisible;
   let _selection;
   let _maxLengthExceeded = false;
-
-  /* TODO: Is there a better way to get this to use later to dispatch the event? */
-  const _this = this;
+  const _instance = this;
 
   // Autocomplete elements
   const _dom = checkDom( element, BASE_CLASS );
@@ -52,12 +50,9 @@ function Autocomplete( element, opts ) {
   // Settings
   const _settings = {
     minChars: 2,
-
-    /* TODO: Is this sufficient to handle autocompletes without a maxlength?
-       https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute#non-existing_attributes */
-    // 1024 is our upper limit for Elasticsearch queries
     maxChars: _input.getAttribute( 'maxlength' ) ?
       _input.getAttribute( 'maxlength' ) :
+      // 1024 is our upper limit for Elasticsearch queries
       1024,
     delay: 300,
     url: '',
@@ -151,7 +146,7 @@ function Autocomplete( element, opts ) {
     } else {
       _input.classList.remove( ERROR_CLASS );
     }
-    _this.dispatchEvent( 'maxCharacterChange', {
+    _instance.dispatchEvent( 'maxCharacterChange', {
       maxLengthExceeded: _maxLengthExceeded
     } );
   }
@@ -159,8 +154,8 @@ function Autocomplete( element, opts ) {
   /**
    * Event handler for input into the _input element
    */
-  function _handleInput() {
-    _searchTerm = this.value;
+  function _handleInput( event ) {
+    _searchTerm = event.target.value;
     if ( _searchTerm.length >= _settings.minChars &&
          _searchTerm.length < _settings.maxChars ) {
       if ( _maxLengthExceeded === true ) {
