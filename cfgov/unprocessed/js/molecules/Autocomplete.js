@@ -153,6 +153,7 @@ function Autocomplete( element, opts ) {
 
   /**
    * Event handler for input into the _input element
+   * @param {Object} event The event object
    */
   function _handleInput( event ) {
     _searchTerm = event.target.value;
