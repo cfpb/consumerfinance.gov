@@ -4,8 +4,12 @@ export class AskCfpbSearch {
     cy.visit( '/ask-cfpb/' );
   }
 
+  input() {
+    return cy.get( '#o-search-bar_query' );
+  }
+
   enter( term ) {
-    cy.get( '#o-search-bar_query' ).type( term );
+    this.input().type( term );
   }
 
   autocomplete() {
@@ -22,5 +26,9 @@ export class AskCfpbSearch {
 
   resultsHeader() {
     return cy.get( '.results-header' );
+  }
+
+  maxLengthErrorMessage() {
+    return cy.get( '#o-search-bar-error_message' );
   }
 }

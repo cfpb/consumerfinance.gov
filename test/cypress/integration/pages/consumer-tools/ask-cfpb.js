@@ -27,6 +27,15 @@ describe( 'Ask CFPB', () => {
       search.resultsHeader().should( 'contain', 'results for “vehicle”' );
       search.resultsHeader().siblings( 'p' ).first().should( 'contain', 'Search instead for' );
     } );
+
+    it( 'should limit queries to a maximum length', () => {
+      const maxLength = Cypress.$( '#o-search-bar_query' ).attr( 'maxlength' );
+      const longTerm = new Array( parseInt( maxLength, 10 ) + 1 ).join( 'c' );
+      search.enter( longTerm );
+      search.input().should( 'contain.class', 'a-text-input__error' )
+        .and( 'have.attr', 'maxlength' );
+      search.maxLengthErrorMessage().should( 'be.visible' );
+    } );
   } );
 
   describe( 'Answer Page', () => {
