@@ -1,7 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% import 'form_block.html' as form_block with context %}
-{% import 'molecules/related-metadata-enforcement-action.html' as enforcement_action_metadata with context %}
+{% import 'molecules/related-metadata-enforcement-action.html' as related_metadata_enforcement_action with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% import 'templates/render_block.html' as render_block with context %}
 
@@ -36,6 +36,6 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    {{ enforcement_action_metadata.render() }}
+    {{ related_metadata_enforcement_action.render() }}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
 {%- endblock %}
