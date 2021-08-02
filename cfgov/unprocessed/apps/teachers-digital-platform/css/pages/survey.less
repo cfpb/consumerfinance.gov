@@ -49,11 +49,12 @@ ul.tdp-survey__choice-question {
     &.tdp-survey__atype-BikeSteps-opts,
     &.tdp-survey__atype-MoneySafe {
         border-bottom: 1px solid @gray-20;
-        margin: 10px 0 30px;
+        margin: 10px 0 30px 20px;
         padding: 0 0 20px;
         li {
             font-size: 1.125em;
-            list-style: none;    
+            list-style: none;
+            text-indent: -20px;
         }
     }
     &:last-of-type { 
@@ -73,4 +74,15 @@ p {
    display: block;
    height: 150px;
    width: 150px;
+}
+
+.tdp-survey-page {
+    .errorlist {
+        display: none;
+    }
+
+    .tdp-survey__sub-opts {
+        margin-left: 3rem;
+        list-style: none;
+    }
 }
