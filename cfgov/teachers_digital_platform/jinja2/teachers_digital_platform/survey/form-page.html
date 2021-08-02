@@ -51,12 +51,12 @@
                     {% if wizard.steps.prev %}
                         <a class="a-btn" href="../{{ wizard.steps.prev }}/">
                             {% include 'icons/left.svg' %} |
-                            <span class="a-link_text">Previous</span>
+                            <span class="a-link_text">Back</span>
                         </a>
                     {% endif %}
                     {% if wizard.steps.next %}
                         <button class="a-btn" type="submit">
-                            Continue | {% include 'icons/right.svg' %}
+                            Next | {% include 'icons/right.svg' %}
                         </button>
                     {% else %}
                         <button class="a-btn" type="submit">
@@ -64,10 +64,9 @@
                         </button>
                     {% endif %}
                     <p>
-                        <a class="results-start-over a-btn a-btn__link a-btn__warning" href="../">
+                        <a class="survey-start-over a-btn a-btn__link a-btn__warning" href="../../">
                             Reset survey and start over
                         </a>
-                    </p>
                     </p>
                 </div>
             </form>

@@ -30,6 +30,10 @@ ChoiceField.get = name => {
   return ChoiceField.cache[name];
 };
 
+/**
+ * @param {string} key
+ * @returns {Record<string, any>}
+ */
 ChoiceField.restoreFromSession = key => {
   const store = JSON.parse( sessionStorage.getItem( key ) || '{}' );
   let update = false;
