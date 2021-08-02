@@ -107,6 +107,13 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.blog1)
 
+    def test_form_language_choices(self):
+        form = self.setUpFilterableForm()
+        self.assertEqual(form.fields['language'].choices, [
+            ('en', 'English'),
+            ('es', 'Spanish'),
+        ])
+
     def test_filter_by_language(self):
         form = self.setUpFilterableForm(data={'language': ['es']})
         page_set = form.get_page_set()

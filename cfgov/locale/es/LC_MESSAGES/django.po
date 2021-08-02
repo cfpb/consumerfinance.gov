@@ -177,6 +177,10 @@ msgstr "Página"
 msgid "Go"
 msgstr "Ir"
 
+#: jinja2/v1/_includes/molecules/related-posts.html:111
+msgid "View more related posts"
+msgstr "Ver más publicaciones relacionadas"
+
 #: jinja2/v1/_includes/molecules/related-posts.html:112
 msgid "View more"
 msgstr "Ver más"
@@ -302,6 +306,10 @@ msgstr "Ver video"
 #: wellbeing/jinja2/wellbeing/results.html:9
 msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
+
+#: jinja2/v1/_layouts/base.html:227
+msgid "Skip to main content"
+msgstr "Saltar al contenido principal"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:30
 msgid "last reviewed"

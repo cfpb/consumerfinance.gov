@@ -39,8 +39,7 @@
 
    value.links[i].text:          A string for the text of the link.
 
-   value.is_button:              Boolean for whether the link should be
-                                 rendered as a button. Default is false.
+   value.links[i].aria_label:    (Optional) An aria-label for the link.
 
    value.link_image_and_heading: Boolean for whether the image and heading
                                  should be linked to the value.links[0].url.
@@ -99,12 +98,16 @@
                         {% endif %}
                         {% include 'contact-email.html' with context %}
                     {% else %}
-                        {% set link_class = 'a-btn m-info-unit_btn' if
-                            value.is_button else 'm-list_link' %}
                         {% set link_text = link.text if link.text
                             else 'Learn More' %}
-                        {% set link = '<a class="' ~ link_class ~ '" href="' ~
-                            link.url ~ '">' ~ link_text ~ '</a>' %}
+
+                        {%- set link -%}
+                            <a class="m-list_link"
+                                href="{{ link.url }}"
+                                {%- if link.aria_label -%}
+                                    aria-label="{{ link.aria_label }}"
+                                {%- endif %}>{{ link_text }}</a>
+                        {%- endset -%}
                         {{ link | safe }}
                     {% endif %}
                 </li>
