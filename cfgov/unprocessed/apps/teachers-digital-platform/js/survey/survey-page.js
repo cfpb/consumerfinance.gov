@@ -103,10 +103,10 @@ function allowStartOver() {
   const a = document.querySelector( 'a.survey-start-over' );
   if ( a ) {
     a.addEventListener( 'click', e => {
-      sessionStorage.removeItem( ANSWERS_SESS_KEY );
-      Cookie.remove( SURVEY_COOKIE );
-
-      if ( !window.confirm( 'Are you sure?' ) ) {
+      if ( window.confirm( 'Are you sure?' ) ) {
+        sessionStorage.removeItem( ANSWERS_SESS_KEY );
+        Cookie.remove( SURVEY_COOKIE );
+      } else {
         e.preventDefault();
       }
     } );
