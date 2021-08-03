@@ -26,9 +26,7 @@ describe( 'Obtener Respuestas', () => {
     } );
 
     it( 'should limit queries to a maximum length', () => {
-      const maxLength = Cypress.$( '#o-search-bar_query' ).attr( 'maxlength' );
-      const longTerm = new Array( parseInt( maxLength, 10 ) + 1 ).join( 'c' );
-      buscar.enter( longTerm );
+      buscar.enter( buscar.longTerm() );
       buscar.input().should( 'contain.class', 'a-text-input__error' )
         .and( 'have.attr', 'maxlength' );
       buscar.maxLengthErrorMessage().should( 'be.visible' );

@@ -36,4 +36,10 @@ export class AskCfpbSearch {
   maxLengthErrorMessage() {
     return cy.get( '#o-search-bar-error_message' );
   }
+
+  longTerm() {
+    const maxLength = Cypress.$( '#o-search-bar_query' ).attr( 'maxlength' );
+    const longTerm = new Array( parseInt( maxLength, 10 ) + 1 ).join( 'c' );
+    return longTerm;
+  }
 }
