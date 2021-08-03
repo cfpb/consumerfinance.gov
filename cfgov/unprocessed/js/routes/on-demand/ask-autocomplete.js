@@ -3,6 +3,7 @@
    ========================================================================== */
 
 import Autocomplete from '../../molecules/Autocomplete';
+import Analytics from '../../modules/Analytics';
 
 const URLS = {
   en: '/ask-cfpb/api/autocomplete/?term=',
@@ -20,8 +21,10 @@ const submitButton = document.querySelector( '.o-search-bar button[type="submit"
  */
 function handleMaxCharacters( event ) {
   if ( event.maxLengthExceeded ) {
+    const eventData = Analytics.getDataLayerOptions( 'maxLimitReached', event.searchTerm, 'Ask Search' );
     submitButton.setAttribute( 'disabled', 'true' );
     errorMessage.classList.remove( 'u-hidden' );
+    Analytics.sendEvent( eventData );
   } else {
     submitButton.removeAttribute( 'disabled' );
     errorMessage.classList.add( 'u-hidden' );
