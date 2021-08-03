@@ -121,17 +121,30 @@ function userTriedReentry() {
  * Allow the user to start a survey over with reset data.
  */
 function allowStartOver() {
-  const a = document.querySelector( 'a.survey-start-over' );
-  if ( a ) {
-    a.addEventListener( 'click', event => {
-      if ( window.confirm( 'Are you sure?' ) ) {
-        sessionStorage.removeItem( ANSWERS_SESS_KEY );
-        Cookie.remove( SURVEY_COOKIE );
-      } else {
-        event.preventDefault();
-      }
-    } );
+  const a = $( '.survey-start-over a' );
+  const note = $( '.survey-start-over .m-notification' );
+  const yes = $( '.survey-start-over [data-yes]' );
+  const cancel = $( '.survey-start-over [data-cancel]' );
+  if ( !a || !note || !yes || !cancel ) {
+    return;
   }
+
+  a.addEventListener( 'click', event => {
+    event.preventDefault();
+    note.classList.add( 'm-notification__visible' );
+  } );
+
+  yes.addEventListener( 'click', event => {
+    event.preventDefault();
+    sessionStorage.removeItem( ANSWERS_SESS_KEY );
+    Cookie.remove( SURVEY_COOKIE );
+    location.href = a.href;
+  } );
+
+  cancel.addEventListener( 'click', event => {
+    event.preventDefault();
+    note.classList.remove( 'm-notification__visible' );
+  } );
 }
 
 /**
