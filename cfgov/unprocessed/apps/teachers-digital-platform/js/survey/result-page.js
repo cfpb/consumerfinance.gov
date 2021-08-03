@@ -60,7 +60,6 @@ function listenForInitialsUpdate() {
     t.value = fixed;
 
     // Show shared URL
-    // @todo This will need to change
     const shareUrlOutput = $( '.shared-url' );
     const a = document.createElement( 'a' );
     a.href = '../view/?r=' + encodeURIComponent(

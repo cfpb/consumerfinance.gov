@@ -17,7 +17,7 @@ class Modal {
 
     const event = new CustomEvent( 'modal:open:before', {
       bubbles: true,
-      detail: { modal: this },
+      detail: { modal: this }
     } );
     el.dispatchEvent( event );
 
@@ -53,7 +53,12 @@ class Modal {
   }
 }
 
-function close(id) {
+/**
+ * Close a modal by ID
+ *
+ * @param {string} id Modal ID
+ */
+function close( id ) {
   openModals.forEach( modal => {
     if ( modal.id === id ) {
       modal.close();
@@ -68,7 +73,7 @@ function init() {
   document.addEventListener( 'click', event => {
     const t = event.target;
     const opener = t.closest( '[data-open-modal]' );
-    if (opener) {
+    if ( opener ) {
       event.stopPropagation();
       const id = opener.dataset.openModal;
       const modal = new Modal( id );
@@ -81,7 +86,7 @@ function init() {
     }
 
     const modal = openModals[openModals.length - 1];
-    function close() {
+    const closeTopModal = () => {
       modal.close();
       event.stopPropagation();
     }
@@ -90,24 +95,24 @@ function init() {
     if ( content.contains( t ) ) {
       // Close if clicking modal's close button(s)
       if ( content.querySelector( '.o-modal_close' ).contains( t ) ) {
-        close();
+        closeTopModal();
         return;
       }
 
       // Close if clicked footer button with "close"
       const btn = content.querySelector( '.o-modal_footer button' );
-      if ( t === btn && /\bclose\b/i.test( btn.textContent ) ) {
-        close();
+      if ( t === btn && ( /\bclose\b/i ).test( btn.textContent ) ) {
+        closeTopModal();
       }
     } else {
       // Outside modal
-      close();
+      closeTopModal();
     }
   } );
 
   document.addEventListener( 'keydown', event => {
     if ( event.key !== 'Escape' || !openModals.length ) {
-      return
+      return;
     }
 
     openModals[openModals.length - 1].close();

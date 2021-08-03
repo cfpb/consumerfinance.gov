@@ -88,7 +88,7 @@ function userSkippedAhead( data ) {
  * numAnswered data is updated for progress updates.
  *
  * @param {SurveyData} data Survey data
- * @param {Record<string, any>} store
+ * @param {Record<string, any>} store Store of selected answers
  */
 function handleNewSelections( data, store ) {
   const onStoreUpdate = () => {
