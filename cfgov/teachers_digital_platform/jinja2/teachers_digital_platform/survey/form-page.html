@@ -25,9 +25,9 @@
          data-page-idx="{{ page_idx|tojson|forceescape }}"
          data-questions-by-page="{{ questions_by_page|tojson|forceescape }}">
         {# <h1>Survey Page {{ wizard.steps.step1 }}</h1> #}
-    
+
             <form action="" method="post"> {{ csrf_input }}
-            
+
                 {# E.g. "./6-8/before-page-2.html" #}
                 {% include './' ~ survey.key ~ '/before-page-' ~ wizard.steps.step1 ~ '.html' ignore missing %}
 
@@ -40,11 +40,11 @@
                 {% else %}
                     {{ wizard.form.as_p() }}
                 {% endif %}
-                {# E.g. "./6-8/after-page-2.html" #}
-                
-                {# opened by a template file, do not remove #}
+
+                {# Do not remove the following closing div tag. The div element #}
+                {# was opened in a before-page template above so it needs closing. #}
                 </div>
-                
+
                 <div class="block">
 
                     <p>
@@ -74,9 +74,15 @@
         </div>
 
         {# wizard.steps.all is a list of 'p1', 'p2', ... #}
-        <aside class="content_sidebar o-sidebar-content">        
+        <aside class="content_sidebar o-sidebar-content">
             <div class="progress"><h2>[Your survey progress]</h2></div>
             <p>[progress graphic]</p>
+            <p>
+                Completed <span class="tdp-survey-progress-out-of"></span>.
+            </p>
+            <div class="tdp-survey-progress-bar" aria-label="50%">
+                <div class="tdp-survey-progress-bar--bar"></div>
+            </div>
             <p>[section complete]</p>
         </aside>
     </div>

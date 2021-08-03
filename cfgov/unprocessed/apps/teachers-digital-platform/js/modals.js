@@ -9,29 +9,29 @@ class Modal {
   }
 
   getElement() {
-    return document.querySelector( `#${this.id}` );
+    return document.querySelector( `#${ this.id }` );
   }
 
   open() {
     const el = this.getElement();
 
-    let event = new CustomEvent('modal:open:before', {
+    const event = new CustomEvent( 'modal:open:before', {
       bubbles: true,
       detail: { modal: this },
-    });
-    el.dispatchEvent(event);
+    } );
+    el.dispatchEvent( event );
 
     // Allow screen readers to see dialog
     el.setAttribute( 'aria-hidden', 'false' );
     el.classList.add( 'o-modal__visible' );
-    const desc = document.querySelector( `#${this.id}_desc` );
+    const desc = document.querySelector( `#${ this.id }_desc` );
     const focusableSelector = [
       'button',
       'a',
       'input:not([type="hidden"])',
       'select',
       'textarea',
-      '[tabindex]:not([tabindex="-1"])',
+      '[tabindex]:not([tabindex="-1"])'
     ].join( ',' );
     const focusable = desc.querySelector( focusableSelector );
     if ( focusable ) {
@@ -40,8 +40,6 @@ class Modal {
 
     this.isOpen = true;
     openModals.push( this );
-
-    // TODO if needed, add a modal:open:after event.
   }
 
   close() {
@@ -63,6 +61,9 @@ function close(id) {
   } );
 }
 
+/**
+ * Initialize events for modals
+ */
 function init() {
   document.addEventListener( 'click', event => {
     const t = event.target;
@@ -79,7 +80,7 @@ function init() {
       return;
     }
 
-    const modal = openModals[ openModals.length - 1 ];
+    const modal = openModals[openModals.length - 1];
     function close() {
       modal.close();
       event.stopPropagation();
@@ -89,7 +90,8 @@ function init() {
     if ( content.contains( t ) ) {
       // Close if clicking modal's close button(s)
       if ( content.querySelector( '.o-modal_close' ).contains( t ) ) {
-        return close();
+        close();
+        return;
       }
 
       // Close if clicked footer button with "close"
@@ -108,7 +110,7 @@ function init() {
       return
     }
 
-    openModals[ openModals.length - 1 ].close();
+    openModals[openModals.length - 1].close();
     event.stopPropagation();
   } );
 }

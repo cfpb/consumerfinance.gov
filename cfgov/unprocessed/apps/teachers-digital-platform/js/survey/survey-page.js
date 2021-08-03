@@ -8,6 +8,8 @@ const $ = document.querySelector.bind( document );
 let progressBar;
 
 /**
+ * Initialize a survey page
+ *
  * @param {HTMLDivElement} el Element with survey data
  */
 function surveyPage( el ) {
@@ -32,8 +34,10 @@ function surveyPage( el ) {
     data[k] = JSON.parse( v );
   } );
 
-  // Init radios and re-select any that were saved in session storage but
-  // which python doesn't know about.
+  /**
+   * Init radios and re-select any that were saved in session storage but
+   * which python doesn't know about.
+   */
   ChoiceField.init();
   const store = ChoiceField.restoreFromSession( ANSWERS_SESS_KEY );
   data.numAnswered = Object.keys( store ).length;
@@ -55,6 +59,7 @@ function surveyPage( el ) {
 }
 
 /**
+ * If the user has skipped ahead, redirect and return true.
  *
  * @param {SurveyData} data Survey data
  * @returns {boolean} True if execution should halt.
@@ -82,7 +87,7 @@ function userSkippedAhead( data ) {
  * Make sure new selections are recorded in sessionStorage and that the
  * numAnswered data is updated for progress updates.
  *
- * @param {SurveyData} data
+ * @param {SurveyData} data Survey data
  * @param {Record<string, any>} store
  */
 function handleNewSelections( data, store ) {
@@ -98,6 +103,7 @@ function handleNewSelections( data, store ) {
 
 /**
  * If the user has results, don't allow re-entry into the survey.
+ * Redirect and return true.
  *
  * @returns {boolean} True if execution should halt
  */
@@ -117,12 +123,12 @@ function userTriedReentry() {
 function allowStartOver() {
   const a = document.querySelector( 'a.survey-start-over' );
   if ( a ) {
-    a.addEventListener( 'click', e => {
+    a.addEventListener( 'click', event => {
       if ( window.confirm( 'Are you sure?' ) ) {
         sessionStorage.removeItem( ANSWERS_SESS_KEY );
         Cookie.remove( SURVEY_COOKIE );
       } else {
-        e.preventDefault();
+        event.preventDefault();
       }
     } );
   }

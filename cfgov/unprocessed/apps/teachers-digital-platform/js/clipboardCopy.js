@@ -2,7 +2,7 @@
  * Copy text to clipboard
  *
  * @link https://stackoverflow.com/a/30810322/3779
- * @param {string} text
+ * @param {string} text Text to copy
  * @returns {Promise<boolean>} Success
  */
 function clipboardCopy( text ) {
@@ -13,7 +13,7 @@ function clipboardCopy( text ) {
   try {
     return navigator.clipboard.writeText( text ).then(
       () => true,
-      () => fallbackClipboardCopy( text ),
+      () => fallbackClipboardCopy( text )
     );
   } catch ( err ) {
     return fallbackClipboardCopy( text );
@@ -24,7 +24,7 @@ function clipboardCopy( text ) {
  * Copy text to clipboard
  *
  * @link https://stackoverflow.com/a/30810322/3779
- * @param {string} text
+ * @param {string} text Text to copy
  * @returns {Promise<boolean>} Success
  */
 function fallbackClipboardCopy( text ) {
@@ -48,7 +48,7 @@ function fallbackClipboardCopy( text ) {
   }
 
   document.body.removeChild( textArea );
-  return Promise.resolve(success);
+  return Promise.resolve( success );
 }
 
 export { clipboardCopy };

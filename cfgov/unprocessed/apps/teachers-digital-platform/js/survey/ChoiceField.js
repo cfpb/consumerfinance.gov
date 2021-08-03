@@ -31,8 +31,10 @@ ChoiceField.get = name => {
 };
 
 /**
- * @param {string} key
- * @returns {Record<string, any>}
+ * Synchronize unset choices from the store and set choices to the store.
+ *
+ * @param {string} key The sessionStorage key
+ * @returns {Record<string, any>} The stored choice values
  */
 ChoiceField.restoreFromSession = key => {
   const store = JSON.parse( sessionStorage.getItem( key ) || '{}' );
