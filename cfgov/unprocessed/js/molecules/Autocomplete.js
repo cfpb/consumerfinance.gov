@@ -147,7 +147,8 @@ function Autocomplete( element, opts ) {
       _input.classList.remove( ERROR_CLASS );
     }
     _instance.dispatchEvent( 'maxCharacterChange', {
-      maxLengthExceeded: _maxLengthExceeded
+      maxLengthExceeded: _maxLengthExceeded,
+      searchTerm: _searchTerm
     } );
   }
 
