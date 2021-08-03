@@ -89,7 +89,7 @@ function init() {
     const closeTopModal = () => {
       modal.close();
       event.stopPropagation();
-    }
+    };
 
     const content = modal.getElement().querySelector( '.o-modal_content' );
     if ( content.contains( t ) ) {
