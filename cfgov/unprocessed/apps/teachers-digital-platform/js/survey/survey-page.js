@@ -1,6 +1,11 @@
 const Cookie = require( 'js-cookie' );
 const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } = require( './config' );
 const ChoiceField = require( './ChoiceField' );
+const ProgressBar = require( './ProgressBar' );
+
+const $ = document.querySelector.bind( document );
+
+let progressBar;
 
 /**
  * @param {HTMLDivElement} el Element with survey data
@@ -31,10 +36,18 @@ function surveyPage( el ) {
   // which python doesn't know about.
   ChoiceField.init();
   const store = ChoiceField.restoreFromSession( ANSWERS_SESS_KEY );
+  data.numAnswered = Object.keys( store ).length;
 
-  if ( userSkippedAhead( data, store ) ) {
+  if ( userSkippedAhead( data ) ) {
     return;
   }
+
+  const totalQuestions = data.questionsByPage.reduce(
+    ( prev, curr ) => prev + curr,
+    0
+  );
+  initProgressListener();
+  progressBar = new ProgressBar( totalQuestions, data.numAnswered );
 
   handleNewSelections( data, store );
 
@@ -43,15 +56,14 @@ function surveyPage( el ) {
 
 /**
  *
- * @param {SurveyData} data
- * @param {Record<string, any>} store
- * @return {boolean} True if execution should halt.
+ * @param {SurveyData} data Survey data
+ * @returns {boolean} True if execution should halt.
  */
-function userSkippedAhead( data, store ) {
-  // Figure out if the user has answered enough questions in total
-  // to be on this page without skipping.
-  data.numAnswered = Object.keys( store ).length;
-
+function userSkippedAhead( data ) {
+  /**
+   * Figure out if the user has answered enough questions in total
+   * to be on this page without skipping.
+   */
   let questionsOnEarlierPages = 0;
   for ( let i = 0; i < data.pageIdx; i++ ) {
     questionsOnEarlierPages += data.questionsByPage[i];
@@ -76,6 +88,9 @@ function userSkippedAhead( data, store ) {
 function handleNewSelections( data, store ) {
   const onStoreUpdate = () => {
     data.numAnswered = Object.keys( store ).length;
+    if ( progressBar ) {
+      progressBar.update( data.numAnswered );
+    }
   };
 
   ChoiceField.watchAndStore( ANSWERS_SESS_KEY, store, onStoreUpdate );
@@ -111,6 +126,28 @@ function allowStartOver() {
       }
     } );
   }
+}
+
+/**
+ * Keep UI in sync with ProgressBar updates
+ */
+function initProgressListener() {
+  document.addEventListener( ProgressBar.UPDATE_EVT, event => {
+    /**
+     * @type {ProgressBar}
+     */
+    const pb = event.detail.progressBar;
+    const barEl = $( '.tdp-survey-progress-bar--bar' );
+    if ( barEl ) {
+      const perc = `${ pb.getPercentage() }%`;
+      barEl.style.width = perc;
+      barEl.parentElement.setAttribute( 'aria-label', `${ perc } complete` );
+    }
+    const outOfEl = $( '.tdp-survey-progress-out-of' );
+    if ( outOfEl ) {
+      outOfEl.textContent = `${ pb.numDone } out of ${ pb.totalNum }`;
+    }
+  } );
 }
 
 export { surveyPage };
