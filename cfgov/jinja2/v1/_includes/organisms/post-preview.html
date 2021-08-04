@@ -202,7 +202,7 @@
 
             {% if show_tags and post.tags.exists() %}
                 {%- import 'tags.html' as tags %}
-                {{ tags.render(post.related_metadata_tags(), hide_heading=true, is_wagtail=True) }}
+                {{ tags.render(post.related_metadata_tags(), hide_heading=true) }}
             {% endif %}
 
             {% if post.secondary_link_url and post.secondary_link_text %}
