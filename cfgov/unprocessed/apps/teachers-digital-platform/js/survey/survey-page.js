@@ -2,6 +2,7 @@ const Cookie = require( 'js-cookie' );
 const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } = require( './config' );
 const ChoiceField = require( './ChoiceField' );
 const ProgressBar = require( './ProgressBar' );
+const SectionLink = require( './SectionLink' );
 
 const $ = document.querySelector.bind( document );
 
@@ -41,6 +42,7 @@ function surveyPage( el ) {
   ChoiceField.init();
   const store = ChoiceField.restoreFromSession( ANSWERS_SESS_KEY );
   data.numAnswered = Object.keys( store ).length;
+  SectionLink.init( data );
 
   if ( userSkippedAhead( data ) ) {
     return;
@@ -96,6 +98,7 @@ function handleNewSelections( data, store ) {
     if ( progressBar ) {
       progressBar.update( data.numAnswered );
     }
+    SectionLink.update( data.numAnswered );
   };
 
   ChoiceField.watchAndStore( ANSWERS_SESS_KEY, store, onStoreUpdate );
