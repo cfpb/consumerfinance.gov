@@ -49,6 +49,8 @@ function surveyPage( el ) {
     return;
   }
 
+  indentQuestionsByNumber();
+
   const totalQuestions = data.questionsByPage.reduce(
     ( prev, curr ) => prev + curr,
     0
@@ -180,6 +182,19 @@ function initProgressListener() {
     const svg = circle.parentElement;
     svg.setAttribute( 'aria-label', `${ perc } complete` );
     svg.style.opacity = 1;
+  } );
+}
+
+function indentQuestionsByNumber() {
+  /**
+   * @type {HTMLElement[]}
+   */
+  const strongs = [].slice.call( $$( '.tdp-survey-page p > label > strong' ) );
+  strongs.forEach( strong => {
+    const offset = strong.getBoundingClientRect().width;
+    const p = strong.parentElement.parentElement;
+    p.style.marginLeft = `${ offset }px`;
+    p.style.textIndent = `-${ offset }px`;
   } );
 }
 

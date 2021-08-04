@@ -6,7 +6,7 @@ ul.tdp-survey__choice-question {
         border-bottom: 1px solid @gray-20;
         display: flex;
         margin: 10px 0 30px;
-        padding: 0 0 20px;
+        padding: 0 0 20px 25px;
         position: relative;
         li {
             list-style: none;
@@ -63,6 +63,8 @@ ul.tdp-survey__choice-question {
 }
 
 p {
+    // See JS function indentQuestionsByNumber() which may
+    // alter margin/text-indent here.
     & label {
         font-size: 1.25em;
         font-weight: 500;
