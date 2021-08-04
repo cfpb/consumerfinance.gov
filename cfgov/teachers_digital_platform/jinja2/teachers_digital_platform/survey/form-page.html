@@ -96,7 +96,29 @@
             <div class="tdp-survey-progress-bar" aria-label="50%">
                 <div class="tdp-survey-progress-bar--bar"></div>
             </div>
-            <p>[section complete]</p>
+
+            <div>
+            {% for name in wizard.steps.all %}
+                <div class="tdp-survey-section"
+                     data-checked=""
+                     data-color="gray"
+                     data-editable=""
+                     data-idx="{{ loop.index0 }}"
+                     data-href="../{{ name }}/"
+                >
+                    <div class="tdp-survey-section__left">
+                        <div class="tdp-survey-section__title">Section {{ loop.index }}
+                            <span class="tdp-survey-section__status"></span>
+                        </div>
+                        <div class="tdp-survey-section__range">Questions ...</div>
+                    </div>
+                    <div class="tdp-survey-section__edit"><span>edit</span></div>
+                    <div class="tdp-survey-section__icon">
+                        {% include 'icons/approved-round.svg' %}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
         </aside>
     </div>
 </div>

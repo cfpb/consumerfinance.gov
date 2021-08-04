@@ -98,6 +98,90 @@ p {
     }
 }
 
+.tdp-survey-section {
+    align-items: center;
+    border: 1px solid #b4b5b6;
+    display: flex;
+    padding: 15px;
+
+    &[data-color="white"] {
+        background: #fff;
+    }
+    &[data-color="green"] {
+        background: #f0f8eb;
+        border-color: #20aa3f;
+    }
+    &[data-color="blue"] {
+        background: #d6e8fa;
+        border-color: #6b9cd7;
+    }
+
+    &__icon {
+        background: #fff;
+        border: 1px solid #b4b5b6;
+        border-radius: 100%;
+        height: 1.5em;
+        width: 1.5em;
+
+        svg {
+            display: none;
+        }
+    }
+    &[data-checked="1"] {
+        .tdp-survey-section__icon {
+            background: none;
+            border: none;
+            height: auto;
+            width: auto;
+
+            svg {
+                display: block;
+                fill: #20aa3f;
+                height: 2em;
+                max-width: none;
+            }
+        }
+    }
+
+    &__edit {
+        display: none;
+    }
+    &[data-editable="1"] {
+        cursor: pointer;
+
+        .tdp-survey-section__edit {
+            display: block;
+            padding: 0 10px;
+
+            span {
+                border-bottom: #0072ce 1px dotted;
+                color: #0072ce;
+                font-weight: 600;
+            }
+        }
+
+        &:hover {
+            .tdp-survey-section__edit span {
+                border-bottom-style: solid;
+            }
+        }
+    }
+
+    &__left {
+        flex: 1;
+    }
+    &__title {
+        font-size: 1.25em;
+        font-weight: 500;
+    }
+    &__range {
+    }
+
+    + .tdp-survey-section {
+        margin-top: 10px;
+    }
+}
+
 .survey-start-over .m-notification_message button {
     margin-left: 0.5em;
 }
