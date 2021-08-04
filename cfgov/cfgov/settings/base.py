@@ -769,6 +769,12 @@ FLAGS = {
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Expand ES Filterable List Search
     "EXPAND_FILTERABLE_LIST_SEARCH": [],
+    # Supports testing of the next version of the website home page.
+    # Enable by appending ?nhp=True to home page URLs.
+    "NEW_HOME_PAGE":  [
+        ("environment is not", "production", True),
+        ("parameter", "nhp", True),
+    ],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
