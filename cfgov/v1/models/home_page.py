@@ -10,6 +10,7 @@ from wagtail.core.models import Orderable, PageManager
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
 
+from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
@@ -71,6 +72,12 @@ class HomePage(CFGOVPage):
         })
 
         return context
+
+    def get_template(self, request, *args, **kwargs):
+        return [
+            super().get_template(request, *args, **kwargs),
+            'v1/home_page_2021.html',
+        ][bool(flag_enabled('HOME_PAGE_2021', request=request))]
 
 
 class HomePageInfoUnit(Orderable, ClusterableModel):
