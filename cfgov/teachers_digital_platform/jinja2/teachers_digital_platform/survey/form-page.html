@@ -46,23 +46,25 @@
                 </div>
 
                 <div class="block">
-
-                    <p>
+                    <div class="m-btn-group">
                     {% if wizard.steps.prev %}
                         <a class="a-btn" href="../{{ wizard.steps.prev }}/">
-                            {% include 'icons/left.svg' %} |
-                            <span class="a-link_text">Back</span>
+                            <span class="a-btn_icon a-btn_icon__on-left">{% include 'icons/left.svg' %}</span>
+                            <span class="a-btn_text">Back</span>
                         </a>
                     {% endif %}
                     {% if wizard.steps.next %}
                         <button class="a-btn" type="submit">
-                            Next | {% include 'icons/right.svg' %}
+                            <span class="a-btn_text">Next</span>
+                            <span class="a-btn_icon a-btn_icon__on-right">{% include 'icons/right.svg' %}</span>
                         </button>
                     {% else %}
                         <button class="a-btn" type="submit">
-                            Get My Results | {% include 'icons/right.svg' %}
+                            <span class="a-btn_text">Get my results</span>
+                            <span class="a-btn_icon a-btn_icon__on-right">{% include 'icons/right.svg' %}</span>
                         </button>
                     {% endif %}
+                    </div>
 
                     <div class="survey-start-over">
                         <p>
