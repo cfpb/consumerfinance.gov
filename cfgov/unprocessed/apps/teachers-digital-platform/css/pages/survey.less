@@ -87,14 +87,41 @@ p {
     }
 }
 
-.tdp-survey-progress-bar {
-    border: 1px solid #000;
-    margin: 0 0 1rem;
+.tdp-survey-sidebar h5 {
+    font-weight: 600;
+}
 
-    .tdp-survey-progress-bar--bar {
-        background: #0072ce;
-        height: 20px;
-        width: 0;
+.tdp-survey-progress__svg {
+    height: auto;
+    margin: 0.5rem 0 1.5rem;
+    max-width: 200px;
+    opacity: 0;
+    position: relative;
+    width: 80%;
+
+    text:first-of-type {
+        fill: #1E9642;
+        font-size: 49px;
+    }
+
+    circle {
+        fill: none;
+        stroke: #5A5D61;
+        stroke-width: 2;
+
+        + circle {
+            stroke: #1E9642;
+            stroke-dasharray: 1;
+            stroke-linecap: round;
+            stroke-width: 15;
+        }
+    }
+    path {
+        fill: none;
+        stroke: #1E9642;
+        stroke-dasharray: 1;
+        stroke-linecap: round;
+        stroke-width: 15;
     }
 }
 
@@ -175,10 +202,11 @@ p {
         flex: 1;
     }
     &__title {
-        font-size: 1.25em;
-        font-weight: 500;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
     }
     &__range {
+        color: #343D48;
     }
 
     + .tdp-survey-section {

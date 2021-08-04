@@ -87,16 +87,22 @@
         </div>
 
         {# wizard.steps.all is a list of 'p1', 'p2', ... #}
-        <aside class="content_sidebar o-sidebar-content">
-            <div class="progress"><h2>[Your survey progress]</h2></div>
-            <p>[progress graphic]</p>
+        <aside class="content_sidebar o-sidebar-content tdp-survey-sidebar">
+            <h2 class="h4">Your survey progress</h2>
             <p>
-                Completed <span class="tdp-survey-progress-out-of"></span>.
+                <span class="tdp-survey-progress-out-of"></span> questions completed
             </p>
-            <div class="tdp-survey-progress-bar" aria-label="50%">
-                <div class="tdp-survey-progress-bar--bar"></div>
+            <div style="text-align: center">
+                <svg class="tdp-survey-progress__svg" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="90"></circle>
+                    <circle cx="100" cy="100" r="90" pathLength="1"
+                            transform="rotate(-90 100 100)"
+                            class="tdp-survey-progress__circle" ></circle>
+                    <text x="50%" y="48%" text-anchor="middle">--%</text>
+                    <text x="50%" y="56%" text-anchor="middle" dominant-baseline="hanging">0/-- questions</text>
+                    <text x="50%" y="67%" text-anchor="middle" dominant-baseline="hanging">completed</text>
+                </svg>
             </div>
-
             <div>
             {% for name in wizard.steps.all %}
                 <button class="tdp-survey-section"

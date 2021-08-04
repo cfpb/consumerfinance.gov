@@ -5,6 +5,7 @@ const ProgressBar = require( './ProgressBar' );
 const SectionLink = require( './SectionLink' );
 
 const $ = document.querySelector.bind( document );
+const $$ = document.querySelectorAll.bind( document );
 
 let progressBar;
 
@@ -159,16 +160,26 @@ function initProgressListener() {
      * @type {ProgressBar}
      */
     const pb = event.detail.progressBar;
-    const barEl = $( '.tdp-survey-progress-bar--bar' );
-    if ( barEl ) {
-      const perc = `${ pb.getPercentage() }%`;
-      barEl.style.width = perc;
-      barEl.parentElement.setAttribute( 'aria-label', `${ perc } complete` );
-    }
     const outOfEl = $( '.tdp-survey-progress-out-of' );
-    if ( outOfEl ) {
-      outOfEl.textContent = `${ pb.numDone } out of ${ pb.totalNum }`;
+    const circle = $( '.tdp-survey-progress__circle' );
+    const texts = [].slice.call( $$( '.tdp-survey-progress__svg text' ) );
+    if ( !outOfEl || !circle || texts.length < 3 ) {
+      return;
     }
+
+    const perc = `${ pb.getPercentage() }%`;
+
+    outOfEl.innerHTML = `<b>${ pb.numDone }</b> of <b>${ pb.totalNum }</b>`;
+
+    texts[0].textContent = perc;
+    texts[1].textContent = `${ pb.numDone }/${ pb.totalNum } questions`;
+
+    const dashOffset = (1 - ( pb.numDone / pb.totalNum ) );
+    circle.setAttribute( 'stroke-dashoffset', dashOffset );
+
+    const svg = circle.parentElement;
+    svg.setAttribute( 'aria-label', `${ perc } complete` );
+    svg.style.opacity = 1;
   } );
 }
 
