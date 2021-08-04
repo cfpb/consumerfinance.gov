@@ -769,11 +769,11 @@ FLAGS = {
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Expand ES Filterable List Search
     "EXPAND_FILTERABLE_LIST_SEARCH": [],
-    # Supports testing of the next version of the website home page.
-    # Enable by appending ?nhp=True to home page URLs.
-    "NEW_HOME_PAGE":  [
+    # Supports testing of a new 2021 version of the website home page.
+    # Enable by appending ?home_page_2021=True to home page URLs.
+    "HOME_PAGE_2021":  [
         ("environment is not", "production", True),
-        ("parameter", "nhp", True),
+        ("parameter", "home_page_2021", True),
     ],
 }
 

@@ -76,8 +76,8 @@ class HomePage(CFGOVPage):
     def get_template(self, request, *args, **kwargs):
         return [
             super().get_template(request, *args, **kwargs),
-            'v1/home_page2.html',
-        ][bool(flag_enabled('NEW_HOME_PAGE', request=request))]
+            'v1/home_page_2021.html',
+        ][bool(flag_enabled('HOME_PAGE_2021', request=request))]
 
 
 class HomePageInfoUnit(Orderable, ClusterableModel):
