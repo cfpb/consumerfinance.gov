@@ -95,3 +95,6 @@ except (TypeError, ValueError):
         "Environment variable ALLOWED_HOSTS is either not defined or is "
         "not valid JSON. Expected a JSON array of allowed hostnames."
     )
+
+# Django 2.2 Baseline required settings
+SECURE_SSL_REDIRECT = True
