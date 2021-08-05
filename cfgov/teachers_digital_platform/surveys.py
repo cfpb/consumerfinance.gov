@@ -15,6 +15,9 @@ PREFILL_ANSWERS = False
 
 AVAILABLE_SURVEYS = ('3-5', '6-8', '9-12')
 
+# alternatives: https://www.fileformat.info/info/unicode/char/search.htm?q=arrow&preview=entity # noqa:E501
+ITEM_BULLET = '‣'
+
 
 def _question_row(row: Dict[str, str]):
     return {
@@ -54,7 +57,8 @@ class ChoiceList:
             if v[0:6] == '[list:' and v[-1] == ']':
                 possible_ref = v[6:-1]
                 if possible_ref in lookup:
-                    labels[k] = ' ‣ '.join(lookup[possible_ref].labels)
+                    joiner = f' {ITEM_BULLET} '
+                    labels[k] = joiner.join(lookup[possible_ref].labels)
 
         return cls(labels)
 
@@ -196,6 +200,7 @@ class Survey:
     """
     A full survey
     """
+    ITEM_BULLET = ITEM_BULLET
 
     def __init__(self, key: str, meta: Dict[str, Any],
                  pages: List[SurveyPage]):

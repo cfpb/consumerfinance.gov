@@ -21,9 +21,10 @@ function surveyPage( el ) {
 
   /**
    * @typedef {Object} SurveyData
+   * @property {string} itemBullet
+   * @property {number} numAnswered
    * @property {number} pageIdx
    * @property {number[]} questionsByPage
-   * @property {number} numAnswered
    */
 
   /**
@@ -62,7 +63,7 @@ function surveyPage( el ) {
 
   // Decorative transformations
   indentQuestionsByNumber();
-  breakBulletedAnswers();
+  breakBulletedAnswers( data.itemBullet );
 }
 
 /**
@@ -206,23 +207,25 @@ function indentQuestionsByNumber() {
 
 /**
  * If a question option is bulleted with ‣, break it into multiple lines.
+ *
+ * @param {string} bullet Bullet character
  */
-function breakBulletedAnswers() {
+function breakBulletedAnswers( bullet ) {
   const spanify = text => {
     // Convert text node into a span with <br> between items.
     const span = document.createElement( 'span' );
 
     // HTML escape any chars as necessary when splitting
-    const htmlItems = text.split( ' ‣ ' ).map( item => {
+    const htmlItems = text.split( ` ${ bullet } ` ).map( item => {
       span.textContent = item;
       return span.innerHTML;
     } );
 
-    span.innerHTML = ' &nbsp;‣ ' + htmlItems.join( '<br>&nbsp;‣ ' );
+    span.innerHTML = ` &nbsp;${ bullet } ` + htmlItems.join( `<br>&nbsp;${ bullet } ` );
     return span;
   };
 
-  const hasTri = str => str.indexOf( ' ‣ ' ) !== -1;
+  const hasTri = str => str.indexOf( ` ${ bullet } ` ) !== -1;
 
   /**
    * @type {HTMLLabelElement[]}
