@@ -284,6 +284,16 @@ msgstr "Destacado"
 msgid "Main menu"
 msgstr "Menú principal"
 
+#: jinja2/v1/_includes/organisms/mega-menu.html:313
+#| msgid "Main menu"
+msgid "Open the main menu"
+msgstr "Abre el menú principal"
+
+#: jinja2/v1/_includes/organisms/mega-menu.html:319
+#| msgid "Main menu"
+msgid "Close the main menu"
+msgstr "Cerrar el menú principal"
+
 #: jinja2/v1/_includes/organisms/secondary-navigation.html:40
 #: jinja2/v1/_includes/organisms/secondary-navigation.html:89
 msgid "Section navigation"
