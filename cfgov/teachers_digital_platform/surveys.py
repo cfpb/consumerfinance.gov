@@ -46,8 +46,16 @@ class ChoiceList:
         )
 
     @classmethod
-    def from_string(cls, s: str):
+    def from_string(cls, s: str, lookup: Dict):
         labels = list(x.strip() for x in s.split('|'))
+
+        # Allow references like: [list:Foo]
+        for k, v in enumerate(labels):
+            if v[0:6] == '[list:' and v[-1] == ']':
+                possible_ref = v[6:-1]
+                if possible_ref in lookup:
+                    labels[k] = ' ‣ '.join(lookup[possible_ref].labels)
+
         return cls(labels)
 
     @classmethod
@@ -58,7 +66,7 @@ class ChoiceList:
         with open(path, encoding='utf-8') as csv_file:
             reader = csv.DictReader(csv_file)
             for row in (_answer_types_row(row) for row in reader):
-                ret[row['k']] = cls.from_string(row['c'])
+                ret[row['k']] = cls.from_string(row['c'], ret)
 
         return ret
 

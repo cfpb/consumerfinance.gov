@@ -49,8 +49,6 @@ function surveyPage( el ) {
     return;
   }
 
-  indentQuestionsByNumber();
-
   const totalQuestions = data.questionsByPage.reduce(
     ( prev, curr ) => prev + curr,
     0
@@ -61,6 +59,10 @@ function surveyPage( el ) {
   handleNewSelections( data, store );
 
   allowStartOver();
+
+  // Decorative transformations
+  indentQuestionsByNumber();
+  breakBulletedAnswers();
 }
 
 /**
@@ -176,15 +178,19 @@ function initProgressListener() {
     texts[0].textContent = perc;
     texts[1].textContent = `${ pb.numDone }/${ pb.totalNum } questions`;
 
-    const dashOffset = (1 - ( pb.numDone / pb.totalNum ) );
+    const dashOffset = 1 - ( pb.numDone / pb.totalNum );
     circle.setAttribute( 'stroke-dashoffset', dashOffset );
 
     const svg = circle.parentElement;
     svg.setAttribute( 'aria-label', `${ perc } complete` );
-    svg.style.opacity = 1;
+    svg.style.opacity = '1';
   } );
 }
 
+/**
+ * Don't allow question text to wrap underneath the number. Indent according
+ * to the width of the number.
+ */
 function indentQuestionsByNumber() {
   /**
    * @type {HTMLElement[]}
@@ -195,6 +201,44 @@ function indentQuestionsByNumber() {
     const p = strong.parentElement.parentElement;
     p.style.marginLeft = `${ offset }px`;
     p.style.textIndent = `-${ offset }px`;
+  } );
+}
+
+/**
+ * If a question option is bulleted with ‣, break it into multiple lines.
+ */
+function breakBulletedAnswers() {
+  const spanify = text => {
+    // Convert text node into a span with <br> between items.
+    const span = document.createElement( 'span' );
+
+    // HTML escape any chars as necessary when splitting
+    const htmlItems = text.split( ' ‣ ' ).map( item => {
+      span.textContent = item;
+      return span.innerHTML;
+    } );
+
+    span.innerHTML = ' &nbsp;‣ ' + htmlItems.join( '<br>&nbsp;‣ ' );
+    return span;
+  };
+
+  const hasTri = str => str.indexOf( ' ‣ ' ) !== -1;
+
+  /**
+   * @type {HTMLLabelElement[]}
+   */
+  const labels = [].slice.call( $$( '.ChoiceField li label' ) );
+  labels.forEach( label => {
+    if ( !hasTri( label.textContent ) ) {
+      return;
+    }
+
+    for ( let i = 0; i < label.childNodes.length; i++ ) {
+      const node = label.childNodes[i];
+      if ( node.nodeType === Node.TEXT_NODE && hasTri( node.textContent ) ) {
+        node.replaceWith( spanify( node.textContent ) );
+      }
+    }
   } );
 }
 
