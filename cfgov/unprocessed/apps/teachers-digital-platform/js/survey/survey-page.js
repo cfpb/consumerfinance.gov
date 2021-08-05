@@ -206,12 +206,33 @@ function initErrorHandling() {
         cf.markError();
       } );
 
-      // walk back to P
+      // Slide P into view
       const p = unsets[0].getUl().previousElementSibling.previousElementSibling;
       if ( p instanceof HTMLParagraphElement ) {
-        p.scrollIntoView();
+        if ( !scrollToEl( p ) ) {
+          // Can't scroll, jump up
+          location.href = '#main';
+        }
       }
     } );
+  }
+}
+
+/**
+ * @param {Element} el Element
+ * @returns {boolean} Success?
+ */
+function scrollToEl( el ) {
+  try {
+    el.scrollIntoView( { behavior: 'smooth' } );
+    return true;
+  } catch ( err ) {}
+
+  try {
+    el.scrollIntoView();
+    return true;
+  } catch ( err ) {
+    return false;
   }
 }
 
