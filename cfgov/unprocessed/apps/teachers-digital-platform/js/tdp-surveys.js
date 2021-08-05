@@ -16,9 +16,8 @@ const surveys = {
       return;
     }
 
-    const el = $( '.tdp-survey-page' );
-    if ( el ) {
-      surveyPage( el );
+    if ( $( '.tdp-survey-page' ) ) {
+      surveyPage();
     }
   }
 };

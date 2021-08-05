@@ -145,7 +145,7 @@ class ChoiceQuestion(Question):
                 ),
                 choices=self.choice_list.choices,
                 label=label,
-                required=True,
+                required=False,
                 initial=initial,
             ),
         }

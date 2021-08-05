@@ -30,6 +30,11 @@
 
             <form action="" method="post"> {{ csrf_input }}
 
+                <div hidden class="a-form-alert a-form-alert__error tdp-survey-alert--clone" role="alert">
+                    {% include 'icons/error-round.svg' %}
+                    <span class="a-form-alert_text">This question is required</span>
+                </div>
+
                 {# E.g. "./6-8/before-page-2.html" #}
                 {% include './' ~ survey.key ~ '/before-page-' ~ wizard.steps.step1 ~ '.html' ignore missing %}
 

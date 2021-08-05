@@ -10,37 +10,22 @@ const $$ = document.querySelectorAll.bind( document );
 let progressBar;
 
 /**
- * Initialize a survey page
- *
- * @param {HTMLDivElement} el Element with survey data
+ * @typedef {Object} SurveyData
+ * @property {string} itemBullet
+ * @property {number} numAnswered
+ * @property {number} pageIdx
+ * @property {number[]} questionsByPage
  */
-function surveyPage( el ) {
+
+/**
+ * Initialize a survey page
+ */
+function surveyPage() {
   if ( userTriedReentry() ) {
     return;
   }
 
-  /**
-   * @typedef {Object} SurveyData
-   * @property {string} itemBullet
-   * @property {number} numAnswered
-   * @property {number} pageIdx
-   * @property {number[]} questionsByPage
-   */
-
-  /**
-   * Store data- attributes from python
-   *
-   * @type {SurveyData}
-   */
-  const data = Object.create( null );
-  Object.entries( el.dataset ).forEach( ( [ k, v ] ) => {
-    data[k] = JSON.parse( v );
-  } );
-
-  /**
-   * Init radios and re-select any that were saved in session storage but
-   * which python doesn't know about.
-   */
+  const data = readSurveyData();
   ChoiceField.init();
   const store = ChoiceField.restoreFromSession( ANSWERS_SESS_KEY );
   data.numAnswered = Object.keys( store ).length;
@@ -59,11 +44,27 @@ function surveyPage( el ) {
 
   handleNewSelections( data, store );
 
+  initErrorHandling();
   allowStartOver();
 
   // Decorative transformations
   indentQuestionsByNumber();
   breakBulletedAnswers( data.itemBullet );
+}
+
+/**
+ * @returns {SurveyData} Survey data
+ */
+function readSurveyData() {
+  const el = $( '.tdp-survey-page' );
+  /**
+   * @type {SurveyData}
+   */
+  const data = Object.create( null );
+  Object.entries( el.dataset ).forEach( ( [ k, v ] ) => {
+    data[k] = JSON.parse( v );
+  } );
+  return data;
 }
 
 /**
@@ -186,6 +187,32 @@ function initProgressListener() {
     svg.setAttribute( 'aria-label', `${ perc } complete` );
     svg.style.opacity = '1';
   } );
+}
+
+/**
+ * Error handling for form
+ */
+function initErrorHandling() {
+  const form = $( '.tdp-survey-page form' );
+  if ( form ) {
+    form.addEventListener( 'submit', event => {
+      const unsets = ChoiceField.findUnsets();
+      if ( !unsets.length ) {
+        return;
+      }
+
+      event.preventDefault();
+      unsets.forEach( cf => {
+        cf.markError();
+      } );
+
+      // walk back to P
+      const p = unsets[0].getUl().previousElementSibling.previousElementSibling;
+      if ( p instanceof HTMLParagraphElement ) {
+        p.scrollIntoView();
+      }
+    } );
+  }
 }
 
 /**

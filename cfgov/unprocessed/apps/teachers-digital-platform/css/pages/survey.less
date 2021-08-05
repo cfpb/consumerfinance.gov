@@ -225,3 +225,15 @@ p {
         margin-left: 0.5em;
     }
 }
+
+.ChoiceField {
+    &--error {
+        border: 2px solid #d14124;
+    }
+}
+
+.a-form-alert__error {
+    + .ChoiceField {
+        padding-top: 1.5rem !important;
+    }
+}
