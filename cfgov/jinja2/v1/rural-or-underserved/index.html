@@ -49,46 +49,48 @@ home price, down payment, and more can affect mortgage interest rates.
                 </div>
             </div>
 
-            <div class="content-l_col content-l_col-1">
-                {# Display errors here. #}
-                <div id="file-error"
-                        class="block
-                            block__flush-top
-                            block__flush-bottom
-                            block__padded-bottom
-                            u-hidden">
-                    <div class="m-notification
-                                m-notification__visible
-                                m-notification__error">
-                        {{ svg_icon('error-round') }}
-                        <div class="m-notification_content">
-                            <div class="h4 m-notification_message">
-                                Formatting error
-                            </div>
-                            <div class="m-notification_explanation">
-                                <strong>We've noticed the following errors:</strong>
-                                <div id="file-error-desc"></div>
+            <div class="content-l">
+                <div class="content-l_col content-l_col-1">
+                    {# Display errors here. #}
+                    <div id="file-error"
+                            class="block
+                                block__flush-top
+                                block__flush-bottom
+                                block__padded-bottom
+                                u-hidden">
+                        <div class="m-notification
+                                    m-notification__visible
+                                    m-notification__error">
+                            {{ svg_icon('error-round') }}
+                            <div class="m-notification_content">
+                                <div class="h4 m-notification_message">
+                                    Formatting error
+                                </div>
+                                <div class="m-notification_explanation">
+                                    <strong>We've noticed the following errors:</strong>
+                                    <div id="file-error-desc"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div id="process-error"
-                        class="block
-                            block__flush-top
-                            block__flush-bottom
-                            block__padded-bottom
-                            u-hidden">
-                    <div class="m-notification
-                                m-notification__visible
-                                m-notification__error">
-                        {{ svg_icon('error-round') }}
-                        <div class="m-notification_content">
-                            <div class="h4 m-notification_message">
-                                Processing error
-                            </div>
-                            <div class="m-notification_explanation">
-                                <strong>The following addresses were not processed because the server was temporarily unavailable. To try again, start a new search.</strong>
-                                <ul id="process-error-desc"></ul>
+                    <div id="process-error"
+                            class="block
+                                block__flush-top
+                                block__flush-bottom
+                                block__padded-bottom
+                                u-hidden">
+                        <div class="m-notification
+                                    m-notification__visible
+                                    m-notification__error">
+                            {{ svg_icon('error-round') }}
+                            <div class="m-notification_content">
+                                <div class="h4 m-notification_message">
+                                    Processing error
+                                </div>
+                                <div class="m-notification_explanation">
+                                    <strong>The following addresses were not processed because the server was temporarily unavailable. To try again, start a new search.</strong>
+                                    <ul id="process-error-desc"></ul>
+                                </div>
                             </div>
                         </div>
                     </div>
