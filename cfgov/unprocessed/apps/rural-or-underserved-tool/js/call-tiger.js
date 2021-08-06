@@ -11,7 +11,7 @@ const jsonP = require( 'jsonp-p' ).default;
 function callTiger( x, y, layer ) {
   // See versions at https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb
   const apiVersion = 'tigerWMS_ACS2019';
-  const url = 'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/'+
+  const url = 'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/' +
               apiVersion + '/MapServer/' +
               layer +
               '/query' +
