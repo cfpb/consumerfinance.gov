@@ -9,7 +9,10 @@ const jsonP = require( 'jsonp-p' ).default;
  * @returns {Promise} A promise returned from the API.
  */
 function callTiger( x, y, layer ) {
-  const url = 'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/' +
+  // See versions at https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb
+  const apiVersion = 'tigerWMS_ACS2019';
+  const url = 'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/'+
+              apiVersion + '/MapServer/' +
               layer +
               '/query' +
               '?geometryType=esriGeometryPoint' +
