@@ -77,7 +77,9 @@ window.callbacks.censusAPI = function( data, rural ) {
         count.updateCount( result.type );
       } ) )
       .catch( function( error ) {
-        console.log( error );
+        const addressElement = DT.createEl( '<li>' + result.address + '</li>' );
+        DT.addEl( DT.getEl( '#process-error-desc' ), addressElement );
+        DT.removeClass( '#process-error', 'u-hidden' );
       } );
   } else {
     result.input = data.result.input.address.address;
