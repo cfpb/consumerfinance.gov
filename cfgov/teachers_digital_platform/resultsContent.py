@@ -43,8 +43,13 @@ class ResultsContent:
             })
         return bbs
 
-    def level_from_position(self, pos_idx: int):
-        """Map 6 car positions to 3 progress levels"""
+    @staticmethod
+    def level_from_position(pos_idx: int):
+        """
+        Map 6 car positions to 3 progress levels
+
+        Given a car position int from 0-5, return a progress level 0-2
+        """
         return [0, 0, 1, 1, 1, 2][pos_idx]
 
     def find_overall_progress(self, adjusted_score: float):
