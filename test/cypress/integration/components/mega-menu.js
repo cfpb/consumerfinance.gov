@@ -2,9 +2,10 @@ import { MegaMenu } from '../../components/mega-menu';
 
 const menu = new MegaMenu();
 
-describe( 'Mega-Menu organism for site navigation', () => {
+describe( 'Mega-Menu organism for site navigation on desktop', () => {
   before( () => {
     cy.visit( '/' );
+    cy.viewport( 1200, 800 );
   } );
   it( 'Mega-Menu, on page Load', () => {
     // Then the mega-menu organism should not show content
@@ -36,5 +37,37 @@ describe( 'Mega-Menu organism for site navigation', () => {
     menu.globalEyebrowLanguages().should( 'exist' );
     menu.globalEyebrow( 'actions' ).should( 'exist' );
     menu.globalEyebrow( 'phone' ).should( 'be.visible' );
+  } );
+} );
+
+describe( 'Mega-Menu organism for site navigation on mobile', () => {
+  before( () => {
+    cy.visit( '/' );
+    cy.viewport( 480, 800 );
+  } );
+
+  it( 'Mega-Menu, on tabbing interactions', () => {
+    // Focus the trigger button and open and navigate to the 2nd level menu.
+    menu.focusTriggerBtn();
+    // Then the 1st level links should have tabbing disabled.
+    menu.contentLink( '1' ).should( 'have.attr', 'tabindex' );
+    // Then click the focused trigger button to open it.
+    cy.focused().click();
+    // Then move focus to last link and it should have tabbing enabled.
+    menu.focusLastLink( '1' ).should( 'not.have.attr', 'tabindex' );
+    // Then click focused trigger item.
+    cy.focused().click();
+    // Then the 1st level links should have tabbing disabled.
+    menu.contentLink( '1' ).should( 'have.attr', 'tabindex' );
+    // Then click the trigger button again to close it.
+    menu.clickTriggerBtn();
+    // Then the 1st level links should have tabbing disabled.
+    menu.contentLink( '1' ).should( 'have.attr', 'tabindex' );
+    // Then focus the trigger button again to open it.
+    menu.focusTriggerBtn();
+    // Then click the focused trigger button to open it.
+    cy.focused().click();
+    // Then the 1st level links should have tabbing enabled.
+    menu.contentLink( '1' ).should( 'not.have.attr', 'tabindex' );
   } );
 } );

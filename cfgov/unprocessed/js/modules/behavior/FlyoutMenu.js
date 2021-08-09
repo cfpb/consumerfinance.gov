@@ -172,7 +172,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
 
   /**
    * Event handler for when the trigger is hovered over.
-   * @param {MouseEvent} event - The flyout trigger was click event object.
+   * @param {MouseEvent} event - The clicked flyout trigger event object.
    */
   function _handleTriggerOver() {
     if ( !_touchTriggered && !_suspended ) {
@@ -190,7 +190,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
 
   /**
    * Event handler for when the trigger is hovered out.
-   * @param {MouseEvent} event - The flyout trigger was click event object.
+   * @param {MouseEvent} event - The clicked flyout trigger event object.
    */
   function _handleTriggerOut( event ) {
     if ( !_suspended ) {
@@ -208,7 +208,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   /**
    * Event handler for when the search input trigger is clicked,
    * which opens/closes the search input.
-   * @param {MouseEvent} event - The flyout trigger was click event object.
+   * @param {MouseEvent} event - The clicked flyout trigger event object.
    */
   function _handleTriggerClicked( event ) {
     if ( !_suspended ) {
