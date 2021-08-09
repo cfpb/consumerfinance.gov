@@ -2,6 +2,10 @@ from django.forms.widgets import RadioSelect
 
 
 class ChoiceWidget(RadioSelect):
+    """
+    Subclass of Django's RadioSelect that allows passing in an opts_list to
+    be rendered above the options.
+    """
     input_type = 'radio'
     template_name = 'teachers_digital_platform/choice.html'
 

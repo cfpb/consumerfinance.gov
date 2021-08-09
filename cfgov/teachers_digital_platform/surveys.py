@@ -1,3 +1,14 @@
+"""Objects for creating surveys
+
+A Survey object has a set of pages and questions within those to model
+a complete survey. A set of Django form classes can be generated to
+represent all the survey pages (assembled by SurveyWizard), and the
+survey can be scored by passing it the full set of answers.
+
+The surveys are configured via CSV files (in code) and some templates
+define content that appears above certain pages.
+"""
+
 import csv
 import hashlib
 import json
@@ -11,8 +22,10 @@ from .forms import SurveyForm, markup
 from .TemplateField import TemplateField
 
 
+# If True, all the best scoring answers will be auto-selected.
 PREFILL_ANSWERS = False
 
+# Which survey keys will be made available.
 AVAILABLE_SURVEYS = ('3-5', '6-8', '9-12')
 
 # alternatives: https://www.fileformat.info/info/unicode/char/search.htm?q=arrow&preview=entity # noqa:E501
@@ -20,6 +33,10 @@ ITEM_BULLET = '‣'
 
 
 def _question_row(row: Dict[str, str]):
+    """
+    Transform the keys of each question CSV row. If the CSV headers change,
+    this will make a single place to fix it.
+    """
     return {
         'q': row['Question'],
         'pt': row['Part'],
@@ -31,6 +48,10 @@ def _question_row(row: Dict[str, str]):
 
 
 def _answer_types_row(row: Dict[str, str]):
+    """
+    Transform the keys of each answer-type CSV row. If the CSV headers
+    change, this will make a single place to fix it.
+    """
     return {
         'k': row['Key'],
         'c': row['Choices'],
@@ -39,7 +60,8 @@ def _answer_types_row(row: Dict[str, str]):
 
 class ChoiceList:
     """
-    To save mem, we'll only need a few of these objects in practice
+    A set of choices to be presented on a question. A single object can
+    be re-used for many questions to save memory.
     """
 
     def __init__(self, labels: List[str]):
@@ -50,6 +72,7 @@ class ChoiceList:
 
     @classmethod
     def from_string(cls, s: str, lookup: Dict):
+        """Convert a string like 'Foo | Bar | Bing' into a new ChoiceList"""
         labels = list(x.strip() for x in s.split('|'))
 
         # Allow references like: [list:Foo]
@@ -64,6 +87,7 @@ class ChoiceList:
 
     @classmethod
     def get_all(cls):
+        """Get a list of all available ChoiceLists from CSV"""
         ret: Dict[str, cls] = {}
 
         path = f'{dirname(__file__)}/survey-data/answer-types.csv'
@@ -77,7 +101,7 @@ class ChoiceList:
 
 class Question:
     """
-    Base question
+    Base question that can be scored
     """
 
     def __init__(self, num: int, part: str):
@@ -94,7 +118,7 @@ class Question:
 
 class ChoiceQuestion(Question):
     """
-    Choice question
+    Choice question for displaying radio buttons
     """
 
     def __init__(self, num: int, part: str, label: str,
@@ -112,12 +136,14 @@ class ChoiceQuestion(Question):
         return self.choice_list.choices
 
     def get_score(self, answer) -> float:
+        """Get a single score based on the answer index"""
         answer = int(answer)
         assert answer >= 0
         assert answer < len(self.choice_list.labels)
         return self.answer_values[answer]
 
     def get_field(self):
+        """Get a form field class to place this question in a form"""
         label = ''.join([
             markup('<strong class="question-num">'),
             str(self.num),
@@ -161,6 +187,10 @@ class SurveyPage:
         self.questions = questions
 
     def get_fields(self, prefix_tpls: Dict[str, str]):
+        """
+        Get a Dict of form field classes that will comprise form attributes
+        for a single page of the survey.
+        """
         fields = {}
 
         for question in self.questions:
@@ -174,6 +204,10 @@ class SurveyPage:
         return fields
 
     def get_score(self, all_cleaned_data):
+        """
+        Get the score total for this page and a dict of scores for each
+        question.
+        """
         total = 0
         question_scores = {}
 
@@ -189,6 +223,7 @@ class SurveyPage:
         }
 
     def get_form_class(self, name: str, prefix_tpls: Dict[str, str]):
+        """Build the form class for this page"""
         return type(
             name,
             (SurveyForm,),
@@ -209,9 +244,17 @@ class Survey:
         self.pages = pages
 
     def num_questions_by_page(self) -> List[int]:
+        """
+        Get a list of how many questions appear on each page, for use in
+        JavaScript for knowing the user's progress within the survey.
+        """
         return list(len(page.questions) for page in self.pages)
 
     def get_score(self, all_cleaned_data) -> float:
+        """
+        Get the score total for this survey, each page, and and a dict of
+        scores for all questions.
+        """
         total = 0
         question_scores = {}
         page_scores = {}
@@ -230,6 +273,7 @@ class Survey:
         }
 
     def adjust_total_score(self, total) -> float:
+        """Adjust the total score so the top score is 100"""
         if 'score_multiplier' not in self.meta:
             return total
 
@@ -244,6 +288,7 @@ class Survey:
         raise ValueError(f'score_multiplier {expr} is unsupported')
 
     def get_form_list(self):
+        """Get a list of (page name, form class) tuples"""
         page_classes = []
 
         for page_i, page in enumerate(self.pages):
@@ -315,5 +360,6 @@ class Survey:
 
 
 def get_survey(key, choice_lists: Optional[Dict] = None) -> Survey:
+    """Get a survey object by its key"""
     assert key in AVAILABLE_SURVEYS
     return Survey.factory(key, choice_lists)

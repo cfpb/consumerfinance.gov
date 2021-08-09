@@ -9,19 +9,25 @@ from django.template.loader import render_to_string
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
-from . import urlEncode
+from .UrlEncoder import UrlEncoder
 from .resultsContent import ResultsContent
 from .surveys import AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
 
 
-signer = signing.Signer()
-tdp = 'teachers_digital_platform'
+_tdp = 'teachers_digital_platform'
+_signer = signing.Signer()
 
 
 class SurveyWizard(NamedUrlCookieWizardView):
+    """
+    High level component representing the full multi-page form.
+    """
     survey_key = ''
 
     def done(self, form_list, **kwargs):
+        """
+        Called after submitting the last page IF every subform is validated
+        """
         survey = get_survey(self.survey_key)
 
         # Calc score and encode in URL
@@ -35,12 +41,14 @@ class SurveyWizard(NamedUrlCookieWizardView):
             part_scores[question.part] += score
 
         subtotals = list(v for k, v in sorted(part_scores.items()))
-        encoded = urlEncode.dumps(survey, subtotals, int(time.time()))
+
+        url_encoder = UrlEncoder(AVAILABLE_SURVEYS)
+        encoded = url_encoder.dumps(survey.key, subtotals, int(time.time()))
 
         # We can't use set_signed_cookie() because we need to unsign the
         # query string using Signer() and for some reason the raw cookie
         # value fails to pass the sig check.
-        signed = signer.sign(encoded)
+        signed = _signer.sign(encoded)
 
         # Send to results page
         response = HttpResponseRedirect('../../results/')
@@ -49,14 +57,21 @@ class SurveyWizard(NamedUrlCookieWizardView):
         return response
 
     def process_step(self, form):
-        # By default, the big CSRF tokens get needlessly stored in the cookie
-        # and take up a lot of space. This is bad because cookies have a
-        # small limit.
-        dict = self.get_form_step_data(form).copy()
-        del dict['csrfmiddlewaretoken']
-        return dict
+        """
+        Process the page-specific data stored in the cookie
+
+        By default, the big CSRF tokens get needlessly stored in the cookie
+        and take up a lot of space. This is bad because cookies have a small
+        limit.
+        """
+        data = self.get_form_step_data(form).copy()
+        del data['csrfmiddlewaretoken']
+        return data
 
     def render(self, form=None, **kwargs):
+        """
+        Called to render the form (and sneak some info into the template)
+        """
         # Overriding so we can inject useful data
         form = form or self.get_form()
         context = self.get_context_data(form=form, **kwargs)
@@ -72,38 +87,44 @@ class SurveyWizard(NamedUrlCookieWizardView):
 
     @classmethod
     def build_views(cls):
-        # Create view wrappers for our surveys.
+        """
+        For each survey key, a view object is returned that can handle a
+        request for a single page.
+        """
         wizard_views = {}
         choice_lists = ChoiceList.get_all()
         for key in AVAILABLE_SURVEYS:
             wizard_views[key] = cls.as_view(
                 survey_key=key,
                 form_list=get_survey(key, choice_lists).get_form_list(),
+                # Note it's important this is kept in sync with the name
+                # parameter in urls.py
                 url_name=f'survey_{key}_step',
-                template_name=f'{tdp}/survey/form-page.html',
+                template_name=f'{_tdp}/survey/form-page.html',
             )
-            print(get_survey(key, choice_lists).__dict__)
         return wizard_views
 
 
 def _handle_result_url(request: HttpRequest, raw: str, code: str,
                        is_student: bool):
-    res = urlEncode.loads(code)
+    url_encoder = UrlEncoder(AVAILABLE_SURVEYS)
+    res = url_encoder.loads(code)
     if res is None:
         return HttpResponseRedirect('../')
 
+    survey = get_survey(res['key'])
     total = sum(res['subtotals'])
-    adjusted = res['survey'].adjust_total_score(total)
+    adjusted = survey.adjust_total_score(total)
     student_view = False if 'share_view' in request.GET else is_student
 
     rendered = render_to_string(
-        f'{tdp}/survey/results-{res["key"]}.html',
+        f'{_tdp}/survey/results-{res["key"]}.html',
         {
             'content': ResultsContent.factory(res['key']),
             'is_student': student_view,
             'request': request,
             'r_param': raw,
-            'survey': res['survey'],
+            'survey': survey,
             'subtotals': res['subtotals'],
             'score': adjusted,
             'time': time.gmtime(res['time']),
@@ -114,7 +135,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
 
 def student_results(request: HttpRequest):
     """
-    Student results page
+    Request handler for the student results page
     """
     if request.method != 'GET':
         return HttpResponse(status=404)
@@ -124,7 +145,7 @@ def student_results(request: HttpRequest):
 
     raw = request.COOKIES['resultUrl']
     try:
-        result_url = signer.unsign(raw)
+        result_url = _signer.unsign(raw)
     except signing.BadSignature:
         return HttpResponseRedirect('../')
 
@@ -133,7 +154,7 @@ def student_results(request: HttpRequest):
 
 def view_results(request: HttpRequest):
     """
-    View results page
+    Request handler for the view results page
     """
     if request.method != 'GET':
         return HttpResponse(status=404)
@@ -143,7 +164,7 @@ def view_results(request: HttpRequest):
         return HttpResponseRedirect('../')
 
     try:
-        result_url = signer.unsign(raw)
+        result_url = _signer.unsign(raw)
     except signing.BadSignature:
         return HttpResponseRedirect('../')
 
@@ -153,7 +174,7 @@ def view_results(request: HttpRequest):
 def _grade_level_page(request: HttpRequest, key: str):
     survey = get_survey(key)
     rendered = render_to_string(
-        f'{tdp}/survey/grade-level-{key}.html',
+        f'{_tdp}/survey/grade-level-{key}.html',
         {
             'request': request,
             'survey': survey,
@@ -163,5 +184,10 @@ def _grade_level_page(request: HttpRequest, key: str):
 
 
 def create_grade_level_page_handler(key: str):
-    # Critically this captures the key in the closure for later invocation.
+    """
+    Create a view handler for a particular grade-level intro page
+
+    This makes sure the key is captured in the closure so it's correct
+    when the lambda is executed.
+    """
     return lambda request: _grade_level_page(request, key)
