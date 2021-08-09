@@ -30,13 +30,12 @@ class AnswerPageSearch:
             ).query(
                 'match', autocomplete=self.search_term
             )
-        except RequestError:
-            results = []
-        else:
             results = [
                 {'question': result.autocomplete, 'url': result.url}
                 for result in s[:20]
             ]
+        except RequestError:
+            results = []
         return results
 
     def search(self):
