@@ -82,7 +82,7 @@ window.callbacks.censusAPI = function( data, rural ) {
         addressUtils.render( result );
         count.updateCount( result.type );
       } ) )
-      .catch( function( error ) {
+      .catch( function() {
         const addressElement = DT.createEl( '<li>' + result.address + '</li>' );
         DT.addEl( DT.getEl( '#process-error-desc' ), addressElement );
         DT.removeClass( '#process-error', 'u-hidden' );
