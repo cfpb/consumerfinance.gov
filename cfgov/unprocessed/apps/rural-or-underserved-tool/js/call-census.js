@@ -24,9 +24,8 @@ function callCensus( address, rural, cb ) {
       if ( error ) {
         const addressElement = DT.createEl( '<li>' + address + '</li>' );
 
-        DT.addEl( DT.getEl( '#processErrorDesc' ), addressElement );
-
-        DT.removeClass( '#processError', 'u-hidden' );
+        DT.addEl( DT.getEl( '#process-error-desc' ), addressElement );
+        DT.removeClass( '#process-error', 'u-hidden' );
 
         count.incrementTotal();
       }
