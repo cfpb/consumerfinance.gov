@@ -1,4 +1,8 @@
+from collections import OrderedDict
+
 from django.db import models
+from django.template.response import TemplateResponse
+from django.utils.cache import patch_cache_control
 from django.utils.safestring import mark_safe
 
 from wagtail.admin.edit_handlers import (
@@ -10,6 +14,7 @@ from wagtail.core.models import Orderable, PageManager
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
 
+from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
@@ -71,6 +76,33 @@ class HomePage(CFGOVPage):
         })
 
         return context
+
+    TEMPLATES = ['v1/home_page.html', 'v1/home_page_2021.html']
+
+    def get_template(self, request, *args, **kwargs):
+        return self.TEMPLATES[
+            bool(flag_enabled('HOME_PAGE_2021', request=request))
+        ]
+
+    @property
+    def preview_modes(self):
+        return super().preview_modes + [('home_page_2021', '2021 version')]
+
+    def serve_preview(self, request, mode_name):
+        template_name = self.TEMPLATES[
+            list(OrderedDict(self.preview_modes).keys()).index(mode_name)
+        ]
+
+        # See wagtail.core.models.Page.serve_preview.
+        request.is_preview = True
+        response = TemplateResponse(
+            request,
+            template_name,
+            self.get_context(request)
+        )
+        patch_cache_control(response, private=True)
+
+        return response
 
 
 class HomePageInfoUnit(Orderable, ClusterableModel):

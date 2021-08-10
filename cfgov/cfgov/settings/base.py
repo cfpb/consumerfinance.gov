@@ -149,6 +149,7 @@ MIDDLEWARE = (
     "core.middleware.SelfHealingMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
@@ -768,6 +769,12 @@ FLAGS = {
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Expand ES Filterable List Search
     "EXPAND_FILTERABLE_LIST_SEARCH": [],
+    # Supports testing of a new 2021 version of the website home page.
+    # Enable by appending ?home_page_2021=True to home page URLs.
+    "HOME_PAGE_2021":  [
+        ("environment is not", "production", True),
+        ("parameter", "home_page_2021", True),
+    ],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
@@ -891,7 +898,6 @@ CSRF_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_HSTS_SECONDS = 600
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_SSL_REDIRECT = True
 
 
 # Cache Settings

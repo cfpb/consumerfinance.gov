@@ -49,11 +49,11 @@ home price, down payment, and more can affect mortgage interest rates.
                 </div>
             </div>
 
-            <div id="search-tool" class="content-l">
+            <div class="content-l">
                 <div class="content-l_col content-l_col-1">
                     {# Display errors here. #}
-                    <div id="fileError"
-                         class="block
+                    <div id="file-error"
+                            class="block
                                 block__flush-top
                                 block__flush-bottom
                                 block__padded-bottom
@@ -68,13 +68,13 @@ home price, down payment, and more can affect mortgage interest rates.
                                 </div>
                                 <div class="m-notification_explanation">
                                     <strong>We've noticed the following errors:</strong>
-                                    <div id="fileErrorDesc"></div>
+                                    <div id="file-error-desc"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="processError"
-                         class="block
+                    <div id="process-error"
+                            class="block
                                 block__flush-top
                                 block__flush-bottom
                                 block__padded-bottom
@@ -88,12 +88,19 @@ home price, down payment, and more can affect mortgage interest rates.
                                     Processing error
                                 </div>
                                 <div class="m-notification_explanation">
-                                    <strong>The following addresses were not processed because the server was temporarily unavailable. To try again, start a new search.</strong>
-                                    <ul id="processErrorDesc"></ul>
+                                    <p>
+                                        <strong>The following addresses were not processed because the server was temporarily unavailable. To try again, start a new search.</strong>
+                                    </p>
+                                    <ul id="process-error-desc"></ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div id="search-tool" class="content-l">
+                <div class="content-l_col content-l_col-1">
 
                     <h2>
                         Check status of properties for loans extended in
