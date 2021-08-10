@@ -6,10 +6,10 @@
 
    Description:
 
-   Creates markup for a Card Group organism, which displays a heading
-   and set of cards.
+   Creates markup for a Card Group organism, which displays a set of cards
+   with an optional heading.
 
-   heading:                     Group heading.
+   heading:                     Group heading (optional).
 
    card.icon:                   Card icon.
 
@@ -25,7 +25,7 @@
 
 {% macro render( heading, cards ) %}
 <div class="o-card-group o-card-group__column-3 o-card-group__bg-green">
-    <h2>{{ heading }}</h2>
+    {% if heading %}<h2>{{ heading }}</h2>{% endif %}
     <div class="o-card-group_cards">
     {% for _card in cards %}
         {{ card.render( _card ) }}
