@@ -246,15 +246,25 @@ class FilterableListForm(forms.Form):
 
     # Populate language choices
     def set_languages(self):
-        language_codes = {
-            b.key for b in
-            self.all_filterable_results.aggregations.languages.buckets
-        }
+        # Support case where self.all_filterable_results does not contain
+        # the language aggregation; this can happen due to the way that these
+        # results were cached before the language aggregation was added.
+        language_aggregation = getattr(
+            self.all_filterable_results.aggregations,
+            'languages',
+            None
+        )
 
-        language_options = [
-            (k, v) for k, v in dict(ref.supported_languages).items()
-            if k in language_codes
-        ]
+        if language_aggregation:
+            language_codes = {b.key for b in language_aggregation.buckets}
+
+            language_options = [
+                (k, v) for k, v in dict(ref.supported_languages).items()
+                if k in language_codes
+            ]
+        else:
+            # If no aggregation exists, fallback to showing all languages.
+            language_options = ref.supported_languages
 
         self.fields['language'].choices = language_options
 
