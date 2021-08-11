@@ -4,6 +4,7 @@ from django.db import models
 from django.template.response import TemplateResponse
 from django.utils.cache import patch_cache_control
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, ObjectList, StreamFieldPanel, TabbedInterface
@@ -36,7 +37,7 @@ class HomePageContentBlock(blocks.StreamBlock):
 class HighlightCardValue(blocks.StructValue):
     @property
     def link_text(self):
-        return 'Read more'
+        return _('Read more')
 
 
 class HighlightCardBlock(blocks.StructBlock):
