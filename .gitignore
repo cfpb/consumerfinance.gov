@@ -122,7 +122,6 @@ htmlcov/
 nosetests.xml
 coverage.xml
 .snyk
-protractorFailuresReport/
 test/cypress/screenshots/
 
 # Temp data backups #
