@@ -6,14 +6,21 @@
 
    Description:
 
-   Creates markup for a Card molecule, which displays an icon, some text,
-   and a link.
+   Creates markup for a Card molecule, which displays some text and a link,
+   with an optional heading and icon.
 
-   value.text:                  Card body text.
+   value.text:      Card body text.
 
-   value.link_text:             Card link text.
+   value.icon:      Name of an icon. See list of available icon names at:
+                    https://cfpb.github.io/design-system/foundation/iconography.
 
-   value.link_url:              Card link URL.
+   value.link_text: Card link text.
+
+   value.link_url:  Card link URL.
+
+   value.heading:               (Optional) Card heading.
+
+   value.icon:                  (Optional) Card icon.
 
    ========================================================================== #}
 
@@ -22,8 +29,14 @@
 <article class="m-card m-card__featured">
     <a href="{{ value.link_url }}">
         <h2 class="m-card_heading">
-            <span class="m-card_icon">{{ svg_icon( value.icon ) }}</span>
-            <span class="u-visually-hidden">{{ value.link_text }}</span>
+            {% if value.icon -%}
+                <span class="m-card_icon">{{ svg_icon( value.icon ) }}</span>
+            {%- endif %}
+            {% if value.heading -%}
+                {{ value.heading }}
+            {%- else -%}
+                <span class="u-visually-hidden">{{ value.link_text }}</span>
+            {%- endif %}
         </h2>
         <p>{{ value.text }}</p>
         <div class="m-card_footer">

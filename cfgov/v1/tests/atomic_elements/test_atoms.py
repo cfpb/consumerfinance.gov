@@ -1,9 +1,28 @@
-from django.test import TestCase
+from django.core.exceptions import ValidationError
+from django.test import SimpleTestCase, TestCase
 
 from wagtail.images.tests.utils import get_test_image_file
 
-from v1.atomic_elements.atoms import ImageBasic
+from v1.atomic_elements.atoms import ImageBasic, URLOrRelativeURLBlock
 from v1.models import CFGOVImage
+
+
+class URLOrRelativeURLBlockTests(SimpleTestCase):
+    def setUp(self):
+        self.block = URLOrRelativeURLBlock()
+
+    def check_clean(self, url):
+        self.assertEqual(self.block.clean(url), url)
+
+    def test_clean_absolute_url(self):
+        self.check_clean('https://www.consumerfinance.gov/foo/bar/')
+
+    def test_clean_relative_url(self):
+        self.check_clean('/foo/bar/')
+
+    def test_clean_invalid_url_raises_validation_error(self):
+        with self.assertRaises(ValidationError):
+            self.check_clean('url with spaces')
 
 
 def make_image(alt_text):

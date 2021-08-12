@@ -9,50 +9,32 @@
 
    Render a tags list when given:
 
-   tags:          An array of tags. "Tags" are simple strings.
-                  Example tag: 'Featured'
-                  Example tags: ['Featured', 'Mortgages']
+   tags.links:    List of tags to render with:
 
-   path:          The path to which the filter applies. For example, if the
-                  tags are used on a blog article then path should be
-                  '/about-us/blog/'. Remember to leverage vars.path instead of
-                  using the literal string '/about-us/blog/'. Path is used to
-                  create the filtered URL: {{ path }}?tags={{ tag }}.
+       link.url:        The tag URL.
+
+       link.text:       The tag text.
 
    hide_heading:  The optional boolean flag to hide the tags_heading element.
                   Adds class 'tags__hide-heading' if true value passed.
                   Defaults to false.
 
-   display_block: The optional boolean flag to display the tags list as block.
-                  Adds class 'tags__block-list' if true value passed.
-                  Defaults to false.
-
    ========================================================================== #}
 
-{% macro render(tags, path='', hide_heading=false, display_block=false, is_sheer=False, is_wagtail=False) %}
-<div class="tags{{' tags__hide-heading' if hide_heading else ''}}{{' tags__block-list' if display_block else '' }}">
-    <span class="{{'u-visually-hidden' if hide_heading else 'tags_heading' }}">Topics:</span>
-    <ul class="tags_list">
-        {% if is_wagtail %}
-            {% for tag in tags.links if tag.url %}
-            <li class="tags_tag">
-                <a href="{{ tag.url }}" class="tags_link">
-                    <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                    {{ tag.text }}
-                </a>
-            </li>
-            {% endfor %}
-        {% else %}
-            {% for tag in tags %}
-                <li class="tags_tag">
-                    {% set url_arg = 'tags=' if is_sheer else 'selected_facets=audience_exact:' if path == '/askcfpb/search/' else 'topics=' %}
-                    <a class="tags_link" href="{{ path }}?{{ url_arg }}{{ tag }}">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        {{ tag }}
-                    </a>
-                </li>
-            {% endfor %}
-        {% endif %}
+{% macro render(tags, hide_heading=false) %}
+<div class="tags{{' tags__hide-heading' if hide_heading else ''}}">
+    <span class="{{'u-visually-hidden' if hide_heading else 'tags_heading' }}">
+        Topics:
+    </span>
+    <ul class="tags_list" aria-label="Topics">
+        {% for tag in tags.links if tag.url %}
+        <li class="tags_tag">
+            <a href="{{ tag.url }}" class="tags_link">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                {{ tag.text }}
+            </a>
+        </li>
+        {% endfor %}
     </ul>
 </div>
 {% endmacro %}

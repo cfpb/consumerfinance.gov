@@ -5,6 +5,7 @@ from django.utils.html import strip_tags
 
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
+from elasticsearch_dsl import A
 from elasticsearch_dsl.query import MultiMatch
 from flags.state import flag_enabled
 
@@ -213,7 +214,12 @@ class FilterablePagesDocumentSearch:
         https://elasticsearch-dsl.readthedocs.io/en/latest/search_dsl.html#response
         """
         self.order(order_by=order_by)
-        return self.search_obj[0:self.count()].execute()
+        search = self.search_obj[0:self.count()]
+
+        # Also aggregate unique languages in the result.
+        search.aggs.bucket('languages', A('terms', field='language'))
+
+        return search.execute()
 
 
 class EventFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):

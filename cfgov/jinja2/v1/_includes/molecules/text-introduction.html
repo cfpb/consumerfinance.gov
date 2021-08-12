@@ -9,26 +9,28 @@
    Create a Text Introduction molecule.
    See [GHE]/flapjack/Modules-V1/wiki/Text-Introduction
 
-   value:               Object defined from a StreamField block.
+   value:                     Object defined from a StreamField block.
 
-   value.eyebrow:       (Optional) Text to display above heading.
+   value.eyebrow:             (Optional) Text to display above heading.
 
-   value.heading:       (Optional) String for heading text.
+   value.heading:             (Optional) String for heading text.
 
-   value.intro:         (Optional) String for body introduction text.
+   value.intro:               (Optional) String for body introduction text.
 
-   value.intro.source:  TODO: add type and description.
+   value.intro.source:        TODO: add type and description.
 
-   value.body:          (Optional) String for body text.
+   value.body:                (Optional) String for body text.
 
-   value.links:         A tuple of items to create a list of links, containing:
+   value.links:               A tuple to create a list of links, containing:
 
-   value.links[i].text: (Optional) A string for the text of the link.
+   value.links[i].text:       (Optional) A string for the text of the link.
 
-   value.links[i].url:  A string for the URL of the link.
+   value.links[i].url:        A string for the URL of the link.
 
-   value.has_rule:      Whether or not to render a rule line (border-bottom)
-                        at the bottom of the molecule.
+   value.links[i].aria_label: (Optional) An aria-label for the link.
+
+   value.has_rule:            Whether or not to render a rule line
+                              (border-bottom) at the bottom of the molecule.
 
    ========================================================================== #}
 {% if value.eyebrow %}
@@ -50,7 +52,9 @@
     {% if link.text %}
         {% if loop.first %}<ul class="m-list m-list__links">{% endif %}
             <li class="m-list_item">
-                <a class="m-list_link" href="{{ link.url }}">
+                <a class="m-list_link"
+                   href="{{ link.url }}"
+                   {% if link.aria_label %}aria-label="{{ link.aria_label }}"{% endif %}>
                     {{ link.text }}
                 </a>
             </li>
