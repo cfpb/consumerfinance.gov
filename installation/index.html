@@ -616,8 +616,7 @@ solution.</p>
    dependencies (<code>clean</code>) so the new installation can start fresh,
    then install the latest requested dependencies (<code>install</code>).</p>
 <p>The <code>devDependencies</code> from <code>package.json</code> are not installed
-   if the environment is production, and if it's the dev or test environment,
-   it checks to see if Protractor is globally installed.</p>
+   if the environment is production.</p>
 <p>Finally, it creates a new checksum for future comparisons.
 1. <strong>Run tasks to build the project for distribution</strong> (<code>build</code>)</p>
 <p>Finally, the script runs <code>yarn run gulp build</code> to rebuild the front-end assets.

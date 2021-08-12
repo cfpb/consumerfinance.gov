@@ -174,8 +174,6 @@
         
             <li><a class="toctree-l4" href="#performance-testing">Performance testing</a></li>
         
-            <li><a class="toctree-l4" href="#accessibility-testing">Accessibility testing</a></li>
-        
             <li><a class="toctree-l4" href="#source-code-linting">Source code linting</a></li>
         
         </ul>
@@ -281,10 +279,9 @@
 <a href="https://github.com/GoogleChrome/lighthouse">Google's Lighthouse</a> can be run
 from Google Chrome by opening the developer console and going to the Lighthouse
 tab to run a performance audit.</p>
-<h2 id="accessibility-testing">Accessibility testing<a class="headerlink" href="#accessibility-testing" title="Permanent link">¶</a></h2>
-<p>Run the acceptance tests with an <code>--a11y</code> flag (i.e. <code>gulp test:acceptance --a11y</code>)
-to check every webpage for WCAG and Section 508 compliancy using Protractor's
-<a href="https://github.com/angular/protractor-accessibility-plugin">accessibility plugin</a>.</p>
+<p>We also have an automated task that generates a lighthouse report every night at
+<a href="https://cfpb.github.io/cfgov-lighthouse/">https://cfpb.github.io/cfgov-lighthouse/</a>
+(<a href="https://cfpb.github.io/cfgov-lighthouse/">repository</a>).</p>
 <h2 id="source-code-linting">Source code linting<a class="headerlink" href="#source-code-linting" title="Permanent link">¶</a></h2>
 <p>The default test task includes linting of the JavaScript source, build,
 and test files.
