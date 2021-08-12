@@ -465,12 +465,11 @@ urlpatterns = [
     ),
 
     re_path(
-        r'^workbox-99cd3a5e.js',
+        r'^workbox-6b4b8de0.js',
         TemplateView.as_view(
-            template_name='regulations3k/workbox-99cd3a5e.js',
+            template_name='regulations3k/workbox-6b4b8de0.js',
             content_type='application/javascript'
-        ),
-        name='workbox-99cd3a5e.js'
+        )
     ),
 
     # Explicitly redirect eRegulations URLs to Regulations3000
