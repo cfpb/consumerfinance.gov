@@ -262,8 +262,6 @@
     "@babel/types" "^7.14.5"
 
 "@babel/helpers@^7.14.6", "@babel/helpers@^7.14.8":
-<<<<<<< HEAD
-<<<<<<< HEAD
   version "7.15.3"
   resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.15.3.tgz#c96838b752b95dcd525b4e741ed40bb1dc2a1357"
   integrity sha512-HwJiz52XaS96lX+28Tnbu31VeFSQJGOeKHJeaEPQlTl7PnlhFElWPj8tUXtqFIzeN86XxXoBr+WFAyK2PPVz6g==
@@ -271,24 +269,6 @@
     "@babel/template" "^7.14.5"
     "@babel/traverse" "^7.15.0"
     "@babel/types" "^7.15.0"
-=======
-  version "7.14.8"
-  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.14.8.tgz#839f88f463025886cff7f85a35297007e2da1b77"
-  integrity sha512-ZRDmI56pnV+p1dH6d+UN6GINGz7Krps3+270qqI9UJ4wxYThfAIcI5i7j5vXC4FJ3Wap+S9qcebxeYiqn87DZw==
-  dependencies:
-    "@babel/template" "^7.14.5"
-    "@babel/traverse" "^7.14.8"
-    "@babel/types" "^7.14.8"
->>>>>>> 55f1d3aeb (Update to Cypress@8.2.0)
-=======
-  version "7.15.3"
-  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.15.3.tgz#c96838b752b95dcd525b4e741ed40bb1dc2a1357"
-  integrity sha512-HwJiz52XaS96lX+28Tnbu31VeFSQJGOeKHJeaEPQlTl7PnlhFElWPj8tUXtqFIzeN86XxXoBr+WFAyK2PPVz6g==
-  dependencies:
-    "@babel/template" "^7.14.5"
-    "@babel/traverse" "^7.15.0"
-    "@babel/types" "^7.15.0"
->>>>>>> aaffbbe39 (Refresh npm cache)
 
 "@babel/highlight@^7.14.5":
   version "7.14.5"
@@ -300,21 +280,9 @@
     js-tokens "^4.0.0"
 
 "@babel/parser@^7.1.0", "@babel/parser@^7.14.5", "@babel/parser@^7.14.6", "@babel/parser@^7.15.0", "@babel/parser@^7.9.4":
-<<<<<<< HEAD
-<<<<<<< HEAD
   version "7.15.3"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.15.3.tgz#3416d9bea748052cfcb63dbcc27368105b1ed862"
   integrity sha512-O0L6v/HvqbdJawj0iBEfVQMc3/6WP+AeOsovsIgBFyJaG+W2w7eqvZB7puddATmWuARlm1SX7DwxJ/JJUnDpEA==
-=======
-  version "7.15.2"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.15.2.tgz#08d4ffcf90d211bf77e7cc7154c6f02d468d2b1d"
-  integrity sha512-bMJXql1Ss8lFnvr11TZDH4ArtwlAS5NG9qBmdiFW2UHHm6MVoR+GDc5XE2b9K938cyjc9O6/+vjjcffLDtfuDg==
->>>>>>> 55f1d3aeb (Update to Cypress@8.2.0)
-=======
-  version "7.15.3"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.15.3.tgz#3416d9bea748052cfcb63dbcc27368105b1ed862"
-  integrity sha512-O0L6v/HvqbdJawj0iBEfVQMc3/6WP+AeOsovsIgBFyJaG+W2w7eqvZB7puddATmWuARlm1SX7DwxJ/JJUnDpEA==
->>>>>>> aaffbbe39 (Refresh npm cache)
 
 "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@^7.14.5":
   version "7.14.5"
@@ -904,21 +872,9 @@
     esutils "^2.0.2"
 
 "@babel/runtime@^7.8.4":
-<<<<<<< HEAD
-<<<<<<< HEAD
   version "7.15.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.15.3.tgz#2e1c2880ca118e5b2f9988322bd8a7656a32502b"
   integrity sha512-OvwMLqNXkCXSz1kSm58sEsNuhqOx/fKpnUnKnFB5v8uDda5bLNEHNgKPvhDN6IU0LDcnHQ90LlJ0Q6jnyBSIBA==
-=======
-  version "7.14.8"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.8.tgz#7119a56f421018852694290b9f9148097391b446"
-  integrity sha512-twj3L8Og5SaCRCErB4x4ajbvBIVV77CGeFglHpeg5WC5FF8TZzBWXtTJ4MqaD9QszLYTtr+IsaAL2rEUevb+eg==
->>>>>>> 55f1d3aeb (Update to Cypress@8.2.0)
-=======
-  version "7.15.3"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.15.3.tgz#2e1c2880ca118e5b2f9988322bd8a7656a32502b"
-  integrity sha512-OvwMLqNXkCXSz1kSm58sEsNuhqOx/fKpnUnKnFB5v8uDda5bLNEHNgKPvhDN6IU0LDcnHQ90LlJ0Q6jnyBSIBA==
->>>>>>> aaffbbe39 (Refresh npm cache)
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -931,15 +887,7 @@
     "@babel/parser" "^7.14.5"
     "@babel/types" "^7.14.5"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 "@babel/traverse@^7.1.0", "@babel/traverse@^7.13.0", "@babel/traverse@^7.14.5", "@babel/traverse@^7.15.0":
-=======
-"@babel/traverse@^7.1.0", "@babel/traverse@^7.13.0", "@babel/traverse@^7.14.5", "@babel/traverse@^7.14.8", "@babel/traverse@^7.15.0":
->>>>>>> 55f1d3aeb (Update to Cypress@8.2.0)
-=======
-"@babel/traverse@^7.1.0", "@babel/traverse@^7.13.0", "@babel/traverse@^7.14.5", "@babel/traverse@^7.15.0":
->>>>>>> aaffbbe39 (Refresh npm cache)
   version "7.15.0"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.15.0.tgz#4cca838fd1b2a03283c1f38e141f639d60b3fc98"
   integrity sha512-392d8BN0C9eVxVWd8H6x9WfipgVH5IaIoLp23334Sc1vbKKWINnvwRpb4us0xtPaCumlwbTtIYNA0Dv/32sVFw==
@@ -1904,21 +1852,9 @@
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
 "@types/node@*":
-<<<<<<< HEAD
-<<<<<<< HEAD
   version "16.6.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.6.0.tgz#0d5685f85066f94e97f19e8a67fe003c5fadacc4"
   integrity sha512-OyiZPohMMjZEYqcVo/UJ04GyAxXOJEZO/FpzyXxcH4r/ArrVoXHf4MbUrkLp0Tz7/p1mMKpo5zJ6ZHl8XBNthQ==
-=======
-  version "16.4.13"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.4.13.tgz#7dfd9c14661edc65cccd43a29eb454174642370d"
-  integrity sha512-bLL69sKtd25w7p1nvg9pigE4gtKVpGTPojBFLMkGHXuUgap2sLqQt2qUnqmVCDfzGUL0DRNZP+1prIZJbMeAXg==
->>>>>>> 55f1d3aeb (Update to Cypress@8.2.0)
-=======
-  version "16.6.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.6.0.tgz#0d5685f85066f94e97f19e8a67fe003c5fadacc4"
-  integrity sha512-OyiZPohMMjZEYqcVo/UJ04GyAxXOJEZO/FpzyXxcH4r/ArrVoXHf4MbUrkLp0Tz7/p1mMKpo5zJ6ZHl8XBNthQ==
->>>>>>> aaffbbe39 (Refresh npm cache)
 
 "@types/node@^13.7.0":
   version "13.13.52"
@@ -2315,21 +2251,9 @@
     tunnel "^0.0.6"
 
 "@yarnpkg/fslib@^2.4.0", "@yarnpkg/fslib@^2.5.0":
-<<<<<<< HEAD
-<<<<<<< HEAD
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/@yarnpkg/fslib/-/fslib-2.5.1.tgz#3e99dccf48790697d52f1b1ac133dce218424521"
   integrity sha512-Y360rwoaUBCF8i9nRepyuFQFNF5OybHafO4PQ5Pf68sT3H6ulmT2t/KjdtMey8zyJkDu5qrC3IgHk0c7zWRIrg==
-=======
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@yarnpkg/fslib/-/fslib-2.5.0.tgz#d0f4b0d70d89ab2de5ad3349e59cfde87a7e6c1c"
-  integrity sha512-xkKmuW3HwQeWOPqOhBCbDjTGbgimP/VWN2bPpx4FnfgbVj1xjULyOtZR5h9p49jA7IIZsccG91+Ad9kLZ2A4DA==
->>>>>>> 55f1d3aeb (Update to Cypress@8.2.0)
-=======
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/@yarnpkg/fslib/-/fslib-2.5.1.tgz#3e99dccf48790697d52f1b1ac133dce218424521"
-  integrity sha512-Y360rwoaUBCF8i9nRepyuFQFNF5OybHafO4PQ5Pf68sT3H6ulmT2t/KjdtMey8zyJkDu5qrC3IgHk0c7zWRIrg==
->>>>>>> aaffbbe39 (Refresh npm cache)
   dependencies:
     "@yarnpkg/libzip" "^2.2.2"
     tslib "^1.13.0"
@@ -3263,16 +3187,6 @@ browserslist@^4.14.5, browserslist@^4.16.6, browserslist@^4.16.7:
     electron-to-chromium "^1.3.793"
     escalade "^3.1.1"
     node-releases "^1.1.73"
-<<<<<<< HEAD
-=======
-
-browserstack@^1.5.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/browserstack/-/browserstack-1.6.1.tgz#e051f9733ec3b507659f395c7a4765a1b1e358b3"
-  integrity sha512-GxtFjpIaKdbAyzHfFDKixKO8IBT7wR3NjbzrGc78nNs/Ciys9wU3/nBtsqsWv5nDSrdI5tz0peKuzCPuNXNUiw==
-  dependencies:
-    https-proxy-agent "^2.2.1"
->>>>>>> 55f1d3aeb (Update to Cypress@8.2.0)
 
 bser@2.1.1:
   version "2.1.1"
@@ -3461,21 +3375,9 @@ camelcase@^6.0.0, camelcase@^6.2.0:
   integrity sha512-c7wVvbw3f37nuobQNtgsgG9POC9qMbNuMQmTCqZv23b6MIz0fcYpBiOlv9gEN/hdLdnZTDQhg6e9Dq5M1vKvfg==
 
 caniuse-lite@^1.0.30001230, caniuse-lite@^1.0.30001248:
-<<<<<<< HEAD
-<<<<<<< HEAD
   version "1.0.30001251"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001251.tgz#6853a606ec50893115db660f82c094d18f096d85"
   integrity sha512-HOe1r+9VkU4TFmnU70z+r7OLmtR+/chB1rdcJUeQlAinjEeb0cKL20tlAtOagNZhbrtLnCvV19B4FmF1rgzl6A==
-=======
-  version "1.0.30001249"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001249.tgz#90a330057f8ff75bfe97a94d047d5e14fabb2ee8"
-  integrity sha512-vcX4U8lwVXPdqzPWi6cAJ3FnQaqXbBqy/GZseKNQzRj37J7qZdGcBtxq/QLFNLLlfsoXLUdHw8Iwenri86Tagw==
->>>>>>> 55f1d3aeb (Update to Cypress@8.2.0)
-=======
-  version "1.0.30001251"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001251.tgz#6853a606ec50893115db660f82c094d18f096d85"
-  integrity sha512-HOe1r+9VkU4TFmnU70z+r7OLmtR+/chB1rdcJUeQlAinjEeb0cKL20tlAtOagNZhbrtLnCvV19B4FmF1rgzl6A==
->>>>>>> aaffbbe39 (Refresh npm cache)
 
 capitalize@^1.0.0:
   version "1.0.0"
@@ -4678,21 +4580,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.3.793:
-<<<<<<< HEAD
-<<<<<<< HEAD
   version "1.3.803"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.803.tgz#78993a991d096500f21a77e91cd2a44295fe3cbe"
   integrity sha512-tmRK9qB8Zs8eLMtTBp+w2zVS9MUe62gQQQHjYdAc5Zljam3ZIokNb+vZLPRz9RCREp6EFRwyhOFwbt1fEriQ2Q==
-=======
-  version "1.3.801"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.801.tgz#f41c588e408ad1a4f794f91f38aa94a89c492f51"
-  integrity sha512-xapG8ekC+IAHtJrGBMQSImNuN+dm+zl7UP1YbhvTkwQn8zf/yYuoxfTSAEiJ9VDD+kjvXaAhNDPSxJ+VImtAJA==
->>>>>>> 55f1d3aeb (Update to Cypress@8.2.0)
-=======
-  version "1.3.803"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.803.tgz#78993a991d096500f21a77e91cd2a44295fe3cbe"
-  integrity sha512-tmRK9qB8Zs8eLMtTBp+w2zVS9MUe62gQQQHjYdAc5Zljam3ZIokNb+vZLPRz9RCREp6EFRwyhOFwbt1fEriQ2Q==
->>>>>>> aaffbbe39 (Refresh npm cache)
 
 elfy@^1.0.0:
   version "1.0.0"
@@ -7494,11 +7384,7 @@ jszip@3.4.0:
     readable-stream "~2.3.6"
     set-immediate-shim "~1.0.1"
 
-<<<<<<< HEAD
 jszip@^3.2.2:
-=======
-jszip@^3.1.3, jszip@^3.2.2:
->>>>>>> 55f1d3aeb (Update to Cypress@8.2.0)
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/jszip/-/jszip-3.7.1.tgz#bd63401221c15625a1228c556ca8a68da6fda3d9"
   integrity sha512-ghL0tz1XG9ZEmRMcEN2vt7xabrDdqHHeykgARpmZ0BiIctWxM47Vt63ZO2dnp4QYt/xJVLLy5Zv1l/xRdh2byg==
@@ -11295,21 +11181,9 @@ tar-stream@^2.0.1, tar-stream@^2.1.0, tar-stream@^2.1.2:
     readable-stream "^3.1.1"
 
 tar@^6.1.0:
-<<<<<<< HEAD
-<<<<<<< HEAD
   version "6.1.8"
   resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.8.tgz#4fc50cfe56511c538ce15b71e05eebe66530cbd4"
   integrity sha512-sb9b0cp855NbkMJcskdSYA7b11Q8JsX4qe4pyUAfHp+Y6jBjJeek2ZVlwEfWayshEIwlIzXx0Fain3QG9JPm2A==
-=======
-  version "6.1.7"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.7.tgz#c566d1107d38b09e92983a68db5534fc7f6cab42"
-  integrity sha512-PBoRkOJU0X3lejJ8GaRCsobjXTgFofRDSPdSUhRSdlwJfifRlQBwGXitDItdGFu0/h0XDMCkig0RN1iT7DBxhA==
->>>>>>> 55f1d3aeb (Update to Cypress@8.2.0)
-=======
-  version "6.1.8"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.8.tgz#4fc50cfe56511c538ce15b71e05eebe66530cbd4"
-  integrity sha512-sb9b0cp855NbkMJcskdSYA7b11Q8JsX4qe4pyUAfHp+Y6jBjJeek2ZVlwEfWayshEIwlIzXx0Fain3QG9JPm2A==
->>>>>>> aaffbbe39 (Refresh npm cache)
   dependencies:
     chownr "^2.0.0"
     fs-minipass "^2.0.0"
