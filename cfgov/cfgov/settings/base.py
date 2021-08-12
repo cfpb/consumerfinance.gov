@@ -767,8 +767,6 @@ FLAGS = {
     "ASK_SURVEY_INTERCEPT": [],
     # Hide archive filter options in the filterable UI
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
-    # Expand ES Filterable List Search
-    "EXPAND_FILTERABLE_LIST_SEARCH": [],
     # Supports testing of a new 2021 version of the website home page.
     # Enable by appending ?home_page_2021=True to home page URLs.
     "HOME_PAGE_2021":  [
