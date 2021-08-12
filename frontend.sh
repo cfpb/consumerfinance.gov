@@ -45,18 +45,8 @@ clean() {
 # Install project dependencies.
 install() {
   if [ "$NODE_ENV" = "development" ]; then
-
     echo "Installing frontend development dependencies…"
     yarn install
-
-    # Protractor = JavaScript browser testing framework.
-    echo "Installing Protractor dependencies locally…"
-    # We skip Gecko here (--gecko false) because webdriver pulls its release
-    # directly from a GitHub.com URL which enforces rate-limiting. This can
-    # cause installation failures when running automated testing. Currently
-    # we don't rely on Gecko for testing.
-    ./node_modules/protractor/bin/webdriver-manager update --gecko false --standalone false
-
   else
     echo "Installing frontend production dependencies…"
     yarn install --production --ignore-optional

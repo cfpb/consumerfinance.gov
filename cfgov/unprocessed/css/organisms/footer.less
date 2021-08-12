@@ -79,41 +79,6 @@
         }
     }
 
-    // TODO: Determine if this is used and if not, delete it!
-    &_long-list {
-        .m-list__unstyled();
-
-        .respond-to-max( @bp-xs-max, {
-            margin-bottom: unit( 10px / @base-font-size-px, em );
-            .m-list__spaced();
-
-            &:first-child {
-                margin-bottom: unit( 24px / @base-font-size-px, em );
-            }
-        } );
-
-        .respond-to-min( @bp-sm-min, {
-            .m-list__horizontal();
-
-            &:first-child {
-                margin-bottom: 0;
-            }
-        } );
-
-        .m-list_item {
-            .respond-to-min( @bp-sm-min, {
-                margin-right: @grid_gutter-width - 4px;
-                margin-bottom: unit( 10px / @base-font-size-px, em );
-            } );
-        }
-
-        .m-list_link {
-            .u-link__colors( @black );
-            .u-link__hover-border();
-        }
-
-    }
-
     &_pre {
         position: relative;
         margin-bottom: unit( 45px / @base-font-size-px, em );
