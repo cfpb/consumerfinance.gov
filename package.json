@@ -89,9 +89,6 @@
     "jest-cli": "26.6.3",
     "jsdoc": "3.6.7",
     "minimist": "1.2.5",
-    "protractor": "7.0.0",
-    "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
-    "protractor-retry": "2.0.1",
     "snyk": "1.630.0",
     "through2": "4.0.2",
     "wcag": "0.3.0"
