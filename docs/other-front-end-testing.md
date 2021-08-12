@@ -7,11 +7,9 @@ To audit if the site complies with performance best practices and guidelines,
 from Google Chrome by opening the developer console and going to the Lighthouse
 tab to run a performance audit.
 
-## Accessibility testing
-
-Run the acceptance tests with an `--a11y` flag (i.e. `gulp test:acceptance --a11y`)
-to check every webpage for WCAG and Section 508 compliancy using Protractor's
-[accessibility plugin](https://github.com/angular/protractor-accessibility-plugin).
+We also have an automated task that generates a lighthouse report every night at
+https://cfpb.github.io/cfgov-lighthouse/
+([repository](https://cfpb.github.io/cfgov-lighthouse/)).
 
 ## Source code linting
 
