@@ -26,7 +26,7 @@ Prefixed with `a-` in class names.
 
 ```html
 <div class="a-tag">
-    Tag label {{ svg_icon('remove') }}
+    Tag label {{ svg_icon('error') }}
 </div>
 ```
 
