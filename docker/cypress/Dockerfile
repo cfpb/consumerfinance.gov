@@ -34,7 +34,7 @@ RUN yum update -y && \
         nss* \
         alsa-lib* && \
     yum clean all && rm -rf /var/cache/yum && \
-    npm install -D cypress@8.2.0 && \
+    yarn add --dev cypress@8.2.0 && \
     $(npm bin)/cypress verify
 
 # Remove files flagged by image vulnerability scanner
