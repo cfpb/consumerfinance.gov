@@ -129,67 +129,6 @@
                 </li>
             </ul>
         </div>
-    - name: Block list modifier
-      markup: |
-        <div class="tags tags__block-list">
-            <h4 class="tags_heading">Topics:</h4>
-            <ul class="tags_list">
-                <li class="tags_tag">
-                    <a href="#" class="tags_link">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        Students
-                    </a>
-                </li>
-                <li class="tags_tag">
-                    <a href="#" class="tags_link">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        Consumers
-                    </a>
-                </li>
-                <li class="tags_tag">
-                    <a href="#" class="tags_link">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        College loans
-                    </a>
-                </li>
-                <li class="tags_tag">
-                    <a href="#" class="tags_link">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        Students
-                    </a>
-                </li>
-                <li class="tags_tag">
-                    <a href="#" class="tags_link">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        Consumers
-                    </a>
-                </li>
-                <li class="tags_tag">
-                    <a href="#" class="tags_link">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        College loans
-                    </a>
-                </li>
-                <li class="tags_tag">
-                    <a href="#" class="tags_link">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        Students
-                    </a>
-                </li>
-                <li class="tags_tag">
-                    <a href="#" class="tags_link">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        Consumers
-                    </a>
-                </li>
-                <li class="tags_tag">
-                    <a href="#" class="tags_link">
-                        <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                        College loans
-                    </a>
-                </li>
-            </ul>
-        </div>
   tags:
     - cfgov-meta
 */
@@ -278,31 +217,9 @@
         font-size: unit(@bullet-font-size / 12px, em);
     }
 
-    &__block-list {
-        padding-left: 0;
-
-        .tags_tag {
-            display: list-item;
-        }
-
-        .tags_heading {
-            .h4();
-            // Bottom margin is eyeballed to 20px from the baseline.
-            margin: 0 0 unit(16px / @font-size, em);
-            color: @black;
-            position: relative;
-        }
-    }
-
     &__hide-heading {
         padding-left: 0;
 
-        .tags_heading {
-            margin: 0;
-        }
-    }
-
-    &__hide-heading&__block-list {
         .tags_heading {
             margin: 0;
         }

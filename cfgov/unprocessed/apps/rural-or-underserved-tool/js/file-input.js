@@ -19,8 +19,8 @@ function setFileName( fileName ) {
  * Clear errors.
  */
 function resetError() {
-  DT.addClass( '#fileError', 'u-hidden' );
-  DT.addClass( '#processError', 'u-hidden' );
+  DT.addClass( '#file-error', 'u-hidden' );
+  DT.addClass( '#process-error', 'u-hidden' );
   DT.changeElHTML( '.js-error-message', '' );
 }
 
@@ -29,8 +29,8 @@ function resetError() {
  * @param {string} message - An error message.
  */
 function setError( message ) {
-  DT.changeElHTML( '#fileErrorDesc', message );
-  DT.removeClass( '#fileError', 'u-hidden' );
+  DT.changeElHTML( '#file-error-desc', message );
+  DT.removeClass( '#file-error', 'u-hidden' );
 }
 
 /**

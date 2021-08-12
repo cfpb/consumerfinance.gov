@@ -309,7 +309,7 @@ msgstr "Oficina para la Protección Financiera del Consumidor"
 
 #: jinja2/v1/_layouts/base.html:227
 msgid "Skip to main content"
-msgstr "Saltar al contenido principal"
+msgstr "Ir al contenido principal"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:30
 msgid "last reviewed"
