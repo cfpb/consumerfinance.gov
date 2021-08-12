@@ -1,6 +1,6 @@
 from django.test import RequestFactory, TestCase
 
-from v1.models import HomePage
+from v1.models.home_page import HighlightCardBlock, HomePage
 
 
 class HomePageTests(TestCase):
@@ -17,3 +17,12 @@ class HomePageTests(TestCase):
 
     def test_preview_2021_template(self):
         self.check_preview_template('home_page_2021', 'v1/home_page_2021.html')
+
+    def test_highlight_card_block_rendering(self):
+        block = HighlightCardBlock()
+        value = block.to_python({
+            'heading': 'Highlight',
+            'text': 'This is a highlight.',
+            'link_url': '/highlight/',
+        })
+        self.assertEqual(value.link_text, 'Read more')
