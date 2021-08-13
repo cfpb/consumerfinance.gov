@@ -30,6 +30,15 @@
 
             <form action="" method="post"> {{ csrf_input }}
 
+                <div class="m-notification
+                            m-notification__error">
+                    {% include 'icons/error-round.svg' %}
+                    <div class="m-notification_content">
+                        <div class="h4 m-notification_message">You've missed a question. Click the
+                            link(s) to jump to them.</div>
+                    </div>
+                    <ul class="m-notification_explanation"></ul>
+                </div>
                 <div hidden class="a-form-alert a-form-alert__error tdp-survey-alert--clone" role="alert">
                     {% include 'icons/error-round.svg' %}
                     <span class="a-form-alert_text">This question is required</span>

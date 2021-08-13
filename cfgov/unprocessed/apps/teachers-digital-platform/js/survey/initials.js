@@ -21,7 +21,7 @@ function update( newValue ) {
       display.setAttribute( 'aria-hidden', 'false' );
     } else {
       display.style.display = 'none';
-      display.setAttribute( 'aria-hidden', 'false' );
+      display.setAttribute( 'aria-hidden', 'true' );
     }
   }
 }
