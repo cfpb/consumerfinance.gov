@@ -194,7 +194,9 @@ function initProgressListener() {
  */
 function initErrorHandling() {
   const form = $( '.tdp-survey-page form' );
-  if ( form ) {
+  const notification = $( '.m-notification' );
+  const ul = $('.m-notification_explanation');
+  if ( form && notification && ul ) {
     form.addEventListener( 'submit', event => {
       const unsets = ChoiceField.findUnsets();
       if ( !unsets.length ) {
@@ -202,17 +204,27 @@ function initErrorHandling() {
       }
 
       event.preventDefault();
+      ul.textContent = '';
       unsets.forEach( cf => {
         cf.markError();
+
+        const el = cf.getUl().previousElementSibling.previousElementSibling;
+        const link = document.createElement( 'a' );
+        link.href = '#';
+        link.textContent = el.textContent;
+        link.addEventListener( 'click', event => {
+          event.preventDefault();
+          scrollToEl( el );
+        } );
+        const li = document.createElement( 'li' );
+        ul.append( li );
+        li.append( link );
       } );
 
-      // Slide P into view
-      const p = unsets[0].getUl().previousElementSibling.previousElementSibling;
-      if ( p instanceof HTMLParagraphElement ) {
-        if ( !scrollToEl( p ) ) {
-          // Can't scroll, jump up
-          location.href = '#main';
-        }
+      notification.classList.add( 'm-notification__visible' );
+      if ( !scrollToEl( notification ) ) {
+        // Can't scroll, jump up
+        location.href = '#main';
       }
     } );
   }
