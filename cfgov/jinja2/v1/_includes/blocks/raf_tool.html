@@ -13,7 +13,9 @@
   }
 </style>
 
-<div id="rental-assistance-finder"></div>
+<div id="rental-assistance-finder" 
+     data-language="{{ page.language if page and page.language else 'en' }}">
+</div>
 
 <div class="js-is-hidden">
   {% import 'molecules/notification.html' as notification with context %}
