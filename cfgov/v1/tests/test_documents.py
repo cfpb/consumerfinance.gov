@@ -267,8 +267,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         results = search.search(title=None)
         self.assertTrue(results.filter(title=self.enforcement.title).exists())
 
-    @override_settings(FLAGS={"EXPAND_FILTERABLE_LIST_SEARCH": [("boolean", True)]})
-    def test_search_title_multimatch_enabled(self):
+    def test_search_title_uses_multimatch(self):
         search = FilterablePagesDocumentSearch(prefix='/')
         search.filter(
             topics=[],
@@ -283,21 +282,3 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         self.assertTrue(results.filter(title=self.blog_content_match.title).exists())
         self.assertTrue(results.filter(title=self.blog_preview_match.title).exists())
         self.assertTrue(results.filter(title=self.blog_topic_match.title).exists())
-
-    @override_settings(FLAGS={"EXPAND_FILTERABLE_LIST_SEARCH": [("boolean", False)]})
-    def test_search_title_multimatch_disabled(self):
-        search = FilterablePagesDocumentSearch(prefix='/')
-        search.filter(
-            topics=[],
-            categories=[],
-            language=[],
-            to_date=None,
-            from_date=None,
-            archived=None
-        )
-        results = search.search(title="Foo")
-
-        self.assertTrue(results.filter(title=self.blog_title_match).exists())
-        self.assertFalse(results.filter(title=self.blog_content_match.title).exists())
-        self.assertFalse(results.filter(title=self.blog_preview_match.title).exists())
-        self.assertFalse(results.filter(title=self.blog_topic_match.title).exists())

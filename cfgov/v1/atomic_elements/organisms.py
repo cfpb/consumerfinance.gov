@@ -896,11 +896,7 @@ class FilterableList(BaseExpandable):
     filter_children = blocks.BooleanBlock(
         default=True,
         required=False,
-        help_text=(
-            "If checked this list will only filter its child pages. "
-            "If both children and siblings are checked, only child pages will "
-            "be filtered."
-        ),
+        help_text='If checked this list will only filter its child pages.'
     )
 
     class Meta:
