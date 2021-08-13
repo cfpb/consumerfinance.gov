@@ -1,4 +1,9 @@
 .tdp-survey-results {
+    &.content_main {
+        .content__2-1 & {
+            width: 80%;
+        }
+    }
     .shared-url {
         margin-bottom: 1rem;
     }
@@ -53,10 +58,17 @@
     }
 
     .o-expandable_header-left {
+        font-weight: 400;
         align-items: center;
         display: flex;
         img {
-            padding-right: 10px;
+            padding-right: 20px;
+        }
+    }
+    .o-expandable_content {
+        padding: 0 4.5em!important;
+        &::before {
+            display: none;
         }
     }
 }
@@ -67,7 +79,7 @@
 }
 
 .results-road__starting-out {
-    width: 25%;
+    width: 33.3%;
 }
 
 
@@ -242,6 +254,24 @@
     }
 }
 
+.position-6 {
+    .results-road__well-on-your-way {
+        label {
+            background-image: url( '../img/star.svg' );
+            background-repeat: no-repeat;
+            font-weight: 600;
+            padding-left: 25px;
+        }
+        .results-road__box {
+            background-image: url( '../img/car.png' );
+            background-size: 90px 50px;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    }
+}
+
+
 .results-road__well-on-your-way {
-    width: 25%;
+    width: 20.6%;
 }

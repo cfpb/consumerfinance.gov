@@ -1,4 +1,4 @@
-{% extends 'content-base.html' %}
+{% extends 'layout-2-1.html' %}
 {% from 'organisms/expandable.html' import expandable with context %}
 
 {% block title -%}
@@ -15,17 +15,14 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-    <div class="content_wrapper tdp-survey-results">
+    <div class="content_wrapper">
+        <div class="content_main tdp-survey-results">
         {% set overall = content.find_overall_progress(score) %}
         {% set bbs = content.building_blocks() %}
 
-        <article aria-hidden="true" style="display:none" class="m-card initials-display">
-            <h2 class="m-card_heading">
-                <span>Survey completed by <span class="initials-value"></span></span>
-            </h2>
-        </article>
-
-        <p class="label">Your money journey results</p>
+        <p class="label">Your money journey results <div aria-hidden="true" style="display:none" class="initials-display">
+            <span>Survey completed by <span class="initials-value"></span></span>
+        </div></p>
         <p class="h1">Congratulations, {{ overall.heading_html|safe }}</p>
         <p class="h3"> {{ overall.msg_html|safe }}</p>
 
@@ -47,20 +44,9 @@
             </div>
         </div>
 
-        <p>
-        {% if is_student %}
-            <button type="button" class="a-btn" data-open-modal="modal-share-url">
-                Share results
-            </button>
-            <button type="button" class="a-btn" data-open-modal="modal-print">
-                Print results
-            </button>
-        {% else %}
-            <button type="button" class="a-btn" onclick="window.print()">
-                Print results
-            </button>
-        {% endif %}
-        </p>
+        <div class="block">
+            <strong>Now what?</strong> Review your results in more detail. Think about things you’re doing well and ways you can improve your financial well-being. Be sure to save your results [add sentence on why: track your progress over time? to share with your teacher or trusted adult?].
+        </div>
 
         {# modal content #}
         {% include './modals/share-url.html' %}
@@ -76,7 +62,7 @@
             <div class="o-expandable o-expandable__padded">
                 <button class="o-expandable_header o-expandable_target"
                         title="Expand content">
-                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                    <h3 class="o-expandable_header-left o-expandable_label">
                         <img src="{{ static('apps/teachers-digital-platform/img/planning.svg') }}" alt="planning icon"> {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_header-right o-expandable_link">
@@ -92,7 +78,7 @@
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
                     
-                    <div class="results-road results-road--planning position-{{ overall.position_idx }}">
+                    <div class="results-road results-road--planning position-{{ progress.position_idx }}">
                         <div class="results-road__starting-out">
                             <label>Starting Out</label>
                             <div class="results-road__box">
@@ -118,7 +104,7 @@
             <div class="o-expandable o-expandable__padded">
                 <button class="o-expandable_header o-expandable_target"
                         title="Expand content">
-                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                    <h3 class="o-expandable_header-left o-expandable_label">
                         <img src="{{ static('apps/teachers-digital-platform/img/habits.svg') }}" alt="habits icon"> {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_header-right o-expandable_link">
@@ -133,7 +119,7 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
-                    <div class="results-road results-road--habits position-{{ overall.position_idx }}">
+                    <div class="results-road results-road--habits position-{{ progress.position_idx }}">
                         <div class="results-road__starting-out">
                             <label>Starting Out</label>
                             <div class="results-road__box">
@@ -159,7 +145,7 @@
             <div class="o-expandable o-expandable__padded">
                 <button class="o-expandable_header o-expandable_target"
                         title="Expand content">
-                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                    <h3 class="o-expandable_header-left o-expandable_label">
                         <img src="{{ static('apps/teachers-digital-platform/img/knowledge.svg') }}" alt="knowledge icon"> {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_header-right o-expandable_link">
@@ -174,7 +160,7 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
-                    <div class="results-road results-road--knowledge position-{{ overall.position_idx }}">
+                    <div class="results-road results-road--knowledge position-{{ progress.position_idx }}">
                         <div class="results-road__starting-out">
                             <label>Starting Out</label>
                             <div class="results-road__box">
@@ -210,14 +196,29 @@
 
         {% if is_student %}
         <div class="block">
+            {% if is_student %}
+            <button type="button" class="a-btn" data-open-modal="modal-share-url">
+                Share results
+            </button>
+            <button type="button" class="a-btn" data-open-modal="modal-print">
+                Print results
+            </button>
+        {% else %}
+            <button type="button" class="a-btn" onclick="window.print()">
+                Print results
+            </button>
+        {% endif %}
+    </div>
         <p>
                 <a class="results-start-over a-btn a-btn__link a-btn__warning" href="../">
                     Reset survey and start over
                 </a>
             </p>
-            </div>
+          
         {% endif %}
+        <aside></aside>
     </div>
+</div>
 {% endblock body_content %}
 
 {% block javascript %}
