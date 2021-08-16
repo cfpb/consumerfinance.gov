@@ -13,6 +13,7 @@ from .resultsContent import ResultsContent
 from .surveys import AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
 from .UrlEncoder import UrlEncoder
 
+
 _tdp = 'teachers_digital_platform'
 _signer = signing.Signer()
 
