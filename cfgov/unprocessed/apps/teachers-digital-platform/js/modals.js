@@ -74,6 +74,7 @@ function init() {
     const t = event.target;
     const opener = t.closest( '[data-open-modal]' );
     if ( opener ) {
+      event.preventDefault();
       event.stopPropagation();
       const id = opener.dataset.openModal;
       const modal = new Modal( id );
