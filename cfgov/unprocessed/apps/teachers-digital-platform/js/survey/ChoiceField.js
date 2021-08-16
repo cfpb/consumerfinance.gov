@@ -23,7 +23,7 @@ class ChoiceField {
   }
 
   /**
-   * @returns {HTMLUListElement}
+   * @returns {HTMLUListElement} The UL of the main set of answers
    */
   getUl() {
     return this.inputs[0].closest( 'ul.ChoiceField' );
@@ -68,11 +68,8 @@ ChoiceField.get = name => {
 /**
  * @returns {ChoiceField[]} unset choice fields
  */
-ChoiceField.findUnsets = () => {
-  return Object.values( ChoiceField.cache ).filter( cf => {
-    return cf.value === null;
-  } );
-};
+ChoiceField.findUnsets = () =>
+  Object.values( ChoiceField.cache ).filter( cf => cf.value === null );
 
 /**
  * Synchronize unset choices from the store and set choices to the store.

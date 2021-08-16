@@ -12,7 +12,7 @@ class ProgressBar {
   }
 
   getPercentage() {
-    return Math.round(100 * this.numDone / this.totalNum);
+    return Math.round( 100 * this.numDone / this.totalNum );
   }
 
   update( numDone ) {

@@ -57,6 +57,7 @@ function surveyPage() {
  */
 function readSurveyData() {
   const el = $( '.tdp-survey-page' );
+
   /**
    * @type {SurveyData}
    */
@@ -197,13 +198,13 @@ function initErrorHandling() {
   const notification = $( '.m-notification' );
   const ul = $('.m-notification_explanation');
   if ( form && notification && ul ) {
-    form.addEventListener( 'submit', event => {
+    form.addEventListener( 'submit', submitEvt => {
       const unsets = ChoiceField.findUnsets();
       if ( !unsets.length ) {
         return;
       }
 
-      event.preventDefault();
+      submitEvt.preventDefault();
       ul.textContent = '';
       unsets.forEach( cf => {
         cf.markError();
@@ -212,8 +213,8 @@ function initErrorHandling() {
         const link = document.createElement( 'a' );
         link.href = '#';
         link.textContent = el.textContent;
-        link.addEventListener( 'click', event => {
-          event.preventDefault();
+        link.addEventListener( 'click', clickEvt => {
+          clickEvt.preventDefault();
           scrollToEl( el );
         } );
         const li = document.createElement( 'li' );
@@ -238,13 +239,13 @@ function scrollToEl( el ) {
   try {
     el.scrollIntoView( { behavior: 'smooth' } );
     return true;
-  } catch ( err ) {}
-
-  try {
-    el.scrollIntoView();
-    return true;
   } catch ( err ) {
-    return false;
+    try {
+      el.scrollIntoView();
+      return true;
+    } catch ( err ) {
+      return false;
+    }
   }
 }
 
