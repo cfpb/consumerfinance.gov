@@ -16,14 +16,14 @@ function resultsPage() {
   Cookie.remove( SURVEY_COOKIE );
   initials.init();
 
-  listenForInitialsUpdate();
-  handlePrintAndCopy();
+  handleShareModal();
+  handlePrintModal();
 
-  // Hide the clipboard copied message when opening share modal
-  document.addEventListener( 'modal:open:before', event => {
-    if ( event.detail.modal.id === 'modal-share-url' ) {
-      $( '.share-output__copied' ).innerHTML = '&nbsp;';
-    }
+  // Re-hide UI changes when opening share modal
+  document.addEventListener( 'modal:open:before', () => {
+    $( '.tdp-survey__initials-error' ).classList.remove( 'm-notification__visible' );
+    $( '.share-output' ).hidden = true;
+    $( '.share-output__copied' ).hidden = true;
   } );
 
   const startOver = $( '.results-start-over' );
@@ -35,71 +35,95 @@ function resultsPage() {
 }
 
 /**
- * Listen for setting initials and sync to the initials module (and update
- * shared URL)
+ * Handle initials validation and callback on valid entry
+ *
+ * @param {HTMLDivElement} desc Modal description DIV
+ * @param {function} cb Callback with valid initials
  */
-function listenForInitialsUpdate() {
-  document.addEventListener( 'input', event => {
-    const t = event.target;
+function withValidInitials( desc, cb ) {
+  const set = desc.querySelector( '.tdp-survey__initials-set' );
+  const ini = desc.querySelector( '.tdp-survey__initials' );
+  const err = desc.querySelector( '.tdp-survey__initials-error' );
 
-    if ( !t.hasAttribute( 'data-initials-setter' ) ) {
-      return;
+  set.addEventListener( 'click', event => {
+    event.preventDefault();
+    if ( ini.value.trim() ) {
+      err.classList.remove( 'm-notification__visible' );
+      cb( ini.value );
+    } else {
+      err.classList.add( 'm-notification__visible' );
     }
+  } );
 
-    const fixed = String( t.value ).toUpperCase().trim().substr( 0, 3 );
+  ini.addEventListener( 'keyup', event => {
+    if ( event.key === 'Enter' ) {
+      set.click();
+    }
+  } );
 
-    initials.update( fixed );
-    $( '.share-output__copied' ).textContent = '';
+  ini.addEventListener( 'input', () => {
+    const fixed = String( ini.value ).toUpperCase().trim().substr( 0, 3 );
 
-    // Set value on all setters!
-    const allSetters = document.querySelectorAll( '[data-initials-setter]' );
+    // Set value in both modals
+    const allSetters = document.querySelectorAll( '.tdp-survey__initials' );
     [].forEach.call( allSetters, input => {
       input.value = fixed;
     } );
-
-    t.value = fixed;
-
-    // Show shared URL
-    const shareUrlOutput = $( '.shared-url' );
-    const a = document.createElement( 'a' );
-    a.href = '../view/?r=' + encodeURIComponent(
-      shareUrlOutput.dataset.rparam
-    );
-    // href property read gives you full URL
-    const shareUrl = a.href;
-    shareUrlOutput.value = encodeName.encodeNameInUrl(
-      shareUrl, initials.get()
-    );
-    $( '.share-output' ).hidden = false;
   } );
 }
 
 /**
- * Handle closing the modal before invoking print() and handle the copy-
- * to-clipboard operation.
+ * Handle behavior within the share URL modal
  */
-function handlePrintAndCopy() {
-  document.addEventListener( 'click', event => {
-    const t = event.target;
+function handleShareModal() {
+  const desc = $( '#modal-share-url_desc' );
+  const shareOutput = $( '.share-output' );
+  const copiedMsg = $( '.share-output__copied' );
+  const a = shareOutput.querySelector( 'a[href]' );
+  if ( !desc || !shareOutput || !a || !copiedMsg ) {
+    return;
+  }
 
-    // Handle closing modals
-    const id = t.dataset.closePrint;
-    if ( id ) {
-      event.stopPropagation();
-      modals.close( id );
-      window.print();
-      return;
-    }
+  withValidInitials( desc, value => {
+    initials.update( value );
+    a.href = '../view/?r=' + encodeURIComponent(
+      shareOutput.dataset.rparam
+    );
+    // href property read gives you full URL
+    const shareUrl = a.href;
+    a.href = encodeName.encodeNameInUrl(
+      shareUrl, initials.get()
+    );
+    copiedMsg.hidden = true;
+    shareOutput.hidden = false;
+  } );
 
-    // Handle copying to clipboard
-    if ( t === $( '.share-output__right button' ) ) {
-      const shareUrl = $( '.shared-url' ).value;
-      clipboardCopy( shareUrl ).then( success => {
-        $( '.share-output__copied' ).textContent = success ?
-          'Link copied to clipboard.' :
-          'Copy failed. Please copy the link yourself.';
-      } );
-    }
+  $( '.share-output button' ).addEventListener( 'click', event => {
+    event.preventDefault();
+    clipboardCopy( a.href ).then( () => {
+      copiedMsg.hidden = false;
+    } );
+  } );
+
+  a.addEventListener( 'click', event => {
+    event.preventDefault();
+    $( '.share-output button' ).click();
+  } );
+}
+
+/**
+ * Handle behavior within the print modal
+ */
+function handlePrintModal() {
+  const desc = $( '#modal-print_desc' );
+  if ( !desc ) {
+    return;
+  }
+
+  withValidInitials( desc, value => {
+    initials.update( value );
+    modals.close( 'modal-print' );
+    window.print();
   } );
 }
 
