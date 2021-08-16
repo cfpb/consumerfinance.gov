@@ -239,11 +239,11 @@ function scrollToEl( el ) {
   try {
     el.scrollIntoView( { behavior: 'smooth' } );
     return true;
-  } catch ( err ) {
+  } catch ( err1 ) {
     try {
       el.scrollIntoView();
       return true;
-    } catch ( err ) {
+    } catch ( err2 ) {
       return false;
     }
   }

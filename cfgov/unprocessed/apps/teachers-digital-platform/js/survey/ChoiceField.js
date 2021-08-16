@@ -68,8 +68,9 @@ ChoiceField.get = name => {
 /**
  * @returns {ChoiceField[]} unset choice fields
  */
-ChoiceField.findUnsets = () =>
-  Object.values( ChoiceField.cache ).filter( cf => cf.value === null );
+ChoiceField.findUnsets = () => Object
+  .values( ChoiceField.cache )
+  .filter( cf => cf.value === null );
 
 /**
  * Synchronize unset choices from the store and set choices to the store.
