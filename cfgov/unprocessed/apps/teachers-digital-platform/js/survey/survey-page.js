@@ -196,7 +196,7 @@ function initProgressListener() {
 function initErrorHandling() {
   const form = $( '.tdp-survey-page form' );
   const notification = $( '.m-notification' );
-  const ul = $('.m-notification_explanation');
+  const ul = $( '.m-notification_explanation' );
   if ( form && notification && ul ) {
     form.addEventListener( 'submit', submitEvt => {
       const unsets = ChoiceField.findUnsets();
