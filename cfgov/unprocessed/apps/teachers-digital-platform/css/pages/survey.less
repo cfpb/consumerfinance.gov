@@ -11,6 +11,7 @@ ul.tdp-survey__choice-question {
         position: relative;
         li {
             list-style: none;
+            padding-right: 2rem;
             position: relative;
             width: 100%;
             input {
@@ -21,6 +22,7 @@ ul.tdp-survey__choice-question {
                 transform: scale(1.5);
             }
             &:last-of-type {
+                padding-right: 0;
                 label {
                     &::before {
                         display: none;
@@ -87,6 +89,15 @@ p {
     .tdp-survey__sub-opts {
         margin-left: 3rem;
         list-style: none;
+    }
+
+    .m-notification {
+        margin-bottom: 2rem;
+    }
+    .m-notification_explanation {
+        display: flex;
+        flex-direction: column;
+        margin-left: 2rem;
     }
 }
 
