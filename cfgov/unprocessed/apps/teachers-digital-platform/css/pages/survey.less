@@ -5,10 +5,14 @@ ul.tdp-survey__choice-question {
     &.tdp-survey__atype-H,
     &.tdp-survey__atype-I {
         border-bottom: 1px solid @gray-20;
-        display: flex;
         margin: 10px 0 30px;
         padding: 0 0 20px 25px;
         position: relative;
+        .respond-to-min(@bp-sm-min, {
+            @supports ( display: flex ) {
+                display: flex;
+            }
+        });
         li {
             list-style: none;
             padding-right: 2rem;
@@ -20,6 +24,10 @@ ul.tdp-survey__choice-question {
                 display: block;
                 margin-bottom: 5px;
                 transform: scale(1.5);
+                .respond-to-max(@bp-xs-max, {
+                    display: inline-block;
+                    margin-right: 5px;
+                });
             }
             &:last-of-type {
                 padding-right: 0;
@@ -32,15 +40,17 @@ ul.tdp-survey__choice-question {
         }
         label {
             &::before {
-                background-color: @gray-40;
-                content: '';
-                height: 1px;
-                left: 12px;
-                position: absolute;
-                top: 6px;
-                width: 100%;
+                .respond-to-min(@bp-sm-min, {
+                    background-color: @gray-40;
+                    content: '';
+                    height: 1px;
+                    left: 12px;
+                    position: absolute;
+                    top: 6px;
+                    width: 100%; 
+                });
             }
-        }
+        }       
     }
     &.tdp-survey__atype-GetGame,
     &.tdp-survey__atype-GameThink,
