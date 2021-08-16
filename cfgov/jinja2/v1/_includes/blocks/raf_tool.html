@@ -14,7 +14,10 @@
 </style>
 
 <div id="rental-assistance-finder" 
-     data-language="{{ page.language if page and page.language else 'en' }}">
+     data-language="{{ page.language if page and page.language else 'en' }}"
+     {% if value.county_threshold %}
+     data-county-threshold={{ value.county_threshold }}
+     {% endif %}>
 </div>
 
 <div class="js-is-hidden">
