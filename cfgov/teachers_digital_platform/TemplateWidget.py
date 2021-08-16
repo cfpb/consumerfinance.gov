@@ -2,6 +2,9 @@ from django.forms.widgets import Input
 
 
 class TemplateWidget(Input):
+    """
+    Widget that simply outputs a static template instead of an input.
+    """
     tpl_prefix = 'teachers_digital_platform/template-field/'
     input_type = 'output'
 

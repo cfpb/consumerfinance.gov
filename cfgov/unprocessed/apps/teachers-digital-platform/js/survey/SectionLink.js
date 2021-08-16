@@ -1,6 +1,6 @@
 class SectionLink {
   /**
-   * @param {HTMLDivElement} root Section link div
+   * @param {HTMLButtonElement} root Section link button
    */
   constructor( root ) {
     this.root = root;
@@ -47,15 +47,9 @@ class SectionLink {
   markEditable() {
     this.root.setAttribute( 'data-editable', '1' );
     this.root.tabIndex = 0;
-    const go = event => {
+    this.root.addEventListener( 'click', event => {
       event.preventDefault();
       location.href = this.root.dataset.href;
-    };
-    this.root.addEventListener( 'click', go );
-    this.root.addEventListener( 'keydown', event => {
-      if ( event.key === 'Enter' ) {
-        go( event );
-      }
     } );
   }
 

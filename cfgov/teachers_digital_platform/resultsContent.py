@@ -1,9 +1,19 @@
+"""Handles rendering dynamic content in a survey results page.
+
+A ResultsContent object holds content that may be output on a
+results page based on the grade and scores for each part.
+"""
+
 import csv
 from os.path import dirname
 from typing import Dict
 
 
 def _results_data_row(row: Dict[str, str]):
+    """
+    Transform the keys of each CSV row. If the CSV headers change,
+    this will make a single place to fix it.
+    """
     return {
         'k': row['Key'],
         'v': row['Content'],
@@ -14,6 +24,7 @@ class ResultsContent:
     """Helps supply result page template with content"""
 
     def __init__(self, store: Dict[str, str], survey_key: str):
+        """Use ResultsContent.factory() instead"""
         self.store = store
         self.key = survey_key
 
@@ -22,6 +33,7 @@ class ResultsContent:
         return self.store[key]
 
     def building_blocks(self):
+        """Get the names/intros for the 3 building blocks"""
         bbs = []
         for i in range(3):
             bbs.append({
@@ -31,13 +43,22 @@ class ResultsContent:
             })
         return bbs
 
-    def level_from_position(self, pos_idx: int):
-        """Map 6 car positions to 3 progress levels"""
+    @staticmethod
+    def level_from_position(pos_idx: int):
+        """
+        Map 6 car positions to 3 progress levels
+
+        Given a car position int from 0-5, return a progress level 0-2
+        """
         return [0, 0, 1, 1, 1, 2][pos_idx]
 
-    def find_overall_progress(self, score: float):
-        # Six positions map to 3 progress levels
-        pos_idx = self._score_idx(f'{self.key} Overall', score)
+    def find_overall_progress(self, adjusted_score: float):
+        """
+        Given an adjusted score for the entire survey, return data
+        useful for displaying the level of the user's progress and the
+        position of the car.
+        """
+        pos_idx = self._score_idx(f'{self.key} Overall', adjusted_score)
         level_idx = self.level_from_position(pos_idx)
         heading, msg = self.get(f'{self.key} Overall{level_idx}').split('|')
 
@@ -49,7 +70,10 @@ class ResultsContent:
         }
 
     def find_bb_progress(self, part: int, score: float):
-        # Six positions map to 3 progress levels
+        """
+        Given a part-level score, return data useful for displaying the
+        level of the user's progress and the position of the car.
+        """
         pos_idx = self._score_idx(f'{self.key} BB{part}', score)
         level_idx = self.level_from_position(pos_idx)
         word = ['Planning', 'Habits', 'Knowledge'][part]
@@ -74,6 +98,7 @@ class ResultsContent:
 
     @classmethod
     def factory(cls, survey_key: str):
+        """Create a ResultsContent object for a particular survey"""
         store: Dict[str, str] = {}
         path = f'{dirname(__file__)}/survey-data/results-content.csv'
         with open(path, encoding='utf-8') as csv_file:

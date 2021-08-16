@@ -23,10 +23,17 @@
 <div class="wrapper content_wrapper">
     <div class="tdp-survey-page content_main"
          data-page-idx="{{ page_idx|tojson|forceescape }}"
-         data-questions-by-page="{{ questions_by_page|tojson|forceescape }}">
+         data-questions-by-page="{{ questions_by_page|tojson|forceescape }}"
+         data-item-bullet="{{ survey.ITEM_BULLET|tojson|forceescape }}"
+    >
         {# <h1>Survey Page {{ wizard.steps.step1 }}</h1> #}
 
             <form action="" method="post"> {{ csrf_input }}
+
+                <div hidden class="a-form-alert a-form-alert__error tdp-survey-alert--clone" role="alert">
+                    {% include 'icons/error-round.svg' %}
+                    <span class="a-form-alert_text">This question is required</span>
+                </div>
 
                 {# E.g. "./6-8/before-page-2.html" #}
                 {% include './' ~ survey.key ~ '/before-page-' ~ wizard.steps.step1 ~ '.html' ignore missing %}
@@ -41,28 +48,29 @@
                     {{ wizard.form.as_p() }}
                 {% endif %}
 
-                {# Do not remove the following closing div tag. The div element #}
+                {# Do not remove this closing div tag --> #}</div>{# The div element #}
                 {# was opened in a before-page template above so it needs closing. #}
-                </div>
 
                 <div class="block">
-
-                    <p>
+                    <div class="m-btn-group">
                     {% if wizard.steps.prev %}
                         <a class="a-btn" href="../{{ wizard.steps.prev }}/">
-                            {% include 'icons/left.svg' %} |
-                            <span class="a-link_text">Back</span>
+                            <span class="a-btn_icon a-btn_icon__on-left">{% include 'icons/left.svg' %}</span>
+                            <span class="a-btn_text">Back</span>
                         </a>
                     {% endif %}
                     {% if wizard.steps.next %}
                         <button class="a-btn" type="submit">
-                            Next | {% include 'icons/right.svg' %}
+                            <span class="a-btn_text">Next</span>
+                            <span class="a-btn_icon a-btn_icon__on-right">{% include 'icons/right.svg' %}</span>
                         </button>
                     {% else %}
                         <button class="a-btn" type="submit">
-                            Get My Results | {% include 'icons/right.svg' %}
+                            <span class="a-btn_text">Get my results</span>
+                            <span class="a-btn_icon a-btn_icon__on-right">{% include 'icons/right.svg' %}</span>
                         </button>
                     {% endif %}
+                    </div>
 
                     <div class="survey-start-over">
                         <p>
@@ -87,24 +95,30 @@
         </div>
 
         {# wizard.steps.all is a list of 'p1', 'p2', ... #}
-        <aside class="content_sidebar o-sidebar-content">
-            <div class="progress"><h2>[Your survey progress]</h2></div>
-            <p>[progress graphic]</p>
+        <aside class="content_sidebar o-sidebar-content tdp-survey-sidebar">
+            <h2 class="h4">Your survey progress</h2>
             <p>
-                Completed <span class="tdp-survey-progress-out-of"></span>.
+                <span class="tdp-survey-progress-out-of"></span> questions completed
             </p>
-            <div class="tdp-survey-progress-bar" aria-label="50%">
-                <div class="tdp-survey-progress-bar--bar"></div>
+            <div style="text-align: center">
+                <svg class="tdp-survey-progress__svg" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="90"></circle>
+                    <circle cx="100" cy="100" r="90" pathLength="1"
+                            transform="rotate(-90 100 100)"
+                            class="tdp-survey-progress__circle" ></circle>
+                    <text x="50%" y="48%" text-anchor="middle">--%</text>
+                    <text x="50%" y="56%" text-anchor="middle" dominant-baseline="hanging">0/-- questions</text>
+                    <text x="50%" y="67%" text-anchor="middle" dominant-baseline="hanging">completed</text>
+                </svg>
             </div>
-
             <div>
             {% for name in wizard.steps.all %}
-                <div class="tdp-survey-section"
-                     data-checked=""
-                     data-color="gray"
-                     data-editable=""
-                     data-idx="{{ loop.index0 }}"
-                     data-href="../{{ name }}/"
+                <button class="tdp-survey-section"
+                        tabindex="-1"
+                        data-checked=""
+                        data-color="gray"
+                        data-editable=""
+                        data-href="../{{ name }}/"
                 >
                     <div class="tdp-survey-section__left">
                         <div class="tdp-survey-section__title">Section {{ loop.index }}
@@ -116,7 +130,7 @@
                     <div class="tdp-survey-section__icon">
                         {% include 'icons/approved-round.svg' %}
                     </div>
-                </div>
+                </button>
             {% endfor %}
             </div>
         </aside>

@@ -5,40 +5,27 @@ const ProgressBar = require( './ProgressBar' );
 const SectionLink = require( './SectionLink' );
 
 const $ = document.querySelector.bind( document );
+const $$ = document.querySelectorAll.bind( document );
 
 let progressBar;
 
 /**
- * Initialize a survey page
- *
- * @param {HTMLDivElement} el Element with survey data
+ * @typedef {Object} SurveyData
+ * @property {string} itemBullet
+ * @property {number} numAnswered
+ * @property {number} pageIdx
+ * @property {number[]} questionsByPage
  */
-function surveyPage( el ) {
+
+/**
+ * Initialize a survey page
+ */
+function surveyPage() {
   if ( userTriedReentry() ) {
     return;
   }
 
-  /**
-   * @typedef {Object} SurveyData
-   * @property {number} pageIdx
-   * @property {number[]} questionsByPage
-   * @property {number} numAnswered
-   */
-
-  /**
-   * Store data- attributes from python
-   *
-   * @type {SurveyData}
-   */
-  const data = Object.create( null );
-  Object.entries( el.dataset ).forEach( ( [ k, v ] ) => {
-    data[k] = JSON.parse( v );
-  } );
-
-  /**
-   * Init radios and re-select any that were saved in session storage but
-   * which python doesn't know about.
-   */
+  const data = readSurveyData();
   ChoiceField.init();
   const store = ChoiceField.restoreFromSession( ANSWERS_SESS_KEY );
   data.numAnswered = Object.keys( store ).length;
@@ -57,7 +44,27 @@ function surveyPage( el ) {
 
   handleNewSelections( data, store );
 
+  initErrorHandling();
   allowStartOver();
+
+  // Decorative transformations
+  indentQuestionsByNumber();
+  breakBulletedAnswers( data.itemBullet );
+}
+
+/**
+ * @returns {SurveyData} Survey data
+ */
+function readSurveyData() {
+  const el = $( '.tdp-survey-page' );
+  /**
+   * @type {SurveyData}
+   */
+  const data = Object.create( null );
+  Object.entries( el.dataset ).forEach( ( [ k, v ] ) => {
+    data[k] = JSON.parse( v );
+  } );
+  return data;
 }
 
 /**
@@ -159,15 +166,129 @@ function initProgressListener() {
      * @type {ProgressBar}
      */
     const pb = event.detail.progressBar;
-    const barEl = $( '.tdp-survey-progress-bar--bar' );
-    if ( barEl ) {
-      const perc = `${ pb.getPercentage() }%`;
-      barEl.style.width = perc;
-      barEl.parentElement.setAttribute( 'aria-label', `${ perc } complete` );
-    }
     const outOfEl = $( '.tdp-survey-progress-out-of' );
-    if ( outOfEl ) {
-      outOfEl.textContent = `${ pb.numDone } out of ${ pb.totalNum }`;
+    const circle = $( '.tdp-survey-progress__circle' );
+    const texts = [].slice.call( $$( '.tdp-survey-progress__svg text' ) );
+    if ( !outOfEl || !circle || texts.length < 3 ) {
+      return;
+    }
+
+    const perc = `${ pb.getPercentage() }%`;
+
+    outOfEl.innerHTML = `<b>${ pb.numDone }</b> of <b>${ pb.totalNum }</b>`;
+
+    texts[0].textContent = perc;
+    texts[1].textContent = `${ pb.numDone }/${ pb.totalNum } questions`;
+
+    const dashOffset = 1 - ( pb.numDone / pb.totalNum );
+    circle.setAttribute( 'stroke-dashoffset', dashOffset );
+
+    const svg = circle.parentElement;
+    svg.setAttribute( 'aria-label', `${ perc } complete` );
+    svg.style.opacity = '1';
+  } );
+}
+
+/**
+ * Error handling for form
+ */
+function initErrorHandling() {
+  const form = $( '.tdp-survey-page form' );
+  if ( form ) {
+    form.addEventListener( 'submit', event => {
+      const unsets = ChoiceField.findUnsets();
+      if ( !unsets.length ) {
+        return;
+      }
+
+      event.preventDefault();
+      unsets.forEach( cf => {
+        cf.markError();
+      } );
+
+      // Slide P into view
+      const p = unsets[0].getUl().previousElementSibling.previousElementSibling;
+      if ( p instanceof HTMLParagraphElement ) {
+        if ( !scrollToEl( p ) ) {
+          // Can't scroll, jump up
+          location.href = '#main';
+        }
+      }
+    } );
+  }
+}
+
+/**
+ * @param {Element} el Element
+ * @returns {boolean} Success?
+ */
+function scrollToEl( el ) {
+  try {
+    el.scrollIntoView( { behavior: 'smooth' } );
+    return true;
+  } catch ( err ) {}
+
+  try {
+    el.scrollIntoView();
+    return true;
+  } catch ( err ) {
+    return false;
+  }
+}
+
+/**
+ * Don't allow question text to wrap underneath the number. Indent according
+ * to the width of the number.
+ */
+function indentQuestionsByNumber() {
+  /**
+   * @type {HTMLElement[]}
+   */
+  const strongs = [].slice.call( $$( '.tdp-survey-page p > label > strong' ) );
+  strongs.forEach( strong => {
+    const offset = strong.getBoundingClientRect().width;
+    const p = strong.parentElement.parentElement;
+    p.style.marginLeft = `${ offset }px`;
+    p.style.textIndent = `-${ offset }px`;
+  } );
+}
+
+/**
+ * If a question option is bulleted with ‣, break it into multiple lines.
+ *
+ * @param {string} bullet Bullet character
+ */
+function breakBulletedAnswers( bullet ) {
+  const spanify = text => {
+    // Convert text node into a span with <br> between items.
+    const span = document.createElement( 'span' );
+
+    // HTML escape any chars as necessary when splitting
+    const htmlItems = text.split( ` ${ bullet } ` ).map( item => {
+      span.textContent = item;
+      return span.innerHTML;
+    } );
+
+    span.innerHTML = ` &nbsp;${ bullet } ` + htmlItems.join( `<br>&nbsp;${ bullet } ` );
+    return span;
+  };
+
+  const hasTri = str => str.indexOf( ` ${ bullet } ` ) !== -1;
+
+  /**
+   * @type {HTMLLabelElement[]}
+   */
+  const labels = [].slice.call( $$( '.ChoiceField li label' ) );
+  labels.forEach( label => {
+    if ( !hasTri( label.textContent ) ) {
+      return;
+    }
+
+    for ( let i = 0; i < label.childNodes.length; i++ ) {
+      const node = label.childNodes[i];
+      if ( node.nodeType === Node.TEXT_NODE && hasTri( node.textContent ) ) {
+        node.replaceWith( spanify( node.textContent ) );
+      }
     }
   } );
 }

@@ -1,8 +1,10 @@
+const $ = document.querySelector.bind( document );
 const $$ = document.querySelectorAll.bind( document );
 
 class ChoiceField {
   constructor( name ) {
-    this.inputs = $$( `.ChoiceField[name="${ name }"]` );
+    this.name = name;
+    this.inputs = [].slice.call( $$( `.ChoiceField[name="${ name }"]` ) );
     this.value = null;
     [].forEach.call( this.inputs, input => {
       if ( input.checked ) {
@@ -13,14 +15,47 @@ class ChoiceField {
 
   changeValue( val ) {
     this.value = val;
-    [].forEach.call( this.inputs, input => {
+    this.inputs.forEach( input => {
       if ( input.value === val ) {
         input.checked = true;
       }
     } );
   }
+
+  /**
+   * @returns {HTMLUListElement}
+   */
+  getUl() {
+    return this.inputs[0].closest( 'ul.ChoiceField' );
+  }
+
+  markError() {
+    const ul = this.getUl();
+
+    // Check existing alert
+    /**
+     * @type {HTMLDivElement}
+     */
+    const error = ul.previousElementSibling;
+    if ( error && error.classList.contains( 'a-form-alert' ) ) {
+      return;
+    }
+
+    /**
+     * @type {HTMLDivElement}
+     */
+    let alert = $( '.tdp-survey-alert--clone' );
+    alert = alert.cloneNode( true );
+    alert.classList.remove( 'tdp-survey-alert--clone' );
+
+    ul.parentNode.insertBefore( alert, ul );
+    alert.removeAttribute( 'hidden' );
+  }
 }
 
+/**
+ * @type {Record<string, ChoiceField>}
+ */
 ChoiceField.cache = Object.create( null );
 
 ChoiceField.get = name => {
@@ -28,6 +63,15 @@ ChoiceField.get = name => {
     ChoiceField.cache[name] = new ChoiceField( name );
   }
   return ChoiceField.cache[name];
+};
+
+/**
+ * @returns {ChoiceField[]} unset choice fields
+ */
+ChoiceField.findUnsets = () => {
+  return Object.values( ChoiceField.cache ).filter( cf => {
+    return cf.value === null;
+  } );
 };
 
 /**
@@ -80,9 +124,12 @@ ChoiceField.watchAndStore = ( key, store, onStoreUpdate ) => {
   } );
 };
 
+/**
+ * Init radio buttons
+ */
 ChoiceField.init = () => {
   // Find them all
-  [].forEach.call( $$( '.ChoiceField' ), input => {
+  [].forEach.call( $$( 'input.ChoiceField' ), input => {
     ChoiceField.get( input.name );
   } );
 };
