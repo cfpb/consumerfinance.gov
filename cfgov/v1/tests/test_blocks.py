@@ -156,7 +156,7 @@ class RAFToolBlockTestCase(TestCase):
         erap_tool_block = RAFToolBlock()
         html = erap_tool_block.render(None)
         self.assertInHTML(
-            '<div id="rental-assistance-finder"></div>',
+            '<div id="rental-assistance-finder"',
             html
         )
 
