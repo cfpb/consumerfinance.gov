@@ -50,9 +50,9 @@ function withValidInitials( desc, cb ) {
     if ( ini.value.trim() ) {
       err.classList.remove( 'm-notification__visible' );
       return cb( ini.value );
-    } else {
-      err.classList.add( 'm-notification__visible' );
     }
+
+    err.classList.add( 'm-notification__visible' );
   } );
 
   ini.addEventListener( 'keyup', event => {
