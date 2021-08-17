@@ -301,7 +301,17 @@
             </button>
             {% endif %}
         </div>
-        
+
+        {% if is_student %}
+        <div class="block">
+            <p>
+                <a class="results-start-over a-btn a-btn__link a-btn__warning" href="../">
+                    Reset survey and start over
+                </a>
+            </p>
+        </div>
+        {% endif %}
+
         <aside></aside>
     </div>
 </div>
