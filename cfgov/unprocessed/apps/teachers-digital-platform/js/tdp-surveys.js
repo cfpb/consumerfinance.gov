@@ -6,17 +6,17 @@ const $ = document.querySelector.bind( document );
 
 const surveys = {
   init() {
-    if ( $( '.tdp-survey-results' ) ) {
+    if ( $( '[data-tdp-page="results"]' ) ) {
       resultsPage();
       return;
     }
 
-    if ( $( '.tdp-survey-grade-level' ) ) {
+    if ( $( '[data-tdp-page="grade-level"]' ) ) {
       gradeLevelPage();
       return;
     }
 
-    if ( $( '.tdp-survey-page' ) ) {
+    if ( $( '[data-tdp-page="survey"]' ) ) {
       surveyPage();
     }
   }

@@ -22,6 +22,7 @@
 {% block body_content scoped %}
 <div class="wrapper content_wrapper">
     <div class="tdp-survey-page content_main"
+         data-tdp-page="survey"
          data-page-idx="{{ page_idx|tojson|forceescape }}"
          data-questions-by-page="{{ questions_by_page|tojson|forceescape }}"
          data-item-bullet="{{ survey.ITEM_BULLET|tojson|forceescape }}"

@@ -16,7 +16,7 @@
 
 {% block body_content scoped %}
     <div class="content_wrapper">
-        <div class="content_main tdp-survey-results">
+        <div data-tdp-page="results" class="content_main tdp-survey-results">
         {% set overall = content.find_overall_progress(score) %}
         {% set bbs = content.building_blocks() %}
 
@@ -354,7 +354,7 @@
             <ul>
                 <li><a href="https://files.consumerfinance.gov/f/documents/cfpb_building_block_activities_who-shapes-my-money-choices_handout.pdf">Who shapes my money choices?</a></li>
                 <li><a href="https://files.consumerfinance.gov/f/documents/cfpb_building_block_activities_options-for-storing-savings_handout.pdf">Options for storing your savings</a></li>
-                <li><a href="https://files.consumerfinance.gov/f/documents/cfpb_building_block_activities_meeting-your-future-self_worksheet.pdf">All about the Free Application for Federal Student Aid (FAFSA)</a></li>
+                <li><a href="https://files.consumerfinance.gov/f/documents/cfpb_building_block_activities_all-about-FAFSA_handout.pdf">All about the Free Application for Federal Student Aid (FAFSA)</a></li>
             </ul>
         </div>
 
