@@ -20,9 +20,10 @@
         {% set overall = content.find_overall_progress(score) %}
         {% set bbs = content.building_blocks() %}
 
-        <p class="label">Your money journey results <div aria-hidden="true" style="display:none" class="initials-display">
-            <span>Survey completed by <span class="initials-value"></span></span>
-        </div></p>
+        <p class="label">
+            Your money journey results<span aria-hidden="true" style="display:none"
+                                            class="initials-display">: <span class="initials-value"></span></span>
+        </p>
         <p class="h1">Congratulations, {{ overall.heading_html|safe }}</p>
         <p class="h3"> {{ overall.msg_html|safe }}</p>
 
