@@ -1,0 +1,34 @@
+{% set id = 'modal-restart' %}
+<div class="o-modal"
+     id="{{ id }}"
+     tabindex="0"
+     aria-hidden="true"
+     role="alertdialog"
+     aria-labelledby="{{ id }}_title"
+     aria-describedby="{{ id }}_desc">
+  <div class="o-modal_backdrop"></div>
+  <div class="o-modal_container">
+    <div class="o-modal_content">
+      <div class="o-modal_body">
+        <button class="o-modal_close a-btn a-btn__link" type="button">
+          Close<span class="a-icon a-icon__large a-icon__space-before">{% include 'icons/close-round.svg' %}</span>
+        </button>
+        <h2 id="{{ id }}_title" class="h3">Reset survey and start over</h2>
+        <div id="{{ id }}_desc">
+          <fieldset class="o-form_fieldset">
+            <legend class="a-legend">This will clear your selections and return you to the
+              grade selection page.</legend>
+
+            <div class="m-btn-group">
+              <button class="a-btn" data-cancel="1">Cancel</button>
+              <button class="a-btn a-btn__link a-btn__warning" data-cancel="">Start over</button>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+      <div class="o-modal_footer">
+        <button class="a-btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 const Cookie = require( 'js-cookie' );
 const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } = require( './config' );
+const modals = require( '../modals' );
 const ChoiceField = require( './ChoiceField' );
 const ProgressBar = require( './ProgressBar' );
 const SectionLink = require( './SectionLink' );
@@ -26,6 +27,7 @@ function surveyPage() {
   }
 
   const data = readSurveyData();
+  modals.init();
   ChoiceField.init();
   const store = ChoiceField.restoreFromSession( ANSWERS_SESS_KEY );
   data.numAnswered = Object.keys( store ).length;
@@ -129,32 +131,21 @@ function userTriedReentry() {
 }
 
 /**
- * Allow the user to start a survey over with reset data.
+ * Allow the user to start a survey over completely.
  */
 function allowStartOver() {
-  const a = $( '.survey-start-over a' );
-  const note = $( '.survey-start-over .m-notification' );
-  const yes = $( '.survey-start-over [data-yes]' );
-  const cancel = $( '.survey-start-over [data-cancel]' );
-  if ( !a || !note || !yes || !cancel ) {
-    return;
-  }
-
-  a.addEventListener( 'click', event => {
-    event.preventDefault();
-    note.classList.add( 'm-notification__visible' );
-  } );
-
-  yes.addEventListener( 'click', event => {
-    event.preventDefault();
-    sessionStorage.removeItem( ANSWERS_SESS_KEY );
-    Cookie.remove( SURVEY_COOKIE );
-    location.href = a.href;
-  } );
-
-  cancel.addEventListener( 'click', event => {
-    event.preventDefault();
-    note.classList.remove( 'm-notification__visible' );
+  document.addEventListener( 'click', event => {
+    const button = event.target.closest( '#modal-restart [data-cancel]' );
+    if ( button ) {
+      event.preventDefault();
+      if ( button.dataset.cancel ) {
+        modals.close( 'modal-restart' );
+      } else {
+        sessionStorage.removeItem( ANSWERS_SESS_KEY );
+        Cookie.remove( SURVEY_COOKIE );
+        location.href = '../../';
+      }
+    }
   } );
 }
 

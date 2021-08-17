@@ -46,39 +46,43 @@
     }
 
     &_content {
-      margin: 0 auto;
-      max-height: 90vh;
-      overflow-x: hidden;
-      overflow-y: auto;
+        margin: 0 auto;
+        max-height: 90vh;
+        overflow-x: hidden;
+        overflow-y: auto;
 
-      // This is not mobile-first to support a consistent appearance
-      // across browsers that don’t support media-querries (IE8).
-      max-width: 630px;
-      .respond-to-max( @bp-xs-max, {
-          max-width: none;
-      } );
+        // This is not mobile-first to support a consistent appearance
+        // across browsers that don’t support media-querries (IE8).
+        max-width: 630px;
+        .respond-to-max( @bp-xs-max, {
+            max-width: none;
+        } );
     }
 
     &_body {
-       border-top: 3px solid @modal-border-top;
-       background-color: @modal-body;
-       padding: 30px;
+        border-top: 3px solid @modal-border-top;
+        background-color: @modal-body;
+        padding: 2rem;
     }
 
     &_footer {
-       background: @modal-footer;
-       padding: 10px 30px;
+        background: @modal-footer;
+        padding: 10px 30px;
     }
 
     &_close {
-       float: right;
-       margin-left: unit( 10px / @base-font-size-px, em );
+        float: right;
+        margin-left: unit( 10px / @base-font-size-px, em );
 
-       // Hide link underline before and after hover and focus.
-       &,
-       &:hover,
-       &:focus {
-           border-bottom: none;
-       }
+        // Hide link underline before and after hover and focus.
+        &,
+        &:hover,
+        &:focus {
+            border-bottom: none;
+        }
+
+        + h2 {
+            margin-bottom: 2rem;
+        }
     }
 }

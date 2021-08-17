@@ -47,21 +47,6 @@
             </div>
         </div>
 
-        <p>
-        {% if is_student %}
-            <button type="button" class="a-btn" data-open-modal="modal-share-url">
-                Share results
-            </button>
-            <button type="button" class="a-btn" data-open-modal="modal-print">
-                Print results
-            </button>
-        {% else %}
-            <button type="button" class="a-btn" onclick="window.print()">
-                Print results
-            </button>
-        {% endif %}
-        </p>
-
         {# modal content #}
         {% include './modals/share-url.html' %}
         {% include './modals/print.html' %}
@@ -91,7 +76,7 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
-                    
+
                     <div class="results-road results-road--planning position-{{ overall.position_idx }}">
                         <div class="results-road__starting-out">
                             <label>Starting Out</label>
@@ -207,6 +192,21 @@
                 </ul>
             </div>
         </div>
+
+        <p>
+            {% if is_student %}
+            <button type="button" class="a-btn" data-open-modal="modal-share-url">
+                Share results
+            </button>
+            <button type="button" class="a-btn" data-open-modal="modal-print">
+                Print results
+            </button>
+            {% else %}
+            <button type="button" class="a-btn" onclick="window.print()">
+                Print results
+            </button>
+            {% endif %}
+        </p>
 
         {% if is_student %}
         <div class="block">
