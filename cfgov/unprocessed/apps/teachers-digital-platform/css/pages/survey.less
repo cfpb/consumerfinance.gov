@@ -1,3 +1,12 @@
+.tdp-survey-layout {
+    .respond-to-max(@bp-xs-max, {
+        @supports ( display: flex ) {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+    });
+}
+
 ul.tdp-survey__choice-question {
     &.tdp-survey__atype-E,
     &.tdp-survey__atype-F,
@@ -113,6 +122,22 @@ p {
 
 .tdp-survey-sidebar h5 {
     font-weight: 600;
+}
+
+.tdp-survey-sidebar {
+    &.o-sidebar-content {
+        .o-expandable {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.tdp-survey-sidebar__mobile-control {
+    display: flex;
+    flex-direction: column-reverse;
+    .respond-to-min(@bp-sm-min, {
+        display: none;
+    });
 }
 
 .tdp-survey-progress__svg {
