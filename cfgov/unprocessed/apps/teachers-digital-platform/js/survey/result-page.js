@@ -47,12 +47,13 @@ function withValidInitials( desc, cb ) {
 
   set.addEventListener( 'click', event => {
     event.preventDefault();
-    if ( ini.value.trim() ) {
-      err.classList.remove( 'm-notification__visible' );
-      return cb( ini.value );
+    if ( !ini.value.trim() ) {
+      err.classList.add( 'm-notification__visible' );
+      return;
     }
 
-    err.classList.add( 'm-notification__visible' );
+    err.classList.remove( 'm-notification__visible' );
+    cb( ini.value );
   } );
 
   ini.addEventListener( 'keyup', event => {
