@@ -49,7 +49,7 @@ function withValidInitials( desc, cb ) {
     event.preventDefault();
     if ( ini.value.trim() ) {
       err.classList.remove( 'm-notification__visible' );
-      cb( ini.value );
+      return cb( ini.value );
     } else {
       err.classList.add( 'm-notification__visible' );
     }
