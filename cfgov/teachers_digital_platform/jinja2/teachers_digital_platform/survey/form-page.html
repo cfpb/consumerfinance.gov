@@ -20,7 +20,7 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-<div class="wrapper content_wrapper">
+<div class="wrapper content_wrapper tdp-survey-layout">
     <div class="tdp-survey-page content_main"
          data-tdp-page="survey"
          data-page-idx="{{ page_idx|tojson|forceescape }}"
@@ -98,42 +98,68 @@
 
         {# wizard.steps.all is a list of 'p1', 'p2', ... #}
         <aside class="content_sidebar o-sidebar-content tdp-survey-sidebar">
-            <h2 class="h4">Your survey progress</h2>
-            <p>
-                <span class="tdp-survey-progress-out-of"></span> questions completed
-            </p>
-            <div style="text-align: center">
-                <svg class="tdp-survey-progress__svg" viewBox="0 0 200 200">
-                    <circle cx="100" cy="100" r="90"></circle>
-                    <circle cx="100" cy="100" r="90" pathLength="1"
-                            transform="rotate(-90 100 100)"
-                            class="tdp-survey-progress__circle" ></circle>
-                    <text x="50%" y="48%" text-anchor="middle">--%</text>
-                    <text x="50%" y="56%" text-anchor="middle" dominant-baseline="hanging">0/-- questions</text>
-                    <text x="50%" y="67%" text-anchor="middle" dominant-baseline="hanging">completed</text>
-                </svg>
-            </div>
-            <div>
-            {% for name in wizard.steps.all %}
-                <button class="tdp-survey-section"
-                        tabindex="-1"
-                        data-checked=""
-                        data-color="gray"
-                        data-editable=""
-                        data-href="../{{ name }}/"
-                >
-                    <div class="tdp-survey-section__left">
-                        <div class="tdp-survey-section__title">Section {{ loop.index }}
-                            <span class="tdp-survey-section__status"></span>
-                        </div>
-                        <div class="tdp-survey-section__range">Questions ...</div>
+            
+            <div class="o-expandable">
+                <div class="tdp-survey-sidebar__mobile-control">
+                    <button class="o-expandable_header o-expandable_target"
+                            title="Expand content">
+                        <span class="o-expandable_header-right o-expandable_link">
+                            <span class="o-expandable_cue o-expandable_cue-open">
+                                {{ svg_icon('plus-round') }}       
+                            </span>
+                            <span class="o-expandable_cue o-expandable_cue-close">
+                                {{ svg_icon('minus-round') }}                 
+                            </span>
+                        </span>
+                        <h3 class="h4 o-expandable_label">Your survey progress</h3>
+                        <p>
+                            <span class="tdp-survey-progress-out-of"></span> questions completed
+                        </p>
+                    </button>
+                </div>
+
+                <div class="u-visually-hidden-on-mobile">
+                    <h3 class="h4 o-expandable_label">Your survey progress</h3>
+                    <p>
+                        <span class="tdp-survey-progress-out-of"></span> questions completed
+                    </p>
+                </div>
+                <div class="o-expandable_content o-expandable_content__onload-open o-expandable__mobile-collapsed">
+        
+                    <div style="text-align: center">
+                        <svg class="tdp-survey-progress__svg" viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="90"></circle>
+                            <circle cx="100" cy="100" r="90" pathLength="1"
+                                    transform="rotate(-90 100 100)"
+                                    class="tdp-survey-progress__circle" ></circle>
+                            <text x="50%" y="48%" text-anchor="middle">--%</text>
+                            <text x="50%" y="56%" text-anchor="middle" dominant-baseline="hanging">0/-- questions</text>
+                            <text x="50%" y="67%" text-anchor="middle" dominant-baseline="hanging">completed</text>
+                        </svg>
                     </div>
-                    <div class="tdp-survey-section__edit"><span>edit</span></div>
-                    <div class="tdp-survey-section__icon">
-                        {% include 'icons/approved-round.svg' %}
+                    <div>
+                    {% for name in wizard.steps.all %}
+                        <button class="tdp-survey-section"
+                                tabindex="-1"
+                                data-checked=""
+                                data-color="gray"
+                                data-editable=""
+                                data-href="../{{ name }}/"
+                        >
+                            <div class="tdp-survey-section__left">
+                                <div class="tdp-survey-section__title">Section {{ loop.index }}
+                                    <span class="tdp-survey-section__status"></span>
+                                </div>
+                                <div class="tdp-survey-section__range">Questions ...</div>
+                            </div>
+                            <div class="tdp-survey-section__edit"><span>edit</span></div>
+                            <div class="tdp-survey-section__icon">
+                                {% include 'icons/approved-round.svg' %}
+                            </div>
+                        </button>
+                    {% endfor %}
                     </div>
-                </button>
-            {% endfor %}
+                </div>
             </div>
         </aside>
     </div>
