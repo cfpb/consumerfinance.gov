@@ -83,20 +83,12 @@
 
                     <div class="survey-start-over">
                         <p>
-                            <a class="a-btn a-btn__link a-btn__warning" href="../../">
+                            <button class="a-btn a-btn__link a-btn__warning"
+                               data-open-modal="modal-restart">
                                 Reset survey and start over
-                            </a>
+                            </button>
                         </p>
-                        <div class="m-notification">
-                            {% include 'icons/information-round.svg' %}
-                            <div class="m-notification_content">
-                                <div class="h4 m-notification_message">
-                                    Are you sure?
-                                    <strong><button class="a-btn a-btn__link" data-yes="">Yes</button></strong>
-                                    <button class="a-btn a-btn__link" data-cancel="">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
+                        {% include './modals/restart.html' %}
                     </div>
                 </div>
             </form>

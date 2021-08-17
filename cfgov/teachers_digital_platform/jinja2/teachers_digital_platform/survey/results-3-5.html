@@ -1,4 +1,4 @@
-{% extends 'content-base.html' %}
+{% extends 'layout-2-1.html' %}
 {% from 'organisms/expandable.html' import expandable with context %}
 
 {% block title -%}
@@ -15,52 +15,57 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-    <div class="content_wrapper tdp-survey-results">
+    <div class="content_wrapper">
+        <div class="content_main tdp-survey-results">
         {% set overall = content.find_overall_progress(score) %}
         {% set bbs = content.building_blocks() %}
 
-        <article aria-hidden="true" style="display:none" class="m-card initials-display">
-            <h2 class="m-card_heading">
-                <span>Survey completed by <span class="initials-value"></span></span>
-            </h2>
-        </article>
-
-        <p class="label">Your money journey results</p>
+        <p class="label">Your money journey results <div aria-hidden="true" style="display:none" class="initials-display">
+            <span>Survey completed by <span class="initials-value"></span></span>
+        </div></p>
         <p class="h1">Congratulations, {{ overall.heading_html|safe }}</p>
         <p class="h3"> {{ overall.msg_html|safe }}</p>
 
-        <div class="results-road results-road--overall position-{{ overall.position_idx }}">
-            <div class="results-road__starting-out">
-                <label>Starting Out</label>
-                <div class="results-road__box">
-                </div>
-            </div>
-            <div class="results-road__on-the-road">
-                <label>On the Road</label>
-                <div class="results-road__box">
-                </div>
-            </div>
-            <div class="results-road__well-on-your-way">
-                <label>Well on Your Way</label>
-                <div class="results-road__box">
-                </div>
-            </div>
-        </div>
-
-        <p>
-        {% if is_student %}
-            <button type="button" class="a-btn" data-open-modal="modal-share-url">
-                Share results
-            </button>
-            <button type="button" class="a-btn" data-open-modal="modal-print">
-                Print results
-            </button>
-        {% else %}
-            <button type="button" class="a-btn" onclick="window.print()">
-                Print results
-            </button>
-        {% endif %}
-        </p>
+        {% set overall_car_position = ((overall.position_idx +1) * 140) - 50 %}
+        {% set overall_color = '#addc91' %}
+        {% set overall_stroke_color = 'green' %}
+        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 119">
+            <g>
+              <g>
+                <rect x="0" y="28" width="280" height="90" fill="{{ overall_color }}" class="svg-starting-out" style="fill-opacity: .3;" />
+                <path d="M 280 28 V 118" stroke="{{ overall_stroke_color }}" />
+              </g>
+              <g>
+                <rect x="281" y="28" width="500" height="90" fill="{{ overall_color }}" class="svg-on-the-road" style="fill-opacity: .6;"/>
+                <path d="M 780 28 V 118" stroke="{{ overall_stroke_color }}" />
+              </g>
+              <g>
+                <rect x="781" y="28" width="180" height="90" fill="{{ overall_color }}" class="well-on-your-way" style="fill-opacity: 1;"/>
+              </g>
+              
+              <text transform="translate(24.47 16.93)" font-size="18" fill="#101820" font-family="AvenirNext-Bold, Avenir Next" font-weight="700">Starting Out</text>
+              <g transform="translate(0 0)">
+                <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+              </g>
+          
+              <text transform="translate(284.47 17.83)" font-size="18" fill="#5a5d61" font-family="AvenirNext-Medium, Avenir Next" font-weight="500">On the Road</text>
+              <g transform="translate(264 0)">
+                <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+              </g>
+          
+              <text transform="translate(762.47 17.83)" font-size="18" fill="#5a5d61" font-family="AvenirNext-Medium, Avenir Next" font-weight="500">Well on Your Way</text>
+              <g transform="translate(740 0)">
+                <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+              </g>
+          
+          
+              <line y1="73" x2="960" y2="73" fill="none" stroke="#101820" stroke-miterlimit="10" stroke-dasharray="4 6"/>
+            </g>
+            <g>
+                <rect x="1" y="28" width="958" height="90" fill="transparent" stroke="{{ overall_stroke_color }}" />
+            </g>
+            <image x="{{ overall_car_position }}" y="35" width="110px" height="75px" href="{{ static('apps/teachers-digital-platform/img/car.png') }}" />
+        </svg>
 
         {# modal content #}
         {% include './modals/share-url.html' %}
@@ -76,7 +81,7 @@
             <div class="o-expandable o-expandable__padded">
                 <button class="o-expandable_header o-expandable_target"
                         title="Expand content">
-                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                    <h3 class="o-expandable_header-left o-expandable_label">
                         <img src="{{ static('apps/teachers-digital-platform/img/planning.svg') }}" alt="planning icon"> {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_header-right o-expandable_link">
@@ -91,24 +96,47 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
+
+                    {% set planning_car_position = ((progress.position_idx +1) * 140) - 50 %}
+                    {% set planning_color = '#93c1bf' %}
+                    {% set planning_stroke_color = '#3b8a86' %}
+                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 119">
+                        <g>
+                        <g>
+                            <rect x="0" y="28" width="280" height="90" fill="{{ planning_color }}" class="svg-starting-out" style="fill-opacity: .3;" />
+                            <path d="M 280 28 V 118" stroke="{{ planning_stroke_color }}" />
+                        </g>
+                        <g>
+                            <rect x="281" y="28" width="500" height="90" fill="{{ planning_color }}" class="svg-on-the-road" style="fill-opacity: .6;"/>
+                            <path d="M 780 28 V 118" stroke="{{ planning_stroke_color }}" />
+                        </g>
+                        <g>
+                            <rect x="781" y="28" width="180" height="90" fill="{{ planning_color }}" class="well-on-your-way" style="fill-opacity: 1;"/>
+                        </g>
+                        
+                        <text transform="translate(24.47 16.93)" font-size="18" fill="#101820" font-family="AvenirNext-Bold, Avenir Next" font-weight="700">Starting Out</text>
+                        <g transform="translate(0 0)">
+                            <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+                        </g>
                     
-                    <div class="results-road results-road--planning position-{{ overall.position_idx }}">
-                        <div class="results-road__starting-out">
-                            <label>Starting Out</label>
-                            <div class="results-road__box">
-                            </div>
-                        </div>
-                        <div class="results-road__on-the-road">
-                            <label>On the Road</label>
-                            <div class="results-road__box">
-                            </div>
-                        </div>
-                        <div class="results-road__well-on-your-way">
-                            <label>Well on Your Way</label>
-                            <div class="results-road__box">
-                            </div>
-                        </div>
-                    </div>
+                        <text transform="translate(284.47 17.83)" font-size="18" fill="#5a5d61" font-family="AvenirNext-Medium, Avenir Next" font-weight="500">On the Road</text>
+                        <g transform="translate(264 0)">
+                            <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+                        </g>
+                    
+                        <text transform="translate(762.47 17.83)" font-size="18" fill="#5a5d61" font-family="AvenirNext-Medium, Avenir Next" font-weight="500">Well on Your Way</text>
+                        <g transform="translate(740 0)">
+                            <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+                        </g>
+                    
+                    
+                        <line y1="73" x2="960" y2="73" fill="none" stroke="#101820" stroke-miterlimit="10" stroke-dasharray="4 6"/>
+                        </g>
+                        <g>
+                            <rect x="1" y="28" width="958" height="90" fill="transparent" stroke="{{ planning_stroke_color }}" />
+                        </g>
+                        <image x="{{ planning_car_position }}" y="35" width="110px" height="75px" href="{{ static('apps/teachers-digital-platform/img/car.png') }}" />
+                    </svg>
                     <p>{{ progress.msg_html|safe }} Extra content...</p>
                     <p>[LISTS]</p>
                 </div>
@@ -118,7 +146,7 @@
             <div class="o-expandable o-expandable__padded">
                 <button class="o-expandable_header o-expandable_target"
                         title="Expand content">
-                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                    <h3 class="o-expandable_header-left o-expandable_label">
                         <img src="{{ static('apps/teachers-digital-platform/img/habits.svg') }}" alt="habits icon"> {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_header-right o-expandable_link">
@@ -133,23 +161,46 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
-                    <div class="results-road results-road--habits position-{{ overall.position_idx }}">
-                        <div class="results-road__starting-out">
-                            <label>Starting Out</label>
-                            <div class="results-road__box">
-                            </div>
-                        </div>
-                        <div class="results-road__on-the-road">
-                            <label>On the Road</label>
-                            <div class="results-road__box">
-                            </div>
-                        </div>
-                        <div class="results-road__well-on-your-way">
-                            <label>Well on Your Way</label>
-                            <div class="results-road__box">
-                            </div>
-                        </div>
-                    </div>
+                    {% set habits_car_position = ((progress.position_idx +1) * 140) - 50 %}
+                    {% set habits_color = '#519ad6' %}
+                    {% set habits_stroke_color = '#205d90' %}
+                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 119">
+                        <g>
+                        <g>
+                            <rect x="0" y="28" width="280" height="90" fill="{{ habits_color }}" class="svg-starting-out" style="fill-opacity: .3;" />
+                            <path d="M 280 28 V 118" stroke="{{ habits_stroke_color }}" />
+                        </g>
+                        <g>
+                            <rect x="281" y="28" width="500" height="90" fill="{{ habits_color }}" class="svg-on-the-road" style="fill-opacity: .6;"/>
+                            <path d="M 780 28 V 118" stroke="{{ habits_stroke_color }}" />
+                        </g>
+                        <g>
+                            <rect x="781" y="28" width="180" height="90" fill="{{ habits_color }}" class="well-on-your-way" style="fill-opacity: 1;"/>
+                        </g>
+                        
+                        <text transform="translate(24.47 16.93)" font-size="18" fill="#101820" font-family="AvenirNext-Bold, Avenir Next" font-weight="700">Starting Out</text>
+                        <g transform="translate(0 0)">
+                            <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+                        </g>
+                    
+                        <text transform="translate(284.47 17.83)" font-size="18" fill="#5a5d61" font-family="AvenirNext-Medium, Avenir Next" font-weight="500">On the Road</text>
+                        <g transform="translate(264 0)">
+                            <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+                        </g>
+                    
+                        <text transform="translate(762.47 17.83)" font-size="18" fill="#5a5d61" font-family="AvenirNext-Medium, Avenir Next" font-weight="500">Well on Your Way</text>
+                        <g transform="translate(740 0)">
+                            <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+                        </g>
+                    
+                    
+                        <line y1="73" x2="960" y2="73" fill="none" stroke="#101820" stroke-miterlimit="10" stroke-dasharray="4 6"/>
+                        </g>
+                        <g>
+                            <rect x="1" y="28" width="958" height="90" fill="transparent" stroke="{{ habits_stroke_color }}" />
+                        </g>
+                        <image x="{{ habits_car_position }}" y="35" width="110px" height="75px" href="{{ static('apps/teachers-digital-platform/img/car.png') }}" />
+                    </svg>
                     <p>{{ progress.msg_html|safe }} Extra content...</p>
                     <p>[LISTS]</p>
                 </div>
@@ -159,7 +210,7 @@
             <div class="o-expandable o-expandable__padded">
                 <button class="o-expandable_header o-expandable_target"
                         title="Expand content">
-                    <h3 class="h4 o-expandable_header-left o-expandable_label">
+                    <h3 class="o-expandable_header-left o-expandable_label">
                         <img src="{{ static('apps/teachers-digital-platform/img/knowledge.svg') }}" alt="knowledge icon"> {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_header-right o-expandable_link">
@@ -174,23 +225,46 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
-                    <div class="results-road results-road--knowledge position-{{ overall.position_idx }}">
-                        <div class="results-road__starting-out">
-                            <label>Starting Out</label>
-                            <div class="results-road__box">
-                            </div>
-                        </div>
-                        <div class="results-road__on-the-road">
-                            <label>On the Road</label>
-                            <div class="results-road__box">
-                            </div>
-                        </div>
-                        <div class="results-road__well-on-your-way">
-                            <label>Well on Your Way</label>
-                            <div class="results-road__box">
-                            </div>
-                        </div>
-                    </div>
+                    {% set knowledge_car_position = ((progress.position_idx +1) * 140) - 50 %}
+                    {% set knowledge_color = '#FFCE8D' %}
+                    {% set knowledge_stroke_color = '#DC731C' %}
+                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 119">
+                        <g>
+                        <g>
+                            <rect x="0" y="28" width="280" height="90" fill="{{ knowledge_color }}" class="svg-starting-out" style="fill-opacity: .3;" />
+                            <path d="M 280 28 V 118" stroke="{{ knowledge_stroke_color }}" />
+                        </g>
+                        <g>
+                            <rect x="281" y="28" width="500" height="90" fill="{{ knowledge_color }}" class="svg-on-the-road" style="fill-opacity: .6;"/>
+                            <path d="M 780 28 V 118" stroke="{{ knowledge_stroke_color }}" />
+                        </g>
+                        <g>
+                            <rect x="781" y="28" width="180" height="90" fill="{{ knowledge_color }}" class="well-on-your-way" style="fill-opacity: 1;"/>
+                        </g>
+                        
+                        <text transform="translate(24.47 16.93)" font-size="18" fill="#101820" font-family="AvenirNext-Bold, Avenir Next" font-weight="700">Starting Out</text>
+                        <g transform="translate(0 0)">
+                            <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+                        </g>
+                    
+                        <text transform="translate(284.47 17.83)" font-size="18" fill="#5a5d61" font-family="AvenirNext-Medium, Avenir Next" font-weight="500">On the Road</text>
+                        <g transform="translate(264 0)">
+                            <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+                        </g>
+                    
+                        <text transform="translate(762.47 17.83)" font-size="18" fill="#5a5d61" font-family="AvenirNext-Medium, Avenir Next" font-weight="500">Well on Your Way</text>
+                        <g transform="translate(740 0)">
+                            <path d="M13.89,12.52l.94,4.71c.26,1.3-.48,1.84-1.64,1.19L9,16.07,4.81,18.42c-1.16.65-1.9.11-1.64-1.19l.47-2.35.47-2.36L2.34,10.88.58,9.26c-1-.91-.69-1.77.63-1.93l2.37-.28L6,6.77,8,2.4c.56-1.2,1.46-1.2,2,0l2,4.37,2.4.28,2.37.28c1.32.16,1.6,1,.63,1.93l-1.76,1.62Z" fill="#ffab39" stroke="#dc731c" stroke-miterlimit="10"/>  
+                        </g>
+                    
+                    
+                        <line y1="73" x2="960" y2="73" fill="none" stroke="#101820" stroke-miterlimit="10" stroke-dasharray="4 6"/>
+                        </g>
+                        <g>
+                            <rect x="1" y="28" width="958" height="90" fill="transparent" stroke="{{ knowledge_stroke_color }}" />
+                        </g>
+                        <image x="{{ knowledge_car_position }}" y="35" width="110px" height="75px" href="{{ static('apps/teachers-digital-platform/img/car.png') }}" />
+                    </svg>
                     <p>{{ progress.msg_html|safe }} Extra content...</p>
                     <p>[LISTS]</p>
                 </div>
@@ -208,16 +282,29 @@
             </div>
         </div>
 
-        {% if is_student %}
         <div class="block">
-        <p>
-                <a class="results-start-over a-btn a-btn__link a-btn__warning" href="../">
-                    Reset survey and start over
-                </a>
-            </p>
-            </div>
-        {% endif %}
+            <strong>Now what?</strong> Review your results in more detail. Think about things you’re doing well and ways you can improve your financial well-being. Be sure to save your results [add sentence on why: track your progress over time? to share with your teacher or trusted adult?].
+        </div>
+
+        
+        <div class="block">
+            {% if is_student %}
+            <button type="button" class="a-btn" data-open-modal="modal-share-url">
+                Share results
+            </button>
+            <button type="button" class="a-btn" data-open-modal="modal-print">
+                Print results
+            </button>
+            {% else %}
+            <button type="button" class="a-btn" onclick="window.print()">
+                Print results
+            </button>
+            {% endif %}
+        </div>
+        
+        <aside></aside>
     </div>
+</div>
 {% endblock body_content %}
 
 {% block javascript %}

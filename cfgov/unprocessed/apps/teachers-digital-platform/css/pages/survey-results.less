@@ -9,54 +9,40 @@
     .h1 {
         margin-top: 0;
     }
-    .h3 {
-        margin-top: 2em;
-    }
-    .share-output {
-        background: #eeeeee;
-        margin-top: 1rem;
-        padding: .5rem 1rem;
-        position: relative;
-
-        input {
-            background: none;
-            border: 0;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-        }
-    }
-
-    .share-output__right {
-        background: rgb(238,238,238);
-        background: linear-gradient(90deg, rgba(238,238,238,0) 0%, rgba(238,238,238,1) 50%, rgba(238,238,238,1) 100%);
-        bottom: 0;
-        display: flex;
-        position: absolute;
-        padding-left: 7rem;
-        right: 0;
-        top: 0;
-
-        button {
-            background: none;
-            border: 0;
-            color: #0072ce;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
-            text-transform: uppercase;
-        }
-    }
-
-    .share-output__copied {
-        margin: 0.5rem 0 0;
-        text-align: right;
-    }
 
     .o-expandable_header-left {
         align-items: center;
         display: flex;
         img {
             padding-right: 10px;
+        }
+    }
+}
+
+.tdp-survey__initials-error {
+    margin-bottom: 1rem;
+}
+
+.share-output:not([hidden]) {
+    display: flex;
+    margin-top: 1.5rem;
+
+    > div:last-child {
+        margin-left: 2rem;
+    }
+    h4 {
+        margin-bottom: 0.5rem;
+    }
+
+    .share-output__copied:not([hidden]) {
+        display: flex;
+        margin-top: 0.5rem;
+
+        div {
+            margin-left: 0.5rem;
+        }
+        path {
+            fill: #20aa3f;
         }
     }
 }
@@ -117,131 +103,4 @@
             background-color: #93c1bf;
         }
     }
-}
-
-.results-road--habits {
-    .results-road__box {
-        background-color: #aed6f7;
-        border: 1px solid #205d90;
-    }
-    .results-road__on-the-road {
-        .results-road__box {
-            background-color: #83c6fd;
-        }
-    }
-    .results-road__well-on-your-way {
-        .results-road__box {
-            background-color: #519ad6;
-        }
-    }
-}
-
-.results-road--knowledge {
-    .results-road__box {
-        background-color: #FFF0DD;
-        border: 1px solid #DC731C;
-    }
-    .results-road__on-the-road {
-        .results-road__box {
-            background-color: #FFE1B9;
-        }
-    }
-    .results-road__well-on-your-way {
-        .results-road__box {
-            background-color: #FFCE8D;
-        }
-    }
-}
-
-.results-road__on-the-road {
-    width: 50%;
-}
-
-.position-1 {
-    .results-road__starting-out {
-        label {
-            background-image: url( '../img/star.svg' );
-            background-repeat: no-repeat;
-            font-weight: 600;
-            padding-left: 25px;
-        }
-        .results-road__box {
-            background-image: url( '../img/car.png' );
-            background-size: 90px 50px;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-    }
-}
-
-.position-2 {
-    .results-road__on-the-road {
-        label {
-            background-image: url( '../img/star.svg' );
-            background-repeat: no-repeat;
-            font-weight: 600;
-            padding-left: 25px;
-        }
-        .results-road__box {
-            background-image: url( '../img/car.png' );
-            background-size: 90px 50px;
-            background-position: 15%;
-            background-repeat: no-repeat;
-        }
-    }
-}
-
-.position-3 {
-    .results-road__on-the-road {
-        label {
-            background-image: url( '../img/star.svg' );
-            background-repeat: no-repeat;
-            font-weight: 600;
-            padding-left: 25px;
-        }
-        .results-road__box {
-            background-image: url( '../img/car.png' );
-            background-size: 90px 50px;
-            background-position: 50%;
-            background-repeat: no-repeat;
-        }
-    }
-}
-
-.position-4 {
-    .results-road__on-the-road {
-        label {
-            background-image: url( '../img/star.svg' );
-            background-repeat: no-repeat;
-            font-weight: 600;
-            padding-left: 25px;
-        }
-        .results-road__box {
-            background-image: url( '../img/car.png' );
-            background-size: 90px 50px;
-            background-position: 80%;
-            background-repeat: no-repeat;
-        }
-    }
-}
-
-.position-5 {
-    .results-road__well-on-your-way {
-        label {
-            background-image: url( '../img/star.svg' );
-            background-repeat: no-repeat;
-            font-weight: 600;
-            padding-left: 25px;
-        }
-        .results-road__box {
-            background-image: url( '../img/car.png' );
-            background-size: 90px 50px;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-    }
-}
-
-.results-road__well-on-your-way {
-    width: 25%;
 }
