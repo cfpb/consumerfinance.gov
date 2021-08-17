@@ -20,9 +20,10 @@
         {% set overall = content.find_overall_progress(score) %}
         {% set bbs = content.building_blocks() %}
 
-        <p class="label">Your money journey results <div aria-hidden="true" style="display:none" class="initials-display">
-            <span>Survey completed by <span class="initials-value"></span></span>
-        </div></p>
+        <p class="label">
+            Your money journey results<span aria-hidden="true" style="display:none"
+                                            class="initials-display">: <span class="initials-value"></span></span>
+        </p>
         <p class="h1">Congratulations, {{ overall.heading_html|safe }}</p>
         <p class="h3"> {{ overall.msg_html|safe }}</p>
 
@@ -70,9 +71,25 @@
         {# modal content #}
         {% include './modals/share-url.html' %}
         {% include './modals/print.html' %}
+
         <div class="block">
-            <h2>Exploring your results</h2>
-            <p>Your overall result is based...</p>
+            <p><strong>Now what?</strong> Read more about your results below. Think about things you’re doing
+                well and things you could do better. Be sure to save your results so you can see them again
+                later or share them with your teacher or a trusted adult.</p>
+        </div>
+
+        <div class="block">
+            <h2>Your money journey</h2>
+
+            <p>Your money journey includes three important subjects:</p>
+
+            <ul>
+                <li>{{ content.get('BB0') }}</li>
+                <li>{{ content.get('BB1') }}</li>
+                <li>{{ content.get('BB2') }}</li>
+            </ul>
+
+            <p>Exploring each of these subjects will help you get the money future you want.</p>
         </div>
 
         <div class="o-expandable-group">
@@ -137,8 +154,8 @@
                         </g>
                         <image x="{{ planning_car_position }}" y="35" width="110px" height="75px" href="{{ static('apps/teachers-digital-platform/img/car.png') }}" />
                     </svg>
-                    <p>{{ progress.msg_html|safe }} Extra content...</p>
-                    <p>[LISTS]</p>
+                    <p>{{ progress.msg_html|safe }} To make progress in this subject, practice things like planning ahead,
+                        remembering information, and solving problems.</p>
                 </div>
             </div>
             {% set bb = 1 %}
@@ -201,8 +218,8 @@
                         </g>
                         <image x="{{ habits_car_position }}" y="35" width="110px" height="75px" href="{{ static('apps/teachers-digital-platform/img/car.png') }}" />
                     </svg>
-                    <p>{{ progress.msg_html|safe }} Extra content...</p>
-                    <p>[LISTS]</p>
+                    <p>{{ progress.msg_html|safe }} To advance in this subject, practice having a positive attitude about saving
+                        and spending and make your own rules about money.</p>
                 </div>
             </div>
             {% set bb = 2 %}
@@ -265,30 +282,31 @@
                         </g>
                         <image x="{{ knowledge_car_position }}" y="35" width="110px" height="75px" href="{{ static('apps/teachers-digital-platform/img/car.png') }}" />
                     </svg>
-                    <p>{{ progress.msg_html|safe }} Extra content...</p>
-                    <p>[LISTS]</p>
+                    <p>{{ progress.msg_html|safe }} To get farther in this subject, learn facts about saving and spending money
+                        and use what you’ve learned to make the best money choices for you.</p>
                 </div>
             </div>
         </div>
         <div class="block">
-            <h2>What does it all mean?</h2>
-            <p>Keep in mind that...</p>
-            <h4>Want to learn more? Check out these tools:</h4>
-            <p>Remember, come back...</p>
-            <div class="o-well">
-                <ul>
-                    <li>[LIST]</li>
-                </ul>
-            </div>
+            <h2>Stop and think</h2>
+            <p>Which path is your strongest? Which one do you want to work on?</p>
+
+            <h4>What now?</h4>
+            <p>Use the <a
+                href="/f/documents/cfpb_building_block_activities_youth-financial-capability-survey-elementary_school.pdf"
+                download>Taking the next steps on your money journey</a> worksheet to think about your
+                strengths and set goals to get the money future you want. Talk with your teacher,
+                your parents, or another trusted adult about your money map. They can also help
+                you set your goals.</p>
+
+            <p>Remember: You are on a money journey that will last your whole life. Everyone, no
+                matter how old or young they are, can always get better at managing money.</p>
         </div>
 
-        <div class="block">
-            <strong>Now what?</strong> Review your results in more detail. Think about things you’re doing well and ways you can improve your financial well-being. Be sure to save your results [add sentence on why: track your progress over time? to share with your teacher or trusted adult?].
-        </div>
-
-        
         <div class="block">
             {% if is_student %}
+            <h2>Save your results</h2>
+
             <button type="button" class="a-btn" data-open-modal="modal-share-url">
                 Share results
             </button>
@@ -301,7 +319,17 @@
             </button>
             {% endif %}
         </div>
-        
+
+        {% if is_student %}
+        <div class="block">
+            <p>
+                <a class="results-start-over a-btn a-btn__link a-btn__warning" href="../">
+                    Reset survey and start over
+                </a>
+            </p>
+        </div>
+        {% endif %}
+
         <aside></aside>
     </div>
 </div>
