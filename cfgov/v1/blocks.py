@@ -245,6 +245,7 @@ class RAFTBlock(blocks.StructBlock):
                    'results trigger display of county dropdown '
                    'for a state.')
     )
+
     class Meta:
         icon = 'cog'
         label = 'RAF Tool (configurable)'
@@ -252,4 +253,3 @@ class RAFTBlock(blocks.StructBlock):
 
     class Media:
         js = ['erap/main.js']
-
