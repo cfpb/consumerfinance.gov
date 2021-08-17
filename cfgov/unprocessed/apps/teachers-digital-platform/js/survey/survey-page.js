@@ -58,14 +58,18 @@ function surveyPage() {
  * @returns {SurveyData} Survey data
  */
 function readSurveyData() {
-  const el = $( '.tdp-survey-page' );
+  const el = $( '[data-tdp-page="survey"]' );
 
   /**
    * @type {SurveyData}
    */
   const data = Object.create( null );
   Object.entries( el.dataset ).forEach( ( [ k, v ] ) => {
-    data[k] = JSON.parse( v );
+    try {
+      data[k] = JSON.parse( v );
+    } catch ( err ) {
+      data[k] = v;
+    }
   } );
   return data;
 }
