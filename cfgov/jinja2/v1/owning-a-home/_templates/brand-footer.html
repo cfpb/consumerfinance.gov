@@ -79,25 +79,11 @@
 {% if link.intro %}
 <p>{{ link.intro | safe }}</p>
 {% endif %}
-{% if link.is_jump_link %}
+
 <a class="a-link
-          a-link__jump
-          a-link__icon
-          a-link__no-wrap"
-   href="{{ link.url }}"
-   aria-label="{{ link.label }}>
-    <span class="a-link_text"">
-        {{ link.text | safe }}
-    </span>
-    {{ svg_icon('download') }}
-</a>
-{% else %}
-<a class="a-link a-link__jump"
+          a-link__jump"
    href="{{ link.url }}"
    aria-label="{{ link.label }}">
-    <span class="a-link_text">
-        {{ link.text | safe }}
-    </span>
+    {{ link.text | safe }}
 </a>
-{% endif %}
 {% endmacro %}
