@@ -48,6 +48,7 @@ function surveyPage() {
 
   initErrorHandling();
   allowStartOver();
+  dontSelectFirst();
 
   // Decorative transformations
   indentQuestionsByNumber();
@@ -314,6 +315,21 @@ function breakSeparatedAnswers() {
     }
 
     charCode += 1;
+  } );
+}
+
+/**
+ * If a user clicks a question label, don't auto-select the first element
+ *
+ * For radios, Django naively points its question-level label to the first
+ * radio option, which seems wrong and causes a click to select it.
+ */
+function dontSelectFirst() {
+  document.addEventListener( 'click', event => {
+    const label = event.target.closest( 'p label[for]' );
+    if ( label && ( /_0$/ ).test( label.htmlFor ) ) {
+      event.preventDefault();
+    }
   } );
 }
 
