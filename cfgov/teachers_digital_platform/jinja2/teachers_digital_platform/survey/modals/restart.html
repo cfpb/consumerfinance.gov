@@ -13,21 +13,17 @@
         <button class="o-modal_close a-btn a-btn__link" type="button">
           Close<span class="a-icon a-icon__large a-icon__space-before">{% include 'icons/close-round.svg' %}</span>
         </button>
-        <h2 id="{{ id }}_title" class="h3">Reset survey and start over</h2>
+        <h2 id="{{ id }}_title" class="h3">Starting over</h2>
         <div id="{{ id }}_desc">
-          <fieldset class="o-form_fieldset">
-            <legend class="a-legend">This will clear your selections and return you to the
-              grade selection page.</legend>
-
-            <div class="m-btn-group">
-              <button class="a-btn" data-cancel="1">Cancel</button>
-              <button class="a-btn a-btn__link a-btn__warning" data-cancel="">Start over</button>
-            </div>
-          </fieldset>
+          <p>Starting over will clear your selections and return you to the
+            grade selection page. Are you sure you want to start over?</p>
         </div>
       </div>
       <div class="o-modal_footer">
-        <button class="a-btn" type="button">Close</button>
+        <div class="m-btn-group">
+          <button class="a-btn a-btn__warning" data-cancel="">Start over</button>
+          <button class="a-btn a-btn__link" data-cancel="1">Return to survey</button>
+        </div>
       </div>
     </div>
   </div>

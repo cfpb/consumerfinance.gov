@@ -266,31 +266,42 @@ function indentQuestionsByNumber() {
  *
  */
 function breakSeparatedAnswers() {
-  const convertToDivs = text => {
+  const convertToDivs = (text, charCode) => {
     // Convert text node into a set of div items
-    const div = document.createElement( 'div' );
-    div.className = 'tdp-lines';
+    const wrap = document.createElement( 'div' );
+    wrap.className = 'tdp-lines';
+    wrap.innerHTML = `<span>(${ String.fromCharCode( charCode ) }) </span>`;
+
+    const ul = document.createElement( 'ul' );
 
     // HTML escape any chars as necessary when splitting
     const htmlItems = text.split( ' ‣ ' ).map( item => {
-      div.textContent = item;
-      return div.innerHTML;
+      ul.textContent = item;
+      return ul.innerHTML;
     } );
 
-    div.innerHTML = '<div>' +
-      htmlItems.join( '</div><div>' ) + '</div>';
+    ul.innerHTML = '<li>' +
+      htmlItems.join( '</li><li>' ) + '</li>';
 
-    return div;
+    wrap.append( ul );
+    return wrap;
   };
 
   const isSeparated = str => str.indexOf( ' ‣ ' ) !== -1;
+  let charCode = 97;
 
   /**
    * @type {HTMLLabelElement[]}
    */
   const labels = [].slice.call( $$( '.ChoiceField li label' ) );
   labels.forEach( label => {
+    if ( label.closest( 'li:first-child' ) === label.parentElement ) {
+      // Reset to "a"
+      charCode = 97;
+    }
+
     if ( !isSeparated( label.textContent ) ) {
+      charCode += 1;
       return;
     }
 
@@ -298,9 +309,11 @@ function breakSeparatedAnswers() {
       const node = label.childNodes[i];
       if ( node.nodeType === Node.TEXT_NODE &&
         isSeparated( node.textContent ) ) {
-        node.replaceWith( convertToDivs( node.textContent ) );
+        node.replaceWith( convertToDivs( node.textContent, charCode ) );
       }
     }
+
+    charCode += 1;
   } );
 }
 

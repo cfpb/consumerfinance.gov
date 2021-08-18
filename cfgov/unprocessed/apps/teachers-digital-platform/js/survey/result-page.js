@@ -128,27 +128,15 @@ function handlePrintModal() {
  * Handle behavior within the restart modal
  */
 function handleResetModal() {
-  const desc = $( '#modal-reset_desc' );
-  if ( !desc ) {
+  const modal = $( '#modal-reset' );
+  if ( !modal ) {
     return;
   }
 
-  document.addEventListener( 'modal:open:before', event => {
-    if ( event.detail.modal.id !== 'modal-reset' ) {
-      return;
-    }
-
-    const warning = desc.querySelector( '.m-notification__error' );
-    if ( initials.get() ) {
-      warning.classList.remove( 'm-notification__visible' );
-    } else {
-      warning.classList.add( 'm-notification__visible' );
-    }
-  } );
-
-  desc.addEventListener( 'click', event => {
+  modal.addEventListener( 'click', event => {
     const button = event.target.closest( '[data-cancel]' );
     if ( button ) {
+      event.preventDefault();
       if ( button.dataset.cancel ) {
         modals.close( 'modal-reset' );
       } else {

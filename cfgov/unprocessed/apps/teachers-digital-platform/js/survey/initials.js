@@ -40,7 +40,13 @@ function get() {
  */
 function init() {
   // Show initials encoded in URL hash
-  update( encodeName.decodeNameFromUrl( location.href ) || '' );
+  let fromUrl = encodeName.decodeNameFromUrl( location.href ) || '';
+  if ( fromUrl.length > 4 ) {
+    // Definitely invalid, reject.
+    fromUrl = '';
+  }
+
+  update( fromUrl );
 }
 
 export { init, get, update };
