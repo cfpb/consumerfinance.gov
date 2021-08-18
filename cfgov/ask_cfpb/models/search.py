@@ -7,6 +7,8 @@ UNSAFE_CHARACTERS = [
     '#', '%', ';', '^', '~', '`', '|',
     '<', '>', '[', ']', '{', '}', '\\'
 ]
+# maximum length of autocomplete form entries before we call a halt
+ASK_AUTOCOMPLETE_MAX = 50
 
 
 def make_safe(term):
