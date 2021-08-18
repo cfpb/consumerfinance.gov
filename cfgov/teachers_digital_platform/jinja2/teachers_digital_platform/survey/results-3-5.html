@@ -35,6 +35,7 @@
         {# modal content #}
         {% include './modals/share-url.html' %}
         {% include './modals/print.html' %}
+        {% include './modals/reset.html' %}
 
         <div class="block">
             <p><strong>Now what?</strong> Read more about your results below. Think about things you’re doing
@@ -167,9 +168,9 @@
         {% if is_student %}
         <div class="block">
             <p>
-                <a class="results-start-over a-btn a-btn__link a-btn__warning" href="../">
+                <button class="a-btn a-btn__link a-btn__warning" data-open-modal="modal-reset">
                     Reset survey and start over
-                </a>
+                </button>
             </p>
         </div>
         {% endif %}

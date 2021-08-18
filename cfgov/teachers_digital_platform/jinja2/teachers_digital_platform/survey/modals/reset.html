@@ -1,4 +1,4 @@
-{% set id = 'modal-print' %}
+{% set id = 'modal-reset' %}
 <div class="o-modal"
      id="{{ id }}"
      tabindex="0"
@@ -13,27 +13,22 @@
         <button class="o-modal_close a-btn a-btn__link" type="button">
           Close<span class="a-icon a-icon__large a-icon__space-before">{% include 'icons/close-round.svg' %}</span>
         </button>
-        <h2 id="{{ id }}_title" class="h3">Print</h2>
+        <h2 id="{{ id }}_title" class="h3">Reset survey and start over</h2>
         <div id="{{ id }}_desc">
-          <div class="m-notification m-notification__error tdp-survey__initials-error">
+          <div class="m-notification m-notification__error">
             {% include 'icons/error-round.svg' %}
             <div class="m-notification_content">
-              <div class="h4 m-notification_message">You forgot to enter your initials.</div>
+              <div class="h4 m-notification_message">Please share your results first.</div>
             </div>
           </div>
 
-          <label class="a-label a-label__heading" for="{{ id }}-initials-input">
-              Enter your initials to print your results
-          </label>
-          <input class="a-text-input tdp-survey__initials"
-                 type="text"
-                 id="{{ id }}-initials-input"
-                 required
-                 maxlength="3"
-                 autocomplete="off">
-          <div style="margin-top:1rem">
-            <button class="a-btn tdp-survey__initials-set">Print</button>
-          </div>
+          <fieldset class="o-form_fieldset">
+            <legend class="a-legend">Are you sure you want to reset your results?</legend>
+            <div class="m-btn-group">
+              <button class="a-btn" data-cancel="1">Cancel</button>
+              <button class="a-btn a-btn__link a-btn__warning" data-cancel="">Reset</button>
+            </div>
+          </fieldset>
         </div>
       </div>
       <div class="o-modal_footer">
