@@ -37,6 +37,17 @@ ul.tdp-survey__choice-question {
                     display: inline-block;
                     margin-right: 5px;
                 });
+                &:focus {
+                    outline: none;
+                    &::after {
+                        content: '';
+                        height: 30px;
+                        outline: dotted 1px #0072ce;
+                        outline-offset: 1px;
+                        position: absolute;
+                        width: 90px;
+                    }
+                }
             }
             &:last-of-type {
                 padding-right: 0;
