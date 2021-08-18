@@ -1,0 +1,176 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% from 'organisms/expandable.html' import expandable with context %}
+
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block title -%}
+    Survey: {{ survey.meta.name }} | Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+
+    <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
+{%- endblock css %}
+
+{% block pre_content scoped -%}
+{%- endblock %}
+
+{% block body_content scoped %}
+<div class="wrapper content_wrapper tdp-survey-layout">
+    <div class="tdp-survey-page content_main"
+         data-tdp-page="survey"
+         data-page-idx="{{ page_idx|tojson|forceescape }}"
+         data-questions-by-page="{{ questions_by_page|tojson|forceescape }}"
+         data-item-separator="{{ survey.ITEM_SEPARATOR|tojson|forceescape }}"
+    >
+        {# <h1>Survey Page {{ wizard.steps.step1 }}</h1> #}
+
+            <form action="" method="post"> {{ csrf_input }}
+
+                <div class="m-notification
+                            m-notification__error">
+                    {% include 'icons/error-round.svg' %}
+                    <div class="m-notification_content">
+                        <div class="h4 m-notification_message">You've missed a question. Click the
+                            link(s) to jump to them.</div>
+                    </div>
+                    <ul class="m-notification_explanation"></ul>
+                </div>
+                <div hidden class="a-form-alert a-form-alert__error tdp-survey-alert--clone" role="alert">
+                    {% include 'icons/error-round.svg' %}
+                    <span class="a-form-alert_text">This question is required</span>
+                </div>
+
+                {# E.g. "./6-8/before-page-2.html" #}
+                {% include './' ~ survey.key ~ '/before-page-' ~ wizard.steps.step1 ~ '.html' ignore missing %}
+
+                {{ wizard.management_form }}
+                {% if wizard.form.forms %}
+                    {{ wizard.form.management_form }}
+                    {% for form in wizard.form.forms %}
+                        {{ form.as_p() }}
+                    {% endfor %}
+                {% else %}
+                    {{ wizard.form.as_p() }}
+                {% endif %}
+
+                {# Do not remove this closing div tag --> #}</div>{# The div element #}
+                {# was opened in a before-page template above so it needs closing. #}
+
+                <div class="block">
+                    <div class="m-btn-group">
+                    {% if wizard.steps.prev %}
+                        <a class="a-btn" href="../{{ wizard.steps.prev }}/">
+                            <span class="a-btn_icon a-btn_icon__on-left">{% include 'icons/left.svg' %}</span>
+                            <span class="a-btn_text">Back</span>
+                        </a>
+                    {% endif %}
+                    {% if wizard.steps.next %}
+                        <button class="a-btn" type="submit">
+                            <span class="a-btn_text">Next</span>
+                            <span class="a-btn_icon a-btn_icon__on-right">{% include 'icons/right.svg' %}</span>
+                        </button>
+                    {% else %}
+                        <button class="a-btn" type="submit">
+                            <span class="a-btn_text">Get my results</span>
+                            <span class="a-btn_icon a-btn_icon__on-right">{% include 'icons/right.svg' %}</span>
+                        </button>
+                    {% endif %}
+                    </div>
+
+                    <div class="survey-start-over">
+                        <p>
+                            <button class="a-btn a-btn__link a-btn__warning"
+                               data-open-modal="modal-restart">
+                                Reset survey and start over
+                            </button>
+                        </p>
+                        {% include './modals/restart.html' %}
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        {# wizard.steps.all is a list of 'p1', 'p2', ... #}
+        <aside class="content_sidebar o-sidebar-content tdp-survey-sidebar">
+
+            <div class="o-expandable">
+                <div class="tdp-survey-sidebar__mobile-control">
+                    <button class="o-expandable_header o-expandable_target"
+                            title="Expand content">
+                        <span class="o-expandable_header-right o-expandable_link">
+                            <span class="o-expandable_cue o-expandable_cue-open">
+                                {{ svg_icon('plus-round') }}
+                            </span>
+                            <span class="o-expandable_cue o-expandable_cue-close">
+                                {{ svg_icon('minus-round') }}
+                            </span>
+                        </span>
+                        <h3 class="h4 o-expandable_label">Your survey progress</h3>
+                        <p>
+                            <span class="tdp-survey-progress-out-of"></span> questions completed
+                        </p>
+                    </button>
+                </div>
+
+                <div class="u-visually-hidden-on-mobile">
+                    <h3 class="h4 o-expandable_label">Your survey progress</h3>
+                    <p>
+                        <span class="tdp-survey-progress-out-of"></span> questions completed
+                    </p>
+                </div>
+                <div class="o-expandable_content o-expandable_content__onload-open o-expandable__mobile-collapsed">
+
+                    <div style="text-align: center">
+                        <svg class="tdp-survey-progress__svg" viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="90"></circle>
+                            <circle cx="100" cy="100" r="90" pathLength="1"
+                                    transform="rotate(-90 100 100)"
+                                    class="tdp-survey-progress__circle" ></circle>
+                            <text x="50%" y="48%" text-anchor="middle">--%</text>
+                            <text x="50%" y="56%" text-anchor="middle" dominant-baseline="hanging">0/-- questions</text>
+                            <text x="50%" y="67%" text-anchor="middle" dominant-baseline="hanging">completed</text>
+                        </svg>
+                    </div>
+                    <div>
+                    {% for name in wizard.steps.all %}
+                        <button class="tdp-survey-section"
+                                tabindex="-1"
+                                data-checked=""
+                                data-color="gray"
+                                data-editable=""
+                                data-href="../{{ name }}/"
+                        >
+                            <div class="tdp-survey-section__left">
+                                <div class="tdp-survey-section__title">Section {{ loop.index }}
+                                    <span class="tdp-survey-section__status"></span>
+                                </div>
+                                <div class="tdp-survey-section__range">Questions ...</div>
+                            </div>
+                            <div class="tdp-survey-section__edit"><span>edit</span></div>
+                            <div class="tdp-survey-section__icon">
+                                {% include 'icons/approved-round.svg' %}
+                            </div>
+                        </button>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+{% endblock body_content %}
+
+{% block javascript %}
+    {{ super() }}
+
+    {# Conditional comment used to block IE8 and under from receiving JS #}
+    <!--[if gt IE 8]><!-->
+        <script src="{{ static('apps/teachers-digital-platform/js/index.js') }}"></script>
+    <!--<![endif]-->
+{% endblock javascript %}

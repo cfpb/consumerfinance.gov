@@ -1,0 +1,56 @@
+{% set id = 'modal-share-url' %}
+<div class="o-modal"
+     id="{{ id }}"
+     tabindex="0"
+     aria-hidden="true"
+     role="alertdialog"
+     aria-labelledby="{{ id }}_title"
+     aria-describedby="{{ id }}_desc">
+  <div class="o-modal_backdrop"></div>
+  <div class="o-modal_container">
+    <div class="o-modal_content">
+      <div class="o-modal_body">
+        <button class="o-modal_close a-btn a-btn__link" type="button">
+          Close<span class="a-icon a-icon__large a-icon__space-before">{% include 'icons/close-round.svg' %}</span>
+        </button>
+        <h2 id="{{ id }}_title" class="h3">Enter your initials to get a shareable link</h2>
+        <div id="{{ id }}_desc">
+          <div class="m-notification m-notification__error tdp-survey__initials-error">
+            {% include 'icons/error-round.svg' %}
+            <div class="m-notification_content">
+              <div class="h4 m-notification_message">You forgot to enter your initials.</div>
+            </div>
+          </div>
+          <label class="a-label a-label__heading" for="{{ id }}-initials-input">
+            Enter initials
+          </label>
+          <input class="a-text-input tdp-survey__initials"
+                 type="text"
+                 id="{{ id }}-initials-input"
+                 required
+                 maxlength="3"
+                 autocomplete="off">
+          <div style="margin-top:1rem">
+            <button class="a-btn tdp-survey__initials-set">Get link</button>
+          </div>
+          <div class="share-output" hidden data-rparam="{{ r_param }}">
+            <div>
+              <h4>Shareable link:</h4>
+              <a href="#">www.consumerfinance.gov/...</a>
+            </div>
+            <div>
+              <button class="a-btn">Copy link</button>
+              <div class="share-output__copied" hidden>
+                {% include 'icons/approved-round.svg' %}
+                <div>Link copied to clipboard</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="o-modal_footer">
+        <button class="a-btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

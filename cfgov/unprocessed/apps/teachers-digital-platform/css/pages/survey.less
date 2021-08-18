@@ -1,0 +1,290 @@
+.tdp-survey-layout {
+    .respond-to-max(@bp-xs-max, {
+        @supports ( display: flex ) {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+    });
+}
+
+ul.tdp-survey__choice-question {
+    &.tdp-survey__atype-E,
+    &.tdp-survey__atype-F,
+    &.tdp-survey__atype-G,
+    &.tdp-survey__atype-H,
+    &.tdp-survey__atype-I {
+        border-bottom: 1px solid @gray-20;
+        margin: 10px 0 30px;
+        padding: 0 0 20px 25px;
+        position: relative;
+        .respond-to-min(@bp-sm-min, {
+            @supports ( display: flex ) {
+                display: flex;
+            }
+        });
+        li {
+            list-style: none;
+            padding-right: 2rem;
+            position: relative;
+            width: 100%;
+            input {
+                -ms-transform: scale(1.5); /* IE 9 */
+                -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+                display: block;
+                margin-bottom: 5px;
+                transform: scale(1.5);
+                .respond-to-max(@bp-xs-max, {
+                    display: inline-block;
+                    margin-right: 5px;
+                });
+            }
+            &:last-of-type {
+                padding-right: 0;
+                label {
+                    &::before {
+                        display: none;
+                    }
+                }
+            }
+        }
+        label {
+            &::before {
+                .respond-to-min(@bp-sm-min, {
+                    background-color: @gray-40;
+                    content: '';
+                    height: 1px;
+                    left: 12px;
+                    position: absolute;
+                    top: 6px;
+                    width: 100%;
+                });
+            }
+        }
+    }
+    &.tdp-survey__atype-GetGame,
+    &.tdp-survey__atype-GameThink,
+    &.tdp-survey__atype-SellDrinks,
+    &.tdp-survey__atype-BPImportant,
+    &.tdp-survey__atype-BPDecide,
+    &.tdp-survey__atype-DSSetup-opts,
+    &.tdp-survey__atype-BikeSteps,
+    &.tdp-survey__atype-BikeSteps-opts,
+    &.tdp-survey__atype-MoneySafe {
+        border-bottom: 1px solid @gray-20;
+        margin: 10px 0 30px 18px;
+        padding: 0 0 20px;
+        li {
+            font-size: 1.125em;
+            list-style: none;
+            text-indent: -18px;
+        }
+    }
+    &:last-of-type {
+        border: none;
+    }
+}
+
+p {
+    // See JS function indentQuestionsByNumber() which may
+    // alter margin/text-indent here.
+    & label {
+        font-size: 1.25em;
+        font-weight: 500;
+    }
+}
+
+.tdp-survey__thumbnail {
+   border-radius: 50%;
+   display: block;
+   height: 150px;
+   width: 150px;
+}
+
+.tdp-survey-page {
+    .errorlist {
+        display: none;
+    }
+
+    .tdp-survey__sub-opts {
+        margin-left: 3rem;
+        list-style: none;
+    }
+
+    .m-notification {
+        margin-bottom: 2rem;
+    }
+    .m-notification_explanation {
+        display: flex;
+        flex-direction: column;
+        margin-left: 2rem;
+    }
+}
+
+.tdp-survey-sidebar h5 {
+    font-weight: 600;
+}
+
+.tdp-survey-sidebar {
+    &.o-sidebar-content {
+        .o-expandable {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.tdp-survey-sidebar__mobile-control {
+    display: flex;
+    flex-direction: column-reverse;
+    .respond-to-min(@bp-sm-min, {
+        display: none;
+    });
+}
+
+.tdp-survey-progress__svg {
+    height: auto;
+    margin: 0.5rem 0 1.5rem;
+    max-width: 200px;
+    opacity: 0;
+    position: relative;
+    width: 80%;
+
+    text:first-of-type {
+        fill: #1E9642;
+        font-size: 49px;
+        font-weight: 600;
+    }
+
+    circle {
+        fill: none;
+        stroke: #5A5D61;
+        stroke-width: 2;
+
+        + circle {
+            stroke: #1E9642;
+            stroke-dasharray: 1;
+            stroke-linecap: round;
+            stroke-width: 15;
+        }
+    }
+    path {
+        fill: none;
+        stroke: #1E9642;
+        stroke-dasharray: 1;
+        stroke-linecap: round;
+        stroke-width: 20;
+    }
+}
+
+.tdp-survey-section {
+    appearance: auto;
+    align-items: center;
+    border: 1px solid #b4b5b6;
+    cursor: default;
+    display: flex;
+    padding: 15px;
+    text-align: left;
+    width: 100%;
+
+    &[data-color="white"] {
+        background: #fff;
+    }
+    &[data-color="green"] {
+        background: #f0f8eb;
+        border-color: #20aa3f;
+    }
+    &[data-color="blue"] {
+        background: #d6e8fa;
+        border-color: #6b9cd7;
+    }
+
+    &__icon {
+        background: #fff;
+        border: 1px solid #b4b5b6;
+        border-radius: 100%;
+        height: 1.5em;
+        width: 1.5em;
+
+        svg {
+            display: none;
+        }
+    }
+    &[data-checked="1"] {
+        .tdp-survey-section__icon {
+            background: none;
+            border: none;
+            height: auto;
+            width: auto;
+
+            svg {
+                display: block;
+                fill: #20aa3f;
+                height: 2em;
+                max-width: none;
+            }
+        }
+    }
+
+    &__edit {
+        display: none;
+    }
+    &[data-editable="1"] {
+        cursor: pointer;
+
+        .tdp-survey-section__edit {
+            display: block;
+            padding: 0 10px;
+
+            span {
+                border-bottom: #0072ce 1px dotted;
+                color: #0072ce;
+                font-weight: 600;
+            }
+        }
+
+        &:hover {
+            .tdp-survey-section__edit span {
+                border-bottom-style: solid;
+            }
+        }
+    }
+
+    &__left {
+        flex: 1;
+    }
+    &__title {
+        font-size: 1.25em;
+        font-weight: 500;
+    }
+    &__range {
+        color: #343D48;
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+    }
+
+    + .tdp-survey-section {
+        margin-top: 10px;
+    }
+}
+
+.survey-start-over {
+    margin-top: 1rem;
+}
+
+.ChoiceField {
+    &--error {
+        border: 2px solid #d14124;
+    }
+}
+
+.a-form-alert__error {
+    + .ChoiceField {
+        padding-top: 1.5rem !important;
+    }
+}
+
+.tdp-lines {
+    display: inline-block;
+    margin: 0 0 0.5rem 0.5rem;
+    text-indent: 0;
+    vertical-align: top;
+}
