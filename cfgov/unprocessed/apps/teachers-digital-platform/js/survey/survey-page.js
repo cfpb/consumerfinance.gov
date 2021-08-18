@@ -278,7 +278,7 @@ function breakSeparatedAnswers() {
     } );
 
     div.innerHTML = '<div>' +
-      htmlItems.join( `</div><div>` ) + '</div>';
+      htmlItems.join( '</div><div>' ) + '</div>';
 
     return div;
   };
@@ -296,7 +296,8 @@ function breakSeparatedAnswers() {
 
     for ( let i = 0; i < label.childNodes.length; i++ ) {
       const node = label.childNodes[i];
-      if ( node.nodeType === Node.TEXT_NODE && isSeparated( node.textContent ) ) {
+      if ( node.nodeType === Node.TEXT_NODE &&
+        isSeparated( node.textContent ) ) {
         node.replaceWith( convertToDivs( node.textContent ) );
       }
     }
