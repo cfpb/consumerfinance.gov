@@ -84,7 +84,7 @@
                     {% set stroke_color = '#3b8a86' %}
                     {% include 'results-graph.html' %}
 
-                    <p>{{ progress.msg_html|safe }} To make progress in this subject, practice things like planning ahead,
+                    <p class="tdp-survey-results__summary-p">{{ progress.msg_html|safe }} To make progress in this subject, practice things like planning ahead,
                         remembering information, and solving problems.</p>
                 </div>
             </div>
@@ -110,10 +110,10 @@
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
                     {% set car_position = ((progress.position_idx +1) * 140) - 50 %}
                     {% set level = progress.level_idx %}
-                    {% set color = '#519ad6' %} 
+                    {% set color = '#519ad6' %}
                     {% set stroke_color = '#205d90' %}
                     {% include 'results-graph.html' %}
-                    <p>{{ progress.msg_html|safe }} To advance in this subject, practice having a positive attitude about saving
+                    <p class="tdp-survey-results__summary-p">{{ progress.msg_html|safe }} To advance in this subject, practice having a positive attitude about saving
                         and spending and make your own rules about money.</p>
                 </div>
             </div>
@@ -142,7 +142,7 @@
                     {% set color = '#FFCE8D' %}
                     {% set stroke_color = '#DC731C' %}
                     {% include 'results-graph.html' %}
-                    <p>{{ progress.msg_html|safe }} To get farther in this subject, learn facts about saving and spending money
+                    <p class="tdp-survey-results__summary-p">{{ progress.msg_html|safe }} To get farther in this subject, learn facts about saving and spending money
                         and use what you’ve learned to make the best money choices for you.</p>
                 </div>
             </div>

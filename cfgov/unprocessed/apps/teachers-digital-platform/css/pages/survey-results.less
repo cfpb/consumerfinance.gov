@@ -1,7 +1,4 @@
 .tdp-survey-results {
-    .shared-url {
-        margin-bottom: 1rem;
-    }
     p.label {
         font-weight: 500;
         margin-top: 2em;
@@ -17,6 +14,26 @@
             padding-right: 10px;
         }
     }
+}
+
+.tdp-survey-results__2col {
+    h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-top: 1rem;
+    }
+
+    .respond-to-min(@bp-lg-min, {
+        display: flex;
+
+        > div:first-child {
+            margin-right: 2rem;
+        }
+    });
+}
+
+.tdp-survey-results__summary-p {
+    margin-top: 1rem;
 }
 
 .share-output:not([hidden]) {
