@@ -36,6 +36,8 @@
         {# modal content #}
         {% include './modals/share-url.html' %}
         {% include './modals/print.html' %}
+        {% include './modals/reset.html' %}
+
         <p><strong>Now what?</strong> Review your results in more detail. Think about things you’re
             doing well and ways you can improve your financial well-being. Be sure to save your results
             so you can see them again later or share them with your teacher or a trusted adult.</p>
@@ -202,7 +204,7 @@
             <h2>Three things you can do to get farther down the road on your money journey</h2>
 
             <h3>(1) Explore your strengths</h3>
-            <p>The <a href="/f/documents/cfpb_building_block_activities_youth-financial-capability-survey-middle_school.pdf">Taking the next steps on your money journey</a> worksheet can help you think about your strengths and set goals to get the money future you want.</p>
+            <p>The <a href="#">Taking the next steps on your money journey</a> worksheet can help you think about your strengths and set goals to get the money future you want.</p>
 
             <h3>(2) Talk with your teacher</h3>
             <p>Talk with your teacher about your money map. Your teacher can review your goals and find the right activities to support your progress on your money journey.</p>
@@ -229,9 +231,9 @@
         {% if is_student %}
         <div class="block">
             <p>
-                <a class="results-start-over a-btn a-btn__link a-btn__warning" href="../">
+                <button class="a-btn a-btn__link a-btn__warning" data-open-modal="modal-reset">
                     Reset survey and start over
-                </a>
+                </button>
             </p>
         </div>
         {% endif %}

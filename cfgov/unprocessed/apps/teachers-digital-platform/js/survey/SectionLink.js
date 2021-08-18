@@ -31,7 +31,7 @@ class SectionLink {
    */
   markUpcomingPage( done, visited ) {
     if ( done ) {
-      this.root.setAttribute( 'data-color', 'white' );
+      this.root.setAttribute( 'data-color', 'green' );
       this.markDone();
     } else if ( visited ) {
       this.root.setAttribute( 'data-color', 'white' );

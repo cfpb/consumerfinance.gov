@@ -18,20 +18,7 @@ function resultsPage() {
 
   handleShareModal();
   handlePrintModal();
-
-  // Re-hide UI changes when opening share modal
-  document.addEventListener( 'modal:open:before', () => {
-    $( '.tdp-survey__initials-error' ).classList.remove( 'm-notification__visible' );
-    $( '.share-output' ).hidden = true;
-    $( '.share-output__copied' ).hidden = true;
-  } );
-
-  const startOver = $( '.results-start-over' );
-  if ( startOver ) {
-    startOver.addEventListener( 'click', () => {
-      Cookie.remove( RESULT_COOKIE );
-    } );
-  }
+  handleResetModal();
 }
 
 /**
@@ -85,6 +72,15 @@ function handleShareModal() {
     return;
   }
 
+  // Re-hide UI changes when opening share modal
+  document.addEventListener( 'modal:open:before', event => {
+    if ( event.detail.modal.id === 'modal-share-url' ) {
+      $( '.tdp-survey__initials-error' ).classList.remove( 'm-notification__visible' );
+      $( '.share-output' ).hidden = true;
+      $( '.share-output__copied' ).hidden = true;
+    }
+  } );
+
   withValidInitials( desc, value => {
     initials.update( value );
     a.href = '../view/?r=' + encodeURIComponent(
@@ -125,6 +121,41 @@ function handlePrintModal() {
     initials.update( value );
     modals.close( 'modal-print' );
     window.print();
+  } );
+}
+
+/**
+ * Handle behavior within the restart modal
+ */
+function handleResetModal() {
+  const desc = $( '#modal-reset_desc' );
+  if ( !desc ) {
+    return;
+  }
+
+  document.addEventListener( 'modal:open:before', event => {
+    if ( event.detail.modal.id !== 'modal-reset' ) {
+      return;
+    }
+
+    const warning = desc.querySelector( '.m-notification__error' );
+    if ( initials.get() ) {
+      warning.classList.remove( 'm-notification__visible' );
+    } else {
+      warning.classList.add( 'm-notification__visible' );
+    }
+  } );
+
+  desc.addEventListener( 'click', event => {
+    const button = event.target.closest( '[data-cancel]' );
+    if ( button ) {
+      if ( button.dataset.cancel ) {
+        modals.close( 'modal-reset' );
+      } else {
+        Cookie.remove( RESULT_COOKIE );
+        location.href = '../';
+      }
+    }
   } );
 }
 
