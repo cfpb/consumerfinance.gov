@@ -51,7 +51,7 @@ function surveyPage() {
 
   // Decorative transformations
   indentQuestionsByNumber();
-  breakBulletedAnswers( data.itemBullet );
+  breakSeparatedAnswers();
 }
 
 /**
@@ -262,40 +262,42 @@ function indentQuestionsByNumber() {
 }
 
 /**
- * If a question option is bulleted with ‣, break it into multiple lines.
+ * If a question option has separators, break it into multiple lines.
  *
- * @param {string} bullet Bullet character
  */
-function breakBulletedAnswers( bullet ) {
-  const spanify = text => {
-    // Convert text node into a span with <br> between items.
-    const span = document.createElement( 'span' );
+function breakSeparatedAnswers() {
+  const convertToDivs = text => {
+    // Convert text node into a set of div items
+    const div = document.createElement( 'div' );
+    div.className = 'tdp-lines';
 
     // HTML escape any chars as necessary when splitting
-    const htmlItems = text.split( ` ${ bullet } ` ).map( item => {
-      span.textContent = item;
-      return span.innerHTML;
+    const htmlItems = text.split( ' ‣ ' ).map( item => {
+      div.textContent = item;
+      return div.innerHTML;
     } );
 
-    span.innerHTML = ` &nbsp;${ bullet } ` + htmlItems.join( `<br>&nbsp;${ bullet } ` );
-    return span;
+    div.innerHTML = '<div>' +
+      htmlItems.join( `</div><div>` ) + '</div>';
+
+    return div;
   };
 
-  const hasTri = str => str.indexOf( ` ${ bullet } ` ) !== -1;
+  const isSeparated = str => str.indexOf( ' ‣ ' ) !== -1;
 
   /**
    * @type {HTMLLabelElement[]}
    */
   const labels = [].slice.call( $$( '.ChoiceField li label' ) );
   labels.forEach( label => {
-    if ( !hasTri( label.textContent ) ) {
+    if ( !isSeparated( label.textContent ) ) {
       return;
     }
 
     for ( let i = 0; i < label.childNodes.length; i++ ) {
       const node = label.childNodes[i];
-      if ( node.nodeType === Node.TEXT_NODE && hasTri( node.textContent ) ) {
-        node.replaceWith( spanify( node.textContent ) );
+      if ( node.nodeType === Node.TEXT_NODE && isSeparated( node.textContent ) ) {
+        node.replaceWith( convertToDivs( node.textContent ) );
       }
     }
   } );
