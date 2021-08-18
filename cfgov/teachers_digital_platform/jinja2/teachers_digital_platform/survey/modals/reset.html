@@ -15,24 +15,15 @@
         </button>
         <h2 id="{{ id }}_title" class="h3">Reset survey and start over</h2>
         <div id="{{ id }}_desc">
-          <div class="m-notification m-notification__error">
-            {% include 'icons/error-round.svg' %}
-            <div class="m-notification_content">
-              <div class="h4 m-notification_message">Please share your results first.</div>
-            </div>
-          </div>
-
-          <fieldset class="o-form_fieldset">
-            <legend class="a-legend">Are you sure you want to reset your results?</legend>
-            <div class="m-btn-group">
-              <button class="a-btn" data-cancel="1">Cancel</button>
-              <button class="a-btn a-btn__link a-btn__warning" data-cancel="">Reset</button>
-            </div>
-          </fieldset>
+          <p>Resetting your survey will cause you to lose your results.</p>
+          <p>Are you sure you want to reset your survey?</p>
         </div>
       </div>
       <div class="o-modal_footer">
-        <button class="a-btn" type="button">Close</button>
+        <div class="m-btn-group">
+          <button class="a-btn a-btn__warning" data-cancel="">Reset</button>
+          <button class="a-btn a-btn__link" data-cancel="1">Return to results page</button>
+        </div>
       </div>
     </div>
   </div>
