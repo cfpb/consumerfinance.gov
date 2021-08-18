@@ -420,22 +420,7 @@
                 want. Come back and take the money journey survey again when you’re ready to check your progress.</p>
         </div>
 
-        <div class="block">
-            {% if is_student %}
-            <h2>Save your results</h2>
-
-            <button type="button" class="a-btn" data-open-modal="modal-share-url">
-                Share results
-            </button>
-            <button type="button" class="a-btn" data-open-modal="modal-print">
-                Print results
-            </button>
-            {% else %}
-            <button type="button" class="a-btn" onclick="window.print()">
-                Print results
-            </button>
-            {% endif %}
-        </div>
+        {% include './results-save.html' %}
 
         {% if is_student %}
         <div class="block">
@@ -446,8 +431,6 @@
             </p>
         </div>
         {% endif %}
-
-        <aside></aside>
     </div>
 </div>
 {% endblock body_content %}
