@@ -1,5 +1,9 @@
 require( './CustomEvent-polyfill' );
 
+/**
+ * Holds the only reference to Modal instances, which are only created just
+ * before opened.
+ */
 let openModals = [];
 
 class Modal {
@@ -55,6 +59,11 @@ class Modal {
   }
 
   _addFocusTraps() {
+    if ( this.getElement().querySelector( '[data-trap]' ) ) {
+      // Traps already created
+      return;
+    }
+
     const before = document.createElement( 'a' );
     before.href = '#';
     before.setAttribute( 'data-trap', '0' );
