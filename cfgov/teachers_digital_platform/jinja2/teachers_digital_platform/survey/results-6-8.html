@@ -39,13 +39,12 @@
         {% set stroke_color = 'green' %}
         {% include 'results-graph.html' %}
 
-
         {# modal content #}
         {% include './modals/share-url.html' %}
         {% include './modals/print.html' %}
         {% include './modals/reset.html' %}
 
-        <p><strong>Now what?</strong> Review your results in more detail. Think about things you’re
+        <p class="tdp-survey-results__summary-p"><strong>Now what?</strong> Review your results in more detail. Think about things you’re
             doing well and ways you can improve your financial well-being. Be sure to save your results
             so you can see them again later or share them with your teacher or a trusted adult.</p>
 
@@ -92,12 +91,12 @@
                     {% set stroke_color = '#3b8a86' %}
                     {% include 'results-graph.html' %}
 
-                    <p>{{ progress.msg_html|safe }} Planning ahead, remembering information, juggling tasks, and controlling impulses
+                    <p class="tdp-survey-results__summary-p">{{ progress.msg_html|safe }} Planning ahead, remembering information, juggling tasks, and controlling impulses
                         are important skills for managing money.</p>
 
-                    <div style="display: flex">
+                    <div class="tdp-survey-results__2col">
                         <div>
-                            <h3>Examples of these skills:</h3>
+                            <h4>Examples of these skills:</h4>
                             <ul>
                                 <li>Being in control of your behavior</li>
                                 <li>Giving something up now so that you can have something better later</li>
@@ -106,10 +105,10 @@
                             </ul>
                         </div>
                         <div>
-                            <h3>Stop and think:</h3>
+                            <h4>Stop and think:</h4>
                             <ul>
-                                <li><i>Which skills in this area are your strongest?</i></li>
-                                <li><i>Which ones do you think can improve to help you along your money journey?</i></li>
+                                <li>Which skills in this area are your strongest?</li>
+                                <li>Which ones do you think can improve to help you along your money journey?</li>
                             </ul>
                         </div>
                     </div>
@@ -144,16 +143,17 @@
                         {% set car_position = (car_position * 100) + (150)  %}
                     {% endif %}
                     {% set level = progress.level_idx %}
-                    {% set color = '#519ad6' %} 
+                    {% set color = '#519ad6' %}
                     {% set stroke_color = '#205d90' %}
                     {% include 'results-graph.html' %}
-                    <p>{{ progress.msg_html|safe }} Money habits and values guide the way we spend and save money each day. These are the things we
+
+                    <p class="tdp-survey-results__summary-p">{{ progress.msg_html|safe }} Money habits and values guide the way we spend and save money each day. These are the things we
                         believe about money and the rules we set for ourselves to help us navigate our money
                         choices. </p>
 
-                    <div style="display: flex">
+                    <div class="tdp-survey-results__2col">
                         <div>
-                            <h3>Examples of these skills:</h3>
+                            <h4>Examples of these skills:</h4>
                             <ul>
                                 <li>Developing a positive attitude about saving and spending</li>
                                 <li>Making money choices based on your own values, not someone else’s</li>
@@ -162,10 +162,10 @@
                             </ul>
                         </div>
                         <div>
-                            <h3>Stop and think:</h3>
+                            <h4>Stop and think:</h4>
                             <ul>
-                                <li><i>Which skills in this area are your strongest?</i></li>
-                                <li><i>Which ones do you think can improve to help you along your money journey?</i></li>
+                                <li>Which skills in this area are your strongest?</li>
+                                <li>Which ones do you think can improve to help you along your money journey?</li>
                             </ul>
                         </div>
                     </div>
@@ -203,12 +203,13 @@
                     {% set color = '#FFCE8D' %}
                     {% set stroke_color = '#DC731C' %}
                     {% include 'results-graph.html' %}
-                    <p>{{ progress.msg_html|safe }} Money knowledge and choices means having the information and skills you need to make thoughtful
+
+                    <p class="tdp-survey-results__summary-p">{{ progress.msg_html|safe }} Money knowledge and choices means having the information and skills you need to make thoughtful
                         decisions about money.</p>
 
-                    <div style="display: flex">
+                    <div class="tdp-survey-results__2col">
                         <div>
-                            <h3>Examples of these skills:</h3>
+                            <h4>Examples of these skills:</h4>
                             <ul>
                                 <li>Understanding basic money concepts and using them with confidence</li>
                                 <li>Managing money to reach your goal</li>
@@ -217,10 +218,10 @@
                             </ul>
                         </div>
                         <div>
-                            <h3>Stop and think:</h3>
+                            <h4>Stop and think:</h4>
                             <ul>
-                                <li><i>Which skills in this area are your strongest?</i></li>
-                                <li><i>Which ones do you think you can improve to help you along your money journey?</i></li>
+                                <li>Which skills in this area are your strongest?</li>
+                                <li>Which ones do you think you can improve to help you along your money journey?</li>
                             </ul>
                         </div>
                     </div>
