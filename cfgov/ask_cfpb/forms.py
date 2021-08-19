@@ -1,7 +1,8 @@
 from django import forms
 from django.core.validators import RegexValidator
 
-from ask_cfpb.models.search import ASK_AUTOCOMPLETE_MAX, make_safe
+from ask_cfpb.models.search import make_safe
+from search.models import AUTOCOMPLETE_MAX_CHARS
 
 
 legacy_facet_validator = RegexValidator(
@@ -14,7 +15,7 @@ class AutocompleteForm(forms.Form):
     term = forms.CharField(strip=True)
 
     def clean_term(self):
-        return make_safe(self.cleaned_data['term'])[:ASK_AUTOCOMPLETE_MAX]
+        return make_safe(self.cleaned_data['term'])[:AUTOCOMPLETE_MAX_CHARS]
 
 
 class SearchForm(forms.Form):
