@@ -32,15 +32,15 @@ urlpatterns = [
     ),
 
     # Handle all results (expects signed cookie "resultsUrl")
-    path(
-        r'survey/results/',
+    re_path(
+        r'^survey/\d+-\d+/results/$',
         views.student_results,
         name='tdp_survey_student_results',
     ),
 
     # View a shared results page (expects ?r=...signed value)
-    path(
-        r'survey/view/',
+    re_path(
+        r'^survey/\d+-\d+/view/$',
         views.view_results,
         name='tdp_survey_view_results',
     ),

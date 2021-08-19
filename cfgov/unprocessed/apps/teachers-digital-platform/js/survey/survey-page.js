@@ -128,7 +128,7 @@ function handleNewSelections( data, store ) {
 function userTriedReentry() {
   if ( Cookie.get( RESULT_COOKIE ) ) {
     // Has not cleared results.
-    location.href = '../../results/';
+    location.href = '../results/';
     return true;
   }
 
