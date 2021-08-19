@@ -26,7 +26,14 @@
         </p>
         <p class="h1">Congratulations, {{ overall.heading_html|safe }}</p>
         <p class="h3"> {{ overall.msg_html|safe }}</p>
-        {% set car_position = ((overall.position_idx +1) * 140) - 50 %}
+        {% set car_position = overall.position_idx %}
+        {% if car_position < 2 >= 0 %}
+            {% set car_position = (car_position * 100) + (40) %}
+        {% elif car_position < 5 >= 2 %}
+            {% set car_position = (car_position * 100) + (100) %}
+        {% else %}
+            {% set car_position = (car_position * 100) + (150)  %}
+        {% endif %}
         {% set level = overall.level_idx %}
         {% set color = '#addc91' %}
         {% set stroke_color = 'green' %}
@@ -71,7 +78,14 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
-                    {% set car_position = ((progress.position_idx +1) * 140) - 50 %}
+                    {% set car_position = progress.position_idx %}
+                    {% if car_position < 2 >= 0 %}
+                        {% set car_position = (car_position * 100) + (40) %}
+                    {% elif car_position < 5 >= 2 %}
+                        {% set car_position = (car_position * 100) + (100) %}
+                    {% else %}
+                        {% set car_position = (car_position * 100) + (150)  %}
+                    {% endif %}
                     {% set level = progress.level_idx %}
                     {% set color = '#93c1bf' %}
                     {% set stroke_color = '#3b8a86' %}
@@ -120,7 +134,14 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
-                    {% set car_position = ((progress.position_idx +1) * 140) - 50 %}
+                    {% set car_position = progress.position_idx %}
+                    {% if car_position < 2 >= 0 %}
+                        {% set car_position = (car_position * 100) + (40) %}
+                    {% elif car_position < 5 >= 2 %}
+                        {% set car_position = (car_position * 100) + (100) %}
+                    {% else %}
+                        {% set car_position = (car_position * 100) + (150)  %}
+                    {% endif %}
                     {% set level = progress.level_idx %}
                     {% set color = '#519ad6' %}
                     {% set stroke_color = '#205d90' %}
@@ -170,7 +191,14 @@
             </span>
                 </button>
                 <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
-                    {% set car_position = ((progress.position_idx +1) * 140) - 50 %}
+                    {% set car_position = progress.position_idx %}
+                    {% if car_position < 2 >= 0 %}
+                        {% set car_position = (car_position * 100) + (40) %}
+                    {% elif car_position < 5 >= 2 %}
+                        {% set car_position = (car_position * 100) + (100) %}
+                    {% else %}
+                        {% set car_position = (car_position * 100) + (150)  %}
+                    {% endif %}
                     {% set level = progress.level_idx %}
                     {% set color = '#FFCE8D' %}
                     {% set stroke_color = '#DC731C' %}
