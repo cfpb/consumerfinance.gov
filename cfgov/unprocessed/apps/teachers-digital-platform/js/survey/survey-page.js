@@ -202,6 +202,8 @@ function initErrorHandling() {
 
       submitEvt.preventDefault();
       ul.textContent = '';
+
+      ChoiceField.removeErrors();
       unsets.forEach( cf => {
         cf.markError();
 
