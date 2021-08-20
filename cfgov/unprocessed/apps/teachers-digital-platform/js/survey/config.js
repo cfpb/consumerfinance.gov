@@ -4,4 +4,6 @@ const SURVEY_COOKIE = 'wizard_survey_wizard';
 
 const RESULT_COOKIE = 'resultUrl';
 
-export { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE };
+const INITIALS_LIMIT = 4;
+
+export { ANSWERS_SESS_KEY, INITIALS_LIMIT, RESULT_COOKIE, SURVEY_COOKIE };

@@ -1,5 +1,10 @@
 const Cookie = require( 'js-cookie' );
-const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } = require( './config' );
+const {
+  ANSWERS_SESS_KEY,
+  INITIALS_LIMIT,
+  RESULT_COOKIE,
+  SURVEY_COOKIE
+} = require( './config' );
 const encodeName = require( '../encode-name' );
 const modals = require( '../modals' );
 const initials = require( './initials' );
@@ -50,7 +55,10 @@ function withValidInitials( desc, cb ) {
   } );
 
   ini.addEventListener( 'input', () => {
-    const fixed = String( ini.value ).toUpperCase().trim().substr( 0, 3 );
+    const fixed = String( ini.value )
+      .toUpperCase()
+      .trim()
+      .substr( 0, INITIALS_LIMIT );
 
     // Set value in both modals
     const allSetters = document.querySelectorAll( '.tdp-survey__initials' );

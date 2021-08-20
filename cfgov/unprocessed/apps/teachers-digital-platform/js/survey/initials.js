@@ -1,3 +1,4 @@
+const { INITIALS_LIMIT } = require( './config' );
 const encodeName = require( '../encode-name' );
 
 const $ = document.querySelector.bind( document );
@@ -41,7 +42,7 @@ function get() {
 function init() {
   // Show initials encoded in URL hash
   let fromUrl = encodeName.decodeNameFromUrl( location.href ) || '';
-  if ( fromUrl.length > 4 ) {
+  if ( fromUrl.length > INITIALS_LIMIT ) {
     // Definitely invalid, reject.
     fromUrl = '';
   }
