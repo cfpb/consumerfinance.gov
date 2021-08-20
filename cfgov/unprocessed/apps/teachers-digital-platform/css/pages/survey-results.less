@@ -123,3 +123,38 @@
         margin-left: 0.3rem;
     }
 }
+
+.tdp-survey-results__wrapper {
+    position: relative;
+}
+
+.tdp-survey-results__marker {
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 13px;
+    display: none;
+    position: absolute;
+    .respond-to-min(@bp-xl-min, {
+        display: block;
+    });
+    &.starting-out {
+        left: 0%;
+    }
+    &.on-the-road {
+        left: 32.5%;
+    }
+    &.well-on-your-way {
+        left: 77.5%;
+    }
+    &.active {
+        background-image:url("/static/apps/teachers-digital-platform/img/marker.svg");
+        font-weight: 700;
+        padding-left: 17px;
+        .respond-to-max(@bp-lg-max, {
+            display: block;
+            left: 0;
+            margin-bottom: -10px;
+            position: relative;
+        });
+    }
+}

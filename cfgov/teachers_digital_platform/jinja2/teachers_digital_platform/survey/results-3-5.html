@@ -26,7 +26,7 @@
         </p>
         <p class="h1">Congratulations, {{ overall.heading_html|safe }}</p>
         <p class="h3"> {{ overall.msg_html|safe }}</p>
-        {% set car_position = ((overall.position_idx +1) * 140) - 50 %}
+        {% set car_position = overall.position_idx %}
         {% if car_position < 2 >= 0 %}
             {% set car_position = (car_position * 100) + (40) %}
         {% elif car_position < 5 >= 2 %}
