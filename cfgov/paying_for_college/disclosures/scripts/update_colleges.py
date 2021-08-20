@@ -18,7 +18,7 @@ from paying_for_college.disclosures.scripts.api_utils import (
     DECIMAL_MAP, MODEL_MAP
 )
 from paying_for_college.models import (
-    CONTROL_MAP, FAKE_SCHOOL_PK, OFFICE_IDS, PROGRAM_LEVELS, Program, School
+    CONTROL_MAP, FAKE_SCHOOL_PKS, OFFICE_IDS, PROGRAM_LEVELS, Program, School
 )
 
 
@@ -168,7 +168,7 @@ def update(exclude_ids=[], single_school=None, store_programs=False):
     """
     programs_created = 0
 
-    excluded_ids = OFFICE_IDS + [FAKE_SCHOOL_PK] + exclude_ids
+    excluded_ids = OFFICE_IDS + FAKE_SCHOOL_PKS + exclude_ids
     no_data = []  # API failed to respond or provided no data
     closed = []  # schools that have closed since our last scrape
     job_msg = (

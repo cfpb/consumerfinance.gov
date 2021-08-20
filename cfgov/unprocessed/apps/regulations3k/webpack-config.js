@@ -103,7 +103,8 @@ const SERVICE_WORKER_CONFIG = {
         }
       }
     }
-  ]
+  ],
+  inlineWorkboxRuntime: true
 };
 
 const conf = {

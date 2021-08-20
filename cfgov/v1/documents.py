@@ -5,8 +5,8 @@ from django.utils.html import strip_tags
 
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
+from elasticsearch_dsl import A
 from elasticsearch_dsl.query import MultiMatch
-from flags.state import flag_enabled
 
 from search.elasticsearch_helpers import environment_specific_index
 from v1.models.blog_page import BlogPage, LegacyBlogPage
@@ -161,23 +161,18 @@ class FilterablePagesDocumentSearch:
 
     def search_title(self, title=''):
         if title not in ([], '', None):
-            if flag_enabled('EXPAND_FILTERABLE_LIST_SEARCH'):
-                query = MultiMatch(
-                    query=title,
-                    fields=[
-                        'title^10',
-                        'tags.name^10',
-                        'content',
-                        'preview_description'
-                    ],
-                    type="phrase_prefix",
-                    slop=2
-                )
-                self.search_obj = self.search_obj.query(query)
-            else:
-                self.search_obj = self.search_obj.query(
-                    "match", title={"query": title, "operator": "AND"}
-                )
+            query = MultiMatch(
+                query=title,
+                fields=[
+                    'title^10',
+                    'tags.name^10',
+                    'content',
+                    'preview_description'
+                ],
+                type="phrase_prefix",
+                slop=2
+            )
+            self.search_obj = self.search_obj.query(query)
 
     def order(self, order_by='-date_published'):
         """ Sort results by the given field """
@@ -213,7 +208,12 @@ class FilterablePagesDocumentSearch:
         https://elasticsearch-dsl.readthedocs.io/en/latest/search_dsl.html#response
         """
         self.order(order_by=order_by)
-        return self.search_obj[0:self.count()].execute()
+        search = self.search_obj[0:self.count()]
+
+        # Also aggregate unique languages in the result.
+        search.aggs.bucket('languages', A('terms', field='language'))
+
+        return search.execute()
 
 
 class EventFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):

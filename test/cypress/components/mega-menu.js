@@ -40,6 +40,10 @@ export class MegaMenu {
     return this.megaMenu( 'trigger' ).click( { force: true } );
   }
 
+  focusTriggerBtn() {
+    return this.megaMenu( 'trigger' ).focus();
+  }
+
   contentElementItem() {
     return this.megaMenuContent( 'item' );
   }

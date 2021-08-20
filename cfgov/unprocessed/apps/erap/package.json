@@ -1,0 +1,18 @@
+{
+  "name": "erap",
+  "version": "1.0.0",
+  "description": "This is our local implementation of the emergency rental assistance program tool, see github url below for more information",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
+  "private": "true",
+  "dependencies": {
+    "@cfpb/rental-assistance-finder": "0.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cfpb/rental-assistance-finder.git"
+  }
+}

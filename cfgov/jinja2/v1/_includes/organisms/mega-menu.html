@@ -309,12 +309,15 @@
             aria-haspopup="menu">
         <span class="{{ base_class ~ '_trigger-open' }}">
             {{ svg_icon('menu') }}
+            <span class="u-visually-hidden">
+                {{ _('Open the main menu') }}
+            </span>
         </span>
         <span class="{{ base_class ~ '_trigger-close' }}">
             {{ svg_icon('close') }}
-        </span>
-        <span class="u-visually-hidden">
-            Main menu
+            <span class="u-visually-hidden">
+                {{ _('Close the main menu') }}
+            </span>
         </span>
     </button>
    {# Create a root menu at depth one.
