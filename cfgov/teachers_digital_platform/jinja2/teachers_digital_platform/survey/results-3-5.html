@@ -24,7 +24,7 @@
             Your money journey results<span aria-hidden="true" style="display:none"
                                             class="initials-display">: <span class="initials-value"></span></span>
         </p>
-        <p class="h1">Congratulations, {{ overall.heading_html|safe }}</p>
+        <h1>Congratulations, {{ overall.heading_html|safe }}</h1>
         <p class="h3"> {{ overall.msg_html|safe }}</p>
         {% set car_position = overall.position_idx %}
         {% if car_position < 2 >= 0 %}
@@ -49,7 +49,7 @@
                 well and things you could do better. Be sure to save your results so you can see them again
                 later or share them with your teacher or a trusted adult.</p>
         </div>
-
+        <hr>
         <div class="block">
             <h2>Your money journey</h2>
 
@@ -98,8 +98,10 @@
                     {% set stroke_color = '#3b8a86' %}
                     {% include 'results-graph.html' %}
 
-                    <p class="tdp-survey-results__summary-p">{{ progress.msg_html|safe }} To make progress in this subject, practice things like planning ahead,
-                        remembering information, and solving problems.</p>
+                    <div class="block">
+                        <p>{{ progress.msg_html|safe }} To make progress in this subject, practice things like planning ahead,
+                            remembering information, and solving problems.</p>
+                    </div>
                 </div>
             </div>
             {% set bb = 1 %}
@@ -134,8 +136,11 @@
                     {% set color = '#519ad6' %}
                     {% set stroke_color = '#205d90' %}
                     {% include 'results-graph.html' %}
-                    <p class="tdp-survey-results__summary-p">{{ progress.msg_html|safe }} To advance in this subject, practice having a positive attitude about saving
-                        and spending and make your own rules about money.</p>
+
+                    <div class="block">
+                        <p>{{ progress.msg_html|safe }} To advance in this subject, practice having a positive attitude about saving
+                            and spending and make your own rules about money.</p>
+                    </div>
                 </div>
             </div>
             {% set bb = 2 %}
@@ -170,12 +175,14 @@
                     {% set color = '#FFCE8D' %}
                     {% set stroke_color = '#DC731C' %}
                     {% include 'results-graph.html' %}
-                    <p class="tdp-survey-results__summary-p">{{ progress.msg_html|safe }} To get farther in this subject, learn facts about saving and spending money
-                        and use what you’ve learned to make the best money choices for you.</p>
+                    <div class="block">
+                        <p>{{ progress.msg_html|safe }} To get farther in this subject, learn facts about saving and spending money
+                            and use what you’ve learned to make the best money choices for you.</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="block">
+        <div class="o-well block">
             <h2>Stop and think</h2>
             <p>Which path is your strongest? Which one do you want to work on?</p>
 
@@ -187,14 +194,14 @@
                 your parents, or another trusted adult about your money map. They can also help
                 you set your goals.</p>
 
-            <p>Remember: You are on a money journey that will last your whole life. Everyone, no
+            <p><strong>Remember:</strong> You are on a money journey that will last your whole life. Everyone, no
                 matter how old or young they are, can always get better at managing money.</p>
         </div>
 
         {% include './results-save.html' %}
 
         {% if is_student %}
-        <div class="block">
+        <div class="survey-reset--link--wrap">
             <p>
                 <button class="a-btn a-btn__link a-btn__warning" data-open-modal="modal-reset">
                     Reset survey and start over

@@ -72,7 +72,7 @@ ChoiceField.findUnsets = () => Object
 ChoiceField.removeErrors = () => {
   errorIndicators.forEach( el => el.remove() );
   errorIndicators = [];
-}
+};
 
 /**
  * Synchronize unset choices from the store and set choices to the store.

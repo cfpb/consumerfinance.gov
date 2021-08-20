@@ -37,17 +37,19 @@ ul.tdp-survey__choice-question {
                     display: inline-block;
                     margin-right: 5px;
                 });
-                // &:focus {
-                //     outline: none;
-                //     &::after {
-                //         content: '';
-                //         height: 30px;
-                //         outline: dotted 1px #0072ce;
-                //         outline-offset: 1px;
-                //         position: absolute;
-                //         width: 90px;
-                //     }
-                // }
+                &:focus {
+                    outline: none;
+                    &::after {
+                        bottom: 0;
+                        content: '';
+                        left: 0;
+                        outline: dotted 1px #0072ce;
+                        outline-offset: 1px;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                    }
+                }
             }
             &:last-of-type {
                 padding-right: 0;
@@ -277,8 +279,8 @@ p {
     }
 }
 
-.survey-start-over {
-    margin-top: 1rem;
+.survey-reset--link--wrap {
+    margin-top: 1.5rem;
 }
 
 .ChoiceField {

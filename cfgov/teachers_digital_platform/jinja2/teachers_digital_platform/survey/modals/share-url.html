@@ -1,4 +1,5 @@
 {% set id = 'modal-share-url' %}
+{% set INITIALS_LIMIT = 4 %}
 <div class="o-modal"
      id="{{ id }}"
      tabindex="0"
@@ -23,13 +24,13 @@
           </div>
 
           <label class="a-label a-label__heading" for="{{ id }}-initials-input">
-            Enter your intials to get a shareable link.
+            Enter your initials to get a shareable link.
           </label>
           <input class="a-text-input tdp-survey__initials"
                  type="text"
                  id="{{ id }}-initials-input"
                  required
-                 maxlength="3"
+                 maxlength="{{ INITIALS_LIMIT }}"
                  autocomplete="off">
           <div style="margin-top:1rem">
             <button class="a-btn tdp-survey__initials-set">Get link</button>
