@@ -1,6 +1,8 @@
 const $ = document.querySelector.bind( document );
 const $$ = document.querySelectorAll.bind( document );
 
+let errorIndicators = [];
+
 class ChoiceField {
   constructor( name ) {
     this.name = name;
@@ -32,15 +34,6 @@ class ChoiceField {
   markError() {
     const ul = this.getUl();
 
-    // Check existing alert
-    /**
-     * @type {HTMLDivElement}
-     */
-    const error = ul.previousElementSibling;
-    if ( error && error.classList.contains( 'a-form-alert' ) ) {
-      return;
-    }
-
     /**
      * @type {HTMLDivElement}
      */
@@ -50,6 +43,7 @@ class ChoiceField {
 
     ul.parentNode.insertBefore( alert, ul );
     alert.removeAttribute( 'hidden' );
+    errorIndicators.push( alert );
   }
 }
 
@@ -71,6 +65,14 @@ ChoiceField.get = name => {
 ChoiceField.findUnsets = () => Object
   .values( ChoiceField.cache )
   .filter( cf => cf.value === null );
+
+/**
+ * Remove all the error indicators
+ */
+ChoiceField.removeErrors = () => {
+  errorIndicators.forEach( el => el.remove() );
+  errorIndicators = [];
+}
 
 /**
  * Synchronize unset choices from the store and set choices to the store.

@@ -128,7 +128,7 @@ function handleNewSelections( data, store ) {
 function userTriedReentry() {
   if ( Cookie.get( RESULT_COOKIE ) ) {
     // Has not cleared results.
-    location.href = '../../results/';
+    location.href = '../results/';
     return true;
   }
 
@@ -163,16 +163,21 @@ function initProgressListener() {
      * @type {ProgressBar}
      */
     const pb = event.detail.progressBar;
-    const outOfEl = $( '.tdp-survey-progress-out-of' );
+
+    // The heading is duplicated, so we must update both
+    const outOfEls = $$( '.tdp-survey-progress-out-of' );
+
     const circle = $( '.tdp-survey-progress__circle' );
     const texts = [].slice.call( $$( '.tdp-survey-progress__svg text' ) );
-    if ( !outOfEl || !circle || texts.length < 3 ) {
+    if ( !outOfEls.length || !circle || texts.length < 3 ) {
       return;
     }
 
     const perc = `${ pb.getPercentage() }%`;
 
-    outOfEl.innerHTML = `<b>${ pb.numDone }</b> of <b>${ pb.totalNum }</b>`;
+    [].forEach.call( outOfEls, el => {
+      el.innerHTML = `<b>${ pb.numDone }</b> of <b>${ pb.totalNum }</b>`;
+    } );
 
     texts[0].textContent = perc;
     texts[1].textContent = `${ pb.numDone }/${ pb.totalNum } questions`;
@@ -202,6 +207,8 @@ function initErrorHandling() {
 
       submitEvt.preventDefault();
       ul.textContent = '';
+
+      ChoiceField.removeErrors();
       unsets.forEach( cf => {
         cf.markError();
 

@@ -141,7 +141,7 @@ function handleResetModal() {
         modals.close( 'modal-reset' );
       } else {
         Cookie.remove( RESULT_COOKIE );
-        location.href = '../';
+        location.href = '../../';
       }
     }
   } );

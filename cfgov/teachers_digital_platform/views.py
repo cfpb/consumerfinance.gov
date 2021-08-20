@@ -50,8 +50,8 @@ class SurveyWizard(NamedUrlCookieWizardView):
         # value fails to pass the sig check.
         signed = _signer.sign(encoded)
 
-        # Send to results page
-        response = HttpResponseRedirect('../../results/')
+        # Send to results page (current URL is survey/6-8/done/ )
+        response = HttpResponseRedirect('../results/')
         response.set_cookie('resultUrl', signed)
         response.delete_cookie('wizard_survey_wizard')
         return response
@@ -110,7 +110,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
     url_encoder = UrlEncoder(AVAILABLE_SURVEYS)
     res = url_encoder.loads(code)
     if res is None:
-        return HttpResponseRedirect('../')
+        return HttpResponseRedirect('../../')
 
     survey = get_survey(res['key'])
     total = sum(res['subtotals'])
@@ -141,13 +141,13 @@ def student_results(request: HttpRequest):
         return HttpResponse(status=404)
 
     if 'resultUrl' not in request.COOKIES:
-        return HttpResponseRedirect('../')
+        return HttpResponseRedirect('../../')
 
     raw = request.COOKIES['resultUrl']
     try:
         result_url = _signer.unsign(raw)
     except signing.BadSignature:
-        return HttpResponseRedirect('../')
+        return HttpResponseRedirect('../../')
 
     return _handle_result_url(request, raw, result_url, True)
 
@@ -161,12 +161,12 @@ def view_results(request: HttpRequest):
 
     raw = request.GET['r']
     if not isinstance(raw, str):
-        return HttpResponseRedirect('../')
+        return HttpResponseRedirect('../../')
 
     try:
         result_url = _signer.unsign(raw)
     except signing.BadSignature:
-        return HttpResponseRedirect('../')
+        return HttpResponseRedirect('../../')
 
     return _handle_result_url(request, raw, result_url, False)
 
