@@ -1,5 +1,5 @@
 .tdp-survey-layout {
-    .respond-to-max(@bp-xs-max, {
+    .respond-to-max(@bp-sm-max, {
         @supports ( display: flex ) {
             display: flex;
             flex-direction: column-reverse;
@@ -17,7 +17,7 @@ ul.tdp-survey__choice-question {
         margin: 10px 0 30px;
         padding: 0 0 20px 25px;
         position: relative;
-        .respond-to-min(@bp-sm-min, {
+        .respond-to-min(@bp-lg-min, {
             @supports ( display: flex ) {
                 display: flex;
             }
@@ -33,7 +33,7 @@ ul.tdp-survey__choice-question {
                 display: block;
                 margin-bottom: 5px;
                 transform: scale(1.5);
-                .respond-to-max(@bp-xs-max, {
+                .respond-to-max(@bp-med-max, {
                     display: inline-block;
                     margin-right: 5px;
                 });
@@ -62,7 +62,7 @@ ul.tdp-survey__choice-question {
         }
         label {
             &::before {
-                .respond-to-min(@bp-sm-min, {
+                .respond-to-min(@bp-lg-min, {
                     background-color: @gray-40;
                     content: '';
                     height: 1px;
@@ -148,7 +148,7 @@ p {
 .tdp-survey-sidebar__mobile-control {
     display: flex;
     flex-direction: column-reverse;
-    .respond-to-min(@bp-sm-min, {
+    .respond-to-min(@bp-med-min, {
         display: none;
     });
 }
@@ -311,4 +311,11 @@ p {
             text-indent: 0 !important;
         }
     }
+}
+
+.u-visually-hidden-on-tablet {
+    display: none;
+    .respond-to-min(@bp-med-min, {
+        display: block;
+    });
 }
