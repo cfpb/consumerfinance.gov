@@ -22,15 +22,6 @@ urlpatterns = [
         lambda request: ServeView.as_view()(request, request.path)
     ),
 
-    # Temporary, remove after wagtail page added
-    path(
-        r'survey/',
-        TemplateView.as_view(
-            template_name=f'{_tdp}/survey/intro.html'
-        ),
-        name='tdp_survey_intro',
-    ),
-
     # Handle all results (expects signed cookie "resultsUrl")
     re_path(
         r'^survey/\d+-\d+/results/$',
