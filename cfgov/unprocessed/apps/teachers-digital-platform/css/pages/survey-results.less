@@ -14,6 +14,13 @@
             padding-right: 10px;
         }
     }
+    .o-expandable_content {
+        @media print {
+            display: block!important;
+            overflow: auto;
+            max-height: none!important;
+        }
+    }
 }
 
 .tdp-survey-results__2col {
@@ -137,6 +144,9 @@
     .respond-to-min(@bp-xl-min, {
         display: block;
     });
+    @media print {
+        display: block;
+    }
     &.starting-out {
         left: 0%;
     }
@@ -150,11 +160,11 @@
         background-image:url("/static/apps/teachers-digital-platform/img/marker.svg");
         font-weight: 700;
         padding-left: 17px;
-        .respond-to-max(@bp-lg-max, {
+        @media screen and (max-width: 900px) {
             display: block;
-            left: 0;
             margin-bottom: -10px;
+            left: 0;
             position: relative;
-        });
+        }
     }
 }
