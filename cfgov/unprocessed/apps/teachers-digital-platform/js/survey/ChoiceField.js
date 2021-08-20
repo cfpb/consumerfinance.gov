@@ -6,7 +6,7 @@ let errorIndicators = [];
 class ChoiceField {
   constructor( name ) {
     this.name = name;
-    this.inputs = [].slice.call( $$( `.ChoiceField[name="${ name }"]` ) );
+    this.inputs = [].slice.call( $$( `input.ChoiceField[name="${ name }"]` ) );
     this.value = null;
     [].forEach.call( this.inputs, input => {
       if ( input.checked ) {

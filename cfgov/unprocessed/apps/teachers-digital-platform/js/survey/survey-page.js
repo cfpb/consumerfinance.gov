@@ -22,6 +22,10 @@ let progressBar;
  * Initialize a survey page
  */
 function surveyPage() {
+  // Decorative transformations
+  indentQuestionsByNumber();
+  breakSeparatedAnswers();
+
   if ( userTriedReentry() ) {
     return;
   }
@@ -48,11 +52,6 @@ function surveyPage() {
 
   initErrorHandling();
   allowStartOver();
-  dontSelectFirst();
-
-  // Decorative transformations
-  indentQuestionsByNumber();
-  breakSeparatedAnswers();
 }
 
 /**
@@ -212,10 +211,10 @@ function initErrorHandling() {
       unsets.forEach( cf => {
         cf.markError();
 
-        const el = cf.getUl().previousElementSibling.previousElementSibling;
+        const el = cf.getUl().parentElement;
         const link = document.createElement( 'a' );
         link.href = '#';
-        link.textContent = el.textContent;
+        link.textContent = el.querySelector( 'label' ).textContent;
         link.addEventListener( 'click', clickEvt => {
           clickEvt.preventDefault();
           scrollToEl( el );
@@ -260,12 +259,13 @@ function indentQuestionsByNumber() {
   /**
    * @type {HTMLElement[]}
    */
-  const strongs = [].slice.call( $$( '.tdp-survey-page p > label > strong' ) );
+  const strongs = [].slice.call( $$( '.tdp-question-legend > strong' ) );
   strongs.forEach( strong => {
-    const offset = strong.getBoundingClientRect().width;
-    const p = strong.parentElement.parentElement;
-    p.style.marginLeft = `${ offset }px`;
-    p.style.textIndent = `-${ offset }px`;
+    const offset = Math.round(strong.getBoundingClientRect().width + 3);
+    const legend = strong.parentElement;
+    const li = legend.parentElement;
+    li.style.paddingLeft = `${ offset }px`;
+    legend.style.textIndent = `-${ offset }px`;
   } );
 }
 
@@ -301,7 +301,7 @@ function breakSeparatedAnswers() {
   /**
    * @type {HTMLLabelElement[]}
    */
-  const labels = [].slice.call( $$( '.ChoiceField li label' ) );
+  const labels = [].slice.call( $$( '.ChoiceField .a-label' ) );
   labels.forEach( label => {
     if ( label.closest( 'li:first-child' ) === label.parentElement ) {
       // Reset to "a"
@@ -322,21 +322,6 @@ function breakSeparatedAnswers() {
     }
 
     charCode += 1;
-  } );
-}
-
-/**
- * If a user clicks a question label, don't auto-select the first element
- *
- * For radios, Django naively points its question-level label to the first
- * radio option, which seems wrong and causes a click to select it.
- */
-function dontSelectFirst() {
-  document.addEventListener( 'click', event => {
-    const label = event.target.closest( 'p label[for]' );
-    if ( label && ( /_0$/ ).test( label.htmlFor ) ) {
-      event.preventDefault();
-    }
   } );
 }
 
