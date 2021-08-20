@@ -27,50 +27,52 @@ ul.tdp-survey__choice-question {
             padding-right: 1rem;
             position: relative;
             width: 100%;
-            input {
-                -ms-transform: scale(1.5); /* IE 9 */
-                -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
-                display: block;
-                margin-bottom: 5px;
-                transform: scale(1.5);
-                .respond-to-max(@bp-xs-max, {
-                    display: inline-block;
-                    margin-right: 5px;
-                });
-                &:focus {
-                    outline: none;
-                    &::after {
-                        content: '';
-                        height: 30px;
-                        outline: dotted 1px #0072ce;
-                        outline-offset: 1px;
-                        position: absolute;
-                        width: 90px;
-                    }
-                }
-            }
-            &:last-of-type {
-                padding-right: 0;
-                label {
-                    &::before {
-                        display: none;
-                    }
-                }
-            }
+            //input {
+            //    -ms-transform: scale(1.5); /* IE 9 */
+            //    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            //    display: block;
+            //    margin-bottom: 5px;
+            //    transform: scale(1.5);
+            //    .respond-to-max(@bp-xs-max, {
+            //        display: inline-block;
+            //        margin-right: 5px;
+            //    });
+            //    &:focus {
+            //        outline: none;
+            //        &::after {
+            //            bottom: 0;
+            //            content: '';
+            //            left: 0;
+            //            outline: dotted 1px #0072ce;
+            //            outline-offset: 1px;
+            //            position: absolute;
+            //            right: 0;
+            //            top: 0;
+            //        }
+            //    }
+            //}
+            //&:last-of-type {
+            //    padding-right: 0;
+            //    label {
+            //        &::before {
+            //            display: none;
+            //        }
+            //    }
+            //}
         }
-        label {
-            &::before {
-                .respond-to-min(@bp-sm-min, {
-                    background-color: @gray-40;
-                    content: '';
-                    height: 1px;
-                    left: 12px;
-                    position: absolute;
-                    top: 6px;
-                    width: 100%;
-                });
-            }
-        }
+        //label {
+        //    &::before {
+        //        .respond-to-min(@bp-sm-min, {
+        //            background-color: @gray-40;
+        //            content: '';
+        //            height: 1px;
+        //            left: 12px;
+        //            position: absolute;
+        //            top: 6px;
+        //            width: 100%;
+        //        });
+        //    }
+        //}
     }
     &.tdp-survey__atype-GetGame,
     &.tdp-survey__atype-GameThink,
