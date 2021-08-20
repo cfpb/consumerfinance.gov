@@ -21,7 +21,7 @@
     <button class="o-expandable_header o-expandable_target"
             title="Expand content">
         <h3 class="h4 o-expandable_header-left o-expandable_label">
-            {{ heading }}
+            {{ heading|safe }}
         </h3>
         <span class="o-expandable_header-right o-expandable_link">
             <span class="o-expandable_cue o-expandable_cue-open">
@@ -36,7 +36,7 @@
     </button>
     <div class="o-expandable_content">
         <p>
-            {{ content }}
+            {{ content|safe }}
         </p>
     </div>
 </div>
