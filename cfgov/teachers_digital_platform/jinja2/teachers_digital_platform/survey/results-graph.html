@@ -1,3 +1,8 @@
+<div class="tdp-survey-results__wrapper">
+  <span class="tdp-survey-results__marker starting-out{% if level == 0 %} active{% endif %}">Starting out</span>
+  <span class="tdp-survey-results__marker on-the-road{% if level == 1 %} active{% endif %}">On the road</span>
+  <span class="tdp-survey-results__marker well-on-your-way{% if level == 2 %} active{% endif %}">Well on your way</span>
+</div>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 123">
     <g>
       <g>
@@ -5,39 +10,12 @@
         <path d="M 270 33 V 119" stroke="{{ stroke_color }}" />
       </g>
       <g>
-        <rect x="271" y="32" width="360" height="88" fill="{{ color }}" class="svg-on-the-road" style="fill-opacity: .6;"/>
+        <rect x="271" y="32" width="361" height="88" fill="{{ color }}" class="svg-on-the-road" style="fill-opacity: .6;"/>
         <path d="M 631 33 V 119" stroke="{{ stroke_color }}" />
       </g>
       <g>
         <rect x="632" y="32" width="180" height="88" fill="{{ color }}" class="well-on-your-way" style="fill-opacity: 1;"/>
       </g>
-
-      {% if level != 0 %}
-      <text transform="translate(0 20)" font-size="18" fill="#101820" font-family="AvenirNext-Medium, Avenir Next" font-weight="500">Starting out</text>
-      {% else %}
-      <text transform="translate(25 20)" font-size="18" fill="#101820" font-family="AvenirNext-Medium, Avenir Next" font-weight="700">Starting out</text>
-      <g id="marker">
-        <path d="M10.61,29.31 C10.6957769,29.4156487 10.8239306,29.4778948 10.96,29.48 L10.96,29.48 C11.0928794,29.4763328 11.2173386,29.4141032 11.3,29.31 C11.3,29.31 13.73,26.14 16.11,22.31 C19.32,17.11 20.96,13.17 20.96,10.57 C20.96,5.0471525 16.4828475,0.57 10.96,0.57 C5.4371525,0.57 0.96,5.0471525 0.96,10.57 C0.96,13.22 2.59,17.18 5.8,22.36 C8.18,26.17 10.59,29.28 10.61,29.31 Z" id="Path"></path>
-      </g>
-      {% endif %}
-        
-      {% if level != 1 %}
-      <text transform="translate(265 20)" font-size="18" fill="#101820" font-family="AvenirNext-Medium, Avenir Next" font-weight="500">On the road</text>
-      {% else %}
-      <text transform="translate(285 20)" font-size="18" fill="#101820" font-family="AvenirNext-Medium, Avenir Next" font-weight="700">On the road</text>
-      <g id="marker" transform="translate(259 0)">
-        <path d="M10.61,29.31 C10.6957769,29.4156487 10.8239306,29.4778948 10.96,29.48 L10.96,29.48 C11.0928794,29.4763328 11.2173386,29.4141032 11.3,29.31 C11.3,29.31 13.73,26.14 16.11,22.31 C19.32,17.11 20.96,13.17 20.96,10.57 C20.96,5.0471525 16.4828475,0.57 10.96,0.57 C5.4371525,0.57 0.96,5.0471525 0.96,10.57 C0.96,13.22 2.59,17.18 5.8,22.36 C8.18,26.17 10.59,29.28 10.61,29.31 Z" id="Path"></path>
-      </g>
-      {% endif %}
-
-      {% if level != 2 %}
-      <text transform="translate(630 20)" font-size="18" fill="#101820" font-family="AvenirNext-Medium, Avenir Next" font-weight="500">Well on your way</text>
-      {% else %}
-      <text transform="translate(645 20)" font-size="18" fill="#101820" font-family="AvenirNext-Medium, Avenir Next" font-weight="700">Well on your way</text>
-      <g id="marker" transform="translate(620 0)">
-        <path d="M10.61,29.31 C10.6957769,29.4156487 10.8239306,29.4778948 10.96,29.48 L10.96,29.48 C11.0928794,29.4763328 11.2173386,29.4141032 11.3,29.31 C11.3,29.31 13.73,26.14 16.11,22.31 C19.32,17.11 20.96,13.17 20.96,10.57 C20.96,5.0471525 16.4828475,0.57 10.96,0.57 C5.4371525,0.57 0.96,5.0471525 0.96,10.57 C0.96,13.22 2.59,17.18 5.8,22.36 C8.18,26.17 10.59,29.28 10.61,29.31 Z" id="Path"></path>
-      </g>
-      {% endif %}
 
       <line y1="73" x2="810" y2="73" fill="none" stroke="#101820" stroke-miterlimit="10" stroke-dasharray="4 6"/>
     </g>
