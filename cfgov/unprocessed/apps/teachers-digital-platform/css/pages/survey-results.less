@@ -3,10 +3,16 @@
         font-weight: 500;
         margin-top: 2em;
     }
-    .h1 {
+    h1 {
         margin-top: 0;
-    }
 
+        + p {
+            margin-bottom: 2rem;
+        }
+    }
+    .block {
+        margin: 2rem 0;
+    }
     .o-expandable_header-left {
         align-items: center;
         display: flex;
@@ -30,10 +36,6 @@
             margin-right: 2rem;
         }
     });
-}
-
-.tdp-survey-results__summary-p {
-    margin-top: 1rem;
 }
 
 .share-output:not([hidden]) {
@@ -119,6 +121,19 @@
 }
 
 .tdp-survey__save-block {
+    // Fix CFPB's group
+    .m-btn-group {
+        line-height: 3;
+
+        .a-btn {
+            margin-left: 0;
+            margin-right: .375em;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
     .a-btn svg {
         margin-left: 0.3rem;
     }
