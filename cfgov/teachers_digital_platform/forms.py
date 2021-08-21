@@ -27,8 +27,8 @@ def _replace_labels(html: str) -> str:
     Replace Django's question-level labels with legend elements
     """
     return re.sub(
-        '<fieldset><label ([^>]+)>(.*?)</label>',
-        lambda m: f'<fieldset><legend class="tdp-question-legend">{m[2]}</legend>',  # noqa E501
+        '<fieldset><label [^>]+>(.*?)</label>',
+        lambda m: f'<fieldset><legend class="tdp-question-legend">{m[1]}</legend>',  # noqa E501
         html,
     )
 
