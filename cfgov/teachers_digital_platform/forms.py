@@ -2,7 +2,7 @@ import re
 import secrets
 
 from django.forms import Form
-from django.utils.safestring import SafeData, mark_safe
+from django.utils.safestring import mark_safe
 
 
 # Don't allow this to be guessable
@@ -27,8 +27,8 @@ def _replace_labels(html: str) -> str:
     Replace Django's question-level labels with legend elements
     """
     return re.sub(
-        f'<fieldset><label ([^>]+)>(.*?)</label>',
-        lambda m: f'<fieldset><legend class="tdp-question-legend">{m[2]}</legend>',
+        '<fieldset><label ([^>]+)>(.*?)</label>',
+        lambda m: f'<fieldset><legend class="tdp-question-legend">{m[2]}</legend>',  # noqa E501
         html,
     )
 
@@ -51,7 +51,7 @@ class SurveyForm(Form):
     def as_ul(self):
         "Return this form rendered as HTML <li>s -- excluding the <ul></ul>."
         output = self._html_output(
-            normal_row='<li%(html_class_attr)s>%(errors)s<fieldset>%(label)s %(field)s%(help_text)s</fieldset></li>',
+            normal_row='<li%(html_class_attr)s>%(errors)s<fieldset>%(label)s %(field)s%(help_text)s</fieldset></li>',  # noqa E501
             error_row='<li>%s</li>',
             row_ender='</li>',
             help_text_html=' <span class="helptext">%s</span>',
