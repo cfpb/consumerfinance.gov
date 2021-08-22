@@ -19,7 +19,6 @@ from django import forms
 
 from .ChoiceWidget import ChoiceWidget
 from .forms import SurveyForm, markup
-from .TemplateField import TemplateField
 
 
 # If True, all the best scoring answers will be auto-selected.
@@ -185,7 +184,7 @@ class SurveyPage:
         self.heading = heading
         self.questions = questions
 
-    def get_fields(self, prefix_tpls: Dict[str, str]):
+    def get_fields(self):
         """
         Get a Dict of form field classes that will comprise form attributes
         for a single page of the survey.
@@ -193,10 +192,6 @@ class SurveyPage:
         fields = {}
 
         for question in self.questions:
-            if question.key in prefix_tpls:
-                fields[f'before_{question.key}'] = TemplateField(
-                    prefix_tpls[question.key])
-
             obj = question.get_field()
             fields[obj['key']] = obj['field']
 
@@ -221,12 +216,12 @@ class SurveyPage:
             'question_scores': question_scores,
         }
 
-    def get_form_class(self, name: str, prefix_tpls: Dict[str, str]):
+    def get_form_class(self, name: str):
         """Build the form class for this page"""
         return type(
             name,
             (SurveyForm,),
-            self.get_fields(prefix_tpls),
+            self.get_fields(),
         )
 
 
@@ -299,7 +294,7 @@ class Survey:
             classname = 'FormPage' + hash.hexdigest()
 
             page_classes.append((name, page.get_form_class(
-                classname, self.meta['prefix_tpls'])))
+                classname)))
 
         return tuple(page_classes)
 
