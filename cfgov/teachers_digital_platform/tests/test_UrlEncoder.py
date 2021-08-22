@@ -32,3 +32,13 @@ class UrlEncoderTest(TestCase):
         self.assertEqual(loaded['key'], '6-9')
         self.assertEqual(loaded['subtotals'], (0.0, 15.25, 20.0))
         self.assertEqual(loaded['time'], _time)
+
+    def test_invalid_parts(self):
+        bad_dump = 'v1_6-9_0:f.p:k_1uo0_bad_dump'
+        loaded = self.encoder.loads(bad_dump)
+        self.assertIsNone(loaded)
+
+    def test_invalid_key(self):
+        bad_dump = 'v1_13-20_0:f.p:k_1uo0'
+        loaded = self.encoder.loads(bad_dump)
+        self.assertIsNone(loaded)
