@@ -12,11 +12,10 @@ _replacements = []
 
 def markup(html: str):
     """
-    Create a piece of markup that will be rendered in the form as-is with
-    no escaping.
+    Exchange some HTML for a unique token that will not be modified by Django's
+    HTML escaping.
 
-    This works by returning an alphanum token that will be replaced with
-    the content when the form is rendered.
+    On output _replace_tokens() will swap this markup back into place.
     """
     _replacements.append(html)
     return f'{_token}{len(_replacements) - 1}_'
@@ -35,7 +34,10 @@ def _replace_labels(html: str) -> str:
 
 def _replace_tokens(html: str) -> str:
     """
-    Replace markup() tokens with the original markup
+    Replace the tokens created in markup() with the original markup.
+
+    Because this happens after the HTML escaping in Django, we're able to
+    smuggle the original markup unharmed into the output.
     """
     return re.sub(
         f'{_token}(\\d+)_',
@@ -46,12 +48,19 @@ def _replace_tokens(html: str) -> str:
 
 class SurveyForm(Form):
     """
-    Form class to customize markup in two ways:
+    Django form subclass to customize markup:
+
+    1. Allow embedding HTML in question titles.
+    2. Make Django's markup more accessible for radio button groups.
     """
     def as_ul(self):
         "Return this form rendered as HTML <li>s -- excluding the <ul></ul>."
         output = self._html_output(
-            normal_row='<li%(html_class_attr)s>%(errors)s<fieldset>%(label)s %(field)s%(help_text)s</fieldset></li>',  # noqa E501
+            normal_row=''.join([
+                '<li%(html_class_attr)s>',
+                '<fieldset>%(label)s %(field)s%(help_text)s</fieldset>',
+                '</li>'
+            ]),
             error_row='<li>%s</li>',
             row_ender='</li>',
             help_text_html=' <span class="helptext">%s</span>',
