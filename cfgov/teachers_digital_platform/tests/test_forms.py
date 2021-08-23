@@ -8,11 +8,17 @@ class SurveyFormTest(TestCase):
 
     def test_as_ul_uses_fieldsets(self):
         class TestForm(SurveyForm):
-            q1 = forms.CharField(label='Hello')
+            q1 = forms.CharField(
+                label='Hello.',
+                required=False,
+            )
 
         form = TestForm()
         output: str = form.as_ul()
-        expected = '<li><fieldset><legend class="tdp-question-legend">Hello:</legend>'
+        expected = ''.join([
+            '<li><fieldset>',
+            '<legend class="tdp-question-legend">Hello.</legend>'
+        ])
         actual = output[0:len(expected)]
 
         self.assertEqual(actual, expected)
