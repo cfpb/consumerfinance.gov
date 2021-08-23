@@ -1,0 +1,7 @@
+{% for name, value in widget.attrs.items %}
+  {% if name == 'class' %}
+    {% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }} a-radio"{% endif %}{% endif %}
+  {% else %}
+    {% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}
+  {% endif %}
+{% endfor %}

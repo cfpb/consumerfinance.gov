@@ -195,4 +195,8 @@ gulp.task( 'styles:watch', function() {
     `${ configStyles.cwd }/**/*.less`,
     gulp.parallel( 'styles:modern' )
   );
+  gulp.watch(
+    `${ paths.unprocessed }/**/css/**/*.less`,
+    gulp.series( 'styles:apps' )
+  );
 } );

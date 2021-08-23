@@ -9,7 +9,7 @@
 `cfgov/unprocessed`.
 
 !!! note
-    After running `gulp build` the site's assets are copied over to `cfgov/static_built`,
+    After running `gulp build` (or `./setup.sh`) the site's assets are copied over to `cfgov/static_built`,
     ready to be served by Django.
 
 
@@ -23,6 +23,16 @@
 - In the rare but observed case that `yarn add new_dep@se.m.ver` doesn't add
   every needed package to the offline cache, you likely need to first run
   `yarn cache clean`.
+
+## Watching files for changes
+
+Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `gulp watch` or `yarn run gulp watch`.
+
+!!! note
+    You must build the assets first, so you may want a command like: 
+    ```
+    ./setup.sh docker && yarn run gulp watch
+    ```
 
 
 ## Developing on nested satellite apps

@@ -1,0 +1,22 @@
+<div class="tdp-survey__save-block">
+  {% if is_student %}
+  <h2>Save your results</h2>
+
+  <div class="m-btn-group">
+    <button type="button" class="a-btn" data-open-modal="modal-print">
+      Print results {% include 'icons/print.svg' %}
+    </button>
+    <a href="/consumer-tools/save-as-pdf-instructions/" class="a-btn" target="_blank">How to save results
+      as a PDF {% include 'icons/external-link.svg' %}</a>
+    <button type="button" class="a-btn" data-open-modal="modal-share-url">
+      Share results {% include 'icons/share.svg' %}
+    </button>
+    {% else %}
+    <button type="button" class="a-btn" onclick="window.print()">
+      Print results {% include 'icons/print.svg' %}
+    </button>
+    <a href="/consumer-tools/save-as-pdf-instructions/" class="a-btn" target="_blank">How to save results
+      as a PDF {% include 'icons/external-link.svg' %}</a>
+    {% endif %}
+  </div>
+</div>
