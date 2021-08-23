@@ -66,8 +66,8 @@
                          role="alert">
                         {{ svg_icon('error-round') }}
                         <p class="a-form-alert_text">
-                            Searches are limited to 50 characters.
-                            Are you trying to
+                            Searches are limited to {{ autocomplete_max_chars }}
+                            characters. Are you trying to
                             <a href="/complaint/getting-started/">
                                 submit a complaint</a>?
                         </p>
