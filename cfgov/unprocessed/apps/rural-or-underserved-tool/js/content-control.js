@@ -10,7 +10,7 @@ const monthNames = [
 /**
  * Hide the data sections. These get shown as needed in addresses.js (render)
  */
-function hideData() {
+function _hideData() {
   DT.addClass( '#rural', 'u-hidden' );
   DT.addClass( '#notRural', 'u-hidden' );
   DT.addClass( '#duplicate', 'u-hidden' );
@@ -39,60 +39,34 @@ function setup() {
     'Report generated ' + monthNames[monthIndex] + ' ' + day + ', ' + year
   );
 
-  DT.addClass( '#fileError', 'u-hidden' );
-  DT.addClass( '#errorMessage', 'u-hidden' );
+  DT.addClass( '#file-error', 'u-hidden' );
+  DT.addClass( '#error-message', 'u-hidden' );
   DT.removeClass( '#spinner', 'u-hidden' );
 
   count.reset();
-  this.resetHTML();
-  this.showResults();
+  _resetHTML();
+  _showResults();
 }
 
 /**
  * Show the results of a search.
  */
-function showResults() {
+function _showResults() {
   // hide search-tool and about
   DT.addClass( '#search-tool', 'u-hidden' );
-  hideData();
+  _hideData();
 
   // show the results
   DT.removeClass( '#results', 'u-hidden' );
 }
 
 /**
- * Show search tool content.
- */
-function showSearchTool() {
-  // show search-tool and about
-  DT.removeClass( '#search-tool', 'u-hidden' );
-
-  // hide the results
-  DT.addClass( '#results', 'u-hidden' );
-
-  hideData();
-}
-
-/**
  * Clear the body of all the tables (data).
  */
-function resetHTML() {
+function _resetHTML() {
   DT.changeElHTML( 'tbody', '' );
 }
 
-/**
- * Show an error message.
- * @param {string} message - An error message.
- */
-function error( message ) {
-  DT.changeElHTML( '#errorMessage', message );
-  DT.removeClass( '#errorMessage', 'u-hidden' );
-}
-
 export default {
-  setup,
-  showResults,
-  showSearchTool,
-  resetHTML,
-  error
+  setup
 };

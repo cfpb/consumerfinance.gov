@@ -1,23 +1,29 @@
+from collections import OrderedDict
+
 from django.db import models
+from django.template.response import TemplateResponse
+from django.utils.cache import patch_cache_control
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.core.blocks import StreamBlock
+from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable, PageManager
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
 
+from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
-from v1.atomic_elements import molecules, organisms
+from v1.atomic_elements import atoms, molecules, organisms
 from v1.models.base import CFGOVPage
 
 
-class HomePageContentBlock(StreamBlock):
+class HomePageContentBlock(blocks.StreamBlock):
     jumbo_hero = molecules.JumboHero()
     features = organisms.InfoUnitGroup()
 
@@ -28,10 +34,36 @@ class HomePageContentBlock(StreamBlock):
         }
 
 
+class HighlightCardValue(blocks.StructValue):
+    @property
+    def link_text(self):
+        return _('Read more')
+
+
+class HighlightCardBlock(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    text = blocks.TextBlock()
+    link_url = atoms.URLOrRelativeURLBlock()
+
+    class Meta:
+        value_class = HighlightCardValue
+
+
+class HighlightCardStreamBlock(blocks.StreamBlock):
+    highlight = HighlightCardBlock()
+
+
+class AnswerPageStreamBlock(blocks.StreamBlock):
+    page = blocks.PageChooserBlock(page_type='ask_cfpb.AnswerPage')
+
+
 class HomePage(CFGOVPage):
-    content = StreamField(HomePageContentBlock, blank=True)
+    content = StreamField(HomePageContentBlock(), blank=True)
 
     card_heading = models.CharField(max_length=40, null=True, blank=True)
+
+    answer_page_links = StreamField(AnswerPageStreamBlock, blank=True)
+    highlight_cards = StreamField(HighlightCardStreamBlock, blank=True)
 
     # Tab handler interface
     edit_handler = TabbedInterface([
@@ -45,18 +77,12 @@ class HomePage(CFGOVPage):
             FieldPanel('card_heading'),
             InlinePanel('cards', min_num=3, max_num=3, label="Card"),
         ], heading='Cards'),
-        ObjectList(
-            # The only general content panel is the page title, which isn't
-            # displayed or used except for slug generation in Wagtail. For this
-            # reason it lives on the configuration tab so that it doesn't
-            # require a tab of its own.
-            CFGOVPage.content_panels + CFGOVPage.settings_panels,
-            heading='Configuration'
-        ),
+        ObjectList(CFGOVPage.content_panels + [
+            StreamFieldPanel('answer_page_links'),
+            StreamFieldPanel('highlight_cards'),
+        ], heading='Content (2021)'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
-
-    # Sets page to only be createable at the root
-    parent_page_types = ['wagtailcore.Page']
 
     objects = PageManager()
 
@@ -74,6 +100,33 @@ class HomePage(CFGOVPage):
         })
 
         return context
+
+    TEMPLATES = ['v1/home_page.html', 'v1/home_page_2021.html']
+
+    def get_template(self, request, *args, **kwargs):
+        return self.TEMPLATES[
+            bool(flag_enabled('HOME_PAGE_2021', request=request))
+        ]
+
+    @property
+    def preview_modes(self):
+        return super().preview_modes + [('home_page_2021', '2021 version')]
+
+    def serve_preview(self, request, mode_name):
+        template_name = self.TEMPLATES[
+            list(OrderedDict(self.preview_modes).keys()).index(mode_name)
+        ]
+
+        # See wagtail.core.models.Page.serve_preview.
+        request.is_preview = True
+        response = TemplateResponse(
+            request,
+            template_name,
+            self.get_context(request)
+        )
+        patch_cache_control(response, private=True)
+
+        return response
 
 
 class HomePageInfoUnit(Orderable, ClusterableModel):

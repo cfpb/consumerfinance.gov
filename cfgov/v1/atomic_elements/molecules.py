@@ -363,17 +363,7 @@ class RelatedMetadata(blocks.StructBlock):
         ('topics', blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100, default='Topics')),
             ('show_topics', blocks.BooleanBlock(default=True, required=False))
-        ], icon='tag')),
-        ('categories', blocks.StructBlock([
-            ('heading', blocks.CharBlock(
-                max_length=100,
-                default='Categories'
-            )),
-            ('show_categories', blocks.BooleanBlock(
-                default=True,
-                required=False
-            ))
-        ], icon='list-ul')),
+        ], icon='tag'))
     ])
     is_half_width = blocks.BooleanBlock(required=False, default=False)
 

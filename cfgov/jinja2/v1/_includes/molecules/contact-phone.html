@@ -46,7 +46,7 @@
         {% endif %}
         {% if phone.tty %}
         <br>
-        <span>TTY/TDD: {{ format_phone(phone.tty) }}{{ ' Ext. ' ~ phone.tty_ext if phone.tty_ext else '' }}<span>
+        <span>TTY/TDD: {{ format_phone(phone.tty) }}{{ ' Ext. ' ~ phone.tty_ext if phone.tty_ext else '' }}</span>
         {% endif %}
     </p>
     {% endfor %}

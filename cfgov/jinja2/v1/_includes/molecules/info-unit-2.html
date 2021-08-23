@@ -30,6 +30,8 @@
 
    value.links[i].text:          A string for the text of the link.
 
+   value.links[i].aria_label:    (Optional) An aria-label for the link.
+
    format:                       Code for the layout of the parent Info Unit
                                  Group, used to determine whether to add the
                                  `__inline` modifier to the main div.
@@ -108,8 +110,14 @@
                 {%- else -%}
                     {%- set link_text = link.text if link.text
                         else 'Learn More' -%}
-                    {%- set link = '<a class="m-list_link" href="' ~
-                        link.url ~ '">' ~ link_text ~ '</a>' %}
+
+                    {%- set link -%}
+                        <a class="m-list_link"
+                            href="{{ link.url }}"
+                            {%- if link.aria_label -%}
+                                aria-label="{{ link.aria_label }}"
+                            {%- endif %}>{{ link_text }}</a>
+                    {%- endset -%}
                     {{ link | safe }}
                 {%- endif %}
                 </li>
