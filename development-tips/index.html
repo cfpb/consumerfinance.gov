@@ -199,6 +199,8 @@
         
             <li><a class="toctree-l4" href="#installing-new-front-end-dependencies">Installing new front-end dependencies</a></li>
         
+            <li><a class="toctree-l4" href="#watching-files-for-changes">Watching files for changes</a></li>
+        
             <li><a class="toctree-l4" href="#developing-on-nested-satellite-apps">Developing on nested satellite apps</a></li>
         
         </ul>
@@ -282,7 +284,7 @@
 <code>cfgov/unprocessed</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>After running <code>gulp build</code> the site's assets are copied over to <code>cfgov/static_built</code>,
+<p>After running <code>gulp build</code> (or <code>./setup.sh</code>) the site's assets are copied over to <code>cfgov/static_built</code>,
 ready to be served by Django.</p>
 </div>
 <h2 id="installing-new-front-end-dependencies">Installing new front-end dependencies<a class="headerlink" href="#installing-new-front-end-dependencies" title="Permanent link">¶</a></h2>
@@ -296,6 +298,13 @@ ready to be served by Django.</p>
   every needed package to the offline cache, you likely need to first run
   <code>yarn cache clean</code>.</li>
 </ul>
+<h2 id="watching-files-for-changes">Watching files for changes<a class="headerlink" href="#watching-files-for-changes" title="Permanent link">¶</a></h2>
+<p>Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using <code>gulp watch</code> or <code>yarn run gulp watch</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You must build the assets first, so you may want a command like: 
+<pre class="highlight"><code>./setup.sh docker &amp;&amp; yarn run gulp watch</code></pre></p>
+</div>
 <h2 id="developing-on-nested-satellite-apps">Developing on nested satellite apps<a class="headerlink" href="#developing-on-nested-satellite-apps" title="Permanent link">¶</a></h2>
 <p>Some projects can sit inside consumerfinance.gov, but manage their own asset
 dependencies. These projects have their own <code>package.json</code> and base templates.</p>
