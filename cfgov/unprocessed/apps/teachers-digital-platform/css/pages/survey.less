@@ -1,3 +1,41 @@
+ul.tdp-form {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+        margin: 0;
+        padding: 0;
+
+        + li {
+            border-top: 1px solid @gray-20;
+            padding-top: 1.5rem;
+        }
+    }
+
+    li {
+        max-width: none;
+    }
+
+    fieldset {
+        border: 0;
+        margin: 0;
+
+        // This gets fine-tuned by indentQuestionsByNumber() but putting this in
+        // CSS reduces the visual jump.
+        padding: 0 0 0 20px;
+    }
+}
+
+.tdp-question-legend {
+    font-size: 1.25em;
+    font-weight: 500;
+
+    // This gets fine-tuned by indentQuestionsByNumber() but putting this in
+    // CSS reduces the visual jump.
+    text-indent: -20px;
+}
+
 .tdp-survey-layout {
     .respond-to-max(@bp-sm-max, {
         @supports ( display: flex ) {
@@ -8,72 +46,64 @@
 }
 
 ul.tdp-survey__choice-question {
+    margin: 1.5rem 0 2rem 0;
+    padding: 0;
+
+    li:last-child & {
+        margin-bottom: 1rem;
+    }
+
     &.tdp-survey__atype-E,
     &.tdp-survey__atype-F,
     &.tdp-survey__atype-G,
     &.tdp-survey__atype-H,
     &.tdp-survey__atype-I {
-        border-bottom: 1px solid @gray-20;
-        margin: 10px 0 30px;
-        padding: 0 0 20px 25px;
         position: relative;
+
+        li {
+            list-style: none;
+            position: relative;
+        }
+
         .respond-to-min(@bp-lg-min, {
             @supports ( display: flex ) {
                 display: flex;
-            }
-        });
-        li {
-            list-style: none;
-            padding-right: 1rem;
-            position: relative;
-            width: 100%;
-            input {
-                -ms-transform: scale(1.5); /* IE 9 */
-                -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
-                display: block;
-                margin-bottom: 5px;
-                transform: scale(1.5);
-                .respond-to-max(@bp-med-max, {
-                    display: inline-block;
-                    margin-right: 5px;
-                });
-                &:focus {
-                    outline: none;
-                    &::after {
-                        bottom: 0;
-                        content: '';
-                        left: 0;
-                        outline: dotted 1px #0072ce;
-                        outline-offset: 1px;
-                        position: absolute;
-                        right: 0;
-                        top: 0;
-                    }
+                justify-content: space-between;
+
+                //> li {
+                //    // equal-spaced
+                //    flex: 1;
+                //}
+
+                .a-label {
+                    grid-template-columns: none;
+                    grid-template-rows: 1.875em auto;
+                    padding-right: 1rem;
                 }
-            }
-            &:last-of-type {
-                padding-right: 0;
-                label {
-                    &::before {
-                        display: none;
-                    }
-                }
-            }
-        }
-        label {
-            &::before {
-                .respond-to-min(@bp-lg-min, {
+
+                &::before {
                     background-color: @gray-40;
                     content: '';
                     height: 1px;
-                    left: 12px;
+                    left: 0;
                     position: absolute;
-                    top: 6px;
+                    top: 11px;
                     width: 100%;
-                });
+                    z-index: 0;
+                }
+
+                > li:last-child {
+                    // Cover the last line segment
+                    background: @well-bg;
+
+                    .a-label {
+                        padding-right: 0;
+                    }
+                }
             }
-        }
+        });
     }
+
     &.tdp-survey__atype-GetGame,
     &.tdp-survey__atype-GameThink,
     &.tdp-survey__atype-SellDrinks,
@@ -83,26 +113,14 @@ ul.tdp-survey__choice-question {
     &.tdp-survey__atype-BikeSteps,
     &.tdp-survey__atype-BikeSteps-opts,
     &.tdp-survey__atype-MoneySafe {
-        border-bottom: 1px solid @gray-20;
-        margin: 10px 0 30px 18px;
-        padding: 0 0 20px;
         li {
-            font-size: 1.125em;
+            //font-size: 1.125em;
             list-style: none;
-            text-indent: -18px;
-        }
-    }
-    &:last-of-type {
-        border: none;
-    }
-}
 
-p {
-    // See JS function indentQuestionsByNumber() which may
-    // alter margin/text-indent here.
-    & label {
-        font-size: 1.25em;
-        font-weight: 500;
+            + li {
+                margin-top: 1rem;
+            }
+        }
     }
 }
 
@@ -125,11 +143,12 @@ p {
 
     .m-notification {
         margin-bottom: 2rem;
-    }
-    .m-notification_explanation {
-        display: flex;
-        flex-direction: column;
-        margin-left: 2rem;
+
+        &_explanation {
+            display: flex;
+            flex-direction: column;
+            margin: 0.5rem 0 0 2rem;
+        }
     }
 }
 
@@ -249,7 +268,7 @@ p {
 
             span {
                 border-bottom: #0072ce 1px dotted;
-                color: #0072ce;
+                color: #0070CC;
                 font-weight: 600;
             }
         }
@@ -290,17 +309,18 @@ p {
 }
 
 .a-form-alert__error {
-    + .ChoiceField {
-        padding-top: 1.5rem !important;
-    }
+    margin-top: 1rem;
 }
 
 .tdp-lines {
     display: inline-flex;
-    margin: 0 0 1rem 0.5rem;
+    margin: 0 0 1rem 0;
     text-indent: 0;
     vertical-align: top;
 
+    span {
+        white-space: nowrap;
+    }
     ul {
         margin: 0 0 0 1.75rem;
         padding: 0;
@@ -308,7 +328,10 @@ p {
         li {
             font-size: 1rem !important;
             list-style: square !important;
-            text-indent: 0 !important;
+
+            + li {
+                margin-top: 0.5rem !important;
+            }
         }
     }
 }

@@ -17,9 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from django import forms
 
-from .ChoiceWidget import ChoiceWidget
 from .forms import SurveyForm, markup
-from .TemplateField import TemplateField
 
 
 # If True, all the best scoring answers will be auto-selected.
@@ -122,12 +120,10 @@ class ChoiceQuestion(Question):
 
     def __init__(self, num: int, part: str, label: str,
                  choice_list: ChoiceList, answer_values: List[float],
-                 opts_list: Optional[ChoiceList] = None,
                  meta: Optional[Dict] = None):
         super().__init__(num, part)
         self.meta = {} if meta is None else meta
         self.choice_list = choice_list
-        self.opts_list = opts_list
         self.label = label
         self.answer_values = answer_values
 
@@ -161,13 +157,13 @@ class ChoiceQuestion(Question):
             atype = self.meta["atype"]
             classes.append(f'tdp-survey__atype-{atype}')
 
+        widget = forms.RadioSelect({'class': ' '.join(classes)})
+        widget.template_name = 'teachers_digital_platform/choice.html'
+
         return {
             'key': self.key,
             'field': forms.ChoiceField(
-                widget=ChoiceWidget(
-                    {'class': ' '.join(classes)},
-                    opts_list=self.opts_list
-                ),
+                widget=widget,
                 choices=self.choice_list.choices,
                 label=label,
                 required=False,
@@ -185,7 +181,7 @@ class SurveyPage:
         self.heading = heading
         self.questions = questions
 
-    def get_fields(self, prefix_tpls: Dict[str, str]):
+    def get_fields(self):
         """
         Get a Dict of form field classes that will comprise form attributes
         for a single page of the survey.
@@ -193,10 +189,6 @@ class SurveyPage:
         fields = {}
 
         for question in self.questions:
-            if question.key in prefix_tpls:
-                fields[f'before_{question.key}'] = TemplateField(
-                    prefix_tpls[question.key])
-
             obj = question.get_field()
             fields[obj['key']] = obj['field']
 
@@ -221,12 +213,12 @@ class SurveyPage:
             'question_scores': question_scores,
         }
 
-    def get_form_class(self, name: str, prefix_tpls: Dict[str, str]):
+    def get_form_class(self, name: str):
         """Build the form class for this page"""
         return type(
             name,
             (SurveyForm,),
-            self.get_fields(prefix_tpls),
+            self.get_fields(),
         )
 
 
@@ -299,7 +291,7 @@ class Survey:
             classname = 'FormPage' + hash.hexdigest()
 
             page_classes.append((name, page.get_form_class(
-                classname, self.meta['prefix_tpls'])))
+                classname)))
 
         return tuple(page_classes)
 
@@ -339,14 +331,9 @@ class Survey:
                     msg = f'Unknown answer type {choices_key}'
                     raise NameError(msg)
 
-                opts_key = f'{choices_key}-opts'
-                opts_list = None
-                if opts_key in choice_lists:
-                    opts_list = choice_lists[opts_key].labels
-
                 question = ChoiceQuestion(
                     q, row['pt'], row['q'], choice_lists[choices_key],
-                    values, opts_list, {'atype': choices_key})
+                    values, {'atype': choices_key})
                 questions.append(question)
                 q += 1
         end_page(last_page)

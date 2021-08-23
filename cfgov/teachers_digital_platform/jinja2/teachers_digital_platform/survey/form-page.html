@@ -49,14 +49,16 @@
                 {% include './' ~ survey.key ~ '/before-page-' ~ wizard.steps.step1 ~ '.html' ignore missing %}
 
                 {{ wizard.management_form }}
+                <ul class="tdp-form">
                 {% if wizard.form.forms %}
                     {{ wizard.form.management_form }}
                     {% for form in wizard.form.forms %}
-                        {{ form.as_p() }}
+                        {{ form.as_ul() }}
                     {% endfor %}
                 {% else %}
-                    {{ wizard.form.as_p() }}
+                    {{ wizard.form.as_ul() }}
                 {% endif %}
+                </ul>
 
                 {# Do not remove this closing div tag --> #}</div>{# The div element #}
                 {# was opened in a before-page template above so it needs closing. #}

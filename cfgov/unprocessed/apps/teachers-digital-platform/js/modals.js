@@ -64,12 +64,14 @@ class Modal {
       return;
     }
 
-    const before = document.createElement( 'a' );
-    before.href = '#';
+    const before = document.createElement( 'span' );
+    before.tabIndex = 0;
     before.setAttribute( 'data-trap', '0' );
-    const after = document.createElement( 'a' );
-    after.href = '#';
+    before.setAttribute( 'aria-hidden', 'true' );
+    const after = document.createElement( 'span' );
+    after.tabIndex = 0;
     after.setAttribute( 'data-trap', '1' );
+    after.setAttribute( 'aria-hidden', 'true' );
 
     const content = this.getElement().querySelector( '.o-modal_content' );
     content.insertBefore( before, content.childNodes[0] );
