@@ -177,8 +177,7 @@ class SurveyPage:
     Page of an survey
     """
 
-    def __init__(self, heading: str, questions: List[Question]):
-        self.heading = heading
+    def __init__(self, questions: List[Question]):
         self.questions = questions
 
     def get_fields(self):
@@ -309,7 +308,7 @@ class Survey:
         questions: List[Question] = []
 
         def end_page(last_page: str):
-            page = SurveyPage(f'Page {last_page}', questions.copy())
+            page = SurveyPage(questions.copy())
             pages.append(page)
             questions.clear()
 
