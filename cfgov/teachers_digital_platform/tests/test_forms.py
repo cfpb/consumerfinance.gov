@@ -1,7 +1,7 @@
 from django import forms
 from django.test import TestCase
 
-from ..forms import markup, SurveyForm
+from ..forms import SurveyForm, markup
 
 
 class SurveyFormTest(TestCase):
