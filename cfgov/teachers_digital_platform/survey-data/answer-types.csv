@@ -7,7 +7,7 @@ I,True most of the time | Often true | Sometimes true | Rarely true | I don't kn
 GameThink,(a) I think about why having the game is important to me and why I should buy it. | (b) I think about what I’d have to give up to buy the game or why it might not be worth spending my money. | (c) I think about both why I should buy the game and why not to buy the game. | (d) I don’t know.,
 GetGame,(a) Get the game now and borrow money from your friend (you will need to pay your friend back). | (b) Wait until the game goes on sale so you can pay for it yourself with your savings. | (c) Get a different game now and forget about the game you want. | (d) I don’t know.,
 BPImportant,(a) Find the style of backpack you like the best. | (b) Count all the money you’ve saved. | (c) Ask your friends which backpack they like more. | (d) I don’t know.,
-BPDecide,(a) Look at the price of both backpacks and buy the one that costs less money. | (b) Look at the price of both backpacks and buy the one that costs more money. | (c) Buy the same backpack that most of your friends have. | (d) I don’t know.,
+BPDecide,(a) Look at the price of both backpacks and buy the one that costs LESS money. | (b) Look at the price of both backpacks and buy the one that costs MORE money. | (c) Buy the same backpack that most of your friends have. | (d) I don’t know.,
 MoneySafe,(a) Under your school desk | (b) In your coat pocket | (c) In a bank or credit union | (d) I don’t know.,
 SellDrinks-A,Make and sell drinks. | Borrow money to buy drink ingredients and cups. | Buy ingredients and cups to make drinks.,
 SellDrinks-B,Borrow money to buy drink ingredients and cups. | Buy ingredients and cups to make drinks. | Make and sell drinks.,
