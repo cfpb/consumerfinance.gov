@@ -195,8 +195,8 @@ function initProgressListener() {
  */
 function initErrorHandling() {
   const form = $( '.tdp-survey-page form' );
-  const notification = $( '.m-notification' );
-  const ul = $( '.m-notification_explanation' );
+  const notification = $( '.tdp-survey-page .m-notification' );
+  const ul = $( '.tdp-survey-page .m-notification_explanation' );
   if ( form && notification && ul ) {
     form.addEventListener( 'submit', submitEvt => {
       const unsets = ChoiceField.findUnsets();
@@ -211,13 +211,13 @@ function initErrorHandling() {
       unsets.forEach( cf => {
         cf.markError();
 
-        const el = cf.getUl().parentElement;
+        const fieldset = cf.getUl().parentElement;
         const link = document.createElement( 'a' );
         link.href = '#';
-        link.textContent = el.querySelector( 'label' ).textContent;
+        link.textContent = fieldset.querySelector( 'legend' ).textContent;
         link.addEventListener( 'click', clickEvt => {
           clickEvt.preventDefault();
-          scrollToEl( el );
+          scrollToEl( fieldset );
         } );
         const li = document.createElement( 'li' );
         ul.append( li );
