@@ -147,7 +147,7 @@ function allowStartOver() {
       } else {
         sessionStorage.removeItem( ANSWERS_SESS_KEY );
         Cookie.remove( SURVEY_COOKIE );
-        location.href = '../../';
+        location.href = '../../../assess/survey/';
       }
     }
   } );
