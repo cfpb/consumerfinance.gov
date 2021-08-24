@@ -6,6 +6,8 @@ from django.core import signing
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http.request import HttpRequest
 from django.template.loader import render_to_string
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
@@ -85,6 +87,10 @@ class SurveyWizard(NamedUrlCookieWizardView):
 
         return self.render_to_response(context)
 
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     @classmethod
     def build_views(cls):
         """
@@ -133,6 +139,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
     return HttpResponse(status=200, content=rendered)
 
 
+@never_cache
 def student_results(request: HttpRequest):
     """
     Request handler for the student results page
@@ -152,6 +159,7 @@ def student_results(request: HttpRequest):
     return _handle_result_url(request, raw, result_url, True)
 
 
+@never_cache
 def view_results(request: HttpRequest):
     """
     Request handler for the view results page
@@ -171,6 +179,7 @@ def view_results(request: HttpRequest):
     return _handle_result_url(request, raw, result_url, False)
 
 
+@never_cache
 def _grade_level_page(request: HttpRequest, key: str):
     survey = get_survey(key)
     rendered = render_to_string(
