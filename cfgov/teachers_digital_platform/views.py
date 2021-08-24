@@ -116,7 +116,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
     url_encoder = UrlEncoder(AVAILABLE_SURVEYS)
     res = url_encoder.loads(code)
     if res is None:
-        return HttpResponseRedirect('../../')
+        return HttpResponseRedirect('../../../assess/survey/')
 
     survey = get_survey(res['key'])
     total = sum(res['subtotals'])
@@ -148,13 +148,13 @@ def student_results(request: HttpRequest):
         return HttpResponse(status=404)
 
     if 'resultUrl' not in request.COOKIES:
-        return HttpResponseRedirect('../../')
+        return HttpResponseRedirect('../../../assess/survey/')
 
     raw = request.COOKIES['resultUrl']
     try:
         result_url = _signer.unsign(raw)
     except signing.BadSignature:
-        return HttpResponseRedirect('../../')
+        return HttpResponseRedirect('../../../assess/survey/')
 
     return _handle_result_url(request, raw, result_url, True)
 
@@ -169,12 +169,12 @@ def view_results(request: HttpRequest):
 
     raw = request.GET['r']
     if not isinstance(raw, str):
-        return HttpResponseRedirect('../../')
+        return HttpResponseRedirect('../../../assess/survey/')
 
     try:
         result_url = _signer.unsign(raw)
     except signing.BadSignature:
-        return HttpResponseRedirect('../../')
+        return HttpResponseRedirect('../../../assess/survey/')
 
     return _handle_result_url(request, raw, result_url, False)
 
