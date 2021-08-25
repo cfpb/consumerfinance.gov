@@ -34,6 +34,9 @@ ul.tdp-form {
     // This gets fine-tuned by indentQuestionsByNumber() but putting this in
     // CSS reduces the visual jump.
     text-indent: -20px;
+
+    // IE11
+    width: 100%;
 }
 
 .tdp-survey-layout {
@@ -238,6 +241,9 @@ ul.tdp-survey__choice-question {
 
         svg {
             display: none;
+
+            // IE11
+            width: 1.5em;
         }
     }
     &[data-checked="1"] {
