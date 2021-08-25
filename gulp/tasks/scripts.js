@@ -35,6 +35,11 @@ function _processScript( localWebpackConfig, src, dest ) {
       extra: configScripts.otherBuildTriggerFiles
     } ) )
     .pipe( vinylNamed( file => file.relative ) )
+
+    /**
+     * @todo ideally after webpack completed building, we would reset
+     *       scriptsAppsFilter to '', but leaving it doesn't break anything.
+     */
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
     .pipe( gulp.dest( paths.processed + dest ) );
