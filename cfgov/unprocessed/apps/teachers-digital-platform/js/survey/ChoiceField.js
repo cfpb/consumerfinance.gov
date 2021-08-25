@@ -1,6 +1,6 @@
-const { closest } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
-const objectValues = require('object.values');
-const objectEntries = require('object.entries');
+const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
+const objectValues = require( 'object.values' );
+const objectEntries = require( 'object.entries' );
 
 const $ = document.querySelector.bind( document );
 const $$ = document.querySelectorAll.bind( document );

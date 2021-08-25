@@ -1,5 +1,5 @@
 const { closest } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
-const customEvent = require('customevent');
+const CustomEvt = require('customevent');
 
 /**
  * Holds the only reference to Modal instances, which are only created just
@@ -22,7 +22,7 @@ class Modal {
   open() {
     const el = this.getElement();
 
-    const event = new customEvent( 'modal:open:before', {
+    const event = new CustomEvt( 'modal:open:before', {
       bubbles: true,
       detail: { modal: this }
     } );

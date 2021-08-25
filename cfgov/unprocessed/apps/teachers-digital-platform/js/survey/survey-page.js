@@ -1,5 +1,5 @@
-const { closest } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
-const objectEntries = require('object.entries');
+const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
+const objectEntries = require( 'object.entries' );
 const Cookie = require( 'js-cookie' );
 const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } = require( './config' );
 const modals = require( '../modals' );
@@ -263,7 +263,7 @@ function indentQuestionsByNumber() {
    */
   const strongs = [].slice.call( $$( '.tdp-question-legend > strong' ) );
   strongs.forEach( strong => {
-    const offset = Math.round(strong.getBoundingClientRect().width + 3);
+    const offset = Math.round( strong.getBoundingClientRect().width + 3 );
     const legend = strong.parentElement;
     const li = legend.parentElement;
     li.style.paddingLeft = `${ offset }px`;
@@ -276,7 +276,7 @@ function indentQuestionsByNumber() {
  *
  */
 function breakSeparatedAnswers() {
-  const convertToDivs = (text, charCode) => {
+  const convertToDivs = ( text, charCode ) => {
     // Convert text node into a set of div items
     const wrap = document.createElement( 'div' );
     wrap.className = 'tdp-lines';

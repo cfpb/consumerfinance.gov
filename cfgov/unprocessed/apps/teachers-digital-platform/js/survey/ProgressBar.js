@@ -1,11 +1,11 @@
-const customEvent = require('customevent');
+const CustomEvt = require( 'customevent' );
 
 class ProgressBar {
   constructor( totalNum, numDone ) {
     this.totalNum = totalNum;
     this.numDone = numDone;
 
-    const event = new customEvent( ProgressBar.UPDATE_EVT, {
+    const event = new CustomEvt( ProgressBar.UPDATE_EVT, {
       detail: { progressBar: this }
     } );
     document.dispatchEvent( event );
@@ -18,7 +18,7 @@ class ProgressBar {
   update( numDone ) {
     this.numDone = numDone;
 
-    const event = new customEvent( ProgressBar.UPDATE_EVT, {
+    const event = new CustomEvt( ProgressBar.UPDATE_EVT, {
       detail: { progressBar: this }
     } );
     document.dispatchEvent( event );

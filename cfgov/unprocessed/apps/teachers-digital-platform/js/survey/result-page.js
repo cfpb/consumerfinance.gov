@@ -1,4 +1,4 @@
-const { closest } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
+const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
 const Cookie = require( 'js-cookie' );
 const {
   ANSWERS_SESS_KEY,
