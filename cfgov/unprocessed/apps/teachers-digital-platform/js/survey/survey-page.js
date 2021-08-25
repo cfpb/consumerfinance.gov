@@ -1,3 +1,5 @@
+const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
+const objectEntries = require( 'object.entries' );
 const Cookie = require( 'js-cookie' );
 const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } = require( './config' );
 const modals = require( '../modals' );
@@ -64,7 +66,7 @@ function readSurveyData() {
    * @type {SurveyData}
    */
   const data = Object.create( null );
-  Object.entries( el.dataset ).forEach( ( [ k, v ] ) => {
+  objectEntries( el.dataset ).forEach( ( [ k, v ] ) => {
     try {
       data[k] = JSON.parse( v );
     } catch ( err ) {
@@ -139,7 +141,7 @@ function userTriedReentry() {
  */
 function allowStartOver() {
   document.addEventListener( 'click', event => {
-    const button = event.target.closest( '#modal-restart [data-cancel]' );
+    const button = closest( event.target, '#modal-restart [data-cancel]' );
     if ( button ) {
       event.preventDefault();
       if ( button.dataset.cancel ) {
@@ -167,8 +169,9 @@ function initProgressListener() {
     const outOfEls = $$( '.tdp-survey-progress-out-of' );
 
     const circle = $( '.tdp-survey-progress__circle' );
+    const svg = $( '.tdp-survey-progress__svg' );
     const texts = [].slice.call( $$( '.tdp-survey-progress__svg text' ) );
-    if ( !outOfEls.length || !circle || texts.length < 3 ) {
+    if ( !outOfEls.length || !circle || !svg || texts.length < 3 ) {
       return;
     }
 
@@ -184,7 +187,6 @@ function initProgressListener() {
     const dashOffset = 1 - ( pb.numDone / pb.totalNum );
     circle.setAttribute( 'stroke-dashoffset', dashOffset );
 
-    const svg = circle.parentElement;
     svg.setAttribute( 'aria-label', `${ perc } complete` );
     svg.style.opacity = '1';
   } );
@@ -220,8 +222,8 @@ function initErrorHandling() {
           scrollToEl( fieldset );
         } );
         const li = document.createElement( 'li' );
-        ul.append( li );
-        li.append( link );
+        ul.appendChild( li );
+        li.appendChild( link );
       } );
 
       notification.classList.add( 'm-notification__visible' );
@@ -261,7 +263,7 @@ function indentQuestionsByNumber() {
    */
   const strongs = [].slice.call( $$( '.tdp-question-legend > strong' ) );
   strongs.forEach( strong => {
-    const offset = Math.round(strong.getBoundingClientRect().width + 3);
+    const offset = Math.round( strong.getBoundingClientRect().width + 3 );
     const legend = strong.parentElement;
     const li = legend.parentElement;
     li.style.paddingLeft = `${ offset }px`;
@@ -274,7 +276,7 @@ function indentQuestionsByNumber() {
  *
  */
 function breakSeparatedAnswers() {
-  const convertToDivs = (text, charCode) => {
+  const convertToDivs = ( text, charCode ) => {
     // Convert text node into a set of div items
     const wrap = document.createElement( 'div' );
     wrap.className = 'tdp-lines';
@@ -291,7 +293,7 @@ function breakSeparatedAnswers() {
     ul.innerHTML = '<li>' +
       htmlItems.join( '</li><li>' ) + '</li>';
 
-    wrap.append( ul );
+    wrap.appendChild( ul );
     return wrap;
   };
 
@@ -303,7 +305,7 @@ function breakSeparatedAnswers() {
    */
   const labels = [].slice.call( $$( '.ChoiceField .a-label' ) );
   labels.forEach( label => {
-    if ( label.closest( 'li:first-child' ) === label.parentElement ) {
+    if ( closest( label, 'li:first-child' ) === label.parentElement ) {
       // Reset to "a"
       charCode = 97;
     }
@@ -317,7 +319,11 @@ function breakSeparatedAnswers() {
       const node = label.childNodes[i];
       if ( node.nodeType === Node.TEXT_NODE &&
         isSeparated( node.textContent ) ) {
-        node.replaceWith( convertToDivs( node.textContent, charCode ) );
+        node.parentNode.insertBefore(
+          convertToDivs( node.textContent, charCode ),
+          node
+        );
+        node.parentNode.removeChild( node );
       }
     }
 

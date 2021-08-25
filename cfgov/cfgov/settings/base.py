@@ -892,7 +892,7 @@ CSRF_REQUIRED_PATHS = (
 # Django 2.2 Baseline required settings
 # exempt beta from CSRF settings until it's converted to https
 
-if DEPLOY_ENVIRONMENT != "beta":
+if DEPLOY_ENVIRONMENT and DEPLOY_ENVIRONMENT != "beta":
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_HTTPONLY = True
     CSRF_COOKIE_SECURE = True

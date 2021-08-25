@@ -1,4 +1,5 @@
-require( './CustomEvent-polyfill' );
+const { closest } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
+const CustomEvt = require('customevent');
 
 /**
  * Holds the only reference to Modal instances, which are only created just
@@ -21,7 +22,7 @@ class Modal {
   open() {
     const el = this.getElement();
 
-    const event = new CustomEvent( 'modal:open:before', {
+    const event = new CustomEvt( 'modal:open:before', {
       bubbles: true,
       detail: { modal: this }
     } );
@@ -107,7 +108,7 @@ function init() {
 function handleClicks() {
   document.addEventListener( 'click', event => {
     const t = event.target;
-    const opener = t.closest( '[data-open-modal]' );
+    const opener = closest( t, '[data-open-modal]' );
     if ( opener ) {
       event.preventDefault();
       event.stopPropagation();
@@ -166,12 +167,12 @@ function handleEscKey() {
  */
 function handleFocusChanges() {
   document.addEventListener( 'focusin', event => {
-    const trap = event.target.closest( '[data-trap]' );
+    const trap = closest( event.target, '[data-trap]' );
     if ( !trap ) {
       return;
     }
 
-    const content = trap.closest( '.o-modal_content' );
+    const content = closest( trap, '.o-modal_content' );
 
     if ( trap.dataset.trap === '1' ) {
       const first = content.querySelector( '.o-modal_close' );

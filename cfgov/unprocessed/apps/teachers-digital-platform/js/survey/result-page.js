@@ -1,3 +1,4 @@
+const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
 const Cookie = require( 'js-cookie' );
 const {
   ANSWERS_SESS_KEY,
@@ -142,7 +143,7 @@ function handleResetModal() {
   }
 
   modal.addEventListener( 'click', event => {
-    const button = event.target.closest( '[data-cancel]' );
+    const button = closest( event.target, '[data-cancel]' );
     if ( button ) {
       event.preventDefault();
       if ( button.dataset.cancel ) {

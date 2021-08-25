@@ -1,3 +1,7 @@
+const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
+const objectValues = require( 'object.values' );
+const objectEntries = require( 'object.entries' );
+
 const $ = document.querySelector.bind( document );
 const $$ = document.querySelectorAll.bind( document );
 
@@ -28,7 +32,7 @@ class ChoiceField {
    * @returns {HTMLUListElement} The UL of the main set of answers
    */
   getUl() {
-    return this.inputs[0].closest( 'ul.ChoiceField' );
+    return closest( this.inputs[0], 'ul.ChoiceField' );
   }
 
   markError() {
@@ -62,15 +66,14 @@ ChoiceField.get = name => {
 /**
  * @returns {ChoiceField[]} unset choice fields
  */
-ChoiceField.findUnsets = () => Object
-  .values( ChoiceField.cache )
+ChoiceField.findUnsets = () => objectValues( ChoiceField.cache )
   .filter( cf => cf.value === null );
 
 /**
  * Remove all the error indicators
  */
 ChoiceField.removeErrors = () => {
-  errorIndicators.forEach( el => el.remove() );
+  errorIndicators.forEach( el => el.parentElement.removeChild( el ) );
   errorIndicators = [];
 };
 
@@ -97,7 +100,7 @@ ChoiceField.restoreFromSession = key => {
     }
   };
 
-  Object.entries( ChoiceField.cache ).forEach( checkCache );
+  objectEntries( ChoiceField.cache ).forEach( checkCache );
 
   if ( update ) {
     sessionStorage.setItem( key, JSON.stringify( store ) );
