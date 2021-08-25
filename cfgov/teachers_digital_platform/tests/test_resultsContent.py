@@ -70,7 +70,7 @@ class ResultsContentTest(TestCase):
             61: 2,
             70: 3,
             81: 4,
-            91: 5
+            90: 5
         }
         level_map = {
             0: 0,
