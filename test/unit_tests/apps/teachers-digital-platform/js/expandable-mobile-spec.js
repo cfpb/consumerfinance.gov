@@ -78,7 +78,7 @@ describe( 'expandable-mobile', () => {
    */
 
   it( 'should remove the OPEN_DEFAULT class on narrow innerWidth', () => {
-    setInnerWidth(800);
+    setInnerWidth(900);
 
     expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) )
       .toEqual( true );
@@ -89,7 +89,7 @@ describe( 'expandable-mobile', () => {
   } );
 
   it( 'should leave the OPEN_DEFAULT class for tablet innerWidth', () => {
-    setInnerWidth(801);
+    setInnerWidth(901);
 
     expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) )
       .toEqual( true );
@@ -100,7 +100,7 @@ describe( 'expandable-mobile', () => {
   } );
 
   it( 'should always remove its MOBILE_COLLAPSED_CLASS (narrow)', () => {
-    setInnerWidth(800);
+    setInnerWidth(900);
 
     beforeExpandableTransitionInit();
     expect( expandableDiv.classList.contains( MOBILE_COLLAPSED_CLASS ) )
@@ -109,7 +109,7 @@ describe( 'expandable-mobile', () => {
   } );
 
   it( 'should always remove its MOBILE_COLLAPSED_CLASS (wide)', () => {
-    setInnerWidth(801);
+    setInnerWidth(901);
 
     beforeExpandableTransitionInit();
     expect( expandableDiv.classList.contains( MOBILE_COLLAPSED_CLASS ) )

@@ -1,7 +1,7 @@
 import ExpandableTransition from '@cfpb/cfpb-expandables/src/ExpandableTransition';
 
 const MOBILE_COLLAPSED_CLASS = 'o-expandable__mobile-collapsed';
-const MOBILE_WIDTH = 800;
+const MOBILE_WIDTH = 900;
 
 let innerWidth;
 

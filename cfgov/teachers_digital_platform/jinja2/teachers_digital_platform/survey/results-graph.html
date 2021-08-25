@@ -1,0 +1,26 @@
+<div class="tdp-survey-results__wrapper">
+  <span class="tdp-survey-results__marker starting-out{% if level == 0 %} active{% endif %}">Starting out</span>
+  <span class="tdp-survey-results__marker on-the-road{% if level == 1 %} active{% endif %}">On the road</span>
+  <span class="tdp-survey-results__marker well-on-your-way{% if level == 2 %} active{% endif %}">Well on your way</span>
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 123">
+    <g>
+      <g>
+        <rect x="0" y="32" width="270" height="88" fill="{{ color }}" class="svg-starting-out" style="fill-opacity: .3;" />
+        <path d="M 270 33 V 119" stroke="{{ stroke_color }}" />
+      </g>
+      <g>
+        <rect x="271" y="32" width="361" height="88" fill="{{ color }}" class="svg-on-the-road" style="fill-opacity: .6;"/>
+        <path d="M 631 33 V 119" stroke="{{ stroke_color }}" />
+      </g>
+      <g>
+        <rect x="632" y="32" width="180" height="88" fill="{{ color }}" class="well-on-your-way" style="fill-opacity: 1;"/>
+      </g>
+
+      <line y1="73" x2="810" y2="73" fill="none" stroke="#101820" stroke-miterlimit="10" stroke-dasharray="4 6"/>
+    </g>
+    <g>
+      <rect x="1" y="32" width="808" height="88" fill="transparent" stroke="{{ stroke_color }}" />
+    </g>
+    <image x="{{car_position}}" y="35" width="110px" height="75px" href="{{ static('apps/teachers-digital-platform/img/car.png') }}" />
+</svg>
