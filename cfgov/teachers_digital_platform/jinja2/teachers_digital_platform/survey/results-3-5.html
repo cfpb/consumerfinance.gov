@@ -1,0 +1,223 @@
+{% extends 'layout-2-1.html' %}
+{% from 'organisms/expandable.html' import expandable with context %}
+
+{% block title -%}
+    Survey Results | Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+
+    <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
+{%- endblock css %}
+
+{% block pre_content scoped -%}
+{%- endblock %}
+
+{% block body_content scoped %}
+    <div class="content_wrapper">
+        <div data-tdp-page="results" class="content_main tdp-survey-results">
+        {% set overall = content.find_overall_progress(score) %}
+        {% set bbs = content.building_blocks() %}
+
+        <p class="label">
+            Your money journey results<span aria-hidden="true" style="display:none"
+                                            class="initials-display">: <span class="initials-value"></span></span>
+        </p>
+        <h1>Congratulations, {{ overall.heading_html|safe }}</h1>
+        <p class="h3"> {{ overall.msg_html|safe }}</p>
+        {% set car_position = overall.position_idx %}
+        {% if car_position < 2 >= 0 %}
+            {% set car_position = (car_position * 100) + (40) %}
+        {% elif car_position < 5 >= 2 %}
+            {% set car_position = (car_position * 100) + (100) %}
+        {% else %}
+            {% set car_position = (car_position * 100) + (150)  %}
+        {% endif %}
+        {% set level = overall.level_idx %}
+        {% set color = '#addc91' %}
+        {% set stroke_color = 'green' %}
+        {% include 'results-graph.html' %}
+
+        {# modal content #}
+        {% include './modals/share-url.html' %}
+        {% include './modals/print.html' %}
+        {% include './modals/reset.html' %}
+
+        <div class="block">
+            <p><strong>Now what?</strong> Read more about your results below. Think about things you’re doing
+                well and things you could do better. Be sure to save your results so you can see them again
+                later or share them with your teacher or a trusted adult.</p>
+        </div>
+        <hr>
+        <div class="block">
+            <h2>Your money journey</h2>
+
+            <p>Your money journey includes three important subjects:</p>
+
+            <ul>
+                <li>{{ content.get('BB0') }}</li>
+                <li>{{ content.get('BB1') }}</li>
+                <li>{{ content.get('BB2') }}</li>
+            </ul>
+
+            <p>Exploring each of these subjects will help you get the money future you want.</p>
+        </div>
+
+        <div class="o-expandable-group">
+            {% set bb = 0 %}
+            {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
+            <div class="o-expandable o-expandable__padded">
+                <button class="o-expandable_header o-expandable_target"
+                        title="Expand content">
+                    <h3 class="o-expandable_header-left o-expandable_label">
+                        <img src="{{ static('apps/teachers-digital-platform/img/planning.svg') }}" alt="planning icon"> {{ bbs[bb].title }}
+                    </h3>
+                    <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_cue o-expandable_cue-open">
+                    <span class="u-visually-hidden-on-mobile">Show</span>
+                    {% include 'icons/plus-round.svg' %}
+                </span>
+                <span class="o-expandable_cue o-expandable_cue-close">
+                    <span class="u-visually-hidden-on-mobile">Hide</span>
+                    {% include 'icons/minus-round.svg' %}
+                </span>
+            </span>
+                </button>
+                <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
+                    {% set car_position = progress.position_idx %}
+                    {% if car_position < 2 >= 0 %}
+                        {% set car_position = (car_position * 100) + (40) %}
+                    {% elif car_position < 5 >= 2 %}
+                        {% set car_position = (car_position * 100) + (100) %}
+                    {% else %}
+                        {% set car_position = (car_position * 100) + (150)  %}
+                    {% endif %}
+                    {% set level = progress.level_idx %}
+                    {% set color = '#93c1bf' %}
+                    {% set stroke_color = '#3b8a86' %}
+                    {% include 'results-graph.html' %}
+
+                    <div class="block">
+                        <p>{{ progress.msg_html|safe }} To make progress in this subject, practice things like planning ahead,
+                            remembering information, and solving problems.</p>
+                    </div>
+                </div>
+            </div>
+            {% set bb = 1 %}
+            {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
+            <div class="o-expandable o-expandable__padded">
+                <button class="o-expandable_header o-expandable_target"
+                        title="Expand content">
+                    <h3 class="o-expandable_header-left o-expandable_label">
+                        <img src="{{ static('apps/teachers-digital-platform/img/habits.svg') }}" alt="habits icon"> {{ bbs[bb].title }}
+                    </h3>
+                    <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_cue o-expandable_cue-open">
+                    <span class="u-visually-hidden-on-mobile">Show</span>
+                    {% include 'icons/plus-round.svg' %}
+                </span>
+                <span class="o-expandable_cue o-expandable_cue-close">
+                    <span class="u-visually-hidden-on-mobile">Hide</span>
+                    {% include 'icons/minus-round.svg' %}
+                </span>
+            </span>
+                </button>
+                <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
+                    {% set car_position = progress.position_idx %}
+                    {% if car_position < 2 >= 0 %}
+                        {% set car_position = (car_position * 100) + (40) %}
+                    {% elif car_position < 5 >= 2 %}
+                        {% set car_position = (car_position * 100) + (100) %}
+                    {% else %}
+                        {% set car_position = (car_position * 100) + (150)  %}
+                    {% endif %}
+                    {% set level = progress.level_idx %}
+                    {% set color = '#519ad6' %}
+                    {% set stroke_color = '#205d90' %}
+                    {% include 'results-graph.html' %}
+
+                    <div class="block">
+                        <p>{{ progress.msg_html|safe }} To advance in this subject, practice having a positive attitude about saving
+                            and spending and make your own rules about money.</p>
+                    </div>
+                </div>
+            </div>
+            {% set bb = 2 %}
+            {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
+            <div class="o-expandable o-expandable__padded">
+                <button class="o-expandable_header o-expandable_target"
+                        title="Expand content">
+                    <h3 class="o-expandable_header-left o-expandable_label">
+                        <img src="{{ static('apps/teachers-digital-platform/img/knowledge.svg') }}" alt="knowledge icon"> {{ bbs[bb].title }}
+                    </h3>
+                    <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_cue o-expandable_cue-open">
+                    <span class="u-visually-hidden-on-mobile">Show</span>
+                    {% include 'icons/plus-round.svg' %}
+                </span>
+                <span class="o-expandable_cue o-expandable_cue-close">
+                    <span class="u-visually-hidden-on-mobile">Hide</span>
+                    {% include 'icons/minus-round.svg' %}
+                </span>
+            </span>
+                </button>
+                <div class="o-expandable_content {{ '' if is_student else 'o-expandable_content__onload-open' }}">
+                    {% set car_position = progress.position_idx %}
+                    {% if car_position < 2 >= 0 %}
+                        {% set car_position = (car_position * 100) + (40) %}
+                    {% elif car_position < 5 >= 2 %}
+                        {% set car_position = (car_position * 100) + (100) %}
+                    {% else %}
+                        {% set car_position = (car_position * 100) + (150)  %}
+                    {% endif %}
+                    {% set level = progress.level_idx %}
+                    {% set color = '#FFCE8D' %}
+                    {% set stroke_color = '#DC731C' %}
+                    {% include 'results-graph.html' %}
+                    <div class="block">
+                        <p>{{ progress.msg_html|safe }} To get farther in this subject, learn facts about saving and spending money
+                            and use what you’ve learned to make the best money choices for you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="o-well block">
+            <h2>Stop and think</h2>
+            <p>Which path is your strongest? Which one do you want to work on?</p>
+
+            <h4>What now?</h4>
+            <p>Use the <a
+                href="https://files.consumerfinance.gov/f/documents/cfpb_building_block_activities_elementary-school-assessment-student-worksheet.pdf">Taking
+                the next steps on your money journey</a> worksheet to think about your
+                strengths and set goals to get the money future you want. Talk with your teacher,
+                your parents, or another trusted adult about your money map. They can also help
+                you set your goals.</p>
+
+            <p><strong>Remember:</strong> You are on a money journey that will last your whole life. Everyone, no
+                matter how old or young they are, can always get better at managing money.</p>
+        </div>
+
+        {% include './results-save.html' %}
+
+        {% if is_student %}
+        <div class="survey-reset--link--wrap">
+            <p>
+                <button class="a-btn a-btn__link a-btn__warning" data-open-modal="modal-reset">
+                    Reset survey and start over
+                </button>
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock body_content %}
+
+{% block javascript %}
+    {{ super() }}
+
+    {# Conditional comment used to block IE8 and under from receiving JS #}
+    <!--[if gt IE 8]><!-->
+        <script src="{{ static('apps/teachers-digital-platform/js/index.js') }}"></script>
+    <!--<![endif]-->
+{% endblock javascript %}
