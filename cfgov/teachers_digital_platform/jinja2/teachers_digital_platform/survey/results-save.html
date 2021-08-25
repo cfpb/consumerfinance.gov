@@ -1,8 +1,10 @@
-<div class="tdp-survey__save-block">
+<div class="tdp-survey__save-block block">
   {% if is_student %}
   <h2>Save your results</h2>
+  {% endif %}
 
   <div class="m-btn-group">
+    {% if is_student %}
     <button type="button" class="a-btn" data-open-modal="modal-print">
       Print results {% include 'icons/print.svg' %}
     </button>
