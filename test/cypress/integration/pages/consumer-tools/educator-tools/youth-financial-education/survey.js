@@ -6,7 +6,7 @@ const tests = [
       [0, 0],
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0],
-      [0, 0],
+      [0, 0]
     ],
     resultsMatch: /^v1_3-5_10:z:h_/,
     x: [500, 500, 650, 300]
@@ -18,7 +18,7 @@ const tests = [
       [3, 3],
       [3, 3, 3, 3, 3, 3, 3],
       [3, 3, 3],
-      [3, 3],
+      [3, 3]
     ],
     resultsMatch: /^v1_3-5_g:e:a_/,
     x: [40, 40, 40, 40]
@@ -67,9 +67,6 @@ function testWithValues(test) {
 
 describe( 'Youth Financial Education Survey', () => {
   describe( 'Completion', () => {
-    beforeEach( () => {
-    } );
-
     it( tests[0].name, () => testWithValues(tests[0]) );
 
     it( tests[1].name, () => testWithValues(tests[1]) );
