@@ -8,6 +8,7 @@ from django.http.request import HttpRequest
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django.views.decorators.vary import vary_on_cookie
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
@@ -88,6 +89,7 @@ class SurveyWizard(NamedUrlCookieWizardView):
         return self.render_to_response(context)
 
     @method_decorator(never_cache)
+    @method_decorator(vary_on_cookie)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
@@ -140,6 +142,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
 
 
 @never_cache
+@vary_on_cookie
 def student_results(request: HttpRequest):
     """
     Request handler for the student results page
@@ -160,6 +163,7 @@ def student_results(request: HttpRequest):
 
 
 @never_cache
+@vary_on_cookie
 def view_results(request: HttpRequest):
     """
     Request handler for the view results page
