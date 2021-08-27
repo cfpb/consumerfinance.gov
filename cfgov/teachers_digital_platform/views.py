@@ -1,5 +1,6 @@
 import re
 import time
+from functools import wraps
 from typing import Dict
 
 from django.core import signing
@@ -19,6 +20,19 @@ from .UrlEncoder import UrlEncoder
 
 _tdp = 'teachers_digital_platform'
 _signer = signing.Signer()
+
+
+def akamai_never_cache(view_func):
+    """
+    Decorator that adds headers to a response so that it will never be cached.
+    """
+    @wraps(view_func)
+    def _wrapped_view_func(request, *args, **kwargs):
+        response = view_func(request, *args, **kwargs)
+        response['Edge-Control'] = 'no-store'
+        response['Akamai-Cache-Control'] = 'no-store'
+        return response
+    return _wrapped_view_func
 
 
 class SurveyWizard(NamedUrlCookieWizardView):
@@ -90,6 +104,7 @@ class SurveyWizard(NamedUrlCookieWizardView):
 
     @method_decorator(never_cache)
     @method_decorator(vary_on_cookie)
+    @method_decorator(akamai_never_cache)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
@@ -143,6 +158,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
 
 @never_cache
 @vary_on_cookie
+@akamai_never_cache
 def student_results(request: HttpRequest):
     """
     Request handler for the student results page
@@ -164,6 +180,7 @@ def student_results(request: HttpRequest):
 
 @never_cache
 @vary_on_cookie
+@akamai_never_cache
 def view_results(request: HttpRequest):
     """
     Request handler for the view results page
@@ -184,6 +201,8 @@ def view_results(request: HttpRequest):
 
 
 @never_cache
+@vary_on_cookie
+@akamai_never_cache
 def _grade_level_page(request: HttpRequest, key: str):
     survey = get_survey(key)
     rendered = render_to_string(
