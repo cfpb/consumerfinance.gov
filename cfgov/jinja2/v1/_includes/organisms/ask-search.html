@@ -8,20 +8,25 @@
 
    Output an ask search bar when given:
 
-   ask_query      The previous search query string.
+   ask_query:      The previous search query string.
 
-   language:      page's language.
+   language:       Page's language.
 
-   show_label:    Boolean; whether to show form label.
+   show_label:     Boolean; whether to show form label.
 
-   autocomplete:  Boolean; whether to allow autocomplete.
+   autocomplete:   Boolean; whether to allow autocomplete.
 
-   placeholder:   String; text to enter for the search input's placeholder value.
+   placeholder:    String; text to enter for the search input's placeholder
+                   value.
 
-   is_subsection: Boolean; whether to mark up the form label with an h3 to fit
-                  into an exisitng section or with an h2 to be its own section
+   is_subsection:  Boolean; whether to mark up the form label with an h3 to fit
+                   into an exisitng section or with an h2 to be its own section
 
-    max_length:   The maximum length of a query string, in characters
+   max_length:     Integer; the maximum length of a query string, in characters
+
+   complaint_link: Boolean; whether to add a link to the complaint submission
+                   page to the end of the error message for searches over the
+                   max length
 
    ========================================================================== #}
 
@@ -32,7 +37,8 @@
     autocomplete=True,
     placeholder='',
     is_subsection=True,
-    max_length=autocomplete_max_chars
+    max_length=autocomplete_max_chars,
+    complaint_link=False
 ) %}
 <div class="o-search-bar">
     <form method="get" action="{{ _('/ask-cfpb/search/') }}">
@@ -67,9 +73,12 @@
                         {{ svg_icon('error-round') }}
                         <p class="a-form-alert_text">
                             Searches are limited to {{ autocomplete_max_chars }}
-                            characters. Are you trying to
+                            characters.
+                            {% if complaint_link %}
+                            Are you trying to
                             <a href="/complaint/getting-started/">
                                 submit a complaint</a>?
+                            {% endif %}
                         </p>
                     </div>
                 </div>
@@ -92,7 +101,10 @@
       value.language | default( 'en' ),
       value.show_label | default( True ),
       value.autocomplete | default( True ),
-      value.placeholder | default( '' )
+      value.placeholder | default( '' ),
+      value.is_subsection | default( True ),
+      value.max_length | default( autocomplete_max_chars ),
+      value.complaint_link | default( False )
     )
   }}
 {% endif %}
