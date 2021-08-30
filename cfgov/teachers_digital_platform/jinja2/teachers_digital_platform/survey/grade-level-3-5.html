@@ -69,6 +69,24 @@
                 sizingMethod='scale');
             padding-bottom: 100%;
         }
+        @media only screen and (max-width: 600px) {
+            #hero1 .m-hero_image {
+                background-image:
+                url('{{ static('apps/teachers-digital-platform/img/journey-mobile.png') }}');
+            background-image: -webkit-image-set(
+                url('{{ static('apps/teachers-digital-platform/img/journey-mobile.png') }}') 1x,
+                url('{{ static('apps/teachers-digital-platform/img/journey-mobile.png') }}') 2x
+            );
+            background-image: image-set(
+                url('{{ static('apps/teachers-digital-platform/img/journey-mobile.png') }}') 1x,
+                url('{{ static('apps/teachers-digital-platform/img/journey-mobile.png') }}') 2x
+            );
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                src='{{ static('apps/teachers-digital-platform/img/journey-mobile.png') }}',
+                sizingMethod='scale');
+            padding-bottom: 50%;
+            }
+        }
     </style>
     {% include './modals/privacy.html' %}
 </section>
