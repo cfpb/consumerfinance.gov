@@ -20,6 +20,7 @@ from .UrlEncoder import UrlEncoder
 
 _tdp = 'teachers_digital_platform'
 _signer = signing.Signer()
+_unexpected_error_uri = '../../../assess/survey/'
 
 
 def akamai_never_cache(view_func):
@@ -133,7 +134,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
     url_encoder = UrlEncoder(AVAILABLE_SURVEYS)
     res = url_encoder.loads(code)
     if res is None:
-        return HttpResponseRedirect('../../../assess/survey/')
+        return HttpResponseRedirect(_unexpected_error_uri)
 
     survey = get_survey(res['key'])
     total = sum(res['subtotals'])
@@ -167,13 +168,13 @@ def student_results(request: HttpRequest):
         return HttpResponse(status=404)
 
     if 'resultUrl' not in request.COOKIES:
-        return HttpResponseRedirect('../../../assess/survey/')
+        return HttpResponseRedirect(_unexpected_error_uri)
 
     raw = request.COOKIES['resultUrl']
     try:
         result_url = _signer.unsign(raw)
     except signing.BadSignature:
-        return HttpResponseRedirect('../../../assess/survey/')
+        return HttpResponseRedirect(_unexpected_error_uri)
 
     return _handle_result_url(request, raw, result_url, True)
 
@@ -188,14 +189,17 @@ def view_results(request: HttpRequest):
     if request.method != 'GET':
         return HttpResponse(status=404)
 
+    if 'r' not in request.GET:
+        return HttpResponseRedirect(_unexpected_error_uri)
+
     raw = request.GET['r']
     if not isinstance(raw, str):
-        return HttpResponseRedirect('../../../assess/survey/')
+        return HttpResponseRedirect(_unexpected_error_uri)
 
     try:
         result_url = _signer.unsign(raw)
     except signing.BadSignature:
-        return HttpResponseRedirect('../../../assess/survey/')
+        return HttpResponseRedirect(_unexpected_error_uri)
 
     return _handle_result_url(request, raw, result_url, False)
 
