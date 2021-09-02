@@ -21,7 +21,7 @@ from wagtailautocomplete.urls.admin import (
 from ask_cfpb.views import (
     ask_autocomplete, ask_search, redirect_ask_search, view_answer
 )
-from core.decorators import add_headers
+from core.decorators import akamai_no_store
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
 )
@@ -444,10 +444,7 @@ urlpatterns = [
             'diversity_inclusion'),
             namespace='diversity_inclusion')),
 
-    re_path(
-        r'^sitemap\.xml$',
-        add_headers(sitemap, {'Edge-Control': 'no-cache'})
-    ),
+    re_path(r'^sitemap\.xml$', akamai_no_store(sitemap)),
 
     re_path(
         r'^consumer-tools/educator-tools/youth-financial-education/',
