@@ -13,13 +13,13 @@ from django.views.decorators.vary import vary_on_cookie
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
+from .forms import SharedUrlForm
 from .resultsContent import ResultsContent
 from .surveys import AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
 from .UrlEncoder import UrlEncoder
 
 
 _tdp = 'teachers_digital_platform'
-_signer = signing.Signer()
 _unexpected_error_uri = '../../../assess/survey/'
 
 
@@ -66,7 +66,7 @@ class SurveyWizard(NamedUrlCookieWizardView):
         # We can't use set_signed_cookie() because we need to unsign the
         # query string using Signer() and for some reason the raw cookie
         # value fails to pass the sig check.
-        signed = _signer.sign(encoded)
+        signed = signing.Signer().sign(encoded)
 
         # Send to results page (current URL is survey/6-8/done/ )
         response = HttpResponseRedirect('../results/')
@@ -129,7 +129,7 @@ class SurveyWizard(NamedUrlCookieWizardView):
         return wizard_views
 
 
-def _handle_result_url(request: HttpRequest, raw: str, code: str,
+def _handle_result_url(request: HttpRequest, signed_code: str, code: str,
                        is_student: bool):
     url_encoder = UrlEncoder(AVAILABLE_SURVEYS)
     res = url_encoder.loads(code)
@@ -147,7 +147,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
             'content': ResultsContent.factory(res['key']),
             'is_student': student_view,
             'request': request,
-            'r_param': raw,
+            'signed_code': signed_code,
             'survey': survey,
             'subtotals': res['subtotals'],
             'score': adjusted,
@@ -169,14 +169,14 @@ def student_results(request: HttpRequest):
 
     if 'resultUrl' not in request.COOKIES:
         return HttpResponseRedirect(_unexpected_error_uri)
+    fake_get = {'r': request.COOKIES['resultUrl']}
 
-    raw = request.COOKIES['resultUrl']
-    try:
-        result_url = _signer.unsign(raw)
-    except signing.BadSignature:
+    form = SharedUrlForm(fake_get)
+    if not form.is_valid():
         return HttpResponseRedirect(_unexpected_error_uri)
+    signed_code, code = form.cleaned_data['r']
 
-    return _handle_result_url(request, raw, result_url, True)
+    return _handle_result_url(request, signed_code, code, True)
 
 
 @never_cache
@@ -189,19 +189,12 @@ def view_results(request: HttpRequest):
     if request.method != 'GET':
         return HttpResponse(status=404)
 
-    if 'r' not in request.GET:
+    form = SharedUrlForm(request.GET)
+    if not form.is_valid():
         return HttpResponseRedirect(_unexpected_error_uri)
+    signed_code, code = form.cleaned_data['r']
 
-    raw = request.GET['r']
-    if not isinstance(raw, str):
-        return HttpResponseRedirect(_unexpected_error_uri)
-
-    try:
-        result_url = _signer.unsign(raw)
-    except signing.BadSignature:
-        return HttpResponseRedirect(_unexpected_error_uri)
-
-    return _handle_result_url(request, raw, result_url, False)
+    return _handle_result_url(request, signed_code, code, False)
 
 
 @never_cache

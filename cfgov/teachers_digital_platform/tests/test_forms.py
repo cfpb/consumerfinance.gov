@@ -1,7 +1,33 @@
 from django import forms
+from django.core import signing
 from django.test import TestCase
 
-from ..forms import SurveyForm, markup
+from ..forms import SharedUrlForm, SurveyForm, markup
+from ..UrlEncoder import UrlEncoder
+
+
+_key = '3-5'
+_scores = [0, 10, 15]
+_time = 1623518461
+_code = UrlEncoder([_key]).dumps(_key, _scores, _time)
+_signed_code = signing.Signer().sign(_code)
+
+
+class SharedFormTest(TestCase):
+
+    def test_valid_signed_code(self):
+        form = SharedUrlForm({'r': _signed_code})
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data['r'], (_signed_code, _code))
+
+    def test_rejects_modification(self):
+        _modified = _signed_code[0:5] + 'z' + _signed_code[5]
+        form = SharedUrlForm({'r': _modified})
+        self.assertFalse(form.is_valid())
+
+    def test_rejects_missing(self):
+        form = SharedUrlForm({})
+        self.assertFalse(form.is_valid())
 
 
 class SurveyFormTest(TestCase):
