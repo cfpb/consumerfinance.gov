@@ -1,8 +1,8 @@
-from functools import wraps
+from functools import partial, wraps
 
 
 def add_headers(view, headers):
-    """Wrapper that adds HTTP headers to a view's response.
+    """Decorator that adds HTTP headers to a view's response.
 
     Usage:
 
@@ -20,3 +20,9 @@ def add_headers(view, headers):
         return response
 
     return inner
+
+
+akamai_no_store = partial(add_headers, headers={
+    'Edge-Control': 'no-store',
+    'Akamai-Cache-Control': 'no-store',
+})
