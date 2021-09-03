@@ -199,16 +199,33 @@ def add_link_markup(tag, request_path):
     icon_classes = {'class': LINK_ICON_TEXT_CLASSES}
     spans = tag.findAll('span', icon_classes)
 
-    if spans:
-        span = spans[-1]
+    icon_soup = BeautifulSoup(svg_icon(icon), 'html.parser')
+
+    if not spans and 'a-btn' in class_attrs:
+        span = soup.new_tag(
+            'span',
+            **{'class': 'a-btn_icon a-btn_icon__on-right'}
+        )
+        span.contents.append(icon_soup)
+
+        button = soup.new_tag('button', **{'class': 'a-btn'})
+        button.contents = list(tag.contents)
+        button.contents.append(span)
+
+        tag.clear()
+        tag.append(button)
     else:
-        span = soup.new_tag('span', **icon_classes)
-        span.contents = list(tag.contents)
+        if spans:
+            span = spans[-1]
+        else:
+            span = soup.new_tag('span', **icon_classes)
+            span.contents = list(tag.contents)
 
         tag.clear()
         tag.append(span)
 
-    span.insert_after(BeautifulSoup(' ' + svg_icon(icon), 'html.parser'))
+        tag.append(' ')
+        tag.append(icon_soup)
 
     return str(tag)
 
