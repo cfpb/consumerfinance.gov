@@ -3,6 +3,7 @@
    ========================================================================== */
 
 import Autocomplete from '../../molecules/Autocomplete';
+import Analytics from '../../modules/Analytics';
 
 const URLS = {
   en: '/ask-cfpb/api/autocomplete/?term=',
@@ -10,6 +11,25 @@ const URLS = {
 };
 
 const autocompleteContainer = document.querySelector( '.m-autocomplete' );
+const errorMessage = document.querySelector( '#o-search-bar_error-message' );
+const submitButton = document.querySelector( '.o-search-bar button[type="submit"]' );
+
+/**
+ * Disable the submit button if the query character limit is reached
+ * @param {Object} event - The maxCharacterChange event object dispatched from
+ *   the autocomplete.
+ */
+function handleMaxCharacters( event ) {
+  if ( event.maxLengthExceeded ) {
+    const eventData = Analytics.getDataLayerOptions( 'maxLimitReached', event.searchTerm, 'Ask Search' );
+    submitButton.setAttribute( 'disabled', 'true' );
+    errorMessage.classList.remove( 'u-hidden' );
+    Analytics.sendEvent( eventData );
+  } else {
+    submitButton.removeAttribute( 'disabled' );
+    errorMessage.classList.add( 'u-hidden' );
+  }
+}
 
 if ( autocompleteContainer ) {
   const language = autocompleteContainer.getAttribute( 'data-language' );
@@ -33,5 +53,6 @@ if ( autocompleteContainer ) {
       return li;
     }
   } );
+  autocomplete.addEventListener( 'maxCharacterChange', handleMaxCharacters );
   autocomplete.init();
 }
