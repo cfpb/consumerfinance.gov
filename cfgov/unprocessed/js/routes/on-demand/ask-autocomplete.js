@@ -11,13 +11,13 @@ const URLS = {
 };
 
 const autocompleteContainer = document.querySelector( '.m-autocomplete' );
-const errorMessage = document.querySelector( '#o-search-bar-error_message' );
+const errorMessage = document.querySelector( '#o-search-bar_error-message' );
 const submitButton = document.querySelector( '.o-search-bar button[type="submit"]' );
 
 /**
  * Disable the submit button if the query character limit is reached
- * @param {Object} event The maxCharacterChange event object dispatched from the
- * autocomplete
+ * @param {Object} event - The maxCharacterChange event object dispatched from
+ *   the autocomplete.
  */
 function handleMaxCharacters( event ) {
   if ( event.maxLengthExceeded ) {

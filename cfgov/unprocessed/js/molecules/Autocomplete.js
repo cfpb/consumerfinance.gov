@@ -158,11 +158,13 @@ function Autocomplete( element, opts ) {
    */
   function _handleInput( event ) {
     _searchTerm = event.target.value;
+
+    if ( _maxLengthExceeded === true ) {
+      _toggleMaxLengthError();
+    }
+
     if ( _searchTerm.length >= _settings.minChars &&
          _searchTerm.length < _settings.maxChars ) {
-      if ( _maxLengthExceeded === true ) {
-        _toggleMaxLengthError();
-      }
       if ( _settings.url ) {
         _throttleFetch();
       } else {
@@ -171,9 +173,6 @@ function Autocomplete( element, opts ) {
     } else if ( _searchTerm.length >= _settings.maxChars ) {
       _toggleMaxLengthError();
     } else {
-      if ( _maxLengthExceeded === true ) {
-        _toggleMaxLengthError();
-      }
       _hide();
     }
   }
