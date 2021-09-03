@@ -208,12 +208,7 @@ def add_link_markup(tag, request_path):
         )
         span.contents.append(icon_soup)
 
-        button = soup.new_tag('button', **{'class': 'a-btn'})
-        button.contents = list(tag.contents)
-        button.contents.append(span)
-
-        tag.clear()
-        tag.append(button)
+        tag.contents.append(span)
     else:
         if spans:
             span = spans[-1]
