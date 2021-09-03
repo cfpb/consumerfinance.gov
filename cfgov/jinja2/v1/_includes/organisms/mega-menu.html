@@ -52,7 +52,7 @@
         <div class="{{ _content_classes( nav_depth, '-list' ) }}">
 
             {% if group.title %}
-            {% set aria_group_title = group.title ~ ' continued' if group.title_hidden else group.title %}
+            {% set aria_group_title = group.title ~ (' ' ~ _('continued')) if group.title_hidden else group.title %}
             <div role="heading"
                  aria-level="3"
                  aria-label="{{ aria_group_title }}"
@@ -192,9 +192,9 @@
                     <div role="heading"
                          aria-level="3"
                          class="h5 {{ base_class ~ '_group-heading' }}">
-                        Additional Resources
+                        {{ _('Additional Resources') }}
                     </div>
-                    <ul aria-label="Additional Resources">
+                    <ul aria-label="{{ _('Additional Resources') }}">
                         {% for link in nav_item.other_items | default( [], true ) %}
                         <li class="{{ _content_classes( nav_depth, '-item' ) }}
                                     {{ _content_classes( nav_depth, '-item__has-icon' ) }}">
