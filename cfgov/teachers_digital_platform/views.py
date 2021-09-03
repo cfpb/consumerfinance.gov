@@ -12,6 +12,8 @@ from django.views.decorators.vary import vary_on_cookie
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
+from core.decorators import akamai_no_store
+
 from .resultsContent import ResultsContent
 from .surveys import AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
 from .UrlEncoder import UrlEncoder
@@ -90,6 +92,7 @@ class SurveyWizard(NamedUrlCookieWizardView):
 
     @method_decorator(never_cache)
     @method_decorator(vary_on_cookie)
+    @method_decorator(akamai_no_store)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
@@ -143,6 +146,7 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
 
 @never_cache
 @vary_on_cookie
+@akamai_no_store
 def student_results(request: HttpRequest):
     """
     Request handler for the student results page
@@ -164,6 +168,7 @@ def student_results(request: HttpRequest):
 
 @never_cache
 @vary_on_cookie
+@akamai_no_store
 def view_results(request: HttpRequest):
     """
     Request handler for the view results page
@@ -184,6 +189,8 @@ def view_results(request: HttpRequest):
 
 
 @never_cache
+@vary_on_cookie
+@akamai_no_store
 def _grade_level_page(request: HttpRequest, key: str):
     survey = get_survey(key)
     rendered = render_to_string(
