@@ -23,8 +23,9 @@ export class TdpResultsPage {
   // stores shareUrl
   visitSharedUrl() {
     cy.get( '[data-open-modal="modal-share-url"]' ).click();
-    cy.get( '#modal-share-url-initials-input' ).type( 'abcd{enter}' );
-    cy.get( '.share-output button' ).click();
+    cy.get( '#modal-share-url-initials-input' ).type( 'a1b-cD' )
+      .should( 'have.value', 'ABC' );
+    cy.get( '#modal-share-url-initials-input' ).type( '{enter}' );
 
     cy.get( '.share-output a' ).then( a => {
       const url = a[0].href;
@@ -35,7 +36,7 @@ export class TdpResultsPage {
   }
 
   checkInitials() {
-    cy.get( '.initials-value' ).should( 'include.text', 'ABCD' );
+    cy.get( '.initials-value' ).should( 'include.text', 'ABC' );
   }
 
   checkNoSharing() {

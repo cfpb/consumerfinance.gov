@@ -59,6 +59,7 @@ function withValidInitials( desc, cb ) {
     const fixed = String( ini.value )
       .toUpperCase()
       .trim()
+      .replace( /[^A-Z]+/g, '' )
       .substr( 0, INITIALS_LIMIT );
 
     // Set value in both modals
