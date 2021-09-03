@@ -920,8 +920,9 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.3.1.tgz#a3a85da32e31296c7bdcc381f65fc6a099e63b28"
   integrity sha512-sbxJN19n9qM+mXPiLGg5gYAxkmYFTHoLlAdMGmgSxEHXFwnrmW5a6o16XDhYuVZOBCxRP9nCQOKXeVoeRP7IGg==
   dependencies:
-    normalize-css "^2.0.0"
-    normalize-legacy-addon "0.1.0"
+    "@cfpb/cfpb-atomic-component" "^0.10.0"
+    "@cfpb/cfpb-core" "^0.10.0"
+    "@cfpb/cfpb-icons" "^0.10.0"
 
 "@cfpb/cfpb-expandables@0.11.0":
   version "0.11.0"

@@ -39,6 +39,10 @@ class HighlightCardValue(blocks.StructValue):
     def link_text(self):
         return _('Read more')
 
+    @property
+    def card_type(self):
+        return 'highlight'
+
 
 class HighlightCardBlock(blocks.StructBlock):
     heading = blocks.CharBlock()
@@ -199,8 +203,12 @@ class HomePageInfoUnitLink(Orderable):
         FieldPanel('url'),
     ]
 
-
+# Deprecated
 class HomePageCard(Orderable):
+    @property
+    def card_type(self):
+        return 'featured'
+
     page = ParentalKey(
         'v1.HomePage', on_delete=models.CASCADE, related_name='cards'
     )

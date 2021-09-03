@@ -50,6 +50,11 @@
     {% endwith %}
 
     <section class="block">
-        {{ card_group.render( card_heading, cards ) }}
+        {{ card_group.render( {
+            'heading': card_heading,
+            'type_group': 'featured',
+            'type_card': 'featured',
+            'cards': cards
+        } ) }}
     </section>
 {% endblock content_main %}

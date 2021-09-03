@@ -9,6 +9,10 @@
    Creates markup for a Card molecule, which displays some text and a link,
    with an optional heading and icon.
 
+   value.card_type: The type of card. Values can be:
+                    topic, topic-action, highlight, breakout,
+                    featured (deprecated)
+
    value.text:      Card body text.
 
    value.icon:      Name of an icon. See list of available icon names at:
@@ -18,17 +22,21 @@
 
    value.link_url:  Card link URL.
 
-   value.heading:               (Optional) Card heading.
-
-   value.icon:                  (Optional) Card icon.
+   value.heading:   (Optional) Card heading.
 
    ========================================================================== #}
 
 {% macro render( value ) %}
 {# We want to make the whole card clickable. #}
-<article class="m-card m-card__featured">
+<article class="m-card
+                {% if value.card_type == 'topic' %} m-card__topic {% endif %}
+                {% if value.card_type == 'topic-action' %} m-card__topic m-card__topic-action {% endif %}
+                {% if value.card_type  == 'highlight' %} m-card__highlight {% endif %}
+                {% if value.card_type  == 'breakout' %} m-card__breakout {% endif %}
+                {% if value.card_type  == 'featured' %} m-card__featured {% endif %}">
     <a href="{{ value.link_url }}">
-        <h2 class="m-card_heading">
+        {% if value.heading or value.icon %}
+        <h3 class="m-card_heading{% if value.card_type == 'featured' %} h2{% endif %}">
             {% if value.icon -%}
                 <span class="m-card_icon">{{ svg_icon( value.icon ) }}</span>
             {%- endif %}
@@ -37,11 +45,28 @@
             {%- else -%}
                 <span class="u-visually-hidden">{{ value.link_text }}</span>
             {%- endif %}
-        </h2>
+        </h3>
+        {% endif %}
+
+        {% if value.text %}
         <p>{{ value.text }}</p>
-        <div class="m-card_footer">
-            <span>{{ value.link_text }}</span>
+        {% endif %}
+
+        {% if value.card_type  == 'breakout' %}
+        <img class="m-card_img"
+             src="{{ value.img_src }}"
+             alt="">
+        {% endif %}
+
+        {% if value.card_type  == 'breakout' %}
+        <div class="m-card_inner-wrapper">
+        {% endif %}
+            <div class="m-card_footer">
+                <span>{{ value.link_text }}</span>
+            </div>
+        {% if value.card_type  == 'breakout' %}
         </div>
-    </a>
+        {% endif %}
+        </a>
 </article>
 {% endmacro %}
