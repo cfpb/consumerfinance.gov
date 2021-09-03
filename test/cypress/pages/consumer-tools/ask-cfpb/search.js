@@ -34,7 +34,7 @@ export class AskCfpbSearch {
   }
 
   maxLengthErrorMessage() {
-    return cy.get( '#o-search-bar-error_message' );
+    return cy.get( '#o-search-bar_error-message' );
   }
 
   longTerm() {
