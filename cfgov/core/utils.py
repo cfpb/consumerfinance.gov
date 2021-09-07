@@ -55,16 +55,8 @@ ICONLESS_LINK_CHILD_ELEMENTS = [
 ]
 
 
-def append_query_args_to_url(base_url, args_dict):
-    return "{0}?{1}".format(base_url, urlencode(args_dict))
-
-
-def sign_url(url, secret=None):
-    if secret:
-        signer = Signer(secret, sep='||')
-    else:
-        signer = Signer(sep='||')
-
+def sign_url(url):
+    signer = Signer(sep='||')
     url, signature = signer.sign(url).split('||')
     return (url, signature)
 
@@ -127,6 +119,7 @@ def add_link_markup(tag, request_path):
     if tag is None:
         return None
 
+    href = tag['href']
     class_attrs = tag.attrs.setdefault('class', [])
 
     if request_path is not None:
@@ -137,18 +130,18 @@ def add_link_markup(tag, request_path):
         in_page_anchor_pattern = request_path + '#'
         if tag['href'].startswith(in_page_anchor_pattern):
             # Strip current path from in-page anchor links
-            tag['href'] = tag['href'].replace(request_path, '')
+            tag['href'] = href.replace(request_path, '')
             return str(tag)
 
-    if ASK_CFPB_LINKS.match(tag['href']):
+    if ASK_CFPB_LINKS.match(href):
         # Use short URL when printing Ask CFPB links
-        tag['data-pretty-href'] = ask_short_url(tag['href'])
+        tag['data-pretty-href'] = ask_short_url(href)
         return str(tag)
 
-    if tag['href'].startswith('/external-site/?'):
+    if href.startswith('/external-site/?'):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = 'external-link'
-        components = urlparse(tag['href'])
+        components = urlparse(href)
         arguments = parse_qs(components.query)
         if 'ext_url' in arguments:
             external_url = arguments['ext_url'][0]
@@ -157,16 +150,16 @@ def add_link_markup(tag, request_path):
             # Add the redirect notice as well
             tag['href'] = signed_redirect(external_url)
 
-    elif NON_CFPB_LINKS.match(tag['href']):
+    elif NON_CFPB_LINKS.match(href):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = 'external-link'
-        if NON_GOV_LINKS.match(tag['href']):
+        if NON_GOV_LINKS.match(href):
             # Add pretty URL for print styles
-            tag['data-pretty-href'] = tag['href']
+            tag['data-pretty-href'] = href
             # Add the redirect notice as well
-            tag['href'] = signed_redirect(tag['href'])
+            tag['href'] = signed_redirect(href)
 
-    elif DOWNLOAD_LINKS.search(tag['href']):
+    elif DOWNLOAD_LINKS.search(href):
         # Sets the icon to indicate you're downloading a file
         icon = 'download'
 
@@ -191,16 +184,14 @@ def add_link_markup(tag, request_path):
     if not icon:
         return None
 
-    # We have an icon to append.
-    for cls in LINK_ICON_CLASSES:
-        if cls not in class_attrs:
-            class_attrs.append(cls)
-
     icon_classes = {'class': LINK_ICON_TEXT_CLASSES}
     spans = tag.findAll('span', icon_classes)
 
     icon_soup = BeautifulSoup(svg_icon(icon), 'html.parser')
 
+    # If this is an <a class="a-btn"> tag without a span inside, we want to
+    # add proper markup so that the link appears as a button with the icon on
+    # the right side.
     if not spans and 'a-btn' in class_attrs:
         span = soup.new_tag(
             'span',
@@ -209,7 +200,16 @@ def add_link_markup(tag, request_path):
         span.contents.append(icon_soup)
 
         tag.contents.append(span)
+    # Otherwise, either modify an existing <span> or add a new one so that
+    # it has the proper non-button link classes, and then add the icon after
+    # the span.
     else:
+        # Since we're adding an icon, also add class="a-link a-link_icon" to
+        # the <a> tag. We don't do this if the link is a button.
+        for cls in LINK_ICON_CLASSES:
+            if cls not in class_attrs:
+                class_attrs.append(cls)
+
         if spans:
             span = spans[-1]
         else:
