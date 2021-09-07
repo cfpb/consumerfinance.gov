@@ -218,34 +218,6 @@ class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
         )
 
 
-class PlaceholderStreamBlock(blocks.StreamBlock):
-    def __init__(self, *args, **kwargs):
-        super(PlaceholderStreamBlock, self).__init__(*args, **kwargs)
-        self.placeholder = kwargs.pop('placeholder', None)
-
-    def render_form(self, *args, **kwargs):
-        html = super(
-            PlaceholderStreamBlock, self
-        ).render_form(*args, **kwargs)
-
-        if self.placeholder is not None:
-            html = self.replace_placeholder(html, self.placeholder)
-
-        return html
-
-    @staticmethod
-    def replace_placeholder(html, placeholder):
-        soup = BeautifulSoup(html, 'html.parser')
-        inputs = soup.findAll('input')
-
-        if 1 != len(inputs):
-            raise ValueError('block must contain a single input tag')
-
-        inputs[0]['placeholder'] = placeholder
-
-        return SafeText(soup)
-
-
 class ReusableTextChooserBlock(SnippetChooserBlock):
     class Meta:
         template = '_includes/snippets/reusable_text.html'
