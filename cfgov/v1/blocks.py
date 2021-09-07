@@ -247,10 +247,6 @@ class PlaceholderStreamBlock(blocks.StreamBlock):
         return SafeText(soup)
 
 
-class PlaceholderCharBlock(PlaceholderStreamBlock, blocks.StreamBlock):
-    pass
-
-
 class ReusableTextChooserBlock(SnippetChooserBlock):
     class Meta:
         template = '_includes/snippets/reusable_text.html'
