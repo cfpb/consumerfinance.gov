@@ -57,22 +57,16 @@
                                 input-contains-label
                                 {% if autocomplete %}m-autocomplete{% endif %}"
                          data-language="{{ language }}">
-                        {% if show_label %}
-                        <span
-                        {% else %}
-                        <label for="o-search-bar_query"
-                        {% endif %}
+                        {% set label_element = 'span' if show_label else 'label' %}
+                        {% set label_for = '' if show_label else 'for="o-search-bar_query"' %}
+                        <{{ label_element }} {{ label_for }}
                                class="input-contains-label_before
                                       input-contains-label_before__search">
                             {{ svg_icon('search') }}
                             {% if not show_label %}
                             <span class="u-visually-hidden">{{ _('Search') }}</span>
                             {% endif %}
-                        {% if show_label %}
-                        </span>
-                        {% else %}
-                        </label>
-                        {% endif %}
+                        </{{ label_element}}>
                         <input class="a-text-input"
                                type="text"
                                name="q"
