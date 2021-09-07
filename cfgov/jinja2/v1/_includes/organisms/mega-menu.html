@@ -170,7 +170,7 @@
                     <div role="heading"
                          aria-level="3"
                          class="h5 {{ base_class ~ '_group-heading' }}">
-                        Featured
+                        {{ _('Featured') }}
                     </div>
                     <ul aria-label="{{ _('Featured') }}">
                         {% for link in nav_item.featured_items | default( [], true ) %}
