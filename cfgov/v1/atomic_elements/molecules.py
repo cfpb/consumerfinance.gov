@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe

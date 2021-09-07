@@ -59,8 +59,7 @@ class Hyperlink(blocks.StructBlock):
                 error_dict.update({'text': is_required('Text')})
 
         if error_dict:
-            raise StructBlockValidationError(
-                                  block_errors=error_dict)
+            raise StructBlockValidationError(block_errors=error_dict)
         else:
             return data
 
@@ -134,8 +133,7 @@ class ImageBasic(blocks.StructBlock):
             error_dict.update({'upload': is_required("Upload")})
 
         if error_dict:
-            raise StructBlockValidationError(
-                                  block_errors=error_dict)
+            raise StructBlockValidationError(block_errors=error_dict)
         else:
             return data
 

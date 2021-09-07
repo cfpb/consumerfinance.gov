@@ -3,7 +3,6 @@ import json
 from collections import Counter
 from urllib.parse import urlencode
 
-from django import forms
 from django.apps import apps
 from django.db.models import Q
 from django.forms.utils import ErrorList
@@ -405,91 +404,6 @@ class MainContactInfo(blocks.StructBlock):
 class SidebarContactInfo(MainContactInfo):
     class Meta:
         template = '_includes/organisms/sidebar-contact-info.html'
-
-
-class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
-    def __init__(self, table_options=None, attrs=None):
-        super(RichTextTableInput, self).__init__(attrs=attrs)
-        self.table_options = table_options
-
-    def render(self, name, value, attrs=None):
-        value = self.json_dict_apply(
-            value,
-            expand_db_html
-        )
-
-        html = super(RichTextTableInput, self).render(name, value, attrs)
-        return Markup(render_to_string('wagtailadmin/table_input.html', {
-            'original_field_html': html,
-            'attrs': attrs,
-            'value': value,
-        }))
-
-    def render_js_init(self, id_, name, value):
-        return "initRichTextTable({0}, {1});".format(
-            json.dumps(id_),
-            json.dumps(self.table_options)
-        )
-
-    def value_from_datadict(self, data, files, name):
-        value = super(RichTextTableInput, self).value_from_datadict(
-            data, files, name
-        )
-
-        try:
-            return self.json_dict_apply(value, DbWhitelister.clean)
-        except NameError:
-            return value
-
-    @staticmethod
-    def json_dict_apply(value, callback):
-        if not value:
-            return
-        value = json.loads(value)
-
-        for row in (value or {}).get('data') or []:
-            for i, cell in enumerate(row or []):
-                if cell:
-                    row[i] = callback(cell)
-
-        return json.dumps(value)
-
-
-class AtomicTableBlock(TableBlock):
-    @cached_property
-    def field(self):
-        widget = RichTextTableInput(table_options=self.table_options)
-        return forms.CharField(widget=widget, **self.field_options)
-
-    def to_python(self, value):
-        new_value = super(AtomicTableBlock, self).to_python(value)
-        if new_value:
-            new_value['has_data'] = self.get_has_data(new_value)
-        return new_value
-
-    def get_has_data(self, value):
-        has_data = False
-        if value and 'data' in value:
-            first_row_index = 1 if value.get('first_row_is_table_header',
-                                             None) else 0
-            first_col_index = 1 if value.get('first_col_is_header',
-                                             None) else 0
-
-            for row in value['data'][first_row_index:]:
-                for cell in row[first_col_index:]:
-                    if cell:
-                        has_data = True
-                        break
-        return has_data
-
-    class Meta:
-        default = None
-        icon = 'table'
-        template = '_includes/organisms/table.html'
-        label = 'Table'
-
-    class Media:
-        js = ['table.js']
 
 
 class ModelBlock(blocks.StructBlock):
@@ -1009,20 +923,19 @@ class VideoPlayer(blocks.StructBlock):
         if not cleaned['video_id']:
             if getattr(self.meta, 'required', True):
                 errors['video_id'] = ErrorList([
-                    StructBlockValidationError(block_errors='This field is required.'),
+                    StructBlockValidationError(
+                        block_errors='This field is required.'),
                 ])
             elif cleaned['thumbnail_image']:
                 errors['thumbnail_image'] = ErrorList([
                     StructBlockValidationError(
-                        block_errors='This field should not be used if YouTube video ID is '
-                        'not set.'
+                        block_errors='This field should not be '
+                        'used if YouTube video ID is not set.'
                     )
                 ])
 
         if errors:
-            raise StructBlockValidationError(
-                block_errors=errors
-            )
+            raise StructBlockValidationError(block_errors=errors)
 
         return cleaned
 
