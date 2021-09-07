@@ -276,9 +276,18 @@ msgstr "https://gobiernousa.gov/"
 msgid "USA.gov"
 msgstr "GobiernoUSA.gov"
 
+#: jinja2/v1/_includes/organisms/mega-menu.html:55
+msgid "continued"
+msgstr "continuación"
+
 #: jinja2/v1/_includes/organisms/mega-menu.html:167
 msgid "Featured"
 msgstr "Destacado"
+
+#: jinja2/v1/_includes/organisms/mega-menu.html:195
+#: jinja2/v1/_includes/organisms/mega-menu.html:197
+msgid "Additional Resources"
+msgstr "Recursos adicionales"
 
 #: jinja2/v1/_includes/organisms/mega-menu.html:298
 msgid "Main menu"
@@ -298,6 +307,10 @@ msgstr "Cerrar el menú principal"
 #: jinja2/v1/_includes/organisms/secondary-navigation.html:89
 msgid "Section navigation"
 msgstr "Navegación de la sección"
+
+#: jinja2/v1/_includes/organisms/video-player.html:61
+msgid "Close video"
+msgstr "Cerrar video"
 
 #: jinja2/v1/_includes/organisms/video-player.html:98
 msgid "Play video on YouTube"
