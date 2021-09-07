@@ -8,18 +8,25 @@
 
    Output an ask search bar when given:
 
-   ask_query      The previous search query string.
+   ask_query:      The previous search query string.
 
-   language:      page's language.
+   language:       Page's language.
 
-   show_label:    Boolean; whether to show form label.
+   show_label:     Boolean; whether to show form label.
 
-   autocomplete:  Boolean; whether to allow autocomplete.
+   autocomplete:   Boolean; whether to allow autocomplete.
 
-   placeholder:   String; text to enter for the search input's placeholder value.
+   placeholder:    String; text to enter for the search input's placeholder
+                   value.
 
-   is_subsection: Boolean; whether to mark up the form label with an h3 to fit
-                  into an exisitng section or with an h2 to be its own section
+   is_subsection:  Boolean; whether to mark up the form label with an h3 to fit
+                   into an exisitng section or with an h2 to be its own section
+
+   max_length:     Integer; the maximum length of a query string, in characters
+
+   complaint_link: Boolean; whether to add a link to the complaint submission
+                   page to the end of the error message for searches over the
+                   max length
 
    ========================================================================== #}
 
@@ -29,7 +36,9 @@
     show_label=True,
     autocomplete=True,
     placeholder='',
-    is_subsection=True
+    is_subsection=True,
+    max_length=autocomplete_max_chars,
+    complaint_link=False
 ) %}
 <div class="o-search-bar">
     <form method="get" action="{{ _('/ask-cfpb/search/') }}">
@@ -54,7 +63,23 @@
                                name="q"
                                id="o-search-bar_query"
                                value="{{ ask_query }}"
-                               placeholder="{{ placeholder }}">
+                               placeholder="{{ placeholder }}"
+                               maxlength="{{ max_length }}"
+                               aria-describedby="o-search-bar_error-message">
+                    </div>
+                    <div class="a-form-alert a-form-alert__error u-hidden"
+                         id="o-search-bar_error-message"
+                         role="alert">
+                        {{ svg_icon('error-round') }}
+                        <p class="a-form-alert_text">
+                            Searches are limited to {{ autocomplete_max_chars }}
+                            characters.
+                            {% if complaint_link %}
+                            Are you trying to
+                            <a href="/complaint/getting-started/">
+                                submit a complaint</a>?
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
                 <div class="o-form__input-w-btn_btn-container">
@@ -76,7 +101,10 @@
       value.language | default( 'en' ),
       value.show_label | default( True ),
       value.autocomplete | default( True ),
-      value.placeholder | default( '' )
+      value.placeholder | default( '' ),
+      value.is_subsection | default( True ),
+      value.max_length | default( autocomplete_max_chars ),
+      value.complaint_link | default( False )
     )
   }}
 {% endif %}

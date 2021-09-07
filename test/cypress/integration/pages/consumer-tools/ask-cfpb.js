@@ -7,7 +7,7 @@ const answerPage = new AskCfpbAnswerPage();
 describe( 'Ask CFPB', () => {
   describe( 'Search', () => {
     beforeEach( () => {
-      search.open();
+      search.open( 'en' );
     } );
 
     it( 'should autocomplete results', () => {
@@ -26,6 +26,14 @@ describe( 'Ask CFPB', () => {
       search.search();
       search.resultsHeader().should( 'contain', 'results for “vehicle”' );
       search.resultsHeader().siblings( 'p' ).first().should( 'contain', 'Search instead for' );
+    } );
+
+    it( 'should limit queries to a maximum length', () => {
+      search.enter( search.longTerm() );
+      search.input().should( 'contain.class', 'a-text-input__error' )
+        .and( 'have.attr', 'maxlength' );
+      search.maxLengthErrorMessage().should( 'be.visible' );
+      search.submitButton().should( 'be.disabled' );
     } );
   } );
 

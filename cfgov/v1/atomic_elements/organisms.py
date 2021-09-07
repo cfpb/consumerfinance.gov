@@ -36,6 +36,14 @@ class AskSearch(blocks.StructBlock):
         help_text='Whether to show form label.'
     )
 
+    complaint_link = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Direct long searches to submit a complaint',
+        help_text=('Add a link to the complaint submission page to the end of '
+                   'the error message for searches over the max length')
+    )
+
     placeholder = blocks.TextBlock(
         required=False,
         help_text='Text to show for the input placeholder text.'

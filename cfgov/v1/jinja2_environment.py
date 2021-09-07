@@ -9,6 +9,8 @@ from django.utils.translation import ugettext, ungettext
 
 from jinja2 import Environment
 
+from search.models import AUTOCOMPLETE_MAX_CHARS
+
 
 class RelativeTemplatePathEnvironment(Environment):
     """Jinja2 environment that supports template loading with relative paths.
@@ -36,6 +38,7 @@ class RelativeTemplatePathEnvironment(Environment):
     This logic adds relative paths to the template search tree, that take
     precendence over the default loader source directories.
     """
+
     def join_path(self, template, parent):
         dirname = os.path.dirname(parent)
         segments = dirname.split('/')
@@ -96,6 +99,7 @@ def environment(**options):
 
     # Expose various Django methods into the Jinja2 environment.
     env.globals.update({
+        'autocomplete_max_chars': AUTOCOMPLETE_MAX_CHARS,
         'get_messages': messages.get_messages,
         'reverse': reverse,
         'static': staticfiles_storage.url,
