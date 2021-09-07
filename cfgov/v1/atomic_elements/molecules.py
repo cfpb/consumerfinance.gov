@@ -49,15 +49,7 @@ class TextIntroduction(blocks.StructBlock):
 
     def clean(self, value):
         cleaned = super(TextIntroduction, self).clean(value)
-<<<<<<< HEAD
-
-        # Eyebrow requires a heading.
-        if cleaned.get('eyebrow') and not cleaned.get('heading'):
-            raise ValidationError(
-                'Validation error in TextIntroduction: '
-=======
         error = ValidationError('Validation error in TextIntroduction: '
->>>>>>> a8f4d5d43 (trying to use the old validation errors in the new errors.)
                 'pre-heading requires heading',
                 params={'heading': ErrorList([
                     'Required if a pre-heading is entered.'
@@ -231,14 +223,7 @@ class ContactEmail(blocks.StructBlock):
 
     def clean(self, value):
         cleaned = super(ContactEmail, self).clean(value)
-<<<<<<< HEAD
-
-        if not cleaned.get('emails'):
-            raise ValidationError(
-                "Validation error in ContactEmail: "
-=======
         error = ValidationError("Validation error in ContactEmail: "
->>>>>>> a8f4d5d43 (trying to use the old validation errors in the new errors.)
                 "at least one email address is required",
                 params={'heading': ErrorList([
                     "At least one email address is required."
