@@ -12,10 +12,9 @@ from django.views.decorators.vary import vary_on_cookie
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
-from .forms import SharedUrlForm
-
 from core.decorators import akamai_no_store
 
+from .forms import SharedUrlForm
 from .resultsContent import ResultsContent
 from .surveys import AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
 from .UrlEncoder import UrlEncoder
