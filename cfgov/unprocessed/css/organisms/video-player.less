@@ -148,6 +148,11 @@
         transform: translate( -50%, -50% );
     }
 
+    &:focus-visible {
+        outline: 1px dotted #0072ce !important;
+        outline-offset: 1px !important;
+    }
+
     &__bottomRight {
         right: unit( @grid_gutter-width / 2 / @play-btn-icon-size, em );
         bottom: unit( @grid_gutter-width / 2 / @play-btn-icon-size, em );
@@ -308,7 +313,12 @@ button.o-video-player_play-btn,
         display: block;
         // Pushes button out of masked window when not playing.
         margin-top: @standard-btn-height__px;
+
+        &:focus {
+        outline: 1px dotted #0072ce !important;
+        outline-offset: 1px !important;
     }
+  }
 }
 
 .respond-to-max( @bp-xs-max, {
