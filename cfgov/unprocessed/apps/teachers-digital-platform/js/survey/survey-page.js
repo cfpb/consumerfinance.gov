@@ -149,7 +149,7 @@ function allowStartOver() {
       } else {
         sessionStorage.removeItem( ANSWERS_SESS_KEY );
         Cookie.remove( SURVEY_COOKIE );
-        location.href = '../../../assess/survey/';
+        location.href = $( '[data-grade-select-url]' ).dataset.gradeSelectUrl;
       }
     }
   } );
