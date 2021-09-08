@@ -55,7 +55,7 @@
                 {{- ' m-hero__knockout' if value.is_white_text else '' }}
                 {{- ' m-hero__bleeding' if value.is_bleeding else '' }}
                 {{- ' m-hero__overlay' if ( value.is_overlay or value.is_jumbo ) else '' }}
-                {{- ' m-hero__jumbo' if value.is_jumbo else '' }}">
+                {{- ' m-hero__50-50' if value.is_jumbo else '' }}">
     <div class="m-hero_wrapper wrapper">
         <div class="m-hero_text">
             <h1 class="m-hero_heading">{{ value.heading | safe }}</h1>
@@ -103,6 +103,10 @@
                 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                     src='{{ img.url }}',
                     sizingMethod='scale');
+            }
+
+            .m-hero__50-50 .m-hero_wrapper {
+                background-size: contain;
             }
         }
     {% endif %}
