@@ -3,7 +3,6 @@ from django.core.files import File
 from django.core.files.base import ContentFile
 from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
-import wagtail
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
 from wagtail.images.tests.utils import get_test_image_file
@@ -496,7 +495,6 @@ class TestInfoUnitGroup(TestCase):
             self.block.clean(value)
         except ValidationError:  # pragma: nocover
             self.fail('heading with intro should not fail validation')
-
 
     def test_2575_with_image_ok(self):
         value = self.block.to_python({
