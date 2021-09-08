@@ -134,7 +134,7 @@
     <button class="{{- _content_classes( nav_depth, '-alt-trigger' ) -}}"
             data-js-hook="behavior_flyout-menu_trigger">
         {{ svg_icon('left') }}
-        Back
+        {{ _('Back') }}
     </button>
     {% endif %}
 
@@ -146,7 +146,8 @@
             <a class="{{ _content_classes( nav_depth, '-overview-link' ) }}
                         {{ _content_classes( nav_depth, '-overview-link__current' ) if overview_link.selected else '' }}"
                href="{{ overview_link.url }}">
-                {{ overview_link.text ~ ' Overview' }}
+                {% set overview_link_text = overview_link.text -%}
+                {% trans %}{{ overview_link_text }} Overview{% endtrans %}
             </a>
         </div>
         {% endif %}
