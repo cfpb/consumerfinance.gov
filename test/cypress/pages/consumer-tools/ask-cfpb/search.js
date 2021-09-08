@@ -1,19 +1,28 @@
 export class AskCfpbSearch {
 
-  open() {
-    cy.visit( '/ask-cfpb/' );
+  open( language ) {
+    const path = language === 'es' ? '/es/obtener-respuestas/' : '/ask-cfpb/';
+    cy.visit( path );
+  }
+
+  input() {
+    return cy.get( '#o-search-bar_query' );
   }
 
   enter( term ) {
-    cy.get( '#o-search-bar_query' ).type( term );
+    this.input().type( term );
   }
 
   autocomplete() {
     return cy.get( '.m-autocomplete_results' );
   }
 
+  submitButton() {
+    return cy.get( '.o-search-bar .a-btn' );
+  }
+
   search() {
-    cy.get( '.o-search-bar .a-btn' ).click();
+    this.submitButton().click();
   }
 
   resultsSection() {
@@ -22,5 +31,15 @@ export class AskCfpbSearch {
 
   resultsHeader() {
     return cy.get( '.results-header' );
+  }
+
+  maxLengthErrorMessage() {
+    return cy.get( '#o-search-bar_error-message' );
+  }
+
+  longTerm() {
+    const maxLength = Cypress.$( '#o-search-bar_query' ).attr( 'maxlength' );
+    const longTerm = new Array( parseInt( maxLength, 10 ) + 1 ).join( 'c' );
+    return longTerm;
   }
 }
