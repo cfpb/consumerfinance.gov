@@ -1,4 +1,4 @@
-import { ObtenerRespuestasBuscar } from './obtener-respuestas-helpers';
+import { AskCfpbSearch } from '../ask-cfpb/search-helpers';
 
 const buscar = new AskCfpbSearch();
 
