@@ -280,26 +280,34 @@ msgstr "GobiernoUSA.gov"
 msgid "continued"
 msgstr "continuación"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:167
+#: jinja2/v1/_includes/organisms/mega-menu.html:137
+msgid "Back"
+msgstr "Regresar"
+
+#: jinja2/v1/_includes/organisms/mega-menu.html:150
+#, python-format
+msgid "%(overview_link_text)s Overview"
+msgstr "Información General %(overview_link_text)s"
+
+#: jinja2/v1/_includes/organisms/mega-menu.html:174
+#: jinja2/v1/_includes/organisms/mega-menu.html:176
 msgid "Featured"
 msgstr "Destacado"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:195
-#: jinja2/v1/_includes/organisms/mega-menu.html:197
+#: jinja2/v1/_includes/organisms/mega-menu.html:196
+#: jinja2/v1/_includes/organisms/mega-menu.html:198
 msgid "Additional Resources"
 msgstr "Recursos adicionales"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:298
+#: jinja2/v1/_includes/organisms/mega-menu.html:307
 msgid "Main menu"
 msgstr "Menú principal"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:313
-#| msgid "Main menu"
+#: jinja2/v1/_includes/organisms/mega-menu.html:314
 msgid "Open the main menu"
 msgstr "Abre el menú principal"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:319
-#| msgid "Main menu"
+#: jinja2/v1/_includes/organisms/mega-menu.html:320
 msgid "Close the main menu"
 msgstr "Cerrar el menú principal"
 
