@@ -64,12 +64,25 @@ describe( 'Youth Financial Education Survey', () => {
     it( 'should reject direct requests for results', () => {
       cy.clearCookies();
 
-      // Can't use visit() locally because 500
-      cy.request( {
-        url: '/consumer-tools/educator-tools/youth-financial-education/survey/3-5/results/',
-        followRedirect: false
-      } ).then( resp => {
-        expect( resp.redirectedToUrl ).to.include( '/assess/survey/' );
+      cy.url().then( url => {
+        /**
+         * The wagtail page that gets redirected to is only available on the
+         * prod and beta environments, so the tests differ.
+         */
+        const prodBetaPattern = /\/\/(beta|www).consumerfinance.gov\b/
+        const wagtailPageExists = prodBetaPattern.test( url );
+        if ( wagtailPageExists ) {
+          cy.visit( '/consumer-tools/educator-tools/youth-financial-education/survey/3-5/results/' );
+          cy.get( '#choose-your-grade-level-to-begin h2' ).should( 'exist' );
+        } else {
+          // Must capture where we get redirected to.
+          cy.request( {
+            url: '/consumer-tools/educator-tools/youth-financial-education/survey/3-5/results/',
+            followRedirect: false
+          } ).then( resp => {
+            expect( resp.redirectedToUrl ).to.include( '/assess/survey/' );
+          } );
+        }
       } );
     } );
 
