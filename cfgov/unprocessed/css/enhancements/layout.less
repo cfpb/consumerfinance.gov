@@ -286,19 +286,24 @@
 } );
 
 
-// Jumbo hero for CampaignPages and the HomePage
-.m-hero__jumbo {
+// Jumbo 50/50 hero for CampaignPages and the HomePage
+.m-hero__50-50 {
     .m-hero_subhead {
         .lead-paragraph();
     }
 
     .respond-to-min( @bp-sm-min, {
-        // margin-top: unit( ( -@grid_gutter-width * 1.5 ) / @base-font-size-px, em);
-        // margin-right: unit( -@grid_gutter-width / @base-font-size-px, em);
-        // margin-left: unit( -@grid_gutter-width / @base-font-size-px, em);
+        .m-hero_wrapper {
+            // Position the hero image all the way to the right plus a little
+            // extra so that it flows into the gutter
+            background-position: calc( 100% + @grid_gutter-width ) center;
+            background-size: 50%;
+            min-height: 290px;
+        }
 
-        > .m-hero_wrapper {
-            height: 290px;
+        .m-hero_text {
+            color: @black;
+            .grid_column( 6, 12 );
         }
 
         .m-hero_heading {
