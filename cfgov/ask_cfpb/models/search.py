@@ -1,6 +1,7 @@
 from elasticsearch7.exceptions import RequestError
 
 from ask_cfpb.documents import AnswerPageDocument
+from search.models import AUTOCOMPLETE_MAX_CHARS
 
 
 UNSAFE_CHARACTERS = [
@@ -28,7 +29,7 @@ class AnswerPageSearch:
             s = AnswerPageDocument.search().filter(
                 "term", language=self.language
             ).query(
-                'match', autocomplete=self.search_term
+                'match', autocomplete=self.search_term[:AUTOCOMPLETE_MAX_CHARS]
             )
             results = [
                 {'question': result.autocomplete, 'url': result.url}
