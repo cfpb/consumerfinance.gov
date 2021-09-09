@@ -13,16 +13,13 @@ from django.views.decorators.vary import vary_on_cookie
 from formtools.wizard.views import NamedUrlCookieWizardView
 
 from core.decorators import akamai_no_store
-
-from v1.models import SublandingPage
-
 from teachers_digital_platform.forms import SharedUrlForm
 from teachers_digital_platform.resultsContent import ResultsContent
 from teachers_digital_platform.surveys import (
     AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
 )
-
 from teachers_digital_platform.UrlEncoder import UrlEncoder
+from v1.models import SublandingPage
 
 
 _tdp = 'teachers_digital_platform'
