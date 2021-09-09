@@ -1,8 +1,8 @@
-import { TdpResultsPage } from './results-helpers';
-import { TdpSurveyPage } from './survey-helpers';
+import { TdpResultsHelpers } from './results-helpers';
+import { TdpSurveyHelpers } from './survey-helpers';
 
-const results = new TdpResultsPage();
-const survey = new TdpSurveyPage();
+const results = new TdpResultsHelpers();
+const survey = new TdpSurveyHelpers();
 
 function testFillingSurvey( test ) {
   survey.open( `${ test.grades }/p1` );

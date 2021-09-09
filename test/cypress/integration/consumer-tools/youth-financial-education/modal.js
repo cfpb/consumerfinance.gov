@@ -19,7 +19,7 @@ describe( 'Youth Financial Education Survey: modal', () => {
     cy.get( '#modal-privacy .o-modal_body' ).should( 'be.hidden' );
     cy.get( '#modal-privacy' ).then( $el => {
       expect( $el.attr( 'aria-hidden' ) ).equal( 'true' );
-      expect( $el.attr( 'aria-modal' ) ).to.be.undefined();
+      expect( $el.attr( 'aria-modal' ) ).to.be.undefined;
     } );
     open();
     cy.get( '#modal-privacy' ).then( $el => {

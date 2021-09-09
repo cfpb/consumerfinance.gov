@@ -1,6 +1,6 @@
-import { TdpSurveyPage } from '../../../../../pages/consumer-tools/educator-tools/youth-financial-education/survey';
+import { TdpSurveyHelpers } from './survey-helpers';
 
-const survey = new TdpSurveyPage();
+const survey = new TdpSurveyHelpers();
 
 describe( 'Youth Financial Education Survey: Progress', () => {
   function verifyProgress( numDone, percent ) {
