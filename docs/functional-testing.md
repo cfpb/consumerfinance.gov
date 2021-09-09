@@ -1,6 +1,6 @@
 # Functional Testing with Cypress
 
-In order to ensure that as we upgrade our wagtail/django dependencies our backend python code is still functional from a frontend perspective we are integrating a new browser testing tool [Cypress](https://www.cypress.io). The goal is to implement and maintain a testing suite that enables confidence in dependency upgrades. 
+In order to ensure that as we upgrade our wagtail/django dependencies our backend python code is still functional from a frontend perspective we are integrating a new browser testing tool [Cypress](https://www.cypress.io). The goal is to implement and maintain a testing suite that enables confidence in dependency upgrades.
 
 ## Installing Cypress
 
@@ -24,15 +24,15 @@ We support both a headless docker container to execute our cypress tests as well
 
 When developing new tests for Cypress it is important to consider what the test is trying to accomplish. We want to ensure that we are not polluting our cypress tests with things that can be tested at another level, we are seeking to only test the integration aspect of our UI hosted via Wagtail/Django and custom python code within our backend.
 
-When adding a test it is often helpful to separate the arrange/act code from the actual assertions in order to improve the readability of our testing code. To do this we have adopted the page model of testing, where we define a page within the application and the methods of interacting with the page separate from the test file itself where we define the assertions. 
+When adding a test it is often helpful to separate the arrange/act code from the actual assertions in order to improve the readability of our testing code. To do this we have adopted the page model of testing, where we define a page within the application and the methods of interacting with the page separate from the test file itself where we define the assertions. We call these files "helpers" and label them as such (example: `megamenu-helpers.js`), and we include them alongside the test files themselves in the `test/cypress/integration/` folder. (They are ignored when running tests thanks to the configuration of `cypress.json`.)
 
-For example consider the ConsumerTools Page:
+For example consider the ConsumerTools Page "helper":
 
 ```javascript
 export default class ConsumerTools {
-    
+
     constructor() {}
-    
+
     open() {
         cy.visit('/consumer-tools/');
     }
@@ -52,7 +52,7 @@ export default class ConsumerTools {
 Notice how this class defines functions to retrieve and modify elements on the page but in a more human readable manner. This allows our test file for consumer tools to look like:
 
 ```javascript
-import ConsumerTools from '../pages/consumer_tools';
+import ConsumerTools from './consumer-tools-helpers';
 
 let page = new ConsumerTools();
 
