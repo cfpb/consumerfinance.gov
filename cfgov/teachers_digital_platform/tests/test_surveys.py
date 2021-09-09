@@ -1,8 +1,8 @@
 from django import forms
 from django.test import TestCase
 
-from ..forms import SurveyForm, _replace_tokens
-from ..surveys import (
+from teachers_digital_platform.forms import SurveyForm, _replace_tokens
+from teachers_digital_platform.surveys import (
     ChoiceList, ChoiceQuestion, Survey, SurveyPage, get_survey
 )
 
