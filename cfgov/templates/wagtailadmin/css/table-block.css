@@ -1,3 +1,13 @@
+.Draftail-Editor__wrapper {
+ height: auto !important;
+ width: 800px !important;
+ max-width: 800px !important;
+}
+
+.handsontableInputHolder {
+  left: 0 !important;
+}
+
 .heading-text-block,
 .heading-level-block,
 .heading-icon-block {
