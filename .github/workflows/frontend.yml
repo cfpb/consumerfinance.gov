@@ -67,6 +67,7 @@ jobs:
         uses: actions/download-artifact@v2.0.10
         with:
           name: frontend_coverage
+          path: frontend_coverage
 
       - name: Check frontend test coverage
         run: |

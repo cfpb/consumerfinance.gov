@@ -95,6 +95,7 @@ jobs:
         uses: actions/download-artifact@v2.0.10
         with:
           name: backend_coverage
+          path: backend_coverage
 
       - name: Check backend test coverage
         run: |
