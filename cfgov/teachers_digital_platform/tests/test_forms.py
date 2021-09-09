@@ -2,8 +2,8 @@ from django import forms
 from django.core import signing
 from django.test import TestCase
 
-from ..forms import SharedUrlForm, SurveyForm, markup
-from ..UrlEncoder import UrlEncoder
+from teachers_digital_platform.forms import SharedUrlForm, SurveyForm, markup
+from teachers_digital_platform.UrlEncoder import UrlEncoder
 
 
 _key = '3-5'

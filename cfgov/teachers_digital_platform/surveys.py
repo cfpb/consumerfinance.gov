@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from django import forms
 
-from .forms import SurveyForm, markup
+from teachers_digital_platform.forms import SurveyForm, markup
 
 
 # If True, all the best scoring answers will be auto-selected.

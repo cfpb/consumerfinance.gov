@@ -12,16 +12,17 @@ from django.views.decorators.vary import vary_on_cookie
 
 from formtools.wizard.views import NamedUrlCookieWizardView
 
-from wagtail.core.models import Page
-
 from core.decorators import akamai_no_store
 
 from v1.models import SublandingPage
 
-from .forms import SharedUrlForm
-from .resultsContent import ResultsContent
-from .surveys import AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
-from .UrlEncoder import UrlEncoder
+from teachers_digital_platform.forms import SharedUrlForm
+from teachers_digital_platform.resultsContent import ResultsContent
+from teachers_digital_platform.surveys import (
+    AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
+)
+
+from teachers_digital_platform.UrlEncoder import UrlEncoder
 
 
 _tdp = 'teachers_digital_platform'
@@ -35,7 +36,7 @@ def _findSurveyGradeSelectionUrl(request: Optional[HttpRequest],
     """
     try:
         destination_page = SublandingPage.objects.get(pk=_gradeSelectionPagePk)
-    except Page.DoesNotExist:
+    except SublandingPage.DoesNotExist:
         return default
 
     destination_url = destination_page.get_url(request)
