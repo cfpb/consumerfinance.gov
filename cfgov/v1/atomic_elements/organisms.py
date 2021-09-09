@@ -5,7 +5,6 @@ from urllib.parse import urlencode
 
 from django import forms
 from django.apps import apps
-from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.template.loader import render_to_string
@@ -14,6 +13,7 @@ from django.utils.safestring import mark_safe
 
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.core import blocks
+from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.core.models import Page
 from wagtail.core.rich_text import expand_db_html
 from wagtail.images import blocks as images_blocks
@@ -130,10 +130,8 @@ class InfoUnitGroup(blocks.StructBlock):
         if cleaned.get('format') == '25-75':
             for unit in cleaned.get('info_units'):
                 if not unit['image']['upload']:
-                    raise ValidationError(
-                        ('Validation error in InfoUnitGroup: '
-                         '25-75 with no image'),
-                        params={'format': ErrorList([
+                    raise StructBlockValidationError(
+                        block_errors={'format': ErrorList([
                             'Info units must include images when using the '
                             '25/75 format. Search for an "FPO" image if you '
                             'need a temporary placeholder.'
@@ -1012,21 +1010,19 @@ class VideoPlayer(blocks.StructBlock):
         if not cleaned['video_id']:
             if getattr(self.meta, 'required', True):
                 errors['video_id'] = ErrorList([
-                    ValidationError('This field is required.'),
+                    StructBlockValidationError(
+                        block_errors='This field is required.'),
                 ])
             elif cleaned['thumbnail_image']:
                 errors['thumbnail_image'] = ErrorList([
-                    ValidationError(
-                        'This field should not be used if YouTube video ID is '
-                        'not set.'
+                    StructBlockValidationError(
+                        block_errors='This field should not be '
+                        'used if YouTube video ID is not set.'
                     )
                 ])
 
         if errors:
-            raise ValidationError(
-                'Validation error in VideoPlayer',
-                params=errors
-            )
+            raise StructBlockValidationError(block_errors=errors)
 
         return cleaned
 
