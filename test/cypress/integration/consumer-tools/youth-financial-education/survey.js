@@ -69,7 +69,7 @@ describe( 'Youth Financial Education Survey', () => {
          * The wagtail page that gets redirected to is only available on the
          * prod and beta environments, so the tests differ.
          */
-        const prodBetaPattern = /\/\/(beta|www).consumerfinance.gov\b/;
+        const prodBetaPattern = /\/\/(beta|www)\.consumerfinance\.gov\b/;
         const wagtailPageExists = prodBetaPattern.test( url );
         if ( wagtailPageExists ) {
           cy.visit( '/consumer-tools/educator-tools/youth-financial-education/survey/3-5/results/' );
