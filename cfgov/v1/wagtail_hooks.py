@@ -27,8 +27,8 @@ from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
 from v1.template_debug import (
-    featured_content_test_cases, heading_test_cases, notification_test_cases,
-    register_template_debug, video_player_test_cases
+    call_to_action_test_cases, featured_content_test_cases, heading_test_cases,
+    notification_test_cases, register_template_debug, video_player_test_cases
 )
 from v1.util import util
 from v1.views.reports import PageMetadataReportView
@@ -428,6 +428,14 @@ def add_export_feedback_permission_to_wagtail_admin_group_view():
         content_type__app_label='v1',
         codename='export_feedback'
     )
+
+
+register_template_debug(
+    'v1',
+    'call_to_action',
+    '_includes/molecules/call-to-action.html',
+    call_to_action_test_cases
+)
 
 
 register_template_debug(
