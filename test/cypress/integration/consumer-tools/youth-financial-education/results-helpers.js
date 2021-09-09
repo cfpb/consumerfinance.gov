@@ -20,11 +20,25 @@ export class TdpResultsPage {
       } );
   }
 
-  // stores shareUrl
+  print() {
+    cy.get( '[data-open-modal="modal-print"]' ).click();
+
+    cy.window().then( win => {
+      cy.stub( win, 'print' ).returns( true );
+    } );
+    cy.get( '#modal-print-initials-input' ).type( 'abcd{enter}' );
+    cy.window().then( win => {
+      expect( win.print ).to.be.calledOnce;
+    });
+
+    cy.get( '.initials-value' ).should( 'include.text', 'ABCD' );
+  }
+
   visitSharedUrl() {
     cy.get( '[data-open-modal="modal-share-url"]' ).click();
-    cy.get( '#modal-share-url-initials-input' ).type( 'abcd{enter}' );
-    cy.get( '.share-output button' ).click();
+    cy.get( '#modal-share-url-initials-input' ).should( 'have.value', 'ABCD' );
+
+    cy.get( '#modal-share-url .tdp-survey__initials-set' ).click();
 
     cy.get( '.share-output a' ).then( a => {
       const url = a[0].href;

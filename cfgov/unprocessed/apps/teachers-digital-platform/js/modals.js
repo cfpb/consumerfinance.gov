@@ -1,11 +1,11 @@
-const { closest } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
-const CustomEvt = require('customevent');
+const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
+const CustomEvt = require( 'customevent' );
 
 /**
- * Holds the only reference to Modal instances, which are only created just
+ * Holds the only reference to Modal instance, which is only created just
  * before opened.
  */
-let openModals = [];
+let openModal = null;
 
 class Modal {
   constructor( id, opener ) {
@@ -20,6 +20,10 @@ class Modal {
   }
 
   open() {
+    if ( openModal ) {
+      openModal.close();
+    }
+
     const el = this.getElement();
 
     const event = new CustomEvt( 'modal:open:before', {
@@ -40,12 +44,12 @@ class Modal {
     }
 
     this.isOpen = true;
-    openModals.push( this );
+    openModal = this;
   }
 
   close() {
     this.isOpen = false;
-    openModals = openModals.filter( modal => modal.isOpen );
+    openModal = null;
 
     const el = this.getElement();
     // Hide from screen readers
@@ -81,16 +85,12 @@ class Modal {
 }
 
 /**
- * Close a modal by ID
- *
- * @param {string} id Modal ID
+ * Close the modal
  */
-function close( id ) {
-  openModals.forEach( modal => {
-    if ( modal.id === id ) {
-      modal.close();
-    }
-  } );
+function close() {
+  if ( openModal ) {
+    openModal.close();
+  }
 }
 
 /**
@@ -118,17 +118,16 @@ function handleClicks() {
       return;
     }
 
-    if ( !openModals.length ) {
+    if ( !openModal ) {
       return;
     }
 
-    const modal = openModals[openModals.length - 1];
     const closeTopModal = () => {
-      modal.close();
+      openModal.close();
       event.stopPropagation();
     };
 
-    const content = modal.getElement().querySelector( '.o-modal_content' );
+    const content = openModal.getElement().querySelector( '.o-modal_content' );
     if ( content.contains( t ) ) {
       // Close if clicking modal's close button(s)
       if ( content.querySelector( '.o-modal_close' ).contains( t ) ) {
@@ -153,11 +152,11 @@ function handleClicks() {
  */
 function handleEscKey() {
   document.addEventListener( 'keydown', event => {
-    if ( event.key !== 'Escape' || !openModals.length ) {
+    if ( event.key !== 'Escape' || !openModal ) {
       return;
     }
 
-    openModals[openModals.length - 1].close();
+    openModal.close();
     event.stopPropagation();
   } );
 }

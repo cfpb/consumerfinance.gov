@@ -1,5 +1,6 @@
 const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
 const Cookie = require( 'js-cookie' );
+import clipboardCopy from 'copy-to-clipboard';
 const {
   ANSWERS_SESS_KEY,
   INITIALS_LIMIT,
@@ -9,7 +10,6 @@ const {
 const encodeName = require( '../encode-name' );
 const modals = require( '../modals' );
 const initials = require( './initials' );
-const { clipboardCopy } = require( '../clipboardCopy' );
 
 const $ = document.querySelector.bind( document );
 
@@ -106,9 +106,8 @@ function handleShareModal() {
 
   $( '.share-output button' ).addEventListener( 'click', event => {
     event.preventDefault();
-    clipboardCopy( a.href ).then( () => {
-      copiedMsg.hidden = false;
-    } );
+    clipboardCopy( a.href );
+    copiedMsg.hidden = false;
   } );
 
   a.addEventListener( 'click', event => {
@@ -128,7 +127,7 @@ function handlePrintModal() {
 
   withValidInitials( desc, value => {
     initials.update( value );
-    modals.close( 'modal-print' );
+    modals.close();
     window.print();
   } );
 }
@@ -147,7 +146,7 @@ function handleResetModal() {
     if ( button ) {
       event.preventDefault();
       if ( button.dataset.cancel ) {
-        modals.close( 'modal-reset' );
+        modals.close();
       } else {
         Cookie.remove( RESULT_COOKIE );
         location.href = $( '[data-grade-select-url]' ).dataset.gradeSelectUrl;
@@ -156,4 +155,4 @@ function handleResetModal() {
   } );
 }
 
-export { resultsPage, ANSWERS_SESS_KEY };
+export { resultsPage, ANSWERS_SESS_KEY, Cookie };

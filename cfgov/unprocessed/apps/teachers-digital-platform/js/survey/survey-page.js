@@ -145,7 +145,7 @@ function allowStartOver() {
     if ( button ) {
       event.preventDefault();
       if ( button.dataset.cancel ) {
-        modals.close( 'modal-restart' );
+        modals.close();
       } else {
         sessionStorage.removeItem( ANSWERS_SESS_KEY );
         Cookie.remove( SURVEY_COOKIE );

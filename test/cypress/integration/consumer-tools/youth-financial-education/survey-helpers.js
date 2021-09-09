@@ -1,15 +1,21 @@
 export class TdpSurveyPage {
   open( path ) {
+    cy.visit( this.url( path) );
+  }
+
+  url( path ) {
     path = path.replace( /(^\/|\/$)/, '' ) + '/';
-    cy.visit( `/consumer-tools/educator-tools/youth-financial-education/survey/${ path }` );
+    return `/consumer-tools/educator-tools/youth-financial-education/survey/${ path }`;
   }
 
   selectAnswers( answers ) {
     answers.forEach( ( val, idx ) => {
-      cy.get( `.tdp-form > li:nth-child(${ idx + 1 }) .a-label` )
-        .then( labels => {
-          labels[val].click();
-        } );
+      if ( val !== null ) {
+        cy.get( `.tdp-form > li:nth-child(${ idx + 1 }) .a-label` )
+          .then( labels => {
+            labels[val].click();
+          } );
+      }
     } );
   }
 
