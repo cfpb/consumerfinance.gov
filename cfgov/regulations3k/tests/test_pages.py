@@ -1,6 +1,6 @@
 import datetime
 
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import RequestFactory, TestCase
 
 from model_bakery import baker
 
@@ -10,7 +10,6 @@ from regulations3k.models import (
 )
 
 
-@override_settings(FLAGS={'REGULATIONS3K': [('boolean', True)]})
 class PagesRegulations3kTestCase(TestCase):
 
     def setUp(self):
