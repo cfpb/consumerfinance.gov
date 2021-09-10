@@ -17,6 +17,6 @@ class MenuPreviewView(WMABaseView):
         return self.model_admin.get_preview_template()
 
     def render_to_response(self, context, **response_kwargs):
-        translation.activate(self.language)
-        self.request.LANGUAGE_CODE = translation.get_language()
-        return super().render_to_response(context, **response_kwargs)
+        with translation.override(self.language):
+            response = super().render_to_response(context, **response_kwargs)
+            return response.render()
