@@ -1,4 +1,3 @@
-from django import forms
 from django.core.exceptions import ValidationError
 
 from wagtail.core import blocks
@@ -9,21 +8,6 @@ from url_or_relative_url_field.forms import URLOrRelativeURLFormField
 
 def is_required(field_name):
     return [str(field_name) + ' is required.']
-
-
-class IntegerBlock(blocks.FieldBlock):
-    def __init__(self, required=True, help_text=None, min_value=None,
-                 max_value=None, **kwargs):
-        self.field = forms.IntegerField(
-            required=required,
-            help_text=help_text,
-            min_value=min_value,
-            max_value=max_value
-        )
-        super(IntegerBlock, self).__init__(**kwargs)
-
-    class Meta:
-        icon = 'plus-inverse'
 
 
 class URLOrRelativeURLBlock(blocks.FieldBlock):

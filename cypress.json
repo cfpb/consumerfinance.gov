@@ -9,5 +9,6 @@
     "pluginsFile": "test/cypress/plugins",
     "supportFile": "test/cypress/support",
     "componentFolder": "test/cypress/component",
+    "ignoreTestFiles": [ "*-helpers.js"],
     "defaultCommandTimeout": 25000
 }

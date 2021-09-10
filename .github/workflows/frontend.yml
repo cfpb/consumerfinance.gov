@@ -14,15 +14,15 @@ jobs:
           - test:unit --ci --headless
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
 
       - name: Set up Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v2.4.0
         with:
             node-version: '14.x'
 
       - name: Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2.2.2
         with:
           python-version: 3.6
 
@@ -38,7 +38,7 @@ jobs:
       - name: Store test coverage
         # Submit coverage from the unit test run only
         if: matrix.gulp_cmd == 'test:unit --ci --headless'
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2.2.4
         with:
           name: frontend_coverage
           path: ./test/unit_test_coverage/clover.xml
@@ -49,12 +49,12 @@ jobs:
       - frontend
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
         with:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2.2.2
         with:
           python-version: 3.6
 
@@ -64,9 +64,10 @@ jobs:
           pip install -r requirements/ci.txt
 
       - name: Retrieve frontend coverage
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2.0.10
         with:
           name: frontend_coverage
+          path: frontend_coverage
 
       - name: Check frontend test coverage
         run: |

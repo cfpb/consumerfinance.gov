@@ -57,9 +57,9 @@
             <div class="o-video-player_video-actions-container">
                     <button class="a-btn o-video-player_close-btn"
                         href="/"
-                        aria-label="Close video"
+                        aria-label="{{ _('Close video') }}"
                         tabindex="-1">
-                        Close {{ svg_icon('close-round') }}
+                        {{ _('Close') }} {{ svg_icon('close-round') }}
                     </button>
                 {% if not is_fcm %}
                     {% import 'molecules/social-media.html' as social_media with context %}
