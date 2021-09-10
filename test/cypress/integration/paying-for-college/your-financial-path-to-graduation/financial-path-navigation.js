@@ -1,4 +1,4 @@
-import { PfcFinancialPathToGraduation } from '../../../pages/paying-for-college/your-financial-path-to-graduation.js';
+import { PfcFinancialPathToGraduation } from './your-financial-path-to-graduation-helpers';
 
 const page = new PfcFinancialPathToGraduation();
 
