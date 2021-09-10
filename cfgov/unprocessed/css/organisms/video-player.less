@@ -206,8 +206,7 @@ button.o-video-player_play-btn,
         top: 0;
     }
 
-    .o-video-player .m-social-media,
-    .o-video-player_video-actions {
+    .o-video-player .m-social-media {
         margin-bottom: @grid_gutter-width;
     }
 } );
@@ -229,15 +228,14 @@ button.o-video-player_play-btn,
     }
 
     .m-social-media {
-
         .respond-to-min( @bp-sm-min, {
             text-align: right;
         } );
     }
 
-    .m-social-media,
-    .o-video-player_video-actions {
+    .m-social-media {
         margin-bottom: 0;
+        margin-left: 29.6875em;
         .grid_column(6);
 
         .respond-to-max( @bp-xs-max, {
@@ -273,8 +271,7 @@ button.o-video-player_play-btn,
     }
 }
 
-.o-video-player .m-social-media,
-.o-video-player_video-actions {
+.o-video-player .m-social-media {
     .respond-to-max( @bp-xs-max, {
         margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
     } );
@@ -297,9 +294,7 @@ button.o-video-player_play-btn,
         padding: 0;
         // Magic number: height of standard button and 1px border around FCM.
         top: ( @standard-btn-height__px + 1px ) * -1;
-    }
 
-    .o-video-player_video-actions {
         // These properties are required to create a masked window for the
         // close button to animate up into.
         height: @standard-btn-height__px;
