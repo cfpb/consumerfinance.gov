@@ -319,8 +319,8 @@ button.o-video-player_play-btn,
         &:focus {
         outline: 1px dotted @pacific;
         outline-offset: 1px;
+       }
     }
-  }
 }
 
 .respond-to-max( @bp-xs-max, {
@@ -339,6 +339,11 @@ button.o-video-player_play-btn,
             // Moves button up into the masked window when playing.
             margin-top: 0;
             transition: 0.5s margin-top ease-out;
+
+            &:focus {
+            outline: 1px dotted @pacific;
+            outline-offset: 1px;
+            }
         }
     }
 
