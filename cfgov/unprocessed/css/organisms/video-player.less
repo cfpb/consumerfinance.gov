@@ -31,6 +31,11 @@
     .no-js &:not( .o-featured-content-module_visual ) {
         border: 1px solid @gray-40;
     }
+
+    &_close-btn {
+        height: 35px; 
+        width: 90px;
+    }
 }
 
 .o-video-player.video-playing {
@@ -195,13 +200,15 @@ button.o-video-player_play-btn,
     margin: 0;
 }
 
-.o-video-player_video-actions-container {
+.o-video-player_video-actions {
     right: 0;
     left: auto;
 }
 
 .respond-to-min( @bp-sm-min, {
-    .o-video-player_video-actions-container {
+    .o-video-player_video-actions {
+        display: flex;
+        justify-content: space-between;
         position: absolute;
         top: 0;
     }
@@ -221,7 +228,7 @@ button.o-video-player_play-btn,
         .u-flexible-container_inner();
     }
 
-    .o-video-player_video-actions-container {
+    .o-video-player_video-actions {
         position: relative;
         top: 0;
         left: 0;
@@ -235,7 +242,6 @@ button.o-video-player_play-btn,
 
     .m-social-media {
         margin-bottom: 0;
-        margin-left: 20em;
         .grid_column(6);
 
         .respond-to-max( @bp-xs-max, {
@@ -244,7 +250,7 @@ button.o-video-player_play-btn,
     }
 }
 
-.o-video-player_video-actions-container {
+.o-video-player_video-actions {
     .grid_wrapper();
 
     padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -274,6 +280,7 @@ button.o-video-player_play-btn,
 .o-video-player .m-social-media {
     .respond-to-max( @bp-xs-max, {
         margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        border-left: 0;
     } );
 }
 
@@ -289,7 +296,7 @@ button.o-video-player_play-btn,
 
 // Special styles for playing within a Featured Content Module (FCM).
 .o-featured-content-module {
-    .o-video-player_video-actions-container {
+    .o-video-player_video-actions {
         margin: 0;
         padding: 0;
         // Magic number: height of standard button and 1px border around FCM.
@@ -317,7 +324,7 @@ button.o-video-player_play-btn,
 }
 
 .respond-to-max( @bp-xs-max, {
-    .o-featured-content-module .o-video-player_video-actions-container {
+    .o-featured-content-module .o-video-player_video-actions {
         display: none;
     }
 } );
