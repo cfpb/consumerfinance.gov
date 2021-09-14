@@ -36,32 +36,8 @@
         }
     }
 
-    .kbyo-video {
-        margin-top: 3.75em;
-        margin-bottom: 3.75em;
-    }
-
-    .kbyo-tools,
-    .kbyo-mortgage-disclosures,
-    .kbyo-timeline {
-        border-top: 1px solid #e3e4e5;
-        padding-top: 1.875em;
-        padding-bottom: 2.8125em;
-    }
-
-    .kbyo-professional-resources, .kbyo-footer {
-        background-color: #f1f2f2;
-        border-bottom: 1px solid #e3e4e5;
-        border-top: 1px solid #e3e4e5;
-        padding-top: 2.8125em;
-        padding-bottom: 2.8125em;
-    }
-
-    .o-info-unit-group .content-l:first-child {
-        margin-top: 0;
-    }
-
 </style>
+<link rel="stylesheet" href="{{ static('apps/know-before-you-owe/css/main.css') }}">
 {% endblock %}
 
 {% block hero %}
@@ -133,7 +109,7 @@
                         <div class="m-info-unit m-info-unit__inline">
                             <div class="m-info-unit_image
                                 m-info-unit_image__square"
-                                style="background-image: url( /static/apps/know-before-you-owe/img/loan-estimate_324.png );">
+                                style="background-image: url( {{ static('apps/know-before-you-owe/img/loan-estimate_324.png') }} );">
                             </div>
                             <div class="m-info-unit_content">
                                 <h3>Sample Loan Estimate</h3>
@@ -157,7 +133,7 @@
                         <div class="m-info-unit m-info-unit__inline">
                             <div class="m-info-unit_image
                                 m-info-unit_image__square"
-                                style="background-image: url( /static/apps/know-before-you-owe/img/closing-disclosure_324.png );">
+                                style="background-image: url( {{ static('apps/know-before-you-owe/img/closing-disclosure_324.png') }} );">
                             </div>
                             <div class="m-info-unit_content">
                                 <h3>Sample Closing Disclosure</h3>
@@ -183,7 +159,7 @@
                         <div class="m-info-unit m-info-unit__inline">
                             <div class="m-info-unit_image
                                 m-info-unit_image__square"
-                                style="background-image: url( /static/apps/know-before-you-owe/img/owning-a-home_324.png );">
+                                style="background-image: url( {{ static('apps/know-before-you-owe/img/owning-a-home_324.png') }} );">
                             </div>
                             <div class="m-info-unit_content">
                                 <h3>Buying a House</h3>
@@ -207,7 +183,7 @@
                         <div class="m-info-unit m-info-unit__inline">
                             <div class="m-info-unit_image
                                 m-info-unit_image__square"
-                                style="background-image: url( /static/apps/know-before-you-owe/img/home-loan-toolkit_324.png );">
+                                style="background-image: url( {{ static('apps/know-before-you-owe/img/home-loan-toolkit_324.png') }} );">
                             </div>
                             <div class="m-info-unit_content">
                                 <h3>Your Home Loan Toolkit</h3>
@@ -427,8 +403,7 @@
             <h2>Timeline</h2>
             <p>
                 <a class="styled-link" href="/know-before-you-owe/timeline/">
-                    Read the timeline
-                </a>
+                    Read the timeline</a>
                 to understand the process of how this rule and our work around
                 it has developed since the CFPB’s beginnings.
             </p>
