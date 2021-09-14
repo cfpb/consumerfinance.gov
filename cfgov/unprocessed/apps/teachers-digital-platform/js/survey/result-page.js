@@ -13,6 +13,9 @@ const initials = require( './initials' );
 
 const $ = document.querySelector.bind( document );
 
+let localClipboardCopy = clipboardCopy;
+
+
 /**
  * Initialize the results page
  */
@@ -77,9 +80,6 @@ function handleShareModal() {
   const shareOutput = $( '.share-output' );
   const copiedMsg = $( '.share-output__copied' );
   const a = shareOutput.querySelector( 'a[href]' );
-  if ( !desc || !shareOutput || !a || !copiedMsg ) {
-    return;
-  }
 
   // Re-hide UI changes when opening share modal
   document.addEventListener( 'modal:open:before', event => {
@@ -120,12 +120,7 @@ function handleShareModal() {
  * Handle behavior within the print modal
  */
 function handlePrintModal() {
-  const desc = $( '#modal-print_desc' );
-  if ( !desc ) {
-    return;
-  }
-
-  withValidInitials( desc, value => {
+  withValidInitials( $( '#modal-print_desc' ), value => {
     initials.update( value );
     modals.close();
     window.print();
@@ -136,12 +131,7 @@ function handlePrintModal() {
  * Handle behavior within the restart modal
  */
 function handleResetModal() {
-  const modal = $( '#modal-reset' );
-  if ( !modal ) {
-    return;
-  }
-
-  modal.addEventListener( 'click', event => {
+  $( '#modal-reset' ).addEventListener( 'click', event => {
     const button = closest( event.target, '[data-cancel]' );
     if ( button ) {
       event.preventDefault();
