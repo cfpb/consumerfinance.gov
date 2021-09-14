@@ -57,7 +57,16 @@
                                 input-contains-label
                                 {% if autocomplete %}m-autocomplete{% endif %}"
                          data-language="{{ language }}">
-                        <label for="query" class="input-contains-label_before input-contains-label_before__search"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880.6 1200" class="cf-icon-svg"><path d="M860.1 879.2L645.7 664.8c90.8-136.8 76-323-44.6-443.5-137.5-137.5-360.5-137.5-498 0s-137.5 360.5 0 498c118.5 118.4 303.9 137 443.5 44.6L761 978.3c27.3 27.3 71.7 27.3 99 0s27.4-71.8.1-99.1zm-508-116.9C191.4 762 61.3 631.5 61.6 470.8c.3-160.7 130.8-290.8 291.5-290.5s290.8 130.8 290.5 291.5c-.2 118.2-71.9 224.6-181.5 269.1-34.9 14.2-72.3 21.5-110 21.4z"></path></svg></label>
+                        {% set label_element = 'span' if show_label else 'label' %}
+                        {% set label_for = '' if show_label else 'for="o-search-bar_query"' %}
+                        <{{ label_element }} {{ label_for }}
+                               class="input-contains-label_before
+                                      input-contains-label_before__search">
+                            {{ svg_icon('search') }}
+                            {% if not show_label %}
+                            <span class="u-visually-hidden">{{ _('Search') }}</span>
+                            {% endif %}
+                        </{{ label_element }}>
                         <input class="a-text-input"
                                type="text"
                                name="q"
