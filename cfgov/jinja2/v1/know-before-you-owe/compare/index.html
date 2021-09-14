@@ -1,5 +1,10 @@
 {% extends 'content-base-main-only.html' %}
 
+{% set breadcrumb_items = [{
+    "title": "Know before you owe",
+    "href": "/know-before-you-owe/",
+}] %}
+
 {% block title -%}
      Compare: Know before you owe: Mortgages | Consumer Financial Protection Bureau
 {%- endblock %}
@@ -9,103 +14,12 @@
 {% endblock %}
 
 {% block css %}
-
-<style>
-    .kbyo-compare-intro {
-        padding-bottom: 2.8125em;
-    }
-
-    .kbyo-compare-tiles {
-        margin-bottom: 0.9375em;
-        position: relative;
-    }
-
-    .kbyo-compare-col {
-        padding-bottom: 2.8125em;
-    }
-
-    @media only all and (min-width: 50em) {
-        .kbyo-compare-row {
-            display: block;
-            position: relative;
-            margin-left: -15px;
-            margin-right: -15px;
-         }
-
-         .kbyo-compare-col {
-            display: inline-block;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            border: solid transparent;
-            border-width: 0 15px;
-            margin-right: -0.25em;
-            vertical-align: top;
-            width: 50%;
-        }
-
-    }
-
-    .kbyo-compare-tiles-overlay {
-        height: 374px;
-    }
-
-    .kbyo-compare-tiles img {
-        border: 1px solid #c5c3c1;
-        box-shadow: 3px 3px 3px #c5c3c1;
-        display: inline-block;
-        zoom: 1;
-        margin: 10px 10px 0 0;
-        vertical-align: top;
-    }
-
-    .kbyo-compare-tiles-overlay img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 200px;
-        z-index: 100;
-    }
-
-    .kbyo-compare-tiles-overlay a + a img {
-        position: absolute;
-        top: 50px;
-        left: 75px;
-        z-index: 90;
-    }
-
-    .kbyo-compare-tiles-overlay a + a + a img {
-        position: absolute;
-        top: 100px;
-        left: 150px;
-        z-index: 80;
-    }
-
-    .kbyo-footer {
-        background-color: #f1f2f2;
-        border-bottom: 1px solid #e3e4e5;
-        border-top: 1px solid #e3e4e5;
-        padding-top: 2.8125em;
-    }
-</style>
-<link rel="stylesheet" href="{{ static('lightbox2/css/lightbox.min.css') }}">
 {{ super() }}
+<link rel="stylesheet" href="{{ static('apps/know-before-you-owe/css/main.css') }}">
+<link rel="stylesheet" href="{{ static('lightbox2/css/lightbox.min.css') }}">
 {% endblock %}
-
-
-{% block pre_content %}
-<div class="content_wrapper">
-    <nav class="breadcrumbs" aria-label="Breadcrumbs">
-        <a class="breadcrumbs_link" href="/know-before-you-owe/">
-            Know before you owe
-        </a>
-    </nav>
-</div>
-{% endblock %}
-
 
 {% block content_main %}
-
 <article>
     <div class="kbyo-compare-intro">
         <header>

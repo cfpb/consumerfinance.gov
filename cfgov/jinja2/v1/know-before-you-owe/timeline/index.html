@@ -1,5 +1,10 @@
 {% extends 'content-base-main-only.html' %}
 
+{% set breadcrumb_items = [{
+    "title": "Know before you owe",
+    "href": "/know-before-you-owe/",
+}] %}
+
 {% block title -%}
     Timeline: Know before you owe: Mortgages | Consumer Financial Protection Bureau
 {%- endblock %}
@@ -9,34 +14,11 @@
 {% endblock %}
 
 {% block css %}
-<style>
-    .kbyo-timeline-page__date {
-        color: #75787b;
-    }
-
-    .kbyo-timeline-page__event {
-        border-top: 1px solid #e3e4e5;
-        padding-top: 1.875em;
-        margin-bottom: 1.875em;
-    }
-</style>
 {{ super() }}
+<link rel="stylesheet" href="{{ static('apps/know-before-you-owe/css/main.css') }}">
 {% endblock %}
-
-
-{% block pre_content %}
-<div class="content_wrapper">
-    <nav class="breadcrumbs" aria-label="Breadcrumbs">
-        <a class="breadcrumbs_link" href="/know-before-you-owe/">
-            Know before you owe
-        </a>
-    </nav>
-</div>
-{% endblock %}
-
 
 {% block content_main %}
-
     <article class="kbyo-timeline-page">
         <h1>Timeline</h1>
         <p>
