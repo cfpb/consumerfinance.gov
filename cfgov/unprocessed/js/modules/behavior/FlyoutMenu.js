@@ -174,7 +174,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    * Event handler for when the trigger is hovered over.
    * @param {MouseEvent} event - The clicked flyout trigger event object.
    */
-  function _handleTriggerOver() {
+  function _handleTriggerOver( event ) {
     if ( !_touchTriggered && !_suspended ) {
       this.dispatchEvent(
         'triggerOver',
