@@ -42,6 +42,7 @@
             <div class="block">
                 <a class="survey-entry-link a-btn a-btn__super" href="p1/">Let's do this</a>
             </div>
+            <div class="m-hero_image--mobile"></div>
             <div class="block block__border-top block__padded-top">
                 <p style="font-weight: 500">Privacy statement</p>
                 <p>We never collect or store the answers you provide. <button class="a-btn a-btn__link" data-open-modal="modal-privacy">See how your privacy is protected.</button></p>
@@ -56,18 +57,19 @@
             background-size: contain;
             background-image:
                 url('{{ static('apps/teachers-digital-platform/img/journey.png') }}');
-            background-image: -webkit-image-set(
-                url('{{ static('apps/teachers-digital-platform/img/journey.png') }}') 1x,
-                url('{{ static('apps/teachers-digital-platform/img/journey.png') }}') 2x
-            );
-            background-image: image-set(
-                url('{{ static('apps/teachers-digital-platform/img/journey.png') }}') 1x,
-                url('{{ static('apps/teachers-digital-platform/img/journey.png') }}') 2x
-            );
-            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-                src='{{ static('apps/teachers-digital-platform/img/journey.png') }}',
-                sizingMethod='scale');
             padding-bottom: 41.4893617%;
+
+        }
+        @media only screen and (max-width: 600px) {
+            #hero1 .m-hero_image {
+                display: none;
+            }
+            .m-hero_image--mobile {
+                background-image:
+                    url('{{ static('apps/teachers-digital-platform/img/journey-mobile.png') }}');
+                background-size: contain;
+                padding-bottom: 59.459459459%;
+            }
         }
     </style>
     {% include './modals/privacy.html' %}
