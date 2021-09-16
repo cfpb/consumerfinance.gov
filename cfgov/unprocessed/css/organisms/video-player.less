@@ -31,11 +31,6 @@
     .no-js &:not( .o-featured-content-module_visual ) {
         border: 1px solid @gray-40;
     }
-
-    &_close-btn {
-        height: 35px; 
-        width: 90px;
-    }
 }
 
 .o-video-player.video-playing {
@@ -151,11 +146,11 @@
         left: 50%;
         top: 50%;
         transform: translate( -50%, -50% );
-    }
-
-    &:focus-visible {
-        outline: 1px dotted @pacific;
-        outline-offset: 1px;
+        
+        &:focus-visible {
+            outline: 1px dotted @pacific;
+            outline-offset: 1px;
+        }
     }
 
     &__bottomRight {
@@ -200,13 +195,13 @@ button.o-video-player_play-btn,
     margin: 0;
 }
 
-.o-video-player_video-actions {
+.o-video-player_video-actions-container {
     right: 0;
     left: auto;
 }
 
 .respond-to-min( @bp-sm-min, {
-    .o-video-player_video-actions {
+    .o-video-player_video-actions-container {
         display: flex;
         justify-content: space-between;
         position: absolute;
@@ -224,7 +219,7 @@ button.o-video-player_play-btn,
         .u-flexible-container_inner();
     }
 
-    .o-video-player_video-actions {
+    .o-video-player_video-actions-container {
         position: relative;
         top: 0;
         left: 0;
@@ -236,7 +231,8 @@ button.o-video-player_play-btn,
         } );
     }
 
-    .m-social-media {
+    .m-social-media,
+    .o-video-player_video-actions {
         margin-bottom: 0;
         .grid_column(6);
 
@@ -246,7 +242,7 @@ button.o-video-player_play-btn,
     }
 }
 
-.o-video-player_video-actions {
+.o-video-player_video-actions-container {
     .grid_wrapper();
 
     padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -273,7 +269,8 @@ button.o-video-player_play-btn,
     }
 }
 
-.o-video-player .m-social-media {
+.o-video-player .m-social-media,
+.o-video-player_video-actions {
     .respond-to-max( @bp-xs-max, {
         margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
         border-left: 0;
@@ -292,11 +289,12 @@ button.o-video-player_play-btn,
 
 // Special styles for playing within a Featured Content Module (FCM).
 .o-featured-content-module {
-    .o-video-player_video-actions {
+    .o-video-player_video-actions-container {
         margin: 0;
         padding: 0;
         // Magic number: height of standard button and 1px border around FCM.
         top: ( @standard-btn-height__px + 1px ) * -1;
+    }
 
     .o-video-player_close-btn {
         border-bottom-right-radius: 0;
@@ -311,10 +309,9 @@ button.o-video-player_play-btn,
        }
     }
   }
-}
 
 .respond-to-max( @bp-xs-max, {
-    .o-featured-content-module .o-video-player_video-actions {
+    .o-featured-content-module .o-video-player_video-actions-container {
         display: none;
     }
 } );
