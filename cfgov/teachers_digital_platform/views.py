@@ -26,14 +26,15 @@ _tdp = 'teachers_digital_platform'
 _gradeSelectionPagePk = 15596
 
 
-def _findSurveyGradeSelectionUrl(request: Optional[HttpRequest],
-                                 default='../../../assess/survey/'):
+def _find_grade_selection_url(request: Optional[HttpRequest],
+                              default='../../../assess/survey/',
+                              page_class=SublandingPage):
     """
     Get URL of the survey grade selection page from Wagtail
     """
     try:
-        destination_page = SublandingPage.objects.get(pk=_gradeSelectionPagePk)
-    except SublandingPage.DoesNotExist:
+        destination_page = page_class.objects.get(pk=_gradeSelectionPagePk)
+    except page_class.DoesNotExist:
         return default
 
     destination_url = destination_page.get_url(request)
@@ -101,7 +102,7 @@ class SurveyWizard(NamedUrlCookieWizardView):
         # Push the survey and active page into template
         page_idx = int(re.sub(r'\D+', '', context['step'])) - 1
         survey = get_survey(self.survey_key)
-        context['gradeSelectUrl'] = _findSurveyGradeSelectionUrl(None)
+        context['gradeSelectUrl'] = _find_grade_selection_url(None)
         context['survey'] = survey
         context['page_idx'] = page_idx
         context['questions_by_page'] = survey.num_questions_by_page()
@@ -139,7 +140,7 @@ def _handle_result_url(request: HttpRequest, signed_code: str, code: str,
     url_encoder = UrlEncoder(AVAILABLE_SURVEYS)
     res = url_encoder.loads(code)
     if res is None:
-        return HttpResponseRedirect(_findSurveyGradeSelectionUrl(request))
+        return HttpResponseRedirect(_find_grade_selection_url(request))
 
     survey = get_survey(res['key'])
     total = sum(res['subtotals'])
@@ -151,7 +152,7 @@ def _handle_result_url(request: HttpRequest, signed_code: str, code: str,
         {
             'content': ResultsContent.factory(res['key']),
             'is_student': student_view,
-            'gradeSelectUrl': _findSurveyGradeSelectionUrl(
+            'gradeSelectUrl': _find_grade_selection_url(
                 request, '../../assess/survey/'),
             'request': request,
             'signed_code': signed_code,
@@ -175,12 +176,12 @@ def student_results(request: HttpRequest):
         return HttpResponse(status=404)
 
     if 'resultUrl' not in request.COOKIES:
-        return HttpResponseRedirect(_findSurveyGradeSelectionUrl(request))
+        return HttpResponseRedirect(_find_grade_selection_url(request))
     fake_get = {'r': request.COOKIES['resultUrl']}
 
     form = SharedUrlForm(fake_get)
     if not form.is_valid():
-        return HttpResponseRedirect(_findSurveyGradeSelectionUrl(request))
+        return HttpResponseRedirect(_find_grade_selection_url(request))
     signed_code, code = form.cleaned_data['r']
 
     return _handle_result_url(request, signed_code, code, True)
@@ -198,7 +199,7 @@ def view_results(request: HttpRequest):
 
     form = SharedUrlForm(request.GET)
     if not form.is_valid():
-        return HttpResponseRedirect(_findSurveyGradeSelectionUrl(request))
+        return HttpResponseRedirect(_find_grade_selection_url(request))
     signed_code, code = form.cleaned_data['r']
 
     return _handle_result_url(request, signed_code, code, False)
@@ -214,7 +215,7 @@ def _grade_level_page(request: HttpRequest, key: str):
         {
             'request': request,
             'survey': survey,
-            'gradeSelectUrl': _findSurveyGradeSelectionUrl(
+            'gradeSelectUrl': _find_grade_selection_url(
                 request, '../../assess/survey/')
         },
     )
