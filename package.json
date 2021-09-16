@@ -83,15 +83,14 @@
     "babel-jest": "26.6.3",
     "chai": "4.3.4",
     "chai-as-promised": "7.1.1",
-    "cypress": "8.3.1",
+    "cypress": "8.4.0",
     "gulp-eslint": "6.0.0",
     "jest": "26.6.3",
     "jest-cli": "26.6.3",
     "jsdoc": "3.6.7",
     "minimist": "1.2.5",
     "snyk": "1.630.0",
-    "through2": "4.0.2",
-    "wcag": "0.3.0"
+    "through2": "4.0.2"
   },
   "resolutions": {
     "gulp-bless/bless/css": "github:cfpb/css",
