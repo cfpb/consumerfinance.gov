@@ -27,13 +27,14 @@ _gradeSelectionPagePk = 15596
 
 
 def _find_grade_selection_url(request: Optional[HttpRequest],
-                              default='../../../assess/survey/'):
+                              default='../../../assess/survey/',
+                              page_class=SublandingPage):
     """
     Get URL of the survey grade selection page from Wagtail
     """
     try:
-        destination_page = SublandingPage.objects.get(pk=_gradeSelectionPagePk)
-    except SublandingPage.DoesNotExist:
+        destination_page = page_class.objects.get(pk=_gradeSelectionPagePk)
+    except page_class.DoesNotExist:
         return default
 
     destination_url = destination_page.get_url(request)
