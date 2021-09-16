@@ -200,11 +200,6 @@ button.o-video-player_play-btn,
         position: absolute;
         top: 0;
     }
-
-    .o-video-player .m-social-media,
-    .o-video-player_video-actions {
-        margin-bottom: @grid_gutter-width;
-    }
 } );
 
 .o-video-player_video-container__flexible {
@@ -295,14 +290,6 @@ button.o-video-player_play-btn,
         top: ( @standard-btn-height__px + 1px ) * -1;
     }
 
-    .o-video-player_video-actions {
-        // These properties are required to create a masked window for the
-        // close button to animate up into.
-        height: @standard-btn-height__px;
-        margin: 0;
-        overflow: hidden;
-    }
-
     .o-video-player_close-btn {
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
@@ -327,7 +314,6 @@ button.o-video-player_play-btn,
         .o-video-player_close-btn {
             // Moves button up into the masked window when playing.
             margin-top: 0;
-            transition: 0.5s margin-top ease-out;
         }
     }
 
