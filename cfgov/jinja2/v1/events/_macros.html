@@ -126,7 +126,7 @@
                     {% import 'organisms/video-player.html' as video_player with context %}
                     {{ video_player.render(
                         video_id=event.live_video_id,
-                        button_pos='bottomRight'
+                        button_pos='bottom-right'
                     ) }}
                 {% elif event_state == 'past' %}
                     {% if event.archive_video_id %}
@@ -134,7 +134,7 @@
                         {% import 'organisms/video-player.html' as video_player with context %}
                         {{ video_player.render(
                             video_id=event.archive_video_id,
-                            button_pos='bottomRight'
+                            button_pos='bottom-right'
                         ) }}
                     {% elif event.post_event_image_type == 'image' %}
                         {# DISPLAY SPECIFICALLY-CHOSEN POST-EVENT IMAGE #}
