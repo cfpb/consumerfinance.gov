@@ -19,7 +19,7 @@ describe( 'SectionLink', () => {
     SectionLink.init( {
       numAnswered: 1,
       pageIdx: 0,
-      questionsByPage: [6, 2, 7, 3, 2]
+      questionsByPage: [ 6, 2, 7, 3, 2 ]
     } );
 
     expect( texts()[0] ).toMatch( 'Section 1 (in progress)' );
@@ -28,41 +28,41 @@ describe( 'SectionLink', () => {
     expect( texts()[2] ).toMatch( 'Questions 9–15' );
     expect( texts()[3] ).toMatch( 'Questions 16–18' );
     expect( texts()[4] ).toMatch( 'Questions 19–20' );
-    expect( colors() ).toEqual( ['blue'] )
+    expect( colors() ).toEqual( [ 'blue' ] );
   } );
 
   it( 'init on page 2', () => {
     SectionLink.init( {
       numAnswered: 6,
       pageIdx: 1,
-      questionsByPage: [6, 2, 7, 3, 2]
+      questionsByPage: [ 6, 2, 7, 3, 2 ]
     } );
 
     expect( texts()[0] ).toMatch( '(complete)' );
     expect( texts()[1] ).toMatch( 'Section 2 (in progress)' );
-    expect( colors() ).toEqual( ['green', 'blue'] )
+    expect( colors() ).toEqual( [ 'green', 'blue' ] );
   } );
 
   it( 'init editing page 1 from 2', () => {
     SectionLink.init( {
       numAnswered: 6,
       pageIdx: 0,
-      questionsByPage: [6, 2, 7, 3, 2]
+      questionsByPage: [ 6, 2, 7, 3, 2 ]
     } );
 
     expect( texts()[1] ).toMatch( 'Section 2 (in progress)' );
-    expect( colors() ).toEqual( ['blue', 'white'] );
+    expect( colors() ).toEqual( [ 'blue', 'white' ] );
   } );
 
   it( 'init editing page 1 from 3', () => {
     SectionLink.init( {
       numAnswered: 8,
       pageIdx: 0,
-      questionsByPage: [6, 2, 7, 3, 2]
+      questionsByPage: [ 6, 2, 7, 3, 2 ]
     } );
 
     expect( texts()[2] ).toMatch( 'Section 3 (in progress)' );
-    expect( colors() ).toEqual( ['blue', 'green', 'white'] );
+    expect( colors() ).toEqual( [ 'blue', 'green', 'white' ] );
   } );
 
   it( 'editing page 1', () => {
@@ -73,7 +73,7 @@ describe( 'SectionLink', () => {
     SectionLink.init( {
       numAnswered: 6,
       pageIdx: 2,
-      questionsByPage: [6, 2, 7, 3, 2]
+      questionsByPage: [ 6, 2, 7, 3, 2 ]
     } );
     buttons[0].click();
 
@@ -86,7 +86,7 @@ describe( 'SectionLink', () => {
     SectionLink.init( {
       numAnswered: 1,
       pageIdx: 0,
-      questionsByPage: [6, 2, 7, 3, 2]
+      questionsByPage: [ 6, 2, 7, 3, 2 ]
     } );
     SectionLink.update( 6 );
 

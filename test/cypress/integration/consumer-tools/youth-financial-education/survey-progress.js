@@ -4,10 +4,10 @@ const survey = new TdpSurveyHelpers();
 
 describe( 'Youth Financial Education Survey: Progress', () => {
   function verifyProgress( numDone, percent ) {
-    cy.get( '.tdp-survey-progress-out-of' ).should( 'include.text', `${ numDone } of`);
-    cy.get( '.tdp-survey-progress__svg text:nth-of-type(1)')
+    cy.get( '.tdp-survey-progress-out-of' ).should( 'include.text', `${ numDone } of` );
+    cy.get( '.tdp-survey-progress__svg text:nth-of-type(1)' )
       .should( 'include.text', `${ percent }%` );
-    cy.get( '.tdp-survey-progress__svg text:nth-of-type(1)')
+    cy.get( '.tdp-survey-progress__svg text:nth-of-type(1)' )
       .should( 'include.text', `${ percent }%` );
   }
 
@@ -18,12 +18,12 @@ describe( 'Youth Financial Education Survey: Progress', () => {
 
     survey.selectAnswers( [ 0, 0, 0 ] );
     verifyProgress( 3, 15 );
-    cy.get( '.tdp-survey-section:first-child .tdp-survey-section__icon svg')
+    cy.get( '.tdp-survey-section:first-child .tdp-survey-section__icon svg' )
       .should( 'be.hidden' );
 
     survey.selectAnswers( [ null, null, null, 0, 0, 0 ] );
     verifyProgress( 6, 30 );
-    cy.get( '.tdp-survey-section:first-child .tdp-survey-section__icon svg')
+    cy.get( '.tdp-survey-section:first-child .tdp-survey-section__icon svg' )
       .should( 'be.visible' );
 
     survey.clickNext();
@@ -40,12 +40,12 @@ describe( 'Youth Financial Education Survey: Progress', () => {
       $buttons.each( ( idx, button ) => {
         expect( button.getAttribute( 'data-color' ) )
           .equal( colors[idx] ? colors[idx] : 'gray' );
-        if (colors[idx] === 'blue') {
+        if ( colors[idx] === 'blue' ) {
           canBeEdited = false;
         }
 
         expect( button.getAttribute( 'data-editable' ) )
-          .equal( ( colors[idx] === 'green' && canBeEdited ) ? '1' : '' );
+          .equal( colors[idx] === 'green' && canBeEdited ? '1' : '' );
       } );
     } );
   }
@@ -62,7 +62,7 @@ describe( 'Youth Financial Education Survey: Progress', () => {
     survey.clickNext();
 
     verifySectionColors( [ 'green', 'green', 'blue' ] );
-    cy.get( '.tdp-survey-section:first-child .tdp-survey-section__edit span')
+    cy.get( '.tdp-survey-section:first-child .tdp-survey-section__edit span' )
       .click();
 
     verifySectionColors( [ 'blue', 'green', 'white' ] );

@@ -87,16 +87,16 @@ describe( 'Youth Financial Education Survey', () => {
       survey.clickNext();
       cy.get( '[data-open-modal="modal-restart"]' ).click();
 
-      cy.intercept('**/p1/', req => {
+      cy.intercept( '**/p1/', req => {
         req.url = survey.url( '3-5/p1/' );
-      });
+      } );
       cy.get( '[data-cancel=""]' ).click();
     } );
   } );
 
   describe( 'Completion', () => {
     beforeEach( () => {
-      Cypress.Cookies.preserveOnce('wizard_survey_wizard', 'resultUrl');
+      Cypress.Cookies.preserveOnce( 'wizard_survey_wizard', 'resultUrl' );
     } );
 
     const tests = [
@@ -130,7 +130,7 @@ describe( 'Youth Financial Education Survey', () => {
       }
     ];
 
-    for (const test of tests) {
+    for ( const test of tests ) {
       // Order matters here
       it( `can fill survey ${ test.name }`, () => testFillingSurvey( test ) );
       it( `can score survey ${ test.name }`, () => testResultsPage( test ) );

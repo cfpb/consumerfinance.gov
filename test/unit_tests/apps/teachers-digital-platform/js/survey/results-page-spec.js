@@ -4,7 +4,6 @@ import { ANSWERS_SESS_KEY, SURVEY_COOKIE } from '../../../../../../cfgov/unproce
 import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
 import * as initials from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/initials';
 import HTML_SNIPPET from '../../html/results-page';
-import { encodeName } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/initials';
 import clipboardCopy from 'copy-to-clipboard';
 
 const $ = document.querySelector.bind( document );
@@ -57,7 +56,7 @@ describe( 'The TDP survey results page', () => {
 
     // Emulate manual entry with event
     input.value = 'cd5ef';
-    input.dispatchEvent( new Event( 'input') );
+    input.dispatchEvent( new Event( 'input' ) );
     set.click();
 
     expect( initials.get() ).toEqual( 'CD5E' );
@@ -94,11 +93,11 @@ describe( 'The TDP survey results page', () => {
     set.click();
 
     expect( initials.get() ).toEqual( 'DEFG' );
-    expect( encodeName.decodeNameFromUrl( shared.href ) ).toEqual( 'DEFG' );
+    expect( initials.encodeName.decodeNameFromUrl( shared.href ) ).toEqual( 'DEFG' );
 
     input.value = 'EFGH';
     input.dispatchEvent( new KeyboardEvent( 'keyup', {
-      key: 'Enter',
+      key: 'Enter'
     } ) );
 
     expect( initials.get() ).toEqual( 'EFGH' );
@@ -121,6 +120,6 @@ describe( 'The TDP survey results page', () => {
     expect( $( '.tdp-survey__initials-error' ).classList.contains( 'm-notification__visible' ) )
       .toBeFalsy();
     expect( $( '.share-output' ).hidden ).toBeTruthy();
-    expect(  $( '.share-output__copied' ).hidden ).toBeTruthy();
+    expect( $( '.share-output__copied' ).hidden ).toBeTruthy();
   } );
 } );

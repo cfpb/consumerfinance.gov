@@ -12,14 +12,14 @@ describe( 'ChoiceField', () => {
   it( 'init should set up cache', () => {
     ChoiceField.init();
 
-    expect( Object.keys(ChoiceField.cache).length ).toEqual( 6 );
+    expect( Object.keys( ChoiceField.cache ).length ).toEqual( 6 );
   } );
 
   it( 'restoreFromSession should sync from inputs', () => {
     sessionStorage.clear();
     const store = ChoiceField.restoreFromSession( ANSWERS_SESS_KEY );
 
-    const answers = JSON.parse( sessionStorage.getItem( ANSWERS_SESS_KEY ));
+    const answers = JSON.parse( sessionStorage.getItem( ANSWERS_SESS_KEY ) );
     expect( answers ).toEqual( { 'p1-q6': '3' } );
     expect( store ).toEqual( { 'p1-q6': '3' } );
   } );
@@ -41,7 +41,7 @@ describe( 'ChoiceField', () => {
     $( 'label[for="id_p1-q3_1"]' ).click();
 
     expect( onStoreUpdate ).toHaveBeenCalled();
-    const answers = JSON.parse( sessionStorage.getItem( ANSWERS_SESS_KEY ));
+    const answers = JSON.parse( sessionStorage.getItem( ANSWERS_SESS_KEY ) );
     expect( answers ).toEqual( { 'p1-q3': '1' } );
 
     const field = ChoiceField.get( 'p1-q3' );

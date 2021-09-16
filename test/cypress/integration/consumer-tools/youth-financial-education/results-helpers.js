@@ -29,7 +29,7 @@ export class TdpResultsHelpers {
     cy.get( '#modal-print-initials-input' ).type( 'abcd{enter}' );
     cy.window().then( win => {
       expect( win.print ).to.be.calledOnce;
-    });
+    } );
 
     cy.get( '.initials-value' ).should( 'include.text', 'ABCD' );
   }

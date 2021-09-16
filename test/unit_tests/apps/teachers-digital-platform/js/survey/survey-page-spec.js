@@ -29,7 +29,7 @@ describe( 'The TDP survey page', () => {
     surveys.init();
 
     const answers = JSON.parse( sessionStorage.getItem( ANSWERS_SESS_KEY ) );
-    expect( answers ).toEqual( { "p1-q6" : "3" } );
+    expect( answers ).toEqual( { 'p1-q6': '3' } );
     expect( modalSpy ).toHaveBeenCalled();
     expect( cf1Spy ).toHaveBeenCalled();
     expect( cf2Spy ).toHaveBeenCalled();
@@ -47,10 +47,10 @@ describe( 'The TDP survey page', () => {
     label.click();
 
     const answers = JSON.parse( sessionStorage.getItem( ANSWERS_SESS_KEY ) );
-    expect( answers ).toEqual( { "p1-q1" : "0" , "p1-q6" : "3" } );
+    expect( answers ).toEqual( { 'p1-q1': '0', 'p1-q6': '3' } );
     expect( progressBar.numDone ).toEqual( 2 );
-    expect( ChoiceField.get('p1-q1') ).toBeInstanceOf( ChoiceField );
-    expect( ChoiceField.get('p1-q1').value ).toEqual( '0' );
+    expect( ChoiceField.get( 'p1-q1' ) ).toBeInstanceOf( ChoiceField );
+    expect( ChoiceField.get( 'p1-q1' ).value ).toEqual( '0' );
   } );
 
   it( 'should catch missing answers', () => {
@@ -64,23 +64,23 @@ describe( 'The TDP survey page', () => {
     expect( $( 'form > .m-notification__visible' ) ).not.toBeUndefined();
 
     // Missed first question
-    let legend = $( 'legend + .a-form-alert').previousElementSibling;
+    let legend = $( 'legend + .a-form-alert' ).previousElementSibling;
     expect( legend.textContent ).toMatch( '1.' );
-    let scrollLink = $( '.m-notification_explanation a');
+    const scrollLink = $( '.m-notification_explanation a' );
     expect( scrollLink.textContent ).toEqual( legend.textContent );
 
     scrollLink.click();
 
-    $( 'label[for="id_p1-q1_0"]').click();
+    $( 'label[for="id_p1-q1_0"]' ).click();
 
     clickNext();
 
     // Missed second
-    legend = $( 'legend + .a-form-alert').previousElementSibling;
+    legend = $( 'legend + .a-form-alert' ).previousElementSibling;
     expect( legend.textContent ).toMatch( '2.' );
 
-    [1, 2, 3, 4, 5, 6].forEach( num => {
-      $( `label[for="id_p1-q${ num }_0"]`).click();
+    [ 1, 2, 3, 4, 5, 6 ].forEach( num => {
+      $( `label[for="id_p1-q${ num }_0"]` ).click();
     } );
 
     const form = $( '.tdp-survey-page form' );
@@ -99,7 +99,7 @@ describe( 'The TDP survey page', () => {
     ChoiceField.cache = Object.create( null );
     sessionStorage.clear();
     sessionStorage.setItem( ANSWERS_SESS_KEY, JSON.stringify(
-      { "p1-q1" : "0" , "p1-q6" : "3" }
+      { 'p1-q1': '0', 'p1-q6': '3' }
     ) );
 
     surveyPage();
@@ -167,7 +167,7 @@ describe( 'The TDP survey page', () => {
 
     el.scrollIntoView.mockImplementation( arg => {
       if ( typeof arg === 'object' ) {
-        throw new Error('No');
+        throw new Error( 'No' );
       }
     } );
 
@@ -178,7 +178,7 @@ describe( 'The TDP survey page', () => {
     expect( el.scrollIntoView.mock.calls[2] ).toEqual( [] );
 
     el.scrollIntoView.mockImplementation( () => {
-      throw new Error('Nada');
+      throw new Error( 'Nada' );
     } );
 
     expect( scrollToEl( el ) ).toBe( false );
