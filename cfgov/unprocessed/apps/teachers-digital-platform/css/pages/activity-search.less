@@ -48,7 +48,6 @@
         });
 
         .o-expandable {
-            padding-bottom: unit( 15px / @base-font-size-px, em );
             border-bottom: 1px solid @gray-40;
             margin-bottom: unit( 15px / @base-font-size-px, em );
         }
@@ -57,10 +56,14 @@
         .o-expandable_content {
             border: 0;
             padding: 0;
+            overflow: hidden;
 
             &::before,
             &::after {
                 border: 0;
+            }
+
+            &::before {
                 padding: 0;
             }
         }
