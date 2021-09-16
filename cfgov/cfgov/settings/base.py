@@ -724,9 +724,6 @@ FLAGS = {
     "EMAIL_POPUP_DEBT": [("boolean", True)],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
-    # SPLIT TESTING FLAGS
-    # Ask CFPB page titles as H1s instead of H2s
-    "ASK_CFPB_H1": [("in split testing cluster", "ASK_CFPB_H1")],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
