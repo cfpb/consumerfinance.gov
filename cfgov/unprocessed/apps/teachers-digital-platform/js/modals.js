@@ -122,7 +122,7 @@ function handleClicks() {
       return;
     }
 
-    const closeTopModal = () => {
+    const closeAndCancelEvent = () => {
       openModal.close();
       event.stopPropagation();
     };
@@ -131,18 +131,18 @@ function handleClicks() {
     if ( content.contains( t ) ) {
       // Close if clicking modal's close button(s)
       if ( content.querySelector( '.o-modal_close' ).contains( t ) ) {
-        closeTopModal();
+        closeAndCancelEvent();
         return;
       }
 
       // Close if clicked footer button with "close"
       const btn = content.querySelector( '.o-modal_footer button' );
       if ( t === btn && ( /\bclose\b/i ).test( btn.textContent ) ) {
-        closeTopModal();
+        closeAndCancelEvent();
       }
     } else {
       // Outside modal
-      closeTopModal();
+      closeAndCancelEvent();
     }
   } );
 }
