@@ -147,6 +147,10 @@ class AnswerPagePreviewTestCase(TestCase):
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response.url, self.english_answer_page2.url)
 
+    def test_redirect_view_with_no_recognized_facet(self):
+        response = self.client.get("/askcfpb/search/?selected_facets=hoodoo")
+        self.assertEqual(response.status_code, 404)
+
 
 class AnswerViewTestCase(TestCase):
     def test_annotate_links(self):

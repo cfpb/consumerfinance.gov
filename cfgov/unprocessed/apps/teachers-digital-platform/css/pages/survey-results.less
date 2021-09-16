@@ -1,3 +1,16 @@
+.initials-display {
+    /**
+     * Hidden to avoid a situation where a student shares online a URL that
+     * displays a naughty word as initials. At least this requires the end-user
+     * to open print preview.
+     */
+    display: none;
+
+    @media print {
+        display: inline;
+    }
+}
+
 .tdp-survey-results {
     p.label {
         font-weight: 500;
@@ -13,7 +26,8 @@
     .block {
         margin: 2rem 0;
     }
-    .o-expandable_header-left {
+    .o-expandable_header-left,
+    .numbered-header {
         align-items: center;
         display: flex;
         img {
