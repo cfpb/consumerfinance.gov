@@ -1,11 +1,14 @@
 from unittest.mock import Mock, patch
 
+from django.core import signing
 from django.http import HttpResponse, HttpResponseRedirect
 from django.test import RequestFactory, TestCase
 
+from teachers_digital_platform.UrlEncoder import UrlEncoder
 from teachers_digital_platform.views import (
-    _find_grade_selection_url, _grade_level_page, _handle_result_url,
-    create_grade_level_page_handler, student_results, view_results
+    SurveyWizard, _find_grade_selection_url, _grade_level_page,
+    _handle_result_url, create_grade_level_page_handler, student_results,
+    view_results
 )
 
 
@@ -18,6 +21,12 @@ class TestSurveyWizard(TestCase):
         super(TestSurveyWizard, self).setUp()
 
         self.factory = RequestFactory()
+
+        key = '3-5'
+        scores = [0, 10, 15]
+        time = 1623518461
+        self.code = UrlEncoder([key]).dumps(key, scores, time)
+        self.signed_code = signing.Signer().sign(self.code)
 
     def test_create_grade_level_page_handler(self):
         response = create_grade_level_page_handler('3-5')
@@ -131,3 +140,29 @@ class TestSurveyWizard(TestCase):
         url = _find_grade_selection_url(
             test_request, 'default', MockSublandingPage)
         self.assertEqual(url, "/success")
+
+    def test_survey_wizard_build_views(self):
+        sw = SurveyWizard()
+        sw.survey_key = '3-5'
+        wv = sw.build_views()
+        keys = wv.keys()
+        self.assertIn('3-5', keys)
+
+    def test_student_results(self):
+        test_request = self.factory.get(
+            "/", {'r': self.signed_code},
+            HTTP_HOST="preview.localhost",
+            SERVER_PORT=8000
+        )
+        test_request.COOKIES = {'resultUrl': 'cookie_code'}
+        response = student_results(test_request)
+        self.assertEqual(response.status_code, 302)
+
+    @patch("teachers_digital_platform.views.UrlEncoder.loads")
+    def test_handle_result_url_redirect(self, mock_loads):
+        test_request = self.factory.get(
+            "/", HTTP_HOST="preview.localhost", SERVER_PORT=8000
+        )
+        mock_loads.return_value = None
+        response = _handle_result_url(test_request, "signed", "code", True)
+        self.assertEqual(response.status_code, 302)
