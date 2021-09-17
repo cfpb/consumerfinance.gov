@@ -1,3 +1,5 @@
+import types
+
 from unittest.mock import Mock, patch
 
 from django.core import signing
@@ -5,6 +7,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.test import RequestFactory, TestCase
 
 from teachers_digital_platform.UrlEncoder import UrlEncoder
+from teachers_digital_platform.surveys import (
+    AVAILABLE_SURVEYS
+)
 from teachers_digital_platform.views import (
     SurveyWizard, _find_grade_selection_url, _grade_level_page,
     _handle_result_url, create_grade_level_page_handler, student_results,
@@ -142,11 +147,13 @@ class TestSurveyWizard(TestCase):
         self.assertEqual(url, "/success")
 
     def test_survey_wizard_build_views(self):
-        sw = SurveyWizard()
-        sw.survey_key = '3-5'
-        wv = sw.build_views()
-        keys = wv.keys()
-        self.assertIn('3-5', keys)
+        self.assertEqual(len(AVAILABLE_SURVEYS), 3)
+        views = SurveyWizard().build_views()
+        for key in AVAILABLE_SURVEYS:
+            view = views[key]
+            self.assertIs(view.view_class, SurveyWizard)
+            self.assertIs(view.__class__, types.FunctionType)
+            self.assertEqual(view.view_initkwargs['survey_key'], key)
 
     def test_student_results(self):
         test_request = self.factory.get(
@@ -166,3 +173,18 @@ class TestSurveyWizard(TestCase):
         mock_loads.return_value = None
         response = _handle_result_url(test_request, "signed", "code", True)
         self.assertEqual(response.status_code, 302)
+
+    def test_survey_done(self):
+        view = SurveyWizard().build_views()['3-5']
+        print(vars(view))
+        print(vars(view.view_class))
+
+        test_request = self.factory.get(
+            "/", HTTP_HOST="preview.localhost", SERVER_PORT=8000
+        )
+        json = '{"step":"p5","step_data":{"p1":{"survey_wizard-current_step":["p1"],"p1-q1":["1"],"p1-q2":["1"],"p1-q3":["1"],"p1-q4":["1"],"p1-q5":["1"],"p1-q6":["1"]},"p2":{"survey_wizard-current_step":["p2"],"p2-q7":["0"],"p2-q8":["0"]},"p3":{"survey_wizard-current_step":["p3"],"p3-q9":["1"],"p3-q10":["1"],"p3-q11":["1"],"p3-q12":["1"],"p3-q13":["1"],"p3-q14":["1"],"p3-q15":["1"]},"p4":{"survey_wizard-current_step":["p4"],"p4-q16":["0"],"p4-q17":["0"],"p4-q18":["0"]},"p5":{"survey_wizard-current_step":["p5"],"p5-q19":["0"],"p5-q20":["0"]}},"step_files":{"p1":{},"p2":{},"p3":{},"p4":{},"p5":{}},"extra_data":{}}'
+        test_request.COOKIES['wizard_survey_wizard'] = signing.get_cookie_signer().sign(json)
+
+        response = view(test_request, step='done')
+        # test redirects to "../results/"
+        print(response)
