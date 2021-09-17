@@ -3,6 +3,10 @@ section[data-tdp-page="grade-level"] {
 
   > div.m-hero_wrapper {
     background-color: #F0F7F6;
+    .respond-to-max(@bp-xs-max, {
+      display: flex;
+      flex-direction: column-reverse;
+    });
   }
 
   // Contrast adjustment
