@@ -23,11 +23,12 @@ class TestSurveyWizard(TestCase):
         response = create_grade_level_page_handler('3-5')
         assert callable(response)
 
-    def test_grade_level_page(self):
+    @patch('teachers_digital_platform.views.render_to_string')
+    def test_grade_level_page(self, mock_rts):
         test_request = self.factory.get(
             "/", HTTP_HOST="preview.localhost", SERVER_PORT=8000
         )
-
+        mock_rts.return_value = 'success'
         response = _grade_level_page(test_request, '3-5')
         self.assertIsInstance(response, HttpResponse)
         self.assertEqual(response.status_code, 200)
