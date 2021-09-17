@@ -68,7 +68,7 @@
 
 {% block content_main %}
 
-<div class="m-notification m-notification__warning {% if data_down %} m-notification__visible show-data-notification {% elif narratives_down %} m-notification__visible show-narratives-notification {% endif %}">
+<div class="m-notification m-notification__warning {% if technical_issues %} m-notification__visible show-data-notification {% endif %}">
   {{ svg_icon("warning-round") }}
   <div class="m-notification_content">
     <div class="m-notification_content">
@@ -76,14 +76,8 @@
       <p class="data-text m-notification_explanation">
         We're currently experiencing technical issues that have delayed the refresh of data in the Consumer Complaint database.
       </p>
-      <p class="narratives-text m-notification_explanation">
-        We're currently experiencing technical issues that have delayed the refresh of consumer complaint narratives in the Consumer Complaint database.
-      </p>
-      <p class="m-notification_explanation">{% if technical_issues %}
+      <p class="m-notification_explanation">
         We expect a refresh of the data and restoration of access soon.
-        {% else %}
-        We expect to refresh the data in the next few days.
-        {% endif %}
       </p>
     </div>
   </div>
