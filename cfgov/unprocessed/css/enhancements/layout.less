@@ -286,69 +286,6 @@
 } );
 
 
-// Jumbo 50/50 hero for CampaignPages and the HomePage
-// @TODO: Move this pattern into the Design System
-.m-hero__jumbo {
-    background-color: @white;
-
-    .m-hero_subhead {
-        .lead-paragraph();
-    }
-
-    .respond-to-max( @bp-xs-max, {
-        .m-hero_wrapper {
-            // Remove wrapper bottom padding.
-            padding-bottom: 0;
-        }
-
-        .m-hero_image-wrapper {
-            position: relative;
-            border-width: 0;
-        }
-    } );
-
-    .respond-to-min( @bp-sm-min, {
-        .m-hero_wrapper {
-            // Position the hero image all the way to the right plus a little
-            // extra so that it flows into the gutter
-            background-position: calc( 100% + @grid_gutter-width ) center;
-            background-repeat: no-repeat;
-            background-size: 50%;
-            border-right: 1px solid @gray-40;
-            border-bottom: 1px solid @gray-40;
-            border-left: 1px solid @gray-40;
-            min-height: unit( 350px / @base-font-size-px, em );
-        }
-
-        .m-hero_text {
-            color: @black;
-            .grid_column( 6, 12 );
-        }
-
-        .m-hero_image {
-            display: none;
-        }
-
-        .m-hero_heading {
-            .heading-1();
-        }
-
-        .m-hero_subhead {
-            .heading-3();
-        }
-    } );
-
-    .respond-to-min( @bp-lg-min, {
-        .m-hero_heading {
-            .superheading();
-        }
-        .m-hero_subhead {
-            .heading-2();
-        }
-    } );
-}
-
-
 // Center content and bleed full-width images into gutters
 // Used on our story pages
 .content__center-image-bleed {

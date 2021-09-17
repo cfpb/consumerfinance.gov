@@ -100,14 +100,9 @@
             .m-hero__jumbo .m-hero_wrapper,
             .m-hero__overlay .m-hero_wrapper {
                 background-image: url('{{ img.url }}');
-                background-size: cover;
                 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                     src='{{ img.url }}',
                     sizingMethod='scale');
-            }
-
-            .m-hero__jumbo .m-hero_wrapper {
-                background-size: 50%;
             }
         }
     {% endif %}
