@@ -100,7 +100,8 @@ class TestSurveyWizard(TestCase):
         )
 
     @patch("teachers_digital_platform.views.UrlEncoder")
-    def test_handle_result_url(self, MockEncoder):
+    @patch('teachers_digital_platform.views.render_to_string')
+    def test_handle_result_url(self, mock_rts, MockEncoder):
         instance = MockEncoder.return_value
         instance.loads.return_value = {
             "key": "3-5",
@@ -111,10 +112,10 @@ class TestSurveyWizard(TestCase):
         test_request = self.factory.get(
             "/", HTTP_HOST="preview.localhost", SERVER_PORT=8000
         )
-
+        mock_rts.return_value = 'data-signed-code="signed"'
         res = _handle_result_url(test_request, "signed", "code", True)
         self.assertEqual(instance.loads.call_args[0], ('code',))
-        self.assertContains(res, 'data-signed-code="signed"')
+        self.assertEqual(res.status_code, 200)
 
     @patch("v1.models.SublandingPage")
     def test_find_grade_selection_url(self, MockSublandingPage):
