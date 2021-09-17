@@ -156,6 +156,11 @@
     &__bottom-right {
         right: unit( @grid_gutter-width / 2 / @play-btn-icon-size, em );
         bottom: unit( @grid_gutter-width / 2 / @play-btn-icon-size, em );
+
+        &:focus-visible {
+            outline: 1px dotted @pacific;
+            outline-offset: 1px;
+        }
     }
 
     & > .cf-icon-svg {
@@ -205,7 +210,7 @@ button.o-video-player_play-btn,
         position: absolute;
         top: 0;
     }
-});
+} );
 
 .o-video-player_video-container__flexible {
     .o-video-player_iframe-container {
@@ -299,11 +304,6 @@ button.o-video-player_play-btn,
         display: block;
         // Pushes button out of masked window when not playing.
         margin-top: @standard-btn-height__px;
-
-        &:focus {
-        outline: 1px dotted @pacific;
-        outline-offset: 1px;
-       }
     }
   }
 
