@@ -19,6 +19,7 @@ django-url-or-relative-url-field==0.1.2
 django-watchman==0.15.0
 edgegrid-python==1.0.10
 elasticsearch==7.10.1
+elasticsearch7==7.10.1
 elasticsearch-dsl==7.3.0
 govdelivery==1.4.0
 Jinja2==2.11.3
