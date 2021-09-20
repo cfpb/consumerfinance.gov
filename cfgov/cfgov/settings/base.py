@@ -100,14 +100,13 @@ INSTALLED_APPS = (
     "django_elasticsearch_dsl",
 
     # Satellites
-    "retirement_api",
-    "ratechecker",
+    "ccdb5_ui",
+    "complaint_search",
     "countylimits",
-    # "complaint_search",
-    "rest_framework",
-    # "ccdb5_ui",
-    "mptt",
     "crtool",
+    "mptt",
+    "ratechecker",
+    "rest_framework",
 )
 
 WAGTAILSEARCH_BACKENDS = {
