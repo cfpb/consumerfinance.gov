@@ -156,8 +156,32 @@
     &__center,
     &__bottom-right {
         &:focus-visible {
-            outline: 1px dotted @pacific;
-            outline-offset: 1px;
+            outline: none;
+
+            &:before,
+            &::after { 
+                content: '';
+                position: absolute;
+                box-sizing: border-box;
+                display: block;
+            }
+
+            &:before {
+                width: 60px;
+                height: 60px;
+                left: -2px;
+                top: -2px;
+                border: 1px solid @white;
+                outline: 1px solid white;
+            }
+
+            &:after {
+                width: 62px;
+                height: 62px;
+                left: -3px;
+                top: -3px;
+                border: 1px dotted @pacific;
+            }
         }    
     }
 
