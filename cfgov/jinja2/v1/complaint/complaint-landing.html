@@ -68,12 +68,13 @@
 
 {% block content_main %}
 
-<div class="m-notification m-notification__warning {% if technical_issues %} m-notification__visible show-data-notification {% endif %}">
+{% if technical_issues %}
+<div class="m-notification m-notification__warning m-notification__visible ">
   {{ svg_icon("warning-round") }}
   <div class="m-notification_content">
     <div class="m-notification_content">
       <div class="h4 m-notification_message">Warning!</div>
-      <p class="data-text m-notification_explanation">
+      <p class="m-notification_explanation">
         We're currently experiencing technical issues that have delayed the refresh of data in the Consumer Complaint database.
       </p>
       <p class="m-notification_explanation">
@@ -82,7 +83,7 @@
     </div>
   </div>
 </div>
-
+{% endif %}
 <div class="block block__padded-top o-well">
   <h2 class="h3">
     Things to know before you use the database
