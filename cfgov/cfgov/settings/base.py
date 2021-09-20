@@ -708,9 +708,6 @@ FLAGS = {
         # Boolean to turn it off explicitly unless enabled by another condition
         {"condition": "boolean", "value": False},
     ],
-    # Fix for margin-top when using the text inset
-    # When enabled, the top margin of full-width text insets is increased
-    "INSET_TEST": [],
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
