@@ -166,3 +166,24 @@ class TestSurveyWizard(TestCase):
         mock_loads.return_value = None
         response = _handle_result_url(test_request, "signed", "code", True)
         self.assertEqual(response.status_code, 302)
+
+    @patch("time.time")
+    def test_survey_done_redirects_with_cookie(self, mock_time):
+        mock_time.return_value = _time
+        expected_code = 'v1_3-5_10:z:h_1uo0'
+        cleaned = {'q1': '0', 'q2': '0', 'q3': '0', 'q4': '0', 'q5': '0',
+                   'q6': '0', 'q7': '0', 'q8': '0', 'q9': '0',
+                   'q10': '0', 'q11': '0', 'q12': '0', 'q13': '0', 'q14': '0',
+                   'q15': '0', 'q16': '0', 'q17': '0',
+                   'q18': '0', 'q19': '0', 'q20': '0'}
+        mock_self = Mock()
+        mock_self.get_all_cleaned_data.return_value = cleaned
+        setattr(mock_self, 'survey_key', '3-5')
+        response = SurveyWizard.done(mock_self, {})
+
+        self.assertIsInstance(response, HttpResponseRedirect)
+        self.assertEqual(response.url, "../results/")
+        cookie_val = response.cookies['resultUrl'].value
+        code = signing.Signer().unsign(cookie_val)
+
+        self.assertEqual(code, expected_code)
