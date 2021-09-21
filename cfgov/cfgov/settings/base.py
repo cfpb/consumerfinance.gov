@@ -708,13 +708,6 @@ FLAGS = {
         # Boolean to turn it off explicitly unless enabled by another condition
         {"condition": "boolean", "value": False},
     ],
-    # Fix for margin-top when using the text inset
-    # When enabled, the top margin of full-width text insets is increased
-    "INSET_TEST": [],
-    # The next version of the public consumer complaint database
-    "CCDB5_RELEASE": [],
-    # The Trends feature inside Consumer Complaints
-    "CCDB5_TRENDS": [],
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
@@ -728,8 +721,6 @@ FLAGS = {
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
     "BETA_EXTERNAL_TESTING": [],
-    # Used to hide new youth employment success pages prior to public launch
-    "YOUTH_EMPLOYMENT_SUCCESS": [],
     # During a Salesforce system outage, the following flag should be enabled
     # to alert users that the Collect community is down.
     "COLLECT_OUTAGE": [
