@@ -18,6 +18,18 @@ const sendEvent = ( action, label, category ) => {
 };
 
 /**
+ * Sends the user survey interaction to Analytics
+ * @param {string} action - The user's action
+ * @param {string} label - The label associated with the action
+ * @returns {object} Event data
+ */
+const sendSurveyEvent = ( action, label) => {
+  const category = 'Student Survey Interaction';
+  const eventData = Analytics.getDataLayerOptions( action, label, category );
+  Analytics.sendEvent( eventData );
+  return eventData;
+};
+/**
  * getExpandable - Find the expandable the user clicked.
  *
  * @param {event} event Click event
@@ -281,6 +293,28 @@ const handleFetchSearchResults = ( searchTerm, sendEventMethod ) => {
 };
 
 /**
+ * handleSurveySwitchGradeClick - Listen for Switch grades click and report to GA.
+ *
+ * @param {string} searchTerm string
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveySwitchGradeClick = ( event, sendEventMethod ) => {
+  const link = closest( event.target, '.a-link__jump' ) || event.target;
+  if ( !link.classList.contains( 'a-link__jump' ) ) {
+    return;
+  }
+  const action = link.textContent.trim();
+  const grade_level = link.getAttribute('data-tdp_grade_level');
+  const label = 'Switch grades from ' + grade_level;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
  * bindAnalytics - Set up analytics reporting.
  *
  * @param {method} sendEventMethod method
@@ -293,6 +327,13 @@ const bindAnalytics = sendEventMethod => {
       handleFilterClick( event, sendEventMethod );
       handleClearFilterClick( event, sendEventMethod );
       handlePaginationClick( event, sendEventMethod );
+    } );
+  }
+  // Survey section event listeners.
+  const surveyContent = queryOne( '.tdp-survey' );
+  if ( surveyContent ) {
+    surveyContent.addEventListener( 'click', event => {
+      handleSurveySwitchGradeClick( event, sendEventMethod );
     } );
   }
 };
@@ -308,6 +349,8 @@ export {
   handlePaginationClick,
   handleClearAllClick,
   handleFetchSearchResults,
+  handleSurveySwitchGradeClick,
   sendEvent,
+  sendSurveyEvent,
   bindAnalytics
 };
