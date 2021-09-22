@@ -327,6 +327,46 @@
       },
       "spatial": "United States",
       "title": "Prepaid Product Agreements Database"
+    },
+    
+    {
+      "@type": "dcat:Dataset",
+      "accessLevel": "public",
+      "accrualPeriodicity": "R/P6M",
+      "bureauCode": [
+        "581:00"
+      ],
+      "contactPoint": {
+        "@type": "vcard:Contact",
+        "fn": "devops@cfpb.gov",
+        "hasEmail": "mailto:devops@cfpb.gov"
+      },
+      "description": "The TCCP is a semi-annual survey on the terms of credit card plans offered by over 150 financial institutions.  Twice per year, the Bureau is required by law to collect certain credit card price and availability information from a sample of credit card issuers and report this information to Congress and the public.  The largest credit card issuers in the country are required to participate in the survey as well as a sample of geographically diverse issuers.",
+      "distribution": [
+        {
+          "@type": "dcat:Distribution",
+          "downloadURL": "https://cfpb-sites.force.com/CreditCardPlanSurveys",
+          "format": "API"
+        },
+      ],
+      "identifier": "TCCP",
+      "keyword": [
+        "terms",
+        "credit card",
+        "plans",
+        "survey",
+      ],
+      "landingPage": "https://www.consumerfinance.gov/data-research/credit-card-data/terms-credit-card-plans-survey/",
+      "modified": "2021-01-31",
+      "programCode": [
+        "000:000"
+      ],
+      "publisher": {
+        "@type": "org:Organization",
+        "name": "Consumer Financial Protection Bureau"
+      },
+      "spatial": "United States",
+      "title": "Terms of Credit Card Plans (TCCP) Survey"
     }
   ]
 }
