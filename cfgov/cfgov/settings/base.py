@@ -320,66 +320,6 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     "/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
 )
 
-ELASTICSEARCH_INDEX_SETTINGS = {
-    "settings": {
-        "analysis": {
-            "analyzer": {
-                "ngram_analyzer": {
-                    "type": "custom",
-                    "tokenizer": "lowercase",
-                    "filter": ["haystack_ngram"],
-                },
-                "edgengram_analyzer": {
-                    "type": "custom",
-                    "tokenizer": "lowercase",
-                    "filter": ["haystack_edgengram"],
-                },
-                "synonym_en": {
-                    "tokenizer": "standard",
-                    "filter": ["synonyms_en"],
-                },
-                "synonym_es": {
-                    "tokenizer": "standard",
-                    "filter": ["synonyms_es"],
-                },
-            },
-            "tokenizer": {
-                "haystack_ngram_tokenizer": {
-                    "type": "nGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "haystack_edgengram_tokenizer": {
-                    "type": "edgeNGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                    "token_chars": [ "letter", "digit" ]
-                },
-            },
-            "filter": {
-                "haystack_ngram": {
-                    "type": "nGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "haystack_edgengram": {
-                    "type": "edgeNGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "synonyms_en": {
-                    "type": "synonym",
-                    "synonyms_path": "analysis/synonyms_en.txt",
-                },
-                "synonyms_es": {
-                    "type": "synonym",
-                    "synonyms_path": "analysis/synonyms_es.txt",
-                },
-            },
-        }
-    }
-}
-
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
 # ElasticSearch 7 Configuration
