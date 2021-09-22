@@ -262,61 +262,61 @@
       "distribution": [
         {
           "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2009-2019"
+          "description": "College Credit Card Agreements 2009-2019",
           "downloadURL": "https://www.consumerfinance.gov/documents/9235/cfpb_college-credit-card-agreements-database-2009-2019.csv",
           "mediaType": "text/csv"
         },
         {
           "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2011"
+          "description": "College Credit Card Agreements 2011",
           "downloadURL": "https://www.consumerfinance.gov/documents/3088/College_2011.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2012"
+          "description": "College Credit Card Agreements 2012",
           "downloadURL": "https://www.consumerfinance.gov/documents/3098/College_2012.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2013"
+          "description": "College Credit Card Agreements 2013",
           "downloadURL": "https://www.consumerfinance.gov/documents/5968/CollegeCCAgreements2013.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2014"
+          "description": "College Credit Card Agreements 2014",
           "downloadURL": "https://www.consumerfinance.gov/documents/5970/CollegeCCAgreements2014.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2015"
+          "description": "College Credit Card Agreements 2015",
           "downloadURL": "https://www.consumerfinance.gov/documents/5972/CollegeCCAgreements2015.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2016"
+          "description": "College Credit Card Agreements 2016",
           "downloadURL": "https://www.consumerfinance.gov/documents/5964/CollegeCCAgreements2016.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2017"
+          "description": "College Credit Card Agreements 2017",
           "downloadURL": "https://www.consumerfinance.gov/documents/7048/All_Agreements_PDFs_2017.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2018"
+          "description": "College Credit Card Agreements 2018",
           "downloadURL": "https://www.consumerfinance.gov/documents/8261/CollegeCCAgreements2018.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
-          "description": "College Credit Card Agreements 2019"
+          "description": "College Credit Card Agreements 2019",
           "downloadURL": "https://www.consumerfinance.gov/documents/9234/cfpb_college-credit-card-agreements_2020-10.zip",
           "mediaType": "application/pdf"
          }
@@ -341,7 +341,7 @@
         "name": "Consumer Financial Protection Bureau"
       },
       "spatial": "United States",
-      "title": "College Credit Card Marketing Agreements Data",
+      "title": "College Credit Card Marketing Agreements Data"
     },
     
     {
@@ -444,211 +444,211 @@
       "distribution": [
         {
           "@type": "dcat:Distribution",
-          "description": "Q3 2011"
+          "description": "Q3 2011",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2011_Q3.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q4 2011"
+          "description": "Q4 2011",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2011_Q4.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q1 2012"
+          "description": "Q1 2012",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q1.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q2 2012"
+          "description": "Q2 2012",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q2.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q3 2012"
+          "description": "Q3 2012",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q3.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q4 2012"
+          "description": "Q4 2012",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q4.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q1 2013"
+          "description": "Q1 2013",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q1.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q2 2013"
+          "description": "Q2 2013",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q2.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q3 2013"
+          "description": "Q3 2013",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q3.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q4 2013"
+          "description": "Q4 2013",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q4.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q1 2014"
+          "description": "Q1 2014",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q1.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q2 2014"
+          "description": "Q2 2014",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q2.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q3 2014"
+          "description": "Q3 2014",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q3.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q4 2014"
+          "description": "Q4 2014",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q4.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q1 2016"
+          "description": "Q1 2016",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2016_Q1.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q2 2016"
+          "description": "Q2 2016",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q2.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q3 2016"
+          "description": "Q3 2016",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q3.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q4 2016"
+          "description": "Q4 2016",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q4.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q1 2017"
+          "description": "Q1 2017",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q1.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q2 2017"
+          "description": "Q2 2017",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q2.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q3 2017"
+          "description": "Q3 2017",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q3.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q4 2017"
+          "description": "Q4 2017",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q4.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q1 2018"
+          "description": "Q1 2018",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q1.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q2 2018"
+          "description": "Q2 2018",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q2.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q3 2018"
+          "description": "Q3 2018",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q3.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q4 2018"
+          "description": "Q4 2018",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q4.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q1 2019"
+          "description": "Q1 2019",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q1.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q2 2019"
+          "description": "Q2 2019",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q2.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q3 2019"
+          "description": "Q3 2019",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q3.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q4 2019"
+          "description": "Q4 2019",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q4.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q1 2020"
+          "description": "Q1 2020",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2020_Q1.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q2 2020"
+          "description": "Q2 2020",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2020_Q2.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q3 2020"
+          "description": "Q3 2020",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2020_Q3.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q4 2020"
+          "description": "Q4 2020",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2020_Q4.zip",
           "mediatype": "application/pdf"
         },
 	{
           "@type": "dcat:Distribution",
-          "description": "Q1 2021"
+          "description": "Q1 2021",
 	  "downloadURL": "https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2021_Q1.zip",
           "mediatype": "application/pdf"
         }
@@ -670,7 +670,7 @@
         "name": "Consumer Financial Protection Bureau"
       },
       "spatial": "United States",
-      "title": "Credit Card Agreements Database",
+      "title": "Credit Card Agreements Database"
     }
   ]
 }
