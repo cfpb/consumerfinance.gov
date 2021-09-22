@@ -301,16 +301,6 @@ TAGGIT_CASE_INSENSITIVE = True
 WAGTAIL_USER_CREATION_FORM = "v1.auth_forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "v1.auth_forms.UserEditForm"
 
-ES_PORT = os.getenv("ES_PORT", "9200")
-SHEER_ELASTICSEARCH_SERVER = (
-    os.environ.get("ES_HOST", "localhost")
-    + ":"
-    + ES_PORT
-)
-SHEER_ELASTICSEARCH_INDEX = os.environ.get(
-    "SHEER_ELASTICSEARCH_INDEX", "content"
-)
-ELASTICSEARCH_BIGINT = 50000
 
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
@@ -320,70 +310,11 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     "/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
 )
 
-ELASTICSEARCH_INDEX_SETTINGS = {
-    "settings": {
-        "analysis": {
-            "analyzer": {
-                "ngram_analyzer": {
-                    "type": "custom",
-                    "tokenizer": "lowercase",
-                    "filter": ["haystack_ngram"],
-                },
-                "edgengram_analyzer": {
-                    "type": "custom",
-                    "tokenizer": "lowercase",
-                    "filter": ["haystack_edgengram"],
-                },
-                "synonym_en": {
-                    "tokenizer": "standard",
-                    "filter": ["synonyms_en"],
-                },
-                "synonym_es": {
-                    "tokenizer": "standard",
-                    "filter": ["synonyms_es"],
-                },
-            },
-            "tokenizer": {
-                "haystack_ngram_tokenizer": {
-                    "type": "nGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "haystack_edgengram_tokenizer": {
-                    "type": "edgeNGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                    "token_chars": [ "letter", "digit" ]
-                },
-            },
-            "filter": {
-                "haystack_ngram": {
-                    "type": "nGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "haystack_edgengram": {
-                    "type": "edgeNGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "synonyms_en": {
-                    "type": "synonym",
-                    "synonyms_path": "analysis/synonyms_en.txt",
-                },
-                "synonyms_es": {
-                    "type": "synonym",
-                    "synonyms_path": "analysis/synonyms_es.txt",
-                },
-            },
-        }
-    }
-}
-
-ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
-
 # ElasticSearch 7 Configuration
 ES7_HOST = os.getenv('ES7_HOST', 'localhost')
+ES_PORT = os.getenv("ES_PORT", "9200")
+ELASTICSEARCH_BIGINT = 50000
+ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
 if os.environ.get('USE_AWS_ES', False):
     awsauth = AWS4Auth(
