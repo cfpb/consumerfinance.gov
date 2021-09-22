@@ -9,7 +9,7 @@ const scroll = require( './scroll' );
 const search = require( './search' );
 const sticky = require( './sticky' );
 const analytics = require( './tdp-analytics' );
-const surveys = require( './tdp-surveys' );
+import surveys from './tdp-surveys';
 
 const app = {
   init: () => {
