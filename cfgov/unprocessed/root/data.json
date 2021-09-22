@@ -286,6 +286,47 @@
       },
       "spatial": "United States",
       "title": "College Credit Card Marketing Agreements Data"
+    },
+    
+    {
+      "@type": "dcat:Dataset",
+      "accessLevel": "public",
+      "accrualPeriodicity": "R/P1D",
+      "bureauCode": [
+        "581:00"
+      ],
+      "contactPoint": {
+        "@type": "vcard:Contact",
+        "fn": "devops@cfpb.gov",
+        "hasEmail": "mailto:devops@cfpb.gov"
+      },
+      "description": "Prepaid account agreement data, which contain general terms and conditions, pricing, and fee information, that issuers submit to the Bureau under the terms of the Prepaid Rule.  Data is refreshed nightly.",
+      "distribution": [
+      
+      {
+          "@type": "dcat:Distribution",
+          "downloadURL": "https://files.consumerfinance.gov/a/assets/prepaid-agreements/prepaid_metadata_all_agreements.csv",
+          "mediaType": "text/csv"
+        },
+      ],
+      "identifier": "PPAD",
+      "keyword": [
+        "prepaid",
+        "product",
+        "type",
+        "agreement",
+      ],
+      "landingPage": "https://www.consumerfinance.gov/data-research/prepaid-accounts/search-agreements/",
+      "modified": "2021-09-21",
+      "programCode": [
+        "000:000"
+      ],
+      "publisher": {
+        "@type": "org:Organization",
+        "name": "Consumer Financial Protection Bureau"
+      },
+      "spatial": "United States",
+      "title": "Prepaid Product Agreements Database"
     }
   ]
 }
