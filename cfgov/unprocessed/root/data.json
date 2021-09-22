@@ -243,6 +243,49 @@
       "spatial": "United States",
       "temporal": "2016-01-01T00:00:00Z/2017-12-31T00:00:00Z",
       "title": "Financial Well-Being in America (2017)"
+    },
+    
+    {
+      "@type": "dcat:Dataset",
+      "accessLevel": "public",
+      "accrualPeriodicity": "R/P1Y",
+      "bureauCode": [
+        "581:00"
+      ],
+      "contactPoint": {
+        "@type": "vcard:Contact",
+        "fn": "devops@cfpb.gov",
+        "hasEmail": "mailto:devops@cfpb.gov"
+      },
+      "description": "As required by the Credit CARD Act of 2009, we collect information annually from credit card issuers who have marketing agreements with universities, colleges, or affiliated organizations such as alumni associations, sororities, fraternities, and foundations.",
+      "distribution": [
+        {
+          "@type": "dcat:Distribution",
+          "downloadURL": "https://www.consumerfinance.gov/documents/9235/cfpb_college-credit-card-agreements-database-2009-2019.csv",
+          "mediaType": "text/csv"
+        },
+      ],
+      "identifier": "CCMA",
+      "keyword": [
+        "student",
+        "credit card",
+        "card",
+        "agreement",
+        "fee",
+        "consumer",
+        "financial",
+      ],
+      "landingPage": "https://www.consumerfinance.gov/data-research/student-banking/marketing-agreements-and-data/",
+      "modified": "2021-12-30",
+      "programCode": [
+        "000:000"
+      ],
+      "publisher": {
+        "@type": "org:Organization",
+        "name": "Consumer Financial Protection Bureau"
+      },
+      "spatial": "United States",
+      "title": "College Credit Card Marketing Agreements Data"
     }
   ]
 }
