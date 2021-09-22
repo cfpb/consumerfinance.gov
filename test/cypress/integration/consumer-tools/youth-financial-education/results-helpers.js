@@ -49,7 +49,9 @@ export class TdpResultsHelpers {
   }
 
   checkInitials() {
-    cy.get( '.initials-value' ).should( 'include.text', 'ABCD' );
+    cy.get( '.initials-value' )
+      .should( 'include.text', 'ABCD' )
+      .should( 'be.hidden' );
   }
 
   checkNoSharing() {

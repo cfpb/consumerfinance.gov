@@ -6,7 +6,7 @@ from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
 import dj_database_url
-from elasticsearch7 import RequestsHttpConnection
+from elasticsearch import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
 from cfgov.util import admin_emails
@@ -65,7 +65,6 @@ INSTALLED_APPS = (
     "wagtailautocomplete",
     "wagtailflags",
     "watchman",
-    "haystack",
     "ask_cfpb",
     "agreements",
     "django.contrib.admin",
@@ -89,6 +88,7 @@ INSTALLED_APPS = (
     "paying_for_college",
     "prepaid_agreements",
     "regulations3k",
+    "retirement_api",
     "treemodeladmin",
     "housing_counselor",
     "hmda",
@@ -101,14 +101,13 @@ INSTALLED_APPS = (
     "django_elasticsearch_dsl",
 
     # Satellites
-    "retirement_api",
-    "ratechecker",
-    "countylimits",
-    "complaint_search",
-    "rest_framework",
     "ccdb5_ui",
-    "mptt",
+    "complaint_search",
+    "countylimits",
     "crtool",
+    "mptt",
+    "ratechecker",
+    "rest_framework",
 )
 
 WAGTAILSEARCH_BACKENDS = {
@@ -313,31 +312,6 @@ SHEER_ELASTICSEARCH_INDEX = os.environ.get(
 )
 ELASTICSEARCH_BIGINT = 50000
 
-SHEER_ELASTICSEARCH_SETTINGS = {
-    "settings": {
-        "analysis": {
-            "analyzer": {
-                "my_edge_ngram_analyzer": {
-                    "tokenizer": "my_edge_ngram_tokenizer"
-                },
-                "tag_analyzer": {
-                    "tokenizer": "keyword",
-                    "filter": "lowercase",
-                },
-            },
-            "tokenizer": {
-                "my_edge_ngram_tokenizer": {
-                    "type": "edgeNGram",
-                    "min_gram": "2",
-                    "max_gram": "5",
-                    "token_chars": ["letter", "digit"],
-                }
-            },
-        }
-    }
-}
-
-
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
 
@@ -345,18 +319,6 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     "https://s3.amazonaws.com/files.consumerfinance.gov"
     "/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
 )
-
-HAYSTACK_CONNECTIONS = {
-    "default": {
-        "ENGINE": "search.backends.CFGOVElasticsearch2SearchEngine",
-        "URL": SHEER_ELASTICSEARCH_SERVER,
-        "INDEX_NAME": os.environ.get(
-            "HAYSTACK_ELASTICSEARCH_INDEX",
-            SHEER_ELASTICSEARCH_INDEX + "_haystack",
-        ),
-        "INCLUDE_SPELLING": True,
-    }
-}
 
 ELASTICSEARCH_INDEX_SETTINGS = {
     "settings": {
@@ -708,13 +670,6 @@ FLAGS = {
         # Boolean to turn it off explicitly unless enabled by another condition
         {"condition": "boolean", "value": False},
     ],
-    # Fix for margin-top when using the text inset
-    # When enabled, the top margin of full-width text insets is increased
-    "INSET_TEST": [],
-    # The next version of the public consumer complaint database
-    "CCDB5_RELEASE": [],
-    # The Trends feature inside Consumer Complaints
-    "CCDB5_TRENDS": [],
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
@@ -724,15 +679,10 @@ FLAGS = {
     "EMAIL_POPUP_DEBT": [("boolean", True)],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
-    # SPLIT TESTING FLAGS
-    # Ask CFPB page titles as H1s instead of H2s
-    "ASK_CFPB_H1": [("in split testing cluster", "ASK_CFPB_H1")],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
     "BETA_EXTERNAL_TESTING": [],
-    # Used to hide new youth employment success pages prior to public launch
-    "YOUTH_EMPLOYMENT_SUCCESS": [],
     # During a Salesforce system outage, the following flag should be enabled
     # to alert users that the Collect community is down.
     "COLLECT_OUTAGE": [
