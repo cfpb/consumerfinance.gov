@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from ..UrlEncoder import UrlEncoder
+from teachers_digital_platform.UrlEncoder import UrlEncoder
 
 
 _time = 1623518461

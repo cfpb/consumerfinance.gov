@@ -16,7 +16,9 @@
 
 {% block body_content scoped %}
     <div class="content_wrapper">
-        <div data-tdp-page="results" class="content_main tdp-survey-results">
+        <div data-tdp-page="results"
+             data-grade-select-url="{{ gradeSelectUrl }}"
+             class="content_main tdp-survey-results">
         {% set overall = content.find_overall_progress(score) %}
         {% set bbs = content.building_blocks() %}
 
