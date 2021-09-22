@@ -246,6 +246,7 @@
     },
     
     {
+      
       "@type": "dcat:Dataset",
       "accessLevel": "public",
       "accrualPeriodicity": "R/P1Y",
@@ -261,9 +262,64 @@
       "distribution": [
         {
           "@type": "dcat:Distribution",
+          "description": "College Credit Card Agreements 2009-2019"
           "downloadURL": "https://www.consumerfinance.gov/documents/9235/cfpb_college-credit-card-agreements-database-2009-2019.csv",
           "mediaType": "text/csv"
         },
+        {
+          "@type": "dcat:Distribution",
+          "description": "College Credit Card Agreements 2011"
+          "downloadURL": "https://www.consumerfinance.gov/documents/3088/College_2011.zip",
+          "mediaType": "application/pdf"
+         },
+         {
+          "@type": "dcat:Distribution",
+          "description": "College Credit Card Agreements 2012"
+          "downloadURL": "https://www.consumerfinance.gov/documents/3098/College_2012.zip",
+          "mediaType": "application/pdf"
+         },
+         {
+          "@type": "dcat:Distribution",
+          "description": "College Credit Card Agreements 2013"
+          "downloadURL": "https://www.consumerfinance.gov/documents/5968/CollegeCCAgreements2013.zip",
+          "mediaType": "application/pdf"
+         },
+         {
+          "@type": "dcat:Distribution",
+          "description": "College Credit Card Agreements 2014"
+          "downloadURL": "https://www.consumerfinance.gov/documents/5970/CollegeCCAgreements2014.zip",
+          "mediaType": "application/pdf"
+         },
+         {
+          "@type": "dcat:Distribution",
+          "description": "College Credit Card Agreements 2015"
+          "downloadURL": "https://www.consumerfinance.gov/documents/5972/CollegeCCAgreements2015.zip",
+          "mediaType": "application/pdf"
+         },
+         {
+          "@type": "dcat:Distribution",
+          "description": "College Credit Card Agreements 2016"
+          "downloadURL": "https://www.consumerfinance.gov/documents/5964/CollegeCCAgreements2016.zip",
+          "mediaType": "application/pdf"
+         },
+         {
+          "@type": "dcat:Distribution",
+          "description": "College Credit Card Agreements 2017"
+          "downloadURL": "https://www.consumerfinance.gov/documents/7048/All_Agreements_PDFs_2017.zip",
+          "mediaType": "application/pdf"
+         },
+         {
+          "@type": "dcat:Distribution",
+          "description": "College Credit Card Agreements 2018"
+          "downloadURL": "https://www.consumerfinance.gov/documents/8261/CollegeCCAgreements2018.zip",
+          "mediaType": "application/pdf"
+         },
+         {
+          "@type": "dcat:Distribution",
+          "description": "College Credit Card Agreements 2019"
+          "downloadURL": "https://www.consumerfinance.gov/documents/9234/cfpb_college-credit-card-agreements_2020-10.zip",
+          "mediaType": "application/pdf"
+         }
       ],
       "identifier": "CCMA",
       "keyword": [
@@ -289,6 +345,7 @@
     },
     
     {
+      
       "@type": "dcat:Dataset",
       "accessLevel": "public",
       "accrualPeriodicity": "R/P1D",
@@ -303,11 +360,11 @@
       "description": "Prepaid account agreement data, which contain general terms and conditions, pricing, and fee information, that issuers submit to the Bureau under the terms of the Prepaid Rule.  Data is refreshed nightly.",
       "distribution": [
       
-      {
+       {
           "@type": "dcat:Distribution",
           "downloadURL": "https://files.consumerfinance.gov/a/assets/prepaid-agreements/prepaid_metadata_all_agreements.csv",
           "mediaType": "text/csv"
-        },
+        }
       ],
       "identifier": "PPAD",
       "keyword": [
@@ -330,6 +387,7 @@
     },
     
     {
+      
       "@type": "dcat:Dataset",
       "accessLevel": "public",
       "accrualPeriodicity": "R/P6M",
@@ -345,9 +403,9 @@
       "distribution": [
         {
           "@type": "dcat:Distribution",
-          "downloadURL": "https://cfpb-sites.force.com/CreditCardPlanSurveys",
+          "accessURL": "https://cfpb-sites.force.com/CreditCardPlanSurveys",
           "format": "API"
-        },
+        }
       ],
       "identifier": "TCCP",
       "keyword": [
