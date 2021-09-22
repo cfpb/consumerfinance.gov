@@ -630,7 +630,7 @@ CSP_MEDIA_SRC = (
 
 # FEATURE FLAGS
 # Flags can be declared here with an empty list, which will evaluate as false 
-# until the flag is enabled in the Wagtail admin, or a with list of conditions. 
+# until the flag is enabled in the Wagtail admin, or with a list of conditions. 
 # Each condition should be a tuple or dict in one of these forms: 
 # (condition-string, value) or {"condition": condition-string, "value": value}
 # An optional 3rd value, "required," can be set to True. It defaults to False.
