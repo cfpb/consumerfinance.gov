@@ -559,10 +559,13 @@ CSP_MEDIA_SRC = (
     "*.consumerfinance.gov",
 )
 
-# Feature flags
-# All feature flags must be listed here with a dict of any hard-coded
-# conditions or an empty dict. If the conditions dict is empty the flag will
-# only be enabled if database conditions are added.
+# FEATURE FLAGS
+# Flags can be declared here with an empty list, which will evaluate as false 
+# until the flag is enabled in the Wagtail admin, or with a list of conditions. 
+# Each condition should be a tuple or dict in one of these forms: 
+# (condition-string, value) or {"condition": condition-string, "value": value}
+# An optional 3rd value, "required," can be set to True. It defaults to False.
+# Flags can also be created (and deleted) in the Wagtail admin.
 FLAGS = {
     # Ask CFPB search spelling correction support
     # When enabled, spelling suggestions will appear in Ask CFPB search and
