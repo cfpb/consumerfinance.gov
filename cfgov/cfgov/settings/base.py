@@ -6,7 +6,7 @@ from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
 import dj_database_url
-from elasticsearch7 import RequestsHttpConnection
+from elasticsearch import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
 from cfgov.util import admin_emails
@@ -65,7 +65,6 @@ INSTALLED_APPS = (
     "wagtailautocomplete",
     "wagtailflags",
     "watchman",
-    "haystack",
     "ask_cfpb",
     "agreements",
     "django.contrib.admin",
@@ -89,6 +88,7 @@ INSTALLED_APPS = (
     "paying_for_college",
     "prepaid_agreements",
     "regulations3k",
+    "retirement_api",
     "treemodeladmin",
     "housing_counselor",
     "hmda",
@@ -101,14 +101,13 @@ INSTALLED_APPS = (
     "django_elasticsearch_dsl",
 
     # Satellites
-    "retirement_api",
-    "ratechecker",
-    "countylimits",
-    "complaint_search",
-    "rest_framework",
     "ccdb5_ui",
-    "mptt",
+    "complaint_search",
+    "countylimits",
     "crtool",
+    "mptt",
+    "ratechecker",
+    "rest_framework",
 )
 
 WAGTAILSEARCH_BACKENDS = {
@@ -313,31 +312,6 @@ SHEER_ELASTICSEARCH_INDEX = os.environ.get(
 )
 ELASTICSEARCH_BIGINT = 50000
 
-SHEER_ELASTICSEARCH_SETTINGS = {
-    "settings": {
-        "analysis": {
-            "analyzer": {
-                "my_edge_ngram_analyzer": {
-                    "tokenizer": "my_edge_ngram_tokenizer"
-                },
-                "tag_analyzer": {
-                    "tokenizer": "keyword",
-                    "filter": "lowercase",
-                },
-            },
-            "tokenizer": {
-                "my_edge_ngram_tokenizer": {
-                    "type": "edgeNGram",
-                    "min_gram": "2",
-                    "max_gram": "5",
-                    "token_chars": ["letter", "digit"],
-                }
-            },
-        }
-    }
-}
-
-
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
 
@@ -345,18 +319,6 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     "https://s3.amazonaws.com/files.consumerfinance.gov"
     "/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
 )
-
-HAYSTACK_CONNECTIONS = {
-    "default": {
-        "ENGINE": "search.backends.CFGOVElasticsearch2SearchEngine",
-        "URL": SHEER_ELASTICSEARCH_SERVER,
-        "INDEX_NAME": os.environ.get(
-            "HAYSTACK_ELASTICSEARCH_INDEX",
-            SHEER_ELASTICSEARCH_INDEX + "_haystack",
-        ),
-        "INCLUDE_SPELLING": True,
-    }
-}
 
 ELASTICSEARCH_INDEX_SETTINGS = {
     "settings": {
