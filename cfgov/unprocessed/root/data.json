@@ -404,7 +404,7 @@
         {
           "@type": "dcat:Distribution",
           "accessURL": "https://cfpb-sites.force.com/CreditCardPlanSurveys",
-	  "mediatype": "application/csv",
+	  "mediatype": "application/json",
           "format": "API"
         }
       ],
