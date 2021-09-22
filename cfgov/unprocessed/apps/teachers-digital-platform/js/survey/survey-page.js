@@ -145,11 +145,11 @@ function allowStartOver() {
     if ( button ) {
       event.preventDefault();
       if ( button.dataset.cancel ) {
-        modals.close( 'modal-restart' );
+        modals.close();
       } else {
         sessionStorage.removeItem( ANSWERS_SESS_KEY );
         Cookie.remove( SURVEY_COOKIE );
-        location.href = '../../../assess/survey/';
+        location.href = $( '[data-grade-select-url]' ).dataset.gradeSelectUrl;
       }
     }
   } );
@@ -171,10 +171,6 @@ function initProgressListener() {
     const circle = $( '.tdp-survey-progress__circle' );
     const svg = $( '.tdp-survey-progress__svg' );
     const texts = [].slice.call( $$( '.tdp-survey-progress__svg text' ) );
-    if ( !outOfEls.length || !circle || !svg || texts.length < 3 ) {
-      return;
-    }
-
     const perc = `${ pb.getPercentage() }%`;
 
     [].forEach.call( outOfEls, el => {
@@ -203,7 +199,7 @@ function initErrorHandling() {
     form.addEventListener( 'submit', submitEvt => {
       const unsets = ChoiceField.findUnsets();
       if ( !unsets.length ) {
-        return;
+        return true;
       }
 
       submitEvt.preventDefault();
@@ -231,6 +227,8 @@ function initErrorHandling() {
         // Can't scroll, jump up
         location.href = '#main';
       }
+
+      return false;
     } );
   }
 }
@@ -331,4 +329,11 @@ function breakSeparatedAnswers() {
   } );
 }
 
-export { surveyPage };
+export {
+  surveyPage,
+  scrollToEl,
+  ChoiceField,
+  progressBar,
+  Cookie,
+  SectionLink
+};

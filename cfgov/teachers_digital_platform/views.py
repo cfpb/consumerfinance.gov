@@ -1,6 +1,6 @@
 import re
 import time
-from typing import Dict
+from typing import Dict, Optional
 
 from django.core import signing
 from django.http import HttpResponse, HttpResponseRedirect
@@ -13,14 +13,32 @@ from django.views.decorators.vary import vary_on_cookie
 from formtools.wizard.views import NamedUrlCookieWizardView
 
 from core.decorators import akamai_no_store
-
-from .resultsContent import ResultsContent
-from .surveys import AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
-from .UrlEncoder import UrlEncoder
+from teachers_digital_platform.forms import SharedUrlForm
+from teachers_digital_platform.resultsContent import ResultsContent
+from teachers_digital_platform.surveys import (
+    AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
+)
+from teachers_digital_platform.UrlEncoder import UrlEncoder
+from v1.models import SublandingPage
 
 
 _tdp = 'teachers_digital_platform'
-_signer = signing.Signer()
+_gradeSelectionPagePk = 15596
+
+
+def _find_grade_selection_url(request: Optional[HttpRequest],
+                              default='../../../assess/survey/',
+                              page_class=SublandingPage):
+    """
+    Get URL of the survey grade selection page from Wagtail
+    """
+    try:
+        destination_page = page_class.objects.get(pk=_gradeSelectionPagePk)
+    except page_class.DoesNotExist:
+        return default
+
+    destination_url = destination_page.get_url(request)
+    return destination_url if destination_url else default
 
 
 class SurveyWizard(NamedUrlCookieWizardView):
@@ -53,7 +71,7 @@ class SurveyWizard(NamedUrlCookieWizardView):
         # We can't use set_signed_cookie() because we need to unsign the
         # query string using Signer() and for some reason the raw cookie
         # value fails to pass the sig check.
-        signed = _signer.sign(encoded)
+        signed = signing.Signer().sign(encoded)
 
         # Send to results page (current URL is survey/6-8/done/ )
         response = HttpResponseRedirect('../results/')
@@ -84,6 +102,7 @@ class SurveyWizard(NamedUrlCookieWizardView):
         # Push the survey and active page into template
         page_idx = int(re.sub(r'\D+', '', context['step'])) - 1
         survey = get_survey(self.survey_key)
+        context['gradeSelectUrl'] = _find_grade_selection_url(None)
         context['survey'] = survey
         context['page_idx'] = page_idx
         context['questions_by_page'] = survey.num_questions_by_page()
@@ -116,12 +135,12 @@ class SurveyWizard(NamedUrlCookieWizardView):
         return wizard_views
 
 
-def _handle_result_url(request: HttpRequest, raw: str, code: str,
+def _handle_result_url(request: HttpRequest, signed_code: str, code: str,
                        is_student: bool):
     url_encoder = UrlEncoder(AVAILABLE_SURVEYS)
     res = url_encoder.loads(code)
     if res is None:
-        return HttpResponseRedirect('../../../assess/survey/')
+        return HttpResponseRedirect(_find_grade_selection_url(request))
 
     survey = get_survey(res['key'])
     total = sum(res['subtotals'])
@@ -133,8 +152,10 @@ def _handle_result_url(request: HttpRequest, raw: str, code: str,
         {
             'content': ResultsContent.factory(res['key']),
             'is_student': student_view,
+            'gradeSelectUrl': _find_grade_selection_url(
+                request, '../../assess/survey/'),
             'request': request,
-            'r_param': raw,
+            'signed_code': signed_code,
             'survey': survey,
             'subtotals': res['subtotals'],
             'score': adjusted,
@@ -155,15 +176,15 @@ def student_results(request: HttpRequest):
         return HttpResponse(status=404)
 
     if 'resultUrl' not in request.COOKIES:
-        return HttpResponseRedirect('../../../assess/survey/')
+        return HttpResponseRedirect(_find_grade_selection_url(request))
+    fake_get = {'r': request.COOKIES['resultUrl']}
 
-    raw = request.COOKIES['resultUrl']
-    try:
-        result_url = _signer.unsign(raw)
-    except signing.BadSignature:
-        return HttpResponseRedirect('../../../assess/survey/')
+    form = SharedUrlForm(fake_get)
+    if not form.is_valid():
+        return HttpResponseRedirect(_find_grade_selection_url(request))
+    signed_code, code = form.cleaned_data['r']
 
-    return _handle_result_url(request, raw, result_url, True)
+    return _handle_result_url(request, signed_code, code, True)
 
 
 @never_cache
@@ -176,16 +197,12 @@ def view_results(request: HttpRequest):
     if request.method != 'GET':
         return HttpResponse(status=404)
 
-    raw = request.GET['r']
-    if not isinstance(raw, str):
-        return HttpResponseRedirect('../../../assess/survey/')
+    form = SharedUrlForm(request.GET)
+    if not form.is_valid():
+        return HttpResponseRedirect(_find_grade_selection_url(request))
+    signed_code, code = form.cleaned_data['r']
 
-    try:
-        result_url = _signer.unsign(raw)
-    except signing.BadSignature:
-        return HttpResponseRedirect('../../../assess/survey/')
-
-    return _handle_result_url(request, raw, result_url, False)
+    return _handle_result_url(request, signed_code, code, False)
 
 
 @never_cache
@@ -198,6 +215,8 @@ def _grade_level_page(request: HttpRequest, key: str):
         {
             'request': request,
             'survey': survey,
+            'gradeSelectUrl': _find_grade_selection_url(
+                request, '../../assess/survey/')
         },
     )
     return HttpResponse(status=200, content=rendered)
