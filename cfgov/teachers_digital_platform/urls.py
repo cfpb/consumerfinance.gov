@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 from wagtailsharing.views import ServeView
 
-from . import views
+from teachers_digital_platform import views
 
 
 _tdp = 'teachers_digital_platform'

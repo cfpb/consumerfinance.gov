@@ -1,7 +1,9 @@
 import re
 import secrets
 
-from django.forms import Form
+from django.core import signing
+from django.core.exceptions import ValidationError
+from django.forms import CharField, Form
 from django.utils.safestring import mark_safe
 
 
@@ -70,3 +72,20 @@ class SurveyForm(Form):
         output = _replace_labels(output)
         output = _replace_tokens(output)
         return mark_safe(output)
+
+
+class SharedUrlForm(Form):
+    """
+    Form to validate and unwrap the signed code holding results
+    """
+    r = CharField(required=True)
+
+    def clean_r(self):
+        signed_code = self.cleaned_data['r']
+        signer = signing.Signer()
+        try:
+            code = signer.unsign(signed_code)
+        except signing.BadSignature:
+            raise ValidationError('Failed signature check')
+
+        return signed_code, code
