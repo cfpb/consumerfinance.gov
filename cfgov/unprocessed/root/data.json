@@ -341,7 +341,7 @@
         "name": "Consumer Financial Protection Bureau"
       },
       "spatial": "United States",
-      "title": "College Credit Card Marketing Agreements Data"
+      "title": "College Credit Card Marketing Agreements Data",
     },
     
     {
@@ -383,7 +383,7 @@
         "name": "Consumer Financial Protection Bureau"
       },
       "spatial": "United States",
-      "title": "Prepaid Product Agreements Database"
+      "title": "Prepaid Product Agreements Database",
     },
     
     {
@@ -670,7 +670,7 @@
         "name": "Consumer Financial Protection Bureau"
       },
       "spatial": "United States",
-      "title": "Credit Card Agreements Database"
+      "title": "Credit Card Agreements Database",
     }
   ]
 }
