@@ -1,4 +1,4 @@
-from elasticsearch7.exceptions import RequestError
+from elasticsearch.exceptions import RequestError
 
 from ask_cfpb.documents import AnswerPageDocument
 from search.models import AUTOCOMPLETE_MAX_CHARS
