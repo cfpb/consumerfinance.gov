@@ -439,7 +439,11 @@ urlpatterns += ask_patterns</code></pre>
 <h2 id="satellite-apps">Satellite apps<a class="headerlink" href="#satellite-apps" title="Permanent link">¶</a></h2>
 <p>Feature flags can be used in satellite apps in exactly the same way they are used in consumerfinance.gov. An example is <a href="https://github.com/cfpb/complaint/blob/9985b4ea4ce5c6e9b55d57228520a92a26152565/complaintdatabase/views.py#L31-L36">the use of a feature flagged template choice in the complaintdatabase app</a>.</p>
 <h2 id="hygiene">Hygiene<a class="headerlink" href="#hygiene" title="Permanent link">¶</a></h2>
-<p>Feature flags should be rare and ephemeral. Changes should be small and frequent, and not big-bang releases, and flags that are no longer used and their conditions should be cleaned up and removed from code and the database.</p>
+<p>Most feature flags are no longer needed once a feature is launched. Follow these steps to remove a flag when its job is done:</p>
+<ul>
+<li>Create a pull request that deletes the flag from settings, if it was declared there, and removes any related code and tests that referenced the flag.</li>
+<li>After the changes are merged and deployed to production, check <code>Settings ==&gt; Flags</code> in Wagtail (<code>/admin/flags/</code>) to see if the removed flag is still listed. If so, the flag has been saved in our database. Select the flag, click the DELETE FLAG button at top right, and then choose YES, DELETE IT.</li>
+</ul>
               
             </div>
           </div>
