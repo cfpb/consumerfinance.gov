@@ -328,7 +328,7 @@ const handleSurveyPrivacyModalClick = ( event, sendEventMethod ) => {
   }
   const action = link.textContent.trim();
   const grade_level = link.getAttribute('data-tdp_grade_level');
-  const label = grade_level + ": " + question;
+  const label = grade_level;
   if ( sendEventMethod ) {
     return sendEventMethod( action, label );
   }
@@ -410,6 +410,30 @@ const handleSurveyErrorNoticeClick = ( event, sendEventMethod ) => {
 };
 
 /**
+ * handleSurveyRestartModalClick - Listen for Restart survey click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyRestartModalClick = ( event, sendEventMethod ) => {
+  const link = closest( event.target, '[data-open-modal="modal-restart"]' ) || event.target;
+  if ( link.getAttribute( 'data-open-modal' ) != 'modal-restart' ) {
+    return;
+  }
+  const action = 'Start Over';
+  const wrapper = closest( link, 'div.wrapper.tdp-survey');
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const section = +queryOne( 'div[data-page-idx]', wrapper).getAttribute( 'data-page-idx' ) + 1;
+  const label = grade_level + ": Section " + section;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
  * bindAnalytics - Set up analytics reporting.
  *
  * @param {method} sendEventMethod method
@@ -432,6 +456,7 @@ const bindAnalytics = sendEventMethod => {
       handleSurveyPrivacyModalClick( event, sendEventMethod );
       handleSurveyLetsDoThisClick( event, sendEventMethod );
       handleSurveyErrorNoticeClick( event, sendEventMethod );
+      handleSurveyRestartModalClick( event, sendEventMethod );
     } );
 
     surveyContent.addEventListener( 'change', event => {
@@ -456,6 +481,7 @@ export {
   handleSurveyLetsDoThisClick,
   handleSurveyChoiceChange,
   handleSurveyErrorNoticeClick,
+  handleSurveyRestartModalClick,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
