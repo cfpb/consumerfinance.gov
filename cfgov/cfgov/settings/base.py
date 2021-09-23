@@ -571,9 +571,6 @@ FLAGS = {
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results
     "ASK_SEARCH_TYPOS": [],
-    # Ask CFPB date label
-    # When enabled, date label will be changed from 'updated' to 'last reviewed'
-    "ASK_UPDATED_DATE_LABEL": [],
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
