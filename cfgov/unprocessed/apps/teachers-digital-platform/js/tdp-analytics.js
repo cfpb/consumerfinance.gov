@@ -29,6 +29,7 @@ const sendSurveyEvent = ( action, label) => {
   Analytics.sendEvent( eventData );
   return eventData;
 };
+
 /**
  * getExpandable - Find the expandable the user clicked.
  *
@@ -434,6 +435,33 @@ const handleSurveyRestartModalClick = ( event, sendEventMethod ) => {
 };
 
 /**
+ * handleSurveyExpandableClick - Listen for opening or closing of an expandable and report to GA.
+ *
+ * @param {event} event Click event
+ * @param  {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyExpandableClick = ( event, sendEventMethod ) => {
+  const selector = '.tdp-survey-sidebar__mobile-control .o-expandable_header';
+  const expandable = closest( event.target, selector ) || event.target;
+  if ( !expandable.classList.contains( 'o-expandable_header' ) ) {
+    return;
+  }
+  const state = getExpandableState( expandable ) == 'expand' ? 'Expand' : 'Collapse';
+  const action = `Survey Progress Dropdown: ${ state }`;
+  const wrapper = closest( expandable, 'div.wrapper.tdp-survey');
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const section = +queryOne( 'div[data-page-idx]', wrapper).getAttribute( 'data-page-idx' ) + 1;
+  const label = grade_level + ": Section " + section;
+
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
  * bindAnalytics - Set up analytics reporting.
  *
  * @param {method} sendEventMethod method
@@ -457,6 +485,7 @@ const bindAnalytics = sendEventMethod => {
       handleSurveyLetsDoThisClick( event, sendEventMethod );
       handleSurveyErrorNoticeClick( event, sendEventMethod );
       handleSurveyRestartModalClick( event, sendEventMethod );
+      handleSurveyExpandableClick( event, sendEventMethod );
     } );
 
     surveyContent.addEventListener( 'change', event => {
@@ -482,6 +511,7 @@ export {
   handleSurveyChoiceChange,
   handleSurveyErrorNoticeClick,
   handleSurveyRestartModalClick,
+  handleSurveyExpandableClick,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
