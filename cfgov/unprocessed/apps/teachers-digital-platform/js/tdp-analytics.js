@@ -295,7 +295,7 @@ const handleFetchSearchResults = ( searchTerm, sendEventMethod ) => {
 /**
  * handleSurveySwitchGradeClick - Listen for Switch grades click and report to GA.
  *
- * @param {string} searchTerm string
+ * @param {event} event Click event
  * @param {method} sendEventMethod method
  * @returns {object} Event data
  */
@@ -307,6 +307,28 @@ const handleSurveySwitchGradeClick = ( event, sendEventMethod ) => {
   const action = link.textContent.trim();
   const grade_level = link.getAttribute('data-tdp_grade_level');
   const label = 'Switch grades from ' + grade_level;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyClickPrivacyModal - Listen for Privacy statement click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyClickPrivacyModal = ( event, sendEventMethod ) => {
+  const link = closest( event.target, '[data-open-modal="modal-privacy"]' ) || event.target;
+  if ( !link.getAttribute( 'data-open-modal' ) ) {
+    return;
+  }
+  const action = link.textContent.trim();
+  const grade_level = link.getAttribute('data-tdp_grade_level');
+  const label = grade_level;
   if ( sendEventMethod ) {
     return sendEventMethod( action, label );
   }
@@ -334,6 +356,7 @@ const bindAnalytics = sendEventMethod => {
   if ( surveyContent ) {
     surveyContent.addEventListener( 'click', event => {
       handleSurveySwitchGradeClick( event, sendEventMethod );
+      handleSurveyClickPrivacyModal( event, sendEventMethod );
     } );
   }
 };
@@ -350,6 +373,7 @@ export {
   handleClearAllClick,
   handleFetchSearchResults,
   handleSurveySwitchGradeClick,
+  handleSurveyClickPrivacyModal,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
