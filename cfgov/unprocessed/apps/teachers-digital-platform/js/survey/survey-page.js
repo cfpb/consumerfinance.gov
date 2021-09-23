@@ -216,6 +216,7 @@ function initErrorHandling() {
         const fieldset = cf.getUl().parentElement;
         const link = document.createElement( 'a' );
         link.href = '#';
+        link.setAttribute('data-gtm_ignore', 'true');
         link.textContent = fieldset.querySelector( 'legend' ).textContent;
         link.addEventListener( 'click', clickEvt => {
           clickEvt.preventDefault();
