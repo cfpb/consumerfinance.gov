@@ -385,6 +385,31 @@ const handleSurveyChoiceChange = ( event, sendEventMethod ) => {
 };
 
 /**
+ * handleSurveyErrorNoticeClick - Listen for error notification click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyErrorNoticeClick = ( event, sendEventMethod ) => {
+  const link = closest( event.target, '.m-notification__error a' ) || event.target;
+  if ( link.getAttribute( 'href' )  != '#' ) {
+    return;
+  }
+  const action = 'Anchor: Missed Question';
+  const wrapper = closest( link, 'div.wrapper.tdp-survey');
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const section = +queryOne( 'div[data-page-idx]', wrapper).getAttribute( 'data-page-idx' ) + 1;
+  const question = link.textContent.trim();
+  const label = grade_level + ': Section ' + section + ' | ' + question;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
  * bindAnalytics - Set up analytics reporting.
  *
  * @param {method} sendEventMethod method
@@ -406,6 +431,7 @@ const bindAnalytics = sendEventMethod => {
       handleSurveySwitchGradeClick( event, sendEventMethod );
       handleSurveyPrivacyModalClick( event, sendEventMethod );
       handleSurveyLetsDoThisClick( event, sendEventMethod );
+      handleSurveyErrorNoticeClick( event, sendEventMethod );
     } );
 
     surveyContent.addEventListener( 'change', event => {
@@ -429,6 +455,7 @@ export {
   handleSurveyPrivacyModalClick,
   handleSurveyLetsDoThisClick,
   handleSurveyChoiceChange,
+  handleSurveyErrorNoticeClick,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
