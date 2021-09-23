@@ -214,25 +214,24 @@ ul.tdp-survey__choice-question {
 }
 
 .tdp-survey-section {
-    appearance: auto;
     align-items: center;
-    border: 1px solid #b4b5b6;
+    border: 1px solid #b4b5b6 !important;
+    color: inherit !important;
     cursor: default;
     display: flex;
     padding: 15px;
     text-align: left;
-    width: 100%;
 
     &[data-color="white"] {
         background: #fff;
     }
     &[data-color="green"] {
         background: #f0f8eb;
-        border-color: #20aa3f;
+        border-color: #20aa3f !important;
     }
     &[data-color="blue"] {
         background: #d6e8fa;
-        border-color: #6b9cd7;
+        border-color: #6b9cd7 !important;
     }
 
     &__icon {
@@ -268,6 +267,10 @@ ul.tdp-survey__choice-question {
     &__edit {
         display: none;
     }
+
+    &:focus {
+        outline: none !important;
+    }
     &[data-editable="1"] {
         cursor: pointer;
 
@@ -286,6 +289,10 @@ ul.tdp-survey__choice-question {
             .tdp-survey-section__edit span {
                 border-bottom-style: solid;
             }
+        }
+
+        &:focus {
+            outline: thin dotted !important;
         }
     }
 
