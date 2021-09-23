@@ -5,15 +5,15 @@ const $ = document.querySelector.bind( document );
 
 let value = '';
 
-const displayValue = $( '.initials-value' );
-const display = $( '.initials-display' );
-
 /**
  * Update the initials in the page
  *
  * @param {string } newValue the new initials
  */
 function update( newValue ) {
+  const displayValue = $( '.initials-value' );
+  const display = $( '.initials-display' );
+
   value = newValue;
   if ( displayValue && display ) {
     if ( newValue ) {
@@ -50,4 +50,4 @@ function init() {
   update( fromUrl );
 }
 
-export { init, get, update };
+export { encodeName, init, get, update };

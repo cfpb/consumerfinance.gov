@@ -1,6 +1,8 @@
 from django.test import TestCase
 
-from ..resultsContent import ResultsContent, _results_data_row
+from teachers_digital_platform.resultsContent import (
+    ResultsContent, _results_data_row
+)
 
 
 class ResultsContentTest(TestCase):

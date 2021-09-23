@@ -1,5 +1,6 @@
 const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
 const Cookie = require( 'js-cookie' );
+import clipboardCopy from 'copy-to-clipboard';
 const {
   ANSWERS_SESS_KEY,
   INITIALS_LIMIT,
@@ -9,9 +10,11 @@ const {
 const encodeName = require( '../encode-name' );
 const modals = require( '../modals' );
 const initials = require( './initials' );
-const { clipboardCopy } = require( '../clipboardCopy' );
 
 const $ = document.querySelector.bind( document );
+
+let localClipboardCopy = clipboardCopy;
+
 
 /**
  * Initialize the results page
@@ -77,9 +80,6 @@ function handleShareModal() {
   const shareOutput = $( '.share-output' );
   const copiedMsg = $( '.share-output__copied' );
   const a = shareOutput.querySelector( 'a[href]' );
-  if ( !desc || !shareOutput || !a || !copiedMsg ) {
-    return;
-  }
 
   // Re-hide UI changes when opening share modal
   document.addEventListener( 'modal:open:before', event => {
@@ -93,7 +93,7 @@ function handleShareModal() {
   withValidInitials( desc, value => {
     initials.update( value );
     a.href = '../view/?r=' + encodeURIComponent(
-      shareOutput.dataset.rparam
+      shareOutput.dataset.signedCode
     );
     // href property read gives you full URL
     const shareUrl = a.href;
@@ -106,9 +106,8 @@ function handleShareModal() {
 
   $( '.share-output button' ).addEventListener( 'click', event => {
     event.preventDefault();
-    clipboardCopy( a.href ).then( () => {
-      copiedMsg.hidden = false;
-    } );
+    clipboardCopy( a.href );
+    copiedMsg.hidden = false;
   } );
 
   a.addEventListener( 'click', event => {
@@ -121,14 +120,9 @@ function handleShareModal() {
  * Handle behavior within the print modal
  */
 function handlePrintModal() {
-  const desc = $( '#modal-print_desc' );
-  if ( !desc ) {
-    return;
-  }
-
-  withValidInitials( desc, value => {
+  withValidInitials( $( '#modal-print_desc' ), value => {
     initials.update( value );
-    modals.close( 'modal-print' );
+    modals.close();
     window.print();
   } );
 }
@@ -137,23 +131,18 @@ function handlePrintModal() {
  * Handle behavior within the restart modal
  */
 function handleResetModal() {
-  const modal = $( '#modal-reset' );
-  if ( !modal ) {
-    return;
-  }
-
-  modal.addEventListener( 'click', event => {
+  $( '#modal-reset' ).addEventListener( 'click', event => {
     const button = closest( event.target, '[data-cancel]' );
     if ( button ) {
       event.preventDefault();
       if ( button.dataset.cancel ) {
-        modals.close( 'modal-reset' );
+        modals.close();
       } else {
         Cookie.remove( RESULT_COOKIE );
-        location.href = '../../../assess/survey/';
+        location.href = $( '[data-grade-select-url]' ).dataset.gradeSelectUrl;
       }
     }
   } );
 }
 
-export { resultsPage, ANSWERS_SESS_KEY };
+export { resultsPage, ANSWERS_SESS_KEY, Cookie };

@@ -1197,14 +1197,6 @@ class AnswerPageTest(TestCase):
         page.save_revision()
         self.assertEqual(page.meta_image, self.test_image)
 
-    def test_answer_split_testing_id(self):
-        """Confirm AnswerPage's split_testing_id is set to its answer_base.id,
-        which is checked by the core.feature_flags.in_split_testing_cluster
-        flag condition when doing split testing on Ask CFPB answer pages."""
-        answer = self.answer1234
-        page = answer.english_page
-        self.assertEqual(page.split_test_id, answer.id)
-
     def test_validate_pagination_number(self):
         paginator = Paginator([{"fake": "results"}] * 30, 25)
         request = HttpRequest()
