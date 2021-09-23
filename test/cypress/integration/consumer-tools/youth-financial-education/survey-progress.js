@@ -34,17 +34,17 @@ describe( 'Youth Financial Education Survey: Progress', () => {
   } );
 
   function verifySectionColors( colors ) {
-    cy.get( '.tdp-survey-section' ).then( $buttons => {
+    cy.get( '.tdp-survey-section' ).then( $anchors => {
       let canBeEdited = true;
 
-      $buttons.each( ( idx, button ) => {
-        expect( button.getAttribute( 'data-color' ) )
+      $anchors.each( ( idx, anchor ) => {
+        expect( anchor.getAttribute( 'data-color' ) )
           .equal( colors[idx] ? colors[idx] : 'gray' );
         if ( colors[idx] === 'blue' ) {
           canBeEdited = false;
         }
 
-        expect( button.getAttribute( 'data-editable' ) )
+        expect( anchor.getAttribute( 'data-editable' ) )
           .equal( colors[idx] === 'green' && canBeEdited ? '1' : '' );
       } );
     } );
@@ -86,7 +86,7 @@ describe( 'Youth Financial Education Survey: Progress', () => {
     survey.clickNext();
 
     survey.selectAnswers( [ 0 ] );
-    cy.get( 'a[href="../p1/"]' ).click();
+    cy.get( 'a.a-btn[href="../p1/"]' ).click();
 
     cy.url().should( 'include', '/p1/' );
     survey.clickNext();
