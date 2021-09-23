@@ -315,15 +315,37 @@ const handleSurveySwitchGradeClick = ( event, sendEventMethod ) => {
 };
 
 /**
- * handleSurveyClickPrivacyModal - Listen for Privacy statement click and report to GA.
+ * handleSurveyPrivacyModalClick - Listen for Privacy statement click and report to GA.
  *
  * @param {event} event Click event
  * @param {method} sendEventMethod method
  * @returns {object} Event data
  */
-const handleSurveyClickPrivacyModal = ( event, sendEventMethod ) => {
+const handleSurveyPrivacyModalClick = ( event, sendEventMethod ) => {
   const link = closest( event.target, '[data-open-modal="modal-privacy"]' ) || event.target;
-  if ( !link.getAttribute( 'data-open-modal' ) ) {
+  if ( link.getAttribute( 'data-open-modal' ) != 'modal-privacy' ) {
+    return;
+  }
+  const action = link.textContent.trim();
+  const grade_level = link.getAttribute('data-tdp_grade_level');
+  const label = grade_level;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyLetsDoThisClick - Listen for Let's do this click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyLetsDoThisClick = ( event, sendEventMethod ) => {
+  const link = closest( event.target, 'a.survey-entry-link' ) || event.target;
+  if ( !link.classList.contains( 'survey-entry-link' ) ) {
     return;
   }
   const action = link.textContent.trim();
@@ -356,7 +378,8 @@ const bindAnalytics = sendEventMethod => {
   if ( surveyContent ) {
     surveyContent.addEventListener( 'click', event => {
       handleSurveySwitchGradeClick( event, sendEventMethod );
-      handleSurveyClickPrivacyModal( event, sendEventMethod );
+      handleSurveyPrivacyModalClick( event, sendEventMethod );
+      handleSurveyLetsDoThisClick( event, sendEventMethod );
     } );
   }
 };
@@ -373,7 +396,8 @@ export {
   handleClearAllClick,
   handleFetchSearchResults,
   handleSurveySwitchGradeClick,
-  handleSurveyClickPrivacyModal,
+  handleSurveyPrivacyModalClick,
+  handleSurveyLetsDoThisClick,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
