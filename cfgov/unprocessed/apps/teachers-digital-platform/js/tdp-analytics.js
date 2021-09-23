@@ -328,7 +328,7 @@ const handleSurveyPrivacyModalClick = ( event, sendEventMethod ) => {
   }
   const action = link.textContent.trim();
   const grade_level = link.getAttribute('data-tdp_grade_level');
-  const label = grade_level;
+  const label = grade_level + ": " + question;
   if ( sendEventMethod ) {
     return sendEventMethod( action, label );
   }
@@ -359,6 +359,32 @@ const handleSurveyLetsDoThisClick = ( event, sendEventMethod ) => {
 };
 
 /**
+ * handleSurveyChoiceChange - Listen for radio button value change and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyChoiceChange = ( event, sendEventMethod ) => {
+  const radio = closest( event.target, 'input.tdp-survey__choice-question' ) || event.target;
+  if ( !radio.classList.contains( 'tdp-survey__choice-question' ) || !radio.checked ) {
+    return;
+  }
+  const action = 'Radio Button Clicked';
+  const wrapper = closest( radio, 'div.wrapper.tdp-survey');
+  const grade_level = wrapper.getAttribute('data-tdp_grade_level');
+  const parent_fieldset = closest( radio, 'fieldset' );
+  const question = queryOne( 'legend.tdp-question-legend', parent_fieldset );
+  const answer = queryOne( 'label', radio.parentElement);
+  const label = grade_level + ': ' + question.textContent.trim() + ' (' + answer.textContent.trim() + ')';
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
  * bindAnalytics - Set up analytics reporting.
  *
  * @param {method} sendEventMethod method
@@ -381,6 +407,10 @@ const bindAnalytics = sendEventMethod => {
       handleSurveyPrivacyModalClick( event, sendEventMethod );
       handleSurveyLetsDoThisClick( event, sendEventMethod );
     } );
+
+    surveyContent.addEventListener( 'change', event => {
+      handleSurveyChoiceChange( event, sendEventMethod);
+    } );
   }
 };
 
@@ -398,6 +428,7 @@ export {
   handleSurveySwitchGradeClick,
   handleSurveyPrivacyModalClick,
   handleSurveyLetsDoThisClick,
+  handleSurveyChoiceChange,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics

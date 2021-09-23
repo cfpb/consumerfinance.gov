@@ -20,7 +20,7 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-<div class="wrapper content_wrapper tdp-survey tdp-survey-layout">
+<div data-tdp_grade_level="{{ survey.key }}" class="wrapper content_wrapper tdp-survey tdp-survey-layout">
     <div class="tdp-survey-page content_main"
          data-tdp-page="survey"
          data-grade-select-url="{{ gradeSelectUrl }}"
