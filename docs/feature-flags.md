@@ -223,4 +223,8 @@ Feature flags can be used in satellite apps in exactly the same way they are use
 
 ## Hygiene
 
-Feature flags should be rare and ephemeral. Changes should be small and frequent, and not big-bang releases, and flags that are no longer used and their conditions should be cleaned up and removed from code and the database.
+Most feature flags are no longer needed once a feature is launched. Follow these steps to remove a flag when its job is done:
+
+- Create a pull request that deletes the flag from settings, if it was declared there, and removes any related code and tests that referenced the flag.
+- After the changes are merged and deployed to production, check `Settings ==> Flags` in Wagtail (`/admin/flags/`) to see if the removed flag is still listed. If so, the flag has been saved in our database. Select the flag, click the DELETE FLAG button at top right, and then choose YES, DELETE IT.
+

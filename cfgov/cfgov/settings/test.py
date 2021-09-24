@@ -88,11 +88,6 @@ FLAG_SOURCES = (
 # test runner cleans up this directory after the tests run.
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'cfgov', 'tests', 'test-media')
 
-# Use a test-specific index
-HAYSTACK_CONNECTIONS["default"]["INDEX_NAME"] = (
-    "test_" + HAYSTACK_CONNECTIONS["default"]["INDEX_NAME"]
-)
-
 ELASTICSEARCH_DSL_AUTO_REFRESH = False
 ELASTICSEARCH_DSL_AUTOSYNC = False
 

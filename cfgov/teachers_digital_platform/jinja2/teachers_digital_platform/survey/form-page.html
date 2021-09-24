@@ -23,6 +23,7 @@
 <div class="wrapper content_wrapper tdp-survey-layout">
     <div class="tdp-survey-page content_main"
          data-tdp-page="survey"
+         data-grade-select-url="{{ gradeSelectUrl }}"
          data-page-idx="{{ page_idx|tojson|forceescape }}"
          data-questions-by-page="{{ questions_by_page|tojson|forceescape }}"
          data-item-separator="{{ survey.ITEM_SEPARATOR|tojson|forceescape }}"
@@ -98,7 +99,6 @@
 
         </div>
 
-        {# wizard.steps.all is a list of 'p1', 'p2', ... #}
         <aside class="content_sidebar o-sidebar-content tdp-survey-sidebar">
 
             <div class="o-expandable">
@@ -140,13 +140,14 @@
                         </svg>
                     </div>
                     <div>
+                    {# wizard.steps.all is a list of 'p1', 'p2', ... #}
                     {% for name in wizard.steps.all %}
-                        <button class="tdp-survey-section"
-                                tabindex="-1"
-                                data-checked=""
-                                data-color="gray"
-                                data-editable=""
-                                data-href="../{{ name }}/"
+                        <a class="tdp-survey-section"
+                           tabindex="-1"
+                           data-checked=""
+                           data-color="gray"
+                           data-editable=""
+                           href="../{{ name }}/"
                         >
                             <div class="tdp-survey-section__left">
                                 <div class="tdp-survey-section__title">Section {{ loop.index }}
@@ -158,7 +159,7 @@
                             <div class="tdp-survey-section__icon">
                                 {% include 'icons/approved-round.svg' %}
                             </div>
-                        </button>
+                        </a>
                     {% endfor %}
                     </div>
                 </div>

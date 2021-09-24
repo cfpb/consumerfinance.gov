@@ -9,18 +9,8 @@
 #}
 
 {% block content_sidebar %}
-    {% if page %}
-        {% import 'regulations3k/regulations3k-secondary-navigation.html' as secondary_navigation with context %}
-        {{ secondary_navigation.render() }}
-    {% else %}
-        {# TODO: Remove `active_nav_id` and `sec_nav_items` parameters when
-             events, careers, doing business with us, the bureau,
-             browse basic, browse filterable, and press resources are moved to Wagtail. #}
-        {% set active_nav_id = active_nav_id | default('index') -%}
-        {% set sec_nav_items = vars.nav_items %}
-        {% import 'regulations3k/regulations3k-secondary-navigation.html' as secondary_navigation with context %}
-        {{ secondary_navigation.render( active_nav_id, vars.nav_items ) }}
-    {% endif %}
+    {% import 'regulations3k/regulations3k-secondary-navigation.html' as secondary_navigation with context %}
+    {{ secondary_navigation.render() }}
 {% endblock %}
 
 {# Extra classes needed for .content_sidebar #}

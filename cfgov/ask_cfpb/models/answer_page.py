@@ -411,9 +411,3 @@ class AnswerPage(CFGOVPage):
             return None
 
         return self.category.first().category_image
-
-    # Overrides the default of page.id for comparing against split testing
-    # clusters. See: core.feature_flags.in_split_testing_cluster
-    @property
-    def split_test_id(self):
-        return self.answer_base.id
