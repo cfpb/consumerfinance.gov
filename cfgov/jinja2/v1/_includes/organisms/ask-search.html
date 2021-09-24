@@ -43,9 +43,9 @@
 <div class="o-search-bar">
     <form method="get" action="{{ _('/ask-cfpb/search/') }}">
         {% if show_label %}
-        <h2 {{ 'class=h3' if is_subsection else '' }}>
+        <{{ 'h3' if is_subsection else 'h2' }}>
             {{ _('Search for your question') }}
-        </h2>
+        </{{ 'h3' if is_subsection else 'h2' }}>
         {% endif %}
 
         <div class="o-search-bar_input">
@@ -59,7 +59,9 @@
                                class="input-contains-label_before
                                       input-contains-label_before__search">
                             {{ svg_icon('search') }}
-                            <span class="u-visually-hidden">{{ _('Search') }}</span>
+                            <span class="u-visually-hidden">
+                                {{ _('Search for your question') }}
+                            </span>
                         </label>
                         <input class="a-text-input"
                                type="text"
