@@ -1,3 +1,5 @@
+const analytics = require( '../tdp-analytics' );
+
 class SectionLink {
   /**
    * @param {HTMLButtonElement} root Section link button
@@ -49,6 +51,7 @@ class SectionLink {
     this.root.tabIndex = 0;
     this.root.addEventListener( 'click', event => {
       event.preventDefault();
+      analytics.handleSurveySectionClick( event, null );
       location.href = this.root.dataset.href;
     } );
   }

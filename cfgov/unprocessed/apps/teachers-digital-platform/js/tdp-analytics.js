@@ -306,7 +306,7 @@ const handleSurveySwitchGradeClick = ( event, sendEventMethod ) => {
     return;
   }
   const action = link.textContent.trim();
-  const grade_level = link.getAttribute('data-tdp_grade_level');
+  const grade_level = link.getAttribute( 'data-tdp_grade_level' );
   const label = 'Switch grades from ' + grade_level;
   if ( sendEventMethod ) {
     return sendEventMethod( action, label );
@@ -328,7 +328,7 @@ const handleSurveyPrivacyModalClick = ( event, sendEventMethod ) => {
     return;
   }
   const action = link.textContent.trim();
-  const grade_level = link.getAttribute('data-tdp_grade_level');
+  const grade_level = link.getAttribute( 'data-tdp_grade_level' );
   const label = grade_level;
   if ( sendEventMethod ) {
     return sendEventMethod( action, label );
@@ -350,7 +350,7 @@ const handleSurveyLetsDoThisClick = ( event, sendEventMethod ) => {
     return;
   }
   const action = link.textContent.trim();
-  const grade_level = link.getAttribute('data-tdp_grade_level');
+  const grade_level = link.getAttribute( 'data-tdp_grade_level' );
   const label = grade_level;
   if ( sendEventMethod ) {
     return sendEventMethod( action, label );
@@ -372,8 +372,8 @@ const handleSurveyChoiceChange = ( event, sendEventMethod ) => {
     return;
   }
   const action = 'Radio Button Clicked';
-  const wrapper = closest( radio, 'div.wrapper.tdp-survey');
-  const grade_level = wrapper.getAttribute('data-tdp_grade_level');
+  const wrapper = closest( radio, 'div.wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
   const parent_fieldset = closest( radio, 'fieldset' );
   const question = queryOne( 'legend.tdp-question-legend', parent_fieldset );
   const answer = queryOne( 'label', radio.parentElement);
@@ -462,6 +462,30 @@ const handleSurveyExpandableClick = ( event, sendEventMethod ) => {
 };
 
 /**
+ * handleSurveySectionClick - Listen for Edit Section click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveySectionClick = ( event, sendEventMethod ) => {
+  const link = closest( event.target, '[data-editable="1"]' ) || event.target;
+  if ( !link.classList.contains( 'tdp-survey-section' ) || ( link.getAttribute( 'data-editable' ) != "1" ) ) {
+    return;
+  }
+  const action = 'Edit';
+  const wrapper = closest( link, 'div.wrapper.tdp-survey');
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const section = queryOne( '.tdp-survey-section__title', link ).textContent.replace ( '(complete)', '' ).trim();
+  const label = grade_level + ': ' + section;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
  * bindAnalytics - Set up analytics reporting.
  *
  * @param {method} sendEventMethod method
@@ -486,6 +510,7 @@ const bindAnalytics = sendEventMethod => {
       handleSurveyErrorNoticeClick( event, sendEventMethod );
       handleSurveyRestartModalClick( event, sendEventMethod );
       handleSurveyExpandableClick( event, sendEventMethod );
+      handleSurveySectionClick( event, sendEventMethod );
     } );
 
     surveyContent.addEventListener( 'change', event => {
@@ -512,6 +537,7 @@ export {
   handleSurveyErrorNoticeClick,
   handleSurveyRestartModalClick,
   handleSurveyExpandableClick,
+  handleSurveySectionClick,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
