@@ -486,6 +486,30 @@ const handleSurveySectionClick = ( event, sendEventMethod ) => {
 };
 
 /**
+ * handleSurveySubmitClick - Listen for Submit click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveySubmitClick = ( event, sendEventMethod ) => {
+  const link = closest( event.target, 'button.a-btn[type="submit"]' ) || event.target;
+  if ( !link.classList.contains( 'a-btn' ) || ( link.getAttribute( 'type' ) != "submit" ) ) {
+    return;
+  }
+  const action = link.textContent.trim();
+  const wrapper = closest( link, 'div.wrapper.tdp-survey');
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const section = +queryOne( 'div[data-page-idx]', wrapper).getAttribute( 'data-page-idx' ) + 1;
+  const label = grade_level + ": Section " + section;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
  * bindAnalytics - Set up analytics reporting.
  *
  * @param {method} sendEventMethod method
@@ -511,6 +535,7 @@ const bindAnalytics = sendEventMethod => {
       handleSurveyRestartModalClick( event, sendEventMethod );
       handleSurveyExpandableClick( event, sendEventMethod );
       handleSurveySectionClick( event, sendEventMethod );
+      handleSurveySubmitClick( event, sendEventMethod );
     } );
 
     surveyContent.addEventListener( 'change', event => {
@@ -538,6 +563,7 @@ export {
   handleSurveyRestartModalClick,
   handleSurveyExpandableClick,
   handleSurveySectionClick,
+  handleSurveySubmitClick,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
