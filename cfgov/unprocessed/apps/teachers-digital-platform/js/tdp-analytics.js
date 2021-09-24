@@ -443,8 +443,8 @@ const handleSurveyRestartModalClick = ( event, sendEventMethod ) => {
  */
 const handleSurveyExpandableClick = ( event, sendEventMethod ) => {
   const selector = '.tdp-survey-sidebar__mobile-control .o-expandable_header';
-  const expandable = closest( event.target, selector ) || event.target;
-  if ( !expandable.classList.contains( 'o-expandable_header' ) ) {
+  const expandable = closest( event.target, selector );
+  if (!expandable || !expandable.classList.contains( 'o-expandable_header' ) ) {
     return;
   }
   const state = getExpandableState( expandable ) == 'expand' ? 'Expand' : 'Collapse';
@@ -513,6 +513,33 @@ const handleSurveySubmitClick = ( event, sendEventMethod ) => {
 };
 
 /**
+ * handleSurveyResultsExpandableClick - Listen for opening or closing of an expandable and report to GA.
+ *
+ * @param {event} event Click event
+ * @param  {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyResultsExpandableClick = ( event, sendEventMethod ) => {
+  const selector = '.tdp-survey-results .o-expandable_target';
+  const expandable = closest( event.target, selector );
+  if ( !expandable || !expandable.classList.contains( 'o-expandable_target' ) ) {
+    return;
+  }
+  const state = getExpandableState( expandable ) == 'expand' ? 'Expand' : 'Collapse';
+  const action = `Results Dropdown: ${ state }`;
+  const wrapper = closest( expandable, 'div.content_wrapper.tdp-survey');
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const text = queryOne( '.o-expandable_label', expandable ).textContent.trim();
+  const label = grade_level + ": " + text;
+
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
  * bindAnalytics - Set up analytics reporting.
  *
  * @param {method} sendEventMethod method
@@ -539,6 +566,7 @@ const bindAnalytics = sendEventMethod => {
       handleSurveyExpandableClick( event, sendEventMethod );
       handleSurveySectionClick( event, sendEventMethod );
       handleSurveySubmitClick( event, sendEventMethod );
+      handleSurveyResultsExpandableClick( event, sendEventMethod );
     } );
 
     surveyContent.addEventListener( 'change', event => {
@@ -567,6 +595,7 @@ export {
   handleSurveyExpandableClick,
   handleSurveySectionClick,
   handleSurveySubmitClick,
+  handleSurveyResultsExpandableClick,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
