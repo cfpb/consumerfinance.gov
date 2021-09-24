@@ -1,6 +1,6 @@
-const { gradeLevelPage } = require( './survey/grade-level-page' );
-const { resultsPage } = require( './survey/result-page' );
-const { surveyPage } = require( './survey/survey-page' );
+import { gradeLevelPage } from './survey/grade-level-page';
+import { surveyPage } from './survey/survey-page';
+import { resultsPage } from './survey/result-page';
 
 const $ = document.querySelector.bind( document );
 
@@ -22,4 +22,4 @@ const surveys = {
   }
 };
 
-module.exports = surveys;
+export default surveys;
