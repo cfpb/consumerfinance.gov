@@ -7,7 +7,7 @@ from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from elasticsearch7.exceptions import RequestError
+from elasticsearch.exceptions import RequestError
 
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models import ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG

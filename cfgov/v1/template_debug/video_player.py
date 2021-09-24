@@ -7,7 +7,7 @@ video_player_test_cases = {
     'Default': {},
 
     'Play button at bottom right': {
-        'button_pos': 'bottomRight',
+        'button_pos': 'bottom-right',
     },
 
     'Custom thumbnail image': {
