@@ -4,6 +4,10 @@
  max-width: 800px !important;
 }
 
+.Draftail-Editor .DraftEditor-root {
+    padding: 0.75em;
+}
+
 .handsontableInputHolder {
   left: 0 !important;
 }
