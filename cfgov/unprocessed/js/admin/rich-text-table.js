@@ -1,7 +1,8 @@
 import { stateToHTML } from 'draft-js-export-html';
 
 // https://handsontable.com/docs/7.2.2/tutorial-cell-editor.html
-(function(Handsontable){
+( function( Handsontable ) {
+  console.log( 'INIT 2' );
   // We're extending the base TextEditor, https://github.com/handsontable/handsontable/blob/master/src/editors/textEditor/textEditor.js
   const RichTextEditor = Handsontable.editors.TextEditor.prototype.extend();
 
@@ -61,18 +62,18 @@ import { stateToHTML } from 'draft-js-export-html';
         description: 'Bulleted list'
       }
     ]
-  }
+  };
 
-  // Do some light modification to the TextEditor's TEXTAREA element to
-  // prepare it for Draftail.
+  /* Do some light modification to the TextEditor's TEXTAREA element to
+     prepare it for Draftail. */
   RichTextEditor.prototype.createElements = function() {
-    Handsontable.editors.TextEditor.prototype.createElements.call(this);
+    Handsontable.editors.TextEditor.prototype.createElements.call( this );
 
-    // TextEditor's TEXTAREA will hold our data for Draftail, and we'll use
-    // its style when we open the editor.
+    /* TextEditor's TEXTAREA will hold our data for Draftail, and we'll use
+       its style when we open the editor. */
     this.TEXTAREA.id = 'rich-text-table-cell-editor';
     this.TEXTAREA.style.display = 'none';
-  }
+  };
 
   // Get the Draftail value from the input and convert it back to HTML
   RichTextEditor.prototype.getValue = function() {
@@ -97,24 +98,27 @@ import { stateToHTML } from 'draft-js-export-html';
       }
     };
     const editorValue = this.TEXTAREA.value;
-    const raw = JSON.parse(editorValue);
-    const state = window.DraftJS.convertFromRaw( raw );
-    return stateToHTML(state, options);
-  }
 
-  // Convert the given value to what Draftail expects, and store it on the
-  // input element from which we'll initialize Draftail
-  RichTextEditor.prototype.setValue = function(value) {
+    const raw = JSON.parse( editorValue );
+    if ( raw === null ) return '';
+
+    const state = window.DraftJS.convertFromRaw( raw );
+    return stateToHTML( state, options );
+  };
+
+  /* Convert the given value to what Draftail expects, and store it on the
+     input element from which we'll initialize Draftail */
+  RichTextEditor.prototype.setValue = function( value ) {
     let contentState;
 
-    const blocksFromHTML = value ? window.DraftJS.convertFromHTML(value) : null;
-    if (blocksFromHTML && blocksFromHTML.contentBlocks) {
-      contentState = window.DraftJS.ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap);
+    const blocksFromHTML = value ? window.DraftJS.convertFromHTML( value ) : null;
+    if ( blocksFromHTML && blocksFromHTML.contentBlocks ) {
+      contentState = window.DraftJS.ContentState.createFromBlockArray( blocksFromHTML.contentBlocks, blocksFromHTML.entityMap );
     } else {
-      contentState = window.DraftJS.ContentState.createFromText('');
+      contentState = window.DraftJS.ContentState.createFromText( '' );
     }
 
-    const cellValue = window.DraftJS.convertToRaw(contentState);
+    const cellValue = window.DraftJS.convertToRaw( contentState );
     if ( cellValue.entityMap ) {
       for ( const entity in cellValue.entityMap ) {
         if ( cellValue.entityMap[entity] && cellValue.entityMap[entity].data ) {
@@ -126,14 +130,14 @@ import { stateToHTML } from 'draft-js-export-html';
       }
     }
 
-    this.TEXTAREA.value = JSON.stringify(cellValue);
-  }
+    this.TEXTAREA.value = JSON.stringify( cellValue );
+  };
 
   RichTextEditor.prototype.open = function() {
-    // Initialize the Draftail editor for this cell
-    // We seem to have to initialize a new Draftail editor for every cell,
-    // because there doesn't seem to be a way to update the data after
-    // initialization.
+    /* Initialize the Draftail editor for this cell
+       We seem to have to initialize a new Draftail editor for every cell,
+       because there doesn't seem to be a way to update the data after
+       initialization. */
     window.draftail.initEditor(
       '#' + this.TEXTAREA.id,
       draftail_options,
@@ -141,30 +145,30 @@ import { stateToHTML } from 'draft-js-export-html';
     );
 
     // Call TextEditor's open
-    Handsontable.editors.TextEditor.prototype.open.call(this);
+    Handsontable.editors.TextEditor.prototype.open.call( this );
 
     // Style the Draftail editor with the TextEditor's TEXTAREA's style
-    let draftailWrapper = this.TEXTAREA_PARENT.querySelector('.Draftail-Editor__wrapper');
-    draftailWrapper.style.cssText= this.TEXTAREA.style.cssText;
+    const draftailWrapper = this.TEXTAREA_PARENT.querySelector( '.Draftail-Editor__wrapper' );
+    draftailWrapper.style.cssText = this.TEXTAREA.style.cssText;
     draftailWrapper.style.display = 'block';
 
-    // This is default style for input elements.
-    // TODO: Specify this in a stylesheet somewhere
+    /* This is default style for input elements.
+       TODO: Specify this in a stylesheet somewhere */
     draftailWrapper.style.backgroundColor = '#fafafa';
     draftailWrapper.style.border = '1px solid var(--color-input-focus-border)';
 
     // Clear the TEXTAREA's style and hide it
     this.TEXTAREA.style.cssText = null;
     this.TEXTAREA.style.display = 'none';
-  }
+  };
 
   RichTextEditor.prototype.close = function() {
-    Handsontable.editors.TextEditor.prototype.close.call(this);
+    Handsontable.editors.TextEditor.prototype.close.call( this );
     // Remove the Draftail editor for this cell
-    this.TEXTAREA_PARENT.querySelector('.Draftail-Editor__wrapper').remove();
-  }
+    this.TEXTAREA_PARENT.querySelector( '.Draftail-Editor__wrapper' ).remove();
+  };
 
   // Register the rich text editor
   Handsontable.editors.RichTextEditor = RichTextEditor;
-  Handsontable.editors.registerEditor('RichTextEditor', RichTextEditor);
-})(Handsontable);
+  Handsontable.editors.registerEditor( 'RichTextEditor', RichTextEditor );
+} )( Handsontable );

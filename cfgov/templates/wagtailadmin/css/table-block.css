@@ -8,6 +8,11 @@
   left: 0 !important;
 }
 
+.handsontable {
+  height: 100% !important;
+  overflow: visible !important;
+}
+
 .heading-text-block,
 .heading-level-block,
 .heading-icon-block {
