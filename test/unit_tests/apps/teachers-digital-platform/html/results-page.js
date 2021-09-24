@@ -1,5 +1,5 @@
 const HTML_SNIPPET = `
-<div data-tdp-page="results" class="content_main tdp-survey-results">
+<div data-tdp-page="results" class="content_main tdp-survey-results" data-grade-select-url="../../assess/survey/">
         <p class="label">
             Your money journey results<span aria-hidden="true" style="display:none" class="initials-display">: <span class="initials-value"></span></span>
         </p>

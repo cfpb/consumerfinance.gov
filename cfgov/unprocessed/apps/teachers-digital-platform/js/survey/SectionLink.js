@@ -1,5 +1,3 @@
-const analytics = require( '../tdp-analytics' );
-
 class SectionLink {
   /**
    * @param {HTMLButtonElement} root Section link button
@@ -49,11 +47,6 @@ class SectionLink {
   markEditable() {
     this.root.setAttribute( 'data-editable', '1' );
     this.root.tabIndex = 0;
-    this.root.addEventListener( 'click', event => {
-      event.preventDefault();
-      analytics.handleSurveySectionClick( event, null );
-      location.href = this.root.dataset.href;
-    } );
   }
 
   /**
@@ -116,6 +109,13 @@ SectionLink.init = function( { numAnswered, pageIdx, questionsByPage } ) {
     }
 
     questionsFound += questionsHere;
+
+    root.addEventListener( 'click', event => {
+      if ( !root.dataset.editable ) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    } );
   } );
 };
 

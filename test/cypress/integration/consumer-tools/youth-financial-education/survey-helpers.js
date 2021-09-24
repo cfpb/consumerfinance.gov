@@ -1,6 +1,6 @@
 export class TdpSurveyHelpers {
   open( path ) {
-    cy.visit( this.url( path) );
+    cy.visit( this.url( path ) );
   }
 
   url( path ) {

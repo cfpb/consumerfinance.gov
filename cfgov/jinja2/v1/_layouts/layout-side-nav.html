@@ -1,26 +1,14 @@
 {% extends 'layout-1-3.html' %}
 
 {#
-    docs/sheer-layouts/layout-side-nav/
-
     Since layout-side-nav.html extends from layout-1-3.html all we need to do
     is set some side nav variables and override the `content_sidebar` block to
     add the nav macro.
 #}
 
 {% block content_sidebar %}
-    {% if page %}
-        {% import 'organisms/secondary-navigation.html' as secondary_navigation with context %}
-        {{ secondary_navigation.render() }}
-    {% else %}
-        {# TODO: Remove `active_nav_id` and `sec_nav_items` parameters when
-             events, careers, doing business with us, the bureau,
-             browse basic, browse filterable, and press resources are moved to Wagtail. #}
-        {% set active_nav_id = active_nav_id | default('index') -%}
-        {% set sec_nav_items = vars.nav_items %}
-        {% import 'organisms/secondary-navigation.html' as secondary_navigation with context %}
-        {{ secondary_navigation.render( active_nav_id, vars.nav_items ) }}
-    {% endif %}
+    {% import 'organisms/secondary-navigation.html' as secondary_navigation with context %}
+    {{ secondary_navigation.render() }}
 {% endblock %}
 
 {# Extra classes needed for .content_sidebar #}
