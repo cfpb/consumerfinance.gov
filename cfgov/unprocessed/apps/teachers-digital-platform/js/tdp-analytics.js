@@ -494,10 +494,13 @@ const handleSurveySectionClick = ( event, sendEventMethod ) => {
  */
 const handleSurveySubmitClick = ( event, sendEventMethod ) => {
   const link = closest( event.target, 'button.a-btn[type="submit"]' ) || event.target;
-  if ( !link.classList.contains( 'a-btn' ) || ( link.getAttribute( 'type' ) != "submit" ) ) {
+  const action = link.textContent.trim();
+  if (
+    !link.classList.contains( 'a-btn' ) ||
+    ( link.getAttribute( 'type' ) != "submit" ) ||
+    ( action != "Get my results" ) ) {
     return;
   }
-  const action = link.textContent.trim();
   const wrapper = closest( link, 'div.wrapper.tdp-survey');
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
   const section = +queryOne( 'div[data-page-idx]', wrapper).getAttribute( 'data-page-idx' ) + 1;
