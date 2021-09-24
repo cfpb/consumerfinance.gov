@@ -302,15 +302,12 @@ urlpatterns = [
     ),
 
     # CCDB5-API
-    flagged_re_path(
-        'CCDB5_RELEASE',
+    re_path(
         r'^data-research/consumer-complaints/search/api/v1/',
         include('complaint_search.urls')
     ),
-
-    # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
-    flagged_re_path(
-        'CCDB5_RELEASE',
+    # CCDB5-UI
+    re_path(
         r'^data-research/consumer-complaints/search/',
         include('ccdb5_ui.config.urls')),
 
@@ -342,8 +339,7 @@ urlpatterns = [
     # educational resources
     re_path(
         r'^consumer-tools/educator-tools/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
-        FlaggedTemplateView.as_view(
-            flag_name='YOUTH_EMPLOYMENT_SUCCESS',
+        TemplateView.as_view(
             template_name='youth_employment_success/index.html'
         ),
         name='youth_employment_success'

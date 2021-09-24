@@ -21,7 +21,7 @@
         <div class="m-hero_text">
             <a class="a-link
                     a-link__jump
-                    a-link__icon-before-text" href="../../assess/survey/">
+                    a-link__icon-before-text" href="{{ gradeSelectUrl }}">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 19" class="cf-icon-svg"><path d="M8.4 17.269a1.026 1.026 0 0 1-.727-.302l-6.801-6.8a1.03 1.03 0 0 1 0-1.456l6.8-6.8a1.03 1.03 0 0 1 1.456 1.455L3.055 9.439l6.073 6.073A1.03 1.03 0 0 1 8.4 17.27z"></path></svg>
                 <span class="a-link_text">Switch grades</span>
             </a>
@@ -42,6 +42,7 @@
             <div class="block">
                 <a class="survey-entry-link a-btn a-btn__super" href="p1/">Let's do this</a>
             </div>
+            <div class="m-hero_image--mobile"></div>
             <div class="block block__border-top block__padded-top">
                 <p style="font-weight: 500">Privacy statement</p>
                 <p>We never collect or store the answers you provide. <button class="a-btn a-btn__link" data-open-modal="modal-privacy">See how your privacy is protected.</button></p>
@@ -56,18 +57,19 @@
             background-size: contain;
             background-image:
                 url('{{ static('apps/teachers-digital-platform/img/journey.png') }}');
-            background-image: -webkit-image-set(
-                url('{{ static('apps/teachers-digital-platform/img/journey.png') }}') 1x,
-                url('{{ static('apps/teachers-digital-platform/img/journey.png') }}') 2x
-            );
-            background-image: image-set(
-                url('{{ static('apps/teachers-digital-platform/img/journey.png') }}') 1x,
-                url('{{ static('apps/teachers-digital-platform/img/journey.png') }}') 2x
-            );
-            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-                src='{{ static('apps/teachers-digital-platform/img/journey.png') }}',
-                sizingMethod='scale');
             padding-bottom: 41.4893617%;
+
+        }
+        @media only screen and (max-width: 600px) {
+            #hero1 .m-hero_image {
+                display: none;
+            }
+            .m-hero_image--mobile {
+                background-image:
+                    url('{{ static('apps/teachers-digital-platform/img/journey-mobile.png') }}');
+                background-size: contain;
+                padding-bottom: 59.459459459%;
+            }
         }
     </style>
     {% include './modals/privacy.html' %}

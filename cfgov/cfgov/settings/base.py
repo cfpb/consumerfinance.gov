@@ -6,7 +6,7 @@ from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
 import dj_database_url
-from elasticsearch7 import RequestsHttpConnection
+from elasticsearch import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
 from cfgov.util import admin_emails
@@ -65,7 +65,6 @@ INSTALLED_APPS = (
     "wagtailautocomplete",
     "wagtailflags",
     "watchman",
-    "haystack",
     "ask_cfpb",
     "agreements",
     "django.contrib.admin",
@@ -89,6 +88,7 @@ INSTALLED_APPS = (
     "paying_for_college",
     "prepaid_agreements",
     "regulations3k",
+    "retirement_api",
     "treemodeladmin",
     "housing_counselor",
     "hmda",
@@ -101,14 +101,13 @@ INSTALLED_APPS = (
     "django_elasticsearch_dsl",
 
     # Satellites
-    "retirement_api",
-    "ratechecker",
-    "countylimits",
-    "complaint_search",
-    "rest_framework",
     "ccdb5_ui",
-    "mptt",
+    "complaint_search",
+    "countylimits",
     "crtool",
+    "mptt",
+    "ratechecker",
+    "rest_framework",
 )
 
 WAGTAILSEARCH_BACKENDS = {
@@ -302,41 +301,6 @@ TAGGIT_CASE_INSENSITIVE = True
 WAGTAIL_USER_CREATION_FORM = "v1.auth_forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "v1.auth_forms.UserEditForm"
 
-ES_PORT = os.getenv("ES_PORT", "9200")
-SHEER_ELASTICSEARCH_SERVER = (
-    os.environ.get("ES_HOST", "localhost")
-    + ":"
-    + ES_PORT
-)
-SHEER_ELASTICSEARCH_INDEX = os.environ.get(
-    "SHEER_ELASTICSEARCH_INDEX", "content"
-)
-ELASTICSEARCH_BIGINT = 50000
-
-SHEER_ELASTICSEARCH_SETTINGS = {
-    "settings": {
-        "analysis": {
-            "analyzer": {
-                "my_edge_ngram_analyzer": {
-                    "tokenizer": "my_edge_ngram_tokenizer"
-                },
-                "tag_analyzer": {
-                    "tokenizer": "keyword",
-                    "filter": "lowercase",
-                },
-            },
-            "tokenizer": {
-                "my_edge_ngram_tokenizer": {
-                    "type": "edgeNGram",
-                    "min_gram": "2",
-                    "max_gram": "5",
-                    "token_chars": ["letter", "digit"],
-                }
-            },
-        }
-    }
-}
-
 
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
@@ -346,82 +310,11 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     "/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
 )
 
-HAYSTACK_CONNECTIONS = {
-    "default": {
-        "ENGINE": "search.backends.CFGOVElasticsearch2SearchEngine",
-        "URL": SHEER_ELASTICSEARCH_SERVER,
-        "INDEX_NAME": os.environ.get(
-            "HAYSTACK_ELASTICSEARCH_INDEX",
-            SHEER_ELASTICSEARCH_INDEX + "_haystack",
-        ),
-        "INCLUDE_SPELLING": True,
-    }
-}
-
-ELASTICSEARCH_INDEX_SETTINGS = {
-    "settings": {
-        "analysis": {
-            "analyzer": {
-                "ngram_analyzer": {
-                    "type": "custom",
-                    "tokenizer": "lowercase",
-                    "filter": ["haystack_ngram"],
-                },
-                "edgengram_analyzer": {
-                    "type": "custom",
-                    "tokenizer": "lowercase",
-                    "filter": ["haystack_edgengram"],
-                },
-                "synonym_en": {
-                    "tokenizer": "standard",
-                    "filter": ["synonyms_en"],
-                },
-                "synonym_es": {
-                    "tokenizer": "standard",
-                    "filter": ["synonyms_es"],
-                },
-            },
-            "tokenizer": {
-                "haystack_ngram_tokenizer": {
-                    "type": "nGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "haystack_edgengram_tokenizer": {
-                    "type": "edgeNGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                    "token_chars": [ "letter", "digit" ]
-                },
-            },
-            "filter": {
-                "haystack_ngram": {
-                    "type": "nGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "haystack_edgengram": {
-                    "type": "edgeNGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "synonyms_en": {
-                    "type": "synonym",
-                    "synonyms_path": "analysis/synonyms_en.txt",
-                },
-                "synonyms_es": {
-                    "type": "synonym",
-                    "synonyms_path": "analysis/synonyms_es.txt",
-                },
-            },
-        }
-    }
-}
-
-ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
-
 # ElasticSearch 7 Configuration
 ES7_HOST = os.getenv('ES7_HOST', 'localhost')
+ES_PORT = os.getenv("ES_PORT", "9200")
+ELASTICSEARCH_BIGINT = 50000
+ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
 if os.environ.get('USE_AWS_ES', False):
     awsauth = AWS4Auth(
@@ -666,18 +559,18 @@ CSP_MEDIA_SRC = (
     "*.consumerfinance.gov",
 )
 
-# Feature flags
-# All feature flags must be listed here with a dict of any hard-coded
-# conditions or an empty dict. If the conditions dict is empty the flag will
-# only be enabled if database conditions are added.
+# FEATURE FLAGS
+# Flags can be declared here with an empty list, which will evaluate as false 
+# until the flag is enabled in the Wagtail admin, or with a list of conditions. 
+# Each condition should be a tuple or dict in one of these forms: 
+# (condition-string, value) or {"condition": condition-string, "value": value}
+# An optional 3rd value, "required," can be set to True. It defaults to False.
+# Flags can also be created (and deleted) in the Wagtail admin.
 FLAGS = {
     # Ask CFPB search spelling correction support
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results
     "ASK_SEARCH_TYPOS": [],
-    # Ask CFPB date label
-    # When enabled, date label will be changed from 'updated' to 'last reviewed'
-    "ASK_UPDATED_DATE_LABEL": [],
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
@@ -708,13 +601,6 @@ FLAGS = {
         # Boolean to turn it off explicitly unless enabled by another condition
         {"condition": "boolean", "value": False},
     ],
-    # Fix for margin-top when using the text inset
-    # When enabled, the top margin of full-width text insets is increased
-    "INSET_TEST": [],
-    # The next version of the public consumer complaint database
-    "CCDB5_RELEASE": [],
-    # The Trends feature inside Consumer Complaints
-    "CCDB5_TRENDS": [],
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
@@ -724,15 +610,10 @@ FLAGS = {
     "EMAIL_POPUP_DEBT": [("boolean", True)],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
-    # SPLIT TESTING FLAGS
-    # Ask CFPB page titles as H1s instead of H2s
-    "ASK_CFPB_H1": [("in split testing cluster", "ASK_CFPB_H1")],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
     "BETA_EXTERNAL_TESTING": [],
-    # Used to hide new youth employment success pages prior to public launch
-    "YOUTH_EMPLOYMENT_SUCCESS": [],
     # During a Salesforce system outage, the following flag should be enabled
     # to alert users that the Collect community is down.
     "COLLECT_OUTAGE": [
