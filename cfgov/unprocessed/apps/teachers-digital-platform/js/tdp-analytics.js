@@ -540,6 +540,76 @@ const handleSurveyResultsExpandableClick = ( event, sendEventMethod ) => {
 };
 
 /**
+ * handleSurveyDownloadClick - Listen for Download link click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyDownloadClick = ( event, sendEventMethod ) => {
+  const link = closest( event.target, '.a-link__icon' ) || event.target;
+  if ( !link.classList.contains( 'a-link__icon' ) ) {
+    return;
+  }
+  const action = 'Download';
+  const label = link.getAttribute( 'href' );
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsModalClick - Listen for Results page Modal click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyResultsModalClick = ( event, sendEventMethod ) => {
+  const selector = '[data-open-modal="modal-print"],[data-open-modal="modal-share-url"]';
+  const link = closest( event.target, selector );
+  if ( !link || !link.getAttribute( 'data-open-modal' ) ) {
+    return;
+  }
+  const modal = link.getAttribute( 'data-open-modal' );
+  const action = ( modal == "modal-print" ) ? "Results Print" : "Results Share";
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey');
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const label = grade_level;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsSavePdfClick - Listen for save as PDF click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyResultsSavePdfClick = ( event, sendEventMethod ) => {
+  const selector = 'a.a-btn[href="/consumer-tools/save-as-pdf-instructions/"]';
+  const link = closest( event.target, selector );
+  if ( !link ) {
+    return;
+  }
+  const action = "Results Save PDF";
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey');
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const label = grade_level;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
  * bindAnalytics - Set up analytics reporting.
  *
  * @param {method} sendEventMethod method
@@ -567,6 +637,9 @@ const bindAnalytics = sendEventMethod => {
       handleSurveySectionClick( event, sendEventMethod );
       handleSurveySubmitClick( event, sendEventMethod );
       handleSurveyResultsExpandableClick( event, sendEventMethod );
+      handleSurveyDownloadClick( event, sendEventMethod );
+      handleSurveyResultsModalClick( event, sendEventMethod );
+      handleSurveyResultsSavePdfClick( event, sendEventMethod );
     } );
 
     surveyContent.addEventListener( 'change', event => {
@@ -596,6 +669,9 @@ export {
   handleSurveySectionClick,
   handleSurveySubmitClick,
   handleSurveyResultsExpandableClick,
+  handleSurveyDownloadClick,
+  handleSurveyResultsModalClick,
+  handleSurveyResultsSavePdfClick,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
