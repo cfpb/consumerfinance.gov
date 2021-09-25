@@ -418,15 +418,25 @@ const handleSurveyErrorNoticeClick = ( event, sendEventMethod ) => {
  * @returns {object} Event data
  */
 const handleSurveyRestartModalClick = ( event, sendEventMethod ) => {
-  const link = closest( event.target, '[data-open-modal="modal-restart"]' ) || event.target;
-  if ( link.getAttribute( 'data-open-modal' ) != 'modal-restart' ) {
+  const selector = '[data-open-modal="modal-restart"],[data-open-modal="modal-reset"]'
+  const link = closest( event.target, selector );
+  let label = '';
+  if ( link && link.getAttribute( 'data-open-modal' ) == 'modal-restart' ) {
+    const wrapper = closest( link, 'div.wrapper.tdp-survey');
+    const section = +queryOne( 'div[data-page-idx]', wrapper).getAttribute( 'data-page-idx' ) + 1;
+    const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+    label = grade_level + ": Section " + section;
+  }
+  else if ( link && link.getAttribute( 'data-open-modal' ) == 'modal-reset' ) {
+    const wrapper = closest( link, 'div.content_wrapper.tdp-survey');
+    const section = "Results page";
+    const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+    label = grade_level + ": " + section;
+  }
+  else {
     return;
   }
   const action = 'Start Over';
-  const wrapper = closest( link, 'div.wrapper.tdp-survey');
-  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
-  const section = +queryOne( 'div[data-page-idx]', wrapper).getAttribute( 'data-page-idx' ) + 1;
-  const label = grade_level + ": Section " + section;
   if ( sendEventMethod ) {
     return sendEventMethod( action, label );
   }
@@ -573,14 +583,36 @@ const handleSurveyResultsModalClick = ( event, sendEventMethod ) => {
   if ( !link || !link.getAttribute( 'data-open-modal' ) ) {
     return;
   }
-  const modal = link.getAttribute( 'data-open-modal' );
-  const action = ( modal == "modal-print" ) ? "Results Print" : "Results Share";
+  const modal_id = link.getAttribute( 'data-open-modal' );
+  const action = ( modal_id == "modal-print" ) ? "Results Print" : "Results Share";
   const wrapper = closest( link, 'div.content_wrapper.tdp-survey');
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
   const label = grade_level;
   if ( sendEventMethod ) {
     return sendEventMethod( action, label );
   }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsModalClose - Listen for Results page Modal click and report to GA.
+ *
+ * @param {element} modal element
+ * @param {element} opener element
+ * @returns {object} Event data
+ */
+const handleSurveyResultsModalClose = ( modal, opener ) => {
+  const modal_id = modal.getAttribute( 'id' );
+  const wrapper = closest( modal, 'div.content_wrapper.tdp-survey');
+  const valid_ids = ["modal-print", "modal-share-url"]
+  if (!valid_ids.includes(modal_id) || !wrapper) {
+    return;
+  }
+  const action = ( modal_id == "modal-print" ) ? "Print: Close" : "Share: Close";
+
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const label = grade_level;
 
   return sendSurveyEvent( action, label );
 };
@@ -671,6 +703,7 @@ export {
   handleSurveyResultsExpandableClick,
   handleSurveyDownloadClick,
   handleSurveyResultsModalClick,
+  handleSurveyResultsModalClose,
   handleSurveyResultsSavePdfClick,
   sendEvent,
   sendSurveyEvent,
