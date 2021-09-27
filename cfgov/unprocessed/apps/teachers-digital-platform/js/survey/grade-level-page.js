@@ -14,4 +14,4 @@ function gradeLevelPage() {
   modals.init();
 }
 
-export { gradeLevelPage };
+export { gradeLevelPage, Cookie };
