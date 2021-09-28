@@ -536,8 +536,9 @@ const handleSurveyResultsExpandableClick = ( event, sendEventMethod ) => {
     return;
   }
   const state = getExpandableState( expandable ) == 'expand' ? 'Expand' : 'Collapse';
-  const action = `Results Dropdown: ${ state }`;
   const wrapper = closest( expandable, 'div.content_wrapper.tdp-survey' );
+  const page_type = !queryOne( '.tdp-survey-results--shared', wrapper ) ? 'Results' : 'View';
+  const action = `${page_type} Dropdown: ${ state }`;
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
   const text = queryOne( '.o-expandable_label', expandable ).textContent.trim();
   const label = grade_level + ": " + text;
@@ -630,9 +631,10 @@ const handleSurveyResultsSavePdfClick = ( event, sendEventMethod ) => {
   if ( !link ) {
     return;
   }
-  const action = "Results Save PDF";
   const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const page_type = !queryOne( '.tdp-survey-results--shared', wrapper ) ? 'Results' : 'View';
+  const action = `${page_type} Save PDF`;
   const label = grade_level;
   if ( sendEventMethod ) {
     return sendEventMethod( action, label );
@@ -728,6 +730,31 @@ const handleSurveyResultsPrintClick = ( event, sendEventMethod ) => {
 };
 
 /**
+ * handleSurveyViewPrintClick - Listen for Results page Modal Print click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyViewPrintClick = ( event, sendEventMethod ) => {
+  const link = closest( event.target, '.tdp-survey-results--shared button[onclick="window.print()"]' );
+
+  if ( !link || !link.classList.contains( 'a-btn' ) ) {
+    return;
+  }
+
+  const action = 'View Print';
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const label = grade_level;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
  * bindAnalytics - Set up analytics reporting.
  *
  * @param {method} sendEventMethod method
@@ -761,6 +788,7 @@ const bindAnalytics = sendEventMethod => {
       handleSurveyResultsGetLinkClick( event, sendEventMethod );
       handleSurveyResultsCopyLinkClick( event, sendEventMethod );
       handleSurveyResultsPrintClick( event, sendEventMethod );
+      handleSurveyViewPrintClick( event, sendEventMethod );
     } );
 
     surveyContent.addEventListener( 'change', event => {
@@ -797,6 +825,7 @@ export {
   handleSurveyResultsGetLinkClick,
   handleSurveyResultsCopyLinkClick,
   handleSurveyResultsPrintClick,
+  handleSurveyViewPrintClick,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
