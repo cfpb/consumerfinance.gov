@@ -398,9 +398,9 @@ const handleSurveyErrorNoticeClick = ( event, sendEventMethod ) => {
     return;
   }
   const action = 'Anchor: Missed Question';
-  const wrapper = closest( link, 'div.wrapper.tdp-survey');
+  const wrapper = closest( link, 'div.wrapper.tdp-survey' );
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
-  const section = +queryOne( 'div[data-page-idx]', wrapper).getAttribute( 'data-page-idx' ) + 1;
+  const section = +queryOne( 'div[data-page-idx]', wrapper ).getAttribute( 'data-page-idx' ) + 1;
   const question = link.textContent.trim();
   const label = grade_level + ': Section ' + section + ' | ' + question;
   if ( sendEventMethod ) {
@@ -422,13 +422,13 @@ const handleSurveyRestartModalClick = ( event, sendEventMethod ) => {
   const link = closest( event.target, selector );
   let label = '';
   if ( link && link.getAttribute( 'data-open-modal' ) == 'modal-restart' ) {
-    const wrapper = closest( link, 'div.wrapper.tdp-survey');
-    const section = +queryOne( 'div[data-page-idx]', wrapper).getAttribute( 'data-page-idx' ) + 1;
+    const wrapper = closest( link, 'div.wrapper.tdp-survey' );
+    const section = +queryOne( 'div[data-page-idx]', wrapper ).getAttribute( 'data-page-idx' ) + 1;
     const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
     label = grade_level + ": Section " + section;
   }
   else if ( link && link.getAttribute( 'data-open-modal' ) == 'modal-reset' ) {
-    const wrapper = closest( link, 'div.content_wrapper.tdp-survey');
+    const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
     const section = "Results page";
     const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
     label = grade_level + ": " + section;
@@ -454,14 +454,14 @@ const handleSurveyRestartModalClick = ( event, sendEventMethod ) => {
 const handleSurveyExpandableClick = ( event, sendEventMethod ) => {
   const selector = '.tdp-survey-sidebar__mobile-control .o-expandable_header';
   const expandable = closest( event.target, selector );
-  if (!expandable || !expandable.classList.contains( 'o-expandable_header' ) ) {
+  if ( !expandable || !expandable.classList.contains( 'o-expandable_header' ) ) {
     return;
   }
   const state = getExpandableState( expandable ) == 'expand' ? 'Expand' : 'Collapse';
   const action = `Survey Progress Dropdown: ${ state }`;
-  const wrapper = closest( expandable, 'div.wrapper.tdp-survey');
+  const wrapper = closest( expandable, 'div.wrapper.tdp-survey' );
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
-  const section = +queryOne( 'div[data-page-idx]', wrapper).getAttribute( 'data-page-idx' ) + 1;
+  const section = +queryOne( 'div[data-page-idx]', wrapper ).getAttribute( 'data-page-idx' ) + 1;
   const label = grade_level + ": Section " + section;
 
   if ( sendEventMethod ) {
@@ -484,7 +484,7 @@ const handleSurveySectionClick = ( event, sendEventMethod ) => {
     return;
   }
   const action = 'Edit';
-  const wrapper = closest( link, 'div.wrapper.tdp-survey');
+  const wrapper = closest( link, 'div.wrapper.tdp-survey' );
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
   const section = queryOne( '.tdp-survey-section__title', link ).textContent.replace ( '(complete)', '' ).trim();
   const label = grade_level + ': ' + section;
@@ -511,9 +511,9 @@ const handleSurveySubmitClick = ( event, sendEventMethod ) => {
     ( action != "Get my results" ) ) {
     return;
   }
-  const wrapper = closest( link, 'div.wrapper.tdp-survey');
+  const wrapper = closest( link, 'div.wrapper.tdp-survey' );
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
-  const section = +queryOne( 'div[data-page-idx]', wrapper).getAttribute( 'data-page-idx' ) + 1;
+  const section = +queryOne( 'div[data-page-idx]', wrapper ).getAttribute( 'data-page-idx' ) + 1;
   const label = grade_level + ": Section " + section;
   if ( sendEventMethod ) {
     return sendEventMethod( action, label );
@@ -537,7 +537,7 @@ const handleSurveyResultsExpandableClick = ( event, sendEventMethod ) => {
   }
   const state = getExpandableState( expandable ) == 'expand' ? 'Expand' : 'Collapse';
   const action = `Results Dropdown: ${ state }`;
-  const wrapper = closest( expandable, 'div.content_wrapper.tdp-survey');
+  const wrapper = closest( expandable, 'div.content_wrapper.tdp-survey' );
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
   const text = queryOne( '.o-expandable_label', expandable ).textContent.trim();
   const label = grade_level + ": " + text;
@@ -585,7 +585,7 @@ const handleSurveyResultsModalClick = ( event, sendEventMethod ) => {
   }
   const modal_id = link.getAttribute( 'data-open-modal' );
   const action = ( modal_id == "modal-print" ) ? "Results Print" : "Results Share";
-  const wrapper = closest( link, 'div.content_wrapper.tdp-survey');
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
   const label = grade_level;
   if ( sendEventMethod ) {
@@ -604,9 +604,9 @@ const handleSurveyResultsModalClick = ( event, sendEventMethod ) => {
  */
 const handleSurveyResultsModalClose = ( modal, opener ) => {
   const modal_id = modal.getAttribute( 'id' );
-  const wrapper = closest( modal, 'div.content_wrapper.tdp-survey');
-  const valid_ids = ["modal-print", "modal-share-url"]
-  if (!valid_ids.includes(modal_id) || !wrapper) {
+  const wrapper = closest( modal, 'div.content_wrapper.tdp-survey' );
+  const valid_ids = [ "modal-print", "modal-share-url" ];
+  if ( !valid_ids.includes( modal_id ) || !wrapper ) {
     return;
   }
   const action = ( modal_id == "modal-print" ) ? "Print: Close" : "Share: Close";
@@ -631,7 +631,62 @@ const handleSurveyResultsSavePdfClick = ( event, sendEventMethod ) => {
     return;
   }
   const action = "Results Save PDF";
-  const wrapper = closest( link, 'div.content_wrapper.tdp-survey');
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const label = grade_level;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsGetLinkClick - Listen for Results page Modal Get link click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyResultsGetLinkClick = ( event, sendEventMethod ) => {
+  const link = closest( event.target, '#modal-share-url .tdp-survey__initials-set' );
+
+  if ( !link || !link.classList.contains( 'a-btn' ) ) {
+    return;
+  }
+  const text_field = queryOne( '#modal-share-url input#modal-share-url-initials-input' );
+
+  if ( !text_field ) {
+    return;
+  }
+
+  const action = 'Share: Get Link';
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const initials = ( !text_field.value ) ? "No initials" : "With initials";
+  const label = grade_level + ": " + initials;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsGetLinkClick - Listen for Results page Modal Copy link click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyResultsCopyLinkClick = ( event, sendEventMethod ) => {
+  const link = closest( event.target, '#modal-share-url .share-output a, #modal-share-url .share-output button.a-btn' );
+  if ( !link ) {
+    return;
+  }
+
+  const action = 'Share: Copy Link';
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
   const label = grade_level;
   if ( sendEventMethod ) {
@@ -672,6 +727,8 @@ const bindAnalytics = sendEventMethod => {
       handleSurveyDownloadClick( event, sendEventMethod );
       handleSurveyResultsModalClick( event, sendEventMethod );
       handleSurveyResultsSavePdfClick( event, sendEventMethod );
+      handleSurveyResultsGetLinkClick( event, sendEventMethod );
+      handleSurveyResultsCopyLinkClick( event, sendEventMethod );
     } );
 
     surveyContent.addEventListener( 'change', event => {
@@ -705,6 +762,8 @@ export {
   handleSurveyResultsModalClick,
   handleSurveyResultsModalClose,
   handleSurveyResultsSavePdfClick,
+  handleSurveyResultsGetLinkClick,
+  handleSurveyResultsCopyLinkClick,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
