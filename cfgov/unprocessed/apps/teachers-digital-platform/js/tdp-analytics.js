@@ -697,6 +697,37 @@ const handleSurveyResultsCopyLinkClick = ( event, sendEventMethod ) => {
 };
 
 /**
+ * handleSurveyResultsPrintClick - Listen for Results page Modal Print click and report to GA.
+ *
+ * @param {event} event Click event
+ * @param {method} sendEventMethod method
+ * @returns {object} Event data
+ */
+const handleSurveyResultsPrintClick = ( event, sendEventMethod ) => {
+  const link = closest( event.target, '#modal-print .tdp-survey__initials-set' );
+
+  if ( !link || !link.classList.contains( 'a-btn' ) ) {
+    return;
+  }
+  const text_field = queryOne( '#modal-print input#modal-print-initials-input' );
+
+  if ( !text_field ) {
+    return;
+  }
+
+  const action = 'Print: Get Link';
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const initials = ( !text_field.value ) ? "No initials" : "With initials";
+  const label = grade_level + ": " + initials;
+  if ( sendEventMethod ) {
+    return sendEventMethod( action, label );
+  }
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
  * bindAnalytics - Set up analytics reporting.
  *
  * @param {method} sendEventMethod method
@@ -729,6 +760,7 @@ const bindAnalytics = sendEventMethod => {
       handleSurveyResultsSavePdfClick( event, sendEventMethod );
       handleSurveyResultsGetLinkClick( event, sendEventMethod );
       handleSurveyResultsCopyLinkClick( event, sendEventMethod );
+      handleSurveyResultsPrintClick( event, sendEventMethod );
     } );
 
     surveyContent.addEventListener( 'change', event => {
@@ -764,6 +796,7 @@ export {
   handleSurveyResultsSavePdfClick,
   handleSurveyResultsGetLinkClick,
   handleSurveyResultsCopyLinkClick,
+  handleSurveyResultsPrintClick,
   sendEvent,
   sendSurveyEvent,
   bindAnalytics
