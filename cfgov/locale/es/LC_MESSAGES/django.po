@@ -310,11 +310,15 @@ msgid "Close the main menu"
 msgstr "Cerrar el menú principal"
 
 #: jinja2/v1/_includes/organisms/secondary-navigation.html:40
-#: jinja2/v1/_includes/organisms/secondary-navigation.html:89
+#: jinja2/v1/_includes/organisms/secondary-navigation.html:90
 msgid "Section navigation"
 msgstr "Navegación de la sección"
 
-#: jinja2/v1/_includes/organisms/video-player.html:60
+#: jinja2/v1/_includes/organisms/secondary-navigation.html:41
+msgid "In this section"
+msgstr "En esta sección"
+
+#: jinja2/v1/_includes/organisms/video-player.html:61
 msgid "Close video"
 msgstr "Cerrar video"
 
@@ -1694,9 +1698,6 @@ msgstr "Jubilado"
 
 #~ msgid " of "
 #~ msgstr " de "
-
-#~ msgid "In this section"
-#~ msgstr "En esta sección"
 
 #~ msgid "Bank accounts"
 #~ msgstr "Cuentas bancarias"

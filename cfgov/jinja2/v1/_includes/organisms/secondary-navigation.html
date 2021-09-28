@@ -15,8 +15,9 @@
 <nav class="o-secondary-navigation
             {{ '' if has_children else 'o-secondary-navigation__no-children' }}"
      aria-label="{{ _('Section navigation') }}">
+    {% set sec_nav_settings_label = _("In this section") %}
     {% set sec_nav_settings = {
-        'label': _('In this section'),
+        'label': sec_nav_settings_label,
         'is_midtone': true,
         'is_bordered': false,
         'is_expanded': false
