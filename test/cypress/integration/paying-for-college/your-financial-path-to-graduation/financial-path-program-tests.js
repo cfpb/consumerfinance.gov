@@ -2,7 +2,7 @@ import { PfcFinancialPathToGraduation } from './your-financial-path-to-graduatio
 
 const page = new PfcFinancialPathToGraduation();
 
-describe( 'Paying For College navigation', () => {
+describe( 'Paying For College program-based content', () => {
   before( () => {
     cy.intercept( '/paying-for-college2/understanding-your-financial-aid-offer/api/constants/', { fixture: 'constants' } ).as( 'constants' );
     cy.visit( '/paying-for-college/your-financial-path-to-graduation/' );
@@ -49,4 +49,49 @@ describe( 'Paying For College navigation', () => {
     cy.get( '#loans__directUnsub' ).should( 'have.value', '$6,500' );
   } );
 
+  it( 'should display associates content for associates students', () => {
+    cy.get( '[data-nav_section="worth-investment"]' ).click();
+    page.clickLeftNav( 'action-plan' );
+    page.actionPlan( 'put-into-action' );
+    cy.get( '[data-state-based-visibility="put-into-action"] .associates-content' ).should( 'be.visible' );
+    cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'not.be.visible' );
+  } );
+
+
+  it( 'should display undergrad content for undergrad students', () => {
+    cy.get( '[data-nav_section="worth-investment"]' ).click();
+    page.clickLeftNav( 'action-plan' );
+    page.actionPlan( 'put-into-action' );
+    cy.get( '[data-state-based-visibility="put-into-action"] .undergrad-content' ).should( 'be.visible' );
+    cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'not.be.visible' );
+
+    cy.get( '[data-nav_section="offer-letter"]' ).click();
+    page.clickLeftNav( 'school-info' );
+    page.selectProgram( 'type', 'bachelors' );
+    cy.get( '[data-nav_section="worth-investment"]' ).click();
+    page.clickLeftNav( 'action-plan' );
+    page.actionPlan( 'put-into-action' );
+    cy.get( '[data-state-based-visibility="put-into-action"] .undergrad-content' ).should( 'be.visible' );
+    cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'not.be.visible' );
+
+    cy.get( '[data-nav_section="offer-letter"]' ).click();
+    page.clickLeftNav( 'school-info' );
+    page.selectProgram( 'type', 'certificate' );
+    cy.get( '[data-nav_section="worth-investment"]' ).click();
+    page.clickLeftNav( 'action-plan' );
+    page.actionPlan( 'put-into-action' );
+    cy.get( '[data-state-based-visibility="put-into-action"] .undergrad-content' ).should( 'be.visible' );
+    cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'not.be.visible' );
+  } );
+
+  it( 'should display graduate content for graduate students', () => {
+    cy.get( '[data-nav_section="offer-letter"]' ).click();
+    page.clickLeftNav( 'school-info' );
+    page.selectProgram( 'type', 'graduate' );
+    cy.get( '[data-nav_section="worth-investment"]' ).click();
+    page.clickLeftNav( 'action-plan' );
+    page.actionPlan( 'put-into-action' );
+    cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'be.visible' );
+    cy.get( '[data-state-based-visibility="put-into-action"] .undergrad-content' ).should( 'not.be.visible' );
+  } );
 } );

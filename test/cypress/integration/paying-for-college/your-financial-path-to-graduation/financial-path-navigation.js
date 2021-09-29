@@ -37,4 +37,16 @@ describe( 'Paying For College navigation', () => {
     cy.get( '[data-nav_section="covering-costs"]' ).click();
     cy.get( '[data-nav_item="loan-counseling"]' ).should( 'be.visible' );
   } );
+
+  it( 'should not display costs inputs until a cost choice is made', () => {
+    cy.get( '#costs-offer-button' ).click();
+    cy.get( '#costs_inputs-section' ).should( 'not.be.visible' );
+    page.costsQuestionChoice( 'yes' );
+    cy.get( '#costs_inputs-section' ).should( 'be.visible' );
+  } );
+
+  it( 'should properly change pages when Next button is clicked', () => {
+    page.clickNextStep();
+    cy.get( '[data-tool-section="grants-scholarships"]' ).should( 'be.visible' );
+  } );
 } );
