@@ -3,6 +3,7 @@ import { Cookie, resultsPage } from '../../../../../../cfgov/unprocessed/apps/te
 import { ANSWERS_SESS_KEY, SURVEY_COOKIE } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
 import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
 import * as initials from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/initials';
+import * as obfuscation from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation';
 import HTML_SNIPPET from '../../html/results-page';
 import clipboardCopy from 'copy-to-clipboard';
 
@@ -32,7 +33,7 @@ describe( 'The TDP survey results page', () => {
   } );
 
   it( 'should read initials', () => {
-    const spy = jest.spyOn( initials.encodeName, 'decodeNameFromUrl' )
+    const spy = jest.spyOn( obfuscation, 'decodeNameFromUrl' )
       .mockImplementation( () => 'ACBDE' );
 
     resultsPage();
@@ -93,7 +94,7 @@ describe( 'The TDP survey results page', () => {
     set.click();
 
     expect( initials.get() ).toEqual( 'DEFG' );
-    expect( initials.encodeName.decodeNameFromUrl( shared.href ) ).toEqual( 'DEFG' );
+    expect( obfuscation.decodeNameFromUrl( shared.href ) ).toEqual( 'DEFG' );
 
     input.value = 'EFGH';
     input.dispatchEvent( new KeyboardEvent( 'keyup', {
