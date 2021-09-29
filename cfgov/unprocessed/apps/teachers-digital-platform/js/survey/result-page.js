@@ -13,7 +13,7 @@ const initials = require( './initials' );
 
 const $ = document.querySelector.bind( document );
 
-let localClipboardCopy = clipboardCopy;
+const localClipboardCopy = clipboardCopy;
 
 
 /**
