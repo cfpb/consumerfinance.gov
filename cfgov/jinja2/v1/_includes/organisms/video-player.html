@@ -58,6 +58,7 @@
                 <div class="o-video-player_video-actions">
                     <button class="a-btn o-video-player_close-btn"
                         aria-label="{{ _('Close video') }}"
+                        aria-hidden="true"
                         tabindex="-1">
                         {{ _('Close') }} {{ svg_icon('close-round') }}
                     </button>
@@ -77,6 +78,7 @@
                 <iframe class="o-video-player_iframe"
                     src="{{ video_url }}"
                     allow="fullscreen; autoplay"
+                    aria-hidden="true"
                     tabindex="-1">
                 </iframe>
             </div>
