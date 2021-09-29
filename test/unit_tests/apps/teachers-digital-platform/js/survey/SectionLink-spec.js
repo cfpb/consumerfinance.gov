@@ -66,20 +66,37 @@ describe( 'SectionLink', () => {
   } );
 
   it( 'editing page 1', () => {
-    const origLocation = location;
-    delete window.location;
-    window.location = {};
-
     SectionLink.init( {
       numAnswered: 6,
       pageIdx: 2,
       questionsByPage: [ 6, 2, 7, 3, 2 ]
     } );
+
+    expect( buttons[0].getAttribute( 'href' ) ).toEqual( '../p1/' );
+    expect( buttons[0].dataset.editable ).toEqual( '1' );
+  } );
+
+  it( 'prevents nav to uneditable sections', () => {
+    SectionLink.init( {
+      numAnswered: 6,
+      pageIdx: 1,
+      questionsByPage: [ 6, 2, 7, 3, 2 ]
+    } );
+
+    let clicks = 0;
+    document.body.addEventListener( 'click', event => {
+      clicks++;
+    } );
+
+    // Editable doesn't stop event
+    expect( buttons[0].dataset.editable ).toEqual( '1' );
     buttons[0].click();
+    expect( clicks ).toEqual( 1 );
 
-    expect( location.href ).toEqual( '../p1/' );
-
-    window.location = origLocation;
+    // Non-editable does
+    expect( buttons[1].dataset.editable ).toEqual( '' );
+    buttons[1].click();
+    expect( clicks ).toEqual( 1 );
   } );
 
   it( 'responds to new answers', () => {
