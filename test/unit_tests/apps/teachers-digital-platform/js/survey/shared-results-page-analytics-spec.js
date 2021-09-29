@@ -1,8 +1,3 @@
-import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys';
-import { Cookie } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/grade-level-page';
-import { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
-import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
-
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/';
 const tdpAnalytics = require(
@@ -51,6 +46,7 @@ describe( 'Custom analytics for the TDP survey results page', () => {
   it( 'should send analytics event when the print button is clicked', () => {
     const target = document.querySelector( '.tdp-survey-results--shared button[onclick="window.print()"]' );
     const spy = jest.fn();
+    window.print = () => true;
 
     tdpAnalytics.bindAnalytics( spy );
 

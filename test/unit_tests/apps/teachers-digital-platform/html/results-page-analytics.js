@@ -459,7 +459,7 @@ const HTML_SNIPPET = `
          </div>
          <div class="survey-reset--link--wrap">
             <p>
-               <button class="a-btn a-btn__link a-btn__warning" data-open-modal="modal-reset">
+               <button class="a-btn a-btn__link a-btn__warning" data-open-modal="modal-reset" type="button">
                Reset survey and start over
                </button>
             </p>

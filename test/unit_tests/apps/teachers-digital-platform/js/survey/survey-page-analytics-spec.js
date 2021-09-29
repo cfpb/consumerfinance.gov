@@ -86,7 +86,7 @@ describe( 'Custom analytics for the TDP survey form page', () => {
     expect( spy ).toHaveBeenCalled();
   } );
 
-  it( 'should send analytics event when sidebar expandalbe link is clicked', () => {
+  it( 'should send analytics event when sidebar expandable link is clicked', () => {
     const target = document.querySelector( '.tdp-survey-sidebar__mobile-control .o-expandable_header' );
     const spy = jest.fn();
 
