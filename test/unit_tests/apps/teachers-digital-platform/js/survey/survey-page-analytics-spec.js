@@ -34,8 +34,8 @@ describe( 'Custom analytics for the TDP survey form page', () => {
     global.XMLHttpRequest = jest.fn( () => mockXHR );
   } );
 
-  it( 'should send analytics event when a radio button is clicked', () => {
-    const target = document.querySelector( 'input#id_p3-q10_0' );
+  it( 'should send analytics event when a radio button changes to checked', () => {
+    const target = document.querySelector( 'label[for="id_p3-q10_0"]' );
     const spy = jest.fn();
 
     tdpAnalytics.bindAnalytics( spy );
@@ -44,20 +44,10 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Radio Button Clicked' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: 10. Try not to spend all my money right away. (Very important)' );
-    expect( spy ).toHaveBeenCalled();
-  } );
-
-  it( 'should send analytics event when a radio button is clicked', () => {
-    const target = document.querySelector( 'input#id_p3-q10_0' );
-    const spy = jest.fn();
-
-    tdpAnalytics.bindAnalytics( spy );
 
     simulateEvent( 'click', target );
 
-    expect( spy.mock.calls[0][0] ).toEqual( 'Radio Button Clicked' );
-    expect( spy.mock.calls[0][1] ).toEqual( '3-5: 10. Try not to spend all my money right away. (Very important)' );
-    expect( spy ).toHaveBeenCalled();
+    expect( spy.mock.calls.length ).toEqual( 1 );
   } );
 
   it( 'should send analytics event when error notification link is clicked', () => {

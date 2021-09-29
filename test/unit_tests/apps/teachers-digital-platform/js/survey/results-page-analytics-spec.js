@@ -1,3 +1,6 @@
+import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
+import Analytics
+  from '../../../../../../cfgov/unprocessed/js/modules/Analytics';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/';
 const tdpAnalytics = require(
@@ -65,8 +68,10 @@ describe( 'Custom analytics for the TDP survey results page', () => {
     expect( spy.mock.calls[0][1] ).toEqual( '9-12' );
   } );
 
-  it( 'should send analytics event when the share link is clicked', () => {
-    const target = document.querySelector( '[data-open-modal="modal-share-url"]' );
+  it( 'should send analytics events when the share link is clicked and modal closed', () => {
+    modals.init();
+
+    let target = document.querySelector( '[data-open-modal="modal-share-url"]' );
     const spy = jest.fn();
 
     tdpAnalytics.bindAnalytics( spy );
@@ -75,6 +80,16 @@ describe( 'Custom analytics for the TDP survey results page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Results Share' );
     expect( spy.mock.calls[0][1] ).toEqual( '9-12' );
+
+    window.dataLayer = [];
+    Analytics.tagManagerIsLoaded = true;
+    modals.close();
+
+    const lastEvent = window.dataLayer.pop();
+    expect( lastEvent.action ).toEqual( 'Share: Close' );
+    expect( lastEvent.label ).toEqual( '9-12' );
+
+    Analytics.tagManagerIsLoaded = false;
   } );
 
   it( 'should send analytics event when the pdf how to link is clicked', () => {
@@ -116,6 +131,19 @@ describe( 'Custom analytics for the TDP survey results page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Print: Get Link' );
     expect( spy.mock.calls[0][1] ).toEqual( '9-12: No initials' );
+  } );
+
+  it( 'should send analytics event when the reset modal is opened', () => {
+    modals.init();
+    const target = document.querySelector( '[data-open-modal="modal-reset"]' );
+    const spy = jest.fn();
+
+    tdpAnalytics.bindAnalytics( spy );
+
+    simulateEvent( 'click', target );
+
+    expect( spy.mock.calls[0][0] ).toEqual( 'Start Over' );
+    expect( spy.mock.calls[0][1] ).toEqual( '9-12: Results page' );
   } );
 
 } );
