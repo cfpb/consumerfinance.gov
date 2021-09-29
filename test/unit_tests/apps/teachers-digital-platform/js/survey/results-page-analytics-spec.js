@@ -48,4 +48,88 @@ describe( 'Custom analytics for the TDP survey results page', () => {
 
   } );
 
+  it( 'should send analytics event when an download link is clicked', () => {
+    const target = document.querySelector( '.a-link__icon' );
+    const spy = jest.fn();
+
+    tdpAnalytics.bindAnalytics( spy );
+
+    simulateEvent( 'click', target );
+
+    expect( spy.mock.calls[0][0] ).toEqual( 'Download' );
+    expect( spy.mock.calls[0][1] ).toEqual( 'https://files.consumerfinance.gov/f/documents/cfpb_building_block_activities_high-school-assessment-student-worksheet.pdf' );
+    expect( spy ).toHaveBeenCalled();
+
+  } );
+
+  it( 'should send analytics event when the print link is clicked', () => {
+    const target = document.querySelector( '[data-open-modal="modal-print"]' );
+    const spy = jest.fn();
+
+    tdpAnalytics.bindAnalytics( spy );
+
+    simulateEvent( 'click', target );
+
+    expect( spy.mock.calls[0][0] ).toEqual( 'Results Print' );
+    expect( spy.mock.calls[0][1] ).toEqual( '9-12' );
+    expect( spy ).toHaveBeenCalled();
+
+  } );
+
+  it( 'should send analytics event when the share link is clicked', () => {
+    const target = document.querySelector( '[data-open-modal="modal-share-url"]' );
+    const spy = jest.fn();
+
+    tdpAnalytics.bindAnalytics( spy );
+
+    simulateEvent( 'click', target );
+
+    expect( spy.mock.calls[0][0] ).toEqual( 'Results Share' );
+    expect( spy.mock.calls[0][1] ).toEqual( '9-12' );
+    expect( spy ).toHaveBeenCalled();
+
+  } );
+
+  it( 'should send analytics event when the pdf how to link is clicked', () => {
+    const target = document.querySelector( 'a.a-btn[href="/consumer-tools/save-as-pdf-instructions/"]' );
+    const spy = jest.fn();
+
+    tdpAnalytics.bindAnalytics( spy );
+
+    simulateEvent( 'click', target );
+
+    expect( spy.mock.calls[0][0] ).toEqual( 'Results Save PDF' );
+    expect( spy.mock.calls[0][1] ).toEqual( '9-12' );
+    expect( spy ).toHaveBeenCalled();
+
+  } );
+
+  it( 'should send analytics event when the get link button is clicked', () => {
+    const target = document.querySelector( '#modal-share-url .tdp-survey__initials-set' );
+    const spy = jest.fn();
+
+    tdpAnalytics.bindAnalytics( spy );
+
+    simulateEvent( 'click', target );
+
+    expect( spy.mock.calls[0][0] ).toEqual( 'Share: Get Link' );
+    expect( spy.mock.calls[0][1] ).toEqual( '9-12: No initials' );
+    expect( spy ).toHaveBeenCalled();
+
+  } );
+
+  it( 'should send analytics event when the print button is clicked', () => {
+    const target = document.querySelector( '#modal-print .tdp-survey__initials-set' );
+    const spy = jest.fn();
+
+    tdpAnalytics.bindAnalytics( spy );
+
+    simulateEvent( 'click', target );
+
+    expect( spy.mock.calls[0][0] ).toEqual( 'Print: Get Link' );
+    expect( spy.mock.calls[0][1] ).toEqual( '9-12: No initials' );
+    expect( spy ).toHaveBeenCalled();
+
+  } );
+
 } );

@@ -48,4 +48,18 @@ describe( 'Custom analytics for the TDP survey results page', () => {
 
   } );
 
+  it( 'should send analytics event when the print button is clicked', () => {
+    const target = document.querySelector( '.tdp-survey-results--shared button[onclick="window.print()"]' );
+    const spy = jest.fn();
+
+    tdpAnalytics.bindAnalytics( spy );
+
+    simulateEvent( 'click', target );
+
+    expect( spy.mock.calls[0][0] ).toEqual( 'View Print' );
+    expect( spy.mock.calls[0][1] ).toEqual( '9-12' );
+    expect( spy ).toHaveBeenCalled();
+
+  } );
+
 } );
