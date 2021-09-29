@@ -1,6 +1,3 @@
-import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys';
-import { Cookie } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/grade-level-page';
-import { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
 import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
 
 import { simulateEvent } from '../../../../../util/simulate-event.js';
@@ -44,7 +41,6 @@ describe( 'Custom analytics for the TDP survey grade-level page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Switch grades' );
     expect( spy.mock.calls[0][1] ).toEqual( 'Switch grades from 3-5' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
   it( 'should send analytics event when privacy modal link is clicked', () => {
@@ -57,7 +53,6 @@ describe( 'Custom analytics for the TDP survey grade-level page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'See how your privacy is protected.' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
   it( 'should send analytics event when lets do this link is clicked', () => {
@@ -70,7 +65,6 @@ describe( 'Custom analytics for the TDP survey grade-level page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( "Let's do this" );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
 } );

@@ -70,7 +70,6 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Anchor: Missed Question' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 3 | 10. Try not to spend all my money right away.' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
   it( 'should send analytics event when restart survey link is clicked', () => {
@@ -83,7 +82,6 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Start Over' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 3' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
   it( 'should send analytics event when sidebar expandable link is clicked', () => {
@@ -96,7 +94,6 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Survey Progress Dropdown: Expand' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 3' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
   it( 'should send analytics event when sidebar section link is clicked', () => {
@@ -109,7 +106,6 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Edit' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 1' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
   it( 'should send analytics event when submit button is clicked', () => {
@@ -137,7 +133,6 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Get my results' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 5' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
 } );
