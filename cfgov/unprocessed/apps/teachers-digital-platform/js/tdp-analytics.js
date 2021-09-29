@@ -279,6 +279,7 @@ const handleFetchSearchResults = ( searchTerm, sendEventMethod ) => {
       if ( sendEventMethod ) {
         sendEventMethod( action, label );
       } else {
+        /* istanbul ignore next */
         sendEvent( action, label );
       }
     }
@@ -290,6 +291,8 @@ const handleFetchSearchResults = ( searchTerm, sendEventMethod ) => {
   if ( sendEventMethod ) {
     return sendEventMethod( action, label );
   }
+
+  /* istanbul ignore next */
   return sendEvent( action, label );
 };
 
@@ -312,6 +315,7 @@ const handleSurveySwitchGradeClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -334,6 +338,7 @@ const handleSurveyPrivacyModalClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -356,6 +361,7 @@ const handleSurveyLetsDoThisClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -382,6 +388,7 @@ const handleSurveyChoiceChange = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -407,6 +414,7 @@ const handleSurveyErrorNoticeClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -439,6 +447,7 @@ const handleSurveyRestartModalClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -466,6 +475,7 @@ const handleSurveyExpandableClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -490,6 +500,7 @@ const handleSurveySectionClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -517,6 +528,7 @@ const handleSurveySubmitClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -545,6 +557,7 @@ const handleSurveyResultsExpandableClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -566,6 +579,7 @@ const handleSurveyDownloadClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -591,6 +605,7 @@ const handleSurveyResultsModalClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -638,6 +653,7 @@ const handleSurveyResultsSavePdfClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -669,6 +685,7 @@ const handleSurveyResultsGetLinkClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -693,6 +710,7 @@ const handleSurveyResultsCopyLinkClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -724,6 +742,7 @@ const handleSurveyResultsPrintClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
@@ -749,6 +768,7 @@ const handleSurveyViewPrintClick = ( event, sendEventMethod ) => {
     return sendEventMethod( action, label );
   }
 
+  /* istanbul ignore next */
   return sendSurveyEvent( action, label );
 };
 
