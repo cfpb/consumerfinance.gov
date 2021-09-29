@@ -68,7 +68,7 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     simulateEvent( 'click', target );
 
-    expect( spy.mock.calls[0][0] ).toEqual( "Anchor: Missed Question" );
+    expect( spy.mock.calls[0][0] ).toEqual( 'Anchor: Missed Question' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 3 | 10. Try not to spend all my money right away.' );
     expect( spy ).toHaveBeenCalled();
   } );
@@ -81,7 +81,7 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     simulateEvent( 'click', target );
 
-    expect( spy.mock.calls[0][0] ).toEqual( "Start Over" );
+    expect( spy.mock.calls[0][0] ).toEqual( 'Start Over' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 3' );
     expect( spy ).toHaveBeenCalled();
   } );
@@ -94,7 +94,7 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     simulateEvent( 'click', target );
 
-    expect( spy.mock.calls[0][0] ).toEqual( "Survey Progress Dropdown: Expand" );
+    expect( spy.mock.calls[0][0] ).toEqual( 'Survey Progress Dropdown: Expand' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 3' );
     expect( spy ).toHaveBeenCalled();
   } );
@@ -107,7 +107,7 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     simulateEvent( 'click', target );
 
-    expect( spy.mock.calls[0][0] ).toEqual( "Edit" );
+    expect( spy.mock.calls[0][0] ).toEqual( 'Edit' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 1' );
     expect( spy ).toHaveBeenCalled();
   } );
@@ -126,7 +126,7 @@ describe( 'Custom analytics for the TDP survey form page', () => {
             </button>
         </div>
       </div>
-    `
+    `;
 
     const target = document.querySelector( 'button.a-btn[type="submit"]' );
     const spy = jest.fn();
@@ -135,7 +135,7 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     simulateEvent( 'click', target );
 
-    expect( spy.mock.calls[0][0] ).toEqual( "Get my results" );
+    expect( spy.mock.calls[0][0] ).toEqual( 'Get my results' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 5' );
     expect( spy ).toHaveBeenCalled();
   } );
