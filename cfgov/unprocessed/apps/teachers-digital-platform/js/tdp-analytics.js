@@ -671,11 +671,6 @@ const handleSurveyResultsGetLinkClick = ( event, sendEventMethod ) => {
     return;
   }
   const text_field = queryOne( '#modal-share-url input#modal-share-url-initials-input' );
-
-  if ( !text_field ) {
-    return;
-  }
-
   const action = 'Share: Get Link';
   const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
@@ -728,11 +723,6 @@ const handleSurveyResultsPrintClick = ( event, sendEventMethod ) => {
     return;
   }
   const text_field = queryOne( '#modal-print input#modal-print-initials-input' );
-
-  if ( !text_field ) {
-    return;
-  }
-
   const action = 'Print: Get Link';
   const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
   const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
