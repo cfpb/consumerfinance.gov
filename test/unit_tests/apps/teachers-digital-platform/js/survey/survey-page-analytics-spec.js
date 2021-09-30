@@ -34,8 +34,8 @@ describe( 'Custom analytics for the TDP survey form page', () => {
     global.XMLHttpRequest = jest.fn( () => mockXHR );
   } );
 
-  it( 'should send analytics event when a radio button is clicked', () => {
-    const target = document.querySelector( 'input#id_p3-q10_0' );
+  it( 'should send analytics event when a radio button changes to checked', () => {
+    const target = document.querySelector( 'label[for="id_p3-q10_0"]' );
     const spy = jest.fn();
 
     tdpAnalytics.bindAnalytics( spy );
@@ -44,20 +44,10 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Radio Button Clicked' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: 10. Try not to spend all my money right away. (Very important)' );
-    expect( spy ).toHaveBeenCalled();
-  } );
-
-  it( 'should send analytics event when a radio button is clicked', () => {
-    const target = document.querySelector( 'input#id_p3-q10_0' );
-    const spy = jest.fn();
-
-    tdpAnalytics.bindAnalytics( spy );
 
     simulateEvent( 'click', target );
 
-    expect( spy.mock.calls[0][0] ).toEqual( 'Radio Button Clicked' );
-    expect( spy.mock.calls[0][1] ).toEqual( '3-5: 10. Try not to spend all my money right away. (Very important)' );
-    expect( spy ).toHaveBeenCalled();
+    expect( spy.mock.calls.length ).toEqual( 1 );
   } );
 
   it( 'should send analytics event when error notification link is clicked', () => {
@@ -70,7 +60,6 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Anchor: Missed Question' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 3 | 10. Try not to spend all my money right away.' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
   it( 'should send analytics event when restart survey link is clicked', () => {
@@ -83,10 +72,9 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Start Over' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 3' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
-  it( 'should send analytics event when sidebar expandalbe link is clicked', () => {
+  it( 'should send analytics event when sidebar expandable link is clicked', () => {
     const target = document.querySelector( '.tdp-survey-sidebar__mobile-control .o-expandable_header' );
     const spy = jest.fn();
 
@@ -96,7 +84,6 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Survey Progress Dropdown: Expand' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 3' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
   it( 'should send analytics event when sidebar section link is clicked', () => {
@@ -109,7 +96,6 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Edit' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 1' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
   it( 'should send analytics event when submit button is clicked', () => {
@@ -137,7 +123,6 @@ describe( 'Custom analytics for the TDP survey form page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Get my results' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 5' );
-    expect( spy ).toHaveBeenCalled();
   } );
 
 } );
