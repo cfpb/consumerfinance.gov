@@ -50,6 +50,25 @@ describe( 'Custom analytics for the TDP survey form page', () => {
     expect( spy.mock.calls.length ).toEqual( 1 );
   } );
 
+  it( 'should not send analytics event when a non-survey radio button changes to checked', () => {
+    document.body.innerHTML = `
+      <div data-tdp_grade_level="3-5" class="wrapper content_wrapper tdp-survey tdp-survey-layout">
+        <div class="tdp-survey-page content_main" data-tdp-page="survey" data-grade-select-url="/consumer-tools/educator-tools/youth-financial-education/assess/survey/" data-page-idx="4" data-questions-by-page="[6, 2, 7, 3, 2]" data-item-separator="&quot;\u2023&quot;">
+          <input type="radio" name="test-radio" value="0" class="non-survey-radio" id="test-radio">
+                    <label class="a-label" for="test-radio"> Very important</label>
+        </div>
+      </div>
+    `;
+    const target = document.querySelector( 'label[for="test-radio"]' );
+    const spy = jest.fn();
+
+    tdpAnalytics.bindAnalytics( spy );
+
+    simulateEvent( 'click', target );
+
+    expect( spy.mock.calls.length ).toEqual( 0 );
+  } );
+
   it( 'should send analytics event when error notification link is clicked', () => {
     const target = document.querySelector( '.m-notification__error a' );
     const spy = jest.fn();

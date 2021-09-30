@@ -71,7 +71,7 @@ describe( 'Custom analytics for the TDP survey results page', () => {
   it( 'should send analytics events when the share link is clicked and modal closed', () => {
     modals.init();
 
-    let target = document.querySelector( '[data-open-modal="modal-share-url"]' );
+    const target = document.querySelector( '[data-open-modal="modal-share-url"]' );
     const spy = jest.fn();
 
     tdpAnalytics.bindAnalytics( spy );

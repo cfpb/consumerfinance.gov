@@ -373,8 +373,8 @@ const handleSurveyLetsDoThisClick = ( event, sendEventMethod ) => {
  * @returns {object} Event data
  */
 const handleSurveyChoiceChange = ( event, sendEventMethod ) => {
-  const radio = closest( event.target, 'input.tdp-survey__choice-question' ) || event.target;
-  if ( !radio.classList.contains( 'tdp-survey__choice-question' ) || !radio.checked ) {
+  const radio = closest( event.target, 'input.tdp-survey__choice-question' );
+  if ( !radio || !radio.checked ) {
     return;
   }
   const action = 'Radio Button Clicked';
