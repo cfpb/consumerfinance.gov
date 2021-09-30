@@ -2,7 +2,6 @@ import itertools
 from collections import Counter
 from urllib.parse import urlencode
 
-from django import forms
 from django.apps import apps
 from django.db.models import Q
 from django.forms.utils import ErrorList
@@ -400,7 +399,6 @@ class MainContactInfo(blocks.StructBlock):
 class SidebarContactInfo(MainContactInfo):
     class Meta:
         template = '_includes/organisms/sidebar-contact-info.html'
-
 
 
 class ModelBlock(blocks.StructBlock):
