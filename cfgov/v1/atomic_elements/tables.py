@@ -1,15 +1,10 @@
-import json
-
 from django import forms
 from django.utils.functional import cached_property
 
 from wagtail.contrib.table_block.blocks import (
     TableBlock, TableInput, TableInputAdapter
 )
-from wagtail.core.rich_text import expand_db_html
 from wagtail.core.telepath import register
-
-from jinja2 import Markup
 
 
 class RichTextTableInput(TableInput):
