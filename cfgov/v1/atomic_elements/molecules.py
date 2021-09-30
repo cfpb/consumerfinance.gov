@@ -158,6 +158,16 @@ class JumboHeroValue(blocks.StructValue):
 
 
 class JumboHero(AbstractHero):
+    is_50_50 = blocks.BooleanBlock(
+        label="50/50 layout",
+        required=False,
+        help_text=mark_safe(
+            '<b>Optional.</b> Set both the hero text and image to 50% width, '
+            'prevent the background color from appearing in the left/right '
+            'margins of the hero, and also add a border to the hero area. '
+            'Requires the uploaded large image to be 755px x 575px.')
+    )
+
     class Meta:
         value_class = JumboHeroValue
 
