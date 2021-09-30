@@ -171,4 +171,4 @@ import { stateToHTML } from 'draft-js-export-html';
   // Register the rich text editor
   Handsontable.editors.RichTextEditor = RichTextEditor;
   Handsontable.editors.registerEditor( 'RichTextEditor', RichTextEditor );
-} )( Handsontable );
+} )( window.Handsontable );
