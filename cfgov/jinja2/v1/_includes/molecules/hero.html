@@ -34,6 +34,9 @@
 
    value.is_overlay:       A boolean to change the hero to an overlay hero.
 
+   value.is_50_50:         A boolean to split the hero's heading/image area
+                           50/50 and add a border around the container.
+
    value.is_jumbo:         A boolean that indicates whether the image is
                            extra large (jumbo).
 
@@ -55,6 +58,7 @@
                 {{- ' m-hero__knockout' if value.is_white_text else '' }}
                 {{- ' m-hero__bleeding' if value.is_bleeding else '' }}
                 {{- ' m-hero__overlay' if value.is_overlay else '' }}
+                {{- ' m-hero__50-50' if value.is_50_50 else '' }}
                 {{- ' m-hero__jumbo' if value.is_jumbo else '' }}">
     <div class="m-hero_wrapper wrapper">
         <div class="m-hero_text">
@@ -74,7 +78,10 @@
        these styles are set in an element to both contain them and make
        it clear where to change them in the future. #}
     <style>
-        .m-hero{%- if value.is_jumbo %}_wrapper{% endif %} {
+        {# If the hero is in 50/50 mode and constrained by a border, only
+           the inner wrapper container gets the background color to prevent
+           it from bleeding horizontally to the edges of the screen. #}
+        .m-hero{%- if value.is_50_50 %}_wrapper{% endif %} {
             {%- if value.background_color %}
                 background-color: {{ value.background_color }};
             {% endif -%}
@@ -98,6 +105,7 @@
             }
 
             .m-hero__jumbo .m-hero_wrapper,
+            .m-hero__50-50 .m-hero_wrapper,
             .m-hero__overlay .m-hero_wrapper {
                 background-image: url('{{ img.url }}');
                 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
