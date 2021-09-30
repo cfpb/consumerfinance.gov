@@ -54,6 +54,20 @@ export class TdpResultsHelpers {
       .should( 'be.hidden' );
   }
 
+  checkDifferentInitials() {
+    /**
+     * Since ?r= values are server-keyed, we have to test with a URL generated
+     * on this site, we just re-use the one we're on.
+     */
+    cy.url().then( url => {
+      const newUrl = url.replace( /#.*/, '#==Vld4V1lWTkJQVDA9' );
+      cy.visit( newUrl );
+      // As usual, browsers are bad at picking up hash changes until reload.
+      cy.reload();
+      cy.get( '.initials-value' ).should( 'include.text', 'EFG' );
+    } );
+  }
+
   checkNoSharing() {
     cy.get( '[data-open-modal="modal-share-url"]' ).should( 'not.exist' );
   }
