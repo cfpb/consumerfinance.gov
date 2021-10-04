@@ -5,6 +5,7 @@ beautifulsoup4==4.8.2
 boto3==1.7.80
 dj-database-url==0.5.0
 djangorestframework==3.11.2
+django-cors-headers==3.9.0
 django-csp==3.4
 django-elasticsearch-dsl==7.1.4
 django-extensions==2.1.3
