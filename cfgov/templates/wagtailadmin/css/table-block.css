@@ -10,6 +10,7 @@
 
 .handsontableInputHolder {
   left: 0 !important;
+  margin-top: -67px;
 }
 
 .handsontableInputHolder .Draftail-Editor__wrapper {
