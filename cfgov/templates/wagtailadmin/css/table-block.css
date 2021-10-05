@@ -17,6 +17,10 @@
     overflow-y: visible !important;
 }
 
+.handsontableInputHolder .Draftail-Editor__wrapper {
+  overflow-y: visible !important;
+}
+
 .handsontable,
 .handsontable .wtHolder {
   height: 100% !important;
