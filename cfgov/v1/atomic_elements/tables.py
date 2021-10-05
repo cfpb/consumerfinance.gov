@@ -58,6 +58,7 @@ class AtomicTableBlock(TableBlock):
             table_options=table_options
         )
         collected_table_options['editor'] = 'RichTextEditor'
+        collected_table_options['outsideClickDeselects'] = False
         return collected_table_options
 
     class Meta:

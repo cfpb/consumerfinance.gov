@@ -1,5 +1,12 @@
 import { stateToHTML } from 'draft-js-export-html';
 
+const body = document.querySelector( 'body' );
+function _handleModalClicks( event ) {
+  if ( document.querySelector( '.modal-open' ) ) {
+    event.stopImmediatePropagation();
+  }
+}
+
 // https://handsontable.com/docs/7.2.2/tutorial-cell-editor.html
 ( function( Handsontable ) {
   console.log( 'INIT 2' );
@@ -160,12 +167,15 @@ import { stateToHTML } from 'draft-js-export-html';
     // Clear the TEXTAREA's style and hide it
     this.TEXTAREA.style.cssText = null;
     this.TEXTAREA.style.display = 'none';
+
+    body.addEventListener( 'mousedown', _handleModalClicks);
   };
 
   RichTextEditor.prototype.close = function() {
     Handsontable.editors.TextEditor.prototype.close.call( this );
     // Remove the Draftail editor for this cell
     this.TEXTAREA_PARENT.querySelector( '.Draftail-Editor__wrapper' ).remove();
+    body.removeEventListener( 'mousedown', _handleModalClicks);
   };
 
   // Register the rich text editor
