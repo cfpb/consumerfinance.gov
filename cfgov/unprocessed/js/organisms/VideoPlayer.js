@@ -51,7 +51,7 @@ function VideoPlayer( element ) {
       return UNDEFINED;
     }
 
-    // Load a default thumbnail image if we're not using a custom one.
+    // Load the thumbnail from YouTube if we haven't specified one in the DOM.
     if ( _videoId && !_showCustomThumbnail ) {
       _imageLoad( youTubeAPI.fetchImageURL( _videoId ) );
     }
@@ -134,9 +134,21 @@ function VideoPlayer( element ) {
    */
   function _imageLoad( imageURL ) {
     _imageDom.addEventListener( 'load', _imageLoaded );
-    _imageDom.addEventListener( 'error', _imageLoadDefault );
+    _imageDom.addEventListener( 'error', _imageLoadFailed );
 
     _imageDom.src = imageURL;
+  }
+
+  /**
+   * Error handler for thumbnail image loading.
+   * If for some reason we can't load the specified thumbnail image, we
+   * should try to load the default thumbnail. But don't do that if we've
+   * already tried and failed to do so once.
+   */
+  function _imageLoadFailed() {
+    if ( _imageDom.src !== _defaultThumbnailURL ) {
+      _imageLoadDefault();
+    }
   }
 
   /**
