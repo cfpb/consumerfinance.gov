@@ -16,8 +16,8 @@ const Analytics = {
    * @param {string} action Name of event.
    * @param {string} label DOM element label.
    * @param {string} category Type of event.
-   * @param {Function} callback Function to call on GTM submission.
-   * @param {number} timeout Callback invocation fallback time.
+   * @param {Function} [callback=undefined] Function to call on GTM submission.
+   * @param {number} [timeout=500] Callback invocation fallback time.
    * @returns {object} Data layer object.
    */
   getDataLayerOptions: function( action, label, category, callback, timeout ) {

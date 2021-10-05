@@ -59,11 +59,11 @@ const OPEN_DEFAULT_CLASS = 'o-expandable_content__onload-open';
 describe( 'expandable-mobile', () => {
 
   beforeEach( () => {
-    setInnerWidth(1000);
+    setInnerWidth( 1000 );
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
-    testDiv = document.querySelector('#test-div');
-    expandableDiv = document.querySelector('#test-div .o-expandable_content');
+    testDiv = document.querySelector( '#test-div' );
+    expandableDiv = document.querySelector( '#test-div .o-expandable_content' );
   } );
 
   it( 'should not throw any errors on init', () => {
@@ -78,7 +78,7 @@ describe( 'expandable-mobile', () => {
    */
 
   it( 'should remove the OPEN_DEFAULT class on narrow innerWidth', () => {
-    setInnerWidth(900);
+    setInnerWidth( 900 );
 
     expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) )
       .toEqual( true );
@@ -89,7 +89,7 @@ describe( 'expandable-mobile', () => {
   } );
 
   it( 'should leave the OPEN_DEFAULT class for tablet innerWidth', () => {
-    setInnerWidth(901);
+    setInnerWidth( 901 );
 
     expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) )
       .toEqual( true );
@@ -100,7 +100,7 @@ describe( 'expandable-mobile', () => {
   } );
 
   it( 'should always remove its MOBILE_COLLAPSED_CLASS (narrow)', () => {
-    setInnerWidth(900);
+    setInnerWidth( 900 );
 
     beforeExpandableTransitionInit();
     expect( expandableDiv.classList.contains( MOBILE_COLLAPSED_CLASS ) )
@@ -109,7 +109,7 @@ describe( 'expandable-mobile', () => {
   } );
 
   it( 'should always remove its MOBILE_COLLAPSED_CLASS (wide)', () => {
-    setInnerWidth(901);
+    setInnerWidth( 901 );
 
     beforeExpandableTransitionInit();
     expect( expandableDiv.classList.contains( MOBILE_COLLAPSED_CLASS ) )

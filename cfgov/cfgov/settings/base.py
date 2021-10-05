@@ -1,8 +1,10 @@
+import json
 import os
 import secrets
 from pathlib import Path
 
 from django.conf import global_settings
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
 
 import dj_database_url
@@ -99,6 +101,7 @@ INSTALLED_APPS = (
     "teachers_digital_platform",
     "wagtailmedia",
     "django_elasticsearch_dsl",
+    "corsheaders",
 
     # Satellites
     "ccdb5_ui",
@@ -139,6 +142,7 @@ WAGTAILSEARCH_BACKENDS = {
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -560,9 +564,9 @@ CSP_MEDIA_SRC = (
 )
 
 # FEATURE FLAGS
-# Flags can be declared here with an empty list, which will evaluate as false 
-# until the flag is enabled in the Wagtail admin, or with a list of conditions. 
-# Each condition should be a tuple or dict in one of these forms: 
+# Flags can be declared here with an empty list, which will evaluate as false
+# until the flag is enabled in the Wagtail admin, or with a list of conditions.
+# Each condition should be a tuple or dict in one of these forms:
 # (condition-string, value) or {"condition": condition-string, "value": value}
 # An optional 3rd value, "required," can be set to True. It defaults to False.
 # Flags can also be created (and deleted) in the Wagtail admin.
@@ -794,3 +798,15 @@ CACHES = {
         'TIMEOUT': None,
     }
 }
+
+# Set our CORS allowed origins based on a JSON list in the
+# CORS_ALLOWED_ORIGINS environment variable.
+try:
+    CORS_ALLOWED_ORIGINS = json.loads(
+        os.environ.get("CORS_ALLOWED_ORIGINS", "[]")
+    )
+except (TypeError, ValueError):
+    raise ImproperlyConfigured(
+        "Environment variable CORS_ALLOWED_ORIGINS is not valid JSON. "
+        "Expected a JSON array of allowed origins."
+    )

@@ -7,13 +7,13 @@ const {
   RESULT_COOKIE,
   SURVEY_COOKIE
 } = require( './config' );
-const encodeName = require( '../encode-name' );
+const obfuscation = require( '../obfuscation' );
 const modals = require( '../modals' );
 const initials = require( './initials' );
 
 const $ = document.querySelector.bind( document );
 
-let localClipboardCopy = clipboardCopy;
+const localClipboardCopy = clipboardCopy;
 
 
 /**
@@ -97,7 +97,7 @@ function handleShareModal() {
     );
     // href property read gives you full URL
     const shareUrl = a.href;
-    a.href = encodeName.encodeNameInUrl(
+    a.href = obfuscation.encodeNameInUrl(
       shareUrl, initials.get()
     );
     copiedMsg.hidden = true;
