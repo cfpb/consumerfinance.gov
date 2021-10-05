@@ -9,7 +9,6 @@ function _handleModalClicks( event ) {
 
 // https://handsontable.com/docs/7.2.2/tutorial-cell-editor.html
 ( function( Handsontable ) {
-  console.log( 'INIT 2' );
   // We're extending the base TextEditor, https://github.com/handsontable/handsontable/blob/master/src/editors/textEditor/textEditor.js
   const RichTextEditor = Handsontable.editors.TextEditor.prototype.extend();
 
