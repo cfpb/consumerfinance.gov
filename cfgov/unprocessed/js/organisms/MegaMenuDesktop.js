@@ -152,7 +152,7 @@ function MegaMenuDesktop( baseClass, menus ) {
 
   /**
    * Close the mega menu.
-   * @returns {MegaMenuDesktop} A instance.
+   * @returns {MegaMenuDesktop} An instance.
    */
   function collapse() {
     // Close the menu.
