@@ -154,8 +154,8 @@ function MegaMenuDesktop( baseClass, menus ) {
    * Close the mega menu.
    * @returns {MegaMenuDesktop} A instance.
    */
-   function collapse() {
-     // Close the menu.
+  function collapse() {
+    // Close the menu.
     _updateMenuState( null );
 
     return this;

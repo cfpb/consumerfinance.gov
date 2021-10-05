@@ -23,7 +23,7 @@ function TabTrigger( element ) {
   }
 
   /**
-   * @param {FocusEvent} event
+   * @param {FocusEvent} event - The event object passed in from focusout.
    * @returns {boolean} True if tabPressed is dispatched, false otherwise.
    */
   function _handleFocusOut( event ) {
