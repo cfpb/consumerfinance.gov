@@ -10,12 +10,18 @@ describe( 'Youth Financial Education Survey: Errors', () => {
     survey.clickNext();
   }
 
+  if ( Cypress.browser.isHeaded ) {
+    it( 'jumps to errors at top', () => {
+      refreshErrors();
+      cy.wait( 1200 );
+      cy.window().then( win => {
+        expect( win.scrollY ).lessThan( 400 );
+      } );
+    } );
+  }
+
   it( 'alerts of missing questions', () => {
     refreshErrors();
-    cy.wait( 700 );
-    cy.window().then( win => {
-      expect( win.scrollY ).lessThan( 287 );
-    } );
     cy.get( 'form .m-notification__error ' )
       .should( 'be.visible' )
       .should( 'include.text', 'You\'ve missed a question.' );
@@ -32,15 +38,17 @@ describe( 'Youth Financial Education Survey: Errors', () => {
       .should( 'include.text', 'You forgot' );
   } );
 
-  it( 'links jump to questions', () => {
-    refreshErrors();
-    cy.get( 'form .m-notification__error li:nth-child(2) a' )
-      .click();
-    cy.wait( 700 );
-    cy.window().then( win => {
-      expect( win.scrollY ).greaterThan( 1200 );
+  if ( Cypress.browser.isHeaded ) {
+    it( 'links jump to questions', () => {
+      refreshErrors();
+      cy.get( 'form .m-notification__error li:nth-child(2) a' )
+        .click();
+      cy.wait( 1200 );
+      cy.window().then( win => {
+        expect( win.scrollY ).greaterThan( 1000 );
+      } );
     } );
-  } );
+  }
 
   it( 'warns until none missing', () => {
     refreshErrors();

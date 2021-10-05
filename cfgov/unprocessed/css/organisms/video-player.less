@@ -31,6 +31,15 @@
     .no-js &:not( .o-featured-content-module_visual ) {
         border: 1px solid @gray-40;
     }
+
+    &_iframe-container {
+      height: 100%;
+      margin: 0;
+    }
+
+    &_iframe {
+      border: 0;
+    }
 }
 
 .o-video-player.video-playing {
@@ -218,11 +227,6 @@ button.o-video-player_play-btn,
     background-color: #000;
 }
 
-.o-video-player_iframe-container {
-    height: 100%;
-    margin: 0;
-}
-
 .o-video-player_video-actions-container {
     right: 0;
     left: auto;
@@ -243,7 +247,6 @@ button.o-video-player_play-btn,
 
     .o-video-player_iframe {
         .u-flexible-container_inner();
-        border: 0;
     }
 
     .o-video-player_video-actions-container {

@@ -146,7 +146,7 @@ function VideoPlayer( element ) {
    * already tried and failed to do so once.
    */
   function _imageLoadFailed() {
-    if ( _imageDom.src === _defaultThumbnailURL ) {
+    if ( _imageDom.src !== _defaultThumbnailURL ) {
       _imageLoadDefault();
     }
   }
