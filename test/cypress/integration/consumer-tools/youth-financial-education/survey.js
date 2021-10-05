@@ -31,6 +31,7 @@ function testSharing( test ) {
   results.checkInitials();
   results.checkCarPositions( test.carImageX );
   results.checkNoSharing();
+  results.checkDifferentInitials();
 }
 
 describe( 'Youth Financial Education Survey', () => {
