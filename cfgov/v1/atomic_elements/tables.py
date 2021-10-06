@@ -14,13 +14,14 @@ class RichTextTableInput(TableInput):
         rich_text_media = forms.Media(
             js=[
                 'js/admin/rich-text-table.js',
+                'js/admin/wagtail-table.js',
             ],
         )
         return media + rich_text_media
 
 
 class RichTextTableInputAdapter(TableInputAdapter):
-    js_constructor = 'wagtail.widgets.TableInput'
+    js_constructor = 'v1.widgets.RichTextTableInput'
 
 
 register(RichTextTableInputAdapter(), RichTextTableInput)

@@ -167,17 +167,377 @@ function _handleModalClicks( event ) {
     this.TEXTAREA.style.cssText = null;
     this.TEXTAREA.style.display = 'none';
 
-    body.addEventListener( 'mousedown', _handleModalClicks);
+    body.addEventListener( 'mousedown', _handleModalClicks );
   };
 
   RichTextEditor.prototype.close = function() {
     Handsontable.editors.TextEditor.prototype.close.call( this );
     // Remove the Draftail editor for this cell
     this.TEXTAREA_PARENT.querySelector( '.Draftail-Editor__wrapper' ).remove();
-    body.removeEventListener( 'mousedown', _handleModalClicks);
+    body.removeEventListener( 'mousedown', _handleModalClicks );
   };
 
   // Register the rich text editor
   Handsontable.editors.RichTextEditor = RichTextEditor;
   Handsontable.editors.registerEditor( 'RichTextEditor', RichTextEditor );
 } )( window.Handsontable );
+
+
+/* Based on Wagtail's initTable. We have to override Wagtail's to add more
+   fields to the table block, and Wagtail's implementation does not provide
+   hooks with which to do that.
+   https://github.com/wagtail/wagtail/blob/773da59107b7cd0e072d3f8c3d5bb7287d47b9b8/client/src/entrypoints/contrib/table_block/table.js */
+function initAtomicTable( id, tableOptions ) {
+  // Definitions from Wagtail's initTable
+  const containerId = id + '-handsontable-container';
+  let hot = null;
+
+  // Wagtail's built-in field elements
+  const tableHeaderCheckbox = window.jQuery( '#' + id + '-handsontable-header' );
+  const colHeaderCheckbox = window.jQuery( '#' + id + '-handsontable-col-header' );
+  const tableCaption = window.jQuery( '#' + id + '-handsontable-col-caption' );
+
+  // Out custom field elements
+  const headingText = window.jQuery( '#' + id + '-handsontable-heading-text' );
+  const headingLevel = window.jQuery( '#' + id + '-handsontable-heading-level' );
+  const headingIcon = window.jQuery( '#' + id + '-handsontable-heading-icon' );
+  const stripedRows = window.jQuery( '#' + id + '-handsontable-striped-rows' );
+  const stackOnMobile = window.jQuery( '#' + id + '-handsontable-stack-on-mobile' );
+  const tableFullWidth = window.jQuery( '#' + id + '-handsontable-full-width' );
+  const tableColFixed = window.jQuery( '#' + id + '-handsontable-col-fixed' );
+  const tableIsSortable = window.jQuery( '#' + id + '-handsontable-sortable' );
+
+  /* Initialize the field values based on the JSON data in this table
+     block's hidden field. */
+  const hiddenStreamInput = window.jQuery( '#' + id );
+  let dataForForm = null;
+  try {
+    console.log( 'Loaded', hiddenStreamInput.val() );
+    dataForForm = JSON.parse( hiddenStreamInput.val() );
+  } catch ( e ) {
+    // do nothing
+  }
+  if ( dataForForm !== null ) {
+    // Wagtail's built-in fields
+    if ( dataForForm.hasOwnProperty( 'first_row_is_table_header' ) ) {
+      tableHeaderCheckbox.prop( 'checked', dataForForm.first_row_is_table_header );
+    }
+    if ( dataForForm.hasOwnProperty( 'first_col_is_header' ) ) {
+      colHeaderCheckbox.prop( 'checked', dataForForm.first_col_is_header );
+    }
+    if ( dataForForm.hasOwnProperty( 'table_caption' ) ) {
+      tableCaption.prop( 'value', dataForForm.table_caption );
+    }
+
+    // Custom fields
+    if ( dataForForm.hasOwnProperty( 'heading_text' ) ) {
+      headingText.prop( 'value', dataForForm.heading_text );
+    }
+    if ( dataForForm.hasOwnProperty( 'heading_level' ) ) {
+      headingLevel.prop( 'value', dataForForm.heading_level );
+    }
+    if ( dataForForm.hasOwnProperty( 'heading_icon' ) ) {
+      headingIcon.prop( 'value', dataForForm.heading_icon );
+    }
+    if ( dataForForm.hasOwnProperty( 'is_striped' ) ) {
+      stripedRows.prop( 'checked', dataForForm.is_striped );
+    }
+    if ( dataForForm.hasOwnProperty( 'is_stacked' ) ) {
+      stackOnMobile.prop( 'checked', dataForForm.is_stacked );
+    }
+    if ( dataForForm.hasOwnProperty( 'is_full_width' ) ) {
+      tableFullWidth.prop( 'checked', dataForForm.is_full_width );
+    }
+    if ( dataForForm.hasOwnProperty( 'fixed_col_widths' ) ) {
+      tableColFixed.prop( 'checked', dataForForm.fixed_col_widths );
+    }
+    if ( dataForForm.hasOwnProperty( 'is_sortable' ) ) {
+      tableIsSortable.prop( 'checked', dataForForm.is_sortable );
+    }
+  }
+
+  /* Function from Wagtail's initTable used below in the customized persist
+     function */
+  const getCellsClassnames = function() {
+    const meta = hot.getCellsMeta();
+    const cellsClassnames = [];
+    for ( let i = 0; i < meta.length; i++ ) {
+      if ( meta[i].hasOwnProperty( 'className' ) ) {
+        cellsClassnames.push( {
+          row: meta[i].row,
+          col: meta[i].col,
+          className: meta[i].className
+        } );
+      }
+    }
+    return cellsClassnames;
+  };
+
+  /* Persist field values back to the JSON data in this table block's hidden
+     field's JSON. This function is then called by event handling functions
+     defined below. */
+  const persist = function() {
+    console.log( 'Persisting' );
+    hiddenStreamInput.val( JSON.stringify( {
+      // Wagtail's built-in fields
+      data: hot.getData(),
+      cell: getCellsClassnames(),
+      first_row_is_table_header: tableHeaderCheckbox.prop( 'checked' ),
+      first_col_is_header: colHeaderCheckbox.prop( 'checked' ),
+      table_caption: tableCaption.val(),
+
+      // Custom fields
+      heading_text: headingText.val(),
+      heading_level: headingLevel.val(),
+      heading_icon: headingIcon.val(),
+      is_striped: stripedRows.prop( 'checked' ),
+      is_stacked: stackOnMobile.prop( 'checked' ),
+      is_full_width: tableFullWidth.prop( 'checked' ),
+      fixed_col_widths: tableColFixed.prop( 'checked' ),
+      is_sortable: tableIsSortable.prop( 'checked' )
+    } ) );
+    console.log( 'Persisted', hiddenStreamInput.val() );
+  };
+
+  /* Ensure each form field persists when changed.
+     Wagtail's built-in fields */
+  tableHeaderCheckbox.on( 'change', () => { persist(); } );
+  colHeaderCheckbox.on( 'change', () => { persist(); } );
+  tableCaption.on( 'change', () => { persist(); } );
+  // Custom fields
+  headingText.on( 'change', () => { persist(); } );
+  headingLevel.on( 'change', () => { persist(); } );
+  headingIcon.on( 'change', () => { persist(); } );
+  stripedRows.on( 'change', () => { persist(); } );
+  stackOnMobile.on( 'change', () => { persist(); } );
+  tableFullWidth.on( 'change', () => { persist(); } );
+  tableColFixed.on( 'change', () => { persist(); } );
+  tableIsSortable.on( 'change', () => { persist(); } );
+
+  /* The rest of this function is duplicated from Wagtail's initTable
+     implementation in order to extend it to add extra fields. Those fields
+     are persisted via event handling functions passed in via tableOptions,
+     but the defaults for those call the resizeHeight function. It's only
+     available in the inner scope of the initTable function, so we have to
+     redefine it here. */
+  const getWidth = function() {
+    return window.jQuery( '.widget-table_input' ).closest( '.sequence-member-inner' ).width();
+  };
+  const getHeight = function() {
+    const tableParent = window.jQuery( '#' + id ).parent();
+    return tableParent.find( '.htCore' ).height() + ( tableParent.find( '.input' ).height() * 2 );
+  };
+  const resizeTargets = [ '.input > .handsontable', '.wtHider', '.wtHolder' ];
+  const resizeHeight = function( height ) {
+    const currTable = window.jQuery( '#' + id );
+    window.jQuery.each( resizeTargets, function() {
+      currTable.closest( '.field-content' ).find( this ).height( height );
+    } );
+  };
+
+  /* Ensure that we persist the table block's data on each of the event types
+     that Wagtail registers with HandsonTable */
+  let isInitialized = false;
+  const cellEvent = function( change, source ) {
+    if ( source === 'loadData' ) {
+      return; // don't save this change
+    }
+    persist();
+  };
+  const metaEvent = function( row, column, key, value ) {
+    if ( isInitialized && key === 'className' ) {
+      persist();
+    }
+  };
+  const initEvent = function() {
+    isInitialized = true;
+  };
+  const structureEvent = function( index, amount ) {
+    resizeHeight( getHeight() );
+    persist();
+  };
+
+  const finalOptions = {};
+  const defaultOptions = {
+    afterChange: cellEvent,
+    afterCreateCol: structureEvent,
+    afterCreateRow: structureEvent,
+    afterRemoveCol: structureEvent,
+    afterRemoveRow: structureEvent,
+    afterSetCellMeta: metaEvent,
+    afterInit: initEvent
+  };
+  if ( dataForForm !== null ) {
+    if ( dataForForm.hasOwnProperty( 'data' ) ) {
+      defaultOptions.data = dataForForm.data;
+    }
+    if ( dataForForm.hasOwnProperty( 'cell' ) ) {
+      defaultOptions.cell = dataForForm.cell;
+    }
+  }
+
+  Object.keys( defaultOptions ).forEach( key => {
+    finalOptions[key] = defaultOptions[key];
+  } );
+  Object.keys( tableOptions ).forEach( key => {
+    finalOptions[key] = tableOptions[key];
+  } );
+
+  hot = new window.Handsontable( document.getElementById( containerId ), finalOptions );
+  hot.render();
+
+  if ( 'resize' in window.jQuery( window ) ) {
+    resizeHeight( getHeight() );
+    window.jQuery( window ).on( 'load', () => {
+      window.jQuery( window ).trigger( 'resize' );
+    } );
+  }
+}
+window.initAtomicTable = initAtomicTable;
+
+
+/* AtomicTableBlock's Telepath widget.
+   This handles the rendering of the entire table block form in the Wagtail
+   admin. It is based on the Wagtail TableInput class:
+   https://github.com/wagtail/wagtail/blob/773da59107b7cd0e072d3f8c3d5bb7287d47b9b8/client/src/entrypoints/contrib/table_block/table.js#L176-L243 */
+class RichTextTableInput {
+  constructor( options ) {
+    this.options = options;
+  }
+
+  render( placeholder, name, id, initialState ) {
+    const container = document.createElement( 'div' );
+    container.innerHTML = `
+      <div class="field">
+        <label for="${ id }-handsontable-heading">Heading</label>
+        <div class="field-content">
+          <div class="heading-text-block">
+            <label for="${ id }-handsontable-heading-text">Text:</label>
+            <div class="input">
+              <input type="text" id="${ id }-handsontable-heading-text" name="handsontable-heading-text">
+            </div>
+          </div>
+          <div class="heading-level-block">
+            <label for="${ id }-handsontable-heading-level">Level:</label>
+            <div class="input">
+              <select id="${ id }-handsontable-heading-level" name="handsontable-heading-level" placeholder="Level">
+                <option value="h2">H2</option>
+                <option value="h3">H3</option>
+                <option value="h4">H4</option>
+              </select>
+            </div>
+          </div>
+          <div class="heading-icon-block">
+            <label for="${ id }-handsontable-heading-icon">Icon:</label>
+            <div class="input">
+              <input type="text" id="${ id }-handsontable-heading-icon" name="handsontable-heading-icon">
+              <span class="help">Input the name of an icon to appear to the left of the heading. E.g., approved, help-round, etc. <a href="https://cfpb.github.io/design-system/foundation/iconography">See full list of icons</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br/>
+
+      <div class="field boolean_field widget-checkbox_input">
+        <label for="${ id }-handsontable-striped-rows">Striped rows</label>
+        <div class="field-content">
+          <div class="input">
+            <input type="checkbox" id="${ id }-handsontable-striped-rows" name="handsontable-striped-rows">
+            <span class="help">Display the Table with striped rows</span>
+          </div>
+        </div>
+      </div>
+      <br/>
+
+      <div class="field boolean_field widget-checkbox_input">
+        <label for="${ id }-handsontable-stack-on-mobile">Stacked on mobile</label>
+        <div class="field-content">
+          <div class="input">
+            <input type="checkbox" id="${ id }-handsontable-stack-on-mobile" name="handsontable-stack-on-mobile">
+            <span class="help">Stack the table columns on mobile</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field boolean_field widget-checkbox_input">
+        <label for="${ id }-handsontable-full-width">Full-width</label>
+        <div class="field-content">
+          <div class="input">
+            <input type="checkbox" id="${ id }-handsontable-full-width" name="handsontable-full-width">
+            <span class="help">Display the table at full-width</span>
+         </div>
+      </div>
+      </div>
+      <br/>
+
+      <div class="field boolean_field widget-checkbox_input">
+        <label for="${ id }-handsontable-header">Row header</label>
+        <div class="field-content">
+          <div class="input">
+            <input type="checkbox" id="${ id }-handsontable-header" name="handsontable-header" />
+          </div>
+          <span class="help">Display the first row as a header.</span>
+        </div>
+      </div>
+      <br/>
+
+      <div class="field boolean_field widget-checkbox_input">
+        <label for="${ id }-handsontable-col-header">Column header</label>
+        <div class="field-content">
+          <div class="input">
+            <input type="checkbox" id="${ id }-handsontable-col-header" name="handsontable-col-header" />
+          </div>
+          <span class="help">Display the first column as a header.</span>
+        </div>
+      </div>
+      <br/>
+
+      <div class="field boolean_field widget-checkbox_input">
+        <label for="${ id }-handsontable-col-fixed">Fixed-width columns</label>
+        <div class="field-content">
+          <div class="input">
+            <input type="checkbox" id="${ id }-handsontable-col-fixed" name="handsontable-col-fixed">
+            <span class="help">Enable fixed width columns</span>
+          </div>
+        </div>
+      </div>
+      <br/>
+
+      <div class="field boolean_field widget-checkbox_input">
+        <label for="${ id }-handsontable-sortable">Sortable table</label>
+        <div class="field-content">
+          <div class="input">
+            <input type="checkbox" id="${ id }-handsontable-sortable" name="handsontable-sortable">
+            <span class="help">Enable sortable table functionality</span>
+          </div>
+        </div>
+      </div>
+      <br/>
+
+      <div id="${ id }-handsontable-container"></div>
+      <input type="hidden" name="${ name }" id="${ id }" placeholder="Table">
+    `;
+    placeholder.replaceWith( container );
+
+    const input = container.querySelector( `input[name="${ name }"]` );
+    const options = this.options;
+
+    const widget = {
+      getValue() {
+        return JSON.parse( input.value );
+      },
+      getState() {
+        return JSON.parse( input.value );
+      },
+      setState( state ) {
+        input.value = JSON.stringify( state );
+        initAtomicTable( id, options );
+      },
+      focus() {}
+    };
+    widget.setState( initialState );
+    return widget;
+  }
+}
+window.telepath.register( 'v1.widgets.RichTextTableInput', RichTextTableInput );
+
