@@ -1016,7 +1016,7 @@ class AnswerPageTest(TestCase):
         )
         self.assertContains(
             english_answer_page_response,
-            "An official website of the "
+            "An official website of the"
         )
         self.assertContains(
             english_answer_page_response,
@@ -1052,7 +1052,7 @@ class AnswerPageTest(TestCase):
         )
         self.assertNotContains(
             spanish_answer_page_response,
-            "An official website of the "
+            "An official website of the"
         )
         self.assertNotContains(
             spanish_answer_page_response,
