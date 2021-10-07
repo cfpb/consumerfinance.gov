@@ -214,6 +214,8 @@ function initAtomicTable( id, tableOptions ) {
   /* Initialize the field values based on the JSON data in this table
      block's hidden field. */
   const hiddenStreamInput = window.jQuery( '#' + id );
+  let columnWidths;
+  let colSortTypes;
   let dataForForm = null;
   try {
     console.log( 'Loaded', hiddenStreamInput.val() );
@@ -257,6 +259,12 @@ function initAtomicTable( id, tableOptions ) {
     }
     if ( dataForForm.hasOwnProperty( 'is_sortable' ) ) {
       tableIsSortable.prop( 'checked', dataForForm.is_sortable );
+    }
+    if ( dataForForm.hasOwnProperty( 'column_widths' ) ) {
+      columnWidths = dataForForm.column_widths;
+    }
+    if ( dataForForm.hasOwnProperty( 'sortable_types' ) ) {
+      colSortTypes = dataForForm.sortable_types;
     }
   }
 
@@ -311,7 +319,8 @@ function initAtomicTable( id, tableOptions ) {
     }
   };
 
-  const populateColumnAttributeInputs = function( columnCount ) {
+  const populateColumnAttributeInputs = function() {
+    const colCount = columnWidths ? columnWidths.length : hot.countCols();
     const colWidthSelector = window.jQuery( `
       <td>
         <select class="column-width-input">
@@ -343,9 +352,23 @@ function initAtomicTable( id, tableOptions ) {
         </select>
       </td>
     ` ).on( 'change', () => { console.log( 'sort change' ); } );
-    for ( let index = 0; index < columnCount; index++ ) {
-      colWidthInput.find( 'tr' ).append( colWidthSelector.clone( true ) );
-      colSortTypeInput.find( 'tr' ).append( colSortSelector.clone( true ) );
+    for ( let index = 0; index < colCount; index++ ) {
+      const colWidthValue = columnWidths ? columnWidths[index] : '';
+      const colSortType = colSortTypes ? colSortTypes[index] : '';
+      const colWidthSelectorClone = colWidthSelector.clone( true );
+      const colSortSelectorClone = colSortSelector.clone( true );
+      colWidthSelectorClone
+        .find( 'select option[value="' + colWidthValue + '"]' )
+        .prop('selected', true);
+      colSortSelectorClone
+        .find( 'select option[value="' + colSortType + '"]' )
+        .prop('selected', true);
+      colWidthInput
+        .find( 'tr' )
+        .append( colWidthSelectorClone );
+      colSortTypeInput
+        .find( 'tr' )
+        .append( colSortSelectorClone );
     }
   };
 
@@ -448,7 +471,8 @@ function initAtomicTable( id, tableOptions ) {
 
   hot = new window.Handsontable( document.getElementById( containerId ), finalOptions );
   hot.render();
-  populateColumnAttributeInputs( hot.countCols() );
+
+  populateColumnAttributeInputs();
   if ( tableColFixed.prop( 'checked' ) ) {
     toggleAttributeInputTable( colWidthInput, true );
   }
