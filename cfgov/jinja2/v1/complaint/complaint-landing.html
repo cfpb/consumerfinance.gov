@@ -303,10 +303,9 @@
 
 {% block javascript scoped %}
     {{ super() }}
-    <script async>
+    <script>
       if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-          {# Include site-wide JavaScript. #}
+        !function() {
           var s = [
             'https://files.consumerfinance.gov/ccdb/metadata.js',
             '{{ static('apps/ccdb-landing-map/js/index.js') }}'

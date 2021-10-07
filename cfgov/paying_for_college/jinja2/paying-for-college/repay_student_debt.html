@@ -2659,13 +2659,12 @@
 
 {% block javascript scoped %}
 {{ super() }}
-<script async>
+<script>
   if (document.body.parentElement.className.indexOf('no-js') === -1) {
-    !function () {
-      {# Include site - wide JavaScript. #}
+    !function() {
       var s = [
-            '{{ static('apps/paying-for-college/js/repay.js') }}'
-          ];
+        '{{ static('apps/paying-for-college/js/repay.js') }}'
+      ];
       jsl(s);
     }()
   }
