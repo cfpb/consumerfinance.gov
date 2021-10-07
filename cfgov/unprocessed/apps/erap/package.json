@@ -9,7 +9,7 @@
   },
   "private": "true",
   "dependencies": {
-    "@cfpb/rental-assistance-finder": "0.3.2"
+    "@cfpb/rental-assistance-finder": "0.4.0"
   },
   "repository": {
     "type": "git",

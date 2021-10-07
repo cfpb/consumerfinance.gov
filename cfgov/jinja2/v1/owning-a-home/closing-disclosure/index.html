@@ -106,10 +106,9 @@ Use the CFPB's tool to double-check that all the details about your loan are cor
 
 {% block javascript %}
     {{ super() }}
-     <script async>
+    <script>
       if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-          {# Include site-wide JavaScript. #}
+        !function() {
           var s = [
             '{{ static('apps/owning-a-home/js/common.js') }}',
             '{{ static('apps/owning-a-home/js/form-explainer/index.js') }}'
