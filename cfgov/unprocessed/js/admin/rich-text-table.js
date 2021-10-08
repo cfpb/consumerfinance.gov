@@ -212,7 +212,7 @@ function initAtomicTable( id, tableOptions ) {
   const colSortTypeInput = window.jQuery( '#' + id + '-sortable-input' );
   const colWidthSelector = window.jQuery( `
     <td>
-      <select class="column-width-input">
+      <select class="column-width-input" aria-label="Column width">
         <option value="">Flexible width</option>
         <option value="u-w10pct">10%</option>
         <option value="u-w20pct">20%</option>
@@ -232,7 +232,7 @@ function initAtomicTable( id, tableOptions ) {
   ` );
   const colSortSelector = window.jQuery( `
     <td>
-      <select class="sortable-type-input">
+      <select class="sortable-type-input" aria-label="Column sorting method">
         <option value="">None</option>
         <option value="string">Alphabetical</option>
         <option value="number">Numerical</option>
