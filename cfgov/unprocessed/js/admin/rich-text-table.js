@@ -1,3 +1,5 @@
+/* eslint-disable max-lines-per-function, complexity, max-statements, require-jsdoc, func-style, no-empty-function */
+
 import { stateToHTML } from 'draft-js-export-html';
 
 const body = document.querySelector( 'body' );
@@ -206,10 +208,45 @@ function initAtomicTable( id, tableOptions ) {
   const tableFullWidth = window.jQuery( '#' + id + '-handsontable-full-width' );
   const tableColFixed = window.jQuery( '#' + id + '-handsontable-col-fixed' );
   const tableIsSortable = window.jQuery( '#' + id + '-handsontable-sortable' );
+  const colWidthInput = window.jQuery( '#' + id + '-fixed-width-column-input' );
+  const colSortTypeInput = window.jQuery( '#' + id + '-sortable-input' );
+  const colWidthSelector = window.jQuery( `
+    <td>
+      <select class="column-width-input" aria-label="Column width">
+        <option value="">Flexible width</option>
+        <option value="u-w10pct">10%</option>
+        <option value="u-w20pct">20%</option>
+        <option value="u-w25pct">25%</option>
+        <option value="u-w30pct">30%</option>
+        <option value="u-w33pct">33%</option>
+        <option value="u-w40pct">40%</option>
+        <option value="u-w50pct">50%</option>
+        <option value="u-w60pct">60%</option>
+        <option value="u-w66pct">66%</option>
+        <option value="u-w70pct">70%</option>
+        <option value="u-w75pct">75%</option>
+        <option value="u-w80pct">80%</option>
+        <option value="u-w90pct">90%</option>
+      </select>
+    </td>
+  ` );
+  const colSortSelector = window.jQuery( `
+    <td>
+      <select class="sortable-type-input" aria-label="Column sorting method">
+        <option value="">None</option>
+        <option value="string">Alphabetical</option>
+        <option value="number">Numerical</option>
+        <option value="string-default">Alphabetical and sort initially</option>
+        <option value="number-default">Numerical and sort initially</option>
+      </select>
+    </td>
+  ` );
 
   /* Initialize the field values based on the JSON data in this table
      block's hidden field. */
   const hiddenStreamInput = window.jQuery( '#' + id );
+  let columnWidths;
+  let colSortTypes;
   let dataForForm = null;
   try {
     console.log( 'Loaded', hiddenStreamInput.val() );
@@ -254,6 +291,12 @@ function initAtomicTable( id, tableOptions ) {
     if ( dataForForm.hasOwnProperty( 'is_sortable' ) ) {
       tableIsSortable.prop( 'checked', dataForForm.is_sortable );
     }
+    if ( dataForForm.hasOwnProperty( 'column_widths' ) ) {
+      columnWidths = dataForForm.column_widths;
+    }
+    if ( dataForForm.hasOwnProperty( 'sortable_types' ) ) {
+      colSortTypes = dataForForm.sortable_types;
+    }
   }
 
   /* Function from Wagtail's initTable used below in the customized persist
@@ -271,6 +314,17 @@ function initAtomicTable( id, tableOptions ) {
       }
     }
     return cellsClassnames;
+  };
+
+  /* Custom function to get column widths and sort types for all columns */
+  const getColAttributes = function( colAttributeTable ) {
+    let colAttributes = [];
+    const selectedAttributes = colAttributeTable.find( 'option:selected' );
+    selectedAttributes.each( index => {
+      const selectedAttribute = selectedAttributes[index].value;
+      colAttributes.push( selectedAttribute );
+    } );
+    return colAttributes;
   };
 
   /* Persist field values back to the JSON data in this table block's hidden
@@ -294,9 +348,62 @@ function initAtomicTable( id, tableOptions ) {
       is_stacked: stackOnMobile.prop( 'checked' ),
       is_full_width: tableFullWidth.prop( 'checked' ),
       fixed_col_widths: tableColFixed.prop( 'checked' ),
-      is_sortable: tableIsSortable.prop( 'checked' )
+      is_sortable: tableIsSortable.prop( 'checked' ),
+      column_widths: getColAttributes( colWidthInput ),
+      sortable_types: getColAttributes( colSortTypeInput )
+
     } ) );
     console.log( 'Persisted', hiddenStreamInput.val() );
+  };
+
+  const toggleAttributeInputTable = function( attributeInputTable, isAttributeEnabled ) {
+    if ( isAttributeEnabled ) {
+      attributeInputTable.show();
+    } else {
+      attributeInputTable.hide();
+    }
+  };
+
+  const populateColumnAttributeInputs = function() {
+    // New tables have no column width data, so we need to count columns instead
+    const colCount = columnWidths ? columnWidths.length : hot.countCols();
+    for ( let index = 0; index < colCount; index++ ) {
+      const colWidthValue = columnWidths ? columnWidths[index] : '';
+      const colSortType = colSortTypes ? colSortTypes[index] : '';
+      const colWidthSelectorClone =
+        colWidthSelector
+          .clone()
+          .on( 'change', () => { persist(); } );
+      const colSortSelectorClone =
+        colSortSelector
+          .clone()
+          .on( 'change', () => { persist(); } );
+      colWidthSelectorClone
+        .find( 'select option[value="' + colWidthValue + '"]' )
+        .prop( 'selected', true );
+      colSortSelectorClone
+        .find( 'select option[value="' + colSortType + '"]' )
+        .prop( 'selected', true );
+      colWidthInput
+        .find( 'tr' )
+        .append( colWidthSelectorClone );
+      colSortTypeInput
+        .find( 'tr' )
+        .append( colSortSelectorClone );
+    }
+  };
+
+  const handleColumnAttributeChange = function( event ) {
+    const attributeName = event.target.getAttribute( 'name' );
+    const isAttributeEnabled = event.target.checked;
+    let attributeInputTable;
+    if ( attributeName === 'handsontable-col-fixed' ) {
+      attributeInputTable = colWidthInput;
+    } else if ( attributeName === 'handsontable-sortable' ) {
+      attributeInputTable = colSortTypeInput;
+    }
+    toggleAttributeInputTable( attributeInputTable, isAttributeEnabled );
+    persist();
   };
 
   /* Ensure each form field persists when changed.
@@ -311,8 +418,9 @@ function initAtomicTable( id, tableOptions ) {
   stripedRows.on( 'change', () => { persist(); } );
   stackOnMobile.on( 'change', () => { persist(); } );
   tableFullWidth.on( 'change', () => { persist(); } );
-  tableColFixed.on( 'change', () => { persist(); } );
-  tableIsSortable.on( 'change', () => { persist(); } );
+  tableColFixed.on( 'change', () => { handleColumnAttributeChange( event ); } );
+  tableIsSortable.on( 'change', () => { handleColumnAttributeChange( event ); } );
+  // Change handlers for column widths and sort types are in populateColumnAttributeInputs
 
   /* The rest of this function is duplicated from Wagtail's initTable
      implementation in order to extend it to add extra fields. Those fields
@@ -357,12 +465,42 @@ function initAtomicTable( id, tableOptions ) {
     persist();
   };
 
+  /* Custom handlers for adding and removing columns that also add and remove
+     column attributes for the new or removed column */
+  const handleCreateCol = function( index, amount ) {
+    // A newly inserted first column will have an index of 0
+    const newColIndex = index - 1 < 0 ? 0 : index - 1;
+    const colWidthInputCell = colWidthInput.find( 'td:eq(' + newColIndex + ')' );
+    const colSortTypeCell = colSortTypeInput.find( 'td:eq(' + newColIndex + ')' );
+    const colWidthSelectorClone =
+      colWidthSelector
+        .clone()
+        .on( 'change', () => { persist(); } );
+    const colSortSelectorClone =
+      colSortSelector
+        .clone()
+        .on( 'change', () => { persist(); } );
+    if ( newColIndex === 0 ) {
+      colWidthInputCell.before( colWidthSelectorClone );
+      colSortTypeCell.before( colSortSelectorClone );
+    } else {
+      colWidthInputCell.after( colWidthSelectorClone );
+      colSortTypeCell.after( colSortSelectorClone );
+    }
+    structureEvent( index, amount );
+  };
+  const handleRemoveCol = function( index, amount ) {
+    colWidthInput.find( 'td:eq(' + index + ')' ).remove();
+    colSortTypeInput.find( 'td:eq(' + index + ')' ).remove();
+    structureEvent( index, amount );
+  };
+
   const finalOptions = {};
   const defaultOptions = {
     afterChange: cellEvent,
-    afterCreateCol: structureEvent,
+    afterCreateCol: handleCreateCol,
     afterCreateRow: structureEvent,
-    afterRemoveCol: structureEvent,
+    afterRemoveCol: handleRemoveCol,
     afterRemoveRow: structureEvent,
     afterSetCellMeta: metaEvent,
     afterInit: initEvent
@@ -385,6 +523,15 @@ function initAtomicTable( id, tableOptions ) {
 
   hot = new window.Handsontable( document.getElementById( containerId ), finalOptions );
   hot.render();
+
+  populateColumnAttributeInputs();
+  if ( tableColFixed.prop( 'checked' ) ) {
+    toggleAttributeInputTable( colWidthInput, true );
+  }
+  if ( tableIsSortable.prop( 'checked' ) ) {
+    toggleAttributeInputTable( colSortTypeInput, true );
+  }
+
 
   if ( 'resize' in window.jQuery( window ) ) {
     resizeHeight( getHeight() );
@@ -513,6 +660,18 @@ class RichTextTableInput {
         </div>
       </div>
       <br/>
+
+      <table id="${ id }-fixed-width-column-input">
+        <tbody>
+          <tr></tr>
+        </tbody>
+      </table>
+
+      <table id="${ id }-sortable-input">
+        <tbody>
+          <tr></tr>
+        </tbody>
+      </table>
 
       <div id="${ id }-handsontable-container"></div>
       <input type="hidden" name="${ name }" id="${ id }" placeholder="Table">

@@ -67,3 +67,6 @@ class AtomicTableBlock(TableBlock):
         icon = 'table'
         template = '_includes/organisms/table.html'
         label = 'Table'
+
+    class Media:
+        js = ['table.js']
