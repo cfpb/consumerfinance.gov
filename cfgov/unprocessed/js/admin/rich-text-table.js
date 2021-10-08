@@ -365,6 +365,7 @@ function initAtomicTable( id, tableOptions ) {
   };
 
   const populateColumnAttributeInputs = function() {
+    // New tables have no column width data, so we need to count columns instead
     const colCount = columnWidths ? columnWidths.length : hot.countCols();
     for ( let index = 0; index < colCount; index++ ) {
       const colWidthValue = columnWidths ? columnWidths[index] : '';
@@ -467,6 +468,7 @@ function initAtomicTable( id, tableOptions ) {
   /* Custom handlers for adding and removing columns that also add and remove
      column attributes for the new or removed column */
   const handleCreateCol = function( index, amount ) {
+    // A newly inserted first column will have an index of 0
     const newColIndex = index - 1 < 0 ? 0 : index - 1;
     const colWidthInputCell = colWidthInput.find( 'td:eq(' + newColIndex + ')' );
     const colSortTypeCell = colSortTypeInput.find( 'td:eq(' + newColIndex + ')' );
