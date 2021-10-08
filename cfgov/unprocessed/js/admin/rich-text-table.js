@@ -236,8 +236,8 @@ function initAtomicTable( id, tableOptions ) {
         <option value="">None</option>
         <option value="string">Alphabetical</option>
         <option value="number">Numerical</option>
-        <option value="string-default">Alphabetical - Default</option>
-        <option value="number-default">Numerical - Default</option>
+        <option value="string-default">Alphabetical and sort initially</option>
+        <option value="number-default">Numerical and sort initially</option>
       </select>
     </td>
   ` );
