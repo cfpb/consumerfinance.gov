@@ -210,6 +210,37 @@ function initAtomicTable( id, tableOptions ) {
   const tableIsSortable = window.jQuery( '#' + id + '-handsontable-sortable' );
   const colWidthInput = window.jQuery( '#' + id + '-fixed-width-column-input' );
   const colSortTypeInput = window.jQuery( '#' + id + '-sortable-input' );
+  const colWidthSelector = window.jQuery( `
+    <td>
+      <select class="column-width-input">
+        <option value="">Flexible width</option>
+        <option value="u-w10pct">10%</option>
+        <option value="u-w20pct">20%</option>
+        <option value="u-w25pct">25%</option>
+        <option value="u-w30pct">30%</option>
+        <option value="u-w33pct">33%</option>
+        <option value="u-w40pct">40%</option>
+        <option value="u-w50pct">50%</option>
+        <option value="u-w60pct">60%</option>
+        <option value="u-w66pct">66%</option>
+        <option value="u-w70pct">70%</option>
+        <option value="u-w75pct">75%</option>
+        <option value="u-w80pct">80%</option>
+        <option value="u-w90pct">90%</option>
+      </select>
+    </td>
+  ` );
+  const colSortSelector = window.jQuery( `
+    <td>
+      <select class="sortable-type-input">
+        <option value="">None</option>
+        <option value="string">Alphabetical</option>
+        <option value="number">Numerical</option>
+        <option value="string-default">Alphabetical - Default</option>
+        <option value="number-default">Numerical - Default</option>
+      </select>
+    </td>
+  ` );
 
   /* Initialize the field values based on the JSON data in this table
      block's hidden field. */
@@ -285,6 +316,17 @@ function initAtomicTable( id, tableOptions ) {
     return cellsClassnames;
   };
 
+  /* Custom function to get column widths and sort types for all columns */
+  const getColAttributes = function( colAttributeTable ) {
+    let colAttributes = [];
+    const selectedAttributes = colAttributeTable.find( 'option:selected' );
+    selectedAttributes.each( index => {
+      const selectedAttribute = selectedAttributes[index].value;
+      colAttributes.push( selectedAttribute );
+    } );
+    return colAttributes;
+  };
+
   /* Persist field values back to the JSON data in this table block's hidden
      field's JSON. This function is then called by event handling functions
      defined below. */
@@ -306,7 +348,10 @@ function initAtomicTable( id, tableOptions ) {
       is_stacked: stackOnMobile.prop( 'checked' ),
       is_full_width: tableFullWidth.prop( 'checked' ),
       fixed_col_widths: tableColFixed.prop( 'checked' ),
-      is_sortable: tableIsSortable.prop( 'checked' )
+      is_sortable: tableIsSortable.prop( 'checked' ),
+      column_widths: getColAttributes( colWidthInput ),
+      sortable_types: getColAttributes( colSortTypeInput )
+
     } ) );
     console.log( 'Persisted', hiddenStreamInput.val() );
   };
@@ -321,42 +366,17 @@ function initAtomicTable( id, tableOptions ) {
 
   const populateColumnAttributeInputs = function() {
     const colCount = columnWidths ? columnWidths.length : hot.countCols();
-    const colWidthSelector = window.jQuery( `
-      <td>
-        <select class="column-width-input">
-          <option value="">Flexible width</option>
-          <option value="u-w10pct">10%</option>
-          <option value="u-w20pct">20%</option>
-          <option value="u-w25pct">25%</option>
-          <option value="u-w30pct">30%</option>
-          <option value="u-w33pct">33%</option>
-          <option value="u-w40pct">40%</option>
-          <option value="u-w50pct">50%</option>
-          <option value="u-w60pct">60%</option>
-          <option value="u-w66pct">66%</option>
-          <option value="u-w70pct">70%</option>
-          <option value="u-w75pct">75%</option>
-          <option value="u-w80pct">80%</option>
-          <option value="u-w90pct">90%</option>
-        </select>
-      </td>
-    ` ).on( 'change', () => { console.log( 'width change' ); } );
-    const colSortSelector = window.jQuery( `
-      <td>
-        <select class="sortable-type-input">
-          <option value="">None</option>
-          <option value="string">Alphabetical</option>
-          <option value="number">Numerical</option>
-          <option value="string-default">Alphabetical - Default</option>
-          <option value="number-default">Numerical - Default</option>
-        </select>
-      </td>
-    ` ).on( 'change', () => { console.log( 'sort change' ); } );
     for ( let index = 0; index < colCount; index++ ) {
       const colWidthValue = columnWidths ? columnWidths[index] : '';
       const colSortType = colSortTypes ? colSortTypes[index] : '';
-      const colWidthSelectorClone = colWidthSelector.clone( true );
-      const colSortSelectorClone = colSortSelector.clone( true );
+      const colWidthSelectorClone =
+        colWidthSelector
+          .clone( true )
+          .on( 'change', () => { persist(); } );
+      const colSortSelectorClone =
+      colSortSelector
+        .clone( true )
+        .on( 'change', () => { persist(); } );
       colWidthSelectorClone
         .find( 'select option[value="' + colWidthValue + '"]' )
         .prop('selected', true);
