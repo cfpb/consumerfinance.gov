@@ -371,12 +371,12 @@ function initAtomicTable( id, tableOptions ) {
       const colSortType = colSortTypes ? colSortTypes[index] : '';
       const colWidthSelectorClone =
         colWidthSelector
-          .clone( true )
+          .clone()
           .on( 'change', () => { persist(); } );
       const colSortSelectorClone =
-      colSortSelector
-        .clone( true )
-        .on( 'change', () => { persist(); } );
+        colSortSelector
+          .clone()
+          .on( 'change', () => { persist(); } );
       colWidthSelectorClone
         .find( 'select option[value="' + colWidthValue + '"]' )
         .prop('selected', true);
@@ -419,6 +419,7 @@ function initAtomicTable( id, tableOptions ) {
   tableFullWidth.on( 'change', () => { persist(); } );
   tableColFixed.on( 'change', () => { handleColumnAttributeChange( event ); } );
   tableIsSortable.on( 'change', () => { handleColumnAttributeChange( event ); } );
+  // Change handlers for column widths and sort types are in populateColumnAttributeInputs
 
   /* The rest of this function is duplicated from Wagtail's initTable
      implementation in order to extend it to add extra fields. Those fields
@@ -463,12 +464,41 @@ function initAtomicTable( id, tableOptions ) {
     persist();
   };
 
+  /* Custom handlers for adding and removing columns that also add and remove
+     column attributes for the new or removed column */
+  const handleCreateCol = function(index, amount ) {
+    const newColIndex = index - 1 < 0 ? 0 : index - 1;
+    const colWidthInputCell = colWidthInput.find( 'td:eq(' + newColIndex + ')' );
+    const colSortTypeCell = colSortTypeInput.find( 'td:eq(' + newColIndex + ')' );
+    const colWidthSelectorClone =
+      colWidthSelector
+        .clone()
+        .on( 'change', () => { persist(); } );
+    const colSortSelectorClone =
+      colSortSelector
+        .clone()
+        .on( 'change', () => { persist(); } );
+    if ( newColIndex === 0 ) {
+      colWidthInputCell.before( colWidthSelectorClone );
+      colSortTypeCell.before( colSortSelectorClone );
+    } else {
+      colWidthInputCell.after( colWidthSelectorClone );
+      colSortTypeCell.after( colSortSelectorClone );
+    }
+    structureEvent( index, amount );
+  };
+  const handleRemoveCol = function(index, amount ) {
+    colWidthInput.find( 'td:eq(' + index + ')' ).remove();
+    colSortTypeInput.find( 'td:eq(' + index + ')' ).remove();
+    structureEvent( index, amount );
+  };
+
   const finalOptions = {};
   const defaultOptions = {
     afterChange: cellEvent,
-    afterCreateCol: structureEvent,
+    afterCreateCol: handleCreateCol,
     afterCreateRow: structureEvent,
-    afterRemoveCol: structureEvent,
+    afterRemoveCol: handleRemoveCol,
     afterRemoveRow: structureEvent,
     afterSetCellMeta: metaEvent,
     afterInit: initEvent
