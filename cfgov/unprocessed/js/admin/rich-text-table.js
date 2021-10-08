@@ -1,4 +1,4 @@
-/* eslint-disable max-lines-per-function, complexity, max-statements, require-jsdoc, func-style */
+/* eslint-disable max-lines-per-function, complexity, max-statements, require-jsdoc, func-style, no-empty-function */
 
 import { stateToHTML } from 'draft-js-export-html';
 
@@ -379,10 +379,10 @@ function initAtomicTable( id, tableOptions ) {
           .on( 'change', () => { persist(); } );
       colWidthSelectorClone
         .find( 'select option[value="' + colWidthValue + '"]' )
-        .prop('selected', true);
+        .prop( 'selected', true );
       colSortSelectorClone
         .find( 'select option[value="' + colSortType + '"]' )
-        .prop('selected', true);
+        .prop( 'selected', true );
       colWidthInput
         .find( 'tr' )
         .append( colWidthSelectorClone );
@@ -466,7 +466,7 @@ function initAtomicTable( id, tableOptions ) {
 
   /* Custom handlers for adding and removing columns that also add and remove
      column attributes for the new or removed column */
-  const handleCreateCol = function(index, amount ) {
+  const handleCreateCol = function( index, amount ) {
     const newColIndex = index - 1 < 0 ? 0 : index - 1;
     const colWidthInputCell = colWidthInput.find( 'td:eq(' + newColIndex + ')' );
     const colSortTypeCell = colSortTypeInput.find( 'td:eq(' + newColIndex + ')' );
@@ -487,7 +487,7 @@ function initAtomicTable( id, tableOptions ) {
     }
     structureEvent( index, amount );
   };
-  const handleRemoveCol = function(index, amount ) {
+  const handleRemoveCol = function( index, amount ) {
     colWidthInput.find( 'td:eq(' + index + ')' ).remove();
     colSortTypeInput.find( 'td:eq(' + index + ')' ).remove();
     structureEvent( index, amount );
