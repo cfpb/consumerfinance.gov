@@ -17,8 +17,8 @@
   },
   "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead, ie >= 11",
   "dependencies": {
-    "@babel/core": "7.15.5",
-    "@babel/preset-env": "7.15.6",
+    "@babel/core": "7.15.8",
+    "@babel/preset-env": "7.15.8",
     "@cfpb/browserslist-config": "0.0.1",
     "@cfpb/cfpb-atomic-component": "0.11.0",
     "@cfpb/cfpb-buttons": "0.11.0",
@@ -27,7 +27,7 @@
     "@cfpb/cfpb-forms": "0.11.0",
     "@cfpb/cfpb-grid": "0.11.0",
     "@cfpb/cfpb-icons": "0.11.0",
-    "@cfpb/cfpb-layout": "0.11.0",
+    "@cfpb/cfpb-layout": "0.11.3",
     "@cfpb/cfpb-notifications": "0.11.2",
     "@cfpb/cfpb-pagination": "0.11.0",
     "@cfpb/cfpb-tables": "0.11.0",
@@ -75,7 +75,7 @@
     "svg-inline-loader": "0.8.2",
     "terser-webpack-plugin": "5.2.4",
     "vinyl-named": "1.1.0",
-    "webpack": "5.57.1",
+    "webpack": "5.58.1",
     "webpack-stream": "7.0.0",
     "xdr": "0.5.3"
   },
@@ -89,7 +89,7 @@
     "jest-cli": "26.6.3",
     "jsdoc": "3.6.7",
     "minimist": "1.2.5",
-    "snyk": "1.731.0",
+    "snyk": "1.733.0",
     "through2": "4.0.2"
   },
   "resolutions": {
