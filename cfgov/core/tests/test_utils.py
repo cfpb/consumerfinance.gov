@@ -156,6 +156,30 @@ class LinkUtilsTests(SimpleTestCase):
         signed_url = signed_redirect(url)
         self.check_external_link(signed_url, expected_pretty_href=url)
 
+    def test_external_link_if_link_already_includes_left_icon(self):
+        url = 'https://example.com'
+        tag = (
+            f'<a class="a-link" href="{url}">'
+            '<svg></svg>'
+            '<span class="a-link_text">foo</span>'
+            '</a>'
+        )
+        path = '/about-us/blog/'
+
+        expected_href = signed_redirect(url)
+        expected_html = (
+            '<a class="a-link a-link__icon" '
+            'data-pretty-href="https://example.com" '
+            f'href="{expected_href}">'
+            '<svg></svg>'
+            '<span class="a-link_text">foo</span> '
+            f'{self.external_link_icon}'
+            '</a>'
+        )
+
+        expected_tag = BeautifulSoup(expected_html, 'html.parser')
+        self.assertEqual(add_link_markup(tag, path), str(expected_tag))
+
     def test_ask_short_url(self):
         # Valid Ask CFPB URLs
         urls = [
