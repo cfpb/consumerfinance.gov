@@ -50,8 +50,8 @@ const urlParameters = {
 
   'wkst': 'financialModel.workStudy_workStudy',
 
-  'fell': 'financialModel.fund_fellowship',
-  'asst': 'financialModel.fund_assistantship',
+  'fell': 'financialModel.fellowAssist_fellowship',
+  'asst': 'financialModel.fellowAssist_assistantship',
 
   'subl': 'financialModel.fedLoan_directSub',
   'unsl': 'financialModel.fedLoan_directUnsub',

@@ -42,7 +42,8 @@ const stateModel = {
     programDependency: 'not-selected',
     programProgress: 'not-selected',
     repayMeterCohort: 'cohortRankByHighestDegree',
-    repayMeterCohortName: 'U.S.'
+    repayMeterCohortName: 'U.S.',
+    initialQuery: null
   },
   textVersions: {
     programType: {

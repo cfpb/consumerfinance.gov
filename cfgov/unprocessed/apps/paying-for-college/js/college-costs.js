@@ -20,24 +20,25 @@ import { updateState } from './dispatchers/update-state.js';
 /**
  * Initialize the app
  */
-const init = function() {
+function init() {
   const body = document.querySelector( 'body' );
   const query = getQueryVariables();
+
+  expensesModel.init( body );
   constantsModel.init();
-  expensesModel.init();
+  expensesView.init();
   financialModel.init();
   schoolView.init( body );
-  expensesView.init( body );
   financialView.init();
   navigationView.init( body, query.iped );
   chartView.init( body );
   appView.init();
   Expandable.init();
 
-  updateModelsFromQueryString( query );
-
   financialView.updateFinancialItems();
   appView.updateUI();
-};
+
+  updateModelsFromQueryString( query );
+}
 
 window.addEventListener( 'load', init );
