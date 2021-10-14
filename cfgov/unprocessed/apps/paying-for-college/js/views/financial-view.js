@@ -151,7 +151,7 @@ function _handleCostsButtonClick( event ) {
   const target = event.target;
   let answer = '';
 
-  if ( checkedButton != null ) {
+  if ( checkedButton !== null ) {
     answer = checkedButton.value;
 
     // When the button is clicked, bring in school data if 'No'
