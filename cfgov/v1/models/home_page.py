@@ -203,6 +203,7 @@ class HomePageInfoUnitLink(Orderable):
         FieldPanel('url'),
     ]
 
+
 # Deprecated
 class HomePageCard(Orderable):
     @property
