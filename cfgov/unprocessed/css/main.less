@@ -158,4 +158,32 @@
 
 .content-grid {
    display: grid;
+   grid-template-areas:
+      "header"
+      "main-content"
+      "footer";
+
+   .o-header {
+      grid-area: header;
+   }
+
+   #main {
+      grid-area: main-content;
+   }
+
+   .o-footer {
+      grid-area: footer;
+   }
+}
+
+.content-grid_inset {
+   width: 932px;
+}
+
+.u-text-centered {
+   text-align: center;
+}
+
+.o-card-group__flow .o-card-group_cards {
+   justify-content: center;
 }
