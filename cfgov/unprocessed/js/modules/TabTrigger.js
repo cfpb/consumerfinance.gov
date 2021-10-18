@@ -29,7 +29,10 @@ function TabTrigger( element ) {
   function _handleFocusOut( event ) {
     /* If focus is still in the element, do nothing.
        The relatedTarget parameter is the EventTarget losing focus. */
-    if ( element.contains( event.relatedTarget ) ) return false;
+    if ( event.relatedTarget === null ||
+         element.contains( event.relatedTarget ) ) {
+      return false;
+    }
 
     this.dispatchEvent( 'tabPressed' );
     return true;
