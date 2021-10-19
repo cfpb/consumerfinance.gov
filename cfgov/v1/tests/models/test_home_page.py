@@ -13,10 +13,13 @@ class HomePageTests(TestCase):
         self.assertEqual(response.template_name, expected_template)
 
     def test_preview_default_template(self):
-        self.check_preview_template('', 'v1/home_page.html')
+        self.check_preview_template('', 'v1/home_page/home_page.html')
 
     def test_preview_2021_template(self):
-        self.check_preview_template('home_page_2021', 'v1/home_page_2021.html')
+        self.check_preview_template(
+            'home_page_2021',
+            'v1/home_page/home_page_2021.html'
+        )
 
     def test_highlight_card_block_rendering(self):
         block = HighlightCardBlock()
