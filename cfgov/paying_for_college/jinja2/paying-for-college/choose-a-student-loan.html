@@ -43,14 +43,4 @@
 
 {% block javascript scoped %}
     {{ super() }}
-    <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            '{{ static("apps/paying-for-college/js/quiz.js") }}'
-          ];
-          jsl(s);
-        }()
-      }
-    </script>
 {% endblock javascript %}
