@@ -10,11 +10,11 @@ function _handleModalClicks( event ) {
 }
 
 // https://handsontable.com/docs/7.2.2/tutorial-cell-editor.html
-( function( Handsontable ) {
+function richTextTable( Handsontable ) {
   // We're extending the base TextEditor, https://github.com/handsontable/handsontable/blob/master/src/editors/textEditor/textEditor.js
   const RichTextEditor = Handsontable.editors.TextEditor.prototype.extend();
 
-  const draftail_options = {
+  const draftailOptions = {
     entityTypes: [
       {
         type: 'LINK',
@@ -148,7 +148,7 @@ function _handleModalClicks( event ) {
        initialization. */
     window.draftail.initEditor(
       '#' + this.TEXTAREA.id,
-      draftail_options,
+      draftailOptions,
       document.currentScript
     );
 
@@ -182,7 +182,7 @@ function _handleModalClicks( event ) {
   // Register the rich text editor
   Handsontable.editors.RichTextEditor = RichTextEditor;
   Handsontable.editors.registerEditor( 'RichTextEditor', RichTextEditor );
-} )( window.Handsontable );
+}
 
 
 /* Based on Wagtail's initTable. We have to override Wagtail's to add more
@@ -249,9 +249,8 @@ function initAtomicTable( id, tableOptions ) {
   let colSortTypes;
   let dataForForm = null;
   try {
-    console.log( 'Loaded', hiddenStreamInput.val() );
     dataForForm = JSON.parse( hiddenStreamInput.val() );
-  } catch ( e ) {
+  } catch ( err ) {
     // do nothing
   }
   if ( dataForForm !== null ) {
@@ -318,7 +317,7 @@ function initAtomicTable( id, tableOptions ) {
 
   /* Custom function to get column widths and sort types for all columns */
   const getColAttributes = function( colAttributeTable ) {
-    let colAttributes = [];
+    const colAttributes = [];
     const selectedAttributes = colAttributeTable.find( 'option:selected' );
     selectedAttributes.each( index => {
       const selectedAttribute = selectedAttributes[index].value;
@@ -331,7 +330,6 @@ function initAtomicTable( id, tableOptions ) {
      field's JSON. This function is then called by event handling functions
      defined below. */
   const persist = function() {
-    console.log( 'Persisting' );
     hiddenStreamInput.val( JSON.stringify( {
       // Wagtail's built-in fields
       data: hot.getData(),
@@ -353,7 +351,6 @@ function initAtomicTable( id, tableOptions ) {
       sortable_types: getColAttributes( colSortTypeInput )
 
     } ) );
-    console.log( 'Persisted', hiddenStreamInput.val() );
   };
 
   const toggleAttributeInputTable = function( attributeInputTable, isAttributeEnabled ) {
@@ -521,7 +518,10 @@ function initAtomicTable( id, tableOptions ) {
     finalOptions[key] = tableOptions[key];
   } );
 
-  hot = new window.Handsontable( document.getElementById( containerId ), finalOptions );
+  hot = new window.Handsontable(
+    document.getElementById( containerId ),
+    finalOptions
+  );
   hot.render();
 
   populateColumnAttributeInputs();
@@ -698,5 +698,9 @@ class RichTextTableInput {
     return widget;
   }
 }
-window.telepath.register( 'v1.widgets.RichTextTableInput', RichTextTableInput );
 
+if ( window.telepath ) window.telepath.register( 'v1.widgets.RichTextTableInput', RichTextTableInput );
+
+if ( window.Handsontable ) richTextTable( window.Handsontable );
+
+export default { richTextTable, initAtomicTable, RichTextTableInput };
