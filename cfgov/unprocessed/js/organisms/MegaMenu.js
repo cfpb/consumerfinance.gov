@@ -90,10 +90,10 @@ function MegaMenu( element ) {
       _mobileNav.resume();
     }
 
-    _dom.classList.remove( 'u-hidden' );
-
     _tabTrigger.init();
     _tabTrigger.addEventListener( 'tabPressed', _handleTabPress );
+
+    _dom.classList.remove( 'u-hidden' );
 
     return this;
   }
@@ -192,7 +192,9 @@ function MegaMenu( element ) {
    * @returns {MegaMenu} An instance.
    */
   function collapse() {
-    if ( !viewportIsIn( DESKTOP ) ) {
+    if ( viewportIsIn( DESKTOP ) ) {
+      _desktopNav.collapse();
+    } else {
       _mobileNav.collapse();
     }
 
