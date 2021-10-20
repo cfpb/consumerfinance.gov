@@ -60,73 +60,38 @@
         {% endif %}
     </section>
 
+    {% if content.answers %}
     <section class="block u-text-centered">
-        <h1><b>Find answers</b> to your money questions</h1>
+        <h1>
+            {{- content.answers.heading_strong }}
+            {{ content.answers.heading -}}
+        </h1>
     </section>
 
     <section class="block">
         <div class="o-well u-text-centered">
-            <h2>Popular money topics</h2>
+            <h2>{{ content.answers.subheading }}</h2>
             <div class="o-card-group o-card-group__flow">
                 <div class="o-card-group_cards">
-                    <article class="m-card m-card__topic">
-                      <a href="#">
+                    {% for topic in content.answers.topics %}
+                    <article class="m-card m-card__topic
+                        {%- if loop.last %} m-card__topic-action{% endif -%}
+                    ">
+                    <a href="{{ topic.url }}">
                           <div class="m-card_icon">
-                              {{ svg_icon('idea') }}
+                              {{ svg_icon( 'arrow-right-round' if loop.last else 'idea' ) }}
                           </div>
                           <div class="m-card_footer">
-                              <span>Credit reports</span>
+                              <span>{{ topic.text }}</span>
                           </div>
                       </a>
                     </article>
-
-                    <article class="m-card m-card__topic">
-                      <a href="#">
-                          <div class="m-card_icon">
-                              {{ svg_icon('idea') }}
-                          </div>
-                          <div class="m-card_footer">
-                              <span>Debt collection</span>
-                          </div>
-                      </a>
-                    </article>
-
-                    <article class="m-card m-card__topic">
-                      <a href="#">
-                          <div class="m-card_icon">
-                              {{ svg_icon('idea') }}
-                          </div>
-                          <div class="m-card_footer">
-                              <span>Mortgages</span>
-                          </div>
-                      </a>
-                    </article>
-
-                    <article class="m-card m-card__topic">
-                      <a href="#">
-                          <div class="m-card_icon">
-                              {{ svg_icon('idea') }}
-                          </div>
-                          <div class="m-card_footer">
-                              <span>Credit cards</span>
-                          </div>
-                      </a>
-                    </article>
-
-                    <article class="m-card m-card__topic m-card__topic-action">
-                      <a href="#">
-                          <div class="m-card_icon">
-                              {{ svg_icon('arrow-right-round') }}
-                          </div>
-                          <div class="m-card_footer">
-                              <span>See all money topics</span>
-                          </div>
-                      </a>
-                  </article>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </section>
+    {% endif %}
 
     <section class="content-grid_inset">
         <section class="block">
