@@ -8,5 +8,5 @@ from paying_for_college.models.disclosures import (
     make_divisible_by_6
 )
 from paying_for_college.models.pages import (
-    CollegeCostsPage, RepayingStudentDebtPage, StudentLoanQuizPage
+    CollegeCostsPage, RepayingStudentDebtPage
 )
