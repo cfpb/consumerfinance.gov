@@ -218,22 +218,25 @@ export class AdminPage {
     return cy.get( '.htCore td' ).first();
   }
 
-  getTableModal() {
-    // Retry while element css has the "display: none" property
-    cy.get( '.table-block-modal', { timeout: 60000 } )
-      .should( 'not.have.css', 'display', 'none' )
-      .as( 'tableModal' );
+  getTableEditor() {
+    cy.get( '.handsontableInputHolder', { timeout: 60000 } )
+    // Make sure the editor isn't hidden
+      .should( 'not.have.css', 'z-index', '-1' )
+      .as( 'tableEditor' );
   }
 
-  selectFirstTableCell() {
+  editFirstTableCell() {
     cy.get( '.htCore td' ).first().as( 'firstTableCell' );
-    cy.get( '@firstTableCell' ).click( { force: true } ).click( { force: true } );
-    this.getTableModal();
+
+    /* We need to click near the top left of the cell, otherwise we'll click on
+    a link once a link has been inserted in the cell */
+    cy.get( '@firstTableCell' ).dblclick( 5, 5 );
+    this.getTableEditor();
   }
 
   selectTableEditorButton( name ) {
-    cy.get( '@tableModal' ).find( `[name="${ name }"]` )
-      .click( { force: true } );
+    cy.get( '@tableEditor' ).find( `[name="${ name }"]` )
+      .click();
   }
 
   searchFirstTableCell( name ) {
@@ -241,29 +244,19 @@ export class AdminPage {
   }
 
   closeTableEditor() {
-    cy.get( '#close-table-block-modal-btn' ).click( { force: true } );
-  }
-
-  saveTableEditor() {
-    // Wait for editor to register entered text before saving.
-    cy.wait( 1000 );
-    cy.get( '@tableModal', { timeout: 60000 } )
-      .should( 'be.visible' )
-      .find( '#table-block-save-btn' )
-      .click();
-  }
-
-  selectTableEditorTextbox() {
-    return cy.get( '@tableModal' )
-      .find( '.public-DraftEditor-content' )
-      .click();
+    /* Clicking anywhere outside the editor closes it, so we'll just click
+       on the very bottom right of the content container */
+    cy.get( '.content' )
+      .click( 'bottomRight', { force: true } );
   }
 
   typeTableEditorTextbox( text ) {
-    /* Wait for Wagtail JS to finish initializing.
-       If we don't, it interrupts the typing. */
-    return cy.get( '.public-DraftEditor-content' )
-      .last().focus().type( text, { force: true } );
+    return cy.get( '@tableEditor' )
+      .find( '.public-DraftEditor-content' )
+      .focus()
+      .type( text )
+      // We need to wait for a bit or the typed text won't be captured
+      .wait( 500 );
   }
 
   selectInternalLink( text ) {
@@ -278,5 +271,6 @@ export class AdminPage {
     cy.get( '.document-choice' ).should( 'contain', text );
     cy.get( '#search-results' ).should( 'contain', 'There is 1 match' );
     cy.get( '#search-results', { timeout: 10000 } ).contains( text ).click();
+    cy.wait( 1000 );
   }
 }
