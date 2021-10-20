@@ -46,3 +46,8 @@ class TestAtomicTableBlock(TestCase):
         block = AtomicTableBlock()
         result = block.render(value)
         self.assertIn(u'H\xebader', result)
+
+    def test_get_field(self):
+        block = AtomicTableBlock()
+        field = block.field
+        self.assertEqual(field.widget.__class__, RichTextTableInput)
