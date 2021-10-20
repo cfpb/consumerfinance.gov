@@ -60,7 +60,6 @@
         {% endif %}
     </section>
 
-    {% if content.answers %}
     <section class="block u-text-centered">
         <h1>
             {{- content.answers.heading_strong }}
@@ -91,7 +90,6 @@
             </div>
         </div>
     </section>
-    {% endif %}
 
     <section class="content-grid_inset">
         <section class="block">
@@ -101,7 +99,7 @@
                     <div class="content-l_col content-l_col-1-2">
                         <div class="m-info-unit">
                             <div class="m-info-unit_heading-text">
-                                <h3>Answers to common questions</h3>
+                                <h3>{{ content.answers.questions_heading }}</h3>
                             </div>
                             <div class="m-info-unit_content">
                                 <ul>
@@ -113,7 +111,9 @@
                                     </li>
                                     {% endfor %}
                                     <li class="m-list_item">
-                                        <a href="/ask-cfpb/"><b>Browse more answers</b></a>
+                                        <a href="{{ content.answers.more.url }}">
+                                            <b>{{ content.answers.more.text }}</b>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -124,17 +124,24 @@
                     <div class="content-l_col {{ 'content-l_col-1-2' if page.answer_page_links else 'content-l_col-1' }}">
                         <div class="m-info-unit">
                             <div class="m-info-unit_heading-text">
-                                <h3>{{ svg_icon('open-quote') }} Dealing with credit reporting errors: Jorge's story</h3>
+                                <h3>
+                                    {{- svg_icon('open-quote') }}
+                                    {{ content.answers.story.heading -}}
+                                </h3>
                             </div>
                             <div class="m-info-unit_content">
                                 <p>
-                                    More than ten years after filing for bankruptcy, Jorge found that the bankruptcy was still showing up on his credit report. After getting nowhere with the reporting agency, Jorge reached out to the CFPB.
-                                    <a href="">Hear Jorge’s story</a>
+                                    {{ content.answers.story.text }}
+                                    <a href="{{ content.answers.story.link.url }}">
+                                        {{- content.answers.story.link.text -}}
+                                    </a>
                                 </p>
 
                                 <p>
-                                    Have a story you’d like us to share with others? We’re listening.
-                                    <a href="">Hear Jorge’s story</a>
+                                    {{ content.answers.story.cta_text }}
+                                    <a href="{{ content.answers.story.cta_link.url }}">
+                                        {{- content.answers.story.cta_link.text -}}
+                                    </a>
                                 </p>
                             </div>
                         </div>
