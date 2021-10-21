@@ -8,7 +8,7 @@ from django.template.response import TemplateResponse
 from django.utils import timezone, translation
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,

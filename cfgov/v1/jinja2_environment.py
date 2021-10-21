@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
 from django.urls import reverse
-from django.utils.translation import ugettext, ungettext
+from django.utils.translation import gettext, ngettext
 
 from jinja2 import Environment
 
@@ -57,11 +57,11 @@ class RelativeTemplatePathEnvironment(Environment):
 
 
 class JinjaTranslations(object):
-    def ugettext(self, message):
-        return ugettext(message)
+    def gettext(self, message):
+        return gettext(message)
 
-    def ungettext(self, singular, plural, number):
-        return ungettext(singular, plural, number)
+    def ngettext(self, singular, plural, number):
+        return ngettext(singular, plural, number)
 
 
 def environment(**options):

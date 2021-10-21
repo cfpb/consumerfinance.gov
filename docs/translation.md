@@ -47,7 +47,7 @@ In Django templates:
 In Python code:
 
 ```python
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 mystring = _("Hello World!")
 ```
