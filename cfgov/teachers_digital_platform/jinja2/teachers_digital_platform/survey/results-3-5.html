@@ -15,10 +15,10 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-    <div class="content_wrapper">
+    <div class="content_wrapper tdp-survey" data-tdp_grade_level="3-5">
         <div data-tdp-page="results"
              data-grade-select-url="{{ gradeSelectUrl }}"
-             class="content_main tdp-survey-results">
+             class="content_main tdp-survey-results{{ '' if is_student else ' tdp-survey-results--shared' }}">
         {% set overall = content.find_overall_progress(score) %}
         {% set bbs = content.building_blocks() %}
 
@@ -188,8 +188,7 @@
             <p>Which path is your strongest? Which one do you want to work on?</p>
 
             <h4>What now?</h4>
-            <p>Use the <a
-                href="https://files.consumerfinance.gov/f/documents/cfpb_building_block_activities_elementary-school-assessment-student-worksheet.pdf">Taking
+            <p>Use the <a target="_blank" rel="noopener noreferrer" href="https://files.consumerfinance.gov/f/documents/cfpb_building_block_activities_elementary-school-assessment-student-worksheet.pdf">Taking
                 the next steps on your money journey</a> worksheet to think about your
                 strengths and set goals to get the money future you want. Talk with your teacher,
                 your parents, or another trusted adult about your money map. They can also help
@@ -204,7 +203,7 @@
         {% if is_student %}
         <div class="survey-reset--link--wrap">
             <p>
-                <button class="a-btn a-btn__link a-btn__warning" data-open-modal="modal-reset">
+                <button class="a-btn a-btn__link a-btn__warning" data-open-modal="modal-reset" type="button">
                     Reset survey and start over
                 </button>
             </p>

@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@cfpb/rental-assistance-finder@0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/rental-assistance-finder/-/rental-assistance-finder-0.3.2.tgz#9995fe27538f2eb682a7c39e218efed1bda5e1d1"
-  integrity sha512-CkHPyfl/5kyAg+0STrfXe1Bw27HrMqhUNynnUor8vs/mDRvpXxT93s64dApAYNy97EoV1CIAFdhppNoHkR9Lgg==
+"@cfpb/rental-assistance-finder@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/rental-assistance-finder/-/rental-assistance-finder-0.4.0.tgz#fd06695d2798f734a1f972125f593419943bbed9"
+  integrity sha512-XHQHh/g5SQ3SWY2F4gWGcx+y8UeGEH+qb5D9Q9Q0//5osOPiwtm8qc0F/85Rp4r61eRukaMamPDqNdM1qEdYMQ==

@@ -208,27 +208,29 @@
     </div>
   </div>
 </div>
-<div class="block block__bg block__flush-top block__flush-bottom">
-  <div class="content-l">
-    <div class="content-l_col content-l_col-2-3">
-      <h3>
-        Past changes to the database
-      </h3>
-      <p>
-        In April 2017, we made some changes to the way products, sub-products, issues, and sub-issues are grouped. The Consumer Complaint Database shows the consumer’s original products, sub-products, issues, and sub-issues selections consistent with the options available on the form at the time the consumer submitted the complaint.
-      </p>
-      <ul class="m-list m-list__links">
-        <li class="m-list_item">
-          <a class="a-link a-link__icon" href="https://files.consumerfinance.gov/f/documents/201704_cfpb_Summary_of_Product_and_Sub-product_Changes.pdf">
-            <span class="a-link_text">Learn more about complaint form changes to products, sub-products, issues, and sub-issues</span>
-          </a>
-        </li>
-        <li class="m-list_item">
-          <a class="a-link a-link__icon" href="https://files.consumerfinance.gov/f/documents/201704_cfpb_Consumer_Complaint_Form_Product_and_Issue_Options.pdf">
-            <span class="a-link_text">View full list of complaint form products, sub-products, issues, and sub-issues</span>
-          </a>
-        </li>
-      </ul>
+<div class="block block__flush-top block__flush-bottom">
+  <div class="o-well">
+    <div class="content-l">
+      <div class="content-l_col content-l_col-2-3">
+        <h3>
+          Past changes to the database
+        </h3>
+        <p>
+          In April 2017, we made some changes to the way products, sub-products, issues, and sub-issues are grouped. The Consumer Complaint Database shows the consumer’s original products, sub-products, issues, and sub-issues selections consistent with the options available on the form at the time the consumer submitted the complaint.
+        </p>
+        <ul class="m-list m-list__links">
+          <li class="m-list_item">
+            <a class="a-link a-link__icon" href="https://files.consumerfinance.gov/f/documents/201704_cfpb_Summary_of_Product_and_Sub-product_Changes.pdf">
+              <span class="a-link_text">Learn more about complaint form changes to products, sub-products, issues, and sub-issues</span>
+            </a>
+          </li>
+          <li class="m-list_item">
+            <a class="a-link a-link__icon" href="https://files.consumerfinance.gov/f/documents/201704_cfpb_Consumer_Complaint_Form_Product_and_Issue_Options.pdf">
+              <span class="a-link_text">View full list of complaint form products, sub-products, issues, and sub-issues</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
@@ -303,10 +305,9 @@
 
 {% block javascript scoped %}
     {{ super() }}
-    <script async>
+    <script>
       if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-          {# Include site-wide JavaScript. #}
+        !function() {
           var s = [
             'https://files.consumerfinance.gov/ccdb/metadata.js',
             '{{ static('apps/ccdb-landing-map/js/index.js') }}'

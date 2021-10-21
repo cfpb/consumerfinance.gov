@@ -147,21 +147,26 @@ function _handleInputClick( event ) {
  * @param {MouseEvent} event - Triggering event.
  */
 function _handleCostsButtonClick( event ) {
-  const answer = document.querySelector( 'input[name="costs-offer-radio"]:checked' ).value;
+  const checkedButton = document.querySelector( 'input[name="costs-offer-radio"]:checked' );
   const target = event.target;
+  let answer = '';
 
-  // When the button is clicked, bring in school data if 'No'
-  if ( getStateValue( 'costsQuestion' ) === false ) {
-    updateState.byProperty( 'costsQuestion', answer );
-    // If their offer does not have costs, use the Department of Ed data
-    if ( answer === 'n' ) {
-      updateFinancialsFromSchool();
-    } else {
-      recalculateFinancials();
+  if ( checkedButton !== null ) {
+    answer = checkedButton.value;
+
+    // When the button is clicked, bring in school data if 'No'
+    if ( getStateValue( 'costsQuestion' ) === false ) {
+      updateState.byProperty( 'costsQuestion', answer );
+      // If their offer does not have costs, use the Department of Ed data
+      if ( answer === 'n' ) {
+        updateFinancialsFromSchool();
+      } else {
+        recalculateFinancials();
+      }
     }
-  }
 
-  updateUrlQueryString();
+    updateUrlQueryString();
+  }
 }
 
 export {

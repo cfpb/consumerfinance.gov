@@ -47,10 +47,9 @@
 
 {% block javascript scoped %}
     {{ super() }}
-    <script async>
+    <script>
       if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-          {# Include site-wide JavaScript. #}
+        !function() {
           var s = [
             '{{ static('apps/regulations3k/js/index.js') }}',
             '{{ static('apps/regulations3k/js/recent-notices.js') }}'
