@@ -236,3 +236,20 @@ class RAFToolBlock(blocks.StaticBlock):
 
     class Media:
         js = ['erap/main.js']
+
+
+class RAFTBlock(blocks.StructBlock):
+    county_threshold = blocks.IntegerBlock(
+        required=False,
+        help_text=('Optional: Add a number to determine how many '
+                   'results trigger display of county dropdown '
+                   'for a state.')
+    )
+
+    class Meta:
+        icon = 'cog'
+        label = 'RAF Tool (configurable)'
+        template = '_includes/blocks/raf_tool.html'
+
+    class Media:
+        js = ['erap/main.js']

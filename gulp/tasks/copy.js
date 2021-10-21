@@ -65,7 +65,7 @@ gulp.task( 'copy:lightbox2', () => {
 
 gulp.task( 'copy:erap', () => {
   const stream = _genericCopy(
-    `${ paths.unprocessed }/erap/js/**/*`,
+    `${ paths.unprocessed }/apps/erap/node_modules/@cfpb/rental-assistance-finder/dist/*.js`,
     `${ paths.processed }/js/routes/on-demand/erap`
   );
   return stream;

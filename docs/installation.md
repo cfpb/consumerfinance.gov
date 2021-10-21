@@ -498,8 +498,7 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    then install the latest requested dependencies (`install`).
 
    The `devDependencies` from `package.json` are not installed
-   if the environment is production, and if it's the dev or test environment,
-   it checks to see if Protractor is globally installed.
+   if the environment is production.
 
    Finally, it creates a new checksum for future comparisons.
 1. **Run tasks to build the project for distribution** (`build`)

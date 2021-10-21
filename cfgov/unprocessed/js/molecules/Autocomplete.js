@@ -1,6 +1,7 @@
 // Required modules.
 import { assign } from '../modules/util/assign';
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import { ajaxRequest } from '../modules/util/ajax-request';
 import * as throttle from 'lodash.throttle';
 
@@ -14,7 +15,8 @@ import * as throttle from 'lodash.throttle';
  *   The DOM element within which to search for the molecule.
  * @param {Object} opts optional params, including
  * url for suggestions endpoint or list of suggestions,
- * minChars, onSubmit, renderItem, and cleanQuery functions.
+ * minChars, maxChars, an error message onSubmit, renderItem,
+ * and cleanQuery functions.
  * @returns {Autocomplete} An instance.
  */
 function Autocomplete( element, opts ) {
@@ -24,6 +26,7 @@ function Autocomplete( element, opts ) {
   const HIDDEN_CLASS = 'u-hidden';
   const AUTOCOMPLETE_CLASS = 'm-autocomplete_results';
   const SELECTED_CLASS = 'm-autocomplete_selected';
+  const ERROR_CLASS = 'a-text-input__error';
 
   // Key constants
   const ENTER = 13;
@@ -37,6 +40,8 @@ function Autocomplete( element, opts ) {
   let _suggestions;
   let _isVisible;
   let _selection;
+  let _maxLengthExceeded = false;
+  const _instance = this;
 
   // Autocomplete elements
   const _dom = checkDom( element, BASE_CLASS );
@@ -45,6 +50,10 @@ function Autocomplete( element, opts ) {
   // Settings
   const _settings = {
     minChars: 2,
+    maxChars: _input.getAttribute( 'maxlength' ) ?
+      _input.getAttribute( 'maxlength' ) :
+      // 1024 is our upper limit for Elasticsearch queries
+      1024,
     delay: 300,
     url: '',
     list: [],
@@ -122,22 +131,58 @@ function Autocomplete( element, opts ) {
   }
 
   /**
+   * Toggles the error state and message that's shown when the
+   * max search term length is hit
+   */
+  function _toggleMaxLengthError() {
+    _maxLengthExceeded = _searchTerm.length >= _settings.maxChars ? true :
+      false;
+    if ( _maxLengthExceeded ) {
+      _input.classList.add( ERROR_CLASS );
+
+      /* If you type fast enough, search results from a letter or two back can
+         cover up the max length error, so we'll wait a bit before hiding */
+      setTimeout( _hide, _settings.delay );
+    } else {
+      _input.classList.remove( ERROR_CLASS );
+    }
+    _instance.dispatchEvent( 'maxCharacterChange', {
+      maxLengthExceeded: _maxLengthExceeded,
+      searchTerm: _searchTerm
+    } );
+  }
+
+  /**
+   * Event handler for input into the _input element
+   * @param {InputEvent} event The input event object
+   */
+  function _handleInput( event ) {
+    _searchTerm = event.target.value;
+
+    if ( _maxLengthExceeded === true ) {
+      _toggleMaxLengthError();
+    }
+
+    if ( _searchTerm.length >= _settings.minChars &&
+         _searchTerm.length < _settings.maxChars ) {
+      if ( _settings.url ) {
+        _throttleFetch();
+      } else {
+        _settings.filterList( _settings.list );
+      }
+    } else if ( _searchTerm.length >= _settings.maxChars ) {
+      _toggleMaxLengthError();
+    } else {
+      _hide();
+    }
+  }
+
+  /**
    * Binds input, blur, and keydown events on _input element and
    * resize event on window.
    */
   function _bindEvents() {
-    _input.addEventListener( 'input', function() {
-      _searchTerm = this.value;
-      if ( _searchTerm.length >= _settings.minChars ) {
-        if ( _settings.url ) {
-          _throttleFetch();
-        } else {
-          _settings.filterList( _settings.list );
-        }
-      } else {
-        _hide();
-      }
-    } );
+    _input.addEventListener( 'input', _handleInput );
     _input.addEventListener( 'blur', function() {
       setTimeout( function() {
         const active = document.activeElement;
@@ -307,6 +352,11 @@ function Autocomplete( element, opts ) {
     _reset();
     _hide();
   }
+
+  const eventObserver = new EventObserver();
+  this.addEventListener = eventObserver.addEventListener;
+  this.removeEventListener = eventObserver.removeEventListener;
+  this.dispatchEvent = eventObserver.dispatchEvent;
 
   this.init = init;
 

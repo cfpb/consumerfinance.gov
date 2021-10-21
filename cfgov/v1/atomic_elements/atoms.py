@@ -1,27 +1,31 @@
-from django import forms
 from django.core.exceptions import ValidationError
 
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
+
+from url_or_relative_url_field.forms import URLOrRelativeURLFormField
 
 
 def is_required(field_name):
     return [str(field_name) + ' is required.']
 
 
-class IntegerBlock(blocks.FieldBlock):
-    def __init__(self, required=True, help_text=None, min_value=None,
-                 max_value=None, **kwargs):
-        self.field = forms.IntegerField(
+class URLOrRelativeURLBlock(blocks.FieldBlock):
+    def __init__(
+        self, required=True, help_text=None, max_length=None, min_length=None,
+        validators=(), **kwargs
+    ):
+        self.field = URLOrRelativeURLFormField(
             required=required,
             help_text=help_text,
-            min_value=min_value,
-            max_value=max_value
+            max_length=max_length,
+            min_length=min_length,
+            validators=validators,
         )
-        super(IntegerBlock, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     class Meta:
-        icon = 'plus-inverse'
+        icon = 'site'
 
 
 class Hyperlink(blocks.StructBlock):

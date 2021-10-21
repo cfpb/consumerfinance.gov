@@ -35,6 +35,8 @@ function MegaMenuMobile( menus ) {
   let _activeMenu = null;
   let _activeMenuDom;
 
+  let _rootLinksDom;
+
   // Whether this instance's behaviors are suspended or not.
   let _suspended = true;
 
@@ -48,6 +50,9 @@ function MegaMenuMobile( menus ) {
     _rootMenuContentDom = _rootMenu.getDom().content;
     _activeMenu = _rootMenu;
     _activeMenuDom = _rootMenuContentDom;
+
+    // Make root level links disabled to tab and voiceover navigation on init.
+    _rootLinksDom = _rootMenuContentDom.querySelectorAll( 'a.o-mega-menu_content-1-link,.m-global-eyebrow a' );
 
     return this;
   }
@@ -108,6 +113,7 @@ function MegaMenuMobile( menus ) {
 
     if ( menu === rootMenu ) {
       // Root menu clicked.
+      _enableRootMenuContent();
 
       // Root menu is closing.
       if ( menu.isExpanded() ) {
@@ -117,6 +123,7 @@ function MegaMenuMobile( menus ) {
           transition.moveLeft,
           [ level + 1 ]
         );
+        _disableRootMenuContent();
       }
     } else {
       // Submenu clicked.
@@ -126,12 +133,20 @@ function MegaMenuMobile( menus ) {
         [ level ]
       );
 
+      // Back button on the 2nd level menu clicked.
+      if ( event.trigger.classList.contains( 'o-mega-menu_content-2-alt-trigger' ) ) {
+        _enableRootMenuContent();
+      } else {
+        _disableRootMenuContent();
+      }
+
       if ( level === 1 ) {
         menuNode.data.setCollapseTransition(
           transition,
           transition.moveToOrigin
         );
       } else {
+        // This is only used if we re-add a 3rd level menu.
         menuNode.data.setCollapseTransition(
           transition,
           transition.moveLeft
@@ -245,6 +260,27 @@ function MegaMenuMobile( menus ) {
   }
 
   /**
+   * Hide the root menu content.
+   * This is to prevent tabbing to off-screen content.
+   */
+  function _disableRootMenuContent() {
+    for ( let i = 0, len = _rootLinksDom.length; i < len; i++ ) {
+      _rootLinksDom[i].setAttribute( 'tabindex', '-1' );
+      _rootLinksDom[i].setAttribute( 'aria-hidden', 'true' );
+    }
+  }
+
+  /**
+   * Show the root menu content.
+   */
+  function _enableRootMenuContent() {
+    for ( let i = 0, len = _rootLinksDom.length; i < len; i++ ) {
+      _rootLinksDom[i].removeAttribute( 'tabindex' );
+      _rootLinksDom[i].removeAttribute( 'aria-hidden' );
+    }
+  }
+
+  /**
    * Close the mega menu.
    * @returns {MegaMenuMobile} A instance.
    */
@@ -270,6 +306,8 @@ function MegaMenuMobile( menus ) {
 
       _activeMenu = _rootMenu;
 
+      _disableRootMenuContent();
+
       _suspended = false;
     }
 
@@ -287,6 +325,8 @@ function MegaMenuMobile( menus ) {
       treeTraversal.bfs( _menus.getRoot(), _handleSuspendTraversal );
       _rootMenuContentDom.classList.remove( 'u-invisible' );
       _rootMenuContentDom.classList.remove( 'u-hidden-overflow' );
+
+      _enableRootMenuContent();
 
       /* TODO: Investigate updating this to close the menus directly
          so `_handleCollapseEnd` is fired. */

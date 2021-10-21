@@ -383,6 +383,5 @@ filter_controls = {
             'page_type': '',
         },
         'filter_children': True,
-        'filter_siblings': False,
     }
 }

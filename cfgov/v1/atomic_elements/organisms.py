@@ -36,6 +36,14 @@ class AskSearch(blocks.StructBlock):
         help_text='Whether to show form label.'
     )
 
+    complaint_link = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Direct long searches to submit a complaint',
+        help_text=('Add a link to the complaint submission page to the end of '
+                   'the error message for searches over the max length')
+    )
+
     placeholder = blocks.TextBlock(
         required=False,
         help_text='Text to show for the input placeholder text.'
@@ -896,11 +904,7 @@ class FilterableList(BaseExpandable):
     filter_children = blocks.BooleanBlock(
         default=True,
         required=False,
-        help_text=(
-            "If checked this list will only filter its child pages. "
-            "If both children and siblings are checked, only child pages will "
-            "be filtered."
-        ),
+        help_text='If checked this list will only filter its child pages.'
     )
 
     class Meta:

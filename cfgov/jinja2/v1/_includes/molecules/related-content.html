@@ -42,10 +42,11 @@
         {% for link in value.links %}
             <li class="m-list_item">
                 <a href="{{ link.url }}"
-                   class="m-list_link"
-                   {% if link.aria_label %}aria-label="{{ link.aria_label }}"{% endif %}>
-                    {{ link.text }}
-                </a>
+                  class="m-list_link"
+                  {%- if link.aria_label -%}
+                    aria-label="{{ link.aria_label }}"
+                  {% endif -%}
+                >{{ link.text }}</a>
             </li>
         {% endfor %}
         </ul>

@@ -1,9 +1,9 @@
 {% macro render(hidden_fields, q='') %}
 
 <form action="." data-js-hook="behavior_submit-search">
-    <label class="a-label a-label__heading" for="query">
-        Search term
-    </label>
+    <h2 class="h4">
+        {{ _('Search term') }}
+    </h2>
     <div class="o-form__input-w-btn">
         {% if hidden_fields | length > 0 %}
             <div id="regs3k-hidden-filters">
@@ -16,8 +16,10 @@
         {% endif %}
         <div class="o-form__input-w-btn_input-container">
             <div class="m-btn-inside-input input-contains-label">
-                <label for="query" class="input-contains-label_before input-contains-label_before__search">{{ svg_icon('search') }}</label>
-                <label for="query" class="input-contains-label_after input-contains-label_after__clear u-hidden">{{ svg_icon('search') }}</label>
+                <label for="query" class="input-contains-label_before input-contains-label_before__search">
+                    {{ svg_icon('search') }}
+                    <span class="u-visually-hidden">{{ _('Search') }}</span>
+                </label>
                 <input id="query" name="q" type="text" title="Search terms" class="a-text-input" value="{{ q }}" placeholder="Search terms">
             </div>
         </div>

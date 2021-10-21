@@ -1,0 +1,33 @@
+{% set id = 'modal-privacy' %}
+<div class="o-modal"
+     id="{{ id }}"
+     tabindex="0"
+     aria-hidden="true"
+     role="alertdialog"
+     aria-labelledby="{{ id }}_title"
+     aria-describedby="{{ id }}_desc">
+  <div class="o-modal_backdrop"></div>
+  <div class="o-modal_container">
+    <div class="o-modal_content">
+      <div class="o-modal_body">
+        <button class="o-modal_close a-btn a-btn__link" type="button">
+          Close<span class="a-icon a-icon__large a-icon__space-before">{% include 'icons/close-round.svg' %}</span>
+        </button>
+        <h2 id="{{ id }}_title" class="h3">Privacy Notice</h2>
+        <div id="{{ id }}_desc">
+          <p>The Youth Financial Capability Assessment is provided by the Consumer Financial Protection
+            Bureau (Bureau) as a financial education resource for parents, educators, and students. No
+            information, including personally identifiable information (PII), will be collected by the Bureau.
+            After completing assessment questions there is an optional feature to share assessment results,
+            with the option to include the initials of your name when sharing the assessment results. If you
+            choose to share assessment results, with or without your initials, this information will be
+            transmitted but the Bureau will not collect, view, or maintain any of your PII.</p>
+          <p>Using this tool and sharing assessment results is voluntary.</p>
+        </div>
+      </div>
+      <div class="o-modal_footer">
+        <button class="a-btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

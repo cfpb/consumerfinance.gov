@@ -1016,11 +1016,19 @@ class AnswerPageTest(TestCase):
         )
         self.assertContains(
             english_answer_page_response,
-            "An official website of the United States government",
+            "An official website of the"
+        )
+        self.assertContains(
+            english_answer_page_response,
+            "United States government"
         )
         self.assertNotContains(
             english_answer_page_response,
-            "Un sitio web oficial del gobierno federal de los Estados Unidos",
+            "Un sitio web oficial"
+        )
+        self.assertNotContains(
+            english_answer_page_response,
+            "gobierno federal de los Estados Unidos"
         )
         self.assertContains(english_answer_page_response, "https://usa.gov/")
         self.assertNotContains(
@@ -1036,11 +1044,19 @@ class AnswerPageTest(TestCase):
         )
         self.assertContains(
             spanish_answer_page_response,
-            "Un sitio web oficial del gobierno federal de los Estados Unidos",
+            "Un sitio web oficial"
+        )
+        self.assertContains(
+            spanish_answer_page_response,
+            "gobierno federal de los Estados Unidos"
         )
         self.assertNotContains(
             spanish_answer_page_response,
-            "An official website of the United States government",
+            "An official website of the"
+        )
+        self.assertNotContains(
+            spanish_answer_page_response,
+            "United States government"
         )
         self.assertContains(
             spanish_answer_page_response, "https://gobiernousa.gov/"
@@ -1196,14 +1212,6 @@ class AnswerPageTest(TestCase):
         page.category.add(category)
         page.save_revision()
         self.assertEqual(page.meta_image, self.test_image)
-
-    def test_answer_split_testing_id(self):
-        """Confirm AnswerPage's split_testing_id is set to its answer_base.id,
-        which is checked by the core.feature_flags.in_split_testing_cluster
-        flag condition when doing split testing on Ask CFPB answer pages."""
-        answer = self.answer1234
-        page = answer.english_page
-        self.assertEqual(page.split_test_id, answer.id)
 
     def test_validate_pagination_number(self):
         paginator = Paginator([{"fake": "results"}] * 30, 25)

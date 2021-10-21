@@ -13,6 +13,10 @@
 
 {% macro render( is_large ) %}
 <div class="a-tagline{{ ' a-tagline__large' if is_large else '' }}">
-	{{ _('An official website of the United States government') }}
+	<span class="u-usa-flag"></span>
+   <div>
+      {{ _('An official website of the') }}
+      <span class="u-nowrap">{{ _('United States government') }}</span>
+   </div>
 </div>
 {% endmacro %}

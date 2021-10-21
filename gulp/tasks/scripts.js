@@ -35,6 +35,11 @@ function _processScript( localWebpackConfig, src, dest ) {
       extra: configScripts.otherBuildTriggerFiles
     } ) )
     .pipe( vinylNamed( file => file.relative ) )
+
+    /**
+     * @todo ideally after webpack completed building, we would reset
+     *       scriptsAppsFilter to '', but leaving it doesn't break anything.
+     */
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
     .pipe( gulp.dest( paths.processed + dest ) );
@@ -135,6 +140,8 @@ function scriptsOnDemandFooter() {
   );
 }
 
+let scriptsAppsFilter = '';
+
 /**
  * Bundle scripts in /apps/ & factor out shared modules into common.js for each.
  * @returns {PassThrough} A source stream.
@@ -150,6 +157,11 @@ function scriptsApps() {
   // Run each application's JS through webpack and store the gulp streams.
   const streams = [];
   apps.forEach( app => {
+    // Allow building just one app
+    if ( scriptsAppsFilter && app !== scriptsAppsFilter ) {
+      return;
+    }
+
     /* Check if node_modules directory exists in a particular app's folder.
        If it doesn't, don't process the scripts and log the command to run. */
     const appsPath = `${ paths.unprocessed }/apps/${ app }`;
@@ -163,10 +175,6 @@ function scriptsApps() {
     if ( fs.existsSync( appWebpackConfigPath ) ) {
       // eslint-disable-next-line global-require
       appWebpackConfig = require( path.resolve( appWebpackConfigPath ) ).conf;
-    }
-
-    // eslint-disable-next-line no-sync
-    if ( fs.existsSync( `${ appsPath }/package.json` ) ) {
       streams.push(
         _processScript(
           appWebpackConfig,
@@ -215,9 +223,38 @@ gulp.task( 'scripts',
   )
 );
 
+/**
+ * If Chokidar gives us an app path, set up filtering in scriptsApp() so
+ * only that app is rebuilt.
+ *
+ * @param {string} chokidarPath Path given by Chokidar file watcher
+ */
+function setScriptsAppFilter( chokidarPath ) {
+  const base = ( paths.unprocessed + '/apps/' ).replace( /^\.\//, '' );
+  let appName = '';
+  if ( chokidarPath.indexOf( base ) === 0 ) {
+    [ appName ] = chokidarPath.substr( base.length ).split( '/' );
+  }
+
+  if ( appName ) {
+    console.log( `Limiting scripts:apps builds to: ${ appName }` );
+    scriptsAppsFilter = appName;
+  }
+}
+
 gulp.task( 'scripts:watch', function() {
   gulp.watch(
     configScripts.src,
     gulp.parallel( 'scripts:modern' )
   );
+
+  const watcher = gulp.watch(
+    paths.unprocessed + '/apps/**/js/**/*.js',
+    { delay: 500 },
+    gulp.parallel( 'scripts:apps' )
+  );
+  // We'll just rebuild the app modified
+  watcher.on( 'add', setScriptsAppFilter );
+  watcher.on( 'change', setScriptsAppFilter );
+  watcher.on( 'delete', setScriptsAppFilter );
 } );
