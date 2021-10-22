@@ -4,7 +4,6 @@ import unittest
 from unittest import mock
 from unittest.mock import mock_open, patch
 
-from django.http import HttpRequest
 from django.test import TestCase
 from django.utils import timezone
 
@@ -14,10 +13,9 @@ from paying_for_college.apps import PayingForCollegeConfig
 from paying_for_college.models import (
     Alias, CollegeCostsPage, ConstantCap, ConstantRate, Contact, Feedback,
     Nickname, Notification, Program, RepayingStudentDebtPage, School,
-    StudentLoanQuizPage, get_region, make_divisible_by_6
+    get_region, make_divisible_by_6
 )
 from v1.models import HomePage
-from v1.util.migrations import set_streamfield_data
 
 
 class MakeDivisibleTest(TestCase):
@@ -48,12 +46,6 @@ class PageModelsTest(TestCase):
             new_page.save()
             return new_page
         self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
-        self.loan_quiz_page = create_page(
-            StudentLoanQuizPage,
-            'Choosing a student loan',
-            'choose-a-student-loan',
-            self.ROOT_PAGE
-        )
         self.debt_page = create_page(
             RepayingStudentDebtPage,
             'Repaying student debt',
@@ -66,27 +58,6 @@ class PageModelsTest(TestCase):
             'college-costs',
             self.ROOT_PAGE
         )
-
-    def test_loan_quiz_template(self):
-        """
-        We are using get_template to set a 'situation_id' for development.
-
-        We hope to drop this value, or deliver it another way,
-        when quiz structure is decided.
-        """
-        page = self.loan_quiz_page
-        data = [{
-            'type': 'guided_quiz',
-            'id': '12345',
-            'value': {
-                'question': '?',
-                'answer': 'huh?'}}]
-        set_streamfield_data(page, 'content', data)
-        self.assertEqual(
-            page.get_template(HttpRequest()),
-            'paying-for-college/choose-a-student-loan.html')
-        self.assertEqual(
-            self.loan_quiz_page.content[0].value['situation_id'], '12345')
 
 
 class SchoolRegionTest(TestCase):

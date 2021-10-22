@@ -216,8 +216,8 @@ def add_link_markup(tag, request_path):
             span = soup.new_tag('span', **icon_classes)
             span.contents = list(tag.contents)
 
-        tag.clear()
-        tag.append(span)
+            tag.clear()
+            tag.append(span)
 
         tag.append(' ')
         tag.append(icon_soup)
