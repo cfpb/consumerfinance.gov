@@ -44,7 +44,7 @@ the Sauce Connect Proxy can be used. See more info on the
 [Sauce Labs documentation site](https://docs.saucelabs.com/secure-connections/sauce-connect/installation/)
 
 
-### iOS simulator
+### iOS Simulator
 While it's possible to check iOS devices in Sauce Labs,
 the JavaScript developer console will not be available. Therefore, it may be
 helpful to instead use the iOS Simulator included inside Xcode.
