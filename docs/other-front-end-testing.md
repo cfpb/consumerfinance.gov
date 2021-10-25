@@ -41,7 +41,7 @@ After logging in, the production site URLs can be tested via
 
 To test changes from `localhost` before they make it to production,
 the Sauce Connect Proxy can be used. See more info on the
-[Sauce Labs documentation site](https://docs.saucelabs.com/secure-connections/sauce-connect/installation/)
+[Sauce Labs documentation site](https://docs.saucelabs.com/secure-connections/sauce-connect/installation/).
 
 
 ### iOS Simulator
