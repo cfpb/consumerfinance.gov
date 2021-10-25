@@ -59,7 +59,7 @@ To use the simulator with a developer console, perform the following:
    navigate to and open the desktop Safari application.
 2. Ensure the developer menu is shown by checking the box at
    `Safari` > `Preferences…` > `Advanced` > `Show Develop menu in menu bar`.
-3. Open the `Develop` menu in the desktop Safari and
+3. Open the `Develop` menu in desktop Safari and
    there should be a `Simulator` option that when opened will show any
    JavaScript console output that's coming from the page you're visiting in the
    iOS Simulator.
