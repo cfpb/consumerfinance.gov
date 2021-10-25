@@ -22,7 +22,6 @@ nav:
     - Feature Flags: feature-flags.md
     - Filterable Lists: filterable-lists.md
     - Search: search.md
-    - Split Testing: split-testing.md
     - Translation: translation.md
 - Testing:
     - JavaScript Unit Testing: javascript-unit-tests.md
