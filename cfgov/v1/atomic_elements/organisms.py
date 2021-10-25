@@ -5,6 +5,7 @@ from urllib.parse import urlencode
 
 from django import forms
 from django.apps import apps
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.template.loader import render_to_string
@@ -129,8 +130,10 @@ class InfoUnitGroup(blocks.StructBlock):
         if cleaned.get('format') == '25-75':
             for unit in cleaned.get('info_units'):
                 if not unit['image']['upload']:
-                    raise StructBlockValidationError(
-                        block_errors={'format': ErrorList([
+                    raise ValidationError(
+                        ('Validation error in InfoUnitGroup: '
+                         '25-75 with no image'),
+                        params={'format': ErrorList([
                             'Info units must include images when using the '
                             '25/75 format. Search for an "FPO" image if you '
                             'need a temporary placeholder.'
@@ -1009,19 +1012,21 @@ class VideoPlayer(blocks.StructBlock):
         if not cleaned['video_id']:
             if getattr(self.meta, 'required', True):
                 errors['video_id'] = ErrorList([
-                    StructBlockValidationError(
-                        block_errors='This field is required.'),
+                    ValidationError('This field is required.'),
                 ])
             elif cleaned['thumbnail_image']:
                 errors['thumbnail_image'] = ErrorList([
-                    StructBlockValidationError(
-                        block_errors='This field should not be '
-                        'used if YouTube video ID is not set.'
+                    ValidationError(
+                        'This field should not be used if YouTube video ID is '
+                        'not set.'
                     )
                 ])
 
         if errors:
-            raise StructBlockValidationError(block_errors=errors)
+            raise ValidationError(
+                'Validation error in VideoPlayer',
+                params=errors
+            )
 
         return cleaned
 

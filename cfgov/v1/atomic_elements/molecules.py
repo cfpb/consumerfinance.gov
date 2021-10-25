@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
@@ -48,15 +49,16 @@ class TextIntroduction(blocks.StructBlock):
 
     def clean(self, value):
         cleaned = super(TextIntroduction, self).clean(value)
-        error = ValidationError('Validation error in TextIntroduction: '
-                'pre-heading requires heading',
-                params={'heading': ErrorList([
-                    'Required if a pre-heading is entered.'
-                ])})
 
         # Eyebrow requires a heading.
         if cleaned.get('eyebrow') and not cleaned.get('heading'):
-            raise StructBlockValidationError(error)
+            raise ValidationError(
+                'Validation error in TextIntroduction: '
+                'pre-heading requires heading',
+                params={'heading': ErrorList([
+                    'Required if a pre-heading is entered.'
+                ])}
+            )
 
         return cleaned
 
@@ -222,14 +224,15 @@ class ContactEmail(blocks.StructBlock):
 
     def clean(self, value):
         cleaned = super(ContactEmail, self).clean(value)
-        error = ValidationError("Validation error in ContactEmail: "
+
+        if not cleaned.get('emails'):
+            raise ValidationError(
+                "Validation error in ContactEmail: "
                 "at least one email address is required",
                 params={'heading': ErrorList([
                     "At least one email address is required."
-                ])})
-
-        if not cleaned.get('emails'):
-            raise StructBlockValidationError(error)
+                ])}
+            )
 
         return cleaned
 
