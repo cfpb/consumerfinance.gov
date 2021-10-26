@@ -40,35 +40,30 @@ TIMEOUT = 30
 ALLOWED_TIMEOUTS = 1
 FULL = False
 BASE = 'https://www.consumerfinance.gov'
-S3_URI = 'https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json'  # noqa: E501
+GIT_URI = 'https://github.cfpb.gov/raw/CFGOV/cfgov-top-pages/main/top_pages.txt'
 
-# Fall-back list of top 25 URLs, as of July 2, 2020, from hubcap/wiki
+# Fall-back list of top 20 URLs, as of April 2, 2021, from hubcap/wiki
 # All URLs in the list should be canonical locations of the given pages,
 # not redirects.
 TOP = [
     '/',  # home page
     '/about-us/blog/guide-covid-19-economic-stimulus-checks/',
-    '/about-us/blog/guide-coronavirus-mortgage-relief-options/',
+    '/coronavirus/mortgage-and-housing-assistance/mortgage-relief/',
     '/find-a-housing-counselor/',
     '/complaint/',
     '/learnmore/',
     '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',  # noqa: E501
-    '/coronavirus/',
-    '/about-us/blog/guide-covid-19-economic-stimulus-checks/#qualify/',
+    '/coronavirus/mortgage-and-housing-assistance/renter-protections/',
+    '/about-us/blog/cares-act-early-retirement-withdrawal/',
+    '/about-us/blog/claim-economic-impact-payments-for-new-dependents/',
     '/consumer-tools/prepaid-cards/',
-    '/coronavirus/cares-act-mortgage-forbearance-what-you-need-know/',
     '/about-us/blog/economic-impact-payment-prepaid-card/',
-    '/about-us/blog/what-you-need-to-know-about-student-loans-and-coronavirus-pandemic/',  # noqa: E501
     '/complaint/getting-started/',
     '/coronavirus/mortgage-and-housing-assistance/',
-    '/ask-cfpb/what-is-forbearance-en-289/',
-    '/about-us/blog/guide-covid-19-economic-stimulus-checks/#when/',
+    '/ask-cfpb/what-is-the-difference-between-a-mortgage-interest-rate-and-an-apr-en-135/',
     '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',
-    '/about-us/blog/protect-yourself-financially-from-impact-of-coronavirus/',
     '/about-us/contact-us/',
-    '/about-us/blog/guide-coronavirus-mortgage-relief-options/#relief-options/',  # noqa: E501
     '/coronavirus/managing-your-finances/economic-impact-payment-prepaid-debit-cards/',  # noqa: E501
-    '/ask-cfpb/how-can-i-tell-who-owns-my-mortgage-en-214/',
     '/rules-policy/regulations/',
     '/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/',  # noqa: E501
 ]
@@ -141,15 +136,16 @@ FALLBACK_URLS = sorted(set(TOP + APPS))
 
 
 def get_full_list():
-    """Fetch a list of URLs to test from s3, or fall back to local default."""
+    """Fetch a list of URLs to test from github, or fall back to local default."""
     try:
-        url_data = requests.get(S3_URI).json()
+        url_data = requests.get(GIT_URI).text.split('\n')
     except Exception as e:
         logger.warning(
             'Using fallback because request for S3 list failed: {}'.format(e))
         url_list = FALLBACK_URLS
     else:
-        url_list = sorted(set(url_data.get('top') + url_data.get('apps')))
+        #github only has the top 20 URLS not the APPS so that will be hard coded
+        url_list = sorted(set(url_data + APPS))
     return url_list
 
 
