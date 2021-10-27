@@ -40,7 +40,7 @@ TIMEOUT = 30
 ALLOWED_TIMEOUTS = 1
 FULL = False
 BASE = 'https://www.consumerfinance.gov'
-GIT_URI = 'https://github.cfpb.gov/raw/CFGOV/cfgov-top-pages/main/top_pages.txt'
+S3_URI = 'https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json'  # noqa: E501
 
 # Fall-back list of top 20 URLs, as of April 2, 2021, from hubcap/wiki
 # All URLs in the list should be canonical locations of the given pages,
