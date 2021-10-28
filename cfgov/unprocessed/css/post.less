@@ -438,11 +438,16 @@
     }
 }
 
-// TODO: `related_content` is only used on newsroom/index.html.
-//       Refactor to use CF classes.
+/* ==========================================================================
+   Accessible bleedbar
+   ========================================================================== */
 
-.related_content, .content__bleedbar .content_wrapper:after {
+.content__bleedbar {
+
+  .content_wrapper:after {
     background-color: @gray-5;
+  }
+
 }
 
 /* topdoc
