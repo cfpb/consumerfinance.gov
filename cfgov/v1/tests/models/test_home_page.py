@@ -35,8 +35,8 @@ class HomePageTests(TestCase):
         self.assertEqual(response.template_name, expected_template)
 
     def test_render_default_template(self):
-        self.check_render_template('v1/home_page.html')
+        self.check_render_template('v1/home_page/home_page.html')
 
     def test_render_2021_template(self):
         with override_settings(FLAGS={'HOME_PAGE_2021': [('boolean', True)]}):
-            self.check_render_template('v1/home_page_2021.html')
+            self.check_render_template('v1/home_page/home_page_2021.html')

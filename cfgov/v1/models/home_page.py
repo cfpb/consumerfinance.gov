@@ -229,4 +229,3 @@ class HomePageCard(Orderable):
         FieldPanel('link_text'),
         FieldPanel('link_url'),
     ]
-
