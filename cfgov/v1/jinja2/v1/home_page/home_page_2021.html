@@ -226,6 +226,7 @@
             </div>
         </section>
 
+        {% if hardcoded.resources %}
         <section class="o-featured-content-module
                         o-featured-content-module__center">
             <div class="o-featured-content-module_text">
@@ -247,8 +248,8 @@
             </div>
 
         </section>
+        {% endif %}
 
-        {% if hardcoded.diversity %}
         <section class="block">
             <div class="o-info-unit-group">
                 <div class="content-l">
@@ -275,7 +276,6 @@
                 </div>
             </div>
         </section>
-        {% endif %}
     </section>
 
 {% endblock content_main %}
