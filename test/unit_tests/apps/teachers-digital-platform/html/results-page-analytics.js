@@ -1,7 +1,11 @@
 const HTML_SNIPPET = `
 <main class="content content__2-1" id="main">
    <div class="content_wrapper tdp-survey" data-tdp_grade_level="9-12">
-      <div data-tdp-page="results" data-grade-select-url="/consumer-tools/educator-tools/youth-financial-education/assess/survey/" class="content_main tdp-survey-results">
+      <div data-tdp-page="results" 
+           data-grade-select-url="/consumer-tools/educator-tools/youth-financial-education/assess/survey/"
+           data-score="90"
+           data-subtotals="[25,35,45]"
+           class="content_main tdp-survey-results">
          <p class="label">
             Your money journey results<span aria-hidden="true" style="display:none" class="initials-display">: <span class="initials-value"></span></span>
          </p>
