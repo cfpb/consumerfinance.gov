@@ -6,7 +6,7 @@ import {
   surveyPage,
   progressBar
 } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/survey-page';
-import { ANSWERS_SESS_KEY, RESULT_COOKIE } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
+import { ANSWERS_SESS_KEY, RESULT_COOKIE, SCORES_UNSET_KEY } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
 import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
 import HTML_SNIPPET from '../../html/survey-page';
 
@@ -35,6 +35,7 @@ describe( 'The TDP survey page', () => {
     expect( cf2Spy ).toHaveBeenCalled();
     expect( cf3Spy ).toHaveBeenCalled();
     expect( progressBar.totalNum ).toEqual( 20 );
+    expect( sessionStorage.getItem( SCORES_UNSET_KEY ) ).toEqual( '1' );
 
     modalSpy.mockRestore();
   } );
