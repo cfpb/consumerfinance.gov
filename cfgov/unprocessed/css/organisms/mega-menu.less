@@ -423,23 +423,24 @@ body {
         // Featured menu content is link items with icons.
         &-item__has-icon {
             // Align the icon and text.
-            display: flex;
+            display: grid;
             align-items: baseline;
-
+            
             & a {
-                display: flex;
+                display: grid;
+                grid-template-columns: 10px auto 1fr;
+                align-self: end;
+                gap: 10px;
             }
 
             // Hide link bottom line from Design System link styles.
             & .a-link_text {
                 border-bottom-width: 0;
-                margin-right: 10px;
             }
 
             & .cf-icon-svg {
                 display: inline;
                 color: @pacific;
-                margin-right: 10px;
                 width: 100%;
             }
         }
