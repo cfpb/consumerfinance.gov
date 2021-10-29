@@ -23,10 +23,43 @@ for detailed rule descriptions.
 There are a number of options to the command:
 
  - `gulp lint:build`: Lint only the gulp build scripts.
- - `gulp lint:test`: Lint only the test scripts.
+ - `gulp lint:tests`: Lint only the test scripts.
  - `gulp lint:scripts`: Lint only the project source scripts.
  - `--fix`: Add this flag (like `gulp lint --fix` or `gulp lint:build --fix`).
    to auto-fix some errors, where ESLint has support to do so.
  - `--path`: Add this flag to specify a file to lint,
    rather than all files. Path is relative to the project root,
    such as `gulp lint --path=cfgov/unprocessed/js/modules/Analytics.js`.
+
+## Cross browser testing
+
+
+### Sauce Labs
+We use https://saucelabs.com to test the site across browsers.
+After logging in, the production site URLs can be tested via
+`Live` > `Cross Browser` in the sidebar.
+
+To test changes from `localhost` before they make it to production,
+the Sauce Connect Proxy can be used. See more info on the
+[Sauce Labs documentation site](https://docs.saucelabs.com/secure-connections/sauce-connect/installation/).
+
+
+### iOS Simulator
+While it's possible to check iOS devices in Sauce Labs,
+the JavaScript developer console will not be available. Therefore, it may be
+helpful to instead use the iOS Simulator included inside Xcode.
+To use the simulator with a developer console, perform the following:
+
+1. Find the Xcode application on your computer.
+2. Right-click on the application and select `Show Package Contents`.
+3. Find and open the iOS Simulator at
+   `Contents` > `Developer` > `Applications` > `Simulator`.
+4. Open mobile Safari and navigate to the page you want to test out.
+2. Now, outside of the iOS Simulator,
+   navigate to and open the desktop Safari application.
+2. Ensure the developer menu is shown by checking the box at
+   `Safari` > `Preferences…` > `Advanced` > `Show Develop menu in menu bar`.
+3. Open the `Develop` menu in desktop Safari and
+   there should be a `Simulator` option that when opened will show any
+   JavaScript console output that's coming from the page you're visiting in the
+   iOS Simulator.
