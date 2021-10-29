@@ -111,8 +111,8 @@ class HomePage(CFGOVPage):
                 preview_mode = ''
 
         templates = {
-            '': 'v1/home_page.html',
-            'home_page_2021': 'v1/home_page_2021.html',
+            '': 'v1/home_page/home_page.html',
+            'home_page_2021': 'v1/home_page/home_page_2021.html',
         }
 
         return templates[preview_mode]
