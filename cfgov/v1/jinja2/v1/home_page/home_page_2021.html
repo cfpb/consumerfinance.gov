@@ -1,0 +1,281 @@
+{% extends "layout-full.html" %}
+
+{% block body_classes %} class="content-grid" {% endblock body_classes %}
+
+{% import "organisms/card-group.html" as card_group with context %}
+
+{% block title -%}
+    {{ _('Consumer Financial Protection Bureau') }}
+{%- endblock %}
+
+{% block hero %}
+    {% for block in page.content %}
+        {% if block.block_type == 'features' %}
+            <section class="wrapper
+                            wrapper__match-content
+                            block
+                            block__bg
+                            block__border
+                            block__flush-top
+                            u-mb0">
+                {% include_block block %}
+            </section>
+        {% else %}
+            {% include_block block %}
+        {% endif %}
+    {% endfor %}
+{% endblock hero %}
+
+{% block content_main %}
+{% import "v1/home_page/_hardcoded_" ~ language ~ ".html" as hardcoded with context %}
+    <section class="o-well o-well__inkwell">
+        <div class="a-tagline a-tagline__xlarge">
+            <span class="u-usa-flag"></span>
+            {{ hardcoded.inkwell.tagline }}
+        </div>
+
+        <p class="o-info-unit-group">
+            <div class="content-l">
+                {% for infounit in hardcoded.inkwell.infounits %}
+                <div class="content-l_col content-l_col-1-3">
+
+                    <div class="m-info-unit">
+                        <div class="m-info-unit_heading-text">
+                            <h2 class="h3">{{ infounit.heading }}</h2>
+                        </div>
+                        <div class="m-info-unit_content">
+                            {{ infounit.content }}
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+        </p>
+    </section>
+
+    <section class="block u-text-centered">
+        <h1>{{ hardcoded.answers_heading | safe }}</h1>
+    </section>
+
+    <section class="block">
+        <div class="o-well u-text-centered">
+            <h2>{{ hardcoded.topics.heading }}</h2>
+            <div class="o-card-group o-card-group__flow">
+                <div class="o-card-group_cards">
+                    {% for card in hardcoded.topics.cards %}
+                    <article class="m-card m-card__topic
+                        {%- if loop.last %}  m-card__topic-action{% endif -%}
+                    ">
+                      <a href="{{ card.url }}">
+                          <div class="m-card_icon">
+                              {{ svg_icon( card.icon ) }}
+                          </div>
+                          <div class="m-card_footer">
+                              <span>{{ card.text }}</span>
+                          </div>
+                      </a>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-grid_inset">
+        <section class="block">
+            <div class="o-info-unit-group">
+                <div class="content-l">
+                    {% if page.answer_page_links %}
+                    <div class="content-l_col content-l_col-1-2">
+                        <div class="m-info-unit">
+                            <div class="m-info-unit_heading-text">
+                                <h3>{{ hardcoded.questions_heading }}</h3>
+                            </div>
+                            <div class="m-info-unit_content">
+                                <ul>
+                                    {% for answer_page in page.answer_page_links %}
+                                    <li class="m-list_item">
+                                        <a class="m-list_link" href="{{ answer_page.value.url }}">
+                                            {{ answer_page.value.question }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                    <li class="m-list_item">
+                                        <a href="{{ hardcoded.questions_more.url }}"><b>
+                                            {{- hardcoded.questions_more.text -}}
+                                        </b></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {# Change to a 1-column layout if the answers above aren't added in Wagtail. #}
+                    <div class="content-l_col {{ 'content-l_col-1-2' if page.answer_page_links else 'content-l_col-1' }}">
+                        <div class="m-info-unit">
+                            <div class="m-info-unit_heading-text">
+                                <h3>{{ svg_icon('open-quote') }} {{ hardcoded.jorge.heading }}</h3>
+                            </div>
+                            <div class="m-info-unit_content">
+                                <p>
+                                    {{ hardcoded.jorge.body1 }}
+                                    <a href="{{ hardcoded.jorge.link1.url }}">{{ hardcoded.jorge.link1.text }}</a>
+                                </p>
+
+                                <p>
+                                    {{ hardcoded.jorge.body2 }}
+                                    <a href="{{ hardcoded.jorge.link2.url }}">{{ hardcoded.jorge.link2.text }}</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="block">
+            <div class="o-info-unit-group">
+                <div class="content-l">
+                    <div class="content-l_col content-l_col-1">
+                        <div class="m-info-unit m-info-unit__inline">
+                            <a class="m-info-unit_heading-link" href="{{ hardcoded.complaint.link.url }}">
+                                <img alt="" class="m-info-unit_image m-info-unit_image__square" src="{{ static('apps/homepage/img/complaint.png') }}">
+                                <div class="m-info-unit_heading-text">
+                                    <h2>{{ hardcoded.complaint.heading }}</h2>
+                                </div>
+                            </a>
+                            <div class="m-info-unit_content">
+                            <p>{{ hardcoded.complaint.body}}</p>
+                                <ul class="m-list m-list__links u-mt15">
+                                    <li class="m-list_item">
+                                        <a class="m-list_link a-btn" href="{{ hardcoded.complaint.link.url }}">
+                                            {{- hardcoded.complaint.link.text -}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        {% if page.highlight_cards %}
+        <section class="block">
+            {{ card_group.render( {
+                'heading': hardcoded.highlight_cards_heading | safe,
+                'type_group': 'count-' ~ page.highlight_cards | length,
+                'type_card': 'highlight',
+                'cards': page.highlight_cards | map( attribute='value' )
+            } ) }}
+        </section>
+        {% endif %}
+
+        <section class="block">
+            {{ card_group.render( {
+                'heading': hardcoded.breakout_cards_heading | safe,
+                'type_group': 'column-3',
+                'type_card': 'breakout',
+                'cards': hardcoded.breakout_cards
+            } ) }}
+        </section>
+
+        <section class="block">
+            <div class="o-info-unit-group">
+                <div class="content-l">
+                    <div class="content-l_col content-l_col-1-2">
+                        <div class="m-info-unit">
+                            <div class="m-info-unit_heading-text">
+                                <h3>{{ hardcoded.other_goals.heading }}</h3>
+                            </div>
+                            <div class="m-info-unit_content">
+                                <ul>
+                                    {% for goal in hardcoded.other_goals.goals %}
+                                    <li class="m-list_item">
+                                        <a class="m-list_link" href="{{ goal.url }}">
+                                            {{ goal.text }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-l_col content-l_col-1-2">
+                        <div class="m-info-unit">
+                            <div class="m-info-unit_heading-text">
+                                <h3>{{ hardcoded.popular_tools.heading }}</h3>
+                            </div>
+                            <div class="m-info-unit_content">
+                                <ul>
+                                    {% for tool in hardcoded.popular_tools.tools %}
+                                    <li class="m-list_item">
+                                        <a class="m-list_link" href="{{ tool.url }}">
+                                            {{ tool.text }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% if hardcoded.resources %}
+        <section class="o-featured-content-module
+                        o-featured-content-module__center">
+            <div class="o-featured-content-module_text">
+                <h2 class="h3">{{ hardcoded.resources.heading }}</h2>
+
+                <p>{{ hardcoded.resources.body }}</p>
+
+                <ul class="m-list m-list__links">
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="{{ hardcoded.resources.link.url }}">
+                            {{- hardcoded.resources.link.text -}}
+                        </a>
+                    </li>
+                </ul>
+
+                </div>
+                <div class="o-featured-content-module_visual">
+                <img class="o-featured-content-module_img" src="https://files.consumerfinance.gov/f/images/money-transfers_fcm.original.png" alt="">
+            </div>
+
+        </section>
+        {% endif %}
+
+        <section class="block">
+            <div class="o-info-unit-group">
+                <div class="content-l">
+                    <div class="content-l_col content-l_col-1">
+                        <div class="m-info-unit m-info-unit__inline">
+                            <div class="m-info-unit_heading-text">
+                                <h2>{{ hardcoded.diversity.heading }}</h2>
+                            </div>
+                            <div class="m-info-unit_content">
+                                <p>{{ hardcoded.diversity.body }}</p>
+
+                                <ul class="m-list m-list__links u-mt15">
+                                    {% for link in hardcoded.diversity.links %}
+                                    <li class="m-list_item">
+                                        <a class="m-list_link" href="{{ link.url }}">
+                                            {{ link.text }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+{% endblock content_main %}
