@@ -1,7 +1,7 @@
 const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
 const objectEntries = require( 'object.entries' );
 const Cookie = require( 'js-cookie' );
-const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } = require( './config' );
+const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE, SCORES_UNSET_KEY } = require( './config' );
 const modals = require( '../modals' );
 const ChoiceField = require( './ChoiceField' );
 const ProgressBar = require( './ProgressBar' );
@@ -54,6 +54,8 @@ function surveyPage() {
 
   initErrorHandling();
   allowStartOver();
+
+  sessionStorage.setItem( SCORES_UNSET_KEY, '1' );
 }
 
 /**
