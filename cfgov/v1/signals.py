@@ -2,11 +2,15 @@ from datetime import timedelta
 from itertools import chain
 
 from django.core.cache import cache, caches
+from django.dispatch import receiver
 from django.utils import timezone
 
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from wagtail.core.signals import page_published, page_unpublished
 
+from teachers_digital_platform.models.activity_index_page import (
+    ActivityPage, ActivitySetUp
+)
 from v1.models import AbstractFilterPage, CFGOVPage
 from v1.models.filterable_list_mixins import (
     CategoryFilterableMixin, FilterableListMixin
@@ -116,3 +120,21 @@ def invalidate_filterable_list_caches(sender, **kwargs):
 
 page_published.connect(invalidate_filterable_list_caches)
 page_unpublished.connect(invalidate_filterable_list_caches)
+
+
+def refresh_tdp_activity_cache():
+    """Refresh the activity setups when a live ActivityPage is changed."""
+    activity_setup = ActivitySetUp.objects.first()
+    if not activity_setup:
+        activity_setup = ActivitySetUp()
+    activity_setup.update_setups()
+
+
+@receiver(page_published, sender=ActivityPage)
+def activity_published_handler(instance, **kwargs):
+    refresh_tdp_activity_cache()
+
+
+@receiver(page_unpublished, sender=ActivityPage)
+def activity_unpublished_handler(instance, **kwargs):
+    refresh_tdp_activity_cache()
