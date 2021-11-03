@@ -406,9 +406,14 @@ function alignMargin( defaultObj, chartType ) {
   if ( chartType === 'tilemap' ) {
     marg = 100;
     y = -15;
-  } else if ( marg < 100 ) {
-    marg = 100;
-    y = 19;
+  } else {
+    if ( marg < 100 ) {
+      marg = 100;
+      y = 19;
+    }
+    if ( window.innerWidth <= 660 ) {
+      marg += 27;
+    }
   }
   if ( !defaultObj.chart.marginTop ) defaultObj.chart.marginTop = marg;
   if ( !defaultObj.legend.y ) defaultObj.legend.y = y;

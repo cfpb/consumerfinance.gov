@@ -107,7 +107,7 @@ const styles = {
           yAxis: {
             title: {
               x: 0,
-              y: -16,
+              y: -25,
               align: 'high',
               reserveSpace: false,
               rotation: 0,
