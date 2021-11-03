@@ -236,7 +236,7 @@ function makeTilemapSelect( chartNode, chart, data, transform ) {
 
   const options = getTilemapDates( d );
   const selectNode = makeFilterDOM( options, chartNode, { key: 'tilemap' },
-    'Select a date'
+    'Select date'
   );
 
   attachTilemapFilter( selectNode, chart, data );
@@ -323,12 +323,12 @@ function getMapConfig( series, date ) {
     colorAxis: {
       dataClasses: [
         { from: min, to: step1, color: '#addc91', name: `${ min } - ${ trimTenth( step1 ) }` },
-        { from: step1, to: step2, color: '#f0f8eb', name: `${ step1 } - ${ trimTenth( step2 ) }` },
+        { from: step1, to: step2, color: '#e2efd8', name: `${ step1 } - ${ trimTenth( step2 ) }` },
         { from: step2, to: step3, color: '#ffffff', name: `${ step2 } - ${ trimTenth( step3 ) }` },
         { from: step3, to: step4, color: '#d6e8fa', name: `${ step3 } - ${ trimTenth( step4 ) }` },
         { from: step4, color: '#7eb7e8', name: `${ step4 } - ${ max }` }
       ]},
-    series: [ { clip: false, borderColor: '#919395', borderWidth: 1, data: added, rowsize: 1, colsize: 1 } ]
+    series: [ { clip: false, data: added } ]
   };
 }
 
@@ -755,9 +755,6 @@ function buildChart( chartNode ) {
     const width = chartSVG.width.animVal.value;
     const height = 450;
     chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height }` );
-    setTimeout( () => {
-      chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height }` );
-    }, 500 );
   }
 
   resolveData( source.trim() ).then( raw => {
@@ -788,6 +785,7 @@ function buildChart( chartNode ) {
     if ( chartType === 'tilemap' ) {
       makeTilemapSelect( chartNode, chart, data,
         transform && chartHooks[transform] );
+
       window.addEventListener( 'resize', fixViewbox );
       fixViewbox();
     } else {

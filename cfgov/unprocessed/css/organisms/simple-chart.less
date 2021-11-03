@@ -27,9 +27,32 @@
       margin-top: unit( 9 / @base-font-size-px, em);
     })
   }
-
+  .highcharts-tilemap-series {
+    .highcharts-point {
+      stroke: #919395;
+    }
+    .highcharts-point:hover {
+      stroke: #5a5d61;
+      stroke-width: 2px;
+    }
+    .highcharts-label {
+      font-family: 'Avenir Next';
+      font-size: 12px;
+      color: '#101820';
+      text {
+        pointer-events: none;
+      }
+      .respond-to-max( @bp-xs-max, {
+        font-size: 10px;
+        tspan:last-of-type {
+          display: none;
+        }
+      })
+    }
+  }
   .select-wrapper {
     .grid_column(1,2);
+    box-sizing: inherit;
     margin-bottom: unit( 15 / @base-font-size-px, em);
     border-width: 0 30px 0 0;
     .respond-to-max( @bp-xs-max, {
@@ -191,6 +214,7 @@
     }
 
   }
+
   .m-chart-footnote {
     max-width: unit(670 / @size-vi, rem);
     margin-top: unit(45 / @size-vi, em);
