@@ -395,7 +395,7 @@ function makeChartOptions( data, target ) {
 
 
 /**
- * Resolves provided x axis or series data
+ * Adjusts legend alignment based on series length
  * @param {object} defaultObj default object to be decorated
  * @param {string} chartType current chart type
  */

@@ -96,7 +96,8 @@ const styles = {
         },
         chartOptions: {
           chart: {
-            spacingLeft: 0
+            spacingLeft: 0,
+            marginRight: 15
           },
           legend: {
             align: 'left',
@@ -106,7 +107,7 @@ const styles = {
           yAxis: {
             title: {
               x: 0,
-              y: -28,
+              y: -16,
               align: 'high',
               reserveSpace: false,
               rotation: 0,

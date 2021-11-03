@@ -119,8 +119,7 @@ const datetime = {
         },
         chartOptions: {
           chart: {
-            spacingBottom: 60,
-            marginTop: 165
+            spacingBottom: 60
           },
           xAxis: {
             labels: {

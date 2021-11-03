@@ -32,17 +32,24 @@ const hooks = {
     } ) );
   },
 
-  ccpi_quarterLabels() {
+  ccpi_labels( label, units = '' ) {
     const { x, y, series } = this;
     const [ quarter, year ] = hooks.ccpi_dateToQuarter( x );
-    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Index value: ${ Math.round( y * 10 ) / 10 }`;
+    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>${ label }: ${ Math.round( y * 10 ) / 10 }${ units }`;
+  },
+
+  ccpi_quarterLabels() {
+    return hooks.ccpi_labels.call( this, 'Index value' );
+  },
+
+  ccpi_averageLabels() {
+    return hooks.ccpi_labels.call( this, 'Average index' );
   },
 
   ccpi_shareLabels() {
-    const { x, y, series } = this;
-    const [ quarter, year ] = hooks.ccpi_dateToQuarter( x );
-    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Share: ${ Math.round( y * 10 ) / 10 }%`;
+    return hooks.ccpi_labels.call( this, 'Share of consumers', '%' );
   },
+
 
   ccpi_dateToQuarter( x ) {
     const d = new Date( x ).toLocaleString(
