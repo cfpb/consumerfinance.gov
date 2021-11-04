@@ -43,7 +43,7 @@
             {% if value.type_group == 'flow' %} o-card-group__flow {% endif %}
             {% if value.type_group == 'featured' %} o-card-group__column-3 o-card-group__bg-green {% endif %}">
     <div class="block u-text-centered">
-    {% if value.heading %}<h2>{{ value.heading }}</h2>{% endif %}
+    {% if value.heading %}<h2 class="h1">{{ value.heading }}</h2>{% endif %}
     </div>
     <div class="o-card-group_cards">
     {% for _card in value.cards %}
