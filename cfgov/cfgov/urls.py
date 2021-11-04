@@ -426,6 +426,13 @@ urlpatterns = [
             'diversity_inclusion'),
             namespace='diversity_inclusion')),
 
+    re_path(
+        r'^foia-bfl/',
+        include((
+            'foia.urls',
+            'foia'),
+            namespace='foia')),
+
     re_path(r'^sitemap\.xml$', akamai_no_store(sitemap)),
 
     re_path(
