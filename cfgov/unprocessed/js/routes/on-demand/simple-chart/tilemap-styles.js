@@ -36,11 +36,10 @@ const tilemap = {
     style: {
       fontFamily: 'Avenir Next',
       fontSize: '16px'
-    },
-    formatter: function() { return `<b>${ this.point.name }</b><br/>Average index: <b>${ Math.round( this.point.value * 10 ) / 10 }</b>`; } },
+    }
+  },
   legend: {
-    enabled: false,
-    title: 'Average index'
+    enabled: false
   },
   chart: {
     animation: false,
