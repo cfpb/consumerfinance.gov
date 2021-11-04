@@ -60,7 +60,7 @@ const tilemap = {
         chartOptions: {
           chart: {
             animation: false,
-            height: 450,
+            height: 350,
             marginLeft: -19,
             spacingBottom: -240
           },

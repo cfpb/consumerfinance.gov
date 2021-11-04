@@ -285,6 +285,7 @@ function updateTilemapLegend( node, data, legendTitle ) {
   } );
   if ( legendTitle ) {
     const title = document.createElement( 'p' );
+    title.className = 'legend-title';
     title.innerText = legendTitle;
     legend.appendChild( title );
   }
@@ -760,10 +761,11 @@ function buildChart( chartNode ) {
    * @param {object} evt Optional event
    * @param {number} height Height value for the SVG element.
    **/
-  function fixViewbox( evt, height = 450 ) {
+  function fixViewbox() {
     const chartSVG = target.getElementsByClassName( 'highcharts-root' )[0];
     const width = chartSVG.width.animVal.value;
-    chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height }` );
+    const height = chartSVG.height.animVal.value;
+    chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height + 1 }` );
   }
 
   resolveData( source.trim() ).then( raw => {
@@ -794,16 +796,17 @@ function buildChart( chartNode ) {
     if ( chartType === 'tilemap' ) {
       makeTilemapSelect( chartNode, chart, data,
         transform && chartHooks[transform] );
-      window.addEventListener( 'resize', fixViewbox );
-      fixViewbox();
     } else {
-      window.addEventListener( 'resize', fixViewbox.bind( null, null, 501 ) );
-      fixViewbox( null, 501 );
       initFilters(
         target.dataset, chartNode, chart, data,
         transform && chartHooks[transform]
       );
     }
+
+    window.addEventListener( 'resize', fixViewbox );
+    fixViewbox();
+    setTimeout( fixViewbox, 500 );
+
   } );
 }
 

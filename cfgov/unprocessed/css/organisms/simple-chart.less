@@ -1,6 +1,6 @@
 .o-simple-chart {
   max-width: 670px;
-  margin-bottom: unit( 60 / @base-font-size-px, em );
+  margin-bottom: unit( 50 / @base-font-size-px, em );
   .chart-anchor, &:hover, &:visited {
     color: @text;
   }
@@ -196,11 +196,26 @@
     display: none;
     width: 100%;
     height: 60px;
+    margin-top: -5px;
+    margin-bottom: 66px;
+
+    .respond-to-max( @bp-xs-max, {
+      margin-top: -2px;
+      margin-bottom: -14px;
+    });
+
+    .legend-title {
+      margin-bottom: 8px;
+
+      .respond-to-max( @bp-xs-max, {
+        margin-bottom: 3px;
+      })
+    }
 
     .legend-color, .legend-label {
       float: left;
-       width: 19.75%;
-       text-align: center;
+      width: 19.75%;
+      text-align: center;
     }
    .legend-label {
      line-height: 2;
