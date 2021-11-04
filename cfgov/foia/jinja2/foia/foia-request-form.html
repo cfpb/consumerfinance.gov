@@ -1,34 +1,30 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% set breadcrumb_items = [{
-    "title": "FOIA requests",
-    "href": "/foia-requests/",
+    "title": "CFPB Home",
+    "href": "/",
 }] %}
 
 {% block title -%}
-    FOIA Request Form | Consumer Financial Protection Bureau
+    Test Form | Consumer Financial Protection Bureau
 {%- endblock %}
 
 {% block desc -%}
-    The CFPB’s voluntary FOIA submission form allows US residents to submit Freedom of Information Act requests
+    This is a test
 {%- endblock %}
 
 {% block og_desc -%}
-    The CFPB’s voluntary FOIA submission form allows US residents to submit Freedom of Information Act requests
+    This is a test
 {%- endblock %}
 
 {% block content_main -%}
     <div class="block block__flush-top">
-        <h1>FOIA request and privacy consent form</h1>
+        <h1>Test form</h1>
         <div class="lead-paragraph">
             <p>
-                The Consumer Financial Protection Bureau’s FOIA program is the first step in allowing financial institutions to submit diversity and inclusion assessments online.
+	    Testing file uploads from a form.
             </p>
         </div>
-        <p>
-            Please complete and submit this form to gain access to the Inclusivity Portal where you will be able to submit diversity and inclusion assessments to the Bureau. For questions concerning this form, please contact the Office of Minority and Women Inclusion’s Diversity Assessments Support Team at
-            <a href="mailto:FOIA@consumerfinance.gov">FOIA@consumerfinance.gov</a>.
-        </p>
     </div>
     <div class="block">
         <form id="voluntary-diversity-assessment"
@@ -53,20 +49,8 @@
                 </div>
             {% endif %}
 
-            <h2>Information about your request</h2>
-            <p>
-                Please provide information about your FOIA request
-            </p>
+            <h2>Test form</h2>
             <div class="o-well u-mb30">
-                <div class="o-form_group">
-                    <div class="m-form-field">
-                        <label class="a-label a-label__heading"
-                               for="{{ form.requester_name.id_for_label }}">
-                            {{ form.requester_name.label }}
-                        </label>
-                        {{ form.requester_name }}
-                    </div>
-                </div>
                 <div class="o-form_group">
                     <div class="m-form-field">
                         <label class="a-label a-label__heading"
@@ -79,28 +63,10 @@
                 <div class="o-form_group">
                     <div class="m-form-field">
                         <label class="a-label a-label__heading"
-                               for="{{ form.request_description.id_for_label }}">
-                            {{ form.request_description.label }}
-                        </label>
-                        {{ form.request_description }}
-                    </div>
-                </div>
-                <div class="o-form_group">
-                    <div class="m-form-field">
-                        <label class="a-label a-label__heading"
                                for="{{ form.file_upload.id_for_label }}">
                             {{ form.file_upload.label }}
                         </label>
                         {{ form.file_upload }}
-                    </div>
-                </div>
-                <div class="o-form_group">
-                    <div class="m-form-field">
-                        <label class="a-label a-label__heading"
-                               for="{{ form.privacy_consent.id_for_label }}">
-                            {{ form.privacy_consent.label }}
-                        </label>
-                        {{ form.privacy_consent }}
                     </div>
                 </div>
             </div>
@@ -109,12 +75,6 @@
                     <input class="a-btn"
                            type="submit"
                            value="Submit">
-                    <a class="a-btn a-btn__link a-btn__secondary"
-                       href="{{ url('diversity_inclusion:privacy') }}"
-                       rel="noopener noreferrer"
-                       target="_blank">
-                       See Privacy Act statement
-                    </a>
                 </div>
             </div>
         </form>

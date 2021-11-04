@@ -1,8 +1,8 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% set breadcrumb_items = [{
-    "title": "FOIA request form",
-    "href": "/foia-bfl/foia-request-form/",
+    "title": "Test form",
+    "href": "/test/test-form/",
 }] %}
 
 {% block meta_viewport %}
@@ -11,25 +11,22 @@
 {% endblock %}
 
 {% block title -%}
-    Your FOIA request has been submitted | Consumer Financial Protection Bureau
+    Your test form has been submitted | Consumer Financial Protection Bureau
 {%- endblock %}
 
 {% block content_main %}
     <div class="block block__flush-top">
-        <h1>FOIA request and privacy consent form</h1>
+        <h1>Test form</h1>
     </div>
     <div class="block">
         <div class="m-notification m-notification__visible m-notification__success">
             {{ svg_icon('approved-round') }}
             <div class="m-notification_content">
                 <div class="h4 m-notification_message">
-                    Your FOIA thing has been submitted
+                    Your test form has been submitted
                 </div>
                 <p class="m-notification_explanation">
-                    We’ll use the information you submitted to give you access to the Inclusivity Portal.
-                    You’ll receive an email when your portal account has been created with instructions for logging in.
-                    If you have any questions, please contact the Office of Minority and Women Inclusion’s Diversity Assessments Support Team at
-                    <a href="mailto:OMWI_diversityassessments@cfpb.gov">OMWI_diversityassessments@cfpb.gov</a>.
+                    Thank you.
                 </p>
             </div>
         </div>
