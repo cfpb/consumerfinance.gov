@@ -60,8 +60,6 @@ services:
       APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
       DATABASE_URL: postgres://cfpb@postgres/cfgov
       DJANGO_ADMIN_USERNAME: admin
-      ES_PORT: 9200
-      ES_HOST: elasticsearch
       ES7_HOST: elasticsearch
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
       GOVDELIVERY_ACCOUNT_CODE: USCFPB

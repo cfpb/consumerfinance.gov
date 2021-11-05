@@ -43,8 +43,7 @@ services:
         stdin_open: true
         tty: true
         environment:
-            ES_HOST: elasticsearch
-            ES_PORT: 9200
+            ES7_HOST: elasticsearch
     docs:
         build:
             context: ./
