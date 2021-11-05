@@ -122,31 +122,6 @@
         border-bottom: 1px solid @horizontal-rule;
         margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
     }
-
-    &__email {
-        .respond-to-min(@bp-sm-min, {
-            box-sizing: border-box;
-            width: 50%;
-            padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
-            float: right;
-        });
-
-        .o-email-signup {
-            padding: unit( @grid_gutter-width / @base-font-size-px, em );
-            border: 1px solid @block__border-top;
-            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-            background-color: @block__bg;
-
-            .respond-to-range(@bp-sm-min, @bp-sm-max, {
-                width: 100%;
-            });
-
-            .respond-to-max(320px, {
-                padding: unit( @grid_gutter-width / @base-font-size-px, em )
-                         unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-            });
-        }
-    }
 }
 
 // in .content__1-3 pages, inset should be 4 of 9 columns
