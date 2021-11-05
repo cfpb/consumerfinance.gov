@@ -1,3 +1,5 @@
+from textwrap import dedent
+
 from django import forms
 from django.conf import settings
 from django.core.mail import BadHeaderError, EmailMessage
@@ -17,17 +19,19 @@ text_input_attrs = {
 
 class PrivacyActForm(forms.Form):
     # Information for locating the records
-    system_of_record = forms.CharField(
-        label='Name of the system of records that you believe contain the record requested',  # noqa: E501
-        widget=forms.TextInput(attrs=text_input_attrs),
-    )
     description = forms.CharField(
         label='Description of the nature of the record(s) sought',
         widget=forms.Textarea(attrs=text_input_attrs),
     )
+    system_of_record = forms.CharField(
+        label='Name of the system of records that you believe contain the record requested',  # noqa: E501
+        required=False,
+        widget=forms.TextInput(attrs=text_input_attrs),
+    )
     date_of_records = forms.CharField(
         label='Date of the record(s)',
         help_text='Or the period in which you believe that the record was created',  # noqa: E501
+        required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     other_help_text = 'This may include maiden name, dates of employment, account information, etc. ' + \
@@ -35,6 +39,7 @@ class PrivacyActForm(forms.Form):
     other_info = forms.CharField(
         label='Any other information that might assist the CFPB in identifying the record sought',  # noqa: E501
         help_text=other_help_text,
+        required=False,
         widget=forms.Textarea(attrs=text_input_attrs),
     )
 
@@ -43,13 +48,21 @@ class PrivacyActForm(forms.Form):
         label='Name of requestor',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
-    requestor_email_address = forms.EmailField(
+    requestor_email = forms.EmailField(
         label='Email address',
         widget=forms.EmailInput(attrs=text_input_attrs),
     )
+    contact_channel = forms.ChoiceField(
+        widget=forms.RadioSelect,
+        choices=[
+            ('email', 'Please send my records by email'),
+            ('mail', 'Please send my records by mail'),
+        ]
+    )
     street_address = forms.CharField(
         # label='Street address',
-        widget=forms.EmailInput(attrs=text_input_attrs),
+        required=False,
+        widget=forms.TextInput(attrs=text_input_attrs),
     )
     city = forms.CharField(
         required=False,
@@ -108,17 +121,48 @@ class PrivacyActForm(forms.Form):
         self.limit_file_size(uploaded_files)
         self.limit_number_of_files(uploaded_files)
 
+    def format_email(self, data):
+        contact_info = f"Please send my records by {data['contact_channel']}."
+        if data['contact_channel'] == 'mail':
+            contact_info += f'''
+            Recipient mailing address:
+            {data['street_address']}
+            {data['city']}, {data['state']} {data['zip_code']}
+            '''
+
+        return dedent(f'''
+        The following information was submitted via web form on consumerfinance.gov/privacy/url. Any attachments have not been scanned for viruses and may be unsafe.
+
+        # Information about the request
+        Description of the nature of the records sought: {data['description']}
+        Name of the system of records that you believe contain the record requested: {data['system_of_record']}
+        Date of the record(s): {data['date_of_records']}
+        Any other information that might assist the CFPB in identifying the record sought: {data['other_info']}
+
+        # Contact Information
+        Name of requestor: {data['requestor_name']}
+        Requestor email address: {data['requestor_email']}
+        Name of recipient: {data['recipient_name']}
+        Recipient email address: {data['recipient_email']}
+        {contact_info}
+
+        Supporting documentation: X files attached
+
+        # Consent for disclosure of records
+        Full name: {data['full_name']}
+        {self.consent_text}: {data['consent']}
+        ''')
+
     def send_email(self):
-        subject = 'Online FOIA request: ' + self.cleaned_data['subject_line']
-        body = 'The following information was submitted via web form on consumerfinance.gov/foia/foia-request-form. Any attachments have not been scanned for viruses and may be unsafe. \n\n'  # noqa: E501
+        data = self.cleaned_data
+        subject = 'Privacy request from consumerfinance.gov: ' + data['requestor_name']
         from_email = settings.DEFAULT_FROM_EMAIL
         # recipient_list = ['FOIA@consumerfinance.gov']
         recipient_list = ['elizabeth.lorton@cfpb.gov']
 
-        for (name, field) in self.fields.items():
-            body += field.label + ': ' + str(self.cleaned_data[name]) + '\n'
+        body = self.format_email(data)
 
-        email = EmailMessage(subject, body, from_email, recipient_list)
+        email = EmailMessage(subject, body, from_email, recipient_list, reply_to=[data['requestor_email']])
         uploaded_files = self.files.getlist('file_upload')
         for f in uploaded_files:
             email.attach(f.name, f.read(), f.content_type)
@@ -136,7 +180,7 @@ class DisclosureConsentForm(PrivacyActForm):
         label='Name of recipient',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
-    recipient_email_address = forms.EmailField(
+    recipient_email = forms.EmailField(
         label='Email address',
         widget=forms.EmailInput(attrs=text_input_attrs),
     )
@@ -145,10 +189,4 @@ class DisclosureConsentForm(PrivacyActForm):
 class RecordsAccessForm(PrivacyActForm):
     # Inherit most fields from the PrivacyActForm class
     # Contact information unique to the Records Access form
-    contact_channel = forms.ChoiceField(
-        widget=forms.RadioSelect,
-        choices=[
-            ('email', 'Please send my records by email'),
-            ('mail', 'Please send my records by mail'),
-        ]
-    )
+    pass
