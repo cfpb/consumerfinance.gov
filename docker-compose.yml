@@ -43,7 +43,7 @@ services:
         stdin_open: true
         tty: true
         environment:
-            ES7_HOST: elasticsearch
+            ES_HOST: elasticsearch
     docs:
         build:
             context: ./
