@@ -559,7 +559,7 @@ function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
  */
 function processDate( option, filter ) {
   if ( filter && filter.key === 'tilemap' ) {
-    const [ quarter, year ] = chartHooks.ccpi_dateToQuarter( option );
+    const [ quarter, year ] = chartHooks.cci_dateToQuarter( option );
     return `${ quarter } ${ year }`;
   }
   const d = new Date( option );
