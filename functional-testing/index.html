@@ -162,9 +162,9 @@
         
             <li><a class="toctree-l4" href="#installing-cypress">Installing Cypress</a></li>
         
-            <li><a class="toctree-l4" href="#running-cypress">Running Cypress</a></li>
+            <li><a class="toctree-l4" href="#running-cypress-tests">Running Cypress tests</a></li>
         
-            <li><a class="toctree-l4" href="#writing-cypress-tests">Writing Cypress Tests</a></li>
+            <li><a class="toctree-l4" href="#writing-cypress-tests">Writing Cypress tests</a></li>
         
         </ul>
     
@@ -272,31 +272,33 @@
             <div class="section">
               
                 <h1 id="functional-testing-with-cypress">Functional Testing with Cypress<a class="headerlink" href="#functional-testing-with-cypress" title="Permanent link">¶</a></h1>
-<p>In order to ensure that as we upgrade our wagtail/django dependencies our backend python code is still functional from a frontend perspective we are integrating a new browser testing tool <a href="https://www.cypress.io">Cypress</a>. The goal is to implement and maintain a testing suite that enables confidence in dependency upgrades.</p>
+<p>We use <a href="https://www.cypress.io">Cypress</a> for functional testing. Our functional tests make sure that common elements and critical pages are working correctly on the front end by simulating interactions with consumerfinance.gov in a browser. They're particularly useful in giving us confidence that our code is working as intended through dependency upgrades.</p>
 <h2 id="installing-cypress">Installing Cypress<a class="headerlink" href="#installing-cypress" title="Permanent link">¶</a></h2>
-<p>We have included Cypress as a dependency of this project, and so the only steps that need to be taken are doing a fresh <code>yarn</code> if you haven't already.</p>
-<h2 id="running-cypress">Running Cypress<a class="headerlink" href="#running-cypress" title="Permanent link">¶</a></h2>
-<p>We support both a headless docker container to execute our cypress tests as well as the already installed desktop application that comes packaged with cypress. The test files are located in the <code>test/cypress/integration/</code> directory.</p>
+<p>We have included Cypress as a dependency of this project. The only installation step is doing a fresh <code>yarn</code> if you haven't already.</p>
+<h2 id="running-cypress-tests">Running Cypress tests<a class="headerlink" href="#running-cypress-tests" title="Permanent link">¶</a></h2>
+<h3 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">¶</a></h3>
+<p>We support a headless Docker container to execute our Cypress tests. The test files are located in the <code>test/cypress/integration/</code> directory.</p>
+<p>If you have not previously set up a local Docker network, you will need to stop any running consumerfinance.gov Docker containers, run <code>docker network create cfgov</code>, and start the containers again before you run these commands.</p>
 <ul>
-<li>To run a single docker container use <code>docker-compose -f docker-compose.e2e.yml run admin-tests</code></li>
-<li>To run all docker containers execute <code>docker-compose -f docker-compose.e2e.yml up</code></li>
-<li>
-<p>If you have not previously set up a local Docker network, you will need to stop any running consumerfinance.gov Docker containers, run <code>docker network create cfgov</code>, start the containers again, and then run the above command.</p>
-</li>
-<li>
-<p>To run the desktop cypress aplication execute <code>yarn run cypress open</code> and select your test file to execute.</p>
-</li>
-<li>
-<p>To run the tests from the commandline you can also invoke them via <code>yarn run cypress run</code>. You can read more about different command line arguments in the <a href="https://docs.cypress.io/guides/guides/command-line.html#Options">Command-Line Documentation</a> provided by Cypress.</p>
-</li>
-<li>
-<p>To run the tests against a server other than <code>http://localhost:8000</code>, you can pass in an override for the <code>baseUrl</code> config value; for example:<code>yarn run cypress open --config baseUrl=http://staging_url</code>.</p>
-</li>
+<li><code>docker-compose -f docker-compose.e2e.yml run admin-tests</code> runs a single Docker container (the Wagtail admin test suite, in this case)</li>
+<li><code>docker-compose -f docker-compose.e2e.yml up</code> runs all Docker containers</li>
 </ul>
-<h2 id="writing-cypress-tests">Writing Cypress Tests<a class="headerlink" href="#writing-cypress-tests" title="Permanent link">¶</a></h2>
-<p>When developing new tests for Cypress it is important to consider what the test is trying to accomplish. We want to ensure that we are not polluting our cypress tests with things that can be tested at another level, we are seeking to only test the integration aspect of our UI hosted via Wagtail/Django and custom python code within our backend.</p>
-<p>When adding a test it is often helpful to separate the arrange/act code from the actual assertions in order to improve the readability of our testing code. To do this we have adopted the page model of testing, where we define a page within the application and the methods of interacting with the page separate from the test file itself where we define the assertions. We call these files "helpers" and label them as such (example: <code>megamenu-helpers.js</code>), and we include them alongside the test files themselves in the <code>test/cypress/integration/</code> folder. (They are ignored when running tests thanks to the configuration of <code>cypress.json</code>.)</p>
-<p>For example consider the ConsumerTools Page "helper":</p>
+<h3 id="cypress-app">Cypress app<a class="headerlink" href="#cypress-app" title="Permanent link">¶</a></h3>
+<p>To run the desktop Cypress app execute <code>yarn run cypress open</code> from the command line. From the app, you can select the tests you want to run and the browser you want to run them in.</p>
+<h3 id="command-line">Command line<a class="headerlink" href="#command-line" title="Permanent link">¶</a></h3>
+<p>You can run functional tests from the command line with <code>yarn run cypress run</code>. That will run all tests in the <code>test/cypress/integration/</code> directory with the default test configuration: headless, in Cypress's default Electron browser, and against <code>localhost:8000</code>. You might want to modify the test run with some common arguments:</p>
+<ul>
+<li><code>--spec test/cypress/integration/{path/to/test.js}</code> runs a single test suite</li>
+<li><code>--browser chrome</code> runs the tests in Chrome, which is what we use to run tests in our continuous integration pipeline</li>
+<li><code>--headed</code> shows the browser and Cypress output as the tests run, handy for watching what's happening during the tests</li>
+<li><code>--no-exit</code> will keep the browser and Cypress output open after the tests complete, handy to inspect any errors</li>
+<li><code>--config baseUrl={url}</code> will run the tests against a server other than <code>localhost:8000</code></li>
+</ul>
+<p>Cypress's <a href="https://docs.cypress.io/guides/guides/command-line.html#Options">command line documentation</a> has the list of all the options you can set.</p>
+<h2 id="writing-cypress-tests">Writing Cypress tests<a class="headerlink" href="#writing-cypress-tests" title="Permanent link">¶</a></h2>
+<p>When developing new tests for Cypress, it is important to consider what the test is trying to accomplish. We want to ensure that we are not polluting our Cypress tests with things that can be tested at another level, like in unit tests.</p>
+<p>When adding a test it is often helpful to separate the arrange/act code from the actual assertions in order to improve the readability of our testing code. To do this we have adopted the page model of testing, where we define a page within the application and the methods of interacting with the page separate from the test file itself where we define the assertions. We call these files "helpers" and label them as such (example: <code>megamenu-helpers.js</code>), and we include them alongside the test files themselves in the <code>test/cypress/integration/</code> directory. (They are ignored when running tests thanks to the configuration of <code>cypress.json</code>.)</p>
+<p>For example consider the <code>ConsumerTools</code> page "helper":</p>
 <pre class="highlight"><code class="language-javascript">export default class ConsumerTools {
 
     constructor() {}
