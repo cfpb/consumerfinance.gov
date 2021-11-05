@@ -1,0 +1,212 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% set breadcrumb_items = [{
+    "title": "CFPB Home",
+    "href": "/",
+}] %}
+
+{% block title -%}
+    Test Form | Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block desc -%}
+    This is a test
+{%- endblock %}
+
+{% block og_desc -%}
+    This is a test
+{%- endblock %}
+
+{% block content_main -%}
+    <div class="block block__flush-top">
+        <h1>Test form</h1>
+        <div class="lead-paragraph">
+            <p>
+            Testing file uploads from a form.
+            </p>
+        </div>
+    </div>
+    <div class="block">
+        <form id="voluntary-diversity-assessment"
+              action="{{ url('foia:disclosure_consent') }}"
+              enctype="multipart/form-data"
+              method="POST">
+            {#
+                Display any error messages created during form submission.
+                Rendered above the form for styling purposes.
+            #}
+            {% if form.errors %}
+                {% import 'molecules/notification.html' as notification %}
+                <div class="u-mb15">
+                    {% for error in form.non_field_errors() %}
+                        {{- notification.render( 'error', true, error | richtext ) }}
+                    {% endfor %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            {{- notification.render( 'error', true, error ) }}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <h2>Test form</h2>
+            <div class="o-well u-mb30">
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.system_of_record.id_for_label }}">
+                            {{ form.system_of_record.label }}
+                        </label>
+                        {{ form.system_of_record }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.description.id_for_label }}">
+                            {{ form.description.label }}
+                        </label>
+                        {{ form.description }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.date_of_records.id_for_label }}">
+                            {{ form.date_of_records.label }}
+                        </label>
+		        <p class="help">{{ form.date_of_records.help_text }}</p>
+                        {{ form.date_of_records }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.other_info.id_for_label }}">
+                            {{ form.other_info.label }}
+                        </label>
+                        <p class="help">{{ form.other_info.help_text }}</p>
+                        {{ form.other_info }}
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="o-well u-mb30">
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.requestor_name.id_for_label }}">
+                            {{ form.requestor_name.label }}
+                        </label>
+                        {{ form.requestor_name }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.requestor_email_address.id_for_label }}">
+                            {{ form.requestor_email_address.label }}
+                        </label>
+                        {{ form.requestor_email_address }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.contact_channel.id_for_label }}">
+                            {{ form.contact_channel.label }}
+                        </label>
+                        {{ form.contact_channel }}
+                    </div>
+                </div>
+                If you would like to receive your records by mail, please provide your mailing address.
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.street_address.id_for_label }}">
+                            {{ form.street_address.label }}
+                        </label>
+                        {{ form.street_address }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.city.id_for_label }}">
+                            {{ form.city.label }}
+                        </label>
+                        {{ form.city }}
+                    </div>
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.state.id_for_label }}">
+                            {{ form.state.label }}
+                        </label>
+                        {{ form.state }}
+                    </div>
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.zip_code.id_for_label }}">
+                            {{ form.zip_code.label }}
+                        </label>
+                        {{ form.zip_code }}
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="o-well u-mb30">
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.supporting_documentation.id_for_label }}">
+                            {{ form.supporting_documentation.label }}
+                        </label>
+                        {{ form.supporting_documentation }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="o-well u-mb30">
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.full_name.id_for_label }}">
+                            {{ form.full_name.label }}
+                        </label>
+                        {{ form.full_name }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.consent.id_for_label }}">
+                            {{ form.consent.label }}
+                        </label>
+                        {{ form.consent }}
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="o-form_group">
+                <div class="m-btn-group">
+                    <input class="a-btn"
+                           type="submit"
+                           value="Submit">
+                    <a class="a-btn a-btn__link a-btn__secondary"
+                       href="{{ url('foia:foia_privacy') }}"
+                       rel="noopener noreferrer"
+                       target="_blank">
+                       Privacy Act statement
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+{%- endblock %}
+
+{% block content_sidebar -%}
+    {% include '_sidebar.html' %}
+{%- endblock %}

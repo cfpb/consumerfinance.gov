@@ -427,7 +427,7 @@ urlpatterns = [
             namespace='diversity_inclusion')),
 
     re_path(
-        r'^test/',
+        r'^foia-requests/',
         include((
             'foia.urls',
             'foia'),

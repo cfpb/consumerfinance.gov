@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.core.mail import BadHeaderError, EmailMessage
+from django.core.validators import validate_image_file_extension
 from django.http import HttpResponse
 
 
@@ -14,16 +15,72 @@ text_input_attrs = {
 }
 
 
-class FoiaRequestForm(forms.Form):
-    subject_line = forms.CharField(
-        label='Subject line',
+class PrivacyActForm(forms.Form):
+    # Information for locating the records
+    system_of_record = forms.CharField(
+        label='Name of the system of records that you believe contain the record requested',  # noqa: E501
         widget=forms.TextInput(attrs=text_input_attrs),
     )
-    file_upload = forms.FileField(
+    description = forms.CharField(
+        label='Description of the nature of the record(s) sought',
+        widget=forms.Textarea(attrs=text_input_attrs),
+    )
+    date_of_records = forms.CharField(
+        label='Date of the record(s)',
+        help_text='Or the period in which you believe that the record was created',  # noqa: E501
+        widget=forms.TextInput(attrs=text_input_attrs),
+    )
+    other_help_text = 'This may include maiden name, dates of employment, account information, etc. ' + \
+            'This enables the CFPB to locate the system of records containing the record(s) with a reasonable amount of effort.'  # noqa: E501
+    other_info = forms.CharField(
+        label='Any other information that might assist the CFPB in identifying the record sought',  # noqa: E501
+        help_text=other_help_text,
+        widget=forms.Textarea(attrs=text_input_attrs),
+    )
+
+    # Contact information
+    requestor_name = forms.CharField(
+        label='Name of requestor',
+        widget=forms.TextInput(attrs=text_input_attrs),
+    )
+    requestor_email_address = forms.EmailField(
+        label='Email address',
+        widget=forms.EmailInput(attrs=text_input_attrs),
+    )
+    street_address = forms.CharField(
+        # label='Street address',
+        widget=forms.EmailInput(attrs=text_input_attrs),
+    )
+    city = forms.CharField(
+        required=False,
+    )
+    state = forms.CharField(
+        required=False,
+    )
+    zip_code = forms.CharField(
+        label='Zip',
+        required=False,
+    )
+
+    # Supporting documentation
+    supporting_documentation = forms.FileField(
         label='Upload supplementary information',
         required=False,
+        validators=[validate_image_file_extension],
         widget=forms.ClearableFileInput(attrs={'multiple': True}),
     )
+
+    # Consent for disclosure
+    full_name = forms.CharField(
+        label='Full name',
+        widget=forms.TextInput(attrs=text_input_attrs),
+    )
+    consent_text = 'I declare under penalty of perjury under the laws of the United States of America that the foregoing is true and correct, and that I am the person named above and consenting to and authorizing disclosure of my records [, or records that I am entitled to request as the parent of a minor or the legal guardian of an incompetent], and I understand that any falsification of this statement is punishable under the provisions of 18 U.S.C. § 1001 by a fine, imprisonment of not more than five years, or both, and that requesting or obtaining any record(s) under false pretenses is punishable under the provisions of 5 U.S.C. § 552a(i)(3) by a fine of not more than $5,000.'
+    consent = forms.BooleanField(
+        label=consent_text,
+        widget=forms.CheckboxInput(),
+    )
+
 
     def combined_file_size(self, files):
         total = 0
@@ -70,3 +127,28 @@ class FoiaRequestForm(forms.Form):
             email.send()
         except BadHeaderError:
             return HttpResponse('Invalid header found.')
+
+
+class DisclosureConsentForm(PrivacyActForm):
+    # Inherit most fields from the PrivacyActForm class
+    # Contact information unique to the Disclosure Consent form
+    recipient_name = forms.CharField(
+        label='Name of recipient',
+        widget=forms.TextInput(attrs=text_input_attrs),
+    )
+    recipient_email_address = forms.EmailField(
+        label='Email address',
+        widget=forms.EmailInput(attrs=text_input_attrs),
+    )
+
+
+class RecordsAccessForm(PrivacyActForm):
+    # Inherit most fields from the PrivacyActForm class
+    # Contact information unique to the Records Access form
+    contact_channel = forms.ChoiceField(
+        widget=forms.RadioSelect,
+        choices=[
+            ('email', 'Please send my records by email'),
+            ('mail', 'Please send my records by mail'),
+        ]
+    )
