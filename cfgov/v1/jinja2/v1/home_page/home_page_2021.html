@@ -8,8 +8,12 @@
     {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+content_main__flush-inner
+{%- endblock %}
+
 {% block hero %}
-    <section class="content_wrapper wrapper">
+    <section class="content_level--1">
     {% for block in page.content %}
         {% if block.block_type == 'features' %}
             {% import "v1/home_page/_hardcoded_" ~ language ~ ".html" as hardcoded with context %}
@@ -75,7 +79,7 @@
         </div>
     </section>
 
-    <section class="content-grid_inset">
+    <section class="content_level-1">
         <section class="block">
             <div class="o-info-unit-group">
                 <div class="content-l">
@@ -167,7 +171,7 @@
         </section>
         {% endif %}
 
-        <section class="block">
+        <section class="block content_level-2">
             {{ card_group.render( {
                 'heading': hardcoded.breakout_cards_heading | safe,
                 'type_group': 'column-3',
@@ -176,7 +180,7 @@
             } ) }}
         </section>
 
-        <section class="block">
+        <section class="block content_level-3">
             <div class="o-info-unit-group">
                 <div class="content-l">
                     <div class="content-l_col content-l_col-1-2">
