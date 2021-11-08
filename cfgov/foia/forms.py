@@ -108,16 +108,16 @@ class PrivacyActForm(forms.Form):
         if total_uploaded_bytes > max_bytes:
             display_size = round(total_uploaded_bytes / mb, 1)
             err = forms.ValidationError(f"Total size of uploaded files ({display_size} MB) was greater than size limit (2 MB).")  # noqa: E501
-            self.add_error('file_upload', err)
+            self.add_error('supporting_documentation', err)
 
     def limit_number_of_files(self, files):
         max_files = 6
         if len(files) > max_files:
             err = forms.ValidationError(f"Please choose {max_files} or fewer files. You chose {len(files)}.")  # noqa: E501
-            self.add_error('file_upload', err)
+            self.add_error('supporting_documentation', err)
 
     def clean(self):
-        uploaded_files = self.files.getlist('file_upload')
+        uploaded_files = self.files.getlist('supporting_documentation')
         self.limit_file_size(uploaded_files)
         self.limit_number_of_files(uploaded_files)
 
@@ -172,20 +172,16 @@ class DisclosureConsentForm(PrivacyActForm):
 
     def email_body(self, data):
         return dedent(f'''
-        The following information was submitted via web form on \
-        consumerfinance.gov/privacy/url. Any attachments have not been \
-        scanned for viruses and may be unsafe.
+        The following information was submitted via web form on consumerfinance.gov/privacy/disclosure-consent. Any attachments have not been scanned for viruses and may be unsafe.
 
         Consent for disclosure of records protected under the Privacy Act
         =================================================================
 
         # Information about the request
         Description of the nature of the records sought: {data['description']}
-        Name of the system of records that you believe contain the record \
-        requested: {data['system_of_record']}
+        Name of the system of records that you believe contain the record requested: {data['system_of_record']}
         Date of the record(s): {data['date_of_records']}
-        Any other information that might assist the CFPB in identifying the \
-                record sought: {data['other_info']}
+        Any other information that might assist the CFPB in identifying the record sought: {data['other_info']}
 
         # Contact Information
         Name of requestor: {data['requestor_name']}
@@ -206,7 +202,7 @@ class RecordsAccessForm(PrivacyActForm):
     # Inherit form fields from the PrivacyActForm class
     def email_body(self, data):
         return dedent(f'''
-        The following information was submitted via web form on consumerfinance.gov/privacy/url. Any attachments have not been scanned for viruses and may be unsafe.
+        The following information was submitted via web form on consumerfinance.gov/privacy/records-access. Any attachments have not been scanned for viruses and may be unsafe.
 
         Request for individual access to records protected under the Privacy Act
         ========================================================================
