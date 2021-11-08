@@ -18,13 +18,13 @@ text_input_attrs = {
 
 
 class PrivacyActForm(forms.Form):
-    # Information for locating the records
+    # Form fields
     description = forms.CharField(
         label='Description of the nature of the record(s) sought',
         widget=forms.Textarea(attrs=text_input_attrs),
     )
     system_of_record = forms.CharField(
-        label='Name of the system of records that you believe contain the record requested',  # noqa: E501
+        label='Name of the system of records you believe contain the record',
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
@@ -34,16 +34,16 @@ class PrivacyActForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
-    other_help_text = 'This may include maiden name, dates of employment, account information, etc. ' + \
-            'This enables the CFPB to locate the system of records containing the record(s) with a reasonable amount of effort.'  # noqa: E501
+    other_help_text = 'This may include maiden name, dates of employment, ' + \
+            'account information, etc. This enables the CFPB to locate ' + \
+            'the system of records containing the record(s) with a ' + \
+            'reasonable amount of effort.'
     other_info = forms.CharField(
-        label='Any other information that might assist the CFPB in identifying the record sought',  # noqa: E501
+        label='Any other information that might assist in identifying the record',  # noqa: E501
         help_text=other_help_text,
         required=False,
         widget=forms.Textarea(attrs=text_input_attrs),
     )
-
-    # Contact information
     requestor_name = forms.CharField(
         label='Name of requestor',
         widget=forms.TextInput(attrs=text_input_attrs),
@@ -60,7 +60,6 @@ class PrivacyActForm(forms.Form):
         ]
     )
     street_address = forms.CharField(
-        # label='Street address',
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
@@ -74,16 +73,12 @@ class PrivacyActForm(forms.Form):
         label='Zip',
         required=False,
     )
-
-    # Supporting documentation
     supporting_documentation = forms.FileField(
         label='Upload supplementary information',
         required=False,
         validators=[validate_image_file_extension],
         widget=forms.ClearableFileInput(attrs={'multiple': True}),
     )
-
-    # Consent for disclosure
     full_name = forms.CharField(
         label='Full name',
         widget=forms.TextInput(attrs=text_input_attrs),
@@ -94,6 +89,13 @@ class PrivacyActForm(forms.Form):
         widget=forms.CheckboxInput(),
     )
 
+    # Form validations
+    def require_address_if_mailing(self):
+        data = self.cleaned_data
+        if not (data['street_address'] and data['city'] and data['state'] \
+                and data['zip_code']):
+            msg = "Mailing address is required if requesting records by mail."
+            self.add_error('street_address', forms.ValidationError(msg))
 
     def combined_file_size(self, files):
         total = 0
@@ -117,10 +119,13 @@ class PrivacyActForm(forms.Form):
             self.add_error('supporting_documentation', err)
 
     def clean(self):
+        super().clean()
+        self.require_address_if_mailing()
         uploaded_files = self.files.getlist('supporting_documentation')
         self.limit_file_size(uploaded_files)
         self.limit_number_of_files(uploaded_files)
 
+    # Email message
     def format_contact_info(self, data):
         contact_info = f"Please send my records by {data['contact_channel']}."
         if data['contact_channel'] == 'mail':
@@ -159,8 +164,7 @@ class PrivacyActForm(forms.Form):
 
 
 class DisclosureConsentForm(PrivacyActForm):
-    # Inherit most fields from the PrivacyActForm class
-    # Contact information unique to the Disclosure Consent form
+    # Inherit most form fields from the PrivacyActForm class
     recipient_name = forms.CharField(
         label='Name of recipient',
         widget=forms.TextInput(attrs=text_input_attrs),
