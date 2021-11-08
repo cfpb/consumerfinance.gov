@@ -427,11 +427,11 @@ urlpatterns = [
             namespace='diversity_inclusion')),
 
     re_path(
-        r'^foia-requests/',
+        r'^privacy/',
         include((
-            'foia.urls',
-            'foia'),
-            namespace='foia')),
+            'privacy.urls',
+            'privacy'),
+            namespace='privacy')),
 
     re_path(r'^sitemap\.xml$', akamai_no_store(sitemap)),
 
