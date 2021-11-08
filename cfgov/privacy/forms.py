@@ -34,10 +34,10 @@ class PrivacyActForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
-    other_help_text = 'This may include maiden name, dates of employment, ' + \
-            'account information, etc. This enables the CFPB to locate ' + \
-            'the system of records containing the record(s) with a ' + \
-            'reasonable amount of effort.'
+    other_help_text = '''This may include maiden name, dates of employment,
+        account information, etc. This enables the CFPB to locate the system of
+        records containing the record(s) with a reasonable amount of effort.
+        '''
     other_info = forms.CharField(
         label='Any other information that might assist in identifying the record',  # noqa: E501
         help_text=other_help_text,
@@ -83,7 +83,19 @@ class PrivacyActForm(forms.Form):
         label='Full name',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
-    consent_text = 'I declare under penalty of perjury under the laws of the United States of America that the foregoing is true and correct, and that I am the person named above and consenting to and authorizing disclosure of my records [, or records that I am entitled to request as the parent of a minor or the legal guardian of an incompetent], and I understand that any falsification of this statement is punishable under the provisions of 18 U.S.C. § 1001 by a fine, imprisonment of not more than five years, or both, and that requesting or obtaining any record(s) under false pretenses is punishable under the provisions of 5 U.S.C. § 552a(i)(3) by a fine of not more than $5,000.'
+    consent_text = '''I declare under penalty of perjury under the laws of
+         the United States of America that the foregoing is true and
+         correct, and that I am the person named above and consenting
+         to and authorizing disclosure of my records [, or records
+         that I am entitled to request as the parent of a minor or
+         the legal guardian of an incompetent], and I understand that
+         any falsification of this statement is punishable under the
+         provisions of 18 U.S.C. § 1001 by a fine, imprisonment of
+         not more than five years, or both, and that requesting or
+         obtaining any record(s) under false pretenses is punishable
+         under the provisions of 5 U.S.C. § 552a(i)(3) by a fine of not
+         more than $5,000.
+         '''
     consent = forms.BooleanField(
         label=consent_text,
         widget=forms.CheckboxInput(),
@@ -92,7 +104,7 @@ class PrivacyActForm(forms.Form):
     # Form validations
     def require_address_if_mailing(self):
         data = self.cleaned_data
-        if not (data['street_address'] and data['city'] and data['state'] \
+        if not (data['street_address'] and data['city'] and data['state']
                 and data['zip_code']):
             msg = "Mailing address is required if requesting records by mail."
             self.add_error('street_address', forms.ValidationError(msg))
@@ -145,14 +157,21 @@ class PrivacyActForm(forms.Form):
 
     def send_email(self):
         data = self.cleaned_data
-        subject = 'Privacy request from consumerfinance.gov: ' + data['requestor_name']
+        subject = self.format_subject(data['requestor_name'])
         from_email = settings.DEFAULT_FROM_EMAIL
         # recipient_list = ['FOIA@consumerfinance.gov']
         recipient_list = ['elizabeth.lorton@cfpb.gov']
 
         body = self.email_body(data)
 
-        email = EmailMessage(subject, body, from_email, recipient_list, reply_to=[data['requestor_email']])
+        email = EmailMessage(
+            subject,
+            body,
+            from_email,
+            recipient_list,
+            reply_to=[data['requestor_email']]
+        )
+
         uploaded_files = self.files.getlist('supporting_documentation')
         for f in uploaded_files:
             email.attach(f.name, f.read(), f.content_type)
@@ -174,8 +193,11 @@ class DisclosureConsentForm(PrivacyActForm):
         widget=forms.EmailInput(attrs=text_input_attrs),
     )
 
+    def format_subject(self, name):
+        return f'Disclosure request from consumerfinance.gov: {name}'
+
     def email_body(self, data):
-        return dedent(f'''
+        return dedent(f'''   # noqa: E501
         The following information was submitted via web form on consumerfinance.gov/privacy/disclosure-consent. Any attachments have not been scanned for viruses and may be unsafe.
 
         Consent for disclosure of records protected under the Privacy Act
@@ -204,8 +226,11 @@ class DisclosureConsentForm(PrivacyActForm):
 
 class RecordsAccessForm(PrivacyActForm):
     # Inherit form fields from the PrivacyActForm class
+    def format_subject(self, name):
+        return f'Records request from consumerfinance.gov: {name}'
+
     def email_body(self, data):
-        return dedent(f'''
+        return dedent(f'''   # noqa: E501
         The following information was submitted via web form on consumerfinance.gov/privacy/records-access. Any attachments have not been scanned for viruses and may be unsafe.
 
         Request for individual access to records protected under the Privacy Act

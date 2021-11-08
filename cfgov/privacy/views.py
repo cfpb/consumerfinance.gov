@@ -15,6 +15,7 @@ class GetDisclosureConsentForm(FormView):
         form.send_email()
         return super(GetDisclosureConsentForm, self).form_valid(form)
 
+
 class GetRecordsAccessForm(FormView):
     template_name = 'privacy/records-access-form.html'
     form_class = RecordsAccessForm
