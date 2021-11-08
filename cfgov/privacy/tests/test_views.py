@@ -3,12 +3,16 @@ from django.test import TestCase
 from django.urls import reverse
 
 
-class TestGetAssessmentForm(TestCase):
+class TestRecordsAccessForm(TestCase):
     # def test_invalid_form_post_does_not_send_email(self):
     #     self.client.post(
-    #         reverse("foia:foia_form"),
+    #         reverse("privacy:records_access"),
     #         {
-    #             "subject_line": "",
+    #             "description": "",
+    #             "system_of_record": "",
+    #             "requestor_name": "",
+    #             "requestor_email": "",
+    #             "contact_channel": "",
     #         },
     #     )
 
