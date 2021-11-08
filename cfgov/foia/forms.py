@@ -121,7 +121,7 @@ class PrivacyActForm(forms.Form):
         self.limit_file_size(uploaded_files)
         self.limit_number_of_files(uploaded_files)
 
-    def format_email(self, data):
+    def format_contact_info(self, data):
         contact_info = f"Please send my records by {data['contact_channel']}."
         if data['contact_channel'] == 'mail':
             contact_info += f'''
@@ -129,29 +129,14 @@ class PrivacyActForm(forms.Form):
             {data['street_address']}
             {data['city']}, {data['state']} {data['zip_code']}
             '''
+        return contact_info
 
-        return dedent(f'''
-        The following information was submitted via web form on consumerfinance.gov/privacy/url. Any attachments have not been scanned for viruses and may be unsafe.
-
-        # Information about the request
-        Description of the nature of the records sought: {data['description']}
-        Name of the system of records that you believe contain the record requested: {data['system_of_record']}
-        Date of the record(s): {data['date_of_records']}
-        Any other information that might assist the CFPB in identifying the record sought: {data['other_info']}
-
-        # Contact Information
-        Name of requestor: {data['requestor_name']}
-        Requestor email address: {data['requestor_email']}
-        Name of recipient: {data['recipient_name']}
-        Recipient email address: {data['recipient_email']}
-        {contact_info}
-
-        Supporting documentation: X files attached
-
-        # Consent for disclosure of records
-        Full name: {data['full_name']}
-        {self.consent_text}: {data['consent']}
-        ''')
+    def format_files(self):
+        uploaded_files = self.files.getlist('supporting_documentation')
+        files = f'{len(uploaded_files)} files attached.'
+        for f in uploaded_files:
+            files += '\n        - ' + f.name
+        return files
 
     def send_email(self):
         data = self.cleaned_data
@@ -160,10 +145,10 @@ class PrivacyActForm(forms.Form):
         # recipient_list = ['FOIA@consumerfinance.gov']
         recipient_list = ['elizabeth.lorton@cfpb.gov']
 
-        body = self.format_email(data)
+        body = self.email_body(data)
 
         email = EmailMessage(subject, body, from_email, recipient_list, reply_to=[data['requestor_email']])
-        uploaded_files = self.files.getlist('file_upload')
+        uploaded_files = self.files.getlist('supporting_documentation')
         for f in uploaded_files:
             email.attach(f.name, f.read(), f.content_type)
 
@@ -185,8 +170,61 @@ class DisclosureConsentForm(PrivacyActForm):
         widget=forms.EmailInput(attrs=text_input_attrs),
     )
 
+    def email_body(self, data):
+        return dedent(f'''
+        The following information was submitted via web form on \
+        consumerfinance.gov/privacy/url. Any attachments have not been \
+        scanned for viruses and may be unsafe.
+
+        Consent for disclosure of records protected under the Privacy Act
+        =================================================================
+
+        # Information about the request
+        Description of the nature of the records sought: {data['description']}
+        Name of the system of records that you believe contain the record \
+        requested: {data['system_of_record']}
+        Date of the record(s): {data['date_of_records']}
+        Any other information that might assist the CFPB in identifying the \
+                record sought: {data['other_info']}
+
+        # Contact Information
+        Name of requestor: {data['requestor_name']}
+        Requestor email address: {data['requestor_email']}
+        Name of recipient: {data['recipient_name']}
+        Recipient email address: {data['recipient_email']}
+        {self.format_contact_info(data)}
+
+        Supporting documentation: {self.format_files()}
+
+        # Consent for disclosure of records
+        Full name: {data['full_name']}
+        {self.consent_text}: {data['consent']}
+        ''')
+
 
 class RecordsAccessForm(PrivacyActForm):
-    # Inherit most fields from the PrivacyActForm class
-    # Contact information unique to the Records Access form
-    pass
+    # Inherit form fields from the PrivacyActForm class
+    def email_body(self, data):
+        return dedent(f'''
+        The following information was submitted via web form on consumerfinance.gov/privacy/url. Any attachments have not been scanned for viruses and may be unsafe.
+
+        Request for individual access to records protected under the Privacy Act
+        ========================================================================
+
+        # Information about the request
+        Description of the nature of the records sought: {data['description']}
+        Name of the system of records that you believe contain the record requested: {data['system_of_record']}
+        Date of the record(s): {data['date_of_records']}
+        Any other information that might assist the CFPB in identifying the record sought: {data['other_info']}
+
+        # Contact Information
+        Name of requestor: {data['requestor_name']}
+        Requestor email address: {data['requestor_email']}
+        {self.format_contact_info(data)}
+
+        Supporting documentation: {self.format_files()}
+
+        # Consent for disclosure of records
+        Full name: {data['full_name']}
+        {self.consent_text}: {data['consent']}
+        ''')
