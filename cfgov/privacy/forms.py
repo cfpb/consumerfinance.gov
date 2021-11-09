@@ -15,6 +15,7 @@ from django.http import HttpResponse
 text_input_attrs = {
     'class': 'a-text-input a-text-input__full',
 }
+address_attrs = {'class': 'a-text-input'}
 
 
 class PrivacyActForm(forms.Form):
@@ -61,18 +62,20 @@ class PrivacyActForm(forms.Form):
     )
     city = forms.CharField(
         required=False,
+        widget=forms.TextInput(attrs=address_attrs),
     )
     state = forms.CharField(
         required=False,
+        widget=forms.TextInput(attrs=address_attrs),
     )
     zip_code = forms.CharField(
         label='Zip',
         required=False,
+        widget=forms.TextInput(attrs=address_attrs),
     )
     supporting_documentation = forms.FileField(
         required=False,
         validators=[validate_image_file_extension],
-        widget=forms.ClearableFileInput(attrs={'multiple': True}),
     )
     full_name = forms.CharField(
         label='Full name',
@@ -177,7 +180,7 @@ class DisclosureConsentForm(PrivacyActForm):
          more than $5,000.''')
     consent = forms.BooleanField(
         label=consent_text,
-        widget=forms.CheckboxInput(),
+        widget=forms.CheckboxInput(attrs={'class': 'a-checkbox'}),
     )
     # Inherit most form fields from the PrivacyActForm class
     recipient_name = forms.CharField(
@@ -236,7 +239,7 @@ class RecordsAccessForm(PrivacyActForm):
             $5,000.''')
     consent = forms.BooleanField(
         label=consent_text,
-        widget=forms.CheckboxInput(),
+        widget=forms.CheckboxInput(attrs={'class': 'a-checkbox'}),
     )
 
     def format_subject(self, name):

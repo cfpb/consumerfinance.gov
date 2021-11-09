@@ -18,6 +18,17 @@
 {%- endblock %}
 
 {% block content_main -%}
+    <style>
+      .m-form-grid {
+        display: grid;
+        grid-template-columns: 50% repeat(2, 1fr);
+        grid-column-gap: 3em;
+        padding-right: 1em;
+      }
+      .m-form-grid input {
+        width: 100%;
+      }
+    </style>
     <div class="block block__flush-top">
         <h1>Test form</h1>
         <div class="lead-paragraph">
@@ -120,7 +131,7 @@
                         {{ form.contact_channel }}
                     </div>
                 </div>
-                If you would like to receive your records by mail, please provide your mailing address.
+                <p>If you would like to receive your records by mail, please provide your mailing address.</p>
                 <div class="o-form_group">
                     <div class="m-form-field">
                         <label class="a-label a-label__heading"
@@ -130,7 +141,7 @@
                         {{ form.street_address }}
                     </div>
                 </div>
-                <div class="o-form_group">
+                <div class="o-form_group m-form-grid">
                     <div class="m-form-field">
                         <label class="a-label a-label__heading"
                                for="{{ form.city.id_for_label }}">
@@ -158,13 +169,26 @@
 
             <div class="o-well u-mb30">
                 <div class="o-form_group">
-                    <div class="m-form-field">
-                        <label class="a-label a-label__heading"
-                               for="{{ form.supporting_documentation.id_for_label }}">
-                            {{ form.supporting_documentation.label }}
-                        </label>
-                        {{ form.supporting_documentation }}
-                    </div>
+                  {% for error in form.supporting_documentation.errors %}
+                      {{- notification.render( 'error', true, error ) }}
+                  {% endfor %}
+                  <h4 style="margin-bottom:0.25em">Select up to six files to attach</h4>
+                  <p>Total file size must not exceed 6MB</p>
+                  <div class="m-form-field m-form-field__file-input">
+                      <!-- Actual hidden file upload component. -->
+                      <label>
+                          <input class="u-hidden" multiple type="file" id="upload-file">
+                      </label>
+                      <!-- Styled faux overlay component. -->
+                      <button class="a-btn
+                                     a-btn__flush-right">
+                          Select files to upload
+                      </button>
+                  </div>
+                </div>
+                <div id="upload-file-list">
+                  <h4 class="u-hidden">Files added:</h4>
+                  <ul class="m-list m-list__unstyled"></ul>
                 </div>
             </div>
 
@@ -179,12 +203,12 @@
                     </div>
                 </div>
                 <div class="o-form_group">
-                    <div class="m-form-field">
+                    <div class="m-form-field m-form-field__checkbox">
+                        {{ form.consent }}
                         <label class="a-label a-label__heading"
                                for="{{ form.consent.id_for_label }}">
                             {{ form.consent.label }}
                         </label>
-                        {{ form.consent }}
                     </div>
                 </div>
             </div>
@@ -210,3 +234,17 @@
 {% block content_sidebar -%}
     {% include '_sidebar.html' %}
 {%- endblock %}
+
+{% block javascript %}
+    {{ super() }}
+    <script>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function() {
+          var s = [
+            '{{ static("/js/routes/on-demand/file-input.js") }}'
+          ];
+          jsl(s);
+        }();
+      }
+    </script>
+{% endblock javascript %}
