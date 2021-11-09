@@ -104,10 +104,11 @@ class PrivacyActForm(forms.Form):
     # Form validations
     def require_address_if_mailing(self):
         data = self.cleaned_data
-        if not (data['street_address'] and data['city'] and data['state']
-                and data['zip_code']):
-            msg = "Mailing address is required if requesting records by mail."
-            self.add_error('street_address', forms.ValidationError(msg))
+        if data['contact_channel'] == 'mail':
+            if not (data['street_address'] and data['city'] and data['state']
+                    and data['zip_code']):
+                msg = "Mailing address is required if requesting records by mail."  # noqa: E501
+                self.add_error('street_address', forms.ValidationError(msg))
 
     def combined_file_size(self, files):
         total = 0

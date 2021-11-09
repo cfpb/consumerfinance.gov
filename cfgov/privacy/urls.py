@@ -19,7 +19,7 @@ urlpatterns = [
     ),
     flagged_re_path(
         "PRIVACY_FORMS",
-        r"^test-form/form-submitted/$",
+        r"^form-submitted/$",
         TemplateView.as_view(
             template_name="privacy/form-submitted.html"
         ),
