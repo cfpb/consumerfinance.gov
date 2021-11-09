@@ -71,6 +71,7 @@ jobs:
         env:
           TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner
           ES_PORT: ${{ job.services.elasticsearch.ports[9200] }}
+          DATABASE_URL: postgres://cfpb:cfpb@localhost/cfgov
 
       - name: Prepare test coverage
         if: steps.filter.outputs.backend == 'true' && matrix.toxenv == 'unittest'
