@@ -20,11 +20,11 @@ text_input_attrs = {
 class PrivacyActForm(forms.Form):
     # Form fields
     description = forms.CharField(
-        label='Description of the nature of the record(s) sought',
+        label='Description of the record(s) sought',
         widget=forms.Textarea(attrs=text_input_attrs),
     )
     system_of_record = forms.CharField(
-        label='Name of the system of records you believe contain the record',
+        label='Name of the system of records you believe contain the record(s)',
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
@@ -34,13 +34,9 @@ class PrivacyActForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
-    other_help_text = '''This may include maiden name, dates of employment,
-        account information, etc. This enables the CFPB to locate the system of
-        records containing the record(s) with a reasonable amount of effort.
-        '''
     other_info = forms.CharField(
-        label='Any other information that might assist in identifying the record',  # noqa: E501
-        help_text=other_help_text,
+        label='Any additional information',
+        help_text='This may include maiden name, dates of employment, account information, etc.',  # noqa: E501
         required=False,
         widget=forms.Textarea(attrs=text_input_attrs),
     )
@@ -74,7 +70,6 @@ class PrivacyActForm(forms.Form):
         required=False,
     )
     supporting_documentation = forms.FileField(
-        label='Upload supplementary information',
         required=False,
         validators=[validate_image_file_extension],
         widget=forms.ClearableFileInput(attrs={'multiple': True}),
@@ -82,23 +77,6 @@ class PrivacyActForm(forms.Form):
     full_name = forms.CharField(
         label='Full name',
         widget=forms.TextInput(attrs=text_input_attrs),
-    )
-    consent_text = '''I declare under penalty of perjury under the laws of
-         the United States of America that the foregoing is true and
-         correct, and that I am the person named above and consenting
-         to and authorizing disclosure of my records [, or records
-         that I am entitled to request as the parent of a minor or
-         the legal guardian of an incompetent], and I understand that
-         any falsification of this statement is punishable under the
-         provisions of 18 U.S.C. § 1001 by a fine, imprisonment of
-         not more than five years, or both, and that requesting or
-         obtaining any record(s) under false pretenses is punishable
-         under the provisions of 5 U.S.C. § 552a(i)(3) by a fine of not
-         more than $5,000.
-         '''
-    consent = forms.BooleanField(
-        label=consent_text,
-        widget=forms.CheckboxInput(),
     )
 
     # Form validations
@@ -184,6 +162,23 @@ class PrivacyActForm(forms.Form):
 
 
 class DisclosureConsentForm(PrivacyActForm):
+    consent_text = dedent('''
+         I declare under penalty of perjury under the laws
+         of the United States of America that the foregoing is true and
+         correct, and that I am the person named above and consenting
+         to and authorizing disclosure of my records [or records
+         that I am entitled to request as the parent of a minor or
+         the legal guardian of an incompetent], and I understand that
+         any falsification of this statement is punishable under the
+         provisions of 18 U.S.C. § 1001 by a fine, imprisonment of
+         not more than five years, or both, and that requesting or
+         obtaining any record(s) under false pretenses is punishable
+         under the provisions of 5 U.S.C. § 552a(i)(3) by a fine of not
+         more than $5,000.''')
+    consent = forms.BooleanField(
+        label=consent_text,
+        widget=forms.CheckboxInput(),
+    )
     # Inherit most form fields from the PrivacyActForm class
     recipient_name = forms.CharField(
         label='Name of recipient',
@@ -198,7 +193,7 @@ class DisclosureConsentForm(PrivacyActForm):
         return f'Disclosure request from consumerfinance.gov: {name}'
 
     def email_body(self, data):
-        return dedent(f'''   # noqa: E501
+        return dedent(f'''
         The following information was submitted via web form on consumerfinance.gov/privacy/disclosure-consent. Any attachments have not been scanned for viruses and may be unsafe.
 
         Consent for disclosure of records protected under the Privacy Act
@@ -227,11 +222,28 @@ class DisclosureConsentForm(PrivacyActForm):
 
 class RecordsAccessForm(PrivacyActForm):
     # Inherit form fields from the PrivacyActForm class
+    consent_text = dedent('''
+            I declare under penalty of perjury under the laws of the United
+            States of America that the foregoing is true and correct, and that
+            I am the person named above and requesting access to my records
+            [or records that I am entitled to request as the parent of a minor
+            or the legal guardian of an incompetent], and I understand that
+            any falsification of this statement is punishable under the
+            provisions of 18 U.S.C. § 1001 by a fine, imprisonment of not
+            more than five years, or both, and that requesting or obtaining
+            any record(s) under false pretenses is punishable under the
+            provisions of 5 U.S.C. § 552a(i)(3) by a fine of not more than
+            $5,000.''')
+    consent = forms.BooleanField(
+        label=consent_text,
+        widget=forms.CheckboxInput(),
+    )
+
     def format_subject(self, name):
         return f'Records request from consumerfinance.gov: {name}'
 
     def email_body(self, data):
-        return dedent(f'''   # noqa: E501
+        return dedent(f'''
         The following information was submitted via web form on consumerfinance.gov/privacy/records-access. Any attachments have not been scanned for viruses and may be unsafe.
 
         Request for individual access to records protected under the Privacy Act
