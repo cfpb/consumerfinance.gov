@@ -165,19 +165,19 @@ class PrivacyActForm(forms.Form):
 
 
 class DisclosureConsentForm(PrivacyActForm):
-    consent_text = dedent('''
-         I declare under penalty of perjury under the laws
-         of the United States of America that the foregoing is true and
-         correct, and that I am the person named above and consenting
-         to and authorizing disclosure of my records [or records
-         that I am entitled to request as the parent of a minor or
-         the legal guardian of an incompetent], and I understand that
-         any falsification of this statement is punishable under the
-         provisions of 18 U.S.C. § 1001 by a fine, imprisonment of
-         not more than five years, or both, and that requesting or
-         obtaining any record(s) under false pretenses is punishable
-         under the provisions of 5 U.S.C. § 552a(i)(3) by a fine of not
-         more than $5,000.''')
+    consent_text = '''
+        I declare under penalty of perjury under the laws
+        of the United States of America that the foregoing is true and
+        correct, and that I am the person named above and consenting
+        to and authorizing disclosure of my records [or records
+        that I am entitled to request as the parent of a minor or
+        the legal guardian of an incompetent], and I understand that
+        any falsification of this statement is punishable under the
+        provisions of 18 U.S.C. § 1001 by a fine, imprisonment of
+        not more than five years, or both, and that requesting or
+        obtaining any record(s) under false pretenses is punishable
+        under the provisions of 5 U.S.C. § 552a(i)(3) by a fine of not
+        more than $5,000.'''
     consent = forms.BooleanField(
         label=consent_text,
         widget=forms.CheckboxInput(attrs={'class': 'a-checkbox'}),
@@ -225,18 +225,18 @@ class DisclosureConsentForm(PrivacyActForm):
 
 class RecordsAccessForm(PrivacyActForm):
     # Inherit form fields from the PrivacyActForm class
-    consent_text = dedent('''
-            I declare under penalty of perjury under the laws of the United
-            States of America that the foregoing is true and correct, and that
-            I am the person named above and requesting access to my records
-            [or records that I am entitled to request as the parent of a minor
-            or the legal guardian of an incompetent], and I understand that
-            any falsification of this statement is punishable under the
-            provisions of 18 U.S.C. § 1001 by a fine, imprisonment of not
-            more than five years, or both, and that requesting or obtaining
-            any record(s) under false pretenses is punishable under the
-            provisions of 5 U.S.C. § 552a(i)(3) by a fine of not more than
-            $5,000.''')
+    consent_text = '''
+        I declare under penalty of perjury under the laws of the United
+        States of America that the foregoing is true and correct, and that
+        I am the person named above and requesting access to my records
+        [or records that I am entitled to request as the parent of a minor
+        or the legal guardian of an incompetent], and I understand that
+        any falsification of this statement is punishable under the
+        provisions of 18 U.S.C. § 1001 by a fine, imprisonment of not
+        more than five years, or both, and that requesting or obtaining
+        any record(s) under false pretenses is punishable under the
+        provisions of 5 U.S.C. § 552a(i)(3) by a fine of not more than
+        $5,000.'''
     consent = forms.BooleanField(
         label=consent_text,
         widget=forms.CheckboxInput(attrs={'class': 'a-checkbox'}),
