@@ -40,7 +40,8 @@ const updateState = {
    * nextSection - Advance to application state to the next section
    */
   nextSection: () => {
-    const i = stateModel.sectionOrder.indexOf( stateModel.values.activeSection );
+    const activeSection = stateModel.values.activeSection;
+    const i = stateModel.sectionOrder.indexOf( activeSection );
     if ( i !== -1 ) {
       const nextSection = stateModel.sectionOrder[i + 1];
       updateState.activeSection( nextSection );

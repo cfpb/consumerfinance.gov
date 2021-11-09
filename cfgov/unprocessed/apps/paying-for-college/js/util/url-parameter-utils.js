@@ -50,8 +50,8 @@ const urlParameters = {
 
   'wkst': 'financialModel.workStudy_workStudy',
 
-  'fell': 'financialModel.fund_fellowship',
-  'asst': 'financialModel.fund_assistantship',
+  'fell': 'financialModel.fellowAssist_fellowship',
+  'asst': 'financialModel.fellowAssist_assistantship',
 
   'subl': 'financialModel.fedLoan_directSub',
   'unsl': 'financialModel.fedLoan_directUnsub',
@@ -93,7 +93,7 @@ const urlParameters = {
   'taxx': 'expensesModel.item_taxes',
   'chcx': 'expensesModel.item_childcare',
   'othx': 'expensesModel.item_other',
-  'dbtx': 'expensesModel.item_currentDebt'
+  'dbtx': 'expensesModel.item_currentDebts'
 };
 
 const models = {

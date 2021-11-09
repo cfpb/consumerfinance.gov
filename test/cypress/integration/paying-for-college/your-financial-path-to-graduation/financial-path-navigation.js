@@ -1,8 +1,8 @@
-import { PfcFinancialPathToGraduation } from './your-financial-path-to-graduation-helpers';
+import { PfcFinancialPathToGraduation } from './financial-path-helpers';
 
 const page = new PfcFinancialPathToGraduation();
 
-describe( 'Paying For College navigation', () => {
+describe( 'Your Financial Path to Graduation (navigation)', () => {
   before( () => {
     cy.visit( '/paying-for-college/your-financial-path-to-graduation/' );
   } );
