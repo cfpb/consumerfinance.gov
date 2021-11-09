@@ -388,7 +388,7 @@ class EventPage(AbstractFilterPage):
             return 'past'
 
         start = min(filter(None, [self.live_stream_date, self.start_dt]))
-        if self._cached_now > start:
+        if self._cached_now >= start:
             return 'present'
 
         return 'future'
