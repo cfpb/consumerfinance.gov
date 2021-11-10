@@ -1,9 +1,12 @@
 from django.core.exceptions import ValidationError
 from django.test import SimpleTestCase, TestCase
 
+from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.images.tests.utils import get_test_image_file
 
-from v1.atomic_elements.atoms import ImageBasic, URLOrRelativeURLBlock
+from v1.atomic_elements.atoms import (
+    Hyperlink, ImageBasic, URLOrRelativeURLBlock
+)
 from v1.models import CFGOVImage
 
 
@@ -69,3 +72,31 @@ class ImageBasicTests(TestCase):
 
         self.assertRegex(value.url, r'^.*/images/test.*\.original\.png$')
         self.assertEqual(value.alt_text, 'ImageBasic alt text')
+
+
+class HyperlinkBlockTests(TestCase):
+
+    def test_block_is_required(self):
+        block = Hyperlink()
+        self.assertTrue(block.is_required)
+
+    def test_block_clean(self):
+        block = Hyperlink()
+        clean_data = block.clean({"text": "value"})
+        self.assertTrue(clean_data["text"] == "value")
+
+    def test_validation_error(self):
+        block = Hyperlink()
+        with self.assertRaises(StructBlockValidationError):
+            block.clean({"text": None})
+
+
+class ImabeBasicBlockTests(TestCase):
+
+    def test_not_required(self):
+        block = ImageBasic(required=False)
+        cleaned = block.clean({
+            "upload": None,
+            "alt": "alt text"
+        })
+        self.assertEqual(cleaned["alt"], "alt text")
