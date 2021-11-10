@@ -25,12 +25,4 @@ urlpatterns = [
         ),
         name="form_submitted",
     ),
-    flagged_re_path(
-        "PRIVACY_FORMS",
-        r"^privacy-act-statement/$",
-        TemplateView.as_view(
-            template_name="privacy/privacy.html"
-        ),
-        name="privacy_statement",
-    ),
 ]
