@@ -28,6 +28,17 @@
       .m-form-grid input {
         width: 100%;
       }
+      .m-form-field__radio {
+        line-height: 1.75em;
+      }
+      #mail-target {
+        max-height: 0;
+        transition: max-height 0.5s;
+        overflow: hidden;
+      }
+      #mail-target.open {
+        max-height: 235px;
+      }
     </style>
     <div class="block block__flush-top">
         <h1>Test form</h1>
@@ -146,47 +157,49 @@
                         {{ form.recipient_email }}
                     </div>
                 </div>
-                <div class="o-form_group">
-                    <div class="m-form-field">
-                        <label class="a-label a-label__heading"
-                               for="{{ form.contact_channel.id_for_label }}">
-                            {{ form.contact_channel.label }}
-                        </label>
-                        {{ form.contact_channel }}
+
+                <div id="mail-radio" class="o-form_group">
+                   {% for choice in form.contact_channel %}
+                    <div class="m-form-field m-form-field__radio">
+                      <input class="a-radio" {%if loop.index == 1%}checked{% endif %} name="contact_channel" type="radio" id="{{choice.id_for_label}}">
+                        <label class="a-label" for="{{choice.id_for_label}}">{{choice.choice_label}}</label>
                     </div>
+                    {% endfor %}
                 </div>
-                <p>If you would like to receive your records by mail, please provide your mailing address.</p>
-                <div class="o-form_group">
-                    <div class="m-form-field">
-                        <label class="a-label a-label__heading"
-                               for="{{ form.street_address.id_for_label }}">
-                            {{ form.street_address.label }}
-                        </label>
-                        {{ form.street_address }}
-                    </div>
-                </div>
-                <div class="o-form_group m-form-grid">
-                    <div class="m-form-field">
-                        <label class="a-label a-label__heading"
-                               for="{{ form.city.id_for_label }}">
-                            {{ form.city.label }}
-                        </label>
-                        {{ form.city }}
-                    </div>
-                    <div class="m-form-field">
-                        <label class="a-label a-label__heading"
-                               for="{{ form.state.id_for_label }}">
-                            {{ form.state.label }}
-                        </label>
-                        {{ form.state }}
-                    </div>
-                    <div class="m-form-field">
-                        <label class="a-label a-label__heading"
-                               for="{{ form.zip_code.id_for_label }}">
-                            {{ form.zip_code.label }}
-                        </label>
-                        {{ form.zip_code }}
-                    </div>
+                <div id="mail-target">
+                  <p>If you would like to receive your records by mail, please provide your mailing address.</p>
+                  <div class="o-form_group">
+                      <div class="m-form-field">
+                          <label class="a-label a-label__heading"
+                                 for="{{ form.street_address.id_for_label }}">
+                              {{ form.street_address.label }}
+                          </label>
+                          {{ form.street_address }}
+                      </div>
+                  </div>
+                  <div class="o-form_group m-form-grid">
+                      <div class="m-form-field">
+                          <label class="a-label a-label__heading"
+                                 for="{{ form.city.id_for_label }}">
+                              {{ form.city.label }}
+                          </label>
+                          {{ form.city }}
+                      </div>
+                      <div class="m-form-field">
+                          <label class="a-label a-label__heading"
+                                 for="{{ form.state.id_for_label }}">
+                              {{ form.state.label }}
+                          </label>
+                          {{ form.state }}
+                      </div>
+                      <div class="m-form-field">
+                          <label class="a-label a-label__heading"
+                                 for="{{ form.zip_code.id_for_label }}">
+                              {{ form.zip_code.label }}
+                          </label>
+                          {{ form.zip_code }}
+                      </div>
+                  </div>
                 </div>
             </div>
 
@@ -265,7 +278,7 @@
       if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
         !function() {
           var s = [
-            '{{ static("/js/routes/on-demand/file-input.js") }}'
+            '{{ static("/js/routes/on-demand/privacy-forms.js") }}'
           ];
           jsl(s);
         }();
