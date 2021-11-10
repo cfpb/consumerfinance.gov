@@ -1,4 +1,4 @@
-const fileInput = document.getElementById( 'upload-file' );
+const fileInput = document.getElementById( 'supporting_documentation' );
 const fileCount = document.querySelector( '#upload-file-list > h4' );
 const fileList = document.querySelector( '#upload-file-list > ul' );
 const radioParent = document.getElementById( 'mail-radio' );

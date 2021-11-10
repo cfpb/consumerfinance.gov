@@ -161,7 +161,7 @@
                 <div id="mail-radio" class="o-form_group">
                    {% for choice in form.contact_channel %}
                     <div class="m-form-field m-form-field__radio">
-                      <input class="a-radio" {%if loop.index == 1%}checked{% endif %} name="contact_channel" type="radio" id="{{choice.id_for_label}}">
+                      <input class="a-radio" {%if loop.index == 1%}checked value="email"{% else %}value="mail"{% endif %} name="contact_channel" type="radio" id="{{choice.id_for_label}}">
                         <label class="a-label" for="{{choice.id_for_label}}">{{choice.choice_label}}</label>
                     </div>
                     {% endfor %}
@@ -214,7 +214,7 @@
                   <div class="m-form-field m-form-field__file-input">
                       <!-- Actual hidden file upload component. -->
                       <label>
-                          <input class="u-hidden" multiple type="file" id="upload-file">
+                          <input class="u-hidden" multiple type="file" name="supporting_documentation" id="supporting_documentation">
                       </label>
                       <!-- Styled faux overlay component. -->
                       <button type="button" class="a-btn
