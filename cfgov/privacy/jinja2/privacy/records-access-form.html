@@ -168,9 +168,15 @@
                     </div>
                 </div>
                   <div id="mail-radio" class="o-form_group">
-                   {% for choice in form.contact_channel %}
+                  {% if form.is_bound %}
+                    {% set selected = form.contact_channel.value() %}
+                  {% else %}
+                    {% set selected = 'email' %}
+                  {% endif %}
+                  {% for choice in form.contact_channel %}
+                    {% set value = choice.data['value'] %}
                     <div class="m-form-field m-form-field__radio">
-                      <input class="a-radio" {%if loop.index == 1%}checked value="email"{% else %}value="mail"{% endif %} name="contact_channel" type="radio" id="{{choice.id_for_label}}">
+                      <input class="a-radio" {%if choice.data['value'] == selected %}checked {% endif %} value={{ value }} name="contact_channel" type="radio" id="{{choice.id_for_label}}">
                         <label class="a-label" for="{{choice.id_for_label}}">{{choice.choice_label}}</label>
                      </div>
                    {% endfor %}

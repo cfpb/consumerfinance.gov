@@ -2,6 +2,7 @@ const fileInput = document.getElementById( 'supporting_documentation' );
 const fileListWrapper = document.getElementById( 'file-list-wrapper' );
 const fileList = document.querySelector( '#file-list-wrapper > ul' );
 const radioParent = document.getElementById( 'mail-radio' );
+const initialCheckedRadio = radioParent.querySelector( 'input[checked]' );
 const addressWrapper = document.getElementById( 'mail-target' );
 
 /**
@@ -43,15 +44,22 @@ function addFile( file ) {
  * @param {object} evt - Bubbled change event on wrapper radio buttons
  */
 function toggleMailingAddress( evt ) {
-  const target = evt.target;
-  if ( target.id === 'id_contact_channel_1' ) {
+  openWrapper( evt.target.id );
+}
+
+/**
+ * @param {string} id - The id of the current checked toggle
+ */
+function openWrapper( id ) {
+  if ( id === 'id_contact_channel_1' ) {
     addressWrapper.className = 'open';
   } else {
     addressWrapper.className = '';
   }
 }
 
-
+openWrapper( initialCheckedRadio.id );
 addFiles( fileInput.files );
+
 fileInput.addEventListener( 'change', fileSelected );
 radioParent.addEventListener( 'change', toggleMailingAddress );
