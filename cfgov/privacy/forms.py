@@ -192,8 +192,7 @@ class DisclosureConsentForm(PrivacyActForm):
     def email_body(self, data):
         num_files = len(data['uploaded_files'])
         data.update({'num_files': num_files,
-                     'consent_text': self.consent_text
-                     })
+                     'consent_text': self.consent_text})
         return loader.render_to_string(self.email_template, data)
 
 
@@ -224,6 +223,5 @@ class RecordsAccessForm(PrivacyActForm):
     def email_body(self, data):
         num_files = len(data['uploaded_files'])
         data.update({'num_files': num_files,
-                     'consent_text': self.consent_text
-                     })
+                     'consent_text': self.consent_text})
         return loader.render_to_string(self.email_template, data)
