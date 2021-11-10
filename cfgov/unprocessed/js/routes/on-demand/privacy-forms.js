@@ -1,6 +1,6 @@
 const fileInput = document.getElementById( 'supporting_documentation' );
-const fileCount = document.querySelector( '#upload-file-list > h4' );
-const fileList = document.querySelector( '#upload-file-list > ul' );
+const fileListWrapper = document.getElementById( 'file-list-wrapper' );
+const fileList = document.querySelector( '#file-list-wrapper > ul' );
 const radioParent = document.getElementById( 'mail-radio' );
 const addressWrapper = document.getElementById( 'mail-target' );
 
@@ -17,14 +17,14 @@ function fileSelected( evt ) {
  */
 function clearSelectedFiles() {
   fileList.innerHTML = '';
-  fileCount.className = 'u-hidden';
+  fileListWrapper.className = 'u-hidden';
 }
 
 /**
  * @param {array} files - DOMList of files provided to the input component
  */
 function addFiles( files ) {
-  if ( files.length ) fileCount.className = '';
+  if ( files.length ) fileListWrapper.className = '';
   for ( const file of files ) {
     addFile( file );
   }
@@ -45,9 +45,9 @@ function addFile( file ) {
 function toggleMailingAddress( evt ) {
   const target = evt.target;
   if ( target.id === 'id_contact_channel_1' ) {
-    addressWrapper.classList.add( 'open' );
+    addressWrapper.className = 'open';
   } else {
-    addressWrapper.classList.remove( 'open' );
+    addressWrapper.className = '';
   }
 }
 
