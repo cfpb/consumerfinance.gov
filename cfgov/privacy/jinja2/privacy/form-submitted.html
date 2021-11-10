@@ -1,8 +1,11 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% set breadcrumb_items = [{
-    "title": "Privacy at CFPB",
-    "href": "/privacy",
+    "title": "FOIA Requests",
+    "href": "/foia-requests/",
+    },{
+    "title": "Submit a FOIA or Privacy Act Request",
+    "href": "/foia-requests/submit-request/",
 }] %}
 
 {% block meta_viewport %}
@@ -11,22 +14,21 @@
 {% endblock %}
 
 {% block title -%}
-    Your request has been submitted | Consumer Financial Protection Bureau
+    Your privacy request has been submitted | Consumer Financial Protection Bureau
 {%- endblock %}
 
 {% block content_main %}
-    <div class="block block__flush-top">
-        <h1>Test form</h1>
-    </div>
     <div class="block">
         <div class="m-notification m-notification__visible m-notification__success">
             {{ svg_icon('approved-round') }}
             <div class="m-notification_content">
                 <div class="h4 m-notification_message">
-                    Your test form has been submitted
+                    Request submitted
                 </div>
                 <p class="m-notification_explanation">
-                    Thank you.
+		    Your request has been submitted to the CFPB FOIA office.
+		    If you have any questions or want to follow up on your request, email
+		    FOIA@consumerfinance.gov
                 </p>
             </div>
         </div>

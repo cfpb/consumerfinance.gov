@@ -1,5 +1,3 @@
-from textwrap import dedent
-
 from django import forms
 from django.conf import settings
 from django.core.mail import BadHeaderError, EmailMessage
@@ -26,19 +24,22 @@ class PrivacyActForm(forms.Form):
         widget=forms.Textarea(attrs=text_input_attrs),
     )
     system_of_record = forms.CharField(
-        label='Name of the system of records you believe contain the record(s)',
+        label=('Name of the system of records you believe contain the '
+               'record(s)'),
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     date_of_records = forms.CharField(
         label='Date of the record(s)',
-        help_text='Or the period in which you believe that the record was created',  # noqa: E501
+        help_text=('Or the period in which you believe that the record was '
+                   'created'),
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     other_info = forms.CharField(
         label='Any additional information',
-        help_text='This may include maiden name, dates of employment, account information, etc.',  # noqa: E501
+        help_text=('This may include maiden name, dates of employment, '
+                   'account information, etc.'),
         required=False,
         widget=forms.Textarea(attrs=text_input_attrs),
     )
@@ -85,10 +86,10 @@ class PrivacyActForm(forms.Form):
     # Form validations
     def require_address_if_mailing(self):
         data = self.cleaned_data
+        msg = "Mailing address is required if requesting records by mail."
         if data['contact_channel'] == 'mail':
             if not (data['street_address'] and data['city'] and data['state']
                     and data['zip_code']):
-                msg = "Mailing address is required if requesting records by mail."  # noqa: E501
                 self.add_error('street_address', forms.ValidationError(msg))
 
     def combined_file_size(self, files):
@@ -103,13 +104,19 @@ class PrivacyActForm(forms.Form):
         total_uploaded_bytes = self.combined_file_size(files)
         if total_uploaded_bytes > max_bytes:
             display_size = round(total_uploaded_bytes / mb, 1)
-            err = forms.ValidationError(f"Total size of uploaded files ({display_size} MB) was greater than size limit (2 MB).")  # noqa: E501
+            err = forms.ValidationError(
+                f"Total size of uploaded files ({display_size} MB) was "
+                "greater than size limit (2 MB)."
+            )
             self.add_error('supporting_documentation', err)
 
     def limit_number_of_files(self, files):
         max_files = 6
         if len(files) > max_files:
-            err = forms.ValidationError(f"Please choose {max_files} or fewer files. You chose {len(files)}.")  # noqa: E501
+            err = forms.ValidationError(
+                f"Please choose {max_files} or fewer files. "
+                f"You chose {len(files)}."
+            )
             self.add_error('supporting_documentation', err)
 
     def clean(self):
@@ -181,11 +188,11 @@ class DisclosureConsentForm(PrivacyActForm):
         return f'Disclosure request from consumerfinance.gov: {name}'
 
     email_template = 'privacy/disclosure_consent_email.html'
+
     def email_body(self, data):
         num_files = len(data['uploaded_files'])
         data.update({'num_files': num_files,
-                     'consent_text':self.consent_text
-                     })
+                     'consent_text': self.consent_text})
         return loader.render_to_string(self.email_template, data)
 
 
@@ -212,9 +219,9 @@ class RecordsAccessForm(PrivacyActForm):
         return f'Records request from consumerfinance.gov: {name}'
 
     email_template = 'privacy/records_access_email.html'
+
     def email_body(self, data):
         num_files = len(data['uploaded_files'])
         data.update({'num_files': num_files,
-                     'consent_text':self.consent_text
-                     })
+                     'consent_text': self.consent_text})
         return loader.render_to_string(self.email_template, data)
