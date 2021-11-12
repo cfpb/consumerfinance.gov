@@ -1,5 +1,8 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% import './privacy-styles.html' as styles %}
+{% import './consent.html' as consent %}
+
 {% set breadcrumb_items = [{
     "title": "FOIA Requests",
     "href": "/foia-requests/",
@@ -21,35 +24,7 @@
 {%- endblock %}
 
 {% block content_main -%}
-    <style>
-      .m-form-grid {
-        display: grid;
-        grid-template-columns: 50% repeat(2, 1fr);
-        grid-column-gap: 3em;
-        padding-right: 1em;
-      }
-      .m-form-grid input {
-        width: 100%;
-      }
-      .m-form-field__radio {
-        margin-bottom: 0.5em;
-      }
-      #mail-target {
-        max-height: 0;
-        transition: max-height 0.5s;
-        overflow: hidden;
-      }
-      #mail-target.open {
-        max-height: 235px;
-      }
-      .m-form-field__file-input{
-        margin-top: 2em;
-        margin-bottom: -1em;
-      }
-      #file-list-wrapper{
-        margin-top: 3em;
-      }
-    </style>
+{{ styles.render() }}
     <div class="block block__flush-top">
         <h1>Consent for disclosure of records protected under the Privacy Act</h1>
         <div class="lead-paragraph">
@@ -78,10 +53,10 @@
         <p>The term guardian means the legal guardian of any individual who has been declared to be incompetent due to physical or mental incapacity or age by a court of competent jurisdiction.</p>
         <h2>Information required to locate the records</h2>
         <p>This information is required for the agency to be able to match the individual's information provided in this request with the record that pertains to that individual.</p>
-        <p><a class="a-link" href="/privacy/system-records-notices/">See list of CFPB System of Records Notices (SORNs)</a></p>
+        <p><a class="a-btn a-btn__link" href="/privacy/system-records-notices/">See list of CFPB System of Records Notices (SORNs)</a></p>
     </div>
-    <div class="block" style="margin-top:-2em;">
-        <form id="voluntary-diversity-assessment"
+    <div class="block" style="margin-top:-2em;margin-bottom:.9375em">
+        <form id="privacy-form"
               action="{{ url('privacy:disclosure_consent') }}"
               enctype="multipart/form-data"
               method="POST">
@@ -114,7 +89,7 @@
                     </div>
                 </div>
                 <h3>Additional information that might assist in locating the records</h3>
-                <p class="a-label_helper">This enables the CFPB to locate the system of records containing the record(s) with a reasonable amount of effort.</p>
+                <p>This enables the CFPB to locate the system of records containing the record(s) with a reasonable amount of effort.</p>
                 <div class="o-form_group">
                     <div class="m-form-field">
                         <label class="a-label a-label__heading"
@@ -171,7 +146,7 @@
                         {{ form.requestor_email }}
                     </div>
                 </div>
-                <h3>Recepient contact information</h3>
+                <h3 style="margin-top:45px;">Recepient contact information</h3>
                 <div class="o-form_group">
                     <div class="m-form-field">
                         <label class="a-label a-label__heading"
@@ -246,18 +221,18 @@
             </div>
 
             <h2>Supporting documentation (optional)</h2>
-            <p>Identity verification documents:</p>
+            <p style="margin-bottom:15px">Identity verification documents:</p>
             <ul class="m-list">
                 <li class="m-list_item">A photocopy of two forms of identification, including one form of identification that bears your photograph, and one form of identification that bears your signature; or</li>
                 <li class="m-list_item">A photocopy of a single form of identification that bears both your photograph and signature</li>
             </ul>
             <p>If you are the parent consenting to and authorizing disclosure of the records of a minor or the legal guardian consenting to and authorizing disclosure of the records of an incompetent, you will be required to provide adequate proof of your legal relationship before action will be taken on any request.</p>
-            <div class="o-well u-mb30">
+            <div style="padding-bottom:30px" class="o-well u-mb30">
                 <div class="o-form_group">
                   {% for error in form.supporting_documentation.errors %}
                       {{- notification.render( 'error', true, error ) }}
                   {% endfor %}
-                  <h4 style="margin-bottom:0.25em">Select files to attach</h4>
+                  <h3>Select files to attach</h3>
                   <p>Please select up to 6 files. The total file size must not exceed 6MB. We accept all image files, including .jpg, .png, .pdf, .gif and .eps.</p>
                   <div class="m-form-field m-form-field__file-input">
                       <!-- Actual hidden file upload component. -->
@@ -273,7 +248,7 @@
                 </div>
                 <div class="u-hidden" id="file-list-wrapper">
                   <h4>Files added:</h4>
-                  <ul class="m-list m-list__unstyled"></ul>
+                  <ul class="m-list"></ul>
                   <p>To remove or replace files, click “Select files to upload” and upload again.</p>
                 </div>
             </div>
@@ -285,7 +260,7 @@
                         {{ form.consent }}
                         <label class="a-label"
                                for="{{ form.consent.id_for_label }}">
-                            {{ form.consent.label }}
+                            {{ consent.render() }}
                         </label>
                     </div>
                 </div>
@@ -303,10 +278,11 @@
 
             <div class="o-form_group">
                 <div class="m-btn-group">
-                    <input class="a-btn"
-                           type="submit"
-                           value="Submit">
-                    <a class="a-btn a-btn__link a-btn__secondary"
+                    <button id="submit-button" class="a-btn">
+                      Submit
+                      <span id ="submit-icon" class="a-btn_icon a-btn_icon__on-right">{{ svg_icon('updating') }}</span>
+                    </button>
+                    <a class="a-btn a-btn__link"
                        href="{{ url('privacy:privacy_statement') }}"
                        rel="noopener noreferrer"
                        target="_blank">
