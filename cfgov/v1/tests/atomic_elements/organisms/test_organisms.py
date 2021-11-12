@@ -3,7 +3,7 @@ from django.core.files import File
 from django.core.files.base import ContentFile
 from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
-import wagtail
+from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
 from wagtail.images.tests.utils import get_test_image_file
@@ -12,7 +12,7 @@ from wagtailmedia.models import Media
 
 from scripts import _atomic_helpers as atomic
 from v1.atomic_elements.organisms import (
-    AudioPlayer, FeaturedContent, InfoUnitGroup, TableBlock, VideoPlayer
+    AudioPlayer, FeaturedContent, InfoUnitGroup, VideoPlayer
 )
 from v1.models import (
     BrowsePage, CFGOVImage, Contact, LandingPage, LearnPage, Resource,
@@ -496,7 +496,6 @@ class TestInfoUnitGroup(TestCase):
             self.block.clean(value)
         except ValidationError:  # pragma: nocover
             self.fail('heading with intro should not fail validation')
-
 
     def test_2575_with_image_ok(self):
         value = self.block.to_python({
