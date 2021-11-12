@@ -316,7 +316,7 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 )
 
 # ElasticSearch 7 Configuration
-ES7_HOST = os.getenv('ES7_HOST', 'localhost')
+ES_HOST = os.getenv('ES_HOST', 'localhost')
 ES_PORT = os.getenv("ES_PORT", "9200")
 ELASTICSEARCH_BIGINT = 50000
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
@@ -330,7 +330,7 @@ if os.environ.get('USE_AWS_ES', False):
     )
     ELASTICSEARCH_DSL = {
         'default': {
-            'hosts': [{'host': ES7_HOST, 'port': 443}],
+            'hosts': [{'host': ES_HOST, 'port': 443}],
             'http_auth': awsauth,
             'use_ssl': True,
             'connection_class': RequestsHttpConnection,
@@ -339,7 +339,7 @@ if os.environ.get('USE_AWS_ES', False):
     }
 else:
     ELASTICSEARCH_DSL = {
-        "default": {"hosts": f"http://{ES7_HOST}:{ES_PORT}"}
+        "default": {"hosts": f"http://{ES_HOST}:{ES_PORT}"}
     }
 
 ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'search.elasticsearch_helpers.WagtailSignalProcessor'

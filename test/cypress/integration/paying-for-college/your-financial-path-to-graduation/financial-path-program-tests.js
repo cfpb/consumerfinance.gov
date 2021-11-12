@@ -1,8 +1,8 @@
-import { PfcFinancialPathToGraduation } from './your-financial-path-to-graduation-helpers';
+import { PfcFinancialPathToGraduation } from './financial-path-helpers';
 
 const page = new PfcFinancialPathToGraduation();
 
-describe( 'Paying For College program-based content', () => {
+describe( 'Your Financial Path to Graduation (program-level functionality)', () => {
   before( () => {
     cy.intercept( '/paying-for-college2/understanding-your-financial-aid-offer/api/constants/', { fixture: 'constants' } ).as( 'constants' );
     cy.visit( '/paying-for-college/your-financial-path-to-graduation/' );
@@ -56,7 +56,6 @@ describe( 'Paying For College program-based content', () => {
     cy.get( '[data-state-based-visibility="put-into-action"] .associates-content' ).should( 'be.visible' );
     cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'not.be.visible' );
   } );
-
 
   it( 'should display undergrad content for undergrad students', () => {
     cy.get( '[data-nav_section="worth-investment"]' ).click();
