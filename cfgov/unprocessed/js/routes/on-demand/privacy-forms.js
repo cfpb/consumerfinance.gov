@@ -4,6 +4,8 @@ const fileList = document.querySelector( '#file-list-wrapper > ul' );
 const radioParent = document.getElementById( 'mail-radio' );
 const initialCheckedRadio = radioParent.querySelector( 'input[checked]' );
 const addressWrapper = document.getElementById( 'mail-target' );
+const form = document.getElementById( 'privacy-form' );
+const submitIcon = document.getElementById( 'submit-icon' );
 
 /**
  * @param {object} evt - change event fired on fileInput
@@ -63,3 +65,6 @@ addFiles( fileInput.files );
 
 fileInput.addEventListener( 'change', fileSelected );
 radioParent.addEventListener( 'change', toggleMailingAddress );
+form.addEventListener( 'submit', function() {
+  submitIcon.classList.add( 'submitting' );
+} );
