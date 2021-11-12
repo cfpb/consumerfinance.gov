@@ -25,6 +25,25 @@
 
 {% block content_main -%}
 {{ styles.render() }}
+  {#
+    Display any error messages created during form submission.
+    Render them at the top of the page so they're visible when the page reloads.
+    Errors for individual fields are also displayed next to the fields, so
+    the user can find them in the form.
+  #}
+    {% if form.errors %}
+	{% import 'molecules/notification.html' as notification %}
+	<div class="u-mb15">
+	    {% for error in form.non_field_errors() %}
+		{{- notification.render( 'error', true, error | richtext ) }}
+	    {% endfor %}
+	    {% for field in form %}
+		{% for error in field.errors %}
+		    {{- notification.render( 'error', true, error ) }}
+		{% endfor %}
+	    {% endfor %}
+	</div>
+    {% endif %}
     <div class="block block__flush-top">
         <h1>Consent for disclosure of records protected under the Privacy Act</h1>
         <div class="lead-paragraph">
@@ -60,24 +79,6 @@
               action="{{ url('privacy:disclosure_consent') }}"
               enctype="multipart/form-data"
               method="POST">
-            {#
-                Display any error messages created during form submission.
-                Rendered above the form for styling purposes.
-            #}
-            {% if form.errors %}
-                {% import 'molecules/notification.html' as notification %}
-                <div class="u-mb15">
-                    {% for error in form.non_field_errors() %}
-                        {{- notification.render( 'error', true, error | richtext ) }}
-                    {% endfor %}
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            {{- notification.render( 'error', true, error ) }}
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-
             <div class="o-well u-mb30">
                 <div class="o-form_group">
                     <div class="m-form-field">
@@ -169,6 +170,11 @@
                     </div>
                 </div>
 
+                  {% for error in form.street_address.errors %}
+		    <div class="o-form_group">
+                      {{- notification.render( 'error', true, error ) }}
+		    </div>
+                  {% endfor %}
                 <div id="mail-radio" class="o-form_group">
                   {% if form.is_bound %}
                     {% set selected = form.contact_channel.value() %}
@@ -283,7 +289,7 @@
                       <span id ="submit-icon" class="a-btn_icon a-btn_icon__on-right">{{ svg_icon('updating') }}</span>
                     </button>
                     <a class="a-btn a-btn__link"
-                       href="{{ url('privacy:privacy_statement') }}"
+                       href="/privacy/records-disclosure-privacy-act-statement/"
                        rel="noopener noreferrer"
                        target="_blank">
                        Privacy Act statement

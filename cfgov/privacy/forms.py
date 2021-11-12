@@ -133,8 +133,7 @@ class PrivacyActForm(forms.Form):
         data.update({'uploaded_files': uploaded_files})
         subject = self.format_subject(data['requestor_name'])
         from_email = settings.DEFAULT_FROM_EMAIL
-        # recipient_list = ['FOIA@consumerfinance.gov']
-        recipient_list = ['elizabeth.lorton@cfpb.gov']
+        recipient_list = ['FOIA@consumerfinance.gov']
 
         body = self.email_body(data)
 
@@ -160,7 +159,7 @@ class DisclosureConsentForm(PrivacyActForm):
     consent = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={'class': 'a-checkbox'}),
     )
-    # Inherit most form fields from the PrivacyActForm class
+    # Additional fields beyond what's defined in PrivacyActForm
     recipient_name = forms.CharField(
         label='Name of recipient',
         widget=forms.TextInput(attrs=text_input_attrs),
