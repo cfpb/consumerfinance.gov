@@ -958,7 +958,12 @@
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-icons@0.11.0", "@cfpb/cfpb-icons@^0.11.0":
+"@cfpb/cfpb-icons@0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-icons/-/cfpb-icons-0.12.0.tgz#4c3c8921de2884310a01b65e1921241e65a1a2c8"
+  integrity sha512-vjZIOOXI8QivlWTtJpJGX3n/UhG0foEsroOgxe1V/yp7+9S6E4IdP/V5/9LWOLqYsBNz1qKwz6d63GE+8H6WNQ==
+
+"@cfpb/cfpb-icons@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-icons/-/cfpb-icons-0.11.0.tgz#c6871d35e43b51ea9ba0762cc266d69093099213"
   integrity sha512-xpWVAzRHd0VilA6CBXQ9Lk7w4tuuvw2PbuW/TdS/Qe1xR7fk80qRYnhnPBV6IkLUBnHkUKYy+E/qp+feDEK7cw==
