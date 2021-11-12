@@ -1,5 +1,5 @@
-from django.utils.datastructures import MultiValueDict
 from django.test import TestCase
+from django.utils.datastructures import MultiValueDict
 
 from privacy.forms import DisclosureConsentForm, RecordsAccessForm
 
@@ -72,7 +72,7 @@ class RecordsAccessFormTests(TestCase):
             files=self.minimum_files
         )
         self.assertIn(
-            'h1>Request for individual access to records protected under the Privacy Act</h1>', #noqa: E501
+            'h1>Request for individual access to records protected under the Privacy Act</h1>',  # noqa: E501
             form.email_body(self.minimum_data),
         )
         self.assertIn(
@@ -143,6 +143,6 @@ class DisclosureConsentFormTests(TestCase):
             form.email_body(self.minimum_data),
         )
         self.assertIn(
-            '<h1>Consent for disclosure of records protected under the Privacy Act</h1>',  #noqa: E501
+            '<h1>Consent for disclosure of records protected under the Privacy Act</h1>',  # noqa: E501
             form.email_body(self.minimum_data),
         )

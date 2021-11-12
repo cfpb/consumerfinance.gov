@@ -1,9 +1,9 @@
 from django import forms
 from django.conf import settings
 from django.core.mail import BadHeaderError, EmailMessage
-from django.template import loader
 from django.core.validators import validate_image_file_extension
 from django.http import HttpResponse
+from django.template import loader
 
 
 # Form input attributes for Design System compatibility.
