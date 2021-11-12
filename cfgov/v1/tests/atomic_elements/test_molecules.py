@@ -233,7 +233,7 @@ class TestTextIntroductionValidation(TestCase):
 
         try:
             block.clean(value)
-        except StructBlockValidationError:
+        except StructBlockValidationError:  # pragma: no cover
             self.fail('no heading and no eyebrow should not fail validation')
 
     def test_text_intro_with_just_heading_passes_validation(self):
@@ -242,7 +242,7 @@ class TestTextIntroductionValidation(TestCase):
 
         try:
             block.clean(value)
-        except StructBlockValidationError:
+        except StructBlockValidationError:  # pragma: no cover
             self.fail('heading without eyebrow should not fail validation')
 
     def test_text_intro_with_eyebrow_but_no_heading_fails_validation(self):
@@ -261,7 +261,7 @@ class TestTextIntroductionValidation(TestCase):
 
         try:
             block.clean(value)
-        except StructBlockValidationError:
+        except StructBlockValidationError:  # pragma: no cover
             self.fail('eyebrow with heading should not fail validation')
 
 
