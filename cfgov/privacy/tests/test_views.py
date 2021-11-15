@@ -5,6 +5,13 @@ from django.urls import reverse
 
 @override_settings(FLAGS={'PRIVACY_FORMS': [('boolean', True)]})
 class TestRecordsAccessForm(TestCase):
+    def test_get_the_form(self):
+        response = self.client.get(reverse('privacy:records_access'))
+        self.assertContains(
+            response,
+            'Request for individual access to records protected under the Privacy Act'  # noqa: E501
+        )
+
     def test_invalid_form_post_does_not_send_email(self):
         self.client.post(
             reverse('privacy:records_access'),
@@ -45,6 +52,13 @@ class TestRecordsAccessForm(TestCase):
 
 @override_settings(FLAGS={'PRIVACY_FORMS': [('boolean', True)]})
 class TestDisclosureConsentForm(TestCase):
+    def test_get_the_form(self):
+        response = self.client.get(reverse('privacy:disclosure_consent'))
+        self.assertContains(
+            response,
+            'Consent for disclosure of records protected under the Privacy Act'
+        )
+
     def test_invalid_form_post_does_not_send_email(self):
         self.client.post(
             reverse('privacy:disclosure_consent'),
