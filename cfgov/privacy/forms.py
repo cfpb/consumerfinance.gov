@@ -4,6 +4,7 @@ from django.core.mail import BadHeaderError, EmailMessage
 from django.core.validators import validate_image_file_extension
 from django.http import HttpResponse
 from django.template import loader
+from django.utils.html import escape
 
 
 # Form input attributes for Design System compatibility.
@@ -87,6 +88,12 @@ class PrivacyActForm(forms.Form):
     )
 
     # Form validations
+    def escaped_data(self):
+        data = {}
+        for (key, value) in self.cleaned_data.items():
+            data.update({key: escape(value)})
+        return data
+
     def require_address_if_mailing(self):
         data = self.cleaned_data
         msg = "Mailing address is required if requesting records by mail."
@@ -137,7 +144,7 @@ class PrivacyActForm(forms.Form):
 
     def send_email(self):
         uploaded_files = self.files.getlist('supporting_documentation')
-        data = self.cleaned_data
+        data = self.escaped_data()
         data.update({'uploaded_files': uploaded_files})
         subject = self.format_subject(data['requestor_name'])
         from_email = settings.DEFAULT_FROM_EMAIL
@@ -175,7 +182,8 @@ class DisclosureConsentForm(PrivacyActForm):
     )
 
     def format_subject(self, name):
-        return f'Disclosure request from consumerfinance.gov: {name}'
+        truncated_name = (name[:20] + '...') if len(name) > 24 else name
+        return f'Disclosure request from consumerfinance.gov: {truncated_name}'
 
     email_template = 'privacy/disclosure_consent_email.html'
 
@@ -183,6 +191,7 @@ class DisclosureConsentForm(PrivacyActForm):
 class RecordsAccessForm(PrivacyActForm):
     # Inherit form fields from the PrivacyActForm class
     def format_subject(self, name):
-        return f'Records request from consumerfinance.gov: {name}'
+        truncated_name = (name[:20] + '...') if len(name) > 24 else name
+        return f'Records request from consumerfinance.gov: {truncated_name}'
 
     email_template = 'privacy/records_access_email.html'
