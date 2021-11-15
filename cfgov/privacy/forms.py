@@ -78,6 +78,9 @@ class PrivacyActForm(forms.Form):
         required=False,
         validators=[validate_image_file_extension],
     )
+    consent = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={'class': 'a-checkbox'}),
+    )
     full_name = forms.CharField(
         label='Full name',
         widget=forms.TextInput(attrs=text_input_attrs),
@@ -127,6 +130,11 @@ class PrivacyActForm(forms.Form):
         self.limit_number_of_files(uploaded_files)
 
     # Email message
+    def email_body(self, data):
+        num_files = len(data['uploaded_files'])
+        data.update({'num_files': num_files})
+        return loader.render_to_string(self.email_template, data)
+
     def send_email(self):
         uploaded_files = self.files.getlist('supporting_documentation')
         data = self.cleaned_data
@@ -156,9 +164,6 @@ class PrivacyActForm(forms.Form):
 
 
 class DisclosureConsentForm(PrivacyActForm):
-    consent = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': 'a-checkbox'}),
-    )
     # Additional fields beyond what's defined in PrivacyActForm
     recipient_name = forms.CharField(
         label='Name of recipient',
@@ -174,24 +179,10 @@ class DisclosureConsentForm(PrivacyActForm):
 
     email_template = 'privacy/disclosure_consent_email.html'
 
-    def email_body(self, data):
-        num_files = len(data['uploaded_files'])
-        data.update({'num_files': num_files})
-        return loader.render_to_string(self.email_template, data)
-
 
 class RecordsAccessForm(PrivacyActForm):
     # Inherit form fields from the PrivacyActForm class
-    consent = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': 'a-checkbox'}),
-    )
-
     def format_subject(self, name):
         return f'Records request from consumerfinance.gov: {name}'
 
     email_template = 'privacy/records_access_email.html'
-
-    def email_body(self, data):
-        num_files = len(data['uploaded_files'])
-        data.update({'num_files': num_files})
-        return loader.render_to_string(self.email_template, data)
