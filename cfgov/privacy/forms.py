@@ -132,37 +132,31 @@ class PrivacyActForm(forms.Form):
     def clean(self):
         super().clean()
         self.require_address_if_mailing()
-        uploaded_files = self.files.getlist('supporting_documentation')
-        self.limit_file_size(uploaded_files)
-        self.limit_number_of_files(uploaded_files)
+        self.uploaded_files = self.files.getlist('supporting_documentation')
+        self.limit_file_size(self.uploaded_files)
+        self.limit_number_of_files(self.uploaded_files)
         return self.escaped_fields()
 
     # Email message
-    def email_body(self, data):
-        num_files = len(data['uploaded_files'])
-        data.update({'num_files': num_files})
+    def email_body(self):
+        data = self.cleaned_data
+        data.update({
+            'num_files': len(self.uploaded_files),
+            'uploaded_files': self.uploaded_files,
+        })
         return loader.render_to_string(self.email_template, data)
 
     def send_email(self):
-        uploaded_files = self.files.getlist('supporting_documentation')
-        data = self.cleaned_data
-        data.update({'uploaded_files': uploaded_files})
-        subject = self.format_subject(data['requestor_name'])
-        from_email = settings.DEFAULT_FROM_EMAIL
-        recipient_list = ['FOIA@consumerfinance.gov']
-
-        body = self.email_body(data)
-
         email = EmailMessage(
-            subject,
-            body,
-            from_email,
-            recipient_list,
-            reply_to=[data['requestor_email']]
+            subject=self.format_subject(),
+            body=self.email_body(),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=['FOIA@consumerfinance.gov'],
+            reply_to=[self.cleaned_data['requestor_email']],
         )
         email.content_subtype = 'html'
 
-        for f in uploaded_files:
+        for f in self.uploaded_files:
             email.attach(f.name, f.read(), f.content_type)
 
         try:
@@ -182,7 +176,8 @@ class DisclosureConsentForm(PrivacyActForm):
         widget=forms.EmailInput(attrs=text_input_attrs),
     )
 
-    def format_subject(self, name):
+    def format_subject(self):
+        name = self.cleaned_data['requestor_name']
         truncated_name = (name[:20] + '...') if len(name) > 24 else name
         return f'Disclosure request from consumerfinance.gov: {truncated_name}'
 
@@ -191,7 +186,8 @@ class DisclosureConsentForm(PrivacyActForm):
 
 class RecordsAccessForm(PrivacyActForm):
     # Inherit form fields from the PrivacyActForm class
-    def format_subject(self, name):
+    def format_subject(self):
+        name = self.cleaned_data['requestor_name']
         truncated_name = (name[:20] + '...') if len(name) > 24 else name
         return f'Records request from consumerfinance.gov: {truncated_name}'
 
