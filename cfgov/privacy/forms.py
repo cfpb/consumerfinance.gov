@@ -88,7 +88,7 @@ class PrivacyActForm(forms.Form):
     )
 
     # Form validations
-    def escaped_data(self):
+    def escaped_fields(self):
         data = {}
         for (key, value) in self.cleaned_data.items():
             data.update({key: escape(value)})
@@ -135,6 +135,7 @@ class PrivacyActForm(forms.Form):
         uploaded_files = self.files.getlist('supporting_documentation')
         self.limit_file_size(uploaded_files)
         self.limit_number_of_files(uploaded_files)
+        return self.escaped_fields()
 
     # Email message
     def email_body(self, data):
@@ -144,7 +145,7 @@ class PrivacyActForm(forms.Form):
 
     def send_email(self):
         uploaded_files = self.files.getlist('supporting_documentation')
-        data = self.escaped_data()
+        data = self.cleaned_data
         data.update({'uploaded_files': uploaded_files})
         subject = self.format_subject(data['requestor_name'])
         from_email = settings.DEFAULT_FROM_EMAIL
