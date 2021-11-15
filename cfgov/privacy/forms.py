@@ -4,6 +4,7 @@ from django.core.mail import BadHeaderError, EmailMessage
 from django.core.validators import validate_image_file_extension
 from django.http import HttpResponse
 from django.template import loader
+from django.utils.html import escape
 
 
 # Form input attributes for Design System compatibility.
@@ -78,12 +79,21 @@ class PrivacyActForm(forms.Form):
         required=False,
         validators=[validate_image_file_extension],
     )
+    consent = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={'class': 'a-checkbox'}),
+    )
     full_name = forms.CharField(
         label='Full name',
         widget=forms.TextInput(attrs=text_input_attrs),
     )
 
     # Form validations
+    def escaped_fields(self):
+        data = {}
+        for (key, value) in self.cleaned_data.items():
+            data.update({key: escape(value)})
+        return data
+
     def require_address_if_mailing(self):
         data = self.cleaned_data
         msg = "Mailing address is required if requesting records by mail."
@@ -125,8 +135,14 @@ class PrivacyActForm(forms.Form):
         uploaded_files = self.files.getlist('supporting_documentation')
         self.limit_file_size(uploaded_files)
         self.limit_number_of_files(uploaded_files)
+        return self.escaped_fields()
 
     # Email message
+    def email_body(self, data):
+        num_files = len(data['uploaded_files'])
+        data.update({'num_files': num_files})
+        return loader.render_to_string(self.email_template, data)
+
     def send_email(self):
         uploaded_files = self.files.getlist('supporting_documentation')
         data = self.cleaned_data
@@ -156,9 +172,6 @@ class PrivacyActForm(forms.Form):
 
 
 class DisclosureConsentForm(PrivacyActForm):
-    consent = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': 'a-checkbox'}),
-    )
     # Additional fields beyond what's defined in PrivacyActForm
     recipient_name = forms.CharField(
         label='Name of recipient',
@@ -170,28 +183,16 @@ class DisclosureConsentForm(PrivacyActForm):
     )
 
     def format_subject(self, name):
-        return f'Disclosure request from consumerfinance.gov: {name}'
+        truncated_name = (name[:20] + '...') if len(name) > 24 else name
+        return f'Disclosure request from consumerfinance.gov: {truncated_name}'
 
     email_template = 'privacy/disclosure_consent_email.html'
-
-    def email_body(self, data):
-        num_files = len(data['uploaded_files'])
-        data.update({'num_files': num_files})
-        return loader.render_to_string(self.email_template, data)
 
 
 class RecordsAccessForm(PrivacyActForm):
     # Inherit form fields from the PrivacyActForm class
-    consent = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': 'a-checkbox'}),
-    )
-
     def format_subject(self, name):
-        return f'Records request from consumerfinance.gov: {name}'
+        truncated_name = (name[:20] + '...') if len(name) > 24 else name
+        return f'Records request from consumerfinance.gov: {truncated_name}'
 
     email_template = 'privacy/records_access_email.html'
-
-    def email_body(self, data):
-        num_files = len(data['uploaded_files'])
-        data.update({'num_files': num_files})
-        return loader.render_to_string(self.email_template, data)
