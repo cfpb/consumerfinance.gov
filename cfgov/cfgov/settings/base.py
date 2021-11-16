@@ -379,6 +379,8 @@ WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get(
     "WAGTAILADMIN_NOTIFICATION_FROM_EMAIL"
 )
 
+PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
+
 
 # Password Policies
 # cfpb_common password rules
