@@ -3,7 +3,10 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 
 
-@override_settings(FLAGS={'PRIVACY_FORMS': [('boolean', True)]})
+@override_settings(
+    FLAGS={'PRIVACY_FORMS': [('boolean', True)]},
+    PRIVACY_EMAIL_TARGET='email@foia.gov',
+)
 class TestRecordsAccessForm(TestCase):
     def test_get_the_form(self):
         response = self.client.get(reverse('privacy:records_access'))
@@ -45,12 +48,15 @@ class TestRecordsAccessForm(TestCase):
             'Records request from consumerfinance.gov: Example Person',
         )
         self.assertIn('Example Q. Person', email.body)
-        self.assertEqual(email.to, ['FOIA@consumerfinance.gov'])
+        self.assertEqual(email.to, ['email@foia.gov'])
         self.assertEqual(email.reply_to, ['person@example.com'])
         self.assertRedirects(response, reverse('privacy:form_submitted'))
 
 
-@override_settings(FLAGS={'PRIVACY_FORMS': [('boolean', True)]})
+@override_settings(
+    FLAGS={'PRIVACY_FORMS': [('boolean', True)]},
+    PRIVACY_EMAIL_TARGET='email@foia.gov',
+)
 class TestDisclosureConsentForm(TestCase):
     def test_get_the_form(self):
         response = self.client.get(reverse('privacy:disclosure_consent'))
@@ -96,6 +102,6 @@ class TestDisclosureConsentForm(TestCase):
             'Disclosure request from consumerfinance.gov: Example Person',
         )
         self.assertIn('Recipient Person', email.body)
-        self.assertEqual(email.to, ['FOIA@consumerfinance.gov'])
+        self.assertEqual(email.to, ['email@foia.gov'])
         self.assertEqual(email.reply_to, ['person@example.com'])
         self.assertRedirects(response, reverse('privacy:form_submitted'))

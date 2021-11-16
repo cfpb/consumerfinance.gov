@@ -151,7 +151,7 @@ class PrivacyActForm(forms.Form):
             subject=self.format_subject(),
             body=self.email_body(),
             from_email=settings.DEFAULT_FROM_EMAIL,
-            to=['FOIA@consumerfinance.gov'],
+            to=[settings.PRIVACY_EMAIL_TARGET],
             reply_to=[self.cleaned_data['requestor_email']],
         )
         email.content_subtype = 'html'
