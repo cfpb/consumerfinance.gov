@@ -146,6 +146,11 @@ class PrivacyActForm(forms.Form):
         })
         return loader.render_to_string(self.email_template, data)
 
+    def format_subject(self):
+        name = self.cleaned_data['requestor_name']
+        truncated_name = (name[:20] + '...') if len(name) > 24 else name
+        return self.email_subject + truncated_name
+
     def send_email(self):
         email = EmailMessage(
             subject=self.format_subject(),
@@ -176,19 +181,13 @@ class DisclosureConsentForm(PrivacyActForm):
         widget=forms.EmailInput(attrs=text_input_attrs),
     )
 
-    def format_subject(self):
-        name = self.cleaned_data['requestor_name']
-        truncated_name = (name[:20] + '...') if len(name) > 24 else name
-        return f'Disclosure request from consumerfinance.gov: {truncated_name}'
+    email_subject = 'Disclosure request from consumerfinance.gov: '
 
     email_template = 'privacy/disclosure_consent_email.html'
 
 
 class RecordsAccessForm(PrivacyActForm):
     # Inherit form fields from the PrivacyActForm class
-    def format_subject(self):
-        name = self.cleaned_data['requestor_name']
-        truncated_name = (name[:20] + '...') if len(name) > 24 else name
-        return f'Records request from consumerfinance.gov: {truncated_name}'
+    email_subject = 'Records request from consumerfinance.gov: '
 
     email_template = 'privacy/records_access_email.html'
