@@ -807,9 +807,11 @@ function buildChart( chartNode ) {
       );
     }
 
-    window.addEventListener( 'resize', fixViewbox );
-    fixViewbox();
-    setTimeout( fixViewbox, 500 );
+    if ( chartType === 'tilemap' ) {
+      window.addEventListener( 'resize', fixViewbox );
+      fixViewbox();
+      setTimeout( fixViewbox, 500 );
+    }
 
   } );
 }
