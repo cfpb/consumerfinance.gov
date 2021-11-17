@@ -1,4 +1,4 @@
-import { PfcFinancialPathToGraduation } from './your-financial-path-to-graduation-helpers';
+import { PfcFinancialPathToGraduation } from './financial-path-helpers';
 
 const page = new PfcFinancialPathToGraduation();
 
@@ -53,13 +53,13 @@ describe( 'Paying For College', () => {
       page.costsQuestionChoice( 'no' );
       page.setText( 'costs__tuition-fees', '50000' );
       page.setText( 'costs__room-board', '25000' );
-      page.setText( 'costs__otherDirect-board', '12500' );
+      page.setText( 'costs__other-direct', '12500' );
       cy.get( '[data-financial-item="total_directCosts"]' ).should( 'contain', '$87,500' );
       page.setText( 'costs__books', '7500' );
       page.setText( 'costs__transportation', '5000' );
-      page.setText( 'costs__other', '2500' );
+      page.setText( 'costs__other-indirect', '2500' );
       cy.get( '[data-financial-item="total_indirectCosts"]' ).should( 'contain', '$15,000' );
-      page.setText( 'costs__otherIndirect', '1250' );
+      page.setText( 'otherCost_additional', '1250' );
       cy.get( '[data-financial-item="total_costs"]' ).each( el => {
         cy.wrap( el ).should( 'contain', '$103,750' );
       } );
@@ -78,13 +78,13 @@ describe( 'Paying For College', () => {
       page.costsQuestionChoice( 'yes' );
       page.setText( 'costs__tuition-fees', '100000' );
       page.setText( 'costs__room-board', '50000' );
-      page.setText( 'costs__otherDirect-board', '25000' );
+      page.setText( 'costs__other-direct', '25000' );
       cy.get( '[data-financial-item="total_directCosts"]' ).should( 'contain', '$175,000' );
       page.setText( 'costs__books', '12500' );
       page.setText( 'costs__transportation', '7500' );
-      page.setText( 'costs__other', '5000' );
+      page.setText( 'costs__other-indirect', '5000' );
       cy.get( '[data-financial-item="total_indirectCosts"]' ).should( 'contain', '$25,000' );
-      page.setText( 'costs__otherIndirect', '2500' );
+      page.setText( 'otherCost_additional', '2500' );
       cy.get( '[data-financial-item="total_costs"]' ).each( el => {
         cy.wrap( el ).should( 'contain', '$202,500' );
       } );
@@ -102,13 +102,13 @@ describe( 'Paying For College', () => {
       page.costsQuestionChoice( 'no' );
       page.setText( 'costs__tuition-fees', '400000' );
       page.setText( 'costs__room-board', '200000' );
-      page.setText( 'costs__otherDirect-board', '100000' );
+      page.setText( 'costs__other-direct', '100000' );
       cy.get( '[data-financial-item="total_directCosts"]' ).should( 'contain', '$700,000' );
       page.setText( 'costs__books', '50000' );
       page.setText( 'costs__transportation', '25000' );
-      page.setText( 'costs__other', '12500' );
+      page.setText( 'costs__other-indirect', '12500' );
       cy.get( '[data-financial-item="total_indirectCosts"]' ).should( 'contain', '$87,500' );
-      page.setText( 'costs__otherIndirect', '10000' );
+      page.setText( 'otherCost_additional', '10000' );
       cy.get( '[data-financial-item="total_costs"]' ).each( el => {
         cy.wrap( el ).should( 'contain', '$797,500' );
       } );
@@ -176,13 +176,13 @@ describe( 'Paying For College', () => {
       page.costsQuestionChoice( 'yes' );
       page.setText( 'costs__tuition-fees', '200000' );
       page.setText( 'costs__room-board', '100000' );
-      page.setText( 'costs__otherDirect-board', '50000' );
+      page.setText( 'costs__other-direct', '50000' );
       cy.get( '[data-financial-item="total_directCosts"]' ).should( 'contain', '$350,000' );
       page.setText( 'costs__books', '25000' );
       page.setText( 'costs__transportation', '12500' );
-      page.setText( 'costs__other', '7500' );
+      page.setText( 'costs__other-indirect', '7500' );
       cy.get( '[data-financial-item="total_indirectCosts"]' ).should( 'contain', '$45,000' );
-      page.setText( 'costs__otherIndirect', '5000' );
+      page.setText( 'otherCost_additional', '5000' );
       cy.get( '[data-financial-item="total_costs"]' ).each( el => {
         cy.wrap( el ).should( 'contain', '$400,000' );
       } );

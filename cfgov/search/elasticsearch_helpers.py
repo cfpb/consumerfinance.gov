@@ -102,7 +102,7 @@ class ElasticsearchTestsMixin:
         # running on GitHub Actions, in which case something is wrong and we
         # want the tests to fail.
         try:
-            socket.create_connection((settings.ES7_HOST, settings.ES_PORT))
+            socket.create_connection((settings.ES_HOST, settings.ES_PORT))
         except OSError as e:  # pragma: nocover
             if os.getenv('GITHUB_ACTIONS'):
                 raise
