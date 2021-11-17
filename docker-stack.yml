@@ -25,7 +25,10 @@ services:
       - app
 
   postgres:
-    image: postgres:10-alpine
+    # Deliberately pin the Postgres image to a minor version so that
+    # upstream image updates don't trigger recreation of the database
+    # container when Docker stacks are redeployed.
+    image: postgres:10.18-alpine
     user: postgres
     deploy:
       placement:
