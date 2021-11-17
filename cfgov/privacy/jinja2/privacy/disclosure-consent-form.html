@@ -1,7 +1,6 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% import './privacy-styles.html' as styles %}
-{% import './consent_disclosure.html' as consent %}
 
 {% set breadcrumb_items = [{
     "title": "FOIA Requests",
@@ -266,7 +265,7 @@
                         {{ form.consent }}
                         <label class="a-label"
                                for="{{ form.consent.id_for_label }}">
-                            {{ consent.render() }}
+                            {{ form.consent.label }}
                         </label>
                     </div>
                 </div>
