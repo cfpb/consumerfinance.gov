@@ -17,7 +17,8 @@ const tilemap = {
         enabled: true,
         formatter: function() { return `<span style="font-weight:900">${ this.point.state }</span><br/><span style="font-weight:100">${ Math.round( this.point.value ) }</span>`; },
         style: {
-          textOutline: false
+          textOutline: false,
+          fontSize: 14
         }
       }
     }

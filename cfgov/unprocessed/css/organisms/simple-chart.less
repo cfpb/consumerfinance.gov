@@ -1,6 +1,6 @@
 .o-simple-chart {
   max-width: 670px;
-  margin-bottom: unit( 50 / @base-font-size-px, em );
+  margin-bottom: unit( 60 / @base-font-size-px, em );
   .chart-anchor, &:hover, &:visited {
     color: @text;
   }
@@ -19,7 +19,7 @@
   }
 
   .o-simple-chart_subtitle {
-    margin: 0 0 unit(20 / @base-font-size-px, em) 0;
+    margin: 0 0 unit(30 / @base-font-size-px, em) 0;
   }
 
   .o-simple-chart_selects {
@@ -58,16 +58,15 @@
     .respond-to-max( @bp-xs-max, {
       display: block;
       width: 100%;
-      margin-bottom: unit( 22 / @base-font-size-px, em);
+      margin-bottom: unit( 30 / @base-font-size-px, em);
     })
   }
 
   .a-label__heading {
     margin: 0;
-    padding-bottom: unit( 10 / @size-vi, em);
+    padding-bottom: 10px;
     .respond-to-max( @bp-xs-max, {
       font-size: @base-font-size-px;
-      padding-bottom: unit( 10 / @base-font-size-px, em);
     })
   }
 
@@ -200,16 +199,12 @@
     margin-bottom: 66px;
 
     .respond-to-max( @bp-xs-max, {
-      margin-top: -2px;
-      margin-bottom: -14px;
+      margin-top: -8px;
+      margin-bottom: -6px;
     });
 
     .legend-title {
-      margin-bottom: 8px;
-
-      .respond-to-max( @bp-xs-max, {
-        margin-bottom: 3px;
-      })
+      margin-bottom: 10px;
     }
 
     .legend-color, .legend-label {

@@ -1,5 +1,6 @@
-/* eslint complexity: ["error", 12] */
+/* eslint-disable complexity */
 /* eslint max-statements: ["error", 30] */
+/* eslint max-lines-per-function: ["error", 75] */
 /* eslint max-params: ["error", 9] */
 /* eslint consistent-return: [0] */
 // Polyfill Promise for IE11
@@ -377,6 +378,9 @@ function makeChartOptions( data, target ) {
   defaultObj.title = { text: undefined };
   defaultObj.accessibility.description = description;
   defaultObj.yAxis.title.text = yAxisLabel;
+  if ( !yAxisLabel && chartType === 'datetime' ) {
+    defaultObj.rangeSelector.buttonPosition.x = -50;
+  }
   if ( xAxisLabel ) defaultObj.xAxis.title.text = xAxisLabel;
   if ( !defaultObj.tooltip.formatter && yAxisLabel ) {
     defaultObj.tooltip.formatter = makeFormatter( yAxisLabel );
