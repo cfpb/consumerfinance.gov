@@ -14,7 +14,19 @@ import { updateState } from '../dispatchers/update-state.js';
 
 const expensesModel = {
   // Values of the currently selected region
-  values: {},
+  values: {
+    item_clothing: 0,
+    item_entertainment: 0,
+    item_food: 0,
+    item_healthcare: 0,
+    item_housing: 0,
+    item_retirement: 0,
+    item_taxes: 0,
+    item_transportation: 0,
+    item_other: 0,
+    item_childcare: 0,
+    item_currentDebts: 0
+  },
 
   // All data from the API
   rawData: {},
@@ -54,12 +66,8 @@ const expensesModel = {
   setValue: ( name, value, updateView ) => {
     expensesModel.values[name] = stringToNum( value );
     expensesModel.calculateTotals();
-
     if ( updateView !== false ) {
       updateExpensesView();
-      updateCostOfBorrowingChart();
-      updateAffordingChart();
-      updateUrlQueryString();
     }
   },
 
@@ -128,31 +136,28 @@ const expensesModel = {
       }
     }
 
-    if ( typeof expensesModel.values.item_childcare === 'undefined' ) {
-      expensesModel.values.item_childcare = 0;
-    }
-
-    if ( typeof expensesModel.values.item_currentDebts === 'undefined' ) {
-      expensesModel.values.item_currentDebts = 0;
-    }
-
     expensesModel.calculateTotals();
     updateUrlQueryString();
   },
 
   /**
    * Initialize the model, fetch values from API
+   * @returns {Promise} The promised init response
    */
   init: function() {
-    getExpenses()
-      .then( resp => {
-        expensesModel.rawData = JSON.parse( resp.responseText );
-        expensesModel.setValuesByRegion( 'NE' );
-        updateExpensesView();
-      } );
+    return new Promise( ( resolve, reject ) => {
+      getExpenses()
+        .then( resp => {
+          expensesModel.rawData = JSON.parse( resp.responseText );
+          updateExpensesView();
+          resolve( true );
+        } )
+        .catch( function( error ) {
+          reject( error );
+          console.log( 'An error occurred when accessing the expenses API', error );
+        } );
+    } );
   }
-
-
 };
 
 export {

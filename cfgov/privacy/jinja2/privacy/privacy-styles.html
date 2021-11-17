@@ -1,0 +1,60 @@
+{% macro render() %}
+  <style>
+    .lead-paragraph {
+      margin-bottom: 1.363636em;
+    }
+    .a-label_helper {
+      font-size: 16px;
+    }
+    .m-form-grid {
+      display: grid;
+      grid-template-columns: 50% repeat(2, 1fr);
+      grid-column-gap: 3em;
+      padding-right: 1em;
+    }
+    .m-form-grid input {
+      width: 100%;
+    }
+    .m-form-field__radio {
+      margin-bottom: 0.5em;
+    }
+    .m-form-field__checkbox span {
+      margin-left: 5px;
+    }
+    #mail-target {
+      display: none;
+    }
+    #mail-target.open {
+      display: block;
+    }
+    .m-form-field__file-input{
+      margin-top: 1.5em;
+      margin-bottom: -1em;
+    }
+    #file-list-wrapper{
+      margin-top: 3em;
+    }
+    #submit-icon{
+      display: none;
+    }
+    #submit-icon.submitting{
+      display: inline;
+    }
+    #id_description {
+      margin-bottom: 5px;
+    }
+    .o-well {
+      margin-bottom: 45px !important;
+      padding-bottom: 15px;
+    }
+    .o-well > .a-label_helper {
+      margin-bottom: 20px;
+    }
+    #privacy-form > p {
+      margin-bottom: 30px;
+    }
+    h3 {
+      margin-bottom: 1em;
+    }
+  </style>
+{% endmacro %}

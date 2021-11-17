@@ -1,0 +1,66 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<h1>Request for individual access to records protected under the Privacy Act</h1>
+		<p>
+		The following information was submitted via web form on consumerfinance.gov/privacy/records-access.
+		Any attachments have not been scanned for viruses and may be unsafe.
+		</p>
+
+		<h2>Information about the request</h2>
+		<p><b>Description of the nature of the records sought</b>:</br>
+		    {{description}}
+		</p>
+		<p><b>Name of the system of records that you believe contain the record requested</b>:</br>
+		    {{system_of_record}}
+		</p>
+		<p><b>Date of the record(s)</b>:</br>
+		    {{date_of_records}}
+		</p>
+		<p><b>Any other information that might assist the CFPB in identifying the record sought</b>:</br>
+		    {{other_info}}
+		</p>
+
+		<h2>Contact Information</h2>
+		<p><b>Name of requestor</b>: </br>
+		    {{requestor_name}}
+		</p>
+		<p><b>Requestor email address</b>: </br>
+		    {{requestor_email}}
+		</p>
+		<p>Please send my records by <b>{{contact_channel}}</b>.</p>
+		{% if contact_channel == 'mail' %}
+		<p><b>Recipient mailing address</b>: </br>
+		    {{street_address}}<br>{{city}}, {{state}} {{zip_code}}
+		</p>
+		{% endif %}
+
+		<p><b>Supporting documentation</b>: {{num_files}} file(s) attached. </p>
+		{% if num_files > 0 %}
+		    <ul>
+			{% for f in uploaded_files %}
+			    <li>{{ f.name }}</li>
+			{% endfor %}
+		    </ul>
+		{% endif %}
+
+		<h2>Consent for disclosure of records</h2>
+		<p><b>Full name</b>: </br>
+		    {{full_name}}
+		</p>
+		<p>
+		    I declare under penalty of perjury under the laws of the United
+		    States of America that the foregoing is true and correct, and that
+		    I am the person named above and requesting access to my records
+		    or records that I am entitled to request as the parent of a minor
+		    or the legal guardian of an incompetent, and I understand that
+		    any falsification of this statement is punishable under the
+		    provisions of 18 U.S.C. § 1001 by a fine, imprisonment of not
+		    more than five years, or both, and that requesting or obtaining
+		    any record(s) under false pretenses is punishable under the
+		    provisions of 5 U.S.C. § 552a(i)(3) by a fine of not more than
+		    $5,000.: <b>{{consent}}</b>
+		</p>
+	</body>
+</html>

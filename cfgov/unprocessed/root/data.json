@@ -329,7 +329,7 @@
         "agreement",
         "fee",
         "consumer",
-        "financial",
+        "financial"
       ],
       "landingPage": "https://www.consumerfinance.gov/data-research/student-banking/marketing-agreements-and-data/",
       "modified": "2021-12-30",
@@ -371,7 +371,7 @@
         "prepaid",
         "product",
         "type",
-        "agreement",
+        "agreement"
       ],
       "landingPage": "https://www.consumerfinance.gov/data-research/prepaid-accounts/search-agreements/",
       "modified": "2021-09-21",
@@ -383,7 +383,7 @@
         "name": "Consumer Financial Protection Bureau"
       },
       "spatial": "United States",
-      "title": "Prepaid Product Agreements Database",
+      "title": "Prepaid Product Agreements Database"
     },
     
     {
@@ -413,7 +413,7 @@
         "terms",
         "credit card",
         "plans",
-        "survey",
+        "survey"
       ],
       "landingPage": "https://www.consumerfinance.gov/data-research/credit-card-data/terms-credit-card-plans-survey/",
       "modified": "2021-01-31",
@@ -659,7 +659,7 @@
         "agreements",
         "credit card",
         "card",
-        "database",
+        "database"
       ],
       "landingPage": "https://www.consumerfinance.gov/credit-cards/agreements/",
       "modified": "2021-03-31",

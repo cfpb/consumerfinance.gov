@@ -5,6 +5,10 @@ const admin = new AdminPage();
 describe( 'Admin', () => {
 
   before( () => {
+    /* We can be reasonably sure that the Wagtail admin is being used on a
+      laptop screen or larger, and the table editor is wider than Cypress's
+      default viewport, so we'll size the viewport appropriately */
+    cy.viewport( 'macbook-13' );
     admin.open();
     admin.login();
   } );
@@ -13,6 +17,7 @@ describe( 'Admin', () => {
     /* Preserve the 'sessionid' cookie so it will not be cleared
        before the NEXT test starts. */
     Cypress.Cookies.preserveOnce( 'sessionid' );
+    cy.viewport( 'macbook-13' );
   } );
 
   it( 'should login', () => {
@@ -124,17 +129,13 @@ describe( 'Admin', () => {
     } );
 
     beforeEach( () => {
-      admin.selectFirstTableCell();
-    } );
-
-    afterEach( () => {
-      admin.closeTableEditor();
+      admin.editFirstTableCell();
     } );
 
     it( 'should be able to create and edit a table', () => {
       const text = 'test cell text';
       admin.typeTableEditorTextbox( text );
-      admin.saveTableEditor();
+      admin.closeTableEditor();
       admin.searchFirstTableCell( text ).should( 'be.visible' );
     } );
 
@@ -148,6 +149,7 @@ describe( 'Admin', () => {
       admin.selectTableEditorButton( 'unordered-list-item' );
       admin.selectTableEditorButton( 'undo' );
       admin.selectTableEditorButton( 'redo' );
+      admin.closeTableEditor();
     } );
 
     it( 'should be able to use link buttons', () => {
@@ -156,11 +158,12 @@ describe( 'Admin', () => {
       const documentName = 'cfpb_interested-vendor-instructions_fy2020.pdf';
       admin.selectTableEditorButton( 'DOCUMENT' );
       admin.selectDocumentLink( documentName );
+      admin.closeTableEditor();
     } );
 
     it( 'should be able to save an empty cell', () => {
-      admin.typeTableEditorTextbox( '{selectall}{backspace}' );
-      admin.saveTableEditor();
+      admin.typeTableEditorTextbox( '{selectall} ' );
+      admin.closeTableEditor();
       admin.getFirstTableCell().should( 'be.empty' );
     } );
   } );

@@ -1,0 +1,38 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% set breadcrumb_items = [{
+    "title": "FOIA Requests",
+    "href": "/foia-requests/",
+    },{
+    "title": "Submit a FOIA or Privacy Act Request",
+    "href": "/foia-requests/submit-request/",
+}] %}
+
+{% block meta_viewport %}
+    {{ super() }}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block title -%}
+    Your privacy request has been submitted | Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block content_main %}
+      <div class="m-notification m-notification__visible m-notification__success">
+          {{ svg_icon('approved-round') }}
+          <div class="m-notification_content">
+              <div class="h4 m-notification_message">
+                  Request submitted
+              </div>
+              <p class="m-notification_explanation">
+      Your request has been submitted to the CFPB FOIA office.
+      If you have any questions or want to follow up on your request, email
+      <a class="a-btn a-btn__link href="mailto:FOIA@consumerfinance.gov">FOIA@consumerfinance.gov</a>
+              </p>
+          </div>
+      </div>
+{% endblock %}
+
+{% block content_sidebar -%}
+    {% include '_sidebar.html' %}
+{%- endblock %}

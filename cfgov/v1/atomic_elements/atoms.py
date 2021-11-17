@@ -1,6 +1,5 @@
-from django.core.exceptions import ValidationError
-
 from wagtail.core import blocks
+from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.images.blocks import ImageChooserBlock
 
 from url_or_relative_url_field.forms import URLOrRelativeURLFormField
@@ -49,18 +48,14 @@ class Hyperlink(blocks.StructBlock):
     def clean(self, data):
         error_dict = {}
 
-        try:
-            data = super(Hyperlink, self).clean(data)
-        except ValidationError as e:
-            error_dict.update(e.params)
+        data = super(Hyperlink, self).clean(data)
 
-        if self.required:
+        if self.is_required:
             if not data['text']:
                 error_dict.update({'text': is_required('Text')})
 
         if error_dict:
-            raise ValidationError("Hyperlink validation errors",
-                                  params=error_dict)
+            raise StructBlockValidationError(block_errors=error_dict)
         else:
             return data
 
@@ -122,10 +117,7 @@ class ImageBasic(blocks.StructBlock):
     def clean(self, data):
         error_dict = {}
 
-        try:
-            data = super(ImageBasic, self).clean(data)
-        except ValidationError as e:
-            error_dict.update(e.params)
+        data = super(ImageBasic, self).clean(data)
 
         if not self.required and not data['upload']:
             return data
@@ -134,8 +126,7 @@ class ImageBasic(blocks.StructBlock):
             error_dict.update({'upload': is_required("Upload")})
 
         if error_dict:
-            raise ValidationError("ImageBasic validation errors",
-                                  params=error_dict)
+            raise StructBlockValidationError(block_errors=error_dict)
         else:
             return data
 

@@ -1,0 +1,316 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% import './privacy-styles.html' as styles %}
+
+{% set breadcrumb_items = [{
+    "title": "Privacy",
+    "href": "/privacy/",
+}] %}
+
+{% block title -%}
+    Consent for disclosure of records protected under the Privacy Act | Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block desc -%}
+    This form may be used to provide consent and authorize the Bureau to disclose your records to another person or entity. Please provide the information requested below and submit.
+{%- endblock %}
+
+{% block og_desc -%}
+    This form may be used to provide consent and authorize the Bureau to disclose your records to another person or entity. Please provide the information requested below and submit.
+{%- endblock %}
+
+{% block content_main -%}
+{{ styles.render() }}
+  {#
+    Display any error messages created during form submission.
+    Render them at the top of the page so they're visible when the page reloads.
+    Errors for individual fields are also displayed next to the fields, so
+    the user can find them in the form.
+  #}
+    {% if form.errors %}
+	{% import 'molecules/notification.html' as notification %}
+	<div class="u-mb15">
+	    {% for error in form.non_field_errors() %}
+		{{- notification.render( 'error', true, error | richtext ) }}
+	    {% endfor %}
+	    {% for field in form %}
+		{% for error in field.errors %}
+		    {{- notification.render( 'error', true, error ) }}
+		{% endfor %}
+	    {% endfor %}
+	</div>
+    {% endif %}
+    <div class="block block__flush-top">
+        <h1>Consent for disclosure of records protected under the Privacy Act</h1>
+        <div class="lead-paragraph">
+            <p>This form may be used to provide consent and authorize the Bureau to disclose your records to another person or entity. Please provide the information requested below and submit.</p>
+        </div>
+        <h2 class="h4">This form may be used if you are:</h2>
+        <ul class="m-list">
+            <li class="m-list_item">Providing consent and authorizing the agency to disclose your records to another person or entity</li>
+            <li class="m-list_item">A parent consenting to and authorizing the disclosure of the records of a minor</li>
+            <li class="m-list_item">A legal guardian consenting to and authorizing disclosure of the records of an incompetent</li>
+        </ul>
+        <p>If you have any questions, please contact the CFPB’s FOIA Office at <a href="mailto:FOIA@cfpb.gov">FOIA@cfpb.gov</a> or at (855) 444-3642.</p>
+        <h2>Information used for identity-proofing and authentication</h2>
+        <p>Please provide the following information to assist the Bureau in verifying your identity:</p>
+        <h2 class="h4">Required</h2>
+        <ul class="m-list">
+            <li class="m-list_item">Full name</li>
+            <li class="m-list_item">Electronically signed statement (at the bottom of this form) that affirms your identity and the fact that you understand penalties associated with requesting information under false pretenses</li>
+        </ul>
+        <h2 class="h4">Optional</h2>
+        <ul class="m-list">
+            <li class="m-list_item">A photocopy of two forms of identification, including one form of identification that bears your photograph, and one form of identification that bears your signature; or</li>
+            <li class="m-list_item">A photocopy of a single form of identification that bears both your photograph and signature</li>
+        </ul>
+        <h3>For requests by parent or legal guardian</h3>
+        <p>If you are the parent consenting to and authorizing disclosure of the records of a minor or the legal guardian consenting to and authorizing disclosure of the records of an incompetent, you will be required to provide adequate proof of your legal relationship before action will be taken on any request. If you have any questions, please contact the CFPB’s FOIA Office at <a href="mailto:FOIA@cfpb.gov">FOIA@cfpb.gov</a> or at (855) 444-3642.</p>
+        <p>The term guardian means the legal guardian of any individual who has been declared to be incompetent due to physical or mental incapacity or age by a court of competent jurisdiction.</p>
+        <h2>Information required to locate the records</h2>
+        <p>This information is required for the agency to be able to match the individual's information provided in this request with the record that pertains to that individual.</p>
+        <p><a class="a-btn a-btn__link" href="/privacy/system-records-notices/">See list of CFPB System of Records Notices (SORNs)</a></p>
+    </div>
+    <div class="block" style="margin-top:-2em;margin-bottom:.9375em">
+        <form id="privacy-form"
+              action="{{ url('privacy:disclosure_consent') }}"
+              enctype="multipart/form-data"
+              method="POST">
+            <div class="o-well u-mb30">
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.description.id_for_label }}">
+                            {{ form.description.label }}
+                        </label>
+                        {{ form.description }}
+                    </div>
+                </div>
+                <h3>Additional information that might assist in locating the records</h3>
+                <p>This enables the CFPB to locate the system of records containing the record(s) with a reasonable amount of effort.</p>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.system_of_record.id_for_label }}">
+                            {{ form.system_of_record.label }} <small class="a-label_helper">(optional)</small>
+                        </label>
+                        {{ form.system_of_record }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.date_of_records.id_for_label }}">
+                            {{ form.date_of_records.label }} <small class="a-label_helper">(optional)</small>
+                        </label>
+		        <p class="a-label_helper">{{ form.date_of_records.help_text }}</p>
+                        {{ form.date_of_records }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.other_info.id_for_label }}">
+                            {{ form.other_info.label }} <small class="a-label_helper">(optional)</small>
+                        </label>
+                        <p class="a-label_helper">{{ form.other_info.help_text }}</p>
+                        {{ form.other_info }}
+                    </div>
+                </div>
+            </div>
+
+            <h2>Contact information</h2>
+            <p>Please provide your contact information so that we can correspond with you regarding the request.</p>
+            <div class="o-well u-mb30">
+                <h3>Requestor contact information</h3>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.requestor_name.id_for_label }}">
+                            {{ form.requestor_name.label }}
+                        </label>
+                        {{ form.requestor_name }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.requestor_email.id_for_label }}">
+                            {{ form.requestor_email.label }}
+                        </label>
+			{% for error in form.requestor_email.errors %}
+			    {{- notification.render( 'error', true, error ) }}
+			{% endfor %}
+                        {{ form.requestor_email }}
+                    </div>
+                </div>
+                <h3 style="margin-top:45px;">Recepient contact information</h3>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.recipient_name.id_for_label }}">
+                            {{ form.recipient_name.label }}
+                        </label>
+                        {{ form.recipient_name }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.recipient_email.id_for_label }}">
+                            {{ form.recipient_email.label }}
+                        </label>
+                        {% for error in form.recipient_email.errors %}
+                            {{- notification.render( 'error', true, error ) }}
+                        {% endfor %}
+                        {{ form.recipient_email }}
+                    </div>
+                </div>
+
+                  {% for error in form.street_address.errors %}
+		    <div class="o-form_group">
+                      {{- notification.render( 'error', true, error ) }}
+		    </div>
+                  {% endfor %}
+                <div id="mail-radio" class="o-form_group">
+                  {% if form.is_bound %}
+                    {% set selected = form.contact_channel.value() %}
+                  {% else %}
+                    {% set selected = 'email' %}
+                  {% endif %}
+                  {% for choice in form.contact_channel %}
+                    {% set value = choice.data['value'] %}
+                    <div class="m-form-field m-form-field__radio">
+                      <input class="a-radio" {%if choice.data['value'] == selected %}checked {% endif %} value={{ value }} name="contact_channel" type="radio" id="{{choice.id_for_label}}">
+                        <label class="a-label" for="{{choice.id_for_label}}">{{choice.choice_label}}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div id="mail-target">
+                  <p>If you would like to receive your records by mail, please provide your mailing address.</p>
+                  <div class="o-form_group">
+                      <div class="m-form-field">
+                          <label class="a-label a-label__heading"
+                                 for="{{ form.street_address.id_for_label }}">
+                              {{ form.street_address.label }}
+                          </label>
+                          {{ form.street_address }}
+                      </div>
+                  </div>
+                  <div class="o-form_group m-form-grid">
+                      <div class="m-form-field">
+                          <label class="a-label a-label__heading"
+                                 for="{{ form.city.id_for_label }}">
+                              {{ form.city.label }}
+                          </label>
+                          {{ form.city }}
+                      </div>
+                      <div class="m-form-field">
+                          <label class="a-label a-label__heading"
+                                 for="{{ form.state.id_for_label }}">
+                              {{ form.state.label }}
+                          </label>
+                          {{ form.state }}
+                      </div>
+                      <div class="m-form-field">
+                          <label class="a-label a-label__heading"
+                                 for="{{ form.zip_code.id_for_label }}">
+                              {{ form.zip_code.label }}
+                          </label>
+                          {{ form.zip_code }}
+                      </div>
+                  </div>
+                </div>
+            </div>
+
+            <h2>Supporting documentation (optional)</h2>
+            <p style="margin-bottom:15px">Identity verification documents:</p>
+            <ul class="m-list">
+                <li class="m-list_item">A photocopy of two forms of identification, including one form of identification that bears your photograph, and one form of identification that bears your signature; or</li>
+                <li class="m-list_item">A photocopy of a single form of identification that bears both your photograph and signature</li>
+            </ul>
+            <p>If you are the parent consenting to and authorizing disclosure of the records of a minor or the legal guardian consenting to and authorizing disclosure of the records of an incompetent, you will be required to provide adequate proof of your legal relationship before action will be taken on any request.</p>
+            <div style="padding-bottom:30px" class="o-well u-mb30">
+                <div class="o-form_group">
+                  {% for error in form.supporting_documentation.errors %}
+                      {{- notification.render( 'error', true, error ) }}
+                  {% endfor %}
+                  <h3>Select files to attach</h3>
+                  <p>Please select up to 6 files. The total file size must not exceed 6MB. We accept all image files, including .jpg, .png, .pdf, .gif and .eps.</p>
+                  <div class="m-form-field m-form-field__file-input">
+                      <!-- Actual hidden file upload component. -->
+                      <label>
+                          <input class="u-hidden" multiple type="file" name="supporting_documentation" id="supporting_documentation">
+                      </label>
+                      <!-- Styled faux overlay component. -->
+                      <button type="button" class="a-btn
+                                     a-btn__flush-right">
+                          Select files to upload
+                      </button>
+                  </div>
+                </div>
+                <div class="u-hidden" id="file-list-wrapper">
+                  <h4>Files added:</h4>
+                  <ul class="m-list"></ul>
+                  <p>To remove or replace files, click “Select files to upload” and upload again.</p>
+                </div>
+            </div>
+
+            <h2>Consent for disclosure of records</h2>
+            <div class="o-well u-mb30">
+                <div class="o-form_group">
+                    <div class="m-form-field m-form-field__checkbox">
+                        {{ form.consent }}
+                        <label class="a-label"
+                               for="{{ form.consent.id_for_label }}">
+                            {{ form.consent.label }}
+                        </label>
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.full_name.id_for_label }}">
+                            {{ form.full_name.label }}
+                        </label>
+                        {{ form.full_name }}
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="o-form_group">
+                <div class="m-btn-group">
+                    <button id="submit-button" class="a-btn">
+                      Submit
+                      <span id ="submit-icon" class="a-btn_icon a-btn_icon__on-right">{{ svg_icon('updating') }}</span>
+                    </button>
+                    <a class="a-btn a-btn__link"
+                       href="/privacy/records-disclosure-privacy-act-statement/"
+                       rel="noopener noreferrer"
+                       target="_blank">
+                       Privacy Act statement
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+{%- endblock %}
+
+{% block content_sidebar -%}
+    {% include '_sidebar.html' %}
+{%- endblock %}
+
+{% block javascript %}
+    {{ super() }}
+    <script>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function() {
+          var s = [
+            '{{ static("/js/routes/on-demand/privacy-forms.js") }}'
+          ];
+          jsl(s);
+        }();
+      }
+    </script>
+{% endblock javascript %}
