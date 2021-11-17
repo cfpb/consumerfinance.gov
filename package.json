@@ -26,7 +26,7 @@
     "@cfpb/cfpb-expandables": "0.11.0",
     "@cfpb/cfpb-forms": "0.11.0",
     "@cfpb/cfpb-grid": "0.11.0",
-    "@cfpb/cfpb-icons": "0.11.0",
+    "@cfpb/cfpb-icons": "0.12.0",
     "@cfpb/cfpb-layout": "0.11.3",
     "@cfpb/cfpb-notifications": "0.11.2",
     "@cfpb/cfpb-pagination": "0.11.0",

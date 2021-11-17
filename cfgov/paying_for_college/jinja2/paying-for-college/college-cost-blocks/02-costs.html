@@ -38,7 +38,7 @@
     </div>
 
     <div class="costs_content-section costs_content-section_content block block__sub" data-state-based-visibility="costs-question-no">
-        <p> This is the most recent data from the U.S. Department of Education, but it is at least one year old. Ask the financial aid office for up-to-date estimates. Your actual spending will depend on which courses you take, whether you have dependents, your personal budgeting, and other factors.</p> 
+        <p> This is the most recent data from the U.S. Department of Education, but it is at least one year old. Ask the financial aid office for up-to-date estimates. Your actual spending will depend on which courses you take, whether you have dependents, your personal budgeting, and other factors.</p>
         <p> The school uses these estimates to calculate how much aid you can receive. If you will spend more, contact the school’s financial aid office—you may be eligible for more aid.</p>
     </div>
 
@@ -67,7 +67,7 @@
                 input.render({
                     'label': 'Other direct costs',
                     'helper_text': 'Anything else your school will bill you for',
-                    'id': 'costs__otherDirect-board',
+                    'id': 'costs__other-direct',
                     'value': '0',
                     'data_attribute': 'data-financial-item="dirCost_other"'
                 })
@@ -107,7 +107,7 @@
             {{
                 input.render({
                     'label': 'Personal/other/miscellaneous expenses',
-                    'id': 'costs__other',
+                    'id': 'costs__other-indirect',
                     'helper_text': 'Everything else! Ask the financial aid office what they include in this number and then check if it is realistic for you. Typically includes laundry and entertainment.',
                     'value': '0',
                     'data_attribute': 'data-financial-item="indiCost_other"'
@@ -118,30 +118,30 @@
                 'caution',
                 true,
                 '',
-                '<p>If your actual costs will be higher than the estimates from the school, talk to the financial aid office. You may be able to appeal for more aid.</p> 
+                '<p>If your actual costs will be higher than the estimates from the school, talk to the financial aid office. You may be able to appeal for more aid.</p>
                 <ul>
                     <li>You may also qualify for additional aid if you will be paying for health insurance, childcare, a personal computer, disability support, or study abroad.</li>
                     <li>Just because you qualify for more aid doesn’t mean you will receive it. And remember, financial aid includes student loans. More financial aid can mean an offer to borrow more money.</li>
                 </ul>' | safe
             ) }}
-            
+
         </div>
 
-        {{  
-            text_item.render({  
-                'label': 'Estimated indirect costs',    
-                'value': '$99,999', 
-                'type': 'subtotal', 
-                'status': 'warning',    
-                'data_attribute': 'data-financial-item="total_indirectCosts"'   
-            })  
+        {{
+            text_item.render({
+                'label': 'Estimated indirect costs',
+                'value': '$99,999',
+                'type': 'subtotal',
+                'status': 'warning',
+                'data_attribute': 'data-financial-item="total_indirectCosts"'
+            })
         }}
-        
+
         {{
             input.render({
                 'label': 'Additional financial obligations',
                 'helper_text': 'Expenses not related to school and not eligible for financial aid, like car payments, credit card payments, helping family with bills, etc. Ask the financial aid office if you\'re not sure if an expense qualifies for financial aid.',
-                'id': 'costs__otherIndirect',
+                'id': 'otherCost_additional',
                 'value': '0',
                 'data_attribute': 'data-financial-item="otherCost_additional"'
             })
@@ -156,7 +156,7 @@
                 'data_attribute': 'data-financial-item="total_costs"'
             })
         }}
-    
+
         {{ notification.render(
             'money-tips',
             true,

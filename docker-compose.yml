@@ -44,7 +44,6 @@ services:
         tty: true
         environment:
             ES_HOST: elasticsearch
-            ES_PORT: 9200
     docs:
         build:
             context: ./
