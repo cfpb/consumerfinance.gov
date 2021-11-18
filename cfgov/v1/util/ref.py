@@ -10,6 +10,7 @@ related_posts_categories = [
         ('Info for Consumers', 'Info for consumers'),
     )),
     ('Newsroom', (
+        ("Director's Statement", "Director's statement"),
         ('Op-Ed', 'Op-ed'),
         ('Press Release', 'Press release'),
         ('Speech', 'Speech'),
@@ -86,6 +87,7 @@ categories = [
         ('official-guidance', 'Official guidance'),
     )),
     ('Newsroom', (
+        ('directors-statement', "Director's statement"),
         ('op-ed', 'Op-ed'),
         ('press-release', 'Press release'),
         ('speech', 'Speech'),
@@ -195,6 +197,7 @@ def page_type_choices():
             ('raj-date', 'Raj Date'),
             ('elizabeth-warren', 'Elizabeth Warren'))),
         ('Newsroom', (
+            ("directors-statement", "Director's statement"),
             ('op-ed', 'Op-ed'),
             ('press-release', 'Press release'),
             ('speech', 'Speech'),
