@@ -232,12 +232,12 @@ if ALLOW_ADMIN_URL:
     DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000  # For heavy Wagtail pages
 
 # Default database is PostgreSQL running on localhost.
-# Database name cfgov, username cfpb, no password.
+# Database name cfgov, username cfpb, password cfpb.
 # Override this by setting DATABASE_URL in the environment.
 # See https://github.com/jacobian/dj-database-url for URL formatting.
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgres://cfpb@localhost/cfgov"
+        default="postgres://cfpb:cfpb@localhost/cfgov"
     ),
 }
 
