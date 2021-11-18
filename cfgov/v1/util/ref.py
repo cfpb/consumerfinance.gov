@@ -1,18 +1,6 @@
 import itertools
 
 
-limited_categories = [
-    ('speech-bubble', 'Blog'),
-    ('newspaper', 'Newsroom'),
-    ('document', 'Report'),
-    ('pencil', "Director's notebook"),
-    ('date', 'Events'),
-    ('microphone', 'Speech'),
-    ('bullhorn', 'Press release'),
-    ('contract', 'Op-ed'),
-    ('double-quote', 'Testimony'),
-]
-
 related_posts_categories = [
     ('Blog', (
         ('At the CFPB', 'At the CFPB'),
