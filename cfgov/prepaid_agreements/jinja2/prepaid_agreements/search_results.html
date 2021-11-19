@@ -23,7 +23,7 @@
                 Issuer name
             </label>
             <select name="issuer_name" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" id="issuer_name" class="o-multiselect">
-                {% for issuer in active_filters['issuer_name'] | sort %}
+                {% for issuer in active_filters['issuer_name'] %}
                     <option 
                         value="{{ issuer }}"
                         {{ ' selected' if issuer in selections else '' }}>
