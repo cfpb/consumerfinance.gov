@@ -29,6 +29,9 @@ def get_available_filters(products):
         if issuer_name and issuer_name not in available_filters['issuer_name']:
             available_filters['issuer_name'].append(issuer_name)
 
+    for filter_type in available_filters.keys():
+        available_filters[filter_type] = sorted(available_filters[filter_type])
+
     return available_filters
 
 
