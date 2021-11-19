@@ -15,7 +15,7 @@ from v1.models.snippets import ReusableText
 def get_available_filters(products):
     available_filters = {'prepaid_type': [], 'status': [], 'issuer_name': []}
 
-    for product in products.order_by('issuer_name'):
+    for product in products.all():
         prepaid_type = product.prepaid_type
         if prepaid_type and prepaid_type != '':
             if prepaid_type not in available_filters['prepaid_type']:
@@ -28,6 +28,9 @@ def get_available_filters(products):
         issuer_name = product.issuer_name
         if issuer_name and issuer_name not in available_filters['issuer_name']:
             available_filters['issuer_name'].append(issuer_name)
+
+    for filter_type in available_filters.keys():
+        available_filters[filter_type] = sorted(available_filters[filter_type])
 
     return available_filters
 
