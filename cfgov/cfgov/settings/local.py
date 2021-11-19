@@ -108,8 +108,6 @@ CSP_IMG_SRC += (
     "placekitten.com",
 )
 
-ELASTICSEARCH_SYNONYMS_HOME = './search/resources'
-
 # Add django-cprofile-middleware to enable lightweight local profiling.
 # The middleware's profiling is only available if DEBUG=True
 MIDDLEWARE += ("django_cprofile_middleware.middleware.ProfilerMiddleware",)
