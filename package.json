@@ -18,7 +18,7 @@
   "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead, ie >= 11",
   "dependencies": {
     "@babel/core": "7.16.0",
-    "@babel/preset-env": "7.16.0",
+    "@babel/preset-env": "7.16.4",
     "@cfpb/browserslist-config": "0.0.1",
     "@cfpb/cfpb-atomic-component": "0.13.0",
     "@cfpb/cfpb-buttons": "0.13.0",
@@ -32,8 +32,8 @@
     "@cfpb/cfpb-pagination": "0.13.0",
     "@cfpb/cfpb-tables": "0.13.0",
     "@cfpb/cfpb-typography": "0.13.0",
-    "autoprefixer": "10.3.7",
-    "babel-loader": "8.2.2",
+    "autoprefixer": "10.4.0",
+    "babel-loader": "8.2.3",
     "cfpb-chart-builder": "6.4.2",
     "core-js": "3.19.1",
     "cross-fetch": "3.1.4",
@@ -75,7 +75,7 @@
     "svg-inline-loader": "0.8.2",
     "terser-webpack-plugin": "5.2.4",
     "vinyl-named": "1.1.0",
-    "webpack": "5.62.1",
+    "webpack": "5.64.2",
     "webpack-stream": "7.0.0",
     "xdr": "0.5.3"
   },
@@ -89,7 +89,7 @@
     "jest-cli": "26.6.3",
     "jsdoc": "3.6.7",
     "minimist": "1.2.5",
-    "snyk": "1.753.0",
+    "snyk": "1.767.0",
     "through2": "4.0.2"
   },
   "resolutions": {
