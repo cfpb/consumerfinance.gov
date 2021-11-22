@@ -189,6 +189,50 @@
     },
 
     {
+      "@type": "dcat:Dataset",
+      "accessLevel": "public",
+      "accrualPeriodicity": "R/P1Y",
+      "bureauCode": [
+        "581:00"
+      ],
+      "contactPoint": {
+        "@type": "vcard:Contact",
+        "fn": "devops@cfpb.gov",
+        "hasEmail": "mailto:devops@cfpb.gov"
+      },
+      "description": "HMDA requires many Financial Institutions (FI)s to maintain, report, and publicly disclose information about applications for and originations of mortgage loans. HMDA’s purposes are to provide the public and public officials with sufficient information to enable them to determine whether institutions are serving the housing needs of the communities and neighborhoods in which they are located, to assist public officials in distributing public sector investments in a manner designed to improve the private investment environment, and to assist in identifying possible discriminatory lending patterns and enforcing antidiscrimination statutes. This publicly-available data asset contains HMDA data collected in or after 2017 and has been modified to protect the privacy of individuals whose information is present in the dataset.",
+      "distribution": [
+        {
+          "@type": "dcat:Distribution",
+          "accessURL": "https://ffiec.cfpb.gov/data-publication/snapshot-national-loan-level-dataset/",
+          "description": "The snapshot files contain the national HMDA datasets as of a fixed date per year for all HMDA reporters, as modified by the Bureau to protect applicant and borrower privacy. The snapshot files are available to download in both .csv and pipe delimited text file formats.",
+          "title": "Snapshot National Loan Level Dataset"
+        }
+      ],
+      "identifier": "hmda_snapshot",
+      "keyword": [
+        "consumer",
+        "finance",
+        "mortgage",
+        "HMDA",
+        "Home Mortgage Disclosure Act",
+        "loan"
+      ],
+      "landingPage": "https://ffiec.cfpb.gov/data-publication/",
+      "modified": "2021-08-10",
+      "programCode": [
+        "000:000"
+      ],
+      "publisher": {
+        "@type": "org:Organization",
+        "name": "Consumer Financial Protection Bureau"
+      },
+      "spatial": "United States",
+      "temporal": "2018-01-01T00:00:00Z/2021-05-03T00:00:00Z",
+      "title": "HMDA Public Data (Starting in 2017)"
+    },
+
+    {
 
       "@type": "dcat:Dataset",
       "accessLevel": "public",
@@ -244,9 +288,9 @@
       "temporal": "2016-01-01T00:00:00Z/2017-12-31T00:00:00Z",
       "title": "Financial Well-Being in America (2017)"
     },
-    
+
     {
-      
+
       "@type": "dcat:Dataset",
       "accessLevel": "public",
       "accrualPeriodicity": "R/P1Y",
@@ -343,9 +387,9 @@
       "spatial": "United States",
       "title": "College Credit Card Marketing Agreements Data"
     },
-    
+
     {
-      
+
       "@type": "dcat:Dataset",
       "accessLevel": "public",
       "accrualPeriodicity": "R/P1D",
@@ -359,7 +403,7 @@
       },
       "description": "Prepaid account agreement data, which contain general terms and conditions, pricing, and fee information, that issuers submit to the Bureau under the terms of the Prepaid Rule.  Data is refreshed nightly.",
       "distribution": [
-      
+
        {
           "@type": "dcat:Distribution",
           "downloadURL": "https://files.consumerfinance.gov/a/assets/prepaid-agreements/prepaid_metadata_all_agreements.csv",
@@ -385,9 +429,9 @@
       "spatial": "United States",
       "title": "Prepaid Product Agreements Database"
     },
-    
+
     {
-      
+
       "@type": "dcat:Dataset",
       "accessLevel": "public",
       "accrualPeriodicity": "R/P6M",
@@ -427,9 +471,9 @@
       "spatial": "United States",
       "title": "Terms of Credit Card Plans (TCCP) Survey"
     },
-    
+
     {
-      
+
       "@type": "dcat:Dataset",
       "accessLevel": "public",
       "accrualPeriodicity": "R/P3M",
