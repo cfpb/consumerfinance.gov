@@ -367,21 +367,24 @@ get those environment variables and get your virtualenv running again.</p>
 <code>cd</code> into the project directory.</p>
 <p>If you prefer not to use Autoenv, just be sure to <code>source .env</code> every time
 you start a new session of work on the project.</p>
-<h4 id="install-postgres">Install Postgres<a class="headerlink" href="#install-postgres" title="Permanent link">¶</a></h4>
-<p>If you're on a Mac and use Homebrew, you can easily install Postgres:</p>
+<h4 id="install-postgresql">Install PostgreSQL<a class="headerlink" href="#install-postgresql" title="Permanent link">¶</a></h4>
+<p>If you're on a Mac and use Homebrew, you can easily install PostgreSQL:</p>
 <pre class="highlight"><code class="language-bash">brew install postgresql</code></pre>
 
 <p>Once it's installed, you can configure it to run as a service:</p>
 <pre class="highlight"><code class="language-bash">brew services start postgresql</code></pre>
 
-<p>Then create the database, associated user, and schema for that user:</p>
+<p>Our recommended Postgres configuration is a database named <code>cfgov</code> and a user
+named <code>cfpb</code>, with data stored in schema <code>cfpb</code>. This can be created with the
+following commands:</p>
 <pre class="highlight"><code class="language-bash">dropdb --if-exists cfgov &amp;&amp; dropuser --if-exists cfpb
-createuser --createdb cfpb &amp;&amp; createdb -O cfpb cfgov
-psql postgres://cfpb@localhost/cfgov -c 'CREATE SCHEMA cfpb'</code></pre>
+psql postgres -c &quot;CREATE USER cfpb WITH LOGIN PASSWORD 'cfpb' CREATEDB&quot;
+psql postgres -c &quot;CREATE DATABASE cfgov OWNER cfpb&quot;
+psql postgres://cfpb:cfpb@localhost/cfgov -c &quot;CREATE SCHEMA cfpb&quot;</code></pre>
 
-<p>We don't support using an SQLite database, because we use database fields
-that are specific to Postgres. The <code>--createdb</code> flag above allows Django to
-create temporary Postgres databases when running unit tests.</p>
+<p>We don't support using an SQLite database because we use database fields
+that are specific to Postgres. The <code>CREATEDB</code> keyword above allows the
+<code>cfpb</code> user to create a temporary Django database when running unit tests.</p>
 <h4 id="run-the-setup-script">Run the setup script<a class="headerlink" href="#run-the-setup-script" title="Permanent link">¶</a></h4>
 <p>At this point, your machine should have everything it needs to automate the
 rest of the setup process.</p>
