@@ -44,9 +44,9 @@ class TestViews(TestCase):
         self.assertEqual(
             get_available_filters(products),
             {
-                'prepaid_type': ['Tax', 'Travel', 'Payroll'],
+                'prepaid_type': ['Payroll', 'Tax', 'Travel'],
                 'status': ['Active', 'Withdrawn'],
-                'issuer_name': ['Bank of CFPB', 'ABC Bank']
+                'issuer_name': ['ABC Bank', 'Bank of CFPB']
             }
         )
 
