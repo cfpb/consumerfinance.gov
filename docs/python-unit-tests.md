@@ -94,8 +94,7 @@ These default environments are:
   versions of Python, Django, and Wagtail. We require this environment to
   pass in CI.
 
-Tests will run against the default Django database as configured in settings
-using the `DATABASE_URL` environment variable.
+Tests will run against the default Django database.
 
 If you would like to run only a specific test, or the tests for a specific app,
 you can provide a dotted path to the test as the final argument to any of the above calls to `tox`:

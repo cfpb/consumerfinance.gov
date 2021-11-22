@@ -231,12 +231,15 @@ ALLOW_ADMIN_URL = os.environ.get("ALLOW_ADMIN_URL", False)
 if ALLOW_ADMIN_URL:
     DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000  # For heavy Wagtail pages
 
-# Databases
-DATABASES = {}
-
-# If DATABASE_URL is defined in the environment, use it to set the Django DB
-if os.getenv("DATABASE_URL"):
-    DATABASES["default"] = dj_database_url.config()
+# Default database is PostgreSQL running on localhost.
+# Database name cfgov, username cfpb, password cfpb.
+# Override this by setting DATABASE_URL in the environment.
+# See https://github.com/jacobian/dj-database-url for URL formatting.
+DATABASES = {
+    "default": dj_database_url.config(
+        default="postgres://cfpb:cfpb@localhost/cfgov"
+    ),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/stable/topics/i18n/
