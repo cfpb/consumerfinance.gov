@@ -598,14 +598,48 @@ category_redirects = [
 urlpatterns = urlpatterns + category_redirects
 
 if settings.ALLOW_ADMIN_URL:
-    patterns = [
-        re_path(r'^login/$', login_with_lockout, name='cfpb_login'),
+    # If SAML2 auth is enabled, /login will redirect to /saml2/login,
+    # which in turn will redirect to the configured identity provider.
+    if settings.SAML_AUTH:
+        auth_patterns = [
+            re_path(r'saml2/', include('djangosaml2.urls')),
+            re_path(
+                r'^login/$',
+                RedirectView.as_view(
+                    url='/saml2/login/',
+                    query_string=True
+                ),
+                name='cfpb_login'
+            ),
+            re_path(
+                r'^logout/$',
+                RedirectView.as_view(
+                    url='/saml2/logout/',
+                    query_string=True,
+                ),
+                name='logout'
+            ),
+
+            # For backup/admin/emergency auth, a pure Django login is still
+            # provided.
+            re_path(r'^django_login/$', login_with_lockout, name='cfpb_login'),
+        ]
+    else:
+        auth_patterns = [
+            re_path(r'^login/$', login_with_lockout, name='cfpb_login'),
+            re_path(
+                r'^logout/$',
+                auth_views.LogoutView.as_view(),
+                name='logout'
+            ),
+        ]
+
+    patterns = auth_patterns + [
         re_path(
             r'^login/check_permissions/$',
             check_permissions,
             name='check_permissions'
         ),
-        re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
         re_path(
             r'^admin/login/$',
             RedirectView.as_view(
@@ -622,7 +656,6 @@ if settings.ALLOW_ADMIN_URL:
                 query_string=True
             )
         ),
-
         re_path(
             r'^django-admin/password_change',
             change_password,
@@ -653,7 +686,6 @@ if settings.ALLOW_ADMIN_URL:
         ),
         re_path(r'^admin/autocomplete/', include(autocomplete_admin_urls)),
         re_path(r'^admin/', include(wagtailadmin_urls)),
-
     ]
 
     urlpatterns = patterns + urlpatterns
