@@ -43,6 +43,7 @@ services:
         stdin_open: true
         tty: true
         environment:
+            DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
             ES_HOST: elasticsearch
     docs:
         build:
