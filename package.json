@@ -80,13 +80,13 @@
     "xdr": "0.5.3"
   },
   "devDependencies": {
-    "babel-jest": "26.6.3",
+    "babel-jest": "27.3.1",
     "chai": "4.3.4",
     "chai-as-promised": "7.1.1",
     "cypress": "8.6.0",
     "gulp-eslint": "6.0.0",
-    "jest": "26.6.3",
-    "jest-cli": "26.6.3",
+    "jest": "27.3.1",
+    "jest-cli": "27.3.1",
     "jsdoc": "3.6.7",
     "minimist": "1.2.5",
     "snyk": "1.733.0",
