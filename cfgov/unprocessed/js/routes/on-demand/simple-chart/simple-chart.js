@@ -425,7 +425,8 @@ function alignMargin( defaultObj, chartType ) {
       y = 40 / len;
     }
     if ( window.innerWidth <= 660 ) {
-      marg += 27;
+      marg = ( len * 23 ) + 50;
+      y = -5;
     }
   }
   if ( !defaultObj.chart.marginTop ) defaultObj.chart.marginTop = marg;
@@ -807,11 +808,9 @@ function buildChart( chartNode ) {
       );
     }
 
-    if ( chartType === 'tilemap' ) {
-      window.addEventListener( 'resize', fixViewbox );
-      fixViewbox();
-      setTimeout( fixViewbox, 500 );
-    }
+    window.addEventListener( 'resize', fixViewbox );
+    fixViewbox();
+    setTimeout( fixViewbox, 500 );
 
   } );
 }
