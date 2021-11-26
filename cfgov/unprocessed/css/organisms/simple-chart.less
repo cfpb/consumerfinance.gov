@@ -231,6 +231,12 @@
 
   }
 
+  .highcharts-legend {
+    .respond-to-max( @bp-xs-max, {
+      transform: translateX(0) !important;
+    })
+  }
+
   .m-chart-footnote {
     max-width: unit(670 / @size-vi, rem);
     margin-top: unit(45 / @size-vi, em);
