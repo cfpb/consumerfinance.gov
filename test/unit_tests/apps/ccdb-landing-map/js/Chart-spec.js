@@ -38,7 +38,6 @@ describe( 'chart constructor', () => {
   } );
 
   it( 'builds raw chart', () => {
-    console.log( 'element', element )
     const options = {
       source: 'https://foobar.json',
       isPerCapita: false,
