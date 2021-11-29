@@ -36,7 +36,7 @@
                 {% if value.card_type  == 'featured' %} m-card__featured {% endif %}">
     <a href="{{ value.link_url }}">
         {% if value.heading or value.icon %}
-        <h3 class="m-card_heading{% if value.card_type == 'featured' %} h2{% endif %}">
+        <h3 class="{% if value.card_type != 'highlight' %}m-card_heading{% endif %}{% if value.card_type == 'featured' %} h2{% endif %}">
             {% if value.icon -%}
                 <span class="m-card_icon">{{ svg_icon( value.icon ) }}</span>
             {%- endif %}

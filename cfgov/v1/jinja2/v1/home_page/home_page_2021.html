@@ -87,7 +87,7 @@ content_main__flush-inner
                     <div class="content-l_col content-l_col-1-2">
                         <div class="m-info-unit">
                             <div class="m-info-unit_heading-text">
-                                <h3>{{ hardcoded.questions_heading }}</h3>
+                                <h2>{{ hardcoded.questions_heading }}</h2>
                             </div>
                             <div class="m-info-unit_content">
                                 <ul>
@@ -112,7 +112,7 @@ content_main__flush-inner
                     <div class="content-l_col {{ 'content-l_col-1-2' if page.answer_page_links else 'content-l_col-1' }}">
                         <div class="m-info-unit">
                             <div class="m-info-unit_heading-text">
-                                <h3>{{ svg_icon('open-quote') }} {{ hardcoded.jorge.heading }}</h3>
+                                <h2>{{ svg_icon('open-quote') }} {{ hardcoded.jorge.heading }}</h2>
                             </div>
                             <div class="m-info-unit_content">
                                 <p>
@@ -171,7 +171,7 @@ content_main__flush-inner
         </section>
         {% endif %}
 
-        <section class="block content_level-2">
+        <section class="block block__flush-bottom content_level-2">
             {{ card_group.render( {
                 'heading': hardcoded.breakout_cards_heading | safe,
                 'type_group': 'column-3',
@@ -180,13 +180,13 @@ content_main__flush-inner
             } ) }}
         </section>
 
-        <section class="block content_level-3">
+        <section class="block block__padded-top block__flush-top content_level-3">
             <div class="o-info-unit-group">
                 <div class="content-l">
                     <div class="content-l_col content-l_col-1-2">
                         <div class="m-info-unit">
                             <div class="m-info-unit_heading-text">
-                                <h3>{{ hardcoded.other_goals.heading }}</h3>
+                                <h2>{{ hardcoded.other_goals.heading }}</h2>
                             </div>
                             <div class="m-info-unit_content">
                                 <ul>
@@ -204,7 +204,7 @@ content_main__flush-inner
                     <div class="content-l_col content-l_col-1-2">
                         <div class="m-info-unit">
                             <div class="m-info-unit_heading-text">
-                                <h3>{{ hardcoded.popular_tools.heading }}</h3>
+                                <h2>{{ hardcoded.popular_tools.heading }}</h2>
                             </div>
                             <div class="m-info-unit_content">
                                 <ul>
