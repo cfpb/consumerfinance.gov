@@ -425,8 +425,8 @@ function alignMargin( defaultObj, chartType ) {
       y = 40 / len;
     }
     if ( window.innerWidth <= 660 ) {
-      marg = ( len * 23 ) + 50;
-      y = -5;
+      marg = ( len * 23 ) + 60;
+      y = 0;
     }
   }
   if ( !defaultObj.chart.marginTop ) defaultObj.chart.marginTop = marg;
