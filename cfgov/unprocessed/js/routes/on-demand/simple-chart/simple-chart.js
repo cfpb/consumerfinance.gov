@@ -197,10 +197,7 @@ function makeFormatter( yAxisLabel ) {
       x = new Date( x );
     }
     if ( x instanceof Date ) {
-      x = x.toLocaleDateString( 'en-US', {
-        dateStyle: 'medium',
-        timeZone: 'UTC'
-      } );
+      x = chartHooks.getDateString( x );
     }
     let str = `<b>${ x }</b><br/>${ yAxisLabel }: <b>${ this.y }</b>`;
     if ( this.series && this.series.name ) {
@@ -568,10 +565,7 @@ function processDate( option, filter ) {
     return `${ quarter } ${ year }`;
   }
   const d = new Date( option );
-  return d.toLocaleDateString( 'en-US', {
-    dateStyle: 'medium',
-    timeZone: 'UTC'
-  } );
+  return chartHooks.getDateString( d );
 }
 
 /**

@@ -32,6 +32,12 @@ const hooks = {
     } ) );
   },
 
+  getDateString( x ) {
+    return new Date( x ).toLocaleDateString(
+      'en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }
+    );
+  },
+
   cci_quarterLabels() {
     const { x, y, series } = this;
     const titleObj = series.yAxis.axisTitle;
@@ -41,9 +47,7 @@ const hooks = {
   },
 
   cci_dateToQuarter( x ) {
-    const d = new Date( x ).toLocaleString(
-      'en-US', { dateStyle: 'medium', timeZone: 'UTC' }
-    ).split( ', ' );
+    const d = hooks.getDateString( x ).split( ', ' );
     console.log( x, d );
     const quarter = `${ cci_quarterMap[d[0]] }: ${ cci_quarterRange[d[0]] }`;
     const year = d[1];
@@ -66,9 +70,8 @@ const hooks = {
     if ( ( max - min ) / msYear > 5 ) {
       return d.getFullYear() + 1;
     }
-    const dSplit = d.toLocaleString(
-      'en-US', { dateStyle: 'medium', timeZone: 'UTC' }
-    ).split( ', ' );
+
+    const dSplit = hooks.getDateString( d ).split( ', ' );
     return `${ cci_quarterMap[dSplit[0]] }<br/>${ dSplit[1] }`;
   },
 
@@ -81,7 +84,7 @@ const hooks = {
   },
 
   enforcement_reliefBarTooltipFormatter() {
-    return `<b>${ this.x }</b><br/>Total relief: <b>$${ this.y.toLocaleString() }</b>`;
+    return `<b>${ this.x }</b><br/>Total relief: <b>$${ this.y.toLocaleDateString() }</b>`;
   }
 };
 
