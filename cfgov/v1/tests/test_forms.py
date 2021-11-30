@@ -1,11 +1,15 @@
 import datetime
 from unittest import mock
 
+from django import forms
 from django.test import TestCase
+
+from wagtail.images.forms import get_image_form
 
 from freezegun import freeze_time
 
 from v1.forms import FilterableDateField, FilterableListForm
+from v1.models import CFGOVImage
 
 
 class TestFilterableListForm(TestCase):
@@ -132,3 +136,10 @@ class TestFilterableDateField(TestCase):
     def test_set_required(self):
         field = FilterableDateField(required=True)
         self.assertTrue(field.required)
+
+
+class CFGOVImageFormTests(TestCase):
+    def test_alt_widget_override(self):
+        form_cls = get_image_form(CFGOVImage)
+        form = form_cls()
+        self.assertIsInstance(form.fields['alt'].widget, forms.TextInput)

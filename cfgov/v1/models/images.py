@@ -10,9 +10,11 @@ from wagtail.images.models import (
 
 from wagtail_placeholder_images.mixins import PlaceholderRenditionMixin
 
+from v1.atomic_elements.atoms import IMAGE_ALT_TEXT_HELP_TEXT
+
 
 class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
-    alt = models.CharField(max_length=100, blank=True)
+    alt = models.TextField(blank=True, help_text=IMAGE_ALT_TEXT_HELP_TEXT)
     file_hash = models.CharField(max_length=40, blank=True, editable=False)
     admin_form_fields = Image.admin_form_fields + (
         'alt',
