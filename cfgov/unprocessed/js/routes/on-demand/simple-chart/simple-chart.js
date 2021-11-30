@@ -568,10 +568,6 @@ function processDate( option, filter ) {
     return `${ quarter } ${ year }`;
   }
   const d = new Date( option );
-  console.log( 'processDate', option, d, d.toLocaleDateString( 'en-US', {
-    dateStyle: 'medium',
-    timeZone: 'UTC'
-  } ) );
   return d.toLocaleDateString( 'en-US', {
     dateStyle: 'medium',
     timeZone: 'UTC'

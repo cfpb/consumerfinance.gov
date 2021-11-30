@@ -44,6 +44,7 @@ const hooks = {
     const d = new Date( x ).toLocaleString(
       'en-US', { dateStyle: 'medium', timeZone: 'UTC' }
     ).split( ', ' );
+    console.log( x, d );
     const quarter = `${ cci_quarterMap[d[0]] }: ${ cci_quarterRange[d[0]] }`;
     const year = d[1];
     return [ quarter, year ];
