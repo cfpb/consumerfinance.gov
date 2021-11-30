@@ -663,7 +663,7 @@ FLAGS = {
     # Enable by appending ?home_page_2021=True to home page URLs.
     "HOME_PAGE_2021":  [
         ("environment is not", "production", True),
-        ("parameter", "home_page_2021", True),
+        ("parameter", "home_page_2021"),
     ],
 }
 
