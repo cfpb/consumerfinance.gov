@@ -17,9 +17,9 @@
   },
   "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead, ie >= 11",
   "dependencies": {
-    "@babel/core": "7.15.8",
+    "@babel/core": "7.16.0",
     "@babel/plugin-transform-runtime": "7.16.4",
-    "@babel/preset-env": "7.15.8",
+    "@babel/preset-env": "7.16.4",
     "@cfpb/browserslist-config": "0.0.1",
     "@cfpb/cfpb-atomic-component": "0.13.0",
     "@cfpb/cfpb-buttons": "0.13.0",
