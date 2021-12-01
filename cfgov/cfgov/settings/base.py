@@ -231,12 +231,15 @@ ALLOW_ADMIN_URL = os.environ.get("ALLOW_ADMIN_URL", False)
 if ALLOW_ADMIN_URL:
     DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000  # For heavy Wagtail pages
 
-# Databases
-DATABASES = {}
-
-# If DATABASE_URL is defined in the environment, use it to set the Django DB
-if os.getenv("DATABASE_URL"):
-    DATABASES["default"] = dj_database_url.config()
+# Default database is PostgreSQL running on localhost.
+# Database name cfgov, username cfpb, password cfpb.
+# Override this by setting DATABASE_URL in the environment.
+# See https://github.com/jacobian/dj-database-url for URL formatting.
+DATABASES = {
+    "default": dj_database_url.config(
+        default="postgres://cfpb:cfpb@localhost/cfgov"
+    ),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/stable/topics/i18n/
@@ -301,6 +304,7 @@ EXTERNAL_URL_ALLOWLIST = (
 # Wagtail settings
 WAGTAIL_SITE_NAME = "consumerfinance.gov"
 WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
+WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
 
 WAGTAIL_USER_CREATION_FORM = "v1.auth_forms.UserCreationForm"
@@ -655,12 +659,6 @@ FLAGS = {
     "ASK_SURVEY_INTERCEPT": [],
     # Hide archive filter options in the filterable UI
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
-    # Supports testing of a new 2021 version of the website home page.
-    # Enable by appending ?home_page_2021=True to home page URLs.
-    "HOME_PAGE_2021":  [
-        ("environment is not", "production", True),
-        ("parameter", "home_page_2021", True),
-    ],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
