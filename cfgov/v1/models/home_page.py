@@ -11,7 +11,6 @@ from wagtail.core.models import Orderable, PageManager
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
 
-from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
@@ -96,33 +95,6 @@ class HomePage(CFGOVPage):
         })
 
         return context
-
-    def get_template(self, request, *args, **kwargs):
-        preview_mode = getattr(request, 'preview_mode', None)
-
-        if preview_mode is None:
-            if flag_enabled('HOME_PAGE_2021', request=request):
-                preview_mode = 'home_page_2021'
-            else:
-                preview_mode = ''
-
-        templates = {
-            '': 'v1/home_page.html',
-            'home_page_2021': 'v1/home_page_2021.html',
-        }
-
-        return templates[preview_mode]
-
-    @property
-    def preview_modes(self):
-        return super().preview_modes + [('home_page_2021', '2021 version')]
-
-    def serve_preview(self, request, mode_name):
-        # TODO: Remove this once we are on Wagtail 2.5+.
-        # Implemented in Wagtail core in
-        # https://github.com/wagtail/wagtail/pull/7596
-        request.preview_mode = mode_name
-        return super().serve_preview(request, mode_name)
 
 
 class HomePageInfoUnit(Orderable, ClusterableModel):
