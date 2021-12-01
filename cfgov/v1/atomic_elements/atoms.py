@@ -71,6 +71,13 @@ class Button(Hyperlink):
     ], default='regular')
 
 
+IMAGE_ALT_TEXT_HELP_TEXT = (
+    "No character limit, but be as succinct as possible. If the image is "
+    "decorative (i.e., a screenreader wouldn't have anything useful to say "
+    "about it), leave this field blank."
+)
+
+
 class ImageBasicStructValue(blocks.StructValue):
     @property
     def url(self):
@@ -99,12 +106,7 @@ class ImageBasicStructValue(blocks.StructValue):
 
 class ImageBasic(blocks.StructBlock):
     upload = ImageChooserBlock(required=False)
-    alt = blocks.CharBlock(
-        required=False,
-        help_text='If the image is decorative (i.e., if a screenreader '
-                  'wouldn\'t have anything useful to say about it), leave the '
-                  'Alt field blank.'
-    )
+    alt = blocks.CharBlock(required=False, help_text=IMAGE_ALT_TEXT_HELP_TEXT)
 
     def __init__(self, required=True):
         self.is_required = required
