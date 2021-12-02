@@ -178,19 +178,19 @@ pipeline {
             }
         }
 
-        // stage('Scan Image') {
-        //     steps {
-        //         postGitHubStatus("jenkins/deploy", "pending", "Scanning", env.RUN_DISPLAY_URL)
+        stage('Scan Image') {
+            steps {
+                postGitHubStatus("jenkins/deploy", "pending", "Scanning", env.RUN_DISPLAY_URL)
 
-        //         script {
-        //             LAST_STAGE = env.STAGE_NAME
-        //             scanImage(env.IMAGE_REPO, env.PYTHON_IMAGE_TAG)
-        //             if (IS_ES_IMAGE_UPDATED == 'true') {
-        //                 scanImage(env.IMAGE_ES_REPO, env.IMAGE_ES_TAG)
-        //             }
-        //         }
-        //     }
-        // }
+                script {
+                    LAST_STAGE = env.STAGE_NAME
+                    scanImage(env.IMAGE_REPO, env.PYTHON_IMAGE_TAG)
+                    if (IS_ES_IMAGE_UPDATED == 'true') {
+                        scanImage(env.IMAGE_ES_REPO, env.IMAGE_ES_TAG)
+                    }
+                }
+            }
+        }
 
         stage('Push Image') {
             // Push image only on main branch or deploy is set to true
