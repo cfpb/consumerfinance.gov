@@ -1,0 +1,115 @@
+[
+    {
+        "fields": {
+            "weight": 0,
+            "title": "CTE (Career and Technical Education)"
+        },
+        "model": "teachers_digital_platform.activityschoolsubject",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "rght": 10,
+            "parent": null,
+            "weight": 0,
+            "title": "Earn",
+            "level": 0,
+            "lft": 1,
+            "tree_id": 1
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "High school (9-10)"
+        },
+        "model": "teachers_digital_platform.activitygradelevel",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "13-15"
+        },
+        "model": "teachers_digital_platform.activityagerange",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "English language learners"
+        },
+        "model": "teachers_digital_platform.activitystudentcharacteristics",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Individual"
+        },
+        "model": "teachers_digital_platform.activitytype",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Blended learning"
+        },
+        "model": "teachers_digital_platform.activityteachingstrategy",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Remember"
+        },
+        "model": "teachers_digital_platform.activitybloomstaxonomylevel",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "15-20 minutes"
+        },
+        "model": "teachers_digital_platform.activityduration",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Spending and saving"
+        },
+        "model": "teachers_digital_platform.activityjumpstartcoalition",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Standard I. Earning Income"
+        },
+        "model": "teachers_digital_platform.activitycouncilforeconed",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Executive function",
+            "svg_icon": "settings"
+        },
+        "model": "teachers_digital_platform.activitybuildingblock",
+        "pk": 1
+    },
+    {
+        "model": "wagtaildocs.document",
+        "pk": 8335,
+        "fields": {
+            "title": "Storing my savings (guide)",
+            "file": "documents/cfpb_building_block_activities_storing-my-savings_guide.pdf",
+            "created_at": "2020-01-09T22:07:29.625Z",
+            "file_size": null,
+            "file_hash": ""
+        }
+    }
+]

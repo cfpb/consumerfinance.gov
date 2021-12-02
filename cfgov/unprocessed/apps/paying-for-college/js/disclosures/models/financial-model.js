@@ -103,7 +103,7 @@ const financialModel = {
    */
   updateModelWithProgram: function( schoolValues ) {
     schoolValues.undergrad = true;
-    if ( schoolValues.level.indexOf( 'Graduate' ) !== -1 ) {
+    if ( schoolValues.level.indexOf( 'Graduate' ) !== -1 || schoolValues.level === '4' ) {
       schoolValues.undergrad = false;
     }
     $.extend( this.values, schoolValues );

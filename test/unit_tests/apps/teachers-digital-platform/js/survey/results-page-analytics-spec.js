@@ -1,6 +1,5 @@
 import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
-import Analytics
-  from '../../../../../../cfgov/unprocessed/js/modules/Analytics';
+import { SCORES_UNSET_KEY } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/';
 const tdpAnalytics = require(
@@ -81,15 +80,10 @@ describe( 'Custom analytics for the TDP survey results page', () => {
     expect( spy.mock.calls[0][0] ).toEqual( 'Results Share' );
     expect( spy.mock.calls[0][1] ).toEqual( '9-12' );
 
-    window.dataLayer = [];
-    Analytics.tagManagerIsLoaded = true;
     modals.close();
 
-    const lastEvent = window.dataLayer.pop();
-    expect( lastEvent.action ).toEqual( 'Share: Close' );
-    expect( lastEvent.label ).toEqual( '9-12' );
-
-    Analytics.tagManagerIsLoaded = false;
+    expect( spy.mock.calls[1][0] ).toEqual( 'Share: Close' );
+    expect( spy.mock.calls[1][1] ).toEqual( '9-12' );
   } );
 
   it( 'should send analytics event when the pdf how to link is clicked', () => {
@@ -144,6 +138,32 @@ describe( 'Custom analytics for the TDP survey results page', () => {
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Start Over' );
     expect( spy.mock.calls[0][1] ).toEqual( '9-12: Results page' );
+  } );
+
+  it( 'should send analytics event when loading the results page', () => {
+    sessionStorage.removeItem( SCORES_UNSET_KEY );
+
+    let spy = jest.fn();
+    tdpAnalytics.bindAnalytics( spy );
+
+    expect( spy.mock.calls.length ).toEqual( 0 );
+
+    sessionStorage.setItem( SCORES_UNSET_KEY, '1' );
+
+    spy = jest.fn();
+    tdpAnalytics.bindAnalytics( spy );
+
+    expect( spy.mock.calls.length ).toEqual( 4 );
+    expect( spy.mock.calls[0][0] ).toEqual( 'Results: 9-12' );
+    expect( spy.mock.calls[1][0] ).toEqual( 'Results: 9-12' );
+    expect( spy.mock.calls[2][0] ).toEqual( 'Results: 9-12' );
+    expect( spy.mock.calls[3][0] ).toEqual( 'Results: 9-12' );
+    expect( spy.mock.calls[0][1] ).toEqual( 'Part 1 total: 25' );
+    expect( spy.mock.calls[1][1] ).toEqual( 'Part 2 total: 35' );
+    expect( spy.mock.calls[2][1] ).toEqual( 'Part 3 total: 45' );
+    expect( spy.mock.calls[3][1] ).toEqual( 'Overall score: 90' );
+
+    expect( sessionStorage.getItem( SCORES_UNSET_KEY ) ).toEqual( null );
   } );
 
 } );

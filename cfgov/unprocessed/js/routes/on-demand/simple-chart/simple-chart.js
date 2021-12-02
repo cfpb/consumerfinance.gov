@@ -1,5 +1,6 @@
-/* eslint complexity: ["error", 12] */
+/* eslint-disable complexity */
 /* eslint max-statements: ["error", 30] */
+/* eslint max-lines-per-function: ["error", 75] */
 /* eslint max-params: ["error", 9] */
 /* eslint consistent-return: [0] */
 // Polyfill Promise for IE11
@@ -196,10 +197,7 @@ function makeFormatter( yAxisLabel ) {
       x = new Date( x );
     }
     if ( x instanceof Date ) {
-      x = x.toLocaleDateString( 'en-US', {
-        dateStyle: 'medium',
-        timeZone: 'UTC'
-      } );
+      x = chartHooks.getDateString( x );
     }
     let str = `<b>${ x }</b><br/>${ yAxisLabel }: <b>${ this.y }</b>`;
     if ( this.series && this.series.name ) {
@@ -236,7 +234,7 @@ function makeTilemapSelect( chartNode, chart, data, transform ) {
 
   const options = getTilemapDates( d );
   const selectNode = makeFilterDOM( options, chartNode, { key: 'tilemap' },
-    'Select a date'
+    'Select date'
   );
 
   attachTilemapFilter( selectNode, chart, data );
@@ -250,11 +248,13 @@ function makeTilemapSelect( chartNode, chart, data, transform ) {
  * @param {object} data The data object
  */
 function attachTilemapFilter( node, chart, data ) {
+
   node.addEventListener( 'change', evt => {
     const formatted = formatSeries( data );
     const updated = getMapConfig( formatted, evt.target.value );
     chart.update( updated );
-    updateTilemapLegend( chart.renderTo, updated, chart.options.legend.title );
+    const updatedTitleObj = chart.options.yAxis[0].title;
+    updateTilemapLegend( chart.renderTo, updated, updatedTitleObj ? updatedTitleObj.text : '' );
   } );
 }
 
@@ -271,8 +271,6 @@ function updateTilemapLegend( node, data, legendTitle ) {
   legend.innerHTML = '';
   const colors = [];
   const labels = [];
-  const title = document.createElement( 'p' );
-  title.innerText = legendTitle;
   classes.forEach( v => {
     const color = document.createElement( 'div' );
     const label = document.createElement( 'div' );
@@ -283,7 +281,12 @@ function updateTilemapLegend( node, data, legendTitle ) {
     colors.push( color );
     labels.push( label );
   } );
-  legend.appendChild( title );
+  if ( legendTitle ) {
+    const title = document.createElement( 'p' );
+    title.className = 'legend-title';
+    title.innerText = legendTitle;
+    legend.appendChild( title );
+  }
   colors.forEach( v => legend.appendChild( v ) );
   labels.forEach( v => legend.appendChild( v ) );
 }
@@ -323,12 +326,12 @@ function getMapConfig( series, date ) {
     colorAxis: {
       dataClasses: [
         { from: min, to: step1, color: '#addc91', name: `${ min } - ${ trimTenth( step1 ) }` },
-        { from: step1, to: step2, color: '#f0f8eb', name: `${ step1 } - ${ trimTenth( step2 ) }` },
+        { from: step1, to: step2, color: '#e2efd8', name: `${ step1 } - ${ trimTenth( step2 ) }` },
         { from: step2, to: step3, color: '#ffffff', name: `${ step2 } - ${ trimTenth( step3 ) }` },
         { from: step3, to: step4, color: '#d6e8fa', name: `${ step3 } - ${ trimTenth( step4 ) }` },
         { from: step4, color: '#7eb7e8', name: `${ step4 } - ${ max }` }
       ]},
-    series: [ { clip: false, borderColor: '#919395', borderWidth: 1, data: added, rowsize: 1, colsize: 1 } ]
+    series: [ { clip: false, data: added } ]
   };
 }
 
@@ -359,8 +362,12 @@ function makeChartOptions( data, target ) {
     };
     const legend = target.parentNode.getElementsByClassName( 'o-simple-chart_tilemap_legend' )[0];
     legend.style.display = 'block';
-    updateTilemapLegend( target, defaultObj, defaultObj.legend.title );
+    updateTilemapLegend( target, defaultObj, yAxisLabel );
 
+    defaultObj.tooltip.formatter = function() {
+      const label = yAxisLabel ? yAxisLabel + ': ' : '';
+      return `<b>${ this.point.name }</b><br/>${ label }<b>${ Math.round( this.point.value * 10 ) / 10 }</b>`;
+    };
   } else {
     defaultObj.series = formattedSeries;
   }
@@ -368,6 +375,9 @@ function makeChartOptions( data, target ) {
   defaultObj.title = { text: undefined };
   defaultObj.accessibility.description = description;
   defaultObj.yAxis.title.text = yAxisLabel;
+  if ( !yAxisLabel && chartType === 'datetime' ) {
+    defaultObj.rangeSelector.buttonPosition.x = -50;
+  }
   if ( xAxisLabel ) defaultObj.xAxis.title.text = xAxisLabel;
   if ( !defaultObj.tooltip.formatter && yAxisLabel ) {
     defaultObj.tooltip.formatter = makeFormatter( yAxisLabel );
@@ -395,7 +405,7 @@ function makeChartOptions( data, target ) {
 
 
 /**
- * Resolves provided x axis or series data
+ * Adjusts legend alignment based on series length
  * @param {object} defaultObj default object to be decorated
  * @param {string} chartType current chart type
  */
@@ -406,9 +416,15 @@ function alignMargin( defaultObj, chartType ) {
   if ( chartType === 'tilemap' ) {
     marg = 100;
     y = -15;
-  } else if ( marg < 100 ) {
-    marg = 100;
-    y = 19;
+  } else {
+    if ( marg < 100 ) {
+      marg = 100;
+      y = 40 / len;
+    }
+    if ( window.innerWidth <= 660 ) {
+      marg = ( len * 23 ) + 60;
+      y = 0;
+    }
   }
   if ( !defaultObj.chart.marginTop ) defaultObj.chart.marginTop = marg;
   if ( !defaultObj.legend.y ) defaultObj.legend.y = y;
@@ -545,14 +561,11 @@ function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
  */
 function processDate( option, filter ) {
   if ( filter && filter.key === 'tilemap' ) {
-    const [ quarter, year ] = chartHooks.ccpi_dateToQuarter( option );
+    const [ quarter, year ] = chartHooks.cci_dateToQuarter( option );
     return `${ quarter } ${ year }`;
   }
   const d = new Date( option );
-  return d.toLocaleDateString( 'en-US', {
-    dateStyle: 'medium',
-    timeZone: 'UTC'
-  } );
+  return chartHooks.getDateString( d );
 }
 
 /**
@@ -744,15 +757,14 @@ function buildChart( chartNode ) {
 
   /**
    * Fixes tilemap clipping
+   * @param {object} evt Optional event
+   * @param {number} height Height value for the SVG element.
    **/
   function fixViewbox() {
     const chartSVG = target.getElementsByClassName( 'highcharts-root' )[0];
     const width = chartSVG.width.animVal.value;
-    const height = 450;
-    chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height }` );
-    setTimeout( () => {
-      chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height }` );
-    }, 500 );
+    const height = chartSVG.height.animVal.value;
+    chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height + 1 }` );
   }
 
   resolveData( source.trim() ).then( raw => {
@@ -783,14 +795,17 @@ function buildChart( chartNode ) {
     if ( chartType === 'tilemap' ) {
       makeTilemapSelect( chartNode, chart, data,
         transform && chartHooks[transform] );
-      window.addEventListener( 'resize', fixViewbox );
-      fixViewbox();
     } else {
       initFilters(
         target.dataset, chartNode, chart, data,
         transform && chartHooks[transform]
       );
     }
+
+    window.addEventListener( 'resize', fixViewbox );
+    fixViewbox();
+    setTimeout( fixViewbox, 500 );
+
   } );
 }
 
