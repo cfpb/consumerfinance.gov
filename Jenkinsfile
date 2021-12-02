@@ -278,10 +278,10 @@ pipeline {
 
                 if (env.DEPLOY_SUCCESS == false) {
                     postGitHubStatus("jenkins/deploy", "failure", "Failed", env.RUN_DISPLAY_URL)
-                    postGitHubStatus("jenkins/functional-tests", "error", "Cancelled", env.RUN_DISPLAY_URL)
+                    postGitHubStatus("jenkins/functional-tests", "error", "Cancelled", "dev-jenkins/job/cf.gov-functional-tests/${BUILD_NUMBER}/consoleFull")
                     deployText = "failed" 
                 } else {
-                    postGitHubStatus("jenkins/functional-tests", "failure", "Failed", env.RUN_DISPLAY_URL)
+                    postGitHubStatus("jenkins/functional-tests", "failure", "Failed", "dev-jenkins/job/cf.gov-functional-tests/${BUILD_NUMBER}/consoleFull")
                     deployText = "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed" 
                 }
 
