@@ -61,7 +61,9 @@ function fetchData( url, isCSV ) {
 
     return prom.then( d => {
       if ( isCSV ) {
-        d = d.replace( /(^"|\n")(#|\/\/)/g, '$2' );
+        /* Excel can put quotes at the start of our # or // comments
+           This strips those quotes */
+        d = d.replace( /^"(#|\/\/)|(\n)"(#|\/\/)/g, '$1$2$3' );
         d = Papa.parse( d, {
           header: true, comments: true, skipEmptyLines: true
         } ).data;
