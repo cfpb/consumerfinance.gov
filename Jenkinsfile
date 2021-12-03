@@ -24,6 +24,7 @@ pipeline {
         IMAGE_ES_TAG = '7.10.1'
         // Only Python image tag changes for every build
         PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
+        FUNCTIONAL_TESTS_URL = "dev-jenkins/job/cf.gov-functional-tests/${BUILD_NUMBER}/consoleFull"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
@@ -255,7 +256,7 @@ pipeline {
                     [$class: 'StringParameterValue', name: 'BASE_URL', value: "https://${env.CFGOV_HOSTNAME}/"],
                     [$class: 'StringParameterValue', name: 'GIT_TAG', value: env.GIT_COMMIT],
                 ]
-                postGitHubStatus("jenkins/functional-tests", "success", "Passed","dev-jenkins/job/cf.gov-functional-tests/${BUILD_NUMBER}/consoleFull")
+                postGitHubStatus("jenkins/functional-tests", "success", "Passed",env.FUNCTIONAL_TESTS_URL)
             }
         }
     }
@@ -278,10 +279,10 @@ pipeline {
 
                 if (env.DEPLOY_SUCCESS == false) {
                     postGitHubStatus("jenkins/deploy", "failure", "Failed", env.RUN_DISPLAY_URL)
-                    postGitHubStatus("jenkins/functional-tests", "error", "Cancelled", "dev-jenkins/job/cf.gov-functional-tests/${BUILD_NUMBER}/consoleFull")
+                    postGitHubStatus("jenkins/functional-tests", "error", "Cancelled", env.FUNCTIONAL_TESTS_URL)
                     deployText = "failed" 
                 } else {
-                    postGitHubStatus("jenkins/functional-tests", "failure", "Failed", "dev-jenkins/job/cf.gov-functional-tests/${BUILD_NUMBER}/consoleFull")
+                    postGitHubStatus("jenkins/functional-tests", "failure", "Failed", env.FUNCTIONAL_TESTS_URL)
                     deployText = "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed" 
                 }
 
