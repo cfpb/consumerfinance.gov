@@ -61,7 +61,7 @@ function fetchData( url, isCSV ) {
 
     return prom.then( d => {
       if ( isCSV ) {
-        d = d.replace( /\n"(#|\/\/)/g, '$1' );
+        d = d.replace( /(^"|\n")(#|\/\/)/g, '$2' );
         d = Papa.parse( d, {
           header: true, comments: true, skipEmptyLines: true
         } ).data;
