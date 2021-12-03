@@ -61,6 +61,7 @@ function fetchData( url, isCSV ) {
 
     return prom.then( d => {
       if ( isCSV ) {
+        d = d.replace( /"##/g, '##' );
         d = Papa.parse( d, {
           header: true, comments: true, skipEmptyLines: true
         } ).data;
@@ -353,7 +354,6 @@ function makeChartOptions( data, target ) {
   if ( xAxisSource && chartType !== 'datetime' ) {
     defaultObj.xAxis.categories = resolveKey( data.raw, xAxisSource );
   }
-
   const formattedSeries = formatSeries( data );
   if ( chartType === 'tilemap' && formattedSeries.length === 1 ) {
     defaultObj = {
