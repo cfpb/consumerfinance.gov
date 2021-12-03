@@ -256,7 +256,7 @@ pipeline {
                     [$class: 'StringParameterValue', name: 'BASE_URL', value: "https://${env.CFGOV_HOSTNAME}/"],
                     [$class: 'StringParameterValue', name: 'GIT_TAG', value: env.GIT_COMMIT],
                 ]
-                postGitHubStatus("jenkins/functional-tests", "success", "Passed",env.RUN_DISPLAY_URL)
+                postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
             }
         }
     }
