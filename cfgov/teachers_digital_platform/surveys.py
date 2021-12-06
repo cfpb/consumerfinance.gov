@@ -132,6 +132,14 @@ class ChoiceQuestion(Question):
 
     def get_score(self, answer) -> float:
         """Get a single score based on the answer index"""
+
+        # formtools.NamedUrlCookieWizardView appears to have a bug where
+        # valid answer data ("0"..."4") sometimes shows up in
+        # all_cleaned_data as empty string. We can't really handle this
+        # other than to grade with some valid response, below "0".
+        if type(answer) is not str or not answer.isdecimal():
+            answer = '0'
+
         answer = int(answer)
         assert answer >= 0
         assert answer < len(self.choice_list.labels)

@@ -52,6 +52,13 @@ class SurveyTest(TestCase):
         q1 = page1.questions[0]
         self.assertEqual(q1.get_score('0'), q1.answer_values[0])
 
+    def test_formtools_bugs(self):
+        survey = get_survey('3-5')
+        page1 = survey.pages[0]
+        q1 = page1.questions[0]
+        self.assertEqual(q1.get_score(None), q1.answer_values[0])
+        self.assertEqual(q1.get_score(''), q1.answer_values[0])
+
     def test_field_generation(self):
         survey = get_survey('3-5')
         q1 = survey.pages[0].questions[0]
