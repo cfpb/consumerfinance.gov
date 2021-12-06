@@ -211,10 +211,10 @@ function _handleNextButtonClick( event ) {
   if ( getStateValue( 'schoolErrors' ) === 'yes' ) {
     updateState.byProperty( 'showSchoolErrors', 'yes' );
   } else {
-    // TODO: Track time between Next button clicks for analytics
     sendAnalyticsEvent( 'next step - ' + getStateValue( 'activeSection' ), 'time-to-click' );
     updateState.nextSection();
     window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
+    document.querySelector( '.college-costs_tool-section.active h2' ).focus();
   }
 }
 

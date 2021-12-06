@@ -8,18 +8,17 @@ const tilemap = {
       tileShape: 'square',
       pointRange: 0.8,
       pointPadding: 3,
-      dataLabels: {
-        enabled: true,
-        formatter: function() { return `${ this.point.state }<br/><span style="font-weight:100">${ Math.round( this.point.value ) }</span>`; },
-        color: '#101820',
-        style: {
-          textOutline: false,
-          fontSize: '12px'
-        }
-      },
       states: {
         hover: {
-          color: 'rgba(100,210,100,.3)'
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function() { return `<span style="font-weight:900">${ this.point.state }</span><br/><span style="font-weight:100">${ Math.round( this.point.value ) }</span>`; },
+        style: {
+          textOutline: false,
+          fontSize: 14
         }
       }
     }
@@ -38,16 +37,16 @@ const tilemap = {
     style: {
       fontFamily: 'Avenir Next',
       fontSize: '16px'
-    },
-    formatter: function() { return `<b>${ this.point.name }</b><br/>Index value: <b>${ Math.round( this.point.value * 10 ) / 10 }</b>`; } },
+    }
+  },
   legend: {
-    enabled: false,
-    title: 'Index value'
+    enabled: false
   },
   chart: {
+    animation: false,
     maxWidth: 670,
     height: 450,
-    marginLeft: 0,
+    marginLeft: -48,
     marginRight: 0,
     marginTop: -1,
     spacingBottom: -290,
@@ -62,8 +61,15 @@ const tilemap = {
         chartOptions: {
           chart: {
             animation: false,
-            height: 450,
+            height: 350,
+            marginLeft: -19,
             spacingBottom: -240
+          },
+
+          plotOptions: {
+            tilemap: {
+              pointRange: 0
+            }
           }
         }
       }

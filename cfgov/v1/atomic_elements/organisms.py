@@ -468,9 +468,9 @@ class SimpleChart(blocks.StructBlock):
     chart_type = blocks.ChoiceBlock(
         choices=[
             ('bar', 'Bar'),
-            ('datetime', 'Datetime'),
+            ('datetime', 'Date/time'),
             ('line', 'Line'),
-            ('tilemap', 'Tilemap')
+            ('tilemap', 'Tile grid map')
         ],
         default='datetime',
         required=True
