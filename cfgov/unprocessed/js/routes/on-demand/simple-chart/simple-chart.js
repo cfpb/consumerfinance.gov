@@ -294,6 +294,20 @@ function updateTilemapLegend( node, data, legendTitle ) {
   labels.forEach( v => legend.appendChild( v ) );
 }
 
+/**
+ * Intuits the correct object key for state short codes
+ * @param {object} data A row of data as an object with headers as keys
+ * @returns {string} The intuited shortcode
+ * */
+function getShortCode( data ) {
+  const keys = Object.keys( data );
+  for ( let i = 0; i < keys.length; i++ ) {
+    if ( usLayout[data[keys[i]]] ) return keys[i];
+  }
+  /* eslint-disable-next-line */
+  console.error( 'Unable to determine state shortcode. Data is misformatted for simple-chart.' );
+}
+
 
 /**
  * Adds generates a config object to be added to the chart config
@@ -305,7 +319,7 @@ function getMapConfig( series, date ) {
   let min = Infinity;
   let max = -Infinity;
   const data = series[0].data;
-  const shortCode = data[0].state_abbrev ? 'state_abbrev' : 'state_ab';
+  const shortCode = getShortCode( data[0] );
   if ( !date ) date = getTilemapDates( data )[0];
   const added = data.map( v => {
     const val = Math.round( Number( v[date] ) * 100 ) / 100;
