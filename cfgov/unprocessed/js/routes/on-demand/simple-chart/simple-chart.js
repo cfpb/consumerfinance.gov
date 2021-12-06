@@ -305,14 +305,15 @@ function getMapConfig( series, date ) {
   let min = Infinity;
   let max = -Infinity;
   const data = series[0].data;
+  const shortCode = data[0].state_abbrev ? 'state_abbrev' : 'state_ab';
   if ( !date ) date = getTilemapDates( data )[0];
   const added = data.map( v => {
     const val = Math.round( Number( v[date] ) * 100 ) / 100;
     if ( val <= min ) min = val;
     if ( val >= max ) max = val;
     return {
-      ...usLayout[v.state_ab],
-      state: v.state_ab,
+      ...usLayout[v[shortCode]],
+      state: v[shortCode],
       value: val
     };
   } );
@@ -358,6 +359,7 @@ function makeChartOptions( data, target ) {
   }
 
   const formattedSeries = formatSeries( data );
+
   if ( chartType === 'tilemap' && formattedSeries.length === 1 ) {
     defaultObj = {
       ...defaultObj,
