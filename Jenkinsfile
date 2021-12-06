@@ -24,7 +24,7 @@ pipeline {
         IMAGE_ES_TAG = '7.10.1'
         // Only Python image tag changes for every build
         PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
-        FUNCTIONAL_TESTS_URL = "dev-jenkins/job/cf.gov-functional-tests/${BUILD_NUMBER}/consoleFull"
+        FUNCTIONAL_TESTS_URL = "http://dev-jenkins/job/cf.gov-functional-tests/${BUILD_NUMBER}/consoleFull"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
