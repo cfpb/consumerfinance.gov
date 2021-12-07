@@ -26,7 +26,8 @@ const schoolView = {
   _searchSection: null,
   _searchBox: null,
   _searchResults: null,
-  _programRadios: null,
+  _programRadioLabels: null,
+  _programRadioInputs: null,
   _schoolInfo: null,
   _schoolItems: [],
   _stateItems: [],
@@ -149,7 +150,8 @@ const schoolView = {
     schoolView._searchSection = body.querySelector( '#college-costs_school-search' );
     schoolView._searchBox = body.querySelector( '#search__school-input' );
     schoolView._searchResults = body.querySelector( '#search-results' );
-    schoolView._programRadios = body.querySelectorAll( '.school-search_additional-info label' );
+    schoolView._programRadioLabels = body.querySelectorAll( '.school-search_additional-info label' );
+    schoolView._programRadioInputs = body.querySelectorAll( '.school-search_additional-info input[type="radio"]' );
     schoolView._programSelect = body.querySelector( '#program-select' );
     schoolView._schoolInfo = body.querySelector( '.school-search_additional-info' );
     schoolView._schoolItems = document.querySelectorAll( '[data-school-item]' );
@@ -167,8 +169,12 @@ function _addListeners() {
   schoolView._searchBox.addEventListener( 'keyup', _handleInputChange );
   schoolView._searchResults.addEventListener( 'click', _handleResultButtonClick );
 
-  schoolView._programRadios.forEach( elem => {
+  schoolView._programRadioLabels.forEach( elem => {
     elem.addEventListener( 'click', _handleProgramRadioClick );
+  } );
+
+  schoolView._programRadioInputs.forEach( elem => {
+    elem.addEventListener( 'change', _handleProgramRadioClick );
   } );
 
   schoolView._programSelect.addEventListener( 'change', _handleProgramSelectChange );
@@ -285,7 +291,6 @@ function _handleProgramRadioClick( event ) {
   if ( prop === 'programType' ) {
     schoolView._updateProgramList();
   }
-
   if ( recalcProps.indexOf( prop ) !== -1 ) {
     recalculateFinancials();
     updateFinancialViewAndFinancialCharts();

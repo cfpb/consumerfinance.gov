@@ -15,41 +15,8 @@ const datetime = {
     startOnTick: true,
     labels: {
       ...styles.xAxis.labels
-    },
-    events: {
-      afterSetExtremes: function( evt ) {
-        const selects = document.querySelectorAll( '.o-simple-chart .select-wrapper select' );
-        if ( !selects.length || !evt.userMin || evt.trigger !== 'rangeSelectorButton' ) return;
-        const options = selects[0].querySelectorAll( 'option' );
-        const min = Number( evt.userMin <= evt.dataMin ?
-          evt.dataMin : evt.userMin );
-        const max = Number( evt.userMax > evt.dataMax ?
-          evt.dataMax : evt.userMax );
-
-        let minOptionVal,
-            minGap = Infinity,
-            maxGap = Infinity,
-            maxOptionVal;
-
-        options.forEach( opt => {
-          const nGap = Math.abs( Number( opt.value ) - min );
-          const xGap = Math.abs( Number( opt.value ) - max );
-          if ( nGap < minGap ) {
-            minGap = nGap;
-            minOptionVal = opt.value;
-          }
-          if ( xGap < maxGap ) {
-            maxGap = xGap;
-            maxOptionVal = opt.value;
-          }
-        } );
-
-        selects[0].value = minOptionVal;
-        selects[1].value = maxOptionVal;
-      }
     }
   },
-
   rangeSelector: {
     inputEnabled: false,
     floating: true,
@@ -57,7 +24,7 @@ const datetime = {
     enabled: true,
     allButtonsEnabled: true,
     buttonPosition: {
-      x: -42,
+      x: -60,
       y: -70
 
     },
@@ -119,8 +86,7 @@ const datetime = {
         },
         chartOptions: {
           chart: {
-            spacingBottom: 60,
-            marginTop: 165
+            spacingBottom: 60
           },
           xAxis: {
             labels: {
