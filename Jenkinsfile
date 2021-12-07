@@ -256,7 +256,7 @@ pipeline {
                     [$class: 'StringParameterValue', name: 'BASE_URL', value: "https://${env.CFGOV_HOSTNAME}/"],
                     [$class: 'StringParameterValue', name: 'GIT_TAG', value: env.GIT_COMMIT],
                 ]
-                def buildNumber = Jenkins.instance.getItem('cf.gov-functional-tests').getLastBuild().number
+                def buildNumber = Jenkins.instance.getItem('cf.gov-functional-tests').getLastBuild().getNumber()
                 postGitHubStatus("jenkins/functional-tests", "success", "Passed", "http://dev-jenkins/job/cf.gov-functional-tests/${buildNumber}/consoleFull")
             }
         }
@@ -283,7 +283,7 @@ pipeline {
                     postGitHubStatus("jenkins/functional-tests", "error", "Cancelled", env.RUN_DISPLAY_URL)
                     deployText = "failed" 
                 } else {
-                    def buildNumber = Jenkins.instance.getItem('cf.gov-functional-tests').getLastBuild().number
+                    def buildNumber = Jenkins.instance.getItem('cf.gov-functional-tests').getLastBuild().getNumber()
                     postGitHubStatus("jenkins/functional-tests", "failure", "Failed", "http://dev-jenkins/job/cf.gov-functional-tests/${buildNumber}/consoleFull")
                     deployText = "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed" 
                 }
