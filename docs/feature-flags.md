@@ -48,10 +48,10 @@ Most of consumerfinance.gov's templates are Jinja2. In these templates, two temp
 
 See [Enabling a flag](#enabling-a-flag) below for more on flag conditions.
 
-An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56):
+An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_includes/organisms/header.html#L28-L41):
 
 ```jinja
-{% if flag_enabled('BETA_NOTICE') and show_banner %}
+{% if flag_enabled('BETA_NOTICE') %}
 <div class="m-global-banner">
     <div class="wrapper
                 wrapper__match-content
@@ -85,7 +85,7 @@ The `BETA_NOTICE` [Jinja2](#jinja2) example above when implemented with Django t
 {% load feature_flags %}
 
 {% flag_enabled 'BETA_NOTICE' as beta_flag %}
-{% if beta_flag and show_banner %}
+{% if beta_flag %}
 <div class="m-global-banner">
     <div class="wrapper
                 wrapper__match-content

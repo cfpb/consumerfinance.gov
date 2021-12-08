@@ -5,7 +5,7 @@
 #}
 <script>
 //<![CDATA[
-  var usasearch_config = { siteHandle: "{{ 'cfpb_es' if language == 'es' else 'cfpb' }}" };
+  var usasearch_config = { siteHandle: "{{ search_gov_affiliate() }}" };
 
   var script = document.createElement("script");
   script.type = "text/javascript";

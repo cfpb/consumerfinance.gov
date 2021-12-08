@@ -665,6 +665,8 @@ FLAGS = {
         ("environment is not", "production", True),
         ("parameter", "home_page_2021"),
     ],
+    # Whether robots.txt should block all robots, except for Search.gov.
+    "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
