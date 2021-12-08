@@ -316,8 +316,8 @@
 <p><code>flag_enabled('MY_FLAG')</code> will return <code>True</code> if the conditions under which <code>MY_FLAG</code> is enabled <strong>are</strong> met.</p>
 <p><code>flag_disabled('MY_FLAG')</code> will return <code>True</code> if the conditions under which <code>MY_FLAG</code> is enabled <strong>are not</strong> met.</p>
 <p>See <a href="#enabling-a-flag">Enabling a flag</a> below for more on flag conditions.</p>
-<p>An example is <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56">the <code>BETA_NOTICE flag</code> as implemented in <code>header.html</code></a>:</p>
-<pre class="highlight"><code class="language-jinja">{% if flag_enabled('BETA_NOTICE') and show_banner %}
+<p>An example is <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_includes/organisms/header.html#L28-L41">the <code>BETA_NOTICE flag</code> as implemented in <code>header.html</code></a>:</p>
+<pre class="highlight"><code class="language-jinja">{% if flag_enabled('BETA_NOTICE') %}
 &lt;div class=&quot;m-global-banner&quot;&gt;
     &lt;div class=&quot;wrapper
                 wrapper__match-content
@@ -343,7 +343,7 @@
 <pre class="highlight"><code class="language-django">{% load feature_flags %}
 
 {% flag_enabled 'BETA_NOTICE' as beta_flag %}
-{% if beta_flag and show_banner %}
+{% if beta_flag %}
 &lt;div class=&quot;m-global-banner&quot;&gt;
     &lt;div class=&quot;wrapper
                 wrapper__match-content
