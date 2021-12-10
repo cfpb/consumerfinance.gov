@@ -6,6 +6,8 @@ from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 
+from wagtail.images.forms import BaseImageForm
+
 from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
@@ -438,3 +440,14 @@ class SuggestionFeedbackForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SuggestionFeedbackForm, self).__init__(*args, **kwargs)
         self.fields['comment'].required = True
+
+
+class CFGOVImageForm(BaseImageForm):
+    """Override the default alt text form widget.
+
+    Our custom image alt text field has no character limit, which renders by
+    default as a multi-line textarea field. We instead want to use a
+    single-line text input field.
+    """
+    class Meta(BaseImageForm.Meta):
+        widgets = {**BaseImageForm.Meta.widgets, 'alt': forms.TextInput}

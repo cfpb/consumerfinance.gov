@@ -42,7 +42,8 @@ const stateModel = {
     programDependency: 'not-selected',
     programProgress: 'not-selected',
     repayMeterCohort: 'cohortRankByHighestDegree',
-    repayMeterCohortName: 'U.S.'
+    repayMeterCohortName: 'U.S.',
+    initialQuery: null
   },
   textVersions: {
     programType: {
@@ -236,8 +237,7 @@ const stateModel = {
     // In case this method gets used to update activeSection...
     if ( name === 'activeSection' ) {
       stateModel.setActiveSection( value );
-    }
-    if ( name === 'programLength' ) {
+    } else if ( name === 'programLength' ) {
       updateFinancial( 'other_programLength', value, true );
     }
     stateModel.values[name] = value;

@@ -4,7 +4,7 @@ import { getExpensesValue } from '../dispatchers/get-model-values.js';
 import numberToMoney from 'format-usd';
 import { selectorMatches } from '../util/other-utils';
 import { stringToNum } from '../util/number-utils.js';
-import { updateAffordingChart, updateUrlQueryString } from '../dispatchers/update-view.js';
+import { updateAffordingChart, updateCostOfBorrowingChart, updateUrlQueryString } from '../dispatchers/update-view.js';
 
 const expensesView = {
   _currentInput: null,
@@ -48,6 +48,9 @@ const expensesView = {
    */
   updateExpensesView: () => {
     expensesView._updateExpensesItems();
+    updateCostOfBorrowingChart();
+    updateAffordingChart();
+    updateUrlQueryString();
   }
 };
 

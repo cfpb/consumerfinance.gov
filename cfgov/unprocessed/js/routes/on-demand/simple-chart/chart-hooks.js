@@ -1,12 +1,12 @@
 /* eslint camelcase: [0] */
-const ccpi_quarterRange = {
+const cci_quarterRange = {
   'Mar 31': 'Jan-Mar',
   'Jun 30': 'Apr-Jun',
   'Sep 30': 'Jul-Sep',
   'Dec 31': 'Oct-Dec'
 };
 
-const ccpi_quarterMap = {
+const cci_quarterMap = {
   'Mar 31': 'Q1',
   'Jun 30': 'Q2',
   'Sep 30': 'Q3',
@@ -32,28 +32,28 @@ const hooks = {
     } ) );
   },
 
-  ccpi_quarterLabels() {
-    const { x, y, series } = this;
-    const [ quarter, year ] = hooks.ccpi_dateToQuarter( x );
-    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Index value: ${ Math.round( y * 10 ) / 10 }`;
+  getDateString( x ) {
+    return new Date( x ).toLocaleDateString(
+      'en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }
+    );
   },
 
-  ccpi_shareLabels() {
+  cci_quarterLabels() {
     const { x, y, series } = this;
-    const [ quarter, year ] = hooks.ccpi_dateToQuarter( x );
-    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Share: ${ Math.round( y * 10 ) / 10 }%`;
+    const titleObj = series.yAxis.axisTitle;
+    const title = titleObj ? titleObj.textStr + ': ' : '';
+    const [ quarter, year ] = hooks.cci_dateToQuarter( x );
+    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>${ title }${ Math.round( y * 10 ) / 10 }`;
   },
 
-  ccpi_dateToQuarter( x ) {
-    const d = new Date( x ).toLocaleString(
-      'en-US', { dateStyle: 'medium', timeZone: 'UTC' }
-    ).split( ', ' );
-    const quarter = `${ ccpi_quarterMap[d[0]] }: ${ ccpi_quarterRange[d[0]] }`;
+  cci_dateToQuarter( x ) {
+    const d = hooks.getDateString( x ).split( ', ' );
+    const quarter = `${ cci_quarterMap[d[0]] }: ${ cci_quarterRange[d[0]] }`;
     const year = d[1];
     return [ quarter, year ];
   },
 
-  ccpi_tickPositioner() {
+  cci_tickPositioner() {
     const { series, min, max } = this;
     if ( ( max - min ) / msYear > 5 ) return this.tickPositions;
     let ticks = series[0].xData.filter( v => v >= min && v <= max );
@@ -63,16 +63,15 @@ const hooks = {
     return ticks;
   },
 
-  ccpi_xAxisLabels() {
+  cci_xAxisLabels() {
     const { min, max } = this.chart.xAxis[0];
     const d = new Date( this.value );
     if ( ( max - min ) / msYear > 5 ) {
       return d.getFullYear() + 1;
     }
-    const dSplit = d.toLocaleString(
-      'en-US', { dateStyle: 'medium', timeZone: 'UTC' }
-    ).split( ', ' );
-    return `${ ccpi_quarterMap[dSplit[0]] }<br/>${ dSplit[1] }`;
+
+    const dSplit = hooks.getDateString( d ).split( ', ' );
+    return `${ cci_quarterMap[dSplit[0]] }<br/>${ dSplit[1] }`;
   },
 
   enforcement_yAxisLabelsFormatter() {
@@ -84,7 +83,7 @@ const hooks = {
   },
 
   enforcement_reliefBarTooltipFormatter() {
-    return `<b>${ this.x }</b><br/>Total relief: <b>$${ this.y.toLocaleString() }</b>`;
+    return `<b>${ this.x }</b><br/>Total relief: <b>$${ this.y.toLocaleDateString() }</b>`;
   }
 };
 

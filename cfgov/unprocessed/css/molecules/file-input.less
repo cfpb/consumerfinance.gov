@@ -1,0 +1,58 @@
+.m-form-field__file-input {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+
+    /*
+      Labels have a max-width set in cf-core,
+      so this is needed to match the overlaid input width.
+    */
+    max-width: 41.875rem;
+
+    // Hide and size native input on top of custom input.
+    label {
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+
+        height: 35px;
+        cursor: pointer;
+
+        & input {
+            opacity: 0;
+        }
+    }
+
+    .a-btn {
+        position: relative;
+        z-index: 1;
+
+        &__flush-right {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    label,
+    .a-text-input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    // Fall back to default file upload if JS is disabled.
+    .no-js & {
+        & label {
+            position: static;
+            & input {
+                opacity: 1;
+            }
+        }
+
+        .a-btn,
+        .a-text-input {
+            display: none;
+        }
+    }
+
+}
