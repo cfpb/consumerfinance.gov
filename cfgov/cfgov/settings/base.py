@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     "wagtailmedia",
     "django_elasticsearch_dsl",
     "corsheaders",
+    "login",
 
     # Satellites
     "ccdb5_ui",
@@ -307,8 +308,8 @@ WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
 WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
 
-WAGTAIL_USER_CREATION_FORM = "v1.auth_forms.UserCreationForm"
-WAGTAIL_USER_EDIT_FORM = "v1.auth_forms.UserEditForm"
+WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
+WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
 
 # LEGACY APPS

@@ -3,7 +3,6 @@ from functools import partial
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.urls import include, path, re_path
@@ -32,11 +31,6 @@ from housing_counselor.views import (
 )
 from legacy.views.complaint import ComplaintLandingView
 from regulations3k.views import redirect_eregs
-from v1.auth_forms import CFGOVPasswordChangeForm
-from v1.views import (
-    change_password, check_permissions, login_with_lockout,
-    password_reset_confirm
-)
 from v1.views.documents import DocumentServeView
 
 
@@ -598,92 +592,11 @@ category_redirects = [
 urlpatterns = urlpatterns + category_redirects
 
 if settings.ALLOW_ADMIN_URL:
-    # If SAML2 auth is enabled, /login will redirect to /saml2/login,
-    # which in turn will redirect to the configured identity provider.
-    if settings.SAML_AUTH:
-        auth_patterns = [
-            re_path(r'saml2/', include('djangosaml2.urls')),
-            re_path(
-                r'^login/$',
-                RedirectView.as_view(
-                    url='/saml2/login/',
-                    query_string=True
-                ),
-                name='cfpb_login'
-            ),
-            re_path(
-                r'^logout/$',
-                RedirectView.as_view(
-                    url='/saml2/logout/',
-                    query_string=True,
-                ),
-                name='logout'
-            ),
+    patterns = [
+        # Include our login URL patterns
+        re_path(r'', include('login.urls')),
 
-            # For backup/admin/emergency auth, a pure Django login is still
-            # provided.
-            re_path(r'^django_login/$', login_with_lockout, name='cfpb_login'),
-        ]
-    else:
-        auth_patterns = [
-            re_path(r'^login/$', login_with_lockout, name='cfpb_login'),
-            re_path(
-                r'^logout/$',
-                auth_views.LogoutView.as_view(),
-                name='logout'
-            ),
-        ]
-
-    patterns = auth_patterns + [
-        re_path(
-            r'^login/check_permissions/$',
-            check_permissions,
-            name='check_permissions'
-        ),
-        re_path(
-            r'^admin/login/$',
-            RedirectView.as_view(
-                url='/login/',
-                permanent=True,
-                query_string=True
-            )
-        ),
-        re_path(
-            r'^django-admin/login/$',
-            RedirectView.as_view(
-                url='/login/',
-                permanent=True,
-                query_string=True
-            )
-        ),
-        re_path(
-            r'^django-admin/password_change',
-            change_password,
-            name='django_admin_account_change_password'
-        ),
         re_path(r'^django-admin/', admin.site.urls),
-
-        # Override Django and Wagtail password views with our password policy
-        re_path(r'^admin/password_reset/', include([
-            re_path(r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',  # noqa: E501
-                password_reset_confirm,
-                name='password_reset_confirm')
-        ])),
-        re_path(
-            r'^django-admin/password_change',
-            auth_views.PasswordChangeView.as_view(),
-            {'password_change_form': CFGOVPasswordChangeForm}
-        ),
-        re_path(
-            r'^password/change/done/$',
-            auth_views.PasswordChangeDoneView.as_view(),
-            name='password_change_done'
-        ),
-        re_path(
-            r'^admin/account/change_password/$',
-            change_password,
-            name='wagtailadmin_account_change_password'
-        ),
         re_path(r'^admin/autocomplete/', include(autocomplete_admin_urls)),
         re_path(r'^admin/', include(wagtailadmin_urls)),
     ]
