@@ -1,0 +1,36 @@
+{% extends 'layout-full.html' %}
+
+{% block title %}
+  Search the Consumer Complaint Database | Consumer Financial Protection Bureau
+{% endblock %}
+
+{% block css %}
+    {{ super() }}
+{% endblock %}
+
+{% block desc %}
+    The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response.
+{% endblock %}
+
+{% block content_main_modifiers -%}
+  {{ super() }} ccdb-landing
+{%- endblock %}
+
+{% block content_main %}
+  <div id="ccdb-ui-root"></div>
+{% endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function() {
+          var s = [
+            'https://files.consumerfinance.gov/ccdb/metadata.js',
+            '{{ static('apps/ccdb-search/js/main.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

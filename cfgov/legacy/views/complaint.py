@@ -14,7 +14,7 @@ class ComplaintLandingView(TemplateView):
     It also displays a warning banner if a trouble feature flag has been set.
     """
 
-    template_name = 'complaint/complaint-landing.html'
+    template_name = 'ccdb-complaint/complaint-landing.html'
 
     def get_context_data(self, **kwargs):
         context = super(ComplaintLandingView, self).get_context_data(**kwargs)
@@ -22,5 +22,18 @@ class ComplaintLandingView(TemplateView):
         context.update({
             'technical_issues': flag_enabled('CCDB_TECHNICAL_ISSUES'),
         })
+
+        return context
+
+class CCDBSearchView(TemplateView):
+    """Consumer Complaint Database search page view.
+
+    This view renders the template for the CCDB search application page.
+    """
+
+    template_name = 'ccdb-complaint/ccdb-search.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CCDBSearchView, self).get_context_data(**kwargs)
 
         return context

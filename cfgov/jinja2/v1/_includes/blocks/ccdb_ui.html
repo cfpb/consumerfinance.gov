@@ -1,0 +1,11 @@
+<div id="ccdb-ui-root"></div>
+
+<div class="js-is-hidden">
+  {% import 'molecules/notification.html' as notification with context %}
+    {{ notification.render(
+      'error',
+      true,
+      'This tool is not supported in your browser.
+       Please try a newer browser or confirm that JavaScript is enabled.'
+    ) }}
+</div>
