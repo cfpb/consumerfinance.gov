@@ -1,6 +1,6 @@
-# Search
+# Page Search
 
-For custom searches on consumerfinance.gov, we use Elasticsearch and the [django-elasticsearch-dsl](https://django-elasticsearch-dsl.readthedocs.io/en/latest/) library, which is a lightweight wrapper around [elasticsearch-dsl](https://elasticsearch-dsl.readthedocs.io/en/latest/).
+For page searches on consumerfinance.gov, we use Elasticsearch and the [django-elasticsearch-dsl](https://django-elasticsearch-dsl.readthedocs.io/en/latest/) library, which is a lightweight wrapper around [elasticsearch-dsl](https://elasticsearch-dsl.readthedocs.io/en/latest/).
 
 - [Indexing](#indexing)
     - [Elasticsearch index configuration](#elasticsearch-index-configuration)
