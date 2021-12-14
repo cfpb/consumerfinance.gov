@@ -21,7 +21,7 @@ pipeline {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch'
         // Elasticsearch image tag should be the same as that defined in Dockerfile
-        IMAGE_ES_TAG = '7.10.1'
+        IMAGE_ES_TAG = '7.16.1'
         // Only Python image tag changes for every build
         PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
