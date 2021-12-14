@@ -113,6 +113,11 @@ except (TypeError, ValueError):
 #   SAML2 identity provider.
 # - SAML_METADATA_URL: The remote URL of the identity provider's metadata for
 #   this service provider.
+#
+# See the djangosaml2 documentation at
+# https://djangosaml2.readthedocs.io/contents/setup.html#configuration
+# and the pySAML2 documentation at https://pysaml2.readthedocs.io/
+# for more details about the configuration below.
 SAML_AUTH = os.environ.get("SAML_AUTH") == "True"
 if SAML_AUTH:
     # Update built-in Django settings for SAML authetnication
@@ -134,7 +139,7 @@ if SAML_AUTH:
     SAML_CREATE_UNKNOWN_USER = False
 
     # URL lookups
-    SAML_ROOT_URL = os.environ.get("SAML_ROOT_URL")
+    SAML_ROOT_URL = os.environ["SAML_ROOT_URL"]
     ACS_URL = format_lazy(
         '{root_url}{acs_path}',
         root_url=SAML_ROOT_URL,
@@ -146,9 +151,9 @@ if SAML_AUTH:
     SAML_CONFIG = {
         'debug': 1,
         'xmlsec_binary': '/usr/bin/xmlsec1',
-        'entityid': os.environ.get("SAML_ENTITY_ID"),
+        'entityid': os.environ["SAML_ENTITY_ID"],
         'metadata': {
-            'remote': [{"url": os.environ.get("SAML_METADATA_URL")}],
+            'remote': [{"url": os.environ["SAML_METADATA_URL"]}],
         },
         'service': {
             'sp': {
