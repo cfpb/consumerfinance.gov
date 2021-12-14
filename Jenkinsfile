@@ -100,7 +100,7 @@ pipeline {
                     ).split()
 
                     for (int i = 0; i < sourceChanged.size(); i++) {
-                        if (sourceChanged[i].contains("docker/elasticsearch/7/Dockerfile")) {
+                        if (sourceChanged[i].contains("docker/elasticsearch/Dockerfile")) {
                             IS_ES_IMAGE_UPDATED = 'true'
                         }
                     }
@@ -170,7 +170,7 @@ pipeline {
                         if (IS_ES_IMAGE_UPDATED == 'true') {
                             docker.build(
                                 env.IMAGE_NAME_ES_LOCAL,
-                                '-f ./docker/elasticsearch/7/Dockerfile .'
+                                '-f ./docker/elasticsearch/Dockerfile .'
                             )
                         }
                     }
