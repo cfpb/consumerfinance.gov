@@ -21,7 +21,8 @@ nav:
     - Caching: caching.md
     - Feature Flags: feature-flags.md
     - Filterable Lists: filterable-lists.md
-    - Search: search.md
+    - Page Search: page-search.md
+    - Site Search: site-search.md
     - Translation: translation.md
 - Testing:
     - JavaScript Unit Testing: javascript-unit-tests.md
