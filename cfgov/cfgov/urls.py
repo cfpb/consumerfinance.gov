@@ -69,7 +69,9 @@ def flagged_wagtail_only_view(flag_name, regex_path, url_name=None):
 
 
 def empty_200_response(request, *args, **kwargs):
-    return HttpResponse(status=200)
+    response = HttpResponse(status=200)
+    response["Cache-Control"] = "no-store"
+    return response
 
 
 urlpatterns = [
