@@ -25,6 +25,7 @@ class ComplaintLandingView(TemplateView):
 
         return context
 
+
 class CCDBSearchView(TemplateView):
     """Consumer Complaint Database search page view.
 

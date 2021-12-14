@@ -233,6 +233,7 @@ class RAFToolBlock(blocks.StaticBlock):
     class Media:
         js = ['erap/main.js']
 
+
 class RAFTBlock(blocks.StructBlock):
     county_threshold = blocks.IntegerBlock(
         required=False,
@@ -248,6 +249,7 @@ class RAFTBlock(blocks.StructBlock):
 
     class Media:
         js = ['erap/main.js']
+
 
 class CCDBToolBlock(blocks.StaticBlock):
     class Meta:
