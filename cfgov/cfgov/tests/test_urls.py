@@ -153,4 +153,4 @@ class TestBetaRefreshEndpoint(TestCase):
     @override_settings(FLAGS={'BETA_EXTERNAL_TESTING': [('boolean', True)]})
     def test_beta_testing_endpoint_is_no_cache_when_enabled(self):
         response = self.client.get('/beta_external_testing/')
-        self.assertEqual(response["Cache-Control"], "no-store")
+        self.assertEqual(response["Akamai-Cache-Control"], "no-store")

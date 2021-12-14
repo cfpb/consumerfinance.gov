@@ -69,9 +69,7 @@ def flagged_wagtail_only_view(flag_name, regex_path, url_name=None):
 
 
 def empty_200_response(request, *args, **kwargs):
-    response = HttpResponse(status=200)
-    response["Cache-Control"] = "no-store"
-    return response
+    return HttpResponse(status=200)
 
 
 urlpatterns = [
@@ -461,7 +459,8 @@ urlpatterns = [
     flagged_re_path(
         'BETA_EXTERNAL_TESTING',
         r'^beta_external_testing/',
-        empty_200_response),
+        akamai_no_store(empty_200_response)
+    ),
 ]
 
 # Ask CFPB category and subcategory redirects
