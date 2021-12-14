@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Other Front-end Testing - consumerfinance.gov</title>
+  <title>Site Search - consumerfinance.gov</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Other Front-end Testing";
-    var mkdocs_page_input_path = "other-front-end-testing.md";
+    var mkdocs_page_name = "Site Search";
+    var mkdocs_page_input_path = "site-search.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -133,9 +133,14 @@
                     
     <a class="" href="../page-search/">Page Search</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../site-search/">Site Search</a>
+    <a class="current" href="./">Site Search</a>
+    <ul class="subnav">
+            
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -164,24 +169,9 @@
                     
     <a class="" href="../profiling-django/">Profiling Django</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Other Front-end Testing</a>
-    <ul class="subnav">
-            
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#performance-testing">Performance testing</a></li>
-        
-            <li><a class="toctree-l4" href="#source-code-linting">Source code linting</a></li>
-        
-            <li><a class="toctree-l4" href="#cross-browser-testing">Cross browser testing</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../other-front-end-testing/">Other Front-end Testing</a>
                 </li>
     </ul>
 	    </li>
@@ -258,14 +248,14 @@
     
       
         
-          <li>Testing &raquo;</li>
+          <li>Supporting Features &raquo;</li>
         
       
     
-    <li>Other Front-end Testing</li>
+    <li>Site Search</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/other-front-end-testing.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/site-search.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -275,61 +265,36 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="other-front-end-testing">Other Front-end Testing<a class="headerlink" href="#other-front-end-testing" title="Permanent link">¶</a></h1>
-<h2 id="performance-testing">Performance testing<a class="headerlink" href="#performance-testing" title="Permanent link">¶</a></h2>
-<p>To audit if the site complies with performance best practices and guidelines,
-<a href="https://github.com/GoogleChrome/lighthouse">Google's Lighthouse</a> can be run
-from Google Chrome by opening the developer console and going to the Lighthouse
-tab to run a performance audit.</p>
-<p>We also have an automated task that generates a lighthouse report every night at
-<a href="https://cfpb.github.io/cfgov-lighthouse/">https://cfpb.github.io/cfgov-lighthouse/</a>
-(<a href="https://cfpb.github.io/cfgov-lighthouse/">repository</a>).</p>
-<h2 id="source-code-linting">Source code linting<a class="headerlink" href="#source-code-linting" title="Permanent link">¶</a></h2>
-<p>The default test task includes linting of the JavaScript source, build,
-and test files.
-Use the <code>gulp lint</code> command from the command-line to run the ESLint linter,
-which checks the JavaScript against the rules configured in <code>.eslintrc</code>.
-<a href="https://eslint.org/docs/rules/">See the ESLint docs</a>
-for detailed rule descriptions.</p>
-<p>There are a number of options to the command:</p>
+                <h1 id="site-search">Site Search<a class="headerlink" href="#site-search" title="Permanent link">¶</a></h1>
+<p>Global site search of consumerfinance.gov is implemented using
+<a href="https://search.gov/">Search.gov</a>.</p>
+<p>The search box in the site header is linked to this global site search.
+Searches using this method return results at the <code>search.consumerfinance.gov</code>
+subdomain. This subdomain is hosted by Search.gov.</p>
+<p>We maintain several independent search indexes on Search.gov for various purposes:</p>
 <ul>
-<li><code>gulp lint:build</code>: Lint only the gulp build scripts.</li>
-<li><code>gulp lint:tests</code>: Lint only the test scripts.</li>
-<li><code>gulp lint:scripts</code>: Lint only the project source scripts.</li>
-<li><code>--fix</code>: Add this flag (like <code>gulp lint --fix</code> or <code>gulp lint:build --fix</code>).
-   to auto-fix some errors, where ESLint has support to do so.</li>
-<li><code>--path</code>: Add this flag to specify a file to lint,
-   rather than all files. Path is relative to the project root,
-   such as <code>gulp lint --path=cfgov/unprocessed/js/modules/Analytics.js</code>.</li>
+<li><code>cfpb</code>: English-language search for
+  <a href="https://www.consumerfinance.gov">www.consumerfinance.gov</a>.</li>
+<li><code>cfpb_es</code>: Spanish-language search for pages under
+  <a href="https://www.consumerfinance.gov/es/">www.consumerfinance.gov/es/</a>.</li>
+<li><code>cfpb_beta</code>: An alternate English-language search index for
+  <a href="https://beta.consumerfinance.gov">beta.consumerfinance.gov</a>.</li>
+<li><code>cfpb_beta_es</code>: An alternate Spanish-language search index for
+  <a href="https://beta.consumerfinance.gov/es/">beta.consumerfinance.gov/es/</a>.</li>
 </ul>
-<h2 id="cross-browser-testing">Cross browser testing<a class="headerlink" href="#cross-browser-testing" title="Permanent link">¶</a></h2>
-<h3 id="sauce-labs">Sauce Labs<a class="headerlink" href="#sauce-labs" title="Permanent link">¶</a></h3>
-<p>We use <a href="https://saucelabs.com">https://saucelabs.com</a> to test the site across browsers.
-After logging in, the production site URLs can be tested via
-<code>Live</code> &gt; <code>Cross Browser</code> in the sidebar.</p>
-<p>To test changes from <code>localhost</code> before they make it to production,
-the Sauce Connect Proxy can be used. See more info on the
-<a href="https://docs.saucelabs.com/secure-connections/sauce-connect/installation/">Sauce Labs documentation site</a>.</p>
-<h3 id="ios-simulator">iOS Simulator<a class="headerlink" href="#ios-simulator" title="Permanent link">¶</a></h3>
-<p>While it's possible to check iOS devices in Sauce Labs,
-the JavaScript developer console will not be available. Therefore, it may be
-helpful to instead use the iOS Simulator included inside Xcode.
-To use the simulator with a developer console, perform the following:</p>
-<ol>
-<li>Find the Xcode application on your computer.</li>
-<li>Right-click on the application and select <code>Show Package Contents</code>.</li>
-<li>Find and open the iOS Simulator at
-   <code>Contents</code> &gt; <code>Developer</code> &gt; <code>Applications</code> &gt; <code>Simulator</code>.</li>
-<li>Open mobile Safari and navigate to the page you want to test out.</li>
-<li>Now, outside of the iOS Simulator,
-   navigate to and open the desktop Safari application.</li>
-<li>Ensure the developer menu is shown by checking the box at
-   <code>Safari</code> &gt; <code>Preferences…</code> &gt; <code>Advanced</code> &gt; <code>Show Develop menu in menu bar</code>.</li>
-<li>Open the <code>Develop</code> menu in desktop Safari and
-   there should be a <code>Simulator</code> option that when opened will show any
-   JavaScript console output that's coming from the page you're visiting in the
-   iOS Simulator.</li>
-</ol>
+<p>These search indexes are hardcoded depending on the page being viewed.</p>
+<p>Configuration of site search on Search.gov requires an approved login to its
+admin console. The <a href="https://search.gov/manual/index.html">Search.gov Help Manual</a>
+documents the various configuration options used on our indexes, for example
+text-based "best bets" and our custom visual design.</p>
+<p>The website base page template includes
+<a href="https://search.gov/manual/code.html">the necessary Search.gov code snippets</a>
+required for searching and indexing of site content. Search.gov also makes use of
+the website
+<a href="https://www.consumerfinance.gov/robots.txt">robots.txt</a>
+and
+<a href="https://www.consumerfinance.gov/sitemap.xml">sitemap.xml</a>
+files.</p>
               
             </div>
           </div>
@@ -337,10 +302,10 @@ To use the simulator with a developer console, perform the following:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../branching-merging/" class="btn btn-neutral float-right" title="Branching and Merging">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../translation/" class="btn btn-neutral float-right" title="Translation">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../profiling-django/" class="btn btn-neutral" title="Profiling Django"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../page-search/" class="btn btn-neutral" title="Page Search"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -368,10 +333,10 @@ To use the simulator with a developer console, perform the following:</p>
           <a href="https://github.com/cfpb/consumerfinance.gov/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../profiling-django/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../page-search/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../branching-merging/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../translation/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

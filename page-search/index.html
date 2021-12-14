@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Search - consumerfinance.gov</title>
+  <title>Page Search - consumerfinance.gov</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Search";
-    var mkdocs_page_input_path = "search.md";
+    var mkdocs_page_name = "Page Search";
+    var mkdocs_page_input_path = "page-search.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -131,7 +131,7 @@
                 </li>
                 <li class=" current">
                     
-    <a class="current" href="./">Search</a>
+    <a class="current" href="./">Page Search</a>
     <ul class="subnav">
             
     
@@ -147,6 +147,10 @@
     
 
     </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../site-search/">Site Search</a>
                 </li>
                 <li class="">
                     
@@ -258,10 +262,10 @@
         
       
     
-    <li>Search</li>
+    <li>Page Search</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/search.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/page-search.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -271,8 +275,8 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="search">Search<a class="headerlink" href="#search" title="Permanent link">¶</a></h1>
-<p>For custom searches on consumerfinance.gov, we use Elasticsearch and the <a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/">django-elasticsearch-dsl</a> library, which is a lightweight wrapper around <a href="https://elasticsearch-dsl.readthedocs.io/en/latest/">elasticsearch-dsl</a>.</p>
+                <h1 id="page-search">Page Search<a class="headerlink" href="#page-search" title="Permanent link">¶</a></h1>
+<p>For page searches on consumerfinance.gov, we use Elasticsearch and the <a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/">django-elasticsearch-dsl</a> library, which is a lightweight wrapper around <a href="https://elasticsearch-dsl.readthedocs.io/en/latest/">elasticsearch-dsl</a>.</p>
 <ul>
 <li><a href="#indexing">Indexing</a><ul>
 <li><a href="#elasticsearch-index-configuration">Elasticsearch index configuration</a></li>
@@ -429,7 +433,7 @@ search.suggest('suggestion', search_term, term={'field': 'text'})</code></pre>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../translation/" class="btn btn-neutral float-right" title="Translation">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../site-search/" class="btn btn-neutral float-right" title="Site Search">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../filterable-lists/" class="btn btn-neutral" title="Filterable Lists"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -463,13 +467,13 @@ search.suggest('suggestion', search_term, term={'field': 'text'})</code></pre>
         <span><a href="../filterable-lists/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../translation/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../site-search/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
     <script>var base_url = '..';</script>
     <script src="../js/theme.js" defer></script>
-      <script src="main.js" defer></script>
+      <script src="../search/main.js" defer></script>
 
 </body>
 </html>
