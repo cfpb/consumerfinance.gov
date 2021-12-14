@@ -249,14 +249,3 @@ class RAFTBlock(blocks.StructBlock):
 
     class Media:
         js = ['erap/main.js']
-
-
-class CCDBToolBlock(blocks.StaticBlock):
-    class Meta:
-        icon = 'cog'
-        label = 'Consumer Complaint Database Tool (CCDB)'
-        admin_text = '{label} has no options to configure'.format(label=label)
-        template = '_includes/blocks/ccdb_ui.html'
-
-    class Media:
-        js = ['../../../ccdb-ui/main.js']
