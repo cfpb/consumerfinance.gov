@@ -6,6 +6,7 @@
 
 {% block css %}
     {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/ccdb-search/css/main.css') }}">
 {% endblock %}
 
 {% block desc %}
@@ -13,7 +14,7 @@
 {% endblock %}
 
 {% block content_main_modifiers -%}
-  {{ super() }} ccdb-landing
+  {{ super() }} ccdb-search
 {%- endblock %}
 
 {% block content_main %}
