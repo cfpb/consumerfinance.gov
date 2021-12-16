@@ -30,7 +30,7 @@ from core.views import (
 from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
-from legacy.views.complaint import ComplaintLandingView, CCDBSearchView
+from legacy.views.complaint import CCDBSearchView, ComplaintLandingView
 from regulations3k.views import redirect_eregs
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
