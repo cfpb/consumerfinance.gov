@@ -33,6 +33,7 @@ class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(
             get_category_children(NewsroomLandingPage.filterable_categories),
             [
+                'consumer-advisories',
                 'directors-statement',
                 'op-ed',
                 'press-release',

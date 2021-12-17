@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
+from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -13,6 +14,7 @@ from wagtail.contrib.sitemaps.views import sitemap
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
+from flags.urls import flagged_re_path
 from flags.views import FlaggedTemplateView
 from wagtailautocomplete.urls.admin import (
     urlpatterns as autocomplete_admin_urls
@@ -36,16 +38,6 @@ from v1.views import (
     password_reset_confirm
 )
 from v1.views.documents import DocumentServeView
-
-
-try:
-    from django.urls import include, re_path
-
-    from flags.urls import flagged_re_path
-except ImportError:
-    from django.conf.urls import include, url as re_path
-
-    from flags.urls import flagged_url as flagged_re_path
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -433,7 +425,11 @@ urlpatterns = [
             'privacy'),
             namespace='privacy')),
 
-    re_path(r'^sitemap\.xml$', akamai_no_store(sitemap)),
+    path('robots.txt', TemplateView.as_view(
+        template_name='robots.txt',
+        content_type='text/plain',
+    )),
+    re_path(r'^sitemap\.xml$', akamai_no_store(sitemap), name='sitemap'),
 
     re_path(
         r'^consumer-tools/educator-tools/youth-financial-education/',
@@ -463,7 +459,8 @@ urlpatterns = [
     flagged_re_path(
         'BETA_EXTERNAL_TESTING',
         r'^beta_external_testing/',
-        empty_200_response),
+        akamai_no_store(empty_200_response)
+    ),
 ]
 
 # Ask CFPB category and subcategory redirects

@@ -463,6 +463,7 @@ CSP_SCRIPT_SRC = (
     "js-agent.newrelic.com",
     "dnn506yrbagrg.cloudfront.net",
     "bam.nr-data.net",
+    "gov-bam.nr-data.net",
     "*.youtube.com",
     "*.ytimg.com",
     "trk.cetrk.com",
@@ -556,6 +557,7 @@ CSP_CONNECT_SRC = (
     "*.tiles.mapbox.com",
     "api.mapbox.com",
     "bam.nr-data.net",
+    "gov-bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",
     "n2.mouseflow.com",
@@ -659,6 +661,8 @@ FLAGS = {
     "ASK_SURVEY_INTERCEPT": [],
     # Hide archive filter options in the filterable UI
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
+    # Whether robots.txt should block all robots, except for Search.gov.
+    "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
