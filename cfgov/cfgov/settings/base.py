@@ -105,7 +105,6 @@ INSTALLED_APPS = (
     "corsheaders",
 
     # Satellites
-    "ccdb5_ui",
     "complaint_search",
     "countylimits",
     "crtool",
