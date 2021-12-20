@@ -21,7 +21,7 @@ pipeline {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch'
         // Elasticsearch image tag should be the same as that defined in Dockerfile
-        IMAGE_ES_TAG = '7.10.1'
+        IMAGE_ES_TAG = '7.16.1'
         // Only Python image tag changes for every build
         PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
@@ -100,7 +100,7 @@ pipeline {
                     ).split()
 
                     for (int i = 0; i < sourceChanged.size(); i++) {
-                        if (sourceChanged[i].contains("docker/elasticsearch/7/Dockerfile")) {
+                        if (sourceChanged[i].contains("docker/elasticsearch/Dockerfile")) {
                             IS_ES_IMAGE_UPDATED = 'true'
                         }
                     }
@@ -170,7 +170,7 @@ pipeline {
                         if (IS_ES_IMAGE_UPDATED == 'true') {
                             docker.build(
                                 env.IMAGE_NAME_ES_LOCAL,
-                                '-f ./docker/elasticsearch/7/Dockerfile .'
+                                '-f ./docker/elasticsearch/Dockerfile .'
                             )
                         }
                     }

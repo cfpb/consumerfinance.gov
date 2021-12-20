@@ -461,7 +461,8 @@ urlpatterns = [
     flagged_re_path(
         'BETA_EXTERNAL_TESTING',
         r'^beta_external_testing/',
-        empty_200_response),
+        akamai_no_store(empty_200_response)
+    ),
 ]
 
 # Ask CFPB category and subcategory redirects
