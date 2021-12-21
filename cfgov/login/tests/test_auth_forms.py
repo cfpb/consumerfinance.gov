@@ -3,10 +3,11 @@ from unittest.mock import patch
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from v1.auth_forms import UserCreationForm, UserEditForm
+from login.forms import CFGOVPasswordChangeForm, UserCreationForm, UserEditForm
+from login.tests.test_password_policy import TestWithUser
 
 
-@patch('v1.auth_forms.send_password_reset_email')
+@patch('login.forms.send_password_reset_email')
 class UserCreationFormTestCase(TestCase):
     def setUp(self):
         self.username = self.__class__.__name__
@@ -92,3 +93,19 @@ class UserEditFormTestCase(TestCase):
                 'users with duplicate emails are allowed, '
                 'just not when creating or editing via for '
             )
+
+
+class PasswordValidationMixinTestCase(TestWithUser):
+
+    def test_edit_password(self):
+        user = self.get_user(last_password='testing')
+        form = CFGOVPasswordChangeForm(
+            data={
+                'old_password': 'testing',
+                'new_password1': 'Testing12345!',
+                'new_password2': 'Testing12345!',
+            },
+            user=user
+        )
+        form.is_valid()
+        self.assertTrue(form.is_valid())
