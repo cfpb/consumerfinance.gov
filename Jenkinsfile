@@ -21,7 +21,7 @@ pipeline {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch'
         // Elasticsearch image tag should be the same as that defined in Dockerfile
-        IMAGE_ES_TAG = '7.16.1'
+        IMAGE_ES_TAG = '7.16.2'
         // Only Python image tag changes for every build
         PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
@@ -279,10 +279,10 @@ pipeline {
                 if (env.DEPLOY_SUCCESS == false) {
                     postGitHubStatus("jenkins/deploy", "failure", "Failed", env.RUN_DISPLAY_URL)
                     postGitHubStatus("jenkins/functional-tests", "error", "Cancelled", env.RUN_DISPLAY_URL)
-                    deployText = "failed" 
+                    deployText = "failed"
                 } else {
                     postGitHubStatus("jenkins/functional-tests", "failure", "Failed", env.RUN_DISPLAY_URL)
-                    deployText = "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed" 
+                    deployText = "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed"
                 }
 
                 notify("${NOTIFICATION_CHANNEL}",
