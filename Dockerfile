@@ -35,19 +35,37 @@ RUN yum -y install \
         postgresql10 \
         which \
         gettext \
-        ${SCL_PYTHON_VERSION} && \
+        openssl-devel \
+        bzip2-devel \
+        libffi-devel \
+        zlib-devel \
+        wget \
+        make && \
     yum clean all && rm -rf /var/cache/yum && \
-    echo "source scl_source enable ${SCL_PYTHON_VERSION}" > /etc/profile.d/enable_scl_python.sh && \
-    source /etc/profile && \
-    pip install --no-cache-dir --upgrade pip setuptools wheel
+    wget  https://www.python.org/ftp/python/3.9.9/Python-3.9.9.tgz && \
+    tar xzf Python-3.9.9.tgz && \
+    rm Python-3.9.9.tgz && \
+    cd Python-3.9.9 && \ 
+    ./configure --enable-optimizations && \
+    make altinstall
 
+RUN yum -y install python3-pip
+RUN pip3 install --no-cache-dir --upgrade pip setuptools wheel
+
+# RUN yum -y install gcc openssl-devel bzip2-devel libffi-devel zlib-devel wget make
+# RUN wget  https://www.python.org/ftp/python/3.9.9/Python-3.9.9.tgz && \
+#     tar xzf Python-3.9.9.tgz &&/
+#     rm Python-3.9.9.tgz 
+# RUN cd Python-3.9.9 &&\ 
+#     ./configure --enable-optimizations && \
+#     make altinstall
 # Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
 # NOTE: MUST be after pip upgrade. Build fails otherwise due to bug in old pip.
 ENV PIP_NO_CACHE_DIR true
 
 # Install python requirements
 COPY requirements requirements
-RUN pip install -r requirements/local.txt -r requirements/deployment.txt
+RUN pip3 install -r requirements/local.txt -r requirements/deployment.txt
 
 EXPOSE 8000
 
