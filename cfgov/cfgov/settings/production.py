@@ -149,7 +149,7 @@ if SAML_AUTH:
 
     # Configure PySAML2 for our identity provider
     SAML_CONFIG = {
-        'debug': 1,
+        'debug': DEBUG,
         'xmlsec_binary': '/usr/bin/xmlsec1',
         'entityid': os.environ["SAML_ENTITY_ID"],
         'metadata': {
