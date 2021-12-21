@@ -128,6 +128,7 @@ pipeline {
                                 IS_ES_IMAGE_UPDATED = 'false'
                             }
                         }
+                        echo "ES image is updated: ${IS_ES_IMAGE_UPDATED}"
                     }
 
                     withCredentials([
@@ -168,6 +169,7 @@ pipeline {
                             '--build-arg scl_python_version=rh-python36 --target cfgov-prod .'
                         )
                         if (IS_ES_IMAGE_UPDATED == 'true') {
+                            echo "Building ES image"
                             docker.build(
                                 env.IMAGE_NAME_ES_LOCAL,
                                 '-f ./docker/elasticsearch/Dockerfile .'
@@ -186,6 +188,7 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     scanImage(env.IMAGE_REPO, env.PYTHON_IMAGE_TAG)
                     if (IS_ES_IMAGE_UPDATED == 'true') {
+                        echo "Scanning ES image"
                         scanImage(env.IMAGE_ES_REPO, env.IMAGE_ES_TAG)
                     }
                 }
@@ -213,6 +216,7 @@ pipeline {
                     docker.withRegistry("${DOCKER_HUB_REGISTRY}", 'docker-hub-cfpb') {
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
                         if (IS_ES_IMAGE_UPDATED == 'true') {
+                            echo "Pushing ES image"
                             image.push()
                         }
                         env.CFGOV_ES_IMAGE = image.imageName()
