@@ -23,7 +23,7 @@ elasticsearch==7.10.1
 elasticsearch-dsl==7.3.0
 govdelivery==1.4.0
 Jinja2==2.11.3
-lxml==4.6.3
+lxml==4.6.5
 Markdown==3.2.1
 ntplib==0.3.4
 openpyxl==3.0.3
