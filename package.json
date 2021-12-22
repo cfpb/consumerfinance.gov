@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=14.x"
+    "node": ">=16.x"
   },
   "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead, ie >= 11",
   "dependencies": {
@@ -78,7 +78,8 @@
     "vinyl-named": "1.1.0",
     "webpack": "5.64.4",
     "webpack-stream": "7.0.0",
-    "xdr": "0.5.3"
+    "xdr": "0.5.3",
+    "yargs": "17.3.0"
   },
   "devDependencies": {
     "babel-jest": "27.4.2",
