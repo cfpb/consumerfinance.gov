@@ -7,14 +7,16 @@ from django.test import TestCase
 
 from wagtail.core.models import Site
 
+from login.email import create_request_for_email, send_password_reset_email
 from model_bakery import baker
-
-from v1.email import create_request_for_email, send_password_reset_email
 
 
 class CreateEmailRequestTestCase(TestCase):
     def test_no_sites_raises_exception(self):
-        with patch('v1.email.Site.objects.get', side_effect=Site.DoesNotExist):
+        with patch(
+            'login.email.Site.objects.get',
+            side_effect=Site.DoesNotExist
+        ):
             self.assertRaises(RuntimeError, create_request_for_email)
 
     def assertRequestMatches(self, request, hostname, port, is_secure):
@@ -29,13 +31,13 @@ class CreateEmailRequestTestCase(TestCase):
 
     def test_http_site(self):
         site = baker.prepare(Site, is_default_site=True, port=80)
-        with patch('v1.email.Site.objects.get', return_value=site):
+        with patch('login.email.Site.objects.get', return_value=site):
             request = create_request_for_email()
         self.assertRequestMatches(request, site.hostname, site.port, False)
 
     def test_https_site(self):
         site = baker.prepare(Site, is_default_site=True, port=443)
-        with patch('v1.email.Site.objects.get', return_value=site):
+        with patch('login.email.Site.objects.get', return_value=site):
             request = create_request_for_email()
         self.assertRequestMatches(request, site.hostname, site.port, True)
 
@@ -76,6 +78,6 @@ class SendEmailTestCase(TestCase):
         )
 
     def test_send_with_no_request(self):
-        with patch('v1.email.create_request_for_email') as p:
+        with patch('login.email.create_request_for_email') as p:
             send_password_reset_email(self.email)
             p.assert_called_once_with()
