@@ -78,8 +78,7 @@
     "vinyl-named": "1.1.0",
     "webpack": "5.64.4",
     "webpack-stream": "7.0.0",
-    "xdr": "0.5.3",
-    "yargs": "17.3.0"
+    "xdr": "0.5.3"
   },
   "devDependencies": {
     "babel-jest": "27.4.2",
