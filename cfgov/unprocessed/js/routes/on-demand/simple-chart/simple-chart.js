@@ -385,7 +385,7 @@ function makeChartOptions( data, target ) {
 
     defaultObj.tooltip.formatter = function() {
       const label = yAxisLabel ? yAxisLabel + ': ' : '';
-      return `<b>${ this.point.name }</b><br/>${ label }<b>${ Math.round( this.point.value * 10 ) / 10 }</b>`;
+      return `<span style="font-weight:600">${ this.point.name }</span><br/>${ label }<span style="font-weight:600">${ Math.round( this.point.value * 10 ) / 10 }</span>`;
     };
   } else {
     defaultObj.series = formattedSeries;

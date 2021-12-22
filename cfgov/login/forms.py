@@ -11,9 +11,10 @@ from django.utils import timezone
 
 from wagtail.users import forms as wagtailforms
 
-from .email import send_password_reset_email
-from .models import base
-from .util import password_policy
+import login.utils
+from login.email import send_password_reset_email
+
+from v1.models import base
 
 
 class PasswordValidationMixin(object):
@@ -27,9 +28,9 @@ class PasswordValidationMixin(object):
         if key1 in cleaned_data and key2 in cleaned_data:
             password = cleaned_data[key1]
 
-            password_policy._check_passwords(password,
-                                             user,
-                                             password_field=key1)
+            login.utils._check_passwords(password,
+                                         user,
+                                         password_field=key1)
         return cleaned_data
 
 
