@@ -288,7 +288,7 @@ urlpatterns = [
     re_path(
         r'^data-research/consumer-complaints/search/',
         CCDBSearchView.as_view(),
-        name='complaint-landing'
+        name='complaint-search'
     ),
 
     re_path(r'^oah-api/rates/', include('ratechecker.urls')),
