@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     "wagtailmedia",
     "django_elasticsearch_dsl",
     "corsheaders",
+    "login",
 
     # Satellites
     "complaint_search",
@@ -306,8 +307,8 @@ WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
 WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
 
-WAGTAIL_USER_CREATION_FORM = "v1.auth_forms.UserCreationForm"
-WAGTAIL_USER_EDIT_FORM = "v1.auth_forms.UserEditForm"
+WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
+WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
 
 # LEGACY APPS
@@ -404,6 +405,10 @@ LOGIN_FAIL_TIME_PERIOD = os.environ.get("LOGIN_FAIL_TIME_PERIOD", 120 * 60)
 LOGIN_FAILS_ALLOWED = os.environ.get("LOGIN_FAILS_ALLOWED", 5)
 LOGIN_REDIRECT_URL = "/admin/"
 LOGIN_URL = "/login/"
+
+# Initialize our SAML_AUTH variable as false. Our production settings will
+# override this based on the SAML_AUTH environment variable.
+SAML_AUTH = False
 
 # When we generate an full HTML version of the regulation, we want to
 # write it out somewhere. This is where.

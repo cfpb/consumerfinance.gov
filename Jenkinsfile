@@ -21,7 +21,7 @@ pipeline {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch'
         // Elasticsearch image tag should be the same as that defined in Dockerfile
-        IMAGE_ES_TAG = '7.16.1'
+        IMAGE_ES_TAG = '7.16.2'
         // Only Python image tag changes for every build
         PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
@@ -128,6 +128,7 @@ pipeline {
                                 IS_ES_IMAGE_UPDATED = 'false'
                             }
                         }
+                        echo "ES image is updated: ${IS_ES_IMAGE_UPDATED}"
                     }
 
                     withCredentials([
@@ -168,6 +169,7 @@ pipeline {
                             '--build-arg scl_python_version=rh-python36 --target cfgov-prod .'
                         )
                         if (IS_ES_IMAGE_UPDATED == 'true') {
+                            echo "Building ES image"
                             docker.build(
                                 env.IMAGE_NAME_ES_LOCAL,
                                 '-f ./docker/elasticsearch/Dockerfile .'
@@ -186,6 +188,7 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     scanImage(env.IMAGE_REPO, env.PYTHON_IMAGE_TAG)
                     if (IS_ES_IMAGE_UPDATED == 'true') {
+                        echo "Scanning ES image"
                         scanImage(env.IMAGE_ES_REPO, env.IMAGE_ES_TAG)
                     }
                 }
@@ -213,6 +216,7 @@ pipeline {
                     docker.withRegistry("${DOCKER_HUB_REGISTRY}", 'docker-hub-cfpb') {
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
                         if (IS_ES_IMAGE_UPDATED == 'true') {
+                            echo "Pushing ES image"
                             image.push()
                         }
                         env.CFGOV_ES_IMAGE = image.imageName()
@@ -279,10 +283,10 @@ pipeline {
                 if (env.DEPLOY_SUCCESS == false) {
                     postGitHubStatus("jenkins/deploy", "failure", "Failed", env.RUN_DISPLAY_URL)
                     postGitHubStatus("jenkins/functional-tests", "error", "Cancelled", env.RUN_DISPLAY_URL)
-                    deployText = "failed" 
+                    deployText = "failed"
                 } else {
                     postGitHubStatus("jenkins/functional-tests", "failure", "Failed", env.RUN_DISPLAY_URL)
-                    deployText = "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed" 
+                    deployText = "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed"
                 }
 
                 notify("${NOTIFICATION_CHANNEL}",
