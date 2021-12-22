@@ -25,7 +25,7 @@ RUN yum -y install \
         centos-release-scl \
         epel-release && \
     rpm -i https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
-    curl -sL https://rpm.nodesource.com/setup_14.x | bash - && \
+    curl -sL https://rpm.nodesource.com/setup_16.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     yum -y update && \
     yum -y install \
