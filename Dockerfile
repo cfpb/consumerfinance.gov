@@ -128,9 +128,6 @@ RUN yum clean all && rm -rf /var/cache/yum && \
 
 ENV PATH="/opt/rh/${PYTHONVERSION}/root/usr/bin:${PATH}"
 
-# Remove files flagged by image vulnerability scanner
-RUN cd /opt/rh/rh-python36/root/usr/lib/python3.6/site-packages/ && \
-    rm -f ndg/httpsclient/test/pki/localhost.key sslserver/certs/development.key
 
 USER apache
 
