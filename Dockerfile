@@ -5,11 +5,6 @@ ENV LANG en_US.UTF-8
 
 LABEL maintainer="tech@cfpb.gov"
 
-# Specify SCL-based Python version
-# Currently used option: rh-python36
-# See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
-ARG scl_python_version
-ENV SCL_PYTHON_VERSION ${scl_python_version}
 
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
@@ -34,43 +29,40 @@ RUN yum -y install \
         mailcap \
         postgresql10 \
         which \
-        gettext \
-        openssl-devel \
-        bzip2-devel \
-        libffi-devel \
-        zlib-devel \
-        wget \
-        make && \
-    yum clean all && rm -rf /var/cache/yum && \
-    wget  https://www.python.org/ftp/python/3.9.9/Python-3.9.9.tgz && \
-    tar xzf Python-3.9.9.tgz && \
-    rm Python-3.9.9.tgz && \
-    cd Python-3.9.9 && \ 
-    ./configure --enable-optimizations && \
-    make altinstall
+        gettext && \
+    yum clean all && rm -rf /var/cache/yum 
 
-RUN yum -y install python3-pip
-RUN pip3 install --no-cache-dir --upgrade pip setuptools wheel
+ENV PYTHONVERSION=3.9.9
+RUN yum install -y epel-release
+RUN yum groupinstall -y "Development Tools"
+RUN yum install -y openssl-devel libffi-devel bzip2-devel wget
+RUN gcc --version
+RUN wget https://www.python.org/ftp/python/${PYTHONVERSION}/Python-${PYTHONVERSION}.tgz
+RUN tar xvf Python-${PYTHONVERSION}.tgz
+RUN cd Python-${PYTHONVERSION}/ && ./configure --enable-optimiztions && make altinstall && make bininstall
+RUN rm -Rf Python* *.pem
+RUN yum remove -y wget openssl-devel libffi-devel bzip2-devel
+RUN yum groupremove -y "Development Tools"
+RUN yum remove -y epel-release
+RUN yum clean all
 
-# RUN yum -y install gcc openssl-devel bzip2-devel libffi-devel zlib-devel wget make
-# RUN wget  https://www.python.org/ftp/python/3.9.9/Python-3.9.9.tgz && \
-#     tar xzf Python-3.9.9.tgz &&/
-#     rm Python-3.9.9.tgz 
-# RUN cd Python-3.9.9 &&\ 
-#     ./configure --enable-optimizations && \
-#     make altinstall
+RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
+
 # Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
 # NOTE: MUST be after pip upgrade. Build fails otherwise due to bug in old pip.
 ENV PIP_NO_CACHE_DIR true
 
 # Install python requirements
+RUN yum install -y postgresql-devel
+RUN yum install -y python3-devel.x86_64
 COPY requirements requirements
-RUN pip3 install -r requirements/local.txt -r requirements/deployment.txt
+RUN echo requirements/local.txt
+RUN python3 -m pip install -r requirements/local.txt -r requirements/deployment.txt
 
 EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
-CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python3", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
 # Build Frontend Assets
 FROM cfgov-dev as cfgov-build
@@ -120,7 +112,7 @@ ENV ALLOWED_HOSTS '["*"]'
 
 # Install and enable SCL-based Apache server and mod_wsgi,
 # and converts all Docker Secrets into environment variables.
-RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
+RUN yum -y install ${SCL_HTTPD_VERSION} ${PYTHONVERSION}-mod_wsgi && \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
     echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
@@ -134,7 +126,7 @@ COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PA
 RUN yum clean all && rm -rf /var/cache/yum && \
     chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
 
-ENV PATH="/opt/rh/${SCL_PYTHON_VERSION}/root/usr/bin:${PATH}"
+ENV PATH="/opt/rh/${PYTHONVERSION}/root/usr/bin:${PATH}"
 
 # Remove files flagged by image vulnerability scanner
 RUN cd /opt/rh/rh-python36/root/usr/lib/python3.6/site-packages/ && \
