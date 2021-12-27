@@ -22,6 +22,9 @@ from v1.models.filterable_list_mixins import (
 from v1.models.learn_page import EventPage
 
 
+NEWSROOM_CACHE_TAG = "newsroom"
+
+
 class BrowseFilterableContent(StreamBlock):
     """Defines the StreamField blocks for BrowseFilterablePage content.
 
@@ -122,3 +125,8 @@ class NewsroomLandingPage(CategoryFilterableMixin, BrowseFilterablePage):
     filterable_categories = ['Newsroom']
 
     objects = PageManager()
+
+    def serve(self, request, *args, **kwargs):
+        response = super().serve(request, *args, **kwargs)
+        response['Edge-Cache-Tag'] = NEWSROOM_CACHE_TAG
+        return response
