@@ -30,8 +30,10 @@ RUN yum -y install \
         postgresql10 \
         which \
         gettext && \
-    yum clean all && rm -rf /var/cache/yum 
+    yum clean all && rm -rf /var/cache/yum
 
+# Build python
+WORKDIR /tmp
 ENV PYTHONVERSION=3.9.9
 RUN yum install -y epel-release
 RUN yum groupinstall -y "Development Tools"
@@ -39,12 +41,14 @@ RUN yum install -y openssl-devel libffi-devel bzip2-devel wget
 RUN gcc --version
 RUN wget https://www.python.org/ftp/python/${PYTHONVERSION}/Python-${PYTHONVERSION}.tgz
 RUN tar xvf Python-${PYTHONVERSION}.tgz
-RUN cd Python-${PYTHONVERSION}/ && ./configure --enable-optimiztions && make altinstall && make bininstall
+RUN cd Python-${PYTHONVERSION}/ && ./configure --enable-shared --enable-optimiztions && make altinstall && make bininstall
+RUN echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/usr/local/lib" > /etc/profile.d/python39.sh
 RUN rm -Rf Python* *.pem
 RUN yum remove -y wget openssl-devel libffi-devel bzip2-devel
 RUN yum groupremove -y "Development Tools"
 RUN yum remove -y epel-release
 RUN yum clean all
+WORKDIR ${APP_HOME}
 
 RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
 
@@ -112,7 +116,7 @@ ENV ALLOWED_HOSTS '["*"]'
 
 # Install and enable SCL-based Apache server and mod_wsgi,
 # and converts all Docker Secrets into environment variables.
-RUN yum -y install ${SCL_HTTPD_VERSION} ${PYTHONVERSION}-mod_wsgi && \
+RUN yum -y install ${SCL_HTTPD_VERSION} && \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
     echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
@@ -126,8 +130,18 @@ COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PA
 RUN yum clean all && rm -rf /var/cache/yum && \
     chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
 
-ENV PATH="/opt/rh/${PYTHONVERSION}/root/usr/bin:${PATH}"
-
+# Build mod_wsgi
+WORKDIR /tmp
+RUN yum groupinstall -y "Development Tools"
+RUN yum install -y ${SCL_HTTPD_VERSION}-httpd-devel wget
+RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar.gz -O mod_wsgi.tar.gz
+RUN tar xzvf mod_wsgi.tar.gz
+RUN mv mod_wsgi-* mod_wsgi
+RUN cd mod_wsgi && ./configure --with-python=/usr/local/bin/python3 && make && make install
+RUN rm -Rf mod_wsgi*
+RUN yum groupremove -y "Development Tools"
+RUN yum remove -y ${SCL_HTTPD_VERSION}-httpd-devel wget
+WORKDIR ${APP_HOME}
 
 USER apache
 
