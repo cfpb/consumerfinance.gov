@@ -126,10 +126,6 @@ COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PATH}/static.in
 
-
-RUN yum clean all && rm -rf /var/cache/yum && \
-    chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
-
 # Build mod_wsgi
 WORKDIR /tmp
 RUN yum groupinstall -y "Development Tools"
@@ -142,6 +138,10 @@ RUN rm -Rf mod_wsgi*
 RUN yum groupremove -y "Development Tools"
 RUN yum remove -y ${SCL_HTTPD_VERSION}-httpd-devel wget
 WORKDIR ${APP_HOME}
+
+# Clean up
+RUN yum clean all && rm -rf /var/cache/yum && \
+    chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
 
 USER apache
 
