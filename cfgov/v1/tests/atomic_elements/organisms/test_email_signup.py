@@ -1,3 +1,5 @@
+from unittest import mock
+
 from django.test import TestCase
 
 from scripts import _atomic_helpers as atomic
@@ -26,5 +28,6 @@ class TestEmailSignup(TestCase):
     def test_learn_page_content(self):
         self.check_page_content(LearnPage, 'content')
 
-    def test_newsroom_page_content(self):
+    @mock.patch("v1.models.caching.AkamaiBackend.post_tags")
+    def test_newsroom_page_content(self, mock_post_tags):
         self.check_page_content(NewsroomPage, 'content')
