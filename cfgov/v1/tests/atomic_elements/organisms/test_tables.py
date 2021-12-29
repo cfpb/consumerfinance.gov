@@ -11,7 +11,7 @@ from v1.atomic_elements.tables import RichTextTableInput
 
 class TestRichTextTableInput(TestCase):
     def test_rich_text_table_js_included(self):
-        assert 'js/admin/rich-text-table.js' in RichTextTableInput().media._js
+        assert 'apps/admin/js/rich-text-table.js' in RichTextTableInput().media._js
 
 
 class TestAtomicTableBlock(TestCase):
