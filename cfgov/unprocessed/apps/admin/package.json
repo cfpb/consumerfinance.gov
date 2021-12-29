@@ -1,0 +1,22 @@
+{
+  "name": "cfpb-admin",
+  "description": "Scripts for the admin parts of the site",
+  "homepage": "https://www.consumerfinance.gov",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cfpb/consumerfinance.gov.git"
+  },
+  "license": "SEE LICENSE IN TERMS.md",
+  "dependencies": {
+    "draft-js": "0.11.7",
+    "draft-js-export-html": "1.4.1",
+    "immutable": "4.0.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  }
+}

@@ -13,7 +13,7 @@ class RichTextTableInput(TableInput):
         media = super().media
         rich_text_media = forms.Media(
             js=[
-                'js/admin/rich-text-table.js'
+                'apps/admin/js/rich-text-table.js'
             ],
         )
         return media + rich_text_media
