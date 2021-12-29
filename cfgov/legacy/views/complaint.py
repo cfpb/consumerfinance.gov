@@ -33,8 +33,3 @@ class CCDBSearchView(TemplateView):
     """
 
     template_name = 'ccdb-complaint/ccdb-search.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(CCDBSearchView, self).get_context_data(**kwargs)
-
-        return context
