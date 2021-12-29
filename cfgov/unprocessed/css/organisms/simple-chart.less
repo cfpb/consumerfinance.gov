@@ -140,8 +140,8 @@
   .highcharts-range-selector-buttons{
     .highcharts-button:last-child {
       text{
-      font-weight: 500 !important;
-    }
+        font-weight: 500 !important;
+      }
     }
     text {
       color: @gray !important;
@@ -149,12 +149,13 @@
       transform:translate(0, 5px);
       font-size: @base-font-size-px;
       font-weight: 400;
+    }
+    & > text {
       &:first-child{
         transform:translate(48px,-28px);
         .respond-to-max( 600px, {
           transform:translate(128px,-28px)
         })
-
       }
     }
   }
@@ -235,6 +236,10 @@
     .respond-to-max( @bp-xs-max, {
       transform: translateX(0) !important;
     })
+  }
+
+  .highcharts-legend-item tspan {
+    font-weight: 400 !important;
   }
 
   .m-chart-footnote {

@@ -38,7 +38,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     {% block meta_viewport %}
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     {% endblock meta_viewport %}
 
 {#
@@ -231,7 +231,6 @@
     {% block header %}
         {% import 'organisms/header.html' as o_header with context %}
         {{ o_header.render(
-            show_banner=true,
             show_mega_menu=true,
             language=language
         ) }}

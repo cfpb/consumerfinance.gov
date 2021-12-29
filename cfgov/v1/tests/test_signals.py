@@ -10,9 +10,10 @@ from model_bakery import baker
 
 from teachers_digital_platform.models import ActivityPage, ActivitySetUp
 from v1.models import (
-    BlogPage, CFGOVPage, CFGOVPageCategory, NewsroomLandingPage,
+    BlogPage, CFGOVPage, CFGOVPageCategory, NewsroomLandingPage, NewsroomPage,
     SublandingFilterablePage
 )
+from v1.models.browse_filterable_page import NEWSROOM_CACHE_TAG
 from v1.signals import invalidate_filterable_list_caches
 
 
@@ -97,6 +98,10 @@ class FilterableListInvalidationTestCase(TestCase):
         )
         self.root_page.add_child(instance=self.category_filterable_list_page)
         self.category_filterable_list_page.save()
+        self.newsroom_page = NewsroomPage(title="News event")
+        self.category_filterable_list_page.add_child(
+            instance=self.newsroom_page)
+        self.newsroom_page.save()
 
         self.blog_page = BlogPage(title='test blog')
         self.filterable_list_page.add_child(instance=self.blog_page)
@@ -106,6 +111,11 @@ class FilterableListInvalidationTestCase(TestCase):
         self.non_filterable_page = CFGOVPage(title='Page')
         self.root_page.add_child(instance=self.non_filterable_page)
         self.non_filterable_page.save()
+
+    @mock.patch('v1.signals.AkamaiBackend.purge_cache_tags')
+    def test_invalidate_newsroom_by_cache_tag(self, mock_purge):
+        self.newsroom_page.save_revision().publish()
+        self.assertTrue(mock_purge.called_with(NEWSROOM_CACHE_TAG))
 
     @mock.patch('v1.signals.PurgeBatch')
     @mock.patch('v1.signals.cache')
