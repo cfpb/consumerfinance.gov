@@ -1,4 +1,4 @@
-import tableWrapper from '../../../../cfgov/unprocessed/js/admin/rich-text-table.js';
+import tableWrapper from '../../../../cfgov/unprocessed/apps/admin/js/rich-text-table.js';
 
 describe( 'Initializes RichTextEditor', () => {
   it( 'should build and register an editor', () => {
