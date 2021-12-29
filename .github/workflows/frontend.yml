@@ -26,10 +26,10 @@ jobs:
               - '**package.json'
 
       - name: Set up Node
-        uses: actions/setup-node@v2.4.0
+        uses: actions/setup-node@v2.5.0
         if: steps.filter.outputs.frontend == 'true'
         with:
-            node-version: '14.x'
+            node-version: '16.x'
 
       - name: Install dependencies
         if: steps.filter.outputs.frontend == 'true'

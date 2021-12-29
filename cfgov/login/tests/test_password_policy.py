@@ -2,13 +2,13 @@ from datetime import timedelta
 from unittest.mock import Mock, patch
 
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils import timezone
 
+import login.utils as password_policy
+
 from v1.models import PasswordHistoryItem
-from v1.util import password_policy
 
 
 PASSWORD_RULES = [
@@ -31,7 +31,7 @@ class TestPasswordValidation(TestCase):
                          'No8Special7Characters8675309', 'Tr0ub4dor&3',
                          'correct_horse_battery_staple']:
             with self.assertRaises(ValidationError):
-                    password_policy.validate_password_all_rules(password, 'key')
+                password_policy.validate_password_all_rules(password, 'key')
 
     def test_good_passwords(self):
         for password in ['1976IndyD3claration!', 'XkCd936HasAGoodPoint!']:
