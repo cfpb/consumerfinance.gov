@@ -266,6 +266,8 @@ describe( 'Filter Blog Posts based on content', () => {
     blog.filterItemName( 'loans' );
     // And I type "01/01/2020" in the From date entry field
     blog.filterFromDate( '2020-01-01' );
+    // And I type "01/01/2021" in the To date entry field to bound the date range
+    blog.filterToDate( '2021-01-01' );
     // And I click "Apply filters" button
     blog.applyFilters();
     // Then I should see only results dated "01/01/2020" or later with "loans" in the post title
