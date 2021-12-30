@@ -1,4 +1,15 @@
 // TODO: !important's are added for styles that are overriding ccdb5-ui styles.
+.wrapper {
+  max-width: 1200px !important;
+}
+
+@tablet: ~"only screen and (min-width: 600px) and (max-width: 900px)";
+.wrapper__match-content {
+  @media @tablet {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
 
 .ccdb-search {
   width: 100vw !important;
@@ -9,8 +20,33 @@
   right: 50%;
   position: relative;
   padding: 0 unit( 30px / 16px, em ) !important;
-}
 
-.wrapper {
-  max-width: 1200px !important;
+  // Overrides for design system.
+  .o-expandable_target .o-expandable_cue-close, .o-expandable_target .o-expandable_cue-open {
+    display: block !important;
+  }
+
+  .o-expandable_label {
+    margin-bottom: 0.83333333em !important;
+  }
+
+  // Overrides for cfpb-chart-builder.
+  .cfpb-chart[data-chart-type="tile_map"] {
+    .highcharts-legend__tile-map {
+      transform: translate( 7px, 50px );
+    }
+  }
+
+  .cfpb-chart {
+    max-width: 100% !important;
+  }
+
+  #tile-chart-map {
+    height: auto;
+  }
+
+  // Overrides for styles in meta.less
+  .tags {
+    padding-left: 0;
+  }
 }
