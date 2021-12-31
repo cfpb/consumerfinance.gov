@@ -83,7 +83,7 @@ const hooks = {
   },
 
   enforcement_reliefBarTooltipFormatter() {
-    return `<b>${ this.x }</b><br/>Total relief: <b>$${ this.y.toLocaleDateString() }</b>`;
+    return `<b>${ this.x }</b><br/>Total relief: <b>$${ this.y.toLocaleString() }</b>`;
   }
 };
 
