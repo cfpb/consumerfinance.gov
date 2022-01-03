@@ -135,9 +135,7 @@ def refresh_tdp_activity_cache():
     activity_setup.update_setups()
 
 
-@receiver(page_published, sender=NewsroomPage)
-@receiver(page_published, sender=LegacyNewsroomPage)
-def invalidate_newsroom_querystring_urls(instance, **kwargs):
+def configure_akamai_backend():
     global_settings = getattr(settings, 'WAGTAILFRONTENDCACHE', {})
     akamai_settings = global_settings.get("akamai", {})
     akamai_params = {
@@ -146,14 +144,17 @@ def invalidate_newsroom_querystring_urls(instance, **kwargs):
         "ACCESS_TOKEN": akamai_settings.get("ACCESS_TOKEN", "test_access"),
     }
     backend = AkamaiBackend(akamai_params)
-    backend.purge_cache_tags([NEWSROOM_CACHE_TAG])
+    return backend
+
+
+@receiver(page_published, sender=NewsroomPage)
+@receiver(page_published, sender=LegacyNewsroomPage)
+def invalidate_newsroom_querystring_urls(instance, **kwargs):
+    backend = configure_akamai_backend()
+    backend.purge_by_tags([NEWSROOM_CACHE_TAG])
 
 
 @receiver(page_published, sender=ActivityPage)
-def activity_published_handler(instance, **kwargs):
-    refresh_tdp_activity_cache()
-
-
 @receiver(page_unpublished, sender=ActivityPage)
-def activity_unpublished_handler(instance, **kwargs):
+def activity_published_handler(instance, **kwargs):
     refresh_tdp_activity_cache()
