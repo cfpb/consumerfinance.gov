@@ -38,7 +38,7 @@ class CCDBSearchView(TemplateView):
     """
 
     def dispatch(self, *args, **kwargs):
-        response = super(CCDB5SearchView, self).dispatch(*args, **kwargs)
+        response = super(CCDBSearchView, self).dispatch(*args, **kwargs)
         response['Edge-Cache-Tag'] = 'complaints'
         return response
 
