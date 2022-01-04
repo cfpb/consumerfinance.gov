@@ -32,4 +32,9 @@ class CCDBSearchView(TemplateView):
     This view renders the template for the CCDB search application page.
     """
 
+    def dispatch(self, *args, **kwargs):
+        response = super(CCDB5SearchView, self).dispatch(*args, **kwargs)
+        response['Edge-Cache-Tag'] = 'complaints'
+        return response
+
     template_name = 'ccdb-complaint/ccdb-search.html'
