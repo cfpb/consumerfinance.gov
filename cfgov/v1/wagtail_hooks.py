@@ -90,7 +90,7 @@ def log_page_deletion(request, page):
 
 @hooks.register('insert_global_admin_js')
 def global_admin_js():
-    js_files = ['js/admin/global.js']
+    js_files = ['apps/admin/js/global.js']
 
     js_includes = format_html_join(
         '\n',

@@ -1,7 +1,7 @@
 {
-  "name": "retirement",
-  "description": "The consumerfinance.gov retirement code.",
-  "homepage": "https://www.consumerfinance.gov/",
+  "name": "cfpb-admin",
+  "description": "Scripts for the admin parts of the site",
+  "homepage": "https://www.consumerfinance.gov",
   "author": {
     "name": "Consumer Financial Protection Bureau",
     "email": "tech@cfpb.gov",
@@ -13,6 +13,10 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
-    "jquery": "3.5.1"
+    "draft-js": "0.11.7",
+    "draft-js-export-html": "1.4.1",
+    "immutable": "4.0.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   }
 }
