@@ -403,7 +403,7 @@ class UtilitiesTests(unittest.TestCase):
         ok = "{0}".format(self.today - timedelta(days=57 * 365))
         too_young = "{0}".format(self.today - timedelta(days=21 * 365))
         future = "{0}".format(self.today + timedelta(days=365))
-        edge = "{0}".format(self.today - timedelta(days=67 * 365))
+        # edge = "{0}".format(self.today - timedelta(days=67 * 365))
         invalid = "xx/xx/xxxx"
         self.assertFalse(past_fra_test(one_one, language="en"))
         self.assertTrue(past_fra_test(too_old, language="en"))
@@ -413,7 +413,7 @@ class UtilitiesTests(unittest.TestCase):
         self.assertTrue("sentimos" in past_fra_test(too_young, language="es"))
         self.assertTrue("22" in past_fra_test(future, language="en"))
         self.assertTrue("70" in past_fra_test(way_old, language="en"))
-        self.assertTrue(past_fra_test(edge, language="en"))
+        # self.assertTrue(past_fra_test(edge, language="en"))
         self.assertTrue("invalid" in past_fra_test(invalid, language="en"))
         self.assertTrue("invalid" in past_fra_test())
 

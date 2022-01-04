@@ -95,8 +95,8 @@ class AkamaiBackend(BaseBackend):
         )
         resp.raise_for_status()
 
-    def post_tags(self, tags):
-        """Request a deletion purge by cache_tags."""
+    def post_tags(self, tags, action):
+        """Request a purge by cache_tags."""
         _url = os.getenv('AKAMAI_FAST_PURGE_URL')
         if not _url:
             logger.info(
@@ -107,17 +107,17 @@ class AkamaiBackend(BaseBackend):
         resp = requests.post(
             url,
             headers=self.headers,
-            data=json.dumps({"action": "invalidate", "objects": tags}),
+            data=json.dumps({"action": action, "objects": tags}),
             auth=self.auth
         )
         logger.info(
-            f"Attempted to invalidate by cache_tags {', '.join(tags)}, "
+            f"Attempted to {action} by cache_tags {', '.join(tags)}, "
             f"and got back the response {resp.text}"
         )
         resp.raise_for_status()
 
-    def purge_cache_tags(self, tags):
-        self.post_tags(tags)
+    def purge_by_tags(self, tags, action="invalidate"):
+        self.post_tags(tags, action=action)
 
     def purge(self, url):
         self.post(url, 'invalidate')
