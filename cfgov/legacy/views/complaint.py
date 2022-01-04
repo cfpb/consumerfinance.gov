@@ -25,6 +25,11 @@ class ComplaintLandingView(TemplateView):
 
         return context
 
+    def dispatch(self, *args, **kwargs):
+        response = super(ComplaintLandingView, self).dispatch(*args, **kwargs)
+        response['Edge-Cache-Tag'] = 'complaints'
+        return response
+
 
 class CCDBSearchView(TemplateView):
     """Consumer Complaint Database search page view.
