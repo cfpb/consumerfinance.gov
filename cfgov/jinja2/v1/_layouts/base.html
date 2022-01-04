@@ -136,14 +136,26 @@
           type="font/woff2" crossorigin>
     <link rel="preload" href="{{ static('js/routes/common.js') }}" as="script">
 
-    <link rel="dns-prefetch" href="//consumerfinance.gov/">
+    {# Preconnecting comes from the 3rd best practice in 
+       https://developer.mozilla.org/en-US/docs/Web/Performance/dns-prefetch#best_practices #}
+    <link rel="preconnect" href="//fast.fonts.net/" crossorigin>    
     <link rel="dns-prefetch" href="//fast.fonts.net/">
+
+    <link rel="preconnect" href="//google-analytics.com/" crossorigin>    
     <link rel="dns-prefetch" href="//google-analytics.com/">
+
+    <link rel="preconnect" href="//googletagmanager.com/" crossorigin>    
     <link rel="dns-prefetch" href="//googletagmanager.com/">
+
+    <link rel="preconnect" href="//js-agent.newrelic.com/" crossorigin>    
     <link rel="dns-prefetch" href="//js-agent.newrelic.com/">
-    <link rel="dns-prefetch" href="//s.ytimg.com/">
+
+    <link rel="preconnect" href="//search.usa.gov/" crossorigin>    
     <link rel="dns-prefetch" href="//search.usa.gov/">
-    <link rel="dns-prefetch" href="//stats.g.doubleclick.net/">
+
+    {# These domains are called on pages with youtube videos.  #}
+    <link rel="dns-prefetch" href="//ytimg.com/">
+    <link rel="dns-prefetch" href="//doubleclick.net/">
     {% endblock preload %}
 
 {#
