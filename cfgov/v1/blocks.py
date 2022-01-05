@@ -231,7 +231,7 @@ class RAFToolBlock(blocks.StaticBlock):
         template = '_includes/blocks/raf_tool.html'
 
     class Media:
-        js = ['erap/main.js']
+        js = ['../../../apps/erap/js/main.js']
 
 
 class RAFTBlock(blocks.StructBlock):
@@ -248,4 +248,4 @@ class RAFTBlock(blocks.StructBlock):
         template = '_includes/blocks/raf_tool.html'
 
     class Media:
-        js = ['erap/main.js']
+        js = ['../../../apps/erap/js/main.js']
