@@ -11,54 +11,83 @@ and several standalone Django apps for specific parts of the site.
 Full installation and usage instructions are available in
 [our documentation](https://cfpb.github.io/consumerfinance.gov).
 
-This project requires Python 3.6, Node 16, and Gulp 4.
-We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and
-[virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
-for keeping the project's Python dependencies contained.
+This quickstart requires a working Docker Desktop installation,
+as well as a
+[pyenv](https://github.com/pyenv/pyenv)-installed Python 3.6
+with
+[pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
+and
+[Node.js 16](https://nodejs.org/en/)
+with
+[Yarn](https://yarnpkg.com/).
+These can be installed per
+[our general development documentation](https://github.com/cfpb/development)
+or
+[our Mac setup scripts](https://github.com/cfpb/mac-setup).
 
-Clone the repository:
+- [Clone the repository](https://cfpb.github.io/consumerfinance.gov/installation/#clone-the-repository):
 
-```sh
-git clone git@github.com:cfpb/consumerfinance.gov.git
-```
+    ```shell
+    git clone https://github.com/cfpb/consumerfinance.gov.git
+    cd consumerfinance.gov
+    ```
 
-Create a virtual environment for Python dependencies:
+- [Set up the environment](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-the-environment):
 
-```sh
-cd consumerfinance.gov
-mkvirtualenv --python=python3.6 consumerfinance.gov
-```
+    ```shell
+    cp -a .env_SAMPLE .env
+    ```
 
-Create and load initial environment settings:
+- [Set up a local Python environment](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-a-local-python-environment)
+    for
+    [unit testing](/python-unit-tests/):
 
-```sh
-cp -a .env_SAMPLE .env
-source .env
-```
+    ```shell
+    pyenv virtualenv consumerfinance.gov
+    pyenv activate consumerfinance.gov
+    pip install -r requirements/ci.txt
+    ```
 
-Install third-party dependencies and build frontend assets:
+- (Optional) [install our private fonts](https://cfpb.github.io/consumerfinance.gov/installation/#install-our-private-fonts)
+    (`[GHE]` is our GitHub Enterprise URL):
 
-```sh
-./setup.sh
-```
+    ```shell
+    git clone https://[GHE]/CFGOV/cfgov-fonts/ static.in/cfgov-fonts
+    ```
 
-Create a local database, a Wagtail admin user, and a site homepage:
+- [Build the frontend](https://cfpb.github.io/consumerfinance.gov/installation/#build-the-frontend):
 
-```sh
-./initial-data.sh
-```
+    ```shell
+    ./frontend.sh
+    ```
 
-Start your local Django server:
+From here you can chose to run consumerfinance.gov locally in Docker, or via
+one of our [alternative setup options](https://cfpb.github.io/consumerfinance.gov/installation/#alternative-setups).
+For simplicity, this quickstart prefers Docker.
 
-```sh
-./runserver.sh
-```
+- [Set up and run the Docker containers](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
 
-Your site will be available locally at <http://localhost:8000/>.
+    ```shell
+    docker network create cfgov
+    docker-compose up
+    ```
+
+- [Load initial data](https://cfpb.github.io/consumerfinance.gov/installation/#load-initial-data) inside the Python container:
+
+    ```shell
+    docker-compose exec python bash
+    ./initial-data.sh
+    ./cfgov/manage.py search_index --create
+    ```
+
+    [A database dump can be loaded](#load-a-database-dump) as an alternative.
+
+consumerfinance.gov should now be available at <http://localhost:8000>.
+
+Our documentation will be available at <http://localhost:8888>.
 
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
-
 
 ## Documentation
 
