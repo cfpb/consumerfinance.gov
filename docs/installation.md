@@ -2,19 +2,7 @@
 
 ## Quickstart
 
-This quickstart requires a working Docker Desktop installation,
-as well as a
-[pyenv](https://github.com/pyenv/pyenv)-installed Python 3.6
-with
-[pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
-and
-[Node.js 14](https://nodejs.org/en/)
-with
-[Yarn](https://yarnpkg.com/).
-These can be installed per
-[our general development documentation](https://github.com/cfpb/development)
-or
-[our Mac setup scripts](https://github.com/cfpb/mac-setup).
+This quickstart requires a working Docker Desktop installation and git:
 
 - [Clone the repository](#clone-the-repository):
 
@@ -23,55 +11,16 @@ or
     cd consumerfinance.gov
     ```
 
-- [Set up the environment](#set-up-the-environment):
-
-    ```sh
-    cp -a .env_SAMPLE .env
-    ```
-
-- [Set up a local Python environment](#set-up-a-local-python-environment)
-    for
-    [unit testing](/python-unit-tests/):
-
-    ```sh
-    pyenv virtualenv consumerfinance.gov
-    pyenv activate consumerfinance.gov
-    pip install -r requirements/ci.txt
-    ```
-
-- (Optional) [install our private fonts](#install-our-private-fonts)
-    (`[GHE]` is our GitHub Enterprise URL):
-
-    ```sh
-    git clone https://[GHE]/CFGOV/cfgov-fonts/ static.in/cfgov-fonts
-    ```
-
-- [Build the frontend](#build-the-frontend):
-
-    ```sh
-    ./frontend.sh
-    ```
-
-From here you can chose to run consumerfinance.gov locally in Docker, or via
-one of our [alternative setup options](#alternative-setups).
-For simplicity, this quickstart prefers Docker.
-
 - [Set up and run the Docker containers](#set-up-and-run-the-docker-containers):
 
     ```sh
-    docker network create cfgov
     docker-compose up
     ```
 
-- [Load initial data](#load-initial-data) inside the Python container:
-
-    ```sh
-    docker-compose exec python bash
-    ./initial-data.sh
-    ./cfgov/manage.py search_index --create
-    ```
-
-    [A database dump can be loaded](#load-a-database-dump) as an alternative.
+    This may take some time, as it will also
+    [load initial data](#load-initial-data)
+    and
+    [build the frontend](#build-the-frontend).
 
 consumerfinance.gov should now be available at <http://localhost:8000>.
 
@@ -83,6 +32,9 @@ which you can log into with the credentials `admin`/`admin`.
 Please see
 our [running consumerfinance.gov](/running/) documentation
 for next steps.
+
+There are also optional steps described below, as well as
+[alternative setup options](#alternative-setups).
 
 ## Detailed installation
 
@@ -103,7 +55,7 @@ You may also wish to fork the repository on GitHub and clone the resultant
 personal fork. This is advised if you are going to be doing development on
 `consumerfinance.gov` and contributing to the project.
 
-### Set up the environment
+### Set up the environment (optional)
 
 The consumerfinance.gov Django site relies on environment variables defined
 in a `.env` file. If this is your first time setting up the project,
@@ -113,7 +65,7 @@ copy `.env_SAMPLE` to `.env`:
 cp -a .env_SAMPLE .env
 ```
 
-### Set up a local Python environment
+### Set up a local Python environment (optional)
 
 For running our
 [Python unit tests, linting, etc](/python-unit-tests/)
@@ -154,7 +106,7 @@ Once activated, our Python CI requirements can be installed in the virtualenv:
 pip install -r requirements/ci.txt
 ```
 
-### Install our private fonts
+### Install our private fonts (optional)
 
 consumerfinance.gov uses a proprietary licensed font, Avenir.
 
@@ -234,14 +186,17 @@ to run these services along side the consumerfinance.gov Django site.
 To build and run our Docker containers for the first time, run:
 
 ```sh
-docker network create cfgov
 docker-compose up
 ```
 
-This will create the `cfgov` network that is required for our
-[functional testing](/functional-testing/)
-and then build and start our PostgreSQL, Elasticsearch, Python, and
+This will build and start our PostgreSQL, Elasticsearch, Python, and
 documentation services.
+
+The first time this is fun, it will
+[load initial data](#load-initial-data)
+and
+[build the frontend](#build-the-frontend)
+for you.
 
 ### Load initial data
 

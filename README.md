@@ -11,19 +11,7 @@ and several standalone Django apps for specific parts of the site.
 Full installation and usage instructions are available in
 [our documentation](https://cfpb.github.io/consumerfinance.gov).
 
-This quickstart requires a working Docker Desktop installation,
-as well as a
-[pyenv](https://github.com/pyenv/pyenv)-installed Python 3.6
-with
-[pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
-and
-[Node.js 16](https://nodejs.org/en/)
-with
-[Yarn](https://yarnpkg.com/).
-These can be installed per
-[our general development documentation](https://github.com/cfpb/development)
-or
-[our Mac setup scripts](https://github.com/cfpb/mac-setup).
+This quickstart requires a working Docker Desktop installation and git:
 
 - [Clone the repository](https://cfpb.github.io/consumerfinance.gov/installation/#clone-the-repository):
 
@@ -32,55 +20,16 @@ or
     cd consumerfinance.gov
     ```
 
-- [Set up the environment](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-the-environment):
-
-    ```shell
-    cp -a .env_SAMPLE .env
-    ```
-
-- [Set up a local Python environment](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-a-local-python-environment)
-    for
-    [unit testing](/python-unit-tests/):
-
-    ```shell
-    pyenv virtualenv consumerfinance.gov
-    pyenv activate consumerfinance.gov
-    pip install -r requirements/ci.txt
-    ```
-
-- (Optional) [install our private fonts](https://cfpb.github.io/consumerfinance.gov/installation/#install-our-private-fonts)
-    (`[GHE]` is our GitHub Enterprise URL):
-
-    ```shell
-    git clone https://[GHE]/CFGOV/cfgov-fonts/ static.in/cfgov-fonts
-    ```
-
-- [Build the frontend](https://cfpb.github.io/consumerfinance.gov/installation/#build-the-frontend):
-
-    ```shell
-    ./frontend.sh
-    ```
-
-From here you can chose to run consumerfinance.gov locally in Docker, or via
-one of our [alternative setup options](https://cfpb.github.io/consumerfinance.gov/installation/#alternative-setups).
-For simplicity, this quickstart prefers Docker.
-
 - [Set up and run the Docker containers](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
 
     ```shell
-    docker network create cfgov
     docker-compose up
     ```
 
-- [Load initial data](https://cfpb.github.io/consumerfinance.gov/installation/#load-initial-data) inside the Python container:
-
-    ```shell
-    docker-compose exec python bash
-    ./initial-data.sh
-    ./cfgov/manage.py search_index --create
-    ```
-
-    [A database dump can be loaded](#load-a-database-dump) as an alternative.
+    This may take some time, as it will also
+    [load initial data](https://cfpb.github.io/consumerfinance.gov/installation/#load-initial-data)
+    and
+    [build the frontend](https://cfpb.github.io/consumerfinance.gov/installation/#build-the-frontend).
 
 consumerfinance.gov should now be available at <http://localhost:8000>.
 
