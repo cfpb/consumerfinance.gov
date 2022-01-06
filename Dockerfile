@@ -30,6 +30,7 @@ RUN yum -y install \
         postgresql10 \
         which \
         gettext && \
+    yum -y install nodejs yarn && \
     yum clean all && rm -rf /var/cache/yum
 
 # Build python
@@ -82,9 +83,8 @@ ENV ALLOWED_HOSTS '["*"]'
 # See .dockerignore for details on which files are included
 COPY . .
 
-# Install Node.js version curled earlier in this file from rpm.nodesource.com
-RUN yum -y install nodejs yarn && \
-    ./frontend.sh production && \
+# Build the front-end
+RUN ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
     rm -rf node_modules npm-packages-offline-cache

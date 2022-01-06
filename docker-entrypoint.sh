@@ -27,5 +27,11 @@ if ! psql ${DATABASE_URL} -c 'SELECT COUNT(*) FROM auth_user' &> /dev/null; then
     ./cfgov/manage.py search_index --rebuild -f --parallel
 fi
 
+# Do first-time build of the front-end if necessary
+if [ ! -d "node_modules" ] && [ ! "$(ls cfgov/static_built)" ]; then
+    echo "Running ./frontend.sh for the first time..."
+    ./frontend.sh
+fi
+
 # Execute the Docker CMD
 exec "$@"
