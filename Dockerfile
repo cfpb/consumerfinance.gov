@@ -5,11 +5,6 @@ ENV LANG en_US.UTF-8
 
 LABEL maintainer="tech@cfpb.gov"
 
-# Specify SCL-based Python version
-# Currently used option: rh-python36
-# See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
-ARG scl_python_version
-ENV SCL_PYTHON_VERSION ${scl_python_version}
 
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
@@ -34,26 +29,44 @@ RUN yum -y install \
         mailcap \
         postgresql10 \
         which \
-        gettext \
-        xmlsec1 xmlsec1-openssl \
-        ${SCL_PYTHON_VERSION} && \
-    yum clean all && rm -rf /var/cache/yum && \
-    echo "source scl_source enable ${SCL_PYTHON_VERSION}" > /etc/profile.d/enable_scl_python.sh && \
-    source /etc/profile && \
-    pip install --no-cache-dir --upgrade pip setuptools wheel
+        gettext && \
+    yum clean all && rm -rf /var/cache/yum
+
+# Build python
+WORKDIR /tmp
+ENV PYTHONVERSION=3.9.9
+RUN yum install -y epel-release
+RUN yum groupinstall -y "Development Tools"
+RUN yum install -y openssl-devel libffi-devel bzip2-devel wget
+RUN gcc --version
+RUN wget https://www.python.org/ftp/python/${PYTHONVERSION}/Python-${PYTHONVERSION}.tgz
+RUN tar xvf Python-${PYTHONVERSION}.tgz
+RUN cd Python-${PYTHONVERSION}/ && ./configure --enable-shared --enable-optimiztions && make altinstall && make bininstall
+RUN echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/usr/local/lib" > /etc/profile.d/python39.sh
+RUN rm -Rf Python* *.pem
+RUN yum remove -y wget openssl-devel libffi-devel bzip2-devel
+RUN yum groupremove -y "Development Tools"
+RUN yum remove -y epel-release
+RUN yum clean all
+WORKDIR ${APP_HOME}
+
+RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
 
 # Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
 # NOTE: MUST be after pip upgrade. Build fails otherwise due to bug in old pip.
 ENV PIP_NO_CACHE_DIR true
 
 # Install python requirements
+RUN yum install -y postgresql-devel
+RUN yum install -y python3-devel.x86_64
 COPY requirements requirements
-RUN pip install -r requirements/local.txt -r requirements/deployment.txt
+RUN echo requirements/local.txt
+RUN python3 -m pip install -r requirements/local.txt -r requirements/deployment.txt
 
 EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
-CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python3", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
 # Build Frontend Assets
 FROM cfgov-dev as cfgov-build
@@ -103,7 +116,7 @@ ENV ALLOWED_HOSTS '["*"]'
 
 # Install and enable SCL-based Apache server and mod_wsgi,
 # and converts all Docker Secrets into environment variables.
-RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
+RUN yum -y install ${SCL_HTTPD_VERSION} && \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
     echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
@@ -113,15 +126,22 @@ COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PATH}/static.in
 
+# Build mod_wsgi
+WORKDIR /tmp
+RUN yum groupinstall -y "Development Tools"
+RUN yum install -y ${SCL_HTTPD_VERSION}-httpd-devel wget
+RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar.gz -O mod_wsgi.tar.gz
+RUN tar xzvf mod_wsgi.tar.gz
+RUN mv mod_wsgi-* mod_wsgi
+RUN cd mod_wsgi && ./configure --with-python=/usr/local/bin/python3 && make && make install
+RUN rm -Rf mod_wsgi*
+RUN yum groupremove -y "Development Tools"
+RUN yum remove -y ${SCL_HTTPD_VERSION}-httpd-devel wget
+WORKDIR ${APP_HOME}
 
+# Clean up
 RUN yum clean all && rm -rf /var/cache/yum && \
     chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
-
-ENV PATH="/opt/rh/${SCL_PYTHON_VERSION}/root/usr/bin:${PATH}"
-
-# Remove files flagged by image vulnerability scanner
-RUN cd /opt/rh/rh-python36/root/usr/lib/python3.6/site-packages/ && \
-    rm -f ndg/httpsclient/test/pki/localhost.key sslserver/certs/development.key
 
 USER apache
 

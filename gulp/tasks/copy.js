@@ -63,14 +63,6 @@ gulp.task( 'copy:lightbox2', () => {
   return stream;
 } );
 
-gulp.task( 'copy:erap', () => {
-  const stream = _genericCopy(
-    `${ paths.unprocessed }/apps/erap/node_modules/@cfpb/rental-assistance-finder/dist/*.js`,
-    `${ paths.processed }/js/routes/on-demand/erap`
-  );
-  return stream;
-} );
-
 gulp.task( 'copy:icons',
   gulp.parallel(
     'copy:icons:main',
@@ -83,7 +75,6 @@ gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
     'copy:lightbox2',
-    'copy:erap',
     'copy:root'
   )
 );
