@@ -5,6 +5,8 @@ const r = `${ up }/js/routes`;
 const a = `${ up }/apps`;
 const od = `${ r }/on-demand`;
 
+require( './cfgov/unprocessed/apps/regulations3k/worker_and_manifest.js' );
+
 /**
  * @param {string} path The directory with the needed js
  * @returns {array} An array of matched js files
@@ -47,7 +49,17 @@ const paths = [
   `${ a }/owning-a-home/js/explore-rates/index.js`,
   `${ a }/owning-a-home/js/mortgage-estimate/index.js`,
   `${ a }/owning-a-home/js/form-explainer/index.js`,
-  `${ a }/retirement/js/index.js`
+  `${ a }/paying-for-college/js/disclosure-feedback.js`,
+  `${ a }/paying-for-college/js/college-costs.js`,
+  `${ a }/paying-for-college/js/repay.js`,
+  `${ a }/regulations3k/js/index.js`,
+  `${ a }/regulations3k/js/permalinks.js`,
+  `${ a }/regulations3k/js/recent-notices.js`,
+  `${ a }/regulations3k/js/search.js`,
+  `${ a }/retirement/js/index.js`,
+  `${ a }/rural-or-underserved-tool/js/common.js`,
+  `${ a }/teachers-digital-platform/js/index.js`,
+  `${ a }/youth-employment-success/js/index.js`
 ];
 
 /* eslint-disable-next-line */
