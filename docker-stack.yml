@@ -102,15 +102,6 @@ services:
     command: >
                 bash -c "
 
-                psql $${DATABASE_URL} -c 'SELECT COUNT(*) FROM auth_user'
-
-                django_tables_exist=$$?
-
-                if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
-                    ./refresh-data.sh
-                    ./cfgov/manage.py createcachetable
-                fi
-
                 ./cfgov/manage.py search_index --rebuild -f --parallel
 
                 httpd -d cfgov/apache -D FOREGROUND"
