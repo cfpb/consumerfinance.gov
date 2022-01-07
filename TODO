@@ -2,5 +2,7 @@ BUILD
   build styles, scripts, images
   copy them to static built
  
+  - copy raft & icons
 
 QUESTIONS:
+  - Does change to throttle autocomplete still work

@@ -1,4 +1,7 @@
-r="./cfgov/unprocessed/js/routes"
+#!/bin/bash
+up="./cfgov/unprocessed"
+r="$up/js/routes"
+a="$up/apps"
 od="$r/on-demand"
 
 paths=(
@@ -19,21 +22,15 @@ paths=(
 "$r/external-site/index.js"
 
 #on-demand: components included on a page via Wagtatil
-"$od/ask-autocomplete.js"
-"$od/audio-player.js"
-"$od/chart.js"
-"$od/email-signup.js"
-"$od/expandable.js"
-"$od/expandable-group.js"
-"$od/featured-content-module.js"
-"$od/feedback-form.js"
-"$od/filterable-list.js"
-"$od/mortgage-performance-trends.js"
-"$od/secondary-navigation.js"
+#$od/*.js
 "$od/simple-chart/simple-chart.js"
-"$od/table.js"
-"$od/video-player.js"
 "$od/youth-employment-programs/buying-a-car/index.js"
+
+#apps
+$a/admin/js/*
+$a/*/js/index.js
 )
 
-./node_modules/.bin/esbuild "${paths[@]}" --loader:.svg=text --bundle --minify --outdir=cfgov/static_built/out
+# command-line arguments are parsed
+./node_modules/.bin/esbuild "${paths[@]}" --loader:.svg=text\
+  --bundle --minify --outdir=cfgov/static_built/out "$@"

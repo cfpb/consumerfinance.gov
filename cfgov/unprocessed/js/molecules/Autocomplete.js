@@ -3,7 +3,7 @@ import { assign } from '../modules/util/assign';
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import { ajaxRequest } from '../modules/util/ajax-request';
-import * as throttle from 'lodash.throttle';
+import throttle from 'lodash.throttle';
 
 /**
  * Autocomplete
