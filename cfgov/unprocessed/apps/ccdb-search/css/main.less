@@ -1,3 +1,5 @@
+@import (reference) 'cfpb-core.less';
+
 // TODO: !important's are added for styles that are overriding ccdb5-ui styles.
 .wrapper {
   max-width: 1200px !important;
@@ -16,10 +18,15 @@
   max-width: 100vw;
   margin-left: -50vw;
   margin-right: -50vw;
+  box-sizing: border-box;
   left: 50%;
   right: 50%;
   position: relative;
-  padding: 0 unit( 30px / 16px, em ) !important;
+  padding: 0 unit( 15px / 16px, em ) !important;
+
+  .respond-to-max( @bp-sm-max, {
+    padding: 0 unit( 10px / 16px, em ) !important;
+  } );
 
   // Overrides for design system.
   .o-expandable_target .o-expandable_cue-close, .o-expandable_target .o-expandable_cue-open {
