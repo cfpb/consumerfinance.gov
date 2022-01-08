@@ -35,16 +35,19 @@ RUN yum -y install \
 # Build python
 WORKDIR /tmp
 ENV PYTHONVERSION=3.9.9
+ENV PYTHON_ARCHIVE_MD5HASH=a2da2a456c078db131734ff62de10ed5
 RUN yum install -y epel-release
 RUN yum groupinstall -y "Development Tools"
-RUN yum install -y openssl-devel libffi-devel bzip2-devel wget
+RUN yum install -y bzip2-devel libffi-devel openssl-devel readline-devel sqlite-devel tk-devel wget xz-devel zlib-devel
 RUN gcc --version
 RUN wget https://www.python.org/ftp/python/${PYTHONVERSION}/Python-${PYTHONVERSION}.tgz
+RUN echo "${PYTHON_ARCHIVE_MD5HASH} Python-${PYTHONVERSION}.tgz" | md5sum -c
 RUN tar xvf Python-${PYTHONVERSION}.tgz
-RUN cd Python-${PYTHONVERSION}/ && ./configure --enable-shared --enable-optimiztions && make altinstall && make bininstall
-RUN echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/usr/local/lib" > /etc/profile.d/python39.sh
+RUN cd Python-${PYTHONVERSION}/ && \
+    ./configure --enable-shared --enable-optimiztions --with-ensurepip=install --prefix=/usr/local LDFLAGS="-Wl,-rpath /usr/local/lib" && \
+    make altinstall && make bininstall
 RUN rm -Rf Python* *.pem
-RUN yum remove -y wget openssl-devel libffi-devel bzip2-devel
+RUN yum remove -y bzip2-devel libffi-devel openssl-devel readline-devel sqlite-devel tk-devel wget xz-devel zlib-devel
 RUN yum groupremove -y "Development Tools"
 RUN yum remove -y epel-release
 RUN yum clean all
