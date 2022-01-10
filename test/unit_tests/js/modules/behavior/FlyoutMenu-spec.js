@@ -1,4 +1,4 @@
-import FlyoutMenu from '../../../../../cfgov/unprocessed/js/modules/behavior/FlyoutMenu';
+import FlyoutMenu from '../../../../../cfgov/unprocessed/js/modules/behavior/FlyoutMenu.js';
 import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition';
 
 const HTML_SNIPPET = `
@@ -89,19 +89,6 @@ describe( 'FlyoutMenu', () => {
       flyoutMenu.addEventListener( 'triggerClick', triggerClickSpy );
     } );
 
-    afterEach( () => {
-      // Check expected event broadcasts.
-      expect( triggerOverSpy ).toHaveBeenCalledTimes( 1 );
-      expect( triggerOverSpy ).toHaveBeenCalledWith(
-        { target: flyoutMenu, type: 'triggerOver' }
-      );
-
-      expect( triggerClickSpy ).toHaveBeenCalledTimes( 1 );
-      expect( triggerClickSpy ).toHaveBeenCalledWith(
-        { target: flyoutMenu, type: 'triggerClick' }
-      );
-    } );
-
     it( 'should dispatch events when called by trigger click', () => {
 
       /* TODO: Ideally this would use `new MouseEvent`,
@@ -111,6 +98,16 @@ describe( 'FlyoutMenu', () => {
       mouseEvent.initEvent( 'mouseover', true, true );
       triggerDom.dispatchEvent( mouseEvent );
       triggerDom.click();
+
+      // Check expected event broadcasts.
+      expect( triggerOverSpy ).toHaveBeenCalledTimes( 1 );
+      expect( triggerOverSpy ).toHaveBeenCalledWith(
+        {
+          target: flyoutMenu,
+          trigger: triggerDom,
+          type: 'triggerOver'
+        }
+      );
     } );
 
     it( 'should dispatch events when called by alt trigger click', () => {
@@ -118,6 +115,16 @@ describe( 'FlyoutMenu', () => {
       mouseEvent.initEvent( 'mouseover', true, true );
       altTriggerDom.dispatchEvent( mouseEvent );
       altTriggerDom.click();
+
+      // Check expected event broadcasts.
+      expect( triggerClickSpy ).toHaveBeenCalledTimes( 1 );
+      expect( triggerClickSpy ).toHaveBeenCalledWith(
+        {
+          target: flyoutMenu,
+          trigger: altTriggerDom,
+          type: 'triggerClick'
+        }
+      );
     } );
   } );
 

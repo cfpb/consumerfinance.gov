@@ -50,6 +50,8 @@ class BrowsePage(CFGOVPage):
         ('data_snapshot', organisms.DataSnapshot()),
         ('job_listing_table', JobListingTable()),
         ('yes_checklist', YESChecklist()),
+        ('erap_tool', v1_blocks.RAFToolBlock()),
+        ('raf_tool', v1_blocks.RAFTBlock())
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

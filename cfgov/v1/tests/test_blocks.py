@@ -4,7 +4,9 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from django.utils.safestring import SafeText
 
-from v1.blocks import AbstractFormBlock, AnchorLink, PlaceholderCharBlock
+from v1.blocks import (
+    AbstractFormBlock, AnchorLink, PlaceholderCharBlock, RAFToolBlock
+)
 
 
 class TestAbstractFormBlock(TestCase):
@@ -91,9 +93,12 @@ class TestAnchorLink(TestCase):
 
 
 class TestPlaceholderBlock(TestCase):
+    def setUp(self):
+        self.char_block = PlaceholderCharBlock()
+        self.placeholder = PlaceholderCharBlock(placeholder='Hi there!')
+
     def test_render_no_placeholder_provided(self):
-        block = PlaceholderCharBlock()
-        html = block.render_form('Hello world!')
+        html = self.char_block.render_form('Hello world!')
         self.assertInHTML(
             (
                 '<input id="" name="" placeholder="" '
@@ -103,13 +108,11 @@ class TestPlaceholderBlock(TestCase):
         )
 
     def test_render_no_placeholder_returns_safetext(self):
-        block = PlaceholderCharBlock()
-        html = block.render_form('Hello world!')
+        html = self.char_block.render_form('Hello world!')
         self.assertIsInstance(html, SafeText)
 
     def test_render_with_placeholder(self):
-        block = PlaceholderCharBlock(placeholder='Hi there!')
-        html = block.render_form('Hello world!')
+        html = self.placeholder.render_form('Hello world!')
         self.assertIn(
             (
                 '<input id="" name="" placeholder="Hi there!" '
@@ -119,8 +122,7 @@ class TestPlaceholderBlock(TestCase):
         )
 
     def test_render_returns_safetext(self):
-        block = PlaceholderCharBlock(placeholder='Hi there!')
-        html = block.render_form('Hello world!')
+        html = self.placeholder.render_form('Hello world!')
         self.assertIsInstance(html, SafeText)
 
     def test_replace_placeholder(self):
@@ -147,3 +149,14 @@ class TestPlaceholderBlock(TestCase):
         html = '<input id="foo" /><input id="bar" />'
         with self.assertRaises(ValueError):
             PlaceholderCharBlock.replace_placeholder(html, 'a')
+
+
+class RAFToolBlockTestCase(TestCase):
+    def test_render_no_placeholder_provided(self):
+        erap_tool_block = RAFToolBlock()
+        html = erap_tool_block.render(None)
+        self.assertInHTML(
+            '<div id="rental-assistance-finder" data-language="en"></div>',
+            html
+        )
+

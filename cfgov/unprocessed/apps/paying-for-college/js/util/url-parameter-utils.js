@@ -10,6 +10,7 @@ const urlParameters = {
   'pid': 'stateModel.pid',
   'houp': 'stateModel.programHousing',
   'typp': 'stateModel.programType',
+  'prop': 'stateModel.programProgress',
   'lenp': 'stateModel.programLength',
   'ratp': 'stateModel.programRate',
   'depp': 'stateModel.programDependency',
@@ -49,8 +50,8 @@ const urlParameters = {
 
   'wkst': 'financialModel.workStudy_workStudy',
 
-  'fell': 'financialModel.fund_fellowship',
-  'asst': 'financialModel.fund_assistantship',
+  'fell': 'financialModel.fellowAssist_fellowship',
+  'asst': 'financialModel.fellowAssist_assistantship',
 
   'subl': 'financialModel.fedLoan_directSub',
   'unsl': 'financialModel.fedLoan_directUnsub',
@@ -80,6 +81,8 @@ const urlParameters = {
 
   'plus': 'financialModel.plusLoan_parentPlus',
 
+  'cdbt': 'financialModel.existingDebt_amount',
+
   'houx': 'expensesModel.item_housing',
   'fdx': 'expensesModel.item_food',
   'clhx': 'expensesModel.item_clothing',
@@ -90,7 +93,7 @@ const urlParameters = {
   'taxx': 'expensesModel.item_taxes',
   'chcx': 'expensesModel.item_childcare',
   'othx': 'expensesModel.item_other',
-  'dbtx': 'expensesModel.item_currentDebt'
+  'dbtx': 'expensesModel.item_currentDebts'
 };
 
 const models = {

@@ -54,7 +54,7 @@ pip install tox
 
 If you have set up
 [a Docker-based installation of consumerfinance.gov](/installation/#docker-based-installation),
-you can run the tests there by  
+you can run the tests there by
 [accessing the Python container's shell](http://localhost:8888/running-docker/#access-a-containers-shell):
 
 ```sh
@@ -86,22 +86,15 @@ tox -e lint -e unittest
 
 These default environments are:
 
-- `lint`, which runs our [linting](#linting) tools. We require this
+- `lint`, which runs our [linters](#linting). We require this
   environment to pass in CI.
-- `validate-migrations`, which checks for any missing Django migrations. 
+- `validate-migrations`, which checks for any missing Django migrations.
   We require this environment to pass in CI.
 - `unittest`, which runs unit tests against the current production
   versions of Python, Django, and Wagtail. We require this environment to
   pass in CI.
 
-In addition, we also have this environment:
-
-- `unittest-future`, which runs unit tests against upcoming versions of
-  Python, Django, and Wagtail. We do not require this environment to pass in
-  CI.
-
-Tests will run against the default Django database as configured in settings
-using the `DATABASE_URL` environment variable.
+Tests will run against the default Django database.
 
 If you would like to run only a specific test, or the tests for a specific app,
 you can provide a dotted path to the test as the final argument to any of the above calls to `tox`:
@@ -138,7 +131,14 @@ From the root of `consumerfinance.gov`.
 
 ### Coverage
 
-To see Python code coverage information, run
+To see Python code coverage information immediately following a test run, 
+you can add the `coverage` env to the list of envs for tox to run:
+
+```sh
+tox -e lint -e unittest -e coverage
+```
+
+You can also run coverage directly to see coverage information from a previous test run:
 
 ```sh
 coverage report -m

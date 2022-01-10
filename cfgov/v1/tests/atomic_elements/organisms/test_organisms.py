@@ -3,6 +3,7 @@ from django.core.files import File
 from django.core.files.base import ContentFile
 from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
+from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
 from wagtail.images.tests.utils import get_test_image_file
@@ -11,7 +12,7 @@ from wagtailmedia.models import Media
 
 from scripts import _atomic_helpers as atomic
 from v1.atomic_elements.organisms import (
-    AudioPlayer, FeaturedContent, InfoUnitGroup, TableBlock, VideoPlayer
+    AudioPlayer, FeaturedContent, InfoUnitGroup, VideoPlayer
 )
 from v1.models import (
     BrowsePage, CFGOVImage, Contact, LandingPage, LearnPage, Resource,
@@ -413,8 +414,8 @@ class FeaturedContentTests(TestCase):
 
         self.assertEqual(value.links, [
             {'url': self.page.url, 'text': 'This is a post'},
-            {'url': '/foo/', 'text': 'A link'},
-            {'url': '/bar/', 'text': 'Another link'},
+            {'url': '/foo/', 'text': 'A link', 'aria_label': None},
+            {'url': '/bar/', 'text': 'Another link', 'aria_label': None},
         ])
 
     def test_render(self):
@@ -445,7 +446,8 @@ class FeaturedContentTests(TestCase):
             ('/bar/', 'Another link'),
         ):
             self.assertIn(
-                f'<a class="m-list_link" href="{url}">{text}</a>',
+                f'<a class="m-list_link"\n                       '
+                f'href="{url}"\n                       >{text}</a>',
                 html
             )
 
@@ -459,57 +461,44 @@ class FeaturedContentTests(TestCase):
 
 class TestInfoUnitGroup(TestCase):
     def setUp(self):
+        self.block = InfoUnitGroup()
         self.image = CFGOVImage.objects.create(
             title='test',
             file=get_test_image_file()
         )
 
     def test_no_heading_or_intro_ok(self):
-        block = InfoUnitGroup()
-        value = block.to_python({})
-
+        value = self.block.to_python({})
         try:
-            block.clean(value)
+            self.block.clean(value)
         except ValidationError:  # pragma: nocover
             self.fail('no heading and no intro should not fail validation')
 
     def test_heading_only_ok(self):
-        block = InfoUnitGroup()
-        value = block.to_python({
+        value = self.block.to_python({
             'heading': {
                 'text': 'Heading'
             }
         })
-
         try:
-            block.clean(value)
+            self.block.clean(value)
         except ValidationError:  # pragma: nocover
             self.fail('heading alone should not fail validation')
 
-    def test_intro_only_fails_validation(self):
-        block = InfoUnitGroup()
-        value = block.to_python({'intro': '<p>Only an intro</p>'})
-
-        with self.assertRaises(ValidationError):
-            block.clean(value)
-
     def test_heading_and_intro_ok(self):
-        block = InfoUnitGroup()
-        value = block.to_python({
+        value = self.block.to_python({
             'heading': {
                 'text': 'Heading'
             },
             'intro': '<p>Rich txt</p>'
         })
-
         try:
-            block.clean(value)
+            self.block.clean(value)
         except ValidationError:  # pragma: nocover
             self.fail('heading with intro should not fail validation')
 
     def test_2575_with_image_ok(self):
-        block = InfoUnitGroup()
-        value = block.to_python({
+        value = self.block.to_python({
             'format': '25-75',
             'info_units': [
                 {
@@ -522,13 +511,12 @@ class TestInfoUnitGroup(TestCase):
         })
 
         try:
-            block.clean(value)
+            self.block.clean(value)
         except ValidationError:  # pragma: nocover
             self.fail('25-75 group with info unit that has an image validates')
 
     def test_2575_with_no_images_fails_validation(self):
-        block = InfoUnitGroup()
-        value = block.to_python({
+        value = self.block.to_python({
             'format': '25-75',
             'info_units': [
                 {
@@ -540,11 +528,10 @@ class TestInfoUnitGroup(TestCase):
         })
 
         with self.assertRaises(ValidationError):
-            block.clean(value)
+            self.block.clean(value)
 
     def test_2575_with_some_images_fails(self):
-        block = InfoUnitGroup()
-        value = block.to_python({
+        value = self.block.to_python({
             'format': '25-75',
             'info_units': [
                 {
@@ -562,7 +549,7 @@ class TestInfoUnitGroup(TestCase):
         })
 
         with self.assertRaises(ValidationError):
-            block.clean(value)
+            self.block.clean(value)
 
 
 class VideoPlayerTests(SimpleTestCase):

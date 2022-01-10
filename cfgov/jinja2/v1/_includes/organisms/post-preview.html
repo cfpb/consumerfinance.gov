@@ -194,7 +194,7 @@
                 <div class="o-post-preview_byline-group">
                 {% for author in post.get_authors() %}
                     {% if loop.first %}By {% elif loop.last %}and {% endif %}
-                    <a href="{{ url }}?authors={{ author.slug }}">{{ author.name }}</a>
+                    {{ author.name }}</a>
                     {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
                 {% endfor %}
                 </div>
@@ -202,7 +202,7 @@
 
             {% if show_tags and post.tags.exists() %}
                 {%- import 'tags.html' as tags %}
-                {{ tags.render(post.related_metadata_tags(), hide_heading=true, is_wagtail=True) }}
+                {{ tags.render(post.related_metadata_tags(), hide_heading=true) }}
             {% endif %}
 
             {% if post.secondary_link_url and post.secondary_link_text %}

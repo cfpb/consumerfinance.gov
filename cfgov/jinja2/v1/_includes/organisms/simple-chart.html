@@ -25,12 +25,12 @@
 
 
 <div class="o-simple-chart">
-    {% if value.figure %}
-    <h5>Figure {{ value.figure }}</h5>
+    {% if value.figure_number %}
+    <h5>Figure {{ value.figure_number }}</h5>
     {% endif %}
 
     {% if value.title %}
-    <h2 class="o-simple-chart_title">{{ value.title }}</h2>
+    <a class="chart-anchor" id="chart-{{value.title}}" href="#chart-{{ value.title}}"><h2 class="o-simple-chart_title">{{ value.title }}</h2></a>
     {% endif %}
 
     {% if value.subtitle %}
@@ -43,9 +43,11 @@
          data-chart-type="{{ value.chart_type }}"
          data-source='{{ data_location }}'
          data-series='{{ value.data_series }}'
-         data-x-axis-data='{{ value.x_axis_data }}'
+         data-x-axis-source='{{ value.x_axis_source }}'
          data-description="{{ value.description }}"
-         data-y-axis-label="{{ value.y_axis_label }}"
+         {% if value.y_axis_label %}
+             data-y-axis-label="{{ value.y_axis_label }}"
+         {% endif %}
          {% if value.x_axis_label %}
               data-x-axis-label="{{ value.x_axis_label }}"
          {% endif %}
@@ -54,7 +56,7 @@
          {% if value.style_overrides %}data-style-overrides='{{ value.style_overrides }}'{% endif %}
          >
     </div>
-
+    <div class="o-simple-chart_tilemap_legend"></div>
     {% set download_source = value.download_file %}
 
     <p class="m-chart-footnote block__sub block__border-top block short-desc">

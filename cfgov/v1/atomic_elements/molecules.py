@@ -1,9 +1,9 @@
-from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
 from wagtail.core import blocks
+from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.images.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms
@@ -52,13 +52,10 @@ class TextIntroduction(blocks.StructBlock):
 
         # Eyebrow requires a heading.
         if cleaned.get('eyebrow') and not cleaned.get('heading'):
-            raise ValidationError(
-                'Validation error in TextIntroduction: '
-                'pre-heading requires heading',
-                params={'heading': ErrorList([
+            raise StructBlockValidationError(
+                block_errors={'heading': ErrorList([
                     'Required if a pre-heading is entered.'
-                ])}
-            )
+                ])})
 
         return cleaned
 
@@ -226,13 +223,10 @@ class ContactEmail(blocks.StructBlock):
         cleaned = super(ContactEmail, self).clean(value)
 
         if not cleaned.get('emails'):
-            raise ValidationError(
-                "Validation error in ContactEmail: "
-                "at least one email address is required",
-                params={'heading': ErrorList([
+            raise StructBlockValidationError(
+                block_errors={'heading': ErrorList([
                     "At least one email address is required."
-                ])}
-            )
+                ])})
 
         return cleaned
 
@@ -298,10 +292,11 @@ class ContactHyperlink(blocks.StructBlock):
 class ContentImage(blocks.StructBlock):
     image = atoms.ImageBasic()
     image_width = blocks.ChoiceBlock(
-        choices=[('full', 'full'),
+        choices=[('full', 'Full width'),
                  (470, '470px'),
                  (270, '270px'),
-                 (170, '170px')],
+                 (170, '170px'),
+                 ('bleed', 'Bleed into left/right margins')],
         default='full',)
     image_position = blocks.ChoiceBlock(
         choices=[('right', 'right'),
@@ -362,17 +357,7 @@ class RelatedMetadata(blocks.StructBlock):
         ('topics', blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100, default='Topics')),
             ('show_topics', blocks.BooleanBlock(default=True, required=False))
-        ], icon='tag')),
-        ('categories', blocks.StructBlock([
-            ('heading', blocks.CharBlock(
-                max_length=100,
-                default='Categories'
-            )),
-            ('show_categories', blocks.BooleanBlock(
-                default=True,
-                required=False
-            ))
-        ], icon='list-ul')),
+        ], icon='tag'))
     ])
     is_half_width = blocks.BooleanBlock(required=False, default=False)
 

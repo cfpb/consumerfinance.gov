@@ -29,6 +29,9 @@ def get_available_filters(products):
         if issuer_name and issuer_name not in available_filters['issuer_name']:
             available_filters['issuer_name'].append(issuer_name)
 
+    for filter_type in available_filters.keys():
+        available_filters[filter_type] = sorted(available_filters[filter_type])
+
     return available_filters
 
 
@@ -135,7 +138,7 @@ def index(request):
     current_count = products.count()
 
     # Handle pagination
-    paginator = Paginator(products.all(), 20)
+    paginator = Paginator(products.all(), 25)
     page = paginator.get_page(page_number)
 
     return TemplateResponse(request, 'prepaid_agreements/index.html', {

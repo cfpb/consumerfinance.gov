@@ -151,6 +151,17 @@ function MegaMenuDesktop( baseClass, menus ) {
   }
 
   /**
+   * Close the mega menu.
+   * @returns {MegaMenuDesktop} An instance.
+   */
+  function collapse() {
+    // Close the menu.
+    _updateMenuState( null );
+
+    return this;
+  }
+
+  /**
    * Add events necessary for the desktop menu behaviors.
    * @returns {boolean} Whether it has successfully been resumed or not.
    */
@@ -268,6 +279,7 @@ function MegaMenuDesktop( baseClass, menus ) {
   this.removeEventListener = eventObserver.removeEventListener;
   this.dispatchEvent = eventObserver.dispatchEvent;
 
+  this.collapse = collapse;
   this.handleEvent = handleEvent;
   this.init = init;
   this.resume = resume;

@@ -1,23 +1,27 @@
-/* eslint complexity: ["error", 10] */
+/* eslint-disable complexity */
 /* eslint max-statements: ["error", 30] */
+/* eslint max-lines-per-function: ["error", 75] */
 /* eslint max-params: ["error", 9] */
 /* eslint consistent-return: [0] */
 // Polyfill Promise for IE11
 import 'core-js/features/promise';
 
 import Highcharts from 'highcharts/highstock';
-// import Highmaps from 'highcharts/highmaps';
+import Highmaps from 'highcharts/highmaps';
 import Papa from 'papaparse';
 import accessibility from 'highcharts/modules/accessibility';
+import tilemap from 'highcharts/modules/tilemap';
 import chartHooks from './chart-hooks.js';
 import cloneDeep from 'lodash.clonedeep';
 import defaultBar from './bar-styles.js';
 import defaultDatetime from './datetime-styles.js';
 import defaultLine from './line-styles.js';
 import defaultTilemap from './tilemap-styles.js';
+import usLayout from './us-layout.js';
 import fetch from 'cross-fetch';
 
 accessibility( Highcharts );
+tilemap( Highmaps );
 
 const dataCache = {};
 
@@ -57,6 +61,9 @@ function fetchData( url, isCSV ) {
 
     return prom.then( d => {
       if ( isCSV ) {
+        /* Excel can put quotes at the start of our # or // comments
+           This strips those quotes */
+        d = d.replace( /^"(#|\/\/)|(\n)"(#|\/\/)/g, '$1$2$3' );
         d = Papa.parse( d, {
           header: true, comments: true, skipEmptyLines: true
         } ).data;
@@ -114,7 +121,7 @@ function applyOverrides( styleOverrides, obj, data ) {
  * @param {string} x_axis_data Key or array of categories
  * @returns {array} Series data
  */
-function extractSeries( rawData, { series, xAxisData, chartType } ) {
+function extractSeries( rawData, { series, xAxisSource, chartType } ) {
   if ( series ) {
     if ( series.match( /^\[/ ) ) {
       series = JSON.parse( series );
@@ -123,7 +130,7 @@ function extractSeries( rawData, { series, xAxisData, chartType } ) {
     }
 
     if ( chartType === 'datetime' ) {
-      if ( !xAxisData ) xAxisData = 'x';
+      if ( !xAxisSource ) xAxisSource = 'x';
     }
 
     const seriesData = [];
@@ -146,7 +153,7 @@ function extractSeries( rawData, { series, xAxisData, chartType } ) {
         let d = Number( obj[key] );
         if ( chartType === 'datetime' ) {
           d = {
-            x:  Number( new Date( obj[xAxisData] ) ),
+            x:  Number( new Date( obj[xAxisSource] ) ),
             y: d
           };
         }
@@ -193,10 +200,7 @@ function makeFormatter( yAxisLabel ) {
       x = new Date( x );
     }
     if ( x instanceof Date ) {
-      x = x.toLocaleDateString( 'en-US', {
-        dateStyle: 'medium',
-        timeZone: 'UTC'
-      } );
+      x = chartHooks.getDateString( x );
     }
     let str = `<b>${ x }</b><br/>${ yAxisLabel }: <b>${ this.y }</b>`;
     if ( this.series && this.series.name ) {
@@ -206,51 +210,245 @@ function makeFormatter( yAxisLabel ) {
   };
 }
 
+
+/**
+ * Extracts all dates from an object/csv formatted for tilemap display
+ * @param {object} data The data object
+ * @returns {array} Extracted dates
+ * */
+function getTilemapDates( data ) {
+  return Object.keys( data[0] )
+    .filter( k => !isNaN( new Date( k ) ) )
+    .sort( ( a, b ) => new Date( b ) - new Date( a ) );
+}
+
+/**
+ * Builds the tilemap filter DOM
+ * @param {object} chartNode The node where the chart lives
+ * @param {object} chart The chart object
+ * @param {object} data The data object
+ * @param {object} transform Whether data has been transformed
+ */
+function makeTilemapSelect( chartNode, chart, data, transform ) {
+
+  let d;
+  if ( transform ) d = data.transformed;
+  else d = data.raw;
+
+  const options = getTilemapDates( d );
+  const selectNode = makeFilterDOM( options, chartNode, { key: 'tilemap' },
+    'Select date'
+  );
+
+  attachTilemapFilter( selectNode, chart, data );
+}
+
+
+/**
+ * Wires up the tilemap filter
+ * @param {object} node The created select node
+ * @param {object} chart The chart object
+ * @param {object} data The data object
+ */
+function attachTilemapFilter( node, chart, data ) {
+
+  node.addEventListener( 'change', evt => {
+    const formatted = formatSeries( data );
+    const updated = getMapConfig( formatted, evt.target.value );
+    chart.update( updated );
+    const updatedTitleObj = chart.options.yAxis[0].title;
+    updateTilemapLegend( chart.renderTo, updated, updatedTitleObj ? updatedTitleObj.text : '' );
+  } );
+}
+
+
+/**
+ * Makes a legend for the tilemap
+ * @param {object} node The chart node
+ * @param {object} data The data object
+ * @param {string } legendTitle The legend title
+*/
+function updateTilemapLegend( node, data, legendTitle ) {
+  const classes = data.colorAxis.dataClasses;
+  const legend = node.parentNode.getElementsByClassName( 'o-simple-chart_tilemap_legend' )[0];
+  legend.innerHTML = '';
+  const colors = [];
+  const labels = [];
+  classes.forEach( v => {
+    const color = document.createElement( 'div' );
+    const label = document.createElement( 'div' );
+    color.className = 'legend-color';
+    label.className = 'legend-label';
+    color.style.backgroundColor = v.color;
+    label.innerText = v.name;
+    colors.push( color );
+    labels.push( label );
+  } );
+  if ( legendTitle ) {
+    const title = document.createElement( 'p' );
+    title.className = 'legend-title';
+    title.innerText = legendTitle;
+    legend.appendChild( title );
+  }
+  colors.forEach( v => legend.appendChild( v ) );
+  labels.forEach( v => legend.appendChild( v ) );
+}
+
+/**
+ * Intuits the correct object key for state short codes
+ * @param {object} data A row of data as an object with headers as keys
+ * @returns {string} The intuited shortcode
+ * */
+function getShortCode( data ) {
+  const keys = Object.keys( data );
+  for ( let i = 0; i < keys.length; i++ ) {
+    if ( usLayout[data[keys[i]]] ) return keys[i];
+  }
+  /* eslint-disable-next-line */
+  console.error( 'Unable to determine state shortcode. Data is misformatted for simple-chart.' );
+}
+
+
+/**
+ * Adds generates a config object to be added to the chart config
+ * @param {array} series The formatted series data
+ * @param {string} date The date to use
+ * @returns {array} series data with a geographic component added
+ * */
+function getMapConfig( series, date ) {
+  let min = Infinity;
+  let max = -Infinity;
+  const data = series[0].data;
+  const shortCode = getShortCode( data[0] );
+  if ( !date ) date = getTilemapDates( data )[0];
+  const added = data.map( v => {
+    const val = Math.round( Number( v[date] ) * 100 ) / 100;
+    if ( val <= min ) min = val;
+    if ( val >= max ) max = val;
+    return {
+      ...usLayout[v[shortCode]],
+      state: v[shortCode],
+      value: val
+    };
+  } );
+  min = Math.floor( min );
+  max = Math.ceil( max );
+  const step = Math.round( ( max - min ) / 5 );
+  const step1 = min + step;
+  const step2 = step1 + step;
+  const step3 = step2 + step;
+  const step4 = step3 + step;
+  const trimTenth = v => Math.round( ( v - 0.1 ) * 10
+  ) / 10;
+  return {
+    colorAxis: {
+      dataClasses: [
+        { from: min, to: step1, color: '#addc91', name: `${ min } - ${ trimTenth( step1 ) }` },
+        { from: step1, to: step2, color: '#e2efd8', name: `${ step1 } - ${ trimTenth( step2 ) }` },
+        { from: step2, to: step3, color: '#ffffff', name: `${ step2 } - ${ trimTenth( step3 ) }` },
+        { from: step3, to: step4, color: '#d6e8fa', name: `${ step3 } - ${ trimTenth( step4 ) }` },
+        { from: step4, color: '#7eb7e8', name: `${ step4 } - ${ max }` }
+      ]},
+    series: [ { clip: false, data: added } ]
+  };
+}
+
 /**
  * Overrides default chart options using provided Wagtail configurations
  * @param {object} data The data to provide to the chart
- * @param {object} dataProps (destructured) data-* props attached to the chart HTML
+ * @param {target} target The target simple chart node
  * @returns {object} The configured style object
  */
-function makeChartOptions(
-  data,
-  { chartType, styleOverrides, description, xAxisData, xAxisLabel,
-    yAxisLabel, filters }
-) {
-  const defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
+function makeChartOptions( data, target ) {
+  const { chartType, styleOverrides, description, xAxisSource, xAxisLabel,
+    yAxisLabel, filters } = target.dataset;
+  let defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
 
   if ( styleOverrides ) {
     applyOverrides( styleOverrides, defaultObj, data );
   }
 
-  if ( xAxisData && chartType !== 'datetime' ) {
-    defaultObj.xAxis.categories = resolveKey( data.raw, xAxisData );
+  if ( xAxisSource && chartType !== 'datetime' ) {
+    defaultObj.xAxis.categories = resolveKey( data.raw, xAxisSource );
+  }
+
+  const formattedSeries = formatSeries( data );
+
+  if ( chartType === 'tilemap' && formattedSeries.length === 1 ) {
+    defaultObj = {
+      ...defaultObj,
+      ...getMapConfig( formattedSeries )
+    };
+    const legend = target.parentNode.getElementsByClassName( 'o-simple-chart_tilemap_legend' )[0];
+    legend.style.display = 'block';
+    updateTilemapLegend( target, defaultObj, yAxisLabel );
+
+    defaultObj.tooltip.formatter = function() {
+      const label = yAxisLabel ? yAxisLabel + ': ' : '';
+      return `<span style="font-weight:600">${ this.point.name }</span><br/>${ label }<span style="font-weight:600">${ Math.round( this.point.value * 10 ) / 10 }</span>`;
+    };
+  } else {
+    defaultObj.series = formattedSeries;
   }
   /* eslint-disable-next-line */
   defaultObj.title = { text: undefined };
-  defaultObj.series = formatSeries( data );
   defaultObj.accessibility.description = description;
   defaultObj.yAxis.title.text = yAxisLabel;
+  if ( !yAxisLabel && chartType === 'datetime' ) {
+    defaultObj.rangeSelector.buttonPosition.x = -50;
+  }
   if ( xAxisLabel ) defaultObj.xAxis.title.text = xAxisLabel;
-  if ( !defaultObj.tooltip.formatter ) {
+  if ( !defaultObj.tooltip.formatter && yAxisLabel ) {
     defaultObj.tooltip.formatter = makeFormatter( yAxisLabel );
   }
-  if ( isDateFilter( filters, xAxisData ) ) {
+  if ( isDateFilter( filters, xAxisSource ) ) {
     defaultObj.navigator.enabled = false;
     defaultObj.xAxis.min = defaultObj.series[0].data[0].x;
   }
-  const len = defaultObj.series.length;
-  let marg = ( len * 23 ) + 35;
-  let y = 0;
-  if ( marg < 100 ) {
-    marg = 100;
-    y = 19;
+
+  if ( defaultObj.series.length === 1 ) {
+    defaultObj.plotOptions.series = {
+      ...defaultObj.plotOptions.series,
+      events: {
+        legendItemClick: function() {
+          return false;
+        }
+      }
+    };
   }
-  defaultObj.chart.marginTop = marg;
-  defaultObj.legend.y = y;
+
+  alignMargin( defaultObj, chartType );
 
   return defaultObj;
 }
+
+
+/**
+ * Adjusts legend alignment based on series length
+ * @param {object} defaultObj default object to be decorated
+ * @param {string} chartType current chart type
+ */
+function alignMargin( defaultObj, chartType ) {
+  const len = defaultObj.series.length;
+  let marg = ( len * 23 ) + 35;
+  let y = 0;
+  if ( chartType === 'tilemap' ) {
+    marg = 100;
+    y = -15;
+  } else {
+    if ( marg < 100 ) {
+      marg = 100;
+      y = 40 / len;
+    }
+    if ( window.innerWidth <= 660 ) {
+      marg = ( len * 23 ) + 60;
+      y = 0;
+    }
+  }
+  if ( !defaultObj.chart.marginTop ) defaultObj.chart.marginTop = marg;
+  if ( !defaultObj.legend.y ) defaultObj.legend.y = y;
+}
+
 
 /**
  * Resolves provided x axis or series data
@@ -297,7 +495,7 @@ function resolveData( source ) {
 }
 
 /**
- * Wires up select filters, if present
+ * Generates a list of options for the select filters
  * @param {object} filter Object with a filter key and possible label
  * @param {object} data The raw chart data
  * @param {boolean} isDate Whether the data should be stored as JS dates
@@ -318,6 +516,7 @@ function getOptions( filter, data, isDate ) {
   if ( isDate ) return options.map( v => Number( new Date( v ) ) );
   return options;
 }
+
 
 /**
  * @param {array} options List of options to build for the select component
@@ -357,7 +556,7 @@ function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
   options.forEach( option => {
     const opt = document.createElement( 'option' );
     opt.value = option;
-    if ( selectLabel ) opt.innerText = processDate( option );
+    if ( selectLabel ) opt.innerText = processDate( option, filter );
     else opt.innerText = option;
     select.appendChild( opt );
   } );
@@ -376,14 +575,16 @@ function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
 
 /**
  * @param {number} option The JS-date formatted option
+ * @param {object} filter The filter object
  * @returns {string} Specially formatted date
  */
-function processDate( option ) {
+function processDate( option, filter ) {
+  if ( filter && filter.key === 'tilemap' ) {
+    const [ quarter, year ] = chartHooks.cci_dateToQuarter( option );
+    return `${ quarter } ${ year }`;
+  }
   const d = new Date( option );
-  return d.toLocaleDateString( 'en-US', {
-    dateStyle: 'medium',
-    timeZone: 'UTC'
-  } );
+  return chartHooks.getDateString( d );
 }
 
 /**
@@ -468,11 +669,11 @@ function attachFilter(
 
 /**
  * @param {string} filters The filters data key
- * @param {string} xAxisData The xAxis data key
+ * @param {string} xAxisSource The xAxis data key
  * @returns {boolean} Whethere the filter is data-based or date-based
  */
-function isDateFilter( filters, xAxisData ) {
-  return xAxisData && filters && filters.match( xAxisData );
+function isDateFilter( filters, xAxisSource ) {
+  return xAxisSource && filters && filters.match( xAxisSource );
 }
 
 /**
@@ -522,7 +723,7 @@ function initFilters( dataset, chartNode, chart, data, transform ) {
 
     filters = JSON.parse( filters );
 
-    if ( isDateFilter( filters, dataset.xAxisData ) ) {
+    if ( isDateFilter( filters, dataset.xAxisSource ) ) {
       const options =
         getOptions( filters, data, 1 );
       const startNode = makeFilterDOM( options, chartNode,
@@ -532,6 +733,7 @@ function initFilters( dataset, chartNode, chart, data, transform ) {
         { key: filters, label: filters }, 'End date', 1
       );
       attachDateFilters( startNode, endNode, chart );
+
     } else {
       if ( !Array.isArray( filters ) ) filters = [ filters ];
       const selects = [];
@@ -570,7 +772,19 @@ function buildCharts() {
  */
 function buildChart( chartNode ) {
   const target = chartNode.getElementsByClassName( 'o-simple-chart_target' )[0];
-  const { source, transform } = target.dataset;
+  const { source, transform, chartType } = target.dataset;
+
+  /**
+   * Fixes tilemap clipping
+   * @param {object} evt Optional event
+   * @param {number} height Height value for the SVG element.
+   **/
+  function fixViewbox() {
+    const chartSVG = target.getElementsByClassName( 'highcharts-root' )[0];
+    const width = chartSVG.width.animVal.value;
+    const height = chartSVG.height.animVal.value;
+    chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height + 1 }` );
+  }
 
   resolveData( source.trim() ).then( raw => {
     const series = extractSeries( raw, target.dataset );
@@ -584,18 +798,33 @@ function buildChart( chartNode ) {
       transformed
     };
 
-    const chart = Highcharts.chart(
+    const chartMaker = chartType === 'tilemap' ?
+      Highmaps.mapChart :
+      Highcharts.chart;
+
+    const chart = chartMaker(
       target,
-      makeChartOptions( data, target.dataset )
+      makeChartOptions( data, target )
     );
     const mediaQueryList = window.matchMedia( 'print' );
     mediaQueryList.addListener( function() {
       chart.reflow();
     } );
 
-    initFilters(
-      target.dataset, chartNode, chart, data, transform && chartHooks[transform]
-    );
+    if ( chartType === 'tilemap' ) {
+      makeTilemapSelect( chartNode, chart, data,
+        transform && chartHooks[transform] );
+    } else {
+      initFilters(
+        target.dataset, chartNode, chart, data,
+        transform && chartHooks[transform]
+      );
+    }
+
+    window.addEventListener( 'resize', fixViewbox );
+    fixViewbox();
+    setTimeout( fixViewbox, 500 );
+
   } );
 }
 

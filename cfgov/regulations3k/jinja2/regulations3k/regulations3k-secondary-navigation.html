@@ -6,73 +6,50 @@
 
    Description:
 
-   Creates markup for Header organism within eregulations.
-
-   TODO: `active_nav_id` and `nav_items` parameters can be removed when
-         `_render_secondary_navigation_deprecated` is removed.
-
-   active_nav_id: Name of active navigation item.
-
-   nav_items:     The secondary navigation item structure.
+   Creates markup for Secondary Navigation organism within eregulations.
 
    ========================================================================== #}
 
-{% macro render(active_nav_id, nav_items) %}
-{% if page %}
-    {{ _render_secondary_navigation() }}
-{% else %}
-    {# TODO: Remove when non-wagtail pages have been migrated to wagtail. #}
-    {{ _render_secondary_navigation_deprecated(active_nav_id, nav_items) }}
-{% endif %}
-{% endmacro %}
-
-{# ==========================================================================
-
-   _render_secondary_navigation()
-
-   ========================================================================== #}
-{% macro _render_secondary_navigation() %}
-{% if nav_items is not defined and has_children is not defined %}
+{% macro render() %}
     {% set nav_items, has_children = get_secondary_nav_items(request, page) %}
-{% endif %}
-{% from 'organisms/expandable.html' import expandable with context %}
-<nav class="o-regs3k-navigation o-expandable__padded"
-     aria-label="Section navigation">
-    <button class="o-regs3k-navigation_header o-expandable_header o-expandable_target">
-        <span class="h4 o-expandable_header-left o-expandable_label">
-            Table of Contents
-        </span>
-        <span class="o-expandable_header-right o-expandable_link">
-            <span class="o-expandable_cue o-expandable_cue-open">
-                <span class="u-visually-hidden">
-                    {{ _('Show') }}
-                    {{ expandable_cue_additional_text }}
-                </span>
-                {{ svg_icon('plus-round') }}
+    {% from 'organisms/expandable.html' import expandable with context %}
+    <nav class="o-regs3k-navigation o-expandable__padded"
+         aria-label="Section navigation">
+        <button class="o-regs3k-navigation_header o-expandable_header o-expandable_target">
+            <span class="h4 o-expandable_header-left o-expandable_label">
+                Table of Contents
             </span>
-            <span class="o-expandable_cue o-expandable_cue-close">
-                <span class="u-visually-hidden">
-                    {{ _('Hide') }}
-                    {{ expandable_cue_additional_text }}
+            <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_cue o-expandable_cue-open">
+                    <span class="u-visually-hidden">
+                        {{ _('Show') }}
+                        {{ expandable_cue_additional_text }}
+                    </span>
+                    {{ svg_icon('plus-round') }}
                 </span>
-                {{ svg_icon('minus-round') }}
+                <span class="o-expandable_cue o-expandable_cue-close">
+                    <span class="u-visually-hidden">
+                        {{ _('Hide') }}
+                        {{ expandable_cue_additional_text }}
+                    </span>
+                    {{ svg_icon('minus-round') }}
+                </span>
             </span>
-        </span>
-    </button>
-    <div class="o-regs3k-sections">
-        {% import 'molecules/nav-link.html' as nav_link %}
-        {%- for subpart in nav_items %}
-            {% set sec_nav_settings = {
-                'label': subpart.subpart_heading ~ ' ' ~ subpart.title ~ ' ' ~ subpart.section_range|safe,
-                'hide_cue_label': true,
-                'is_expanded': nav_items[subpart].expanded
-            } %}
-            {% call() expandable(sec_nav_settings) %}
-            {% for section in nav_items[subpart].sections %}
-                {{ nav_link.render(section.title, section.url, true, section.active) }}
+        </button>
+        <div class="o-regs3k-sections">
+            {% import 'molecules/nav-link.html' as nav_link %}
+            {%- for subpart in nav_items %}
+                {% set sec_nav_settings = {
+                    'label': subpart.subpart_heading ~ ' ' ~ subpart.title ~ ' ' ~ subpart.section_range|safe,
+                    'hide_cue_label': true,
+                    'is_expanded': nav_items[subpart].expanded
+                } %}
+                {% call() expandable(sec_nav_settings) %}
+                {% for section in nav_items[subpart].sections %}
+                    {{ nav_link.render(section.title, section.url, true, section.active) }}
+                {%- endfor %}
+                {% endcall %}
             {%- endfor %}
-            {% endcall %}
-        {%- endfor %}
-    </div>
-</nav>
+        </div>
+    </nav>
 {% endmacro %}

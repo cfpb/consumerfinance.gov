@@ -1,4 +1,10 @@
-{% extends "base.html" %}
+{% extends "content-base.html" %}
+
+{% set breadcrumb_items = [{
+    "title": "Buying a House",
+    "href": "/owning-a-home/",
+}] %}
+
 {% import "molecules/social-media.html" as social_media with context %}
 {% set page={"search_description":"A Loan Estimate tells you important details about a mortgage loan you have requested. Use this tool to make sure it’s accurate—and what you expected."} %}
 {% set active_page = "loan-estimate" %}
@@ -8,7 +14,9 @@
     Loan Estimate Explainer | Consumer Financial Protection Bureau
 {%- endblock %}
 
-{% block metadescription %}Use the CFPB's tool to review your Loan Estimate to make sure it reflects what you discussed with the lender.{% endblock metadescription %}
+{% block desc %}
+Use the CFPB's tool to review your Loan Estimate to make sure it reflects what you discussed with the lender.
+{% endblock %}
 
 {% block banner_top %}
     {% include "_templates/brand-header.html" %}
@@ -18,31 +26,9 @@
     {{ super() }}
     <link rel="stylesheet"
           href="{{ static('apps/owning-a-home/css/main.css') }}">
-{% endblock css %}
+{% endblock %}
 
-{% block javascript %}
-    {{ super() }}
-     <script async>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-          {# Include site-wide JavaScript. #}
-          var s = [
-            '{{ static('apps/owning-a-home/js/common.js') }}',
-            '{{ static('apps/owning-a-home/js/form-explainer/index.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
-    </script>
-{% endblock javascript %}
-
-{% block content %}
-<main class="content">
-    <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            <a href="/owning-a-home/" class="breadcrumbs_link">Buying a House</a>
-        </nav>
-    </div>
+{% block body_content %}
     <div class="content_wrapper">
         <div class="content_main">
 
@@ -54,10 +40,10 @@
                         <h1>Loan Estimate Explainer</h1>
                         <p class="lead">A Loan Estimate tells you important details about a mortgage loan you have requested. Use this tool to review your Loan Estimate to make sure it reflects what you discussed with the lender. If something looks different from what you expected, ask why. Request multiple Loan Estimates from different lenders so you can compare and choose the loan that's right for you.</p>
                         <div class="block
-                                block__flush-top
-                                block__padded-top
-                                block__flush-bottom
-                                u-right-on-desktop">
+                                    block__flush-top
+                                    block__padded-top
+                                    block__flush-bottom
+                                    u-right-on-desktop">
                             {{ social_media.render( {
                                 "twitter_text": "Use the @CFPB's interactive tool to review your Loan Estimate and get definitions for unfamiliar terms.",
                                 "email_title": "Review your Loan Estimate with the CFPB",
@@ -70,8 +56,8 @@
                     </div>
                     <div class="content-l_col-1-3">
                         <img src="{{ static('apps/owning-a-home/img/ill-form-explainer-loan-est.png') }}"
-                            alt=""
-                            class="illustration">
+                             alt=""
+                             class="illustration">
                     </div>
                 </div>
                 {# Import the form explainer macros #}
@@ -98,24 +84,35 @@
         "intro": "Ready to request Loan Estimates? ",
         "text": "Learn what comes next",
         "label": "Comparing loan offers",
-        "url": "/owning-a-home/process/compare/",
-        "is_jump_link": false
+        "url": "/owning-a-home/process/compare/"
     }, {
         "img": static("apps/owning-a-home/img/footer_chart.png"),
         "intro": "Is your interest rate competitive?",
         "text": "Explore interest rates",
         "label": "Explore interest rates",
-        "url": "/owning-a-home/explore-rates/",
-        is_jump_link: true
+        "url": "/owning-a-home/explore-rates/"
     }, {
         "img": static("apps/owning-a-home/img/footer_options.png"),
         "intro": "Your loan choices affect your costs.",
         "text": "Learn how",
         "label": "Understand loan options",
-        "url": "/owning-a-home/loan-options/",
-        is_jump_link: true
+        "url": "/owning-a-home/loan-options/"
     }
     ] %}
-  {{ brand_footer.render(footer_links) }}
-</main>
+    {{ brand_footer.render(footer_links) }}
 {% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+    <script>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function() {
+          var s = [
+            '{{ static('apps/owning-a-home/js/common.js') }}',
+            '{{ static('apps/owning-a-home/js/form-explainer/index.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

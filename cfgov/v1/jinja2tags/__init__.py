@@ -5,6 +5,7 @@ from django.utils.module_loading import import_string
 from jinja2 import Markup, contextfunction
 from jinja2.ext import Extension
 
+from core.feature_flags import environment_is
 from v1.jinja2tags.datetimes import DatetimesExtension
 from v1.jinja2tags.fragment_cache import FragmentCacheExtension
 from v1.models.images import CFGOVRendition
@@ -128,6 +129,25 @@ def unique_id_in_context(context):
         return get_unique_id()
 
 
+def search_gov_affiliate(context):
+    """Given a request, return the appropriate affiliate for Search.gov.
+
+    Our default affiliate code is "cfpb". We have a separate Spanish-language
+    index named "cfpb_es". We then have two additional indexes, "cfpb_beta"
+    and "cfpb_beta_es", for use on beta.consumerfinance.gov.
+    """
+    affiliate = 'cfpb'
+
+    if environment_is('beta'):
+        affiliate += '_beta'
+
+    language = context.get('language')
+    if language == 'es':
+        affiliate += '_es'
+
+    return affiliate
+
+
 class V1Extension(Extension):
     def __init__(self, environment):
         super(V1Extension, self).__init__(environment)
@@ -151,6 +171,7 @@ class V1Extension(Extension):
             'unique_id_in_context': contextfunction(unique_id_in_context),
             'app_url': app_url,
             'app_page_url': app_page_url,
+            'search_gov_affiliate': contextfunction(search_gov_affiliate),
         })
 
 

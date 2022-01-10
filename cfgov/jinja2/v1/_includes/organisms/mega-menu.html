@@ -52,7 +52,7 @@
         <div class="{{ _content_classes( nav_depth, '-list' ) }}">
 
             {% if group.title %}
-            {% set aria_group_title = group.title ~ ' continued' if group.title_hidden else group.title %}
+            {% set aria_group_title = group.title ~ (' ' ~ _('continued')) if group.title_hidden else group.title %}
             <div role="heading"
                  aria-level="3"
                  aria-label="{{ aria_group_title }}"
@@ -70,13 +70,21 @@
                 aria-label="{{ nav_title | safe }}"
                 {% endif %}>
                 {% if nav_depth == 1 -%}
-                    {% set complaint_url = '/es/enviar-una-queja/' if language == 'es' else '/complaint/' %}
-                    {% set complaint_item = {
-                        'text': 'Submit a Complaint',
-                        'url': complaint_url,
-                        'icon_pre': 'complaint'
-                    }
-                    %}
+                    {% if language == 'es' %}
+                        {% set complaint_item = {
+                            'text': 'Enviar una queja',
+                            'url': '/es/enviar-una-queja/',
+                            'icon_pre': 'complaint'
+                        }
+                        %}
+                    {% else %}
+                        {% set complaint_item = {
+                            'text': 'Submit a Complaint',
+                            'url': '/complaint/',
+                            'icon_pre': 'complaint'
+                        }
+                        %}
+                    {% endif %}
                     {{ _nav_item( nav_depth, complaint_item, language ) }}
                 {%- endif %}
                 {%- for item in group.nav_items %}
@@ -126,7 +134,7 @@
     <button class="{{- _content_classes( nav_depth, '-alt-trigger' ) -}}"
             data-js-hook="behavior_flyout-menu_trigger">
         {{ svg_icon('left') }}
-        Back
+        {{ _('Back') }}
     </button>
     {% endif %}
 
@@ -138,7 +146,8 @@
             <a class="{{ _content_classes( nav_depth, '-overview-link' ) }}
                         {{ _content_classes( nav_depth, '-overview-link__current' ) if overview_link.selected else '' }}"
                href="{{ overview_link.url }}">
-                {{ overview_link.text ~ ' Overview' }}
+                {% set overview_link_text = overview_link.text -%}
+                {% trans %}{{ overview_link_text }} Overview{% endtrans %}
             </a>
         </div>
         {% endif %}
@@ -162,7 +171,7 @@
                     <div role="heading"
                          aria-level="3"
                          class="h5 {{ base_class ~ '_group-heading' }}">
-                        Featured
+                        {{ _('Featured') }}
                     </div>
                     <ul aria-label="{{ _('Featured') }}">
                         {% for link in nav_item.featured_items | default( [], true ) %}
@@ -184,9 +193,9 @@
                     <div role="heading"
                          aria-level="3"
                          class="h5 {{ base_class ~ '_group-heading' }}">
-                        Additional Resources
+                        {{ _('Additional Resources') }}
                     </div>
-                    <ul aria-label="Additional Resources">
+                    <ul aria-label="{{ _('Additional Resources') }}">
                         {% for link in nav_item.other_items | default( [], true ) %}
                         <li class="{{ _content_classes( nav_depth, '-item' ) }}
                                     {{ _content_classes( nav_depth, '-item__has-icon' ) }}">
@@ -195,7 +204,7 @@
                                       {{ _content_classes( nav_depth, '-link__current' ) if link.selected else '' }}"
                             href="{{ link.url }}">
                                 {{ svg_icon( link.icon ) }}
-                                <span><span class="a-link_text">{{ link.text }}</span></span>
+                                <span class="a-link_text">{{ link.text }}</span>
                             </a>
                         </li>
                         {% endfor %}
@@ -301,12 +310,15 @@
             aria-haspopup="menu">
         <span class="{{ base_class ~ '_trigger-open' }}">
             {{ svg_icon('menu') }}
+            <span class="u-visually-hidden">
+                {{ _('Open the main menu') }}
+            </span>
         </span>
         <span class="{{ base_class ~ '_trigger-close' }}">
             {{ svg_icon('close') }}
-        </span>
-        <span class="u-visually-hidden">
-            Main menu
+            <span class="u-visually-hidden">
+                {{ _('Close the main menu') }}
+            </span>
         </span>
     </button>
    {# Create a root menu at depth one.

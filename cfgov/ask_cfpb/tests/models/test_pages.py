@@ -3,6 +3,7 @@ from unittest import mock
 
 from django.apps import apps
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.test import SimpleTestCase, TestCase, override_settings
@@ -1015,11 +1016,19 @@ class AnswerPageTest(TestCase):
         )
         self.assertContains(
             english_answer_page_response,
-            "An official website of the United States government",
+            "An official website of the"
+        )
+        self.assertContains(
+            english_answer_page_response,
+            "United States government"
         )
         self.assertNotContains(
             english_answer_page_response,
-            "Un sitio web oficial del gobierno federal de los Estados Unidos",
+            "Un sitio web oficial"
+        )
+        self.assertNotContains(
+            english_answer_page_response,
+            "gobierno federal de los Estados Unidos"
         )
         self.assertContains(english_answer_page_response, "https://usa.gov/")
         self.assertNotContains(
@@ -1035,11 +1044,19 @@ class AnswerPageTest(TestCase):
         )
         self.assertContains(
             spanish_answer_page_response,
-            "Un sitio web oficial del gobierno federal de los Estados Unidos",
+            "Un sitio web oficial"
+        )
+        self.assertContains(
+            spanish_answer_page_response,
+            "gobierno federal de los Estados Unidos"
         )
         self.assertNotContains(
             spanish_answer_page_response,
-            "An official website of the United States government",
+            "An official website of the"
+        )
+        self.assertNotContains(
+            spanish_answer_page_response,
+            "United States government"
         )
         self.assertContains(
             spanish_answer_page_response, "https://gobiernousa.gov/"
@@ -1196,14 +1213,6 @@ class AnswerPageTest(TestCase):
         page.save_revision()
         self.assertEqual(page.meta_image, self.test_image)
 
-    def test_answer_split_testing_id(self):
-        """Confirm AnswerPage's split_testing_id is set to its answer_base.id,
-        which is checked by the core.feature_flags.in_split_testing_cluster
-        flag condition when doing split testing on Ask CFPB answer pages."""
-        answer = self.answer1234
-        page = answer.english_page
-        self.assertEqual(page.split_test_id, answer.id)
-
     def test_validate_pagination_number(self):
         paginator = Paginator([{"fake": "results"}] * 30, 25)
         request = HttpRequest()
@@ -1216,3 +1225,25 @@ class AnswerPageTest(TestCase):
         request = HttpRequest()
         request.GET.update({"page": "<script>Boo</script>"})
         self.assertEqual(validate_page_number(request, paginator), 1)
+
+    def test_validate_uniqueness_of_language_and_answer(self):
+        answer = baker.make(Answer)
+        answer.save()
+
+        page = AnswerPage(
+            slug="question-en",
+            title="Original question?"
+        )
+        self.ROOT_PAGE.add_child(instance=page)
+        page.answer_base = answer
+        page.full_clean()
+        page.save()
+
+        dup_page = AnswerPage(
+            slug="dup-question-en",
+            title="Duplicate question?"
+        )
+        dup_page.answer_base = answer
+
+        with self.assertRaises(ValidationError):
+            dup_page.full_clean()

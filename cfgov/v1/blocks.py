@@ -1,3 +1,4 @@
+from django.template.loader import render_to_string
 from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
@@ -127,6 +128,7 @@ class Feedback(AbstractFormBlock):
 
 class HeadingIconBlock(blocks.CharBlock):
     classname = 'heading-icon-block'
+    form_classname = 'heading-icon-block'
 
 
 class HeadingLevelBlock(blocks.ChoiceBlock):
@@ -136,10 +138,12 @@ class HeadingLevelBlock(blocks.ChoiceBlock):
         ('h4', 'H4'),
     ]
     classname = 'heading-level-block'
+    form_classname = 'heading-level-block'
 
 
 class HeadingTextBlock(blocks.CharBlock):
     classname = 'heading-text-block'
+    form_classname = 'heading-text-block'
 
 
 class HeadingBlock(blocks.StructBlock):
@@ -164,12 +168,29 @@ class HeadingBlock(blocks.StructBlock):
 
 
 class PlaceholderFieldBlock(blocks.FieldBlock):
+    """
+    Provides a render_form method that outputs a block
+    placeholder, for use in a custom form_template.
+    """
     def __init__(self, *args, **kwargs):
         super(PlaceholderFieldBlock, self).__init__(*args, **kwargs)
         self.placeholder = kwargs.pop('placeholder', None)
 
     def render_form(self, *args, **kwargs):
-        html = super(PlaceholderFieldBlock, self).render_form(*args, **kwargs)
+        # pragma: no cover
+        prefix = ''
+        value = '{}'.format(*args)
+        html = render_to_string('wagtailadmin/block_forms/field.html', {
+            'name': self.name,
+            'classes': getattr(
+                self.meta, 'form_classname', self.meta.classname),
+            'widget': self.field.widget.render(
+                prefix,
+                self.field.prepare_value(self.value_for_form(value)),
+                attrs={'id': format(prefix), 'placeholder': self.label}),
+            'field': self.field,
+            'errors': None
+        })
 
         if self.placeholder is not None:
             html = self.replace_placeholder(html, self.placeholder)
@@ -190,9 +211,41 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
 
 
 class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
-    pass
+    class Meta:
+        icon = 'placeholder'
+        form_template = (
+            'admin/form_templates/struct_block_with_render_form.html'
+        )
 
 
 class ReusableTextChooserBlock(SnippetChooserBlock):
     class Meta:
         template = '_includes/snippets/reusable_text.html'
+
+
+class RAFToolBlock(blocks.StaticBlock):
+    class Meta:
+        icon = 'cog'
+        label = 'Rental Assistance Finder Tool'
+        admin_text = '{label} has no options to configure'.format(label=label)
+        template = '_includes/blocks/raf_tool.html'
+
+    class Media:
+        js = ['../../../apps/erap/js/main.js']
+
+
+class RAFTBlock(blocks.StructBlock):
+    county_threshold = blocks.IntegerBlock(
+        required=False,
+        help_text=('Optional: Add a number to determine how many '
+                   'results trigger display of county dropdown '
+                   'for a state.')
+    )
+
+    class Meta:
+        icon = 'cog'
+        label = 'RAF Tool (configurable)'
+        template = '_includes/blocks/raf_tool.html'
+
+    class Media:
+        js = ['../../../apps/erap/js/main.js']

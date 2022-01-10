@@ -7,6 +7,8 @@ from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
+from elasticsearch.exceptions import RequestError
+
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models import ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG
 from ask_cfpb.models.search import AnswerPageSearch, make_safe
@@ -125,6 +127,57 @@ class AnswerPageSearchTest(TestCase):
         self.assertTrue(
             mock_search.called_with(language="en", search_term=term)
         )
+
+    @mock.patch.object(AnswerPageDocument, 'search')
+    def test_ask_search_autocomplete_honors_max_chars(self, mock_search):
+        valid_term = "You saw the masterpiece, she looks a lot like you!"
+        overage = " This is overage text that should not appear in the query"
+        too_long_term = valid_term + overage
+        self.client.get(
+            reverse("ask-autocomplete-en"),
+            {"term": too_long_term}
+        )
+        self.assertTrue(mock_search.called_with(valid_term))
+
+    @mock.patch.object(AnswerPageDocument, 'search')
+    def test_ask_search_autocomplete(self, mock_search):
+        mock_return = mock.Mock()
+        mock_return.autocomplete = "Autocomplete question"
+        mock_return.url = "https://autocomplete"
+        mock_search().filter().query().__getitem__.return_value = [
+            mock_return
+        ]
+
+        response = self.client.get(
+            reverse("ask-autocomplete-en"), {"term": "test"}
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(
+            mock_search.called_with(language="en", search_term="test")
+        )
+        self.assertEqual(
+            response.json(),
+            [{'question': 'Autocomplete question',
+              'url': 'https://autocomplete'}]
+        )
+
+    @mock.patch.object(AnswerPageDocument, 'search')
+    def test_ask_search_autocomplete_requesterror(self, mock_search):
+        mock_return = mock.Mock()
+        mock_return.autocomplete = "Autocomplete question"
+        mock_return.url = "https://autocomplete"
+        for error in [RequestError(), IndexError()]:
+            mock_search().filter().query.side_effect = error
+            response = self.client.get(
+                reverse("ask-autocomplete-en"), {"term": "test"}
+            )
+
+            self.assertEqual(response.status_code, 200)
+            self.assertTrue(
+                mock_search.called_with(language="en", search_term="test")
+            )
+            self.assertEqual(response.json(), [])
 
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_ask_search_es(self, mock_search):

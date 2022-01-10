@@ -3,23 +3,6 @@
 {% load static from staticfiles %}
 
 <!DOCTYPE html>
-<!--
-    ============================================================================
-
-    Hey! If you're viewing this, you should probably come work on our Technology
-    & Innovation team. We're always looking for a few great designers,
-    developers, data scientists, and network, infrastructure, privacy and
-    security pros. Keep an eye on our job opportunities at:
-    https://www.consumerfinance.gov/jobs/
-
-    Also, you can see more of our code at https://github.com/cfpb
-
-    And by the way, there’s another hidden message somewhere on the following
-    page: https://www.consumerfinance.gov/jobs/technology-innovation-fellows/.
-    See if you can find it! Hint: picture yourself embedded in our work.
-
-    ============================================================================
--->
 
 <!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" dir="ltr" lang="{% trans "en-US" %}"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie10 lt-ie9 lt-ie8" dir="ltr" lang="{% trans "en-US" %}"> <![endif]-->
@@ -107,11 +90,6 @@
 
     {% block page_css %}
     {% endblock %}
-
-    <!--[if lt IE 9]>
-    <link rel="stylesheet" href="{% static 'css/header.nonresponsive.css' %}"/>
-    <link rel="stylesheet" href="{% static 'css/footer.nonresponsive.css' %}"/>
-    <![endif]-->
 
     <!--[if gt IE 8]><!-->
     <link rel="stylesheet" href="{% static 'css/header.css' %}"/>

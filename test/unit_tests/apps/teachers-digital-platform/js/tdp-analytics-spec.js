@@ -1,5 +1,16 @@
-import { simulateEvent } from '../../../../util/simulate-event';
-const tdpAnalytics = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js' );
+import { handleFetchSearchResults } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js';
+import { simulateEvent } from '../../../../util/simulate-event.js';
+const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
+const tdpAnalytics = require(
+  BASE_JS_PATH + 'teachers-digital-platform/js/tdp-analytics.js'
+);
+
+const EMPTY_SEARCH_HTML = `
+  <div id="tdp-search-facets-and-results">
+    <div class="results_count" data-results-count="0">
+    </div>
+  </div>
+`;
 
 const HTML_SNIPPET = `
 
@@ -252,6 +263,18 @@ describe( 'The TDP custom analytics', () => {
     simulateEvent( 'click', expandable );
 
     expect( spy ).toHaveBeenCalled();
+  } );
+
+  it( '', () => {
+    document.body.innerHTML = EMPTY_SEARCH_HTML;
+    const spy = jest.fn();
+
+    tdpAnalytics.bindAnalytics(spy);
+
+    handleFetchSearchResults( 'Not Found' );
+
+    expect(spy.mock.calls[0][0]).toEqual( 'noSearchResults' );
+    expect(spy.mock.calls[0][1]).toEqual('not found:0');
   } );
 
 } );

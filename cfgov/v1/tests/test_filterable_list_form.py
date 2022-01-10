@@ -1,5 +1,5 @@
 import time
-from datetime import datetime
+from datetime import date, datetime
 from io import StringIO
 
 from django.test import TestCase, override_settings
@@ -7,6 +7,10 @@ from django.test import TestCase, override_settings
 from pytz import timezone
 
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
+from v1.documents import (
+    EnforcementActionFilterablePagesDocumentSearch,
+    EventFilterablePagesDocumentSearch, FilterablePagesDocumentSearch
+)
 from v1.forms import (
     EnforcementActionsFilterForm, EventArchiveFilterForm, FilterableListForm
 )
@@ -27,13 +31,15 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         blog1.categories.add(CFGOVPageCategory(name='bar'))
         blog1.tags.add('foo')
         blog1.authors.add('richa-agarwal')
-        blog1.authors.add('sarah-simpson')
+        blog1.language = 'es'
         blog2 = BlogPage(title='another test page')
         blog2.categories.add(CFGOVPageCategory(name='bar'))
         blog2.tags.add('blah')
         blog2.authors.add('richard-cordray')
         category_blog = BlogPage(title='Category Test')
-        category_blog.categories.add(CFGOVPageCategory(name='info-for-consumers'))
+        category_blog.categories.add(
+            CFGOVPageCategory(name='info-for-consumers')
+        )
         event1 = EventPage(
             title='test page 2',
             start_dt=datetime.now(timezone('UTC'))
@@ -61,13 +67,13 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         cls.category_blog = category_blog
 
         cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
-    
+
     def setUpFilterableForm(self, data=None, filterable_categories=None):
-        filterable_pages = AbstractFilterPage.objects.live()
         form = FilterableListForm(
-            filterable_pages=filterable_pages,
+            filterable_search=FilterablePagesDocumentSearch(
+                prefix="/"
+            ),
             wagtail_block=None,
-            filterable_root='/',
             filterable_categories=filterable_categories
         )
         form.is_bound = True
@@ -101,8 +107,15 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.blog1)
 
-    def test_filter_by_author_names(self):
-        form = self.setUpFilterableForm(data={'authors': ['sarah-simpson']})
+    def test_form_language_choices(self):
+        form = self.setUpFilterableForm()
+        self.assertEqual(form.fields['language'].choices, [
+            ('en', 'English'),
+            ('es', 'Spanish'),
+        ])
+
+    def test_filter_by_language(self):
+        form = self.setUpFilterableForm(data={'language': ['es']})
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.blog1)
@@ -158,10 +171,19 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         )
 
     def test_filterable_categories_sets_initial_category_list(self):
-        form = self.setUpFilterableForm(data={'categories': []}, filterable_categories=('Blog', 'Newsroom', 'Research Report'))
+        form = self.setUpFilterableForm(
+            data={'categories': []},
+            filterable_categories=('Blog', 'Newsroom', 'Research Report')
+        )
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.category_blog)
+
+    def test_first_page_date(self):
+        form = self.setUpFilterableForm()
+        self.assertEqual(form.first_page_date(), self.blog1.date_published)
+        form.all_filterable_results = []
+        self.assertEqual(form.first_page_date(), date(2010, 1, 1))
 
 
 class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):
@@ -178,11 +200,11 @@ class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):
         cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def get_filtered_pages(self, data):
-        filterable_pages = AbstractFilterPage.objects.live()
         form = FilterableListForm(
-            filterable_pages=filterable_pages,
+            filterable_search=FilterablePagesDocumentSearch(
+                prefix="/"
+            ),
             wagtail_block=None,
-            filterable_root='/',
             filterable_categories=None,
             data=data
         )
@@ -205,7 +227,7 @@ class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(pages[0].specific, self.page1)
 
 
-@override_settings(ELASTICSEARCH_DSL_AUTOSYNC = True)
+@override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
 class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
 
     @classmethod
@@ -221,10 +243,10 @@ class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
         cls.event = event
 
     def test_event_archive_elasticsearch(self):
-        filterable_pages = AbstractFilterPage.objects.live()
         form = EventArchiveFilterForm(
-            filterable_pages=filterable_pages,
-            filterable_root='/',
+            filterable_search=EventFilterablePagesDocumentSearch(
+                prefix="/"
+            ),
             wagtail_block=None,
             filterable_categories=None
         )
@@ -246,10 +268,10 @@ class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
         cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_enforcement_action_elasticsearch(self):
-        filterable_pages = EnforcementActionPage.objects.live()
         form = EnforcementActionsFilterForm(
-            filterable_pages=filterable_pages,
-            filterable_root='/',
+            filterable_search=EnforcementActionFilterablePagesDocumentSearch(
+                prefix="/"
+            ),
             wagtail_block=None,
             filterable_categories=None
         )

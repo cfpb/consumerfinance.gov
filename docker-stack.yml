@@ -3,25 +3,6 @@
 version: "3.7"
 
 services:
-  elasticsearch2:
-    image: ${CFGOV_ES2_IMAGE}
-    deploy:
-      placement:
-        constraints:
-          - node.role!=manager
-      restart_policy:
-        condition: any
-        delay: 10s
-        max_attempts: 3
-        window: 120s
-      resources:
-        limits:
-          memory: 2048M
-        reservations:
-          memory: 1024M
-    networks:
-      - app
-
   elasticsearch:
     image: ${CFGOV_ES_IMAGE}
     environment:
@@ -44,7 +25,10 @@ services:
       - app
 
   postgres:
-    image: postgres:10-alpine
+    # Deliberately pin the Postgres image to a minor version so that
+    # upstream image updates don't trigger recreation of the database
+    # container when Docker stacks are redeployed.
+    image: postgres:10.18-alpine
     user: postgres
     deploy:
       placement:
@@ -79,9 +63,7 @@ services:
       APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
       DATABASE_URL: postgres://cfpb@postgres/cfgov
       DJANGO_ADMIN_USERNAME: admin
-      ES_PORT: 9200
-      ES_HOST: elasticsearch2
-      ES7_HOST: elasticsearch
+      ES_HOST: elasticsearch
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
       GOVDELIVERY_ACCOUNT_CODE: USCFPB
       MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
@@ -126,9 +108,8 @@ services:
 
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
                     ./refresh-data.sh
+                    ./cfgov/manage.py createcachetable
                 fi
-
-                ./cfgov/manage.py update_index
 
                 ./cfgov/manage.py search_index --rebuild -f --parallel
 

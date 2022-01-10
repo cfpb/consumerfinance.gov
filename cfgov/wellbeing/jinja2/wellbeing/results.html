@@ -1,5 +1,11 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% set link_text =  _('Back to the questionnaire') %}
+{% set breadcrumb_items = [{
+    "title": link_text,
+    "href": url('fwb_home_' + current_language),
+}] %}
+
 {% block meta_viewport %}
     {{ super() }}
     <meta name="robots" content="noindex">
@@ -203,17 +209,6 @@
             }
         }
     </style>
-{% endblock %}
-
-{% block pre_content %}
-    <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="{{ _('Breadcrumbs') }}">
-            <a class="breadcrumbs_link" id="results-link" href="{{ url('fwb_home_' + current_language) }}">
-                {{ svg_icon( 'left' ) }}
-                {{ _('Back to the questionnaire') }}
-            </a>
-        </nav>
-    </div>
 {% endblock %}
 
 {% set user_pct = user_score.pct if user_score else 0 %}
@@ -725,4 +720,18 @@
             {{ _('There may be other resources that also serve your needs.') }}
         </p>
     </div>
+{% endblock %}
+
+{% block javascript scoped %}
+{{ super() }}
+<script>
+  if (document.body.parentElement.className.indexOf('no-js') === -1) {
+    !function() {
+      var s = [
+        '{{ static('apps/financial-well-being/js/results.js') }}'
+      ];
+      jsl(s);
+    }()
+  }
+</script>
 {% endblock %}

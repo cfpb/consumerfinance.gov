@@ -96,12 +96,18 @@ const styles = {
         },
         chartOptions: {
           chart: {
-            spacingLeft: 0
+            spacingLeft: 0,
+            marginRight: 15
+          },
+          legend: {
+            align: 'left',
+            margin: 0,
+            padding: 0
           },
           yAxis: {
             title: {
               x: 0,
-              y: -28,
+              y: -25,
               align: 'high',
               reserveSpace: false,
               rotation: 0,

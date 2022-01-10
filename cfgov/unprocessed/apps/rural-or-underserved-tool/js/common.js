@@ -48,11 +48,17 @@ window.callbacks.censusAPI = function( data, rural ) {
     result.x = data.result.addressMatches[0].coordinates.x;
     result.y = data.result.addressMatches[0].coordinates.y;
 
+    /*
+    In the 2019 tigerweb API the layer IDs/name mappings are as follows:
+    84 = Counties
+    64 = 2010 Census Urban Clusters
+    62 = 2010 Census Urbanized Areas
+    */
     axios.all(
       [
-        tiger( result.x, result.y, '86' ),
-        tiger( result.x, result.y, '66' ),
-        tiger( result.x, result.y, '64' )
+        tiger( result.x, result.y, '84' ),
+        tiger( result.x, result.y, '64' ),
+        tiger( result.x, result.y, '62' )
       ]
     )
       .then( axios.spread( function( censusCounty, censusUC, censusUA ) {
@@ -76,8 +82,10 @@ window.callbacks.censusAPI = function( data, rural ) {
         addressUtils.render( result );
         count.updateCount( result.type );
       } ) )
-      .catch( function( error ) {
-        console.log( error );
+      .catch( function() {
+        const addressElement = DT.createEl( '<li>' + result.address + '</li>' );
+        DT.addEl( DT.getEl( '#process-error-desc' ), addressElement );
+        DT.removeClass( '#process-error', 'u-hidden' );
       } );
   } else {
     result.input = data.result.input.address.address;

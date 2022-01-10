@@ -1,31 +1,26 @@
 import itertools
-import json
 from collections import Counter
 from urllib.parse import urlencode
 
-from django import forms
 from django.apps import apps
-from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.forms.utils import ErrorList
-from django.template.loader import render_to_string
-from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 
-from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.core import blocks
+from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.core.models import Page
-from wagtail.core.rich_text import expand_db_html
 from wagtail.images import blocks as images_blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
-from wagtail.utils.widgets import WidgetWithScript
 
-from jinja2 import Markup
 from taggit.models import Tag
 from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
+# Bring AtomicTableBlock into this module to
+# maintain import structure across the project
+from v1.atomic_elements.tables import AtomicTableBlock
 from v1.util import ref
 
 
@@ -34,6 +29,14 @@ class AskSearch(blocks.StructBlock):
         default=True,
         required=False,
         help_text='Whether to show form label.'
+    )
+
+    complaint_link = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Direct long searches to submit a complaint',
+        help_text=('Add a link to the complaint submission page to the end of '
+                   'the error message for searches over the max length')
     )
 
     placeholder = blocks.TextBlock(
@@ -77,8 +80,6 @@ class InfoUnitGroup(blocks.StructBlock):
 
     intro = blocks.RichTextBlock(
         required=False,
-        help_text='If this field is not empty, '
-                  'the Heading field must also be set.'
     )
 
     link_image_and_heading = blocks.BooleanBlock(
@@ -103,7 +104,7 @@ class InfoUnitGroup(blocks.StructBlock):
                    'units.')
     )
 
-    info_units = blocks.ListBlock(molecules.InfoUnit())
+    info_units = blocks.ListBlock(molecules.InfoUnit(), default=list())
 
     sharing = blocks.StructBlock([
         ('shareable', blocks.BooleanBlock(label='Include sharing links?',
@@ -120,24 +121,12 @@ class InfoUnitGroup(blocks.StructBlock):
     def clean(self, value):
         cleaned = super(InfoUnitGroup, self).clean(value)
 
-        # Intro paragraph may only be specified with a heading.
-        if cleaned.get('intro') and not cleaned.get('heading'):
-            raise ValidationError(
-                'Validation error in InfoUnitGroup: intro with no heading',
-                params={'heading': ErrorList([
-                    'Required if paragraph is not empty. (If it looks empty, '
-                    'click into it and hit the delete key a bunch of times.)'
-                ])}
-            )
-
         # If 25/75, info units must have images.
         if cleaned.get('format') == '25-75':
             for unit in cleaned.get('info_units'):
                 if not unit['image']['upload']:
-                    raise ValidationError(
-                        ('Validation error in InfoUnitGroup: '
-                         '25-75 with no image'),
-                        params={'format': ErrorList([
+                    raise StructBlockValidationError(
+                        block_errors={'format': ErrorList([
                             'Info units must include images when using the '
                             '25/75 format. Search for an "FPO" image if you '
                             'need a temporary placeholder.'
@@ -414,89 +403,6 @@ class SidebarContactInfo(MainContactInfo):
         template = '_includes/organisms/sidebar-contact-info.html'
 
 
-class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
-    def __init__(self, table_options=None, attrs=None):
-        super(RichTextTableInput, self).__init__(attrs=attrs)
-        self.table_options = table_options
-
-    def render(self, name, value, attrs=None):
-        value = self.json_dict_apply(
-            value,
-            expand_db_html
-        )
-
-        html = super(RichTextTableInput, self).render(name, value, attrs)
-        return Markup(render_to_string('wagtailadmin/table_input.html', {
-            'original_field_html': html,
-            'attrs': attrs,
-            'value': value,
-        }))
-
-    def render_js_init(self, id_, name, value):
-        return "initRichTextTable({0}, {1});".format(
-            json.dumps(id_),
-            json.dumps(self.table_options)
-        )
-
-    def value_from_datadict(self, data, files, name):
-        value = super(RichTextTableInput, self).value_from_datadict(
-            data, files, name
-        )
-
-        try:
-            return self.json_dict_apply(value, DbWhitelister.clean)
-        except NameError:
-            return value
-
-    @staticmethod
-    def json_dict_apply(value, callback):
-        value = json.loads(value)
-
-        for row in (value or {}).get('data') or []:
-            for i, cell in enumerate(row or []):
-                if cell:
-                    row[i] = callback(cell)
-
-        return json.dumps(value)
-
-
-class AtomicTableBlock(TableBlock):
-    @cached_property
-    def field(self):
-        widget = RichTextTableInput(table_options=self.table_options)
-        return forms.CharField(widget=widget, **self.field_options)
-
-    def to_python(self, value):
-        new_value = super(AtomicTableBlock, self).to_python(value)
-        if new_value:
-            new_value['has_data'] = self.get_has_data(new_value)
-        return new_value
-
-    def get_has_data(self, value):
-        has_data = False
-        if value and 'data' in value:
-            first_row_index = 1 if value.get('first_row_is_table_header',
-                                             None) else 0
-            first_col_index = 1 if value.get('first_col_is_header',
-                                             None) else 0
-
-            for row in value['data'][first_row_index:]:
-                for cell in row[first_col_index:]:
-                    if cell:
-                        has_data = True
-                        break
-        return has_data
-
-    class Meta:
-        default = None
-        icon = 'table'
-        template = '_includes/organisms/table.html'
-        label = 'Table'
-
-    class Media:
-        js = ['table.js']
-
-
 class ModelBlock(blocks.StructBlock):
     """Abstract StructBlock that provides Django model instances to subclasses.
 
@@ -552,15 +458,19 @@ class ModelBlock(blocks.StructBlock):
 
 class SimpleChart(blocks.StructBlock):
     title = blocks.CharBlock(required=True)
-    subtitle = blocks.CharBlock(required=False)
-    figure = blocks.CharBlock(required=False)
+    subtitle = blocks.TextBlock(required=False)
+    description = blocks.TextBlock(
+        required=True,
+        help_text='Accessible description of the chart content'
+    )
+    figure_number = blocks.CharBlock(required=False)
 
     chart_type = blocks.ChoiceBlock(
         choices=[
             ('bar', 'Bar'),
-            ('datetime', 'Datetime'),
+            ('datetime', 'Date/time'),
             ('line', 'Line'),
-            ('tilemap', 'Tilemap')
+            ('tilemap', 'Tile grid map')
         ],
         default='datetime',
         required=True
@@ -573,24 +483,19 @@ class SimpleChart(blocks.StructBlock):
 
     data_series = blocks.TextBlock(
         required=False,
-        help_text='A string or array of keys (JSON) or headers (CSV) to '
-        'include as data in the chart. Labels may be included via: '
-        '{"key": <key>, "label": <label>}'
+        help_text='A list of column headers (CSV) or keys (JSON) to include '
+        'as data in the chart in the format [<key>, <key>, <key>]. '
+        'Other labels may be included via: {"key": <key>, "label": <label>}'
     )
 
-    x_axis_data = blocks.TextBlock(
+    x_axis_source = blocks.TextBlock(
         required=False,
-        help_text='A string for a key/column or data array to include as '
-        'categories or x values, depending on chart type.'
-    )
-
-    description = blocks.CharBlock(
-        required=True,
-        help_text='Accessible description of the chart content'
+        help_text='The column header (CSV), key or data array (JSON) '
+        'to include as the source of x-axis values.'
     )
 
     y_axis_label = blocks.CharBlock(
-        required=True,
+        required=False,
         help_text='y-axis label'
     )
 
@@ -800,8 +705,6 @@ class ItemIntroduction(blocks.StructBlock):
 
 
 class FilterableList(BaseExpandable):
-    title = blocks.BooleanBlock(default=True, required=False,
-                                label='Filter Title')
     no_posts_message = blocks.CharBlock(
         required=False,
         help_text=mark_safe(
@@ -820,9 +723,22 @@ class FilterableList(BaseExpandable):
         help_text='Strongly encouraged to help users understand the '
                   'action that the date of the post is linked to, '
                   'i.e. published, issued, released.')
+    title = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        label='Filter by keyword',
+        help_text='Whether to include a "Search by keyword" filter '
+                  'in the filter controls.'
+    )
     categories = blocks.StructBlock([
         ('filter_category',
-         blocks.BooleanBlock(default=True, required=False)),
+            blocks.BooleanBlock(
+                default=True,
+                required=False,
+                label='Filter by Category',
+                help_text='Whether to include a "Category" filter '
+                          'in the filter controls.'
+            )),
         ('show_preview_categories',
          blocks.BooleanBlock(default=True, required=False)),
         ('page_type', blocks.ChoiceBlock(
@@ -839,8 +755,8 @@ class FilterableList(BaseExpandable):
                 'Filter topics, sort topic list by number of results'),
         ],
         required=True,
-        help_text='Whether to include a dropdown in the filter controls '
-                  'for "Topics"')
+        help_text='Whether to include a "Topics" filter in the filter controls'
+    )
     order_by = blocks.ChoiceBlock(
         choices=[
             ('-date_published', 'Date Published'),
@@ -850,14 +766,40 @@ class FilterableList(BaseExpandable):
         help_text='How to order results',
         default='-date_published'
     )
-    statuses = blocks.BooleanBlock(default=False, required=False,
-                                   label='Filter Enforcement Statuses')
-    products = blocks.BooleanBlock(default=False, required=False,
-                                   label='Filter Enforcement Products')
-    authors = blocks.BooleanBlock(default=True, required=False,
-                                  label='Filter Authors')
-    date_range = blocks.BooleanBlock(default=True, required=False,
-                                     label='Filter Date Range')
+    statuses = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Filter by Enforcement Statuses',
+        help_text='Whether to include a "Status" filter '
+                  'in the filter controls. '
+                  'Only enable if using on an '
+                  'enforcement actions filterable list.'
+    )
+    products = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Filter by Enforcement Products',
+        help_text='Whether to include a "Product" filter '
+                  'in the filter controls. '
+                  'Only enable if using on an '
+                  'enforcement actions filterable list.'
+    )
+    language = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Filter by Language',
+        help_text='Whether to include a "Language" filter '
+                  'in the filter controls.'
+                  'Only enable if there are non-english '
+                  'filterable results available.'
+    )
+    date_range = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        label='Filter by Date Range',
+        help_text='Whether to include a set of "Date range" filters '
+                  'in the filter controls.'
+    )
     output_5050 = blocks.BooleanBlock(default=False, required=False,
                                       label="Render preview items as 50-50s")
     link_image_and_heading = blocks.BooleanBlock(
@@ -870,11 +812,7 @@ class FilterableList(BaseExpandable):
     filter_children = blocks.BooleanBlock(
         default=True,
         required=False,
-        help_text=(
-            "If checked this list will only filter its child pages. "
-            "If both children and siblings are checked, only child pages will "
-            "be filtered."
-        ),
+        help_text='If checked this list will only filter its child pages.'
     )
 
     class Meta:
@@ -982,21 +920,19 @@ class VideoPlayer(blocks.StructBlock):
         if not cleaned['video_id']:
             if getattr(self.meta, 'required', True):
                 errors['video_id'] = ErrorList([
-                    ValidationError('This field is required.'),
+                    StructBlockValidationError(
+                        block_errors='This field is required.'),
                 ])
             elif cleaned['thumbnail_image']:
                 errors['thumbnail_image'] = ErrorList([
-                    ValidationError(
-                        'This field should not be used if YouTube video ID is '
-                        'not set.'
+                    StructBlockValidationError(
+                        block_errors='This field should not be '
+                        'used if YouTube video ID is not set.'
                     )
                 ])
 
         if errors:
-            raise ValidationError(
-                'Validation error in VideoPlayer',
-                params=errors
-            )
+            raise StructBlockValidationError(block_errors=errors)
 
         return cleaned
 
@@ -1044,7 +980,8 @@ class FeaturedContentStructValue(blocks.StructValue):
         # We want to pass a single list of links to the template when the
         # FeaturedContent organism is rendered. So we consolidate any links
         # that have been specified: the post link and any other links. We
-        # also normalize them each to have URL and text attributes.
+        # also normalize them each to have URL, text,
+        # and (optionally) aria-label attributes.
         links = []
 
         # We want to pass the post URL into the template so that it can be
@@ -1062,9 +999,14 @@ class FeaturedContentStructValue(blocks.StructValue):
         for hyperlink in self.get('links') or []:
             url = hyperlink.get('url')
             text = hyperlink.get('text')
+            aria_label = hyperlink.get('aria_label')
 
             if url and text:
-                links.append({'url': url, 'text': text})
+                links.append({
+                    'url': url,
+                    'text': text,
+                    'aria_label': aria_label
+                })
 
         return links
 

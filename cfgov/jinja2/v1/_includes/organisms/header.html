@@ -8,9 +8,6 @@
 
    Creates markup for Header organism.
 
-   show_banner:     Whether the global banner molecule is included.
-                    Default is false.
-
    show_mega_menu:  Whether the mega menu is included. Default is true.
 
    language:        The page's language value (used to display different
@@ -19,13 +16,13 @@
 
    ========================================================================== #}
 
-{% macro render( show_banner=false, show_mega_menu=true, language='en' ) %}
+{% macro render( show_mega_menu=true, language='en' ) %}
 
 {% set mega_menu_content = show_mega_menu and get_mega_menu_content() %}
 
 <header class="o-header{% if mega_menu_content %} o-header__mega-menu{% endif %}">
 
-    {% if flag_enabled('BETA_NOTICE') and show_banner %}
+    {% if flag_enabled('BETA_NOTICE') %}
     {% import 'molecules/notification.html' as notification with context %}
     <div class="m-global-banner">
       <div class="wrapper
@@ -99,7 +96,9 @@
                              {{ static('img/logo_237x50@2x.png') }} 474w"
                      sizes="(max-width: 900px) 161px,
                             237px"
-                     alt="Consumer Financial Protection Bureau">
+                     alt="Consumer Financial Protection Bureau"
+                     width="237"
+                     height="50">
             </a>
             {% endif %}
 

@@ -1,4 +1,4 @@
-import '../../../../cfgov/unprocessed/js/admin/global';
+import '../../../../cfgov/unprocessed/apps/admin/js/global.js';
 
 describe( 'Environment banner', () => {
   it( 'should create data attribute on page load', () => {

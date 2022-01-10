@@ -18,10 +18,6 @@
 
     Also, you can see more of our code at https://github.com/cfpb
 
-    And by the way, there’s another hidden message somewhere on the following
-    page: https://www.consumerfinance.gov/jobs/technology-innovation-fellows/.
-    See if you can find it! Hint: picture yourself embedded in our work.
-
     ============================================================================
 -->
 {% endif %}
@@ -42,7 +38,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     {% block meta_viewport %}
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     {% endblock meta_viewport %}
 
 {#
@@ -140,14 +136,26 @@
           type="font/woff2" crossorigin>
     <link rel="preload" href="{{ static('js/routes/common.js') }}" as="script">
 
-    <link rel="dns-prefetch" href="//consumerfinance.gov/">
+    {# Preconnecting comes from the 3rd best practice in 
+       https://developer.mozilla.org/en-US/docs/Web/Performance/dns-prefetch#best_practices #}
+    <link rel="preconnect" href="//fast.fonts.net/" crossorigin>    
     <link rel="dns-prefetch" href="//fast.fonts.net/">
+
+    <link rel="preconnect" href="//google-analytics.com/" crossorigin>    
     <link rel="dns-prefetch" href="//google-analytics.com/">
+
+    <link rel="preconnect" href="//googletagmanager.com/" crossorigin>    
     <link rel="dns-prefetch" href="//googletagmanager.com/">
+
+    <link rel="preconnect" href="//js-agent.newrelic.com/" crossorigin>    
     <link rel="dns-prefetch" href="//js-agent.newrelic.com/">
-    <link rel="dns-prefetch" href="//s.ytimg.com/">
+
+    <link rel="preconnect" href="//search.usa.gov/" crossorigin>    
     <link rel="dns-prefetch" href="//search.usa.gov/">
-    <link rel="dns-prefetch" href="//stats.g.doubleclick.net/">
+
+    {# These domains are called on pages with youtube videos.  #}
+    <link rel="dns-prefetch" href="//ytimg.com/">
+    <link rel="dns-prefetch" href="//doubleclick.net/">
     {% endblock preload %}
 
 {#
@@ -159,11 +167,34 @@
   If you come across a script that makes a convincing case to be included in
   the head, then file an issue or PR to discuss including it.
 #}
+    {% if flag_enabled('AB_TESTING') %}
+    {# Begin Google Optimize #}
+    {# Optimize anti-flicker snippet. #}
+    <style>.async-hide { opacity: 0 !important} </style>
+    <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+    h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+    (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+    })(window,document.documentElement,'async-hide','dataLayer',4000,
+    {'GTM-KMMLRS':true});</script>
+    {#
+      NOTE: We don't include the googleoptimize.com/optimize.js script call here
+      because we are including optimize via GTM.
+    #}
+    {# End Google Optimize #}
+    {% endif %}
+
+    {# Begin Google Tag Manager #}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+    {# End Google Tag Manager #}
 
     {# Schema data in JSON-LD format #}
     {% if schema_json %}
     <script type="application/ld+json">
-{{ schema_json | tojson(indent=2) }}
+    {{ schema_json | tojson(indent=2) }}
     </script>
     {% endif %}
 
@@ -175,44 +206,6 @@
       }
     </script>
     {% endblock javascript_loader %}
-
-    {% if flag_enabled('AB_TESTING') %}
-    {# Google Optimize page-hiding snippet #}
-    <style>
-        .optimize-loading { opacity: 0 !important; }
-    </style>
-    <script>
-        (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
-        h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
-        (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
-        })(window,document.documentElement,'optimize-loading','dataLayer',5000,
-        {'GTM-KHB8MB':true});
-    {# end Google Optimize page-hiding snippet #}
-
-    {# Google Analytics/Optimize snippet #}
-    {#
-      The last line in the script requires Optimize.
-      Pageview call removed, because pagviews are sent to Analytics via
-      the Google Tag Manager tag (code included below).
-    #}
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-54439736-1', 'auto');
-        ga('require', 'GTM-KHB8MB');
-    </script>
-    {# end Google Analytics/Optimize snippet #}
-    {% endif %}
-
-    {# Google Tag Manager #}
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
-    {# end Google Tag Manager #}
 
     {% include "v1/modernizr.html" %}
 </head>
@@ -243,14 +236,13 @@
     <div class="skip-nav">
         <a class="skip-nav_link"
           href="{% block skip_nav_target %}#main{% endblock %}">
-            Skip to main content
+            {{ _('Skip to main content') }}
         </a>
     </div>
 
     {% block header %}
         {% import 'organisms/header.html' as o_header with context %}
         {{ o_header.render(
-            show_banner=true,
             show_mega_menu=true,
             language=language
         ) }}

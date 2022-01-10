@@ -18,6 +18,11 @@
   "dependencies": {
     "aos": "3.0.0-beta.6",
     "classlist-polyfill": "1.2.0",
+    "copy-to-clipboard": "3.3.1",
+    "customevent": "1.0.1",
+    "js-cookie": "2.2.1",
+    "object.entries": "1.1.4",
+    "object.values": "1.1.4",
     "smoothscroll-polyfill": "0.4.4",
     "stickyfilljs": "2.1.0"
   }

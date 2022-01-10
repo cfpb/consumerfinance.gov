@@ -7,8 +7,6 @@
 {% import 'college-cost-blocks/macros/financial-item-input.html' as input with context %}
 {% import 'college-cost-blocks/macros/financial-item-text.html' as text_item with context %}
 {% import 'college-cost-blocks/macros/number-callout.html' as number_callout with context %}
-{% import 'college-cost-blocks/macros/secondary-nav.html' as secondary_nav with context %}
-
 
 {% block css -%}
     {{ super() }}
@@ -52,12 +50,7 @@
                             </div>
                             <div class="college-costs_save-for-later block block__mid" data-state-based-visibility="save-for-later">
                                 <p>Copy and save this link so that you can come back and review your plan.</p>
-                                <div class="m-form-field">
-                                    <p>
-                                        <strong>Your link</strong>
-                                    </p>
-                                    <pre name="finish_link" data-app-save-link="save-for-later"></pre>
-                                </div>
+                                {% include 'college-cost-blocks/copy-link-form.html' %}
                             </div>
                         </div>
                         <div class="costs-not-covered costs-not-covered-sticky">
@@ -75,14 +68,11 @@
     </main>
 {% endblock %}
 
-
-
 {% block javascript scoped %}
     {{ super() }}
-    <script async>
+    <script>
       if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-          {# Include site-wide JavaScript. #}
+        !function() {
           var s = [
             '{{ static('apps/paying-for-college/js/college-costs.js') }}'
           ];

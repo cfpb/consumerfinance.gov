@@ -137,9 +137,9 @@ If you setup Autoenv earlier, this will happen for you automatically when you
 If you prefer not to use Autoenv, just be sure to `source .env` every time
 you start a new session of work on the project.
 
-#### Install Postgres
+#### Install PostgreSQL
 
-If you're on a Mac and use Homebrew, you can easily install Postgres:
+If you're on a Mac and use Homebrew, you can easily install PostgreSQL:
 
 ```bash
 brew install postgresql
@@ -151,18 +151,20 @@ Once it's installed, you can configure it to run as a service:
 brew services start postgresql
 ```
 
-Then create the database, associated user, and schema for that user:
+Our recommended Postgres configuration is a database named `cfgov` and a user
+named `cfpb`, with data stored in schema `cfpb`. This can be created with the
+following commands:
 
 ```bash
 dropdb --if-exists cfgov && dropuser --if-exists cfpb
-createuser --createdb cfpb && createdb -O cfpb cfgov
-psql postgres://cfpb@localhost/cfgov -c 'CREATE SCHEMA cfpb'
+psql postgres -c "CREATE USER cfpb WITH LOGIN PASSWORD 'cfpb' CREATEDB"
+psql postgres -c "CREATE DATABASE cfgov OWNER cfpb"
+psql postgres://cfpb:cfpb@localhost/cfgov -c "CREATE SCHEMA cfpb"
 ```
 
-We don't support using an SQLite database, because we use database fields
-that are specific to Postgres. The `--createdb` flag above allows Django to
-create temporary Postgres databases when running unit tests.
-
+We don't support using an SQLite database because we use database fields
+that are specific to Postgres. The `CREATEDB` keyword above allows the
+`cfpb` user to create a temporary Django database when running unit tests.
 
 #### Run the setup script
 
@@ -498,8 +500,7 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    then install the latest requested dependencies (`install`).
 
    The `devDependencies` from `package.json` are not installed
-   if the environment is production, and if it's the dev or test environment,
-   it checks to see if Protractor is globally installed.
+   if the environment is production.
 
    Finally, it creates a new checksum for future comparisons.
 1. **Run tasks to build the project for distribution** (`build`)

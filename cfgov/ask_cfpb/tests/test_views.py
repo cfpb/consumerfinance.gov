@@ -1,8 +1,8 @@
 from unittest import mock
 
 from django.apps import apps
-from django.http import Http404, HttpRequest
-from django.test import TestCase
+from django.http import Http404
+from django.test import RequestFactory, TestCase
 from django.utils import timezone
 
 from wagtail.core.models import Site
@@ -24,6 +24,8 @@ class AnswerPagePreviewTestCase(TestCase):
     def setUp(self):
         from ask_cfpb.models import Answer
         from v1.models import HomePage
+
+        self.factory = RequestFactory()
 
         self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
         self.english_parent_page = get_or_create_page(
@@ -83,25 +85,57 @@ class AnswerPagePreviewTestCase(TestCase):
         )
 
     @mock.patch("ask_cfpb.views.ServeView.serve")
-    def test_preview_page(self, mock_serve):
+    def test_live_plus_draft_with_sharing(self, mock_serve):
         from ask_cfpb.views import view_answer
 
-        test_request = HttpRequest()
-        test_request.META["SERVER_NAME"] = "preview.localhost"
-        test_request.META["SERVER_PORT"] = 8000
-        view_answer(test_request, "test-question1", "en", self.test_answer.pk)
+        test_request = self.factory.get(
+            "/", HTTP_HOST="preview.localhost", SERVER_PORT=8000
+        )
+        page = self.test_answer.english_page
+        page.title += " more title"
+        page.save_revision(user=None)
+        slug = page.slug
+        pk = page.answer_base.pk
+        view_answer(test_request, slug, "en", pk)
         self.assertEqual(mock_serve.call_count, 1)
+
+    @mock.patch("ask_cfpb.views.ServeView.serve")
+    def test_live_plus_draft_no_sharing(self, mock_serve):
+        from ask_cfpb.views import view_answer
+
+        test_request = self.factory.get("/")
+        page = self.test_answer.english_page
+        page.title += " more title"
+        page.save_revision(user=None)
+        slug = page.slug
+        pk = page.answer_base.pk
+        response = view_answer(test_request, slug, "en", pk)
+        self.assertEqual(mock_serve.call_count, 0)
+        self.assertEqual(response.status_code, 200)
 
     def test_answer_page_not_live(self):
         from ask_cfpb.views import view_answer
 
         page = self.test_answer.english_page
         page.unpublish()
-        test_request = HttpRequest()
+        test_request = self.factory.get("/")
         with self.assertRaises(Http404):
             view_answer(
-                test_request, "test-question", "en", self.test_answer.pk
+                test_request, page.slug, "en", page.answer_base.pk
             )
+
+    @mock.patch("ask_cfpb.views.ServeView.serve")
+    def test_answer_page_not_live_on_sharing_site(self, mock_serve):
+        from ask_cfpb.views import view_answer
+        page = self.test_answer.english_page
+        page.unpublish()
+        test_request = self.factory.get(
+            "/", HTTP_HOST="preview.localhost", SERVER_PORT=8000
+        )
+        view_answer(
+            test_request, "test-question1", "en", self.test_answer.pk
+        )
+        self.assertEqual(mock_serve.call_count, 1)
 
     def test_page_redirected(self):
         page = self.english_answer_page
@@ -112,6 +146,10 @@ class AnswerPagePreviewTestCase(TestCase):
         response = self.client.get(page.url)
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response.url, self.english_answer_page2.url)
+
+    def test_redirect_view_with_no_recognized_facet(self):
+        response = self.client.get("/askcfpb/search/?selected_facets=hoodoo")
+        self.assertEqual(response.status_code, 404)
 
 
 class AnswerViewTestCase(TestCase):

@@ -6,12 +6,14 @@ import {
   getStateValue
 } from '../dispatchers/get-model-values.js';
 import {
+  recalculateFinancials,
   refreshExpenses,
   updateFinancial,
   updateSchoolData
 } from '../dispatchers/update-models.js';
 import {
   updateFinancialView,
+  updateFinancialViewAndFinancialCharts,
   updateGradMeterChart,
   updateRepaymentMeterChart
 } from '../dispatchers/update-view.js';
@@ -24,7 +26,8 @@ const schoolView = {
   _searchSection: null,
   _searchBox: null,
   _searchResults: null,
-  _programRadios: null,
+  _programRadioLabels: null,
+  _programRadioInputs: null,
   _schoolInfo: null,
   _schoolItems: [],
   _stateItems: [],
@@ -74,14 +77,13 @@ const schoolView = {
    * NOTE: The appearance of error messages is mostly found in the state-based.less rules
    */
   updateViewWithErrors: () => {
-    const errorChecks = [ 'programType', 'programLength', 'programLevel', 'programRate',
-      'programHousing', 'programDependency' ];
+    const errorChecks = [ 'programType', 'programProgress', 'programLength',
+      'programLevel', 'programRate', 'programHousing', 'programDependency' ];
 
-    const searchBox = document.querySelector( '#search__school-input' );
     if ( getStateValue( 'schoolSelected' ) === false ) {
-      searchBox.classList.add( 'a-text-input__warning' );
+      schoolView._searchBox.classList.add( 'a-text-input__warning' );
     } else {
-      searchBox.classList.remove( 'a-text-input__warning' );
+      schoolView._searchBox.classList.remove( 'a-text-input__warning' );
     }
   },
 
@@ -106,7 +108,7 @@ const schoolView = {
                 ${ elem.level } - ${ elem.name }
           </option>`;
       } );
-      html += '\n<option value="null">My program is not listed here.</option>';
+      html += '\n<option value="null">My program is not listed here/I am undecided.</option>';
       schoolView._programSelect.innerHTML = html;
 
       // If there's a program id in the state, select that program
@@ -117,7 +119,8 @@ const schoolView = {
   },
 
   _updateSchoolRadioButtons: () => {
-    const buttons = [ 'programLength', 'programType', 'programHousing', 'programRate', 'programDependency' ];
+    const buttons = [ 'programLength', 'programType', 'programHousing', 'programProgress',
+      'programRate', 'programDependency' ];
 
     schoolView._searchResults.classList.remove( 'active' );
     schoolView._searchBox.value = getSchoolValue( 'school' );
@@ -147,7 +150,8 @@ const schoolView = {
     schoolView._searchSection = body.querySelector( '#college-costs_school-search' );
     schoolView._searchBox = body.querySelector( '#search__school-input' );
     schoolView._searchResults = body.querySelector( '#search-results' );
-    schoolView._programRadios = body.querySelectorAll( '.school-search_additional-info label' );
+    schoolView._programRadioLabels = body.querySelectorAll( '.school-search_additional-info label' );
+    schoolView._programRadioInputs = body.querySelectorAll( '.school-search_additional-info input[type="radio"]' );
     schoolView._programSelect = body.querySelector( '#program-select' );
     schoolView._schoolInfo = body.querySelector( '.school-search_additional-info' );
     schoolView._schoolItems = document.querySelectorAll( '[data-school-item]' );
@@ -165,8 +169,12 @@ function _addListeners() {
   schoolView._searchBox.addEventListener( 'keyup', _handleInputChange );
   schoolView._searchResults.addEventListener( 'click', _handleResultButtonClick );
 
-  schoolView._programRadios.forEach( elem => {
+  schoolView._programRadioLabels.forEach( elem => {
     elem.addEventListener( 'click', _handleProgramRadioClick );
+  } );
+
+  schoolView._programRadioInputs.forEach( elem => {
+    elem.addEventListener( 'change', _handleProgramRadioClick );
   } );
 
   schoolView._programSelect.addEventListener( 'change', _handleProgramSelectChange );
@@ -198,14 +206,20 @@ let _keyupDelay;
 function _handleInputChange( event ) {
   clearTimeout( _keyupDelay );
   _keyupDelay = setTimeout( function() {
-    const searchTerm = schoolView._searchBox.value;
+    const searchTerm = schoolView._searchBox.value.trim();
     // TODO - clean up searchbox text, remove non-alphanumeric characters
-    schoolSearch( searchTerm )
-      .then( resp => {
-        _formatSearchResults( resp.responseText );
-      }, error => {
-        console.log( error );
-      } );
+    // Searches of less than 3 characters are prevented in the API fetch, so
+    // we represent that visually by hiding the search results DIV
+    if ( searchTerm.length < 3 ) {
+      schoolView._searchResults.classList.remove( 'active' );
+    } else {
+      schoolSearch( searchTerm )
+        .then( resp => {
+          _formatSearchResults( resp.responseText );
+        }, error => {
+          console.log( error );
+        } );
+    }
   }, 500 );
 }
 
@@ -252,9 +266,11 @@ function _handleResultButtonClick( event ) {
   // If there's a school_id, then proceed with schoolInfo
   if ( typeof button.dataset.school_id !== 'undefined' ) {
     const iped = button.dataset.school_id;
+    if ( iped !== null && typeof iped !== 'undefined') {
+      // Add schoolData to schoolModel
+      updateSchoolData( iped );
+    }
 
-    // Add schoolData to schoolModel
-    updateSchoolData( iped );
   }
 }
 
@@ -265,6 +281,8 @@ function _handleResultButtonClick( event ) {
 function _handleProgramRadioClick( event ) {
   const container = closest( event.target, '.m-form-field' );
   const input = container.querySelector( 'input' );
+  const recalcProps = [ 'programProgress', 'programLength', 'programType',
+    'programDependency' ];
 
   // Update the model with program info
   const prop = input.getAttribute( 'name' );
@@ -272,6 +290,10 @@ function _handleProgramRadioClick( event ) {
   updateState.byProperty( prop, value );
   if ( prop === 'programType' ) {
     schoolView._updateProgramList();
+  }
+  if ( recalcProps.indexOf( prop ) !== -1 ) {
+    recalculateFinancials();
+    updateFinancialViewAndFinancialCharts();
   }
 }
 

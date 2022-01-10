@@ -1,6 +1,6 @@
 import datetime
 
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import RequestFactory, TestCase
 
 from model_bakery import baker
 
@@ -8,7 +8,6 @@ from regulations3k.models import EffectiveVersion, Part
 from regulations3k.views import get_version_date, redirect_eregs
 
 
-@override_settings(FLAGS={'REGULATIONS3K': [('boolean', True)]})
 class RedirectRegulations3kTestCase(TestCase):
 
     def setUp(self):
@@ -124,7 +123,7 @@ class RedirectRegulations3kTestCase(TestCase):
         self.assertEqual(
             response.get('location'),
             '/policy-compliance/rulemaking/regulations/'
-            '1002/2016-07-11/Interp-C/')
+            '1002/2016-07-11/interp-c/')
 
     def test_redirect_interp_appendix_invalid_date(self):
         request = self.factory.get(
@@ -132,7 +131,7 @@ class RedirectRegulations3kTestCase(TestCase):
         response = redirect_eregs(request)
         self.assertEqual(
             response.get('location'),
-            '/policy-compliance/rulemaking/regulations/1024/Interp-MS/')
+            '/policy-compliance/rulemaking/regulations/1024/interp-ms/')
 
     def test_redirect_interp_intro(self):
         request = self.factory.get(
@@ -141,7 +140,7 @@ class RedirectRegulations3kTestCase(TestCase):
         self.assertEqual(
             response.get('location'),
             '/policy-compliance/rulemaking/regulations/1002/'
-            '2016-07-11/h1-Interp/')
+            '2016-07-11/h1-interp/')
 
     def test_redirect_interp_intro_bad_version(self):
         request = self.factory.get(
@@ -149,7 +148,7 @@ class RedirectRegulations3kTestCase(TestCase):
         response = redirect_eregs(request)
         self.assertEqual(
             response.get('location'),
-            '/policy-compliance/rulemaking/regulations/1030/Interp-0/')
+            '/policy-compliance/rulemaking/regulations/1030/interp-0/')
 
     def test_redirect_interp_section_past(self):
         request = self.factory.get(
@@ -158,7 +157,7 @@ class RedirectRegulations3kTestCase(TestCase):
         self.assertEqual(
             response.get('location'),
             '/policy-compliance/rulemaking/regulations/1002/'
-            '2016-07-11/Interp-1/')
+            '2016-07-11/interp-1/')
 
     def test_redirect_interp_section_past_lowercase(self):
         # troublemaker URL on launch day
@@ -168,7 +167,7 @@ class RedirectRegulations3kTestCase(TestCase):
         self.assertEqual(
             response.get('location'),
             '/policy-compliance/rulemaking/regulations/1002/'
-            '2011-12-30/Interp-1/')
+            '2011-12-30/interp-1/')
 
     def test_interp_section_current(self):
         request = self.factory.get(
@@ -176,7 +175,7 @@ class RedirectRegulations3kTestCase(TestCase):
         response = redirect_eregs(request)
         self.assertEqual(
             response.get('location'),
-            '/policy-compliance/rulemaking/regulations/1002/Interp-1/')
+            '/policy-compliance/rulemaking/regulations/1002/interp-1/')
 
     def test_interp_section_no_subpart_with_default_section(self):
         # another launch troublemaker
@@ -186,7 +185,7 @@ class RedirectRegulations3kTestCase(TestCase):
         self.assertEqual(
             response.get('location'),
             '/policy-compliance/rulemaking/regulations/1005/'
-            '2013-03-26/Interp-2/')
+            '2013-03-26/interp-2/')
 
     def test_redirect_no_pattern_match_after_part(self):
         """This tests our final fall-through redirect"""

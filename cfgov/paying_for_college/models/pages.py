@@ -4,7 +4,6 @@ from wagtail.admin.edit_handlers import (
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 
-from paying_for_college.blocks import GuidedQuiz
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
 
@@ -31,6 +30,11 @@ class PayingForCollegePage(CFGOVPage):
     class Meta:
         abstract = True
 
+    def get_context(self, request, *args, **kwargs):
+        context = super(PayingForCollegePage, self).get_context(request)
+        context['return_user'] = 'iped' in request.GET and request.GET['iped']
+        return context
+
 
 class PayingForCollegeContent(blocks.StreamBlock):
     """A base content block for PFC pages."""
@@ -40,20 +44,6 @@ class PayingForCollegeContent(blocks.StreamBlock):
     expandable = organisms.Expandable()
     well = organisms.Well()
     raw_html_block = blocks.RawHTMLBlock(label='Raw HTML block')
-
-
-class StudentLoanQuizContent(PayingForCollegeContent):
-    guided_quiz = GuidedQuiz()
-
-
-class StudentLoanQuizPage(PayingForCollegePage):
-    """A page to guide students through the college debt maze."""
-    content = StreamField(StudentLoanQuizContent, blank=True)
-
-    def get_template(self, request):
-        for block in self.content:
-            block.value['situation_id'] = block.id
-        return 'paying-for-college/choose-a-student-loan.html'
 
 
 class CollegeCostsPage(PayingForCollegePage):

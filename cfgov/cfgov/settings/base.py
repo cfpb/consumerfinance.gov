@@ -1,12 +1,14 @@
+import json
 import os
 import secrets
 from pathlib import Path
 
 from django.conf import global_settings
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
 
 import dj_database_url
-from elasticsearch7 import RequestsHttpConnection
+from elasticsearch import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
 from cfgov.util import admin_emails
@@ -65,7 +67,6 @@ INSTALLED_APPS = (
     "wagtailautocomplete",
     "wagtailflags",
     "watchman",
-    "haystack",
     "ask_cfpb",
     "agreements",
     "django.contrib.admin",
@@ -89,26 +90,29 @@ INSTALLED_APPS = (
     "paying_for_college",
     "prepaid_agreements",
     "regulations3k",
+    "retirement_api",
     "treemodeladmin",
     "housing_counselor",
     "hmda",
     "youth_employment",
     "diversity_inclusion",
+    "privacy",
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
     "wagtailmedia",
     "django_elasticsearch_dsl",
+    "corsheaders",
+    "login",
 
     # Satellites
-    "retirement_api",
-    "ratechecker",
-    "countylimits",
-    "complaint_search",
-    "rest_framework",
     "ccdb5_ui",
-    "mptt",
+    "complaint_search",
+    "countylimits",
     "crtool",
+    "mptt",
+    "ratechecker",
+    "rest_framework",
 )
 
 WAGTAILSEARCH_BACKENDS = {
@@ -140,6 +144,7 @@ WAGTAILSEARCH_BACKENDS = {
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -149,6 +154,7 @@ MIDDLEWARE = (
     "core.middleware.SelfHealingMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
@@ -226,12 +232,15 @@ ALLOW_ADMIN_URL = os.environ.get("ALLOW_ADMIN_URL", False)
 if ALLOW_ADMIN_URL:
     DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000  # For heavy Wagtail pages
 
-# Databases
-DATABASES = {}
-
-# If DATABASE_URL is defined in the environment, use it to set the Django DB
-if os.getenv("DATABASE_URL"):
-    DATABASES["default"] = dj_database_url.config()
+# Default database is PostgreSQL running on localhost.
+# Database name cfgov, username cfpb, password cfpb.
+# Override this by setting DATABASE_URL in the environment.
+# See https://github.com/jacobian/dj-database-url for URL formatting.
+DATABASES = {
+    "default": dj_database_url.config(
+        default="postgres://cfpb:cfpb@localhost/cfgov"
+    ),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/stable/topics/i18n/
@@ -296,45 +305,11 @@ EXTERNAL_URL_ALLOWLIST = (
 # Wagtail settings
 WAGTAIL_SITE_NAME = "consumerfinance.gov"
 WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
+WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
 
-WAGTAIL_USER_CREATION_FORM = "v1.auth_forms.UserCreationForm"
-WAGTAIL_USER_EDIT_FORM = "v1.auth_forms.UserEditForm"
-
-ES_PORT = os.getenv("ES_PORT", "9200")
-SHEER_ELASTICSEARCH_SERVER = (
-    os.environ.get("ES_HOST", "localhost")
-    + ":"
-    + ES_PORT
-)
-SHEER_ELASTICSEARCH_INDEX = os.environ.get(
-    "SHEER_ELASTICSEARCH_INDEX", "content"
-)
-ELASTICSEARCH_BIGINT = 50000
-
-SHEER_ELASTICSEARCH_SETTINGS = {
-    "settings": {
-        "analysis": {
-            "analyzer": {
-                "my_edge_ngram_analyzer": {
-                    "tokenizer": "my_edge_ngram_tokenizer"
-                },
-                "tag_analyzer": {
-                    "tokenizer": "keyword",
-                    "filter": "lowercase",
-                },
-            },
-            "tokenizer": {
-                "my_edge_ngram_tokenizer": {
-                    "type": "edgeNGram",
-                    "min_gram": "2",
-                    "max_gram": "5",
-                    "token_chars": ["letter", "digit"],
-                }
-            },
-        }
-    }
-}
+WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
+WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
 
 # LEGACY APPS
@@ -345,82 +320,11 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     "/a/assets/hud/{file_format}s/{zipcode}.{file_format}"
 )
 
-HAYSTACK_CONNECTIONS = {
-    "default": {
-        "ENGINE": "search.backends.CFGOVElasticsearch2SearchEngine",
-        "URL": SHEER_ELASTICSEARCH_SERVER,
-        "INDEX_NAME": os.environ.get(
-            "HAYSTACK_ELASTICSEARCH_INDEX",
-            SHEER_ELASTICSEARCH_INDEX + "_haystack",
-        ),
-        "INCLUDE_SPELLING": True,
-    }
-}
-
-ELASTICSEARCH_INDEX_SETTINGS = {
-    "settings": {
-        "analysis": {
-            "analyzer": {
-                "ngram_analyzer": {
-                    "type": "custom",
-                    "tokenizer": "lowercase",
-                    "filter": ["haystack_ngram"],
-                },
-                "edgengram_analyzer": {
-                    "type": "custom",
-                    "tokenizer": "lowercase",
-                    "filter": ["haystack_edgengram"],
-                },
-                "synonym_en": {
-                    "tokenizer": "standard",
-                    "filter": ["synonyms_en"],
-                },
-                "synonym_es": {
-                    "tokenizer": "standard",
-                    "filter": ["synonyms_es"],
-                },
-            },
-            "tokenizer": {
-                "haystack_ngram_tokenizer": {
-                    "type": "nGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "haystack_edgengram_tokenizer": {
-                    "type": "edgeNGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                    "token_chars": [ "letter", "digit" ]
-                },
-            },
-            "filter": {
-                "haystack_ngram": {
-                    "type": "nGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "haystack_edgengram": {
-                    "type": "edgeNGram",
-                    "min_gram": 3,
-                    "max_gram": 15,
-                },
-                "synonyms_en": {
-                    "type": "synonym",
-                    "synonyms_path": "analysis/synonyms_en.txt",
-                },
-                "synonyms_es": {
-                    "type": "synonym",
-                    "synonyms_path": "analysis/synonyms_es.txt",
-                },
-            },
-        }
-    }
-}
-
-ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
-
 # ElasticSearch 7 Configuration
-ES7_HOST = os.getenv('ES7_HOST', 'localhost')
+ES_HOST = os.getenv('ES_HOST', 'localhost')
+ES_PORT = os.getenv("ES_PORT", "9200")
+ELASTICSEARCH_BIGINT = 50000
+ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
 if os.environ.get('USE_AWS_ES', False):
     awsauth = AWS4Auth(
@@ -431,7 +335,7 @@ if os.environ.get('USE_AWS_ES', False):
     )
     ELASTICSEARCH_DSL = {
         'default': {
-            'hosts': [{'host': ES7_HOST, 'port': 443}],
+            'hosts': [{'host': ES_HOST, 'port': 443}],
             'http_auth': awsauth,
             'use_ssl': True,
             'connection_class': RequestsHttpConnection,
@@ -440,7 +344,7 @@ if os.environ.get('USE_AWS_ES', False):
     }
 else:
     ELASTICSEARCH_DSL = {
-        "default": {"hosts": f"http://{ES7_HOST}:{ES_PORT}"}
+        "default": {"hosts": f"http://{ES_HOST}:{ES_PORT}"}
     }
 
 ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'search.elasticsearch_helpers.WagtailSignalProcessor'
@@ -480,6 +384,8 @@ WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get(
     "WAGTAILADMIN_NOTIFICATION_FROM_EMAIL"
 )
 
+PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
+
 
 # Password Policies
 # cfpb_common password rules
@@ -500,6 +406,10 @@ LOGIN_FAIL_TIME_PERIOD = os.environ.get("LOGIN_FAIL_TIME_PERIOD", 120 * 60)
 LOGIN_FAILS_ALLOWED = os.environ.get("LOGIN_FAILS_ALLOWED", 5)
 LOGIN_REDIRECT_URL = "/admin/"
 LOGIN_URL = "/login/"
+
+# Initialize our SAML_AUTH variable as false. Our production settings will
+# override this based on the SAML_AUTH environment variable.
+SAML_AUTH = False
 
 # When we generate an full HTML version of the regulation, we want to
 # write it out somewhere. This is where.
@@ -549,6 +459,7 @@ CSP_SCRIPT_SRC = (
     "*.consumerfinance.gov",
     "*.google-analytics.com",
     "*.googletagmanager.com",
+    "*.googleoptimize.com",
     "tagmanager.google.com",
     "optimize.google.com",
     "ajax.googleapis.com",
@@ -557,6 +468,7 @@ CSP_SCRIPT_SRC = (
     "js-agent.newrelic.com",
     "dnn506yrbagrg.cloudfront.net",
     "bam.nr-data.net",
+    "gov-bam.nr-data.net",
     "*.youtube.com",
     "*.ytimg.com",
     "trk.cetrk.com",
@@ -620,6 +532,7 @@ CSP_FRAME_SRC = (
     "*.consumerfinance.gov",
     "*.googletagmanager.com",
     "*.google-analytics.com",
+    "*.googleoptimize.com",
     "optimize.google.com",
     "www.youtube.com",
     "*.doubleclick.net",
@@ -645,9 +558,11 @@ CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
     "*.google-analytics.com",
+    "*.googleoptimize.com",
     "*.tiles.mapbox.com",
     "api.mapbox.com",
     "bam.nr-data.net",
+    "gov-bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",
     "n2.mouseflow.com",
@@ -662,18 +577,18 @@ CSP_MEDIA_SRC = (
     "*.consumerfinance.gov",
 )
 
-# Feature flags
-# All feature flags must be listed here with a dict of any hard-coded
-# conditions or an empty dict. If the conditions dict is empty the flag will
-# only be enabled if database conditions are added.
+# FEATURE FLAGS
+# Flags can be declared here with an empty list, which will evaluate as false
+# until the flag is enabled in the Wagtail admin, or with a list of conditions.
+# Each condition should be a tuple or dict in one of these forms:
+# (condition-string, value) or {"condition": condition-string, "value": value}
+# An optional 3rd value, "required," can be set to True. It defaults to False.
+# Flags can also be created (and deleted) in the Wagtail admin.
 FLAGS = {
     # Ask CFPB search spelling correction support
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results
     "ASK_SEARCH_TYPOS": [],
-    # Ask CFPB date label
-    # When enabled, date label will be changed from 'updated' to 'last reviewed'
-    "ASK_UPDATED_DATE_LABEL": [],
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
@@ -704,13 +619,6 @@ FLAGS = {
         # Boolean to turn it off explicitly unless enabled by another condition
         {"condition": "boolean", "value": False},
     ],
-    # Fix for margin-top when using the text inset
-    # When enabled, the top margin of full-width text insets is increased
-    "INSET_TEST": [],
-    # The next version of the public consumer complaint database
-    "CCDB5_RELEASE": [],
-    # The Trends feature inside Consumer Complaints
-    "CCDB5_TRENDS": [],
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
@@ -720,15 +628,10 @@ FLAGS = {
     "EMAIL_POPUP_DEBT": [("boolean", True)],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
-    # SPLIT TESTING FLAGS
-    # Ask CFPB page titles as H1s instead of H2s
-    "ASK_CFPB_H1": [("in split testing cluster", "ASK_CFPB_H1")],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
     "BETA_EXTERNAL_TESTING": [],
-    # Used to hide new youth employment success pages prior to public launch
-    "YOUTH_EMPLOYMENT_SUCCESS": [],
     # During a Salesforce system outage, the following flag should be enabled
     # to alert users that the Collect community is down.
     "COLLECT_OUTAGE": [
@@ -763,8 +666,8 @@ FLAGS = {
     "ASK_SURVEY_INTERCEPT": [],
     # Hide archive filter options in the filterable UI
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
-    # Expand ES Filterable List Search
-    "EXPAND_FILTERABLE_LIST_SEARCH": [],
+    # Whether robots.txt should block all robots, except for Search.gov.
+    "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
@@ -879,3 +782,41 @@ CSRF_REQUIRED_PATHS = (
     "/admin",
     "/django-admin",
 )
+
+
+# Django 2.2 Baseline required settings
+# exempt beta from CSRF settings until it's converted to https
+
+if DEPLOY_ENVIRONMENT and DEPLOY_ENVIRONMENT != "beta":
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_HTTPONLY = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_HSTS_SECONDS = 600
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Cache Settings
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cfgov_default_cache',
+        'TIMEOUT': None,
+    },
+    'post_preview': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'post_preview_cache',
+        'TIMEOUT': None,
+    }
+}
+
+# Set our CORS allowed origins based on a JSON list in the
+# CORS_ALLOWED_ORIGINS environment variable.
+try:
+    CORS_ALLOWED_ORIGINS = json.loads(
+        os.environ.get("CORS_ALLOWED_ORIGINS", "[]")
+    )
+except (TypeError, ValueError):
+    raise ImproperlyConfigured(
+        "Environment variable CORS_ALLOWED_ORIGINS is not valid JSON. "
+        "Expected a JSON array of allowed origins."
+    )

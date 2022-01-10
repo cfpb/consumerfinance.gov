@@ -3,7 +3,9 @@ from datetime import date
 
 from django.http import HttpRequest
 from django.template import engines
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import (
+    RequestFactory, SimpleTestCase, TestCase, override_settings
+)
 
 from model_bakery import baker
 
@@ -152,3 +154,24 @@ class TestUniqueIdInContext(TestCase):
                 self.render(self.template, {'request': HttpRequest()}),
                 '1'
             )
+
+
+class SearchGovAffiliateTests(SimpleTestCase):
+    def render(self, context):
+        engine = engines['wagtail-env']
+        template = engine.from_string('{{ search_gov_affiliate() }}')
+        return template.render(context=context)
+
+    def test_default_cfpb(self):
+        self.assertEqual(self.render({}), 'cfpb')
+
+    def test_spanish(self):
+        self.assertEqual(self.render({'language': 'es'}), 'cfpb_es')
+
+    @override_settings(DEPLOY_ENVIRONMENT='beta')
+    def test_beta(self):
+        self.assertEqual(self.render({}), 'cfpb_beta')
+
+    @override_settings(DEPLOY_ENVIRONMENT='beta')
+    def test_beta_spanish(self):
+        self.assertEqual(self.render({'language': 'es'}), 'cfpb_beta_es')

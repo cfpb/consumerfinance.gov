@@ -45,18 +45,8 @@ clean() {
 # Install project dependencies.
 install() {
   if [ "$NODE_ENV" = "development" ]; then
-
     echo "Installing frontend development dependencies…"
     yarn install
-
-    # Protractor = JavaScript acceptance testing framework.
-    echo "Installing Protractor dependencies locally…"
-    # We skip Gecko here (--gecko false) because webdriver pulls its release
-    # directly from a GitHub.com URL which enforces rate-limiting. This can
-    # cause installation failures when running automated testing. Currently
-    # we don't rely on Gecko for testing.
-    ./node_modules/protractor/bin/webdriver-manager update --gecko false --standalone false
-
   else
     echo "Installing frontend production dependencies…"
     yarn install --production --ignore-optional
@@ -73,17 +63,17 @@ build() {
 fake_fonts() {
   if [ ! -d static.in/cfgov-fonts/fonts ]; then
     echo "Faking font files…"
-    # We want to test Django collectstatic, but we might not have our webfont 
+    # We want to test Django collectstatic, but we might not have our webfont
     # files if this script is running somewhere public. Because consumerfinance.gov
-    # uses the Django ManifestStaticFilesStorage backend, the collectstatic 
+    # uses the Django ManifestStaticFilesStorage backend, the collectstatic
     # command will fail if any referenced files are missing.
     #
     # Builds generated with webfont files place them in a static.in/0/fonts
-    # subdirectory. Builds generated without these files don't have this 
+    # subdirectory. Builds generated without these files don't have this
     # directory.
     #
-    # If we don't have the webfont files, we create empty files with the same 
-    # name to allow collectstatic to run successfully. If the files already 
+    # If we don't have the webfont files, we create empty files with the same
+    # name to allow collectstatic to run successfully. If the files already
     # exist, these commands do nothing.
     mkdir -p static.in/fake-fonts/fonts
 

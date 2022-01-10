@@ -1,22 +1,36 @@
 <div class="college-costs_intro-segment">
-    {% for block in page.header -%}
-        {% if 'hero' in block.block_type %}
-            {{ render_stream_child(block) }}
-        {% endif %}
-    {%- endfor %}
-    <div class="wrapper content_wrapper">
-        <div class="content_main">
-           {% for block in page.header -%}
-                {% if block.block_type != 'hero' %}
-                    {{ render_block.render(block, loop.index) }}
-                {% endif %}
-            {%- endfor %}
-            {% for block in page.content -%}
-                {{ render_block.render(block, loop.index) }}
-            {%- endfor %}
-            <div class="college-costs_tool-section_buttons">
-                <button class="a-btn college-costs_buttons__start btn__get-started">Get started</button>
+    {% if return_user %}
+        <div class="wrapper content_wrapper">
+            <div class="content_main">
+                <div class="m-notification
+                            m-notification__visible">
+                    {{ svg_icon('update') }}
+                    <div class="m-notification_content">
+                        <div class="h4 m-notification_message">The page is loading…</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        {% for block in page.header -%}
+            {% if 'hero' in block.block_type %}
+                {{ render_stream_child(block) }}
+            {% endif %}
+        {%- endfor %}
+        <div class="wrapper content_wrapper">
+            <div class="content_main">
+               {% for block in page.header -%}
+                    {% if block.block_type != 'hero' %}
+                        {{ render_block.render(block, loop.index) }}
+                    {% endif %}
+                {%- endfor %}
+                {% for block in page.content -%}
+                    {{ render_block.render(block, loop.index) }}
+                {%- endfor %}
+                <div class="college-costs_tool-section_buttons">
+                    <button class="a-btn college-costs_buttons__start btn__get-started">Get started</button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 </div>

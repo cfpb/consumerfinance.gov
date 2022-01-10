@@ -1,18 +1,6 @@
 import itertools
 
 
-limited_categories = [
-    ('speech-bubble', 'Blog'),
-    ('newspaper', 'Newsroom'),
-    ('document', 'Report'),
-    ('pencil', "Director's notebook"),
-    ('date', 'Events'),
-    ('microphone', 'Speech'),
-    ('bullhorn', 'Press release'),
-    ('contract', 'Op-ed'),
-    ('double-quote', 'Testimony'),
-]
-
 related_posts_categories = [
     ('Blog', (
         ('At the CFPB', 'At the CFPB'),
@@ -22,6 +10,8 @@ related_posts_categories = [
         ('Info for Consumers', 'Info for consumers'),
     )),
     ('Newsroom', (
+        ('Consumer Advisories', 'Consumer advisories'),
+        ("Director's Statement", "Director's statement"),
         ('Op-Ed', 'Op-ed'),
         ('Press Release', 'Press release'),
         ('Speech', 'Speech'),
@@ -98,6 +88,8 @@ categories = [
         ('official-guidance', 'Official guidance'),
     )),
     ('Newsroom', (
+        ('consumer-advisories', 'Consumer advisories'),
+        ('directors-statement', "Director's statement"),
         ('op-ed', 'Op-ed'),
         ('press-release', 'Press release'),
         ('speech', 'Speech'),
@@ -139,16 +131,17 @@ categories = [
     )),
 ]
 
-supported_languagues = [
-    ('en', 'English'),
-    ('es', 'Spanish'),
-    ('zh', 'Chinese'),
-    ('vi', 'Vietnamese'),
-    ('ko', 'Korean'),
-    ('tl', 'Tagalog'),
-    ('ru', 'Russian'),
+supported_languages = [
     ('ar', 'Arabic'),
+    ('zh-Hans', 'Chinese (Simplified)'),
+    ('zh-Hant', 'Chinese (Traditional)'),
+    ('en', 'English'),
     ('ht', 'Haitian Creole'),
+    ('ko', 'Korean'),
+    ('ru', 'Russian'),
+    ('es', 'Spanish'),
+    ('tl', 'Tagalog'),
+    ('vi', 'Vietnamese'),
 ]
 
 
@@ -206,6 +199,8 @@ def page_type_choices():
             ('raj-date', 'Raj Date'),
             ('elizabeth-warren', 'Elizabeth Warren'))),
         ('Newsroom', (
+            ('consumer-advisories', 'Consumer advisories'),
+            ("directors-statement", "Director's statement"),
             ('op-ed', 'Op-ed'),
             ('press-release', 'Press release'),
             ('speech', 'Speech'),

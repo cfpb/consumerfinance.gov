@@ -4,6 +4,7 @@
 {% import 'macros/util/format/datetime.html' as dt %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% import 'organisms/ask-search.html' as ask_search with context %}
+{% import 'molecules/notification.html' as notification %}
 
 {% block title -%}
     {{- seo_title or page.question or page.title | striptags }} | {{ _('Consumer Financial Protection Bureau') }}
@@ -26,11 +27,7 @@
                 block__flush-top
                 block__sub">
         {% if last_edited %}
-            {% if flag_enabled('ASK_UPDATED_DATE_LABEL') %}
-                <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('last reviewed') }}: {{ dt.format_date(last_edited) }}</time>
-            {% else %}
-                <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
-            {% endif %}
+            <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('last reviewed') }}: {{ dt.format_date(last_edited) }}</time>
         {% endif %}
         <h1>
             {{ page.question | striptags }}
@@ -38,6 +35,7 @@
     </div>
     <div class="block
                 block__flush-top">
+
         {% if page.short_answer %}
             <div class="lead-paragraph">
                 {{ page.short_answer | richtext | safe }}
@@ -53,6 +51,12 @@
                         'is_printable': true
                     }
                 ) }}
+            </div>
+        {% endif %}
+
+        {% if page.notification %}
+            <div class="block block__sub">
+                {{ page.notification }}
             </div>
         {% endif %}
 

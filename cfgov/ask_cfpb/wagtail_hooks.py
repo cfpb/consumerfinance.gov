@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import re_path, reverse
 from django.utils.html import format_html
 
 from wagtail.admin.menu import MenuItem
@@ -9,12 +9,6 @@ from wagtail.core.models import Page
 
 from ask_cfpb.models import Answer, AnswerPage
 from ask_cfpb.scripts import export_ask_data
-
-
-try:
-    from django.urls import re_path
-except ImportError:
-    from django.conf.urls import url as re_path
 
 
 def export_data(request):

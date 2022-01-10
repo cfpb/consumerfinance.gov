@@ -1,8 +1,25 @@
-import 'regenerator-runtime/runtime';
-import Chart from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart';
+import Chart from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart.js';
+
+const HTML_SNIPPET = `
+  <div id="map"></div>
+`;
+let element;
 
 describe( 'chart constructor', () => {
   beforeEach( () => {
+
+    // Empty HTML element for the chart.
+    document.body.innerHTML = HTML_SNIPPET;
+    element = document.querySelector( '#map' );
+
+    // Mock highcharts required APIs.
+    window.SVGElement.prototype.getBBox = () => ( {
+      x: 0,
+      y: 0
+      // whatever other props you need
+    } );
+
+    // Mock window.fetch.
     global.fetch = jest.fn().mockImplementation( url => {
       expect( url ).toEqual( 'https://foobar.json' );
       return new Promise( resolve => {
@@ -23,7 +40,8 @@ describe( 'chart constructor', () => {
   it( 'builds raw chart', () => {
     const options = {
       source: 'https://foobar.json',
-      isPerCapita: false
+      isPerCapita: false,
+      el: element
     };
     // eslint-disable-next-line no-unused-vars
     const chart = new Chart( options );
@@ -32,7 +50,8 @@ describe( 'chart constructor', () => {
   it( 'builds per capita chart', () => {
     const options = {
       source: 'https://foobar.json',
-      isPerCapita: true
+      isPerCapita: true,
+      el: element
     };
     // eslint-disable-next-line no-unused-vars
     const chart = new Chart( options );

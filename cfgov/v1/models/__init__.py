@@ -8,7 +8,8 @@ from v1.models.base import (
 )
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.browse_filterable_page import (
-    BrowseFilterablePage, EventArchivePage, NewsroomLandingPage
+    NEWSROOM_CACHE_TAG, BrowseFilterablePage, EventArchivePage,
+    NewsroomLandingPage
 )
 from v1.models.browse_page import BrowsePage
 from v1.models.caching import CDNHistory
@@ -29,6 +30,7 @@ from v1.models.portal_topics import (
 )
 from v1.models.resources import Resource, ResourceTag, TaggableSnippetManager
 from v1.models.snippets import Contact, ReusableText
+from v1.models.story_page import StoryPage
 from v1.models.sublanding_filterable_page import (
     ActivityLogPage, SublandingFilterablePage
 )

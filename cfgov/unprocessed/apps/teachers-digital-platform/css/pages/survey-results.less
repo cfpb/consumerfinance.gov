@@ -1,0 +1,206 @@
+.initials-display {
+    /**
+     * Hidden to avoid a situation where a student shares online a URL that
+     * displays a naughty word as initials. At least this requires the end-user
+     * to open print preview.
+     */
+    display: none;
+
+    @media print {
+        display: inline;
+    }
+}
+
+.tdp-survey-results {
+    p.label {
+        font-weight: 500;
+        margin-top: 2em;
+    }
+    h1 {
+        margin-top: 0;
+
+        + p {
+            margin-bottom: 2rem;
+        }
+    }
+    .block {
+        margin: 2rem 0;
+    }
+    .o-expandable_header-left,
+    .numbered-header {
+        align-items: center;
+        display: flex;
+        img {
+            padding-right: 10px;
+        }
+    }
+    .o-expandable_content {
+        @media print {
+            display: block!important;
+            overflow: auto;
+            max-height: none!important;
+        }
+    }
+}
+
+.tdp-survey-results__2col {
+    h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-top: 1rem;
+    }
+
+    .respond-to-min(@bp-lg-min, {
+        display: flex;
+
+        > div:first-child {
+            margin-right: 2rem;
+        }
+    });
+}
+
+.share-output:not([hidden]) {
+    display: flex;
+    margin-top: 1.5rem;
+
+    > div:last-child {
+        margin-left: 2rem;
+    }
+    h4 {
+        margin-bottom: 0.5rem;
+    }
+
+    .share-output__copied:not([hidden]) {
+        display: flex;
+        margin-top: 0.5rem;
+
+        div {
+            margin-left: 0.5rem;
+        }
+        path {
+            fill: #20aa3f;
+        }
+    }
+}
+
+.results-road {
+    display: flex;
+    margin: 2em 0;
+}
+
+.results-road__starting-out {
+    width: 25%;
+}
+
+
+.results-road__box {
+    padding: 2.5rem;
+    position: relative;
+    &::before {
+        background-image: linear-gradient(90deg, #000, #000 75%, transparent 75%, transparent 100%);
+        background-size: 14px 1px;
+        content: '';
+        left: 0;
+        height: 1px;
+        position: absolute;
+        width: 100%;
+    }
+}
+
+.results-road--overall {
+    .results-road__box {
+        background-color: #E2EFD8;
+        border: 1px solid #1E9642;
+    }
+    .results-road__on-the-road {
+        .results-road__box {
+            background-color: #C7E5B3;
+        }
+    }
+    .results-road__well-on-your-way {
+        .results-road__box {
+            background-color: #ADDC91;
+        }
+    }
+}
+
+.results-road--planning {
+    .results-road__box {
+        background-color: #daf1f0;
+        border: 1px solid #3b8a86;
+    }
+    .results-road__on-the-road {
+        .results-road__box {
+            background-color: #b3d8d6;
+        }
+    }
+    .results-road__well-on-your-way {
+        .results-road__box {
+            background-color: #93c1bf;
+        }
+    }
+}
+
+.tdp-survey__save-block {
+    // Fix CFPB's group
+    .m-btn-group {
+        line-height: 3;
+
+        .a-btn {
+            margin-left: 0;
+            margin-right: .375em;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+    .a-btn svg {
+        margin-left: 0.3rem;
+    }
+}
+
+.tdp-survey-results__wrapper {
+    position: relative;
+}
+
+.tdp-survey-results__marker {
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 13px;
+    display: none;
+    position: absolute;
+    .respond-to-min(@bp-xl-min, {
+        display: block;
+    });
+    @media print {
+        display: block;
+    }
+    &.starting-out {
+        left: 0%;
+    }
+    &.on-the-road {
+        left: 32.5%;
+    }
+    &.well-on-your-way {
+        left: 77.5%;
+    }
+    &.active {
+        background-image:url("/static/apps/teachers-digital-platform/img/marker.svg");
+        font-weight: 700;
+        padding-left: 17px;
+        @media screen and (max-width: 900px) {
+            display: block;
+            margin-bottom: -10px;
+            left: 0;
+            position: relative;
+        }
+    }
+}
+
+.tdp-survey__save-block,
+.survey-reset--link--wrap {
+    @media print {
+        display: none;
+    }
+}

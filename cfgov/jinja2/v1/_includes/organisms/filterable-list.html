@@ -35,15 +35,14 @@
 
    show_post_tags: Whether to render the tags in post previews.
 
+   has_unfiltered_results: Whether the filterable list has anything to filter.
+
    ========================================================================== #}
 
 {% import 'organisms/filterable-list-controls.html' as filterable_list_controls with context %}
 {% import 'molecules/notification.html' as notification with context %}
 
 {# SHOW A NOTIFICATION IF THERE'S NOTHING TO FILTER. #}
-
-{% set has_unfiltered_results = filter_data.form.filterable_pages.first() %}
-
 {% if not has_unfiltered_results and value.no_posts_message %}
     {{ notification.render(
         'information',
@@ -52,7 +51,6 @@
         value.no_posts_explanation
     ) }}
 {% elif has_unfiltered_results %}
-
     <div class="o-filterable-list">
         {% set form = filter_data.form %}
         {% set posts = filter_data.page_set %}
@@ -95,7 +93,7 @@
             {% set count = posts.paginator.count %}
             {% if count == 0 %}
                 {# The if statement here allows access to the
-                    notification_opts variable outside of the for loop.
+                   notification_opts variable outside of the for loop.
                 #}
                 {% if notification_opts.update({
                     'type': 'warning',

@@ -41,7 +41,7 @@ class FilterablePagesDocumentTest(TestCase):
         self.assertCountEqual(
             mapping.properties.properties.to_dict().keys(),
             [
-                'tags', 'categories', 'authors', 'title', 'url',
+                'tags', 'categories', 'language', 'title', 'url',
                 'is_archived', 'date_published', 'start_dt', 'end_dt',
                 'statuses', 'products', 'initial_filing_date', 'model_class',
                 'content', 'preview_description'
@@ -141,7 +141,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         )
         event.tags.add('test-topic')
         event.categories.add(CFGOVPageCategory(name='test-category'))
-        event.authors.add('test-author')
+        event.language = 'es'
         publish_page(event)
         enforcement = EnforcementActionPage(
             title="Great Test Page",
@@ -197,15 +197,16 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         from_date_dt = datetime(2021, 1, 16)
         from_date = datetime.date(from_date_dt)
 
-        results = EventFilterablePagesDocumentSearch(
-            prefix='/',
+        search = EventFilterablePagesDocumentSearch(prefix='/')
+        search.filter(
             topics=['test-topic'],
             categories=['test-category'],
-            authors=['test-author'],
+            language=['es'],
             to_date=to_date,
             from_date=from_date,
-            title='Event Test',
-            archived=['no']).search()
+            archived=['no']
+        )
+        results = search.search(title='Event Test')
         self.assertTrue(results.filter(title=self.event.title).exists())
 
     def test_search_blog_dates(self):
@@ -214,15 +215,16 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         from_date_dt = datetime.today() - relativedelta(months=1)
         from_date = datetime.date(from_date_dt)
 
-        results = FilterablePagesDocumentSearch(
-            prefix='/',
+        search = FilterablePagesDocumentSearch(prefix='/')
+        search.filter(
             topics=[],
             categories=[],
-            authors=[],
+            language=[],
             to_date=to_date,
             from_date=from_date,
-            title=None,
-            archived=None).search()
+            archived=None,
+        )
+        results = search.search(title=None)
         self.assertTrue(results.filter(title=self.blog.title).exists())
 
     def test_search_enforcement_actions(self):
@@ -231,17 +233,18 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         from_date_dt = datetime.today() - relativedelta(months=1)
         from_date = datetime.date(from_date_dt)
 
-        results = EnforcementActionFilterablePagesDocumentSearch(
-            prefix='/',
+        search = EnforcementActionFilterablePagesDocumentSearch(prefix='/')
+        search.filter(
             topics=[],
             categories=[],
-            authors=[],
+            language=[],
             to_date=to_date,
             from_date=from_date,
-            title=None,
             statuses=['expired-terminated-dismissed'],
             products=['Debt Collection'],
-            archived=None).search()
+            archived=None
+        )
+        results = search.search(title=None)
         self.assertTrue(results.filter(title=self.enforcement.title).exists())
 
     def test_search_enforcement_actions_no_statuses(self):
@@ -250,47 +253,32 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         from_date_dt = datetime.today() - relativedelta(months=1)
         from_date = datetime.date(from_date_dt)
 
-        results = EnforcementActionFilterablePagesDocumentSearch(
-            prefix='/',
+        search = EnforcementActionFilterablePagesDocumentSearch(prefix='/')
+        search.filter(
             topics=[],
             categories=[],
-            authors=[],
+            language=[],
             to_date=to_date,
             from_date=from_date,
-            title=None,
             statuses=[],
             products=[],
-            archived=None).search()
+            archived=None
+        )
+        results = search.search(title=None)
         self.assertTrue(results.filter(title=self.enforcement.title).exists())
 
-    @override_settings(FLAGS={"EXPAND_FILTERABLE_LIST_SEARCH": [("boolean", True)]})
-    def test_search_title_multimatch_enabled(self):
-        results = FilterablePagesDocumentSearch(
-            prefix='/',
+    def test_search_title_uses_multimatch(self):
+        search = FilterablePagesDocumentSearch(prefix='/')
+        search.filter(
             topics=[],
             categories=[],
-            authors=[],
+            language=[],
             to_date=None,
             from_date=None,
-            title="Foo",
-            archived=None).search()
+            archived=None
+        )
+        results = search.search(title="Foo")
         self.assertTrue(results.filter(title=self.blog_title_match).exists())
         self.assertTrue(results.filter(title=self.blog_content_match.title).exists())
         self.assertTrue(results.filter(title=self.blog_preview_match.title).exists())
         self.assertTrue(results.filter(title=self.blog_topic_match.title).exists())
-
-    @override_settings(FLAGS={"EXPAND_FILTERABLE_LIST_SEARCH": [("boolean", False)]})
-    def test_search_title_multimatch_disabled(self):
-        results = FilterablePagesDocumentSearch(
-            prefix='/',
-            topics=[],
-            categories=[],
-            authors=[],
-            to_date=None,
-            from_date=None,
-            title="Foo",
-            archived=None).search()
-        self.assertTrue(results.filter(title=self.blog_title_match).exists())
-        self.assertFalse(results.filter(title=self.blog_content_match.title).exists())
-        self.assertFalse(results.filter(title=self.blog_preview_match.title).exists())
-        self.assertFalse(results.filter(title=self.blog_topic_match.title).exists())

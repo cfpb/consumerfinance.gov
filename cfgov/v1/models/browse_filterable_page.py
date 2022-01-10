@@ -10,12 +10,19 @@ from wagtail.search import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
+from v1.documents import (
+    EnforcementActionFilterablePagesDocumentSearch,
+    EventFilterablePagesDocumentSearch
+)
 from v1.models.base import CFGOVPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.filterable_list_mixins import (
     CategoryFilterableMixin, FilterableListMixin
 )
 from v1.models.learn_page import EventPage
+
+
+NEWSROOM_CACHE_TAG = "newsroom"
 
 
 class BrowseFilterableContent(StreamBlock):
@@ -89,6 +96,10 @@ class EnforcementActionsFilterPage(BrowseFilterablePage):
     def get_model_class():
         return EnforcementActionPage
 
+    @staticmethod
+    def get_search_class():
+        return EnforcementActionFilterablePagesDocumentSearch
+
 
 class EventArchivePage(BrowseFilterablePage):
     template = 'browse-filterable/index.html'
@@ -104,9 +115,18 @@ class EventArchivePage(BrowseFilterablePage):
         from .. import forms
         return forms.EventArchiveFilterForm
 
+    @staticmethod
+    def get_search_class():
+        return EventFilterablePagesDocumentSearch
+
 
 class NewsroomLandingPage(CategoryFilterableMixin, BrowseFilterablePage):
     template = 'newsroom/index.html'
     filterable_categories = ['Newsroom']
 
     objects = PageManager()
+
+    def serve(self, request, *args, **kwargs):
+        response = super().serve(request, *args, **kwargs)
+        response['Edge-Cache-Tag'] = NEWSROOM_CACHE_TAG
+        return response

@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 from django.db import models
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
@@ -186,6 +187,15 @@ class AnswerPage(CFGOVPage):
         help_text="Include share and print buttons above answer."
     )
 
+    # TODO: When we've updated to Wagtail 2.13.x remove the help_text
+    # and set the block_count for the notification to 1.
+    # See https://git.io/JODqS
+    notification = StreamField([
+        ('notification', molecules.Notification(
+            help_text="Include only one notification."))],
+        blank=True,
+    )
+
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
             FieldPanel('last_edited'),
@@ -195,6 +205,7 @@ class AnswerPage(CFGOVPage):
             heading="Page content",
             classname="collapsible"),
         FieldPanel('share_and_print'),
+        StreamFieldPanel('notification'),
         StreamFieldPanel('answer_content'),
         MultiFieldPanel([
             SnippetChooserPanel('related_resource'),
@@ -349,6 +360,30 @@ class AnswerPage(CFGOVPage):
         else:
             return self.title
 
+    def validate_unique(self, *args, **kwargs):
+        super().validate_unique(*args, **kwargs)
+
+        if self.answer_base is None:
+            return
+
+        # Ensure that there is only ever one answer page in this language for
+        # an answer
+        pages_with_same_answer_and_language = self.__class__.objects.filter(
+            language=self.language,
+            answer_base=self.answer_base
+        ).exclude(
+            pk=self.pk
+        )
+        if pages_with_same_answer_and_language.exists():
+            raise ValidationError(
+                {
+                    NON_FIELD_ERRORS: (
+                        f"An answer page in {self.language} already exists "
+                        f"for answer id {self.answer_base.id}"
+                    )
+                }
+            )
+
     @property
     def clean_search_tags(self):
         return [
@@ -376,9 +411,3 @@ class AnswerPage(CFGOVPage):
             return None
 
         return self.category.first().category_image
-
-    # Overrides the default of page.id for comparing against split testing
-    # clusters. See: core.feature_flags.in_split_testing_cluster
-    @property
-    def split_test_id(self):
-        return self.answer_base.id

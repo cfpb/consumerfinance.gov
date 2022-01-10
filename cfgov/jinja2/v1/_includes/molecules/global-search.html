@@ -14,16 +14,24 @@
 
 {% macro render( language='en' ) %}
 
+{%- set search_url_base = "https://search.consumerfinance.gov/search" -%}
+{%- set search_url = (
+    search_url_base
+    ~ "?utf8=✓"
+    ~ "&affiliate=" ~ search_gov_affiliate()
+    ~ "&query="
+) -%}
+
 <div class="m-global-search"
      data-js-hook="behavior_flyout-menu">
     <div class="m-global-search_fallback">
-        <a href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=">
+        <a rel="nofollow" href="{{ search_url }}">
             {{ _('Search') }}
         </a>
     </div>
     <button class="m-global-search_trigger"
             data-js-hook="behavior_flyout-menu_trigger"
-            aria-label="{{ _('Search') }}">
+            aria-label="{{ _('Search the consumerfinance.gov website') }}">
         <span class="m-global-search_trigger-open-label">
             {{ svg_icon('search') }}
             <span class="u-hide-on-mobile">{{ _('Search') }}</span>
@@ -39,7 +47,7 @@
          aria-expanded="false"
          role="search">
         <form class="m-global-search_content-form"
-              action="https://search.consumerfinance.gov/search"
+              action="{{ search_url_base }}"
               method="get">
             {#
                 The following two inputs are required by the search portal.
@@ -51,7 +59,7 @@
             <input type="hidden"
                    id="affiliate"
                    name="affiliate"
-                   value="{{ 'cfpb_es' if language == 'es' else 'cfpb' }}">
+                   value="{{ search_gov_affiliate() }}">
 
             <div class="o-form__input-w-btn">
                <div class="o-form__input-w-btn_input-container">
@@ -88,22 +96,26 @@
                 <p class="h5">{{ _('Suggested search terms:') }}</p>
                 <ul class="m-list m-list__horizontal">
                     <li class="m-list_item">
-                        <a class="m-list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=regulations">
+                        <a class="m-list_link" rel="nofollow"
+                           href="{{ search_url }}regulations">
                             {{ _('Regulations') }}
                         </a>
                     </li>
                     <li class="m-list_item">
-                        <a class="m-list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=compliance+guides">
+                        <a class="m-list_link" rel="nofollow"
+                           href="{{ search_url }}compliance+guides">
                             {{ _('Compliance guides') }}
                         </a>
                     </li>
                     <li class="m-list_item">
-                        <a class="m-list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=mortgage">
+                        <a class="m-list_link" rel="nofollow"
+                           href="{{ search_url }}mortgage">
                             {{ _('Mortgage') }}
                         </a>
                     </li>
                     <li class="m-list_item">
-                        <a class="m-list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=college+loans">
+                        <a class="m-list_link" rel="nofollow"
+                           href="{{ search_url }}college+loans">
                             {{ _('College loans') }}
                         </a>
                     </li>

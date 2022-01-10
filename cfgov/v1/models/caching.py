@@ -29,6 +29,8 @@ class CDNHistory(models.Model):
 
 
 class AkamaiBackend(BaseBackend):
+    """ Akamai backend that performs an 'invalidate' purge """
+
     def __init__(self, params):
         self.client_token = params.get('CLIENT_TOKEN')
         self.client_secret = params.get('CLIENT_SECRET')
@@ -57,12 +59,6 @@ class AkamaiBackend(BaseBackend):
             'action': action,
             'objects': [obj]
         }
-
-    def delete(self, url):
-        self.post(url, 'delete')
-
-    def delete_all(self):
-        self.post_all('delete')
 
     def post_all(self, action):
         obj = os.environ['AKAMAI_OBJECT_ID']
@@ -99,11 +95,50 @@ class AkamaiBackend(BaseBackend):
         )
         resp.raise_for_status()
 
+    def post_tags(self, tags, action):
+        """Request a purge by cache_tags."""
+        _url = os.getenv('AKAMAI_FAST_PURGE_URL')
+        if not _url:
+            logger.info(
+                "Can't purge cache. No value set for 'AKAMAI_FAST_PURGE_URL'"
+            )
+            return
+        url = _url.replace("url", "tag")
+        resp = requests.post(
+            url,
+            headers=self.headers,
+            data=json.dumps({"action": action, "objects": tags}),
+            auth=self.auth
+        )
+        logger.info(
+            f"Attempted to {action} by cache_tags {', '.join(tags)}, "
+            f"and got back the response {resp.text}"
+        )
+        resp.raise_for_status()
+
+    def purge_by_tags(self, tags, action="invalidate"):
+        self.post_tags(tags, action=action)
+
     def purge(self, url):
         self.post(url, 'invalidate')
 
     def purge_all(self):
         self.post_all('invalidate')
+
+
+class AkamaiDeletingBackend(AkamaiBackend):
+    """ Akamai backend that performs a 'delete' purge
+
+    This is a special-case backend, and should not be globally configured. """
+
+    def purge(self, url):
+        self.post(url, 'delete')
+
+    def purge_all(self):
+        raise NotImplementedError(
+            "Purging all by deletion is intentionally not supported through "
+            "this backend. Please use the Akamai Control Center."
+        )
 
 
 @receiver(post_save, sender=Document)

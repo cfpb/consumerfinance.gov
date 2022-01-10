@@ -48,10 +48,10 @@ Most of consumerfinance.gov's templates are Jinja2. In these templates, two temp
 
 See [Enabling a flag](#enabling-a-flag) below for more on flag conditions.
 
-An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56):
+An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_includes/organisms/header.html#L28-L41):
 
 ```jinja
-{% if flag_enabled('BETA_NOTICE') and show_banner %}
+{% if flag_enabled('BETA_NOTICE') %}
 <div class="m-global-banner">
     <div class="wrapper
                 wrapper__match-content
@@ -85,7 +85,7 @@ The `BETA_NOTICE` [Jinja2](#jinja2) example above when implemented with Django t
 {% load feature_flags %}
 
 {% flag_enabled 'BETA_NOTICE' as beta_flag %}
-{% if beta_flag and show_banner %}
+{% if beta_flag %}
 <div class="m-global-banner">
     <div class="wrapper
                 wrapper__match-content
@@ -223,4 +223,8 @@ Feature flags can be used in satellite apps in exactly the same way they are use
 
 ## Hygiene
 
-Feature flags should be rare and ephemeral. Changes should be small and frequent, and not big-bang releases, and flags that are no longer used and their conditions should be cleaned up and removed from code and the database.
+Most feature flags are no longer needed once a feature is launched. Follow these steps to remove a flag when its job is done:
+
+- Create a pull request that deletes the flag from settings, if it was declared there, and removes any related code and tests that referenced the flag.
+- After the changes are merged and deployed to production, check `Settings ==> Flags` in Wagtail (`/admin/flags/`) to see if the removed flag is still listed. If so, the flag has been saved in our database. Select the flag, click the DELETE FLAG button at top right, and then choose YES, DELETE IT.
+

@@ -1,5 +1,6 @@
-import Analytics from '../../../js/modules/Analytics';
 import { closest, queryOne } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+import Analytics from '../../../js/modules/Analytics';
+import { SCORES_UNSET_KEY } from './survey/config';
 
 /* eslint-disable consistent-return */
 
@@ -10,8 +11,21 @@ import { closest, queryOne } from '@cfpb/cfpb-atomic-component/src/utilities/dom
  * @param {string} category - Optional category if it's not eRegs-related
  * @returns {object} Event data
  */
-const sendEvent = ( action, label, category ) => {
+let sendEvent = ( action, label, category ) => {
   category = category || 'TDP Search Tool';
+  const eventData = Analytics.getDataLayerOptions( action, label, category );
+  Analytics.sendEvent( eventData );
+  return eventData;
+};
+
+/**
+ * Sends the user survey interaction to Analytics
+ * @param {string} action - The user's action
+ * @param {string} label - The label associated with the action
+ * @returns {object} Event data
+ */
+let sendSurveyEvent = ( action, label ) => {
+  const category = 'Student Survey Interaction';
   const eventData = Analytics.getDataLayerOptions( action, label, category );
   Analytics.sendEvent( eventData );
   return eventData;
@@ -61,10 +75,9 @@ const getExpandableState = expandable => {
  * and report to GA if they opened or closed an expandable.
  *
  * @param {event} event Click event
- * @param {method} sendEventMethod method
  * @returns {object} Event data
  */
-const handleExpandableClick = ( event, sendEventMethod ) => {
+const handleExpandableClick = event => {
   const expandable = getExpandable( event );
   if ( !expandable ) {
     return;
@@ -77,10 +90,6 @@ const handleExpandableClick = ( event, sendEventMethod ) => {
   }
   label = label.textContent.trim();
 
-  if ( sendEventMethod ) {
-    return sendEventMethod( action, label );
-  }
-
   return sendEvent( action, label );
 };
 
@@ -88,20 +97,15 @@ const handleExpandableClick = ( event, sendEventMethod ) => {
  * handleFilterClick - Listen for filter clicks and report to GA.
  *
  * @param {event} event Click event
- * @param {method} sendEventMethod method
  * @returns {object} Event data
  */
-const handleFilterClick = ( event, sendEventMethod ) => {
+const handleFilterClick = event => {
   const checkbox = event.target;
   if ( !checkbox.classList.contains( 'a-checkbox' ) ) {
     return;
   }
   const action = checkbox.checked ? 'filter' : 'remove filter';
   const label = checkbox.getAttribute( 'aria-label' );
-
-  if ( sendEventMethod ) {
-    return sendEventMethod( action, label );
-  }
 
   return sendEvent( action, label );
 };
@@ -110,10 +114,9 @@ const handleFilterClick = ( event, sendEventMethod ) => {
  * handleClearFilterClick - Listen for clear filter clicks and report to GA.
  *
  * @param {event} event Click event
- * @param {method} sendEventMethod method
  * @returns {object} Event data
  */
-const handleClearFilterClick = ( event, sendEventMethod ) => {
+const handleClearFilterClick = event => {
   // Continue only if the X icon was clicked and not the parent button
   let target = event.target.tagName.toLowerCase();
   if ( target !== 'svg' && target !== 'path' ) {
@@ -126,10 +129,6 @@ const handleClearFilterClick = ( event, sendEventMethod ) => {
   }
   const action = 'remove filter';
   const label = target.textContent.trim();
-
-  if ( sendEventMethod ) {
-    return sendEventMethod( action, label );
-  }
 
   return sendEvent( action, label );
 };
@@ -153,10 +152,9 @@ const getPaginator = event => {
  * handlePaginationClick - Listen for pagination clicks and report to GA.
  *
  * @param {event} event Click event
- * @param {method} sendEventMethod method
  * @returns {object} Event data
  */
-const handlePaginationClick = ( event, sendEventMethod ) => {
+const handlePaginationClick = event => {
   const paginator = getPaginator( event );
   if ( !paginator ) {
     return;
@@ -180,12 +178,6 @@ const handlePaginationClick = ( event, sendEventMethod ) => {
     return;
   }
   label = isNextButton ? parseInt( label[1], 10 ) - 1 : parseInt( label[1], 10 ) + 1;
-
-
-  if ( sendEventMethod ) {
-    return sendEventMethod( action, label );
-  }
-
   return sendEvent( action, label );
 };
 
@@ -208,10 +200,9 @@ const getClearBtn = event => {
  * handleClearAllClick - Listen for clear all filters clicks and report to GA.
  *
  * @param {event} event Click event
- * @param {method} sendEventMethod method
  * @returns {object} Event data
  */
-const handleClearAllClick = ( event, sendEventMethod ) => {
+const handleClearAllClick = event => {
   const clearBtn = getClearBtn( event );
   if ( !clearBtn ) {
     return;
@@ -232,11 +223,6 @@ const handleClearAllClick = ( event, sendEventMethod ) => {
   }
   const action = 'clear all filters';
   const label = tagNames.join( '|' );
-
-  if ( sendEventMethod ) {
-    return sendEventMethod( action, label );
-  }
-
   return sendEvent( action, label );
 };
 
@@ -244,10 +230,8 @@ const handleClearAllClick = ( event, sendEventMethod ) => {
  * handleFetchSearchResults - Listen for AJAX fetchSearchResults and report to GA.
  *
  * @param {string} searchTerm string
- * @param {method} sendEventMethod method
- * @returns {object} Event data
  */
-const handleFetchSearchResults = ( searchTerm, sendEventMethod ) => {
+const handleFetchSearchResults = searchTerm => {
 
   if ( searchTerm.length === 0 ) {
     return;
@@ -263,37 +247,453 @@ const handleFetchSearchResults = ( searchTerm, sendEventMethod ) => {
       const action = 'noSearchResults';
       const label = searchTerm.toLowerCase() + ':0';
 
-      if ( sendEventMethod ) {
-        sendEventMethod( action, label );
-      } else {
-        sendEvent( action, label );
-      }
+      sendEvent( action, label );
     }
   }
 
   // Send the keyword to Analytics.
   const action = 'search';
   const label = searchTerm.toLowerCase();
-  if ( sendEventMethod ) {
-    return sendEventMethod( action, label );
+  sendEvent( action, label );
+};
+
+/**
+ * handleSurveySwitchGradeClick - Listen for Switch grades click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveySwitchGradeClick = event => {
+  const link = closest( event.target, '.a-link__jump' ) || event.target;
+  if ( !link.classList.contains( 'a-link__jump' ) ) {
+    return;
   }
-  return sendEvent( action, label );
+  const action = link.textContent.trim();
+  const grade_level = link.getAttribute( 'data-tdp_grade_level' );
+  const label = 'Switch grades from ' + grade_level;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyPrivacyModalClick - Listen for Privacy statement click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyPrivacyModalClick = event => {
+  const link = closest( event.target, '[data-open-modal="modal-privacy"]' ) || event.target;
+  if ( link.getAttribute( 'data-open-modal' ) !== 'modal-privacy' ) {
+    return;
+  }
+  const action = link.textContent.trim();
+  const grade_level = link.getAttribute( 'data-tdp_grade_level' );
+  const label = grade_level;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyLetsDoThisClick - Listen for Let's do this click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyLetsDoThisClick = event => {
+  const link = closest( event.target, 'a.survey-entry-link' ) || event.target;
+  if ( !link.classList.contains( 'survey-entry-link' ) ) {
+    return;
+  }
+  const action = link.textContent.trim();
+  const grade_level = link.getAttribute( 'data-tdp_grade_level' );
+  const label = grade_level;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyChoiceChange - Listen for radio button value change and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyChoiceChange = event => {
+  const radio = closest( event.target, 'input.tdp-survey__choice-question' );
+  if ( !radio || !radio.checked ) {
+    return;
+  }
+  const action = 'Radio Button Clicked';
+  const wrapper = closest( radio, 'div.wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const parent_fieldset = closest( radio, 'fieldset' );
+  const question = queryOne( 'legend.tdp-question-legend', parent_fieldset );
+  const answer = queryOne( 'label', radio.parentElement );
+  const label = grade_level + ': ' + question.textContent.trim() + ' (' + answer.textContent.trim() + ')';
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyErrorNoticeClick - Listen for error notification click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyErrorNoticeClick = event => {
+  const link = closest( event.target, '.m-notification__error a' ) || event.target;
+  if ( link.getAttribute( 'href' ) !== '#' ) {
+    return;
+  }
+  const action = 'Anchor: Missed Question';
+  const wrapper = closest( link, 'div.wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const section = Number( queryOne( 'div[data-page-idx]', wrapper ).getAttribute( 'data-page-idx' ) ) + 1;
+  const question = link.textContent.trim();
+  const label = grade_level + ': Section ' + section + ' | ' + question;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyRestartModalClick - Listen for Restart survey click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyRestartModalClick = event => {
+  const selector = '[data-open-modal="modal-restart"],[data-open-modal="modal-reset"]';
+  const link = closest( event.target, selector );
+  let label = '';
+  if ( link && link.getAttribute( 'data-open-modal' ) === 'modal-restart' ) {
+    const wrapper = closest( link, 'div.wrapper.tdp-survey' );
+    const section = Number( queryOne( 'div[data-page-idx]', wrapper ).getAttribute( 'data-page-idx' ) ) + 1;
+    const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+    label = grade_level + ': Section ' + section;
+  } else if ( link && link.getAttribute( 'data-open-modal' ) === 'modal-reset' ) {
+    const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
+    const section = 'Results page';
+    const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+    label = grade_level + ': ' + section;
+  } else {
+    return;
+  }
+  const action = 'Start Over';
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyExpandableClick - Listen for opening or closing of an expandable and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyExpandableClick = event => {
+  const selector = '.tdp-survey-sidebar__mobile-control .o-expandable_header';
+  const expandable = closest( event.target, selector );
+  if ( !expandable || !expandable.classList.contains( 'o-expandable_header' ) ) {
+    return;
+  }
+  const state = getExpandableState( expandable ) === 'expand' ? 'Expand' : 'Collapse';
+  const action = `Survey Progress Dropdown: ${ state }`;
+  const wrapper = closest( expandable, 'div.wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const section = Number( queryOne( 'div[data-page-idx]', wrapper ).getAttribute( 'data-page-idx' ) ) + 1;
+  const label = grade_level + ': Section ' + section;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveySectionClick - Listen for Edit Section click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveySectionClick = event => {
+  const link = closest( event.target, '[data-editable="1"]' ) || event.target;
+  if ( !link.classList.contains( 'tdp-survey-section' ) || ( link.getAttribute( 'data-editable' ) !== '1' ) ) {
+    return;
+  }
+  const action = 'Edit';
+  const wrapper = closest( link, 'div.wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const section = queryOne( '.tdp-survey-section__title', link ).textContent.replace( '(complete)', '' ).trim();
+  const label = grade_level + ': ' + section;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveySubmitClick - Listen for Submit click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveySubmitClick = event => {
+  const link = closest( event.target, 'button.a-btn[type="submit"]' ) || event.target;
+  const action = link.textContent.trim();
+  if (
+    !link.classList.contains( 'a-btn' ) ||
+    ( link.getAttribute( 'type' ) !== 'submit' ) ||
+    ( action !== 'Get my results' ) ) {
+    return;
+  }
+  const wrapper = closest( link, 'div.wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const section = Number( queryOne( 'div[data-page-idx]', wrapper ).getAttribute( 'data-page-idx' ) ) + 1;
+  const label = grade_level + ': Section ' + section;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsExpandableClick - Listen for opening or closing of an expandable and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyResultsExpandableClick = event => {
+  const selector = '.tdp-survey-results .o-expandable_target';
+  const expandable = closest( event.target, selector );
+  if ( !expandable || !expandable.classList.contains( 'o-expandable_target' ) ) {
+    return;
+  }
+  const state = getExpandableState( expandable ) === 'expand' ? 'Expand' : 'Collapse';
+  const wrapper = closest( expandable, 'div.content_wrapper.tdp-survey' );
+  const page_type = queryOne( '.tdp-survey-results--shared', wrapper ) ? 'View' : 'Results';
+  const action = `${ page_type } Dropdown: ${ state }`;
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const text = queryOne( '.o-expandable_label', expandable ).textContent.trim();
+  const label = grade_level + ': ' + text;
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyDownloadClick - Listen for Download link click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyDownloadClick = event => {
+  const link = closest( event.target, '.a-link__icon' ) || event.target;
+  if ( !link.classList.contains( 'a-link__icon' ) ) {
+    return;
+  }
+  const action = 'Download';
+  const label = link.getAttribute( 'href' );
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsModalClick - Listen for Results page Modal click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyResultsModalClick = event => {
+  const selector = '[data-open-modal="modal-print"],[data-open-modal="modal-share-url"]';
+  const link = closest( event.target, selector );
+  if ( !link || !link.getAttribute( 'data-open-modal' ) ) {
+    return;
+  }
+  const modal_id = link.getAttribute( 'data-open-modal' );
+  const action = modal_id === 'modal-print' ? 'Results Print' : 'Results Share';
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const label = grade_level;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsModalClose - Listen for Results page Modal click and report to GA.
+ *
+ * @param {element} modal element
+ * @param {element} opener element
+ * @returns {object} Event data
+ */
+const handleSurveyResultsModalClose = ( modal, opener ) => {
+  const modal_id = modal.getAttribute( 'id' );
+  const wrapper = closest( modal, 'div.content_wrapper.tdp-survey' );
+  const valid_ids = [ 'modal-print', 'modal-share-url' ];
+  if ( !valid_ids.includes( modal_id ) || !wrapper ) {
+    return;
+  }
+  const action = modal_id === 'modal-print' ? 'Print: Close' : 'Share: Close';
+
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const label = grade_level;
+
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsSavePdfClick - Listen for save as PDF click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyResultsSavePdfClick = event => {
+  const selector = 'a.a-btn[href="/consumer-tools/save-as-pdf-instructions/"]';
+  const link = closest( event.target, selector );
+  if ( !link ) {
+    return;
+  }
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const page_type = queryOne( '.tdp-survey-results--shared', wrapper ) ? 'View' : 'Results';
+  const action = `${ page_type } Save PDF`;
+  const label = grade_level;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsGetLinkClick - Listen for Results page Modal Get link click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyResultsGetLinkClick = event => {
+  const link = closest( event.target, '#modal-share-url .tdp-survey__initials-set' );
+
+  if ( !link || !link.classList.contains( 'a-btn' ) ) {
+    return;
+  }
+  const text_field = queryOne( '#modal-share-url input#modal-share-url-initials-input' );
+  const action = 'Share: Get Link';
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const initials = text_field.value ? 'With initials' : 'No initials';
+  const label = grade_level + ': ' + initials;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsGetLinkClick - Listen for Results page Modal Copy link click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyResultsCopyLinkClick = event => {
+  const link = closest( event.target, '#modal-share-url .share-output a, #modal-share-url .share-output button.a-btn' );
+  if ( !link ) {
+    return;
+  }
+
+  const action = 'Share: Copy Link';
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const label = grade_level;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * handleSurveyResultsPrintClick - Listen for Results page Modal Print click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyResultsPrintClick = event => {
+  const link = closest( event.target, '#modal-print .tdp-survey__initials-set' );
+
+  if ( !link || !link.classList.contains( 'a-btn' ) ) {
+    return;
+  }
+  const text_field = queryOne( '#modal-print input#modal-print-initials-input' );
+  const action = 'Print: Get Link';
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const initials = text_field.value ? 'With initials' : 'No initials';
+  const label = grade_level + ': ' + initials;
+  return sendSurveyEvent( action, label );
+};
+
+/**
+ * surveyResultsPageLoad - Report to GA on survey results page load.
+ */
+const surveyResultsPageLoad = () => {
+  const el = queryOne( '[data-tdp-page="results"]' );
+  if ( !el || !sessionStorage.getItem( SCORES_UNSET_KEY ) ) {
+    return;
+  }
+
+  const score = Number(el.dataset.score);
+  const subtotals = JSON.parse( el.dataset.subtotals );
+
+  const wrapper = closest( el, 'div.content_wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+
+  const queue = subtotals.map( ( total, idx ) => [
+    `Results: ${ grade_level }`, `Part ${ idx + 1 } total: ${ total }`
+  ] );
+  queue.push( [
+    `Results: ${ grade_level }`, `Overall score: ${ score }`
+  ] );
+
+  queue.forEach( args => sendSurveyEvent( args[0], args[1] ) );
+
+  sessionStorage.removeItem( SCORES_UNSET_KEY );
+};
+
+/**
+ * handleSurveyViewPrintClick - Listen for Results page Modal Print click and report to GA.
+ *
+ * @param {event} event Click event
+ * @returns {object} Event data
+ */
+const handleSurveyViewPrintClick = event => {
+  const link = closest( event.target, '.tdp-survey-results--shared button[onclick="window.print()"]' );
+
+  if ( !link || !link.classList.contains( 'a-btn' ) ) {
+    return;
+  }
+
+  const action = 'View Print';
+  const wrapper = closest( link, 'div.content_wrapper.tdp-survey' );
+  const grade_level = wrapper.getAttribute( 'data-tdp_grade_level' );
+  const label = grade_level;
+  return sendSurveyEvent( action, label );
 };
 
 /**
  * bindAnalytics - Set up analytics reporting.
  *
- * @param {method} sendEventMethod method
+ * @param {method} spyMethod optional spy method
  */
-const bindAnalytics = sendEventMethod => {
+const bindAnalytics = spyMethod => {
+  if ( spyMethod ) {
+    sendEvent = spyMethod;
+    sendSurveyEvent = spyMethod;
+  }
+
   const searchContent = queryOne( '#tdp-search-facets-and-results' );
   if ( searchContent ) {
     searchContent.addEventListener( 'click', event => {
-      handleExpandableClick( event, sendEventMethod );
-      handleFilterClick( event, sendEventMethod );
-      handleClearFilterClick( event, sendEventMethod );
-      handlePaginationClick( event, sendEventMethod );
+      handleExpandableClick( event );
+      handleFilterClick( event );
+      handleClearFilterClick( event );
+      handlePaginationClick( event );
     } );
+  }
+  // Survey section event listeners.
+  const surveyContent = queryOne( '.tdp-survey' );
+  if ( surveyContent ) {
+    surveyContent.addEventListener( 'click', event => {
+      handleSurveySwitchGradeClick( event );
+      handleSurveyPrivacyModalClick( event );
+      handleSurveyLetsDoThisClick( event );
+      handleSurveyErrorNoticeClick( event );
+      handleSurveyRestartModalClick( event );
+      handleSurveyExpandableClick( event );
+      handleSurveySectionClick( event );
+      handleSurveySubmitClick( event );
+      handleSurveyResultsExpandableClick( event );
+      handleSurveyDownloadClick( event );
+      handleSurveyResultsModalClick( event );
+      handleSurveyResultsSavePdfClick( event );
+      handleSurveyResultsGetLinkClick( event );
+      handleSurveyResultsCopyLinkClick( event );
+      handleSurveyResultsPrintClick( event );
+      handleSurveyViewPrintClick( event );
+    } );
+
+    surveyContent.addEventListener( 'change', event => {
+      handleSurveyChoiceChange( event );
+    } );
+
+    surveyResultsPageLoad();
   }
 };
 
@@ -308,6 +708,26 @@ export {
   handlePaginationClick,
   handleClearAllClick,
   handleFetchSearchResults,
+  handleSurveySwitchGradeClick,
+  handleSurveyPrivacyModalClick,
+  handleSurveyLetsDoThisClick,
+  handleSurveyChoiceChange,
+  handleSurveyErrorNoticeClick,
+  handleSurveyRestartModalClick,
+  handleSurveyExpandableClick,
+  handleSurveySectionClick,
+  handleSurveySubmitClick,
+  handleSurveyResultsExpandableClick,
+  handleSurveyDownloadClick,
+  handleSurveyResultsModalClick,
+  handleSurveyResultsModalClose,
+  handleSurveyResultsSavePdfClick,
+  handleSurveyResultsGetLinkClick,
+  handleSurveyResultsCopyLinkClick,
+  handleSurveyResultsPrintClick,
+  handleSurveyViewPrintClick,
   sendEvent,
+  sendSurveyEvent,
+  surveyResultsPageLoad,
   bindAnalytics
 };

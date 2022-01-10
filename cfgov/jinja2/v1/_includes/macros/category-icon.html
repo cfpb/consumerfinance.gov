@@ -9,26 +9,25 @@
 
    Create an HTML icon when given:
 
-   category:           A document type category.
-
-   additional_classes: Extra classes you wish to add to the icon, space
-                       separated.
+   category: A document type category.
 
    ========================================================================== #}
 
-{% macro render(category, is_round) %}
+{% macro render(category) %}
     {% set icons = {
         'at the cfpb': 'bullhorn',
-        'auto loans': 'buying-car',
-        'bank accounts': 'bank-account',
-        'bank accounts and services': 'bank-account',
+        'auto loans': 'car',
+        'bank accounts': 'bank',
+        'bank accounts and services': 'bank',
         'blog': 'speech-bubble',
+        'consumer advisories': 'complaint',
         'credit cards': 'credit-card',
         'credit reporting': 'credit-report',
         'credit reports and scores': 'credit-report',
         'data, research, and reports': 'chart',
         'debt collection': 'debt-collection',
-        "director's notebook": 'pencil',
+        "director's notebook": 'edit',
+        "director's statement": 'open-quote',
         'events': 'date',
         'families and money': 'money',
         'featured event': 'date',
@@ -43,20 +42,20 @@
         'money basics': 'money',
         'money transfers': 'money-transfer',
         'newsroom': 'newspaper',
-        'op-ed': 'contract',
+        'op-ed': 'fountain-pen',
         'payday loans': 'payday-loan',
-        'policy and compliance': 'bank-account',
+        'policy and compliance': 'bank',
         'prepaid cards': 'prepaid-cards',
         'press release': 'bullhorn',
         'report': 'chart',
         'reverse mortgages': 'loan',
         'speech': 'microphone',
         'student loans': 'college',
-        'testimony': 'open-quote',
+        'testimony': 'government',
       }
     %}
     {% set icon_name = icons[category | lower] %}
     {% if icon_name %}
-        {{ svg_icon( icon_name ~ ( '-round' if is_round else '' ) ) | safe }}
+        {{ svg_icon( icon_name ) | safe }}
     {% endif %}
 {% endmacro %}

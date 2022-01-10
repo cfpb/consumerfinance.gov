@@ -1,6 +1,6 @@
-import MegaMenu from '../../../../cfgov/unprocessed/js/organisms/MegaMenu';
-import { simulateEvent } from '../../../util/simulate-event';
-import HTML_SNIPPET from '../../mocks/megaMenuSnippet';
+import MegaMenu from '../../../../cfgov/unprocessed/js/organisms/MegaMenu.js';
+import { simulateEvent } from '../../../util/simulate-event.js';
+import HTML_SNIPPET from '../../mocks/megaMenuSnippet.js';
 
 describe( 'MegaMenu', () => {
   let navElem;

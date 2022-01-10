@@ -1,24 +1,18 @@
 import datetime
 from unittest import mock
 
+from django import forms
 from django.test import TestCase
+
+from wagtail.images.forms import get_image_form
 
 from freezegun import freeze_time
 
 from v1.forms import FilterableDateField, FilterableListForm
+from v1.models import CFGOVImage
 
 
 class TestFilterableListForm(TestCase):
-
-    @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('taggit.models.Tag.objects')
-    def test_set_authors_filters_tags_on_pageids(self, mock_tag_objects, mock_init):
-        mock_init.return_value = None
-        page_ids = [1, 2, 3, 4, 5]
-        form = FilterableListForm()
-        form.fields = {'authors': mock.Mock()}
-        form.set_authors(page_ids=page_ids)
-        mock_tag_objects.filter.assert_called_with(v1_cfgovauthoredpages_items__content_object__id__in=page_ids)
 
     @mock.patch('v1.forms.FilterableListForm.__init__')
     @mock.patch('builtins.super')
@@ -142,3 +136,10 @@ class TestFilterableDateField(TestCase):
     def test_set_required(self):
         field = FilterableDateField(required=True)
         self.assertTrue(field.required)
+
+
+class CFGOVImageFormTests(TestCase):
+    def test_alt_widget_override(self):
+        form_cls = get_image_form(CFGOVImage)
+        form = form_cls()
+        self.assertIsInstance(form.fields['alt'].widget, forms.TextInput)

@@ -1,6 +1,6 @@
 import datetime
 
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Page
@@ -12,9 +12,6 @@ from regulations3k.models.django import EffectiveVersion, Part
 from regulations3k.models.pages import RegulationLandingPage, RegulationPage
 
 
-@override_settings(
-    FLAGS={'REGULATIONS3K': [('boolean', True)]}
-)
 class RegulationsListTestCase(TestCase):
 
     def setUp(self):
@@ -77,7 +74,6 @@ class RegulationsListTestCase(TestCase):
         }))
         self.assertIn('Reg B', result)
         self.assertIn('/regulations/1002/', result)
-        self.assertIn('New amendments effective', result)
         self.assertNotIn('Reg C', result)
         self.assertNotIn('/regulations/1003/', result)
 

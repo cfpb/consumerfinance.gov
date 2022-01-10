@@ -4,26 +4,17 @@ volumes:
     postgres_data:
 
 services:
-    elasticsearch2:
-        build:
-            context: ./
-            dockerfile: ./docker/elasticsearch/Dockerfile
-        ports:
-            - 127.0.0.1:9000:9200
-            - 127.0.0.1:9100:9300
     elasticsearch:
         build:
             context: ./
-            dockerfile: ./docker/elasticsearch/7/Dockerfile
+            dockerfile: ./docker/elasticsearch/Dockerfile
         ports:
             - 127.0.0.1:9200:9200
             - 127.0.0.1:9300:9300
         environment:
             discovery.type: single-node
-        volumes:
-            - ./cfgov/search/resources/:/usr/share/elasticsearch/config/synonyms
     kibana:
-        image: blacktop/kibana:7.10.1
+        image: docker.elastic.co/kibana/kibana:7.16.0
         depends_on:
             - elasticsearch
         ports:
@@ -40,24 +31,18 @@ services:
             POSTGRES_DB: cfgov
         ports:
             - 127.0.0.1:5432:5432
-
     python:
         build:
             context: .
             dockerfile: Dockerfile
-            args:
-                scl_python_version: rh-python36
         depends_on:
             - elasticsearch
-            - elasticsearch2
             - postgres
         stdin_open: true
         tty: true
         environment:
-            ES7_HOST: elasticsearch
-            ES_HOST: elasticsearch2
-            ES_PORT: 9200
-
+            DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
+            ES_HOST: elasticsearch
     docs:
         build:
             context: ./

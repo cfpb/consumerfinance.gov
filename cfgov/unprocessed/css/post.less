@@ -35,7 +35,7 @@
                 <ul class="m-list m-list__horizontal">
                     <li class="m-list_item">
                         <a href="#" aria-label="Share by email">
-                            {{ svg_icon('email-social-square') }}
+                            {{ svg_icon('email-square') }}
                         </a>
                     </li>
                     <li class="m-list_item">
@@ -77,7 +77,7 @@
                             </li>
                             <li class="m-list_item">
                                 <a class="m-list_link" href="#">
-                                    PDF {{ svg_icon('pdf') }}
+                                    PDF {{ svg_icon('document') }}
                                 </a>
                             </li>
                         </ul>
@@ -102,7 +102,7 @@
                             </li>
                             <li class="m-list_item">
                                 <a class="m-list_link" href="#">
-                                    PDF {{ svg_icon('pdf') }}
+                                    PDF {{ svg_icon('document') }}
                                 </a>
                             </li>
                         </ul>
@@ -438,11 +438,16 @@
     }
 }
 
-// TODO: `related_content` is only used on newsroom/index.html.
-//       Refactor to use CF classes.
+/* ==========================================================================
+   Accessible bleedbar
+   ========================================================================== */
 
-.related_content, .content__bleedbar .content_wrapper:after {
+.content__bleedbar {
+
+  .content_wrapper:after {
     background-color: @gray-5;
+  }
+
 }
 
 /* topdoc
