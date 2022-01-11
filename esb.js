@@ -1,6 +1,13 @@
 /* eslint-disable no-sync */
 const fs = require( 'fs' );
+const esbuild = require( 'esbuild' );
+const postCSSPlugin = require( 'esbuild-plugin-postcss2' );
+const autoprefixer = require( 'autoprefixer' );
+
+const cfpbModules = './node_modules/@cfpb';
+
 const up = './cfgov/unprocessed';
+const css = `${ up }/css`;
 const r = `${ up }/js/routes`;
 const a = `${ up }/apps`;
 const od = `${ r }/on-demand`;
@@ -9,15 +16,16 @@ require( './cfgov/unprocessed/apps/regulations3k/worker_and_manifest.js' );
 
 /**
  * @param {string} path The directory with the needed js
- * @returns {array} An array of matched js files
+ * @param {regex} regex The regex to match against
+ * @returns {array} An array of matched files
  */
-function getAllJs( path ) {
+function getAll( path, regex = /.js$/ ) {
   return fs.readdirSync( path )
-    .filter( v => v.match( /.js$/ ) )
+    .filter( v => v.match( regex ) )
     .map( v => `${ path }/${ v }` );
 }
 
-const paths = [
+const jsPaths = [
   // header and footer
   `${ r }/common.js`,
 
@@ -34,12 +42,12 @@ const paths = [
   `${ r }/external-site/index.js`,
 
   // on-demand: components included on a page via Wagtatil
-  ...getAllJs( od ),
+  ...getAll( od ),
   `${ od }/simple-chart/simple-chart.js`,
   `${ od }/youth-employment-programs/buying-a-car/index.js`,
   // apps
-  ...getAllJs( `${ a }/admin/js` ),
-  ...getAllJs( `${ a }/analytics-gtm/js` ),
+  ...getAll( `${ a }/admin/js` ),
+  ...getAll( `${ a }/analytics-gtm/js` ),
   `${ a }/ccdb-landing-map/js/index.js`,
   `${ a }/financial-well-being/js/home.js`,
   `${ a }/financial-well-being/js/results.js`,
@@ -62,14 +70,55 @@ const paths = [
   `${ a }/youth-employment-success/js/index.js`
 ];
 
+const styledApps = [
+  'ccdb-landing-map',
+  'erap',
+  'find-a-housing-counselor',
+  'form-explainer',
+  'know-before-you-owe',
+  'owning-a-home',
+  'paying-for-college',
+  'prepaid-agreements',
+  'regulations3k',
+  'retirement',
+  'rural-or-underserved-tool',
+  'teachers-digital-platform',
+  'youth-employment-success'
+];
+
+const cssPaths = [
+  `${ css }/main.less`,
+  `${ css }/header.less`,
+  `${ css }/footer.less`,
+  ...getAll( `${ css }/on-demand/`, /.less$/ ),
+  ...styledApps.map( v => `${ a }/${ v }/css/main.less` )
+];
+
 /* eslint-disable-next-line */
-require( 'esbuild' ).buildSync( {
-  entryPoints: paths,
+esbuild.build( {
+  entryPoints: [
+    ...jsPaths,
+    ...cssPaths
+  ],
   logLevel: 'info',
   bundle: true,
   minify: true,
+  sourcemap: true,
+  plugins: [ postCSSPlugin.default( {
+    plugins: [ autoprefixer ],
+    lessOptions: {
+      compress: true,
+      math: 'always',
+      paths: [
+        ...fs.readdirSync( cfpbModules ).map( v => `${ cfpbModules }/${ v }/src` ),
+        './node_modules/cfpb-chart-builder/src/css',
+        './node_modules/highcharts/css'
+      ]
+    }
+  } ) ],
   loader: {
     '.svg': 'text'
   },
+  external: [ '*.png', '*.woff', '*.woff2' ],
   outdir: 'cfgov/static_built/out'
 } );

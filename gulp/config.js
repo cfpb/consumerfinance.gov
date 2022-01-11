@@ -1,7 +1,6 @@
 const fs = require( 'fs' );
 const environment = require( '../config/environment' );
 const paths = environment.paths;
-const globAll = require( 'glob-all' );
 
 module.exports = {
   // eslint-disable-next-line no-sync
@@ -58,11 +57,11 @@ module.exports = {
     src:      '/main.less',
     dest:     paths.processed + '/css',
     settings: {
-      paths:  globAll.sync( [
-        paths.modules + '/@cfpb/cfpb-*/src',
-        paths.modules + '/cfpb-chart-builder/src/**',
+      paths:  [
+        ...fs.readdirSync( `${ paths.modules }/@cfpb` ).map( v => `${ paths.modules }/@cfpb/${ v }/src` ),
+        paths.modules + '/cfpb-chart-builder/src/css',
         paths.modules + '/highcharts/css'
-      ] ),
+      ],
       compress: true
     },
     otherBuildTriggerFiles: [
