@@ -205,13 +205,15 @@
             }
 
             // Hover state for (x) close button.
-            // &:hover {
-            //     color: @black;
-            //     border-left: 1px solid @gray-40;
+            @media (hover: hover) {
+            &:hover {
+                color: @black;
+                border-left: 1px solid @gray-40;
 
-            //     // Important needed to override background color in expanded state.
-            //     background: @gray-20 !important;
-            // }
+                // Important needed to override background color in expanded state.
+                background: @gray-20 !important;
+            }
+          }
         }
 
          &_content {

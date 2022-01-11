@@ -543,9 +543,11 @@ body {
             }
 
             // Hover state for (x) close button.
-            // &:hover {
-            //     background: @gray-20;
-            // }
+            @media (hover: hover) {
+            &:hover {
+                background: @gray-20;
+            }
+          }
         }
 
         // Menu flyout.
