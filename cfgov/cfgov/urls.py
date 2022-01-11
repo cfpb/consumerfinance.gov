@@ -29,7 +29,7 @@ from core.views import (
 from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
-from legacy.views.complaint import ComplaintLandingView
+from legacy.views.complaint import CCDBSearchView, ComplaintLandingView
 from regulations3k.views import redirect_eregs
 from v1.views.documents import DocumentServeView
 
@@ -281,7 +281,9 @@ urlpatterns = [
     # CCDB5-UI
     re_path(
         r'^data-research/consumer-complaints/search/',
-        include('ccdb5_ui.config.urls')),
+        CCDBSearchView.as_view(),
+        name='complaint-search'
+    ),
 
     re_path(r'^oah-api/rates/', include('ratechecker.urls')),
     re_path(r'^oah-api/county/', include('countylimits.urls')),
