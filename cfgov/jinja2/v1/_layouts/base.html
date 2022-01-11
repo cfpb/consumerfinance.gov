@@ -319,12 +319,7 @@
           #}
           {% if page and page.media %}
             {% for js in page.media %}
-              // Check whether this JS is coming from our apps or from an on-demand script.
-              if ( '{{ js }}'.substring(0,6) === '/apps/' ) {
-                s.push( '{{ static(js) }}' );
-              } else {
-                s.push( '{{ static('js/routes/on-demand/' + js) }}' );
-              }
+              s.push( '{{ static('js/routes/on-demand/' + js) }}' );
             {% endfor %}
           {% endif %}
           {#
