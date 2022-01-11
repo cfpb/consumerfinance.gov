@@ -91,7 +91,7 @@ function stylesOnDemand() {
  * @returns {PassThrough} A source stream.
  */
 function stylesOnDemandBlocks() {
-  return gulp.src( configStyles.cwd + '/on-demand/blocks/*.less' )
+  return gulp.src( configStyles.cwd + '/on-demand/*.less' )
     .pipe( gulpNewer( {
       dest:  configStyles.dest + '/blocks',
       // ext option required because this subtask uses multiple source files
@@ -185,7 +185,7 @@ gulp.task( 'styles',
     'styles:featureFlags',
     'styles:ie',
     'styles:modern',
-    'styles:ondemand',
+    // 'styles:ondemand',
     'styles:ondemandBlocks'
   )
 );

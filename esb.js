@@ -111,14 +111,10 @@ esbuild.build( {
       math: 'always',
       paths: [
         ...fs.readdirSync( cfpbModules ).map( v => `${ cfpbModules }/${ v }/src` ),
-        './node_modules/cfpb-chart-builder/src/css',
-        './node_modules/highcharts/css'
+        './node_modules/cfpb-chart-builder/src/css'
       ]
     }
   } ) ],
-  loader: {
-    '.svg': 'text'
-  },
-  external: [ '*.png', '*.woff', '*.woff2' ],
+  external: [ '*.png', '*.woff', '*.woff2', '*.gif', '*.svg' ],
   outdir: 'cfgov/static_built/out'
 } );
