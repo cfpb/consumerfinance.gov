@@ -50,4 +50,4 @@ jobs:
       uses: cypress-io/github-action@v2
       with:
         build: yarn run gulp
-        start: python cfgov/manage.py runserver localhost:8000
+        start: python cfgov/manage.py runserver 8000
