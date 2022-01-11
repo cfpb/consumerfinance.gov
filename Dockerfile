@@ -46,6 +46,7 @@ RUN tar xvf Python-${PYTHONVERSION}.tgz
 RUN cd Python-${PYTHONVERSION}/ && \
     ./configure --enable-shared --enable-optimiztions --with-ensurepip=install --prefix=/usr/local LDFLAGS="-Wl,-rpath /usr/local/lib" && \
     make altinstall && make bininstall
+RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/python3.conf
 RUN rm -Rf Python* *.pem
 RUN yum remove -y bzip2-devel libffi-devel openssl-devel readline-devel sqlite-devel tk-devel wget xz-devel zlib-devel
 RUN yum groupremove -y "Development Tools"
