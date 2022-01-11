@@ -30,9 +30,9 @@ jobs:
           node-version: '16.x'
 
     - name: Set up Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
-        python-version: 3.9
+        python-version: 3.6
 
     - name: Install dependencies
       run: |
@@ -50,4 +50,4 @@ jobs:
       uses: cypress-io/github-action@v2
       with:
         build: yarn run gulp
-        start: python cfgov/manage.py runserver 8000
+        start: python cfgov/manage.py runserver 0.0.0.0:8000
