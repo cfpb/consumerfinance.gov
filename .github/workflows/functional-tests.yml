@@ -39,12 +39,9 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements/base.txt
         python3 -m pip install django-sslserver==0.20
-        yum install -y httpd24-httpd-devel wget
-        wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar.gz -O mod_wsgi.tar.gz
-        tar xzvf mod_wsgi.tar.gz
-        mod_wsgi-* mod_wsgi
-        cd mod_wsgi && ./configure --with-python=/usr/local/bin/python3 && make && make install
-
+        sudo apt install apache2 apache2-utils ssl-cert libapache2-mod-wsgi
+        sudo a2enconf mod-wsgi
+        sudo systemctl restart apache2
     - name: Set up initial data
       run: ./initial-data.sh
 
