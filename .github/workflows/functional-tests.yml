@@ -37,9 +37,7 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install -r requirements/base.txt
-        python3 -m pip install django-sslserver==0.20
-        sudo apt install apache2 apache2-utils ssl-cert libapache2-mod-wsgi
+        python3 -m pip install -r requirements/local.txt
         
     - name: Set up initial data
       run: ./initial-data.sh
