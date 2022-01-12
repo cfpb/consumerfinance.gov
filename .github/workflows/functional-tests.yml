@@ -40,8 +40,7 @@ jobs:
         python3 -m pip install -r requirements/base.txt
         python3 -m pip install django-sslserver==0.20
         sudo apt install apache2 apache2-utils ssl-cert libapache2-mod-wsgi
-        sudo a2enconf mod-wsgi
-        sudo systemctl restart apache2
+        
     - name: Set up initial data
       run: ./initial-data.sh
 
