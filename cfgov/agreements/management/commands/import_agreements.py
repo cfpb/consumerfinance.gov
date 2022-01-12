@@ -41,6 +41,11 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        if options['verbosity'] >= 1:
+            output_file = self.stdout
+        else:
+            output_file = open(os.devnull, 'a')
+
         # maybe this should be replaced with a CLI options:
         do_upload = os.environ.get('AGREEMENTS_S3_UPLOAD_ENABLED', False)
 
@@ -68,10 +73,6 @@ class Command(BaseCommand):
             )
             raise CommandError(error_msg)
 
-        if options['verbosity'] >= 1:
-            output_file = self.stdout
-        else:
-            output_file = open(os.devnull, 'a')
 
         for pdf_path in all_pdfs:
             _util.save_agreement(
