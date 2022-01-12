@@ -29,6 +29,16 @@ def upload_to_s3(pdf_obj, s3_key):
     s3_client.upload_fileobj(pdf_obj, AWS_STORAGE_BUCKET_NAME, s3_key)
 
 
+def filename_in_zip(file_info):
+    # Zip files default to IBM Code Page 437 encoding unless a specific bit
+    # is set. See Appendix D in the zip file spec:
+    # https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
+    if (file_info.flag_bits & 0x800) == 0:
+        return file_info.filename
+    else:
+        return force_str(file_info.filename, 'cp437')
+
+
 def get_issuer(name):
     slug = slugify(name)
     try:

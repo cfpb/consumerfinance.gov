@@ -51,12 +51,8 @@ class Command(BaseCommand):
 
         agreements_zip = ZipFile(options['path'])
 
-        # Zip files default to IBM Code Page 437 encoding unless a specific bit
-        # is set. See Appendix D in the zip file spec:
-        # https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
         all_pdfs = [
-            info.filename if (info.flag_bits & 0x800) == 0
-            else force_str(info.filename, 'cp437')
+            _util.filename_in_zip(info)
             for info in agreements_zip.infolist()
             if info.filename.upper().endswith('.PDF')
         ]
