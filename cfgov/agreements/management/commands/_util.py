@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from django.utils.encoding import force_str
 from django.utils.text import slugify
@@ -59,7 +60,8 @@ def save_agreement(agreements_zip, pdf_path, outfile,
     path = force_str(pdf_path)
 
     try:
-        issuer_name, filename = path.split('/')
+        filename = Path(path).parts[-1]
+        issuer_name = Path(path).parts[-2]
     except ValueError:
         # too many slashes...
         outfile.write("%s Does not match issuer/file.pdf pattern" % path)

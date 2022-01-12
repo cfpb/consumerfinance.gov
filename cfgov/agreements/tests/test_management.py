@@ -3,14 +3,12 @@ import os.path
 import unittest
 import zipfile
 from unittest import mock
-from zipfile import ZipFile
 
 from django.core import management
 from django.core.management.base import CommandError
 from django.test import TestCase
 
 from agreements.management.commands import _util
-from agreements.management.commands.import_agreements import empty_folder_test
 from agreements.models import Issuer
 
 
@@ -18,16 +16,8 @@ empty_folder_zip = os.path.dirname(__file__) + '/empty-folder-agreements.zip'
 utf8_zip = os.path.dirname(__file__) + '/UTF_agreements.zip'
 
 
-class EmptyFolderTest(unittest.TestCase):
-
-    def test_empty_folder_test(self):
-        agreements_zip = ZipFile(empty_folder_zip)
-        all_pdfs = [name for name in agreements_zip.namelist()
-                    if name.upper().endswith('.PDF')]
-        blanks = empty_folder_test(agreements_zip, all_pdfs)
-        self.assertEqual(blanks, ['Blank Folder/'])
-
-    def test_import_agreements_raises_error(self):
+class TestValidations(unittest.TestCase):
+    def test_empty_folder_causes_error(self):
         with self.assertRaises(CommandError):
             management.call_command(
                 'import_agreements',
