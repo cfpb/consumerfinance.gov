@@ -39,6 +39,11 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements/base.txt
         python3 -m pip install django-sslserver==0.20
+        yum install -y httpd24-httpd-devel wget
+        wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar.gz -O mod_wsgi.tar.gz
+        tar xzvf mod_wsgi.tar.gz
+        mod_wsgi-* mod_wsgi
+        cd mod_wsgi && ./configure --with-python=/usr/local/bin/python3 && make && make install
 
     - name: Set up initial data
       run: ./initial-data.sh
@@ -51,3 +56,4 @@ jobs:
       with:
         build: yarn run gulp
         start: python cfgov/manage.py runserver 0.0.0.0:8000
+        wait-on: 'http://localhost:8000'
