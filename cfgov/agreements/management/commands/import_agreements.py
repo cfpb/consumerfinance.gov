@@ -49,9 +49,6 @@ class Command(BaseCommand):
         # maybe this should be replaced with a CLI options:
         do_upload = os.environ.get('AGREEMENTS_S3_UPLOAD_ENABLED', False)
 
-        Agreement.objects.all().delete()
-        Issuer.objects.all().delete()
-
         agreements_zip = ZipFile(options['path'])
 
         # Zip files default to IBM Code Page 437 encoding unless a specific bit
@@ -73,6 +70,8 @@ class Command(BaseCommand):
             )
             raise CommandError(error_msg)
 
+        Agreement.objects.all().delete()
+        Issuer.objects.all().delete()
 
         for pdf_path in all_pdfs:
             _util.save_agreement(
