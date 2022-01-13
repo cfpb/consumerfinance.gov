@@ -112,7 +112,7 @@ class FilterableListInvalidationTestCase(TestCase):
         self.root_page.add_child(instance=self.non_filterable_page)
         self.non_filterable_page.save()
 
-    @mock.patch('v1.signals.AkamaiBackend.purge_cache_tags')
+    @mock.patch('v1.signals.AkamaiBackend.purge_by_tags')
     def test_invalidate_newsroom_by_cache_tag(self, mock_purge):
         self.newsroom_page.save_revision().publish()
         self.assertTrue(mock_purge.called_with(NEWSROOM_CACHE_TAG))

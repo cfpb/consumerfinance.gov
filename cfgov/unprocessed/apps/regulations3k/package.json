@@ -13,9 +13,6 @@
   },
   "private": "true",
   "license": "SEE LICENSE IN TERMS.md",
-  "engines": {
-    "node": ">=16.x"
-  },
   "dependencies": {
     "workbox-build": "6.2.4"
   },

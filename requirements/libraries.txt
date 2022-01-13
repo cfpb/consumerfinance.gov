@@ -27,7 +27,7 @@ lxml==4.6.5
 Markdown==3.2.1
 ntplib==0.3.4
 openpyxl==3.0.3
-psycopg2==2.7.3.2
+psycopg2-binary==2.8.6
 python-dateutil==2.7.3
 regdown==1.0.3
 requests==2.25.1
@@ -45,5 +45,4 @@ wagtailmedia==0.6.0
 # These packages are installed from GitHub.
 https://github.com/cfpb/owning-a-home-api/releases/download/0.17.1/owning_a_home_api-0.17.1-py3-none-any.whl
 https://github.com/cfpb/ccdb5-api/releases/download/1.6.3/ccdb5_api-1.6.3-py3-none-any.whl
-https://github.com/cfpb/ccdb5-ui/releases/download/2.4.4/ccdb5_ui-2.4.4-py3-none-any.whl
 https://github.com/cfpb/curriculum-review-tool/releases/download/2.1.4/crtool-2.1.4-py3-none-any.whl

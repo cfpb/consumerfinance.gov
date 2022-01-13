@@ -2,7 +2,7 @@
 
 set -e
 
-echo "Using '$(python --version 2>&1)' from '$(which python)'"
+echo "Using '$(python3 --version 2>&1)' from '$(which python3)'"
 
 # Execute the Docker CMD
 exec "$@"

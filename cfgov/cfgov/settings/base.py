@@ -106,7 +106,6 @@ INSTALLED_APPS = (
     "login",
 
     # Satellites
-    "ccdb5_ui",
     "complaint_search",
     "countylimits",
     "crtool",
