@@ -54,6 +54,20 @@ jobs:
     - name: Run Cypress
       uses: cypress-io/github-action@v2
       with:
+         spec: |
+            paying-for-college/repay-student-debt/repay-student-debt.js
+            data-research/consumer-complaints/consumer-complaints.js
+            consumer-tools/youth-financial-education/survey.js 
+            consumer-tools/youth-financial-education/survey-progress.js
+            consumer-tools/youth-financial-education/survey-errors.js
+            consumer-tools/youth-financial-education/modal.js
+            consumer-tools/youth-financial-education/grade-levels.js
+            consumer-tools/rural-or-underserved-tool/rural-or-underserved-tool.js
+            consumer-tools/owning-a-home/owning-a-home.js
+            consumer-tools/financial-well-being/financial-well-being.js
+            consumer-tools/before-you-claim/before-you-claim.js
+            components/global-search/global-search.js
+            components/footer/footer.js
         build: yarn run gulp
         start: python cfgov/manage.py runserver 0.0.0.0:8000
         wait-on: 'http://localhost:8000'
