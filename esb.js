@@ -72,7 +72,6 @@ const jsPaths = [
 
 const styledApps = [
   'ccdb-landing-map',
-  'erap',
   'find-a-housing-counselor',
   'form-explainer',
   'know-before-you-owe',
