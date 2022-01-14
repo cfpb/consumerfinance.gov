@@ -49,11 +49,7 @@ ENV PIP_NO_CACHE_DIR true
 
 # Install python requirements
 COPY requirements requirements
-<<<<<<< HEAD
 RUN pip install -r requirements/local.txt -r requirements/deployment.txt
-=======
-RUN pip3 install -r requirements/local.txt -r requirements/deployment.txt
->>>>>>> 84538e99db72fcd9671e66b56d571f506d0ecb36
 
 EXPOSE 8000
 
@@ -124,14 +120,9 @@ RUN yum clean all && rm -rf /var/cache/yum && \
 
 ENV PATH="/opt/rh/${SCL_PYTHON_VERSION}/root/usr/bin:${PATH}"
 
-# Remove files flagged by image vulnerability scanner
-<<<<<<< HEAD
+# Remove files flagged by image vulnerability scanner (doesn't seem to be needed in rh-python38)
 #RUN cd /opt/rh/rh-python38/root/usr/lib/python3.8/site-packages/ && \
 #    rm -f ndg/httpsclient/test/pki/localhost.key sslserver/certs/development.key
-=======
-RUN cd /opt/rh/${SCL_PYTHON_VERSION}/root/usr/local/lib/python3.8/site-packages/ && \
-    rm -f ndg/httpsclient/test/pki/localhost.key sslserver/certs/development.key
->>>>>>> 84538e99db72fcd9671e66b56d571f506d0ecb36
 
 USER apache
 
