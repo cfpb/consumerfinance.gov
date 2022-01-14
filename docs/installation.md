@@ -129,7 +129,7 @@ Where `[GHE]` is our GitHub Enterprise URL.
 ### Build the frontend
 
 !!! note
-    Our frontend quires [Node.js 14](https://nodejs.org/en/)
+    Our frontend requires [Node.js 16](https://nodejs.org/en/)
     with
     [Yarn](https://yarnpkg.com/).
     We prefer
@@ -141,16 +141,16 @@ Where `[GHE]` is our GitHub Enterprise URL.
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | sh
     ```
 
-    Node 14 must then be installed once nvm is installed:
+    Node 16 must then be installed once nvm is installed:
 
     ```sh
-    nvm install 14
+    nvm install 16
     ```
 
-    Node.js 14 can then be used in any sh using:
+    Node.js 16 can then be used in any sh using:
 
     ```sh
-    nvm use 14
+    nvm use 16
     ```
 
     Yarn must then be installed:
