@@ -62,7 +62,3 @@ services:
         working_dir: /src/consumerfinance.gov
         stdin_open: true
         tty: true
-networks:
-    default:
-        external:
-            name: cfgov
