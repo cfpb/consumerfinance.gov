@@ -11,7 +11,7 @@ and several standalone Django apps for specific parts of the site.
 Full installation and usage instructions are available in
 [our documentation](https://cfpb.github.io/consumerfinance.gov).
 
-This project requires Python 3.6, Node 16, and Gulp 4.
+This project requires Python 3.8, Node 16, and Gulp 4.
 We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and
 [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
 for keeping the project's Python dependencies contained.
@@ -26,7 +26,7 @@ Create a virtual environment for Python dependencies:
 
 ```sh
 cd consumerfinance.gov
-mkvirtualenv --python=python3.6 consumerfinance.gov
+mkvirtualenv --python=python3.8 consumerfinance.gov
 ```
 
 Create and load initial environment settings:
