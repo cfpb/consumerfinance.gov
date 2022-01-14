@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Installation - consumerfinance.gov</title>
+  <title>Setup - consumerfinance.gov</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -19,7 +19,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Installation";
+    var mkdocs_page_name = "Setup";
     var mkdocs_page_input_path = "installation.md";
     var mkdocs_page_url = null;
   </script>
@@ -52,20 +52,18 @@
                     </li>
                 </ul>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Installation</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Setup</a>
     <ul class="current">
     
         <ul>
         
-            <li><a class="toctree-l4" href="#clone-the-repository">Clone the repository</a></li>
+            <li><a class="toctree-l4" href="#quickstart">Quickstart</a></li>
         
-            <li><a class="toctree-l4" href="#stand-alone-installation">Stand-alone installation</a></li>
+            <li><a class="toctree-l4" href="#detailed-installation">Detailed installation</a></li>
         
-            <li><a class="toctree-l4" href="#docker-based-installation">Docker-based installation</a></li>
+            <li><a class="toctree-l4" href="#alternative-setups">Alternative setups</a></li>
         
-            <li><a class="toctree-l4" href="#optional-steps">Optional steps</a></li>
-        
-            <li><a class="toctree-l4" href="#curious-about-what-the-setup-scripts-are-doing">Curious about what the setup scripts are doing?</a></li>
+            <li><a class="toctree-l4" href="#additional-setup">Additional setup</a></li>
         
         </ul>
     
@@ -172,7 +170,7 @@
     
       
     
-    <li>Installation</li>
+    <li>Setup</li>
     <li class="wy-breadcrumbs-aside">
       
         <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/installation.md"
@@ -187,259 +185,145 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="installation-and-configuration-for-consumerfinancegov">Installation and configuration for consumerfinance.gov<a class="headerlink" href="#installation-and-configuration-for-consumerfinancegov" title="Permanent link">¶</a></h1>
-<h2 id="clone-the-repository">Clone the repository<a class="headerlink" href="#clone-the-repository" title="Permanent link">¶</a></h2>
+                <h1 id="setting-up-consumerfinancegov">Setting up consumerfinance.gov<a class="headerlink" href="#setting-up-consumerfinancegov" title="Permanent link">¶</a></h1>
+<h2 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">¶</a></h2>
+<p>This quickstart requires a working Docker Desktop installation and git:</p>
+<ul>
+<li>
+<p><a href="#clone-the-repository">Clone the repository</a>:</p>
+<pre class="highlight"><code class="language-sh">git clone https://github.com/cfpb/consumerfinance.gov.git
+cd consumerfinance.gov</code></pre>
+
+</li>
+<li>
+<p><a href="#set-up-and-run-the-docker-containers">Set up and run the Docker containers</a>:</p>
+<pre class="highlight"><code class="language-sh">docker-compose up</code></pre>
+
+<p>This may take some time, as it will also
+<a href="#load-initial-data">load initial data</a>
+and
+<a href="#build-the-frontend">build the frontend</a>.</p>
+</li>
+</ul>
+<p>consumerfinance.gov should now be available at <a href="http://localhost:8000">http://localhost:8000</a>.</p>
+<p>This documentation will be available at <a href="http://localhost:8888">http://localhost:8888</a>.</p>
+<p>The Wagtail admin area will be available at <a href="http://localhost:8000/admin/">http://localhost:8000/admin/</a>,
+which you can log into with the credentials <code>admin</code>/<code>admin</code>.</p>
+<p>Please see
+our <a href="/running/">running consumerfinance.gov</a> documentation
+for next steps.</p>
+<p>There are also optional steps described below, as well as
+<a href="#alternative-setups">alternative setup options</a>.</p>
+<h2 id="detailed-installation">Detailed installation<a class="headerlink" href="#detailed-installation" title="Permanent link">¶</a></h2>
+<p>The <a href="#quickstart">quickstart above</a> should get you started.
+Each step has some additional detail below.</p>
+<h3 id="clone-the-repository">Clone the repository<a class="headerlink" href="#clone-the-repository" title="Permanent link">¶</a></h3>
 <p>Using the console, navigate to the root directory in which your projects
 live and clone this project's repository:</p>
-<pre class="highlight"><code class="language-bash">git clone git@github.com:cfpb/consumerfinance.gov.git
+<pre class="highlight"><code class="language-sh">git clone git@github.com:cfpb/consumerfinance.gov.git
 cd consumerfinance.gov</code></pre>
 
 <p>You may also wish to fork the repository on GitHub and clone the resultant
 personal fork. This is advised if you are going to be doing development on
 <code>consumerfinance.gov</code> and contributing to the project.</p>
-<p>There are two ways to install consumerfinance.gov:</p>
-<ul>
-<li><a href="#stand-alone-installation">Stand-alone installation</a></li>
-<li><a href="#docker-based-installation">Docker-based installation</a></li>
-</ul>
-<h2 id="stand-alone-installation">Stand-alone installation<a class="headerlink" href="#stand-alone-installation" title="Permanent link">¶</a></h2>
-<p>These instructions are somewhat specific to developing on macOS,
-but if you're familiar with other Unix-based systems,
-it should be fairly easy to adapt them to your needs.</p>
-<h3 id="install-system-level-requirements">Install system-level requirements<a class="headerlink" href="#install-system-level-requirements" title="Permanent link">¶</a></h3>
-<h4 id="virtualenv-virtualenvwrapper-python-modules">virtualenv &amp; virtualenvwrapper Python modules<a class="headerlink" href="#virtualenv-virtualenvwrapper-python-modules" title="Permanent link">¶</a></h4>
-<p>Install <a href="https://virtualenv.pypa.io/en/latest/index.html">virtualenv</a>
-and <a href="https://virtualenvwrapper.readthedocs.org/en/latest/">virtualenvwrapper</a>
-to be able to create a local environment for your server:</p>
-<pre class="highlight"><code class="language-bash">pip install virtualenv virtualenvwrapper</code></pre>
+<h3 id="set-up-the-environment-optional">Set up the environment (optional)<a class="headerlink" href="#set-up-the-environment-optional" title="Permanent link">¶</a></h3>
+<p>The consumerfinance.gov Django site relies on environment variables defined
+in a <code>.env</code> file. If this is your first time setting up the project,
+copy <code>.env_SAMPLE</code> to <code>.env</code>:</p>
+<pre class="highlight"><code class="language-sh">cp -a .env_SAMPLE .env</code></pre>
 
-<h4 id="autoenv-module">Autoenv module<a class="headerlink" href="#autoenv-module" title="Permanent link">¶</a></h4>
-<p>This project uses a large number of environment variables.</p>
-<p>To automatically define environment variables and launch the virtualenv
-upon <code>cd</code>ing to the project folder,
-<a href="https://github.com/kennethreitz/autoenv#install">install Autoenv</a>.
-We recommend using <a href="https://brew.sh">Homebrew</a>:</p>
-<pre class="highlight"><code class="language-bash">brew install autoenv</code></pre>
-
-<p>After installation, Homebrew will output instructions similar to:</p>
-<pre class="highlight"><code class="language-bash">To finish the installation, source activate.sh in your shell:
-  source /Users/[YOUR USERNAME]/homebrew/opt/autoenv/activate.sh</code></pre>
-
-<p>Run that now for your initial setup.
-Any time you run the project you’ll need to run that last line,
-so if you’ll be working with the project consistently,
-we suggest adding it to your Bash profile by running:</p>
-<pre class="highlight"><code class="language-bash">echo 'source /Users/[YOUR USERNAME]/homebrew/opt/autoenv/activate.sh' &gt;&gt; ~/.bash_profile</code></pre>
-
-<p>If you need to find this info again later, you can run:</p>
-<pre class="highlight"><code class="language-bash">brew info autoenv</code></pre>
-
+<h3 id="set-up-a-local-python-environment-optional">Set up a local Python environment (optional)<a class="headerlink" href="#set-up-a-local-python-environment-optional" title="Permanent link">¶</a></h3>
+<p>For running our
+<a href="/python-unit-tests/">Python unit tests, linting, etc</a>
+outside of the Docker container, we rely on a local Python environment.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you use Zsh you’ll need to use
-<a href="https://github.com/Tarrasch/zsh-autoenv">zsh-autoenv</a>,
-but we can’t provide support for issues that may arise.</p>
-</div>
-<h4 id="front-end-dependencies">Front-end dependencies<a class="headerlink" href="#front-end-dependencies" title="Permanent link">¶</a></h4>
-<p>The consumerfinance.gov front-end build process currently
-includes the following frameworks / tools:</p>
-<ul>
-<li><a href="https://gulpjs.com">Gulp</a>: task management for pulling in assets,
-  linting and concatenating code, etc.</li>
-<li><a href="http://lesscss.org">Less</a>: CSS pre-processor.</li>
-<li><a href="https://cfpb.github.io/design-system/getting-started/">Design System</a>:
-  User interface pattern-library produced by the CFPB.</li>
-<li><a href="https://nodejs.org">Node.js</a>. Install however you’d like.
-  We recommend using <a href="https://github.com/creationix/nvm">nvm</a>, though.
-  If your node version is outdated you should receive a console error to upgrade
-  while attempting to build the project.</li>
-<li><a href="https://yarnpkg.com">Yarn</a>.
-  We recommend installing using <a href="https://brew.sh">Homebrew</a>:</li>
-</ul>
-<pre class="highlight"><code class="language-bash"># Use --ignore-dependencies to use your system installed node version
-brew install yarn --ignore-dependencies</code></pre>
+<p>Our local Python environment requires <a href="https://github.com/pyenv/pyenv">pyenv</a>
+with
+<a href="https://github.com/pyenv/pyenv-virtualenv">pyenv-virtualenv</a>.
+They can be installed from Homebrew on macOS:</p>
+<pre class="highlight"><code class="language-sh">brew install pyenv pyenv-virtualenv</code></pre>
 
-<h4 id="webfonts">Webfonts<a class="headerlink" href="#webfonts" title="Permanent link">¶</a></h4>
-<p>The site uses a proprietary licensed font, Avenir.
-If you want to pull this from a content delivery network (CDN),
+<p>Python 3.6 must then be installed once pyenv is installed:</p>
+<pre class="highlight"><code class="language-sh">pyenv install 3.6.9</code></pre>
+
+</div>
+<p>First we need to create a Python virtualenv for consumerfinance.gov:</p>
+<pre class="highlight"><code class="language-sh">pyenv virtualenv 3.6.9 consumerfinance.gov</code></pre>
+
+<p>Then we'll need to activate it.
+Activating the virtualenv is necessary before using it in the future as well:</p>
+<pre class="highlight"><code class="language-sh">pyenv activate consumerfinance.gov</code></pre>
+
+<p>Once activated, our Python CI requirements can be installed in the virtualenv:</p>
+<pre class="highlight"><code class="language-sh">pip install -r requirements/ci.txt</code></pre>
+
+<h3 id="install-our-private-fonts-optional">Install our private fonts (optional)<a class="headerlink" href="#install-our-private-fonts-optional" title="Permanent link">¶</a></h3>
+<p>consumerfinance.gov uses a proprietary licensed font, Avenir.</p>
+<p>If you want to pull this from a content delivery network (CDN),
 you can set the
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/css/main.less#L30"><code>@use-font-cdn</code></a>
-to <code>true</code> and rebuild the assets with <code>yarn run gulp build</code>.
-If you want to install self-hosted fonts locally, you can place the font files
-in <code>static.in/cfgov-fonts/fonts/</code> and restart the local web server.
-If you are a CFPB employee, you can perform this step with:</p>
-<p><pre class="highlight"><code>cd static.in/ &amp;&amp; git clone https://[GHE]/CFGOV/cfgov-fonts/</code></pre>
-Where <code>[GHE]</code> is our GitHub Enterprise URL.</p>
-<h4 id="set-up-your-environment">Set up your environment<a class="headerlink" href="#set-up-your-environment" title="Permanent link">¶</a></h4>
-<p>The Django app relies on environment variables defined in a <code>.env</code> file. If this
-is your first time setting up the project, copy <code>.env_SAMPLE</code> to <code>.env</code> and then
-<code>source</code> that file:</p>
-<pre class="highlight"><code class="language-bash">cp -a .env_SAMPLE .env
-source .env</code></pre>
+to <code>true</code> and rebuild the assets with <code>yarn run gulp build</code>.</p>
+<p>If you want to install self-hosted fonts locally, you can place the font files
+in <code>static.in/cfgov-fonts/fonts/</code>.</p>
+<p>If you are a CFPB employee, you can perform this step with:</p>
+<pre class="highlight"><code>git clone https://[GHE]/CFGOV/cfgov-fonts/ static.in/cfgov-fonts</code></pre>
 
-<p>Each time you start a new session for working on this project, you'll need to
-get those environment variables and get your virtualenv running again.</p>
-<p>If you setup Autoenv earlier, this will happen for you automatically when you
-<code>cd</code> into the project directory.</p>
-<p>If you prefer not to use Autoenv, just be sure to <code>source .env</code> every time
-you start a new session of work on the project.</p>
-<h4 id="install-postgresql">Install PostgreSQL<a class="headerlink" href="#install-postgresql" title="Permanent link">¶</a></h4>
-<p>If you're on a Mac and use Homebrew, you can easily install PostgreSQL:</p>
-<pre class="highlight"><code class="language-bash">brew install postgresql</code></pre>
-
-<p>Once it's installed, you can configure it to run as a service:</p>
-<pre class="highlight"><code class="language-bash">brew services start postgresql</code></pre>
-
-<p>Our recommended Postgres configuration is a database named <code>cfgov</code> and a user
-named <code>cfpb</code>, with data stored in schema <code>cfpb</code>. This can be created with the
-following commands:</p>
-<pre class="highlight"><code class="language-bash">dropdb --if-exists cfgov &amp;&amp; dropuser --if-exists cfpb
-psql postgres -c &quot;CREATE USER cfpb WITH LOGIN PASSWORD 'cfpb' CREATEDB&quot;
-psql postgres -c &quot;CREATE DATABASE cfgov OWNER cfpb&quot;
-psql postgres://cfpb:cfpb@localhost/cfgov -c &quot;CREATE SCHEMA cfpb&quot;</code></pre>
-
-<p>We don't support using an SQLite database because we use database fields
-that are specific to Postgres. The <code>CREATEDB</code> keyword above allows the
-<code>cfpb</code> user to create a temporary Django database when running unit tests.</p>
-<h4 id="run-the-setup-script">Run the setup script<a class="headerlink" href="#run-the-setup-script" title="Permanent link">¶</a></h4>
-<p>At this point, your machine should have everything it needs to automate the
-rest of the setup process.</p>
-<p>If you haven't cloned this repo yet, clone it to a local folder.
-Because related projects will need to be installed as siblings to this project,
-we recommend putting them all in their own folder, e.g., <code>~/Projects/cf.gov</code>.</p>
-<p>Once cloned, from the project root (<code>~/Projects/cf.gov/consumerfinance.gov/</code>),
-run this command to complete the setup process:</p>
-<pre class="highlight"><code class="language-bash">./setup.sh</code></pre>
-
-<p>This will take several minutes, going through the steps in these scripts:</p>
-<ol>
-<li><code>frontend.sh</code></li>
-<li><code>backend.sh</code></li>
-</ol>
-<p>Once complete, you should have a fully functioning local environment,
-ready for you to develop against!</p>
-<p>There are some <a href="#optional-steps">optional setup steps</a>
-that you may want to perform before continuing.</p>
-<p>Want to know more about what the setup scripts are doing?
-<a href="#curious-about-what-the-setup-scripts-are-doing">Read the detailed rundown.</a></p>
-<p><strong>Continue following the <a href="../running-virtualenv/">usage instructions</a>.</strong></p>
-<h2 id="docker-based-installation">Docker-based installation<a class="headerlink" href="#docker-based-installation" title="Permanent link">¶</a></h2>
-<h3 id="tools-we-use-for-developing-with-docker">Tools we use for developing with Docker<a class="headerlink" href="#tools-we-use-for-developing-with-docker" title="Permanent link">¶</a></h3>
-<ul>
-<li><strong>Docker</strong>: You may not need to interact directly with Docker, but you
-  should know that it's a client/server application for managing <em>containers</em>
-  (a way of running software in an isolated environment) and <em>images</em> (a
-  snapshot of all of the files necessary to run a container).</li>
-<li><strong>Docker Compose</strong>: Compose allows you to configure and run a collection of
-  connected containers (like a web application and its database).</li>
-</ul>
-<h3 id="1-setup-your-docker-environment">1. Setup your Docker environment<a class="headerlink" href="#1-setup-your-docker-environment" title="Permanent link">¶</a></h3>
-<p>If you have never installed Docker before, follow the instructions
-<a href="https://docs.docker.com/install/">here</a> or from your operating system vendor.</p>
-<p>The default Docker installation on some systems includes Docker Compose.
-For systems where this is not the case, Docker Compose will need to be
-<a href="https://docs.docker.com/compose/install/">installed manually</a>.</p>
-<p>To verify the installation of Docker Compose, the command
-<code>docker-compose ps</code> should run without error if Docker is running locally.</p>
-<h4 id="copy-the-env_sample-file-over">Copy the <code>.env_SAMPLE</code> file over<a class="headerlink" href="#copy-the-env_sample-file-over" title="Permanent link">¶</a></h4>
-<p>The Docker Compose setup (see <code>docker-compose.yml</code>) provides the environment
-variables defined in <code>.env</code> to the container running the Django app. If
-this is your first time setting up the project, copy <code>.env_SAMPLE</code> to
-<code>.env</code>:</p>
-<pre class="highlight"><code class="language-bash">cp -a .env_SAMPLE .env</code></pre>
-
-<h3 id="2-setup-your-frontend-environment">2. Setup your frontend environment<a class="headerlink" href="#2-setup-your-frontend-environment" title="Permanent link">¶</a></h3>
-<p>Refer to the <a href="#front-end-dependencies">front-end dependencies</a> described above
-in the <a href="#stand-alone-installation">standalone installation instructions</a>.</p>
-<h3 id="3-run-setup">3. Run setup<a class="headerlink" href="#3-run-setup" title="Permanent link">¶</a></h3>
-<p><code>./setup.sh docker</code></p>
-<p>This will install and build the frontend and set up the docker environment.</p>
-<h3 id="4-run-docker-compose-for-the-first-time">4. Run Docker Compose for the first time<a class="headerlink" href="#4-run-docker-compose-for-the-first-time" title="Permanent link">¶</a></h3>
-<p><code>docker-compose up</code></p>
-<p>This will download and/or build images, and then start the containers, as
-described in the <code>docker-compose.yml</code> file. This will take a few minutes, or
-longer if you are on a slow Internet connection.</p>
-<p>When it's all done, you should be able to load <a href="http://localhost:8000">http://localhost:8000</a> in your
-browser, and see a database error.</p>
+<p>Where <code>[GHE]</code> is our GitHub Enterprise URL.</p>
+<h3 id="build-the-frontend">Build the frontend<a class="headerlink" href="#build-the-frontend" title="Permanent link">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Trying to use Docker Compose and finding that it gives you an error?
-Something like:</p>
-<pre class="highlight"><code>ERROR: In file ./.env: environment variable name
-`export DJANGO_HTTP_PORT` may not contain whitespace.</code></pre>
+<p>Our frontend requires <a href="https://nodejs.org/en/">Node.js 16</a>
+with
+<a href="https://yarnpkg.com/">Yarn</a>.
+We prefer
+<a href="https://github.com/nvm-sh/nvm">nvm</a>
+for Node.js version management.
+nvm can be installed using:</p>
+<pre class="highlight"><code class="language-sh">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | sh</code></pre>
 
-<p>You've probably running the latest version of Docker Desktop
-that's available to us (CFPB developers) in Self Service,
-which comes with a version of Docker Compose
-that changes how it handles <code>.env</code> files.</p>
-<p>Docker Compose has been updated to fix this,
-but the fix is still in the Release Candidate stage (as of June 1, 2020),
-it may be some time before that fix gets packaged
-with a new version of Docker Desktop,
-and longer still before that version of Docker Desktop
-gets packaged up and made available to us in Self Service,
-so we need a workaround.</p>
-<h4 id="1-install-pipx-if-you-havent-yet">1. Install pipx, if you haven't yet<a class="headerlink" href="#1-install-pipx-if-you-havent-yet" title="Permanent link">¶</a></h4>
-<p>If you have not yet set up pipx on your computer, follow our
-<a href="https://github.com/cfpb/development/blob/main/guides/pipx.md">guide to installing and using pipx</a>
-to do so.</p>
-<h4 id="2-install-docker-compose-with-pipx">2. Install docker-compose with pipx<a class="headerlink" href="#2-install-docker-compose-with-pipx" title="Permanent link">¶</a></h4>
-<p>With that all set, we're ready to install the latest Docker Compose.</p>
-<pre class="highlight"><code class="language-bash">pipx install docker-compose</code></pre>
+<p>Node 16 must then be installed once nvm is installed:</p>
+<pre class="highlight"><code class="language-sh">nvm install 16</code></pre>
 
-<p>Confirm that it installed properly by running <code>which docker-compose</code>
-and seeing the pipx path:</p>
-<pre class="highlight"><code class="language-bash">$ which docker-compose
-/Users/&lt;username&gt;/.local/bin/docker-compose</code></pre>
+<p>Node.js 16 can then be used in any sh using:</p>
+<pre class="highlight"><code class="language-sh">nvm use 16</code></pre>
 
-<p>Finally, we'll need to inject another Python package, python-dotenv,
-into pipx's isolated docker-compose environment:</p>
-<pre class="highlight"><code class="language-bash">pipx inject docker-compose python-dotenv</code></pre>
+<p>Yarn must then be installed:</p>
+<pre class="highlight"><code class="language-sh">curl -o- -L https://yarnpkg.com/install.sh | sh</code></pre>
 
-<h4 id="3-profit">3. Profit!<a class="headerlink" href="#3-profit" title="Permanent link">¶</a></h4>
-<p>At this point, you should be able to run <code>docker-compose</code> commands again.</p>
-<p><strong>Note:</strong> When running <code>docker-compose up</code> in consumerfinance.gov
-with our typical <code>.env</code> file, you may see some warnings like the following:</p>
-<pre class="highlight"><code>WARNING: Python-dotenv could not parse statement starting at line 236
-WARNING: Python-dotenv could not parse statement starting at line 239
-WARNING: Python-dotenv could not parse statement starting at line 236
-WARNING: Python-dotenv could not parse statement starting at line 239
-WARNING: Python-dotenv could not parse statement starting at line 236
-WARNING: Python-dotenv could not parse statement starting at line 239</code></pre>
-
-<p>These are caused by the <code>if</code> statement that will override some of the variables
-when sourcing the <code>.env</code> file in a local (non-Docker) environment.
-They can safely be ignored.</p>
 </div>
-<h3 id="5-setup-the-database">5. Setup the database<a class="headerlink" href="#5-setup-the-database" title="Permanent link">¶</a></h3>
-<p>Open a bash shell inside your Python container.</p>
-<pre class="highlight"><code class="language-bash">docker-compose exec python bash</code></pre>
+<p>We have a single script that will install our frontend dependencies for both
+building and
+<a href="/javascript-unit-tests/">unit testing/linting/etc</a>:</p>
+<pre class="highlight"><code class="language-sh">./frontend.sh</code></pre>
 
-<p>You can either <a href="#load-initial-data-into-database">load initial data</a> per the
-instructions below, or load a database dump.</p>
-<p>You could save some time and effort later (if you have access to the CFPB
-network), by configuring a URL for database dumps in the <code>.env</code> file.</p>
-<pre class="highlight"><code>CFGOV_PROD_DB_LOCATION=http://(rest of the URL)</code></pre>
+<p>Gulp can be used to rebuild our assets after the initial setup:</p>
+<pre class="highlight"><code class="language-sh">yarn run gulp build</code></pre>
 
-<p>You can get that URL at
-[GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3</p>
-<p>The first time you add this value to <code>.env</code> (and any time you make a
-change to that file) you will either need to run <code>source .env</code> from
-the container or <code>docker-compose down &amp;&amp; docker-compose up</code> from your
-standard shell to pick up the changes.</p>
-<p>With <code>CFGOV_PROD_DB_LOCATION</code> in <code>.env</code> you should be able to run:</p>
-<p><code>./refresh-data.sh</code></p>
-<p>Otherwise, <a href="#load-a-database-dump">the instructions to load a database dump</a>
-below should be enough to get you started.</p>
-<p>Once you have a database loaded, you should have a functioning copy of site
-working at <a href="http://localhost:8000">http://localhost:8000</a></p>
-<h3 id="6-next-steps">6. Next Steps<a class="headerlink" href="#6-next-steps" title="Permanent link">¶</a></h3>
-<p>See <a href="../running-docker/">Running in Docker</a> to continue after that.</p>
-<h2 id="optional-steps">Optional steps<a class="headerlink" href="#optional-steps" title="Permanent link">¶</a></h2>
-<h3 id="load-initial-data-into-database">Load initial data into database<a class="headerlink" href="#load-initial-data-into-database" title="Permanent link">¶</a></h3>
-<p>The <code>initial-data.sh</code> script can be used to initialize a new database to make
-it easy to get started working on Wagtail. This script first ensures that all
-migrations are applied to the database, and then does the following:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to <a href="https://love2dev.com/blog/how-to-uninstall-a-service-worker/">manage service workers in Firefox and Chrome</a>.</p>
+</div>
+<h3 id="set-up-and-run-the-docker-containers">Set up and run the Docker containers<a class="headerlink" href="#set-up-and-run-the-docker-containers" title="Permanent link">¶</a></h3>
+<p>consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
+We use
+<a href="https://docs.docker.com/compose/"><code>docker-compose</code></a>
+to run these services along side the consumerfinance.gov Django site.</p>
+<p>To build and run our Docker containers for the first time, run:</p>
+<pre class="highlight"><code class="language-sh">docker-compose up</code></pre>
+
+<p>This will build and start our PostgreSQL, Elasticsearch, Python, and
+documentation services.</p>
+<p>The first time this is fun, it will
+<a href="#load-initial-data">load initial data</a>
+and
+<a href="#build-the-frontend">build the frontend</a>
+for you.</p>
+<h3 id="load-initial-data">Load initial data<a class="headerlink" href="#load-initial-data" title="Permanent link">¶</a></h3>
+<p>Our <code>initial-data.sh</code> script can be used to initialize a new database to make
+it easy to get started working on consumerfinance.gov.
+This script ensures that all migrations are applied to the database
+and then does the following:</p>
 <ul>
 <li>Creates an <code>admin</code> superuser with password <code>admin</code>.</li>
 <li>If it doesn't already exist, creates a new Wagtail home page named <code>CFGOV</code>,
@@ -452,25 +336,86 @@ set to 80.</li>
 a hostname and port defined by the <code>WAGTAIL_SHARING_HOSTNAME</code> and
 <code>DJANGO_HTTP_PORT</code> environment variables.</li>
 </ul>
+<p>This script must be run inside the Docker <code>python</code> container:</p>
+<pre class="highlight"><code class="language-sh">docker-compose exec python bash
+./initial-data.sh</code></pre>
+
 <h3 id="load-a-database-dump">Load a database dump<a class="headerlink" href="#load-a-database-dump" title="Permanent link">¶</a></h3>
-<p>If you're installing this fresh, the initial data you receive will not be
-as extensive as you'd probably like it to be.</p>
-<p>You can get a database dump by:</p>
-<ol>
-<li>Going to [GHE]/CFGOV/platform/wiki/Database-downloads</li>
-<li>Selecting one of the extractions and downloading the
-   <code>production_django.sql.gz</code> file</li>
-<li>Run:</li>
-</ol>
-<pre class="highlight"><code class="language-bash">./refresh-data.sh /path/to/dump.sql.gz</code></pre>
+<p>Alternatively, one of our database dumps can be installed using our
+<code>refresh-data.sh</code> script. You can get a database dump by defining
+<code>CFGOV_PROD_DB_LOCATION</code> in your <code>.env</code> file as described in
+GitHub Enterprise at
+[GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3, or
+inside a Docker <code>python</code> container sh immediately before running
+<code>refresh-data.sh</code>:</p>
+<pre class="highlight"><code class="language-sh">docker-compose exec python bash
+CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
+./refresh-data.sh</code></pre>
 
-<p>The <code>refresh-data.sh</code> script will apply the same changes as the
-<code>initial-data.sh</code> script described above (including setting up the <code>admin</code>
-superuser), but will not apply migrations.</p>
-<p>To apply any unapplied migrations to a database created from a dump, run:</p>
-<pre class="highlight"><code class="language-bash">python cfgov/manage.py migrate</code></pre>
+<p><code>refresh-data.sh</code> can also be given a path to a gziped database dump:</p>
+<pre class="highlight"><code class="language-sh">./refresh-data.sh /path/to/dump.sql.gz</code></pre>
 
-<h3 id="sync-local-image-storage">Sync local image storage<a class="headerlink" href="#sync-local-image-storage" title="Permanent link">¶</a></h3>
+<p>Finally, build <a href="/search/#building-the-index">the Elasticsearch index</a>:</p>
+<pre class="highlight"><code class="language-sh">./cfgov/manage.py search_index --create</code></pre>
+
+<h2 id="alternative-setups">Alternative setups<a class="headerlink" href="#alternative-setups" title="Permanent link">¶</a></h2>
+<p>consumerfinance.gov requires a Python environment, PostgreSQL, and
+Elasticsearch to run. None of this requires Docker, Docker is simply a
+convenient way to ensure consistent versioning and running of these services
+along with the consumerfinance.gov Django site.</p>
+<p>The consumerfinance.gov Django site can be run locally in a virtualenv and can
+use PostgreSQL and Elasticsearch from either
+our <a href="https://docs.docker.com/compose/"><code>docker-compose</code></a> file
+or from Homebrew.</p>
+<h3 id="postgresql-and-elasticsearch-from-docker">PostgreSQL and Elasticsearch from Docker<a class="headerlink" href="#postgresql-and-elasticsearch-from-docker" title="Permanent link">¶</a></h3>
+<p>To build and start only
+the PostgreSQL (<code>postgres</code>)
+and Elasticsearch (<code>elasticsearch</code>)
+containers from our
+<a href="https://docs.docker.com/compose/"><code>docker-compose</code></a> file,
+explicitly specify them as arguments to <code>docker-compose</code>:</p>
+<pre class="highlight"><code>docker-compose up postgres elasticsearch</code></pre>
+
+<p>This will expose
+PostgreSQL on port <code>5432</code> on <code>localhost</code>
+and
+Elasticsearch on port <code>9200</code> on <code>localhost</code>.</p>
+<h3 id="postgresql-and-elasticsearch-from-homebrew">PostgreSQL and Elasticsearch from Homebrew<a class="headerlink" href="#postgresql-and-elasticsearch-from-homebrew" title="Permanent link">¶</a></h3>
+<p>You can install PostgreSQL and Elasticsearch from Homebrew if you're on a Mac:</p>
+<pre class="highlight"><code class="language-sh">brew install postgresql
+brew install elasticsearch</code></pre>
+
+<p>Once it's installed, you can configure it to run as a service:</p>
+<pre class="highlight"><code class="language-sh">brew services start postgresql
+brew services start elasticsearch</code></pre>
+
+<p>Our recommended Postgres configuration is a database named <code>cfgov</code> and a user
+named <code>cfpb</code>, with data stored in schema <code>cfpb</code>. This can be created with the
+following commands:</p>
+<pre class="highlight"><code class="language-sh">dropdb --if-exists cfgov &amp;&amp; dropuser --if-exists cfpb
+psql postgres -c &quot;CREATE USER cfpb WITH LOGIN PASSWORD 'cfpb' CREATEDB&quot;
+psql postgres -c &quot;CREATE DATABASE cfgov OWNER cfpb&quot;
+psql postgres://cfpb:cfpb@localhost/cfgov -c &quot;CREATE SCHEMA cfpb&quot;</code></pre>
+
+<p>We don't support using an SQLite database because we use database fields
+that are specific to Postgres. The <code>CREATEDB</code> keyword above allows the
+<code>cfpb</code> user to create a temporary Django database when running unit tests.</p>
+<h3 id="set-up-the-consumerfinancegov-virtualenv">Set up the <code>consumerfinance.gov</code> virtualenv<a class="headerlink" href="#set-up-the-consumerfinancegov-virtualenv" title="Permanent link">¶</a></h3>
+<p>After you have chosen a means to run PostgreSQL and Elasticsearch,
+<a href="#set-up-the-environment">set up the environment</a>,
+<a href="#set-up-a-local-python-environment">set up a local Python environment</a>,
+optionally <a href="#install-our-private-fonts">installed our private fonts</a>,
+and <a href="#build-the-frontend">built the frontend</a>,
+all the Python dependencies for running locally can be installed:</p>
+<pre class="highlight"><code class="language-sh">pyenv activate consumerfinance.gov
+pip install -r requirements/local.txt</code></pre>
+
+<p>Once complete, our <code>runserver.sh</code> script will bring up the site at
+<a href="http://localhost:8000">http://localhost:8000</a>.</p>
+<pre class="highlight"><code class="language-sh">./runserver.sh</code></pre>
+
+<h2 id="additional-setup">Additional setup<a class="headerlink" href="#additional-setup" title="Permanent link">¶</a></h2>
+<h3 id="sync-local-image-storage-optional">Sync local image storage (optional)<a class="headerlink" href="#sync-local-image-storage-optional" title="Permanent link">¶</a></h3>
 <p>If using a database dump, pages will contain links to images that exist in
 the database but don't exist on your local disk. This will cause broken or
 missing images when browsing the site locally.</p>
@@ -479,24 +424,16 @@ they are stored on disk.</p>
 <p>This project includes a Django management command that can be used to download
 any remote images referenced in the database so that they can be served when
 running locally.</p>
-<pre class="highlight"><code class="language-bash">cfgov/manage.py sync_image_storage https://files.consumerfinance.gov/f/ ./cfgov/f/</code></pre>
+<pre class="highlight"><code class="language-sh">cfgov/manage.py sync_image_storage https://files.consumerfinance.gov/f/ ./cfgov/f/</code></pre>
 
 <p>This downloads all remote images (and image renditions) referenced in the
 database, retrieving them from the specified URL and storing them in the
 specified local directory.</p>
-<h3 id="set-variables-for-working-with-the-govdelivery-api">Set variables for working with the GovDelivery API<a class="headerlink" href="#set-variables-for-working-with-the-govdelivery-api" title="Permanent link">¶</a></h3>
-<p>Uncomment and set the GovDelivery environment variables in your <code>.env</code> file.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>GovDelivery is a third-party web service that powers our emails.
-The API is used by subscribe forms on our website.
-Users may decide to swap this tool out for another third-party service.</p>
-</div>
-<h3 id="install-gnu-gettext-for-django-translation-support">Install GNU gettext for Django translation support<a class="headerlink" href="#install-gnu-gettext-for-django-translation-support" title="Permanent link">¶</a></h3>
+<h3 id="install-gnu-gettext-for-django-translation-support-optional">Install GNU gettext for Django translation support (optional)<a class="headerlink" href="#install-gnu-gettext-for-django-translation-support-optional" title="Permanent link">¶</a></h3>
 <p>In order to generate Django translations as documented
 <a href="../translation/">here</a>, you'll need to install the
 <a href="https://www.gnu.org/software/gettext/">GNU gettext</a> library.</p>
-<p>On MacOS, GNU gettext is available via Homebrew:</p>
+<p>On macOS, GNU gettext is available via Homebrew:</p>
 <pre class="highlight"><code>brew install gettext</code></pre>
 
 <p>but it gets installed as
@@ -511,57 +448,6 @@ solution.</p>
 <pre class="highlight"><code>$ gettext --version</code></pre>
 
 <p>GNU gettext is also required to run our translation-related unit tests locally.</p>
-<h2 id="curious-about-what-the-setup-scripts-are-doing">Curious about what the setup scripts are doing?<a class="headerlink" href="#curious-about-what-the-setup-scripts-are-doing" title="Permanent link">¶</a></h2>
-<p>Here's a rundown of each of the scripts called by <code>setup.sh</code> and what they do.</p>
-<h3 id="1-frontendsh">1. <code>frontend.sh</code><a class="headerlink" href="#1-frontendsh" title="Permanent link">¶</a></h3>
-<ol>
-<li><strong>Initialize project dependency directories</strong> (<code>init</code>)</li>
-</ol>
-<p>This script first checks for an argument passed from the command line
-   that can trigger different options for different environments.
-   Since you ran it with no arguments, it will set up the dev environment.</p>
-<p>It then creates a checksum for <code>package-lock.json</code> (if it exists) and
-   <code>package.json</code>.
-   This will be used later to determine if dependencies need to be installed.</p>
-<p>It will then set some env vars for the Node dependency directories.
-1. <strong>Clean and install project dependencies</strong> (<code>clean_and_install</code>)</p>
-<p>The script will now compare the checksums to see if it needs to install
-   dependencies, or if they are already up-to-date.</p>
-<p>If the checksums do not match, the script will empty out all installed
-   dependencies (<code>clean</code>) so the new installation can start fresh,
-   then install the latest requested dependencies (<code>install</code>).</p>
-<p>The <code>devDependencies</code> from <code>package.json</code> are not installed
-   if the environment is production.</p>
-<p>Finally, it creates a new checksum for future comparisons.
-1. <strong>Run tasks to build the project for distribution</strong> (<code>build</code>)</p>
-<p>Finally, the script runs <code>yarn run gulp build</code> to rebuild the front-end assets.
-   It no longer cleans first, because the gulp-changed plugin prevents
-   rebuilding assets that haven't changed since the last build.</p>
-<p>If this is the production environment, it also triggers style and script
-   builds for <code>ondemand</code>, which aren't part of a standard <code>gulp build</code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to <a href="https://love2dev.com/blog/how-to-uninstall-a-service-worker/">manage service workers in Firefox and Chrome</a>.</p>
-</div>
-<h3 id="2-backendsh">2. <code>backend.sh</code><a class="headerlink" href="#2-backendsh" title="Permanent link">¶</a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code>backend.sh</code> is not used for our Docker setup.</p>
-</div>
-<ol>
-<li><strong>Confirm environment</strong> (<code>init</code>)</li>
-</ol>
-<p>This script first checks for an argument passed from the command line
-   that can trigger different options for different environments.
-   Since you ran it with no arguments, it will set up the dev environment.</p>
-<p>It will then run a script to ensure that you're in a virtualenv.
-   If not, the script will end, to prevent you from accidentally installing
-   your Python dependencies globally.</p>
-<ol>
-<li><strong>Install project dependencies</strong> (<code>install</code>)</li>
-</ol>
-<p>Python dependencies are installed into the virtualenv via pip.
-   Dependencies vary slightly depending on whether we're in dev, test, or prod.</p>
               
             </div>
           </div>
