@@ -2019,7 +2019,11 @@ Taskforce on Federal Consumer Financial Law
         ">
 
 <div class="a-tagline">
-An official website of the United States government
+    <span class="u-usa-flag"></span>
+    <div class="a-tagline_text">
+        An official website of the
+        <span class="u-nowrap">United States government</span>
+    </div>
 </div>
 
 <div class="m-global-eyebrow_actions">
