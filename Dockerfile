@@ -6,13 +6,9 @@ ENV LANG en_US.UTF-8
 LABEL maintainer="tech@cfpb.gov"
 
 # Specify SCL-based Python version
-<<<<<<< HEAD
 # Currently used option: rh-python38
 # See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
 ARG scl_python_version
-=======
-ARG scl_python_version=rh-python38
->>>>>>> 84538e99db72fcd9671e66b56d571f506d0ecb36
 ENV SCL_PYTHON_VERSION ${scl_python_version}
 
 # Stops Python default buffering to stdout, improving logging to the console.
