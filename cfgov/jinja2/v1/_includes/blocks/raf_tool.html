@@ -1,4 +1,17 @@
-<link rel="stylesheet" href="{{ static('apps/erap/css/main.css') }}">
+<style>
+#rental-assistance-finder {
+  max-width: 41.875rem;
+}
+#rental-assistance-finder dl a {
+  word-break: break-all;
+}
+#rental-assistance-finder .m-form-field + .m-form-field {
+  margin-top: 15px;
+}
+.no-js .js-is-hidden {
+  display: block !important;
+}
+</style>
 
 <div id="rental-assistance-finder"
      data-language="{{ page.language if page and page.language else 'en' }}"

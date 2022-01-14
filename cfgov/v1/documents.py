@@ -41,6 +41,8 @@ class FilterablePagesDocument(Document):
     model_class = fields.KeywordField()
     content = fields.TextField()
     preview_description = fields.TextField()
+    path = fields.TextField()
+    depth = fields.IntegerField()
 
     def get_queryset(self):
         return AbstractFilterPage.objects.live().public().specific()
