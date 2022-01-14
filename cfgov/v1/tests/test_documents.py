@@ -44,7 +44,7 @@ class FilterablePagesDocumentTest(TestCase):
                 'tags', 'categories', 'language', 'title', 'url',
                 'is_archived', 'date_published', 'start_dt', 'end_dt',
                 'statuses', 'products', 'initial_filing_date', 'model_class',
-                'content', 'preview_description'
+                'content', 'preview_description', 'path', 'depth',
             ]
         )
 
