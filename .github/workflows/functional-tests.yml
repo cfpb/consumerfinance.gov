@@ -56,7 +56,7 @@ jobs:
       with:
         spec: |
           /test/cypress/integration/paying-for-college/repay-student-debt/repay-student-debt.js
-          /test/cypress/integration/ data-research/consumer-complaints/consumer-complaints.js
+          /test/cypress/integration/data-research/consumer-complaints/consumer-complaints.js
           /test/cypress/integration/consumer-tools/youth-financial-education/survey.js 
           /test/cypress/integration/consumer-tools/youth-financial-education/survey-progress.js
           /test/cypress/integration/consumer-tools/youth-financial-education/survey-errors.js
