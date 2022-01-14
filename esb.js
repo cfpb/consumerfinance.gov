@@ -12,8 +12,6 @@ const r = `${ up }/js/routes`;
 const a = `${ up }/apps`;
 const od = `${ r }/on-demand`;
 
-require( './cfgov/unprocessed/apps/regulations3k/worker_and_manifest.js' );
-
 /**
  * @param {string} path The directory with the needed js
  * @param {regex} regex The regex to match against
@@ -93,16 +91,22 @@ const cssPaths = [
   ...styledApps.map( v => `${ a }/${ v }/css/main.less` )
 ];
 
-/* eslint-disable-next-line */
-esbuild.build( {
-  entryPoints: [
-    ...jsPaths,
-    ...cssPaths
-  ],
+const baseConfig = {
   logLevel: 'info',
   bundle: true,
   minify: true,
   sourcemap: true,
+  external: [ '*.png', '*.woff', '*.woff2', '*.gif', '*.svg' ],
+  outdir: 'cfgov/static_built/out'
+};
+
+// JS
+esbuild.build( { ...baseConfig, entryPoints: jsPaths } );
+
+// CSS
+esbuild.build( {
+  ...baseConfig,
+  entryPoints: cssPaths,
   plugins: [ postCSSPlugin.default( {
     plugins: [ autoprefixer ],
     lessOptions: {
@@ -113,7 +117,9 @@ esbuild.build( {
         './node_modules/cfpb-chart-builder/src/css'
       ]
     }
-  } ) ],
-  external: [ '*.png', '*.woff', '*.woff2', '*.gif', '*.svg' ],
-  outdir: 'cfgov/static_built/out'
+  } ) ]
 } );
+
+// Run app-specific scripts
+require( './cfgov/unprocessed/apps/regulations3k/worker_and_manifest.js' );
+
