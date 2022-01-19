@@ -18,49 +18,61 @@ describe( 'explore-rates/template-loader', () => {
 
     const testTemplate = templateLoader.county( mockData );
     expect( testTemplate ).toBe(
-      '<option value="1" data-gse="1" data-fha="1" data-va="1">Test</option>\n'
+      '<option value="1" data-gse="1" data-fha="1" data-va="1">Test</option>'
     );
   } );
 
   it( 'should be able to render countyConfWarning template', () => {
-    const testTemplate = templateLoader.countyConfWarning();
+    const testTemplate = templateLoader.countyConfWarning;
     expect( typeof testTemplate ).toBe( 'string' );
   } );
 
   it( 'should be able to render countyFHAWarning template', () => {
-    const testTemplate = templateLoader.countyFHAWarning();
+    const testTemplate = templateLoader.countyFHAWarning;
     expect( typeof testTemplate ).toBe( 'string' );
   } );
 
   it( 'should be able to render countyVAWarning template', () => {
-    const testTemplate = templateLoader.countyVAWarning();
+    const testTemplate = templateLoader.countyVAWarning;
     expect( typeof testTemplate ).toBe( 'string' );
   } );
 
   it( 'should be able to render countyGenWarning template', () => {
-    const testTemplate = templateLoader.countyGenWarning();
+    const testTemplate = templateLoader.countyGenWarning;
     expect( typeof testTemplate ).toBe( 'string' );
   } );
 
-  it( 'should be able to render chartTooltipSingle template', () => {
-    const testTemplate = templateLoader.chartTooltipSingle();
-    expect( typeof testTemplate ).toBe( 'string' );
-  } );
-
-  it( 'should be able to render chartTooltipMultiple template', () => {
+  it( 'should be able to render chartTooltip template with one item', () => {
     const mockData = {
       y: 1,
       key: '50%'
     };
-    const testTemplate = templateLoader.chartTooltipMultiple( mockData );
+    const testTemplate = templateLoader.chartTooltip( mockData );
     expect( testTemplate ).toBe(
-      '<div class="chart-tooltip">\n' +
-      '  <strong class="lenders">1</strong>\n' +
-      '  <span class="text">\n' +
-      '    Lenders are offering <br>\n' +
-      '    rates at <strong>50%</strong>.\n' +
-      '  </span>\n' +
-      '</div>\n'
+      '<div class="chart-tooltip">' +
+        '<strong class="lenders">1</strong>' +
+        '<span class="text">' +
+          'lender is offering <br> ' +
+          'rates at <strong>50%</strong>.' +
+        '</span>' +
+      '</div>'
+    );
+  } );
+
+  it( 'should be able to render chartTooltip template with multiple items', () => {
+    const mockData = {
+      y: 3,
+      key: '60%'
+    };
+    const testTemplate = templateLoader.chartTooltip( mockData );
+    expect( testTemplate ).toBe(
+      '<div class="chart-tooltip">' +
+        '<strong class="lenders">3</strong>' +
+        '<span class="text">' +
+          'lenders are offering <br> ' +
+          'rates at <strong>60%</strong>.' +
+        '</span>' +
+      '</div>'
     );
   } );
 } );
