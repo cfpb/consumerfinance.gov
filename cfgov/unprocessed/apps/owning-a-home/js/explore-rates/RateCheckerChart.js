@@ -1,6 +1,5 @@
 import {
-  chartTooltipMultiple,
-  chartTooltipSingle
+  chartTooltip
 } from './template-loader';
 import Highcharts from 'highcharts';
 import RateCheckerChartMenu from './RateCheckerChartMenu';
@@ -112,11 +111,7 @@ function RateCheckerChart() {
       tooltip: {
         useHTML: true,
         formatter: function() {
-          if ( this.y === 1 ) {
-            return chartTooltipSingle( this );
-          }
-
-          return chartTooltipMultiple( this );
+          return chartTooltip( this );
         },
         positioner: function( boxWidth, boxHeight, point ) {
           let x, y;
