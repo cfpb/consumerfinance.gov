@@ -1,4 +1,4 @@
-#!/bin/bash --login
+#!/bin/sh
 
 set -e
 

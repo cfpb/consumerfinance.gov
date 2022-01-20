@@ -1,15 +1,9 @@
-FROM centos:7 AS cfgov-dev
+FROM python:3.9-alpine AS cfgov-dev
 
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
 
 LABEL maintainer="tech@cfpb.gov"
-
-# Specify SCL-based Python version
-# Currently used option: rh-python38
-# See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
-ARG scl_python_version
-ENV SCL_PYTHON_VERSION ${scl_python_version}
 
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
@@ -18,31 +12,11 @@ ENV APP_HOME /src/consumerfinance.gov
 RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
 
-SHELL ["/bin/bash", "--login", "-o", "pipefail", "-c"]
-
 # Install common OS packages
-RUN yum -y install \
-        centos-release-scl \
-        epel-release && \
-    rpm -i https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
-    curl -sL https://rpm.nodesource.com/setup_16.x | bash - && \
-    curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
-    yum -y update && \
-    yum -y install \
-        gcc \
-        git \
-        mailcap \
-        postgresql10 \
-        postgresql10-devel \
-        which \
-        gettext \
-        xmlsec1 xmlsec1-openssl \
-        ${SCL_PYTHON_VERSION} && \
-    yum -y install nodejs yarn && \
-    yum clean all && rm -rf /var/cache/yum && \
-    echo "source scl_source enable ${SCL_PYTHON_VERSION}" > /etc/profile.d/enable_scl_python.sh && \
-    source /etc/profile && \
-    pip install --no-cache-dir --upgrade pip setuptools wheel
+RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev postgresql-dev zlib-dev jpeg-dev
+RUN apk add --no-cache --virtual .backend-deps postgresql
+RUN apk add --no-cache --virtual .frontend-deps nodejs yarn
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
 # Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
 # NOTE: MUST be after pip upgrade. Build fails otherwise due to bug in old pip.
@@ -51,6 +25,9 @@ ENV PIP_NO_CACHE_DIR true
 # Install python requirements
 COPY requirements requirements
 RUN pip install -r requirements/local.txt -r requirements/deployment.txt
+
+# Remove build dependencies for smaller image
+# RUN apk del .build-deps
 
 EXPOSE 8000
 
@@ -71,6 +48,7 @@ ENV ALLOWED_HOSTS '["*"]'
 # See .dockerignore for details on which files are included
 COPY . .
 
+RUN ls -la
 # Build the front-end
 RUN ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
@@ -81,8 +59,7 @@ RUN ./frontend.sh production && \
 # Production-like Apache-based image
 FROM cfgov-dev as cfgov-prod
 
-ENV SCL_HTTPD_VERSION httpd24
-ENV SCL_HTTPD_ROOT /opt/rh/${SCL_HTTPD_VERSION}/root
+ENV HTTPD_ROOT /etc/apache2
 
 # Apache HTTPD settings
 ENV APACHE_SERVER_ROOT ${APP_HOME}/cfgov/apache
@@ -102,11 +79,9 @@ ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
 ENV ALLOWED_HOSTS '["*"]'
 
-# Install and enable SCL-based Apache server and mod_wsgi,
+# Install Apache server, mod_wsgi, and curl (container healthcheck),
 # and converts all Docker Secrets into environment variables.
-RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
-    yum clean all && rm -rf /var/cache/yum && \
-    echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
+RUN apk add apache2 apache2-mod-wsgi curl && \
     echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
 
 # Copy the cfgov directory form the build image
@@ -116,9 +91,7 @@ COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PA
 
 
 RUN yum clean all && rm -rf /var/cache/yum && \
-    chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
-
-ENV PATH="/opt/rh/${SCL_PYTHON_VERSION}/root/usr/bin:${PATH}"
+    chown -R apache:apache ${APP_HOME} /usr/share/apache2 /var/run/apache2
 
 # Remove files flagged by image vulnerability scanner (doesn't seem to be needed in rh-python38)
 #RUN cd /opt/rh/rh-python38/root/usr/lib/python3.8/site-packages/ && \
@@ -128,9 +101,7 @@ USER apache
 
 # Build frontend, cleanup excess file, and setup filesystem
 # - cfgov/f/ - Wagtail file uploads
-RUN ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
-    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/run ${APACHE_SERVER_ROOT}/run && \
-    rm -rf cfgov/apache/www cfgov/unprocessed && \
+RUN rm -rf cfgov/apache/www cfgov/unprocessed && \
     mkdir -p cfgov/f
 
 # Healthcheck retry set high since database loads take a while
