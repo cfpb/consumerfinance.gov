@@ -1,4 +1,6 @@
-FROM python:3.9-alpine AS cfgov-dev
+FROM python:3.9-alpine as base
+
+FROM base AS cfgov-dev
 
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
@@ -57,7 +59,7 @@ RUN ./frontend.sh production && \
     rm -rf node_modules npm-packages-offline-cache
 
 
-FROM python:3.9-alpine as cfgov-mod-wsgi
+FROM base as cfgov-mod-wsgi
 WORKDIR /tmp
 RUN apk add --no-cache --virtual .build-deps apache2-dev gcc make musl-dev
 RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar.gz -O mod_wsgi.tar.gz
