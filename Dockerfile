@@ -107,10 +107,6 @@ COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PA
 RUN ln -s /usr/lib/apache2 cfgov/apache/modules
 RUN chown -R apache:apache ${APP_HOME} /usr/share/apache2 /var/run/apache2 /var/log/apache2
 
-# Remove files flagged by image vulnerability scanner (doesn't seem to be needed in rh-python38)
-#RUN cd /opt/rh/rh-python38/root/usr/lib/python3.8/site-packages/ && \
-#    rm -f ndg/httpsclient/test/pki/localhost.key sslserver/certs/development.key
-
 USER apache
 
 # Build frontend, cleanup excess file, and setup filesystem
