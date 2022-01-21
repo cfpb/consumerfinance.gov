@@ -13,9 +13,10 @@ RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
 
 # Install common OS packages
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev postgresql-dev zlib-dev jpeg-dev
+RUN apk update --no-cache && apk upgrade --no-cache
+RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev postgresql-dev
 RUN apk add --no-cache --virtual .backend-deps postgresql
-RUN apk add --no-cache --virtual .frontend-deps nodejs yarn
+RUN apk add --no-cache --virtual .frontend-deps nodejs yarn zlib-dev jpeg-dev
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
 # Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
@@ -27,7 +28,7 @@ COPY requirements requirements
 RUN pip install -r requirements/local.txt -r requirements/deployment.txt
 
 # Remove build dependencies for smaller image
-# RUN apk del .build-deps
+RUN apk del .build-deps
 
 EXPOSE 8000
 
@@ -81,17 +82,26 @@ ENV ALLOWED_HOSTS '["*"]'
 
 # Install Apache server, mod_wsgi, and curl (container healthcheck),
 # and converts all Docker Secrets into environment variables.
-RUN apk add apache2 apache2-mod-wsgi curl && \
+RUN apk add --no-cache apache2 curl && \
     echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
+
+WORKDIR /tmp
+RUN apk add --no-cache --virtual .build-deps apache2-dev gcc make musl-dev
+RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar.gz -O mod_wsgi.tar.gz
+RUN echo -n "0a6f380af854b85a3151e54a3c33b520c4a6e21a99bcad7ae5ddfbfe31a74b50  mod_wsgi.tar.gz" | sha256sum -c
+RUN tar xvf mod_wsgi.tar.gz
+RUN cd mod_wsgi* && ./configure && make install
+RUN apk del .build-deps
+RUN rm -Rf /tmp/mod_wsgi*
+WORKDIR ${APP_HOME}
 
 # Copy the cfgov directory form the build image
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PATH}/static.in
 
-
-RUN yum clean all && rm -rf /var/cache/yum && \
-    chown -R apache:apache ${APP_HOME} /usr/share/apache2 /var/run/apache2
+RUN ln -s /usr/lib/apache2 cfgov/apache/modules
+RUN chown -R apache:apache ${APP_HOME} /usr/share/apache2 /var/run/apache2 /var/log/apache2
 
 # Remove files flagged by image vulnerability scanner (doesn't seem to be needed in rh-python38)
 #RUN cd /opt/rh/rh-python38/root/usr/lib/python3.8/site-packages/ && \
@@ -108,4 +118,5 @@ RUN rm -rf cfgov/apache/www cfgov/unprocessed && \
 HEALTHCHECK --start-period=300s --interval=30s --retries=30 \
             CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
 
-CMD ["httpd", "-d", "cfgov/apache", "-D", "FOREGROUND"]
+CMD ["httpd", "-d", "/src/consumerfinance.gov/cfgov/apache", "-f", "/src/consumerfinance.gov/cfgov/apache/conf/httpd.conf", "-D", "FOREGROUND"]
+# CMD ["sleep", "3600"]
