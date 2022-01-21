@@ -57,6 +57,17 @@ RUN ./frontend.sh production && \
     rm -rf node_modules npm-packages-offline-cache
 
 
+FROM python:3.9-alpine as cfgov-mod-wsgi
+WORKDIR /tmp
+RUN apk add --no-cache --virtual .build-deps apache2-dev gcc make musl-dev
+RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar.gz -O mod_wsgi.tar.gz
+RUN echo -n "0a6f380af854b85a3151e54a3c33b520c4a6e21a99bcad7ae5ddfbfe31a74b50  mod_wsgi.tar.gz" | sha256sum -c
+RUN tar xvf mod_wsgi.tar.gz
+RUN cd mod_wsgi* && ./configure && make install
+RUN ls /usr/lib/apache2/mod_wsgi.so  # Ensure it compiled and is where it's expected
+RUN apk del .build-deps
+RUN rm -Rf /tmp/mod_wsgi*
+
 # Production-like Apache-based image
 FROM cfgov-dev as cfgov-prod
 
@@ -85,15 +96,8 @@ ENV ALLOWED_HOSTS '["*"]'
 RUN apk add --no-cache apache2 curl && \
     echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
 
-WORKDIR /tmp
-RUN apk add --no-cache --virtual .build-deps apache2-dev gcc make musl-dev
-RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar.gz -O mod_wsgi.tar.gz
-RUN echo -n "0a6f380af854b85a3151e54a3c33b520c4a6e21a99bcad7ae5ddfbfe31a74b50  mod_wsgi.tar.gz" | sha256sum -c
-RUN tar xvf mod_wsgi.tar.gz
-RUN cd mod_wsgi* && ./configure && make install
-RUN apk del .build-deps
-RUN rm -Rf /tmp/mod_wsgi*
-WORKDIR ${APP_HOME}
+# Copy mod_wsgi.so from mod_wsgi image
+COPY --from=cfgov-mod-wsgi /usr/lib/apache2/mod_wsgi.so /usr/lib/apache2/mod_wsgi.so
 
 # Copy the cfgov directory form the build image
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
@@ -119,4 +123,3 @@ HEALTHCHECK --start-period=300s --interval=30s --retries=30 \
             CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
 
 CMD ["httpd", "-d", "/src/consumerfinance.gov/cfgov/apache", "-f", "/src/consumerfinance.gov/cfgov/apache/conf/httpd.conf", "-D", "FOREGROUND"]
-# CMD ["sleep", "3600"]
