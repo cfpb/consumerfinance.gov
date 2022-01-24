@@ -35,6 +35,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+            args:
+                scl_python_version: rh-python38
         depends_on:
             - elasticsearch
             - postgres
