@@ -1,0 +1,72 @@
+name: functional
+
+on: pull_request
+
+jobs:
+
+  cypress:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgres://cfpb:cfpb@localhost/cfgov
+
+    services:
+      elasticsearch:
+        image: elasticsearch:7.10.1
+        ports:
+          - 9200/tcp
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: cfpb
+          POSTGRES_PASSWORD: cfpb
+          POSTGRES_DB: cfgov
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Node
+      uses: actions/setup-node@v2
+      with:
+          node-version: '16.x'
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9.x'
+
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install -r requirements/local.txt
+        
+    - name: Set up initial data
+      run: ./initial-data.sh
+
+    # - name: Run server
+    #   run: python cfgov/manage.py runserver
+
+    - name: Run Cypress
+      uses: cypress-io/github-action@v2
+      with:
+        spec: |
+          test/cypress/integration/paying-for-college/repay-student-debt/repay-student-debt.js
+          test/cypress/integration/data-research/consumer-complaints/consumer-complaints.js
+          test/cypress/integration/consumer-tools/youth-financial-education/survey.js 
+          test/cypress/integration/consumer-tools/youth-financial-education/survey-progress.js
+          test/cypress/integration/consumer-tools/youth-financial-education/survey-errors.js
+          test/cypress/integration/consumer-tools/youth-financial-education/modal.js
+          test/cypress/integration/consumer-tools/youth-financial-education/grade-levels.js
+          test/cypress/integration/consumer-tools/owning-a-home/owning-a-home.js
+          test/cypress/integration/consumer-tools/financial-well-being/financial-well-being.js
+          test/cypress/integration/consumer-tools/before-you-claim/before-you-claim.js
+          test/cypress/integration/components/global-search/global-search.js
+          test/cypress/integration/components/footer/footer.js
+        build: yarn run gulp
+        start: python cfgov/manage.py runserver 0.0.0.0:8000
+        wait-on: 'http://localhost:8000'
