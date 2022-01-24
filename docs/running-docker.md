@@ -129,12 +129,12 @@ This includes:
 If you just want to build the image:
 
 ```bash
-docker build . --build-arg scl_python_version=rh-python36 -t your-desired-image-name
+docker build . --build-arg scl_python_version=rh-python38 -t your-desired-image-name
 ```
 
 **Note:** The `scl_python_version` build arg specifies which
 [Python Software Collection](https://www.softwarecollections.org/en/scls/?search=python)
-version you'd like to use. We've tested this against `rh-python36`.
+version you'd like to use. We've tested this against `rh-python38`.
 
 #### Docker Compose
 
