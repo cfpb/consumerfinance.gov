@@ -62,7 +62,6 @@ jobs:
           test/cypress/integration/consumer-tools/youth-financial-education/survey-errors.js
           test/cypress/integration/consumer-tools/youth-financial-education/modal.js
           test/cypress/integration/consumer-tools/youth-financial-education/grade-levels.js
-          test/cypress/integration/consumer-tools/rural-or-underserved-tool/rural-or-underserved-tool.js
           test/cypress/integration/consumer-tools/owning-a-home/owning-a-home.js
           test/cypress/integration/consumer-tools/financial-well-being/financial-well-being.js
           test/cypress/integration/consumer-tools/before-you-claim/before-you-claim.js
