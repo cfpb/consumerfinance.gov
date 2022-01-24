@@ -26,7 +26,7 @@ function isFound( response ) {
  *
  * @param {string} fips - An ID.
  * @param {Object} counties - Object from the census API.
- * @returns {boolean} Whether thhe county is rural
+ * @returns {boolean} Whether the county is rural
  */
 function isRural( fips, counties ) {
   for ( let i = 0; i < counties.length; i++ ) {
