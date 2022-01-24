@@ -290,11 +290,11 @@ container in production.</p>
 <h3 id="how-do-i-use-it">How do I use it?<a class="headerlink" href="#how-do-i-use-it" title="Permanent link">¶</a></h3>
 <h4 id="just-docker">Just Docker<a class="headerlink" href="#just-docker" title="Permanent link">¶</a></h4>
 <p>If you just want to build the image:</p>
-<pre class="highlight"><code class="language-bash">docker build . --build-arg scl_python_version=rh-python36 -t your-desired-image-name</code></pre>
+<pre class="highlight"><code class="language-bash">docker build . --build-arg scl_python_version=rh-python38 -t your-desired-image-name</code></pre>
 
 <p><strong>Note:</strong> The <code>scl_python_version</code> build arg specifies which
 <a href="https://www.softwarecollections.org/en/scls/?search=python">Python Software Collection</a>
-version you'd like to use. We've tested this against <code>rh-python36</code>.</p>
+version you'd like to use. We've tested this against <code>rh-python38</code>.</p>
 <h4 id="docker-compose">Docker Compose<a class="headerlink" href="#docker-compose" title="Permanent link">¶</a></h4>
 <p>You can also launch the full cf.gov stack locally via <code>docker-compose</code>. This setup is
 a nice way to test out new Apache config changes. It includes volumes that mount your
