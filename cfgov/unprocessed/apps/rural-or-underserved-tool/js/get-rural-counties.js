@@ -6,7 +6,7 @@ const cache = {};
 
 /**
  * @param {string} year - A year.
- * @returns {array} An array of rural counties by fips.
+ * @returns {Promise} An array of rural counties by fips.
  */
 function getRuralCounties( year ) {
   if ( cache[year] ) return Promise.resolve( cache[year] );
