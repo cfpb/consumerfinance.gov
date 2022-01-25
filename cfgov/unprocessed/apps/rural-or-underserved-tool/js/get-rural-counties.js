@@ -2,6 +2,8 @@ require( 'es6-promise' ).polyfill();
 import { fetch } from 'cross-fetch';
 
 
+/* This cache currently isn't meaningfully used in any code path.
+   If/when we implement better routing in this tool, it will be valuable. */
 const cache = {};
 
 /**
