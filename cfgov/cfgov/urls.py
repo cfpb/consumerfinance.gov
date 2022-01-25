@@ -1,5 +1,5 @@
-from functools import partial
 from datetime import datetime
+from functools import partial
 
 from django.conf import settings
 from django.conf.urls.static import static
