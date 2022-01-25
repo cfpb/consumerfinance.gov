@@ -46,7 +46,7 @@ jobs:
         python3 -m pip install -r requirements/local.txt
         
     - name: Set up initial data
-      run: ./initial-data.sh
+      run: ./refresh-data.sh test.sql.gz
 
     # - name: Run server
     #   run: python cfgov/manage.py runserver
