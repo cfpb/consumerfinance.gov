@@ -54,6 +54,8 @@ refresh_data() {
     ./cfgov/manage.py migrate --noinput --fake-initial
     echo 'Setting up initial data'
     ./cfgov/manage.py runscript initial_data
+    echo 'Updating search indexes'
+    ./cfgov/manage.py search_index --rebuild -f
 }
 
 if [[ -z "$refresh_dump_name" ]]; then

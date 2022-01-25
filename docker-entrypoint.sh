@@ -23,8 +23,6 @@ if ! psql ${DATABASE_URL} -c 'SELECT COUNT(*) FROM auth_user' &> /dev/null; then
     fi
     echo "Create the cache table..."
     ./cfgov/manage.py createcachetable
-    echo "Update the search indexes..."
-    ./cfgov/manage.py search_index --rebuild -f --parallel
 fi
 
 # Do first-time build of the front-end if necessary
