@@ -13,7 +13,7 @@ jobs:
       elasticsearch:
         image: elasticsearch:7.10.1
         ports:
-          - 9200/tcp
+          - 9200:9200
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
 
       postgres:
@@ -44,9 +44,9 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements/local.txt
-        
+
     - name: Set up initial data
-      run: ./initial-data.sh
+      run: ./refresh-data.sh test.sql.gz
 
     # - name: Run server
     #   run: python cfgov/manage.py runserver
@@ -57,7 +57,7 @@ jobs:
         spec: |
           test/cypress/integration/paying-for-college/repay-student-debt/repay-student-debt.js
           test/cypress/integration/data-research/consumer-complaints/consumer-complaints.js
-          test/cypress/integration/consumer-tools/youth-financial-education/survey.js 
+          test/cypress/integration/consumer-tools/youth-financial-education/survey.js
           test/cypress/integration/consumer-tools/youth-financial-education/survey-progress.js
           test/cypress/integration/consumer-tools/youth-financial-education/survey-errors.js
           test/cypress/integration/consumer-tools/youth-financial-education/modal.js
@@ -67,6 +67,7 @@ jobs:
           test/cypress/integration/consumer-tools/before-you-claim/before-you-claim.js
           test/cypress/integration/components/global-search/global-search.js
           test/cypress/integration/components/footer/footer.js
+          test/cypress/integration/rules-policy/regulations-search.js
         build: yarn run gulp
         start: python cfgov/manage.py runserver 0.0.0.0:8000
         wait-on: 'http://localhost:8000'
