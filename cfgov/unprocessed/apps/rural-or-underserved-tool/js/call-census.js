@@ -6,8 +6,8 @@ import count from './count';
 /**
  * Call the census.gov API and display an error if warranted.
  * @param {string} address - An address.
- * @param {object} ruralCounties - Rural counties for a chosen year
- * @param {*} cb - Callback to call.
+ * @param {Array} ruralCounties - Rural counties for a chosen year.
+ * @param {function} cb - Callback to call.
  */
 function callCensus( address, ruralCounties, cb ) {
   let url = 'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?';
