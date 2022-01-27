@@ -2,7 +2,7 @@
 
 set -e
 
-echo "Using '$(python3 --version 2>&1)' from '$(which python3)'"
+echo "Using $(python3 --version 2>&1) located at $(which python3)"
 
 # Wait for the database to be ready
 until psql ${DATABASE_URL} -c '\q' &> /dev/null; do

@@ -51,14 +51,13 @@ ENV ALLOWED_HOSTS '["*"]'
 # See .dockerignore for details on which files are included
 COPY . .
 
-RUN ls -la
 # Build the front-end
 RUN ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
     rm -rf node_modules npm-packages-offline-cache
 
-
+# Build mod_wsgi against target Python version
 FROM base as cfgov-mod-wsgi
 WORKDIR /tmp
 RUN apk add --no-cache --virtual .build-deps apache2-dev gcc make musl-dev
