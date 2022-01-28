@@ -31,7 +31,7 @@ from v1.template_debug import (
     notification_test_cases, register_template_debug, video_player_test_cases
 )
 from v1.util import util
-from v1.views.reports import PageMetadataReportView
+from v1.views.reports import PageMetadataReportView, DocumentsReportView
 
 
 try:
@@ -249,6 +249,27 @@ def register_page_metadata_report_url():
             r'^reports/page-metadata/$',
             PageMetadataReportView.as_view(),
             name='page_metadata_report'
+        ),
+    ]
+
+
+@hooks.register('register_reports_menu_item')
+def register_documents_report_menu_item():
+    return MenuItem(
+        "Documents",
+        reverse('documents_report'),
+        classnames='icon icon-' + DocumentsReportView.header_icon,
+        order=700
+    )
+
+
+@hooks.register('register_admin_urls')
+def register_documents_report_url():
+    return [
+        re_path(
+            r'^reports/documents/$',
+            DocumentsReportView.as_view(),
+            name='documents_report'
         ),
     ]
 
