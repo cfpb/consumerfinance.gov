@@ -1,5 +1,3 @@
-from unittest import skipIf
-
 from django.test import TestCase
 
 from v1.models.resources import Resource
