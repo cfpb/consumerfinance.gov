@@ -68,6 +68,11 @@ jobs:
           test/cypress/integration/components/global-search/global-search.js
           test/cypress/integration/components/footer/footer.js
           test/cypress/integration/rules-policy/regulations-search.js
+          test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-helpers.js
+          test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-navigation.js
+          test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-program-tests.js
+          test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-url-params.js
+          test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path.js
         build: yarn run gulp
         start: python cfgov/manage.py runserver 0.0.0.0:8000
         wait-on: 'http://localhost:8000'
