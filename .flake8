@@ -1,11 +1,11 @@
 [flake8]
-ignore = 
+ignore =
     # There's nothing wrong with assigning lambdas
     E731,
     # PEP8 weakly recommends Knuth-style line breaks before binary
     # operators
     W503, W504
-exclude = 
+exclude =
     # These are directories that it's a waste of time to traverse
     .git,
     .tox,
@@ -34,9 +34,5 @@ exclude =
     # Our settings files might need to conform to different readability
     # standards
     cfgov/cfgov/settings/*,
-
-    # Now we come to the bits we exclude because they haven't had a
-    # proper cleanup yet.
-    cfgov/v1/tests,
 
 # max-complexity = 10

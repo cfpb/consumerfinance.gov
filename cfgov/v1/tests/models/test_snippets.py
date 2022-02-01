@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from unittest import skipIf
-
 from django.test import TestCase
 
 from wagtail.core.models import Site

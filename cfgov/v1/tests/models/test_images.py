@@ -96,17 +96,17 @@ class CFGOVImageTest(TestCase):
         )
 
     def test_twitter_card_large(self):
-        """ Twitter card property should be true if meta image is large """
+        """Twitter card property should be true if meta image is large"""
         image = CFGOVImage(width=1200, height=600)
         self.assertTrue(image.should_display_summary_large_image)
 
     def test_twitter_card_small(self):
-        """ Twitter card property should be false if meta image is small """
+        """Twitter card property should be false if meta image is small"""
         image = CFGOVImage(width=100, height=50)
         self.assertFalse(image.should_display_summary_large_image)
 
     def test_twitter_card_large_bad_ratio(self):
-        """ Twitter card property should be false if meta image ratio isn't ~ 50% """
+        """Twitter card property should be false if meta image ratio < 50%"""
         image = CFGOVImage(width=1200, height=100)
         self.assertFalse(image.should_display_summary_large_image)
 

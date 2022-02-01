@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from django.conf import settings
 from django.template import Context, Template
-from django.test import RequestFactory, SimpleTestCase, override_settings
+from django.test import RequestFactory, override_settings
 
 
 class TestEmailPopupSettings(TestCase):
@@ -13,6 +13,7 @@ class TestEmailPopupSettings(TestCase):
         for k, v in settings.EMAIL_POPUP_URLS.items():
             self.assertIsInstance(k, str)
             self.assertIsInstance(v, list)
+
 
 class TestEmailPopupTag(TestCase):
     def render(self, path):
