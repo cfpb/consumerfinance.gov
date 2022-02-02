@@ -40,7 +40,7 @@ class Command(makemessages.Command):
         # The rest of trans_real's regular expressions should match conventions
         # used in both Django and Jinja2 templates.
         # Call makemessages
-        super(Command, self).handle(*args, **options)
+        super().handle(*args, **options)
 
         # Restore just the Django-matching regular expressions
         trans_real.endblock_re = django_endblock_re

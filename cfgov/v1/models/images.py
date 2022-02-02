@@ -30,7 +30,7 @@ class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
         if self.file.name.endswith('.gif'):
             return self.get_mock_rendition(rendition_filter)
         else:
-            return super(CFGOVImage, self).get_rendition(rendition_filter)
+            return super().get_rendition(rendition_filter)
 
     def get_mock_rendition(self, rendition_filter):
         """Create a mock rendition object that wraps the original image.

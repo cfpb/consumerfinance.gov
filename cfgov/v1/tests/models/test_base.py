@@ -31,7 +31,7 @@ class TestCFGOVPage(TestCase):
     @mock.patch('builtins.super')
     def test_serve_calls_super_on_non_ajax_request(self, mock_super):
         self.page.serve(self.request)
-        mock_super.assert_called_with(CFGOVPage, self.page)
+        mock_super.assert_called_once()
         mock_super().serve.assert_called_with(self.request)
 
     @mock.patch('v1.models.base.CFGOVPage.serve_post')

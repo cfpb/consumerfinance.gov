@@ -21,7 +21,7 @@ class TestLoggingHandlers(TestCase):
         Persists previous log configuration and global disable level. These
         then get restored in tearDownClass.
         """
-        super(TestLoggingHandlers, cls).setUpClass()
+        super().setUpClass()
         cls._logging = settings.LOGGING
         cls._logging_disable_level = logging.root.manager.disable
 
@@ -57,7 +57,7 @@ class TestLoggingHandlers(TestCase):
         """Restores regular logging."""
         logging.config.dictConfig(cls._logging)
         logging.disable(cls._logging_disable_level)
-        super(TestLoggingHandlers, cls).tearDownClass()
+        super().tearDownClass()
 
     def test_logger_calls_sqs_queue_post(self, sqs_queue_post):
         self.logger.error('something')

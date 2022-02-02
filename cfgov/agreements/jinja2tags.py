@@ -44,7 +44,7 @@ class AgreementsExtension(Extension):
     This will give us an {% agreements_issuer_select %} tag.
     """
     def __init__(self, environment):
-        super(AgreementsExtension, self).__init__(environment)
+        super().__init__(environment)
         self.environment.globals.update({
             'agreements_issuer_select': issuer_select,
         })

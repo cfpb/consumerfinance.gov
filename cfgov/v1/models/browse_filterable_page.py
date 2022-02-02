@@ -78,7 +78,7 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
     @property
     def page_js(self):
         return (
-            super(BrowseFilterablePage, self).page_js
+            super().page_js
             + ['secondary-navigation.js']
         )
 

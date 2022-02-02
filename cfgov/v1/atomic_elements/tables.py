@@ -33,7 +33,7 @@ class AtomicTableBlock(TableBlock):
         return forms.CharField(widget=widget, **self.field_options)
 
     def to_python(self, value):
-        new_value = super(AtomicTableBlock, self).to_python(value)
+        new_value = super().to_python(value)
         if new_value:
             new_value['has_data'] = self.get_has_data(new_value)
         return new_value

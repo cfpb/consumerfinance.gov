@@ -131,7 +131,7 @@ class EffectiveVersion(models.Model):
         return 'Previous version'
 
     def validate_unique(self, exclude=None):
-        super(EffectiveVersion, self).validate_unique(exclude=exclude)
+        super().validate_unique(exclude=exclude)
 
         # Enforce some uniqueness on the effective-date. It will need to be
         # unique within a part, so if this part has a date the same as this
@@ -317,7 +317,7 @@ class Section(models.Model):
 
     def save(self, **kwargs):
         self.sortable_label = '-'.join(sortable_label(self.label))
-        super(Section, self).save(**kwargs)
+        super().save(**kwargs)
 
     @cached_property
     def part(self):
