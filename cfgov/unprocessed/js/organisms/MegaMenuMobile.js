@@ -52,7 +52,7 @@ function MegaMenuMobile( menus ) {
     _activeMenuDom = _rootMenuContentDom;
 
     // Make root level links disabled to tab and voiceover navigation on init.
-    _rootLinksDom = _rootMenuContentDom.querySelectorAll( 'a.o-mega-menu_content-1-link' );
+    _rootLinksDom = _rootMenuContentDom.querySelectorAll( 'a.o-mega-menu_content-1-link,.m-global-eyebrow a' );
 
     return this;
   }

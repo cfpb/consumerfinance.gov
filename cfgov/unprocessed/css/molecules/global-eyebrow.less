@@ -77,6 +77,8 @@
     }
 
     &__horizontal {
+        width: 100%;
+        display: inline-block;
         padding-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
         padding-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
         background: @gray-5;
@@ -89,6 +91,13 @@
         .m-global-eyebrow_languages {
             text-align: right;
         }
+
+        // Tablet/mobile sizes.
+        .respond-to-max( @bp-sm-max, {
+          .m-global-eyebrow_actions {
+            display: none;
+          }
+        } );
     }
 
     &__list {
@@ -98,14 +107,10 @@
         padding-bottom: unit( @grid_gutter-width / @base-font-size-px, rem );
 
         .a-tagline {
-            line-height: unit( 18px / @base-font-size-px, rem );
+          display: none;
         }
 
         .m-global-eyebrow_actions {
-            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-            border-top: 1px solid @gray-40;
-            margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-
             text-align: left;
         }
 

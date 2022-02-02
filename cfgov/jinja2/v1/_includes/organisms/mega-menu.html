@@ -216,6 +216,11 @@
         </div>
         {% endif %}
     </div>
+
+  {% if nav_depth == 1 %}
+    {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
+    {{ global_eyebrow.render( language=language ) }}
+  {% endif %}
 </div>
 {% endmacro %}
 
