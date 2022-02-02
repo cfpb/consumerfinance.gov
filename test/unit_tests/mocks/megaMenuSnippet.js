@@ -2021,8 +2021,7 @@ Taskforce on Federal Consumer Financial Law
 <div class="a-tagline">
     <span class="u-usa-flag"></span>
     <div class="a-tagline_text">
-        An official website of the
-        <span class="u-nowrap">United States government</span>
+        This is a United States government website
     </div>
 </div>
 

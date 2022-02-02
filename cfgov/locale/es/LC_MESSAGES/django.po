@@ -72,12 +72,8 @@ msgid "Tip"
 msgstr "Consejo"
 
 #: jinja2/v1/_includes/atoms/tagline.html:18
-msgid "An official website of the"
-msgstr "Un sitio web oficial del"
-
-#: jinja2/v1/_includes/atoms/tagline.html:19
-msgid "United States government"
-msgstr "gobierno federal de los Estados Unidos"
+msgid "This is a United States government website"
+msgstr "Un sitio oficial del Gobierno de Estados Unidos"
 
 #: jinja2/v1/_includes/blocks/audio.html:6
 msgid "Your browser does not support this audio player."

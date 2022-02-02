@@ -45,8 +45,8 @@ class ModelAdminTests(TestCase, WagtailTestUtils):
 
     def test_preview_view_renders_using_correct_language(self):
         response = self.client.get('/admin/mega_menu/menu/preview/en/')
-        self.assertContains(response, 'An official website')
-        self.assertNotContains(response, 'Un sitio web oficial')
+        self.assertContains(response, 'United States government')
+        self.assertNotContains(response, 'Gobierno de Estados Unidos')
 
         response = self.client.get('/admin/mega_menu/menu/preview/es/')
         self.assertNotContains(response, 'An official website')
