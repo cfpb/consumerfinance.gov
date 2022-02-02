@@ -1,10 +1,10 @@
 from io import StringIO
 
 from django.core import management
-from django.core.exceptions import ValidationError
 from django.test import SimpleTestCase, TestCase
 
 from wagtail.core.blocks import StreamValue
+from wagtail.core.blocks.struct_block import StructBlockValidationError
 
 from scripts import _atomic_helpers as atomic
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
@@ -25,10 +25,16 @@ class MoleculesTestCase(ElasticsearchTestsMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
         # Create a clean index for the test suite
-        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
+        management.call_command(
+            'search_index',
+            action='rebuild',
+            force=True,
+            models=['v1'],
+            stdout=StringIO()
+        )
 
     def test_text_intro(self):
-        """Text introduction value correctly displays on a Browse Filterable Page"""
+        """Text introduction value correctly displays on a BFP"""
         bfp = BrowseFilterablePage(
             title='Browse Filterable Page',
             slug='browse-filterable-page',
@@ -152,7 +158,7 @@ class MoleculesTestCase(ElasticsearchTestsMixin, TestCase):
         self.assertContains(response, 'this is an expandable')
 
     def test_related_metadata(self):
-        """Related metadata heading correctly displays on a Document Detail Page"""
+        """Related metadata heading correctly displays on a DDP"""
         ddp = DocumentDetailPage(
             title='Document Detail Page',
             slug='ddp',
@@ -171,7 +177,7 @@ class ContactEmailTests(SimpleTestCase):
     def test_clean_email_required(self):
         block = ContactEmail()
         value = block.to_python({'emails': []})
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(StructBlockValidationError):
             block.clean(value)
 
     def test_clean_valid(self):
@@ -233,7 +239,7 @@ class TestTextIntroductionValidation(TestCase):
 
         try:
             block.clean(value)
-        except ValidationError:
+        except StructBlockValidationError:  # pragma: no cover
             self.fail('no heading and no eyebrow should not fail validation')
 
     def test_text_intro_with_just_heading_passes_validation(self):
@@ -242,14 +248,14 @@ class TestTextIntroductionValidation(TestCase):
 
         try:
             block.clean(value)
-        except ValidationError:
+        except StructBlockValidationError:  # pragma: no cover
             self.fail('heading without eyebrow should not fail validation')
 
     def test_text_intro_with_eyebrow_but_no_heading_fails_validation(self):
         block = TextIntroduction()
         value = block.to_python({'eyebrow': 'Eyebrow'})
 
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(StructBlockValidationError):
             block.clean(value)
 
     def test_text_intro_with_heading_and_eyebrow_passes_validation(self):
@@ -261,7 +267,7 @@ class TestTextIntroductionValidation(TestCase):
 
         try:
             block.clean(value)
-        except ValidationError:
+        except StructBlockValidationError:  # pragma: no cover
             self.fail('eyebrow with heading should not fail validation')
 
 

@@ -28,7 +28,7 @@ class TestAbstractFormBlock(TestCase):
         mock_getclass()().process.assert_called_with(True)
 
     def test_get_handler_class_raises_AttributeError_for_unset_handler_meta(self):  # noqa
-        with self.assertRaises(AttributeError) as e:
+        with self.assertRaises(AttributeError):
             self.block.get_handler_class()
 
     @mock.patch('v1.blocks.import_string')
@@ -159,4 +159,3 @@ class RAFToolBlockTestCase(TestCase):
             '<div id="rental-assistance-finder" data-language="en"></div>',
             html
         )
-

@@ -16,12 +16,10 @@ services:
             ALLOW_ADMIN_URL: 'True'
             APACHE_PORT: 8000
             APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
-            DATABASE_URL: postgres://cfpb@postgres/cfgov
             DJANGO_ADMIN_USERNAME: admin
             DJANGO_ADMIN_PASSWORD: admin
             SECRET_KEY: abcdefghijklmnopqrstuvwxyz
             MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
-            PGPASSWORD: cfpb
             WATCHMAN_TOKENS: "token"
             APACHE_STATUS_ALLOW_FROM: 127.0.0.1
         ports:

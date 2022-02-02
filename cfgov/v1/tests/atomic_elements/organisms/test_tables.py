@@ -1,45 +1,19 @@
-import json
-
 from django.test import TestCase
 
 from wagtail.core.models import Site
 from wagtail.tests.testapp.models import SimplePage
 
-from v1.atomic_elements.organisms import AtomicTableBlock, RichTextTableInput
+from v1.atomic_elements.organisms import (
+    AtomicTableBlock  # import from organisms for import check
+)
+from v1.atomic_elements.tables import RichTextTableInput
 
 
 class TestRichTextTableInput(TestCase):
-    def test_json_dict_apply_none(self):
-        self.assertEqual(
-            RichTextTableInput.json_dict_apply('null', lambda x: x),
-            'null'
-        )
-
-    def test_json_dict_apply_modifies_each_cell(self):
-        value = {
-            'foo': 'bar',
-            'data': [
-                ['a', 'b', None],
-                [],
-                ['d', 'e', ''],
-            ]
-        }
-
-        applied_value = RichTextTableInput.json_dict_apply(
-            json.dumps(value),
-            lambda x: 2 * x
-        )
-
-        self.assertEqual(
-            json.loads(applied_value),
-            {
-                'foo': 'bar',
-                'data': [
-                    ['aa', 'bb', None],
-                    [],
-                    ['dd', 'ee', ''],
-                ]
-            }
+    def test_rich_text_table_js_included(self):
+        self.assertIn(
+            'apps/admin/js/rich-text-table.js',
+            RichTextTableInput().media._js
         )
 
 
@@ -75,3 +49,8 @@ class TestAtomicTableBlock(TestCase):
         block = AtomicTableBlock()
         result = block.render(value)
         self.assertIn(u'H\xebader', result)
+
+    def test_get_field(self):
+        block = AtomicTableBlock()
+        field = block.field
+        self.assertEqual(field.widget.__class__, RichTextTableInput)

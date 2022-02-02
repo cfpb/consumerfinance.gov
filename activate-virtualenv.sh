@@ -25,9 +25,9 @@ if ! type "workon" &>/dev/null; then
   source $virtualenvwrapper_path
 fi
 
-if ! which python3.6 &>/dev/null; then
-  echo 'Error: python3.6 is not in your path.' \
-       'Please ensure python3.6 is installed and available'
+if ! which python3.8 &>/dev/null; then
+  echo 'Error: python3.8 is not in your path.' \
+       'Please ensure python3.8 is installed and available'
   return
 fi
 

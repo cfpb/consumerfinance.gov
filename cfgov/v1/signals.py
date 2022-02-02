@@ -1,13 +1,22 @@
 from datetime import timedelta
 from itertools import chain
 
+from django.conf import settings
 from django.core.cache import cache, caches
+from django.dispatch import receiver
 from django.utils import timezone
 
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from wagtail.core.signals import page_published, page_unpublished
 
-from v1.models import AbstractFilterPage, CFGOVPage
+from teachers_digital_platform.models.activity_index_page import (
+    ActivityPage, ActivitySetUp
+)
+from v1.models import (
+    AbstractFilterPage, CFGOVPage, LegacyNewsroomPage, NewsroomPage
+)
+from v1.models.browse_filterable_page import NEWSROOM_CACHE_TAG
+from v1.models.caching import AkamaiBackend
 from v1.models.filterable_list_mixins import (
     CategoryFilterableMixin, FilterableListMixin
 )
@@ -116,3 +125,36 @@ def invalidate_filterable_list_caches(sender, **kwargs):
 
 page_published.connect(invalidate_filterable_list_caches)
 page_unpublished.connect(invalidate_filterable_list_caches)
+
+
+def refresh_tdp_activity_cache():
+    """Refresh the activity setups when a live ActivityPage is changed."""
+    activity_setup = ActivitySetUp.objects.first()
+    if not activity_setup:
+        activity_setup = ActivitySetUp()
+    activity_setup.update_setups()
+
+
+def configure_akamai_backend():
+    global_settings = getattr(settings, 'WAGTAILFRONTENDCACHE', {})
+    akamai_settings = global_settings.get("akamai", {})
+    akamai_params = {
+        "CLIENT_TOKEN": akamai_settings.get("CLIENT_TOKEN", "test_token"),
+        "CLIENT_SECRET": akamai_settings.get("CLIENT_SECRET", "test_secret"),
+        "ACCESS_TOKEN": akamai_settings.get("ACCESS_TOKEN", "test_access"),
+    }
+    backend = AkamaiBackend(akamai_params)
+    return backend
+
+
+@receiver(page_published, sender=NewsroomPage)
+@receiver(page_published, sender=LegacyNewsroomPage)
+def invalidate_newsroom_querystring_urls(instance, **kwargs):
+    backend = configure_akamai_backend()
+    backend.purge_by_tags([NEWSROOM_CACHE_TAG])
+
+
+@receiver(page_published, sender=ActivityPage)
+@receiver(page_unpublished, sender=ActivityPage)
+def activity_published_handler(instance, **kwargs):
+    refresh_tdp_activity_cache()

@@ -138,7 +138,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       }
 
       triggerDom.addEventListener( 'click', handleTriggerClickedBinded );
-      triggerDom.addEventListener( 'touchstart', _handleTouchStart );
+      triggerDom.addEventListener( 'touchstart', _handleTouchStart, { passive: true } );
       triggerDom.addEventListener( 'mouseover', handleTriggerOverBinded );
       triggerDom.addEventListener( 'mouseout', handleTriggerOutBinded );
     }

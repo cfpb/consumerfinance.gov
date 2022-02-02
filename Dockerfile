@@ -6,7 +6,7 @@ ENV LANG en_US.UTF-8
 LABEL maintainer="tech@cfpb.gov"
 
 # Specify SCL-based Python version
-# Currently used option: rh-python36
+# Currently used option: rh-python38
 # See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
 ARG scl_python_version
 ENV SCL_PYTHON_VERSION ${scl_python_version}
@@ -25,7 +25,7 @@ RUN yum -y install \
         centos-release-scl \
         epel-release && \
     rpm -i https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
-    curl -sL https://rpm.nodesource.com/setup_14.x | bash - && \
+    curl -sL https://rpm.nodesource.com/setup_16.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     yum -y update && \
     yum -y install \
@@ -33,9 +33,12 @@ RUN yum -y install \
         git \
         mailcap \
         postgresql10 \
+        postgresql10-devel \
         which \
         gettext \
+        xmlsec1 xmlsec1-openssl \
         ${SCL_PYTHON_VERSION} && \
+    yum -y install nodejs yarn && \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_PYTHON_VERSION}" > /etc/profile.d/enable_scl_python.sh && \
     source /etc/profile && \
@@ -68,9 +71,8 @@ ENV ALLOWED_HOSTS '["*"]'
 # See .dockerignore for details on which files are included
 COPY . .
 
-# Install Node.js version curled earlier in this file from rpm.nodesource.com
-RUN yum -y install nodejs yarn && \
-    ./frontend.sh production && \
+# Build the front-end
+RUN ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
     rm -rf node_modules npm-packages-offline-cache
@@ -118,9 +120,9 @@ RUN yum clean all && rm -rf /var/cache/yum && \
 
 ENV PATH="/opt/rh/${SCL_PYTHON_VERSION}/root/usr/bin:${PATH}"
 
-# Remove files flagged by image vulnerability scanner
-RUN cd /opt/rh/rh-python36/root/usr/lib/python3.6/site-packages/ && \
-    rm -f ndg/httpsclient/test/pki/localhost.key sslserver/certs/development.key
+# Remove files flagged by image vulnerability scanner (doesn't seem to be needed in rh-python38)
+#RUN cd /opt/rh/rh-python38/root/usr/lib/python3.8/site-packages/ && \
+#    rm -f ndg/httpsclient/test/pki/localhost.key sslserver/certs/development.key
 
 USER apache
 

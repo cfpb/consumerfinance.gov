@@ -18,6 +18,8 @@
     <div class="content_wrapper tdp-survey" data-tdp_grade_level="3-5">
         <div data-tdp-page="results"
              data-grade-select-url="{{ gradeSelectUrl }}"
+             data-score="{{ score }}"
+             data-subtotals="{{ subtotals|tojson|forceescape }}"
              class="content_main tdp-survey-results{{ '' if is_student else ' tdp-survey-results--shared' }}">
         {% set overall = content.find_overall_progress(score) %}
         {% set bbs = content.building_blocks() %}

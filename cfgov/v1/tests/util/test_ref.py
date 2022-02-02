@@ -17,17 +17,23 @@ class TestCategories(TestCase):
 
 
 class TestGetAppropriateCategories(TestCase):
-# Note this test is heavily hard-coded with values from cfgov/v1/util/ref.py
-    def test_non_related_post_category_should_not_return_matches(self):
-        result = get_appropriate_categories(['Administrative adjudication'], 'blog')
+    # This test is heavily hard-coded with values from cfgov/v1/util/ref.py.
+    def test_non_related_post_category_no_matches(self):
+        result = get_appropriate_categories(
+            ['Administrative adjudication'],
+            'blog'
+        )
         self.assertEqual(result, [])
 
-    def test_related_post_category_should_not_return_matches_if_wrong_page_type(self):
+    def test_related_post_category_no_matches_if_wrong_page_type(self):
         result = get_appropriate_categories(['Press Release'], 'blog')
         self.assertEqual(result, [])
 
     def test_should_return_matches_only_for_relevant_page_type(self):
-        result = get_appropriate_categories(['Press Release', 'At the CFPB'], 'blog')
+        result = get_appropriate_categories(
+            ['Press Release', 'At the CFPB'],
+            'blog'
+        )
         self.assertEqual(len(result), 1)
 
     def test_should_return_matches_as_slugs(self):
@@ -35,7 +41,10 @@ class TestGetAppropriateCategories(TestCase):
         self.assertEqual(result, ['press-release'])
 
     def test_should_return_all_matches(self):
-        result = get_appropriate_categories(['Op-Ed', 'Testimony', 'Speech', 'Press Release'], 'newsroom')
+        result = get_appropriate_categories(
+            ['Op-Ed', 'Testimony', 'Speech', 'Press Release'],
+            'newsroom'
+        )
         self.assertEqual(len(result), 4)
 
 
@@ -43,13 +52,23 @@ class TestGetCategoryChildren(TestCase):
     def test_get_children_of_single_category(self):
         self.assertEqual(
             get_category_children(['Amicus Brief']),
-            ['fed-circuit-court', 'fed-district-court', 'state-court', 'us-supreme-court']
+            [
+                'fed-circuit-court',
+                'fed-district-court',
+                'state-court',
+                'us-supreme-court',
+            ]
         )
 
     def test_get_children_of_multiple_categories(self):
         self.assertEqual(
             get_category_children(['Final rule', 'Implementation Resource']),
-            ['compliance-aid', 'final-rule', 'interim-final-rule', 'official-guidance']
+            [
+                'compliance-aid',
+                'final-rule',
+                'interim-final-rule',
+                'official-guidance',
+            ]
         )
 
     def test_get_children_with_invalid_category_raises_keyerror(self):

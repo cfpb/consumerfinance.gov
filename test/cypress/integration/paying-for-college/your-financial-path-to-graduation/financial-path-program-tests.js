@@ -1,10 +1,9 @@
-import { PfcFinancialPathToGraduation } from './your-financial-path-to-graduation-helpers';
+import { PfcFinancialPathToGraduation } from './financial-path-helpers';
 
 const page = new PfcFinancialPathToGraduation();
 
-describe( 'Paying For College program-based content', () => {
+describe( 'Your Financial Path to Graduation (program-level functionality)', () => {
   before( () => {
-    cy.intercept( '/paying-for-college2/understanding-your-financial-aid-offer/api/constants/', { fixture: 'constants' } ).as( 'constants' );
     cy.visit( '/paying-for-college/your-financial-path-to-graduation/' );
   } );
 
@@ -21,10 +20,10 @@ describe( 'Paying For College program-based content', () => {
     page.clickLeftNav( 'federal-loans' );
     page.setText( 'loans__directSub', '999999' );
     cy.get( '#loans__directSub' ).blur();
-    cy.get( '#loans__directSub' ).should( 'have.value', '$1,000' );
+    cy.get( '#loans__directSub' ).should( 'have.value', '$3,500' );
     page.setText( 'loans__directUnsub', '999999' );
     cy.get( '#loans__directUnsub' ).blur();
-    cy.get( '#loans__directUnsub' ).should( 'have.value', '$4,500' );
+    cy.get( '#loans__directUnsub' ).should( 'have.value', '$5,500' );
   } );
 
   it( 'should change limits when the user changes their program progress', () => {
@@ -33,20 +32,20 @@ describe( 'Paying For College program-based content', () => {
     page.clickLeftNav( 'federal-loans' );
     page.setText( 'loans__directSub', '999999' );
     cy.get( '#loans__directSub' ).blur();
-    cy.get( '#loans__directSub' ).should( 'have.value', '$2,000' );
+    cy.get( '#loans__directSub' ).should( 'have.value', '$4,500' );
     page.setText( 'loans__directUnsub', '999999' );
     cy.get( '#loans__directUnsub' ).blur();
-    cy.get( '#loans__directUnsub' ).should( 'have.value', '$5,500' );
+    cy.get( '#loans__directUnsub' ).should( 'have.value', '$6,500' );
 
     page.clickLeftNav( 'school-info' );
     page.selectProgram( 'years-spent', 'a' );
     page.clickLeftNav( 'federal-loans' );
     page.setText( 'loans__directSub', '999999' );
     cy.get( '#loans__directSub' ).blur();
-    cy.get( '#loans__directSub' ).should( 'have.value', '$3,000' );
+    cy.get( '#loans__directSub' ).should( 'have.value', '$5,500' );
     page.setText( 'loans__directUnsub', '999999' );
     cy.get( '#loans__directUnsub' ).blur();
-    cy.get( '#loans__directUnsub' ).should( 'have.value', '$6,500' );
+    cy.get( '#loans__directUnsub' ).should( 'have.value', '$7,500' );
   } );
 
   it( 'should display associates content for associates students', () => {
@@ -56,7 +55,6 @@ describe( 'Paying For College program-based content', () => {
     cy.get( '[data-state-based-visibility="put-into-action"] .associates-content' ).should( 'be.visible' );
     cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'not.be.visible' );
   } );
-
 
   it( 'should display undergrad content for undergrad students', () => {
     cy.get( '[data-nav_section="worth-investment"]' ).click();

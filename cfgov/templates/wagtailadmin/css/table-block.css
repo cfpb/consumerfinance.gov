@@ -1,9 +1,33 @@
+.Draftail-Editor__wrapper {
+ height: auto !important;
+ width: 800px !important;
+ max-width: 800px !important;
+}
+
+.Draftail-Editor .DraftEditor-root {
+    padding: 0.75em;
+}
+
+.handsontableInputHolder {
+  left: 0 !important;
+  margin-top: -67px;
+}
+
+.handsontableInputHolder .Draftail-Editor__wrapper {
+    overflow-y: visible !important;
+}
+
+.handsontable,
+.handsontable .wtHolder {
+  height: 100% !important;
+  overflow: visible !important;
+}
+
 .heading-text-block,
 .heading-level-block,
 .heading-icon-block {
     vertical-align: top;
 }
-
 
 .table-block-modal {
     box-sizing: border-box;

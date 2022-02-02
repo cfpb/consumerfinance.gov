@@ -22,7 +22,6 @@
 -->
 {% endif %}
 
-<!--[if IE 7]>         <html lang="{{ language }}" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="{{ language }}" class="no-js lt-ie10 lt-ie9"> <![endif]-->
 <!--[if IE 9]>         <html lang="{{ language }}" class="no-js lt-ie10"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="{{ language }}" class="no-js"> <!--<![endif]-->
@@ -38,7 +37,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     {% block meta_viewport %}
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     {% endblock meta_viewport %}
 
 {#
@@ -136,14 +135,26 @@
           type="font/woff2" crossorigin>
     <link rel="preload" href="{{ static('js/routes/common.js') }}" as="script">
 
-    <link rel="dns-prefetch" href="//consumerfinance.gov/">
+    {# Preconnecting comes from the 3rd best practice in 
+       https://developer.mozilla.org/en-US/docs/Web/Performance/dns-prefetch#best_practices #}
+    <link rel="preconnect" href="//fast.fonts.net/" crossorigin>    
     <link rel="dns-prefetch" href="//fast.fonts.net/">
+
+    <link rel="preconnect" href="//google-analytics.com/" crossorigin>    
     <link rel="dns-prefetch" href="//google-analytics.com/">
+
+    <link rel="preconnect" href="//googletagmanager.com/" crossorigin>    
     <link rel="dns-prefetch" href="//googletagmanager.com/">
+
+    <link rel="preconnect" href="//js-agent.newrelic.com/" crossorigin>    
     <link rel="dns-prefetch" href="//js-agent.newrelic.com/">
-    <link rel="dns-prefetch" href="//s.ytimg.com/">
+
+    <link rel="preconnect" href="//search.usa.gov/" crossorigin>    
     <link rel="dns-prefetch" href="//search.usa.gov/">
-    <link rel="dns-prefetch" href="//stats.g.doubleclick.net/">
+
+    {# These domains are called on pages with youtube videos.  #}
+    <link rel="dns-prefetch" href="//ytimg.com/">
+    <link rel="dns-prefetch" href="//doubleclick.net/">
     {% endblock preload %}
 
 {#
@@ -231,7 +242,6 @@
     {% block header %}
         {% import 'organisms/header.html' as o_header with context %}
         {{ o_header.render(
-            show_banner=true,
             show_mega_menu=true,
             language=language
         ) }}

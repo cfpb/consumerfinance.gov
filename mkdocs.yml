@@ -4,7 +4,7 @@ repo_url: https://github.com/cfpb/consumerfinance.gov
 
 nav:
 - Introduction: index.md
-- Installation: installation.md
+- Setup: installation.md
 - Running this Project:
     - Running in a Virtual Environment: running-virtualenv.md
     - Running in Docker: running-docker.md
@@ -21,8 +21,8 @@ nav:
     - Caching: caching.md
     - Feature Flags: feature-flags.md
     - Filterable Lists: filterable-lists.md
-    - Search: search.md
-    - Split Testing: split-testing.md
+    - Page Search: page-search.md
+    - Site Search: site-search.md
     - Translation: translation.md
 - Testing:
     - JavaScript Unit Testing: javascript-unit-tests.md
