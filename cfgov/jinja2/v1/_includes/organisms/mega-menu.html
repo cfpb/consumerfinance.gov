@@ -117,8 +117,7 @@
 
    nav_overview_text:  A string used for a sub nav overview title.
 
-   language:           The page's language (passed to global_eyebrow macro).
-                       Defaults to English.
+   language:           The page's language. Defaults to English.
 
 
    ========================================================================== #}
@@ -217,11 +216,6 @@
         </div>
         {% endif %}
     </div>
-
-    {% if nav_depth == 1 %}
-    {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
-    {{ global_eyebrow.render( language=language ) }}
-    {% endif %}
 </div>
 {% endmacro %}
 
