@@ -355,9 +355,8 @@ CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 <p><code>refresh-data.sh</code> can also be given a path to a gziped database dump:</p>
 <pre class="highlight"><code class="language-sh">./refresh-data.sh /path/to/dump.sql.gz</code></pre>
 
-<p>Finally, build <a href="/search/#building-the-index">the Elasticsearch index</a>:</p>
-<pre class="highlight"><code class="language-sh">./cfgov/manage.py search_index --create</code></pre>
-
+<p>This automatically <a href="/search/#building-the-index">(re)builds the Elasticsearch index</a>,
+unless you run the <code>refresh-data.sh</code> script with the <code>--noindex</code> flag.</p>
 <h2 id="alternative-setups">Alternative setups<a class="headerlink" href="#alternative-setups" title="Permanent link">¶</a></h2>
 <p>consumerfinance.gov requires a Python environment, PostgreSQL, and
 Elasticsearch to run. None of this requires Docker, Docker is simply a
