@@ -6,8 +6,8 @@ volumes:
 services:
 
     elasticsearch:
-      environment:
-        ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+        environment:
+            ES_JAVA_OPTS: "-Xms1g -Xmx1g"
 
     python:
         build:
