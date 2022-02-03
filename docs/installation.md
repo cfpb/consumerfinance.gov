@@ -245,11 +245,9 @@ CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ./refresh-data.sh /path/to/dump.sql.gz
 ```
 
-Finally, build [the Elasticsearch index](/search/#building-the-index):
+This automatically [(re)builds the Elasticsearch index](/search/#building-the-index),
+unless you run the `refresh-data.sh` script with the `--noindex` flag.
 
-```sh
-./cfgov/manage.py search_index --create
-```
 
 ## Alternative setups
 
