@@ -17,7 +17,7 @@ class ComplaintLandingView(TemplateView):
     template_name = 'ccdb-complaint/complaint-landing.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ComplaintLandingView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         context.update({
             'technical_issues': flag_enabled('CCDB_TECHNICAL_ISSUES'),
@@ -26,7 +26,7 @@ class ComplaintLandingView(TemplateView):
         return context
 
     def dispatch(self, *args, **kwargs):
-        response = super(ComplaintLandingView, self).dispatch(*args, **kwargs)
+        response = super().dispatch(*args, **kwargs)
         response['Edge-Cache-Tag'] = 'complaints'
         return response
 
@@ -38,7 +38,7 @@ class CCDBSearchView(TemplateView):
     """
 
     def dispatch(self, *args, **kwargs):
-        response = super(CCDBSearchView, self).dispatch(*args, **kwargs)
+        response = super().dispatch(*args, **kwargs)
         response['Edge-Cache-Tag'] = 'complaints'
         return response
 

@@ -29,7 +29,7 @@ class PrepaidAgreementsExtension(Extension):
     This will give us a {% remove_url_parameter %} tag.
     """
     def __init__(self, environment):
-        super(PrepaidAgreementsExtension, self).__init__(environment)
+        super().__init__(environment)
         self.environment.globals.update({
             'remove_url_parameter': remove_url_parameter
         })

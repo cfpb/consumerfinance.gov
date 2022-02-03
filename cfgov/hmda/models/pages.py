@@ -18,7 +18,7 @@ class HmdaHistoricDataPage(LearnPage):
     template = 'hmda/hmda-explorer.html'
 
     def get_context(self, request, *args, **kwargs):
-        context = super(HmdaHistoricDataPage, self).get_context(
+        context = super().get_context(
             request, *args, **kwargs)
 
         form_data = self.form_data(request.GET)

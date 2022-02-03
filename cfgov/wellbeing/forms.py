@@ -60,7 +60,7 @@ class ResultsForm(forms.Form):
     )
 
     def clean(self):
-        cleaned_data = super(ResultsForm, self).clean()
+        cleaned_data = super().clean()
 
         if self._errors:
             return
