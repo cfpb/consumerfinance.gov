@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-21 14:57-0400\n"
+"POT-Creation-Date: 2022-02-03 13:34+0000\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,11 +49,11 @@ msgstr "Ver todos los resultados para"
 msgid "Export Ask data"
 msgstr ""
 
-#: cfgov/settings/base.py:243
+#: cfgov/settings/base.py:250
 msgid "English"
 msgstr ""
 
-#: cfgov/settings/base.py:244
+#: cfgov/settings/base.py:251
 msgid "Spanish"
 msgstr ""
 
@@ -109,54 +109,54 @@ msgstr "Guía de navegación"
 msgid "Submit a Complaint"
 msgstr "Enviar una queja"
 
-#: jinja2/v1/_includes/molecules/global-search.html:21
 #: jinja2/v1/_includes/molecules/global-search.html:29
-#: jinja2/v1/_includes/molecules/global-search.html:64
-#: jinja2/v1/_includes/molecules/global-search.html:83
-#: jinja2/v1/_includes/organisms/ask-search.html:67
-#: jinja2/v1/_includes/organisms/ask-search.html:98
+#: jinja2/v1/_includes/molecules/global-search.html:37
+#: jinja2/v1/_includes/molecules/global-search.html:72
+#: jinja2/v1/_includes/molecules/global-search.html:91
+#: jinja2/v1/_includes/organisms/ask-search.html:94
 #: jinja2/v1/ask-cfpb/see-all.html:52
+#: regulations3k/jinja2/regulations3k/regulations3k-search-bar.html:21
 msgid "Search"
 msgstr "Buscar"
 
-#: jinja2/v1/_includes/molecules/global-search.html:26
+#: jinja2/v1/_includes/molecules/global-search.html:34
 msgid "Search the consumerfinance.gov website"
 msgstr "Busque en el sitio web consumerfinance.gov"
 
-#: jinja2/v1/_includes/molecules/global-search.html:33
-#: jinja2/v1/_includes/organisms/video-player.html:62
+#: jinja2/v1/_includes/molecules/global-search.html:41
+#: jinja2/v1/_includes/organisms/video-player.html:63
 msgid "Close"
 msgstr "Cerrar"
 
-#: jinja2/v1/_includes/molecules/global-search.html:69
-#: jinja2/v1/_includes/molecules/global-search.html:72
+#: jinja2/v1/_includes/molecules/global-search.html:77
+#: jinja2/v1/_includes/molecules/global-search.html:80
 msgid "Search the CFPB"
 msgstr "Buscar la CFPB"
 
-#: jinja2/v1/_includes/molecules/global-search.html:78
+#: jinja2/v1/_includes/molecules/global-search.html:86
 #: jinja2/v1/ask-cfpb/see-all.html:56
 msgid "Clear search"
 msgstr "Borrar búsqueda"
 
-#: jinja2/v1/_includes/molecules/global-search.html:88
+#: jinja2/v1/_includes/molecules/global-search.html:96
 msgid "Suggested search terms:"
 msgstr ""
 
-#: jinja2/v1/_includes/molecules/global-search.html:92
+#: jinja2/v1/_includes/molecules/global-search.html:101
 #, fuzzy
 #| msgid "Related questions"
 msgid "Regulations"
 msgstr "Otras preguntas"
 
-#: jinja2/v1/_includes/molecules/global-search.html:97
+#: jinja2/v1/_includes/molecules/global-search.html:107
 msgid "Compliance guides"
 msgstr ""
 
-#: jinja2/v1/_includes/molecules/global-search.html:102
+#: jinja2/v1/_includes/molecules/global-search.html:113
 msgid "Mortgage"
 msgstr "Hipoteca"
 
-#: jinja2/v1/_includes/molecules/global-search.html:107
+#: jinja2/v1/_includes/molecules/global-search.html:119
 #, fuzzy
 #| msgid "Auto loans"
 msgid "College loans"
@@ -226,11 +226,12 @@ msgstr "Visítenos en"
 msgid "/ask-cfpb/search/"
 msgstr "/es/obtener-respuestas/buscar/"
 
-#: jinja2/v1/_includes/organisms/ask-search.html:48
+#: jinja2/v1/_includes/organisms/ask-search.html:47
+#: jinja2/v1/_includes/organisms/ask-search.html:63
 msgid "Search for your question"
 msgstr "Busca su pregunta"
 
-#: jinja2/v1/_includes/organisms/ask-search.html:97
+#: jinja2/v1/_includes/organisms/ask-search.html:93
 msgid "Search Ask CFPB for your question"
 msgstr "Busque 'Obtener Respuestas' para su cuestionamiento"
 
@@ -248,7 +249,7 @@ msgstr "Lea la declaración de privacidad"
 
 #: jinja2/v1/_includes/organisms/expandable.html:54
 #: regulations3k/jinja2/regulations3k/inline_interps.html:18
-#: regulations3k/jinja2/regulations3k/regulations3k-secondary-navigation.html:48
+#: regulations3k/jinja2/regulations3k/regulations3k-secondary-navigation.html:25
 #: teachers_digital_platform/jinja2/teachers_digital_platform/activity_search_facets_and_results.html:20
 #: wellbeing/jinja2/wellbeing/results.html:340
 msgid "Show"
@@ -256,7 +257,7 @@ msgstr "Mostrar"
 
 #: jinja2/v1/_includes/organisms/expandable.html:62
 #: regulations3k/jinja2/regulations3k/inline_interps.html:24
-#: regulations3k/jinja2/regulations3k/regulations3k-secondary-navigation.html:55
+#: regulations3k/jinja2/regulations3k/regulations3k-secondary-navigation.html:32
 #: teachers_digital_platform/jinja2/teachers_digital_platform/activity_search_facets_and_results.html:26
 #: wellbeing/jinja2/wellbeing/results.html:346
 msgid "Hide"
@@ -278,69 +279,62 @@ msgstr "GobiernoUSA.gov"
 msgid "continued"
 msgstr "continuación"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:137
+#: jinja2/v1/_includes/organisms/mega-menu.html:136
 msgid "Back"
 msgstr "Regresar"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:150
-#, python-format
-msgid "%(overview_link_text)s Overview"
-msgstr "Información General %(overview_link_text)s"
-
-#: jinja2/v1/_includes/organisms/mega-menu.html:174
-#: jinja2/v1/_includes/organisms/mega-menu.html:176
+#: jinja2/v1/_includes/organisms/mega-menu.html:173
+#: jinja2/v1/_includes/organisms/mega-menu.html:175
 msgid "Featured"
 msgstr "Destacado"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:196
-#: jinja2/v1/_includes/organisms/mega-menu.html:198
+#: jinja2/v1/_includes/organisms/mega-menu.html:195
+#: jinja2/v1/_includes/organisms/mega-menu.html:197
 msgid "Additional Resources"
 msgstr "Recursos adicionales"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:307
+#: jinja2/v1/_includes/organisms/mega-menu.html:306
 msgid "Main menu"
 msgstr "Menú principal"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:314
+#: jinja2/v1/_includes/organisms/mega-menu.html:313
 msgid "Open the main menu"
 msgstr "Abre el menú principal"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:320
+#: jinja2/v1/_includes/organisms/mega-menu.html:319
 msgid "Close the main menu"
 msgstr "Cerrar el menú principal"
 
-#: jinja2/v1/_includes/organisms/secondary-navigation.html:40
-#: jinja2/v1/_includes/organisms/secondary-navigation.html:90
+#: jinja2/v1/_includes/organisms/secondary-navigation.html:17
 msgid "Section navigation"
 msgstr "Navegación de la sección"
 
-#: jinja2/v1/_includes/organisms/secondary-navigation.html:41
+#: jinja2/v1/_includes/organisms/secondary-navigation.html:18
 msgid "In this section"
 msgstr "En esta sección"
 
-#: jinja2/v1/_includes/organisms/video-player.html:61
+#: jinja2/v1/_includes/organisms/video-player.html:60
 msgid "Close video"
 msgstr "Cerrar video"
 
-#: jinja2/v1/_includes/organisms/video-player.html:93
+#: jinja2/v1/_includes/organisms/video-player.html:95
 msgid "Play video on YouTube"
 msgstr "Ver video en YouTube"
 
-#: jinja2/v1/_includes/organisms/video-player.html:105
+#: jinja2/v1/_includes/organisms/video-player.html:107
 msgid "Play video"
 msgstr "Ver video"
 
-#: jinja2/v1/_layouts/base.html:53 jinja2/v1/ask-cfpb/answer-page.html:10
+#: jinja2/v1/_layouts/base.html:52 jinja2/v1/ask-cfpb/answer-page.html:10
 #: jinja2/v1/youth_employment_success/index.html:18
-#: legacy/templates/front/base_update.html:30 v1/jinja2/v1/home_page.html:6
-#: v1/jinja2/v1/home_page_2021.html:6 wellbeing/jinja2/wellbeing/about.html:10
+#: v1/jinja2/v1/home_page.html:6 wellbeing/jinja2/wellbeing/about.html:10
 #: wellbeing/jinja2/wellbeing/error.html:13
 #: wellbeing/jinja2/wellbeing/home.html:4
 #: wellbeing/jinja2/wellbeing/results.html:15
 msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
 
-#: jinja2/v1/_layouts/base.html:227
+#: jinja2/v1/_layouts/base.html:238
 msgid "Skip to main content"
 msgstr "Ir al contenido principal"
 
@@ -423,7 +417,7 @@ msgstr "En este artículo"
 msgid "Read answer"
 msgstr "Leer la respuesta"
 
-#: jinja2/v1/ask-cfpb/see-all.html:27 v1/models/home_page.py:40
+#: jinja2/v1/ask-cfpb/see-all.html:27 v1/models/home_page.py:35
 msgid "Read more"
 msgstr "Leer más"
 
@@ -432,6 +426,7 @@ msgid "Narrow your results"
 msgstr "Búsqueda especial"
 
 #: jinja2/v1/ask-cfpb/see-all.html:48
+#: regulations3k/jinja2/regulations3k/regulations3k-search-bar.html:5
 msgid "Search term"
 msgstr "Palabra a buscar"
 
@@ -439,27 +434,20 @@ msgstr "Palabra a buscar"
 msgid "Search our full library of answers"
 msgstr "Buscar en toda la lista de respuestas"
 
-#: jinja2/v1/blog/blog_page.html:29
-#, python-format
-msgid ""
-"Join the conversation. Follow CFPB on %(twitter_link)s and %(facebook_link)s."
-msgstr ""
-"Únase a la conversación. Síganos en %(twitter_link)s y en %(facebook_link)s."
-
 #: jobmanager/jinja2/jobmanager/job_listing_page.html:76
 msgid "Read full description"
 msgstr "Leer descripción completa"
 
-#: legacy/templates/front/base_update.html:7
-#: legacy/templates/front/base_update.html:8
-#: legacy/templates/front/base_update.html:9
-#: legacy/templates/front/base_update.html:10
-#: legacy/templates/front/base_update.html:11
-msgid "en-US"
+#: login/views.py:52
+msgid "Your password has been changed successfully!"
 msgstr ""
 
-#: legacy/templates/front/base_update.html:130
-msgid "en"
+#: login/views.py:183
+msgid "Enter new password"
+msgstr ""
+
+#: login/views.py:196
+msgid "Password reset unsuccessful"
 msgstr ""
 
 #: mega_menu/wagtail_hooks.py:21
@@ -654,27 +642,8 @@ msgstr ""
 msgid "Test string from Python file."
 msgstr ""
 
-#: v1/tests/management/commands/test_makemessages_data/jinja2/test.html:1
-msgid ""
-"\n"
-"Test string from Jinja template.\n"
-"This is in a multi-line block.\n"
-msgstr ""
-
 #: v1/tests/management/commands/test_makemessages_data/templates/test.html:2
 msgid "Test string from Django template."
-msgstr ""
-
-#: v1/views/__init__.py:52
-msgid "Your password has been changed successfully!"
-msgstr ""
-
-#: v1/views/__init__.py:187
-msgid "Enter new password"
-msgstr ""
-
-#: v1/views/__init__.py:200
-msgid "Password reset unsuccessful"
 msgstr ""
 
 #: wellbeing/jinja2/wellbeing/about.html:3
@@ -1578,6 +1547,16 @@ msgstr "Desempleado o despedido"
 #: wellbeing/views.py:157
 msgid "Retired"
 msgstr "Jubilado"
+
+#~ msgid "%(overview_link_text)s Overview"
+#~ msgstr "Información General %(overview_link_text)s"
+
+#~ msgid ""
+#~ "Join the conversation. Follow CFPB on %(twitter_link)s and "
+#~ "%(facebook_link)s."
+#~ msgstr ""
+#~ "Únase a la conversación. Síganos en %(twitter_link)s y en "
+#~ "%(facebook_link)s."
 
 #~ msgid "updated"
 #~ msgstr "actualizado"
