@@ -64,5 +64,10 @@ function ExternalSite( element ) {
 }
 
 const externalSiteDom = document.querySelector( `.${ BASE_CLASS }` );
-const externalSite = new ExternalSite( externalSiteDom );
-externalSite.init();
+
+if ( externalSiteDom ) {
+  const externalSite = new ExternalSite( externalSiteDom );
+  externalSite.init();
+}
+
+export default ExternalSite;
