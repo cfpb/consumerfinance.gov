@@ -267,6 +267,12 @@ django-admin.py compilemessages</code></pre>
 mystring = gettext_noop(&quot;Hello World!&quot;)</code></pre>
 
 <pre class="highlight"><code class="language-jinja">{{ _(mystring) }}</code></pre>
+
+<h3 id="do-ensure-gettext-is-relatively-recent">Do ensure gettext is relatively recent<a class="headerlink" href="#do-ensure-gettext-is-relatively-recent" title="Permanent link">¶</a></h3>
+<p>Django's <code>makemessages</code> and <code>compilemessages</code> management commands invoke GNU gettext to generate the message files. gettext versions below 0.20 had an issue where they will bring creation dates forward from the text <code>.po</code> file into the binary <code>.mo</code> file. This can break our pull request check to ensure that translations have been updated. To check the version of gettext Django will use, run:</p>
+<pre class="highlight"><code class="language-shell">gettext -V</code></pre>
+
+<p>Our CentOS 7 Docker container unfortunately uses an older version of gettext. If the <code>validate-translations</code> check on pull requests fails, please try to run <code>makemessages</code> and <code>compilemessages</code> <a href="https://cfpb.github.io/consumerfinance.gov/installation/#set-up-the-consumerfinancegov-virtualenv">in a local virtualenv</a>.</p>
               
             </div>
           </div>
