@@ -4,6 +4,7 @@ FROM base AS cfgov-dev
 
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
+ENV ENV /etc/profile
 
 LABEL maintainer="tech@cfpb.gov"
 
