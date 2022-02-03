@@ -30,8 +30,8 @@ class TemplateDebugViewTests(SimpleTestCase):
                 'text': 'First test case to be rendered',
             },
             'Second': {
-               'url': 'https://example.com/second/',
-               'text': 'Second test case to be rendered',
+                'url': 'https://example.com/second/',
+                'text': 'Second test case to be rendered',
             },
         }
 

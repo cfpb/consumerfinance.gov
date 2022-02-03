@@ -196,7 +196,7 @@ class JobListingPage(CFGOVPage):
     objects = JobListingPageManager()
 
     def get_context(self, request, *args, **kwargs):
-        context = super(JobListingPage, self).get_context(request)
+        context = super().get_context(request)
 
         try:
             context['about_us'] = ReusableText.objects.get(
@@ -230,4 +230,4 @@ class JobListingPage(CFGOVPage):
 
     @property
     def page_js(self):
-        return super(JobListingPage, self).page_js + ['summary.js']
+        return super().page_js + ['summary.js']

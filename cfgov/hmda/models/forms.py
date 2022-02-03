@@ -9,7 +9,7 @@ from hmda.resources.hmda_data_options import (
 class HmdaFilterableForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
-        super(HmdaFilterableForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     geo = forms.ChoiceField(
         required=False,

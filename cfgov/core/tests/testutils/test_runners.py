@@ -25,7 +25,7 @@ class StderrSuppressingStdoutCapturingTestRunner(StdoutCapturingTestRunner):
     """
 
     def get_test_runner_kwargs(self):
-        kwargs = super(StderrSuppressingStdoutCapturingTestRunner, self). \
+        kwargs = super(). \
             get_test_runner_kwargs()
         kwargs['stream'] = StringIO()
         return kwargs

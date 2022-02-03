@@ -25,10 +25,16 @@ class MoleculesTestCase(ElasticsearchTestsMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
         # Create a clean index for the test suite
-        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
+        management.call_command(
+            'search_index',
+            action='rebuild',
+            force=True,
+            models=['v1'],
+            stdout=StringIO()
+        )
 
     def test_text_intro(self):
-        """Text introduction value correctly displays on a Browse Filterable Page"""
+        """Text introduction value correctly displays on a BFP"""
         bfp = BrowseFilterablePage(
             title='Browse Filterable Page',
             slug='browse-filterable-page',
@@ -152,7 +158,7 @@ class MoleculesTestCase(ElasticsearchTestsMixin, TestCase):
         self.assertContains(response, 'this is an expandable')
 
     def test_related_metadata(self):
-        """Related metadata heading correctly displays on a Document Detail Page"""
+        """Related metadata heading correctly displays on a DDP"""
         ddp = DocumentDetailPage(
             title='Document Detail Page',
             slug='ddp',

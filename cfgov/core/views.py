@@ -140,10 +140,10 @@ class ExternalURLNoticeView(FormMixin, TemplateView):
     form_class = ExternalURLForm
 
     def dispatch(self, *args, **kwargs):
-        return super(ExternalURLNoticeView, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
     def get_form_kwargs(self):
-        kwargs = super(ExternalURLNoticeView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
 
         if self.request.method == 'GET':
             kwargs['data'] = self.request.GET
@@ -151,7 +151,7 @@ class ExternalURLNoticeView(FormMixin, TemplateView):
         return kwargs
 
     def get_context_data(self, **kwargs):
-        context = super(ExternalURLNoticeView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         form = self.get_form()
         context['form'] = form
@@ -166,7 +166,7 @@ class ExternalURLNoticeView(FormMixin, TemplateView):
                 'URL invalid, not whitelisted, or signature validation failed'
             )
 
-        return super(ExternalURLNoticeView, self).get(request)
+        return super().get(request)
 
 
 class TranslatedTemplateView(TemplateView):
@@ -178,7 +178,7 @@ class TranslatedTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         activate(self.language)
-        context = super(TranslatedTemplateView, self).get_context_data(
+        context = super().get_context_data(
             **kwargs
         )
         context['current_language'] = get_language()

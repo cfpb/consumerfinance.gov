@@ -48,7 +48,7 @@ class TextIntroduction(blocks.StructBlock):
     )
 
     def clean(self, value):
-        cleaned = super(TextIntroduction, self).clean(value)
+        cleaned = super().clean(value)
 
         # Eyebrow requires a heading.
         if cleaned.get('eyebrow') and not cleaned.get('heading'):
@@ -220,7 +220,7 @@ class ContactEmail(blocks.StructBlock):
     )
 
     def clean(self, value):
-        cleaned = super(ContactEmail, self).clean(value)
+        cleaned = super().clean(value)
 
         if not cleaned.get('emails'):
             raise StructBlockValidationError(
@@ -380,7 +380,7 @@ class RSSFeed(blocks.StaticBlock):
         )
 
     def get_context(self, value, parent_context=None):
-        context = super(RSSFeed, self).get_context(
+        context = super().get_context(
             value,
             parent_context=parent_context
         )

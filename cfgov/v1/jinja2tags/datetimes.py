@@ -18,7 +18,7 @@ def get_date_string(date, format="%Y-%m-%d", tz='America/New_York'):
 
 class DatetimesExtension(Extension):
     def __init__(self, environment):
-        super(DatetimesExtension, self).__init__(environment)
+        super().__init__(environment)
         self.environment.globals.update({
             'date_formatter': date_formatter,
             'localtime': template_localtime,

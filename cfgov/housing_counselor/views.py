@@ -69,7 +69,7 @@ class HousingCounselorView(TemplateView, HousingCounselorS3URLMixin):
     }
 
     def get_context_data(self, **kwargs):
-        context = super(HousingCounselorView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['mapbox_access_token'] = settings.MAPBOX_ACCESS_TOKEN
 
         zipcode = self.request.GET.get('zipcode')

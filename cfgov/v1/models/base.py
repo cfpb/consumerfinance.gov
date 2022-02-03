@@ -191,7 +191,7 @@ class CFGOVPage(Page):
     ]
 
     def clean(self):
-        super(CFGOVPage, self).clean()
+        super().clean()
         validate_social_sharing_image(self.social_sharing_image)
 
     def get_authors(self):
@@ -298,7 +298,7 @@ class CFGOVPage(Page):
         return ''
 
     def get_context(self, request, *args, **kwargs):
-        context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+        context = super().get_context(request, *args, **kwargs)
 
         for hook in hooks.get_hooks('cfgovpage_context_handlers'):
             hook(self, request, context, *args, **kwargs)
@@ -331,7 +331,7 @@ class CFGOVPage(Page):
         # Force the page's language on the request
         translation.activate(self.language)
         request.LANGUAGE_CODE = translation.get_language()
-        return super(CFGOVPage, self).serve(request, *args, **kwargs)
+        return super().serve(request, *args, **kwargs)
 
     def _return_bad_post_response(self, request):
         if request.is_ajax():
