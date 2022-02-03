@@ -35,7 +35,7 @@ class BlogPage(AbstractFilterPage):
     ]
 
     def get_context(self, request, *args, **kwargs):
-        context = super(BlogPage, self).get_context(request, *args, **kwargs)
+        context = super().get_context(request, *args, **kwargs)
 
         context['rss_feed'] = get_appropriate_rss_feed_url_for_page(
             self,

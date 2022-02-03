@@ -59,7 +59,7 @@ class FilterableDateField(forms.DateField):
         kwargs.setdefault('widget', widgets.DateInput(
             attrs=self.default_widget_attrs
         ))
-        super(FilterableDateField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class FilterableListForm(forms.Form):
@@ -134,7 +134,7 @@ class FilterableListForm(forms.Form):
         # provided.
         self.cache_key_prefix = kwargs.pop('cache_key_prefix', hash(self))
 
-        super(FilterableListForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         clean_categories(selected_categories=self.data.get('categories'))
 
@@ -271,7 +271,7 @@ class FilterableListForm(forms.Form):
         self.fields['language'].choices = language_options
 
     def clean(self):
-        cleaned_data = super(FilterableListForm, self).clean()
+        cleaned_data = super().clean()
         if self.errors.get('from_date') or self.errors.get('to_date'):
             return cleaned_data
         else:
@@ -410,7 +410,7 @@ class FeedbackForm(forms.ModelForm):
         fields = ['is_helpful', 'comment', 'language']
 
     def __init__(self, *args, **kwargs):
-        super(FeedbackForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['is_helpful'].required = True
 
 
@@ -421,7 +421,7 @@ class ReferredFeedbackForm(forms.ModelForm):
         fields = ['is_helpful', 'referrer', 'comment', 'language']
 
     def __init__(self, *args, **kwargs):
-        super(ReferredFeedbackForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['comment'].required = True
 
 
@@ -438,7 +438,7 @@ class SuggestionFeedbackForm(forms.ModelForm):
                   'language']
 
     def __init__(self, *args, **kwargs):
-        super(SuggestionFeedbackForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['comment'].required = True
 
 

@@ -18,7 +18,7 @@ class ConferenceRegistrationHandler(Handler):
     """
 
     def __init__(self, page, request, block_value, form_cls=None):
-        super(ConferenceRegistrationHandler, self).__init__(page, request)
+        super().__init__(page, request)
         self.govdelivery_code = block_value['govdelivery_code']
         self.govdelivery_question_id = block_value['govdelivery_question_id']
         self.govdelivery_answer_id = block_value['govdelivery_answer_id']

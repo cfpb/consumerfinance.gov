@@ -64,7 +64,7 @@ class AnchorLink(blocks.StructBlock):
                 return get_unique_id('anchor_' + slugify(string) + suffix)
 
         data['link_id'] = format_id(data['link_id'])
-        data = super(AnchorLink, self).clean(data)
+        data = super().clean(data)
         return data
 
     class Meta:
@@ -173,7 +173,7 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
     placeholder, for use in a custom form_template.
     """
     def __init__(self, *args, **kwargs):
-        super(PlaceholderFieldBlock, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.placeholder = kwargs.pop('placeholder', None)
 
     def render_form(self, *args, **kwargs):

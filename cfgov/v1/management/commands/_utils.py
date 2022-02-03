@@ -8,7 +8,7 @@ import input
 
 class WagtailClient(object):
     def __init__(self, *args, **kwargs):
-        super(WagtailClient, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.client = Client()
 
     def login(self):
