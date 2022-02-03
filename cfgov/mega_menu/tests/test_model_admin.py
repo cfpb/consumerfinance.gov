@@ -49,5 +49,5 @@ class ModelAdminTests(TestCase, WagtailTestUtils):
         self.assertNotContains(response, 'Gobierno de Estados Unidos')
 
         response = self.client.get('/admin/mega_menu/menu/preview/es/')
-        self.assertNotContains(response, 'An official website')
-        self.assertContains(response, 'Un sitio web oficial')
+        self.assertNotContains(response, 'United States government')
+        self.assertContains(response, 'Gobierno de Estados Unidos')

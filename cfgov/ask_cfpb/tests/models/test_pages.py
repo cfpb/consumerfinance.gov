@@ -1036,19 +1036,11 @@ class AnswerPageTest(TestCase):
         )
         self.assertContains(
             spanish_answer_page_response,
-            "Un sitio web oficial"
-        )
-        self.assertContains(
-            spanish_answer_page_response,
-            "gobierno federal de los Estados Unidos"
+            "Un sitio oficial del Gobierno de Estados Unidos"
         )
         self.assertNotContains(
             spanish_answer_page_response,
-            "An official website of the"
-        )
-        self.assertNotContains(
-            spanish_answer_page_response,
-            "United States government"
+            "This is a United States government website"
         )
         self.assertContains(
             spanish_answer_page_response, "https://gobiernousa.gov/"
