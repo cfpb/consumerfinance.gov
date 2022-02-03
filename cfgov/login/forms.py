@@ -22,7 +22,7 @@ class PasswordValidationMixin(object):
     user_attribute = 'user'
 
     def clean(self):
-        cleaned_data = super(PasswordValidationMixin, self).clean()
+        cleaned_data = super().clean()
         user = getattr(self, self.user_attribute)
         key1, key2 = (self.password_key + '1', self.password_key + '2')
         if key1 in cleaned_data and key2 in cleaned_data:
@@ -132,7 +132,7 @@ class LoginForm(AuthenticationForm):
                 return self.cleaned_data
 
     def confirm_login_allowed(self, user):
-        super(LoginForm, self).confirm_login_allowed(user)
+        super().confirm_login_allowed(user)
         now = timezone.now()
 
         lockout_query = user.temporarylockout_set.filter(expires_at__gt=now)
@@ -159,7 +159,7 @@ class UserCreationForm(wagtailforms.UserCreationForm):
             raise ValidationError('This email is already in use.')
 
     def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=commit)
+        user = super().save(commit=commit)
 
         if commit:
             send_password_reset_email(user.email)

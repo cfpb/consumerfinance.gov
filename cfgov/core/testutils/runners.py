@@ -16,7 +16,7 @@ from scripts import initial_data
 
 class TestRunner(DiscoverRunner):
     def setup_test_environment(self, **kwargs):
-        super(TestRunner, self).setup_test_environment(**kwargs)
+        super().setup_test_environment(**kwargs)
 
         # The frontend build generates JavaScript files which are included in
         # Django templates via {% include %} blocks. If these files don't
@@ -43,7 +43,7 @@ class TestRunner(DiscoverRunner):
                     f.write(PLACEHOLDER_STRING)
 
     def teardown_test_environment(self, **kwargs):
-        super(TestRunner, self).teardown_test_environment()
+        super().teardown_test_environment()
 
         # The test settings use a custom MEDIA_ROOT for tests that write files
         # to disk. We want to clean up that location after the tests run.
@@ -53,14 +53,14 @@ class TestRunner(DiscoverRunner):
         # Disable logging below CRITICAL during tests.
         logging.disable(logging.CRITICAL)
 
-        return super(TestRunner, self).run_tests(
+        return super().run_tests(
             test_labels,
             extra_tests,
             **kwargs
         )
 
     def setup_databases(self, **kwargs):
-        dbs = super(TestRunner, self).setup_databases(**kwargs)
+        dbs = super().setup_databases(**kwargs)
 
         # Ensure that certain key data migrations are always run even if
         # tests are being run with most migrations disabled (e.g. using
@@ -113,7 +113,7 @@ class StdoutCapturingTestRunner(TestRunner):
     def run_suite(self, suite, **kwargs):
         captured_stdout = StringIO()
         with redirect_stdout(captured_stdout):
-            return_value = super(StdoutCapturingTestRunner, self).run_suite(
+            return_value = super().run_suite(
                 suite,
                 **kwargs
             )

@@ -61,10 +61,7 @@ class OrganismsTestCase(TestCase):
 
     def test_well(self):
         """Well content correctly displays on a Landing Page"""
-        landing_page = LandingPage(
-                title='Landing Page',
-                slug='landing',
-        )
+        landing_page = LandingPage(title='Landing Page', slug='landing')
         landing_page.content = StreamValue(
             landing_page.content.stream_block,
             [atomic.well],
@@ -77,8 +74,8 @@ class OrganismsTestCase(TestCase):
     def test_main_contact_info(self):
         """Main contact info correctly displays on a Sublanding Page"""
         sublanding_page = SublandingPage(
-                title='Sublanding Page',
-                slug='sublanding',
+            title='Sublanding Page',
+            slug='sublanding',
         )
         contact = self.get_contact()
         sublanding_page.content = StreamValue(
@@ -94,14 +91,12 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, '123 abc street')
         self.assertContains(response, 'this is a heading')
         self.assertContains(response, 'this is a body')
-        self.assertNotContains(response, 'Contact Information') # Only shown on sidebar
+        # Only shown on sidebar
+        self.assertNotContains(response, 'Contact Information')
 
     def test_sidebar_contact_info(self):
         """Sidebar contact info correctly displays on a Landing Page"""
-        landing_page = LandingPage(
-                title='Landing Page',
-                slug='landing',
-        )
+        landing_page = LandingPage(title='Landing Page', slug='landing')
         contact = self.get_contact()
         landing_page.sidefoot = StreamValue(
             landing_page.sidefoot.stream_block,
@@ -116,14 +111,12 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, '123 abc street')
         self.assertContains(response, 'this is a heading')
         self.assertContains(response, 'this is a body')
-        self.assertContains(response, 'Contact Information') # This is specific to sidebar
+        # This is specific to sidebar
+        self.assertContains(response, 'Contact Information')
 
     def test_full_width_text(self):
         """Full width text content correctly displays on a Learn Page"""
-        learn_page = LearnPage(
-                title='Learn Page',
-                slug='learn',
-        )
+        learn_page = LearnPage(title='Learn Page', slug='learn')
         learn_page.content = StreamValue(
             learn_page.content.stream_block,
             [atomic.full_width_text],
@@ -166,10 +159,7 @@ class OrganismsTestCase(TestCase):
 
     def test_tableblock(self):
         """Table correctly displays on a Learn Page"""
-        learn_page = LearnPage(
-                title='Learn Page',
-                slug='learn',
-        )
+        learn_page = LearnPage(title='Learn Page', slug='learn')
         learn_page.content = StreamValue(
             learn_page.content.stream_block,
             [atomic.table_block],
@@ -182,7 +172,7 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'Row 2-1')
 
     def test_tableblock_missing_attributes(self):
-        """Table correctly displays when value dictionary is missing attributes"""
+        """Table correctly displays when value dict is missing attributes"""
         table_context = dict(atomic.table_block)
         value = table_context.get('value')
         del value['first_row_is_table_header']
@@ -220,10 +210,7 @@ class OrganismsTestCase(TestCase):
 
     def test_item_introduction(self):
         """Item introduction correctly displays on a Learn Page"""
-        learn_page = LearnPage(
-                title='Learn Page',
-                slug='learn',
-        )
+        learn_page = LearnPage(title='Learn Page', slug='learn')
         learn_page.header = StreamValue(
             learn_page.header.stream_block,
             [atomic.item_introduction],
@@ -264,8 +251,7 @@ class OrganismsTestCase(TestCase):
         self.assertNotContains(response, 'In year-over-year credit tightness')
 
     def test_data_snapshot_with_optional_fields(self):
-        """ Data Snapshot with inquiry and tightness information correctly renders
-        fields on a Browse Page"""
+        """Test rendering of Data Snapshot with inquiry and tightness data"""
         browse_page = BrowsePage(
             title='Browse Page',
             slug='browse',
@@ -312,10 +298,10 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'Volume of credit cards originated')
         self.assertContains(response, 'foo/bar.csv')
         self.assertContains(response, 'Data not final.')
-        self.assertContains(
-            response,
-            'The most recent data available in this visualization are for April 2016'
-        )
+        self.assertContains(response, (
+            'The most recent data available in this visualization are for '
+            'April 2016'
+        ))
         self.assertContains(response, 'January 2018')
 
     def test_resource_list(self):
@@ -432,7 +418,7 @@ class FeaturedContentTests(TestCase):
             ],
             'video': {
                 'video_id': '1V0Ax9OIc84',
-		'thumbnail_image': self.image.pk,
+                'thumbnail_image': self.image.pk,
             },
         })
 
@@ -566,7 +552,7 @@ class VideoPlayerTests(SimpleTestCase):
 
         try:
             block.clean(value)
-        except ValidationError as e:  # pragma: nocover
+        except ValidationError:  # pragma: nocover
             self.fail('Optional VideoPlayers should not require sub-fields')
 
     def test_invalid_video_id(self):
@@ -582,7 +568,7 @@ class VideoPlayerTests(SimpleTestCase):
 
         try:
             block.clean(value)
-        except ValidationError as e:  # pragma: nocover
+        except ValidationError:  # pragma: nocover
             self.fail('VideoPlayer should support valid YouTube IDs')
 
     def test_render(self):

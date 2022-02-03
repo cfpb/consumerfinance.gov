@@ -15,7 +15,7 @@ from v1.models import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 
 
-class TestRestoreArchivePages(ElasticsearchTestsMixin,TestCase):
+class TestRestoreArchivePages(ElasticsearchTestsMixin, TestCase):
 
     def setUp(self):
         self.filterable_page = BrowseFilterablePage(

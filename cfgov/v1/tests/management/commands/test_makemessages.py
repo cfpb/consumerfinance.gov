@@ -6,7 +6,6 @@ from unittest import skipUnless
 from django.core.management import call_command
 from django.core.management.utils import find_command
 from django.test import SimpleTestCase
-from django.utils._os import upath
 
 
 # https://github.com/django/django/blob/1.11.18/tests/i18n/test_extraction.py

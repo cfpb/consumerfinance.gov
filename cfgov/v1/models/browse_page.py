@@ -91,11 +91,11 @@ class BrowsePage(CFGOVPage):
     @property
     def page_js(self):
         return (
-            super(BrowsePage, self).page_js + ['secondary-navigation.js']
+            super().page_js + ['secondary-navigation.js']
         )
 
     def get_context(self, request, *args, **kwargs):
-        context = super(BrowsePage, self).get_context(request, *args, **kwargs)
+        context = super().get_context(request, *args, **kwargs)
         context.update({
             'get_secondary_nav_items': get_secondary_nav_items
         })

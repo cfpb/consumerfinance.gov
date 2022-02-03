@@ -44,7 +44,7 @@ def regs_hide_on_mobile(text):
 class RegulationsExtension(Extension):
 
     def __init__(self, environment):
-        super(RegulationsExtension, self).__init__(environment)
+        super().__init__(environment)
 
         self.environment.globals.update({
             'routablepageurl': jinja2.contextfunction(routablepageurl),

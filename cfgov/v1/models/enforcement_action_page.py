@@ -283,7 +283,7 @@ class EnforcementActionPage(AbstractFilterPage):
     ]
 
     def get_context(self, request):
-        context = super(EnforcementActionPage, self).get_context(request)
+        context = super().get_context(request)
         dispositions = self.enforcement_dispositions.all()
 
         context.update({

@@ -13,7 +13,9 @@ class TestUtilFunctions(TestCase):
     @mock.patch('__builtin__.isinstance')
     @mock.patch('__builtin__.vars')
     @mock.patch('v1.util.util.StreamValue')
-    def get_streamfields_returns_dict_of_streamfields(self, mock_streamvalueclass, mock_vars, mock_isinstance):
+    def get_streamfields_returns_dict_of_streamfields(
+        self, mock_streamvalueclass, mock_vars, mock_isinstance
+    ):
         page = mock.Mock()
         mock_vars.items.return_value = {'key': 'value'}
         mock_isinstance.return_value = True
@@ -22,19 +24,18 @@ class TestUtilFunctions(TestCase):
 
 
 class TestExtendedStrftime(TestCase):
-
     def test_date_formatted_without_leading_zero_in_day(self):
-        test_date=date(2018, 4, 5)
+        test_date = date(2018, 4, 5)
         formatted_date = util.extended_strftime(test_date, '%b %_d, %Y')
         self.assertEqual(formatted_date, 'Apr 5, 2018')
 
     def test_date_formatted_with_custom_month_abbreviation(self):
-        test_date=date(2018, 9, 5)
+        test_date = date(2018, 9, 5)
         formatted_date = util.extended_strftime(test_date, '%_m %d, %Y')
         self.assertEqual(formatted_date, 'Sept. 05, 2018')
 
     def test_date_formatted_with_default_pattern(self):
-        test_date=date(2018, 9, 5)
+        test_date = date(2018, 9, 5)
         formatted_date = util.extended_strftime(test_date, '%b %d, %Y')
         self.assertEqual(formatted_date, 'Sep 05, 2018')
 
@@ -106,7 +107,7 @@ class TestSecondaryNav(TestCase):
         self.assertEqual(nav[1]['title'], self.browse_page2.title)
         self.assertEqual(nav[1]['children'], [])
 
-    def test_nav_for_child_of_browse_page_includes_only_children_of_parent_browse_page(self):
+    def test_nav_for_child_of_browse_page_includes_only_children_of_parent_browse_page(self):  # noqa: E501
         nav, has_children = util.get_secondary_nav_items(
             self.request, self.child_of_browse_page2
         )
@@ -130,7 +131,7 @@ class TestSecondaryNav(TestCase):
 
         self.assertEqual(has_children, True)
 
-    def test_has_children_is_true_for_browse_page_with_browse_filterable_child(self):
+    def test_has_children_is_true_for_browse_page_with_browse_filterable_child(self):  # noqa: E501
         browse_filterable_page = BrowsePage(title='Non-browse page')
         helpers.publish_page(child=browse_filterable_page)
         browse_filterable_page_child = BrowseFilterablePage(
@@ -145,10 +146,12 @@ class TestSecondaryNav(TestCase):
 
         self.assertEqual(has_children, True)
 
-    def test_has_children_is_false_for_browse_page_with_only_non_browse_children(self):
+    def test_has_children_is_false_for_browse_page_with_only_non_browse_children(self):  # noqa: E501
         browse_page3 = BrowsePage(title='Browse page 3')
         helpers.publish_page(child=browse_page3)
-        child_of_browse_page3 = CFGOVPage(title='Non-browse child of browse page')
+        child_of_browse_page3 = CFGOVPage(
+            title='Non-browse child of browse page'
+        )
         helpers.save_new_page(child_of_browse_page3, browse_page3)
 
         nav, has_children = util.get_secondary_nav_items(

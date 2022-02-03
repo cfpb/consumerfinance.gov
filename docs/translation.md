@@ -138,3 +138,13 @@ mystring = gettext_noop("Hello World!")
 ```jinja
 {{ _(mystring) }}
 ```
+
+### Do ensure gettext is relatively recent
+
+Django's `makemessages` and `compilemessages` management commands invoke GNU gettext to generate the message files. gettext versions below 0.20 had an issue where they will bring creation dates forward from the text `.po` file into the binary `.mo` file. This can break our pull request check to ensure that translations have been updated. To check the version of gettext Django will use, run:
+
+```shell
+gettext -V
+```
+
+Our CentOS 7 Docker container unfortunately uses an older version of gettext. If the `validate-translations` check on pull requests fails, please try to run `makemessages` and `compilemessages` [in a local virtualenv](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-the-consumerfinancegov-virtualenv).
