@@ -44,7 +44,7 @@ import re
 from regulations3k.parser.integer_conversion import alpha_to_int, roman_to_int
 
 
-class IdLevelState(object):
+class IdLevelState:
     """
     A class to manage paragraph IDs and keep track of indentation state.
 
