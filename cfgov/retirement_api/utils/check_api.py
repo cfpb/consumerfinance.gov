@@ -31,7 +31,7 @@ def handler(signum, frame):
     raise TimeoutError("Request timed out")
 
 
-class Collector(object):
+class Collector:
     data = ""
     date = ("{0}".format(timestamp))[:16]
     domain = ""

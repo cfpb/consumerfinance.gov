@@ -11,7 +11,7 @@ from wagtail.core.rich_text import expand_db_html
 from core.utils import add_link_markup, get_body_html, get_link_tags
 
 
-class DownstreamCacheControlMiddleware(object):
+class DownstreamCacheControlMiddleware:
 
     def __init__(self, get_response):
         self.get_response = get_response
@@ -56,7 +56,7 @@ def parse_links(html, request_path=None, encoding=None):
     return expanded_html
 
 
-class ParseLinksMiddleware(object):
+class ParseLinksMiddleware:
 
     def __init__(self, get_response):
         self.get_response = get_response

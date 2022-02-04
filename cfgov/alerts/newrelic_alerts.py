@@ -4,7 +4,7 @@ import re
 import requests
 
 
-class NewRelicAlertViolations(object):
+class NewRelicAlertViolations:
 
     newrelic_url = 'https://api.newrelic.com/v2/'
 

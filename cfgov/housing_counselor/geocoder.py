@@ -16,7 +16,7 @@ def geocode_counselors(counselors, **kwargs):
     return ZipCodeBasedCounselorGeocoder(**kwargs).geocode(counselors)
 
 
-class ZipCodeBasedCounselorGeocoder(object):
+class ZipCodeBasedCounselorGeocoder:
     """Fill in missing latitude/longitude data using zipcode locations.
 
     This "geocoder" just takes a housing counselor zipcode and uses it to set
@@ -50,7 +50,7 @@ class ZipCodeBasedCounselorGeocoder(object):
         return counselor
 
 
-class BulkZipCodeGeocoder(object):
+class BulkZipCodeGeocoder:
     """Generate latitude/longitude pairs for all possible zipcodes.
 
     Uses an external Mapbox geocoder (license key required) to lookup location
@@ -181,7 +181,7 @@ class BulkZipCodeGeocoder(object):
         )
 
 
-class GeocodedZipCodeCsv(object):
+class GeocodedZipCodeCsv:
     """Helper class for storage of geocoded zipcode data in a CSV file.
 
     Each line in the file is: zipcode,latitude_degrees,longitude_degrees
@@ -216,7 +216,7 @@ class GeocodedZipCodeCsv(object):
         logger.info('Wrote %d zipcodes to file', count)
 
 
-class GazetteerZipCodeFile(object):
+class GazetteerZipCodeFile:
     """Helper class for loading of zipcode data from Census Gazetteer files.
 
     See https://www.census.gov/geo/maps-data/data/gazetteer2016.html
