@@ -9,7 +9,7 @@ from core.utils import (
 )
 
 
-class FakeRequest(object):
+class FakeRequest:
     # Quick way to simulate a request object with a POST attribute
     def __init__(self, params):
         self.POST = params
