@@ -36,7 +36,7 @@ class CopyButtonHelper(TreeButtonHelper):
         ph = self.permission_helper
         pk = getattr(obj, self.opts.pk.attname)
 
-        btns = super(CopyButtonHelper, self).get_buttons_for_obj(
+        btns = super().get_buttons_for_obj(
             obj,
             exclude=exclude,
             classnames_add=classnames_add,

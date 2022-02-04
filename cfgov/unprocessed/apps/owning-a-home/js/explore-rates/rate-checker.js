@@ -376,9 +376,9 @@ function checkForJumbo() {
   // Hide any existing message, then show a message if appropriate.
   document.querySelector( '#county-warning' ).classList.add( 'u-hidden' );
   if ( warnings.hasOwnProperty( params.getVal( 'loan-type' ) ) ) {
-    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'span' ).text( warnings[params.getVal( 'loan-type' )].call() );
+    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'span' ).text( warnings[params.getVal( 'loan-type' )] );
   } else {
-    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'span' ).text( template.countyGenWarning() );
+    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'span' ).text( template.countyGenWarning );
   }
 
   // If the state hasn't changed, we also cool. No need to load new counties.

@@ -60,7 +60,10 @@ class EventUtilTestCase(TestCase):
     @override_settings(MAPBOX_ACCESS_TOKEN='test_token')
     def test_get_venue_coords_default_venue_coords_when_empty(self):
         # Should default to DC coords if no city/state provided
-        self.assertEqual(get_venue_coords(city='', state=''), '-77.039628,38.898238')
+        self.assertEqual(
+            get_venue_coords(city='', state=''),
+            '-77.039628,38.898238'
+        )
 
     @override_settings(MAPBOX_ACCESS_TOKEN='test_token')
     @responses.activate

@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from django.utils.encoding import force_str
 from django.utils.text import slugify
@@ -29,6 +30,16 @@ def upload_to_s3(pdf_obj, s3_key):
     s3_client.upload_fileobj(pdf_obj, AWS_STORAGE_BUCKET_NAME, s3_key)
 
 
+def filename_in_zip(file_info):
+    # Zip files default to IBM Code Page 437 encoding unless a specific bit
+    # is set. See Appendix D in the zip file spec:
+    # https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
+    if (file_info.flag_bits & 0x800) == 0:
+        return file_info.filename
+    else:
+        return force_str(file_info.filename, 'cp437')
+
+
 def get_issuer(name):
     slug = slugify(name)
     try:
@@ -49,7 +60,8 @@ def save_agreement(agreements_zip, pdf_path, outfile,
     path = force_str(pdf_path)
 
     try:
-        issuer_name, filename = path.split('/')
+        filename = Path(path).parts[-1]
+        issuer_name = Path(path).parts[-2]
     except ValueError:
         # too many slashes...
         outfile.write("%s Does not match issuer/file.pdf pattern" % path)

@@ -28,7 +28,7 @@ class RegulationsList(organisms.ModelBlock):
         return qs.live()
 
     def get_queryset(self, value):
-        qs = super(RegulationsList, self).get_queryset(value)
+        qs = super().get_queryset(value)
         future_versions_qs = EffectiveVersion.objects.filter(
             draft=False,
             effective_date__gte=date.today()
@@ -43,7 +43,7 @@ class RegulationsList(organisms.ModelBlock):
         return qs
 
     def get_context(self, value, parent_context=None):
-        context = super(RegulationsList, self).get_context(
+        context = super().get_context(
             value, parent_context=parent_context
         )
         context['regulations'] = self.get_queryset(value)

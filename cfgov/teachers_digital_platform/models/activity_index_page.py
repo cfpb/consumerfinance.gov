@@ -91,7 +91,7 @@ class ActivityIndexPage(CFGOVPage):
     @classmethod
     def can_create_at(cls, parent):
         # You can only create one of these!
-        return super(ActivityIndexPage, cls).can_create_at(parent) \
+        return super().can_create_at(parent) \
             and not cls.objects.exists()
 
     def get_template(self, request):
@@ -212,7 +212,7 @@ class ActivityIndexPage(CFGOVPage):
         if not self.activity_setups:
             self.activity_setups = get_activity_setup()
         context_update = self.dsl_search(request, *args, **kwargs)
-        context = super(ActivityIndexPage, self).get_context(request)
+        context = super().get_context(request)
         context.update(context_update)
         return context
 

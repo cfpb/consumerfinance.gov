@@ -36,7 +36,7 @@ class FeedbackHandler(Handler):
                  page,
                  request,
                  block_value):
-        super(FeedbackHandler, self).__init__(page, request)
+        super().__init__(page, request)
         self.block_value = block_value
 
     def sanitize_referrer(self):

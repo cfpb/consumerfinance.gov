@@ -119,10 +119,10 @@ class ConferenceRegistrationForm(forms.Form):
         self.govdelivery_code = kwargs.pop('govdelivery_code')
         self.govdelivery_question_id = kwargs.pop('govdelivery_question_id')
         self.govdelivery_answer_id = kwargs.pop('govdelivery_answer_id')
-        super(ConferenceRegistrationForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self):
-        cleaned_data = super(ConferenceRegistrationForm, self).clean()
+        cleaned_data = super().clean()
 
         if (
             cleaned_data.get('attendee_type') == self.ATTENDEE_IN_PERSON and

@@ -116,9 +116,10 @@ class RelatedPostsTestCase(TestCase):
         helpers.save_new_page(self.events_child1, self.events_parent)
 
         # mock a stream block that dictates how to retrieve the related posts
-        # note that because of the way that the related_posts_category_lookup function
-        # works i.e. by consulting a hard-coded object, the specific_categories
-        # slot of the dict has to be something that it can actually find.
+        # note that because of the way that the related_posts_category_lookup
+        # function works i.e. by consulting a hard-coded object, the
+        # specific_categories slot of the dict has to be something that it can
+        # actually find.
         self.block_value = {
             'limit': 3,
             'show_heading': True,

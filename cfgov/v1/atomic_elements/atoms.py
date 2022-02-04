@@ -39,7 +39,7 @@ class Hyperlink(blocks.StructBlock):
 
     def __init__(self, required=True):
         self.is_required = required
-        super(Hyperlink, self).__init__()
+        super().__init__()
 
     @property
     def required(self):
@@ -48,7 +48,7 @@ class Hyperlink(blocks.StructBlock):
     def clean(self, data):
         error_dict = {}
 
-        data = super(Hyperlink, self).clean(data)
+        data = super().clean(data)
 
         if self.is_required:
             if not data['text']:
@@ -110,7 +110,7 @@ class ImageBasic(blocks.StructBlock):
 
     def __init__(self, required=True):
         self.is_required = required
-        super(ImageBasic, self).__init__()
+        super().__init__()
 
     @property
     def required(self):
@@ -119,7 +119,7 @@ class ImageBasic(blocks.StructBlock):
     def clean(self, data):
         error_dict = {}
 
-        data = super(ImageBasic, self).clean(data)
+        data = super().clean(data)
 
         if not self.required and not data['upload']:
             return data

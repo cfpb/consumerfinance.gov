@@ -28,7 +28,7 @@ from v1.models import HomePage
 class ActivityIndexPageTests(WagtailPageTests):
     @classmethod
     def setUpClass(self):
-        super(ActivityIndexPageTests, self).setUpClass()
+        super().setUpClass()
 
     def test_can_create_an_activity_page_under_activity_index_page(self):
         self.assertCanCreateAt(ActivityIndexPage, ActivityPage)
@@ -284,7 +284,7 @@ class TestActivityIndexPageSearch(TestCase):
     fixtures = ['tdp_initial_data']
 
     def setUp(self):
-        # super(TestActivityIndexPageSearch, self).setUp()
+        # super().setUp()
         self.root_page = HomePage.objects.get(slug='cfgov')
         self.root_page.save_revision().publish()
         self.site = Site.objects.get(is_default_site=True)
