@@ -3,7 +3,7 @@
 set -e
 
 echo "Using $(python3 --version 2>&1) located at $(which python3)"
-
+echo "${DATABASE_URL}"
 # Wait for the database to be ready
 until psql ${DATABASE_URL} -c '\q' &> /dev/null; do
   >&2 echo "Postgres is unavailable - waiting"
