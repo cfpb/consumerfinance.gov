@@ -42,7 +42,7 @@ class HighlightCardValue(blocks.StructValue):
 
 class HighlightCardBlock(blocks.StructBlock):
     heading = blocks.CharBlock()
-    text = blocks.TextBlock()
+    text = blocks.TextBlock(required=False)
     link_url = atoms.URLOrRelativeURLBlock()
 
     class Meta:
