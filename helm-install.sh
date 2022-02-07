@@ -20,6 +20,10 @@ for i in $ARGS; do
   tempFiles+=($tempFile)
 done
 
+if [ ! -d ./helm/cfgov/charts ]; then
+  helm dependency build ./helm/cfgov
+fi
+
 helm upgrade --install cfgov $OVERRIDES ./helm/cfgov
 
 for i in ${tempFiles[@]}; do
