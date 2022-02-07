@@ -1,7 +1,7 @@
 from django import forms
 
 
-class FWBScore(object):
+class FWBScore:
     HIGH = 95
     LOW = 14
     AVG = 54
@@ -60,7 +60,7 @@ class ResultsForm(forms.Form):
     )
 
     def clean(self):
-        cleaned_data = super(ResultsForm, self).clean()
+        cleaned_data = super().clean()
 
         if self._errors:
             return

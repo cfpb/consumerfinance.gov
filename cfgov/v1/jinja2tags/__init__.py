@@ -150,7 +150,7 @@ def search_gov_affiliate(context):
 
 class V1Extension(Extension):
     def __init__(self, environment):
-        super(V1Extension, self).__init__(environment)
+        super().__init__(environment)
 
         self.environment.globals.update({
             'category_label': ref.category_label,

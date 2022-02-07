@@ -315,7 +315,7 @@ class AnswerPage(CFGOVPage):
         # self.get_meta_description() is not called here because it is called
         # and added to the context by CFGOVPage's get_context() method.
         portal_topic = self.primary_portal_topic or self.portal_topic.first()
-        context = super(AnswerPage, self).get_context(request)
+        context = super().get_context(request)
         context['related_questions'] = self.related_questions.all()
         context['last_edited'] = self.last_edited
         context['portal_page'] = get_portal_or_portal_search_page(
@@ -399,7 +399,7 @@ class AnswerPage(CFGOVPage):
             else:
                 return ("redirected")
         else:
-            return super(AnswerPage, self).status_string
+            return super().status_string
 
     # Returns an image for the page's meta Open Graph tag
     @property
