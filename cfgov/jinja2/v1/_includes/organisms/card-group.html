@@ -9,25 +9,44 @@
    Creates markup for a Card Group organism, which displays a set of cards
    with an optional heading.
 
-   heading:                     (Optional) Group heading.
+   value.heading:                     (Optional) Group heading.
 
-   card.icon:                   Card icon.
+   value.type_group:                  (Optional) The group type. Can be:
+                                      column-2, column-3,
+                                      count-2, count-3, count-4,
+                                      flow or featured (deprecated)
 
-   card.text:                   Card body text.
+   value.type_card:                   (Optional) The group type. Can be:
+                                      column-2, column-3,
+                                      count-2, count-3, count-4,
+                                      flow or featured (deprecated)
 
-   card.link_text:              Card link text.
+   value.card.icon:                   Card icon.
 
-   card.link_url:               Card link URL.
+   value.card.text:                   Card body text.
+
+   value.card.link_text:              Card link text.
+
+   value.card.link_url:               Card link URL.
 
    ========================================================================== #}
 
 {% import "molecules/card.html" as card with context %}
 
-{% macro render( heading, cards ) %}
-<div class="o-card-group o-card-group__column-3 o-card-group__bg-green">
-    {% if heading %}<h2>{{ heading }}</h2>{% endif %}
+{% macro render( value ) %}
+<div class="o-card-group
+            {% if value.type_group == 'column-2' %} o-card-group__column-2 {% endif %}
+            {% if value.type_group == 'column-3' %} o-card-group__column-3 {% endif %}
+            {% if value.type_group == 'count-2' %} o-card-group__count-2 {% endif %}
+            {% if value.type_group == 'count-3' %} o-card-group__count-3 {% endif %}
+            {% if value.type_group == 'count-4' %} o-card-group__count-4 {% endif %}
+            {% if value.type_group == 'flow' %} o-card-group__flow {% endif %}
+            {% if value.type_group == 'featured' %} o-card-group__column-3 o-card-group__bg-green {% endif %}">
+    <div class="block u-text-centered">
+    {% if value.heading %}<h2 class="h1">{{ value.heading }}</h2>{% endif %}
+    </div>
     <div class="o-card-group_cards">
-    {% for _card in cards %}
+    {% for _card in value.cards %}
         {{ card.render( _card ) }}
     {% endfor %}
     </div>

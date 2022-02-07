@@ -665,6 +665,12 @@ FLAGS = {
     "ASK_SURVEY_INTERCEPT": [],
     # Hide archive filter options in the filterable UI
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
+    # Supports testing of a new 2021 version of the website home page.
+    # Enable by appending ?home_page_2021=True to home page URLs.
+    "HOME_PAGE_2021":  [
+        ("environment is not", "production", True),
+        ("parameter", "home_page_2021"),
+    ],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
