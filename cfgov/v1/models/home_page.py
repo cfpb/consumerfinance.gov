@@ -57,6 +57,16 @@ class AnswerPageStreamBlock(blocks.StreamBlock):
     page = blocks.PageChooserBlock(page_type='ask_cfpb.AnswerPage')
 
 
+def image_passthrough(image, *args, **kwargs):
+    """Passthrough replacement for Wagtail {{ image }} tag.
+
+    This is needed because, as written, the hero module template assumes that
+    it will get passed a Wagtail image object, which needs to get converted
+    into e.g. a URL to render. We want to pass the hero module a URL directly.
+    """
+    return image
+
+
 class HomePage(CFGOVPage):
     content = StreamField(HomePageContentBlock(), blank=True)
 
@@ -97,6 +107,7 @@ class HomePage(CFGOVPage):
             ],
             'card_heading': self.card_heading,
             'cards': self.cards.all(),
+            'image_passthrough': image_passthrough,
         })
 
         return context

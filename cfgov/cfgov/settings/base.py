@@ -671,6 +671,10 @@ FLAGS = {
         ("environment is not", "production", True),
         ("parameter", "home_page_2021"),
     ],
+    "HOME_PAGE_2021_MINIMAL":  [
+        ("environment is not", "production", True),
+        ("parameter", "home_page_2021_minimal"),
+    ],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
