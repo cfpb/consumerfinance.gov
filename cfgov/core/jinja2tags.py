@@ -8,7 +8,7 @@ from core.utils import slugify_unique
 
 class CoreExtension(Extension):
     def __init__(self, environment):
-        super(CoreExtension, self).__init__(environment)
+        super().__init__(environment)
         self.environment.globals.update({
             'svg_icon': svg_icon,
         })

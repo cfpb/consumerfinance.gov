@@ -1,6 +1,5 @@
 import json
 
-from django.http import HttpRequest
 from django.test import TestCase
 
 from wagtail.core import blocks
@@ -136,4 +135,4 @@ class ContactExpandableGroupTests(WagtailTestUtils, TestCase):
         # all 10 Contacts, even though they are split up between two different
         # ContactExpandableGroup blocks.
         with self.assertNumQueries(1):
-            html = block.render(value)
+            block.render(value)

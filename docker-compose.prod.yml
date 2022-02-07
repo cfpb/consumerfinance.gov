@@ -5,6 +5,10 @@ volumes:
 
 services:
 
+    elasticsearch:
+        environment:
+            ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+
     python:
         image: cfgov_python:prod
         build:

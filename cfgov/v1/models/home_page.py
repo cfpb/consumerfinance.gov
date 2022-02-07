@@ -82,7 +82,7 @@ class HomePage(CFGOVPage):
     objects = PageManager()
 
     def get_context(self, request):
-        context = super(HomePage, self).get_context(request)
+        context = super().get_context(request)
 
         context.update({
             'info_units': [

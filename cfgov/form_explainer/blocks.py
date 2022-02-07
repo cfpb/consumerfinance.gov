@@ -12,7 +12,7 @@ class ImageMapCoordinates(blocks.StructBlock):
     height = blocks.FloatBlock(required=True, min_value=0, max_value=100)
 
     def clean(self, value):
-        cleaned = super(ImageMapCoordinates, self).clean(value)
+        cleaned = super().clean(value)
         errors = {}
         if cleaned.get('left') + cleaned.get('width') > 100:
             errors['left'] = errors['width'] = ErrorList([

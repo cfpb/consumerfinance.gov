@@ -1,14 +1,11 @@
-import os
-
 from django.test import Client, TestCase
 
 from v1.models.landing_page import LandingPage
-from v1.tests.wagtail_pages.helpers import (
-    publish_page, save_new_page, save_page
-)
+from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
 django_client = Client()
+
 
 class PageStatesTestCase(TestCase):
 

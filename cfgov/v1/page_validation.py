@@ -42,7 +42,7 @@ def convert_http_image_match(match, url_mappings):
     )
 
 
-class PageValidator(object):
+class PageValidator:
     def __init__(self, http_image_url_mappings):
         self.http_image_url_mappings = http_image_url_mappings
 

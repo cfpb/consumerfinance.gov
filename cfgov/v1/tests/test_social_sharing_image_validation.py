@@ -17,7 +17,11 @@ class TestSocialSharingImage(TestCase):
         save_new_page(self.page)
 
     def test_validation_error_thrown_if_width_height_too_large(self):
-        self.page.social_sharing_image = baker.prepare(CFGOVImage, width=5000, height=5000)
+        self.page.social_sharing_image = baker.prepare(
+            CFGOVImage,
+            width=5000,
+            height=5000
+        )
         with self.assertRaisesRegex(
             ValidationError,
             'Social sharing image must be less than 4096w x 4096h'
@@ -25,7 +29,11 @@ class TestSocialSharingImage(TestCase):
             self.page.save()
 
     def test_validation_error_thrown_if_width_too_large(self):
-        self.page.social_sharing_image = baker.prepare(CFGOVImage, width=4097, height=1500)
+        self.page.social_sharing_image = baker.prepare(
+            CFGOVImage,
+            width=4097,
+            height=1500
+        )
         with self.assertRaisesRegex(
             ValidationError,
             'Social sharing image must be less than 4096w x 4096h'
@@ -33,7 +41,11 @@ class TestSocialSharingImage(TestCase):
             self.page.save()
 
     def test_validation_error_thrown_if_height_too_large(self):
-        self.page.social_sharing_image = baker.prepare(CFGOVImage, width=1500, height=4097)
+        self.page.social_sharing_image = baker.prepare(
+            CFGOVImage,
+            width=1500,
+            height=4097
+        )
         with self.assertRaisesRegex(
             ValidationError,
             'Social sharing image must be less than 4096w x 4096h'

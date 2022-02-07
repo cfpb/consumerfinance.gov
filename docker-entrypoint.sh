@@ -3,7 +3,7 @@
 set -e
 
 echo "Using $(python3 --version 2>&1) located at $(which python3)"
-
+echo "${DATABASE_URL}"
 # Wait for the database to be ready
 until psql ${DATABASE_URL} -c '\q' &> /dev/null; do
   >&2 echo "Postgres is unavailable - waiting"
@@ -24,8 +24,6 @@ if [ "$RUN_MIGRATIONS" = true ]; then
         fi
         echo "Create the cache table..."
         ./cfgov/manage.py createcachetable
-        echo "Update the search indexes..."
-        ./cfgov/manage.py search_index --rebuild -f --parallel
     fi
 fi
 

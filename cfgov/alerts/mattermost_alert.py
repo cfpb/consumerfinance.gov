@@ -3,7 +3,7 @@ import os
 import requests
 
 
-class MattermostAlert(object):
+class MattermostAlert:
     def __init__(self, credentials, icon_url=None):
         self.username = credentials.get(
             'username',

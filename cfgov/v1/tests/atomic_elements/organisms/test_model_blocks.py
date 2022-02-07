@@ -4,10 +4,10 @@ from django.test import TestCase
 from v1.atomic_elements.organisms import ModelBlock
 
 
-class UserModelMixin(object):
+class UserModelMixin:
     @classmethod
     def setUpClass(cls):
-        super(UserModelMixin, cls).setUpClass()
+        super().setUpClass()
         usernames = ['chico', 'harpo', 'groucho']
         first_names = ['leonard', 'arthur', 'julius']
 

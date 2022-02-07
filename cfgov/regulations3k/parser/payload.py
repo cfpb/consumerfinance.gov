@@ -23,7 +23,7 @@ FR_date_query = (
 logger = logging.getLogger(__name__)
 
 
-class PayLoad(object):
+class PayLoad:
     """Stash regulation components and interp references as they are built."""
 
     def __init__(self):

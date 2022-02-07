@@ -88,13 +88,14 @@ class MigrationsUtilTestCase(TestCase):
         old data, calls the mapper function, and stores new data
         based on the mapper results. """
         # Mock the field mapper migration function. We'll inspect the
-        # call to this and ensure the return value makes it to set_streamfield_data.
+        # call to this and ensure the return value makes it to
+        # set_streamfield_data.
         mapper = mock.Mock(return_value='new text')
 
         migrate_stream_field(self.page, 'body', 'text', mapper)
 
         mapper.assert_called_with(self.page, 'some text')
-        data =self.page.body.raw_data
+        data = self.page.body.raw_data
         self.assertEqual(data[0]['value'], 'new text')
 
     def test_migrate_stream_field_revision(self):
@@ -102,7 +103,8 @@ class MigrationsUtilTestCase(TestCase):
         old data, calls the mapper function, and stores new data
         based on the mapper results. """
         # Mock the field mapper migration function. We'll inspect the
-        # call to this and ensure the return value makes it to set_streamfield_data.
+        # call to this and ensure the return value makes it to
+        # set_streamfield_data.
         mapper = mock.Mock(return_value='new text')
 
         migrate_stream_field(self.revision, 'body', 'text', mapper)
@@ -158,8 +160,10 @@ class MigrationsUtilTestCase(TestCase):
 class ChildStructBlock(blocks.StructBlock):
     text = blocks.CharBlock()
 
+
 class ChildStreamBlock(blocks.StreamBlock):
     text = blocks.CharBlock()
+
 
 class TestStreamBlock(blocks.StreamBlock):
     text = blocks.CharBlock()

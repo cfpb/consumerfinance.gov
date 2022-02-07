@@ -1,5 +1,4 @@
 import re
-from datetime import date
 
 from django.http import HttpRequest
 from django.template import engines
@@ -10,7 +9,7 @@ from django.test import (
 from model_bakery import baker
 
 from v1.atomic_elements.atoms import ImageBasic
-from v1.jinja2tags import complaint_issue_banner, email_popup, image_alt_value
+from v1.jinja2tags import email_popup, image_alt_value
 from v1.models import CFGOVImage, CFGOVRendition
 
 

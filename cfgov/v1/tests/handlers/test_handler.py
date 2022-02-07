@@ -11,5 +11,5 @@ class TestHandler(TestCase):
         self.handler = Handler(self.page, self.request, self.context)
 
     def test_process_raises_NotImplementedError(self):
-        with self.assertRaises(NotImplementedError) as nie:
+        with self.assertRaises(NotImplementedError):
             self.handler.process()

@@ -19,8 +19,6 @@
     "es6-promise": "4.2.8",
     "fastdom": "1.0.10",
     "format-usd": "1.0.1",
-    "handlebars": "4.7.7",
-    "handlebars-loader": "git+https://github.com/Waavi/handlebars-loader.git",
     "highcharts": "7.2.2",
     "jquery": "3.6.0",
     "jumbo-mortgage": "3.0.0",
