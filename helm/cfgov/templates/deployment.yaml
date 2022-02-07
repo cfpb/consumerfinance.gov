@@ -1,0 +1,135 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cfgov.fullname" . }}
+  labels:
+    {{- include "cfgov.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "cfgov.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "cfgov.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "cfgov.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: {{ .Chart.Name }}-migrations
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["./docker-entrypoint.sh"]
+          volumeMounts:
+            {{- range .Values.volumes }}
+            - mountPath: {{ .mountPath }}
+              name: {{ .name }}
+            {{- end }}
+          env:
+            - name: RUN_MIGRATIONS
+              value: "true"
+            {{- if .Values.importDbPath }}
+            - name: CFGOV_PROD_DB_LOCATION
+              value: {{ .Values.importDbPath | quote }}
+            {{- end }}
+            {{- if .Values.postgresql.enabled }}
+            - name: DATABASE_URL
+              {{- if .Values.postgresql.nameOverride }}
+              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ .Values.postgresql.nameOverride }}-postgresql/{{ .Values.postgresql.postgresqlDatabase }}"
+              {{- else if .Values.postgresql.fullnameOverride }}
+              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ .Values.postgresql.fullNameOverride }}/{{ .Values.postgresql.postgresqlDatabase }}"
+              {{- else }}
+              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ include "cfgov.fullname" . }}-postgresql/{{ .Values.postgresql.postgresqlDatabase }}"
+              {{- end }}
+            {{- end }}
+            {{- if .Values.elasticsearch.enabled }}
+            - name: ES_HOST
+              {{- if .Values.elasticsearch.nameOverride }}
+              value: "{{ .Values.elasticsearch.nameOverride }}-master"
+              {{- else if .Values.elasticsearch.fullnameOverride }}
+              value: {{ .Values.elasticsearch.fullnameOverride | quote }}
+              {{- else }}
+              value: elasticsearch-master
+              {{- end }}
+            {{- end }}
+            {{- toYaml .Values.extraEnvs | nindent 12 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            timeoutSeconds: 3
+          volumeMounts:
+            {{- range .Values.volumes }}
+            - mountPath: {{  .mountPath }}
+              name: {{ .name }}
+            {{- end }}
+          env:
+            - name: RUN_MIGRATIONS
+              value: "false"
+            {{- if .Values.postgresql.enabled }}
+            - name: DATABASE_URL
+              {{- if .Values.postgresql.nameOverride }}
+              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ .Values.postgresql.nameOverride }}-postgresql/{{ .Values.postgresql.postgresqlDatabase }}"
+              {{- else if .Values.postgresql.fullnameOverride }}
+              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ .Values.postgresql.fullNameOverride }}/{{ .Values.postgresql.postgresqlDatabase }}"
+              {{- else }}
+              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ include "cfgov.fullname" . }}-postgresql/{{ .Values.postgresql.postgresqlDatabase }}"
+              {{- end }}
+            {{- end }}
+            {{- if .Values.elasticsearch.enabled }}
+            - name: ES_HOST
+              {{- if .Values.elasticsearch.nameOverride }}
+              value: "{{ .Values.elasticsearch.nameOverride }}-master"
+              {{- else if .Values.elasticsearch.fullnameOverride }}
+              value: {{  .Values.elasticsearch.fullnameOverride | quote }}
+              {{- else }}
+              value: elasticsearch-master
+              {{- end }}
+            {{- end }}
+            {{- toYaml .Values.extraEnvs | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        {{- range .Values.volumes }}
+        - name: {{ .name }}
+          {{- toYaml .volume | nindent 10 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

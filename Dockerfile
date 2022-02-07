@@ -4,6 +4,7 @@ FROM base AS cfgov-dev
 
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
+ENV ENV /etc/profile
 
 LABEL maintainer="tech@cfpb.gov"
 
@@ -17,7 +18,7 @@ WORKDIR ${APP_HOME}
 # Install common OS packages
 RUN apk update --no-cache && apk upgrade --no-cache
 RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev postgresql-dev
-RUN apk add --no-cache --virtual .backend-deps postgresql
+RUN apk add --no-cache --virtual .backend-deps postgresql curl bash
 RUN apk add --no-cache --virtual .frontend-deps nodejs yarn zlib-dev jpeg-dev
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 

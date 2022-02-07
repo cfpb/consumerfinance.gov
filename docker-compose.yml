@@ -32,6 +32,7 @@ services:
         ports:
             - 127.0.0.1:5432:5432
     python:
+        image: cfgov_python:local
         build:
             context: .
             dockerfile: Dockerfile

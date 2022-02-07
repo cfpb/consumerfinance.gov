@@ -1,0 +1,41 @@
+image:
+  tag: prod
+
+# Must redefine local.yaml volumes since this is an array
+volumes:
+  - name: code
+    volume:
+      hostPath:
+        path: ${PROJECT_DIR}
+        type: Directory
+    mountPath: /src/consumerfinance.gov
+  - name: dev-env
+    volume:
+      hostPath:
+        path: ${PROJECT_DIR}/.env
+        type: File
+    mountPath: /src/consumerfinance.gov/.env
+  - name: extend-env
+    volume:
+      hostPath:
+        path: ${PROJECT_DIR}/extend-environment.sh
+        type: File
+    mountPath: /src/consumerfinance.gov/extend-environment.sh
+  - name: apache-conf
+    volume:
+      hostPath:
+        path: ${PROJECT_DIR}/cfgov/apache/conf
+        type: Directory
+    mountPath: /src/consumerfinance.gov/cfgov/apache/conf
+  - name: apache-conf-d
+    volume:
+      hostPath:
+        path: ${PROJECT_DIR}/cfgov/apache/conf.d
+        type: Directory
+    mountPath: /src/consumerfinance.gov/cfgov/apache/conf.d
+  - name: apache-modules-conf
+    volume:
+      hostPath:
+        path: ${PROJECT_DIR}/cfgov/apache/conf.modules.d
+        type: Directory
+    mountPath: /src/consumerfinance.gov/cfgov/apache/conf.modules.d

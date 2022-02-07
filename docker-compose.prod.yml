@@ -6,6 +6,7 @@ volumes:
 services:
 
     python:
+        image: cfgov_python:prod
         build:
             target: cfgov-prod
         environment:

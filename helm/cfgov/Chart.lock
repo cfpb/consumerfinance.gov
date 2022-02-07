@@ -1,0 +1,12 @@
+dependencies:
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.16.2
+- name: elasticsearch
+  repository: https://helm.elastic.co/
+  version: 7.16.3
+- name: kibana
+  repository: https://helm.elastic.co/
+  version: 7.16.3
+digest: sha256:2e6c2d44d0e224eb39a58ea6ae6c009986a0a390ca59b71f03694f24b51afd96
+generated: "2022-01-26T20:44:09.359416-07:00"
