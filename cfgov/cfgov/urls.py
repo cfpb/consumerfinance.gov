@@ -461,6 +461,9 @@ urlpatterns = [
         r'^beta_external_testing/',
         akamai_no_store(empty_200_response)
     ),
+
+    # Health check
+    re_path(r'^ht/', include('health_check.urls')),
 ]
 
 # Ask CFPB category and subcategory redirects

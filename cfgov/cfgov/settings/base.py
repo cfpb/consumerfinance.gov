@@ -104,6 +104,8 @@ INSTALLED_APPS = (
     "django_elasticsearch_dsl",
     "corsheaders",
     "login",
+    "health_check",
+    "health_check.db",
 
     # Satellites
     "complaint_search",
