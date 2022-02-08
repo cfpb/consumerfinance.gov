@@ -1,6 +1,5 @@
 /* ==========================================================================
-   External Site Initialization
-   Used on at least `/external-site/`.
+   Scripts for `/external-site/`.
    ========================================================================== */
 
 import { checkDom } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
@@ -64,7 +63,11 @@ function ExternalSite( element ) {
   return this;
 }
 
-ExternalSite.BASE_CLASS = BASE_CLASS;
+const externalSiteDom = document.querySelector( `.${ BASE_CLASS }` );
 
-// Expose public methods.
+if ( externalSiteDom ) {
+  const externalSite = new ExternalSite( externalSiteDom );
+  externalSite.init();
+}
+
 export default ExternalSite;
