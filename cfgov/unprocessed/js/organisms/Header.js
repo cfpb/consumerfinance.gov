@@ -47,9 +47,9 @@ function Header( element ) {
       _megaMenu.init();
 
       // If we have a mega menu, it needs to be collapsed when search is expanded.
-      _globalSearch.addEventListener( 'expandBegin', _megaMenu.collapse );
+      _globalSearch.addEventListener( 'expandBegin', _globalSearchExpandBegin );
+      _globalSearch.addEventListener( 'collapseEnd', _globalSearchCollapseEnd );
     }
-
     _globalSearch.init();
 
     return this;
@@ -69,6 +69,23 @@ function Header( element ) {
    * Show an overlay.
    */
   function _megaMenuCollapseEnd() {
+    _overlay.classList.add( 'u-hidden' );
+  }
+
+  /**
+   * Handler for when the global search begins expansion.
+   * Collapse the mega menu.
+   */
+  function _globalSearchExpandBegin() {
+    _megaMenu.collapse();
+    _overlay.classList.remove( 'u-hidden' );
+  }
+
+  /**
+   * Handler for when the global search ends collapsing.
+   * Show an overlay.
+   */
+  function _globalSearchCollapseEnd() {
     _overlay.classList.add( 'u-hidden' );
   }
 
