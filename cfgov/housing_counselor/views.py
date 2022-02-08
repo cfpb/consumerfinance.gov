@@ -36,7 +36,7 @@ def requests_retry_session(
     return session
 
 
-class HousingCounselorS3URLMixin(object):
+class HousingCounselorS3URLMixin:
 
     @staticmethod
     def s3_url(file_format, zipcode):

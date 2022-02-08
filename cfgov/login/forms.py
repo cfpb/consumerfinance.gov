@@ -17,7 +17,7 @@ from login.email import send_password_reset_email
 from v1.models import base
 
 
-class PasswordValidationMixin(object):
+class PasswordValidationMixin:
     password_key = 'new_password'
     user_attribute = 'user'
 

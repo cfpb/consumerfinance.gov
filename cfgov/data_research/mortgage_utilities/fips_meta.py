@@ -71,7 +71,7 @@ SOURCE_HEADINGS = [  # last changed 2017-07-31
 logger = logging.getLogger(__name__)
 
 
-class FipsMeta(object):
+class FipsMeta:
     """A metadata reference for juggling mortgage records"""
     def __init__(self):
         self.county_fips = {}  # 3 mappings of FIPS to metadata
