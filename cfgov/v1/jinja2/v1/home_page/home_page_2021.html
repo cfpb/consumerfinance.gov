@@ -22,7 +22,17 @@ content_main__flush-inner
         {% endwith %}
 
         {% if minimal %}
-        <section class="o-well">
+        {#
+            Temporary CSS well modifier for user testing.
+            Move into DS if it tests well.
+        #}
+        <style>
+            .o-well__putting {
+                background-color: #e2efd8;
+                border: none;
+            }
+        </style>
+        <section class="o-well o-well__putting">
             <p class="o-info-unit-group">
                 <h3>{{ hardcoded.highlights_heading }}</h3>
 
