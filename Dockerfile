@@ -118,6 +118,6 @@ RUN rm -rf cfgov/apache/www cfgov/unprocessed && \
 
 # Healthcheck retry set high since database loads take a while
 HEALTHCHECK --start-period=300s --interval=30s --retries=30 \
-            CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
+            CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000/ht/
 
 CMD ["httpd", "-d", "/src/consumerfinance.gov/cfgov/apache", "-f", "/src/consumerfinance.gov/cfgov/apache/conf/httpd.conf", "-D", "FOREGROUND"]
