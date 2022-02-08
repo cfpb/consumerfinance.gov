@@ -77,12 +77,12 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /ht/
               port: http
             timeoutSeconds: 3
           readinessProbe:
             httpGet:
-              path: /
+              path: /ht/
               port: http
             timeoutSeconds: 3
           volumeMounts:
