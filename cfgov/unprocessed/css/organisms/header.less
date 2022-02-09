@@ -69,13 +69,6 @@
     z-index: 10;
     background-color: @white;
 
-    // Tablet/mobile sizes.
-    .respond-to-max( @bp-sm-max, {
-        > .m-global-eyebrow {
-            display: none;
-        }
-    } );
-
     .respond-to-min( @bp-lg-min, {
         min-width: @bp-lg-min;
     } );
@@ -121,7 +114,9 @@
 
         // Tablet/mobile sizes.
         // Hide Global Header Call to Action.
+        // Adjust Mobile Megamenu margin
         .respond-to-max( @bp-sm-max, {
+            margin-top: -6px;
             > .wrapper {
                 > .m-global-header-cta {
                     display: none;
