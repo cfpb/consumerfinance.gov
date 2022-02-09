@@ -33,8 +33,8 @@ content_main__flush-inner
             }
         </style>
         <section class="o-well o-well__putting">
-            <p class="o-info-unit-group">
-                <h3>{{ hardcoded.highlights_heading }}</h3>
+            <div class="o-info-unit-group">
+                <h2>{{ hardcoded.highlights_heading }}</h2>
 
                 <div class="content-l">
                     {% for highlight in hardcoded.highlights %}
@@ -42,7 +42,7 @@ content_main__flush-inner
 
                         <div class="m-info-unit">
                             <div class="m-info-unit_heading-text">
-                                <h2 class="h3">{{ highlight.heading }}</h2>
+                                <h3>{{ highlight.heading }}</h3>
                             </div>
                             <div class="m-info-unit_content">
                                 <ul class="m-list m-list__links u-mt15">
@@ -59,11 +59,11 @@ content_main__flush-inner
                     </div>
                     {% endfor %}
                 </div>
-            </p>
+            </div>
         </section>
         {% else %}
         <section class="o-well o-well__inkwell">
-            <p class="o-info-unit-group">
+            <div class="o-info-unit-group">
                 <div class="content-l">
                     {% for infounit in hardcoded.inkwell.infounits %}
                     <div class="content-l_col content-l_col-1-3">
@@ -80,7 +80,7 @@ content_main__flush-inner
                     </div>
                     {% endfor %}
                 </div>
-            </p>
+            </div>
         </section>
         {% endif %}
     </section>
