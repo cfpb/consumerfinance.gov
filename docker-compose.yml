@@ -44,6 +44,7 @@ services:
         environment:
             DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
             ES_HOST: elasticsearch
+            SECRET_KEY: abcdefghijklmnopqrstuvwxyz
     docs:
         build:
             context: ./
