@@ -52,7 +52,11 @@ jobs:
     - name: Test Token
       run: |
         echo "token grabbed was: "
-        echo $MAPBOX_ACCESS_TOKEN
+        if [ "$MAPBOX_ACCESS_TOKEN" = "THISISATESTTOKEN" ]; then 
+          echo "token Matched" 
+        else
+          echo "token is NOT Matched"  
+        fi;
 
     # - name: Run server
     #   run: python cfgov/manage.py runserver
