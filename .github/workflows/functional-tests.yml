@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: postgres://cfpb:cfpb@localhost/cfgov
-      MAPBOX_ACCESS_TOKEN:  ${{ secrets.THISISATESTTOKEN }}
+      MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
 
     services:
       elasticsearch:
