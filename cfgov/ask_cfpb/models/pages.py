@@ -181,7 +181,7 @@ class AnswerLandingPage(LandingPage):
         return context
 
 
-class SecondaryNavigationJSMixin(object):
+class SecondaryNavigationJSMixin:
     """A page mixin that adds navigation JS for English pages."""
 
     @property

@@ -7,7 +7,7 @@ from django.http import QueryDict
 from django.test import RequestFactory, TestCase
 
 
-class ObjectThatCantBeRepresented(object):
+class ObjectThatCantBeRepresented:
     def __repr__(self):
         raise Exception
 

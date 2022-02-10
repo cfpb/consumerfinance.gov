@@ -1,7 +1,7 @@
 from django import forms
 
 
-class FWBScore(object):
+class FWBScore:
     HIGH = 95
     LOW = 14
     AVG = 54
