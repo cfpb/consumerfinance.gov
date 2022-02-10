@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: postgres://cfpb:cfpb@localhost/cfgov
-      MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+      MAPBOX_ACCESS_TOKEN:  ${{ secrets.THISISATESTTOKEN }}
 
     services:
       elasticsearch:
@@ -48,6 +48,11 @@ jobs:
 
     - name: Set up initial data
       run: ./refresh-data.sh test.sql.gz
+
+    - name: Test Token
+      run: |
+        echo "token grabbed was: "
+        echo $MAPBOX_ACCESS_TOKEN
 
     # - name: Run server
     #   run: python cfgov/manage.py runserver
