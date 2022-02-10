@@ -49,14 +49,6 @@ jobs:
     - name: Set up initial data
       run: ./refresh-data.sh test.sql.gz
 
-    - name: Test Token
-      run: |
-        echo "token grabbed was: "
-        if [ "$MAPBOX_ACCESS_TOKEN" = "THISISATESTTOKEN" ]; then 
-          echo "token Matched" 
-        else
-          echo "token is NOT Matched"  
-        fi;
 
     # - name: Run server
     #   run: python cfgov/manage.py runserver
@@ -64,6 +56,8 @@ jobs:
     - name: Run Cypress
       uses: cypress-io/github-action@v2
       with:
+        env: 
+          MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
         spec: |
           test/cypress/integration/paying-for-college/repay-student-debt/repay-student-debt.js
           test/cypress/integration/data-research/consumer-complaints/consumer-complaints.js
