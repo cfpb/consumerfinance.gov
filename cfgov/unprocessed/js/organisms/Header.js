@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 // Required modules.
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import GlobalSearch from '../molecules/GlobalSearch';
@@ -23,6 +24,15 @@ function Header( element ) {
   let _globalSearch;
   let _megaMenu;
   let _overlay;
+
+  /**
+   * Check if either the mega menu or the global search is open.
+   * @returns {Boolean} true if either the mega menu or the global search is open.
+   */
+  function _hasOpenMenu() {
+    return document.querySelector( '.o-mega-menu_content' ).getAttribute( 'aria-expanded' ) === 'true' ||
+           document.querySelector( '.m-global-search_content' ).getAttribute( 'aria-expanded' ) === 'true';
+  }
 
   /**
    * @param {HTMLNode} overlay
@@ -69,7 +79,9 @@ function Header( element ) {
    * Show an overlay.
    */
   function _megaMenuCollapseEnd() {
-    _overlay.classList.add( 'u-hidden' );
+    if ( !_hasOpenMenu() ) {
+      _overlay.classList.add( 'u-hidden' );
+    }
   }
 
   /**
@@ -86,7 +98,11 @@ function Header( element ) {
    * Show an overlay.
    */
   function _globalSearchCollapseEnd() {
-    _overlay.classList.add( 'u-hidden' );
+    setTimeout( function() {
+      if ( !_hasOpenMenu() ) {
+        _overlay.classList.add( 'u-hidden' );
+      }
+    }, 100 );
   }
 
   this.init = init;
