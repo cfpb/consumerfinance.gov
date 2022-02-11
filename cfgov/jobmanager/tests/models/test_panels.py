@@ -24,7 +24,7 @@ class GradePanelTests(unittest.TestCase):
         )
 
 
-class ApplicationLinkTestCaseMixin(object):
+class ApplicationLinkTestCaseMixin:
     link_cls = None
 
     @classmethod

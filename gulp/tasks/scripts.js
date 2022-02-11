@@ -88,18 +88,6 @@ function scriptsModern() {
 }
 
 /**
- * Bundle external site scripts.
- * @returns {PassThrough} A source stream.
- */
-function scriptsExternal() {
-  return _processScript(
-    webpackConfig.externalConf,
-    '/js/routes/external-site/index.js',
-    '/js/'
-  );
-}
-
-/**
  * Bundle atomic header component scripts.
  * Provides a means to bundle JS for specific atomic components,
  * which then can be carried over to other projects.
@@ -184,7 +172,6 @@ function scriptsApps() {
 }
 
 gulp.task( 'scripts:apps', scriptsApps );
-gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 
@@ -203,7 +190,6 @@ gulp.task( 'scripts',
     'scripts:polyfill',
     'scripts:modern',
     'scripts:apps',
-    'scripts:external',
     'scripts:ondemand'
   )
 );

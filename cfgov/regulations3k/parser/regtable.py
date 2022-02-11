@@ -1,4 +1,4 @@
-class RegTable(object):
+class RegTable:
     """Assemble table from XML and deliver an HTML table."""
 
     SHELL = (

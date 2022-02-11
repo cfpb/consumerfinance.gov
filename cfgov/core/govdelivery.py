@@ -22,7 +22,7 @@ def get_govdelivery_api():
     return cls(account_code=settings.GOVDELIVERY_ACCOUNT_CODE)
 
 
-class MockGovDelivery(object):
+class MockGovDelivery:
     """Mock class for testing the GovDelivery API.
 
     Stores all method calls to a list, and returns a valid requests.Response
