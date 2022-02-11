@@ -93,10 +93,14 @@ ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
 ENV ALLOWED_HOSTS '["*"]'
 
-# Install Apache server, mod_wsgi, and curl (container healthcheck),
+# Install Apache server and curl (container healthcheck),
 # and converts all Docker Secrets into environment variables.
 RUN apk add --no-cache apache2 curl && \
     echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
+
+# Link mime.types for RHEL Compatability in apache config.
+# TODO: Remove this link once RHEL is replaced
+RUN ln -s /etc/apache2/mime.types /etc/mime.types
 
 # Copy mod_wsgi.so from mod_wsgi image
 COPY --from=cfgov-mod-wsgi /usr/lib/apache2/mod_wsgi.so /usr/lib/apache2/mod_wsgi.so
