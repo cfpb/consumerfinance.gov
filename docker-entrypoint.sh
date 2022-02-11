@@ -1,8 +1,8 @@
-#!/bin/bash --login
+#!/bin/sh -l
 
 set -e
 
-echo "Using '$(python3 --version 2>&1)' from '$(which python3)'"
+echo "Using $(python3 --version 2>&1) located at $(which python3)"
 
 # Wait for the database to be ready
 until psql ${DATABASE_URL} -c '\q' &> /dev/null; do
@@ -11,7 +11,6 @@ until psql ${DATABASE_URL} -c '\q' &> /dev/null; do
 done
 
 # Do first-time set up of the database if necessary
-echo "${DATABASE_URL}"
 if ! psql ${DATABASE_URL} -c 'SELECT COUNT(*) FROM auth_user' &> /dev/null; then
     echo "Doing first-time database and search index setup..."
     if [ ! -z $CFGOV_PROD_DB_LOCATION ]; then
