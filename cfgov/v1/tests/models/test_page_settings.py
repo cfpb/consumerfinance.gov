@@ -11,7 +11,7 @@ class PageSettingsOrderTestCaseMeta(type):
                 if issubclass(model, CFGOVPage):
                     cls.add_test(dct, model)
 
-        return super(PageSettingsOrderTestCaseMeta, cls).__new__(
+        return super().__new__(
             cls, name, parent, dct
         )
 

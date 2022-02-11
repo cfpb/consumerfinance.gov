@@ -68,7 +68,7 @@ class ConferenceRegistrationForm(AbstractFormBlock):
     )
 
     def clean(self, value):
-        cleaned = super(ConferenceRegistrationForm, self).clean(value)
+        cleaned = super().clean(value)
         question = cleaned.get('govdelivery_question_id')
         answer = cleaned.get('govdelivery_answer_id')
 

@@ -1,3 +1,4 @@
+from datetime import datetime
 from functools import partial
 
 from django.conf import settings
@@ -29,7 +30,7 @@ from core.views import (
 from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
-from legacy.views.complaint import CCDBSearchView, ComplaintLandingView
+from legacy.views.complaint import CCDBSearchView
 from regulations3k.views import redirect_eregs
 from v1.views.documents import DocumentServeView
 
@@ -69,6 +70,9 @@ def empty_200_response(request, *args, **kwargs):
 urlpatterns = [
 
     re_path(r'^rural-or-underserved-tool/$', TemplateView.as_view(
+        extra_context={'years': [
+            year for year in range(2014, datetime.now().year)
+        ]},
         template_name='rural-or-underserved/index.html'),
         name='rural-or-underserved'),
 
@@ -265,12 +269,6 @@ urlpatterns = [
     re_path(
         r'^consumer-tools/retirement/',
         include('retirement_api.urls', namespace='retirement_api')
-    ),
-
-    re_path(
-        r'^data-research/consumer-complaints/$',
-        ComplaintLandingView.as_view(),
-        name='complaint-landing'
     ),
 
     # CCDB5-API

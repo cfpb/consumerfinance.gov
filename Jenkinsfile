@@ -166,7 +166,7 @@ pipeline {
                     docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
                         docker.build(
                             env.IMAGE_NAME_LOCAL,
-                            '--build-arg scl_python_version=rh-python36 --target cfgov-prod .'
+                            '--target cfgov-prod .'
                         )
                         if (IS_ES_IMAGE_UPDATED == 'true') {
                             echo "Building ES image"

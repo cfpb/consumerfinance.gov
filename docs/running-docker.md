@@ -57,6 +57,24 @@ they will work as expected once you’re inside the Python container.
 - PostgreSQL: `docker-compose exec postgres bash`
 
 
+## Update/Change Python MAJOR.MINOR Version
+
+The [first line](https://github.com/cfpb/consumerfinance.gov/tree/main/Dockerfile) of `Dockerfile` sets the base Python Interpreter version for all
+`cfgov` images. Our current pattern is `python:MAJOR.MINOR-alpine` for 
+the base image. This allows us to rapidly incorporate `PATCH` versions without 
+the need for explicit commits.
+
+### Updating `PATCH` version locally
+
+To update the `PATCH` version on your local Docker, replace `<MAJOR.MINOR>` 
+with your target and run:
+
+```bash
+PYTHONVERSION=<MAJOR.MINOR>; \
+  docker pull python:${PYTHONVERSION}-alpine && \
+  docker-compose build --no-cache python
+```
+
 ## Update Python dependencies
 
 If the Python package requirements files have changed,
@@ -90,6 +108,9 @@ When you're done, you can detach with `Ctrl+P Ctrl+Q`.
     Yours may or may not be `consumerfinancegov_python_1`. 
     To verify, use `docker container ls` 
     to get the Python container's full name or ID.
+
+!!! note
+    `docker attach` will ONLY work with the dev image, not prod (apache).
 
 
 ## Useful Docker commands
@@ -129,12 +150,8 @@ This includes:
 If you just want to build the image:
 
 ```bash
-docker build . --build-arg scl_python_version=rh-python36 -t your-desired-image-name
+docker build . -t your-desired-image-name
 ```
-
-**Note:** The `scl_python_version` build arg specifies which
-[Python Software Collection](https://www.softwarecollections.org/en/scls/?search=python)
-version you'd like to use. We've tested this against `rh-python36`.
 
 #### Docker Compose
 
@@ -175,7 +192,7 @@ change configs locally without having to rebuild the image each time.
     docker-compose exec python bash
 
     # Once in the container...
-    httpd -d ./cfgov/apache -k restart
+    httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -k restart
     ```
 
 1. Switch back to the development Compose setup.
@@ -206,8 +223,8 @@ Both 'cfgov-dev' and 'cfgov-prod' are called "[build stages](https://docs.docker
 
 From there, we:
 
-- Install SCL-based Apache HTTPD, and the `mod_wsgi` version appropriate for our chosen `scl_python_version`.
+- Install Apache 2.4 HTTPD, and copy over the `mod_wsgi.so` Apache module from `cfgov-mod-wsgi` build stage to ensure compatibility.
 - Run frontend.sh, Django's collectstatic command, and then *uninstall* node and yarn.
-- Set the default command on container startup to `httpd -d ./cfgov/apache -D FOREGROUND`, which runs Apache using
+- Set the default command on container startup to `httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -D FOREGROUND`, which runs Apache using
     the [configuration in consumerfinance.gov](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache), in the
     foreground (typical when running Apache in a container).

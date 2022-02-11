@@ -178,7 +178,7 @@ class PermissionCheckingMenuItem(MenuItem):
 
     def __init__(self, *args, **kwargs):
         self.permission = kwargs.pop('permission')
-        super(PermissionCheckingMenuItem, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def is_shown(self, request):
         return request.user.has_perm(self.permission)

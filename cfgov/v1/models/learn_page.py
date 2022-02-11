@@ -103,7 +103,7 @@ class AbstractFilterPage(CFGOVPage):
     # Returns an image for the page's meta Open Graph tag
     @property
     def meta_image(self):
-        parent_meta = super(AbstractFilterPage, self).meta_image
+        parent_meta = super().meta_image
         return parent_meta or self.preview_image
 
 
@@ -399,9 +399,9 @@ class EventPage(AbstractFilterPage):
             (self.live_stream_date and self.event_state == 'present')
             or (self.archive_video_id and self.event_state == 'past')
         ):
-            return super(EventPage, self).page_js + ['video-player.js']
+            return super().page_js + ['video-player.js']
 
-        return super(EventPage, self).page_js
+        return super().page_js
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
         if not self.venue_coords:
@@ -420,7 +420,7 @@ class EventPage(AbstractFilterPage):
         return static_map_image_url
 
     def clean(self):
-        super(EventPage, self).clean()
+        super().clean()
         if self.venue_image_type == 'image' and not self.venue_image:
             raise ValidationError({
                 'venue_image': 'Required if "Venue image type" is "Image".'
@@ -433,10 +433,10 @@ class EventPage(AbstractFilterPage):
 
     def save(self, *args, **kwargs):
         self.venue_coords = get_venue_coords(self.venue_city, self.venue_state)
-        return super(EventPage, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def get_context(self, request):
-        context = super(EventPage, self).get_context(request)
+        context = super().get_context(request)
         context['event_state'] = self.event_state
         return context
 

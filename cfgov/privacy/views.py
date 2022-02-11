@@ -13,7 +13,7 @@ class GetDisclosureConsentForm(FormView):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         form.send_email()
-        return super(GetDisclosureConsentForm, self).form_valid(form)
+        return super().form_valid(form)
 
 
 class GetRecordsAccessForm(FormView):
@@ -25,4 +25,4 @@ class GetRecordsAccessForm(FormView):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         form.send_email()
-        return super(GetRecordsAccessForm, self).form_valid(form)
+        return super().form_valid(form)

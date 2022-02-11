@@ -1,10 +1,12 @@
-FROM centos:7 AS cfgov-dev
+FROM python:3.8-alpine as base
+
+FROM base AS cfgov-dev
 
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
+ENV ENV /etc/profile
 
 LABEL maintainer="tech@cfpb.gov"
-
 
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
@@ -13,60 +15,28 @@ ENV APP_HOME /src/consumerfinance.gov
 RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
 
-SHELL ["/bin/bash", "--login", "-o", "pipefail", "-c"]
-
 # Install common OS packages
-RUN yum -y install \
-        centos-release-scl \
-        epel-release && \
-    rpm -i https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
-    curl -sL https://rpm.nodesource.com/setup_16.x | bash - && \
-    curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
-    yum -y update && \
-    yum -y install \
-        gcc \
-        git \
-        mailcap \
-        postgresql10 \
-        which \
-        gettext && \
-    yum clean all && rm -rf /var/cache/yum
-
-# Build python
-WORKDIR /tmp
-ENV PYTHONVERSION=3.9.9
-RUN yum install -y epel-release
-RUN yum groupinstall -y "Development Tools"
-RUN yum install -y openssl-devel libffi-devel bzip2-devel wget
-RUN gcc --version
-RUN wget https://www.python.org/ftp/python/${PYTHONVERSION}/Python-${PYTHONVERSION}.tgz
-RUN tar xvf Python-${PYTHONVERSION}.tgz
-RUN cd Python-${PYTHONVERSION}/ && ./configure --enable-shared --enable-optimiztions && make altinstall && make bininstall
-RUN echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/usr/local/lib" > /etc/profile.d/python39.sh
-RUN rm -Rf Python* *.pem
-RUN yum remove -y wget openssl-devel libffi-devel bzip2-devel
-RUN yum groupremove -y "Development Tools"
-RUN yum remove -y epel-release
-RUN yum clean all
-WORKDIR ${APP_HOME}
-
-RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
+RUN apk update --no-cache && apk upgrade --no-cache
+RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev postgresql-dev
+RUN apk add --no-cache --virtual .backend-deps postgresql curl bash
+RUN apk add --no-cache --virtual .frontend-deps nodejs yarn zlib-dev jpeg-dev
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
 # Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
 # NOTE: MUST be after pip upgrade. Build fails otherwise due to bug in old pip.
 ENV PIP_NO_CACHE_DIR true
 
 # Install python requirements
-RUN yum install -y postgresql-devel
-RUN yum install -y python3-devel.x86_64
 COPY requirements requirements
-RUN echo requirements/local.txt
-RUN python3 -m pip install -r requirements/local.txt -r requirements/deployment.txt
+RUN pip install -r requirements/local.txt -r requirements/deployment.txt
+
+# Remove build dependencies for smaller image
+RUN apk del .build-deps
 
 EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
-CMD ["python3", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
 # Build Frontend Assets
 FROM cfgov-dev as cfgov-build
@@ -82,19 +52,28 @@ ENV ALLOWED_HOSTS '["*"]'
 # See .dockerignore for details on which files are included
 COPY . .
 
-# Install Node.js version curled earlier in this file from rpm.nodesource.com
-RUN yum -y install nodejs yarn && \
-    ./frontend.sh production && \
+# Build the front-end
+RUN ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
     rm -rf node_modules npm-packages-offline-cache
 
+# Build mod_wsgi against target Python version
+FROM base as cfgov-mod-wsgi
+WORKDIR /tmp
+RUN apk add --no-cache --virtual .build-deps apache2-dev gcc make musl-dev
+RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar.gz -O mod_wsgi.tar.gz
+RUN echo -n "0a6f380af854b85a3151e54a3c33b520c4a6e21a99bcad7ae5ddfbfe31a74b50  mod_wsgi.tar.gz" | sha256sum -c
+RUN tar xvf mod_wsgi.tar.gz
+RUN cd mod_wsgi* && ./configure && make install
+RUN ls /usr/lib/apache2/mod_wsgi.so  # Ensure it compiled and is where it's expected
+RUN apk del .build-deps
+RUN rm -Rf /tmp/mod_wsgi*
 
 # Production-like Apache-based image
 FROM cfgov-dev as cfgov-prod
 
-ENV SCL_HTTPD_VERSION httpd24
-ENV SCL_HTTPD_ROOT /opt/rh/${SCL_HTTPD_VERSION}/root
+ENV HTTPD_ROOT /etc/apache2
 
 # Apache HTTPD settings
 ENV APACHE_SERVER_ROOT ${APP_HOME}/cfgov/apache
@@ -114,46 +93,35 @@ ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
 ENV ALLOWED_HOSTS '["*"]'
 
-# Install and enable SCL-based Apache server and mod_wsgi,
+# Install Apache server and curl (container healthcheck),
 # and converts all Docker Secrets into environment variables.
-RUN yum -y install ${SCL_HTTPD_VERSION} && \
-    yum clean all && rm -rf /var/cache/yum && \
-    echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
+RUN apk add --no-cache apache2 curl && \
     echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
+
+# Link mime.types for RHEL Compatability in apache config.
+# TODO: Remove this link once RHEL is replaced
+RUN ln -s /etc/apache2/mime.types /etc/mime.types
+
+# Copy mod_wsgi.so from mod_wsgi image
+COPY --from=cfgov-mod-wsgi /usr/lib/apache2/mod_wsgi.so /usr/lib/apache2/mod_wsgi.so
 
 # Copy the cfgov directory form the build image
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PATH}/static.in
 
-# Build mod_wsgi
-WORKDIR /tmp
-RUN yum groupinstall -y "Development Tools"
-RUN yum install -y ${SCL_HTTPD_VERSION}-httpd-devel wget
-RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar.gz -O mod_wsgi.tar.gz
-RUN tar xzvf mod_wsgi.tar.gz
-RUN mv mod_wsgi-* mod_wsgi
-RUN cd mod_wsgi && ./configure --with-python=/usr/local/bin/python3 && make && make install
-RUN rm -Rf mod_wsgi*
-RUN yum groupremove -y "Development Tools"
-RUN yum remove -y ${SCL_HTTPD_VERSION}-httpd-devel wget
-WORKDIR ${APP_HOME}
-
-# Clean up
-RUN yum clean all && rm -rf /var/cache/yum && \
-    chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
+RUN ln -s /usr/lib/apache2 cfgov/apache/modules
+RUN chown -R apache:apache ${APP_HOME} /usr/share/apache2 /var/run/apache2 /var/log/apache2
 
 USER apache
 
 # Build frontend, cleanup excess file, and setup filesystem
 # - cfgov/f/ - Wagtail file uploads
-RUN ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
-    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/run ${APACHE_SERVER_ROOT}/run && \
-    rm -rf cfgov/apache/www cfgov/unprocessed && \
+RUN rm -rf cfgov/apache/www cfgov/unprocessed && \
     mkdir -p cfgov/f
 
 # Healthcheck retry set high since database loads take a while
 HEALTHCHECK --start-period=300s --interval=30s --retries=30 \
             CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
 
-CMD ["httpd", "-d", "cfgov/apache", "-D", "FOREGROUND"]
+CMD ["httpd", "-d", "/src/consumerfinance.gov/cfgov/apache", "-f", "/src/consumerfinance.gov/cfgov/apache/conf/httpd.conf", "-D", "FOREGROUND"]

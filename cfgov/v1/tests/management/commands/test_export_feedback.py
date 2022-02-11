@@ -40,7 +40,7 @@ class LookupPageSlug(TestCase):
 
         page = create_simple_page(self.root_page, duplicate_slug)
         create_simple_page(page, duplicate_slug)
-        
+
         with self.assertRaises(argparse.ArgumentTypeError):
             lookup_page_slug(duplicate_slug)
 
@@ -155,8 +155,8 @@ class TestExportFeedback(TestCase):
 
     def test_export_between_dates_only_some(self):
         output = self.call_command(
-                from_date=self.first_timestamp.date(),
-                to_date=self.first_timestamp.date() + timedelta(days=1)
+            from_date=self.first_timestamp.date(),
+            to_date=self.first_timestamp.date() + timedelta(days=1)
         )
 
         # Output should contain only the first set of feedback.

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 yarn list --depth=3 2>/dev/null | \
 awk '$NF~/@[0-9]\.[0-9]\.[0-9]/ {print $NF}' | \
 sort -u | \

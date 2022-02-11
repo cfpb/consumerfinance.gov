@@ -4,7 +4,7 @@ repo_url: https://github.com/cfpb/consumerfinance.gov
 
 nav:
 - Introduction: index.md
-- Installation: installation.md
+- Setup: installation.md
 - Running this Project:
     - Running in a Virtual Environment: running-virtualenv.md
     - Running in Docker: running-docker.md

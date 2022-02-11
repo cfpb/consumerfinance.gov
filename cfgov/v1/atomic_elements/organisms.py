@@ -119,7 +119,7 @@ class InfoUnitGroup(blocks.StructBlock):
     ])
 
     def clean(self, value):
-        cleaned = super(InfoUnitGroup, self).clean(value)
+        cleaned = super().clean(value)
 
         # If 25/75, info units must have images.
         if cleaned.get('format') == '25-75':
@@ -280,7 +280,7 @@ class RelatedPosts(blocks.StructBlock):
     )
 
     def get_context(self, value, parent_context=None):
-        context = super(RelatedPosts, self).get_context(
+        context = super().get_context(
             value,
             parent_context=parent_context
         )
@@ -839,7 +839,7 @@ class FilterableList(BaseExpandable):
             return []
 
     def get_context(self, value, parent_context=None):
-        context = super(FilterableList, self).get_context(
+        context = super().get_context(
             value,
             parent_context=parent_context
         )

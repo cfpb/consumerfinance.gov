@@ -24,12 +24,12 @@ class GradePanelTests(unittest.TestCase):
         )
 
 
-class ApplicationLinkTestCaseMixin(object):
+class ApplicationLinkTestCaseMixin:
     link_cls = None
 
     @classmethod
     def setUpClass(cls):
-        super(ApplicationLinkTestCaseMixin, cls).setUpClass()
+        super().setUpClass()
         cls.root = Page.objects.get(slug='root')
 
     def setUp(self):
@@ -52,7 +52,7 @@ class USAJobsApplicationLinkTestCase(ApplicationLinkTestCaseMixin, TestCase):
     link_cls = USAJobsApplicationLink
 
     def setUp(self):
-        super(USAJobsApplicationLinkTestCase, self).setUp()
+        super().setUp()
         self.applicant_type = baker.make(ApplicantType)
 
     def test_all_fields_passes_validation(self):
