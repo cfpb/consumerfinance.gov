@@ -70,6 +70,8 @@
         
             <li><a class="toctree-l4" href="#access-a-containers-shell">Access a container’s shell</a></li>
         
+            <li><a class="toctree-l4" href="#updatechange-python-majorminor-version">Update/Change Python MAJOR.MINOR Version</a></li>
+        
             <li><a class="toctree-l4" href="#update-python-dependencies">Update Python dependencies</a></li>
         
             <li><a class="toctree-l4" href="#work-on-satellite-apps">Work on satellite apps</a></li>
@@ -240,6 +242,18 @@ they will work as expected once you’re inside the Python container.</p>
 <li>Elasticsearch: <code>docker-compose exec elasticsearch bash</code></li>
 <li>PostgreSQL: <code>docker-compose exec postgres bash</code></li>
 </ul>
+<h2 id="updatechange-python-majorminor-version">Update/Change Python MAJOR.MINOR Version<a class="headerlink" href="#updatechange-python-majorminor-version" title="Permanent link">¶</a></h2>
+<p>The <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/Dockerfile">first line</a> of <code>Dockerfile</code> sets the base Python Interpreter version for all
+<code>cfgov</code> images. Our current pattern is <code>python:MAJOR.MINOR-alpine</code> for 
+the base image. This allows us to rapidly incorporate <code>PATCH</code> versions without 
+the need for explicit commits.</p>
+<h3 id="updating-patch-version-locally">Updating <code>PATCH</code> version locally<a class="headerlink" href="#updating-patch-version-locally" title="Permanent link">¶</a></h3>
+<p>To update the <code>PATCH</code> version on your local Docker, replace <code>&lt;MAJOR.MINOR&gt;</code> 
+with your target and run:</p>
+<pre class="highlight"><code class="language-bash">PYTHONVERSION=&lt;MAJOR.MINOR&gt;; \
+  docker pull python:${PYTHONVERSION}-alpine &amp;&amp; \
+  docker-compose build --no-cache python</code></pre>
+
 <h2 id="update-python-dependencies">Update Python dependencies<a class="headerlink" href="#update-python-dependencies" title="Permanent link">¶</a></h2>
 <p>If the Python package requirements files have changed,
 you will need to stop <code>docker-compose</code> (if it is running)
@@ -261,6 +275,10 @@ you can run <a href="https://docs.docker.com/engine/reference/commandline/attach
 Yours may or may not be <code>consumerfinancegov_python_1</code>. 
 To verify, use <code>docker container ls</code> 
 to get the Python container's full name or ID.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>docker attach</code> will ONLY work with the dev image, not prod (apache).</p>
 </div>
 <h2 id="useful-docker-commands">Useful Docker commands<a class="headerlink" href="#useful-docker-commands" title="Permanent link">¶</a></h2>
 <p>For <code>docker-compose</code> commands,
@@ -290,11 +308,8 @@ container in production.</p>
 <h3 id="how-do-i-use-it">How do I use it?<a class="headerlink" href="#how-do-i-use-it" title="Permanent link">¶</a></h3>
 <h4 id="just-docker">Just Docker<a class="headerlink" href="#just-docker" title="Permanent link">¶</a></h4>
 <p>If you just want to build the image:</p>
-<pre class="highlight"><code class="language-bash">docker build . --build-arg scl_python_version=rh-python38 -t your-desired-image-name</code></pre>
+<pre class="highlight"><code class="language-bash">docker build . -t your-desired-image-name</code></pre>
 
-<p><strong>Note:</strong> The <code>scl_python_version</code> build arg specifies which
-<a href="https://www.softwarecollections.org/en/scls/?search=python">Python Software Collection</a>
-version you'd like to use. We've tested this against <code>rh-python38</code>.</p>
 <h4 id="docker-compose">Docker Compose<a class="headerlink" href="#docker-compose" title="Permanent link">¶</a></h4>
 <p>You can also launch the full cf.gov stack locally via <code>docker-compose</code>. This setup is
 a nice way to test out new Apache config changes. It includes volumes that mount your
@@ -328,7 +343,7 @@ export CFGOV_PROD_DB_LOCATION=&lt;database-dump-url&gt;
 <pre class="highlight"><code class="language-bash">docker-compose exec python bash
 
 # Once in the container...
-httpd -d ./cfgov/apache -k restart</code></pre>
+httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -k restart</code></pre>
 
 </li>
 <li>
@@ -352,9 +367,9 @@ optionally deploying to our Docker Swarm cluster.</p>
 <p>Both 'cfgov-dev' and 'cfgov-prod' are called "<a href="https://docs.docker.com/develop/develop-images/multistage-build/">build stages</a>". That line means, "create a new stage, starting from cfgov-dev, called cfgov-prod".</p>
 <p>From there, we:</p>
 <ul>
-<li>Install SCL-based Apache HTTPD, and the <code>mod_wsgi</code> version appropriate for our chosen <code>scl_python_version</code>.</li>
+<li>Install Apache 2.4 HTTPD, and copy over the <code>mod_wsgi.so</code> Apache module from <code>cfgov-mod-wsgi</code> build stage to ensure compatibility.</li>
 <li>Run frontend.sh, Django's collectstatic command, and then <em>uninstall</em> node and yarn.</li>
-<li>Set the default command on container startup to <code>httpd -d ./cfgov/apache -D FOREGROUND</code>, which runs Apache using
+<li>Set the default command on container startup to <code>httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -D FOREGROUND</code>, which runs Apache using
     the <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache">configuration in consumerfinance.gov</a>, in the
     foreground (typical when running Apache in a container).</li>
 </ul>
