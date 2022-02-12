@@ -33,7 +33,7 @@ def get_conference_details_from_page(page_id):
     raise RuntimeError('no registration form found on %s' % page)
 
 
-class ConferenceExporter(object):
+class ConferenceExporter:
     """Generates a Excel workbook of registrants for a given conference.
 
     Looks up conference attendees by GovDelivery code.
@@ -84,7 +84,7 @@ class ConferenceExporter(object):
         return ', '.join(value) if isinstance(value, list) else value
 
 
-class ConferenceNotifier(object):
+class ConferenceNotifier:
     """Emails an Excel workbook of registrants for a given conference.
 
     Looks up conference attendees by GovDelivery code.

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # ==========================================================================
 # Setup script for installing project dependencies.

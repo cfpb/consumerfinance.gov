@@ -11,7 +11,7 @@ set -e
 
 init() {
   # Ensure that we're in a virtualenv.
-  python -c 'import sys; sys.real_prefix' 2>/dev/null || (
+  python -c 'import sys; sys.prefix != sys.base_prefix' 2>/dev/null || (
     echo 'Please activate your virtualenv before running this script.' &&
     exit 1
   )

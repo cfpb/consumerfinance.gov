@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 from django.core.cache import cache, caches
 from django.template import engines
-from django.test import Client, TestCase, override_settings
+from django.test import TestCase, override_settings
 
 from scripts import _atomic_helpers as atomic
 from search.elasticsearch_helpers import ElasticsearchTestsMixin

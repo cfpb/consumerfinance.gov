@@ -19,7 +19,7 @@
   }
 
   .o-simple-chart_subtitle {
-    margin: 0 0 unit(20 / @base-font-size-px, em) 0;
+    margin: 0 0 unit(30 / @base-font-size-px, em) 0;
   }
 
   .o-simple-chart_selects {
@@ -27,23 +27,46 @@
       margin-top: unit( 9 / @base-font-size-px, em);
     })
   }
-
+  .highcharts-tilemap-series {
+    .highcharts-point {
+      stroke: #919395;
+    }
+    .highcharts-point:hover {
+      stroke: #5a5d61;
+      stroke-width: 2px;
+    }
+    .highcharts-label {
+      font-family: 'Avenir Next';
+      font-size: 12px;
+      color: '#101820';
+      text {
+        pointer-events: none;
+      }
+      .respond-to-max( @bp-xs-max, {
+        font-size: 10px;
+        tspan:last-of-type {
+          display: none;
+        }
+      })
+    }
+  }
   .select-wrapper {
     .grid_column(1,2);
-    margin-bottom: unit( 15 / @base-font-size-px, em);
+    box-sizing: inherit;
+    margin-bottom: unit( 10 / @base-font-size-px, em);
     border-width: 0 30px 0 0;
     .respond-to-max( @bp-xs-max, {
       display: block;
       width: 100%;
+      margin-bottom: unit( 30 / @base-font-size-px, em);
     })
   }
 
   .a-label__heading {
     margin: 0;
-    padding-bottom: unit( 10 / @size-vi, em);
+    padding-bottom: 10px;
     .respond-to-max( @bp-xs-max, {
       font-size: @base-font-size-px;
-      padding-bottom: unit( 10 / @base-font-size-px, em);
     })
   }
 
@@ -55,7 +78,8 @@
   }
 
   .highcharts-navigator-mask-inside{
-    fill: @gray-20;
+    fill: @gray-30;
+    fill-opacity: 0.1;
   }
   .highcharts-navigator-handle {
     stroke: @gray;
@@ -116,19 +140,22 @@
   .highcharts-range-selector-buttons{
     .highcharts-button:last-child {
       text{
-      font-weight: 500 !important;
-    }
+        font-weight: 500 !important;
+      }
     }
     text {
+      color: @gray !important;
+      fill: @gray !important;
       transform:translate(0, 5px);
       font-size: @base-font-size-px;
       font-weight: 400;
+    }
+    & > text {
       &:first-child{
         transform:translate(48px,-28px);
         .respond-to-max( 600px, {
           transform:translate(128px,-28px)
         })
-
       }
     }
   }
@@ -172,14 +199,27 @@
     display: none;
     width: 100%;
     height: 60px;
+    margin-top: -5px;
+    margin-bottom: 66px;
+
+    .respond-to-max( @bp-xs-max, {
+      margin-top: -8px;
+      margin-bottom: -6px;
+    });
+
+    .legend-title {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
 
     .legend-color, .legend-label {
       float: left;
-       width: 19.75%;
-       text-align: center;
+      width: 19.75%;
+      text-align: center;
     }
    .legend-label {
      line-height: 2;
+     font-size: 14px;
    }
    .legend-color {
       height: 15px;
@@ -191,9 +231,20 @@
     }
 
   }
+
+  .highcharts-legend {
+    .respond-to-max( @bp-xs-max, {
+      transform: translateX(0) !important;
+    })
+  }
+
+  .highcharts-legend-item tspan {
+    font-weight: 400 !important;
+  }
+
   .m-chart-footnote {
     max-width: unit(670 / @size-vi, rem);
-    margin-top: unit(30 / @size-vi, em);
+    margin-top: unit(45 / @size-vi, em);
     padding-top: unit(15 / @size-vi, em);
   }
 }

@@ -120,7 +120,7 @@ def format_constants():
 class BaseTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
-        context = super(BaseTemplateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['url_root'] = DISCLOSURE_ROOT
         context.update(format_constants())
         return context

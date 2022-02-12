@@ -1,25 +1,50 @@
 import os
+from pathlib import Path
 from zipfile import ZipFile
 
 from django.core.management.base import BaseCommand, CommandError
-from django.utils.encoding import force_str
 
 from agreements.management.commands import _util
 from agreements.models import Agreement, Issuer
 
 
-def empty_folder_test(zipfile, pdf_list):
-    """Check that there are no empty folders in the agreement zip file."""
+def validate_contains_pdfs(pdf_list):
+    """
+    Check that the zip file contains at least one PDF.
+    If not, raise a CommandError.
+    """
+    if len(pdf_list) == 0:
+        error_msg = ("No PDFs were detected in the input file.")
+        raise CommandError(error_msg)
+
+
+def validate_no_empty_folders(zipfile, pdf_list):
+    """
+    Check that there are no empty folders in the agreement zip file.
+    If there are, raise a CommandError.
+    """
     all_folders = set(
-        [name for name in zipfile.namelist()
+        [Path(name) for name in zipfile.namelist()
          if name.endswith('/')]
     )
     pdf_folders = set(
-        [pdf.split('/')[0] + '/' for pdf in pdf_list]
+        [Path(pdf_path).parent for pdf_path in pdf_list]
     )
+
+    # Ensure folders at higher levels of the directory structure
+    # don't get marked as empty
+    sample_pdf = Path(pdf_list[0])
+    for p in sample_pdf.parents:
+        pdf_folders.add(p)
+
     empty_folders = all_folders - pdf_folders
     if empty_folders:
-        return list(empty_folders)
+        error_msg = (
+            "Processing error: Blank folders were found "
+            "in the source zip file:\n{}".format(
+                ", ".join([str(folder) for folder in empty_folders]))
+        )
+        raise CommandError(error_msg)
 
 
 class Command(BaseCommand):
@@ -41,37 +66,27 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        # maybe this should be replaced with a CLI options:
-        do_upload = os.environ.get('AGREEMENTS_S3_UPLOAD_ENABLED', False)
-
-        Agreement.objects.all().delete()
-        Issuer.objects.all().delete()
-
-        agreements_zip = ZipFile(options['path'])
-
-        # Zip files default to IBM Code Page 437 encoding unless a specific bit
-        # is set. See Appendix D in the zip file spec:
-        # https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
-        all_pdfs = [
-            info.filename if (info.flag_bits & 0x800) == 0
-            else force_str(info.filename, 'cp437')
-            for info in agreements_zip.infolist()
-            if info.filename.upper().endswith('.PDF')
-        ]
-
-        blanks = empty_folder_test(agreements_zip, all_pdfs)
-        if blanks:
-            error_msg = (
-                "Processing error: Blank folders were found "
-                "in the source zip file:\n{}".format(
-                    ", ".join([folder for folder in blanks]))
-            )
-            raise CommandError(error_msg)
-
         if options['verbosity'] >= 1:
             output_file = self.stdout
         else:
             output_file = open(os.devnull, 'a')
+
+        # maybe this should be replaced with a CLI options:
+        do_upload = os.environ.get('AGREEMENTS_S3_UPLOAD_ENABLED', False)
+
+        agreements_zip = ZipFile(options['path'])
+
+        all_pdfs = [
+            _util.filename_in_zip(info)
+            for info in agreements_zip.infolist()
+            if info.filename.upper().endswith('.PDF')
+        ]
+
+        validate_contains_pdfs(all_pdfs)
+        validate_no_empty_folders(agreements_zip, all_pdfs)
+
+        Agreement.objects.all().delete()
+        Issuer.objects.all().delete()
 
         for pdf_path in all_pdfs:
             _util.save_agreement(

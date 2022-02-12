@@ -96,15 +96,16 @@ INSTALLED_APPS = (
     "hmda",
     "youth_employment",
     "diversity_inclusion",
+    "privacy",
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
     "wagtailmedia",
     "django_elasticsearch_dsl",
     "corsheaders",
+    "login",
 
     # Satellites
-    "ccdb5_ui",
     "complaint_search",
     "countylimits",
     "crtool",
@@ -230,12 +231,15 @@ ALLOW_ADMIN_URL = os.environ.get("ALLOW_ADMIN_URL", False)
 if ALLOW_ADMIN_URL:
     DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000  # For heavy Wagtail pages
 
-# Databases
-DATABASES = {}
-
-# If DATABASE_URL is defined in the environment, use it to set the Django DB
-if os.getenv("DATABASE_URL"):
-    DATABASES["default"] = dj_database_url.config()
+# Default database is PostgreSQL running on localhost.
+# Database name cfgov, username cfpb, password cfpb.
+# Override this by setting DATABASE_URL in the environment.
+# See https://github.com/jacobian/dj-database-url for URL formatting.
+DATABASES = {
+    "default": dj_database_url.config(
+        default="postgres://cfpb:cfpb@localhost/cfgov"
+    ),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/stable/topics/i18n/
@@ -300,10 +304,11 @@ EXTERNAL_URL_ALLOWLIST = (
 # Wagtail settings
 WAGTAIL_SITE_NAME = "consumerfinance.gov"
 WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
+WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
 
-WAGTAIL_USER_CREATION_FORM = "v1.auth_forms.UserCreationForm"
-WAGTAIL_USER_EDIT_FORM = "v1.auth_forms.UserEditForm"
+WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
+WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
 
 # LEGACY APPS
@@ -315,7 +320,7 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 )
 
 # ElasticSearch 7 Configuration
-ES7_HOST = os.getenv('ES7_HOST', 'localhost')
+ES_HOST = os.getenv('ES_HOST', 'localhost')
 ES_PORT = os.getenv("ES_PORT", "9200")
 ELASTICSEARCH_BIGINT = 50000
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
@@ -329,7 +334,7 @@ if os.environ.get('USE_AWS_ES', False):
     )
     ELASTICSEARCH_DSL = {
         'default': {
-            'hosts': [{'host': ES7_HOST, 'port': 443}],
+            'hosts': [{'host': ES_HOST, 'port': 443}],
             'http_auth': awsauth,
             'use_ssl': True,
             'connection_class': RequestsHttpConnection,
@@ -338,7 +343,7 @@ if os.environ.get('USE_AWS_ES', False):
     }
 else:
     ELASTICSEARCH_DSL = {
-        "default": {"hosts": f"http://{ES7_HOST}:{ES_PORT}"}
+        "default": {"hosts": f"http://{ES_HOST}:{ES_PORT}"}
     }
 
 ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'search.elasticsearch_helpers.WagtailSignalProcessor'
@@ -378,6 +383,8 @@ WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get(
     "WAGTAILADMIN_NOTIFICATION_FROM_EMAIL"
 )
 
+PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
+
 
 # Password Policies
 # cfpb_common password rules
@@ -398,6 +405,10 @@ LOGIN_FAIL_TIME_PERIOD = os.environ.get("LOGIN_FAIL_TIME_PERIOD", 120 * 60)
 LOGIN_FAILS_ALLOWED = os.environ.get("LOGIN_FAILS_ALLOWED", 5)
 LOGIN_REDIRECT_URL = "/admin/"
 LOGIN_URL = "/login/"
+
+# Initialize our SAML_AUTH variable as false. Our production settings will
+# override this based on the SAML_AUTH environment variable.
+SAML_AUTH = False
 
 # When we generate an full HTML version of the regulation, we want to
 # write it out somewhere. This is where.
@@ -456,6 +467,7 @@ CSP_SCRIPT_SRC = (
     "js-agent.newrelic.com",
     "dnn506yrbagrg.cloudfront.net",
     "bam.nr-data.net",
+    "gov-bam.nr-data.net",
     "*.youtube.com",
     "*.ytimg.com",
     "trk.cetrk.com",
@@ -549,6 +561,7 @@ CSP_CONNECT_SRC = (
     "*.tiles.mapbox.com",
     "api.mapbox.com",
     "bam.nr-data.net",
+    "gov-bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",
     "n2.mouseflow.com",
@@ -652,12 +665,8 @@ FLAGS = {
     "ASK_SURVEY_INTERCEPT": [],
     # Hide archive filter options in the filterable UI
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
-    # Supports testing of a new 2021 version of the website home page.
-    # Enable by appending ?home_page_2021=True to home page URLs.
-    "HOME_PAGE_2021":  [
-        ("environment is not", "production", True),
-        ("parameter", "home_page_2021", True),
-    ],
+    # Whether robots.txt should block all robots, except for Search.gov.
+    "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate

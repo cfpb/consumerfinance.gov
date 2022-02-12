@@ -25,7 +25,10 @@ services:
       - app
 
   postgres:
-    image: postgres:10-alpine
+    # Deliberately pin the Postgres image to a minor version so that
+    # upstream image updates don't trigger recreation of the database
+    # container when Docker stacks are redeployed.
+    image: postgres:10.18-alpine
     user: postgres
     deploy:
       placement:
@@ -60,9 +63,7 @@ services:
       APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
       DATABASE_URL: postgres://cfpb@postgres/cfgov
       DJANGO_ADMIN_USERNAME: admin
-      ES_PORT: 9200
       ES_HOST: elasticsearch
-      ES7_HOST: elasticsearch
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
       GOVDELIVERY_ACCOUNT_CODE: USCFPB
       MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
@@ -101,18 +102,9 @@ services:
     command: >
                 bash -c "
 
-                psql $${DATABASE_URL} -c 'SELECT COUNT(*) FROM auth_user'
-
-                django_tables_exist=$$?
-
-                if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
-                    ./refresh-data.sh
-                    ./cfgov/manage.py createcachetable
-                fi
-
                 ./cfgov/manage.py search_index --rebuild -f --parallel
 
-                httpd -d cfgov/apache -D FOREGROUND"
+                httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -D FOREGROUND"
 
 networks:
   app:

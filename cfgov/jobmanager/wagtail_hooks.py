@@ -31,7 +31,7 @@ class JobCategoryForm(ModelForm):
         model = JobCategory
 
 
-class JobCategoryModelFormMixin(object):
+class JobCategoryModelFormMixin:
     def get_form_class(self):
         return JobCategoryForm
 

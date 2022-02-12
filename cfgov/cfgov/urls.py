@@ -1,11 +1,12 @@
+from datetime import datetime
 from functools import partial
 
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
+from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -13,6 +14,7 @@ from wagtail.contrib.sitemaps.views import sitemap
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
+from flags.urls import flagged_re_path
 from flags.views import FlaggedTemplateView
 from wagtailautocomplete.urls.admin import (
     urlpatterns as autocomplete_admin_urls
@@ -28,24 +30,9 @@ from core.views import (
 from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
-from legacy.views.complaint import ComplaintLandingView
+from legacy.views.complaint import CCDBSearchView
 from regulations3k.views import redirect_eregs
-from v1.auth_forms import CFGOVPasswordChangeForm
-from v1.views import (
-    change_password, check_permissions, login_with_lockout,
-    password_reset_confirm
-)
 from v1.views.documents import DocumentServeView
-
-
-try:
-    from django.urls import include, re_path
-
-    from flags.urls import flagged_re_path
-except ImportError:
-    from django.conf.urls import include, url as re_path
-
-    from flags.urls import flagged_url as flagged_re_path
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -83,6 +70,9 @@ def empty_200_response(request, *args, **kwargs):
 urlpatterns = [
 
     re_path(r'^rural-or-underserved-tool/$', TemplateView.as_view(
+        extra_context={'years': [
+            year for year in range(2014, datetime.now().year)
+        ]},
         template_name='rural-or-underserved/index.html'),
         name='rural-or-underserved'),
 
@@ -281,12 +271,6 @@ urlpatterns = [
         include('retirement_api.urls', namespace='retirement_api')
     ),
 
-    re_path(
-        r'^data-research/consumer-complaints/$',
-        ComplaintLandingView.as_view(),
-        name='complaint-landing'
-    ),
-
     # CCDB5-API
     re_path(
         r'^data-research/consumer-complaints/search/api/v1/',
@@ -295,7 +279,9 @@ urlpatterns = [
     # CCDB5-UI
     re_path(
         r'^data-research/consumer-complaints/search/',
-        include('ccdb5_ui.config.urls')),
+        CCDBSearchView.as_view(),
+        name='complaint-search'
+    ),
 
     re_path(r'^oah-api/rates/', include('ratechecker.urls')),
     re_path(r'^oah-api/county/', include('countylimits.urls')),
@@ -426,7 +412,18 @@ urlpatterns = [
             'diversity_inclusion'),
             namespace='diversity_inclusion')),
 
-    re_path(r'^sitemap\.xml$', akamai_no_store(sitemap)),
+    re_path(
+        r'^privacy/',
+        include((
+            'privacy.urls',
+            'privacy'),
+            namespace='privacy')),
+
+    path('robots.txt', TemplateView.as_view(
+        template_name='robots.txt',
+        content_type='text/plain',
+    )),
+    re_path(r'^sitemap\.xml$', akamai_no_store(sitemap), name='sitemap'),
 
     re_path(
         r'^consumer-tools/educator-tools/youth-financial-education/',
@@ -456,7 +453,8 @@ urlpatterns = [
     flagged_re_path(
         'BETA_EXTERNAL_TESTING',
         r'^beta_external_testing/',
-        empty_200_response),
+        akamai_no_store(empty_200_response)
+    ),
 ]
 
 # Ask CFPB category and subcategory redirects
@@ -595,61 +593,12 @@ urlpatterns = urlpatterns + category_redirects
 
 if settings.ALLOW_ADMIN_URL:
     patterns = [
-        re_path(r'^login/$', login_with_lockout, name='cfpb_login'),
-        re_path(
-            r'^login/check_permissions/$',
-            check_permissions,
-            name='check_permissions'
-        ),
-        re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
-        re_path(
-            r'^admin/login/$',
-            RedirectView.as_view(
-                url='/login/',
-                permanent=True,
-                query_string=True
-            )
-        ),
-        re_path(
-            r'^django-admin/login/$',
-            RedirectView.as_view(
-                url='/login/',
-                permanent=True,
-                query_string=True
-            )
-        ),
+        # Include our login URL patterns
+        re_path(r'', include('login.urls')),
 
-        re_path(
-            r'^django-admin/password_change',
-            change_password,
-            name='django_admin_account_change_password'
-        ),
         re_path(r'^django-admin/', admin.site.urls),
-
-        # Override Django and Wagtail password views with our password policy
-        re_path(r'^admin/password_reset/', include([
-            re_path(r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',  # noqa: E501
-                password_reset_confirm,
-                name='password_reset_confirm')
-        ])),
-        re_path(
-            r'^django-admin/password_change',
-            auth_views.PasswordChangeView.as_view(),
-            {'password_change_form': CFGOVPasswordChangeForm}
-        ),
-        re_path(
-            r'^password/change/done/$',
-            auth_views.PasswordChangeDoneView.as_view(),
-            name='password_change_done'
-        ),
-        re_path(
-            r'^admin/account/change_password/$',
-            change_password,
-            name='wagtailadmin_account_change_password'
-        ),
         re_path(r'^admin/autocomplete/', include(autocomplete_admin_urls)),
         re_path(r'^admin/', include(wagtailadmin_urls)),
-
     ]
 
     urlpatterns = patterns + urlpatterns

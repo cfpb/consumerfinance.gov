@@ -11,7 +11,7 @@ class MockConferenceRegistrationForm(forms.Form):
         kwargs.pop('govdelivery_code')
         kwargs.pop('govdelivery_question_id')
         kwargs.pop('govdelivery_answer_id')
-        super(MockConferenceRegistrationForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def save(self, commit=False):
         pass

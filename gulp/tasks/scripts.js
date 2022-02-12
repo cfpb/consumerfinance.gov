@@ -88,31 +88,6 @@ function scriptsModern() {
 }
 
 /**
- * Bundle scripts in unprocessed/js/routes/
- * and factor out common modules into common.js.
- * @returns {PassThrough} A source stream.
- */
-function scriptsAdmin() {
-  return _processScript(
-    webpackConfig.modernConf,
-    '/js/admin/*.js',
-    '/js/admin/'
-  );
-}
-
-/**
- * Bundle external site scripts.
- * @returns {PassThrough} A source stream.
- */
-function scriptsExternal() {
-  return _processScript(
-    webpackConfig.externalConf,
-    '/js/routes/external-site/index.js',
-    '/js/'
-  );
-}
-
-/**
  * Bundle atomic header component scripts.
  * Provides a means to bundle JS for specific atomic components,
  * which then can be carried over to other projects.
@@ -197,10 +172,8 @@ function scriptsApps() {
 }
 
 gulp.task( 'scripts:apps', scriptsApps );
-gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
-gulp.task( 'scripts:admin', scriptsAdmin );
 
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
@@ -217,9 +190,7 @@ gulp.task( 'scripts',
     'scripts:polyfill',
     'scripts:modern',
     'scripts:apps',
-    'scripts:external',
-    'scripts:ondemand',
-    'scripts:admin'
+    'scripts:ondemand'
   )
 );
 

@@ -22,9 +22,9 @@ sticky-kit@1.1.3:
   resolved "https://registry.yarnpkg.com/sticky-kit/-/sticky-kit-1.1.3.tgz#dab5ace49b462cf6d4969b1d58e639fc01377570"
   integrity sha1-2rWs5JtGLPbUlpsdWOY5/AE3dXA=
 
-student-debt-calc@2.6.5:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/student-debt-calc/-/student-debt-calc-2.6.5.tgz#de7260730a05706698bbc0dbd38622a546504d2f"
-  integrity sha512-j38faFRVP79RWHXfNE7kvWIKDQRhu3vrXmlV7L/SIuyARG+zPnvNja4Cg0+xvo3ZH3lQewKjWGUvbMmUitihyw==
+student-debt-calc@2.6.6:
+  version "2.6.6"
+  resolved "https://registry.yarnpkg.com/student-debt-calc/-/student-debt-calc-2.6.6.tgz#894f79ebaef64865e9004a8ddcd2d7f1e3fbb373"
+  integrity sha512-DACtsgkK+AJfcg02SZsi9vcsp+j0EYE6sThr71NwnmlTpRaOwT9YVtGufI+qYtxf+yL2HzgCZZkSpXr229Xg4Q==
   dependencies:
     extend "3.0.2"

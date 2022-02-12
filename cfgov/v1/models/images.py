@@ -10,9 +10,11 @@ from wagtail.images.models import (
 
 from wagtail_placeholder_images.mixins import PlaceholderRenditionMixin
 
+from v1.atomic_elements.atoms import IMAGE_ALT_TEXT_HELP_TEXT
+
 
 class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
-    alt = models.CharField(max_length=100, blank=True)
+    alt = models.TextField(blank=True, help_text=IMAGE_ALT_TEXT_HELP_TEXT)
     file_hash = models.CharField(max_length=40, blank=True, editable=False)
     admin_form_fields = Image.admin_form_fields + (
         'alt',
@@ -28,7 +30,7 @@ class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
         if self.file.name.endswith('.gif'):
             return self.get_mock_rendition(rendition_filter)
         else:
-            return super(CFGOVImage, self).get_rendition(rendition_filter)
+            return super().get_rendition(rendition_filter)
 
     def get_mock_rendition(self, rendition_filter):
         """Create a mock rendition object that wraps the original image.

@@ -3,7 +3,7 @@ import os
 import github3
 
 
-class GithubAlert(object):
+class GithubAlert:
     def __init__(self, credentials):
         self.token = credentials.get(
             'token',

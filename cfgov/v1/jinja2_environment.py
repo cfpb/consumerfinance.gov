@@ -56,7 +56,7 @@ class RelativeTemplatePathEnvironment(Environment):
         return template
 
 
-class JinjaTranslations(object):
+class JinjaTranslations:
     def gettext(self, message):
         return gettext(message)
 

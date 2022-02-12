@@ -18,7 +18,7 @@ _time = 1623518461
 class TestSurveyWizard(TestCase):
 
     def setUp(self):
-        super(TestSurveyWizard, self).setUp()
+        super().setUp()
 
         self.factory = RequestFactory()
 

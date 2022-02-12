@@ -374,7 +374,7 @@ class MortgagePerformancePage(BrowsePage):
         return meta
 
     def get_context(self, request, *args, **kwargs):
-        context = super(MortgagePerformancePage, self).get_context(
+        context = super().get_context(
             request, *args, **kwargs)
         context.update(self.get_mortgage_meta())
         if '30-89' in self.url:

@@ -2,11 +2,10 @@ import json
 from datetime import datetime
 from io import StringIO
 
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 from wagtail.core.models import Site
 
-import dateutil.relativedelta
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
@@ -28,7 +27,10 @@ from v1.tests.wagtail_pages.helpers import publish_page
 class FilterablePagesDocumentTest(TestCase):
 
     def test_model_class_added(self):
-        self.assertEqual(FilterablePagesDocument.django.model, AbstractFilterPage)
+        self.assertEqual(
+            FilterablePagesDocument.django.model,
+            AbstractFilterPage
+        )
 
     def test_ignore_signal_default(self):
         self.assertFalse(FilterablePagesDocument.django.ignore_signals)
@@ -44,7 +46,7 @@ class FilterablePagesDocumentTest(TestCase):
                 'tags', 'categories', 'language', 'title', 'url',
                 'is_archived', 'date_published', 'start_dt', 'end_dt',
                 'statuses', 'products', 'initial_filing_date', 'model_class',
-                'content', 'preview_description'
+                'content', 'preview_description', 'path', 'depth',
             ]
         )
 
@@ -66,7 +68,10 @@ class FilterablePagesDocumentTest(TestCase):
         enforcement.statuses.add(status)
         doc = FilterablePagesDocument()
         prepared_data = doc.prepare(enforcement)
-        self.assertEqual(prepared_data['statuses'], ['expired-terminated-dismissed'])
+        self.assertEqual(
+            prepared_data['statuses'],
+            ['expired-terminated-dismissed']
+        )
 
     def test_prepare_content_no_content_defined(self):
         event = EventPage(
@@ -85,10 +90,11 @@ class FilterablePagesDocumentTest(TestCase):
                     'type': 'full_width_text',
                     'value': [
                         {
-                            'type':'content',
-                            'value': 'Blog Text'
-                    }]
-                }
+                            'type': 'content',
+                            'value': 'Blog Text',
+                        },
+                    ],
+                },
             ])
         )
         doc = FilterablePagesDocument()
@@ -124,15 +130,16 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         cls.site = Site.objects.get(is_default_site=True)
 
         content = json.dumps([
-                {
-                    'type': 'full_width_text',
-                    'value': [
-                        {
-                            'type':'content',
-                            'value': 'Foo Test Content'
-                    }]
-                }
-            ])
+            {
+                'type': 'full_width_text',
+                'value': [
+                    {
+                        'type': 'content',
+                        'value': 'Foo Test Content',
+                    },
+                ],
+            },
+        ])
 
         event = EventPage(
             title='Event Test',
@@ -279,6 +286,12 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         )
         results = search.search(title="Foo")
         self.assertTrue(results.filter(title=self.blog_title_match).exists())
-        self.assertTrue(results.filter(title=self.blog_content_match.title).exists())
-        self.assertTrue(results.filter(title=self.blog_preview_match.title).exists())
-        self.assertTrue(results.filter(title=self.blog_topic_match.title).exists())
+        self.assertTrue(
+            results.filter(title=self.blog_content_match.title).exists()
+        )
+        self.assertTrue(
+            results.filter(title=self.blog_preview_match.title).exists()
+        )
+        self.assertTrue(
+            results.filter(title=self.blog_topic_match.title).exists()
+        )

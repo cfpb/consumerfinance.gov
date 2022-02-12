@@ -94,7 +94,6 @@ const financialView = {
             militaryTuitionAssistance: 'militaryAssistanceCap',
             militaryTuitionAssistanceGrad: 'militaryAssistanceCap',
             directSubsidized: 'subsidizedCapYearOne',
-            directSubsidizedGrad: 'subsidizedCapYearOne',
             directUnsubsidized: 'unsubsidizedCapIndepYearOne',
             directUnsubsidizedDep: 'unsubsidizedCapYearOne',
             directUnsubsidizedThirdYear: 'unsubsidizedCapIndepYearThree',

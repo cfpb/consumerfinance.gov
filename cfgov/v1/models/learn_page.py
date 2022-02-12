@@ -1,9 +1,12 @@
-from datetime import date, datetime
+from datetime import date
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
+from django.utils import timezone
+from django.utils.functional import cached_property
+from django.utils.http import http_date
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
@@ -17,12 +20,10 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
 from localflavor.us.models import USStateField
-from pytz import timezone
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
-from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
 
 
@@ -102,7 +103,7 @@ class AbstractFilterPage(CFGOVPage):
     # Returns an image for the page's meta Open Graph tag
     @property
     def meta_image(self):
-        parent_meta = super(AbstractFilterPage, self).meta_image
+        parent_meta = super().meta_image
         return parent_meta or self.preview_image
 
 
@@ -383,20 +384,11 @@ class EventPage(AbstractFilterPage):
 
     @property
     def event_state(self):
-        if self.end_dt:
-            end = convert_date(self.end_dt, 'America/New_York')
-            if end < datetime.now(timezone('America/New_York')):
-                return 'past'
+        if self.end_dt and self.end_dt < self._cached_now:
+            return 'past'
 
-        if self.live_stream_date:
-            start = convert_date(
-                self.live_stream_date,
-                'America/New_York'
-            )
-        else:
-            start = convert_date(self.start_dt, 'America/New_York')
-
-        if datetime.now(timezone('America/New_York')) > start:
+        start = min(filter(None, [self.live_stream_date, self.start_dt]))
+        if self._cached_now >= start:
             return 'present'
 
         return 'future'
@@ -407,9 +399,9 @@ class EventPage(AbstractFilterPage):
             (self.live_stream_date and self.event_state == 'present')
             or (self.archive_video_id and self.event_state == 'past')
         ):
-            return super(EventPage, self).page_js + ['video-player.js']
+            return super().page_js + ['video-player.js']
 
-        return super(EventPage, self).page_js
+        return super().page_js
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
         if not self.venue_coords:
@@ -428,7 +420,7 @@ class EventPage(AbstractFilterPage):
         return static_map_image_url
 
     def clean(self):
-        super(EventPage, self).clean()
+        super().clean()
         if self.venue_image_type == 'image' and not self.venue_image:
             raise ValidationError({
                 'venue_image': 'Required if "Venue image type" is "Image".'
@@ -441,9 +433,35 @@ class EventPage(AbstractFilterPage):
 
     def save(self, *args, **kwargs):
         self.venue_coords = get_venue_coords(self.venue_city, self.venue_state)
-        return super(EventPage, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def get_context(self, request):
-        context = super(EventPage, self).get_context(request)
+        context = super().get_context(request)
         context['event_state'] = self.event_state
         return context
+
+    def serve(self, request, *args, **kwargs):
+        response = super().serve(request, *args, **kwargs)
+
+        changes_at = [self.start_dt, self.end_dt, self.live_stream_date]
+        future_changes_at = [
+            at for at in changes_at if at and at > self._cached_now
+        ]
+
+        if future_changes_at:
+            response['Expires'] = http_date(min(future_changes_at).timestamp())
+
+        return response
+
+    @cached_property
+    def _cached_now(self):
+        """Cached value of now for use during page rendering.
+
+        This property can be used to retrieve a fixed version of "now"
+        associated with a single EventPage instance. The first time this
+        property is accessed, it will return the current time. Any subsequent
+        accesses will return the same time.
+
+        This allows for a consistent timestamp to be used during page render.
+        """
+        return timezone.now()

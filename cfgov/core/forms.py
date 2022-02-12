@@ -17,7 +17,7 @@ class ExternalURLForm(forms.Form):
     signature = forms.CharField(required=False, widget=forms.HiddenInput)
 
     def clean(self):
-        cleaned_data = super(ExternalURLForm, self).clean()
+        cleaned_data = super().clean()
         signer = Signer()
 
         if self.errors:

@@ -1,0 +1,29 @@
+User-agent: *
+{#-
+    If this flag is set, we block all robots from the entire site except for
+    the Search.gov robot, which has user-agent "usasearch", as documented at
+    https://search.gov/manual/go-live.html.
+#}
+{% if flag_enabled( 'ROBOTS_TXT_SEARCH_GOV_ONLY' ) -%}
+Disallow: /
+
+User-agent: usasearch
+{% endif -%}
+Disallow: /save-hud-counselors-list
+Disallow: /about-us/the-bureau/leadership-calendar/pdf
+Disallow: /es/obtener-respuestas/*.imprimir.html
+Disallow: /external-site
+Disallow: /*?success
+Disallow: *form-id=*
+Disallow: /?page=
+Disallow: /hud-api-replace
+Disallow: /yourstory
+Disallow: /ask-cfpb/search/
+Disallow: /ask-cfpb/search-by-tag/
+Disallow: /askcfpb/search/
+Disallow: /es/obtener-respuestas/buscar/
+Disallow: /es/obtener-respuestas/buscar-por-etiqueta/
+Disallow: /consumer-tools/educator-tools/youth-financial-education/curriculum-review/tool/*
+Disallow: /paying-for-college2/*
+
+sitemap: {{ request.build_absolute_uri( url( 'sitemap' ) ) }}

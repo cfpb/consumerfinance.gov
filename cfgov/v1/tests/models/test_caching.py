@@ -7,10 +7,8 @@ from django.test import TestCase, override_settings
 from wagtail.documents.models import Document
 from wagtail.images.tests.utils import get_test_image_file
 
-import boto3
-import moto
-
 from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
+from v1.models import NEWSROOM_CACHE_TAG
 from v1.models.caching import (
     AkamaiBackend, AkamaiDeletingBackend, cloudfront_cache_invalidation
 )
@@ -98,6 +96,41 @@ class TestAkamaiBackend(TestCase):
             akamai_backend.purge_all()
         mock_post_all.assert_called_once_with(
             "invalidate"
+        )
+
+    def test_purge_cache_tags(self):
+        akamai_backend = AkamaiBackend(self.credentials)
+        with mock.patch.object(AkamaiBackend, "post_tags") as mock_post_tags:
+            akamai_backend.purge_by_tags(
+                [NEWSROOM_CACHE_TAG],
+                action="invalidate"
+            )
+        mock_post_tags.assert_called_once_with(
+            [NEWSROOM_CACHE_TAG], action="invalidate"
+        )
+
+    @mock.patch.dict(os.environ, {
+        "AKAMAI_FAST_PURGE_URL": "",
+    })
+    def test_post_tags_no_url_config(self):
+        akamai_backend = AkamaiBackend(self.credentials)
+        self.assertIs(
+            akamai_backend.post_tags([NEWSROOM_CACHE_TAG], action="delete"),
+            None
+        )
+
+    @mock.patch.dict(os.environ, {
+        "AKAMAI_FAST_PURGE_URL": "http://my/url/",
+    })
+    @mock.patch("requests.post")
+    def test_post_tags_with_url_config(self, mock_post):
+        akamai_backend = AkamaiBackend(self.credentials)
+        akamai_backend.post_tags([NEWSROOM_CACHE_TAG], action="delete")
+        mock_post.assert_called_once_with(
+            "http://my/tag/",
+            headers=akamai_backend.headers,
+            data='{"action": "delete", "objects": ["newsroom"]}',
+            auth=akamai_backend.auth,
         )
 
 

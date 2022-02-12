@@ -13,8 +13,9 @@ services:
             - 127.0.0.1:9300:9300
         environment:
             discovery.type: single-node
+            ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     kibana:
-        image: docker.elastic.co/kibana/kibana:7.13.4
+        image: docker.elastic.co/kibana/kibana:7.16.0
         depends_on:
             - elasticsearch
         ports:
@@ -35,16 +36,15 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-            args:
-                scl_python_version: rh-python36
         depends_on:
             - elasticsearch
             - postgres
         stdin_open: true
         tty: true
         environment:
+            DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
             ES_HOST: elasticsearch
-            ES_PORT: 9200
+            SECRET_KEY: abcdefghijklmnopqrstuvwxyz
     docs:
         build:
             context: ./
@@ -62,7 +62,3 @@ services:
         working_dir: /src/consumerfinance.gov
         stdin_open: true
         tty: true
-networks:
-    default:
-        external:
-            name: cfgov

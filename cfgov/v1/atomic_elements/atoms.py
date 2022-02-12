@@ -1,6 +1,5 @@
-from django.core.exceptions import ValidationError
-
 from wagtail.core import blocks
+from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.images.blocks import ImageChooserBlock
 
 from url_or_relative_url_field.forms import URLOrRelativeURLFormField
@@ -40,7 +39,7 @@ class Hyperlink(blocks.StructBlock):
 
     def __init__(self, required=True):
         self.is_required = required
-        super(Hyperlink, self).__init__()
+        super().__init__()
 
     @property
     def required(self):
@@ -49,18 +48,14 @@ class Hyperlink(blocks.StructBlock):
     def clean(self, data):
         error_dict = {}
 
-        try:
-            data = super(Hyperlink, self).clean(data)
-        except ValidationError as e:
-            error_dict.update(e.params)
+        data = super().clean(data)
 
-        if self.required:
+        if self.is_required:
             if not data['text']:
                 error_dict.update({'text': is_required('Text')})
 
         if error_dict:
-            raise ValidationError("Hyperlink validation errors",
-                                  params=error_dict)
+            raise StructBlockValidationError(block_errors=error_dict)
         else:
             return data
 
@@ -74,6 +69,13 @@ class Button(Hyperlink):
         ('regular', 'Regular'),
         ('large', 'Large Primary'),
     ], default='regular')
+
+
+IMAGE_ALT_TEXT_HELP_TEXT = (
+    "No character limit, but be as succinct as possible. If the image is "
+    "decorative (i.e., a screenreader wouldn't have anything useful to say "
+    "about it), leave this field blank."
+)
 
 
 class ImageBasicStructValue(blocks.StructValue):
@@ -104,16 +106,11 @@ class ImageBasicStructValue(blocks.StructValue):
 
 class ImageBasic(blocks.StructBlock):
     upload = ImageChooserBlock(required=False)
-    alt = blocks.CharBlock(
-        required=False,
-        help_text='If the image is decorative (i.e., if a screenreader '
-                  'wouldn\'t have anything useful to say about it), leave the '
-                  'Alt field blank.'
-    )
+    alt = blocks.CharBlock(required=False, help_text=IMAGE_ALT_TEXT_HELP_TEXT)
 
     def __init__(self, required=True):
         self.is_required = required
-        super(ImageBasic, self).__init__()
+        super().__init__()
 
     @property
     def required(self):
@@ -122,10 +119,7 @@ class ImageBasic(blocks.StructBlock):
     def clean(self, data):
         error_dict = {}
 
-        try:
-            data = super(ImageBasic, self).clean(data)
-        except ValidationError as e:
-            error_dict.update(e.params)
+        data = super().clean(data)
 
         if not self.required and not data['upload']:
             return data
@@ -134,8 +128,7 @@ class ImageBasic(blocks.StructBlock):
             error_dict.update({'upload': is_required("Upload")})
 
         if error_dict:
-            raise ValidationError("ImageBasic validation errors",
-                                  params=error_dict)
+            raise StructBlockValidationError(block_errors=error_dict)
         else:
             return data
 

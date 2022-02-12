@@ -11,7 +11,7 @@ import count from './count';
 import DT from './dom-tools';
 import fileInput from './file-input';
 import Papaparse from 'papaparse';
-import ruralCounties from './get-rural-counties';
+import getRuralCounties from './get-rural-counties';
 import textInputs from './text-inputs';
 import tiger from './call-tiger';
 
@@ -41,8 +41,7 @@ Expandable.init();
 
 const MAX_CSV_ROWS = 250;
 
-window.callbacks = {};
-window.callbacks.censusAPI = function( data, rural ) {
+function censusAPI( data, ruralCounties ) {
   const result = {};
   if ( addressUtils.isFound( data.result ) ) {
     result.x = data.result.addressMatches[0].coordinates.x;
@@ -69,7 +68,7 @@ window.callbacks.censusAPI = function( data, rural ) {
         const fips = censusCounty.features[0].attributes.STATE +
                  censusCounty.features[0].attributes.COUNTY;
 
-        if ( addressUtils.isInCounty( fips, rural ) ) {
+        if ( addressUtils.isRural( fips, ruralCounties ) ) {
           result.type = 'rural';
         } else if ( addressUtils.isRuralCensus( censusUC.features, censusUA.features ) ) {
           result.type = 'rural';
@@ -96,13 +95,13 @@ window.callbacks.censusAPI = function( data, rural ) {
     count.updateCount( result.type );
     addressUtils.render( result );
   }
-};
+}
 
 function processAddresses( addresses ) {
   const processed = [];
 
-  ruralCounties( DT.getEl( '#year' ).value )
-    .then( function( rural ) {
+  getRuralCounties( DT.getEl( '#year' ).value )
+    .then( function( ruralCounties ) {
       addresses.forEach( function( address, index ) {
 
         if ( addressUtils.isDup( address, processed ) ) {
@@ -117,7 +116,7 @@ function processAddresses( addresses ) {
           count.updateCount( result.type );
         } else {
           // if its not dup
-          callCensus( address, rural, 'callbacks.censusAPI' );
+          callCensus( address, ruralCounties, censusAPI );
           processed.push( address );
         }
       } );

@@ -6,6 +6,8 @@ from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 
+from wagtail.images.forms import BaseImageForm
+
 from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
@@ -57,7 +59,7 @@ class FilterableDateField(forms.DateField):
         kwargs.setdefault('widget', widgets.DateInput(
             attrs=self.default_widget_attrs
         ))
-        super(FilterableDateField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class FilterableListForm(forms.Form):
@@ -132,7 +134,7 @@ class FilterableListForm(forms.Form):
         # provided.
         self.cache_key_prefix = kwargs.pop('cache_key_prefix', hash(self))
 
-        super(FilterableListForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         clean_categories(selected_categories=self.data.get('categories'))
 
@@ -269,7 +271,7 @@ class FilterableListForm(forms.Form):
         self.fields['language'].choices = language_options
 
     def clean(self):
-        cleaned_data = super(FilterableListForm, self).clean()
+        cleaned_data = super().clean()
         if self.errors.get('from_date') or self.errors.get('to_date'):
             return cleaned_data
         else:
@@ -408,7 +410,7 @@ class FeedbackForm(forms.ModelForm):
         fields = ['is_helpful', 'comment', 'language']
 
     def __init__(self, *args, **kwargs):
-        super(FeedbackForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['is_helpful'].required = True
 
 
@@ -419,7 +421,7 @@ class ReferredFeedbackForm(forms.ModelForm):
         fields = ['is_helpful', 'referrer', 'comment', 'language']
 
     def __init__(self, *args, **kwargs):
-        super(ReferredFeedbackForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['comment'].required = True
 
 
@@ -436,5 +438,16 @@ class SuggestionFeedbackForm(forms.ModelForm):
                   'language']
 
     def __init__(self, *args, **kwargs):
-        super(SuggestionFeedbackForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['comment'].required = True
+
+
+class CFGOVImageForm(BaseImageForm):
+    """Override the default alt text form widget.
+
+    Our custom image alt text field has no character limit, which renders by
+    default as a multi-line textarea field. We instead want to use a
+    single-line text input field.
+    """
+    class Meta(BaseImageForm.Meta):
+        widgets = {**BaseImageForm.Meta.widgets, 'alt': forms.TextInput}

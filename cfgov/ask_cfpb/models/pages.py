@@ -174,19 +174,19 @@ class AnswerLandingPage(LandingPage):
         return portal_cards
 
     def get_context(self, request, *args, **kwargs):
-        context = super(AnswerLandingPage, self).get_context(request)
+        context = super().get_context(request)
         context['portal_cards'] = self.get_portal_cards()
         context['about_us'] = get_standard_text(self.language, 'about_us')
         context['disclaimer'] = get_standard_text(self.language, 'disclaimer')
         return context
 
 
-class SecondaryNavigationJSMixin(object):
+class SecondaryNavigationJSMixin:
     """A page mixin that adds navigation JS for English pages."""
 
     @property
     def page_js(self):
-        js = super(SecondaryNavigationJSMixin, self).page_js
+        js = super().page_js
         if self.language == 'en':
             js += ['secondary-navigation.js']
         return js
@@ -295,7 +295,7 @@ class PortalSearchPage(
             activate(self.language)
         else:
             deactivate_all()
-        return super(PortalSearchPage, self).get_context(
+        return super().get_context(
             request, *args, **kwargs)
 
     def get_nav_items(self, request, page):
@@ -601,7 +601,7 @@ class ArticlePage(CFGOVPage):
     objects = CFGOVPageManager()
 
     def get_context(self, request, *args, **kwargs):
-        context = super(ArticlePage, self).get_context(request)
+        context = super().get_context(request)
         context['about_us'] = get_standard_text(self.language, 'about_us')
         return context
 

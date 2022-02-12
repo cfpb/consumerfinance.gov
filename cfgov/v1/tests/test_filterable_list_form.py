@@ -1,4 +1,3 @@
-import time
 from datetime import date, datetime
 from io import StringIO
 
@@ -17,7 +16,7 @@ from v1.forms import (
 from v1.models import BlogPage
 from v1.models.base import CFGOVPageCategory
 from v1.models.enforcement_action_page import EnforcementActionPage
-from v1.models.learn_page import AbstractFilterPage, EventPage
+from v1.models.learn_page import EventPage
 from v1.tests.wagtail_pages.helpers import publish_page
 from v1.util.categories import clean_categories
 

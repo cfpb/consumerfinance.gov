@@ -22,7 +22,7 @@ def get_govdelivery_api():
     return cls(account_code=settings.GOVDELIVERY_ACCOUNT_CODE)
 
 
-class MockGovDelivery(object):
+class MockGovDelivery:
     """Mock class for testing the GovDelivery API.
 
     Stores all method calls to a list, and returns a valid requests.Response
@@ -66,7 +66,7 @@ class ExceptionMockGovDelivery(MockGovDelivery):
     any method.
     """
     def handle(self, method, *args, **kwargs):
-        super(ExceptionMockGovDelivery, self).handle(method, *args, **kwargs)
+        super().handle(method, *args, **kwargs)
         raise RuntimeError('test GovDelivery exception')
 
 
@@ -77,7 +77,7 @@ class ServerErrorMockGovDelivery(MockGovDelivery):
     an HTTP status code of 500
     """
     def handle(self, method, *args, **kwargs):
-        response = super(ServerErrorMockGovDelivery, self).handle(
+        response = super().handle(
             method,
             *args,
             **kwargs
@@ -107,7 +107,7 @@ class LoggingMockGovDelivery(MockGovDelivery):
             )
         )
 
-        return super(LoggingMockGovDelivery, self).handle(
+        return super().handle(
             method,
             *args,
             **kwargs

@@ -1,9 +1,9 @@
-from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
 from wagtail.core import blocks
+from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.images.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms
@@ -48,17 +48,14 @@ class TextIntroduction(blocks.StructBlock):
     )
 
     def clean(self, value):
-        cleaned = super(TextIntroduction, self).clean(value)
+        cleaned = super().clean(value)
 
         # Eyebrow requires a heading.
         if cleaned.get('eyebrow') and not cleaned.get('heading'):
-            raise ValidationError(
-                'Validation error in TextIntroduction: '
-                'pre-heading requires heading',
-                params={'heading': ErrorList([
+            raise StructBlockValidationError(
+                block_errors={'heading': ErrorList([
                     'Required if a pre-heading is entered.'
-                ])}
-            )
+                ])})
 
         return cleaned
 
@@ -223,16 +220,13 @@ class ContactEmail(blocks.StructBlock):
     )
 
     def clean(self, value):
-        cleaned = super(ContactEmail, self).clean(value)
+        cleaned = super().clean(value)
 
         if not cleaned.get('emails'):
-            raise ValidationError(
-                "Validation error in ContactEmail: "
-                "at least one email address is required",
-                params={'heading': ErrorList([
+            raise StructBlockValidationError(
+                block_errors={'heading': ErrorList([
                     "At least one email address is required."
-                ])}
-            )
+                ])})
 
         return cleaned
 
@@ -386,7 +380,7 @@ class RSSFeed(blocks.StaticBlock):
         )
 
     def get_context(self, value, parent_context=None):
-        context = super(RSSFeed, self).get_context(
+        context = super().get_context(
             value,
             parent_context=parent_context
         )

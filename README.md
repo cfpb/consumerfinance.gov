@@ -11,54 +11,32 @@ and several standalone Django apps for specific parts of the site.
 Full installation and usage instructions are available in
 [our documentation](https://cfpb.github.io/consumerfinance.gov).
 
-This project requires Python 3.6, Node 14, and Gulp 4.
-We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and
-[virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
-for keeping the project's Python dependencies contained.
+This quickstart requires a working Docker Desktop installation and git:
 
-Clone the repository:
+- [Clone the repository](https://cfpb.github.io/consumerfinance.gov/installation/#clone-the-repository):
 
-```sh
-git clone git@github.com:cfpb/consumerfinance.gov.git
-```
+    ```shell
+    git clone https://github.com/cfpb/consumerfinance.gov.git
+    cd consumerfinance.gov
+    ```
 
-Create a virtual environment for Python dependencies:
+- [Set up and run the Docker containers](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
 
-```sh
-cd consumerfinance.gov
-mkvirtualenv --python=python3.6 consumerfinance.gov
-```
+    ```shell
+    docker-compose up
+    ```
 
-Create and load initial environment settings:
+    This may take some time, as it will also
+    [load initial data](https://cfpb.github.io/consumerfinance.gov/installation/#load-initial-data)
+    and
+    [build the frontend](https://cfpb.github.io/consumerfinance.gov/installation/#build-the-frontend).
 
-```sh
-cp -a .env_SAMPLE .env
-source .env
-```
+consumerfinance.gov should now be available at <http://localhost:8000>.
 
-Install third-party dependencies and build frontend assets:
-
-```sh
-./setup.sh
-```
-
-Create a local database, a Wagtail admin user, and a site homepage:
-
-```sh
-./initial-data.sh
-```
-
-Start your local Django server:
-
-```sh
-./runserver.sh
-```
-
-Your site will be available locally at <http://localhost:8000/>.
+Our documentation will be available at <http://localhost:8888>.
 
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
-
 
 ## Documentation
 

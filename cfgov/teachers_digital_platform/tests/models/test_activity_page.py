@@ -19,7 +19,7 @@ class TestActivityPage(TestCase):
     fixtures = ['tdp_initial_data']
 
     def setUp(self):
-        super(TestActivityPage, self).setUp()
+        super().setUp()
         self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.ROOT_PAGE.save_revision().publish()
 

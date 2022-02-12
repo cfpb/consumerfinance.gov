@@ -6,7 +6,7 @@ import { promiseRequest } from '../util/promise-request';
  * @param {string} parameter - Additional parameter, if applicable
  * @returns {Object} Promise
  */
-const getApi = function( url ) {
+function getApi( url ) {
   return new Promise( function( resolve, reject ) {
     promiseRequest( 'GET', url )
       .then( function( resp ) {
@@ -17,14 +17,14 @@ const getApi = function( url ) {
         reject( new Error( error ) );
       } );
   } );
-};
+}
 
 /**
  * schoolSearch - search for schools based on searchTerm
  * @param {String} searchTerm - Term to be searched for
  * @returns {Object} Promise
  */
-const schoolSearch = function( searchTerm ) {
+function schoolSearch( searchTerm ) {
   searchTerm = searchTerm.trim();
   if ( searchTerm.length > 2 ) {
     const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
@@ -32,39 +32,39 @@ const schoolSearch = function( searchTerm ) {
     return getApi( url );
   }
   return Promise.reject( new Error( 'Failure - search term too short' ) );
-};
+}
 
 /**
  * getConstants - retrieve constants from our API
  * @returns {Object} Promise
  */
-const getConstants = function() {
+function getConstants() {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
     '/api/constants/';
   return getApi( url );
-};
+}
 
 /**
  * getExpenses - retrieve expense data from our API
  * @returns {Object} Promise
  */
-const getExpenses = function() {
+function getExpenses() {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
     '/api/expenses/';
   return getApi( url );
-};
+}
 
 /**
  * getSchoolData - retrieve school data from our API
  * @param { String } iped - The school's identification number
  * @returns {Object} Promise
  */
-const getSchoolData = function( iped ) {
+function getSchoolData( iped ) {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
     '/api/school/' + iped;
 
   return getApi( url );
-};
+}
 
 export {
   getConstants,

@@ -3,7 +3,6 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
 
-import wagtail
 from wagtail.core import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 
@@ -65,7 +64,7 @@ class AnchorLink(blocks.StructBlock):
                 return get_unique_id('anchor_' + slugify(string) + suffix)
 
         data['link_id'] = format_id(data['link_id'])
-        data = super(AnchorLink, self).clean(data)
+        data = super().clean(data)
         return data
 
     class Meta:
@@ -174,27 +173,24 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
     placeholder, for use in a custom form_template.
     """
     def __init__(self, *args, **kwargs):
-        super(PlaceholderFieldBlock, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.placeholder = kwargs.pop('placeholder', None)
 
     def render_form(self, *args, **kwargs):
-        if wagtail.VERSION < (2, 13):
-            html = super(
-                PlaceholderFieldBlock, self).render_form(*args, **kwargs)
-        else:  # pragma: no cover
-            prefix = ''
-            value = '{}'.format(*args)
-            html = render_to_string('wagtailadmin/block_forms/field.html', {
-                'name': self.name,
-                'classes': getattr(
-                    self.meta, 'form_classname', self.meta.classname),
-                'widget': self.field.widget.render(
-                    prefix,
-                    self.field.prepare_value(self.value_for_form(value)),
-                    attrs={'id': format(prefix), 'placeholder': self.label}),
-                'field': self.field,
-                'errors': None
-            })
+        # pragma: no cover
+        prefix = ''
+        value = '{}'.format(*args)
+        html = render_to_string('wagtailadmin/block_forms/field.html', {
+            'name': self.name,
+            'classes': getattr(
+                self.meta, 'form_classname', self.meta.classname),
+            'widget': self.field.widget.render(
+                prefix,
+                self.field.prepare_value(self.value_for_form(value)),
+                attrs={'id': format(prefix), 'placeholder': self.label}),
+            'field': self.field,
+            'errors': None
+        })
 
         if self.placeholder is not None:
             html = self.replace_placeholder(html, self.placeholder)
@@ -235,7 +231,7 @@ class RAFToolBlock(blocks.StaticBlock):
         template = '_includes/blocks/raf_tool.html'
 
     class Media:
-        js = ['erap/main.js']
+        js = ['erap.js']
 
 
 class RAFTBlock(blocks.StructBlock):
@@ -252,4 +248,4 @@ class RAFTBlock(blocks.StructBlock):
         template = '_includes/blocks/raf_tool.html'
 
     class Media:
-        js = ['erap/main.js']
+        js = ['erap.js']
