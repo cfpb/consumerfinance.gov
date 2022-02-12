@@ -30,7 +30,7 @@ from core.views import (
 from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
-from legacy.views.complaint import CCDBSearchView, ComplaintLandingView
+from legacy.views.complaint import CCDBSearchView
 from regulations3k.views import redirect_eregs
 from v1.views.documents import DocumentServeView
 
@@ -269,12 +269,6 @@ urlpatterns = [
     re_path(
         r'^consumer-tools/retirement/',
         include('retirement_api.urls', namespace='retirement_api')
-    ),
-
-    re_path(
-        r'^data-research/consumer-complaints/$',
-        ComplaintLandingView.as_view(),
-        name='complaint-landing'
     ),
 
     # CCDB5-API
