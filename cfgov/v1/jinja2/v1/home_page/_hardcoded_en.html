@@ -1,6 +1,6 @@
 {%- set hero = {
-    "heading": "<strong>On your side</strong> through all of life’s important financial decisions.",
-    "body": "We’re the Consumer Financial Protection Bureau, a U.S. government agency dedicated to making sure you are treated fairly by banks, lenders and other financial institutions.",
+    "heading": "Keeping consumer finance <strong>fair for all</strong>.",
+    "body": "We’re the Consumer Financial Protection Bureau, a U.S. government agency dedicated to protecting consumers from financial harm.",
     "image": {
         "url": static( "apps/homepage/img/hero.jpg" ),
         "height": 575,
@@ -59,35 +59,57 @@
     ],
 } -%}
 
-{%- set complaint = {
+<!-- {%- set complaint = {
     "heading": "Having trouble with a financial product or service?",
     "body": "When you submit a complaint to the CFPB, we’ll forward your complaint to the company and work to get you a response, generally within 15 days.",
     "link": {
         "text": "Submit a complaint",
         "url": "/complaint/",
     },
-} -%}
+} -%} -->
 
-{%- set highlights_heading = "Bureau highlights" -%}
+{%- set complaints = [
+    {
+        "heading": "Have you been charged hidden or extra fees?",
+        "body": "Many companies are using fees to make additional money, like charging for paying your bill or an overdraft.",
+        "link": {
+            "text": "Learn more and share your experience",
+            "url": "/complaint/",
+        },
+    },
+    {
+        "heading": "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+        "body": "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+        "link": {
+            "text": "Read about medical fees",
+            "url": "/complaint/",
+        },
+    },
+] -%}
+
+<!-- {%- set highlights_heading = "Bureau highlights" -%} -->
 
 {%- set highlights = [
     {
+        "img_src": static( "apps/homepage/img/key-house.png" ),
         "card_type": "highlight",
-        "heading": "Protect your finances during the coronavirus emergency",
-        "link_text": "Read more",
+        "heading": "Help with finances during the COVID-19 pandemic",
+        "link_text": "Get help",
         "link_url": "/coronavirus/"
     },
     {
+        "img_src": static( "apps/homepage/img/graduate.png" ),
         "card_type": "highlight",
-        "heading": "Rental assistance helps renters and landlords make ends meet",
-        "link_text": "Read more",
+        "heading": "The hidden cost of junk fees: Learn more and share your experience",
+        "link_text": "Read about junk fees",
         "link_url": "/coronavirus/mortgage-and-housing-assistance/renter-protections/find-help-with-rent-and-utilities/"
     },
     {
+        "img_src": static( "apps/homepage/img/housing-counselor.png" ),
         "card_type": "highlight",
-        "heading": "Advancing racial and economic equity for all",
-        "link_text": "Read more",
-        "link_url": "/about-us/diversity-and-inclusion/"
+        "heading": "Having a problem with a financial product or service?",
+        "link_text": "Submit a complaint",
+        "link_url": "/complaint/"
     },
 ] -%}
 

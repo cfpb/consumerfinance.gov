@@ -49,13 +49,16 @@ content_main__flush-inner
         </style>
         <section class="o-well o-well__putting">
             <div class="o-info-unit-group">
-                <h2>{{ hardcoded.highlights_heading }}</h2>
+                <!-- <h2>{{ hardcoded.highlights_heading }}</h2> -->
 
                 <div class="content-l">
                     {% for highlight in hardcoded.highlights %}
                     <div class="content-l_col content-l_col-1-3">
 
                         <div class="m-info-unit">
+                            <div style="padding-bottom:.25em;">
+                                <img style="max-height:2.5em;" src="{{ highlight.img_src }}" alt="">
+                            </div>
                             <div class="m-info-unit_heading-text">
                                 <h3>{{ highlight.heading }}</h3>
                             </div>
@@ -130,7 +133,7 @@ content_main__flush-inner
         </div>
     </section>
 
-    <section class="content_level-1">
+    <!-- <section class="content_level-1">
         <section class="block">
             <div class="o-info-unit-group">
                 <div class="content-l">
@@ -152,8 +155,37 @@ content_main__flush-inner
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
+    <section class="content_level-1">
+        <section class="block">
+            <div class="o-info-unit-group">
+                <div class="content-l">
+                    {% for complaint in hardcoded.complaints %}
+                    <div class="content-l_col content-l_col-1-2">
+                        <div class="m-info-unit">
+                            <a class="m-info-unit_heading-link" href="{{ complaint.link.url }}">
+                                <div class="m-info-unit_heading-text">
+                                    <h2>{{ complaint.heading }}</h2>
+                                </div>
+                            </a>
+                            <div class="m-info-unit_content">
+                                <p>{{ complaint.body}}</p>
+                                <ul class="m-list m-list__links u-mt15">
+                                    <li class="m-list_item">
+                                        <a class="m-list_link" href="{{ complaint.link.url }}">
+                                            {{- complaint.link.text -}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}                   
+                </div>
+            </div>
+        </section>
+        
         <hr>
 
         {% if not minimal %}
