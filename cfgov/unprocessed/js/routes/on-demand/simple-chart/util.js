@@ -1,4 +1,4 @@
-import { sendEvent } from '../../../modules/Analytics.js';
+import Analytics from '../../../modules/Analytics.js';
 
 /**
  * Prints an aesthetic time range from a time-aware chart event
@@ -35,7 +35,7 @@ function getTimeRange( evt ) {
  **/
 function trackChartEvent( evt, name, label ) {
   if ( !label ) label = getTimeRange( evt );
-  sendEvent( {
+  Analytics.sendEvent( {
     event: 'Page Interaction',
     action: `${ name }: ${ getChartTitle( evt ) }`,
     label
