@@ -27,8 +27,5 @@ module.exports = {
     '<rootDir>/node_modules/',
     '<rootDir>/develop-apps/'
   ],
-  testURL: 'http://localhost',
-  transformIgnorePatterns: [
-    '<rootDir>/cfgov/unprocessed/apps/ccdb-landing-map/node_modules/cfpb-chart-builder/src/js/get-tile-map-state.js'
-  ]
+  testURL: 'http://localhost'
 };
