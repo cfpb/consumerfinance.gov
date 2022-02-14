@@ -594,8 +594,6 @@ FLAGS = {
     "BETA_NOTICE": [("environment is", "beta")],
     # When enabled, include a recruitment code comment in the base template
     "CFPB_RECRUITING": [],
-    # When enabled, display a "technical issues" banner on /complaintdatabase
-    "CCDB_TECHNICAL_ISSUES": [],
     # When enabled, display a banner stating the complaint intake form is down
     "COMPLAINT_INTAKE_TECHNICAL_ISSUES": [
         {
