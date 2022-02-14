@@ -1,4 +1,4 @@
-/* import { ConsumerComplaints } from './consumer-complaints-helpers';
+import { ConsumerComplaints } from './consumer-complaints-helpers';
 
 const page = new ConsumerComplaints();
 
@@ -46,4 +46,4 @@ describe( 'Consumer Complaint Database', () => {
     cy.url().should( 'include', 'download-the-data' );
   } );
 
-} ); */
+} );
