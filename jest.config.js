@@ -27,5 +27,6 @@ module.exports = {
     '<rootDir>/node_modules/',
     '<rootDir>/develop-apps/'
   ],
-  testURL: 'http://localhost'
+  testURL: 'http://localhost',
+  transformIgnorePatterns: []
 };
