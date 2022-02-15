@@ -104,7 +104,7 @@ services:
 
                 ./cfgov/manage.py search_index --rebuild -f --parallel
 
-                httpd -d cfgov/apache -D FOREGROUND"
+                httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -D FOREGROUND"
 
 networks:
   app:

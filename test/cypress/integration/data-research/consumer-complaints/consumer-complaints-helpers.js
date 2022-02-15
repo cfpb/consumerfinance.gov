@@ -1,7 +1,7 @@
 export class ConsumerComplaints {
 
   click( name ) {
-    cy.get( '.a-btn' ).contains( name ).click();
+    cy.get( '.m-list_link' ).contains( name ).click();
   }
 
   clickTab( name ) {
@@ -14,23 +14,6 @@ export class ConsumerComplaints {
 
   clickButton( name ) {
     cy.get( '.a-btn' ).contains( name ).click();
-  }
-
-  clickTile( name ) {
-    const tile = name.toUpperCase();
-    return cy.get( `.tile-${ tile }` ).click();
-  }
-
-  checkState( name ) {
-    return cy.get( `.highcharts-name-${ name }`.toLowerCase() );
-  }
-
-  checkChart( name ) {
-    return cy.get( '.highcharts-tracker' ).should( 'contain', name );
-  }
-
-  checkLegend( name ) {
-    return cy.get( `.highcharts-legend-${ name }` );
   }
 
   enter( term ) {

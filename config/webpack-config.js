@@ -90,24 +90,6 @@ const commonConf = {
   stats: STATS_CONFIG.stats
 };
 
-const externalConf = {
-  cache: true,
-  mode: WEBPACK_MODE_DEFAULT,
-  module: COMMON_MODULE_CONFIG,
-  output: {
-    filename: 'external-site.js'
-  },
-  optimization: {
-    minimizer: [
-      COMMON_MINIFICATION_CONFIG
-    ]
-  },
-  resolve: {
-    symlinks: false
-  },
-  stats: STATS_CONFIG.stats
-};
-
 const modernConf = {
   cache: true,
   mode: WEBPACK_MODE_DEFAULT,
@@ -189,7 +171,6 @@ const devConf = {
 const configExports = {
   commonConf,
   devConf,
-  externalConf,
   modernConf,
   onDemandHeaderRawConf,
   appsConf,
