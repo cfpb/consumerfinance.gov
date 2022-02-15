@@ -1,6 +1,6 @@
 {%- set hero = {
-    "heading": "Keeping consumer finance <strong>fair for all</strong>.",
-    "body": "We’re the Consumer Financial Protection Bureau, a U.S. government agency dedicated to protecting consumers from financial harm.",
+    "heading": "<strong>On your side</strong> through life’s financial moments.",
+    "body": "We’re the Consumer Financial Protection Bureau, a U.S. government agency dedicated to making sure you are treated fairly by banks, lenders and other financial institutions.",
     "image": {
         "url": static( "apps/homepage/img/hero.jpg" ),
         "height": 575,
@@ -59,31 +59,53 @@
     ],
 } -%}
 
-{%- set complaint = {
+<!-- {%- set complaint = {
     "heading": "Having trouble with a financial product or service?",
     "body": "When you submit a complaint to the CFPB, we’ll forward your complaint to the company and work to get you a response, generally within 15 days.",
     "link": {
         "text": "Submit a complaint",
         "url": "/complaint/",
     },
-} -%}
+} -%} -->
 
-{%- set highlights_heading = "Bureau highlights" -%}
+{%- set recents = [
+    {
+        "heading": "Have you been charged hidden or extra fees?",
+        "body": "Many companies are using fees to make additional money, like charging for paying your bill or for an overdraft.",
+        "link": {
+            "text": "Learn more and share your experience",
+            "url": "/about-us/blog/hidden-cost-junk-fees/",
+        },    
+    },
+    {
+        "heading": "Protecting you from the side effects of surprise medical bills",
+        "body": "If you face unexpectedly high medical costs, you now have protections under the No Surprises Act.",
+        "link": {
+            "text": "Read about medical fees",
+            "url": "/about-us/blog/no-surprises-act-how-we-are-protecting-people-from-side-effects-surprise-medical-bills/",
+        },      
+    },
+] -%}
+
+<!-- {%- set highlights_heading = "Bureau highlights" -%} -->
 
 {%- set highlights = [
     {
+        "img_src": static( "apps/homepage/img/putting-green_finances-covid.png" ),
         "card_type": "highlight",
         "heading": "Help with finances during the COVID-19 pandemic",
         "link_text": "Get help",
         "link_url": "/coronavirus/"
     },
     {
+        "img_src": static( "apps/homepage/img/putting-green_housing-counselor.png" ),
         "card_type": "highlight",
-        "heading": "The hidden cost of junk fees: Learn more and share your experience",
-        "link_text": "Read about junk fees",
-        "link_url": "/about-us/blog/hidden-cost-junk-fees/"
+        "heading": "Talk with an expert about your housing needs for free",
+        "link_text": "Speak to a housing counselor",
+        "link_url": "/find-a-housing-counselor/"
     },
     {
+        "img_src": static( "apps/homepage/img/putting-green_submit-a-complaint.png" ),
         "card_type": "highlight",
         "heading": "Having a problem with a financial product or service?",
         "link_text": "Submit a complaint",
@@ -108,8 +130,8 @@
     },
     {
         "card_type": "breakout",
-        "link_text": "Find a housing counselor",
-        "link_url": "/find-a-housing-counselor/",
-        "img_src": static( "apps/homepage/img/housing-counselor.png" )
+        "link_text": "Get an auto loan",
+        "link_url": "/consumer-tools/getting-an-auto-loan/",
+        "img_src": static( "apps/homepage/img/key-car.png" )
     }
 ] -%}
