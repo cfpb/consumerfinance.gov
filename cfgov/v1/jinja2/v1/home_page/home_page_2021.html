@@ -170,11 +170,23 @@ content_main__flush-inner
                                 </div>
                             </a>
                             <div class="m-info-unit_content">
+                                <span class="a-date">Published 
+                                <span class="datetime">
+                                    <time class="datetime_time" datetime="{{ complaint.datetime }}">
+                                        {{ complaint.time }}
+                                    </time>
+                                </span>
+                                </span>
                                 <p>{{ complaint.body }}</p>
                                 <ul class="m-list m-list__links u-mt15">
                                     <li class="m-list_item">
                                         <a class="m-list_link" href="{{ complaint.link.url }}">
                                             {{- complaint.link.text -}}
+                                        </a>
+                                    </li>
+                                    <li class="m-list_item">
+                                        <a class="m-list_link" href="{{ complaint.link.url }}">
+                                            {{- complaint.link2.text -}}
                                         </a>
                                     </li>
                                 </ul>
@@ -186,6 +198,8 @@ content_main__flush-inner
             </div>
         </section>
         
+        
+
         <hr>
 
         {% if not minimal %}
