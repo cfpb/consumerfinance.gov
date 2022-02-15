@@ -161,39 +161,44 @@ content_main__flush-inner
         <section class="block">
             <div class="o-info-unit-group">
                 <div class="content-l">
-                    {% for complaint in hardcoded.complaints %}
+                    {% for recent in hardcoded.recents %}
                     <div class="content-l_col content-l_col-1-2">
                         <div class="m-info-unit">
-                            <a class="m-info-unit_heading-link" href="{{ complaint.link.url }}">
+                            <a class="m-info-unit_heading-link" href="{{ recent.link.url }}">
                                 <div class="m-info-unit_heading-text">
-                                    <h2>{{ complaint.heading }}</h2>
+                                    <h2>{{ recent.heading }}</h2>
                                 </div>
                             </a>
                             <div class="m-info-unit_content">
-                                <p>{{ complaint.body }}</p>
+                                <p>{{ recent.body }}</p>
                                 <ul class="m-list m-list__links u-mt15">
                                     <li class="m-list_item">
-                                        <a class="m-list_link" href="{{ complaint.link.url }}">
-                                            {{- complaint.link.text -}}
+                                        <a class="m-list_link" href="{{ recent.link.url }}">
+                                            {{- recent.link.text -}}
                                         </a>
-                                    </li>
-                                    <li class="m-list_item">
-                                        <a class="m-list_link" href="{{ complaint.link2.url }}">
-                                            {{- complaint.link2.text -}}
-                                        </a>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}                   
+                    {% endfor %}
+                    <div class="content-l_col content-l_col-1-2">
+                        <div class="m-info-unit">
+                            <div class="m-info-unit_content">
+                                <ul class="m-list m-list__links u-mt15">
+                                    <li class="m-list_item">
+                                        <a class="m-list_link" href="">
+                                            See all recent updates
+                                        </a>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <hr style="margin-top:2em;">
         </section>
-        
-        
 
-        <hr>
+
 
         {% if not minimal %}
         <section class="block">
