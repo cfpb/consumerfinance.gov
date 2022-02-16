@@ -23,49 +23,41 @@ from v1.util.categories import clean_categories
 
 class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
 
-    @classmethod
-    def setUpTestData(cls):
-        blog1 = BlogPage(title='test page')
-        blog1.categories.add(CFGOVPageCategory(name='foo'))
-        blog1.categories.add(CFGOVPageCategory(name='bar'))
-        blog1.tags.add('foo')
-        blog1.authors.add('richa-agarwal')
-        blog1.language = 'es'
-        blog2 = BlogPage(title='another test page')
-        blog2.categories.add(CFGOVPageCategory(name='bar'))
-        blog2.tags.add('blah')
-        blog2.authors.add('richard-cordray')
-        category_blog = BlogPage(title='Category Test')
-        category_blog.categories.add(
+    def setUp(self):
+        self.blog1 = BlogPage(title='test page')
+        self.blog1.categories.add(CFGOVPageCategory(name='foo'))
+        self.blog1.categories.add(CFGOVPageCategory(name='bar'))
+        self.blog1.tags.add('foo')
+        self.blog1.authors.add('richa-agarwal')
+        self.blog1.language = 'es'
+        self.blog2 = BlogPage(title='another test page')
+        self.blog2.categories.add(CFGOVPageCategory(name='bar'))
+        self.blog2.tags.add('blah')
+        self.blog2.authors.add('richard-cordray')
+        self.category_blog = BlogPage(title='Category Test')
+        self.category_blog.categories.add(
             CFGOVPageCategory(name='info-for-consumers')
         )
-        event1 = EventPage(
+        self.event1 = EventPage(
             title='test page 2',
             start_dt=datetime.now(timezone('UTC'))
         )
-        event1.tags.add('bar')
-        cool_event = EventPage(
+        self.event1.tags.add('bar')
+        self.cool_event = EventPage(
             title='Cool Event',
             start_dt=datetime.now(timezone('UTC'))
         )
-        awesome_event = EventPage(
+        self.awesome_event = EventPage(
             title='Awesome Event',
             start_dt=datetime.now(timezone('UTC'))
         )
-        publish_page(blog1)
-        publish_page(blog2)
-        publish_page(event1)
-        publish_page(cool_event)
-        publish_page(awesome_event)
-        publish_page(category_blog)
-        cls.blog1 = blog1
-        cls.blog2 = blog2
-        cls.event1 = event1
-        cls.cool_event = cool_event
-        cls.awesome_event = awesome_event
-        cls.category_blog = category_blog
-
-        cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
+        publish_page(self.blog1)
+        publish_page(self.blog2)
+        publish_page(self.event1)
+        publish_page(self.cool_event)
+        publish_page(self.awesome_event)
+        publish_page(self.category_blog)
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def setUpFilterableForm(self, data=None, filterable_categories=None):
         form = FilterableListForm(
