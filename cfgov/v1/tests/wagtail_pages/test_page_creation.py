@@ -10,17 +10,20 @@ from v1.tests.wagtail_pages.helpers import (
     create_browse_page,
 )
 
+django_client = Client()
+
 class PageCreationTestCase(TestCase):
 
     def test_landing_page_does_not_exist(self):
         """landing page should be created if it does not exist"""
-        create_landing_page("Test landing", "test-landing")
+        path = create_landing_page("Test landing", "test-landing")
 
-        www_response = Client.get('/test-landing/')
+        www_response = django_client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_landing_page_exists_fail(self):
         """page creation should abort if it already exists, returns none"""
+        create_landing_page("Test landing", "test-landing")
         path = create_landing_page("Test landing", "test-landing")
         self.assertIsNone(path)
 
