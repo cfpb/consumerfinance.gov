@@ -166,6 +166,7 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
                 'industry-markets',
                 'consumer-edu-empower',
                 'to-congress',
+                'data-spotlight',
             ]
         )
 
