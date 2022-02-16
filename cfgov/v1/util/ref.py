@@ -83,10 +83,6 @@ categories = [
         ('log', 'Log'),
         ('record', 'Record'),
     )),
-    ('Implementation Resource', (
-        ('compliance-aid', 'Compliance aid'),
-        ('official-guidance', 'Official guidance'),
-    )),
     ('Newsroom', (
         ('consumer-advisories', 'Consumer advisories'),
         ('directors-statement', "Director's statement"),
