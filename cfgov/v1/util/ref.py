@@ -112,6 +112,7 @@ categories = [
         ('industry-markets', 'Industry and markets'),
         ('consumer-edu-empower', 'Consumer education and empowerment'),
         ('to-congress', 'To Congress'),
+        ('data-spotlight', 'Data spotlight'),
     )),
     ('Rule Under Development', (
         ('notice-proposed-rule-2', 'Advance notice of proposed rulemaking'),
