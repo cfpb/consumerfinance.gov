@@ -53,7 +53,7 @@ def get_parent_route(site, parent_path=None):
         try:
             route = root.route(None, path_components)
         except Http404:
-            return None
+            return
 
         parent = route.page
 
@@ -70,6 +70,7 @@ def create_landing_page(page_title, page_slug, parent_path=None,
     # skip if parent is None
     if not parent:
         print("skipping page creation")
+        return
 
     # create page, add it as a child of parent, save, and publish
     new_page = LandingPage(title=page_title, slug=page_slug)
@@ -84,6 +85,7 @@ def create_landing_page(page_title, page_slug, parent_path=None,
         new_page.save_revision().publish()
     except ValidationError:
         print("skipping page creation")
+        return
 
     # return path
     return new_page.get_url(None, site)
@@ -102,6 +104,7 @@ def create_sublanding_filterable_page(page_title, page_slug,
     # skip if parent is None
     if not parent:
         print("skipping page creation")
+        return
 
     # create page, add it as a child of parent, save, and publish
     new_page = SublandingFilterablePage(title=page_title, slug=page_slug)
@@ -123,6 +126,7 @@ def create_sublanding_filterable_page(page_title, page_slug,
         new_page.save_revision().publish()
     except ValidationError:
         print("skipping page creation")
+        return
 
     # return path
     return new_page.get_url(None, site)
@@ -141,6 +145,7 @@ def create_blog_page(page_title, page_slug, parent_path=None,
     # skip if parent is None
     if not parent:
         print("skipping page creation")
+        return
 
     # check for optional variables set to None
     if not page_language:
@@ -168,6 +173,7 @@ def create_blog_page(page_title, page_slug, parent_path=None,
         new_page.save_revision().publish()
     except ValidationError:
         print("skipping page creation")
+        return
 
     # return path
     return new_page.get_url(None, site)
@@ -184,6 +190,7 @@ def create_browse_filterable_page(page_title, page_slug, parent_path=None,
     # skip if parent is None
     if not parent:
         print("skipping page creation")
+        return
 
     # create page, add it as a child of parent, save, and publish
     new_page = BrowseFilterablePage(title=page_title, slug=page_slug)
@@ -205,6 +212,7 @@ def create_browse_filterable_page(page_title, page_slug, parent_path=None,
         new_page.save_revision().publish()
     except ValidationError:
         print("skipping page creation")
+        return
 
     # return path
     return new_page.get_url(None, site)
@@ -222,6 +230,7 @@ def create_learn_page(page_title, page_slug, parent_path=None,
     # skip if parent is None
     if not parent:
         print("skipping page creation")
+        return
 
     # set date published override if set to None
     if not page_tags:
@@ -246,6 +255,7 @@ def create_learn_page(page_title, page_slug, parent_path=None,
         new_page.save_revision().publish()
     except ValidationError:
         print("skipping page creation")
+        return
 
     # return path
     return new_page.get_url(None, site)
@@ -262,6 +272,7 @@ def create_sublanding_page(page_title, page_slug, parent_path=None,
     # skip if parent is None
     if not parent:
         print("skipping page creation")
+        return
 
     # create page, add it as a child of parent, save, and publish
     new_page = SublandingPage(title=page_title, slug=page_slug)
@@ -278,6 +289,7 @@ def create_sublanding_page(page_title, page_slug, parent_path=None,
         new_page.save_revision().publish()
     except ValidationError:
         print("skipping page creation")
+        return
 
     # return path
     return new_page.get_url(None, site)
@@ -298,6 +310,7 @@ def create_browse_page(page_title, page_slug, parent_path=None,
     # skip if parent is None
     if not parent:
         print("skipping page creation")
+        return
 
     # create page, add it as a child of parent, save, and publish
     new_page = BrowsePage(title=page_title, slug=page_slug)
@@ -322,6 +335,7 @@ def create_browse_page(page_title, page_slug, parent_path=None,
         new_page.save_revision().publish()
     except ValidationError:
         print("skipping page creation")
+        return
 
     # return path
     return new_page.get_url(None, site)
