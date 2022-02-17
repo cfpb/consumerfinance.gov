@@ -3,14 +3,11 @@ from datetime import date
 from django.test import Client, TestCase
 
 from v1.tests.wagtail_pages.helpers import (
-    create_landing_page,
-    create_sublanding_filterable_page,
-    create_blog_page,
-    create_browse_filterable_page,
-    create_learn_page,
-    create_sublanding_page,
-    create_browse_page,
+    create_blog_page, create_browse_filterable_page, create_browse_page,
+    create_landing_page, create_learn_page, create_sublanding_filterable_page,
+    create_sublanding_page
 )
+
 
 django_client = Client()
 
