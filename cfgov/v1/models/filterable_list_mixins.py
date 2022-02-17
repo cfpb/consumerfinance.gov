@@ -1,7 +1,8 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
 
-from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from wagtail.contrib.routable_page.models import route
+from wagtailsharing.models import ShareableRoutablePageMixin
 
 from flags.state import flag_enabled
 
@@ -12,7 +13,7 @@ from v1.util.ref import get_category_children
 from v1.util.util import get_secondary_nav_items
 
 
-class FilterableListMixin(RoutablePageMixin):
+class FilterableListMixin(ShareableRoutablePageMixin):
     """Wagtail Page mixin that allows for filtering of other pages."""
 
     filterable_per_page_limit = 25
