@@ -1,4 +1,4 @@
-# This is a standalone file. Running it will create wagtail pages
+# This is a standalone file. Running it will create wagtail pages 
 # This data allows integration tests to pass
 # To run this file locally, run the following commands on a bash shell within
 # the python container from the root folder:
