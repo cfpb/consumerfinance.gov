@@ -1,6 +1,5 @@
 import json
-from datetime import date, datetime
-from time import strftime
+from datetime import date
 
 from django.apps import apps
 from django.http import Http404

@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.test import Client, TestCase
 
 from v1.tests.wagtail_pages.helpers import (
@@ -14,39 +16,187 @@ django_client = Client()
 
 class PageCreationTestCase(TestCase):
 
-    def test_landing_page_does_not_exist(self):
+    def test_landing_page_creation(self):
         """landing page should be created if it does not exist"""
-        path = create_landing_page("Test landing", "test-landing")
+        path = create_landing_page("Test", "test")
 
         www_response = django_client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_landing_page_exists_fail(self):
-        """page creation should abort if it already exists, returns none"""
-        create_landing_page("Test landing", "test-landing")
-        path = create_landing_page("Test landing", "test-landing")
+        """landing page creation should abort if it already exists, \
+            returns none"""
+        create_landing_page("Test", "test")
+        path = create_landing_page("Test", "test")
+        self.assertIsNone(path)
+
+    def test_sublanding_page_creation(self):
+        """sublanding page should be created if it does not exist"""
+        path = create_sublanding_page("Test", "test")
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_sublanding_page_exists_fail(self):
+        """sublanding page creation should abort if it already exists, \
+            returns none"""
+        create_sublanding_page("Test", "test")
+        path = create_sublanding_page("Test", "test")
+        self.assertIsNone(path)
+
+    def test_sublanding_filterable_page_creation(self):
+        """sublanding filterable page should be created if it \
+            does not exist"""
+        path = create_sublanding_filterable_page("Test", "test")
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_sublanding_filterable_page_exists_fail(self):
+        """sublanding filterable page creation should abort if it \
+            already exists, returns none"""
+        create_sublanding_filterable_page("Test", "test")
+        path = create_sublanding_filterable_page("Test", "test")
+        self.assertIsNone(path)
+
+    def test_browse_filterable_page_creation(self):
+        """browse filterable page should be created if it \
+            does not exist"""
+        path = create_browse_filterable_page("Test", "test")
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_browse_filterable_page_exists_fail(self):
+        """browse filterable page creation should abort if it \
+            already exists, returns none"""
+        create_browse_filterable_page("Test", "test")
+        path = create_browse_filterable_page("Test", "test")
+        self.assertIsNone(path)
+
+    def test_browse_page_creation(self):
+        """browse page should be created if it \
+            does not exist"""
+        path = create_browse_page("Test", "test")
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_browse_page_exists_fail(self):
+        """browse page creation should abort if it \
+            already exists, returns none"""
+        create_browse_page("Test", "test")
+        path = create_browse_page("Test", "test")
+        self.assertIsNone(path)
+
+    def test_learn_page_creation(self):
+        """learn page should be created if it \
+            does not exist"""
+        path = create_learn_page("Test", "test")
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_learn_page_exists_fail(self):
+        """learn page creation should abort if it \
+            already exists, returns none"""
+        create_learn_page("Test", "test")
+        path = create_learn_page("Test", "test")
+        self.assertIsNone(path)
+
+    def test_blog_page_creation(self):
+        """blog page should be created if it \
+            does not exist"""
+        path = create_blog_page("Test", "test")
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_sublanding_filterable_page_exists_fail(self):
+        """blog page creation should abort if it \
+            already exists, returns none"""
+        create_blog_page("Test", "test")
+        path = create_blog_page("Test", "test")
         self.assertIsNone(path)
 
     def test_sublanding_page_with_blog_as_child(self):
         """blog page should be created as child of sublanding page"""
-        path = create_sublanding_filterable_page("Test sublanding", "test-sublanding")
-        new_path = create_blog_page("Test post1", "test-post1", path)
-        self.assertIn("/test-sublanding/test-post1", new_path)
+        path = create_sublanding_filterable_page("Test", "test")
+        new_path = create_blog_page("Test post", "test-post", path)
+        self.assertIn("/test/test-post", new_path)
 
     def test_browse_filterable_page_with_learn_page_as_child(self):
         """learn page should be created as child of browse filterable page"""
-        path = create_browse_filterable_page("Test browse filterable", "test-browse-filterable")
-        new_path = create_learn_page("Test browse1", "test-browse1", path)
-        self.assertIn("/test-browse-filterable/test-browse1", new_path)
+        path = create_browse_filterable_page("Test", "test")
+        new_path = create_learn_page("Test learn", "test-learn", path)
+        self.assertIn("/test/test-learn", new_path)
 
     def test_landing_page_with_sublanding_page_as_child(self):
         """sublanding page should be created as child of landing page"""
-        path = create_landing_page("Test landing 2", "test-landing2")
-        new_path = create_sublanding_page("Test sublanding 2", "test-sublanding2", path)
-        self.assertIn("/test-landing2/test-sublanding2", new_path)
+        path = create_landing_page("Test", "test")
+        new_path = create_sublanding_page("sublanding", "sublanding", path)
+        self.assertIn("/test/sublanding", new_path)
 
     def test_browse_filterable_page_with_browse_page_as_child(self):
         """browse page should be created as child of browse filterable page"""
-        path = create_browse_filterable_page("Test browse filterable 2", "test-browse-filterable2")
+        path = create_browse_filterable_page("Test", "test")
         new_path = create_browse_page("Test browse", "test-browse", path)
-        self.assertIn("/test-browse-filterable2/test-browse", new_path)
+        self.assertIn("/test/test-browse", new_path)
+
+    def test_landing_page_with_optional_arguments(self):
+        """landing page should be created correctly with one or more \
+            optional arguments provided"""
+        path = create_landing_page("Test", "test", None, True)
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_sublanding_page_with_optional_arguments(self):
+        """sublanding page should be created correctly with one or more \
+            optional arguments provided"""
+        path = create_sublanding_page("Test", "test", None, True)
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_sublanding_filterable_page_with_optional_arguments(self):
+        """sublanding filterable page should be created correctly with one \
+            or more optional arguments provided"""
+        path = create_sublanding_filterable_page("Test", "test", None, True)
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_browse_filterable_page_with_optional_arguments(self):
+        """browse filterable page should be created correctly with one or \
+            more optional arguments provided"""
+        path = create_browse_filterable_page("Test", "test", None, True)
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_browse_page_with_optional_arguments(self):
+        """browse page should be created correctly with one or more \
+            optional arguments provided"""
+        path = create_browse_page("Test", "test", None, True)
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_learn_page_with_optional_arguments(self):
+        """learn page should be created correctly with one or more \
+            optional arguments provided"""
+        path = create_learn_page("Test", "test", None, {"test tag"}, \
+            {"test category"}, date.today())
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
+
+    def test_blog_page_with_optional_arguments(self):
+        """blog page should be created correctly with one or more \
+            optional arguments provided"""
+        path = create_blog_page("Test", "test", None, {"test tag"}, \
+            {"test category"}, "es", date.today())
+
+        www_response = django_client.get(path)
+        self.assertEqual(www_response.status_code, 200)
