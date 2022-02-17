@@ -51,10 +51,6 @@ git clone git@github.com:cfpb/consumerfinance.gov.git
 cd consumerfinance.gov
 ```
 
-You may also wish to fork the repository on GitHub and clone the resultant
-personal fork. This is advised if you are going to be doing development on
-`consumerfinance.gov` and contributing to the project.
-
 ### Set up the environment (optional)
 
 The consumerfinance.gov Django site relies on environment variables defined
