@@ -69,7 +69,6 @@ def create_landing_page(page_title, page_slug, parent_path=None,
 
     # skip if parent is None
     if not parent:
-        print("skipping page creation")
         return
 
     # create page, add it as a child of parent, save, and publish
@@ -84,7 +83,6 @@ def create_landing_page(page_title, page_slug, parent_path=None,
         parent.add_child(instance=new_page)
         new_page.save_revision().publish()
     except ValidationError:
-        print("skipping page creation")
         return
 
     # return path
@@ -103,7 +101,6 @@ def create_sublanding_filterable_page(page_title, page_slug,
 
     # skip if parent is None
     if not parent:
-        print("skipping page creation")
         return
 
     # create page, add it as a child of parent, save, and publish
@@ -125,7 +122,6 @@ def create_sublanding_filterable_page(page_title, page_slug,
         parent.add_child(instance=new_page)
         new_page.save_revision().publish()
     except ValidationError:
-        print("skipping page creation")
         return
 
     # return path
@@ -144,7 +140,6 @@ def create_blog_page(page_title, page_slug, parent_path=None,
 
     # skip if parent is None
     if not parent:
-        print("skipping page creation")
         return
 
     # check for optional variables set to None
@@ -172,7 +167,6 @@ def create_blog_page(page_title, page_slug, parent_path=None,
         parent.add_child(instance=new_page)
         new_page.save_revision().publish()
     except ValidationError:
-        print("skipping page creation")
         return
 
     # return path
@@ -189,7 +183,6 @@ def create_browse_filterable_page(page_title, page_slug, parent_path=None,
 
     # skip if parent is None
     if not parent:
-        print("skipping page creation")
         return
 
     # create page, add it as a child of parent, save, and publish
@@ -211,7 +204,6 @@ def create_browse_filterable_page(page_title, page_slug, parent_path=None,
         parent.add_child(instance=new_page)
         new_page.save_revision().publish()
     except ValidationError:
-        print("skipping page creation")
         return
 
     # return path
@@ -229,7 +221,6 @@ def create_learn_page(page_title, page_slug, parent_path=None,
 
     # skip if parent is None
     if not parent:
-        print("skipping page creation")
         return
 
     # set date published override if set to None
@@ -254,7 +245,6 @@ def create_learn_page(page_title, page_slug, parent_path=None,
         parent.add_child(instance=new_page)
         new_page.save_revision().publish()
     except ValidationError:
-        print("skipping page creation")
         return
 
     # return path
@@ -271,7 +261,6 @@ def create_sublanding_page(page_title, page_slug, parent_path=None,
 
     # skip if parent is None
     if not parent:
-        print("skipping page creation")
         return
 
     # create page, add it as a child of parent, save, and publish
@@ -288,7 +277,6 @@ def create_sublanding_page(page_title, page_slug, parent_path=None,
         parent.add_child(instance=new_page)
         new_page.save_revision().publish()
     except ValidationError:
-        print("skipping page creation")
         return
 
     # return path
@@ -309,7 +297,6 @@ def create_browse_page(page_title, page_slug, parent_path=None,
 
     # skip if parent is None
     if not parent:
-        print("skipping page creation")
         return
 
     # create page, add it as a child of parent, save, and publish
@@ -334,7 +321,6 @@ def create_browse_page(page_title, page_slug, parent_path=None,
         parent.add_child(instance=new_page)
         new_page.save_revision().publish()
     except ValidationError:
-        print("skipping page creation")
         return
 
     # return path
