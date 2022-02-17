@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: postgres://cfpb:cfpb@localhost/cfgov
+      MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
 
     services:
       elasticsearch:
@@ -48,15 +49,23 @@ jobs:
     - name: Set up initial data
       run: ./refresh-data.sh test.sql.gz
 
+
     # - name: Run server
     #   run: python cfgov/manage.py runserver
 
     - name: Run Cypress
       uses: cypress-io/github-action@v2
+      env: 
+          MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
       with:
         spec: |
           test/cypress/integration/paying-for-college/repay-student-debt/repay-student-debt.js
           test/cypress/integration/data-research/consumer-complaints/consumer-complaints.js
+          test/cypress/integration/consumer-tools/ask-cfpb/ask-cfpb.js
+          test/cypress/integration/consumer-tools/find-a-housing-counselor/find-a-housing-counselor.js
+          test/cypress/integration/consumer-tools/obtener-respuestas/obtener-respuestas.js
+          test/cypress/integration/consumer-tools//rural-or-underserved-tool/rural-or-underserved-tool.js
+          test/cypress/integration/consumer-tools/tdp-activity-search/tdp-activity-search.js
           test/cypress/integration/consumer-tools/youth-financial-education/survey.js
           test/cypress/integration/consumer-tools/youth-financial-education/survey-progress.js
           test/cypress/integration/consumer-tools/youth-financial-education/survey-errors.js

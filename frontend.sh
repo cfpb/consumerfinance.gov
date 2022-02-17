@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # ==========================================================================
 # Setup script for installing project dependencies.
@@ -92,12 +92,12 @@ fake_fonts() {
 }
 
 # Execute requested (or all) functions.
-if [ "$1" == "init" ]; then
+if [ "$1" = "init" ]; then
   init ""
   install
-elif [ "$1" == "build" ]; then
+elif [ "$1" = "build" ]; then
   build
-elif [ "$1" == "ci" ]; then
+elif [ "$1" = "ci" ]; then
   init "production"
   install
   build
