@@ -91,7 +91,16 @@ To run this file locally, run the following commands on a bash shell within
 the python container from the root folder:
 
 `./cfgov/manage.py shell`
-`exec(open('/src/consumerfinance.gov/cfgov/v1/tests/wagtail_pages/create_test_data.py').read())`
+`from v1.tests.wagtail_pages import create_test_data`
+
+Currently supported page types:
+- blog_page
+- browse_filterable_page
+- browse_page
+- landing_page
+- learn_page
+- sublanding_filterable_page
+- sublanding_page
 
 To import "create a page" functions, import from:
 - v1.tests.wagtail_pages.helpers

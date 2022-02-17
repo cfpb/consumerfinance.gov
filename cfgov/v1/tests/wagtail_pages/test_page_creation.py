@@ -14,6 +14,7 @@ from v1.tests.wagtail_pages.helpers import (
 
 django_client = Client()
 
+
 class PageCreationTestCase(TestCase):
 
     def test_landing_page_creation(self):
@@ -112,7 +113,7 @@ class PageCreationTestCase(TestCase):
         www_response = django_client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
-    def test_sublanding_filterable_page_exists_fail(self):
+    def test_blog_page_exists_fail(self):
         """blog page creation should abort if it \
             already exists, returns none"""
         create_blog_page("Test", "test")
@@ -186,8 +187,8 @@ class PageCreationTestCase(TestCase):
     def test_learn_page_with_optional_arguments(self):
         """learn page should be created correctly with one or more \
             optional arguments provided"""
-        path = create_learn_page("Test", "test", None, {"test tag"}, \
-            {"test category"}, date.today())
+        path = create_learn_page("Test", "test", None, {"test tag"},
+                                 {"test category"}, date.today())
 
         www_response = django_client.get(path)
         self.assertEqual(www_response.status_code, 200)
@@ -195,8 +196,8 @@ class PageCreationTestCase(TestCase):
     def test_blog_page_with_optional_arguments(self):
         """blog page should be created correctly with one or more \
             optional arguments provided"""
-        path = create_blog_page("Test", "test", None, {"test tag"}, \
-            {"test category"}, "es", date.today())
+        path = create_blog_page("Test", "test", None, {"test tag"},
+                                {"test category"}, "es", date.today())
 
         www_response = django_client.get(path)
         self.assertEqual(www_response.status_code, 200)
