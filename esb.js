@@ -1,4 +1,4 @@
-/* eslint-disable no-sync,max-lines-per-function */
+/* eslint-disable no-sync,max-lines-per-function,global-require */
 const { readdirSync } = require( 'fs' );
 const { readdir, mkdir, copyFile } = require( 'fs' ).promises;
 const { resolve, dirname } = require( 'path' );
@@ -14,7 +14,7 @@ const r = `${ unprocessed }/js/routes`;
 const a = `${ unprocessed }/apps`;
 const od = `${ r }/on-demand`;
 
-const rDir = resolve( unprocessed );
+const rDir = resolve( '.' );
 const blacklist = [
   'node_modules', 'npm-packages-offline-cache', '.yarnrc', 'yarn.lock',
   'browserslist', 'package.json', 'config.json', '.gitkeep', 'root'
@@ -30,12 +30,11 @@ async function getFiles( dir ) {
     const res = resolve( dir, dirent.name );
     return dirent.isDirectory() ? getFiles( res ) : res;
   } ) );
-  return files.flat().filter( v => v ).map( v => v.replace( rDir, unprocessed ) );
+  return files.flat().filter( v => v )
+    .map( v => v.replace( rDir, '.' ) );
 }
 
 ( async () => {
-  const files = await getFiles( unprocessed );
-
   /**
  * @param {string} path The directory with the needed js
  * @param {regex} regex The regex to match against
@@ -124,12 +123,23 @@ async function getFiles( dir ) {
     outdir: 'cfgov/static_built/out'
   };
 
+  /*
+  const watchConfig = {
+    ...baseConfig,
+    watch: true
+  };
+*/
+
   // Static
+  const files = await getFiles( unprocessed );
   const staticFiles = files.filter( v => !v.match( /.js$|.less$|.css$/ ) );
   const inDirs = [ ...new Set( staticFiles.map( v => dirname( v ) ) ) ];
-  const outDirs = inDirs.map( v => v.replace(
-    unprocessed, baseConfig.outdir )
-  );
+  const outDirs = [
+    ...inDirs.map( v => v.replace( unprocessed, baseConfig.outdir ) ),
+    // Hande prebuilt lightbox dep
+    ...[ '', '/images', '/js', '/css' ]
+      .map( v => `${ baseConfig.outdir }/lightbox2${ v }` )
+  ];
 
   // Make output directories
   await Promise.all( outDirs.map( d => mkdir( d, { recursive: true } ) ) );
@@ -138,6 +148,22 @@ async function getFiles( dir ) {
   await Promise.all( staticFiles.map( f => copyFile(
     f, f.replace( unprocessed, baseConfig.outdir )
   ) ) );
+
+  // Handle prebuilt lightbox dep
+  await Promise.all( [
+    './node_modules/lightbox2/dist/css/lightbox.min.css',
+    './node_modules/lightbox2/dist/images/close.png',
+    './node_modules/lightbox2/dist/images/loading.gif',
+    './node_modules/lightbox2/dist/images/next.png',
+    './node_modules/lightbox2/dist/images/prev.png',
+    './node_modules/lightbox2/dist/js/lightbox-plus-jquery.min.js'
+  ].map( f => copyFile(
+    f, f.replace(
+      'node_modules/lightbox2/dist',
+      `${ baseConfig.outdir }/lightbox2`
+    ) ) )
+  );
+
 
   // JS
   esbuild.build( { ...baseConfig, entryPoints: jsPaths } );
