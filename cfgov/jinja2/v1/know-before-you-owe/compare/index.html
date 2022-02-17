@@ -16,7 +16,7 @@
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" href="{{ static('apps/know-before-you-owe/css/main.css') }}">
-<link rel="stylesheet" href="https://unpkg.com/lightbox2@2.11.3/dist/css/lightbox.min.css">
+<link rel="stylesheet" href="{{ static('lightbox2/css/lightbox.min.css') }}">
 {% endblock %}
 
 {% block content_main %}
@@ -192,5 +192,5 @@
 
 {% block javascript %}
     {{ super() }}
-    <script src='https://unpkg.com/lightbox2@2.11.3/dist/js/lightbox-plus-jquery.min.js"'></script>
+    <script src='{{ static("lightbox2/js/lightbox-plus-jquery.min.js") }}'></script>
 {% endblock %}

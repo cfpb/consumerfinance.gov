@@ -1,4 +1,4 @@
-/* eslint-disable no-sync,max-lines-per-function,global-require */
+/* eslint-disable no-sync,max-lines-per-function */
 const { readdirSync } = require( 'fs' );
 const { readdir, mkdir, copyFile } = require( 'fs' ).promises;
 const { resolve, dirname } = require( 'path' );
@@ -30,8 +30,7 @@ async function getFiles( dir ) {
     const res = resolve( dir, dirent.name );
     return dirent.isDirectory() ? getFiles( res ) : res;
   } ) );
-  return files.flat().filter( v => v )
-    .map( v => v.replace( rDir, unprocessed ) );
+  return files.flat().filter( v => v ).map( v => v.replace( rDir, unprocessed ) );
 }
 
 ( async () => {
@@ -123,11 +122,6 @@ async function getFiles( dir ) {
     sourcemap: true,
     external: [ '*.png', '*.woff', '*.woff2', '*.gif', '*.svg' ],
     outdir: 'cfgov/static_built/out'
-  };
-
-  const watchConfig = {
-    ...baseConfig,
-    watch: true
   };
 
   // Static
