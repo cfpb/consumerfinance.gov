@@ -113,6 +113,8 @@
         
             <li><a class="toctree-l4" href="#writing-cypress-tests">Writing Cypress tests</a></li>
         
+            <li><a class="toctree-l4" href="#creating-test-data">Creating test data</a></li>
+        
         </ul>
     
 
@@ -252,6 +254,28 @@ describe('Consumer Tools', () =&gt; {
 });</code></pre>
 
 <p>Overall it lets our tests show what is intended to be happening on a page without showing the more technical side of how we reference and interact with elements.</p>
+<h2 id="creating-test-data">Creating test data<a class="headerlink" href="#creating-test-data" title="Permanent link">¶</a></h2>
+<p>Wagtail pages can be created programmatically by adding function calls to cfgov/v1/tests/wagtail_pages/create_test_data.py
+To run this file locally, run the following commands on a bash shell within
+the python container from the root folder:</p>
+<p><code>./cfgov/manage.py shell</code>
+<code>from v1.tests.wagtail_pages import create_test_data</code></p>
+<p>Currently supported page types:
+- blog_page
+- browse_filterable_page
+- browse_page
+- landing_page
+- learn_page
+- sublanding_filterable_page
+- sublanding_page</p>
+<p>To import "create a page" functions, import from:
+- v1.tests.wagtail_pages.helpers</p>
+<p>"Create a page" functions return a path to the created page or None if no page was created</p>
+<p>When adding tags or categories, they should be passed as a set:
+<code>MY_TAGS = {"a tag", "another tag"}</code></p>
+<p>The first three arguments of any "create a page" function are title, slug, and parent path (optional, defaults to root)</p>
+<p>Do not include new functions that only add test data in a pull request. When you are done running the test data creation
+script, remove your created functions and only leave the documentation.</p>
               
             </div>
           </div>
