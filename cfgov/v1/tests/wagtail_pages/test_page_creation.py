@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.test import Client, TestCase
+from django.test import TestCase
 
 from wagtail.core.models import Site
 
@@ -11,16 +11,13 @@ from v1.tests.wagtail_pages.helpers import (
 )
 
 
-django_client = Client()
-
-
 class PageCreationTestCase(TestCase):
 
     def test_landing_page_creation(self):
         """landing page should be created if it does not exist"""
         path = create_landing_page("Test", "test")
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_landing_page_exists_fail(self):
@@ -34,7 +31,7 @@ class PageCreationTestCase(TestCase):
         """sublanding page should be created if it does not exist"""
         path = create_sublanding_page("Test", "test")
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_sublanding_page_exists_fail(self):
@@ -49,7 +46,7 @@ class PageCreationTestCase(TestCase):
             does not exist"""
         path = create_sublanding_filterable_page("Test", "test")
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_sublanding_filterable_page_exists_fail(self):
@@ -64,7 +61,7 @@ class PageCreationTestCase(TestCase):
             does not exist"""
         path = create_browse_filterable_page("Test", "test")
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_browse_filterable_page_exists_fail(self):
@@ -79,7 +76,7 @@ class PageCreationTestCase(TestCase):
             does not exist"""
         path = create_browse_page("Test", "test")
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_browse_page_exists_fail(self):
@@ -94,7 +91,7 @@ class PageCreationTestCase(TestCase):
             does not exist"""
         path = create_learn_page("Test", "test")
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_learn_page_exists_fail(self):
@@ -109,7 +106,7 @@ class PageCreationTestCase(TestCase):
             does not exist"""
         path = create_blog_page("Test", "test")
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_blog_page_exists_fail(self):
@@ -148,7 +145,7 @@ class PageCreationTestCase(TestCase):
             optional arguments provided"""
         path = create_landing_page("Test", "test", None, True)
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_sublanding_page_with_optional_arguments(self):
@@ -156,7 +153,7 @@ class PageCreationTestCase(TestCase):
             optional arguments provided"""
         path = create_sublanding_page("Test", "test", None, True)
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_sublanding_filterable_page_with_optional_arguments(self):
@@ -164,7 +161,7 @@ class PageCreationTestCase(TestCase):
             or more optional arguments provided"""
         path = create_sublanding_filterable_page("Test", "test", None, True)
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_browse_filterable_page_with_optional_arguments(self):
@@ -172,7 +169,7 @@ class PageCreationTestCase(TestCase):
             more optional arguments provided"""
         path = create_browse_filterable_page("Test", "test", None, True)
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_browse_page_with_optional_arguments(self):
@@ -180,7 +177,7 @@ class PageCreationTestCase(TestCase):
             optional arguments provided"""
         path = create_browse_page("Test", "test", None, True)
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_learn_page_with_optional_arguments(self):
@@ -189,7 +186,7 @@ class PageCreationTestCase(TestCase):
         path = create_learn_page("Test", "test", None, {"test tag"},
                                  {"test category"}, date.today())
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_blog_page_with_optional_arguments(self):
@@ -198,7 +195,7 @@ class PageCreationTestCase(TestCase):
         path = create_blog_page("Test", "test", None, {"test tag"},
                                 {"test category"}, "es", date.today())
 
-        www_response = django_client.get(path)
+        www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
 
     def test_path_does_not_exist_fail(self):
