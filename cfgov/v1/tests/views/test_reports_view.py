@@ -30,9 +30,9 @@ class ServeViewTestCase(TestCase):
         self.category = CFGOVPageCategory(name=self.category_tuple[1])
         self.blog_page.categories.add(self.category)
         self.blog_page.tags.add(self.tag1, self.tag2)
-        self.document1 = Document(title="Test document 1")
-        self.document1.save()
-        self.document1.tags.add(self.tag1, self.tag2)
+        self.document = Document(title="Test document 1")
+        self.document.save()
+        self.document.tags.add(self.tag1, self.tag2)
 
     def test_construct_absolute_url(self):
         self.assertEqual(
@@ -47,7 +47,9 @@ class ServeViewTestCase(TestCase):
             self.category.get_name_display(), self.category_tuple[1])
 
     def test_process_tags(self):
-        tag_string = process_tags(self.document1.tags.all())
+        tag_name_queryset = self.document.tags.all().values_list(
+            'name', flat=True)
+        tag_string = process_tags(tag_name_queryset)
         self.assertEqual(
             tag_string,
             'tag1, tag2'
