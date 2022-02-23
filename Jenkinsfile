@@ -248,20 +248,6 @@ pipeline {
                 postGitHubStatus("jenkins/deploy", "success", "Deployed", env.RUN_DISPLAY_URL)
             }
         }
-
-        stage('Run functional tests') {
-            steps {
-                script{
-                    LAST_STAGE = env.STAGE_NAME
-                }
-                echo "Running functional tests against https://${CFGOV_HOSTNAME}"
-                build job: 'cf.gov-functional-tests', parameters: [
-                    [$class: 'StringParameterValue', name: 'BASE_URL', value: "https://${env.CFGOV_HOSTNAME}/"],
-                    [$class: 'StringParameterValue', name: 'GIT_TAG', value: env.GIT_COMMIT],
-                ]
-                postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
-            }
-        }
     }
 
     post {
