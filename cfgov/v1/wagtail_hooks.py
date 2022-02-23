@@ -31,7 +31,7 @@ from v1.template_debug import (
     notification_test_cases, register_template_debug, video_player_test_cases
 )
 from v1.util import util
-from v1.views.reports import PageMetadataReportView, DocumentsReportView
+from v1.views.reports import DocumentsReportView, PageMetadataReportView
 
 
 try:
