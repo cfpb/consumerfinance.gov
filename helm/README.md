@@ -37,7 +37,7 @@ run the following command in the correct namespace
 * [`local.yaml`](overrides/local.yaml) - Local dev stack (minus services)
 * [`services.yaml`](overrides/services.yaml) - Services Stack (Postgres, ElasticSearch, Kibana)
 * [`prod.yaml`](overrides/prod.yaml) - Prod stack (minus services)
-* [`lb8000.yaml`](overrides/lb8000.yaml) - LoadBalancer bound to port 8000 (useful for local prod stack)
+* [`lb8000.yaml`](overrides/lb8000.yaml) - LoadBalancer bound to port 8000 (useful for local prod stack, already part of [`local.yaml`](overrides/local.yaml))
 * [`init-sleep.yaml`](overrides/init-sleep.yaml) - Sleep cfgov initContainer to infinity (debug use)
 * [`sleep.yaml`](overrides/sleep.yaml) - Sleep cfgov container to infinity (debug use)
 
