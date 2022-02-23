@@ -1,14 +1,14 @@
-/* import { ConsumerComplaints } from './consumer-complaints-helpers';
+import { ConsumerComplaints } from './consumer-complaints-helpers';
 
 const page = new ConsumerComplaints();
 
 describe( 'Consumer Complaint Database', () => {
   beforeEach( () => {
-    cy.visit( '/data-research/consumer-complaints/' );
+    cy.visit( '/data-research/consumer-complaints/search/' );
   } );
 
   it( 'should limit results by a date range', () => {
-    page.click( 'Explore data and trends' );
+    page.clickTab( 'trends' );
     page.clickDateRange( '3m' );
     cy.url().should( 'include', 'dateRange=3m' );
     page.clickDateRange( '6m' );
@@ -22,7 +22,6 @@ describe( 'Consumer Complaint Database', () => {
   } );
 
   it( 'should limit results by search query', () => {
-    page.click( 'Read complaints' );
     page.clickTab( 'trends' );
     cy.url().should( 'include', 'tab=Trends' );
     page.enter( 'money' );
@@ -32,7 +31,6 @@ describe( 'Consumer Complaint Database', () => {
   } );
 
   it( 'should search based on multiple terms', () => {
-    page.click( 'Explore data and trends' );
     page.clickTab( 'list' );
     cy.url().should( 'include', 'tab=List' );
     page.enter( 'loan sold' );
@@ -41,9 +39,4 @@ describe( 'Consumer Complaint Database', () => {
     cy.url().should( 'include', 'searchText=loan' );
   } );
 
-  it( 'should display Download the data', () => {
-    page.click( 'Download complaint data' );
-    cy.url().should( 'include', 'download-the-data' );
-  } );
-
-} ); */
+} );

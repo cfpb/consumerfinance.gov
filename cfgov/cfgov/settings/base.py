@@ -598,28 +598,6 @@ FLAGS = {
     "CFPB_RECRUITING": [],
     # When enabled, display a "technical issues" banner on /complaintdatabase
     "CCDB_TECHNICAL_ISSUES": [],
-    # When enabled, display a banner stating the complaint intake form is down
-    "COMPLAINT_INTAKE_TECHNICAL_ISSUES": [
-        {
-            "condition": "path matches",
-            "value": r"^/complaint",
-            "required": True,
-        },
-        # Boolean to turn it off explicitly unless enabled by another condition
-        {"condition": "boolean", "value": False},
-    ],
-    # When enabled, display a banner stating that the complaint intake form is
-    # offline for maintenance. A combination of 'after date'/'before date'
-    # conditions is expected.
-    "COMPLAINT_INTAKE_MAINTENANCE": [
-        {
-            "condition": "path matches",
-            "value": r"^/complaint",
-            "required": True,
-        },
-        # Boolean to turn it off explicitly unless enabled by another condition
-        {"condition": "boolean", "value": False},
-    ],
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
@@ -633,35 +611,6 @@ FLAGS = {
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
     "BETA_EXTERNAL_TESTING": [],
-    # During a Salesforce system outage, the following flag should be enabled
-    # to alert users that the Collect community is down.
-    "COLLECT_OUTAGE": [
-        {
-            "condition": "path matches",
-            "value": (
-                r"^/data-research/credit-card-data/terms-credit-card-plans-survey/$|"  # noqa: E501
-                r"^/data-research/prepaid-accounts/$"
-            ),
-            "required": True,
-        },
-        # Boolean to turn it off explicitly unless enabled by another condition
-        {"condition": "boolean", "value": False},
-    ],
-    # During a Salesforce system outage, the following flag
-    # should be enabled to alert users that
-    # the OMWI assessment form and inclusivity portal are down.
-    "OMWI_SALESFORCE_OUTAGE": [
-        {
-            "condition": "path matches",
-            "value": (
-                r"^/about-us/diversity-and-inclusion/$|"
-                r"^/about-us/diversity-and-inclusion/self-assessment-financial-institutions/$"
-            ),  # noqa: E501
-            "required": True,
-        },
-        # Boolean to turn it off explicitly unless enabled by another condition
-        {"condition": "boolean", "value": False},
-    ],
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
