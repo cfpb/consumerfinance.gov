@@ -24,7 +24,7 @@ class ServeViewTestCase(TestCase):
         self.tag2 = baker.make(Tag, name="tag2")
         self.site = Site.objects.get(is_default_site=True)
         self.root_page = self.site.root_page
-        self.blog_page = BlogPage(title='Blogojevich', live=True)
+        self.blog_page = BlogPage(title="Blogojevich", live=True)
         self.root_page.add_child(instance=self.blog_page)
         self.category_tuple = categories[0][1][0]
         self.category = CFGOVPageCategory(name=self.category_tuple[1])
@@ -48,11 +48,11 @@ class ServeViewTestCase(TestCase):
 
     def test_process_tags(self):
         tag_name_queryset = self.document.tags.all().values_list(
-            'name', flat=True)
+            "name", flat=True)
         tag_string = process_tags(tag_name_queryset)
         self.assertEqual(
             tag_string,
-            'tag1, tag2'
+            "tag1, tag2"
         )
 
     def test_metadata_report_get_filename(self):
