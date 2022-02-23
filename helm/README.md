@@ -31,7 +31,7 @@ If you provide any arguments, it will only include those provided.
     ./helm-install helm/overrides/prod.yaml helm/overrides/services.yaml helm/overrides/lb8000.yaml
 
 ## Remove Helm Release
-To remove a cfgov release insalled with [`./helm-install`](../helm-install.sh),
+To remove a cfgov release installed with [`./helm-install`](../helm-install.sh),
 run the following command in the correct namespace
 
     helm uninstall cfgov
