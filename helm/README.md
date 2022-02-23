@@ -7,7 +7,7 @@ override yamls in [`overrides`](overrides).
 
 ## Usage
 Arguments passed in, should be a spaced separated list of override yamls.
-If not arguments are provided, it includes [`local.yaml`](overrides/local.yaml)
+If no arguments are provided, it includes [`local.yaml`](overrides/local.yaml)
 and [`services.yaml`](overrides/services.yaml).
 
 ### Default Execution
@@ -24,7 +24,11 @@ If you provide any arguments, it will only include those provided.
 
 ### Prod (with services)
 
+    # ClusterIP
     ./helm-install helm/overrides/prod.yaml helm/overrides/services.yaml
+
+    # LoadBalancer - Port 8000
+    ./helm-install helm/overrides/prod.yaml helm/overrides/services.yaml helm/overrides/lb8000.yaml
 
 ## Remove Helm Release
 To remove a cfgov release insalled with [`./helm-install`](../helm-install.sh),
@@ -47,7 +51,7 @@ run the following command in the correct namespace
     ./helm-install.sh helm/overrides/local.yaml helm/overrides/services.yaml helm/overrides/init-sleep.yaml
 
     # Prod and Services Stack with CFGOV LoadBalancer bound to port 8000 (Local Prod Testing)
-    ./helm-install.sh helm/overrides/prod.yaml helm/overrides/services.yaml helm/overrides/lb8000.yaml
+    ./helm-install.sh helm/overrides/prod.yaml helm/overrides/services.yaml helm/overrides/lb8000.yaml helm/overrides/sleep.yaml
 
 
 # Override Values
