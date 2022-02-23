@@ -1,8 +1,6 @@
 /* The tests assume some blog posts already exist, and will need some test post data if they're run locally.
-This includes at least one post that contains the word "loan" in the title, one post without the word "loan" in the title,
-posts published both before and after the date 12/31/2020. The posts should be in several different categories,
-and tagged with several different topic tags, including at least one with the tag "mortgages" and at least one without the "mortgages" tag.
-The posts should also have several different languages, including at least one in Spanish and one in Tagalog. */
+The posts should be in five different categories, and tagged with at least five different topic tags.
+The posts should also have at least three different languages. */
 import { Filter } from './filter-helpers';
 import { FilterableListControl } from './filterable-list-control-helpers';
 import { Pagination } from '../pagination/pagination-helpers';
@@ -16,109 +14,200 @@ describe( 'Filter Blog Posts based on content', () => {
     cy.visit( '/about-us/blog/' );
   } );
   it( 'Item name search', () => {
-    // When I enter "loan" in the item name input field
-    blog.filterItemName( 'loan' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then I should see only results with the word "loan" in the post title
-    blog.resultsContent().should( 'contain', 'loan' );
-    // And the page url should contain "title=loan"
-    cy.url().should( 'include', 'title=loan' );
+    // get the title of any blog post
+    blog.resultTitle().then( ( title ) => {
+      // When I enter the title in the item name input field
+      blog.filterItemName( title.get( 0 ).innerText );
+      // And I click "Apply filters" button
+      blog.applyFilters();
+      // Then I should see only results with the title in the post title
+      blog.resultsContent().should( 
+        'contain', title.get( 0 ).innerText 
+      );
+      // And the page url should contain "title=" followed by the title
+      cy.url().should( 
+        'include', 'title=' + title.get( 0 ).innerText
+      );
+    } );
   } );
   it( 'Select a single category', () => {
-    // When I select the first option in the Category multiselect
-    filter.clickCategory( 'At the CFPB' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then I should see only results in that category
-    blog.notification().should( 'be.visible' );
-    // And the page url should contain "categories=at-the-cfpb"
-    cy.url().should( 'include', 'categories=at-the-cfpb' );
+    // retrieve the category
+    filter.getCategory().then( ( category ) => {
+      // When I select the first option in the Category multiselect
+      filter.clickCategory( category.get( 0 ).getAttribute( 'value' ) );
+      // And I click "Apply filters" button
+      blog.applyFilters();
+      // Then I should see only results in that category
+      blog.notification().should( 'be.visible' );
+      // And the page url should contain "categories=" category
+      cy.url().should(
+        'include',
+        'categories=' + category.get( 0 ).getAttribute( 'value' )
+      );
+    } );
   } );
   it( 'Select multiple categories', () => {
-    // When I select all options checkboxes in the Category multiselect
-    filter.clickCategory( 'at-the-cfpb' );
-    filter.clickCategory( 'directors-notebook' );
-    filter.clickCategory( 'policy_compliance' );
-    filter.clickCategory( 'data-research-reports' );
-    filter.clickCategory( 'info-for-consumers' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then I should see only results that are in at least one of the selected categories
-    blog.notification().should( 'be.visible' );
-    // And the page url should contain "categories=at-the-cfpb"
-    cy.url().should( 'include', 'categories=at-the-cfpb' );
-    // And the page url should contain "categories=directors-notebook"
-    cy.url().should( 'include', 'categories=directors-notebook' );
-    // And the page url should contain "categories=policy_compliance"
-    cy.url().should( 'include', 'categories=policy_compliance' );
-    // And the page url should contain "categories=data-research-reports"
-    cy.url().should( 'include', 'categories=data-research-reports' );
-    // And the page url should contain "categories=info-for-consumers"
-    cy.url().should( 'include', 'categories=info-for-consumers' );
+    // retrieve the categories
+    filter.getCategory().then( ( categories ) => {
+      // When I select all options checkboxes in the Category multiselect
+      filter.clickCategory( categories.get( 0 ).getAttribute( 'value' ) );
+      filter.clickCategory( categories.get( 1 ).getAttribute( 'value' ) );
+      filter.clickCategory( categories.get( 2 ).getAttribute( 'value' ) );
+      filter.clickCategory( categories.get( 3 ).getAttribute( 'value' ) );
+      filter.clickCategory( categories.get( 4 ).getAttribute( 'value' ) );
+      // And I click "Apply filters" button
+      blog.applyFilters();
+      // Then I should see only results that are in at least one of the selected categories
+      blog.notification().should( 'be.visible' );
+      // And the page url should contain "categories=at-the-cfpb"
+      cy.url().should(
+        'include',
+        'categories=' + categories.get( 0 ).getAttribute( 'value' )
+      );
+      // And the page url should contain "categories=directors-notebook"
+      cy.url().should(
+        'include',
+        'categories=' + categories.get( 1 ).getAttribute( 'value' )
+      );
+      // And the page url should contain "categories=policy_compliance"
+      cy.url().should(
+        'include',
+        'categories=' + categories.get( 2 ).getAttribute( 'value' )
+      );
+      // And the page url should contain "categories=data-research-reports"
+      cy.url().should(
+        'include',
+        'categories=' + categories.get( 3 ).getAttribute( 'value' )
+      );
+      // And the page url should contain "categories=info-for-consumers"
+      cy.url().should(
+        'include',
+        'categories=' + categories.get( 4 ).getAttribute( 'value' )
+      );
+      } );
   } );
   it( 'Date range to present', () => {
-    // When I enter "01/01/2020" in the From date entry field
-    blog.filterFromDate( '2020-01-01' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then the page url should contain "from_date=2020-01-01"
-    cy.url().should( 'include', 'from_date=2020-01-01' );
-    // When I paginate to the last page of results
-    page.lastResults();
-    // Then I should see only results dated 01/01/2020 or later
-    blog.lastResultHeader().should( 'contain', '2020' );
+    // get the date from a result
+    blog.resultDate().then( ( date ) => {
+      // When I enter the date in the From date entry field
+      blog.filterFromDate( 
+        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+      );
+      // And I click "Apply filters" button
+      blog.applyFilters();
+      // Then the page url should contain "from_date=" date
+      cy.url().should( 
+        'include',
+        'from_date=' + date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[
+          0
+        ] );
+      // When I paginate to the last page of results
+      page.lastResults();
+      // Then I should see only results dated that year or later
+      blog.lastResultHeader().should(
+        'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[ 0 ]
+      );
+    } );
   } );
   it( 'Date range in past', () => {
-    // When I enter "01/01/2020" in the From date entry field
-    blog.filterFromDate( '2020-01-01' );
-    // And I enter "12/31/2020" in the To date entry field
-    blog.filterToDate( '2020-12-31' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then I should see only results between 01/01/2020 and 12/31/2020, inclusive
-    blog.notification().should( 'be.visible' );
-    blog.resultsHeaderRight().should( 'not.contain', '2019' );
-    blog.resultsHeaderRight().should( 'not.contain', '2021' );
-    blog.resultsHeaderRight().should( 'contain', '2020' );
-    // And the page url should contain "from_date=2020-01-01"
-    cy.url().should( 'include', 'from_date=2020-01-01' );
-    // And the page url should contain "to_date=2020-12-31"
-    cy.url().should( 'include', 'to_date=2020-12-31' );
+    // get the date from a result
+    blog.resultDate().then( ( date ) => {
+      // When I enter the date in the From date entry field
+      blog.filterFromDate(
+        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+      );
+      // And I enter the date in the To date entry field
+      blog.filterToDate(
+        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+      );
+      // And I click "Apply filters" button
+      blog.applyFilters();
+      // Then I should see only results from the year belonging to that date
+      blog.notification().should( 'be.visible' );
+      blog.resultsHeaderRight().should( 
+        'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[ 0 ]
+      );
+      // And the page url should contain "from_date=" date
+      cy.url().should(
+        'include',
+        'from_date=' + date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[
+          0
+        ]
+      );
+      // And the page url should contain "to_date=" date
+      cy.url().should(
+        'include',
+        'to_date=' + date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[
+          0
+        ]
+      );
+    } );
   } );
   it( 'Select a single topic', () => {
-    // When I click the first checkbox in the Topic list
-    filter.clickTopic( 'Financial Education' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then I should see only results tagged with the selected topic
-    blog.notification().should( 'be.visible' );
-    blog.resultsContent().should( 'contain', 'education' );
-    // And the page url should contain "topics=financial-education"
-    cy.url().should( 'include', 'topics=financial-education' );
+    // get a topic
+    filter.getTopic().then( ( topic ) => {
+      // When I click the first checkbox in the Topic list
+      filter.clickTopic( topic.get( 0 ).getAttribute( 'value' ) );
+      // And I click "Apply filters" button
+      blog.applyFilters();
+      // Then I should see only results tagged with the selected topic
+      blog.notification().should( 'be.visible' );
+      filter.getTopicLabel( 
+        topic.get( 0 ).getAttribute( 'value' ) 
+      ).then( ( label ) => {
+        blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
+      } );
+      // And the page url should contain "topics=" topic
+      cy.url().should(
+        'include',
+        'topics=' + topic.get( 0 ).getAttribute( 'value' )
+      );
+    });
   } );
   it( 'Select multiple topics', () => {
-    // When I select five checkboxes in the Topic list
-    filter.clickTopic( 'Student loans' );
-    filter.clickTopic( 'Financial education' );
-    filter.clickTopic( 'Mortgages' );
-    filter.clickTopic( 'Consumer complaints' );
-    filter.clickTopic( 'Financial well-being' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then I should see only results tagged with at least one of the two selected topics
-    blog.notification().should( 'be.visible' );
-    blog.resultsContent().should( 'contain', 'financial' );
-    // And the page url should contain "topics=student-loans"
-    cy.url().should( 'include', 'topics=student-loans' );
-    // And the page url should contain "topics=financial-education"
-    cy.url().should( 'include', 'topics=financial-education' );
-    // And the page url should contain "topics=mortgages"
-    cy.url().should( 'include', 'topics=mortgages' );
-    // And the page url should contain "topics=consumer-complaints"
-    cy.url().should( 'include', 'topics=consumer-complaints' );
-    // And the page url should contain "topics=financial-well-being"
-    cy.url().should( 'include', 'topics=financial-well-being' );
+    // get topics
+    filter.getTopic().then( ( topics ) => {
+      // When I select five checkboxes in the Topic list
+      filter.clickTopic( topics.get( 0 ).getAttribute( 'value' ) );
+      filter.clickTopic( topics.get( 1 ).getAttribute( 'value' ) );
+      filter.clickTopic( topics.get( 2 ).getAttribute( 'value' ) );
+      filter.clickTopic( topics.get( 3 ).getAttribute( 'value' ) );
+      filter.clickTopic( topics.get( 4 ).getAttribute( 'value' ) );
+      // And I click "Apply filters" button
+      blog.applyFilters();
+      // Then I should see results tagged with at least one of the topics
+      blog.notification().should( 'be.visible' );
+      filter.getTopicLabel( 
+        topics.get( 0 ).getAttribute( 'value' ) 
+      ).then( ( label ) => {
+        blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
+      } );
+      // And the page url should contain "topics=" first topic
+      cy.url().should(
+        'include',
+        'topics=' + topics.get( 0 ).getAttribute( 'value' )
+      );
+      // And the page url should contain "topics=" second topic
+      cy.url().should(
+        'include',
+        'topics=' + topics.get( 1 ).getAttribute( 'value' )
+      );
+      // And the page url should contain "topics=" third topic
+      cy.url().should(
+        'include',
+        'topics=' + topics.get( 2 ).getAttribute( 'value' )
+      );
+      // And the page url should contain "topics=" fourth topic
+      cy.url().should(
+        'include',
+        'topics=' + topics.get( 3 ).getAttribute( 'value' )
+      );
+      // And the page url should contain "topics=" fifth topic
+      cy.url().should(
+        'include',
+        'topics=' + topics.get( 4 ).getAttribute( 'value' )
+      );
+    } );
   } );
   it( 'Type-ahead topics', () => {
     // When I type "mortgage" in the topic input box

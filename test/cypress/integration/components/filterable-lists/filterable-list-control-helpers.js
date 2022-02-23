@@ -16,6 +16,10 @@ export class FilterableListControl {
     return this.filterableListElement( 'title' ).type( name );
   }
 
+  resultDate() {
+    return cy.get( '.datetime_date:first' )
+  }
+
   filterFromDate( date ) {
     return this.filterableListElement( 'from-date' ).type( date );
   }
@@ -30,6 +34,10 @@ export class FilterableListControl {
 
   firstResultContent() {
     return this.resultsContent().first();
+  }
+
+  resultTitle() {
+    return cy.get( '.o-post-preview_title:first' );
   }
 
   lastResultContent() {
