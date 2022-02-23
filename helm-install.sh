@@ -18,7 +18,7 @@ fi
 # Parse overrides list
 export PROJECT_DIR="$(dirname "$(realpath "$0")")"
 if [ $# -eq 0 ]; then
-  ARGS="$PROJECT_DIR/helm/overrides/local.yaml"
+  ARGS="$PROJECT_DIR/helm/overrides/local.yaml $PROJECT_DIR/helm/overrides/services.yaml"
 else
   ARGS=$@
 fi

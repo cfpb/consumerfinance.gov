@@ -1,0 +1,56 @@
+### POSTGRESQL OVERRIDES ###
+postgresql:
+  enabled: true
+  postgresqlPostgresPassword: cfpb  # Admin password, admin user is postgres
+  postgresqlPassword: cfpb  # User password
+  postgresqlUsername: cfpb  # User username
+  postgresqlDatabase: cfgov
+  persistence:
+    enabled: false
+  service:
+    type: LoadBalancer
+
+### ELASTICSEARCH OVERRIDES ###
+elasticsearch:
+  enabled: true
+
+  # Disable persistence for local by default
+  persistence:
+    enabled: false
+
+  replicas: 1
+  minimumMasterNodes: 0
+  antiAffinity: "soft"
+
+  # Shrink default JVM heap.
+  esJavaOpts: "-Xmx512m -Xms512m"
+
+  # Allocate smaller chunks of memory per pod.
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "1024M"
+    limits:
+      cpu: "1000m"
+      memory: "2048M"
+
+  # Request smaller persistent volumes, if enabled.
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    storageClassName: "hostpath"
+    resources:
+      requests:
+        storage: 100M
+
+  service:
+    type: LoadBalancer
+
+### KIBANA OVERRIDES ###
+kibana:
+  enabled: true
+
+  persistence:
+    enabled: false
+
+  service:
+    type: LoadBalancer

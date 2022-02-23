@@ -1,0 +1,4 @@
+command:
+  - "sleep"
+args:
+  - "infinity"
