@@ -96,7 +96,7 @@ ENV ALLOWED_HOSTS '["*"]'
 # Install Apache server and curl (container healthcheck),
 # and converts all Docker Secrets into environment variables.
 RUN apk add --no-cache apache2 curl && \
-    echo '[ -d /var/run/secrets ] && for s in $(find /var/run/secrets -type f -name "*" -maxdepth 1) ; do if [ "$s" = "kubernetes.io" ]; then continue; fi; export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
+    echo '[ -d /var/run/secrets ] && for s in $(find /var/run/secrets -type f -name "*" -maxdepth 1) ; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
 
 # Link mime.types for RHEL Compatability in apache config.
 # TODO: Remove this link once RHEL is replaced
