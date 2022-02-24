@@ -47,8 +47,7 @@ class ServeViewTestCase(TestCase):
             self.category.get_name_display(), self.category_tuple[1])
 
     def test_process_tags(self):
-        tag_name_queryset = self.document.tags.all().values_list(
-            "name", flat=True)
+        tag_name_queryset = self.document.tags.values_list("name", flat=True)
         tag_string = process_tags(tag_name_queryset)
         self.assertEqual(
             tag_string,

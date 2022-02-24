@@ -87,7 +87,6 @@ class DocumentsReportView(ReportView):
         "uploaded_by_user": "Uploaded by",
     }
 
-    """TODO: Why must tags be processed here but not page metadata report?"""
     custom_field_preprocess = {
         "tags.names": {
             "csv": process_tags
