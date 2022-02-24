@@ -6,3 +6,7 @@
   version "2.4.8"
   resolved "https://registry.yarnpkg.com/@cfpb/ccdb5-ui/-/ccdb5-ui-2.4.8.tgz#f0e91da99cfa89c91b5f2c4e5b604490d90f1738"
   integrity sha512-MyneNZJ4lOtwwiEOKmItMaHhVix3l7UHJaBSZARH+A4HmtJjS7VN74BAzF3/fB8W1BaeYZAR50MDe/eOgmAi8g==
+
+"@cfpb/ccdb5-ui@cfpb/ccdb5-ui#ui-tweaks":
+  version "2.4.8"
+  resolved "https://codeload.github.com/cfpb/ccdb5-ui/tar.gz/615f1071b14b09b1e4e2dee2251c5d2cc4daaa74"
