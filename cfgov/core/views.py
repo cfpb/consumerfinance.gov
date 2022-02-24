@@ -3,6 +3,7 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
+from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.utils.translation import activate, get_language
@@ -183,3 +184,25 @@ class TranslatedTemplateView(TemplateView):
         )
         context['current_language'] = get_language()
         return context
+
+
+class CacheTaggedTemplateView(TemplateView):
+    """ A TemplateView that responds with an `Edge-Cache-Tag` header.
+    The `Edge-Cache-Tag` header will contain the value of the `cache_tag`
+    argument provided to this view.
+    """
+
+    cache_tag = None
+
+    def dispatch(self, *args, **kwargs):
+        response = super().dispatch(*args, **kwargs)
+        response['Edge-Cache-Tag'] = self.get_cache_tag()
+        return response
+
+    def get_cache_tag(self):
+        if self.cache_tag is None:
+            raise ImproperlyConfigured(
+                "CacheTaggedTemplateView requires either a definition of "
+                "'cache_tag' or an implementation of 'get_cache_tag()'"
+            )
+        return self.cache_tag

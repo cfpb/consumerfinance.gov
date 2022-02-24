@@ -169,6 +169,14 @@ class FilterableListMixin(ShareableRoutablePageMixin):
 
         return response
 
+    def serve(self, request, *args, **kwargs):
+        # Set a cache key for this filterable list page.
+        # We do this in `serve()` so that it gets applied to all routes, not
+        # just routes that use `render()`.
+        response = super().serve(request, *args, **kwargs)
+        response['Edge-Cache-Tag'] = self.slug
+        return response
+
     @route(r'^$')
     def index_route(self, request):
         return self.render(request)
