@@ -1,0 +1,217 @@
+{
+  "meta": {
+    "fips_type": "state",
+    "date": "2021-06-01",
+    "national_average": 0.0064879438048298255
+  },
+  "data": {
+    "56": {
+      "value": 0.007852815795378058,
+      "name": "Wyoming"
+    },
+    "55": {
+      "value": 0.0049417803134743045,
+      "name": "Wisconsin"
+    },
+    "54": {
+      "value": 0.010727272727272728,
+      "name": "West Virginia"
+    },
+    "53": {
+      "value": 0.003323272540457231,
+      "name": "Washington"
+    },
+    "51": {
+      "value": 0.005964482382561631,
+      "name": "Virginia"
+    },
+    "50": {
+      "value": 0.005042016806722689,
+      "name": "Vermont"
+    },
+    "49": {
+      "value": 0.004539951573849879,
+      "name": "Utah"
+    },
+    "48": {
+      "value": 0.008093084395330184,
+      "name": "Texas"
+    },
+    "47": {
+      "value": 0.00799093811142004,
+      "name": "Tennessee"
+    },
+    "46": {
+      "value": 0.004230393752033843,
+      "name": "South Dakota"
+    },
+    "45": {
+      "value": 0.009259722708844287,
+      "name": "South Carolina"
+    },
+    "44": {
+      "value": 0.004979253112033195,
+      "name": "Rhode Island"
+    },
+    "72": {
+      "value": 0,
+      "name": "Puerto Rico"
+    },
+    "42": {
+      "value": 0.008105848969446338,
+      "name": "Pennsylvania"
+    },
+    "41": {
+      "value": 0.00300027275206837,
+      "name": "Oregon"
+    },
+    "40": {
+      "value": 0.009094583670169765,
+      "name": "Oklahoma"
+    },
+    "39": {
+      "value": 0.007131583562284445,
+      "name": "Ohio"
+    },
+    "38": {
+      "value": 0.006153846153846154,
+      "name": "North Dakota"
+    },
+    "37": {
+      "value": 0.008848809696267324,
+      "name": "North Carolina"
+    },
+    "36": {
+      "value": 0.006174291980008848,
+      "name": "New York"
+    },
+    "35": {
+      "value": 0.00688395616746277,
+      "name": "New Mexico"
+    },
+    "34": {
+      "value": 0.0066036319975986794,
+      "name": "New Jersey"
+    },
+    "33": {
+      "value": 0.006132356698747977,
+      "name": "New Hampshire"
+    },
+    "32": {
+      "value": 0.003581691724626213,
+      "name": "Nevada"
+    },
+    "31": {
+      "value": 0.005051903114186851,
+      "name": "Nebraska"
+    },
+    "30": {
+      "value": 0.0038428164125449363,
+      "name": "Montana"
+    },
+    "29": {
+      "value": 0.008138020833333334,
+      "name": "Missouri"
+    },
+    "28": {
+      "value": 0.014900767230993596,
+      "name": "Mississippi"
+    },
+    "27": {
+      "value": 0.004362335155998713,
+      "name": "Minnesota"
+    },
+    "26": {
+      "value": 0.007124878993223621,
+      "name": "Michigan"
+    },
+    "25": {
+      "value": 0.005041068847604611,
+      "name": "Massachusetts"
+    },
+    "24": {
+      "value": 0.006523966140076562,
+      "name": "Maryland"
+    },
+    "23": {
+      "value": 0.0075553625705601386,
+      "name": "Maine"
+    },
+    "22": {
+      "value": 0.011488750598372427,
+      "name": "Louisiana"
+    },
+    "21": {
+      "value": 0.007181567310569538,
+      "name": "Kentucky"
+    },
+    "20": {
+      "value": 0.007113570123005483,
+      "name": "Kansas"
+    },
+    "19": {
+      "value": 0.005954536310601489,
+      "name": "Iowa"
+    },
+    "18": {
+      "value": 0.008147104732173449,
+      "name": "Indiana"
+    },
+    "17": {
+      "value": 0.006681697913127632,
+      "name": "Illinois"
+    },
+    "16": {
+      "value": 0.004419233559791571,
+      "name": "Idaho"
+    },
+    "15": {
+      "value": 0.0035959463877084014,
+      "name": "Hawaii"
+    },
+    "13": {
+      "value": 0.007765175121525614,
+      "name": "Georgia"
+    },
+    "12": {
+      "value": 0.006503057501048375,
+      "name": "Florida"
+    },
+    "11": {
+      "value": 0.004336349924585219,
+      "name": "District of Columbia"
+    },
+    "10": {
+      "value": 0.007689021785561726,
+      "name": "Delaware"
+    },
+    "09": {
+      "value": 0.006621841890790546,
+      "name": "Connecticut"
+    },
+    "08": {
+      "value": 0.004584527220630372,
+      "name": "Colorado"
+    },
+    "06": {
+      "value": 0.003763176701804538,
+      "name": "California"
+    },
+    "05": {
+      "value": 0.009632085899257856,
+      "name": "Arkansas"
+    },
+    "04": {
+      "value": 0.005158805220710883,
+      "name": "Arizona"
+    },
+    "02": {
+      "value": 0.006734006734006734,
+      "name": "Alaska"
+    },
+    "01": {
+      "value": 0.009605026929982047,
+      "name": "Alabama"
+    }
+  }
+}

@@ -2,6 +2,7 @@ export class MortgagePerformanceTrends {
 
   open() {
     cy.visit( '/data-research/mortgage-performance-trends/mortgages-30-89-days-delinquent/' );
+    cy.intercept('/data-research/mortgages/api/v1/map-data/30-89/states/2021-06',{ fixture: 'map-data' } ).as( 'map-data' );
   }
 
   selectLocationType( location ) {
