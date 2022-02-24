@@ -8,7 +8,7 @@ import v1.models.filterable_list_mixins
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0278_remove_unused_categories'),
+        ('v1', '0279_data_spotlight'),
     ]
 
     operations = [
