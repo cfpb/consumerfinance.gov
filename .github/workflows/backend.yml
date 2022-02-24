@@ -47,6 +47,9 @@ jobs:
               - '**.html'
               - '**.mo'
               - '**.po'
+              - 'Dockerfile'
+              - '**.conf'
+              - '**.csv'
 
       - name: Install gettext for translation validation
         if: steps.filter.outputs.backend == 'true' && matrix.toxenv == 'validate-translations'

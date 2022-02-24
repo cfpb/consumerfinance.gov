@@ -24,6 +24,8 @@ jobs:
             frontend:
               - '**.js'
               - '**package.json'
+              - 'Dockerfile'
+              - '**.conf'
 
       - name: Set up Node
         uses: actions/setup-node@v2.5.0
