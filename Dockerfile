@@ -18,12 +18,21 @@ WORKDIR ${APP_HOME}
 
 # Install common OS packages
 RUN apk update --no-cache && apk upgrade --no-cache
+# Local Dev Candy (removed in prod)
+RUN apk add --no-cache --virtual .local-candy zsh
 # .build-deps are required to build and test the application (pip, tox, etc.)
 RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev postgresql-dev
 # .backend-deps and .frontend-deps are required to run the application
 RUN apk add --no-cache --virtual .backend-deps bash curl postgresql
 RUN apk add --no-cache --virtual .frontend-deps jpeg-dev nodejs yarn zlib-dev
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+
+# Install oh-my-zsh and clone zsh-autosuggestions
+RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+RUN sed -i "s/plugins=(\(.*\))/plugins=(\1 zsh-autosuggestions)/g" $HOME/.zshrc  # Enable zsh-autosuggestions
+RUN sed -i 's/robbyrussell/gallois/' $HOME/.zshrc  # Set zsh theme
+RUN git config --global --add oh-my-zsh.hide-dirty 1  # Hide dirty speeds up git plugin
 
 # Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
 # NOTE: MUST be after pip upgrade. Build fails otherwise due to bug in old pip.
@@ -113,8 +122,11 @@ COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PA
 RUN ln -s /usr/lib/apache2 cfgov/apache/modules
 RUN chown -R apache:apache ${APP_HOME} /usr/share/apache2 /var/run/apache2 /var/log/apache2
 
-# Remove build dependencies for smaller image
-RUN apk del .build-deps
+# Remove build dependencies and local candy for smaller image
+RUN apk del .build-deps .local-candy
+
+# Clear root home directory
+RUN rm -Rf $HOME/*
 
 USER apache
 
