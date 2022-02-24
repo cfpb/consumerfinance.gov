@@ -160,6 +160,7 @@ class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
         self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")
         self.root = Site.objects.get(is_default_site=True).root_page
         self.root.add_child(instance=self.filterable_page)
+        self.filterable_page.save_revision().publish()
 
         self.set_filterable_controls(filter_controls)
 
@@ -202,3 +203,17 @@ class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
 
         root = self.filterable_page.get_filterable_root()
         self.assertEqual("/", root)
+
+    def test_cache_tag_applied(self):
+        response = self.client.get(self.filterable_page.url)
+        self.assertEqual(
+            response.get("Edge-Cache-Tag"),
+            self.filterable_page.slug
+        )
+
+    def test_cache_tag_applied_to_feed(self):
+        response = self.client.get(self.filterable_page.url + 'feed/')
+        self.assertEqual(
+            response.get("Edge-Cache-Tag"),
+            self.filterable_page.slug
+        )
