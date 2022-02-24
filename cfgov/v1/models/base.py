@@ -50,6 +50,13 @@ class CFGOVTaggedPages(TaggedItemBase):
         verbose_name_plural = _("Tags")
 
 
+class CFGOVOwnedPages(TaggedItemBase):
+    content_object = ParentalKey('CFGOVPage')
+
+    class Meta:
+        verbose_name = _("Content Owner")
+        verbose_name_plural = _("Content Owners")
+
 class BaseCFGOVPageManager(PageManager):
     def get_queryset(self):
         return PageQuerySet(self.model).order_by('path')
@@ -81,6 +88,15 @@ class CFGOVPage(Page):
             'Maximum size: 4096w x 4096h.'
         )
     )
+
+    content_owners = ClusterTaggableManager(through=CFGOVOwnedPages, blank=True,
+                                     verbose_name='Content Owners',
+                                     help_text='A comma separated list of '
+                                               + 'internal content owners. '
+                                               + 'Listed names should use '
+                                               + 'division acronyms.',
+                                     related_name='owned_pages')
+
     schema_json = JSONField(
         null=True,
         blank=True,
@@ -172,6 +188,7 @@ class CFGOVPage(Page):
         InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
+        FieldPanel('content_owners', 'Content Owners'),
         FieldPanel('schema_json', 'Structured Data'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'language'),
