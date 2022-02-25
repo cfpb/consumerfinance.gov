@@ -24,8 +24,7 @@ jobs:
             frontend:
               - '**.js'
               - '**package.json'
-              - '**Dockerfile'
-              - '**.conf'
+              - '**.sh'
 
       - name: Set up Node
         uses: actions/setup-node@v2.5.0
@@ -66,7 +65,6 @@ jobs:
             frontend:
               - '**.js'
               - '**package.json'
-              - '**.sh'
 
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
