@@ -12,18 +12,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
       - uses: dorny/paths-filter@v2.10.2
-      id: filter
-      with:
-        filters: |
-          docker:
-            - '**.py'
-            - 'requirements/**.txt'
-            - '**.html'
-            - '**.mo'
-            - '**.po'
-            - '**Dockerfile'
-            - '**.conf'
-            - '**.csv'
+        id: filter
+        with:
+          filters: |
+            docker:
+              - '**.py'
+              - 'requirements/**.txt'
+              - '**.html'
+              - '**.mo'
+              - '**.po'
+              - '**Dockerfile'
+              - '**.conf'
+              - '**.csv'
 
       - name: Setup QEMU
         if: steps.filter.outputs.docker == 'true'
@@ -45,6 +45,7 @@ jobs:
         if: steps.filter.outputs.docker == 'true'
         run: |
           docker run --rm ${{ env.TEST_TAG }}
+
 
   backend:
     runs-on: ubuntu-latest
