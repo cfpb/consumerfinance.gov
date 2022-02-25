@@ -77,7 +77,7 @@ function Header( element ) {
   function _megaMenuCollapseEnd() {
     // Update state.
     _menuOpen = false;
-    
+
     _hideOverlay();
   }
 
