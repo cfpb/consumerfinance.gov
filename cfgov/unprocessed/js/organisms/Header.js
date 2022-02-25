@@ -3,6 +3,7 @@ import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities
 import GlobalSearch from '../molecules/GlobalSearch';
 import MegaMenu from '../organisms/MegaMenu';
 
+
 /**
  * Header
  * @class
@@ -22,16 +23,8 @@ function Header( element ) {
   let _globalSearch;
   let _megaMenu;
   let _overlay;
-
-  /**
-   * Check if either the mega menu or the global search is open.
-   * @returns {Boolean} true if either the mega menu or the global search is open.
-   */
-  function _hasOpenMenu() {
-    return document.querySelector( '.o-mega-menu_content' ).getAttribute( 'aria-expanded' ) === 'true' ||
-           document.querySelector( '.m-global-search_content' ).getAttribute( 'aria-expanded' ) === 'true';
-  }
-
+  let _menuOpen = false;
+  let _searchOpen = false;
 
   /**
    * @param {HTMLNode} overlay
@@ -46,61 +39,89 @@ function Header( element ) {
     // Semi-opaque overlay that shows over the content when the menu flies out.
     _overlay = overlay;
 
+    _globalSearch = new GlobalSearch( _dom );
+
     // Don't initialize the mega menu if it isn't on the page.
     if ( _dom.classList.contains( `${ BASE_CLASS }__mega-menu` ) ) {
       _megaMenu = new MegaMenu( _dom );
       _megaMenu.addEventListener( 'rootExpandBegin', _megaMenuExpandBegin );
       _megaMenu.addEventListener( 'rootCollapseEnd', _megaMenuCollapseEnd );
-      _megaMenu.init();
 
-      _globalSearch = new GlobalSearch( _dom );
+      // If we have a mega menu, it needs to be collapsed when search is expanded.
       _globalSearch.addEventListener( 'expandBegin', _globalSearchExpandBegin );
       _globalSearch.addEventListener( 'collapseEnd', _globalSearchCollapseEnd );
-      _globalSearch.init();
+
+      _megaMenu.init();
     }
+
+    _globalSearch.init();
 
     return this;
   }
 
   /**
    * Handler for when the mega menu begins expansion.
-   * Collapse the global search.
    */
   function _megaMenuExpandBegin() {
+    // Update state.
+    _menuOpen = true;
+    _searchOpen = false;
+
     _globalSearch.collapse();
-    _overlay.classList.remove( 'u-hidden' );
+    _showOverlay();
   }
 
   /**
    * Handler for when the mega menu ends collapsing.
-   * Show an overlay.
    */
   function _megaMenuCollapseEnd() {
-    if ( !_hasOpenMenu() ) {
-      _overlay.classList.add( 'u-hidden' );
-    }
+    // Update state.
+    _menuOpen = false;
+
+    _hideOverlay();
   }
 
   /**
    * Handler for when the global search begins expansion.
-   * Collapse the mega menu.
    */
   function _globalSearchExpandBegin() {
+    // Update state.
+    _menuOpen = false;
+    _searchOpen = true;
+
     _megaMenu.collapse();
-    _overlay.classList.remove( 'u-hidden' );
+    _showOverlay();
   }
 
   /**
    * Handler for when the global search ends collapsing.
-   * Show an overlay.
    */
   function _globalSearchCollapseEnd() {
-    setTimeout( () => {
-      if ( !_hasOpenMenu() ) {
-        _overlay.classList.add( 'u-hidden' );
-      }
-    }, 100 );
+    // Update state.
+    _searchOpen = false;
+
+    _hideOverlay();
   }
+
+
+  /**
+   * Shows the overlay.
+   */
+  function _showOverlay() {
+    if ( _menuOpen || _searchOpen ) {
+      _overlay.classList.remove( 'u-hidden' );
+    }
+  }
+
+  /**
+   * Hides the overlay.
+   */
+  function _hideOverlay() {
+    if ( !_menuOpen && !_searchOpen ) {
+      _overlay.classList.add( 'u-hidden' );
+    }
+  }
+
 
   this.init = init;
 
