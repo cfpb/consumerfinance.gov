@@ -24,7 +24,7 @@ jobs:
             frontend:
               - '**.js'
               - '**package.json'
-              - 'Dockerfile'
+              - '**Dockerfile'
               - '**.conf'
 
       - name: Set up Node

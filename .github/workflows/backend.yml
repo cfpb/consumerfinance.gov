@@ -47,7 +47,7 @@ jobs:
               - '**.html'
               - '**.mo'
               - '**.po'
-              - 'Dockerfile'
+              - '**Dockerfile'
               - '**.conf'
               - '**.csv'
 
