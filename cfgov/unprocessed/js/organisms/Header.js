@@ -23,6 +23,8 @@ function Header( element ) {
   let _globalSearch;
   let _megaMenu;
   let _overlay;
+  let _menuOpen = false;
+  let _searchOpen = false;
 
   /**
    * @param {HTMLNode} overlay
@@ -44,10 +46,12 @@ function Header( element ) {
       _megaMenu = new MegaMenu( _dom );
       _megaMenu.addEventListener( 'rootExpandBegin', _megaMenuExpandBegin );
       _megaMenu.addEventListener( 'rootCollapseEnd', _megaMenuCollapseEnd );
-      _megaMenu.init();
 
       // If we have a mega menu, it needs to be collapsed when search is expanded.
-      _globalSearch.addEventListener( 'expandBegin', _megaMenu.collapse );
+      _globalSearch.addEventListener( 'expandBegin', _globalSearchExpandBegin );
+      _globalSearch.addEventListener( 'collapseEnd', _globalSearchCollapseEnd );
+
+      _megaMenu.init();
     }
 
     _globalSearch.init();
@@ -57,20 +61,67 @@ function Header( element ) {
 
   /**
    * Handler for when the mega menu begins expansion.
-   * Collapse the global search.
    */
   function _megaMenuExpandBegin() {
+    // Update state.
+    _menuOpen = true;
+    _searchOpen = false;
+
     _globalSearch.collapse();
-    _overlay.classList.remove( 'u-hidden' );
+    _showOverlay();
   }
 
   /**
    * Handler for when the mega menu ends collapsing.
-   * Show an overlay.
    */
   function _megaMenuCollapseEnd() {
-    _overlay.classList.add( 'u-hidden' );
+    // Update state.
+    _menuOpen = false;
+    
+    _hideOverlay();
   }
+
+  /**
+   * Handler for when the global search begins expansion.
+   */
+  function _globalSearchExpandBegin() {
+    // Update state.
+    _menuOpen = false;
+    _searchOpen = true;
+
+    _megaMenu.collapse();
+    _showOverlay();
+  }
+
+  /**
+   * Handler for when the global search ends collapsing.
+   */
+  function _globalSearchCollapseEnd() {
+    // Update state.
+    _searchOpen = false;
+
+    _hideOverlay();
+  }
+
+
+  /**
+   * Shows the overlay.
+   */
+  function _showOverlay() {
+    if ( _menuOpen || _searchOpen ) {
+      _overlay.classList.remove( 'u-hidden' );
+    }
+  }
+
+  /**
+   * Hides the overlay.
+   */
+  function _hideOverlay() {
+    if ( !_menuOpen && !_searchOpen ) {
+      _overlay.classList.add( 'u-hidden' );
+    }
+  }
+
 
   this.init = init;
 
