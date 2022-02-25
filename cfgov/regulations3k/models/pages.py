@@ -6,6 +6,7 @@ from datetime import date
 from functools import partial
 from urllib.parse import urljoin
 
+from django.core.exceptions import ValidationError
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404, HttpResponse, JsonResponse
@@ -283,11 +284,15 @@ class RegulationPage(
         if not draft_permission:
             query_filter['draft'] = False
 
-        effective_version = self.regulation.versions.filter(
-            **query_filter
-        ).order_by(
-            '-effective_date'
-        ).first()
+        try:
+            effective_version = self.regulation.versions.filter(
+                **query_filter
+            ).order_by(
+                '-effective_date'
+            ).first()
+        except ValidationError:
+            # This can be raised by an invalid date string
+            raise Http404
 
         if effective_version is None:
             raise Http404

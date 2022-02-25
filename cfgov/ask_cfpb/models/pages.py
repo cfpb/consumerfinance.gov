@@ -128,7 +128,7 @@ class AnswerLandingPage(LandingPage):
     """
     Page type for Ask CFPB's landing page.
     """
-    content_panels = [
+    content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header')
     ]
     edit_handler = TabbedInterface([

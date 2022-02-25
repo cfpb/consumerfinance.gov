@@ -8,7 +8,7 @@ from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.forms import EventArchiveFilterForm
 from v1.models import CFGOVPageCategory, LandingPage
 from v1.models.browse_filterable_page import (
-    NEWSROOM_CACHE_TAG, EventArchivePage, NewsroomLandingPage
+    EventArchivePage, NewsroomLandingPage
 )
 from v1.models.learn_page import AbstractFilterPage
 from v1.util.ref import get_category_children
@@ -81,8 +81,3 @@ class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
         filterable_search = self.newsroom_page.get_filterable_search()
         result = filterable_search.search()
         self.assertFalse(result.exists())
-
-    def test_cache_tag_applied(self):
-        self.newsroom_page.save_revision().publish()
-        response = self.client.get(self.newsroom_page.url)
-        self.assertEqual(response.get("Edge-Cache-Tag"), NEWSROOM_CACHE_TAG)

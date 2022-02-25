@@ -1,7 +1,8 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
 
-from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from wagtail.contrib.routable_page.models import route
+from wagtailsharing.models import ShareableRoutablePageMixin
 
 from flags.state import flag_enabled
 
@@ -12,7 +13,7 @@ from v1.util.ref import get_category_children
 from v1.util.util import get_secondary_nav_items
 
 
-class FilterableListMixin(RoutablePageMixin):
+class FilterableListMixin(ShareableRoutablePageMixin):
     """Wagtail Page mixin that allows for filtering of other pages."""
 
     filterable_per_page_limit = 25
@@ -166,6 +167,14 @@ class FilterableListMixin(RoutablePageMixin):
         if self.do_not_index:
             response['X-Robots-Tag'] = 'noindex'
 
+        return response
+
+    def serve(self, request, *args, **kwargs):
+        # Set a cache key for this filterable list page.
+        # We do this in `serve()` so that it gets applied to all routes, not
+        # just routes that use `render()`.
+        response = super().serve(request, *args, **kwargs)
+        response['Edge-Cache-Tag'] = self.slug
         return response
 
     @route(r'^$')
