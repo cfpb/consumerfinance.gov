@@ -43,7 +43,7 @@ class PageMetadataReportView(PageReportView):
         ("search_description", "Search description"),
         ("tags.names", "Tags"),
         ("categories.all", "Categories"),
-        ("content_owners.names","Content Owner(s)")],
+        ("content_owners.names", "Content Owner(s)")],
         **PageReportView.export_headings,
     )
 

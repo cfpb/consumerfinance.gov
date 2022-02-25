@@ -57,6 +57,7 @@ class CFGOVOwnedPages(TaggedItemBase):
         verbose_name = _("Content Owner")
         verbose_name_plural = _("Content Owners")
 
+
 class BaseCFGOVPageManager(PageManager):
     def get_queryset(self):
         return PageQuerySet(self.model).order_by('path')
@@ -89,13 +90,14 @@ class CFGOVPage(Page):
         )
     )
 
-    content_owners = ClusterTaggableManager(through=CFGOVOwnedPages, blank=True,
-                                     verbose_name='Content Owners',
-                                     help_text='A comma separated list of '
-                                               + 'internal content owners. '
-                                               + 'Listed names should use '
-                                               + 'division acronyms.',
-                                     related_name='owned_pages')
+    content_owners = ClusterTaggableManager(through=CFGOVOwnedPages,
+                                            blank=True,
+                                            verbose_name='Content Owners',
+                                            help_text='A comma separated list '
+                                            + 'of internal content owners. '
+                                            + 'Listed names should use '
+                                            + 'division acronyms.',
+                                            related_name='owned_pages')
 
     schema_json = JSONField(
         null=True,
