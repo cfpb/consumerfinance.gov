@@ -22,7 +22,8 @@ install() {
   echo 'Installing back-end dependencies...'
 
   # Install requirements for Django Server or tox.
-  pip install -r ./requirements/local.txt
+  #bad backend
+  #pip install -r ./requirements/local.txt
 }
 
 init "$1"
