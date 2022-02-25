@@ -33,3 +33,13 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cfgov.settings.local")
 from django.core.wsgi import get_wsgi_application  # noqa: E402, isort:skip
 
 application = get_wsgi_application()
+
+# Try to enable Contrast IAST if it's installed
+# TODO: I don't love the middleware wrapper. We should find a better way to
+# isolate this.
+try:
+    from contrast.django import ContrastMiddleware
+except ImportError:
+    pass
+else:
+    application = ContrastMiddleware(application)
