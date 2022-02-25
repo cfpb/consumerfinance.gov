@@ -66,6 +66,7 @@ jobs:
             frontend:
               - '**.js'
               - '**package.json'
+              - '**.sh'
 
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
