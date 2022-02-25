@@ -10,22 +10,10 @@
 @bp-graph-cols-min:     740px;
 
 .understanding-financial-aid-offer {
-  font: @webfont-regular;
 
   // Hide the clear-input "helper" in IE10+; it throws off calculations
   input::-ms-clear {
     display: none;
-  }
-
-  input[type="text"],
-  input[type="search"],
-  input[type="email"],
-  input[type="url"],
-  input[type="tel"],
-  input[type="number"],
-  textarea,
-  select[multiple] {
-    font: @webfont-regular;
   }
 
   .content {
@@ -469,9 +457,8 @@
   }
 
   .form-label-header {
-    font-family: 'AvenirNextLTW01-Demi',Arial,sans-serif;
     font-style: normal;
-    font-weight: bold;
+    font-weight: bolder;
     font-size: .875em;
     display: block;
     letter-spacing: 1px;
@@ -512,7 +499,6 @@
   &_explanation {
     display: block;
     margin-top: unit(5px / @line-item-font-size, em);
-    font: @webfont-regular;
     font-size: unit(14px / @line-item-font-size, em);
   }
 
@@ -1037,7 +1023,6 @@
   &_explanation {
     display: block;
     margin-top: unit(5px / @salary-and-debt-font-size, em);
-    font: @webfont-regular;
     font-size: unit(14px / @salary-and-debt-font-size, em);
   }
 
@@ -1126,13 +1111,11 @@
     margin-top: unit(3px / @symbol-font-size-px, em);
     width: 15%;
     float: left;
-    font: @webfont-medium;
     font-size: @symbol-font-size-px;
     text-align: center;
   }
 
   &_number {
-    font: @webfont-medium;
     font-size: unit(18px / @base-font-size-px, em);
   }
 }
@@ -1237,7 +1220,6 @@
   }
 
   &_point__you {
-    font: @webfont-medium;
     font-size: unit(@bar-graph-you-font-size / @base-font-size-px, em);
 
     .bar-graph_line {

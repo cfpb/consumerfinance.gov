@@ -83,10 +83,6 @@ categories = [
         ('log', 'Log'),
         ('record', 'Record'),
     )),
-    ('Implementation Resource', (
-        ('compliance-aid', 'Compliance aid'),
-        ('official-guidance', 'Official guidance'),
-    )),
     ('Newsroom', (
         ('consumer-advisories', 'Consumer advisories'),
         ('directors-statement', "Director's statement"),
@@ -112,6 +108,7 @@ categories = [
         ('industry-markets', 'Industry and markets'),
         ('consumer-edu-empower', 'Consumer education and empowerment'),
         ('to-congress', 'To Congress'),
+        ('data-spotlight', 'Data spotlight'),
     )),
     ('Rule Under Development', (
         ('notice-proposed-rule-2', 'Advance notice of proposed rulemaking'),

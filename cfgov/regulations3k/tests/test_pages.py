@@ -87,3 +87,11 @@ class PagesRegulations3kTestCase(TestCase):
         self.assertEqual(
             response.get('location'),
             '/reg-landing/1002/interp-2/')
+
+    def test_invalid_effective_date(self):
+        # Try to fetch a date string that's incorrectly formatted.
+        # It should 404.
+        response = self.client.get(
+            '/reg-landing/1002/2014-18-01/'
+        )
+        self.assertEqual(response.status_code, 404)

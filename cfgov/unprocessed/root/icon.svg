@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="499.844"
+   height="500"
+   viewBox="0 0 499.844 500"
+   version="1.1"
+   id="svg7"
+   sodipodi:docname="cfpb.svg"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview9"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.746"
+     inkscape:cx="456.47194"
+     inkscape:cy="266.89576"
+     inkscape:window-width="2560"
+     inkscape:window-height="1387"
+     inkscape:window-x="-8"
+     inkscape:window-y="22"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">
+      .cls-1 {
+        fill: #52b848;
+        fill-rule: evenodd;
+      }
+    </style>
+    <pattern
+       id="EMFhbasepattern"
+       patternUnits="userSpaceOnUse"
+       width="6"
+       height="6"
+       x="0"
+       y="0" />
+    <pattern
+       id="EMFhbasepattern-0"
+       patternUnits="userSpaceOnUse"
+       width="6"
+       height="6"
+       x="0"
+       y="0" />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1109">
+      <rect
+         style="fill:#2cb34a"
+         id="rect1111"
+         width="57.233932"
+         height="61.826088"
+         x="-0.11200378"
+         y="20.496693" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1443">
+      <rect
+         style="fill:#2cb34a;stroke-width:0.164171"
+         id="rect1445"
+         width="50.981014"
+         height="50.813183"
+         x="0.72029144"
+         y="25.071407" />
+    </clipPath>
+  </defs>
+  <g
+     id="g13042"
+     transform="translate(282.07331,220.21764)" />
+  <path
+     d="m 59,60.6 15.9,2.5 V 74.8 H 59 Z M 85.8,26.2 H 74.9 V 23 c 0,-4.8 0.9,-9 7,-9 a 17.37,17.37 0 0 1 3.9,0.5 V 0.8 c 0,0 -0.3,-0.1 -2.1,-0.4 A 37.3,37.3 0 0 0 77.8,0 C 61.2,0 59,11.4 59,22.5 v 18 L 85.8,36.2 Z M 166,1.1 H 150.2 V 25.9 L 166,23.3 Z M 93.2,100 H 109 V 72.3 a 22.11,22.11 0 0 0 12.7,3.7 22.48,22.48 0 0 0 12.1,-3.4 L 93.2,66 Z m 28.1,-74.9 a 19.52,19.52 0 0 0 -12.3,4 V 26.2 H 93.2 V 35 l 40.7,-6.6 A 24.89,24.89 0 0 0 121.3,25.1 Z M 35.5,56.7 A 9.67,9.67 0 0 1 27,61.1 c -6.8,0 -10.4,-5.4 -10.4,-10.6 0,-5.2 3.6,-10.6 10.4,-10.6 a 9.67,9.67 0 0 1 8.5,4.4 L 51.7,41.7 C 48.2,31.7 38.9,25.1 26.9,25.1 11.7,25.1 0.7,35.8 0.7,50.5 c 0,14.7 11,25.4 26.2,25.4 11.9,0 21.3,-6.6 24.8,-16.6 z"
+     fill="#2cb34a"
+     id="path839"
+     clip-path="url(#clipPath1443)"
+     transform="matrix(7.3528704,0,0,7.3528704,57.197392,-121.15818)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Layer 1"
+     style="display:inline" />
+</svg>
