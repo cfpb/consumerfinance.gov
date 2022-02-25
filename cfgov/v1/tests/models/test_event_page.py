@@ -63,10 +63,21 @@ class EventPageTests(TestCase):
         self.assertEqual(response['Expires'], 'Wed, 05 Jan 2011 00:00:00 GMT')
 
     @freeze_time('2011-01-03')
+    def test_future_event_with_livestream_default_date(self):
+        page = EventPage(
+            title='Future event with livestream date defaulting to start date',
+            start_dt=datetime.datetime(2011, 1, 5, tzinfo=pytz.UTC),
+            live_stream_availability=True
+        )
+        save_new_page(page)
+        self.assertEqual(page.start_dt, page.live_stream_date)
+
+    @freeze_time('2011-01-03')
     def test_future_event_with_livestream_date(self):
         page = EventPage(
             title='Future event with livestream date',
             start_dt=datetime.datetime(2011, 1, 5, tzinfo=pytz.UTC),
+            live_stream_availability=True,
             live_stream_date=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC)
         )
         save_new_page(page)
@@ -86,6 +97,7 @@ class EventPageTests(TestCase):
         page = EventPage(
             title='Present event with livestream',
             start_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
+            live_stream_availability=True,
             live_stream_date=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
             end_dt=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC)
         )
@@ -172,4 +184,14 @@ class EventPageTests(TestCase):
         self.assertValidationFails(
             'Required if "Post-event image type" is "Image".',
             post_event_image_type='image'
+        )
+
+    def test_failing_validation_live_start_date(self):
+        self.assertValidationFails(
+            'Cannot be on or after Event End.',
+            end_dt=datetime.datetime.now(pytz.UTC) +
+            datetime.timedelta(hours=1),
+            live_stream_availability=True,
+            live_stream_date=datetime.datetime.now(pytz.UTC) +
+            datetime.timedelta(hours=2)
         )
