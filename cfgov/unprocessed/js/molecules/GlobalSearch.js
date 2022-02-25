@@ -73,6 +73,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     clearableInput.init();
     const handleExpandBeginBinded = _handleExpandBegin.bind( this );
     const handleCollapseEndBinded = _handleCollapseEnd.bind( this );
+
     _flyoutMenu.addEventListener( 'expandBegin', handleExpandBeginBinded );
     _flyoutMenu.addEventListener( 'collapseBegin', _handleCollapseBegin );
     _flyoutMenu.addEventListener( 'collapseEnd', handleCollapseEndBinded );
