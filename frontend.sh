@@ -75,6 +75,7 @@ fake_fonts() {
     # If we don't have the webfont files, we create empty files with the same
     # name to allow collectstatic to run successfully. If the files already
     # exist, these commands do nothing.
+    #safe test
     mkdir -p static.in/fake-fonts/fonts
 
     # 1. Use grep to find all .woff and .woff2 files referenced in CSS files.
