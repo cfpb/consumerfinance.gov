@@ -6,16 +6,12 @@ from django.core.cache import cache, caches
 from django.dispatch import receiver
 from django.utils import timezone
 
-from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from wagtail.core.signals import page_published, page_unpublished
 
 from teachers_digital_platform.models.activity_index_page import (
     ActivityPage, ActivitySetUp
 )
-from v1.models import (
-    AbstractFilterPage, CFGOVPage, LegacyNewsroomPage, NewsroomPage
-)
-from v1.models.browse_filterable_page import NEWSROOM_CACHE_TAG
+from v1.models import AbstractFilterPage, CFGOVPage
 from v1.models.caching import AkamaiBackend
 from v1.models.filterable_list_mixins import (
     CategoryFilterableMixin, FilterableListMixin
@@ -105,9 +101,7 @@ def invalidate_filterable_list_caches(sender, **kwargs):
         category_filterable_list_pages
     ))
 
-    # Create a frontend cache purge batch for invalidation
-    batch = PurgeBatch()
-
+    cache_tags_to_purge = []
     for filterable_list_page in filterable_list_pages:
         cache_key_prefix = filterable_list_page.get_cache_key_prefix()
 
@@ -117,10 +111,12 @@ def invalidate_filterable_list_caches(sender, **kwargs):
         cache.delete(f"{cache_key_prefix}-topics")
         cache.delete(f"{cache_key_prefix}-authors")
 
-        # Invalidate the filterable list page in front-end cache
-        batch.add_page(filterable_list_page)
+        # Add the filterable list's slug to the list of cache tags to purge
+        cache_tags_to_purge.append(filterable_list_page.slug)
 
-    batch.purge()
+    # Get the cache backend and purge filterable list page cache tags
+    cache_backend = configure_akamai_backend()
+    cache_backend.purge_by_tags(cache_tags_to_purge)
 
 
 page_published.connect(invalidate_filterable_list_caches)
@@ -145,13 +141,6 @@ def configure_akamai_backend():
     }
     backend = AkamaiBackend(akamai_params)
     return backend
-
-
-@receiver(page_published, sender=NewsroomPage)
-@receiver(page_published, sender=LegacyNewsroomPage)
-def invalidate_newsroom_querystring_urls(instance, **kwargs):
-    backend = configure_akamai_backend()
-    backend.purge_by_tags([NEWSROOM_CACHE_TAG])
 
 
 @receiver(page_published, sender=ActivityPage)

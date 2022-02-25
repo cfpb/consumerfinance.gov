@@ -76,6 +76,15 @@ jobs:
           test/cypress/integration/consumer-tools/before-you-claim/before-you-claim.js
           test/cypress/integration/components/global-search/global-search.js
           test/cypress/integration/components/footer/footer.js
+          test/cypress/integration/components/cct-charts/cct-charts.js
+          test/cypress/integration/components/email-signup/email-signup.js
+          test/cypress/integration/components/feedback/feedback.js
+          test/cypress/integration/components/filterable-lists/filterable-lists.js
+          test/cypress/integration/components/filterable-lists/filter-blog-posts.js
+          test/cypress/integration/components/header/header.js
+          test/cypress/integration/components/header/mega-menu.js
+          test/cypress/integration/components/multiselect/multiselect.js
+          test/cypress/integration/components/pagination/pagination.js
           test/cypress/integration/rules-policy/regulations-search.js
           test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-helpers.js
           test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-navigation.js

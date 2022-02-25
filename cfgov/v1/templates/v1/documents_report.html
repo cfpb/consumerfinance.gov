@@ -1,0 +1,73 @@
+{% extends 'wagtailadmin/reports/base_report.html' %}
+{% load i18n wagtailadmin_tags %}
+
+{% block actions %}
+    {% if view.list_export %}
+        <div class="actionbutton">
+            <a href="{{ view.csv_export_url }}" class="button bicolor button--icon">{% icon name="download" wrapped=1 %}{% trans 'Download CSV' %}</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block results %}
+    {% if object_list %}
+        <table class="listing">
+            <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        File
+                    </th>
+                    <th>
+                        Collection
+                    </th>
+                    <th>
+                        Tags
+                    </th>
+                    <th>
+                        Uploaded on
+                    </th>
+                    <th>
+                        Uploaded by
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for document in object_list %}
+                    <tr>
+                        <td>
+                            {{ document.id }}
+                        </td>
+                        <td>
+                            {{ document.title }}
+                        </td>
+                        <td>
+                            <a href="https://www.consumerfinance.gov{{ document.url }}">
+                                {{ document.filename }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ document.collection }}
+                        </td>
+                        <td>
+                            {{ document.tags.names|join:", " }}
+                        </td>
+                        <td>
+                            {{ document.created_at }}
+                        </td>
+                        <td>
+                            {{ document.uploaded_by_user }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no documents in the document library.</p>
+    {% endif %}
+{% endblock %}
