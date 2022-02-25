@@ -31,7 +31,7 @@ ENV PIP_NO_CACHE_DIR true
 
 # Install python requirements
 COPY requirements requirements
-RUN pip install -r requrements/local.txt -r requrements/deployment.txt
+RUN pip install -r requirements/local.txt -r requirements/deployment.txt
 
 EXPOSE 8000
 
