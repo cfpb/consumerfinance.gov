@@ -67,6 +67,8 @@ class EventPageTests(TestCase):
         page = EventPage(
             title='Future event with livestream date',
             start_dt=datetime.datetime(2011, 1, 5, tzinfo=pytz.UTC),
+            live_stream_availability=True,
+            live_video_id='1V0Ax9OIc84',
             live_stream_date=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC)
         )
         save_new_page(page)
@@ -86,6 +88,8 @@ class EventPageTests(TestCase):
         page = EventPage(
             title='Present event with livestream',
             start_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
+            live_stream_availability=True,
+            live_video_id='1V0Ax9OIc84',
             live_stream_date=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
             end_dt=datetime.datetime(2011, 1, 4, tzinfo=pytz.UTC)
         )
@@ -172,4 +176,28 @@ class EventPageTests(TestCase):
         self.assertValidationFails(
             'Required if "Post-event image type" is "Image".',
             post_event_image_type='image'
+        )
+
+    def test_failing_validation_live_video_id(self):
+        self.assertValidationFails(
+            'Required if "Streaming" is "True".',
+            live_stream_availability=True,
+            live_stream_date=datetime.datetime.now(pytz.UTC)
+        )
+
+    def test_failing_validation_live_start_date(self):
+        self.assertValidationFails(
+            'Required if "Streaming" is "True".',
+            live_stream_availability=True,
+            live_video_id='1V0Ax9OIc84'
+        )
+
+        self.assertValidationFails(
+            'Cannot be after Event End.',
+            end_dt=datetime.datetime.now(pytz.UTC) +
+            datetime.timedelta(hours=1),
+            live_stream_availability=True,
+            live_video_id='1V0Ax9OIc84',
+            live_stream_date=datetime.datetime.now(pytz.UTC) +
+            datetime.timedelta(hours=2)
         )
