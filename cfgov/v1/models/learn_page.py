@@ -431,17 +431,8 @@ class EventPage(AbstractFilterPage):
                                     '"Image".'
             })
         if self.live_stream_availability:
-            # Ensure there is a live video id
-            if not self.live_video_id:
-                raise ValidationError({
-                    'live_video_id': 'Required if "Streaming" is "True".'
-                })
-            # Require a live stream time
             if not self.live_stream_date:
-                # self.live_stream_date = self.start_dt  # Maybe if not defined
-                raise ValidationError({
-                    'live_stream_date': 'Required if "Streaming" is "True".'
-                })
+                self.live_stream_date = self.start_dt
             # Make sure live stream doesn't start after event end.
             if self.end_dt and self.live_stream_date >= self.end_dt:
                 raise ValidationError({
