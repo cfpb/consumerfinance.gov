@@ -193,7 +193,7 @@ class EventPageTests(TestCase):
         )
 
         self.assertValidationFails(
-            'Cannot be after Event End.',
+            'Cannot be on or after Event End.',
             end_dt=datetime.datetime.now(pytz.UTC) +
             datetime.timedelta(hours=1),
             live_stream_availability=True,
