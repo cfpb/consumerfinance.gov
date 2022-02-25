@@ -41,7 +41,7 @@ jobs:
           load: true
           tag: ${{ env.TEST_TAG }}
           build-args:
-            - "FRONTEND_TARGET=ci"
+            - FRONTEND_TARGET: ci
 
       - name: Do something with the image
         if: steps.filter.outputs.docker == 'true'
