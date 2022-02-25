@@ -1,6 +1,5 @@
 FROM centos:7
-#this comment is just a test
-ENV TEST_ENV true
+
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
 
