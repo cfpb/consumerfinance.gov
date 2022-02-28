@@ -1,4 +1,4 @@
-import { assign } from '../../../../../../apps/youth-employment-success/js/util';
+import { assign } from '../util';
 
 const defaultProps = {
   maxElements: 3,
