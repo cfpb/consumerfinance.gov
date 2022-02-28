@@ -93,18 +93,18 @@ fake_fonts() {
 }
 
 # Execute requested (or all) functions.
-if [ "$1" = "init" ]; then
-  init ""
-  install
-elif [ "$1" = "build" ]; then
-  build
-elif [ "$1" = "ci" ]; then
-  init "production"
-  install
-  build
-  fake_fonts
-else
-  init "$1"
-  install
-  build
-fi
+# if [ "$1" = "init" ]; then
+#   init ""
+#   install
+# elif [ "$1" = "build" ]; then
+#   build
+# elif [ "$1" = "ci" ]; then
+#   init "production"
+#   install
+#   build
+#   fake_fonts
+# else
+#   init "$1"
+#   install
+#   build
+# fi
