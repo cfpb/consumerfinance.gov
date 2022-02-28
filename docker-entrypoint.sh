@@ -2,7 +2,6 @@
 
 set -e
 
-ls -lah /var/run/secrets
 if [ -f '.env' ] && [ -d /var/run/secrets/kubernetes.io ]; then
   . '.env'
 fi
