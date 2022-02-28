@@ -36,7 +36,7 @@ requests_toolbelt==0.8.0
 urllib3==1.26.5
 wagtail-autocomplete==0.6.3
 wagtail-flags==5.1.0
-wagtail-inventory==1.2.0
+wagtail-inventory==1.4
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.5.1
 wagtail-treemodeladmin==1.5.0
