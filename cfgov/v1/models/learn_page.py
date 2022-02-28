@@ -430,6 +430,14 @@ class EventPage(AbstractFilterPage):
                 'post_event_image': 'Required if "Post-event image type" is '
                                     '"Image".'
             })
+        if self.live_stream_availability:
+            if not self.live_stream_date:
+                self.live_stream_date = self.start_dt
+            # Make sure live stream doesn't start after event end.
+            if self.end_dt and self.live_stream_date >= self.end_dt:
+                raise ValidationError({
+                    'live_stream_date': 'Cannot be on or after Event End.'
+                })
 
     def save(self, *args, **kwargs):
         self.venue_coords = get_venue_coords(self.venue_city, self.venue_state)
