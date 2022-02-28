@@ -1,9 +1,9 @@
-FROM python:3.8-alpine as base
+#bad Docker file
+#FROM python:3.8-alpine as base
 
 # cfgov-dev is used for local development, as well as a base for frontend and prod.
 FROM base AS cfgov-dev
 
-# Tickle
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
 ENV ENV /etc/profile
@@ -42,8 +42,6 @@ CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 # Build Frontend Assets
 FROM cfgov-dev as cfgov-build
 
-ARG FRONTEND_TARGET=production
-
 ENV STATIC_PATH ${APP_HOME}/cfgov/static/
 ENV PYTHONPATH ${APP_HOME}/cfgov
 
@@ -56,7 +54,7 @@ ENV ALLOWED_HOSTS '["*"]'
 COPY . .
 
 # Build the front-end
-RUN ./frontend.sh ${FRONTEND_TARGET} && \
+RUN ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
     rm -rf node_modules npm-packages-offline-cache
