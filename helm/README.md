@@ -1,12 +1,25 @@
 # CFGOV Helm Chart
 
+# build-images.sh
+In the main `consumerfinance.gov` directory, there is [`build-images.sh`](../build-images.sh).
+This script will build the required images for Kubernetes. **You must run this 
+script as a pre-requisite to `helm-install.sh`. `build-images.sh` takes 1 argument, 
+which is the tag. Valid values are `local` and `prod`.
+
+## Usage
+
+    ./build-images.sh  # Same as local
+    ./build-images.sh local
+    ./build-images.sh prod
+
 # helm-install.sh
 In the main `consumerfinance.gov` directory, there is [`helm-install.sh`](../helm-install.sh). 
 This script is built to inject environment variables into the provided 
 override yamls in [`overrides`](overrides).
 
 ## Usage
-Arguments passed in, should be a spaced separated list of override yamls.
+In all cases, make sure you have built images via `build-images.sh`.
+Arguments passed in to `helm-install.sh`, should be a spaced separated list of override yamls.
 If no arguments are provided, it includes [`local.yaml`](overrides/local.yaml)
 and [`services.yaml`](overrides/services.yaml).
 
