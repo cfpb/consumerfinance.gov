@@ -51,6 +51,26 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Docs Common labels
+*/}}
+{{- define "cfgov.docs.labels" -}}
+helm.sh/chart: {{ include "cfgov.chart" . }}
+{{ include "cfgov.docs.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Docs Selector labels
+*/}}
+{{- define "cfgov.docs.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "cfgov.name" . }}-docs
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "cfgov.serviceAccountName" -}}
