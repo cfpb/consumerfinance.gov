@@ -75,8 +75,7 @@ fake_fonts() {
     # If we don't have the webfont files, we create empty files with the same
     # name to allow collectstatic to run successfully. If the files already
     # exist, these commands do nothing.
-    #bad test
-    #mkdir -p static.in/fake-fonts/fonts
+    mkdir -p static.in/fake-fonts/fonts
 
     # 1. Use grep to find all .woff and .woff2 files referenced in CSS files.
     # 2. Reduce these to a list of unique webfont filenames.
@@ -93,18 +92,18 @@ fake_fonts() {
 }
 
 # Execute requested (or all) functions.
-# if [ "$1" = "init" ]; then
-#   init ""
-#   install
-# elif [ "$1" = "build" ]; then
-#   build
-# elif [ "$1" = "ci" ]; then
-#   init "production"
-#   install
-#   build
-#   fake_fonts
-# else
-#   init "$1"
-#   install
-#   build
-# fi
+if [ "$1" = "init" ]; then
+  init ""
+  install
+elif [ "$1" = "build" ]; then
+  build
+elif [ "$1" = "ci" ]; then
+  init "production"
+  install
+  build
+  fake_fonts
+else
+  init "$1"
+  install
+  build
+fi
