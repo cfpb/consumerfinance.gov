@@ -41,7 +41,7 @@ jobs:
           load: true
           tag: ${{ env.TEST_TAG }}
           build-args: FRONTEND_TARGET=ci
-          
+
       - name: Build zipfile and export to Docker (not DockerHub)
         if: steps.filter.outputs.docker == 'true'
         uses: docker/build-push-action@v2
@@ -50,3 +50,22 @@ jobs:
           load: true
           tag: ${{ env.TEST_TAG }}
           build-args: FRONTEND_TARGET=ci
+
+      - name: Build docs and export to Docker (not DockerHub)
+        if: steps.filter.outputs.docker == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: docker/docs/
+          load: true
+          tag: ${{ env.TEST_TAG }}
+          build-args: FRONTEND_TARGET=ci
+
+      - name: Build elastic and export to Docker (not DockerHub)
+        if: steps.filter.outputs.docker == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: docker/elasticsearch/
+          load: true
+          tag: ${{ env.TEST_TAG }}
+          build-args: FRONTEND_TARGET=ci
+
