@@ -1,5 +1,4 @@
-#bad Docker file
-#FROM python:3.8-alpine as base
+FROM python:3.8-alpine as base
 
 # cfgov-dev is used for local development, as well as a base for frontend and prod.
 FROM base AS cfgov-dev
