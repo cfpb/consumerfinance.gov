@@ -78,7 +78,7 @@ jobs:
         with:
           filters: |
             docker:
-              - 'docker/docs/Dockerfile
+              - 'docker/docs/Dockerfile'
 
       - name: Setup QEMU
         if: steps.filter.outputs.docker == 'true'
