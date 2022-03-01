@@ -46,7 +46,7 @@ jobs:
         if: steps.filter.outputs.docker == 'true'
         uses: docker/build-push-action@v2
         with:
-          context: docker/deployable-zipfile/
+          context: ./docker/deployable-zipfile/
           load: true
           tag: ${{ env.TEST_TAG }}
           build-args: FRONTEND_TARGET=ci
@@ -55,7 +55,7 @@ jobs:
         if: steps.filter.outputs.docker == 'true'
         uses: docker/build-push-action@v2
         with:
-          context: docker/docs/
+          context: ./docker/docs/
           load: true
           tag: ${{ env.TEST_TAG }}
           build-args: FRONTEND_TARGET=ci
@@ -64,7 +64,7 @@ jobs:
         if: steps.filter.outputs.docker == 'true'
         uses: docker/build-push-action@v2
         with:
-          context: docker/elasticsearch/
+          context: ./docker/elasticsearch/
           load: true
           tag: ${{ env.TEST_TAG }}
           build-args: FRONTEND_TARGET=ci
