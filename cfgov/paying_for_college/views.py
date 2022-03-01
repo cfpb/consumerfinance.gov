@@ -218,7 +218,9 @@ class FeedbackView(TemplateView):
                 url=request.build_absolute_uri(),
             )
             feedback.save()
-            return render(request, "paying-for-college/disclosure_feedback_thanks.html")
+            return render(
+                request, "paying-for-college/disclosure_feedback_thanks.html"
+            )
         else:
             return HttpResponseBadRequest("Invalid form")
 
@@ -303,7 +305,9 @@ class ConstantsRepresentation(View):
         return json.dumps(constants)
 
     def get(self, request):
-        return HttpResponse(self.get_constants(), content_type="application/json")
+        return HttpResponse(
+            self.get_constants(), content_type="application/json"
+        )
 
 
 def school_autocomplete(request):
@@ -353,7 +357,9 @@ class VerifyView(View):
             )
             notification.save()
             msg = notification.notify_school()
-            callback = json.dumps({"result": "Verification recorded; {0}".format(msg)})
+            callback = json.dumps(
+                {"result": "Verification recorded; {0}".format(msg)}
+            )
             response = HttpResponse(callback)
             return response
         else:

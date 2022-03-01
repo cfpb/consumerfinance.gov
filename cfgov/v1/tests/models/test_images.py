@@ -110,7 +110,9 @@ class CFGOVImageTest(TestCase):
 
 class CFGOVRenditionTest(TestCase):
     def test_uniqueness_constraint(self):
-        image = CFGOVImage.objects.create(title="test", file=get_test_image_file())
+        image = CFGOVImage.objects.create(
+            title="test", file=get_test_image_file()
+        )
 
         filt = Filter(spec="original")
 

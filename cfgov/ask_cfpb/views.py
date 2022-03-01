@@ -147,7 +147,9 @@ def ask_autocomplete(request, language="en"):
 
     term = autocomplete_form.cleaned_data["term"]
     try:
-        results = AnswerPageSearch(search_term=term, language=language).autocomplete()
+        results = AnswerPageSearch(
+            search_term=term, language=language
+        ).autocomplete()
         return JsonResponse(results, safe=False)
     except IndexError:
         return JsonResponse([], safe=False)
@@ -214,7 +216,9 @@ def redirect_ask_search(request, language="en"):
                     permanent=True,
                 )
             else:
-                return redirect(f"/ask-cfpb/search-by-tag/{tag}/", permanent=True)
+                return redirect(
+                    f"/ask-cfpb/search-by-tag/{tag}/", permanent=True
+                )
 
         # Redirect by facet value, if there is one, starting with category.
         # We want to exhaust facets each time, so we need three loops.
@@ -239,7 +243,9 @@ def redirect_ask_search(request, language="en"):
                 raw_tag = facet.replace(tag_facet, "")
                 if raw_tag:
                     tag = (
-                        raw_tag.replace(" ", "_").replace("%20", "_").replace("+", "_")
+                        raw_tag.replace(" ", "_")
+                        .replace("%20", "_")
+                        .replace("+", "_")
                     )
                     return redirect_to_tag(tag, language)
 

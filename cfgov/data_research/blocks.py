@@ -11,13 +11,16 @@ class ConferenceRegistrationForm(AbstractFormBlock):
     govdelivery_code = blocks.CharBlock(
         label="GovDelivery code",
         help_text=(
-            "Conference registrants will be subscribed to this GovDelivery " "topic."
+            "Conference registrants will be subscribed to this GovDelivery "
+            "topic."
         ),
     )
     govdelivery_question_id = blocks.RegexBlock(
         required=False,
         regex=r"^\d{5,}$",
-        error_messages={"invalid": "GovDelivery question ID must be 5 digits."},
+        error_messages={
+            "invalid": "GovDelivery question ID must be 5 digits."
+        },
         label="GovDelivery question ID",
         help_text=mark_safe(
             "Enter the ID of the question in GovDelivery that is being used "
@@ -41,13 +44,19 @@ class ConferenceRegistrationForm(AbstractFormBlock):
         ),
     )
     capacity = blocks.IntegerBlock(
-        help_text=("Enter the (physical) conference attendance limit as a number.")
+        help_text=(
+            "Enter the (physical) conference attendance limit as a number."
+        )
     )
     success_message = blocks.RichTextBlock(
-        help_text=("Enter a message that will be shown on successful registration.")
+        help_text=(
+            "Enter a message that will be shown on successful registration."
+        )
     )
     at_capacity_message = blocks.RichTextBlock(
-        help_text=("Enter a message that will be shown when the event is at capacity.")
+        help_text=(
+            "Enter a message that will be shown when the event is at capacity."
+        )
     )
     failure_message = blocks.RichTextBlock(
         help_text=(

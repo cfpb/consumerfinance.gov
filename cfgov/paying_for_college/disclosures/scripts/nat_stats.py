@@ -35,11 +35,19 @@ def get_prepped_stats(program_length=None):
     full_data = get_national_stats()
     natstats = {
         "completionRateMedian": full_data["completion_rate"]["median"],
-        "completionRateMedianLow": full_data["completion_rate"]["average_range"][0],
-        "completionRateMedianHigh": full_data["completion_rate"]["average_range"][1],
+        "completionRateMedianLow": full_data["completion_rate"][
+            "average_range"
+        ][0],
+        "completionRateMedianHigh": full_data["completion_rate"][
+            "average_range"
+        ][1],
         "nationalSalary": full_data["median_earnings"]["median"],
-        "nationalSalaryAvgLow": full_data["median_earnings"]["average_range"][0],
-        "nationalSalaryAvgHigh": full_data["median_earnings"]["average_range"][1],
+        "nationalSalaryAvgLow": full_data["median_earnings"]["average_range"][
+            0
+        ],
+        "nationalSalaryAvgHigh": full_data["median_earnings"]["average_range"][
+            1
+        ],
         "repaymentRateMedian": full_data["repayment_rate"]["median"],
         "monthlyLoanMedian": full_data["median_monthly_loan"]["median"],
         "retentionRateMedian": full_data["retention_rate"]["median"],

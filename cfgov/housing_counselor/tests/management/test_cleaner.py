@@ -110,7 +110,9 @@ class TestCleaner(TestCase):
         self.assertIsNone(reformat_weburl("www.notavailable.org"))
 
     def test_reformat_weburl_adds_http_if_not_present(self):
-        self.assertEqual(reformat_weburl("www.domain.com"), "http://www.domain.com")
+        self.assertEqual(
+            reformat_weburl("www.domain.com"), "http://www.domain.com"
+        )
 
     def test_reformat_weburl_keeps_http_if_present(self):
         url = "http://www.domain.com"
@@ -131,10 +133,14 @@ class TestCleaner(TestCase):
         self.assertIsNone(title_case(""))
 
     def test_title_case_multiple_words(self):
-        self.assertEqual(title_case("SOME WORDS like tHiS"), "Some Words Like This")
+        self.assertEqual(
+            title_case("SOME WORDS like tHiS"), "Some Words Like This"
+        )
 
     def test_title_case_leaves_special_words_lowercase(self):
-        self.assertEqual(title_case("HELLO FOR THE PEOPLE"), "Hello for the People")
+        self.assertEqual(
+            title_case("HELLO FOR THE PEOPLE"), "Hello for the People"
+        )
 
     def test_title_case_first_special_word_titlecase(self):
         self.assertEqual(

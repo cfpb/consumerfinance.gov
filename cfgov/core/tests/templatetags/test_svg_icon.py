@@ -43,7 +43,9 @@ class SvgRegexTests(TestCase):
 @override_settings(
     MOCK_STATICFILES_PATTERNS={},
     STATICFILES_DIRS=[
-        os.path.join(os.path.dirname(os.path.dirname(__file__)), "staticfiles"),
+        os.path.join(
+            os.path.dirname(os.path.dirname(__file__)), "staticfiles"
+        ),
     ],
 )
 class SvgIconTests(TestCase):

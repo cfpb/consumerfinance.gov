@@ -99,7 +99,9 @@ class TestRegs3kHooks(TestCase, WagtailTestUtils):
         self.assertNotIn(b"View draft", response.content)
 
     def test_section_model_admin_has_preview_button(self):
-        reg_page = RegulationPage(regulation=self.part_1002, title="Reg B", slug="1002")
+        reg_page = RegulationPage(
+            regulation=self.part_1002, title="Reg B", slug="1002"
+        )
         self.landing_page.add_child(instance=reg_page)
         reg_page.save()
 

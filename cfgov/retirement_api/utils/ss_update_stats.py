@@ -100,7 +100,9 @@ def output_json(filepath, headings, bs_rows):
 def make_soup(url):
     req = requests.get(url)
     if req.reason != "OK":
-        log.warn("request to %s failed: %s %s" % (url, req.status_code, req.reason))
+        log.warn(
+            "request to %s failed: %s %s" % (url, req.status_code, req.reason)
+        )
         return ""
     else:
         soup = bs(req.text, "html.parser")
@@ -143,7 +145,9 @@ def update_awi_series():
         rows = []
         log.info("found %s tables" % len(tables))
         for table in tables:
-            rows.extend([row for row in table.findAll("tr") if row.findAll("td")])
+            rows.extend(
+                [row for row in table.findAll("tr") if row.findAll("td")]
+            )
         output_csv(outcsv, headings, rows)
         log.info("updated %s with %s rows" % (outcsv, len(rows)))
         output_json(outjson, headings, rows)
@@ -195,7 +199,9 @@ def update_life():
                 output_csv(outcsv, headings, rows)
                 msg += "updated %s with %s rows" % (outcsv, len(rows))
                 output_json(outjson, headings, rows)
-                msg += "updated {0} with {1} entries".format(outjson, len(rows))
+                msg += "updated {0} with {1} entries".format(
+                    outjson, len(rows)
+                )
             else:
                 msg += "didn't find more than 100 rows at {0}".format(url)
     log.info(msg)

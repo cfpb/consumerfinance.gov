@@ -29,7 +29,9 @@ from v1.tests.wagtail_pages.helpers import publish_page
 
 class FilterablePagesDocumentTest(TestCase):
     def test_model_class_added(self):
-        self.assertEqual(FilterablePagesDocument.django.model, AbstractFilterPage)
+        self.assertEqual(
+            FilterablePagesDocument.django.model, AbstractFilterPage
+        )
 
     def test_ignore_signal_default(self):
         self.assertFalse(FilterablePagesDocument.django.ignore_signals)
@@ -63,7 +65,9 @@ class FilterablePagesDocumentTest(TestCase):
         )
 
     def test_get_queryset(self):
-        test_event = EventPage(title="Testing", start_dt=datetime.now(timezone("UTC")))
+        test_event = EventPage(
+            title="Testing", start_dt=datetime.now(timezone("UTC"))
+        )
         qs = FilterablePagesDocument().get_queryset()
         self.assertFalse(qs.filter(title=test_event.title).exists())
 
@@ -77,10 +81,14 @@ class FilterablePagesDocumentTest(TestCase):
         enforcement.statuses.add(status)
         doc = FilterablePagesDocument()
         prepared_data = doc.prepare(enforcement)
-        self.assertEqual(prepared_data["statuses"], ["expired-terminated-dismissed"])
+        self.assertEqual(
+            prepared_data["statuses"], ["expired-terminated-dismissed"]
+        )
 
     def test_prepare_content_no_content_defined(self):
-        event = EventPage(title="Event Test", start_dt=datetime.now(timezone("UTC")))
+        event = EventPage(
+            title="Event Test", start_dt=datetime.now(timezone("UTC"))
+        )
         doc = FilterablePagesDocument()
         prepared_data = doc.prepare(event)
         self.assertIsNone(prepared_data["content"])
@@ -279,6 +287,12 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         )
         results = search.search(title="Foo")
         self.assertTrue(results.filter(title=self.blog_title_match).exists())
-        self.assertTrue(results.filter(title=self.blog_content_match.title).exists())
-        self.assertTrue(results.filter(title=self.blog_preview_match.title).exists())
-        self.assertTrue(results.filter(title=self.blog_topic_match.title).exists())
+        self.assertTrue(
+            results.filter(title=self.blog_content_match.title).exists()
+        )
+        self.assertTrue(
+            results.filter(title=self.blog_preview_match.title).exists()
+        )
+        self.assertTrue(
+            results.filter(title=self.blog_topic_match.title).exists()
+        )

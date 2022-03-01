@@ -37,7 +37,9 @@ class SchoolSearchTest(TestCase):
         ]
         mock_count = mock.Mock(return_value=1)
         mock_autocomplete().query().count = mock_count
-        mock_autocomplete().query().filter().sort().__getitem__().count = mock_count
+        mock_autocomplete().query().filter().sort().__getitem__().count = (
+            mock_count
+        )
         url = "{}?q=Kansas".format(
             reverse("paying_for_college:disclosures:school_search")
         )
@@ -146,7 +148,9 @@ class SchoolSearchTest(TestCase):
 
     @mock.patch.object(SchoolSearch, "autocomplete")
     def test_autocomplete_blank_term(self, mock_autocomplete):
-        url = "{}?q=".format(reverse("paying_for_college:disclosures:school_search"))
+        url = "{}?q=".format(
+            reverse("paying_for_college:disclosures:school_search")
+        )
         response = school_autocomplete(RequestFactory().get(url))
         self.assertEqual(json.loads(response.content), [])
         self.assertEqual(mock_autocomplete.call_count, 0)

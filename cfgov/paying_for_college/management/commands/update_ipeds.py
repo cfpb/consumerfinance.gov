@@ -20,7 +20,9 @@ class Command(BaseCommand):
     help = COMMAND_HELP
 
     def add_arguments(self, parser):
-        parser.add_argument("--dry-run", help=PARSER_HELP, type=str, default="true")
+        parser.add_argument(
+            "--dry-run", help=PARSER_HELP, type=str, default="true"
+        )
 
     def handle(self, *args, **options):
         if options["dry_run"].lower() == "false":

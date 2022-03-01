@@ -10,7 +10,9 @@ import requests.exceptions
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
-        parser.add_argument("base_url", help="ex: https://files.consumerfinance.gov/f/")
+        parser.add_argument(
+            "base_url", help="ex: https://files.consumerfinance.gov/f/"
+        )
         parser.add_argument("dest_dir", help="ex: ./cfgov/f/")
 
     def handle(self, *args, **options):

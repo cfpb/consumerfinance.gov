@@ -147,7 +147,9 @@ class RegModelTests(DjangoTestCase):
             SectionParagraph,
             section=self.section_num4,
             paragraph_id="d",
-            paragraph=("(1) General rule. A creditor that provides in writing."),
+            paragraph=(
+                "(1) General rule. A creditor that provides in writing."
+            ),
         )
         self.graph_to_delete = baker.make(
             SectionParagraph,
@@ -215,7 +217,9 @@ class RegModelTests(DjangoTestCase):
         return request
 
     def test_part_string_method(self):
-        self.assertEqual(self.part_1002.__str__(), "12 CFR Part 1002 (Regulation B)")
+        self.assertEqual(
+            self.part_1002.__str__(), "12 CFR Part 1002 (Regulation B)"
+        )
 
     def test_part_cfr_title_method(self):
         part = self.part_1002
@@ -248,7 +252,9 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(test_counts["kept"], 1)
 
     def test_section_paragraph_str(self):
-        self.assertEqual(self.graph_to_keep.__str__(), "Section 1002-4 paragraph d")
+        self.assertEqual(
+            self.graph_to_keep.__str__(), "Section 1002-4 paragraph d"
+        )
 
     def test_subpart_headings(self):
         for each in Subpart.objects.all():
@@ -318,7 +324,9 @@ class RegModelTests(DjangoTestCase):
         request = self.get_request()
         request.path = "/regulations/1002/4/"
         sections = list(self.reg_page.get_section_query(request).all())
-        test_nav_items = get_secondary_nav_items(request, self.reg_page, sections)[0]
+        test_nav_items = get_secondary_nav_items(
+            request, self.reg_page, sections
+        )[0]
         self.assertEqual(
             len(test_nav_items),
             Subpart.objects.filter(version=self.effective_version)
@@ -501,7 +509,8 @@ class RegModelTests(DjangoTestCase):
         mock_response.status_code = 200
         mock_requests_get.return_value = mock_response
         response = self.client.get(
-            self.landing_page.url + self.landing_page.reverse_subpage("recent_notices")
+            self.landing_page.url
+            + self.landing_page.reverse_subpage("recent_notices")
         )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, b'{"some": "json"}')
@@ -512,7 +521,8 @@ class RegModelTests(DjangoTestCase):
         mock_response.status_code = 500
         mock_requests_get.return_value = mock_response
         response = self.client.get(
-            self.landing_page.url + self.landing_page.reverse_subpage("recent_notices")
+            self.landing_page.url
+            + self.landing_page.reverse_subpage("recent_notices")
         )
         self.assertEqual(response.status_code, 500)
 
@@ -544,7 +554,9 @@ class RegModelTests(DjangoTestCase):
     def test_index_page_with_effective_date(self):
         response = self.client.get("/reg-landing/1002/2011-01-01/")
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b"This version is not the current regulation", response.content)
+        self.assertIn(
+            b"This version is not the current regulation", response.content
+        )
         self.assertIn(b"Jan. 1, 2011", response.content)
 
     def test_index_page_without_effective_date(self):
@@ -555,12 +567,16 @@ class RegModelTests(DjangoTestCase):
     def test_section_page_with_effective_date(self):
         response = self.client.get("/reg-landing/1002/2011-01-01/4/")
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b"This version is not the current regulation", response.content)
+        self.assertIn(
+            b"This version is not the current regulation", response.content
+        )
 
     def test_section_page_without_effective_date(self):
         response = self.client.get("/reg-landing/1002/4/")
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b"This version is the current regulation", response.content)
+        self.assertIn(
+            b"This version is the current regulation", response.content
+        )
         self.assertIn(b"Search this regulation", response.content)
 
     def test_versions_page_view_without_section(self):
@@ -574,7 +590,9 @@ class RegModelTests(DjangoTestCase):
     def test_versions_page_view_with_section(self):
         response = self.client.get("/reg-landing/1002/versions/4/")
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'href="/reg-landing/1002/2011-01-01/4/"', response.content)
+        self.assertIn(
+            b'href="/reg-landing/1002/2011-01-01/4/"', response.content
+        )
 
     def test_get_breadcrumbs_section_with_date(self):
         crumbs = self.reg_page.get_breadcrumbs(
@@ -615,7 +633,9 @@ class RegModelTests(DjangoTestCase):
         )
         self.assertEqual(["http://localhost/reg-landing/1002/4/"], urls)
 
-        urls = list(self.reg_page.get_urls_for_version(self.old_effective_version))
+        urls = list(
+            self.reg_page.get_urls_for_version(self.old_effective_version)
+        )
         self.assertIn("http://localhost/reg-landing/1002/2011-01-01/", urls)
         self.assertIn("http://localhost/reg-landing/1002/2011-01-01/4/", urls)
 
@@ -630,8 +650,12 @@ class RegModelTests(DjangoTestCase):
         effective_version_saved(None, self.effective_version)
 
         self.assertIn("http://localhost/reg-landing/1002/", CACHE_PURGED_URLS)
-        self.assertIn("http://localhost/reg-landing/1002/4/", CACHE_PURGED_URLS)
-        self.assertIn("http://localhost/reg-landing/1002/versions/", CACHE_PURGED_URLS)
+        self.assertIn(
+            "http://localhost/reg-landing/1002/4/", CACHE_PURGED_URLS
+        )
+        self.assertIn(
+            "http://localhost/reg-landing/1002/versions/", CACHE_PURGED_URLS
+        )
 
     @override_settings(
         WAGTAILFRONTENDCACHE={
@@ -642,7 +666,9 @@ class RegModelTests(DjangoTestCase):
     )
     def test_section_saved(self):
         section_saved(None, self.section_num4)
-        self.assertEqual(CACHE_PURGED_URLS, ["http://localhost/reg-landing/1002/4/"])
+        self.assertEqual(
+            CACHE_PURGED_URLS, ["http://localhost/reg-landing/1002/4/"]
+        )
 
     def test_reg_page_can_serve_draft_versions(self):
         request = self.get_request()
@@ -671,7 +697,9 @@ class RegModelTests(DjangoTestCase):
 
     def test_reg_page_next_version(self):
         response = self.client.get("/reg-landing/1002/2011-01-01/4/")
-        self.assertEqual(response.context_data["next_version"], self.effective_version)
+        self.assertEqual(
+            response.context_data["next_version"], self.effective_version
+        )
 
     def test_validate_label(self):
         with self.assertRaises(ValidationError):
@@ -712,7 +740,9 @@ class SectionNavTests(unittest.TestCase):
     def test_get_next_section(self):
         section_list = ["1002.1", "1002.2"]
         current_index = 0
-        self.assertEqual(get_next_section(section_list, current_index), "1002.2")
+        self.assertEqual(
+            get_next_section(section_list, current_index), "1002.2"
+        )
 
     def test_get_next_section_none(self):
         section_list = ["1002.1", "1002.2"]
@@ -722,7 +752,9 @@ class SectionNavTests(unittest.TestCase):
     def test_get_previous_section(self):
         section_list = ["1002.1", "1002.2"]
         current_index = 1
-        self.assertEqual(get_previous_section(section_list, current_index), "1002.1")
+        self.assertEqual(
+            get_previous_section(section_list, current_index), "1002.1"
+        )
 
     def test_get_previous_section_none(self):
         section_list = ["1002.1", "1002.2"]

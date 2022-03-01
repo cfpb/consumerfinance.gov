@@ -27,7 +27,9 @@ class AtCapacityConferenceRegistrationForm(MockConferenceRegistrationForm):
         return True
 
 
-class ExceptionThrowingConferenceRegistrationForm(MockConferenceRegistrationForm):
+class ExceptionThrowingConferenceRegistrationForm(
+    MockConferenceRegistrationForm
+):
     def save(self, commit=False):
         raise RuntimeError("something went wrong")
 
@@ -69,7 +71,9 @@ class TestConferenceRegistrationHandler(TestCase):
         self.assertFalse(response["is_at_capacity"])
 
     def test_process_at_capacity(self):
-        handler = self.get_handler(form_cls=AtCapacityConferenceRegistrationForm)
+        handler = self.get_handler(
+            form_cls=AtCapacityConferenceRegistrationForm
+        )
         response = handler.process(is_submitted=False)
         self.assertTrue(response["is_at_capacity"])
 
@@ -96,7 +100,9 @@ class TestConferenceRegistrationHandler(TestCase):
         self.assertEqual(response["Location"], self.path + "?success")
 
     def test_process_exception_sets_form_error(self):
-        handler = self.get_handler(form_cls=ExceptionThrowingConferenceRegistrationForm)
+        handler = self.get_handler(
+            form_cls=ExceptionThrowingConferenceRegistrationForm
+        )
         response = handler.process(is_submitted=True)
         self.assertEqual(
             response["form"].non_field_errors(),

@@ -38,8 +38,14 @@ def govdelivery_subscribe(request):
         passing_response = redirect("govdelivery:success")
         failing_response = redirect("govdelivery:server_error")
     for required_param in REQUIRED_PARAMS_GOVDELIVERY:
-        if required_param not in request.POST or not request.POST.get(required_param):
-            return failing_response if is_ajax else redirect("govdelivery:user_error")
+        if required_param not in request.POST or not request.POST.get(
+            required_param
+        ):
+            return (
+                failing_response
+                if is_ajax
+                else redirect("govdelivery:user_error")
+            )
     email_address = request.POST["email"]
     codes = request.POST.getlist("code")
 
@@ -54,7 +60,9 @@ def govdelivery_subscribe(request):
         return failing_response
     answers = extract_answers_from_request(request)
     for question_id, answer_text in answers:
-        gd.set_subscriber_answers_to_question(email_address, question_id, answer_text)
+        gd.set_subscriber_answers_to_question(
+            email_address, question_id, answer_text
+        )
     return passing_response
 
 
@@ -78,7 +86,11 @@ def regsgov_comment(request):
 
     for required_param in REQUIRED_PARAMS_REGSGOV:
         if not request.POST.get(required_param):
-            return failing_response if is_ajax else redirect("reg_comment:user_error")
+            return (
+                failing_response
+                if is_ajax
+                else redirect("reg_comment:user_error")
+            )
 
     try:
         submission_response = submit_comment(request.POST)
@@ -115,7 +127,9 @@ def submit_comment(data):
             "first_name": (
                 data["first_name"] if data.get("first_name") else "Anonymous"
             ),
-            "last_name": (data["last_name"] if data.get("last_name") else "Anonymous"),
+            "last_name": (
+                data["last_name"] if data.get("last_name") else "Anonymous"
+            ),
             "email": (data["email"] if data.get("email") else "NA"),
             "general_comment": data["general_comment"],
             "comment_on": data["comment_on"],

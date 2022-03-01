@@ -14,7 +14,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.stdout.write("Searching for events to archive…")
-        event_page_exists = BrowseFilterablePage.objects.filter(title="Events").exists()
+        event_page_exists = BrowseFilterablePage.objects.filter(
+            title="Events"
+        ).exists()
         archive_event_page_exists = EventArchivePage.objects.filter(
             title__icontains="Archive"
         ).exists()

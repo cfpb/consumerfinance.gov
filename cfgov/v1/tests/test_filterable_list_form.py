@@ -37,7 +37,9 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         self.blog2.tags.add("blah")
         self.blog2.authors.add("richard-cordray")
         self.category_blog = BlogPage(title="Category Test")
-        self.category_blog.categories.add(CFGOVPageCategory(name="info-for-consumers"))
+        self.category_blog.categories.add(
+            CFGOVPageCategory(name="info-for-consumers")
+        )
         self.event1 = EventPage(
             title="test page 2", start_dt=datetime.now(timezone("UTC"))
         )
@@ -220,7 +222,9 @@ class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
     def setUpTestData(cls):
         cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
-        event = EventPage(title="test page 2", start_dt=datetime.now(timezone("UTC")))
+        event = EventPage(
+            title="test page 2", start_dt=datetime.now(timezone("UTC"))
+        )
         event.tags.add("bar")
         publish_page(event)
         cls.event = event

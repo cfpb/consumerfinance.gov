@@ -70,7 +70,9 @@ class HomePage(CFGOVPage):
             ObjectList([StreamFieldPanel("content")], heading="Content"),
             ObjectList(
                 [
-                    InlinePanel("info_units", min_num=3, max_num=6, label="Info Unit"),
+                    InlinePanel(
+                        "info_units", min_num=3, max_num=6, label="Info Unit"
+                    ),
                 ],
                 heading="Info Units",
             ),
@@ -189,7 +191,9 @@ class HomePageInfoUnitLink(Orderable):
 
 
 class HomePageCard(Orderable):
-    page = ParentalKey("v1.HomePage", on_delete=models.CASCADE, related_name="cards")
+    page = ParentalKey(
+        "v1.HomePage", on_delete=models.CASCADE, related_name="cards"
+    )
     icon = models.CharField(
         max_length=64,
         help_text=mark_safe(

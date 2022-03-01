@@ -85,10 +85,14 @@ class TestShouldParseLinks(TestCase):
         self.check_should_parse_links_for_path("/admin/foo/bar/", False)
 
     def test_should_parse_links_true_for_admin_page_preview(self):
-        self.check_should_parse_links_for_path("/admin/pages/1234/edit/preview/", True)
+        self.check_should_parse_links_for_path(
+            "/admin/pages/1234/edit/preview/", True
+        )
 
     def test_should_parse_links_true_for_admin_page_view_draft(self):
-        self.check_should_parse_links_for_path("/admin/pages/1234/view_draft/", True)
+        self.check_should_parse_links_for_path(
+            "/admin/pages/1234/view_draft/", True
+        )
 
 
 class TestParseLinks(TestCase):
@@ -145,7 +149,9 @@ class TestParseLinks(TestCase):
         publish_page(page)
         link = f'<body><a id="{page.id}" linktype="page">foo bar</a></body>'
         output = parse_links(link)
-        self.assertEqual('<body><a href="/foo-bar/">foo bar</a></body>', output)
+        self.assertEqual(
+            '<body><a href="/foo-bar/">foo bar</a></body>', output
+        )
 
     def test_non_default_encoding(self):
         s = '<body><a href="/something">哈哈</a></body>'
@@ -352,7 +358,9 @@ class SelfHealingMiddlewareTests(SimpleTestCase):
             return HttpResponse(status=404)
 
         middleware = SelfHealingMiddleware(get_response)
-        request = RequestFactory().get("/test ~!@#$%^&*()-_–—=+[]{}\\|;:'‘’\"“”,.…<>?")
+        request = RequestFactory().get(
+            "/test ~!@#$%^&*()-_–—=+[]{}\\|;:'‘’\"“”,.…<>?"
+        )
         response = middleware(request)
         self.assertRedirects(
             response, "/test", status_code=301, fetch_redirect_response=False
@@ -378,17 +386,23 @@ class PathBasedCsrfViewMiddlewareTestCase(SimpleTestCase):
     @override_settings(CSRF_REQUIRED_PATHS=None)
     def test_default_apply_everywhere(self):
         request = self.request_factory.get("/test")
-        self.middleware.process_view(request, self.middleware.get_response, [], {})
+        self.middleware.process_view(
+            request, self.middleware.get_response, [], {}
+        )
         self.assertTrue(hasattr(request, "csrf_processing_done"))
 
     @override_settings(CSRF_REQUIRED_PATHS=("/admin",))
     def test_do_not_apply_to_path(self):
         request = self.request_factory.get("/test")
-        self.middleware.process_view(request, self.middleware.get_response, [], {})
+        self.middleware.process_view(
+            request, self.middleware.get_response, [], {}
+        )
         self.assertFalse(hasattr(request, "csrf_processing_done"))
 
     @override_settings(CSRF_REQUIRED_PATHS=("/admin",))
     def test_apply_to_path(self):
         request = self.request_factory.get("/admin")
-        self.middleware.process_view(request, self.middleware.get_response, [], {})
+        self.middleware.process_view(
+            request, self.middleware.get_response, [], {}
+        )
         self.assertTrue(hasattr(request, "csrf_processing_done"))

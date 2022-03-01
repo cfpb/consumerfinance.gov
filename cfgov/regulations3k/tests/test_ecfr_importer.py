@@ -35,7 +35,9 @@ class ImporterTestCase(DjangoTestCase):
 
     fixtures = ["test_parts.json"]
     # xml_fixture has partial XML for regs 1002 and 1005
-    xml_fixture = "{}/regulations3k/fixtures/graftest.xml".format(settings.PROJECT_ROOT)
+    xml_fixture = "{}/regulations3k/fixtures/graftest.xml".format(
+        settings.PROJECT_ROOT
+    )
     interp_fixture = "{}/regulations3k/fixtures/interptest.xml".format(
         settings.PROJECT_ROOT
     )
@@ -63,7 +65,9 @@ class ImporterTestCase(DjangoTestCase):
         p_soup = bS(self.test_xml, "lxml-xml")
         graphs = p_soup.find_all("DIV5")[1].find_all("DIV9")[1].find_all("P")
         parsed_graph2 = ls.parse_appendix_graph(graphs[2], "1002-A")
-        self.assertIn("(2) To the extent not included in item 1 above:", parsed_graph2)
+        self.assertIn(
+            "(2) To the extent not included in item 1 above:", parsed_graph2
+        )
         parsed_graph3 = ls.parse_appendix_graph(graphs[3], "1002-A")
         self.assertIn("(i) National banks", parsed_graph3)
         ecfr_importer.parse_appendix_paragraphs(graphs, "appendix", "1002-A")
@@ -192,7 +196,9 @@ class ImporterTestCase(DjangoTestCase):
         mock_get.return_value = mock_response
         part_number = "1003"  # This part exists in the loaded fixture
         ecfr_importer.ecfr_to_regdown(part_number, file_path=self.xml_fixture)
-        self.assertEqual(Part.objects.filter(part_number=part_number).count(), 1)
+        self.assertEqual(
+            Part.objects.filter(part_number=part_number).count(), 1
+        )
 
     @mock.patch("regulations3k.scripts.ecfr_importer.requests.get")
     def test_part_parser_create_new(self, mock_get):
@@ -201,10 +207,14 @@ class ImporterTestCase(DjangoTestCase):
         mock_response = mock.Mock(  # mock the effective_date request
             Response, reason="REQUESTS FOR HUMANS MY EYE", ok=True
         )
-        mock_response.json.return_value = {"results": [{"effective_on": "2018-06-01"}]}
+        mock_response.json.return_value = {
+            "results": [{"effective_on": "2018-06-01"}]
+        }
         mock_get.return_value = mock_response
         ecfr_importer.ecfr_to_regdown(part_number, file_path=self.xml_fixture)
-        self.assertEqual(Part.objects.filter(part_number=part_number).count(), 1)
+        self.assertEqual(
+            Part.objects.filter(part_number=part_number).count(), 1
+        )
 
     def test_bad_file_path_returns_none(self):
         self.assertIs(
@@ -242,7 +252,9 @@ class AppendixCreationTestCase(DjangoTestCase):
     """Checks that parse_appendices() creates objects as expected."""
 
     fixtures = ["tree_limb.json"]
-    xml_fixture = "{}/regulations3k/fixtures/graftest.xml".format(settings.PROJECT_ROOT)
+    xml_fixture = "{}/regulations3k/fixtures/graftest.xml".format(
+        settings.PROJECT_ROOT
+    )
     with open(xml_fixture, "r") as f:
         test_xml = f.read()
 
@@ -272,25 +284,33 @@ class AppendixNamingTestCase(unittest.TestCase):
 
     def test_get_appendix_label_good_N_value(self):
         self.assertEqual(
-            ecfr_importer.get_appendix_label("Appendix X", "unhelpful head", "Z"),
+            ecfr_importer.get_appendix_label(
+                "Appendix X", "unhelpful head", "Z"
+            ),
             "X",
         )
 
     def test_get_appendix_label_no_N_value(self):
         self.assertEqual(
-            ecfr_importer.get_appendix_label("", "Appendix X to Reg 1030", "Z"),
+            ecfr_importer.get_appendix_label(
+                "", "Appendix X to Reg 1030", "Z"
+            ),
             "X",
         )
 
     def test_get_appendix_label_appendices(self):
         self.assertEqual(
-            ecfr_importer.get_appendix_label("", "Appendices G and H to Reg 1030", "Z"),
+            ecfr_importer.get_appendix_label(
+                "", "Appendices G and H to Reg 1030", "Z"
+            ),
             "GH",
         )
 
     def test_get_appendix_label_appendixes(self):
         self.assertEqual(
-            ecfr_importer.get_appendix_label("", "Appendixes G and H to Reg 1030", "Z"),
+            ecfr_importer.get_appendix_label(
+                "", "Appendixes G and H to Reg 1030", "Z"
+            ),
             "GH",
         )
 
@@ -333,7 +353,9 @@ class ImporterRunTestCase(unittest.TestCase):
 class ParagraphParsingTestCase(unittest.TestCase):
     fixtures_dir = "{}/regulations3k/fixtures".format(settings.PROJECT_ROOT)
     # test paragraphs are from reg DD, section 1030.4
-    test_paragraph_xml_path = "{}/test_graphs_with_multi_ids.xml".format(fixtures_dir)
+    test_paragraph_xml_path = "{}/test_graphs_with_multi_ids.xml".format(
+        fixtures_dir
+    )
     with open(test_paragraph_xml_path, "r") as f:
         test_xml = f.read()
     LEVEL_STATE = IdLevelState()
@@ -382,7 +404,9 @@ class ParagraphParsingTestCase(unittest.TestCase):
             "(1) <I>Credit scoring systems</I> (i) Credit scoring systems "
             "evaluate an applicant's creditworthiness mechanically.\n</P>"
         )
-        result = ecfr_importer.parse_multi_id_graph(graph, ["p", "1", "i"], "2")
+        result = ecfr_importer.parse_multi_id_graph(
+            graph, ["p", "1", "i"], "2"
+        )
         self.assertIn("see(2-p-1-i-Interp)", result)
 
     def test_multiple_id_test_true(self):
@@ -439,7 +463,9 @@ class ParagraphParsingTestCase(unittest.TestCase):
         section_graph_element_no_id = bS(
             "<P>This is a bare interp paragraph with no ID.</P>", "lxml-xml"
         )
-        parsed_graph = ecfr_importer.parse_interp_graph(section_graph_element_no_id)
+        parsed_graph = ecfr_importer.parse_interp_graph(
+            section_graph_element_no_id
+        )
         self.assertTrue(parsed_graph.startswith("This is a bare interp"))
 
     def test_get_interp_section_tag(self):
@@ -456,7 +482,9 @@ class ParagraphParsingTestCase(unittest.TestCase):
         headline = "Appendix MS-3 - Model Force-Placed Insurance Notice Forms"
         self.assertEqual(ecfr_importer.get_interp_section_tag(headline), "MS3")
         headline = "Inevitable - Random Section Name"
-        self.assertEqual(ecfr_importer.get_interp_section_tag(headline), "Inevitable")
+        self.assertEqual(
+            ecfr_importer.get_interp_section_tag(headline), "Inevitable"
+        )
 
     def test_divine_interp_tag(self):
 
@@ -482,7 +510,9 @@ class ParagraphParsingTestCase(unittest.TestCase):
         HD = bS("<HD3>2(b) Application\n</HD3>", "lxml-xml").find("HD3")
         self.assertEqual(divine_interp_tag_use(HD, "1002"), "graph_id")
         HD = bS("<HD3>(b) Application\n</HD3>", "lxml-xml").find("HD3")
-        self.assertEqual(divine_interp_tag_use(HD, "1030"), "graph_id_inferred_section")
+        self.assertEqual(
+            divine_interp_tag_use(HD, "1030"), "graph_id_inferred_section"
+        )
 
 
 class ParserIdTestCase(unittest.TestCase):
@@ -853,21 +883,27 @@ class PatternsTestCase(unittest.TestCase):
     def test_roman_surf_test_level_3_token_not_roman(self):
         self.levelstate.current_id = "a-1-1"
         self.assertIs(
-            self.levelstate.roman_surf_test(self.levelstate.current_token, "ii"),
+            self.levelstate.roman_surf_test(
+                self.levelstate.current_token, "ii"
+            ),
             False,
         )
 
     def test_roman_surf_test_true(self):
         self.levelstate.current_id = "a-1-i"
         self.assertIs(
-            self.levelstate.roman_surf_test(self.levelstate.current_token(), "ii"),
+            self.levelstate.roman_surf_test(
+                self.levelstate.current_token(), "ii"
+            ),
             True,
         )
 
     def test_roman_surf_test_false_if_blank_token(self):
         self.levelstate.current_id = ""
         self.assertIs(
-            self.levelstate.roman_surf_test(self.levelstate.current_token(), "ii"),
+            self.levelstate.roman_surf_test(
+                self.levelstate.current_token(), "ii"
+            ),
             False,
         )
 

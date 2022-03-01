@@ -41,6 +41,8 @@ class MegaMenuExtension(Extension):
 
         self.environment.globals.update(
             {
-                "get_mega_menu_content": contextfunction(get_mega_menu_content),
+                "get_mega_menu_content": contextfunction(
+                    get_mega_menu_content
+                ),
             }
         )

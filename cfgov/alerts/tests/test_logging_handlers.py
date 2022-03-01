@@ -94,7 +94,9 @@ class TestLoggingHandlers(TestCase):
         self.logger.error("something", extra={"request": request})
 
         args, kwargs = sqs_queue_post.call_args
-        self.assertIn("Request repr(): \n<WSGIRequest\npath:/", kwargs["message"])
+        self.assertIn(
+            "Request repr(): \n<WSGIRequest\npath:/", kwargs["message"]
+        )
 
     def test_body_shows_none_if_no_request_available(self, sqs_queue_post):
         self.logger.error("something")

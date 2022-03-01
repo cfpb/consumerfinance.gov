@@ -45,7 +45,9 @@ def insert_section_links(regdown):
         url = get_url(ref)
         if url:
             link = '<a href="{}" data-linktag="{}">{}</a> '.format(url, i, ref)
-            regdown = regdown[:index_head] + regdown[index_head:].replace(ref, link, 1)
+            regdown = regdown[:index_head] + regdown[index_head:].replace(
+                ref, link, 1
+            )
             index_head = regdown.index(link) + len(link)
     return regdown
 
@@ -56,16 +58,18 @@ def insert_links(reg=None):
     else:
         parts = Part.objects.filter(part_number=reg)
     live_versions = [part.effective_version for part in parts]
-    live_sections = Section.objects.filter(subpart__version__in=live_versions).exclude(
-        subpart__title__contains="Supplement I"
-    )
+    live_sections = Section.objects.filter(
+        subpart__version__in=live_versions
+    ).exclude(subpart__title__contains="Supplement I")
     for section in live_sections:
         if "data-linktag" in section.contents:
             logger.info("Section {} already has links applied".format(section))
             continue
         linked_regdown = insert_section_links(section.contents)
         if not linked_regdown:
-            logger.info("No section references found in section {}".format(section))
+            logger.info(
+                "No section references found in section {}".format(section)
+            )
             continue
         else:
             logger.info("Links added to section {}".format(section))

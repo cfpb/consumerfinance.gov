@@ -61,7 +61,9 @@ class TestAskHooks(TestCase):
         create_answer_id(request, test_page)
         self.assertEqual(
             test_page.slug,
-            "spanish-page-1-es-{}".format(Answer.objects.order_by("pk").last().pk),
+            "spanish-page-1-es-{}".format(
+                Answer.objects.order_by("pk").last().pk
+            ),
         )
         self.assertIsNotNone(test_page.answer_base)
         self.assertIsNotNone(test_page.answer_base.english_page)

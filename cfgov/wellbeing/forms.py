@@ -51,7 +51,8 @@ class ResultsForm(forms.Form):
             ("read-self", "I read and answered the questions myself"),
             (
                 "read-to-me",
-                "I read the questions to someone else and recorded " "their answers",
+                "I read the questions to someone else and recorded "
+                "their answers",
             ),
         )
     )

@@ -147,7 +147,9 @@ class HttpTests(unittest.TestCase):
     )
     def test_http_fail_connection_error(self, mock_get):
         check_urls("pro1")
-        self.assertEqual(mock_get.call_count, len(FALLBACK_URLS) + 1)  # one call for s3
+        self.assertEqual(
+            mock_get.call_count, len(FALLBACK_URLS) + 1
+        )  # one call for s3
 
     @mock.patch(
         "scripts.http_smoke_test.requests.get",

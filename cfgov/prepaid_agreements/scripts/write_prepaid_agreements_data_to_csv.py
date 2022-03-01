@@ -52,7 +52,9 @@ def write_agreements_data(path=""):
     )
     agreements_writer.writeheader()
 
-    products_writer = csv.DictWriter(products_file, fieldnames=products_fieldnames)
+    products_writer = csv.DictWriter(
+        products_file, fieldnames=products_fieldnames
+    )
     products_writer.writeheader()
 
     agreements = sorted(
@@ -74,7 +76,9 @@ def write_agreements_data(path=""):
 
             other_relevant_parties = product.other_relevant_parties
             if other_relevant_parties:
-                other_relevant_parties = other_relevant_parties.replace("\n", "; ")
+                other_relevant_parties = other_relevant_parties.replace(
+                    "\n", "; "
+                )
             else:
                 other_relevant_parties = "No information provided"
 

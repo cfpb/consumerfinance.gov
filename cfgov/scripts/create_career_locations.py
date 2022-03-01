@@ -124,7 +124,9 @@ REGIONAL_CITIES = {
 
 def create_regions():
     for r in REGIONS:
-        region_obj, cr = Region.objects.get_or_create(abbreviation=r[0], name=r[1])
+        region_obj, cr = Region.objects.get_or_create(
+            abbreviation=r[0], name=r[1]
+        )
         region_obj.save()
 
 

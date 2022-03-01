@@ -14,7 +14,10 @@ class FrontendConverter:
         self._submenu_selected = False
         self._link_selected = False
 
-        return [self._get_menu_item(submenu.value) for submenu in self.menu.submenus]
+        return [
+            self._get_menu_item(submenu.value)
+            for submenu in self.menu.submenus
+        ]
 
     def _get_menu_item(self, submenu):
         # Normally we want to mark menu links as selected if the current
@@ -55,7 +58,9 @@ class FrontendConverter:
             ):
                 url = link.get("url")
                 if url:
-                    url_no_query_string = REGEX_REMOVE_QUERY_STRING.sub("", url)
+                    url_no_query_string = REGEX_REMOVE_QUERY_STRING.sub(
+                        "", url
+                    )
 
                     if self.request.path.startswith(url_no_query_string):
                         menu_item["selected"] = True
@@ -76,7 +81,8 @@ class FrontendConverter:
                     "title": heading or last_heading,
                     "title_hidden": not heading,
                     "nav_items": [
-                        self.make_link(link) for link in (column.get("links") or [])
+                        self.make_link(link)
+                        for link in (column.get("links") or [])
                     ],
                 }
             )

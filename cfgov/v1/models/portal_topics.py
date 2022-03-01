@@ -31,9 +31,9 @@ class PortalTopic(ClusterableModel):
     )
 
     def featured_answers(self, language):
-        return self.answerpage_set.filter(language=language, featured=True).order_by(
-            "featured_rank"
-        )
+        return self.answerpage_set.filter(
+            language=language, featured=True
+        ).order_by("featured_rank")
 
     def title(self, language="en"):
         if language == "es":
@@ -64,7 +64,9 @@ class PortalCategory(ClusterableModel):
     tags = TaggableManager(
         through=PortalCategoryTag,
         blank=True,
-        help_text=("Tags are used to identify and organize portal see-all pages."),
+        help_text=(
+            "Tags are used to identify and organize portal see-all pages."
+        ),
     )
 
     class Meta:

@@ -8,7 +8,9 @@ class GithubAlert:
         self.token = credentials.get("token", os.environ.get("GITHUB_TOKEN"))
         self.url = credentials.get("url", os.environ.get("GITHUB_URL"))
         self.user = credentials.get("user", os.environ.get("GITHUB_USER"))
-        self.repo_name = credentials.get("repo_name", os.environ.get("GITHUB_REPO"))
+        self.repo_name = credentials.get(
+            "repo_name", os.environ.get("GITHUB_REPO")
+        )
 
     def repo(self):
         gh = github3.login(

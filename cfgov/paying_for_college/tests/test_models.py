@@ -105,7 +105,9 @@ class SchoolModelsTest(TestCase):
         )
 
     def create_alias(self, alias, school):
-        return Alias.objects.create(alias=alias, is_primary=True, institution=school)
+        return Alias.objects.create(
+            alias=alias, is_primary=True, institution=school
+        )
 
     def create_contact(self):
         return Contact.objects.create(
@@ -194,7 +196,9 @@ class SchoolModelsTest(TestCase):
         school.contact = contact
         notification = self.create_notification(school)
         notification.notify_school()
-        self.assertTrue(mock_requests.called_with, unicode_endpoint.encode("utf-8"))
+        self.assertTrue(
+            mock_requests.called_with, unicode_endpoint.encode("utf-8")
+        )
 
     def test_constant_models(self):
         cr = ConstantRate(name="cr test", slug="crTest", value="0.1")

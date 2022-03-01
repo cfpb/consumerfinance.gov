@@ -52,7 +52,9 @@ FACET_MAP = (
 FACET_LIST = [tup[0] for tup in FACET_MAP]
 FACET_DICT = {"aggs": {}}
 for facet in FACET_LIST:
-    FACET_DICT["aggs"].update({"{}_terms".format(facet): {"terms": {"field": facet}}})
+    FACET_DICT["aggs"].update(
+        {"{}_terms".format(facet): {"terms": {"field": facet}}}
+    )
 ALWAYS_EXPANDED = {"building_block", "topic", "school_subject"}
 SEARCH_FIELDS = [
     "text",
@@ -120,7 +122,9 @@ class ActivityIndexPage(CFGOVPage):
         card_setup = self.activity_setups.ordered_cards
         total_activities = len(card_setup)
         search_query = request.GET.get("q", "")
-        facet_called = any([request.GET.get(facet, "") for facet in FACET_LIST])
+        facet_called = any(
+            [request.GET.get(facet, "") for facet in FACET_LIST]
+        )
         # If there's no query or facet request, we can return cached setups:
         if not search_query and not facet_called:
             payload = {
@@ -161,7 +165,9 @@ class ActivityIndexPage(CFGOVPage):
         for facet, facet_config in FACET_MAP:
             if facet in request.GET and request.GET.get(facet):
                 facet_ids = [
-                    value for value in request.GET.getlist(facet) if value.isdigit()
+                    value
+                    for value in request.GET.getlist(facet)
+                    if value.isdigit()
                 ]
                 selected_facets[facet] = facet_ids
         for facet, pks in selected_facets.items():
@@ -175,10 +181,14 @@ class ActivityIndexPage(CFGOVPage):
         results = [card_setup[str(hit.id)] for hit in response[:total_results]]
         facet_response = facet_search.execute()
         facet_counts = {
-            facet: getattr(facet_response.aggregations, f"{facet}_terms").buckets
+            facet: getattr(
+                facet_response.aggregations, f"{facet}_terms"
+            ).buckets
             for facet in FACET_LIST
         }
-        all_facets = parse_dsl_facets(all_facets, facet_counts, selected_facets)
+        all_facets = parse_dsl_facets(
+            all_facets, facet_counts, selected_facets
+        )
         payload = {
             "search_query": search_query,
             "results": results,
@@ -261,7 +271,10 @@ def parse_dsl_facets(all_facets, facet_counts, selected_facets):
                     all_facets[facet][i].update(flat_facet)
             for flat_facet in all_facets[facet]:
                 flat_id = flat_facet["id"]
-                if flat_id not in returned_facet_ids and flat_id not in selections:
+                if (
+                    flat_id not in returned_facet_ids
+                    and flat_id not in selections
+                ):
                     all_facets[facet].remove(flat_facet)
     return all_facets
 
@@ -336,7 +349,9 @@ class ActivitySetUp(models.Model):
             "jump_start_coalition",
             "council_for_economic_education",
         )
-        base_query = ActivityPage.objects.filter(live=True).order_by("-date", "title")
+        base_query = ActivityPage.objects.filter(live=True).order_by(
+            "-date", "title"
+        )
         self.card_order = [a.pk for a in base_query]
         for activity in base_query:
             payload = {
@@ -344,7 +359,9 @@ class ActivitySetUp(models.Model):
                 "title": activity.title,
                 "date": activity.date.strftime("%b %d, %Y"),
                 "date_attr": activity.date.strftime("%Y-%m-%d"),
-                "ideal_for": ", ".join([gl.title for gl in activity.grade_level.all()]),
+                "ideal_for": ", ".join(
+                    [gl.title for gl in activity.grade_level.all()]
+                ),
                 "summary": activity.summary,
                 "topic": activity.get_topics_list(),
                 "activity_duration": activity.activity_duration.title,

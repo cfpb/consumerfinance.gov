@@ -26,7 +26,9 @@ class TestEmailPopupTag(TestCase):
         response = self.render("/no/pages/configured/")
         self.assertEqual(response, "")
 
-    @override_settings(EMAIL_POPUP_URLS={"foo": ["/page/configured/"]}, FLAGS={})
+    @override_settings(
+        EMAIL_POPUP_URLS={"foo": ["/page/configured/"]}, FLAGS={}
+    )
     def test_popup_configured_but_no_flag(self):
         response = self.render("/page/configured/")
         self.assertEqual(response, "")

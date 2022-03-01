@@ -61,7 +61,9 @@ def update_job_pages():
     for page in JobListingPage.objects.all():
         for link in page.usajobs_application_links.all():
             if link.applicant_type and link.applicant_type.applicant_type:
-                current_applicant_type = link.applicant_type.applicant_type.lower()
+                current_applicant_type = (
+                    link.applicant_type.applicant_type.lower()
+                )
                 for a in new_applicant_types:
                     if a.lower() in current_applicant_type:
                         link.applicant_type = applicant_type_dict[a]
@@ -84,7 +86,9 @@ def update_job_pages():
                     pk=link["applicant_type"]
                 ).first()
                 if applicant_type and applicant_type.applicant_type:
-                    current_applicant_type = applicant_type.applicant_type.lower()
+                    current_applicant_type = (
+                        applicant_type.applicant_type.lower()
+                    )
                     for s in service_types:
                         if s in current_applicant_type:
                             content["service_type"] = service_type_dict[s].pk

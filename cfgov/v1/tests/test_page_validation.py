@@ -51,7 +51,8 @@ class TestConvertHttpImageLinks(TestCase):
 
     def test_multiple_links_with_one_not_supported(self):
         html = (
-            '<img src="http://some.url/img.png">' '<img src="http://other.url/img.png">'
+            '<img src="http://some.url/img.png">'
+            '<img src="http://other.url/img.png">'
         )
         url_mappings = [("http://some.url/", "https://some.url/")]
         with self.assertRaises(ValueError):

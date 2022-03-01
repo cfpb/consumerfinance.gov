@@ -18,7 +18,9 @@ from v1.util.ref import get_category_children
 
 class EventArchivePageTestCase(TestCase):
     def test_get_form_class(self):
-        self.assertEqual(EventArchivePage.get_form_class(), EventArchiveFilterForm)
+        self.assertEqual(
+            EventArchivePage.get_form_class(), EventArchiveFilterForm
+        )
 
 
 class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
@@ -52,7 +54,9 @@ class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
         page = AbstractFilterPage(title="test", slug="test")
         parent.add_child(instance=page)
 
-        category = CFGOVPageCategory.objects.create(name=category_name, page=page)
+        category = CFGOVPageCategory.objects.create(
+            name=category_name, page=page
+        )
         page.categories.add(category)
         self.rebuild_elasticsearch_index("v1", stdout=StringIO())
 

@@ -34,7 +34,9 @@ class ImportMegaMenuTests(TestCase):
         stdout = StringIO()
 
         call_command("import_mega_menu", "en", filename=stdin, stdout=stdout)
-        self.assertEqual(stdout.getvalue(), "Created mega menu for language en.\n")
+        self.assertEqual(
+            stdout.getvalue(), "Created mega menu for language en.\n"
+        )
 
         menu = Menu.objects.get(language="en")
         self.assertSequenceEqual(menu.submenus.raw_data, submenus)

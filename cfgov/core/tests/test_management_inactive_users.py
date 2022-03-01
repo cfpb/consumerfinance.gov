@@ -59,7 +59,9 @@ class InactiveUsersTestCase(TestCase):
         )
 
         # This user has never logged in, joined today.
-        self.user_5 = User.objects.create(username="user_5", email="user_5@test.test")
+        self.user_5 = User.objects.create(
+            username="user_5", email="user_5@test.test"
+        )
 
         # This user last logged on 61 days ago, will be warned.
         self.user_6 = User.objects.create(
@@ -84,7 +86,9 @@ class InactiveUsersTestCase(TestCase):
         return self.stdout.getvalue()
 
     def test_format_inactive_users_last_login(self):
-        short_date = date_format(self.user_1.last_login, "SHORT_DATETIME_FORMAT")
+        short_date = date_format(
+            self.user_1.last_login, "SHORT_DATETIME_FORMAT"
+        )
         self.assertEqual(
             Command().format_inactive_users([self.user_1]),
             "\tuser_1: {}\n".format(short_date),
@@ -133,7 +137,9 @@ class InactiveUsersTestCase(TestCase):
         list of users"""
 
         mail.outbox = []
-        call_command("inactive_users", emails=["test@example.com"], stdout=self.stdout)
+        call_command(
+            "inactive_users", emails=["test@example.com"], stdout=self.stdout
+        )
         # Outbox will have one system-owner email
         self.assertEqual(len(mail.outbox), 1)
 
@@ -166,7 +172,9 @@ class InactiveUsersTestCase(TestCase):
         list of users"""
 
         mail.outbox = []
-        call_command("inactive_users", "--deactivate-users", stdout=self.stdout)
+        call_command(
+            "inactive_users", "--deactivate-users", stdout=self.stdout
+        )
         # Outbox will have three inactive user emails
         self.assertEqual(len(mail.outbox), 3)
 
@@ -189,7 +197,9 @@ class InactiveUsersTestCase(TestCase):
         list of users"""
 
         mail.outbox = []
-        call_command("inactive_users", "--deactivate-users", stdout=self.stdout)
+        call_command(
+            "inactive_users", "--deactivate-users", stdout=self.stdout
+        )
 
         # Test that users were actually deactivated
         # May need to re-fetch users

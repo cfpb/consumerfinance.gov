@@ -23,7 +23,9 @@ def _get_inactive_users(days_back):
         date_joined__lt=pivot_date,
     )
     for user in inactive_users:
-        revisions = PageRevision.objects.filter(user=user).order_by("-created_at")
+        revisions = PageRevision.objects.filter(user=user).order_by(
+            "-created_at"
+        )
         if revisions and revisions.first().created_at >= pivot_date:
             inactive_users = inactive_users.exclude(pk=user.pk)
     return inactive_users
@@ -83,7 +85,8 @@ class Command(BaseCommand):
             # Notify specified emails (e.g. system admins)
             if len(emails) > 0:
                 self.stdout.write(
-                    "Sending inactive user list to " "{}\n".format(",".join(emails))
+                    "Sending inactive user list to "
+                    "{}\n".format(",".join(emails))
                 )
                 self.send_email(emails, period, inactive_users)
 
@@ -96,7 +99,9 @@ class Command(BaseCommand):
                 # Deactivate and notify inactive users
                 self.stdout.write(
                     "Deactivating and emailing {} users who "
-                    "have been inactive for {} days".format(len(inactive_users), period)
+                    "have been inactive for {} days".format(
+                        len(inactive_users), period
+                    )
                 )
 
         if warn_users_flag_set:
@@ -119,7 +124,9 @@ class Command(BaseCommand):
         inactive_users_str = ""
         for user in inactive_users:
             if user.last_login is not None:
-                last_login = date_format(user.last_login, "SHORT_DATETIME_FORMAT")
+                last_login = date_format(
+                    user.last_login, "SHORT_DATETIME_FORMAT"
+                )
             else:
                 last_login = "never"
 

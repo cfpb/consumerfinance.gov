@@ -23,7 +23,8 @@ class ConferenceRegistrationQuerySet(models.QuerySet):
     def in_person(self):
         return filter(
             lambda a: (
-                a.details.get("attendee_type") == ConferenceRegistration.IN_PERSON
+                a.details.get("attendee_type")
+                == ConferenceRegistration.IN_PERSON
             ),
             self,
         )
@@ -31,7 +32,8 @@ class ConferenceRegistrationQuerySet(models.QuerySet):
     def virtual(self):
         return filter(
             lambda a: (
-                a.details.get("attendee_type") == ConferenceRegistration.VIRTUAL
+                a.details.get("attendee_type")
+                == ConferenceRegistration.VIRTUAL
             ),
             self,
         )
@@ -53,7 +55,9 @@ class MortgageDataConstant(models.Model):
     """Constant values that Research can change via the admin."""
 
     name = models.CharField(max_length=255)
-    slug = models.CharField(max_length=255, blank=True, help_text="OPTIONAL SLUG")
+    slug = models.CharField(
+        max_length=255, blank=True, help_text="OPTIONAL SLUG"
+    )
     value = models.IntegerField(null=True, blank=True)
     date_value = models.DateField(
         null=True,
@@ -115,7 +119,9 @@ class State(models.Model):
         blank=True,
         help_text="FIPS list of counties in the state that are not in an MSA",
     )
-    msas = models.JSONField(blank=True, help_text="FIPS list of MSAs in the state")
+    msas = models.JSONField(
+        blank=True, help_text="FIPS list of MSAs in the state"
+    )
     non_msa_valid = models.BooleanField(default=False)
 
     def __str__(self):
@@ -191,7 +197,9 @@ class County(models.Model):
 
     fips = models.CharField(max_length=6, blank=True, db_index=True)
     name = models.CharField(max_length=128, blank=True)
-    state = models.ForeignKey(State, blank=True, null=True, on_delete=models.SET_NULL)
+    state = models.ForeignKey(
+        State, blank=True, null=True, on_delete=models.SET_NULL
+    )
     valid = models.BooleanField()
 
     def validate(self):
@@ -385,9 +393,9 @@ class MortgagePerformancePage(BrowsePage):
         meta["thru_month"] = thru_date.strftime("%Y-%m")
         meta["thru_month_formatted"] = thru_date.strftime("%B&nbsp;%Y")
         meta["from_month_formatted"] = from_date.strftime("%B&nbsp;%Y")
-        meta["pub_date_formatted"] = meta.get("download_files")[meta["thru_month"]][
-            "pub_date"
-        ]
+        meta["pub_date_formatted"] = meta.get("download_files")[
+            meta["thru_month"]
+        ]["pub_date"]
         download_dates = sorted(meta["download_files"].keys(), reverse=True)
         meta["archive_dates"] = download_dates[1:]
         return meta
@@ -396,7 +404,9 @@ class MortgagePerformancePage(BrowsePage):
         context = super().get_context(request, *args, **kwargs)
         context.update(self.get_mortgage_meta())
         if "30-89" in self.url:
-            context.update({"delinquency": "percent_30_60", "time_frame": "30-89"})
+            context.update(
+                {"delinquency": "percent_30_60", "time_frame": "30-89"}
+            )
         elif "90" in self.url:
             context.update({"delinquency": "percent_90", "time_frame": "90"})
         return context

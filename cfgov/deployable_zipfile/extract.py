@@ -90,7 +90,9 @@ if __name__ == "__main__":  # pragma: no cover
     )
 
     parser.add_argument("zipfile_filename", nargs="?")
-    parser.add_argument("-d", "--destination", dest="extract_location", required=True)
+    parser.add_argument(
+        "-d", "--destination", dest="extract_location", required=True
+    )
 
     args = parser.parse_args()
 

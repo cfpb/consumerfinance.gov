@@ -55,7 +55,9 @@ class TextIntroduction(blocks.StructBlock):
         if cleaned.get("eyebrow") and not cleaned.get("heading"):
             raise StructBlockValidationError(
                 block_errors={
-                    "heading": ErrorList(["Required if a pre-heading is entered."])
+                    "heading": ErrorList(
+                        ["Required if a pre-heading is entered."]
+                    )
                 }
             )
 
@@ -228,7 +230,9 @@ class ContactEmail(blocks.StructBlock):
                 ("url", blocks.EmailBlock(label="Email address")),
                 (
                     "text",
-                    blocks.CharBlock(required=False, label="Link text (optional)"),
+                    blocks.CharBlock(
+                        required=False, label="Link text (optional)"
+                    ),
                 ),
             ]
         )
@@ -240,7 +244,9 @@ class ContactEmail(blocks.StructBlock):
         if not cleaned.get("emails"):
             raise StructBlockValidationError(
                 block_errors={
-                    "heading": ErrorList(["At least one email address is required."])
+                    "heading": ErrorList(
+                        ["At least one email address is required."]
+                    )
                 }
             )
 
@@ -467,7 +473,8 @@ class SocialMedia(blocks.StructBlock):
     blurb = blocks.CharBlock(
         required=False,
         default="Look what I found on the CFPB's site!",
-        help_text="Sets the tweet text, email subject line, " "and LinkedIn post text.",
+        help_text="Sets the tweet text, email subject line, "
+        "and LinkedIn post text.",
     )
 
     twitter_text = blocks.CharBlock(

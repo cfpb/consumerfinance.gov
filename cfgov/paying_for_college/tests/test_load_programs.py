@@ -179,12 +179,17 @@ class TestLoadPrograms(django.test.TestCase):
         self.assertEqual(data, [{"a": "d", "b": "e", "c": "\u201c"}])
 
     @patch(
-        "paying_for_college.disclosures.scripts" ".load_programs.clean_number_as_string"
+        "paying_for_college.disclosures.scripts"
+        ".load_programs.clean_number_as_string"
     )
     @patch(
-        "paying_for_college.disclosures.scripts." "load_programs.clean_string_as_string"
+        "paying_for_college.disclosures.scripts."
+        "load_programs.clean_string_as_string"
     )
-    @patch("paying_for_college.disclosures.scripts." "load_programs.standardize_rate")
+    @patch(
+        "paying_for_college.disclosures.scripts."
+        "load_programs.standardize_rate"
+    )
     def test_clean(self, mock_standardize, mock_string, mock_number):
         mock_number.return_value = "NUMBER"
         mock_string.return_value = "STRING"
@@ -217,10 +222,12 @@ class TestLoadPrograms(django.test.TestCase):
     )
     def test_load(self, mock_get_or_create_program, mock_clean, mock_read_in):
         accreditor = (
-            "Accrediting Council for Independent Colleges " "and Schools (ACICS) - Test"
+            "Accrediting Council for Independent Colleges "
+            "and Schools (ACICS) - Test"
         )
         jpr_note = (
-            "The rate reflects employment status " "as of November 1, 2014 - Test"
+            "The rate reflects employment status "
+            "as of November 1, 2014 - Test"
         )
         program_name = "Occupational Therapy Assistant - 981 - Test"
         mock_read_in.return_value = [

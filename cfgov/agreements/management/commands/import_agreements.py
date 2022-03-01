@@ -23,7 +23,9 @@ def validate_no_empty_folders(zipfile, pdf_list):
     Check that there are no empty folders in the agreement zip file.
     If there are, raise a CommandError.
     """
-    all_folders = set([Path(name) for name in zipfile.namelist() if name.endswith("/")])
+    all_folders = set(
+        [Path(name) for name in zipfile.namelist() if name.endswith("/")]
+    )
     pdf_folders = set([Path(pdf_path).parent for pdf_path in pdf_list])
 
     # Ensure folders at higher levels of the directory structure
@@ -48,7 +50,10 @@ class Command(BaseCommand):
     imports credit card agreement data from provided zip file.
     """
 
-    help = "Upload agreements data from new Quarterly Agreement " "zip file at --path"
+    help = (
+        "Upload agreements data from new Quarterly Agreement "
+        "zip file at --path"
+    )
 
     def add_arguments(self, parser):
         parser.add_argument(

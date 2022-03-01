@@ -14,7 +14,9 @@ from wagtail.core.models import Site
 # Javascript side in error-messages-config.js
 
 ERROR_MESSAGES = {
-    "CHECKBOX_ERRORS": {"required": 'Please select at least one of the "%s" options.'},
+    "CHECKBOX_ERRORS": {
+        "required": 'Please select at least one of the "%s" options.'
+    },
     "DATE_ERRORS": {
         "invalid": "You have entered an invalid date.",
     },
@@ -87,7 +89,9 @@ def get_secondary_nav_items(request, current_page):
         if page.id == sibling.id:
             visible_children = list(
                 filter(
-                    lambda c: (instanceOfBrowseOrFilterablePages(c) and (c.live)),
+                    lambda c: (
+                        instanceOfBrowseOrFilterablePages(c) and (c.live)
+                    ),
                     sibling.get_children().specific(),
                 )
             )
@@ -122,7 +126,9 @@ def get_secondary_nav_items(request, current_page):
     )
     if current_page.relative_url(site).startswith(journey_urls):
         for item in nav_items:
-            item["url"] = item["url"].replace("owning-a-home", "owning-a-home/process")
+            item["url"] = item["url"].replace(
+                "owning-a-home", "owning-a-home/process"
+            )
             for child in item["children"]:
                 child["url"] = child["url"].replace(
                     "owning-a-home", "owning-a-home/process"
@@ -205,7 +211,9 @@ def extended_strftime(dt, format):
 def validate_social_sharing_image(image):
     """Raises a validation error if the image is too large or too small."""
     if image and (image.width > 4096 or image.height > 4096):
-        raise ValidationError("Social sharing image must be less than 4096w x 4096h")
+        raise ValidationError(
+            "Social sharing image must be less than 4096w x 4096h"
+        )
 
 
 def get_page_from_path(path, root=None):

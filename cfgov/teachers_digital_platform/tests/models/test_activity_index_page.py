@@ -53,7 +53,9 @@ class ActivityIndexPageTests(WagtailPageTests):
         self.assertCanNotCreateAt(ActivityPage, HomePage)
 
     def test_activity_page_parent_pages(self):
-        self.assertAllowedParentPageTypes(ActivityPage, {ActivityIndexPage, HomePage})
+        self.assertAllowedParentPageTypes(
+            ActivityPage, {ActivityIndexPage, HomePage}
+        )
 
     def test_can_create_activity_index_page(self):
         root_page = HomePage.objects.first()
@@ -136,7 +138,9 @@ class ActivitySetUpTests(TestCase):
         self.activity_page.save()
 
     def test_setup_str(self):
-        self.assertEqual(ActivitySetUp().__str__(), "Cached activity facets and cards")
+        self.assertEqual(
+            ActivitySetUp().__str__(), "Cached activity facets and cards"
+        )
 
     def test_facet_setup_creation(self):
         """get_activity_setup should ensure existence of a setup object."""
@@ -185,7 +189,9 @@ class ActivitySetUpTests(TestCase):
             "council_for_economic_education": [{"key": "1", "doc_count": 14}],
         }
         selected_facets = {"topic": ["1", "2", "14"], "school_subject": ["1"]}
-        new_all_facets = parse_dsl_facets(all_facets, facet_response, selected_facets)
+        new_all_facets = parse_dsl_facets(
+            all_facets, facet_response, selected_facets
+        )
         new_topic_count = len(new_all_facets["topic"])
         new_subject_count = len(new_all_facets["school_subject"])
         self.assertNotEqual(original_topic_count, new_topic_count)
@@ -195,7 +201,9 @@ class ActivitySetUpTests(TestCase):
         """Search with no query or faceting should not need Elasticsearch."""
         response = self.client.get(self.search_page.url)
         self.assertEqual(response.status_code, 200)
-        self.assertIn(self.activity_page.title, response.content.decode("utf8"))
+        self.assertIn(
+            self.activity_page.title, response.content.decode("utf8")
+        )
 
     @mock.patch.object(ActivityPageDocument, "search")
     def test_search_page_renders_with_query_parameter(self, mock_search):
@@ -216,14 +224,20 @@ class ActivitySetUpTests(TestCase):
         mock_facet_response = mock.Mock()
         mock_facet_response.aggregations = mock.Mock()
         mock_facet_response.aggregations.buckets = mock.Mock(
-            return_value=iter({"topic": [{"key": "1"}, {"key": "2"}, {"key": "3"}]})
+            return_value=iter(
+                {"topic": [{"key": "1"}, {"key": "2"}, {"key": "3"}]}
+            )
         )
         mock_search().sort().query().count.return_value = 1
-        mock_search().sort().query().__getitem__().execute.return_value = [mock_hit]
+        mock_search().sort().query().__getitem__().execute.return_value = [
+            mock_hit
+        ]
         mock_search().sort().query().update_from_dict().__getitem__().execute.return_value = (
             mock_facet_response
         )
-        response = self.client.get(f"{self.search_page.url}?topic=1&topic=2&topic=3")
+        response = self.client.get(
+            f"{self.search_page.url}?topic=1&topic=2&topic=3"
+        )
         self.assertEqual(response.status_code, 200)
         self.assertIn("topic=1", response.content.decode("utf8"))
 
@@ -340,7 +354,8 @@ class TestActivityIndexPageSearch(TestCase):
         actual_topics_list = activity_page.get_topics_list(None)
         # Assert
         self.assertTrue(
-            "Save and Invest (Saving for short-term goals)" in actual_topics_list
+            "Save and Invest (Saving for short-term goals)"
+            in actual_topics_list
         )  # noqa: B950
 
     def create_activity_detail_page(self, title="title", slug="slug"):

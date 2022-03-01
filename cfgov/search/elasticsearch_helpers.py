@@ -77,7 +77,9 @@ def get_synonyms():
         return []
 
 
-synonym_filter = token_filter("synonym_filter", "synonym", synonyms=get_synonyms())
+synonym_filter = token_filter(
+    "synonym_filter", "synonym", synonyms=get_synonyms()
+)
 
 synonym_analyzer = analyzer(
     "synonym_analyzer",

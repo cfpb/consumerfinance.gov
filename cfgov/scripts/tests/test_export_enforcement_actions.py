@@ -36,7 +36,9 @@ class TestExportEnforcementActions(TestCase):
         )
         save_new_page(self.test_no_data_page, root=self.actions_page)
 
-        self.test_wrong_page = EnforcementActionPage(title="Wrong Test Page", live=True)
+        self.test_wrong_page = EnforcementActionPage(
+            title="Wrong Test Page", live=True
+        )
         save_new_page(self.test_wrong_page, root=self.enforcement_page)
 
     def test_assemble_output(self):

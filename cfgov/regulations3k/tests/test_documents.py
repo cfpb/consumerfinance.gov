@@ -19,8 +19,12 @@ class SectionParagraphDocumentTest(TestCase):
             title="Test Title",
             short_name="short name",
         )
-        version = EffectiveVersion(authority="authority", source="Source", part=part)
-        subpart = Subpart(label="Subpart Label", title="Subpart Title", version=version)
+        version = EffectiveVersion(
+            authority="authority", source="Source", part=part
+        )
+        subpart = Subpart(
+            label="Subpart Label", title="Subpart Title", version=version
+        )
         section = Section(
             label="Section Label",
             title="Section Title",

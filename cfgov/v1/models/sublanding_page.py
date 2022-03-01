@@ -72,7 +72,9 @@ class SublandingPage(CFGOVPage):
                         ),
                         (
                             "icon",
-                            blocks.CharBlock(help_text="Enter icon class name."),
+                            blocks.CharBlock(
+                                help_text="Enter icon class name."
+                            ),
                         ),
                         (
                             "heading",
@@ -82,7 +84,9 @@ class SublandingPage(CFGOVPage):
                         ),
                         (
                             "body",
-                            blocks.TextBlock(required=False, label="Introduction Body"),
+                            blocks.TextBlock(
+                                required=False, label="Introduction Body"
+                            ),
                         ),
                     ],
                     heading="Breakout Image",
@@ -139,4 +143,6 @@ class SublandingPage(CFGOVPage):
                 )
             )
 
-        return sorted(posts_list, key=lambda p: p.date_published, reverse=True)[:limit]
+        return sorted(
+            posts_list, key=lambda p: p.date_published, reverse=True
+        )[:limit]

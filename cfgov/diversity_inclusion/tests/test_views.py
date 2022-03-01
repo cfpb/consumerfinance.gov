@@ -47,5 +47,9 @@ class TestGetAssessmentForm(TestCase):
             mail.outbox[0].subject,
             "Diversity assessment submission from Institution Name",
         )
-        self.assertEqual(mail.outbox[0].to, ["OMWI_diversityassessments@cfpb.gov"])
-        self.assertRedirects(response, reverse("diversity_inclusion:form_submitted"))
+        self.assertEqual(
+            mail.outbox[0].to, ["OMWI_diversityassessments@cfpb.gov"]
+        )
+        self.assertRedirects(
+            response, reverse("diversity_inclusion:form_submitted")
+        )

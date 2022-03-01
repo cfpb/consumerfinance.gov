@@ -228,6 +228,8 @@ def migrate_page_types_and_fields(apps, page_types_and_fields, mapper):
         for page in page_model.objects.all():
             migrate_stream_field(page, field_name, block_path, mapper)
 
-            revisions = revision_model.objects.filter(page=page).order_by("-id")
+            revisions = revision_model.objects.filter(page=page).order_by(
+                "-id"
+            )
             for revision in revisions:
                 migrate_stream_field(revision, field_name, block_path, mapper)

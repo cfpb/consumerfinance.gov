@@ -74,7 +74,9 @@ def check_static(url):
     failures = []
     response = requests.get(url)
     if not response.ok:
-        return "\x1B[91mFAIL! Request to {} failed ({})".format(url, response.reason)
+        return "\x1B[91mFAIL! Request to {} failed ({})".format(
+            url, response.reason
+        )
     static_links = extract_static_links(response.content)
     for link in static_links:
         count += 1
@@ -82,7 +84,9 @@ def check_static(url):
             final_url = "{}{}".format(CFPB_BASE, link)
         else:
             final_url = "{}{}".format(url, link)
-        code = requests.get(final_url, headers={"referer": CFPB_BASE}).status_code
+        code = requests.get(
+            final_url, headers={"referer": CFPB_BASE}
+        ).status_code
         if code == 200:
             logger.info("checked {}".format(final_url))
         else:
@@ -91,15 +95,21 @@ def check_static(url):
         if len(failures) > 2:  # allow for font failures when testing locally
             return (
                 "\x1B[91mFAIL! {} static links out of {} failed "
-                "for {}: {}\x1B[0m\n".format(len(failures), count, url, failures)
+                "for {}: {}\x1B[0m\n".format(
+                    len(failures), count, url, failures
+                )
             )
         else:
             return (
                 "\x1B[91mPartial failure: {} static links out of {} failed"
-                " for {}: {}\x1B[0m\n".format(len(failures), count, url, failures)
+                " for {}: {}\x1B[0m\n".format(
+                    len(failures), count, url, failures
+                )
             )
     else:
-        return "\x1B[32m{} static links passed " "for {}\x1B[0m\n".format(count, url)
+        return "\x1B[32m{} static links passed " "for {}\x1B[0m\n".format(
+            count, url
+        )
 
 
 if __name__ == "__main__":  # pragma: nocover

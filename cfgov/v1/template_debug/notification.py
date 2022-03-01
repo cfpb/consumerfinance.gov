@@ -11,7 +11,8 @@ notification_defaults = {
 
 
 message_with_html_tags = (
-    'Visit <a href="https://www.consumerfinance.gov/">' "www.consumerfinance.gov</a>."
+    'Visit <a href="https://www.consumerfinance.gov/">'
+    "www.consumerfinance.gov</a>."
 )
 
 

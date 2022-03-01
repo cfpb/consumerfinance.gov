@@ -41,7 +41,8 @@ class Category(models.Model):
     intro_es = RichTextField(
         blank=True,
         help_text=(
-            "Do not use this field. " "It is not currently displayed on the front end."
+            "Do not use this field. "
+            "It is not currently displayed on the front end."
         ),
     )
     category_image = models.ForeignKey(
@@ -74,7 +75,9 @@ class Category(models.Model):
 
 
 class Answer(models.Model):
-    last_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    last_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, blank=True, null=True
+    )
     question = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

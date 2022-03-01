@@ -27,7 +27,9 @@ def run():
 
     # If specified in the environment, create or activate superuser.
     if admin_username and admin_password:
-        logger.info("Configuring superuser, username: {}".format(admin_username))
+        logger.info(
+            "Configuring superuser, username: {}".format(admin_username)
+        )
 
         User.objects.update_or_create(
             username=admin_username,
@@ -65,7 +67,10 @@ def run():
 
     # If needed, configure the default Wagtail Site to point to the proper
     # home page with the desired port.
-    if default_site.root_page_id != home_page.id or default_site.port != http_port:
+    if (
+        default_site.root_page_id != home_page.id
+        or default_site.port != http_port
+    ):
         default_site.root_page_id = home_page.id
         default_site.port = http_port
         default_site.save()

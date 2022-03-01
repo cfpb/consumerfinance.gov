@@ -37,12 +37,16 @@ class RelatedPostsTestCase(TestCase):
         # posts we can have
 
         self.blog_parent = CFGOVPage(slug="blog", title="blog parent")
-        self.newsroom_parent = CFGOVPage(slug="newsroom", title="newsroom parent")
+        self.newsroom_parent = CFGOVPage(
+            slug="newsroom", title="newsroom parent"
+        )
         self.events_parent = CFGOVPage(slug="events", title="events parent")
         self.archive_events_parent = CFGOVPage(
             slug="archive-past-events", title="archive past events parent"
         )
-        self.activity_log = CFGOVPage(slug="activity-log", title="activity log")
+        self.activity_log = CFGOVPage(
+            slug="activity-log", title="activity log"
+        )
 
         helpers.save_new_page(self.blog_parent)
         helpers.save_new_page(self.newsroom_parent)
@@ -57,13 +61,17 @@ class RelatedPostsTestCase(TestCase):
             title="blog child 1", date_published=dt.date(2016, 9, 1)
         )
         self.blog_child1.tags.add("tag 1")
-        self.blog_child1.categories.add(CFGOVPageCategory(name="info-for-consumers"))
+        self.blog_child1.categories.add(
+            CFGOVPageCategory(name="info-for-consumers")
+        )
 
         self.blog_child2 = BlogPage(
             title="blog child 2", date_published=dt.date(2016, 9, 2)
         )
         self.blog_child2.tags.add("tag 2")
-        self.blog_child2.categories.add(CFGOVPageCategory(name="policy_compliance"))
+        self.blog_child2.categories.add(
+            CFGOVPageCategory(name="policy_compliance")
+        )
 
         self.newsroom_child1 = NewsroomPage(
             title="newsroom child 1", date_published=dt.date(2016, 9, 2)
@@ -140,7 +148,9 @@ class RelatedPostsTestCase(TestCase):
         self.assertEqual(len(related_posts["Blog"]), 2)
         self.assertEqual(related_posts["Blog"][0], self.blog_child2)
         self.assertEqual(related_posts["Blog"][1], self.blog_child1)
-        self.assertEqual(related_posts["Blog"][0].content_type.model, "blogpage")
+        self.assertEqual(
+            related_posts["Blog"][0].content_type.model, "blogpage"
+        )
         self.assertNotIn("Newsroom", related_posts)
         self.assertNotIn("Events", related_posts)
 
@@ -266,7 +276,9 @@ class RelatedPostsTestCase(TestCase):
         self.assertIn("Events", related_posts)
         self.assertEqual(len(related_posts), 1)
         self.assertEqual(related_posts["Events"][0], self.events_child1)
-        self.assertEqual(related_posts["Events"][0].content_type.model, "eventpage")
+        self.assertEqual(
+            related_posts["Events"][0].content_type.model, "eventpage"
+        )
         self.assertNotIn("Blog", related_posts)
         self.assertNotIn("Newsroom", related_posts)
 

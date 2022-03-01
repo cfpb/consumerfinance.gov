@@ -88,7 +88,9 @@ class UnpublishClosedJobsTestCase(TestCase):
         helpers.publish_page(child=self.page)
 
     @patch("requests.get", return_value=api_not_found_job_response())
-    def test_job_listing_page_still_live_if_job_not_closed_on_api(self, request_mock):
+    def test_job_listing_page_still_live_if_job_not_closed_on_api(
+        self, request_mock
+    ):
         self.assertTrue(self.page.live)
 
         control_number = "1"
@@ -107,7 +109,9 @@ class UnpublishClosedJobsTestCase(TestCase):
         self.assertFalse(self.page.expired)
 
     @patch("requests.get", return_value=open_usajobs_page())
-    def test_job_listing_page_still_live_if_job_page_not_closed(self, request_mock):
+    def test_job_listing_page_still_live_if_job_page_not_closed(
+        self, request_mock
+    ):
         self.assertTrue(self.page.live)
 
         control_number = "1"
@@ -122,7 +126,9 @@ class UnpublishClosedJobsTestCase(TestCase):
         self.assertFalse(self.page.expired)
 
     @patch("requests.get", return_value=closed_usajobs_page())
-    def test_job_listing_page_unpublished_if_job_closed_on_usajobs(self, request_mock):
+    def test_job_listing_page_unpublished_if_job_closed_on_usajobs(
+        self, request_mock
+    ):
         self.assertTrue(self.page.live)
         control_number = "1"
         job_link = create_job_link(control_number, self.status_type, self.page)
@@ -149,7 +155,9 @@ class UnpublishClosedJobsTestCase(TestCase):
         self.assertTrue(self.page.expired)
 
     @patch("requests.get")
-    def test_job_listing_page_live_if_only_1_of_2_links_closed(self, request_mock):
+    def test_job_listing_page_live_if_only_1_of_2_links_closed(
+        self, request_mock
+    ):
         self.assertTrue(self.page.live)
 
         create_job_link("1", self.status_type, self.page)
@@ -164,7 +172,9 @@ class UnpublishClosedJobsTestCase(TestCase):
         self.assertFalse(self.page.expired)
 
     @patch("requests.get", return_value=closed_usajobs_page())
-    def test_job_listing_page_unpublished_if_all_links_closed(self, request_mock):
+    def test_job_listing_page_unpublished_if_all_links_closed(
+        self, request_mock
+    ):
         self.assertTrue(self.page.live)
 
         create_job_link("1", self.status_type, self.page)

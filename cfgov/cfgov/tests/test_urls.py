@@ -50,7 +50,9 @@ def extract_regexes_from_urlpatterns(urlpatterns, base=""):
             patterns = p.url_patterns
             if django.VERSION < (2, 0):
                 regexes.extend(
-                    extract_regexes_from_urlpatterns(patterns, base + p.regex.pattern)
+                    extract_regexes_from_urlpatterns(
+                        patterns, base + p.regex.pattern
+                    )
                 )
             else:
                 regexes.extend(
@@ -103,7 +105,9 @@ def dummy_external_site_view(request):
 
 urlpatterns = [
     # Needed for rendering of base template that calls reverse("external-site")
-    re_path(r"^external-site/$", dummy_external_site_view, name="external-site"),
+    re_path(
+        r"^external-site/$", dummy_external_site_view, name="external-site"
+    ),
     urls.flagged_wagtail_only_view("MY_TEST_FLAG", r"^$"),
 ]
 

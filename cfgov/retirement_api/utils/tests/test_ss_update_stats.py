@@ -18,7 +18,9 @@ from retirement_api.utils.ss_update_stats import (
 )
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+)
 sys.path.append(BASE_DIR)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
@@ -69,7 +71,9 @@ class UpdateSsStatsTests(TestCase):
             reader = csv.reader(f)
             data = [row for row in reader]
         for sample in self.sample_life_results:
-            self.assertEqual(data[sample], self.sample_life_results[sample].split(","))
+            self.assertEqual(
+                data[sample], self.sample_life_results[sample].split(",")
+            )
 
     # def output_json(filepath, headings, bs_rows):
     def test_output_json(self):
@@ -125,7 +129,9 @@ class UpdateSsStatsTests(TestCase):
     @mock.patch("retirement_api.utils.ss_update_stats.update_life")
     @mock.patch("retirement_api.utils.ss_update_stats.update_cola")
     @mock.patch("retirement_api.utils.ss_update_stats.update_awi_series")
-    @mock.patch("retirement_api.utils.ss_update_stats.update_example_reduction")
+    @mock.patch(
+        "retirement_api.utils.ss_update_stats.update_example_reduction"
+    )
     def test_harvest_all(
         self,
         mock_update_example,
@@ -142,7 +148,9 @@ class UpdateSsStatsTests(TestCase):
     @mock.patch("retirement_api.utils.ss_update_stats.output_csv")
     @mock.patch("retirement_api.utils.ss_update_stats.output_json")
     @mock.patch("retirement_api.utils.ss_update_stats.make_soup")
-    def test_example_reduction(self, mock_soup, mock_output_json, mock_output_csv):
+    def test_example_reduction(
+        self, mock_soup, mock_output_json, mock_output_csv
+    ):
         # arrange
         with open(self.earlyretire_page, "r") as f:
             mockpage = f.read()
@@ -195,7 +203,9 @@ class UpdateSsStatsTests(TestCase):
     @mock.patch("retirement_api.utils.ss_update_stats.output_csv")
     @mock.patch("retirement_api.utils.ss_update_stats.output_json")
     @mock.patch("retirement_api.utils.ss_update_stats.make_soup")
-    def test_update_awi_series(self, mock_soup, mock_output_json, mock_output_csv):
+    def test_update_awi_series(
+        self, mock_soup, mock_output_json, mock_output_csv
+    ):
         # arrange
         with open(self.awi_page, "r") as f:
             mockpage = f.read()

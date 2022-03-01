@@ -66,7 +66,9 @@ class TestCopyableModelAdmin(TestCase, WagtailTestUtils):
         self.assertEqual(response.status_code, 302)
 
         self.assertEqual(EffectiveVersion.objects.count(), num_versions + 1)
-        new_effective_version = EffectiveVersion.objects.all().order_by("-id").first()
+        new_effective_version = (
+            EffectiveVersion.objects.all().order_by("-id").first()
+        )
 
         self.assertEqual(new_effective_version.subparts.count(), 1)
         new_subpart = new_effective_version.subparts.first()

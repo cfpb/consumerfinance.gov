@@ -34,7 +34,9 @@ def convert_http_image_match(match, url_mappings):
         if http_image_url.startswith(from_prefix):
             return re.sub(from_prefix, to_prefix, match.group(0))
 
-    raise ValueError("cannot convert HTTP image link {}".format(http_image_url))
+    raise ValueError(
+        "cannot convert HTTP image link {}".format(http_image_url)
+    )
 
 
 class PageValidator:
@@ -57,7 +59,9 @@ class PageValidator:
             if corrected != block.value:
                 diffset = ndiff(block.value.split("\n"), corrected.split("\n"))
                 diffsets.append(
-                    d for d in diffset if d.startswith("- ") or d.startswith("+ ")
+                    d
+                    for d in diffset
+                    if d.startswith("- ") or d.startswith("+ ")
                 )
 
                 block.value = corrected

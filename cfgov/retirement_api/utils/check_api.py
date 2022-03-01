@@ -102,7 +102,9 @@ def run(base):
         end = time.time()
         signal.alarm(0)
         collector.status = "TIMEDOUT"
-        collector.error = "SSA request exceeded {0} sec".format(timeout_seconds)
+        collector.error = "SSA request exceeded {0} sec".format(
+            timeout_seconds
+        )
     else:
         if test_request.status_code != 200:
             signal.alarm(0)

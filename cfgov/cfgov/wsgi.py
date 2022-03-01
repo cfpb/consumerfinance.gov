@@ -13,7 +13,9 @@ import os
 def initialize_new_relic():
     if os.getenv("NEW_RELIC_LICENSE_KEY"):
         new_relic_config_file = os.path.abspath(
-            os.path.join(os.path.dirname(os.path.realpath(__file__)), "../newrelic.ini")
+            os.path.join(
+                os.path.dirname(os.path.realpath(__file__)), "../newrelic.ini"
+            )
         )
 
         import newrelic.agent

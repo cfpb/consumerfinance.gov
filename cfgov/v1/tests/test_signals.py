@@ -98,7 +98,9 @@ class FilterableListInvalidationTestCase(TestCase):
         self.root_page.add_child(instance=self.category_filterable_list_page)
         self.category_filterable_list_page.save()
         self.newsroom_page = NewsroomPage(title="News event")
-        self.category_filterable_list_page.add_child(instance=self.newsroom_page)
+        self.category_filterable_list_page.add_child(
+            instance=self.newsroom_page
+        )
         self.newsroom_page.save()
 
         self.blog_page = BlogPage(title="test blog")
@@ -139,7 +141,9 @@ class FilterableListInvalidationTestCase(TestCase):
 
     @mock.patch("django.core.cache.cache")
     def test_invalidate_filterable_list_caches_does_nothing(self, mock_cache):
-        invalidate_filterable_list_caches(None, instance=self.non_filterable_page)
+        invalidate_filterable_list_caches(
+            None, instance=self.non_filterable_page
+        )
         mock_cache.delete.assert_not_called()
 
 
@@ -193,7 +197,9 @@ class RefreshActivitiesTestCase(DjangoTestCase):
         self.activity_page2.save_revision().publish()
         self.assertEqual(len(ActivitySetUp.objects.first().card_setup), 2)
         for page in [self.activity_page, self.activity_page2]:
-            self.assertIn(str(page.pk), ActivitySetUp.objects.first().card_setup)
+            self.assertIn(
+                str(page.pk), ActivitySetUp.objects.first().card_setup
+            )
 
     def test_upublish(self):
         self.activity_page.save_revision().publish()

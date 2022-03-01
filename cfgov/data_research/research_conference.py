@@ -26,7 +26,8 @@ def get_conference_details_from_page(page_id):
         for block in page.content.raw_data:
             if "conference_registration_form" == block["type"]:
                 return {
-                    key: block["value"][key] for key in ("govdelivery_code", "capacity")
+                    key: block["value"][key]
+                    for key in ("govdelivery_code", "capacity")
                 }
 
     raise RuntimeError("no registration form found on %s" % page)
@@ -76,7 +77,8 @@ class ConferenceExporter:
 
     def _registrant_to_row(self, registrant):
         return [registrant.created] + [
-            self._prep_value(registrant.details.get(key)) for key in self.fields[1:]
+            self._prep_value(registrant.details.get(key))
+            for key in self.fields[1:]
         ]
 
     def _prep_value(self, value):

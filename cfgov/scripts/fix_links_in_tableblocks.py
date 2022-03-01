@@ -18,13 +18,17 @@ def get_tableblocks(page):
         data = page.specific.content.raw_data
     except Exception:
         return []
-    tableblocks = list(filter(lambda item: item["type"] == "table_block", data))
+    tableblocks = list(
+        filter(lambda item: item["type"] == "table_block", data)
+    )
     full_width_text_items = list(
         filter(lambda item: item["type"] == "full_width_text", data)
     )
     for item in full_width_text_items:
         sub_items = item["value"]
-        for sub_item in list(filter(lambda i: i["type"] == "table_block", sub_items)):
+        for sub_item in list(
+            filter(lambda i: i["type"] == "table_block", sub_items)
+        ):
             tableblocks.append(sub_item)
     return tableblocks
 

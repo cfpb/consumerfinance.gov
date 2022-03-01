@@ -32,7 +32,9 @@ urlpatterns = [
         ),
         name="pfc-technote",
     ),
-    re_path(r"^api/search-schools.json", school_autocomplete, name="school_search"),
+    re_path(
+        r"^api/search-schools.json", school_autocomplete, name="school_search"
+    ),
     re_path(
         r"^api/program/([^/]+)/$",
         ProgramRepresentation.as_view(),

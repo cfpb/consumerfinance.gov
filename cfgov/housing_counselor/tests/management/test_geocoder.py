@@ -96,7 +96,9 @@ class TestBulkZipCodeGeocoder(TestCase):
         self.assertEqual(list(BulkZipCodeGeocoder.chunker([], 3)), [])
 
     def test_chunker_less_than_one_chunk(self):
-        self.assertEqual(list(BulkZipCodeGeocoder.chunker([1, 2], 3)), [(1, 2)])
+        self.assertEqual(
+            list(BulkZipCodeGeocoder.chunker([1, 2], 3)), [(1, 2)]
+        )
 
     def test_chunker_elements_fit_exactly_into_chunks(self):
         self.assertEqual(

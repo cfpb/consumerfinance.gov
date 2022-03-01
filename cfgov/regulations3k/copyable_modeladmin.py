@@ -54,7 +54,9 @@ class CopyView(TreeViewParentMixin, InstanceSpecificView):
     @method_decorator(login_required)
     def dispatch(self, request, *arg, **kwargs):
         new_instance = self.model_admin.copy(self.instance)
-        return redirect(self.url_helper.get_action_url("edit", quote(new_instance.pk)))
+        return redirect(
+            self.url_helper.get_action_url("edit", quote(new_instance.pk))
+        )
 
 
 class CopyableModelAdmin(TreeModelAdmin):
@@ -67,12 +69,14 @@ class CopyableModelAdmin(TreeModelAdmin):
         )  # pragma: no cover
 
     def copy_view(self, request, instance_pk):
-        return self.copy_view_class.as_view(model_admin=self, instance_pk=instance_pk)(
-            request
-        )
+        return self.copy_view_class.as_view(
+            model_admin=self, instance_pk=instance_pk
+        )(request)
 
     def get_admin_urls_for_registration(self, parent=None):
-        urls = super(CopyableModelAdmin, self).get_admin_urls_for_registration()
+        urls = super(
+            CopyableModelAdmin, self
+        ).get_admin_urls_for_registration()
 
         # Add the copy URL
         urls = urls + (

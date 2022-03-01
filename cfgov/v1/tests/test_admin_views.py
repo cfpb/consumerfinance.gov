@@ -80,7 +80,9 @@ class TestCDNManagementView(TestCase):
     def test_requires_authentication(self):
         response = self.client.get(reverse("manage-cdn"))
         expected_url = "/admin/login/?next=/admin/cdn/"
-        self.assertRedirects(response, expected_url, fetch_redirect_response=False)
+        self.assertRedirects(
+            response, expected_url, fetch_redirect_response=False
+        )
 
     def test_form_hiding(self):
         # users without 'Can add cdn history' can view the page,
@@ -111,7 +113,9 @@ class TestCDNManagementView(TestCase):
     @mock.patch(f"{cache_path}.purge_batch")
     def test_submission_with_url_cloudfront(self, mock_purge_batch):
         self.client.login(username="cdn", password="password")
-        self.client.post(reverse("manage-cdn"), {"url": "http://files.fake.gov"})
+        self.client.post(
+            reverse("manage-cdn"), {"url": "http://files.fake.gov"}
+        )
         mock_purge_batch.assert_called_with(["http://files.fake.gov"])
 
     @mock.patch("v1.models.caching.AkamaiBackend.purge_all")
@@ -122,7 +126,9 @@ class TestCDNManagementView(TestCase):
 
     def test_bad_submission(self):
         self.client.login(username="cdn", password="password")
-        response = self.client.post(reverse("manage-cdn"), {"url": "not a URL"})
+        response = self.client.post(
+            reverse("manage-cdn"), {"url": "not a URL"}
+        )
         self.assertContains(response, "url: Enter a valid URL.")
 
 

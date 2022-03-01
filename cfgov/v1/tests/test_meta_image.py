@@ -21,7 +21,9 @@ class TestMetaImage(TestCase):
 
     def test_meta_image_only_social_sharing(self):
         """Meta image uses social sharing image if provided"""
-        page = baker.prepare(CFGOVPage, social_sharing_image=self.social_sharing_image)
+        page = baker.prepare(
+            CFGOVPage, social_sharing_image=self.social_sharing_image
+        )
         self.assertEqual(page.meta_image, page.social_sharing_image)
 
     def test_meta_image_only_preview(self):

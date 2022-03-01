@@ -8,7 +8,9 @@ from django.utils.translation import gettext_lazy as _
 
 
 EXTERNAL_URL_ALLOWLIST_RAW = getattr(settings, "EXTERNAL_URL_ALLOWLIST", ())
-EXTERNAL_URL_ALLOWLIST = [re.compile(regex) for regex in EXTERNAL_URL_ALLOWLIST_RAW]
+EXTERNAL_URL_ALLOWLIST = [
+    re.compile(regex) for regex in EXTERNAL_URL_ALLOWLIST_RAW
+]
 
 
 class ExternalURLForm(forms.Form):
@@ -24,7 +26,9 @@ class ExternalURLForm(forms.Form):
             return
 
         url = cleaned_data["ext_url"]
-        matched_whitelist = any((regex.match(url) for regex in EXTERNAL_URL_ALLOWLIST))
+        matched_whitelist = any(
+            (regex.match(url) for regex in EXTERNAL_URL_ALLOWLIST)
+        )
 
         if matched_whitelist:
             cleaned_data["validated_url"] = url
@@ -34,7 +38,9 @@ class ExternalURLForm(forms.Form):
             try:
                 cleaned_data["validated_url"] = signer.unsign(signed_url)
             except BadSignature:
-                raise ValidationError(_("Signature validation failed"), code="invalid")
+                raise ValidationError(
+                    _("Signature validation failed"), code="invalid"
+                )
         else:
             raise ValidationError(
                 _(

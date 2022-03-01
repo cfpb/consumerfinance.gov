@@ -24,7 +24,9 @@ def distance_in_miles(lat1_radians, lng1_radians, lat2_radians, lng2_radians):
     earth_radius_in_miles = 3959
 
     return earth_radius_in_miles * acos(
-        cos(lat1_radians) * cos(lat2_radians) * cos(lng2_radians - lng1_radians)
+        cos(lat1_radians)
+        * cos(lat2_radians)
+        * cos(lng2_radians - lng1_radians)
         + sin(lat1_radians) * sin(lat2_radians)
     )
 

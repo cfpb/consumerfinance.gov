@@ -50,4 +50,6 @@ class RegulationsExtensionTestCase(TestCase):
     def test_regs_hide_on_mobile(self):
         test_str = "Regulation C"
         result = regs_hide_on_mobile(test_str)
-        self.assertEqual(result, 'Reg<span class="u-hide-on-mobile">ulation</span> C')
+        self.assertEqual(
+            result, 'Reg<span class="u-hide-on-mobile">ulation</span> C'
+        )

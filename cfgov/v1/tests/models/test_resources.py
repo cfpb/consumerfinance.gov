@@ -39,7 +39,9 @@ class TestFilterByTags(TestCase):
         self.assertSequenceEqual(Resource.objects.filter_by_tags(["tagC"]), [])
 
     def test_item_with_multiple_tags_is_returned(self):
-        self.assertIn(self.snippet2, Resource.objects.filter_by_tags(["tagA", "tagB"]))
+        self.assertIn(
+            self.snippet2, Resource.objects.filter_by_tags(["tagA", "tagB"])
+        )
 
     def test_item_with_only_some_of_selected_tags_is_not_returned(self):
         self.assertNotIn(

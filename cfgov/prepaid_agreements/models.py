@@ -11,7 +11,9 @@ class PrepaidProduct(models.Model):
     issuer_name = models.CharField(max_length=255, blank=True)
     prepaid_type = models.CharField(max_length=255, blank=True, null=True)
     program_manager = models.CharField(max_length=255, blank=True, null=True)
-    program_manager_exists = models.CharField(max_length=255, blank=True, null=True)
+    program_manager_exists = models.CharField(
+        max_length=255, blank=True, null=True
+    )
     other_relevant_parties = models.TextField(blank=True, null=True)
     status = models.TextField(blank=True, null=True)
     withdrawal_date = models.DateField(blank=True, null=True)

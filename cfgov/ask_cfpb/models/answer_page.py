@@ -150,7 +150,8 @@ class AnswerPage(CFGOVPage):
     featured = models.BooleanField(
         default=False,
         help_text=(
-            "Check to make this one of two featured answers " "on the landing page."
+            "Check to make this one of two featured answers "
+            "on the landing page."
         ),
     )
     featured_rank = models.IntegerField(blank=True, null=True)
@@ -158,7 +159,8 @@ class AnswerPage(CFGOVPage):
         "Category",
         blank=True,
         help_text=(
-            "Categorize this answer. " "Avoid putting into more than one category."
+            "Categorize this answer. "
+            "Avoid putting into more than one category."
         ),
     )
     search_tags = models.CharField(
@@ -213,7 +215,9 @@ class AnswerPage(CFGOVPage):
         [
             (
                 "notification",
-                molecules.Notification(help_text="Include only one notification."),
+                molecules.Notification(
+                    help_text="Include only one notification."
+                ),
             )
         ],
         blank=True,
@@ -245,9 +249,13 @@ class AnswerPage(CFGOVPage):
         ),
         MultiFieldPanel(
             [
-                FieldPanel("portal_topic", widget=forms.CheckboxSelectMultiple),
+                FieldPanel(
+                    "portal_topic", widget=forms.CheckboxSelectMultiple
+                ),
                 FieldPanel("primary_portal_topic"),
-                FieldPanel("portal_category", widget=forms.CheckboxSelectMultiple),
+                FieldPanel(
+                    "portal_category", widget=forms.CheckboxSelectMultiple
+                ),
             ],
             heading="Portal tags",
             classname="collapsible",
@@ -258,7 +266,11 @@ class AnswerPage(CFGOVPage):
             classname="collapsible",
         ),
         MultiFieldPanel(
-            [AutocompletePanel("redirect_to_page", target_model="ask_cfpb.AnswerPage")],
+            [
+                AutocompletePanel(
+                    "redirect_to_page", target_model="ask_cfpb.AnswerPage"
+                )
+            ],
             heading="Redirect to another answer",
             classname="collapsible",
         ),

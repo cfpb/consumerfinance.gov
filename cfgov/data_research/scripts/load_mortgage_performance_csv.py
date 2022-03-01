@@ -37,8 +37,12 @@ def load_values(return_fips=False):
 
     counter = 0
     source_url = "{}/{}".format(S3_SOURCE_BUCKET, S3_SOURCE_FILE)
-    starting_date = MortgageDataConstant.objects.get(name="starting_date").date_value
-    through_date = MortgageDataConstant.objects.get(name="through_date").date_value
+    starting_date = MortgageDataConstant.objects.get(
+        name="starting_date"
+    ).date_value
+    through_date = MortgageDataConstant.objects.get(
+        name="through_date"
+    ).date_value
     raw_data = read_in_s3_csv(source_url)
     # raw_data is a generator delivering data dicts, each representing a row
     if return_fips is True:
@@ -47,7 +51,9 @@ def load_values(return_fips=False):
     logger.info("Deleting CountyMortgageData objects.")
     CountyMortgageData.objects.all().delete()
     logger.info(
-        "CountyMorgtgageData count is now {}".format(CountyMortgageData.objects.count())
+        "CountyMorgtgageData count is now {}".format(
+            CountyMortgageData.objects.count()
+        )
     )
     for row in raw_data:
         sampling_date = parser.parse(row.get("date")).date()

@@ -17,7 +17,9 @@ class RecordsAccessFormTests(TestCase):
     minimum_files = MultiValueDict({"supporting_documentation": []})
 
     def test_valid_data_has_no_errors(self):
-        form = RecordsAccessForm(data=self.minimum_data, files=self.minimum_files)
+        form = RecordsAccessForm(
+            data=self.minimum_data, files=self.minimum_files
+        )
         self.assertTrue(form.is_valid())
 
     def test_mailing_address_required(self):
@@ -46,7 +48,9 @@ class RecordsAccessFormTests(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_email_subject(self):
-        form = RecordsAccessForm(data=self.minimum_data, files=self.minimum_files)
+        form = RecordsAccessForm(
+            data=self.minimum_data, files=self.minimum_files
+        )
         form.is_valid()  # so form.cleaned_data will be populated
         self.assertEqual(
             form.format_subject(),
@@ -101,7 +105,9 @@ class DisclosureConsentFormTests(TestCase):
     minimum_files = MultiValueDict({"supporting_documentation": []})
 
     def test_valid_data_has_no_errors(self):
-        form = DisclosureConsentForm(data=self.minimum_data, files=self.minimum_files)
+        form = DisclosureConsentForm(
+            data=self.minimum_data, files=self.minimum_files
+        )
         self.assertTrue(form.is_valid())
 
     def test_disclosure_consent_form_requires_additional_fields(self):
@@ -115,11 +121,15 @@ class DisclosureConsentFormTests(TestCase):
             "full_name": "Example Q. Person",
             "consent": True,
         }
-        form = DisclosureConsentForm(data=invalid_data, files=self.minimum_files)
+        form = DisclosureConsentForm(
+            data=invalid_data, files=self.minimum_files
+        )
         self.assertFalse(form.is_valid())
 
     def test_email_subject(self):
-        form = DisclosureConsentForm(data=self.minimum_data, files=self.minimum_files)
+        form = DisclosureConsentForm(
+            data=self.minimum_data, files=self.minimum_files
+        )
         form.is_valid()  # so form.cleaned_data will be populated
         self.assertEqual(
             form.format_subject(),
@@ -127,8 +137,12 @@ class DisclosureConsentFormTests(TestCase):
         )
 
     def test_subject_line_truncates_long_names(self):
-        self.minimum_data.update({"requestor_name": "Rufus Xavier Sarsaparilla"})
-        form = DisclosureConsentForm(data=self.minimum_data, files=self.minimum_files)
+        self.minimum_data.update(
+            {"requestor_name": "Rufus Xavier Sarsaparilla"}
+        )
+        form = DisclosureConsentForm(
+            data=self.minimum_data, files=self.minimum_files
+        )
         form.is_valid()  # so form.cleaned_data will be populated
         self.assertEqual(
             form.format_subject(),

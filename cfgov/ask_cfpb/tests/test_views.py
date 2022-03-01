@@ -153,7 +153,9 @@ class AnswerPagePreviewTestCase(TestCase):
 
 class AnswerViewTestCase(TestCase):
     def test_annotate_links(self):
-        mock_answer = '<p>Answer with a <a href="http://fake.com">fake link.</a></p>'
+        mock_answer = (
+            '<p>Answer with a <a href="http://fake.com">fake link.</a></p>'
+        )
         (annotated_answer, links) = annotate_links(mock_answer)
         self.assertEqual(
             annotated_answer,

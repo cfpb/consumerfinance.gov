@@ -16,7 +16,8 @@ def load_redirects(redirects_filename, from_index, to_index):
         dataset = Dataset().load(f, format="csv" if csv else None)
 
     return [
-        tuple(row[i].rstrip("*") for i in (from_index, to_index)) for row in dataset
+        tuple(row[i].rstrip("*") for i in (from_index, to_index))
+        for row in dataset
     ]
 
 
@@ -59,7 +60,9 @@ def validate_redirects(redirects, baseurl):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("redirects_filename", help="Redirects filename (XLSX format)")
+    parser.add_argument(
+        "redirects_filename", help="Redirects filename (XLSX format)"
+    )
     parser.add_argument(
         "baseurl",
         help="Base URL, defaults to %(default)s",
@@ -81,6 +84,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    redirects = load_redirects(args.redirects_filename, args.from_index, args.to_index)
+    redirects = load_redirects(
+        args.redirects_filename, args.from_index, args.to_index
+    )
 
     validate_redirects(redirects, args.baseurl)

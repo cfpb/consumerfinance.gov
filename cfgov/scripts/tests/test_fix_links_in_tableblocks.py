@@ -49,7 +49,9 @@ class TestFixLinksInTableblocks(TestCase):
             },
         }
         self.root = Site.objects.get(is_default_site=True).root_page
-        self.doc_page = DocumentDetailPage(title="Document", live=True, slug="document")
+        self.doc_page = DocumentDetailPage(
+            title="Document", live=True, slug="document"
+        )
         self.event_page = EventPage(
             title="Event",
             live=True,

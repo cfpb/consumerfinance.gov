@@ -94,13 +94,17 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         search = SectionParagraphDocument.search().query(
             "match", text={"query": search_query, "operator": "AND"}
         )
-        search = search.highlight("text", pre_tags="<strong>", post_tags="</strong>")
+        search = search.highlight(
+            "text", pre_tags="<strong>", post_tags="</strong>"
+        )
         total_results = search.count()
         all_regs = [
             {
                 "short_name": reg.short_name,
                 "id": reg.part_number,
-                "num_results": search.filter("term", part=reg.part_number).count(),
+                "num_results": search.filter(
+                    "term", part=reg.part_number
+                ).count(),
                 "selected": reg.part_number in regs,
             }
             for reg in all_regs
@@ -117,7 +121,9 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 snippet = Markup("".join(hit.meta.highlight.text[0]))
             except TypeError as e:
                 logger.warning(
-                    "Query string {} produced a TypeError: {}".format(search_query, e)
+                    "Query string {} produced a TypeError: {}".format(
+                        search_query, e
+                    )
                 )
                 continue
             hit_payload = {
@@ -224,7 +230,9 @@ class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
         return JsonResponse(response.json())
 
 
-class RegulationPage(ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
+class RegulationPage(
+    ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage
+):
     """A routable page for serving an eregulations page by Section ID."""
 
     objects = PageManager()
@@ -335,7 +343,9 @@ class RegulationPage(ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFG
             {
                 "regulation": self.regulation,
                 "current_version": self.get_effective_version(request),
-                "breadcrumb_items": self.get_breadcrumbs(request, *args, **kwargs),
+                "breadcrumb_items": self.get_breadcrumbs(
+                    request, *args, **kwargs
+                ),
                 "search_url": (
                     self.get_parent().url
                     + "search-regulations/results/?regs="
@@ -355,7 +365,9 @@ class RegulationPage(ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFG
                     "href": self.url
                     + self.reverse_subpage(
                         "index",
-                        kwargs={k: v for k, v in kwargs.items() if k == "date_str"},
+                        kwargs={
+                            k: v for k, v in kwargs.items() if k == "date_str"
+                        },
                     ),
                     "title": str(section.subpart.version.part),
                 },
@@ -379,7 +391,9 @@ class RegulationPage(ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFG
         if section is not None:
             yield urljoin(version_url, section.label) + "/"
         else:
-            sections = self.get_section_query(effective_version=effective_version)
+            sections = self.get_section_query(
+                effective_version=effective_version
+            )
             yield version_url
             yield versions_url
             for section in sections.all():
@@ -389,7 +403,9 @@ class RegulationPage(ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFG
         template = get_template("regulations3k/inline_interps.html")
 
         # Extract the title from the raw regdown
-        section_title_match = re.search(r"#+\s?(?P<section_title>.*)\s", raw_contents)
+        section_title_match = re.search(
+            r"#+\s?(?P<section_title>.*)\s", raw_contents
+        )
         if section_title_match is not None:
             context.update({"section_title": section_title_match.group(1)})
             span = section_title_match.span()
@@ -404,8 +420,12 @@ class RegulationPage(ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFG
     def index_route(self, request, date_str=None):
         request.is_preview = getattr(request, "is_preview", False)
 
-        effective_version = self.get_effective_version(request, date_str=date_str)
-        section_query = self.get_section_query(effective_version=effective_version)
+        effective_version = self.get_effective_version(
+            request, date_str=date_str
+        )
+        section_query = self.get_section_query(
+            effective_version=effective_version
+        )
         sections = list(section_query.all())
 
         context = self.get_context(request)
@@ -442,7 +462,9 @@ class RegulationPage(ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFG
                 "sections": self.get_section_query(effective_version=v).all(),
                 "draft": v.draft,
             }
-            for v in self.get_versions_query(request).order_by("-effective_date")
+            for v in self.get_versions_query(request).order_by(
+                "-effective_date"
+            )
         ]
 
         context.update(
@@ -465,8 +487,12 @@ class RegulationPage(ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFG
     def section_page(self, request, date_str=None, section_label=None):
         """Render a section of the currently effective regulation"""
 
-        effective_version = self.get_effective_version(request, date_str=date_str)
-        section_query = self.get_section_query(effective_version=effective_version)
+        effective_version = self.get_effective_version(
+            request, date_str=date_str
+        )
+        section_query = self.get_section_query(
+            effective_version=effective_version
+        )
 
         next_version = (
             self.get_versions_query(request)
@@ -489,11 +515,15 @@ class RegulationPage(ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFG
                     permanent=True,
                 )
         except Section.DoesNotExist:
-            return redirect(self.url + self.reverse_subpage("index", kwargs=kwargs))
+            return redirect(
+                self.url + self.reverse_subpage("index", kwargs=kwargs)
+            )
 
         sections = list(section_query.all())
         current_index = sections.index(section)
-        context = self.get_context(request, section, sections=sections, **kwargs)
+        context = self.get_context(
+            request, section, sections=sections, **kwargs
+        )
 
         content = regdown(
             section.contents,
@@ -517,7 +547,9 @@ class RegulationPage(ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFG
                     date_str=date_str,
                 ),
                 "next_section": next_section,
-                "next_url": get_section_url(self, next_section, date_str=date_str),
+                "next_url": get_section_url(
+                    self, next_section, date_str=date_str
+                ),
                 "previous_section": previous_section,
                 "previous_url": get_section_url(
                     self, previous_section, date_str=date_str
@@ -551,7 +583,9 @@ def get_section_url(page, section, date_str=None):
         section_kwargs["date_str"] = date_str
 
     section_kwargs["section_label"] = section.label
-    return (page.url + page.reverse_subpage("section", kwargs=section_kwargs)).lower()
+    return (
+        page.url + page.reverse_subpage("section", kwargs=section_kwargs)
+    ).lower()
 
 
 def get_secondary_nav_items(request, current_page, sections=[], date_str=None):

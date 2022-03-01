@@ -43,7 +43,9 @@ class HmdaHistoricDataPage(LearnPage):
         labels = self.value_or_default(
             HMDA_FIELD_DESC_OPTIONS, params.get("field_descriptions")
         )
-        record_set = self.value_or_default(HMDA_RECORDS_OPTIONS, params.get("records"))
+        record_set = self.value_or_default(
+            HMDA_RECORDS_OPTIONS, params.get("records")
+        )
 
         data = {
             "geo": geo,

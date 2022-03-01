@@ -96,7 +96,8 @@ class InfoUnitGroup(blocks.StructBlock):
         default=False,
         required=False,
         help_text=(
-            "Check this to add a horizontal rule line to top of " "info unit group."
+            "Check this to add a horizontal rule line to top of "
+            "info unit group."
         ),
     )
 
@@ -104,7 +105,9 @@ class InfoUnitGroup(blocks.StructBlock):
         default=False,
         required=False,
         label="Show rule lines between items",
-        help_text=("Check this to show horizontal rule lines between info " "units."),
+        help_text=(
+            "Check this to show horizontal rule lines between info " "units."
+        ),
     )
 
     info_units = blocks.ListBlock(molecules.InfoUnit(), default=list())
@@ -268,9 +271,13 @@ class RelatedPosts(blocks.StructBlock):
         required=False,
         default=True,
         label="Show Heading and Icon?",
-        help_text=("This toggles the heading and " "icon for the related types."),
+        help_text=(
+            "This toggles the heading and " "icon for the related types."
+        ),
     )
-    header_title = blocks.CharBlock(default="Further reading", label="Slug Title")
+    header_title = blocks.CharBlock(
+        default="Further reading", label="Slug Title"
+    )
 
     relate_posts = blocks.BooleanBlock(
         required=False, default=True, label="Blog Posts", editable=False
@@ -278,10 +285,14 @@ class RelatedPosts(blocks.StructBlock):
     relate_newsroom = blocks.BooleanBlock(
         required=False, default=True, label="Newsroom", editable=False
     )
-    relate_events = blocks.BooleanBlock(required=False, default=True, label="Events")
+    relate_events = blocks.BooleanBlock(
+        required=False, default=True, label="Events"
+    )
 
     specific_categories = blocks.ListBlock(
-        blocks.ChoiceBlock(choices=ref.related_posts_categories, required=False),
+        blocks.ChoiceBlock(
+            choices=ref.related_posts_categories, required=False
+        ),
         required=False,
     )
 
@@ -335,7 +346,9 @@ class RelatedPosts(blocks.StructBlock):
             """Return pages that share every one of the current page's tags."""
             current_tag_set = set([tag.pk for tag in page_tags])
             return [
-                page for page in queryset if current_tag_set.issubset(tag_set(page))
+                page
+                for page in queryset
+                if current_tag_set.issubset(tag_set(page))
             ]
 
         related_types = []
@@ -527,7 +540,9 @@ class SimpleChart(blocks.StructBlock):
 
     y_axis_label = blocks.CharBlock(required=False, help_text="y-axis label")
 
-    x_axis_label = blocks.CharBlock(required=False, help_text="x-axis label, if needed")
+    x_axis_label = blocks.CharBlock(
+        required=False, help_text="x-axis label, if needed"
+    )
 
     transform = blocks.CharBlock(
         required=False,
@@ -566,7 +581,9 @@ class SimpleChart(blocks.StructBlock):
         required=False, help_text="Custom text for the chart download field"
     )
 
-    notes = blocks.TextBlock(required=False, help_text="General chart information")
+    notes = blocks.TextBlock(
+        required=False, help_text="General chart information"
+    )
 
     class Meta:
         label = "Simple Chart"
@@ -652,7 +669,8 @@ class ExpandableGroup(BaseExpandableGroup):
         default=False,
         required=False,
         help_text=(
-            "Check this to add a horizontal rule line to top of " "expandable group."
+            "Check this to add a horizontal rule line to top of "
+            "expandable group."
         ),
     )
 
@@ -1050,7 +1068,9 @@ class FeaturedContentStructValue(blocks.StructValue):
             aria_label = hyperlink.get("aria_label")
 
             if url and text:
-                links.append({"url": url, "text": text, "aria_label": aria_label})
+                links.append(
+                    {"url": url, "text": text, "aria_label": aria_label}
+                )
 
         return links
 
@@ -1060,12 +1080,16 @@ class FeaturedContent(blocks.StructBlock):
     body = blocks.TextBlock(help_text="Line breaks will be ignored.")
 
     post = blocks.PageChooserBlock(required=False)
-    show_post_link = blocks.BooleanBlock(required=False, label="Render post link?")
+    show_post_link = blocks.BooleanBlock(
+        required=False, label="Render post link?"
+    )
     post_link_text = blocks.CharBlock(required=False)
 
     image = atoms.ImageBasic(required=False)
 
-    links = blocks.ListBlock(atoms.Hyperlink(required=False), label="Additional Links")
+    links = blocks.ListBlock(
+        atoms.Hyperlink(required=False), label="Additional Links"
+    )
 
     video = VideoPlayer(required=False)
 
@@ -1125,7 +1149,8 @@ class ChartBlock(blocks.StructBlock):
         default=False,
         required=False,
         help_text=(
-            "Check this to add a horizontal rule line to top of " "chart block."
+            "Check this to add a horizontal rule line to top of "
+            "chart block."
         ),
     )
 
@@ -1172,7 +1197,8 @@ class MortgageChartBlock(blocks.StructBlock):
         default=False,
         required=False,
         help_text=(
-            "Check this to add a horizontal rule line to top of " "chart block."
+            "Check this to add a horizontal rule line to top of "
+            "chart block."
         ),
     )
 

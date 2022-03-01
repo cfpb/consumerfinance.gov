@@ -58,7 +58,9 @@ class FeedbackHandler(Handler):
         if form.is_valid():
             feedback = form.save(commit=False)
             try:
-                feedback.is_helpful = bool(int(self.request.POST.get("is_helpful")))
+                feedback.is_helpful = bool(
+                    int(self.request.POST.get("is_helpful"))
+                )
             except (ValueError, TypeError):
                 pass
 
@@ -103,7 +105,9 @@ class FeedbackHandler(Handler):
                     }
                 )
         else:
-            messages.success(self.request, message=THANKS_MAP[self.page.language])
+            messages.success(
+                self.request, message=THANKS_MAP[self.page.language]
+            )
             return HttpResponseRedirect(self.request.path)
 
     def fail(self, form):

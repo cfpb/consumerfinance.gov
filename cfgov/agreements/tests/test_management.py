@@ -36,7 +36,9 @@ class TestValidations(unittest.TestCase):
 
 class TestDataLoad(TestCase):
     def test_import_no_s3_utf8(self):
-        management.call_command("import_agreements", "--path=" + utf8_zip, verbosity=0)
+        management.call_command(
+            "import_agreements", "--path=" + utf8_zip, verbosity=0
+        )
         self.assertEqual(Issuer.objects.all().count(), 1)
 
     def test_import_2_directory_levels(self):
@@ -49,7 +51,9 @@ class TestDataLoad(TestCase):
     @mock.patch("agreements.management.commands._util.upload_to_s3")
     def test_import_with_s3_calls_print_statement(self, _):
         buf = io.StringIO()
-        management.call_command("import_agreements", "--path=" + utf8_zip, stdout=buf)
+        management.call_command(
+            "import_agreements", "--path=" + utf8_zip, stdout=buf
+        )
         self.assertIn("uploaded", buf.getvalue())
 
 
@@ -65,7 +69,9 @@ class TestManagementUtils(TestCase):
         raw_path = "UTF_agreements/" + expectedName
 
         buf = io.StringIO()
-        agreement = _util.save_agreement(agreements_zip, raw_path, buf, upload=False)
+        agreement = _util.save_agreement(
+            agreements_zip, raw_path, buf, upload=False
+        )
 
         self.assertEqual(agreement.file_name, expectedName)
 

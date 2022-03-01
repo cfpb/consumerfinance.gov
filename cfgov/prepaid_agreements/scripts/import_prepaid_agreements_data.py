@@ -26,7 +26,9 @@ def import_products_data(products_data):
 
         withdrawal_date = item["withdrawal_date"]
         if withdrawal_date:
-            withdrawal_date = datetime.strptime(withdrawal_date, "%m/%d/%Y").date()
+            withdrawal_date = datetime.strptime(
+                withdrawal_date, "%m/%d/%Y"
+            ).date()
 
         PrepaidProduct.objects.update_or_create(
             pk=pk,
@@ -50,11 +52,15 @@ def import_agreements_data(agreements_data):
 
         effective_date = item["effective_date"]
         if effective_date and effective_date != "None":
-            effective_date = datetime.strptime(effective_date, "%m/%d/%Y").date()
+            effective_date = datetime.strptime(
+                effective_date, "%m/%d/%Y"
+            ).date()
         else:
             effective_date = None
 
-        created_time = datetime.strptime(item["created_date"], "%Y-%m-%d %H:%M:%S")
+        created_time = datetime.strptime(
+            item["created_date"], "%Y-%m-%d %H:%M:%S"
+        )
         created_time = created_time.replace(tzinfo=pytz.timezone("EST"))
 
         product_id = item["product_id"].replace("PRODUCT-", "")

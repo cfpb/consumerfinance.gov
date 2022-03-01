@@ -56,7 +56,9 @@ class AnswerPageSearch:
 
     def search(self):
         if not self.base_query:
-            search = AnswerPageDocument.search().filter("term", language=self.language)
+            search = AnswerPageDocument.search().filter(
+                "term", language=self.language
+            )
         else:
             search = self.base_query.filter("term", language=self.language)
         if self.search_term != "":

@@ -66,7 +66,8 @@ class TestMakeAwareDatetime(SimpleTestCase):
 
 class TestExportFeedback(TestCase):
     expected_csv_header = (
-        '"comment","is_helpful","page","referrer","submitted_on","language"' "\r\n"
+        '"comment","is_helpful","page","referrer","submitted_on","language"'
+        "\r\n"
     )
 
     def setUp(self):

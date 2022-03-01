@@ -161,7 +161,9 @@ def form_module_handlers(page, request, context, *args, **kwargs):
                     form_modules[fieldname] = {}
 
                 if not request.method == "POST":
-                    is_submitted = child.block.is_submitted(request, fieldname, index)
+                    is_submitted = child.block.is_submitted(
+                        request, fieldname, index
+                    )
                     module_context = child.block.get_result(
                         page, request, child.value, is_submitted
                     )
@@ -392,7 +394,9 @@ modeladmin_register(SnippetModelAdminGroup)
 @hooks.register("construct_main_menu")
 def hide_snippets_menu_item(request, menu_items):
     menu_items[:] = [
-        item for item in menu_items if item.url != reverse("wagtailsnippets:index")
+        item
+        for item in menu_items
+        if item.url != reverse("wagtailsnippets:index")
     ]
 
 

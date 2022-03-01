@@ -13,14 +13,18 @@ PagePermissions = namedtuple("PagePermissions", ["page", "group_permissions"])
 CollectionPermissions = namedtuple(
     "CollectionPermissions", ["collection", "group_permissions"]
 )
-CTPermissions = namedtuple("CTPermissions", ["content_type", "group_permissions"])
+CTPermissions = namedtuple(
+    "CTPermissions", ["content_type", "group_permissions"]
+)
 
 
 def display_group_roster(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
 
     active_users = group.user_set.filter(is_active=True).order_by("username")
-    inactive_users = group.user_set.filter(is_active=False).order_by("username")
+    inactive_users = group.user_set.filter(is_active=False).order_by(
+        "username"
+    )
     return render(
         request,
         "permissions_viewer/group.html",
@@ -39,14 +43,18 @@ def display_user_permissions(request, user_id):
     page_permissions = []
     groups = list(user.groups.all())
     for page in pages:
-        group_perms = [group.page_permissions.filter(page=page) for group in groups]
+        group_perms = [
+            group.page_permissions.filter(page=page) for group in groups
+        ]
         page_permissions.append(
             PagePermissions(page=page, group_permissions=group_perms)
         )
 
     collection_permissions = []
     collections = list(
-        Collection.objects.filter(group_permissions__group__user=user).distinct()
+        Collection.objects.filter(
+            group_permissions__group__user=user
+        ).distinct()
     )
 
     for collection in collections:
@@ -55,7 +63,9 @@ def display_user_permissions(request, user_id):
             for group in groups
         ]
         collection_permissions.append(
-            CollectionPermissions(collection=collection, group_permissions=group_perms)
+            CollectionPermissions(
+                collection=collection, group_permissions=group_perms
+            )
         )
 
     groups_content_types = (
@@ -66,7 +76,9 @@ def display_user_permissions(request, user_id):
 
     group_ct_permissions = []
     for ct in groups_content_types:
-        group_perms = [group.permissions.filter(content_type=ct) for group in groups]
+        group_perms = [
+            group.permissions.filter(content_type=ct) for group in groups
+        ]
         group_ct_permissions.append(
             CTPermissions(content_type=ct, group_permissions=group_perms)
         )

@@ -12,8 +12,12 @@ class RegulationsList(organisms.ModelBlock):
     model = "regulations3k.RegulationPage"
     ordering = "title"
 
-    heading = blocks.CharBlock(required=False, help_text="Regulations list heading")
-    more_regs_page = blocks.PageChooserBlock(help_text="Link to more regulations")
+    heading = blocks.CharBlock(
+        required=False, help_text="Regulations list heading"
+    )
+    more_regs_page = blocks.PageChooserBlock(
+        help_text="Link to more regulations"
+    )
     more_regs_text = blocks.CharBlock(
         required=False, help_text="Text to show on link to more regulations"
     )

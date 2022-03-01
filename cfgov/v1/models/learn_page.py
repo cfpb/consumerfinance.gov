@@ -43,10 +43,16 @@ class AbstractFilterPage(CFGOVPage):
         blank=True,
     )
     preview_title = models.CharField(max_length=255, null=True, blank=True)
-    preview_subheading = models.CharField(max_length=255, null=True, blank=True)
+    preview_subheading = models.CharField(
+        max_length=255, null=True, blank=True
+    )
     preview_description = RichTextField(null=True, blank=True)
-    secondary_link_url = models.CharField(max_length=500, null=True, blank=True)
-    secondary_link_text = models.CharField(max_length=255, null=True, blank=True)
+    secondary_link_url = models.CharField(
+        max_length=500, null=True, blank=True
+    )
+    secondary_link_text = models.CharField(
+        max_length=255, null=True, blank=True
+    )
     preview_image = models.ForeignKey(
         "v1.CFGOVImage",
         null=True,
@@ -151,7 +157,9 @@ class LearnPage(AbstractFilterPage):
 
     objects = PageManager()
 
-    search_fields = AbstractFilterPage.search_fields + [index.SearchField("content")]
+    search_fields = AbstractFilterPage.search_fields + [
+        index.SearchField("content")
+    ]
 
 
 class DocumentDetailPage(AbstractFilterPage):
@@ -176,7 +184,9 @@ class DocumentDetailPage(AbstractFilterPage):
 
     objects = PageManager()
 
-    search_fields = AbstractFilterPage.search_fields + [index.SearchField("content")]
+    search_fields = AbstractFilterPage.search_fields + [
+        index.SearchField("content")
+    ]
 
 
 class AgendaItemBlock(blocks.StructBlock):
@@ -414,7 +424,9 @@ class EventPage(AbstractFilterPage):
     ]
     # Promotion panels
     promote_panels = [
-        MultiFieldPanel(AbstractFilterPage.promote_panels, "Page configuration"),
+        MultiFieldPanel(
+            AbstractFilterPage.promote_panels, "Page configuration"
+        ),
     ]
     # Tab handler interface
     edit_handler = TabbedInterface(
@@ -423,7 +435,9 @@ class EventPage(AbstractFilterPage):
             ObjectList(venue_panels, heading="Venue Information"),
             ObjectList(agenda_panels, heading="Agenda Information"),
             ObjectList(AbstractFilterPage.sidefoot_panels, heading="Sidebar"),
-            ObjectList(AbstractFilterPage.settings_panels, heading="Configuration"),
+            ObjectList(
+                AbstractFilterPage.settings_panels, heading="Configuration"
+            ),
         ]
     )
 
@@ -451,7 +465,9 @@ class EventPage(AbstractFilterPage):
 
     def location_image_url(self, scale="2", size="276x155", zoom="12"):
         if not self.venue_coords:
-            self.venue_coords = get_venue_coords(self.venue_city, self.venue_state)
+            self.venue_coords = get_venue_coords(
+                self.venue_city, self.venue_state
+            )
         api_url = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static"
         static_map_image_url = "{}/{},{}/{}?access_token={}".format(
             api_url,
@@ -490,7 +506,9 @@ class EventPage(AbstractFilterPage):
         response = super().serve(request, *args, **kwargs)
 
         changes_at = [self.start_dt, self.end_dt, self.live_stream_date]
-        future_changes_at = [at for at in changes_at if at and at > self._cached_now]
+        future_changes_at = [
+            at for at in changes_at if at and at > self._cached_now
+        ]
 
         if future_changes_at:
             response["Expires"] = http_date(min(future_changes_at).timestamp())

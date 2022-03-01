@@ -255,7 +255,9 @@ def calculate_group_percent(group1, group2):
 def compile_school_programs(api_data):
     """Return a school's programs by popularity, and a program count."""
     program_data = {
-        k: v for k, v in api_data.items() if "latest.academics.program_percentage." in k
+        k: v
+        for k, v in api_data.items()
+        if "latest.academics.program_percentage." in k
     }
     program_tuples = sorted(
         [

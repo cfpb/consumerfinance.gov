@@ -16,7 +16,9 @@ class TestDistanceInMiles(TestCase):
         latitude = 0.5
         longitude = 0.3
 
-        self.assertEqual(distance_in_miles(latitude, longitude, latitude, longitude), 0)
+        self.assertEqual(
+            distance_in_miles(latitude, longitude, latitude, longitude), 0
+        )
 
 
 class TestGeneratorCounselorJson(TestCase):

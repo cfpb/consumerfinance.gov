@@ -264,7 +264,9 @@ class ActivityPage(CFGOVPage):
 
     def get_grade_level_ids(self):
         """Get a list of this activity's grade_level ids."""
-        grade_level_ids = [grade_level.id for grade_level in self.grade_level.all()]
+        grade_level_ids = [
+            grade_level.id for grade_level in self.grade_level.all()
+        ]
         return grade_level_ids
 
     def get_related_activities_url(self):
@@ -278,7 +280,9 @@ class ActivityPage(CFGOVPage):
             subtopics = "&topic=" + "&topic=".join(subtopic_ids)
             url += subtopics
         if grade_level_ids:
-            grade_levels = "&grade_level=" + "&grade_level=".join(grade_level_ids)
+            grade_levels = "&grade_level=" + "&grade_level=".join(
+                grade_level_ids
+            )
             url += grade_levels
         return url
 
@@ -307,9 +311,9 @@ class ActivityPage(CFGOVPage):
             # Build root list of topics and recurse their children.
             topic_list = []
             topic_ids = [topic.id for topic in self.topic.all()]
-            ancestors = ActivityTopic.objects.filter(id__in=topic_ids).get_ancestors(
-                True
-            )
+            ancestors = ActivityTopic.objects.filter(
+                id__in=topic_ids
+            ).get_ancestors(True)
             roots = ActivityTopic.objects.filter(parent=None) & ancestors
             for root_topic in roots:
                 topic_list.append(self.get_topics_list(root_topic))

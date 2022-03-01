@@ -94,7 +94,9 @@ class AkamaiBackend(BaseBackend):
         """Request a purge by cache_tags."""
         _url = os.getenv("AKAMAI_FAST_PURGE_URL")
         if not _url:
-            logger.info("Can't purge cache. No value set for 'AKAMAI_FAST_PURGE_URL'")
+            logger.info(
+                "Can't purge cache. No value set for 'AKAMAI_FAST_PURGE_URL'"
+            )
             return
         url = _url.replace("url", "tag")
         resp = requests.post(

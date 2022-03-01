@@ -206,7 +206,9 @@ class SecondaryNavigationJSMixin:
         return js
 
 
-class PortalSearchPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
+class PortalSearchPage(
+    RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage
+):
     """
     A routable page type for Ask CFPB portal search ("see-all") pages.
     """
@@ -251,7 +253,9 @@ class PortalSearchPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage)
         categories = PortalCategory.objects.all()
         sorted_mapping = OrderedDict()
         for category in categories:
-            sorted_mapping.update({slugify(category.title(self.language)): category})
+            sorted_mapping.update(
+                {slugify(category.title(self.language)): category}
+            )
         return sorted_mapping
 
     def results_message(self, count, heading, search_term):
@@ -419,7 +423,9 @@ class AnswerResultsPage(CFGOVPage):
         context["paginator"] = paginator
         context["results"] = results
         context["results_count"] = len(self.answers)
-        context["breadcrumb_items"] = get_ask_breadcrumbs(language=self.language)
+        context["breadcrumb_items"] = get_ask_breadcrumbs(
+            language=self.language
+        )
         context["about_us"] = get_standard_text(self.language, "about_us")
         context["disclaimer"] = get_standard_text(self.language, "disclaimer")
         return context
@@ -437,7 +443,9 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
             activate(self.language)
         else:
             deactivate_all()
-        context = super(TagResultsPage, self).get_context(request, *args, **kwargs)
+        context = super(TagResultsPage, self).get_context(
+            request, *args, **kwargs
+        )
         return context
 
     @route(r"^$")
@@ -504,7 +512,9 @@ class ArticlePage(CFGOVPage):
         blank=False,
     )
     intro = models.TextField(blank=False)
-    inset_heading = models.CharField(max_length=255, blank=True, verbose_name="Heading")
+    inset_heading = models.CharField(
+        max_length=255, blank=True, verbose_name="Heading"
+    )
     sections = StreamField(
         [
             (

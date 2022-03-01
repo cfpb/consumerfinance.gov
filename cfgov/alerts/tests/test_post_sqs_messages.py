@@ -42,7 +42,9 @@ class TestPostSQSMessages(TestCase):
             )
         )
 
-    @patch("alerts.mattermost_alert.MattermostAlert.post", side_effect=Exception)
+    @patch(
+        "alerts.mattermost_alert.MattermostAlert.post", side_effect=Exception
+    )
     @patch("alerts.github_alert.GithubAlert.post")
     def test_mattermost_failure_ignored(self, gh, mm):
         process_sqs_message(

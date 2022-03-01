@@ -373,7 +373,9 @@ class OrganismsTestCase(TestCase):
 class FeaturedContentTests(TestCase):
     def setUp(self):
         self.page = Site.objects.get(is_default_site=True).root_page
-        self.image = CFGOVImage.objects.create(title="test", file=get_test_image_file())
+        self.image = CFGOVImage.objects.create(
+            title="test", file=get_test_image_file()
+        )
 
     def test_value_contains_single_list_of_links(self):
         block = FeaturedContent()
@@ -441,7 +443,9 @@ class FeaturedContentTests(TestCase):
 class TestInfoUnitGroup(TestCase):
     def setUp(self):
         self.block = InfoUnitGroup()
-        self.image = CFGOVImage.objects.create(title="test", file=get_test_image_file())
+        self.image = CFGOVImage.objects.create(
+            title="test", file=get_test_image_file()
+        )
 
     def test_no_heading_or_intro_ok(self):
         value = self.block.to_python({})
@@ -566,7 +570,9 @@ class VideoPlayerTests(SimpleTestCase):
         self.assertIn('href="https://www.youtube.com/embed/1V0Ax9OIc84', html)
 
         # Default no-JS image is used if no thumbnail is provided.
-        self.assertIn('src="/static/img/cfpb_video_cover_card_954x200.png"', html)
+        self.assertIn(
+            'src="/static/img/cfpb_video_cover_card_954x200.png"', html
+        )
 
         # Default behavior doesn't render as FCM.
         self.assertNotIn("o-featured-content-module_visual", html)
@@ -574,7 +580,9 @@ class VideoPlayerTests(SimpleTestCase):
 
 class VideoPlayerThumbnailTests(TestCase):
     def setUp(self):
-        self.image = CFGOVImage.objects.create(title="test", file=get_test_image_file())
+        self.image = CFGOVImage.objects.create(
+            title="test", file=get_test_image_file()
+        )
 
     def test_thumbnail_image_without_video_id_fails_validation(self):
         block = VideoPlayer(required=False)
@@ -592,7 +600,9 @@ class VideoPlayerThumbnailTests(TestCase):
             }
         )
 
-        self.assertRegex(value.thumbnail_url, r"^.*/images/test.*\.original\.png$")
+        self.assertRegex(
+            value.thumbnail_url, r"^.*/images/test.*\.original\.png$"
+        )
 
     def test_render(self):
         block = VideoPlayer()

@@ -92,6 +92,8 @@ def title_case(s):
     )
 
     parts[0] = parts[0].title()
-    parts = map(lambda part: part.title() if part not in lower_case else part, parts)
+    parts = map(
+        lambda part: part.title() if part not in lower_case else part, parts
+    )
 
     return " ".join(parts)

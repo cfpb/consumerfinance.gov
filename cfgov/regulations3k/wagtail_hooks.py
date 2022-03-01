@@ -13,7 +13,9 @@ from regulations3k.models import EffectiveVersion, Part, Section, Subpart
 
 
 class RegsURLHelper(TreeAdminURLHelper):
-    def crumb(self, parent_field=None, parent_instance=None, specific_instance=None):
+    def crumb(
+        self, parent_field=None, parent_instance=None, specific_instance=None
+    ):
         """Override the URL helper's crumb method to shorten reg model crumbs.
 
         The regulation models include their "parent" model's string

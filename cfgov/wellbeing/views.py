@@ -73,7 +73,8 @@ class ResultsView(TranslatedTemplateView):
         {
             # Question 6
             "question": _(
-                "I am concerned that the money I have or will save " "won't last"
+                "I am concerned that the money I have or will save "
+                "won't last"
             ),
             "answers": [
                 _("Completely"),

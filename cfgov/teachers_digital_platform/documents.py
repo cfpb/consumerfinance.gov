@@ -57,7 +57,9 @@ class ActivityPageDocument(Document):
 
     def get_queryset(self):
         """Prevent non-live pages from being indexed."""
-        return super(ActivityPageDocument, self).get_queryset().filter(live=True)
+        return (
+            super(ActivityPageDocument, self).get_queryset().filter(live=True)
+        )
 
     def prepare_activity_duration(self, instance):
         if instance.activity_duration:
@@ -81,7 +83,9 @@ class ActivityPageDocument(Document):
 
     def prepare_council_for_economic_education(self, instance):
         if instance.council_for_economic_education:
-            return [i.pk for i in instance.council_for_economic_education.all()]
+            return [
+                i.pk for i in instance.council_for_economic_education.all()
+            ]
 
     def prepare_grade_level(self, instance):
         if instance.grade_level:
@@ -112,7 +116,9 @@ class ActivityPageDocument(Document):
         if instance.activity_duration:
             content_bits.append(instance.activity_duration.title)
         for field in mtm_fields:
-            content_bits += [entry.title for entry in getattr(instance, field).all()]
+            content_bits += [
+                entry.title for entry in getattr(instance, field).all()
+            ]
         return " ".join(content_bits)
 
     def prepare_big_idea(self, instance):

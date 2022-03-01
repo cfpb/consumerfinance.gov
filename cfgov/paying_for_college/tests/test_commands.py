@@ -31,7 +31,9 @@ class CommandTests(unittest.TestCase):
         call_command("purge", "schools")
         self.assertEqual(mock_purge.call_count, 4)
 
-    @mock.patch("paying_for_college.management.commands.update_ipeds.load_values")
+    @mock.patch(
+        "paying_for_college.management.commands.update_ipeds.load_values"
+    )
     def test_update_ipeds(self, mock_load):
         mock_load.return_value = "DRY RUN"
         call_command("update_ipeds")
@@ -52,7 +54,9 @@ class CommandTests(unittest.TestCase):
         call_command("update_via_api", "--school_id", "999999")
         self.assertTrue(mock_update.call_count == 2)
         self.assertTrue(mock_update.called_with(single_school=999999))
-        call_command("update_via_api", "--school_id", "999999", "--save_programs")
+        call_command(
+            "update_via_api", "--school_id", "999999", "--save_programs"
+        )
         self.assertTrue(mock_update.call_count == 3)
         self.assertTrue(
             mock_update.called_with(single_school=999999, store_programs=True)
@@ -62,7 +66,8 @@ class CommandTests(unittest.TestCase):
         self.assertTrue(mock_update.called_with(store_programs=True))
 
     @mock.patch(
-        "paying_for_college.management.commands." "load_programs.load_programs.load"
+        "paying_for_college.management.commands."
+        "load_programs.load_programs.load"
     )
     def test_load_programs(self, mock_load):
         mock_load.return_value = ([], "OK")
@@ -81,7 +86,8 @@ class CommandTests(unittest.TestCase):
         self.assertTrue(error_state is None)
 
     @mock.patch(
-        "paying_for_college.management.commands." "load_programs.load_programs.load"
+        "paying_for_college.management.commands."
+        "load_programs.load_programs.load"
     )
     def test_load_programs_more_than_1_files(self, mock_load):
         mock_load.return_value = ([], "OK")
@@ -115,6 +121,8 @@ class CommandTests(unittest.TestCase):
         mock_send.return_value = "notified"
         call_command("send_stale_notifications")
         self.assertEqual(mock_send.call_count, 1)
-        call_command("send_stale_notifications", "--add-email", "fake@fake.com")
+        call_command(
+            "send_stale_notifications", "--add-email", "fake@fake.com"
+        )
         self.assertEqual(mock_send.call_count, 2)
         self.assertTrue(mock_send.called_with(add_email=["fake@fake.com"]))

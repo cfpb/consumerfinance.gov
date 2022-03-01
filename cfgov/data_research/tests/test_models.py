@@ -252,18 +252,24 @@ class GeoValidationTests(django.test.TestCase):
 
     def test_national_aggregation(self):
         """National records aggregate state records."""
-        nation_record = NationalMortgageData.objects.get(date=datetime.date(2016, 1, 1))
+        nation_record = NationalMortgageData.objects.get(
+            date=datetime.date(2016, 1, 1)
+        )
         self.assertEqual(nation_record.total, 0)
         nation_record.aggregate_data()
         self.assertEqual(nation_record.total, 1000000)
 
     def test_state_name_string(self):
         state = State.objects.get(fips="12")
-        self.assertEqual(state.__str__(), "{} ({})".format(state.name, state.fips))
+        self.assertEqual(
+            state.__str__(), "{} ({})".format(state.name, state.fips)
+        )
 
     def test_metro_name_string(self):
         metro = MetroArea.objects.get(fips="35840")
-        self.assertEqual(metro.__str__(), "{} ({})".format(metro.name, metro.fips))
+        self.assertEqual(
+            metro.__str__(), "{} ({})".format(metro.name, metro.fips)
+        )
 
     def test_county_name_string(self):
         county = County.objects.get(fips="12081")
@@ -301,19 +307,25 @@ class MortgagePerformancePageTests(django.test.TestCase):
         self.assertIn("sampling_dates", page.get_mortgage_meta())
 
     def test_page_template(self):
-        self.assertEqual(self.chart_page_30.template, "browse-basic/index.html")
+        self.assertEqual(
+            self.chart_page_30.template, "browse-basic/index.html"
+        )
 
     def test_chart_page_context_30_89(self):
         test_page = self.chart_page_30
         request = HttpRequest()
         self.assertIn("delinquency", test_page.get_context(request))
-        self.assertEqual(test_page.get_context(request)["delinquency"], "percent_30_60")
+        self.assertEqual(
+            test_page.get_context(request)["delinquency"], "percent_30_60"
+        )
 
     def test_chart_page_context_90(self):
         test_page = self.map_page_90
         request = HttpRequest()
         self.assertIn("delinquency", test_page.get_context(request))
-        self.assertEqual(test_page.get_context(request)["delinquency"], "percent_90")
+        self.assertEqual(
+            test_page.get_context(request)["delinquency"], "percent_90"
+        )
 
 
 class ModelStringTest(django.test.TestCase):

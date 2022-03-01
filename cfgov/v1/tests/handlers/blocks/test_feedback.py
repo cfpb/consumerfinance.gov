@@ -59,7 +59,9 @@ class TestFeedbackHandler(TestCase):
         self.assertEqual(mock_get_response.call_count, 0)
 
     @mock.patch("v1.handlers.blocks.feedback.FeedbackHandler.get_response")
-    def test_process_returns_get_response_call_for_submission(self, mock_get_response):
+    def test_process_returns_get_response_call_for_submission(
+        self, mock_get_response
+    ):
         result = self.handler.process(True)
         self.assertEqual(result, mock_get_response())
 
@@ -166,7 +168,9 @@ class TestFeedbackHandler(TestCase):
 
     @mock.patch("v1.handlers.blocks.feedback.JsonResponse")
     @mock.patch("v1.handlers.blocks.feedback.messages")
-    def test_fail_calls_returns_form_dict(self, mock_messages, mock_json_response):
+    def test_fail_calls_returns_form_dict(
+        self, mock_messages, mock_json_response
+    ):
         form = mock.Mock()
         result = self.handler.fail(form)
         self.assertEqual(result, {"form": form})

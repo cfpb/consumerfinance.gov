@@ -16,7 +16,9 @@ default_loggers = []
 
 # Is there a syslog device available?
 # selects first of these locations that exist, or None
-syslog_device = next((l for l in ["/dev/log", "/var/run/syslog"] if exists(l)), None)
+syslog_device = next(
+    (l for l in ["/dev/log", "/var/run/syslog"] if exists(l)), None
+)
 
 if syslog_device:
     default_loggers.append("syslog")
@@ -84,7 +86,9 @@ if "syslog" in default_loggers:
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATICFILES_STORAGE = (
+    "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+)
 
 STATIC_ROOT = os.environ["DJANGO_STATIC_ROOT"]
 

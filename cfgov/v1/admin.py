@@ -36,7 +36,12 @@ class PortalTopicAdmin(admin.ModelAdmin):
 
     def askids(self, obj):
         pks = sorted(
-            set([answerpage.answer_base.pk for answerpage in obj.answerpage_set.all()])
+            set(
+                [
+                    answerpage.answer_base.pk
+                    for answerpage in obj.answerpage_set.all()
+                ]
+            )
         )
         return ", ".join([str(pk) for pk in pks])
 
@@ -53,7 +58,12 @@ class PortalCategoryAdmin(admin.ModelAdmin):
 
     def askids(self, obj):
         pks = sorted(
-            set([answerpage.answer_base.pk for answerpage in obj.answerpage_set.all()])
+            set(
+                [
+                    answerpage.answer_base.pk
+                    for answerpage in obj.answerpage_set.all()
+                ]
+            )
         )
         return ", ".join([str(pk) for pk in pks])
 

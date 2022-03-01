@@ -115,12 +115,16 @@ urlpatterns = [
     ),
     re_path(
         r"^owning-a-home/explore-rates/",
-        TemplateView.as_view(template_name="owning-a-home/explore-rates/index.html"),
+        TemplateView.as_view(
+            template_name="owning-a-home/explore-rates/index.html"
+        ),
         name="explore-rates",
     ),
     re_path(
         r"^owning-a-home/loan-estimate/$",
-        TemplateView.as_view(template_name="owning-a-home/loan-estimate/index.html"),
+        TemplateView.as_view(
+            template_name="owning-a-home/loan-estimate/index.html"
+        ),
         name="loan-estimate",
     ),
     # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
@@ -139,12 +143,16 @@ urlpatterns = [
     ),
     re_path(
         r"^know-before-you-owe/timeline/$",
-        TemplateView.as_view(template_name="know-before-you-owe/timeline/index.html"),
+        TemplateView.as_view(
+            template_name="know-before-you-owe/timeline/index.html"
+        ),
         name="kbyo-timeline",
     ),
     re_path(
         r"^know-before-you-owe/compare/$",
-        TemplateView.as_view(template_name="know-before-you-owe/compare/index.html"),
+        TemplateView.as_view(
+            template_name="know-before-you-owe/compare/index.html"
+        ),
         name="kbyo-compare",
     ),
     re_path(
@@ -153,7 +161,9 @@ urlpatterns = [
     ),
     re_path(
         r"^parents/(?P<path>.*)$",
-        RedirectView.as_view(url="/money-as-you-grow/%(path)s", permanent=True),
+        RedirectView.as_view(
+            url="/money-as-you-grow/%(path)s", permanent=True
+        ),
     ),
     re_path(
         r"^blog/(?P<path>.*)$",
@@ -161,11 +171,15 @@ urlpatterns = [
     ),
     re_path(
         r"^newsroom/(?P<path>.*)$",
-        RedirectView.as_view(url="/about-us/newsroom/%(path)s", permanent=True),
+        RedirectView.as_view(
+            url="/about-us/newsroom/%(path)s", permanent=True
+        ),
     ),
     re_path(
         r"^the-bureau/(?P<path>.*)$",
-        RedirectView.as_view(url="/about-us/the-bureau/%(path)s", permanent=True),
+        RedirectView.as_view(
+            url="/about-us/the-bureau/%(path)s", permanent=True
+        ),
     ),
     re_path(
         r"^about-us/leadership-calendar/(?P<path>.*)$",
@@ -185,7 +199,9 @@ urlpatterns = [
         ExternalURLNoticeView.as_view(),
         name="external-site",
     ),
-    re_path(r"^subscriptions/new/$", govdelivery_subscribe, name="govdelivery"),
+    re_path(
+        r"^subscriptions/new/$", govdelivery_subscribe, name="govdelivery"
+    ),
     re_path(
         r"^govdelivery-subscribe/",
         include(
@@ -347,17 +363,23 @@ urlpatterns = [
         ),
     ),
     # data-research-api
-    re_path(r"^data-research/mortgages/api/v1/", include("data_research.urls")),
+    re_path(
+        r"^data-research/mortgages/api/v1/", include("data_research.urls")
+    ),
     # educational resources
     re_path(
         r"^consumer-tools/educator-tools/resources-youth-employment-programs/transportation-tool/$",  # noqa: B950
-        TemplateView.as_view(template_name="youth_employment_success/index.html"),
+        TemplateView.as_view(
+            template_name="youth_employment_success/index.html"
+        ),
         name="youth_employment_success",
     ),
     # retirement redirects
     re_path(
         r"^retirement/(?P<path>.*)$",
-        RedirectView.as_view(url="/consumer-tools/retirement/%(path)s", permanent=True),
+        RedirectView.as_view(
+            url="/consumer-tools/retirement/%(path)s", permanent=True
+        ),
     ),
     # empowerment redirects
     re_path(
@@ -376,7 +398,9 @@ urlpatterns = [
         ),
     ),
     # ask-cfpb
-    re_path(r"^askcfpb/$", RedirectView.as_view(url="/ask-cfpb/", permanent=True)),
+    re_path(
+        r"^askcfpb/$", RedirectView.as_view(url="/ask-cfpb/", permanent=True)
+    ),
     re_path(
         r"^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$",  # noqa: B950
         RedirectView.as_view(
@@ -385,9 +409,13 @@ urlpatterns = [
     ),
     re_path(
         r"^askcfpb/(?P<ask_id>\d+)/(.*)$",
-        RedirectView.as_view(url="/ask-cfpb/slug-en-%(ask_id)s", permanent=True),
+        RedirectView.as_view(
+            url="/ask-cfpb/slug-en-%(ask_id)s", permanent=True
+        ),
     ),
-    re_path(r"^askcfpb/search/", redirect_ask_search, name="redirect-ask-search"),
+    re_path(
+        r"^askcfpb/search/", redirect_ask_search, name="redirect-ask-search"
+    ),
     re_path(
         r"^ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$",
         view_answer,
@@ -429,7 +457,9 @@ urlpatterns = [
         ask_autocomplete,
         name="ask-autocomplete-es",
     ),
-    re_path(r"^consumer-tools/financial-well-being/", include("wellbeing.urls")),
+    re_path(
+        r"^consumer-tools/financial-well-being/", include("wellbeing.urls")
+    ),
     re_path(
         r"^about-us/diversity-and-inclusion/",
         include(
@@ -437,7 +467,9 @@ urlpatterns = [
             namespace="diversity_inclusion",
         ),
     ),
-    re_path(r"^privacy/", include(("privacy.urls", "privacy"), namespace="privacy")),
+    re_path(
+        r"^privacy/", include(("privacy.urls", "privacy"), namespace="privacy")
+    ),
     path(
         "robots.txt",
         TemplateView.as_view(
@@ -478,11 +510,15 @@ urlpatterns = [
 category_redirects = [
     re_path(
         r"^ask-cfpb/category-auto-loans/(.*)$",
-        RedirectView.as_view(url="/consumer-tools/auto-loans/", permanent=True),
+        RedirectView.as_view(
+            url="/consumer-tools/auto-loans/", permanent=True
+        ),
     ),
     re_path(
         r"^ask-cfpb/category-bank-accounts-and-services/(.*)$",
-        RedirectView.as_view(url="/consumer-tools/bank-accounts/", permanent=True),
+        RedirectView.as_view(
+            url="/consumer-tools/bank-accounts/", permanent=True
+        ),
     ),
     re_path(
         r"^ask-cfpb/category-credit-cards/(.*)$",
@@ -498,11 +534,15 @@ category_redirects = [
     ),
     re_path(
         r"^ask-cfpb/category-debt-collection/(.*)$",
-        RedirectView.as_view(url="/consumer-tools/debt-collection/", permanent=True),
+        RedirectView.as_view(
+            url="/consumer-tools/debt-collection/", permanent=True
+        ),
     ),
     re_path(
         r"^ask-cfpb/category-families-money/(.*)$",
-        RedirectView.as_view(url="/consumer-tools/money-as-you-grow/", permanent=True),
+        RedirectView.as_view(
+            url="/consumer-tools/money-as-you-grow/", permanent=True
+        ),
     ),
     re_path(
         r"^ask-cfpb/category-money-transfers/(.*)$",
@@ -522,11 +562,15 @@ category_redirects = [
     ),
     re_path(
         r"^ask-cfpb/category-prepaid-cards/(.*)$",
-        RedirectView.as_view(url="/consumer-tools/prepaid-cards/", permanent=True),
+        RedirectView.as_view(
+            url="/consumer-tools/prepaid-cards/", permanent=True
+        ),
     ),
     re_path(
         r"^ask-cfpb/category-student-loans/(.*)$",
-        RedirectView.as_view(url="/consumer-tools/student-loans/", permanent=True),
+        RedirectView.as_view(
+            url="/consumer-tools/student-loans/", permanent=True
+        ),
     ),
     re_path(
         r"^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$",
@@ -565,7 +609,9 @@ category_redirects = [
     ),
     re_path(
         r"^es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$",
-        RedirectView.as_view(url="/es/el-dinero-mientras-creces/", permanent=True),
+        RedirectView.as_view(
+            url="/es/el-dinero-mientras-creces/", permanent=True
+        ),
     ),
     re_path(
         r"^es/obtener-respuestas/categoria-enviar-dinero/(.*)$",
@@ -621,7 +667,9 @@ if settings.WATCHMAN_TOKENS is not None:
     )
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )
 
     # enable local preview of error pages
     urlpatterns.append(
@@ -642,7 +690,9 @@ if settings.DEBUG:
     try:
         import debug_toolbar
 
-        urlpatterns.append(re_path(r"^__debug__/", include(debug_toolbar.urls)))
+        urlpatterns.append(
+            re_path(r"^__debug__/", include(debug_toolbar.urls))
+        )
     except ImportError:
         pass
 
@@ -664,7 +714,8 @@ def handle_error(code, request, exception=None):
         # the results of a security scan, or a malformed static file reference.
 
         return HttpResponse(
-            "This request could not be processed, " "HTTP Error %s." % str(code),
+            "This request could not be processed, "
+            "HTTP Error %s." % str(code),
             status=code,
         )
 

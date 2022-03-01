@@ -104,4 +104,6 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
 
     def test_get_queryset(self):
         qs = ActivityPageDocument().get_queryset()
-        self.assertEqual(qs.count(), ActivityPage.objects.filter(live=True).count())
+        self.assertEqual(
+            qs.count(), ActivityPage.objects.filter(live=True).count()
+        )

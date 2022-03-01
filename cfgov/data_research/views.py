@@ -92,7 +92,9 @@ class TimeSeriesData(APIView):
             data = {
                 "meta": {
                     "fips": fips,
-                    "name": "Non-metro area of {}".format(records.first().state.name),
+                    "name": "Non-metro area of {}".format(
+                        records.first().state.name
+                    ),
                     "fips_type": "non_msa",
                 },
                 "data": [record.time_series(days_late) for record in records],
@@ -211,7 +213,9 @@ class MapData(APIView):
                 data_series = record.time_series(days_late)
                 geo_parent = getattr(record, geo_dict[geo]["geo_obj"])
                 if geo == "counties":
-                    name = "{}, {}".format(geo_parent.name, geo_parent.state.abbr)
+                    name = "{}, {}".format(
+                        geo_parent.name, geo_parent.state.abbr
+                    )
                 else:
                     name = geo_parent.name
                 data_series.update({"name": name})

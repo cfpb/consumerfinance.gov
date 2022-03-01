@@ -29,11 +29,15 @@ class ServeViewTestCase(TestCase):
     def test_process_categories(self):
         category_string = process_categories(self.blog_page.categories.all())
         self.assertIn(self.category.get_name_display(), category_string)
-        self.assertEqual(self.category.get_name_display(), self.category_tuple[1])
+        self.assertEqual(
+            self.category.get_name_display(), self.category_tuple[1]
+        )
 
     def test_metadata_report_get_filename(self):
         today = date.today()
-        self.assertEqual(self.view.get_filename(), f"spreadsheet-export-{today}")
+        self.assertEqual(
+            self.view.get_filename(), f"spreadsheet-export-{today}"
+        )
 
     def test_get_queryset(self):
         self.assertEqual(self.view.get_queryset().count(), 2)

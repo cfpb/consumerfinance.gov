@@ -29,7 +29,9 @@ def assemble_output():
         url = "https://consumerfinance.gov" + page.get_url()
         if "enforcement/actions" not in url:
             continue
-        page_categories = ",".join(c.get_name_display() for c in page.categories.all())
+        page_categories = ",".join(
+            c.get_name_display() for c in page.categories.all()
+        )
         content = ""
         soup = BeautifulSoup(str(page.content), "html.parser")
         para = soup.findAll(["p", "h5"])
@@ -49,8 +51,12 @@ def assemble_output():
                 d.docket_number for d in page.docket_numbers.all()
             ),
             "Initial Filing Date": page.initial_filing_date,
-            "Statuses": ",".join(d.get_status_display() for d in page.statuses.all()),
-            "Products": ",".join(d.get_product_display() for d in page.products.all()),
+            "Statuses": ",".join(
+                d.get_status_display() for d in page.statuses.all()
+            ),
+            "Products": ",".join(
+                d.get_product_display() for d in page.products.all()
+            ),
             "URL": url,
         }
         rows.append(row)

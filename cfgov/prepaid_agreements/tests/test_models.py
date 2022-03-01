@@ -65,8 +65,12 @@ class TestMostRecentAgreement(TestCase):
         self.created_earlier.save()
 
     def test_product_most_recent_agreement(self):
-        self.assertEqual(self.product_1.most_recent_agreement, self.agreement_1)
-        self.assertEqual(self.product_2.most_recent_agreement, self.agreement_2)
+        self.assertEqual(
+            self.product_1.most_recent_agreement, self.agreement_1
+        )
+        self.assertEqual(
+            self.product_2.most_recent_agreement, self.agreement_2
+        )
 
     def test_agreement_is_most_recent(self):
         self.assertTrue(self.agreement_1.is_most_recent)
