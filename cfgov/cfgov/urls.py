@@ -25,12 +25,12 @@ from ask_cfpb.views import (
 )
 from core.decorators import akamai_no_store
 from core.views import (
-    ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
+    CacheTaggedTemplateView, ExternalURLNoticeView, govdelivery_subscribe,
+    regsgov_comment
 )
 from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
-from legacy.views.complaint import CCDBSearchView
 from regulations3k.views import redirect_eregs
 from v1.views.documents import DocumentServeView
 
@@ -279,7 +279,10 @@ urlpatterns = [
     # CCDB5-UI
     re_path(
         r'^data-research/consumer-complaints/search/',
-        CCDBSearchView.as_view(),
+        CacheTaggedTemplateView.as_view(
+            template_name='ccdb-complaint/ccdb-search.html',
+            cache_tag='complaints',
+        ),
         name='complaint-search'
     ),
 
@@ -306,15 +309,6 @@ urlpatterns = [
     re_path(
         r'^data-research/mortgages/api/v1/',
         include('data_research.urls')
-    ),
-
-    # educational resources
-    re_path(
-        r'^consumer-tools/educator-tools/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
-        TemplateView.as_view(
-            template_name='youth_employment_success/index.html'
-        ),
-        name='youth_employment_success'
     ),
 
     # retirement redirects
