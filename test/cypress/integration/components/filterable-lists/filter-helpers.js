@@ -18,11 +18,11 @@ export class Filter {
   }
 
   getCategory() {
-    return cy.get( '[id^="categories-"]' )
+    return cy.get( '[id^="categories-"]' );
   }
 
   getCategoryLabel( name ) {
-    return cy.get( `[for="categories-${ name }"]` )
+    return cy.get( `[for="categories-${ name }"]` );
   }
 
   clickCategory( name ) {
@@ -37,11 +37,11 @@ export class Filter {
   }
 
   getTopic() {
-    return cy.get( '[id^="topics-"]' )
+    return cy.get( '[id^="topics-"]' );
   }
 
   getTopicLabel( name ) {
-    return cy.get( `[for="topics-${ name }"]` )
+    return cy.get( `[for="topics-${ name }"]` );
   }
 
   clickTopic( name ) {

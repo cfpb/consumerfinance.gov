@@ -17,7 +17,7 @@ export class FilterableListControl {
   }
 
   resultDate() {
-    return cy.get( '.datetime_date:first' )
+    return cy.get( '.datetime_date:first' );
   }
 
   filterFromDate( date ) {

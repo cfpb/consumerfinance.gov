@@ -15,24 +15,24 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Item name search', () => {
     // get the title of any blog post
-    blog.resultTitle().then( ( title ) => {
+    blog.resultTitle().then( title => {
       // When I enter the title in the item name input field
       blog.filterItemName( title.get( 0 ).innerText );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then I should see only results with the title in the post title
-      blog.resultsContent().should( 
-        'contain', title.get( 0 ).innerText 
+      blog.resultsContent().should(
+        'contain', title.get( 0 ).innerText
       );
       // And the page url should contain "title=" followed by the title
-      cy.url().should( 
+      cy.url().should(
         'include', 'title=' + title.get( 0 ).innerText
       );
     } );
   } );
   it( 'Select a single category', () => {
     // retrieve the category
-    filter.getCategory().then( ( category ) => {
+    filter.getCategory().then( category => {
       // When I select the first option in the Category multiselect
       filter.clickCategory( category.get( 0 ).getAttribute( 'value' ) );
       // And I click "Apply filters" button
@@ -48,7 +48,7 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Select multiple categories', () => {
     // retrieve the categories
-    filter.getCategory().then( ( categories ) => {
+    filter.getCategory().then( categories => {
       // When I select all options checkboxes in the Category multiselect
       filter.clickCategory( categories.get( 0 ).getAttribute( 'value' ) );
       filter.clickCategory( categories.get( 1 ).getAttribute( 'value' ) );
@@ -84,19 +84,19 @@ describe( 'Filter Blog Posts based on content', () => {
         'include',
         'categories=' + categories.get( 4 ).getAttribute( 'value' )
       );
-      } );
+    } );
   } );
   it( 'Date range to present', () => {
     // get the date from a result
-    blog.resultDate().then( ( date ) => {
+    blog.resultDate().then( date => {
       // When I enter the date in the From date entry field
-      blog.filterFromDate( 
+      blog.filterFromDate(
         date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
       );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then the page url should contain "from_date=" date
-      cy.url().should( 
+      cy.url().should(
         'include',
         'from_date=' + date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[
           0
@@ -111,7 +111,7 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Date range in past', () => {
     // get the date from a result
-    blog.resultDate().then( ( date ) => {
+    blog.resultDate().then( date => {
       // When I enter the date in the From date entry field
       blog.filterFromDate(
         date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
@@ -124,7 +124,7 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.applyFilters();
       // Then I should see only results from the year belonging to that date
       blog.notification().should( 'be.visible' );
-      blog.resultsHeaderRight().should( 
+      blog.resultsHeaderRight().should(
         'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[ 0 ]
       );
       // And the page url should contain "from_date=" date
@@ -145,16 +145,16 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Select a single topic', () => {
     // get a topic
-    filter.getTopic().then( ( topic ) => {
+    filter.getTopic().then( topic => {
       // When I click the first checkbox in the Topic list
       filter.clickTopic( topic.get( 0 ).getAttribute( 'value' ) );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then I should see only results tagged with the selected topic
       blog.notification().should( 'be.visible' );
-      filter.getTopicLabel( 
-        topic.get( 0 ).getAttribute( 'value' ) 
-      ).then( ( label ) => {
+      filter.getTopicLabel(
+        topic.get( 0 ).getAttribute( 'value' )
+      ).then( label => {
         blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
       } );
       // And the page url should contain "topics=" topic
@@ -166,7 +166,7 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Select multiple topics', () => {
     // get topics
-    filter.getTopic().then( ( topics ) => {
+    filter.getTopic().then( topics => {
       // When I select five checkboxes in the Topic list
       filter.clickTopic( topics.get( 0 ).getAttribute( 'value' ) );
       filter.clickTopic( topics.get( 1 ).getAttribute( 'value' ) );
@@ -177,9 +177,9 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.applyFilters();
       // Then I should see results tagged with at least one of the topics
       blog.notification().should( 'be.visible' );
-      filter.getTopicLabel( 
-        topics.get( 0 ).getAttribute( 'value' ) 
-      ).then( ( label ) => {
+      filter.getTopicLabel(
+        topics.get( 0 ).getAttribute( 'value' )
+      ).then( label => {
         blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
       } );
       // And the page url should contain "topics=" first topic
@@ -211,7 +211,7 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Type-ahead topics', () => {
     // get topics
-    filter.getTopic().then( ( topics ) => {
+    filter.getTopic().then( topics => {
       // When I type a topic in the topic input box
       filter.typeAheadTopic(
         topics.get( 0 ).getAttribute( 'value' ).split( '-' ).join( ' ' )
@@ -228,14 +228,14 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.applyFilters();
       // Then I should see only results tagged with the selected topic
       blog.notification().should( 'be.visible' );
-      filter.getTopicLabel( 
-        topics.get( 0 ).getAttribute( 'value' ) 
-      ).then( ( label ) => {
+      filter.getTopicLabel(
+        topics.get( 0 ).getAttribute( 'value' )
+      ).then( label => {
         blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
       } );
-      filter.getTopicLabel( 
-        topics.get( 1 ).getAttribute( 'value' ) 
-      ).then( ( label ) => {
+      filter.getTopicLabel(
+        topics.get( 1 ).getAttribute( 'value' )
+      ).then( label => {
         blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
       } );
       // And the page url should contain "topics=reverse-mortgages"
@@ -252,8 +252,8 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Select category and topic', () => {
     // check results for blog post with category and topic
-    blog.getResultCategoryHasTags().then( ( category ) => {
-      blog.getResultTagHasCategories().then( ( topic ) => {
+    blog.getResultCategoryHasTags().then( category => {
+      blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
           category.get( 0 ).innerText.split( '\n' ).pop().trim()
@@ -274,7 +274,7 @@ describe( 'Filter Blog Posts based on content', () => {
             '\n'
           ).pop().trim().split( ' ' ).join(
             '-'
-          ).toLowerCase()).then((label) => {
+          ).toLowerCase()).then( label => {
           blog.resultsContent().should( 'contain', label.get( 0 ).innerText);
         } );
         // And the page url should contain "categories=policy_compliance"
@@ -296,8 +296,8 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Clear filters', () => {
     // check results for blog post with category and topic
-    blog.getResultCategoryHasTags().then( ( category ) => {
-      blog.getResultTagHasCategories().then( ( topic ) => {
+    blog.getResultCategoryHasTags().then( category => {
+      blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
           category.get( 0 ).innerText.split( '\n' ).pop().trim()
@@ -318,7 +318,7 @@ describe( 'Filter Blog Posts based on content', () => {
             '\n'
           ).pop().trim().split( ' ' ).join(
             '-'
-          ).toLowerCase()).then((label) => {
+          ).toLowerCase()).then( label => {
           blog.resultsContent().should( 'contain', label.get( 0 ).innerText);
         } );
         // And the page url should contain "categories=policy_compliance"
@@ -409,9 +409,9 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Item name search plus category', () => {
     // get the title of any blog post
-    blog.getResultCategory().then( ( category ) => {
+    blog.getResultCategory().then( category => {
       // get category for that blog post
-      blog.getResultTitleHasCategory().then( ( title ) => {
+      blog.getResultTitleHasCategory().then( title => {
         // When I type title in the item name input box
         blog.filterItemName( title.get( 0 ).innerText );
         // And I select a checkbox in the category list
@@ -440,9 +440,9 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Item name search plus topic', () => {
     // get the title of any blog post
-    blog.getResultTag().then( ( topic ) => {
+    blog.getResultTag().then( topic => {
       // get topic for that blog post
-      blog.getResultTitleHasTag().then( ( title ) => {
+      blog.getResultTitleHasTag().then( title => {
         // When I type title in the item name input box
         blog.filterItemName( title.get( 0 ).innerText );
         // And I select a checkbox in the Topic list
@@ -459,7 +459,7 @@ describe( 'Filter Blog Posts based on content', () => {
             '\n'
           ).pop().trim().split( ' ' ).join(
             '-'
-          ).toLowerCase()).then((label) => {
+          ).toLowerCase()).then( label => {
           blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
         } );
         // And the page url should contain "title=" title
@@ -476,9 +476,9 @@ describe( 'Filter Blog Posts based on content', () => {
   } );
   it( 'Item name search plus date range', () => {
     // get the date from a result
-    blog.resultDate().then( ( date ) => {
+    blog.resultDate().then( date => {
       // get the title of any blog post
-      blog.resultTitle().then( ( title ) => {
+      blog.resultTitle().then( title => {
         // When I type "loans" in the item name input box
         blog.filterItemName( title.get( 0 ).innerText );
         // And I type "01/01/2020" in the From date entry field
@@ -505,7 +505,7 @@ describe( 'Filter Blog Posts based on content', () => {
           'include',
           'from_date=' + date.get( 0 ).getAttribute(
             'datetime'
-            ).split( 'T' )[ 0 ]
+          ).split( 'T' )[ 0 ]
         );
       } );
     } );
