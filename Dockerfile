@@ -41,6 +41,8 @@ CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 # Build Frontend Assets
 FROM cfgov-dev as cfgov-build
 
+ARG FRONTEND_TARGET=production
+
 ENV STATIC_PATH ${APP_HOME}/cfgov/static/
 ENV PYTHONPATH ${APP_HOME}/cfgov
 
@@ -53,7 +55,7 @@ ENV ALLOWED_HOSTS '["*"]'
 COPY . .
 
 # Build the front-end
-RUN ./frontend.sh production && \
+RUN ./frontend.sh  ${FRONTEND_TARGET} && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
     rm -rf node_modules npm-packages-offline-cache
