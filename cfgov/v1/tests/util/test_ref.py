@@ -13,10 +13,7 @@ class TestCategories(TestCase):
         page_categories = dict(categories).values()
         slugs = list(
             itertools.chain(
-                *(
-                    dict(page_category).keys()
-                    for page_category in page_categories
-                )
+                *(dict(page_category).keys() for page_category in page_categories)
             )
         )
         self.assertCountEqual(slugs, set(slugs))
@@ -25,9 +22,7 @@ class TestCategories(TestCase):
 class TestGetAppropriateCategories(TestCase):
     # This test is heavily hard-coded with values from cfgov/v1/util/ref.py.
     def test_non_related_post_category_no_matches(self):
-        result = get_appropriate_categories(
-            ["Administrative adjudication"], "blog"
-        )
+        result = get_appropriate_categories(["Administrative adjudication"], "blog")
         self.assertEqual(result, [])
 
     def test_related_post_category_no_matches_if_wrong_page_type(self):
@@ -35,9 +30,7 @@ class TestGetAppropriateCategories(TestCase):
         self.assertEqual(result, [])
 
     def test_should_return_matches_only_for_relevant_page_type(self):
-        result = get_appropriate_categories(
-            ["Press Release", "At the CFPB"], "blog"
-        )
+        result = get_appropriate_categories(["Press Release", "At the CFPB"], "blog")
         self.assertEqual(len(result), 1)
 
     def test_should_return_matches_as_slugs(self):

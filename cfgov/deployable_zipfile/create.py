@@ -49,9 +49,7 @@ def create_project_pth_file(project_name, target_directory):
 
     project_pth = project_pth_template.substitute(project_name=project_name)
 
-    project_pth_filename = os.path.join(
-        target_directory, "%s.pth" % project_name
-    )
+    project_pth_filename = os.path.join(target_directory, "%s.pth" % project_name)
 
     with open(project_pth_filename, "w") as f:
         f.write(project_pth)
@@ -77,9 +75,7 @@ def create_zipfile(
             wheel_executables.append(extra_python)
 
         for wheel_executable in wheel_executables:
-            save_wheels(
-                wheel_executable, wheel_dir, "-r%s" % requirements_file
-            )
+            save_wheels(wheel_executable, wheel_dir, "-r%s" % requirements_file)
 
         # Copy the project code into the zip.
         project_name = os.path.basename(os.path.realpath(project_path))
@@ -107,9 +103,7 @@ def create_zipfile(
 
         # Add any static file directories, if provided.
         for i, static_dir in enumerate(extra_static or []):
-            shutil.copytree(
-                static_dir, os.path.join(temp_dir, "static.in/%s/" % i)
-            )
+            shutil.copytree(static_dir, os.path.join(temp_dir, "static.in/%s/" % i))
 
         zipfile = shutil.make_archive(zipfile_basename, "zip", temp_dir)
 
@@ -128,9 +122,7 @@ def create_zipfile(
             f.write(zipfile_data)
 
         existing_st_mode = os.stat(zipfile)[0]
-        new_st_mode = (
-            existing_st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
-        )
+        new_st_mode = existing_st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
         os.chmod(zipfile, new_st_mode)
 
         return zipfile

@@ -129,9 +129,7 @@ class BulkZipCodeGeocoder:
 
             # Handle rate limiting
             if 429 == response.status_code:
-                logger.info(
-                    "rate limited, url %s, headers: %s", url, response.headers
-                )
+                logger.info("rate limited, url %s, headers: %s", url, response.headers)
 
                 sleep_for = 10
                 logger.info("sleeping for %s seconds", sleep_for)

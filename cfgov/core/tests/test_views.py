@@ -57,9 +57,7 @@ class GovDeliverySubscribeTest(TestCase):
     def check_post(self, post, response_check, ajax=False):
         response_check(self.post(post, ajax=ajax))
 
-    def check_subscribe(
-        self, response_check, ajax=False, include_answers=False
-    ):
+    def check_subscribe(self, response_check, ajax=False, include_answers=False):
         post = {
             "code": "FAKE_CODE",
             "email": "fake@example.com",
@@ -117,27 +115,19 @@ class GovDeliverySubscribeTest(TestCase):
     def test_successful_subscribe_ajax(self):
         self.check_subscribe(self.assertJSONSuccess, ajax=True)
 
-    @override_settings(
-        GOVDELIVERY_API="core.govdelivery.ExceptionMockGovDelivery"
-    )
+    @override_settings(GOVDELIVERY_API="core.govdelivery.ExceptionMockGovDelivery")
     def test_exception(self):
         self.check_subscribe(self.assertRedirectServerError)
 
-    @override_settings(
-        GOVDELIVERY_API="core.govdelivery.ExceptionMockGovDelivery"
-    )
+    @override_settings(GOVDELIVERY_API="core.govdelivery.ExceptionMockGovDelivery")
     def test_exception_ajax(self):
         self.check_subscribe(self.assertJSONError, ajax=True)
 
-    @override_settings(
-        GOVDELIVERY_API="core.govdelivery.ServerErrorMockGovDelivery"
-    )
+    @override_settings(GOVDELIVERY_API="core.govdelivery.ServerErrorMockGovDelivery")
     def test_server_error(self):
         self.check_subscribe(self.assertRedirectServerError)
 
-    @override_settings(
-        GOVDELIVERY_API="core.govdelivery.ServerErrorMockGovDelivery"
-    )
+    @override_settings(GOVDELIVERY_API="core.govdelivery.ServerErrorMockGovDelivery")
     def test_server_error_ajax(self):
         self.check_subscribe(self.assertJSONError, ajax=True)
 
@@ -182,9 +172,7 @@ class RegsgovCommentTest(TestCase):
         if has_tracking_num:
             expected.update({"tracking_number": self.tracking_number})
 
-        self.assertEqual(
-            response.content.decode("utf-8"), json.dumps(expected)
-        )
+        self.assertEqual(response.content.decode("utf-8"), json.dumps(expected))
 
     def assertJSONSuccessCommented(self, response):
         return self.assertJSON(response, "pass", has_tracking_num=True)
@@ -218,9 +206,7 @@ class RegsgovCommentTest(TestCase):
         submit = self.mock_submit_data(status_code=status_code)
         messages = self.mock_messages()
 
-        request, response = self.check_post(
-            self.data, response_check, ajax=ajax
-        )
+        request, response = self.check_post(self.data, response_check, ajax=ajax)
 
         submit.assert_called_with(request.POST)
 
@@ -275,9 +261,7 @@ class RegsgovCommentTest(TestCase):
         submit_comment(QueryDict(urlencode(data)))
         act_args, act_kwargs = mock_post.call_args
 
-        self.assertEqual(
-            act_args[0], "FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM"
-        )
+        self.assertEqual(act_args[0], "FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM")
         exp_data_field = data
         exp_data_field["email"] = "NA"
         exp_data_field["organization"] = "NA"
@@ -307,9 +291,7 @@ class RegsgovCommentTest(TestCase):
         submit_comment(QueryDict(urlencode(data)))
         act_args, act_kwargs = mock_post.call_args
 
-        self.assertEqual(
-            act_args[0], "FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM"
-        )
+        self.assertEqual(act_args[0], "FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM")
         exp_data_field = data
         exp_data_field["organization"] = "NA"
         exp_data = MultipartEncoder(fields=exp_data_field)
@@ -355,8 +337,6 @@ class TranslatedTemplateViewTestCase(TestCase):
         response = view(request)
         self.assertEqual(response.context_data["current_language"], "en")
 
-        view = TranslatedTemplateView.as_view(
-            template_name="test.html", language="es"
-        )
+        view = TranslatedTemplateView.as_view(template_name="test.html", language="es")
         response = view(request)
         self.assertEqual(response.context_data["current_language"], "es")

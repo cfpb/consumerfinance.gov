@@ -288,9 +288,7 @@ def create_learn_page(
     return new_page.get_url(None, site)
 
 
-def create_sublanding_page(
-    page_title, page_slug, parent_path=None, has_feedback=False
-):
+def create_sublanding_page(page_title, page_slug, parent_path=None, has_feedback=False):
     # create a new page and set it as the child of an existing page
     # get the current site
     site = Site.objects.get(is_default_site=True)

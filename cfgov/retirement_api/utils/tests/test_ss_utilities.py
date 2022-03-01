@@ -36,9 +36,7 @@ from retirement_api.utils.ss_utilities import (
 # ,
 #                          run_tests)
 
-BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 sys.path.append(BASE_DIR)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
@@ -233,17 +231,13 @@ class UtilitiesTests(unittest.TestCase):
         # need to pass results, base, fra_tuple, current_age, DOB
         results = interpolate_benefits(mock_results, 2176, (67, 0), 44, dob)
         for key in results["data"]["benefits"].keys():
-            self.assertTrue(
-                results["data"]["benefits"][key] == expected_benefits[key]
-            )
-        mock_results["data"]["benefits"]["age 66"] = mock_results["data"][
-            "benefits"
-        ]["age 67"]
+            self.assertTrue(results["data"]["benefits"][key] == expected_benefits[key])
+        mock_results["data"]["benefits"]["age 66"] = mock_results["data"]["benefits"][
+            "age 67"
+        ]
         mock_results["data"]["benefits"]["age 67"] = 0
         dob = (
-            self.today
-            - datetime.timedelta(days=365 * 55)
-            - datetime.timedelta(days=14)
+            self.today - datetime.timedelta(days=365 * 55) - datetime.timedelta(days=14)
         )
         results = interpolate_benefits(mock_results, 2176, (66, 0), 55, dob)
         for key in sorted(results["data"]["benefits"].keys()):
@@ -269,8 +263,7 @@ class UtilitiesTests(unittest.TestCase):
 
     def test_parse_details(self):
         sample_rows = [
-            "early: Base year for indexing is 2013. "
-            "Bend points are 826 & 4980",
+            "early: Base year for indexing is 2013. " "Bend points are 826 & 4980",
             "AIME = 2930 & PIA in 2018 is 1416.6.",
             "PIA in 2018 after COLAs is $1,416.60.",
         ]
@@ -408,9 +401,7 @@ class UtilitiesTests(unittest.TestCase):
             self.assertEqual(get_retirement_age(year), sample_inputs[year])
 
     def test_past_fra_test(self):
-        one_one = "{0}".format(
-            date(1980, 1, 1).replace(year=self.today.year - 25)
-        )
+        one_one = "{0}".format(date(1980, 1, 1).replace(year=self.today.year - 25))
         way_old = "{0}".format(self.today - timedelta(days=80 * 365))
         too_old = "{0}".format(self.today - timedelta(days=68 * 365))
         ok = "{0}".format(self.today - timedelta(days=57 * 365))

@@ -210,9 +210,7 @@ def assemble_msa_mapping(msa_data):
     for msa_id in mapping:
         mapping[msa_id]["fips"] = msa_id
         mapping[msa_id]["county_list"] += [
-            row.get("county_fips")
-            for row in msa_data
-            if row.get("msa_id") == msa_id
+            row.get("county_fips") for row in msa_data if row.get("msa_id") == msa_id
         ]
     return mapping
 
@@ -222,16 +220,12 @@ def load_county_mappings():
     from data_research.models import MortgageMetaData
 
     msa_meta = MortgageMetaData.objects.get(name="state_msa_meta").json_value
-    live_fips = [
-        fips for fips in FIPS.state_fips if fips not in NON_STATES.values()
-    ]
+    live_fips = [fips for fips in FIPS.state_fips if fips not in NON_STATES.values()]
     for each in live_fips:
         _attr = FIPS.state_fips[each]
         abbr = _attr["abbr"]
         _attr["counties"] = [
-            county_fips
-            for county_fips in FIPS.county_fips
-            if county_fips[:2] == each
+            county_fips for county_fips in FIPS.county_fips if county_fips[:2] == each
         ]
         _attr["msas"] = [
             entry["fips"]
@@ -258,9 +252,7 @@ def load_fips_lists():
 
     for attr in ["allowlist", "all_fips"]:
         setattr(FIPS, attr, MortgageMetaData.objects.get(name=attr).json_value)
-    FIPS.state_fips = MortgageMetaData.objects.get(
-        name="state_meta"
-    ).json_value
+    FIPS.state_fips = MortgageMetaData.objects.get(name="state_meta").json_value
 
 
 def load_constants():

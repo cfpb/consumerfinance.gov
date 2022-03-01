@@ -58,15 +58,11 @@ def calculate_percentile_rank(array, score):
 
 def rank_by_metric(school, cohort, metric):
     """Return a school's percentile rank among a cohort by 3 metrics."""
-    values = [
-        getattr(s, metric) for s in cohort if getattr(s, metric) is not None
-    ]
+    values = [getattr(s, metric) for s in cohort if getattr(s, metric) is not None]
     payload = {"cohort_count": len(values)}
     array = [float(val) for val in values]
     target_value = float(getattr(school, metric))
-    payload.update(
-        {"percentile_rank": calculate_percentile_rank(array, target_value)}
-    )
+    payload.update({"percentile_rank": calculate_percentile_rank(array, target_value)})
     return payload
 
 
@@ -88,22 +84,16 @@ def run(single_school=None):
         # base query weeds out schools without state or degrees_highest values
         degree_cohort = DEGREE_COHORTS.get(get_grad_level(school))
         state_cohort = [
-            s
-            for s in degree_cohort
-            if s and s.state and s.state == school.state
+            s for s in degree_cohort if s and s.state and s.state == school.state
         ]
         # For school control, we want cohorts only for public and private;
         # We do not want a special cohort of for-profit schools
         if not school.control:
             control_cohort = None
         elif school.control == "Public":
-            control_cohort = [
-                s for s in degree_cohort if s.control == school.control
-            ]
+            control_cohort = [s for s in degree_cohort if s.control == school.control]
         else:
-            control_cohort = [
-                s for s in degree_cohort if s.control != "Public"
-            ]
+            control_cohort = [s for s in degree_cohort if s.control != "Public"]
         for metric in ["grad_rate", "repay_3yr", "median_total_debt"]:
             if getattr(school, metric) is None:
                 by_state.update({metric: None})
@@ -116,11 +106,7 @@ def run(single_school=None):
                     )
                 if control_cohort:
                     by_control.update(
-                        {
-                            metric: rank_by_metric(
-                                school, control_cohort, metric
-                            )
-                        }
+                        {metric: rank_by_metric(school, control_cohort, metric)}
                     )
                 if degree_cohort:
                     by_degree.update(

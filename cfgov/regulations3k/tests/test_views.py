@@ -124,14 +124,11 @@ class RedirectRegulations3kTestCase(TestCase):
         )
 
     def test_redirect_interp_appendix(self):
-        request = self.factory.get(
-            "/eregulations/1002-Appendices-Interp/2016-16301"
-        )
+        request = self.factory.get("/eregulations/1002-Appendices-Interp/2016-16301")
         response = redirect_eregs(request)
         self.assertEqual(
             response.get("location"),
-            "/policy-compliance/rulemaking/regulations/"
-            "1002/2016-07-11/interp-c/",
+            "/policy-compliance/rulemaking/regulations/" "1002/2016-07-11/interp-c/",
         )
 
     def test_redirect_interp_appendix_invalid_date(self):
@@ -149,8 +146,7 @@ class RedirectRegulations3kTestCase(TestCase):
         response = redirect_eregs(request)
         self.assertEqual(
             response.get("location"),
-            "/policy-compliance/rulemaking/regulations/1002/"
-            "2016-07-11/h1-interp/",
+            "/policy-compliance/rulemaking/regulations/1002/" "2016-07-11/h1-interp/",
         )
 
     def test_redirect_interp_intro_bad_version(self):
@@ -162,26 +158,20 @@ class RedirectRegulations3kTestCase(TestCase):
         )
 
     def test_redirect_interp_section_past(self):
-        request = self.factory.get(
-            "/eregulations/1002-Subpart-Interp/2016-16301"
-        )
+        request = self.factory.get("/eregulations/1002-Subpart-Interp/2016-16301")
         response = redirect_eregs(request)
         self.assertEqual(
             response.get("location"),
-            "/policy-compliance/rulemaking/regulations/1002/"
-            "2016-07-11/interp-1/",
+            "/policy-compliance/rulemaking/regulations/1002/" "2016-07-11/interp-1/",
         )
 
     def test_redirect_interp_section_past_lowercase(self):
         # troublemaker URL on launch day
-        request = self.factory.get(
-            "/eregulations/1002-subpart-interp/2011-31714"
-        )
+        request = self.factory.get("/eregulations/1002-subpart-interp/2011-31714")
         response = redirect_eregs(request)
         self.assertEqual(
             response.get("location"),
-            "/policy-compliance/rulemaking/regulations/1002/"
-            "2011-12-30/interp-1/",
+            "/policy-compliance/rulemaking/regulations/1002/" "2011-12-30/interp-1/",
         )
 
     def test_interp_section_current(self):
@@ -200,8 +190,7 @@ class RedirectRegulations3kTestCase(TestCase):
         response = redirect_eregs(request)
         self.assertEqual(
             response.get("location"),
-            "/policy-compliance/rulemaking/regulations/1005/"
-            "2013-03-26/interp-2/",
+            "/policy-compliance/rulemaking/regulations/1005/" "2013-03-26/interp-2/",
         )
 
     def test_redirect_no_pattern_match_after_part(self):

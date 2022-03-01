@@ -7,9 +7,7 @@ from mega_menu.models import Menu
 
 
 class Command(BaseCommand):
-    help = (
-        "Import (and overwrite) language-specific mega menu content as JSON."
-    )
+    help = "Import (and overwrite) language-specific mega menu content as JSON."
 
     def add_arguments(self, parser):
         parser.add_argument("language")

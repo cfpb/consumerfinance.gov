@@ -67,9 +67,7 @@ class MenuModelAdmin(ModelAdmin):
         )
 
     def preview_view(self, request, instance_pk):
-        return MenuPreviewView.as_view(model_admin=self, language=instance_pk)(
-            request
-        )
+        return MenuPreviewView.as_view(model_admin=self, language=instance_pk)(request)
 
     def get_preview_template(self):
         return self.get_templates("preview")

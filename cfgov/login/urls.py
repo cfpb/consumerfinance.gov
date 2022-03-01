@@ -42,9 +42,7 @@ else:
             r"^django-admin/login/$",
             RedirectView.as_view(url="/login/", query_string=True),
         ),
-        re_path(
-            r"^logout/$", django_auth_views.LogoutView.as_view(), name="logout"
-        ),
+        re_path(r"^logout/$", django_auth_views.LogoutView.as_view(), name="logout"),
     ]
 
 urlpatterns = urlpatterns + [

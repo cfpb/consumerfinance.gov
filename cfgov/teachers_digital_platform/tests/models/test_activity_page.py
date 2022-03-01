@@ -51,9 +51,7 @@ class TestActivityPage(TestCase):
 
     def test_get_subtopic_ids_works_with_no_topics(self):
         # Arrange
-        activity_page = self.create_activity_detail_page(
-            "Test", "test", topic_list=[]
-        )
+        activity_page = self.create_activity_detail_page("Test", "test", topic_list=[])
         # Act
         actual_subtopic_ids = activity_page.get_subtopic_ids()
         # Assert
@@ -62,9 +60,7 @@ class TestActivityPage(TestCase):
 
     def test_get_subtopic_ids_works_with_no_subtopics(self):
         # Arrange
-        activity_page = self.create_activity_detail_page(
-            "Test", "test", topic_list=[6]
-        )
+        activity_page = self.create_activity_detail_page("Test", "test", topic_list=[6])
         # Act
         actual_subtopic_ids = activity_page.get_subtopic_ids()
         # Assert

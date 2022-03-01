@@ -13,9 +13,7 @@ class TestSetup(TestCase):
 
     @mock.patch("subprocess.check_call")
     def test_something(self, check_call):
-        wheel_directory = os.path.join(
-            os.path.dirname(__file__), "data", "wheels"
-        )
+        wheel_directory = os.path.join(os.path.dirname(__file__), "data", "wheels")
 
         install_wheels(wheel_directory)
 

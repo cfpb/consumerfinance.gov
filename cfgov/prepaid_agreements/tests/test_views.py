@@ -51,9 +51,7 @@ class TestViews(TestCase):
             },
         )
 
-    @unittest.skipUnless(
-        connection.vendor == "postgresql", "PostgreSQL-dependent"
-    )
+    @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL-dependent")
     def test_search_products_issuer_name(self):
         results = search_products(
             search_term="cfpb",
@@ -63,9 +61,7 @@ class TestViews(TestCase):
         self.assertIn(self.product1, results)
         self.assertEqual(results.count(), 2)
 
-    @unittest.skipUnless(
-        connection.vendor == "postgresql", "PostgreSQL-dependent"
-    )
+    @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL-dependent")
     def test_search_products_all_fields(self):
         results = search_products(
             search_term="cfpb",
@@ -92,9 +88,7 @@ class TestViews(TestCase):
         request = HttpRequest()
         search_path_with_query = reverse("prepaid_agreements:index") + "?q=a"
         request.META.update({"HTTP_REFERER": search_path_with_query})
-        self.assertEqual(
-            get_detail_page_breadcrumb(request), search_path_with_query
-        )
+        self.assertEqual(get_detail_page_breadcrumb(request), search_path_with_query)
 
     def test_get_breadcrumb_if_referrer_is_search_page_without_query(self):
         request = HttpRequest()

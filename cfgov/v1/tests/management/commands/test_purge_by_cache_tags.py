@@ -14,6 +14,4 @@ class CacheTagPurgeTestCase(TestCase):
             "--action",
             "invalidate",
         )
-        self.assertTrue(
-            mock_purge_tags.called_with("complaints", action="invalidate")
-        )
+        self.assertTrue(mock_purge_tags.called_with("complaints", action="invalidate"))

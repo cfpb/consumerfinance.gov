@@ -18,29 +18,15 @@ class UpdateChartBlockDatesTestCase(TestCase):
         with open("./v1/tests/fixtures/data_snapshot.json") as json_data:
             data = json.load(json_data)
         markets = data["markets"]
-        data_source_crc = (
-            "consumer-credit-trends/credit-cards/inq_data_CRC.csv"
-        )
+        data_source_crc = "consumer-credit-trends/credit-cards/inq_data_CRC.csv"
         data_source_mtg = "consumer-credit-trends/mortgages/crt_data_MTG.csv"
-        data_source_other = (
-            "consumer-credit-trends/student-loans/num_data_STU.csv"
-        )
+        data_source_other = "consumer-credit-trends/student-loans/num_data_STU.csv"
 
-        self.assertEqual(
-            get_inquiry_month(markets, data_source_crc), "2018-06-01"
-        )
-        self.assertNotEqual(
-            get_inquiry_month(markets, data_source_crc), "2018-02-01"
-        )
-        self.assertEqual(
-            get_inquiry_month(markets, data_source_mtg), "2017-09-01"
-        )
-        self.assertNotEqual(
-            get_inquiry_month(markets, data_source_mtg), "2018-06-01"
-        )
-        self.assertNotEqual(
-            get_inquiry_month(markets, data_source_other), "2018-06-01"
-        )
+        self.assertEqual(get_inquiry_month(markets, data_source_crc), "2018-06-01")
+        self.assertNotEqual(get_inquiry_month(markets, data_source_crc), "2018-02-01")
+        self.assertEqual(get_inquiry_month(markets, data_source_mtg), "2017-09-01")
+        self.assertNotEqual(get_inquiry_month(markets, data_source_mtg), "2018-06-01")
+        self.assertNotEqual(get_inquiry_month(markets, data_source_other), "2018-06-01")
         self.assertIsNone(get_inquiry_month(markets, data_source_other))
 
     def test_chart_block(self):
@@ -60,9 +46,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
         filename = os.path.join(
             settings.PROJECT_ROOT, "v1/tests/fixtures/data_snapshot.json"
         )
-        call_command(
-            "update_chart_block_dates", "--snapshot_file={}".format(filename)
-        )
+        call_command("update_chart_block_dates", "--snapshot_file={}".format(filename))
         response = self.client.get("/browse/")
 
         # Tests last_updated_projected_data is correct
@@ -96,9 +80,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
         filename = os.path.join(
             settings.PROJECT_ROOT, "v1/tests/fixtures/data_snapshot.json"
         )
-        call_command(
-            "update_chart_block_dates", "--snapshot_file={}".format(filename)
-        )
+        call_command("update_chart_block_dates", "--snapshot_file={}".format(filename))
         response = self.client.get("/browse/")
 
         # Tests last_updated_projected_data is correct
@@ -132,9 +114,7 @@ class UpdateChartBlockDatesTestCase(TestCase):
         filename = os.path.join(
             settings.PROJECT_ROOT, "v1/tests/fixtures/data_snapshot.json"
         )
-        call_command(
-            "update_chart_block_dates", "--snapshot_file={}".format(filename)
-        )
+        call_command("update_chart_block_dates", "--snapshot_file={}".format(filename))
         response = self.client.get("/browse/")
 
         # Tests last_updated_projected_data is correct

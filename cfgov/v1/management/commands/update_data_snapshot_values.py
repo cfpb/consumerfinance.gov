@@ -78,9 +78,7 @@ class Command(BaseCommand):
             # Update inquiry index info if it exists for this market
             if "inquiry_yoy_change" in market:
                 snapshot["inquiry_month"] = market["inquiry_month"]
-                snapshot["inquiry_year_over_year_change"] = market[
-                    "inquiry_yoy_change"
-                ]
+                snapshot["inquiry_year_over_year_change"] = market["inquiry_yoy_change"]
             else:
                 snapshot["inquiry_month"] = ""
                 snapshot["inquiry_year_over_year_change"] = ""

@@ -140,9 +140,7 @@ class ConferenceRegistrationFormTests(TestCase):
             govdelivery_code=govdelivery_code,
             details={"attendee_type": attendee_type},
         )
-        ConferenceRegistration.objects.bulk_create(
-            [registrant] * self.capacity
-        )
+        ConferenceRegistration.objects.bulk_create([registrant] * self.capacity)
 
     def test_form_not_at_capacity(self):
         self.assertFalse(self.get_valid_form().at_capacity)

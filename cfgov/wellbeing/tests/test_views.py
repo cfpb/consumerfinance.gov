@@ -49,6 +49,4 @@ class TestResultsView(TestCase):
                 "method": "read-self",
             },
         )
-        self.assertContains(
-            response, 'Your score: <b class="score-value">57</b>'
-        )
+        self.assertContains(response, 'Your score: <b class="score-value">57</b>')

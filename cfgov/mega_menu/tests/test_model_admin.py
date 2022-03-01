@@ -35,10 +35,7 @@ class ModelAdminTests(TestCase, WagtailTestUtils):
         )
 
         Menu.objects.bulk_create(
-            [
-                Menu(language=language, submenus=submenus)
-                for language in ("en", "es")
-            ]
+            [Menu(language=language, submenus=submenus) for language in ("en", "es")]
         )
 
     def test_index_view_contains_preview_button(self):

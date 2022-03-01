@@ -27,9 +27,7 @@ class TestTranslations(TestCase):
         self.assertEqual(str(test_resource), test_resource.title)
         self.assertEqual(test_resource.trans_title(), test_resource.title)
         self.assertEqual(test_resource.trans_text(), test_resource.text)
-        self.assertEqual(
-            test_resource.trans_title("es"), test_resource.title_es
-        )
+        self.assertEqual(test_resource.trans_title("es"), test_resource.title_es)
         self.assertEqual(test_resource.trans_text("es"), test_resource.text_es)
 
 

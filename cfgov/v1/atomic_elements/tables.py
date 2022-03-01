@@ -41,12 +41,8 @@ class AtomicTableBlock(TableBlock):
     def get_has_data(self, value):
         has_data = False
         if value and "data" in value:
-            first_row_index = (
-                1 if value.get("first_row_is_table_header", None) else 0
-            )
-            first_col_index = (
-                1 if value.get("first_col_is_header", None) else 0
-            )
+            first_row_index = 1 if value.get("first_row_is_table_header", None) else 0
+            first_col_index = 1 if value.get("first_col_is_header", None) else 0
 
             for row in value["data"][first_row_index:]:
                 for cell in row[first_col_index:]:
@@ -56,9 +52,7 @@ class AtomicTableBlock(TableBlock):
         return has_data
 
     def get_table_options(self, table_options=None):
-        collected_table_options = super().get_table_options(
-            table_options=table_options
-        )
+        collected_table_options = super().get_table_options(table_options=table_options)
         collected_table_options["editor"] = "RichTextEditor"
         collected_table_options["outsideClickDeselects"] = False
         return collected_table_options

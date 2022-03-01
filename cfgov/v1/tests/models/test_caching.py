@@ -104,9 +104,7 @@ class TestAkamaiBackend(TestCase):
     def test_purge_cache_tags(self):
         akamai_backend = AkamaiBackend(self.credentials)
         with mock.patch.object(AkamaiBackend, "post_tags") as mock_post_tags:
-            akamai_backend.purge_by_tags(
-                [NEWSROOM_CACHE_TAG], action="invalidate"
-            )
+            akamai_backend.purge_by_tags([NEWSROOM_CACHE_TAG], action="invalidate")
         mock_post_tags.assert_called_once_with(
             [NEWSROOM_CACHE_TAG], action="invalidate"
         )
@@ -173,12 +171,8 @@ class CloudfrontInvalidationTest(TestCase):
     def setUp(self):
         self.document = Document(title="Test document")
         self.document_without_file = Document(title="Document without file")
-        self.document.file.save(
-            "example.txt", ContentFile("A boring example document")
-        )
-        self.image = CFGOVImage.objects.create(
-            title="test", file=get_test_image_file()
-        )
+        self.document.file.save("example.txt", ContentFile("A boring example document"))
+        self.image = CFGOVImage.objects.create(title="test", file=get_test_image_file())
         self.rendition = self.image.get_rendition("original")
 
         CACHE_PURGED_URLS[:] = []

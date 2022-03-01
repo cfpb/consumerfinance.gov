@@ -108,9 +108,7 @@ class FilterableListMixin(ShareableRoutablePageMixin):
     def process_form(self, request, form):
         filter_data = {}
         if form.is_valid():
-            paginator = Paginator(
-                form.get_page_set(), self.filterable_per_page_limit
-            )
+            paginator = Paginator(form.get_page_set(), self.filterable_per_page_limit)
             page = request.GET.get("page")
 
             # Get the page number in the request and get the page from the
@@ -197,8 +195,6 @@ class CategoryFilterableMixin:
         By default this is an empty list and all page tags are eligible.
         """
         category_names = get_category_children(self.filterable_categories)
-        filterable_search = self.get_search_class()(
-            prefix=self.get_filterable_root()
-        )
+        filterable_search = self.get_search_class()(prefix=self.get_filterable_root())
         filterable_search.filter_categories(categories=category_names)
         return filterable_search

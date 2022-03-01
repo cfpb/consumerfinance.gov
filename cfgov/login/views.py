@@ -52,9 +52,7 @@ def change_password(request):
             form.save()
             update_session_auth_hash(request, form.user)
 
-            messages.success(
-                request, _("Your password has been changed successfully!")
-            )
+            messages.success(request, _("Your password has been changed successfully!"))
             return redirect("wagtailadmin_account")
         else:
             if "__all__" in form.errors:
@@ -93,9 +91,7 @@ def login_with_lockout(request, template_name="wagtailadmin/login.html"):
 
         if form.is_valid():
             # Ensure the user-originating redirection url is safe.
-            if not is_safe_url(
-                url=redirect_to, allowed_hosts=request.get_host()
-            ):
+            if not is_safe_url(url=redirect_to, allowed_hosts=request.get_host()):
                 redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
             user = form.get_user()
@@ -106,14 +102,10 @@ def login_with_lockout(request, template_name="wagtailadmin/login.html"):
 
             login(request, form.get_user())
 
-            return HttpResponseRedirect(
-                "/login/check_permissions/?next=" + redirect_to
-            )
+            return HttpResponseRedirect("/login/check_permissions/?next=" + redirect_to)
     else:
         if request.user.is_authenticated:
-            return HttpResponseRedirect(
-                "/login/check_permissions/?next=" + redirect_to
-            )
+            return HttpResponseRedirect("/login/check_permissions/?next=" + redirect_to)
         form = LoginForm(request)
 
     current_site = get_current_site(request)
@@ -165,9 +157,7 @@ def check_permissions(request):
                 "wagtailadmin/access_denied.html",
                 context={
                     "attempted_to_reach": redirect_to,
-                    "destinations": all_valid_destinations_for_request(
-                        request
-                    ),
+                    "destinations": all_valid_destinations_for_request(request),
                 },
             )
 
@@ -224,6 +214,4 @@ def custom_password_reset_confirm(
     return TemplateResponse(request, template_name, context)
 
 
-password_reset_confirm = _wrap_password_reset_view(
-    custom_password_reset_confirm
-)
+password_reset_confirm = _wrap_password_reset_view(custom_password_reset_confirm)

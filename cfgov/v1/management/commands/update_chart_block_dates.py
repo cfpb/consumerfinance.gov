@@ -58,13 +58,9 @@ class Command(BaseCommand):
                     last_updated_inquiry = get_inquiry_month(
                         markets, chart_options["data_source"]
                     )
-                    chart["value"][
-                        "last_updated_projected_data"
-                    ] = last_updated_inquiry
+                    chart["value"]["last_updated_projected_data"] = last_updated_inquiry
                 else:
-                    chart["value"][
-                        "last_updated_projected_data"
-                    ] = last_updated
+                    chart["value"]["last_updated_projected_data"] = last_updated
             publish_changes(page.specific)
 
     def handle(self, *args, **options):
@@ -75,10 +71,6 @@ class Command(BaseCommand):
         markets = data["markets"]
         date_published = data["date_published"]
         last_updated = max([item["data_month"] for item in markets])
-        inquiry_activity_charts = [
-            item for item in markets if "inquiry_month" in item
-        ]
+        inquiry_activity_charts = [item for item in markets if "inquiry_month" in item]
 
-        self.update_chart_blocks(
-            date_published, last_updated, inquiry_activity_charts
-        )
+        self.update_chart_blocks(date_published, last_updated, inquiry_activity_charts)

@@ -72,9 +72,7 @@ class FrontendConverterTests(TestCase):
             },
         ]
 
-        cls.menu = Menu.objects.create(
-            language="en", submenus=json.dumps(submenus)
-        )
+        cls.menu = Menu.objects.create(language="en", submenus=json.dumps(submenus))
 
     @classmethod
     def make_test_page(cls, title):

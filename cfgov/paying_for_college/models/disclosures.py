@@ -285,17 +285,13 @@ class ConstantCap(models.Model):
 class Contact(models.Model):
     """school endpoint or email to which we send confirmations"""
 
-    contacts = models.TextField(
-        help_text="COMMA-SEPARATED LIST OF EMAILS", blank=True
-    )
+    contacts = models.TextField(help_text="COMMA-SEPARATED LIST OF EMAILS", blank=True)
     endpoint = models.CharField(max_length=255, blank=True)
     name = models.CharField(max_length=255, blank=True)
     internal_note = models.TextField(blank=True)
 
     def __str__(self):
-        return ", ".join(
-            [bit for bit in [self.contacts, self.endpoint] if bit]
-        )
+        return ", ".join([bit for bit in [self.contacts, self.endpoint] if bit])
 
 
 def format_for_null(value):
@@ -314,9 +310,7 @@ class School(models.Model):
     school_id = models.IntegerField(primary_key=True)
     ope6_id = models.IntegerField(blank=True, null=True)
     ope8_id = models.IntegerField(blank=True, null=True)
-    settlement_school = models.CharField(
-        max_length=100, blank=True, default=""
-    )
+    settlement_school = models.CharField(max_length=100, blank=True, default="")
     contact = models.ForeignKey(
         Contact, on_delete=models.CASCADE, blank=True, null=True
     )
@@ -449,9 +443,7 @@ class School(models.Model):
             "medianTotalDebt": format_for_null(self.median_total_debt),
             "netPriceAvg": self.avg_net_price,
             "netPriceAvgSlices": self.avg_net_price_slices,
-            "nicknames": ", ".join(
-                [nick.nickname for nick in self.nickname_set.all()]
-            ),
+            "nicknames": ", ".join([nick.nickname for nick in self.nickname_set.all()]),
             "offersPerkins": self.offers_perkins,
             "onCampusAvail": jdata["ONCAMPUSAVAIL"],
             "online": self.online_only,
@@ -462,9 +454,7 @@ class School(models.Model):
             "programCount": self.program_count,
             "programsPopular": self.program_most_popular,
             "predominantDegree": self.get_predominant_degree(),
-            "rateAssociateTransfer": format_for_null(
-                self.associate_transfer_rate
-            ),
+            "rateAssociateTransfer": format_for_null(self.associate_transfer_rate),
             "rateDefault": format_for_null(self.default_rate),
             "rateGraduation": format_for_null(self.grad_rate),
             "rateRepay3yr": format_for_null(self.repay_3yr),
@@ -499,9 +489,7 @@ class School(models.Model):
         # We're only insterested in program data with salary included
         payload = {}
         live_programs = (
-            self.program_set.filter(test=False)
-            .exclude(level="")
-            .exclude(salary=None)
+            self.program_set.filter(test=False).exclude(level="").exclude(salary=None)
         )
         graduate = [p for p in live_programs if int(p.level) > 3]
         undergrad = [p for p in live_programs if p not in graduate]
@@ -524,10 +512,7 @@ class School(models.Model):
 
     def get_predominant_degree(self):
         predominant = ""
-        if (
-            self.degrees_predominant
-            and self.degrees_predominant in HIGHEST_DEGREES
-        ):
+        if self.degrees_predominant and self.degrees_predominant in HIGHEST_DEGREES:
             predominant = HIGHEST_DEGREES[self.degrees_predominant]
         return predominant
 
@@ -583,9 +568,7 @@ class DisclosureBase(models.Model):
         data = {}
         if not self.url or "?" not in self.url:
             return data
-        split_fields = (
-            self.url.replace("#info-right", "").split("?")[1].split("&")
-        )
+        split_fields = self.url.replace("#info-right", "").split("?")[1].split("&")
         for field in split_fields:
             pair = field.split("=")
             data[pair[0]] = pair[1]
@@ -681,9 +664,7 @@ class Notification(DisclosureBase):
     oid = models.CharField(max_length=40)
     timestamp = models.DateTimeField()
     errors = models.CharField(max_length=255)
-    emails = models.TextField(
-        blank=True, help_text="COMMA-SEPARATED STRING OF EMAILS"
-    )
+    emails = models.TextField(blank=True, help_text="COMMA-SEPARATED STRING OF EMAILS")
     sent = models.BooleanField(default=False)
     log = models.TextField(blank=True)
 
@@ -704,8 +685,7 @@ class Notification(DisclosureBase):
         }
         now = datetime.datetime.now()
         no_contact_msg = (
-            "School notification failed: "
-            "No endpoint or email info {}".format(now)
+            "School notification failed: " "No endpoint or email info {}".format(now)
         )
         # we prefer to use endpount notification, so use it first if existing
         if school.contact:
@@ -716,35 +696,28 @@ class Notification(DisclosureBase):
                 try:
                     resp = requests.post(endpoint, data=payload, timeout=10)
                 except requests.exceptions.ConnectionError as e:
-                    exmsg = (
-                        "Error: connection error at school "
-                        "{} {}\n".format(now, e)
+                    exmsg = "Error: connection error at school " "{} {}\n".format(
+                        now, e
                     )
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg
                 except requests.exceptions.Timeout:
-                    exmsg = (
-                        "Error: connection with school "
-                        "timed out {}\n".format(now)
+                    exmsg = "Error: connection with school " "timed out {}\n".format(
+                        now
                     )
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg
                 except requests.exceptions.RequestException as e:
-                    exmsg = (
-                        "Error: request error at school: "
-                        "{} {}\n".format(now, e)
-                    )
+                    exmsg = "Error: request error at school: " "{} {}\n".format(now, e)
                     self.log = self.log + exmsg
                     self.save()
                     return exmsg
                 else:
                     if resp.ok:
                         self.sent = True
-                        self.log = "School notified " "via endpoint {}".format(
-                            now
-                        )
+                        self.log = "School notified " "via endpoint {}".format(now)
                         self.save()
                         return self.log
                     else:
@@ -768,17 +741,12 @@ class Notification(DisclosureBase):
                         "CFPB disclosure notification",
                         NOTIFICATION_TEMPLATE.substitute(payload),
                         "no-reply@cfpb.gov",
-                        [
-                            email
-                            for email in school.contact.contacts.split(",")
-                        ],
+                        [email for email in school.contact.contacts.split(",")],
                         fail_silently=False,
                     )
                     self.sent = True
                     self.emails = school.contact.contacts
-                    self.log = "School notified via email " "at {}".format(
-                        self.emails
-                    )
+                    self.log = "School notified via email " "at {}".format(self.emails)
                     self.save()
                     return self.log
                 except smtplib.SMTPException as e:
@@ -815,12 +783,8 @@ class Program(models.Model):
     campus = models.CharField(max_length=255, blank=True)
     cip_code = models.CharField(max_length=255, blank=True)
     soc_codes = models.CharField(max_length=255, blank=True)
-    total_cost = models.IntegerField(
-        blank=True, null=True, help_text="COMPUTED"
-    )
-    time_to_complete = models.IntegerField(
-        blank=True, null=True, help_text="IN MONTHS"
-    )
+    total_cost = models.IntegerField(blank=True, null=True, help_text="COMPUTED")
+    time_to_complete = models.IntegerField(blank=True, null=True, help_text="IN MONTHS")
     completion_rate = models.DecimalField(
         blank=True, null=True, max_digits=5, decimal_places=2
     )
@@ -847,20 +811,12 @@ class Program(models.Model):
     default_rate = models.DecimalField(
         blank=True, null=True, max_digits=5, decimal_places=2
     )
-    salary = models.IntegerField(
-        blank=True, null=True, help_text="MEDIAN SALARY"
-    )
-    program_length = models.IntegerField(
-        blank=True, null=True, help_text="IN MONTHS"
-    )
+    salary = models.IntegerField(blank=True, null=True, help_text="MEDIAN SALARY")
+    program_length = models.IntegerField(blank=True, null=True, help_text="IN MONTHS")
     tuition = models.IntegerField(blank=True, null=True)
     fees = models.IntegerField(blank=True, null=True)
-    housing = models.IntegerField(
-        blank=True, null=True, help_text="HOUSING & MEALS"
-    )
-    books = models.IntegerField(
-        blank=True, null=True, help_text="BOOKS & SUPPLIES"
-    )
+    housing = models.IntegerField(blank=True, null=True, help_text="HOUSING & MEALS")
+    books = models.IntegerField(blank=True, null=True, help_text="BOOKS & SUPPLIES")
     transportation = models.IntegerField(blank=True, null=True)
     other_costs = models.IntegerField(blank=True, null=True)
     job_rate = models.DecimalField(
@@ -870,9 +826,7 @@ class Program(models.Model):
         decimal_places=2,
         help_text="COMPLETERS WHO GET RELATED JOB",
     )
-    job_note = models.TextField(
-        blank=True, help_text="EXPLANATION FROM SCHOOL"
-    )
+    job_note = models.TextField(blank=True, help_text="EXPLANATION FROM SCHOOL")
     test = models.BooleanField(default=False)
 
     def __str__(self):

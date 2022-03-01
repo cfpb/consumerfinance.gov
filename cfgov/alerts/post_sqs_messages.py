@@ -31,15 +31,11 @@ parser.add_argument(
 parser.add_argument(
     "--github_token", required=True, help="Access token for Github account"
 )
-parser.add_argument(
-    "--github_url", required=True, help="URL for Github (enterprise)"
-)
+parser.add_argument("--github_url", required=True, help="URL for Github (enterprise)")
 parser.add_argument(
     "--github_user", required=True, help="Github user that repo lives under"
 )
-parser.add_argument(
-    "--github_repo", required=True, help="Github repo name to post to"
-)
+parser.add_argument("--github_repo", required=True, help="Github repo name to post to")
 parser.add_argument(
     "--mattermost_webhook_url",
     help="Mattermost webhook URL to post to chatroom",
@@ -61,9 +57,7 @@ parser.add_argument(
 
 
 def cleanup_message(message):
-    return message.replace(
-        "#", "# "
-    ).replace(  # Avoids erroneous Github issue link
+    return message.replace("#", "# ").replace(  # Avoids erroneous Github issue link
         "[Open]", ""  # We want to expand the link
     )
 
@@ -79,9 +73,7 @@ def process_sqs_message(message, github_alert, mattermost_alert):
     if mattermost_alert:
         try:
             mattermost_alert.post(
-                text="Alert: {}. Github issue at {}".format(
-                    title, issue.html_url
-                )
+                text="Alert: {}. Github issue at {}".format(title, issue.html_url)
             )
         except Exception:
             # Mattermost failures should be considered non-fatal, as the alert
@@ -127,9 +119,7 @@ if __name__ == "__main__":
         )
 
     # Receive messages from specified SQS queue
-    response = client.receive_message(
-        QueueUrl=args.queue_url, MaxNumberOfMessages=10
-    )
+    response = client.receive_message(QueueUrl=args.queue_url, MaxNumberOfMessages=10)
 
     for message in response.get("Messages", {}):
         process_sqs_message(

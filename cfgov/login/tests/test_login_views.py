@@ -9,12 +9,8 @@ class LoginViewsTestCase(TestCase):
         self.assertEqual(response.context["next"], "/admin/")
 
     def test_login_with_lockout_failed_login(self):
-        self.client.post(
-            "/login/", {"username": "admin", "password": "badadmin"}
-        )
-        self.assertIsNotNone(
-            User.objects.get(username="admin").failedloginattempt
-        )
+        self.client.post("/login/", {"username": "admin", "password": "badadmin"})
+        self.assertIsNotNone(User.objects.get(username="admin").failedloginattempt)
 
     def test_login_with_lockout_success_after_failed_login(self):
         response = self.client.post(
@@ -62,15 +58,11 @@ class LoginViewsTestCase(TestCase):
 
     def test_check_permissions_next_url_unsafe(self):
         self.client.login(username="admin", password="admin")
-        response = self.client.get(
-            "/login/check_permissions/?next=https://google.com/"
-        )
+        response = self.client.get("/login/check_permissions/?next=https://google.com/")
         self.assertRedirects(response, "/admin/")
 
     def test_check_permissions_next_permissions_problem(self):
-        User.objects.create_user(
-            username="noperm", email="", password="noperm"
-        )
+        User.objects.create_user(username="noperm", email="", password="noperm")
         self.client.login(username="noperm", password="noperm")
         response = self.client.get("/login/check_permissions/?next=/admin/")
         self.assertIn(

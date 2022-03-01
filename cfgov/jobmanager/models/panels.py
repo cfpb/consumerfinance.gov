@@ -15,9 +15,7 @@ class EmailApplicationLink(Orderable, models.Model):
     label = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
 
-    job_listing = ParentalKey(
-        JobListingPage, related_name="email_application_links"
-    )
+    job_listing = ParentalKey(JobListingPage, related_name="email_application_links")
 
     panels = [
         FieldPanel("address"),
@@ -41,9 +39,7 @@ class USAJobsApplicationLink(Orderable, models.Model):
         related_name="usajobs_application_links",
     )
 
-    job_listing = ParentalKey(
-        JobListingPage, related_name="usajobs_application_links"
-    )
+    job_listing = ParentalKey(JobListingPage, related_name="usajobs_application_links")
 
     panels = [
         FieldPanel("announcement_number"),

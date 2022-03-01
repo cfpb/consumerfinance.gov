@@ -28,10 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 def cdn_is_configured():
-    return (
-        hasattr(settings, "WAGTAILFRONTENDCACHE")
-        and settings.WAGTAILFRONTENDCACHE
-    )
+    return hasattr(settings, "WAGTAILFRONTENDCACHE") and settings.WAGTAILFRONTENDCACHE
 
 
 def purge(url=None):
@@ -45,9 +42,7 @@ def purge(url=None):
 
         # If the URL matches any of our CloudFront distributions, invalidate
         # with that backend
-        if any(
-            k for k in cloudfront_config.get("DISTRIBUTION_ID", {}) if k in url
-        ):
+        if any(k for k in cloudfront_config.get("DISTRIBUTION_ID", {}) if k in url):
             logger.info('Purging {} from "files" cache'.format(url))
             batch.purge(backends=["files"])
 
@@ -82,9 +77,7 @@ def manage_cdn(request):
         form = CacheInvalidationForm(request.POST)
         if form.is_valid():
             url = form.cleaned_data["url"]
-            history_item = CDNHistory(
-                subject=url or "entire site", user=request.user
-            )
+            history_item = CDNHistory(subject=url or "entire site", user=request.user)
 
             try:
                 message = purge(url)

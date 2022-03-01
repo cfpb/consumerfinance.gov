@@ -41,9 +41,7 @@ class PageSettingsOrderTestCase(TestCase):
     def check_correct_page_settings_order(self, page_cls):
         settings_panels = getattr(page_cls, "settings_panels", [])
         panel_names = [self.get_panel_name(p).lower() for p in settings_panels]
-        expected_order = [
-            p for p in self.expected_panel_order if p in panel_names
-        ]
+        expected_order = [p for p in self.expected_panel_order if p in panel_names]
 
         self.assertSequenceEqual(panel_names, expected_order)
 

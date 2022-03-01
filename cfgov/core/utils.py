@@ -17,9 +17,7 @@ NON_CFPB_LINKS = re.compile(
     r"(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)"
     r"(?!(content\.)?localhost).*)"
 )
-DOWNLOAD_LINKS = re.compile(
-    r"(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$"
-)
+DOWNLOAD_LINKS = re.compile(r"(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$")
 ASK_CFPB_LINKS = re.compile(
     # https://regexr.com/5opro
     r"(https?:\/\/(www\.)?(cfpb|consumerfinance)\.gov)?\/ask\-cfpb\/([-\w]{1,244})-(en)-(?P<ask_id>\d{1,6})\/?$"  # noqa: B950
@@ -178,9 +176,7 @@ def add_link_markup(tag, request_path):
     svgs = tag.find_all("svg")
     if svgs:
         last_svg = svgs[-1]
-        if not any(
-            str(sibling or "").strip() for sibling in last_svg.next_siblings
-        ):
+        if not any(str(sibling or "").strip() for sibling in last_svg.next_siblings):
             return str(tag)
 
     if tag.select(", ".join(ICONLESS_LINK_CHILD_ELEMENTS)):
@@ -201,9 +197,7 @@ def add_link_markup(tag, request_path):
     # add proper markup so that the link appears as a button with the icon on
     # the right side.
     if not spans and "a-btn" in class_attrs:
-        span = soup.new_tag(
-            "span", **{"class": "a-btn_icon a-btn_icon__on-right"}
-        )
+        span = soup.new_tag("span", **{"class": "a-btn_icon a-btn_icon__on-right"})
         span.contents.append(icon_soup)
 
         tag.contents.append(span)

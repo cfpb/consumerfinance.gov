@@ -129,9 +129,7 @@ class CFGOVPage(Page):
         "automatically after a certain period of time.",
     )
 
-    archived_at = models.DateField(
-        blank=True, null=True, verbose_name="Archive date"
-    )
+    archived_at = models.DateField(blank=True, null=True, verbose_name="Archive date")
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
@@ -406,9 +404,7 @@ class CFGOVPage(Page):
             return result
 
         context = self.get_context(request, *args, **kwargs)
-        context["form_modules"][streamfield_name].update(
-            {streamfield_index: result}
-        )
+        context["form_modules"][streamfield_name].update({streamfield_index: result})
 
         return TemplateResponse(
             request, self.get_template(request, *args, **kwargs), context
@@ -506,24 +502,18 @@ class FailedLoginAttempt(models.Model):
 
     def __unicode__(self):
         attempts_no = (
-            0
-            if not self.failed_attempts
-            else len(self.failed_attempts.split(","))
+            0 if not self.failed_attempts else len(self.failed_attempts.split(","))
         )
         return "%s has %s failed login attempts" % (self.user, attempts_no)
 
     def clean_attempts(self, timestamp):
         """Leave only those that happened after <timestamp>"""
         attempts = self.failed_attempts.split(",")
-        self.failed_attempts = ",".join(
-            [fa for fa in attempts if int(fa) >= timestamp]
-        )
+        self.failed_attempts = ",".join([fa for fa in attempts if int(fa) >= timestamp])
 
     def failed(self, timestamp):
         """Add another failed attempt"""
-        attempts = (
-            self.failed_attempts.split(",") if self.failed_attempts else []
-        )
+        attempts = self.failed_attempts.split(",") if self.failed_attempts else []
         attempts.append(str(int(timestamp)))
         self.failed_attempts = ",".join(attempts)
 

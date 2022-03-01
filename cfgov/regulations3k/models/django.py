@@ -21,8 +21,7 @@ import regdown
 label_re_str = r"[\w]+[-\w]*"
 validate_label = RegexValidator(
     re.compile(r"^" + label_re_str + r"$"),
-    "Enter a valid “label” consisting of letters, numbers, hyphens, "
-    "and no spaces.",
+    "Enter a valid “label” consisting of letters, numbers, hyphens, " "and no spaces.",
     "invalid",
 )
 
@@ -98,9 +97,7 @@ class EffectiveVersion(models.Model):
     effective_date = models.DateField(default=date.today)
     created = models.DateField(default=date.today)
     draft = models.BooleanField(default=False)
-    part = models.ForeignKey(
-        Part, on_delete=models.CASCADE, related_name="versions"
-    )
+    part = models.ForeignKey(Part, on_delete=models.CASCADE, related_name="versions")
 
     panels = [
         FieldPanel("authority"),
@@ -139,9 +136,7 @@ class EffectiveVersion(models.Model):
         )
 
         if self.pk:
-            versions_with_this_date = versions_with_this_date.exclude(
-                pk=self.pk
-            )
+            versions_with_this_date = versions_with_this_date.exclude(pk=self.pk)
 
         if versions_with_this_date.count() > 0:
             raise ValidationError(
@@ -367,8 +362,6 @@ def section_saved(sender, instance, **kwargs):
     if not instance.subpart.version.draft:
         batch = PurgeBatch()
         for page in instance.subpart.version.part.page.all():
-            urls = page.get_urls_for_version(
-                instance.subpart.version, section=instance
-            )
+            urls = page.get_urls_for_version(instance.subpart.version, section=instance)
             batch.add_urls(urls)
         batch.purge()

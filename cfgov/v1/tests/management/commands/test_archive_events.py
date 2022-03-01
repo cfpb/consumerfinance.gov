@@ -74,9 +74,7 @@ class TestArchiveEvents(TestCase):
         )
         events_page.add_child(instance=future_event_page)
 
-        self.assertIn(
-            "No past events found to be archived.", self.call_command()
-        )
+        self.assertIn("No past events found to be archived.", self.call_command())
 
     @freeze_time("2020-02-02")
     def test_past_events_get_archived(self):

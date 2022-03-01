@@ -70,9 +70,7 @@ def update_programs(api_data, school):
                 "level": level,
                 "level_name": PROGRAM_LEVELS.get(level),
                 "salary": entry["earnings"]["median_earnings"],
-                "median_student_loan_completers": (
-                    entry["debt"]["median_debt"]
-                ),
+                "median_student_loan_completers": (entry["debt"]["median_debt"]),
                 "median_monthly_debt": (entry["debt"]["monthly_debt_payment"]),
             },
         )
@@ -110,9 +108,7 @@ def get_scorecard_data(url):
 
 def set_school_grad_rate(school, api_data):
     """Set the appropriate grad rate for a given school."""
-    four_year_raw = api_data.get(
-        "latest.completion.completion_rate_4yr_150nt_pooled"
-    )
+    four_year_raw = api_data.get("latest.completion.completion_rate_4yr_150nt_pooled")
     associate_raw = api_data.get(
         "latest.completion.completion_rate_less_than_4yr_150nt_pooled"
     )
@@ -150,20 +146,14 @@ def compile_net_prices(school, api_data):
         "latest.cost.net_price.{}.by_income_level.75001-110000": "75k_110k",
         "latest.cost.net_price.{}.by_income_level.110001-plus": "110k_plus",
     }
-    public_slices = {
-        key.format("public"): val for key, val in slice_map.items()
-    }
-    private_slices = {
-        key.format("private"): val for key, val in slice_map.items()
-    }
+    public_slices = {key.format("public"): val for key, val in slice_map.items()}
+    private_slices = {key.format("private"): val for key, val in slice_map.items()}
     if school.control == "Public":
         mapping = public_slices
         school.avg_net_price = api_data.get("latest.cost.avg_net_price.public")
     else:
         mapping = private_slices
-        school.avg_net_price = api_data.get(
-            "latest.cost.avg_net_price.private"
-        )
+        school.avg_net_price = api_data.get("latest.cost.avg_net_price.private")
     for key, val in mapping.items():
         slice_data[val] = api_data.get(key)
     school.avg_net_price_slices = slice_data
@@ -193,16 +183,12 @@ def update(exclude_ids=[], single_school=None, store_programs=False):
     base_query = School.objects.exclude(pk__in=excluded_ids)
     if single_school:
         if not base_query.filter(pk=single_school).exists():
-            no_school_msg = "Could not find school with ID {}".format(
-                single_school
-            )
+            no_school_msg = "Could not find school with ID {}".format(single_school)
             return (no_data, no_school_msg)
         base_query = base_query.filter(pk=single_school)
         logger.info("Updating {}".format(base_query[0]))
     else:
-        logger.info(
-            "Seeking updates for {} schools.".format(base_query.count())
-        )
+        logger.info("Seeking updates for {} schools.".format(base_query.count()))
         logger.info(job_msg)
     for school in base_query:
         processed += 1

@@ -11,9 +11,7 @@ logger = logging.getLogger(__name__)
 
 def _run_elasticsearch_rebuild():
     """Rebuild the Elasticsearch index after prepping section paragraphs."""
-    call_command(
-        "search_index", "--rebuild", "-f", "--models", "regulations3k"
-    )
+    call_command("search_index", "--rebuild", "-f", "--models", "regulations3k")
 
 
 class Command(BaseCommand):
@@ -27,9 +25,7 @@ class Command(BaseCommand):
         }
         regulations = Part.objects.all()
         versions = [
-            part.effective_version
-            for part in regulations
-            if part.effective_version
+            part.effective_version for part in regulations if part.effective_version
         ]
         sections = Section.objects.filter(subpart__version__in=versions)
         for section in sections:
@@ -50,7 +46,5 @@ class Command(BaseCommand):
             )
         )
         if dupes:
-            logger.info(
-                "These paragraph IDs were dupes: \n{}".format("\n".join(dupes))
-            )
+            logger.info("These paragraph IDs were dupes: \n{}".format("\n".join(dupes)))
         _run_elasticsearch_rebuild()

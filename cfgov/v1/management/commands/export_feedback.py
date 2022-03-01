@@ -38,10 +38,7 @@ class Command(BaseCommand):
             "pages",
             nargs="*",
             type=lookup_page_slug,
-            help=(
-                "export only feedback for these page slugs "
-                "and their child pages"
-            ),
+            help=("export only feedback for these page slugs " "and their child pages"),
         )
         parser.add_argument(
             "--exclude",

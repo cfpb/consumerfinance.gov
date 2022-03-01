@@ -197,27 +197,18 @@ class OfferTest(django.test.TestCase):
             "prvi=4.55&insl=3000&insi=4.55"
         )
         no_oid = "?iped=408039&pid=981&oid="
-        bad_school = (
-            "?iped=xxxxxx&pid=981&" "oid=f38283b5b7c939a058889f997949efa566c61"
-        )
+        bad_school = "?iped=xxxxxx&pid=981&" "oid=f38283b5b7c939a058889f997949efa566c61"
         bad_program = (
-            "?iped=408039&pid=xxx&"
-            "oid=f38283b5b7c939a058889f997949efa566c616c5"
+            "?iped=408039&pid=xxx&" "oid=f38283b5b7c939a058889f997949efa566c616c5"
         )
         # puerto_rico = '?iped=243197&pid=981&oid='
         missing_oid_field = "?iped=408039&pid=981"
         missing_school_id = "?iped="
-        bad_oid = (
-            "?iped=408039&pid=981&oid=f382"
-            "<script></script>f997949efa566c616c5"
-        )
+        bad_oid = "?iped=408039&pid=981&oid=f382" "<script></script>f997949efa566c616c5"
         illegal_program = (
-            "?iped=408039&pid=<981>&oid=f38283b"
-            "5b7c939a058889f997949efa566c616c5"
+            "?iped=408039&pid=<981>&oid=f38283b" "5b7c939a058889f997949efa566c616c5"
         )
-        no_program = (
-            "?iped=408039&pid=&oid=f38283b" "5b7c939a058889f997949efa566c616c5"
-        )
+        no_program = "?iped=408039&pid=&oid=f38283b" "5b7c939a058889f997949efa566c616c5"
         resp = self.client.get(url + qstring)
         self.assertEqual(resp.status_code, 200)
         resp_test = self.client.get(url + qstring)
@@ -261,9 +252,7 @@ class APITests(django.test.TestCase):
     # /paying-for-college2/understanding-your-financial-aid-offer/api/school/155317.json
     def test_school_json(self):
         """api call for school details."""
-        url = reverse(
-            "paying_for_college:disclosures:school-json", args=["155317"]
-        )
+        url = reverse("paying_for_college:disclosures:school-json", args=["155317"])
         resp = self.client.get(url)
         self.assertIn(b"Kansas", resp.content)
         self.assertIn(b"155317", resp.content)

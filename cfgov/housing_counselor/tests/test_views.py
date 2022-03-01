@@ -57,9 +57,7 @@ class HousingCounselorViewTestCase(TestCase):
     @mock.patch("housing_counselor.views.HousingCounselorView.get_counselors")
     def test_get_counselors_valid_zipcode(self, mock_get_counselors):
         mock_get_counselors.return_value = {}
-        response = self.client.get(
-            "/find-a-housing-counselor/", {"zipcode": "12345"}
-        )
+        response = self.client.get("/find-a-housing-counselor/", {"zipcode": "12345"})
         self.assertTrue(response.context_data["zipcode_valid"])
         self.assertIn("12345.pdf", response.context_data["pdf_url"])
 
@@ -71,7 +69,5 @@ class HousingCounselorPDFViewTestCase(TestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_get_valid_form(self):
-        response = self.client.get(
-            "/save-hud-counselors-list/", {"zip": "12345"}
-        )
+        response = self.client.get("/save-hud-counselors-list/", {"zip": "12345"})
         self.assertEqual(response.status_code, 302)

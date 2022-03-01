@@ -50,9 +50,7 @@ class TestCFGOVPage(TestCase):
         self.assertIsInstance(response, HttpResponseBadRequest)
 
     def test_serve_post_returns_json_400_for_no_form_id(self):
-        request = self.factory.post(
-            "/", HTTP_X_REQUESTED_WITH="XMLHttpRequest"
-        )
+        request = self.factory.post("/", HTTP_X_REQUESTED_WITH="XMLHttpRequest")
         response = self.page.serve_post(request)
         self.assertEqual(response.content, b'{"result": "error"}')
         self.assertEqual(response.status_code, 400)
@@ -551,9 +549,7 @@ class TestCFGOVPageCopy(TestCase):
     def setUp(self):
         self.site = Site.objects.first()
         self.root_page = self.site.root_page
-        self.page_with_tags = CFGOVPage(
-            title="Tagged", slug="tagged", live=True
-        )
+        self.page_with_tags = CFGOVPage(title="Tagged", slug="tagged", live=True)
         save_new_page(self.page_with_tags, root=self.root_page)
         self.page_with_tags.tags.add("tag1")
         self.page_with_tags.authors.add("author1")
@@ -580,14 +576,10 @@ class TestCFGOVPageBreadcrumbs(TestCase):
         self.top_level_page = CFGOVPage(title="top", slug="top", live=True)
         save_new_page(self.top_level_page, root=self.root_page)
 
-        self.second_level_page = CFGOVPage(
-            title="second", slug="second", live=True
-        )
+        self.second_level_page = CFGOVPage(title="second", slug="second", live=True)
         save_new_page(self.second_level_page, root=self.top_level_page)
 
-        self.third_level_page = CFGOVPage(
-            title="third", slug="third", live=True
-        )
+        self.third_level_page = CFGOVPage(title="third", slug="third", live=True)
         save_new_page(self.third_level_page, root=self.second_level_page)
 
     def test_get_breadcrumbs_forced_homepage_descendant(self):

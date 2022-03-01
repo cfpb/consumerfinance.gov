@@ -22,8 +22,7 @@ parser.add_argument(
     type=str,
     nargs="+",
     help=(
-        "You can provide a space-separated custom list "
-        "of relative URLs to check."
+        "You can provide a space-separated custom list " "of relative URLs to check."
     ),
 )
 parser.add_argument(
@@ -216,8 +215,7 @@ def check_urls(base, url_list=None):
         logger.error("These URLs failed: {}".format(failures))
     if len(timeouts) > ALLOWED_TIMEOUTS:
         logger.error(
-            "These URLs timed out after {} seconds: "
-            "{}".format(TIMEOUT, timeouts)
+            "These URLs timed out after {} seconds: " "{}".format(TIMEOUT, timeouts)
         )
     elif timeouts:
         logger.info(

@@ -22,9 +22,7 @@ def get_supported_wheels(wheel_directory):
             # This deliberately filters out incompatible requirements.
             pass
 
-    return sorted(
-        req.link.path for req in requirement_set.requirements.values()
-    )
+    return sorted(req.link.path for req in requirement_set.requirements.values())
 
 
 def install_wheels(wheel_directory):

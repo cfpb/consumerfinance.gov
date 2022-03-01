@@ -122,9 +122,7 @@ class FilterablePagesDocumentSearch:
 
     def filter_topics(self, topics=[]):
         if topics not in ([], "", None):
-            self.search_obj = self.search_obj.filter(
-                "terms", tags__slug=topics
-            )
+            self.search_obj = self.search_obj.filter("terms", tags__slug=topics)
 
     def filter_categories(self, categories=[]):
         if categories not in ([], "", None):
@@ -134,9 +132,7 @@ class FilterablePagesDocumentSearch:
 
     def filter_language(self, language=[]):
         if language not in ([], "", None):
-            self.search_obj = self.search_obj.filter(
-                "terms", language=language
-            )
+            self.search_obj = self.search_obj.filter("terms", language=language)
 
     def filter_date(self, from_date=None, to_date=None):
         if to_date is not None and from_date is not None:
@@ -147,9 +143,7 @@ class FilterablePagesDocumentSearch:
 
     def filter_archived(self, archived=None):
         if archived is not None:
-            self.search_obj = self.search_obj.filter(
-                "terms", is_archived=archived
-            )
+            self.search_obj = self.search_obj.filter("terms", is_archived=archived)
 
     def search_title(self, title=""):
         if title not in ([], "", None):
@@ -223,15 +217,11 @@ class EventFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):
             ).filter("range", **{"end_dt": {"lte": to_date}})
 
     def filter(self, **kwargs):
-        self.search_obj = self.search_obj.filter(
-            "term", model_class="EventPage"
-        )
+        self.search_obj = self.search_obj.filter("term", model_class="EventPage")
         super().filter(**kwargs)
 
 
-class EnforcementActionFilterablePagesDocumentSearch(
-    FilterablePagesDocumentSearch
-):
+class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):
     def filter_date(self, from_date=None, to_date=None):
         if to_date is not None and from_date is not None:
             self.search_obj = self.search_obj.filter(
@@ -245,14 +235,10 @@ class EnforcementActionFilterablePagesDocumentSearch(
         )
 
         if statuses != []:
-            self.search_obj = self.search_obj.filter(
-                "terms", statuses=statuses
-            )
+            self.search_obj = self.search_obj.filter("terms", statuses=statuses)
 
         if products != []:
-            self.search_obj = self.search_obj.filter(
-                "terms", products=products
-            )
+            self.search_obj = self.search_obj.filter("terms", products=products)
 
         super().filter(**kwargs)
 

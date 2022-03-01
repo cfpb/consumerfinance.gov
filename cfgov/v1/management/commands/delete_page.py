@@ -36,6 +36,4 @@ class Command(BaseCommand):
 
         except Exception as e:
             self.stderr.write(str(e))
-            raise CommandError(
-                "Failed to delete page {}".format(page_to_delete)
-            )
+            raise CommandError("Failed to delete page {}".format(page_to_delete))

@@ -16,9 +16,7 @@ class DatetimesExtensionTests(TestCase):
 
     def test_date_filter_from_string(self):
         tmpl = self.engine.from_string("{{ d | date }}")
-        self.assertEqual(
-            tmpl.render({"d": "February 1st, 2018"}), "2018-02-01"
-        )
+        self.assertEqual(tmpl.render({"d": "February 1st, 2018"}), "2018-02-01")
 
     def test_date_filter_with_timezone(self):
         tmpl = self.engine.from_string("{{ d | date(tz=tz) }}")

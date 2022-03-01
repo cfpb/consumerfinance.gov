@@ -58,9 +58,7 @@ class LoginForm(AuthenticationForm):
         password = self.cleaned_data.get("password")
 
         if username and password:
-            self.user_cache = authenticate(
-                username=username, password=password
-            )
+            self.user_cache = authenticate(username=username, password=password)
 
             if self.user_cache is None and username is not None:
                 UserModel = get_user_model()
@@ -78,9 +76,7 @@ class LoginForm(AuthenticationForm):
                 # reason
                 self.confirm_login_allowed(user)
 
-                fa, created = base.FailedLoginAttempt.objects.get_or_create(
-                    user=user
-                )
+                fa, created = base.FailedLoginAttempt.objects.get_or_create(user=user)
                 now = time.time()
                 fa.failed(now)
                 # Defaults to a 2 hour lockout for a user

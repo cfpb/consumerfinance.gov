@@ -116,9 +116,7 @@ def fill_nation_row_date_values(date_set):
                 FIPS.nation_row[key].append("")
         else:
             for key in FIPS.nation_row:
-                FIPS.nation_row[key].append(
-                    round_pct(getattr(nation_obj, key))
-                )
+                FIPS.nation_row[key].append(round_pct(getattr(nation_obj, key)))
 
 
 def export_downloadable_csv(geo_type, late_value):
@@ -157,9 +155,7 @@ def export_downloadable_csv(geo_type, late_value):
             ),
         },
         "NonMetroArea": {
-            "queryset": NonMSAMortgageData.objects.filter(
-                state__non_msa_valid=True
-            ),
+            "queryset": NonMSAMortgageData.objects.filter(state__non_msa_valid=True),
             "headings": ["RegionType", "Name", "CBSACode"],
             "fips_list": sorted(
                 [
@@ -174,9 +170,7 @@ def export_downloadable_csv(geo_type, late_value):
             "fips_list": sorted(
                 [
                     state.fips
-                    for state in State.objects.exclude(
-                        fips__in=STATES_TO_IGNORE
-                    )
+                    for state in State.objects.exclude(fips__in=STATES_TO_IGNORE)
                 ]
             ),
         },
@@ -195,9 +189,7 @@ def export_downloadable_csv(geo_type, late_value):
     for fips in fips_list:
         records = _map["queryset"].filter(fips=fips)
         record_starter = row_starter(geo_type, records.first())
-        record_ender = [
-            round_pct(getattr(record, late_value)) for record in records
-        ]
+        record_ender = [round_pct(getattr(record, late_value)) for record in records]
         writer.writerow(record_starter + record_ender)
     if geo_type == "MetroArea":
         non_map = geo_dict["NonMetroArea"]
@@ -208,9 +200,7 @@ def export_downloadable_csv(geo_type, late_value):
                 round_pct(getattr(record, late_value)) for record in records
             ]
             writer.writerow(record_starter + record_ender)
-    bake_csv_to_s3(
-        slug, csvfile, sub_bucket="{}/downloads".format(MORTGAGE_SUB_BUCKET)
-    )
+    bake_csv_to_s3(slug, csvfile, sub_bucket="{}/downloads".format(MORTGAGE_SUB_BUCKET))
     logger.info("Baked {} to S3".format(slug))
     csvfile.seek(0, 2)
     bytecount = csvfile.tell()

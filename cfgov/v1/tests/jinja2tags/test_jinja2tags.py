@@ -138,15 +138,11 @@ class TestUniqueIdInContext(TestCase):
     def test_render_uses_request_to_make_multiple_unique_ids(self):
         request = HttpRequest()
         template = " and ".join([self.template, self.template])
-        self.assertEqual(
-            self.render(template, {"request": request}), "1 and 2"
-        )
+        self.assertEqual(self.render(template, {"request": request}), "1 and 2")
 
     def test_multiple_renders_multiple_unique_ids(self):
         request = HttpRequest()
-        rendered = [
-            self.render(self.template, {"request": request}) for _ in range(5)
-        ]
+        rendered = [self.render(self.template, {"request": request}) for _ in range(5)]
         self.assertEqual(rendered, ["1", "2", "3", "4", "5"])
 
     def test_different_requests_allow_repeats(self):

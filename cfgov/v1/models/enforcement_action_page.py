@@ -139,9 +139,7 @@ class EnforcementActionDisposition(models.Model):
     final_order_disgorgement_suspended = decimal_field()
     final_order_civil_money_penalty = decimal_field()
     final_order_civil_money_penalty_suspended = decimal_field()
-    estimated_consumers_entitled_to_relief = models.CharField(
-        max_length=30, blank=True
-    )
+    estimated_consumers_entitled_to_relief = models.CharField(max_length=30, blank=True)
 
     action = ParentalKey(
         "v1.EnforcementActionPage",
@@ -189,9 +187,7 @@ class EnforcementActionProduct(models.Model):
 
 
 class EnforcementActionAtRisk(models.Model):
-    at_risk_group = models.CharField(
-        max_length=30, choices=enforcement_at_risk_groups
-    )
+    at_risk_group = models.CharField(max_length=30, choices=enforcement_at_risk_groups)
     action = ParentalKey(
         "v1.EnforcementActionPage",
         on_delete=models.CASCADE,
@@ -294,9 +290,7 @@ class EnforcementActionPage(AbstractFilterPage):
 
     objects = PageManager()
 
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField("content")
-    ]
+    search_fields = AbstractFilterPage.search_fields + [index.SearchField("content")]
 
     def get_context(self, request):
         context = super().get_context(request)
@@ -310,20 +304,14 @@ class EnforcementActionPage(AbstractFilterPage):
                     for disp in dispositions
                 ),
                 "total_cmp": sum(
-                    disp.final_order_civil_money_penalty
-                    for disp in dispositions
+                    disp.final_order_civil_money_penalty for disp in dispositions
                 ),
                 "defendant_types": [
-                    d.get_defendant_type_display()
-                    for d in self.defendant_types.all()
+                    d.get_defendant_type_display() for d in self.defendant_types.all()
                 ],
                 "statutes": [s.statute for s in self.statutes.all()],
-                "products": [
-                    p.get_product_display() for p in self.products.all()
-                ],
-                "at_risk_groups": [
-                    g.at_risk_group for g in self.at_risk_groups.all()
-                ],
+                "products": [p.get_product_display() for p in self.products.all()],
+                "at_risk_groups": [g.at_risk_group for g in self.at_risk_groups.all()],
             }
         )
 

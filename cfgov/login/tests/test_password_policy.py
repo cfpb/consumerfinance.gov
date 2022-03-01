@@ -75,9 +75,7 @@ class TestMinimumPasswordAge(TestWithUser):
     def test_cant_set_password_if_locked(self):
         tomorrow = timezone.now() + timedelta(days=1)
         user = self.get_user(pw_locked_until=tomorrow)
-        self.assertRaises(
-            ValidationError, password_policy.validate_password_age, user
-        )
+        self.assertRaises(ValidationError, password_policy.validate_password_age, user)
 
 
 class TestPasswordReusePolicy(TestWithUser):

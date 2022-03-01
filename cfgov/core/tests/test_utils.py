@@ -74,9 +74,7 @@ class LinkUtilsTests(SimpleTestCase):
     def test_get_body_html_full(self):
         self.assertEqual(
             get_body_html(
-                "<html><head>outer</head>"
-                "<body><span>inner</span></body>"
-                "</html>"
+                "<html><head>outer</head>" "<body><span>inner</span></body>" "</html>"
             ),
             "<body><span>inner</span></body>",
         )
@@ -133,9 +131,7 @@ class LinkUtilsTests(SimpleTestCase):
             add_link_markup(tag, path), '<a class="" href="#anchor">bar</a>'
         )
 
-    def check_external_link(
-        self, url, expected_href=None, expected_pretty_href=None
-    ):
+    def check_external_link(self, url, expected_href=None, expected_pretty_href=None):
         tag = f'<a href="{url}">foo</a>'
         path = "/about-us/blog/"
 

@@ -34,9 +34,7 @@ class FeedbackQuerySet(models.QuerySet):
         return q
 
     def _filter_by_page_q(self, page):
-        return Q(page__path__startswith=page.path) & Q(
-            page__depth__gte=page.depth
-        )
+        return Q(page__path__startswith=page.path) & Q(page__depth__gte=page.depth)
 
     def write_csv(self, f):
         headings = [

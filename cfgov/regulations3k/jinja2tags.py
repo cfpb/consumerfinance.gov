@@ -35,9 +35,7 @@ def regdown_filter(text):
 def regs_hide_on_mobile(text):
     """Mark specific patterns in text as hidden on mobile"""
     text = do_mark_safe(
-        text.replace(
-            "Regulation", 'Reg<span class="u-hide-on-mobile">ulation</span>'
-        )
+        text.replace("Regulation", 'Reg<span class="u-hide-on-mobile">ulation</span>')
     )
     return text
 

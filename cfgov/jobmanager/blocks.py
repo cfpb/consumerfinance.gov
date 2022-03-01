@@ -4,9 +4,7 @@ from jobmanager.models import JobListingPage
 
 
 class JobListingList(blocks.StructBlock):
-    more_jobs_page = blocks.PageChooserBlock(
-        help_text="Link to full list of jobs"
-    )
+    more_jobs_page = blocks.PageChooserBlock(help_text="Link to full list of jobs")
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)

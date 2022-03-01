@@ -110,9 +110,7 @@ INTERP_SECTION_DEFAULTS = {
 SEARCH_RE = re.compile(r"/eregulations/search/(\d{4})")
 SECTION_RE = re.compile(r"/eregulations/\d{4}-(\d{1,3})/([0-9_-]+)")
 APPENDIX_RE = re.compile(r"/eregulations/\d{4}-([A-Z1-2]{1,3})/([0-9_-]+)")
-INTERP_INTRO_RE = re.compile(
-    r"/eregulations/\d{4}-Interp-h1/([0-9_-]+)", re.IGNORECASE
-)
+INTERP_INTRO_RE = re.compile(r"/eregulations/\d{4}-Interp-h1/([0-9_-]+)", re.IGNORECASE)
 INTERP_APPENDIX_RE = re.compile(
     r"/eregulations/\d{4}-Appendices-Interp/([0-9_-]+)", re.IGNORECASE
 )
@@ -197,9 +195,7 @@ def redirect_eregs(request, **kwargs):
                         permanent=True,
                     )
                 else:
-                    return redirect(
-                        f"{new_base}{part}/interp-0/", permanent=True
-                    )
+                    return redirect(f"{new_base}{part}/interp-0/", permanent=True)
             if pattern == INTERP_APPENDIX_RE:
                 appendix = INTERP_APPENDIX_DEFAULTS.get(part, "A")
                 if version_date:

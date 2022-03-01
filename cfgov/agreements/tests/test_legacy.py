@@ -85,9 +85,7 @@ class Views(TestCase):
         issuer = models.Issuer(name="name", slug="slug")
         issuer.save()
 
-        self.client.get(
-            reverse("issuer_search", kwargs={"issuer_slug": issuer.slug})
-        )
+        self.client.get(reverse("issuer_search", kwargs={"issuer_slug": issuer.slug}))
         context = render.call_args[0][2]
 
         self.assertTrue("page" in context)

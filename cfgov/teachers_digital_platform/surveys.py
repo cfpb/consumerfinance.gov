@@ -242,9 +242,7 @@ class Survey:
 
     ITEM_SEPARATOR = ITEM_SEPARATOR
 
-    def __init__(
-        self, key: str, meta: Dict[str, Any], pages: List[SurveyPage]
-    ):
+    def __init__(self, key: str, meta: Dict[str, Any], pages: List[SurveyPage]):
         self.key = key
         self.meta = meta
         self.pages = pages

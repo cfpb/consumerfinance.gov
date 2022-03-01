@@ -61,9 +61,7 @@ class TestSecondaryNav(TestCase):
         self.assertEqual(len(nav), 2)
 
     def test_nav_includes_browse_filterable_sibling_pages(self):
-        browse_filterable_page = BrowseFilterablePage(
-            title="Browse filterable page"
-        )
+        browse_filterable_page = BrowseFilterablePage(title="Browse filterable page")
         helpers.publish_page(child=browse_filterable_page)
 
         nav, has_children = util.get_secondary_nav_items(
@@ -134,9 +132,7 @@ class TestSecondaryNav(TestCase):
         browse_filterable_page_child = BrowseFilterablePage(
             title="Child of non-browse page"
         )
-        helpers.save_new_page(
-            browse_filterable_page_child, browse_filterable_page
-        )
+        helpers.save_new_page(browse_filterable_page_child, browse_filterable_page)
         nav, has_children = util.get_secondary_nav_items(
             self.request, browse_filterable_page
         )
@@ -148,21 +144,15 @@ class TestSecondaryNav(TestCase):
     ):  # noqa: B950
         browse_page3 = BrowsePage(title="Browse page 3")
         helpers.publish_page(child=browse_page3)
-        child_of_browse_page3 = CFGOVPage(
-            title="Non-browse child of browse page"
-        )
+        child_of_browse_page3 = CFGOVPage(title="Non-browse child of browse page")
         helpers.save_new_page(child_of_browse_page3, browse_page3)
 
-        nav, has_children = util.get_secondary_nav_items(
-            self.request, browse_page3
-        )
+        nav, has_children = util.get_secondary_nav_items(self.request, browse_page3)
 
         self.assertEqual(has_children, False)
 
     def test_has_children_is_false_for_browse_page_with_no_children(self):
-        browse_page_without_children = BrowsePage(
-            title="Browse page without children"
-        )
+        browse_page_without_children = BrowsePage(title="Browse page without children")
         helpers.publish_page(child=browse_page_without_children)
 
         nav, has_children = util.get_secondary_nav_items(

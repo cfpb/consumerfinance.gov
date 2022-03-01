@@ -130,9 +130,7 @@ def parse_subparts(part_soup, part):
             LEVEL_STATE.current_id = ""
         parse_appendices(appendices, part)
         LEVEL_STATE.current_id = ""
-    labeled_subparts = [
-        subp for subp in subpart_list if subp.find("HEAD").text.strip()
-    ]
+    labeled_subparts = [subp for subp in subpart_list if subp.find("HEAD").text.strip()]
     if not labeled_subparts:
         generic_subpart = Subpart(
             label=part.part_number,
@@ -199,9 +197,7 @@ def parse_multi_id_graph(graph, ids, label):
     pid2 = LEVEL_STATE.next_id()
     new_graphs += "\n{" + pid2 + "}\n"
     if len(ids) == 2:
-        text2 = lint_paragraph(
-            combine_bolds(" ".join([pid2_marker, remainder]))
-        )
+        text2 = lint_paragraph(combine_bolds(" ".join([pid2_marker, remainder])))
         new_graphs += text2 + "\n"
         if id_refs and pid2 in id_refs:
             new_graphs += "\n" + id_refs[pid2] + "\n"
@@ -210,16 +206,12 @@ def parse_multi_id_graph(graph, ids, label):
         split2 = remainder.partition("({})".format(ids[2]))
         pid3_marker = split2[1]
         remainder2 = bold_first_italics(split2[2])
-        text2 = lint_paragraph(
-            combine_bolds(" ".join([pid2_marker, split2[0]]))
-        )
+        text2 = lint_paragraph(combine_bolds(" ".join([pid2_marker, split2[0]])))
         new_graphs += text2 + "\n"
         LEVEL_STATE.next_token = ids[2]
         pid3 = LEVEL_STATE.next_id()
         new_graphs += "\n{" + pid3 + "}\n"
-        text3 = lint_paragraph(
-            combine_bolds(" ".join([pid3_marker, remainder2]))
-        )
+        text3 = lint_paragraph(combine_bolds(" ".join([pid3_marker, remainder2])))
         new_graphs += text3 + "\n"
         if id_refs and pid3 in id_refs:
             new_graphs += "\n" + id_refs[pid3] + "\n"
@@ -289,15 +281,11 @@ def parse_sections(section_list, part, subpart):
     for section_element in section_list:
         label = section_element["N"].rsplit(".")[-1]
         LEVEL_STATE.current_id = "a"
-        section_content = parse_section_paragraphs(
-            section_element.find_all("P"), label
-        )
+        section_content = parse_section_paragraphs(section_element.find_all("P"), label)
         _section = Section(
             subpart=subpart,
             label=label,
-            title=section_element.find("HEAD")
-            .text.strip()
-            .replace("\xc2", ""),
+            title=section_element.find("HEAD").text.strip().replace("\xc2", ""),
             contents=section_content,
         )
         _section.save()
@@ -399,8 +387,7 @@ def parse_appendices(appendices, part):
             subpart=subpart,
             label=label,
             title=head,
-            contents=prefix
-            + parse_appendix_elements(_appendix, default_label),
+            contents=prefix + parse_appendix_elements(_appendix, default_label),
         )
         appendix.save()
 
@@ -440,9 +427,7 @@ def divine_interp_tag_use(element, part_num):
         return "appendix"
     if text.startswith("Appendices") or text.startswith("Appendixes"):
         return "appendices"
-    if re.match(
-        r"\d{1,3}\([a-z]{1,2}\)", text.replace("Paragraph", "", 1).strip()
-    ):
+    if re.match(r"\d{1,3}\([a-z]{1,2}\)", text.replace("Paragraph", "", 1).strip()):
         return "graph_id"
     if (
         re.match(r"\([a-z]{1,2}\)", text.replace("Paragraph", "", 1).strip())
@@ -549,10 +534,7 @@ def parse_interps(interp_div, part, subpart):
             .replace("Appendix ", "Comment for Appendix "),
             contents="",
         )
-        if (
-            divine_interp_tag_use(section_heading, part.part_number)
-            == "appendix"
-        ):
+        if divine_interp_tag_use(section_heading, part.part_number) == "appendix":
             interp_id = "{}-1-Interp".format(section_label)
             LEVEL_STATE.current_id = interp_id
             see = "see({}-1-Interp)".format(section_label)
@@ -667,9 +649,7 @@ def run(*args):
                 logger.info("parsing {} from the latest eCFR XML".format(part))
                 logger.info(ecfr_to_regdown(part))
             logger.info(
-                "Overall, parsing took {}".format(
-                    datetime.datetime.now() - starter
-                )
+                "Overall, parsing took {}".format(datetime.datetime.now() - starter)
             )
         else:
             logger.info("parsing {} from the latest eCFR XML".format(args[0]))
@@ -681,9 +661,7 @@ def run(*args):
                 logger.info("parsing {} from local XML file".format(part))
                 logger.info(ecfr_to_regdown(part, file_path=args[1]))
             logger.info(
-                "Overall, parsing took {}".format(
-                    datetime.datetime.now() - starter
-                )
+                "Overall, parsing took {}".format(datetime.datetime.now() - starter)
             )
         else:
             logger.info("parsing {} from local XML file".format(args[0]))
