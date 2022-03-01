@@ -3,7 +3,6 @@ from django.urls import reverse
 
 
 class ComplaintLandingViewTests(TestCase):
-
     def setUp(self):
         self.search_url = reverse("complaint-search")
 

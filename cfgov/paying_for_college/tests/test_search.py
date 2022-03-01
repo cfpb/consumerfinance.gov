@@ -15,7 +15,7 @@ class SchoolSearchTest(TestCase):
 
     fixtures = ["test_fixture.json", "test_school.json"]
 
-    @mock.patch.object(SchoolDocument, 'search')
+    @mock.patch.object(SchoolDocument, "search")
     def test_school_autocomplete(self, mock_autocomplete):
         term = "Kansas"
         school = School.objects.get(pk=155317)
@@ -32,12 +32,14 @@ class SchoolSearchTest(TestCase):
         mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
         mock_queryset.count.return_value = 1
         # mock_autocomplete.return_value = mock_queryset
-        mock_autocomplete().query().filter().sort() \
-            .__getitem__().execute.return_value = [mock_return]
+        mock_autocomplete().query().filter().sort().__getitem__().execute.return_value = [
+            mock_return
+        ]
         mock_count = mock.Mock(return_value=1)
         mock_autocomplete().query().count = mock_count
-        mock_autocomplete().query().filter().sort() \
-            .__getitem__().count = mock_count
+        mock_autocomplete().query().filter().sort().__getitem__().count = (
+            mock_count
+        )
         url = "{}?q=Kansas".format(
             reverse("paying_for_college:disclosures:school_search")
         )
@@ -53,7 +55,7 @@ class SchoolSearchTest(TestCase):
         self.assertTrue("Lawrence" in mock_return.city)
         self.assertTrue("KS" in mock_return.state)
 
-    @mock.patch.object(SchoolDocument, 'search')
+    @mock.patch.object(SchoolDocument, "search")
     def test_autocomplete_school_id(self, mock_search):
         school_id = "155317"
         school = School.objects.get(pk=155317)
@@ -66,13 +68,13 @@ class SchoolSearchTest(TestCase):
         mock_queryset.count.return_value = 1
         response = self.client.get(
             reverse("paying_for_college:disclosures:school_search"),
-            {"q": school_id}
+            {"q": school_id},
         )
         self.assertEqual(mock_search.call_count, 1)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(155317, mock_return.school_id)
 
-    @mock.patch.object(SchoolDocument, 'search')
+    @mock.patch.object(SchoolDocument, "search")
     def test_autocomplete_nickname(self, mock_search):
         nickname = "Jayhawks"
         school = School.objects.get(pk=155317)
@@ -85,13 +87,13 @@ class SchoolSearchTest(TestCase):
         mock_queryset.count.return_value = 1
         response = self.client.get(
             reverse("paying_for_college:disclosures:school_search"),
-            {"q": nickname}
+            {"q": nickname},
         )
         self.assertEqual(mock_search.call_count, 1)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("Jayhawks" in mock_return.nicknames)
 
-    @mock.patch.object(SchoolDocument, 'search')
+    @mock.patch.object(SchoolDocument, "search")
     def test_autocomplete_city(self, mock_search):
         city = "Lawrence"
         school = School.objects.get(pk=155317)
@@ -104,13 +106,13 @@ class SchoolSearchTest(TestCase):
         mock_queryset.count.return_value = 1
         response = self.client.get(
             reverse("paying_for_college:disclosures:school_search"),
-            {"q": city}
+            {"q": city},
         )
         self.assertEqual(mock_search.call_count, 1)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("Lawrence" in mock_return.city)
 
-    @mock.patch.object(SchoolDocument, 'search')
+    @mock.patch.object(SchoolDocument, "search")
     def test_autocomplete_state(self, mock_search):
         state = "KS"
         school = School.objects.get(pk=155317)
@@ -123,13 +125,13 @@ class SchoolSearchTest(TestCase):
         mock_queryset.count.return_value = 1
         response = self.client.get(
             reverse("paying_for_college:disclosures:school_search"),
-            {"q": state}
+            {"q": state},
         )
         self.assertEqual(mock_search.call_count, 1)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("KS" in mock_return.state)
 
-    @mock.patch.object(SchoolDocument, 'search')
+    @mock.patch.object(SchoolDocument, "search")
     def test_autocomplete_no_term(self, mock_search):
         term = ""
         mock_return = mock.Mock()
@@ -139,12 +141,12 @@ class SchoolSearchTest(TestCase):
         mock_queryset.count.return_value = 1
         response = self.client.get(
             reverse("paying_for_college:disclosures:school_search"),
-            {"q": term}
+            {"q": term},
         )
         self.assertEqual(mock_search.call_count, 0)
         self.assertEqual(response.status_code, 200)
 
-    @mock.patch.object(SchoolSearch, 'autocomplete')
+    @mock.patch.object(SchoolSearch, "autocomplete")
     def test_autocomplete_blank_term(self, mock_autocomplete):
         url = "{}?q=".format(
             reverse("paying_for_college:disclosures:school_search")
@@ -154,7 +156,7 @@ class SchoolSearchTest(TestCase):
         self.assertEqual(mock_autocomplete.call_count, 0)
         self.assertEqual(response.status_code, 200)
 
-    @mock.patch.object(SchoolDocument, 'search')
+    @mock.patch.object(SchoolDocument, "search")
     def test_autocomplete_closed(self, mock_search):
         school = School.objects.get(pk=987654)
         school.save()

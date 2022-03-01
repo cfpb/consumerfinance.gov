@@ -6,5 +6,5 @@ from login.apps import LoginConfig
 
 class LoginConfigTest(TestCase):
     def test_apps(self):
-        self.assertEqual(LoginConfig.name, 'login')
-        self.assertEqual(apps.get_app_config('login').name, 'login')
+        self.assertEqual(LoginConfig.name, "login")
+        self.assertEqual(apps.get_app_config("login").name, "login")

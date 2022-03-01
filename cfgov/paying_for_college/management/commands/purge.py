@@ -10,15 +10,16 @@ COMMAND_HELP = (
     "and you must provide an object type to purge.\n"
     "Purge all notifications with 'manage.py purge notifications'\n"
     "Purge all projects with 'manage.py purge projects'\n"
-    "Purge test projecs with 'manage.py purge test-projects'")
+    "Purge test projecs with 'manage.py purge test-projects'"
+)
 
 
 class Command(BaseCommand):
     help = COMMAND_HELP
 
     def add_arguments(self, parser):
-        parser.add_argument('objects', type=str)
+        parser.add_argument("objects", type=str)
 
     def handle(self, *args, **options):
-        msg = purge(options['objects'])
+        msg = purge(options["objects"])
         self.stdout.write(msg)

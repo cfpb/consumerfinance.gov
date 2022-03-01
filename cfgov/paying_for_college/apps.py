@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class PayingForCollegeConfig(AppConfig):
-    name = 'paying_for_college'
+    name = "paying_for_college"

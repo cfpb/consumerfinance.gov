@@ -9,7 +9,7 @@ class CCDBSearchView(TemplateView):
 
     def dispatch(self, *args, **kwargs):
         response = super().dispatch(*args, **kwargs)
-        response['Edge-Cache-Tag'] = 'complaints'
+        response["Edge-Cache-Tag"] = "complaints"
         return response
 
-    template_name = 'ccdb-complaint/ccdb-search.html'
+    template_name = "ccdb-complaint/ccdb-search.html"

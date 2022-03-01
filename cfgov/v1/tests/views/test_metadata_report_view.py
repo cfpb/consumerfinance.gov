@@ -19,7 +19,7 @@ class ServeViewTestCase(TestCase):
         self.tag2 = baker.make(Tag, name="tag2")
         self.site = Site.objects.get(is_default_site=True)
         self.root_page = self.site.root_page
-        self.blog_page = BlogPage(title='Blogojevich', live=True)
+        self.blog_page = BlogPage(title="Blogojevich", live=True)
         self.root_page.add_child(instance=self.blog_page)
         self.category_tuple = categories[0][1][0]
         self.category = CFGOVPageCategory(name=self.category_tuple[1])
@@ -28,16 +28,16 @@ class ServeViewTestCase(TestCase):
 
     def test_process_categories(self):
         category_string = process_categories(self.blog_page.categories.all())
-        self.assertIn(
-            self.category.get_name_display(), category_string)
+        self.assertIn(self.category.get_name_display(), category_string)
         self.assertEqual(
-            self.category.get_name_display(), self.category_tuple[1])
+            self.category.get_name_display(), self.category_tuple[1]
+        )
 
     def test_metadata_report_get_filename(self):
         today = date.today()
         self.assertEqual(
-            self.view.get_filename(),
-            f"spreadsheet-export-{today}")
+            self.view.get_filename(), f"spreadsheet-export-{today}"
+        )
 
     def test_get_queryset(self):
         self.assertEqual(self.view.get_queryset().count(), 2)

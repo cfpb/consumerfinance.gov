@@ -5,14 +5,18 @@ from django.test import TestCase
 from wagtail.core.models import Site
 
 from v1.tests.wagtail_pages.helpers import (
-    create_blog_page, create_browse_filterable_page, create_browse_page,
-    create_landing_page, create_learn_page, create_sublanding_filterable_page,
-    create_sublanding_page, get_parent_route
+    create_blog_page,
+    create_browse_filterable_page,
+    create_browse_page,
+    create_landing_page,
+    create_learn_page,
+    create_sublanding_filterable_page,
+    create_sublanding_page,
+    get_parent_route,
 )
 
 
 class PageCreationTestCase(TestCase):
-
     def test_landing_page_creation(self):
         """landing page should be created if it does not exist"""
         path = create_landing_page("Test", "test")
@@ -183,8 +187,9 @@ class PageCreationTestCase(TestCase):
     def test_learn_page_with_optional_arguments(self):
         """learn page should be created correctly with one or more \
             optional arguments provided"""
-        path = create_learn_page("Test", "test", None, {"test tag"},
-                                 {"test category"}, date.today())
+        path = create_learn_page(
+            "Test", "test", None, {"test tag"}, {"test category"}, date.today()
+        )
 
         www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
@@ -192,8 +197,15 @@ class PageCreationTestCase(TestCase):
     def test_blog_page_with_optional_arguments(self):
         """blog page should be created correctly with one or more \
             optional arguments provided"""
-        path = create_blog_page("Test", "test", None, {"test tag"},
-                                {"test category"}, "es", date.today())
+        path = create_blog_page(
+            "Test",
+            "test",
+            None,
+            {"test tag"},
+            {"test category"},
+            "es",
+            date.today(),
+        )
 
         www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
@@ -201,46 +213,48 @@ class PageCreationTestCase(TestCase):
     def test_path_does_not_exist_fail(self):
         """get parent root path fails when page does not exist"""
         site = Site.objects.get(is_default_site=True)
-        path = get_parent_route(site, '/test-fake-path/')
+        path = get_parent_route(site, "/test-fake-path/")
         self.assertIsNone(path)
 
     def test_landing_path_does_not_exist_fail(self):
         """get landing path fails when parent path does not exist"""
-        path = create_landing_page("Test", "test", '/test-fake-path/')
+        path = create_landing_page("Test", "test", "/test-fake-path/")
         self.assertIsNone(path)
 
     def test_sublanding_path_does_not_exist_fail(self):
         """get sublanding path fails when parent path does not exist"""
-        path = create_sublanding_page("Test", "test", '/test-fake-path/')
+        path = create_sublanding_page("Test", "test", "/test-fake-path/")
         self.assertIsNone(path)
 
     def test_sublanding_filterable_path_does_not_exist_fail(self):
         """get sublanding filterable path fails when parent path does not \
             exist"""
-        path = create_sublanding_filterable_page("Test", "test",
-                                                 '/test-fake-path/')
+        path = create_sublanding_filterable_page(
+            "Test", "test", "/test-fake-path/"
+        )
         self.assertIsNone(path)
 
     def test_browse_filterable_path_does_not_exist_fail(self):
         """get browse filterable path fails when parent path does not \
             exist"""
-        path = create_browse_filterable_page("Test", "test",
-                                             '/test-fake-path/')
+        path = create_browse_filterable_page(
+            "Test", "test", "/test-fake-path/"
+        )
         self.assertIsNone(path)
 
     def test_browse_path_does_not_exist_fail(self):
         """get browse path fails when parent path does not exist"""
-        path = create_browse_page("Test", "test", '/test-fake-path/')
+        path = create_browse_page("Test", "test", "/test-fake-path/")
         self.assertIsNone(path)
 
     def test_learn_path_does_not_exist_fail(self):
         """get learn path fails when parent path does not exist"""
-        path = create_learn_page("Test", "test", '/test-fake-path/')
+        path = create_learn_page("Test", "test", "/test-fake-path/")
         self.assertIsNone(path)
 
     def test_blog_path_does_not_exist_fail(self):
         """get blog path fails when parent path does not exist"""
-        path = create_blog_page("Test", "test", '/test-fake-path/')
+        path = create_blog_page("Test", "test", "/test-fake-path/")
         self.assertIsNone(path)
 
     def test_blog_page_with_none_optional_arguments(self):
