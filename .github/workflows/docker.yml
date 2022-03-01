@@ -24,6 +24,7 @@ jobs:
               - '**Dockerfile'
               - '**.conf'
               - '**.csv'
+              - 'docker/**Dockerfile'
 
       - name: Setup QEMU
         if: steps.filter.outputs.docker == 'true'
