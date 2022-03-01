@@ -24,7 +24,9 @@ jobs:
               - '**Dockerfile'
               - '**.conf'
               - '**.csv'
-              - 'docker/**Dockerfile'
+              - 'docker/deployable-zipfile/Dockerfile'
+              - 'docker/docs/Dockerfile'
+              - 'docker/elasticsearch/Dockerfile'
 
       - name: Setup QEMU
         if: steps.filter.outputs.docker == 'true'
