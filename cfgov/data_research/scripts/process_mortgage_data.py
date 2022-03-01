@@ -32,9 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 def update_through_date_constant(date):
-    constant, cr = MortgageDataConstant.objects.get_or_create(
-        name="through_date"
-    )
+    constant, cr = MortgageDataConstant.objects.get_or_create(name="through_date")
     constant.date_value = date
     constant.save()
 
@@ -141,9 +139,7 @@ def run(*args):
     `manage.py runscript process_mortgage_data --script-args 2017-03-01 /tmp/mp_countydata`  # noqa: B950
     """
     dump_slug = None
-    starting_date = MortgageDataConstant.objects.get(
-        name="starting_date"
-    ).date_value
+    starting_date = MortgageDataConstant.objects.get(name="starting_date").date_value
     if args:
         through_date = parser.parse(args[0]).date()
         update_through_date_constant(through_date)

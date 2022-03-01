@@ -67,9 +67,7 @@ class ProgamDataTest(django.test.TestCase):
         self.assertIn("Could not find", msg)
 
     def test_program_data_check_passes(self):
-        self.assertTrue(
-            update_colleges.test_for_program_data(self.mock_program_data)
-        )
+        self.assertTrue(update_colleges.test_for_program_data(self.mock_program_data))
 
     def test_empty_program_data_fails(self):
         self.assertFalse(
@@ -81,9 +79,7 @@ class ProgamDataTest(django.test.TestCase):
         empty_program_data = {
             "latest.programs.cip_4_digit": [self.empty_mock_program_data]
         }
-        count = update_colleges.update_programs(
-            empty_program_data, self.school
-        )
+        count = update_colleges.update_programs(empty_program_data, self.school)
         self.assertEqual(count, 0)
 
     def test_program_creation_success(self):
@@ -119,8 +115,7 @@ class TaggingTests(django.test.TestCase):
     bad_csv_data = [{"ipeds_unit_id": "243197", "floog": "mock_university"}]
 
     @mock.patch(
-        "paying_for_college.disclosures.scripts."
-        "tag_settlement_schools.read_in_s3"
+        "paying_for_college.disclosures.scripts." "tag_settlement_schools.read_in_s3"
     )
     def test_tag_schools(self, mock_read_in):
         mock_read_in.return_value = self.mock_csv_data
@@ -131,8 +126,7 @@ class TaggingTests(django.test.TestCase):
         self.assertTrue(flagged.count() == 1)
 
     @mock.patch(
-        "paying_for_college.disclosures.scripts."
-        "tag_settlement_schools.read_in_s3"
+        "paying_for_college.disclosures.scripts." "tag_settlement_schools.read_in_s3"
     )
     def test_tag_schools_no_data(self, mock_read_in):
         mock_read_in.return_value = [{}]
@@ -140,8 +134,7 @@ class TaggingTests(django.test.TestCase):
         self.assertIn("ERROR", msg)
 
     @mock.patch(
-        "paying_for_college.disclosures.scripts."
-        "tag_settlement_schools.read_in_s3"
+        "paying_for_college.disclosures.scripts." "tag_settlement_schools.read_in_s3"
     )
     def test_tag_schools_bad_heading(self, mock_read_in):
         mock_read_in.return_value = self.bad_csv_data
@@ -156,9 +149,7 @@ class PurgeTests(django.test.TestCase):
     def test_purges(self):
         self.assertTrue(Program.objects.exists())
         self.assertTrue(Notification.objects.exists())
-        self.assertEqual(
-            purge_objects.purge("schools"), purge_objects.error_msg
-        )
+        self.assertEqual(purge_objects.purge("schools"), purge_objects.error_msg)
         self.assertEqual(purge_objects.purge(""), purge_objects.no_args_msg)
         self.assertIn("test-programs", purge_objects.purge("test-programs"))
         self.assertTrue(Program.objects.exists())
@@ -250,13 +241,9 @@ class TestScripts(django.test.TestCase):
         )
 
     def test_percentile_rank_blank_array(self):
-        self.assertIs(
-            process_cohorts.calculate_percentile_rank([], 0.50), None
-        )
+        self.assertIs(process_cohorts.calculate_percentile_rank([], 0.50), None)
 
-    @unittest.skipUnless(
-        connection.vendor == "postgresql", "PostgreSQL-dependent"
-    )
+    @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL-dependent")
     def test_run_cohorts(self):
         school = School.objects.get(pk=100654)
         self.assertIs(school.cohort_ranking_by_state, None)
@@ -264,24 +251,18 @@ class TestScripts(django.test.TestCase):
         school.refresh_from_db()
         self.assertEqual(type(school.cohort_ranking_by_state), dict)
         self.assertEqual(
-            school.cohort_ranking_by_state.get("grad_rate").get(
-                "percentile_rank"
-            ),
+            school.cohort_ranking_by_state.get("grad_rate").get("percentile_rank"),
             100,
         )
 
-    @unittest.skipUnless(
-        connection.vendor == "postgresql", "PostgreSQL-dependent"
-    )
+    @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL-dependent")
     def test_run_cohorts_singleton(self):
         school = School.objects.get(pk=100654)
         self.assertIs(school.cohort_ranking_by_state, None)
         process_cohorts.run(single_school=100654)
         school.refresh_from_db()
         self.assertEqual(
-            school.cohort_ranking_by_state.get("grad_rate").get(
-                "percentile_rank"
-            ),
+            school.cohort_ranking_by_state.get("grad_rate").get("percentile_rank"),
             100,
         )
 
@@ -319,12 +300,8 @@ class TestScripts(django.test.TestCase):
         self.assertEqual(school.grad_rate_lt4, Decimal("0.54"))
         self.assertEqual(school.grad_rate_4yr, None)
 
-    @unittest.skipUnless(
-        connection.vendor == "postgresql", "PostgreSQL-dependent"
-    )
-    @patch(
-        "paying_for_college.disclosures.scripts.update_colleges.requests.get"
-    )
+    @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL-dependent")
+    @patch("paying_for_college.disclosures.scripts.update_colleges.requests.get")
     def test_api_school_query(self, mock_requests):
         mock_response = mock.Mock()
         mock_response.json.return_value = self.mock_results
@@ -334,9 +311,7 @@ class TestScripts(django.test.TestCase):
         self.assertEqual(mock_requests.call_count, 1)
         self.assertTrue(mock_requests.called_with((123456, "school.name")))
 
-    @unittest.skipUnless(
-        connection.vendor == "postgresql", "PostgreSQL-dependent"
-    )
+    @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL-dependent")
     @patch(
         "paying_for_college.disclosures.scripts.update_colleges.get_scorecard_data"
     )  # noqa
@@ -418,21 +393,15 @@ class TestScripts(django.test.TestCase):
         for each in ["0_30k", "30k_48k", "48k_75k", "75k_110k", "110k_plus"]:
             self.assertIn(each, school.avg_net_price_slices.keys())
 
-    @unittest.skipUnless(
-        connection.vendor == "postgresql", "PostgreSQL-dependent"
-    )
+    @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL-dependent")
     def test_compile_net_prices_public(self):
         self.check_compile_net_prices("Public")
 
-    @unittest.skipUnless(
-        connection.vendor == "postgresql", "PostgreSQL-dependent"
-    )
+    @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL-dependent")
     def test_compile_net_prices_private(self):
         self.check_compile_net_prices("Private")
 
-    @patch(
-        "paying_for_college.disclosures.scripts.update_colleges.requests.get"
-    )
+    @patch("paying_for_college.disclosures.scripts.update_colleges.requests.get")
     def test_get_scorecard_data(self, mock_requests):
         mock_response = mock.Mock()
         mock_response.json.return_value = self.mock_results
@@ -452,9 +421,7 @@ class TestScripts(django.test.TestCase):
         self.assertEqual(mock_requests.call_count, 1)
         self.assertIsNone(test_data)
 
-    @patch(
-        "paying_for_college.disclosures.scripts.update_colleges.requests.get"
-    )
+    @patch("paying_for_college.disclosures.scripts.update_colleges.requests.get")
     def test_get_scorecard_data_throttled(self, mock_requests):
         mock_response = mock.Mock()
         mock_response.ok = False
@@ -465,9 +432,7 @@ class TestScripts(django.test.TestCase):
         self.assertEqual(mock_requests.call_count, 1)
         self.assertIs(test_data, None)
 
-    @patch(
-        "paying_for_college.disclosures.scripts.update_colleges.requests.get"
-    )
+    @patch("paying_for_college.disclosures.scripts.update_colleges.requests.get")
     def test_get_scorecard_data_no_results(self, mock_requests):
         mock_response = mock.Mock()
         mock_response.ok = True
@@ -495,9 +460,7 @@ class TestScripts(django.test.TestCase):
     def test_process_missing(
         self, mock_create_school, mock_dump, mock_process_datafiles
     ):
-        mock_process_datafiles.return_value = {
-            "999998": {"onCampusAvail": "yes"}
-        }
+        mock_process_datafiles.return_value = {"999998": {"onCampusAvail": "yes"}}
         update_ipeds.process_missing(["999998"])
         self.assertTrue(mock_dump.call_count == 1)
         self.assertTrue(mock_create_school.call_count == 1)
@@ -525,9 +488,7 @@ class TestScripts(django.test.TestCase):
             )
         self.assertTrue(m.call_count == 1)
 
-    @patch(
-        "paying_for_college.disclosures.scripts.update_ipeds.download_files"
-    )
+    @patch("paying_for_college.disclosures.scripts.update_ipeds.download_files")
     def test_read_csv(self, mock_download):
         m = mock_open(read_data="a , b, c \nd,e,f")
         with patch("builtins.open", m):
@@ -538,9 +499,7 @@ class TestScripts(django.test.TestCase):
         # self.assertEqual(data, [{'a ': 'd', ' b': 'e', ' c ': 'f'}])
 
     @patch("paying_for_college.disclosures.scripts.update_ipeds.read_csv")
-    @patch(
-        "paying_for_college.disclosures.scripts.update_ipeds.write_clean_csv"
-    )
+    @patch("paying_for_college.disclosures.scripts.update_ipeds.write_clean_csv")
     def test_clean_csv_headings(self, mock_write, mock_read):
         mock_read.return_value = (
             ["UNITID", "PEO1ISTR"],
@@ -610,17 +569,13 @@ class TestScripts(django.test.TestCase):
     @patch(
         "paying_for_college.disclosures.scripts.update_ipeds.process_datafiles"
     )  # noqa
-    @patch(
-        "paying_for_college.disclosures.scripts.update_ipeds.process_missing"
-    )
+    @patch("paying_for_college.disclosures.scripts.update_ipeds.process_missing")
     def test_load_values(self, mock_process_missing, mock_process):
         mock_process.return_value = {"999999": {"onCampusAvail": "2"}}
         msg = update_ipeds.load_values()
         self.assertTrue("DRY" in msg)
         self.assertTrue(mock_process.call_count == 1)
-        mock_process.return_value = {
-            "243197": {"onCampusAvail": "2", "books": "."}
-        }
+        mock_process.return_value = {"243197": {"onCampusAvail": "2", "books": "."}}
         msg = update_ipeds.load_values()
         self.assertTrue("DRY" in msg)
         self.assertTrue(mock_process.call_count == 2)
@@ -671,8 +626,7 @@ class TestScripts(django.test.TestCase):
         self.assertTrue("found" in msg)
 
     @patch(
-        "paying_for_college.disclosures.scripts."
-        "notification_tester.requests.post"
+        "paying_for_college.disclosures.scripts." "notification_tester.requests.post"
     )
     def test_edmc_ping(self, mock_post):
         mock_return = mock.Mock()

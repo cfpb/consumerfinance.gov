@@ -38,9 +38,7 @@ class ApplicantTypeTests(TestCase):
 
 class GradeTests(TestCase):
     def test_str(self):
-        self.assertEqual(
-            str(Grade(grade="53", salary_min=1, salary_max=100)), "53"
-        )
+        self.assertEqual(str(Grade(grade="53", salary_min=1, salary_max=100)), "53")
 
     def test_compare_lt(self):
         self.assertLess(

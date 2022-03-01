@@ -73,9 +73,7 @@ def is_filter_selected(context, fieldname, value):
 def render_stream_child(context, stream_child):
     # Use the django_jinja to get the template content based on its name
     try:
-        template = context.environment.get_template(
-            stream_child.block.meta.template
-        )
+        template = context.environment.get_template(stream_child.block.meta.template)
     except Exception:
         return stream_child
 

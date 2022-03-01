@@ -31,9 +31,7 @@ class TestJinja2Tags(TestCase):
             self.assertTrue(names[l_idx] in html)
             #   Also, verify that this letter comes before the others
             for r_idx in range(l_idx + 1, len(names)):
-                self.assertTrue(
-                    html.find(names[l_idx]) < html.find(names[r_idx])
-                )
+                self.assertTrue(html.find(names[l_idx]) < html.find(names[r_idx]))
 
     def test_issuer_select_selected(self):
         """

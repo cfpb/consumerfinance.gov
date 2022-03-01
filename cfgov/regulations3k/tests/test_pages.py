@@ -83,9 +83,7 @@ class PagesRegulations3kTestCase(TestCase):
         # Check for permanent redirect
         self.assertEqual(response.status_code, 301)
         # Check for lowercase location
-        self.assertEqual(
-            response.get("location"), "/reg-landing/1002/interp-2/"
-        )
+        self.assertEqual(response.get("location"), "/reg-landing/1002/interp-2/")
 
     def test_invalid_effective_date(self):
         # Try to fetch a date string that's incorrectly formatted.

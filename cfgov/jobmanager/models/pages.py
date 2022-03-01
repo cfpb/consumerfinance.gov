@@ -60,9 +60,7 @@ class JobListingPageForm(WagtailAdminPageForm):
         regions = cleaned_data.get("regions")
         has_regions = regions.exists() if regions else False
 
-        if (has_offices and has_regions) or (
-            not has_offices and not has_regions
-        ):
+        if (has_offices and has_regions) or (not has_offices and not has_regions):
             self.add_error("regions", mark_safe(LOCATION_HELP_TEXT))
 
         if has_regions and cleaned_data["allow_remote"]:
@@ -78,15 +76,9 @@ class JobListingPage(CFGOVPage):
     description = RichTextField("Summary")
     open_date = models.DateField("Open date")
     close_date = models.DateField("Close date")
-    salary_min = models.DecimalField(
-        "Minimum salary", max_digits=11, decimal_places=2
-    )
-    salary_max = models.DecimalField(
-        "Maximum salary", max_digits=11, decimal_places=2
-    )
-    division = models.ForeignKey(
-        JobCategory, on_delete=models.PROTECT, null=True
-    )
+    salary_min = models.DecimalField("Minimum salary", max_digits=11, decimal_places=2)
+    salary_max = models.DecimalField("Maximum salary", max_digits=11, decimal_places=2)
+    division = models.ForeignKey(JobCategory, on_delete=models.PROTECT, null=True)
     job_length = models.ForeignKey(
         JobLength,
         on_delete=models.PROTECT,
@@ -97,15 +89,11 @@ class JobListingPage(CFGOVPage):
     service_type = models.ForeignKey(
         ServiceType, on_delete=models.PROTECT, null=True, blank=True
     )
-    offices = ParentalManyToManyField(
-        Office, related_name="job_listings", blank=True
-    )
+    offices = ParentalManyToManyField(Office, related_name="job_listings", blank=True)
     allow_remote = models.BooleanField(
         default=False, verbose_name="Office location can also be remote"
     )
-    regions = ParentalManyToManyField(
-        Region, related_name="job_listings", blank=True
-    )
+    regions = ParentalManyToManyField(Region, related_name="job_listings", blank=True)
     responsibilities = RichTextField("Responsibilities", null=True, blank=True)
     travel_required = models.BooleanField(
         blank=False,
@@ -165,9 +153,7 @@ class JobListingPage(CFGOVPage):
                 HelpPanel(LOCATION_HELP_TEXT),
                 FieldRowPanel(
                     [
-                        FieldPanel(
-                            "offices", widget=forms.CheckboxSelectMultiple
-                        ),
+                        FieldPanel("offices", widget=forms.CheckboxSelectMultiple),
                         FieldPanel("allow_remote"),
                     ]
                 ),
@@ -186,12 +172,8 @@ class JobListingPage(CFGOVPage):
             ],
             heading="Description",
         ),
-        InlinePanel(
-            "usajobs_application_links", label="USAJobs application links"
-        ),
-        InlinePanel(
-            "email_application_links", label="Email application links"
-        ),
+        InlinePanel("usajobs_application_links", label="USAJobs application links"),
+        InlinePanel("email_application_links", label="Email application links"),
     ]
 
     edit_handler = TabbedInterface(
@@ -227,9 +209,7 @@ class JobListingPage(CFGOVPage):
                 "regions": [
                     {
                         "name": region.name,
-                        "states": [
-                            state.abbreviation for state in region.states.all()
-                        ],
+                        "states": [state.abbreviation for state in region.states.all()],
                         "major_cities": list(
                             region.major_cities.values("name", "state_id")
                         ),

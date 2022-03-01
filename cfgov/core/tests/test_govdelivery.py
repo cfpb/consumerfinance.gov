@@ -38,9 +38,7 @@ class MockGovDeliveryTests(TestCase):
     def test_calls_get_recorded(self):
         govdelivery = MockGovDelivery("code")
         govdelivery.do_something(123, foo="bar")
-        self.assertEqual(
-            govdelivery.calls, [("do_something", (123,), {"foo": "bar"})]
-        )
+        self.assertEqual(govdelivery.calls, [("do_something", (123,), {"foo": "bar"})])
 
     def test_call_returns_valid_response(self):
         govdelivery = MockGovDelivery("code")

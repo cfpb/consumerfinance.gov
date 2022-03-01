@@ -32,9 +32,7 @@ class BlogPage(AbstractFilterPage):
     template = "blog/blog_page.html"
 
     objects = PageManager()
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField("content")
-    ]
+    search_fields = AbstractFilterPage.search_fields + [index.SearchField("content")]
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -51,9 +49,7 @@ class LegacyBlogPage(AbstractFilterPage):
         [
             (
                 "content",
-                blocks.RawHTMLBlock(
-                    help_text="Content from WordPress unescaped."
-                ),
+                blocks.RawHTMLBlock(help_text="Content from WordPress unescaped."),
             ),
             ("feedback", v1_blocks.Feedback()),
             (
@@ -68,6 +64,4 @@ class LegacyBlogPage(AbstractFilterPage):
     )
     template = "blog/blog_page.html"
 
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField("content")
-    ]
+    search_fields = AbstractFilterPage.search_fields + [index.SearchField("content")]

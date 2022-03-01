@@ -24,9 +24,7 @@ class AbstractFormBlock(blocks.StructBlock):
     def get_handler_class(self):
         handler_path = self.meta.handler
         if not handler_path:
-            raise AttributeError(
-                "You must set a handler attribute on the Meta class."
-            )
+            raise AttributeError("You must set a handler attribute on the Meta class.")
         return import_string(handler_path)
 
     def is_submitted(self, request, sfname, index):
@@ -83,9 +81,7 @@ class Feedback(AbstractFormBlock):
             'that use "Was this helpful?" radio buttons.'
         ),
     )
-    intro_text = blocks.CharBlock(
-        required=False, help_text="Optional feedback intro"
-    )
+    intro_text = blocks.CharBlock(required=False, help_text="Optional feedback intro")
     question_text = blocks.CharBlock(
         required=False, help_text="Optional expansion on intro"
     )
@@ -156,9 +152,7 @@ class HeadingBlock(blocks.StructBlock):
     class Meta:
         icon = "title"
         template = "_includes/blocks/heading.html"
-        form_template = (
-            "admin/form_templates/struct-with-block-wrapper-classes.html"
-        )
+        form_template = "admin/form_templates/struct-with-block-wrapper-classes.html"
 
 
 class PlaceholderFieldBlock(blocks.FieldBlock):
@@ -179,9 +173,7 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
             "wagtailadmin/block_forms/field.html",
             {
                 "name": self.name,
-                "classes": getattr(
-                    self.meta, "form_classname", self.meta.classname
-                ),
+                "classes": getattr(self.meta, "form_classname", self.meta.classname),
                 "widget": self.field.widget.render(
                     prefix,
                     self.field.prepare_value(self.value_for_form(value)),
@@ -213,9 +205,7 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
 class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
     class Meta:
         icon = "placeholder"
-        form_template = (
-            "admin/form_templates/struct_block_with_render_form.html"
-        )
+        form_template = "admin/form_templates/struct_block_with_render_form.html"
 
 
 class ReusableTextChooserBlock(SnippetChooserBlock):

@@ -19,9 +19,7 @@ class Command(BaseCommand):
     help = COMMAND_HELP
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            "--add-email", help=PARSER_HELP, nargs="+", type=str
-        )
+        parser.add_argument("--add-email", help=PARSER_HELP, nargs="+", type=str)
 
     def handle(self, *args, **options):
         if options["add_email"]:

@@ -117,9 +117,7 @@ class MigrationsUtilTestCase(TestCase):
         self.assertEqual(data[0]["value"], "new text")
 
     @mock.patch("v1.util.migrations.set_streamfield_data")
-    def test_migrate_stream_field_not_migrated(
-        self, mock_set_streamfield_data
-    ):
+    def test_migrate_stream_field_not_migrated(self, mock_set_streamfield_data):
         """Test that the migrate_stream_field function correctly
         ignores a field that does not have the correct type and
         shouldn't be migrated."""
@@ -147,15 +145,11 @@ class MigrationsUtilTestCase(TestCase):
         migrate_page_types_and_fields(apps, page_types_and_fields, mapper)
 
         # Check that migrate_stream_field was correct called with the page
-        mock_migrate_stream_field.assert_any_call(
-            self.page, "body", "text", mapper
-        )
+        mock_migrate_stream_field.assert_any_call(self.page, "body", "text", mapper)
 
         # Check that the revision lookup happened correctly and that the
         # revision stream field was correctly migrated.
-        mock_migrate_stream_field.assert_any_call(
-            self.revision, "body", "text", mapper
-        )
+        mock_migrate_stream_field.assert_any_call(self.revision, "body", "text", mapper)
 
 
 class ChildStructBlock(blocks.StructBlock):

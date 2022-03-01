@@ -229,17 +229,13 @@ class PageCreationTestCase(TestCase):
     def test_sublanding_filterable_path_does_not_exist_fail(self):
         """get sublanding filterable path fails when parent path does not \
             exist"""
-        path = create_sublanding_filterable_page(
-            "Test", "test", "/test-fake-path/"
-        )
+        path = create_sublanding_filterable_page("Test", "test", "/test-fake-path/")
         self.assertIsNone(path)
 
     def test_browse_filterable_path_does_not_exist_fail(self):
         """get browse filterable path fails when parent path does not \
             exist"""
-        path = create_browse_filterable_page(
-            "Test", "test", "/test-fake-path/"
-        )
+        path = create_browse_filterable_page("Test", "test", "/test-fake-path/")
         self.assertIsNone(path)
 
     def test_browse_path_does_not_exist_fail(self):

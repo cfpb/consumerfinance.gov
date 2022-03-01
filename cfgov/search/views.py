@@ -12,9 +12,7 @@ class SearchView(View):
     template_name = "search/external_links.html"
 
     def get(self, request):
-        return render(
-            request, self.template_name, {"form": ExternalLinksForm()}
-        )
+        return render(request, self.template_name, {"form": ExternalLinksForm()})
 
     def post(self, request):
         form = ExternalLinksForm(request.POST)

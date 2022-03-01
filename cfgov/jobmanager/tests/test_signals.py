@@ -34,9 +34,7 @@ class JobListingPagePublishedSignalCase(TestCase):
             )
 
     @patch("jobmanager.signals.flag_enabled", return_value=False)
-    def test_ping_google_when_job_page_published_failure(
-        self, flag_enabled_check
-    ):
+    def test_ping_google_when_job_page_published_failure(self, flag_enabled_check):
         with patch("requests.get") as mock_request:
             helpers.publish_page(child=self.page)
             mock_request.assert_not_called()

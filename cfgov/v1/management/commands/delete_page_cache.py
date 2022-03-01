@@ -13,8 +13,7 @@ class Command(BaseCommand):
             required=True,
             nargs="+",
             help=(
-                "The full URL for the page cache to delete "
-                "(can specify multiple)"
+                "The full URL for the page cache to delete " "(can specify multiple)"
             ),
         )
 

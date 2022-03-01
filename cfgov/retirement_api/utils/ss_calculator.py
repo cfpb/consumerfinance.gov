@@ -116,9 +116,7 @@ def parse_details(rows):
     datad = {}
     if len(rows) == 3:
         titlerow = rows[0].split(":")
-        datad[titlerow[0].strip().upper()] = {
-            "Bend points": titlerow[1].strip()
-        }
+        datad[titlerow[0].strip().upper()] = {"Bend points": titlerow[1].strip()}
         outer = datad[titlerow[0].strip().upper()]
         outer["AIME"] = rows[1]
         outer["COLA"] = rows[2]
@@ -200,9 +198,7 @@ def interpolate_benefits(results, base, fra_tuple, current_age, DOB):
             )
         BENS["age 63"] = int(
             round(
-                base
-                - base * (3 * 12 * EARLY_PENALTY)
-                - base * (12 * EARLIER_PENALTY)
+                base - base * (3 * 12 * EARLY_PENALTY) - base * (12 * EARLIER_PENALTY)
             )
         )
         BENS["age 64"] = int(round(base - base * (3 * 12 * EARLY_PENALTY)))
@@ -228,16 +224,12 @@ def interpolate_benefits(results, base, fra_tuple, current_age, DOB):
             BENS["age 62"] = 0
             BENS["age 63"] = 0
             BENS["age 64"] = 0
-            BENS["age 65"] = int(
-                round(base - (dob_month_delta * monthly_penalty))
-            )
+            BENS["age 65"] = int(round(base - (dob_month_delta * monthly_penalty)))
         elif current_age == 64:
             BENS["age 62"] = 0
             BENS["age 63"] = 0
             BENS["age 64"] = int(
-                round(
-                    base - first_penalty - (dob_month_delta * monthly_penalty)
-                )
+                round(base - first_penalty - (dob_month_delta * monthly_penalty))
             )
             BENS["age 65"] = int(round(base - first_penalty))
         elif current_age == 63:
@@ -250,9 +242,7 @@ def interpolate_benefits(results, base, fra_tuple, current_age, DOB):
                     - (dob_month_delta * monthly_penalty)
                 )
             )
-            BENS["age 64"] = int(
-                round(base - first_penalty - (12 * monthly_penalty))
-            )
+            BENS["age 64"] = int(round(base - first_penalty - (12 * monthly_penalty)))
             BENS["age 65"] = int(round(base - first_penalty))
         elif current_age == 62:
             BENS["age 62"] = int(
@@ -266,9 +256,7 @@ def interpolate_benefits(results, base, fra_tuple, current_age, DOB):
             BENS["age 63"] = int(
                 round(base - first_penalty - (2 * 12 * monthly_penalty))
             )
-            BENS["age 64"] = int(
-                round(base - first_penalty - (12 * monthly_penalty))
-            )
+            BENS["age 64"] = int(round(base - first_penalty - (12 * monthly_penalty)))
             BENS["age 65"] = int(round(base - first_penalty))
         elif current_age in range(55, 62):
             if DOB.day == 2:
@@ -302,9 +290,7 @@ def interpolate_benefits(results, base, fra_tuple, current_age, DOB):
                     - (fra_months * earlier_monthly_penalty)
                 )
             )
-            BENS["age 64"] = int(
-                round(base - first_penalty - (12 * monthly_penalty))
-            )
+            BENS["age 64"] = int(round(base - first_penalty - (12 * monthly_penalty)))
             BENS["age 65"] = int(round(base - first_penalty))
     return results
 
@@ -374,9 +360,7 @@ def set_up_runvars(params, language="en"):
       to match SSA's handling of edge cases
     """
     today = date.today()
-    dobstring = "{0}-{1}-{2}".format(
-        params["yob"], params["dobmon"], params["dobday"]
-    )
+    dobstring = "{0}-{1}-{2}".format(params["yob"], params["dobmon"], params["dobday"])
     yobstring = "{0}".format(params["yob"])
     current_age = get_current_age(dobstring)
     dob = parser.parse(dobstring).date()
@@ -460,9 +444,7 @@ def parse_response(results, html, language):
 
 def validate_date(params):
     """Make sure delivered date is real"""
-    dobstring = "{0}-{1}-{2}".format(
-        params["yob"], params["dobmon"], params["dobday"]
-    )
+    dobstring = "{0}-{1}-{2}".format(params["yob"], params["dobmon"], params["dobday"])
     try:
         parser.parse(dobstring).date()
         return True
@@ -541,20 +523,14 @@ def get_retire_data(params, language):
     if results["error"]:
         return results
     if past_fra is True:
-        results = interpolate_for_past_fra(
-            results, base_benefit, current_age, dob
-        )
+        results = interpolate_for_past_fra(results, base_benefit, current_age, dob)
     else:
-        results["data"]["benefits"][
-            "age {0}".format(fra_tuple[0])
-        ] = base_benefit
+        results["data"]["benefits"]["age {0}".format(fra_tuple[0])] = base_benefit
         results = interpolate_benefits(
             results, base_benefit, fra_tuple, current_age, dob
         )
     final_results = calculate_lifetime_benefits(
         results, base_benefit, fra_tuple, dob, past_fra
     )
-    LOGGER.info(
-        "script took {0} to run".format((datetime.datetime.now() - starter))
-    )
+    LOGGER.info("script took {0} to run".format((datetime.datetime.now() - starter)))
     return final_results

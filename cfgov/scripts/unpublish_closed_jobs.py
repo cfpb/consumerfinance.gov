@@ -35,9 +35,7 @@ def job_archived(link):
     try:
         job = os.path.basename(os.path.normpath(link))
         params = {"ControlNumber": job, "WhoMayApply": "all"}
-        response = requests.get(
-            URL, headers=HEADERS, params=params, timeout=45
-        )
+        response = requests.get(URL, headers=HEADERS, params=params, timeout=45)
         response.raise_for_status()
         response_text = json.loads(response.text)
         results = response_text["SearchResult"]
@@ -66,9 +64,7 @@ def run():
     job_pages = JobListingPage.objects.filter(live=True)
     if job_pages:
         for page in job_pages:
-            logger.info(
-                'Checking status of job posting "{}"...'.format(page.title)
-            )
+            logger.info('Checking status of job posting "{}"...'.format(page.title))
             if page.usajobs_application_links:
                 closed_count = 0
                 links = page.usajobs_application_links.all()
@@ -77,8 +73,6 @@ def run():
                         closed_count += 1
                 if closed_count == links.count():
                     page.unpublish(set_expired=True)
-                    logger.info(
-                        "Job posting {} has closed.".format(page.title)
-                    )
+                    logger.info("Job posting {} has closed.".format(page.title))
     else:
         logger.info("No live job posting pages found...")

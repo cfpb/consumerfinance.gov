@@ -19,9 +19,7 @@ from v1.util.migrations import get_or_create_page
 class AskSearchSafetyTestCase(unittest.TestCase):
     def test_make_safe(self):
         test_phrase = "Would you like green eggs and ^~`[]#<>;|%\\{\\}\\?"
-        self.assertEqual(
-            make_safe(test_phrase), "Would you like green eggs and ?"
-        )
+        self.assertEqual(make_safe(test_phrase), "Would you like green eggs and ?")
 
 
 class AnswerPageSearchTest(TestCase):
@@ -86,9 +84,7 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["page"], self.en_page)
         self.assertEqual(mock_search.call_count, 3)
-        self.assertTrue(
-            mock_search.called_with(language="en", search_term=term)
-        )
+        self.assertTrue(mock_search.called_with(language="en", search_term=term))
 
     @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_search_en_no_term(self, mock_search):
@@ -126,18 +122,14 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(response_page, self.en_page)
         self.assertEqual(response_page.query, term)
         self.assertEqual(response_page.suggestion, term)
-        self.assertTrue(
-            mock_search.called_with(language="en", search_term=term)
-        )
+        self.assertTrue(mock_search.called_with(language="en", search_term=term))
 
     @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_search_autocomplete_honors_max_chars(self, mock_search):
         valid_term = "You saw the masterpiece, she looks a lot like you!"
         overage = " This is overage text that should not appear in the query"
         too_long_term = valid_term + overage
-        self.client.get(
-            reverse("ask-autocomplete-en"), {"term": too_long_term}
-        )
+        self.client.get(reverse("ask-autocomplete-en"), {"term": too_long_term})
         self.assertTrue(mock_search.called_with(valid_term))
 
     @mock.patch.object(AnswerPageDocument, "search")
@@ -147,14 +139,10 @@ class AnswerPageSearchTest(TestCase):
         mock_return.url = "https://autocomplete"
         mock_search().filter().query().__getitem__.return_value = [mock_return]
 
-        response = self.client.get(
-            reverse("ask-autocomplete-en"), {"term": "test"}
-        )
+        response = self.client.get(reverse("ask-autocomplete-en"), {"term": "test"})
 
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(
-            mock_search.called_with(language="en", search_term="test")
-        )
+        self.assertTrue(mock_search.called_with(language="en", search_term="test"))
         self.assertEqual(
             response.json(),
             [
@@ -172,14 +160,10 @@ class AnswerPageSearchTest(TestCase):
         mock_return.url = "https://autocomplete"
         for error in [RequestError(), IndexError()]:
             mock_search().filter().query.side_effect = error
-            response = self.client.get(
-                reverse("ask-autocomplete-en"), {"term": "test"}
-            )
+            response = self.client.get(reverse("ask-autocomplete-en"), {"term": "test"})
 
             self.assertEqual(response.status_code, 200)
-            self.assertTrue(
-                mock_search.called_with(language="en", search_term="test")
-            )
+            self.assertTrue(mock_search.called_with(language="en", search_term="test"))
             self.assertEqual(response.json(), [])
 
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
@@ -201,9 +185,7 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["page"], self.es_page)
         self.assertEqual(mock_search.call_count, 3)
-        self.assertTrue(
-            mock_search.called_with(language="es", search_term=term)
-        )
+        self.assertTrue(mock_search.called_with(language="es", search_term=term))
 
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_ask_search_en_page_selection(self, mock_search):
@@ -289,9 +271,7 @@ class AnswerPageSearchTest(TestCase):
         mock_search_result.autocomplete = "question"
         mock_search_result.url = "url"
         mock_autocomplete.query.return_value = [mock_search_result]
-        result = self.client.get(
-            reverse("ask-autocomplete-en"), {"term": "question"}
-        )
+        result = self.client.get(reverse("ask-autocomplete-en"), {"term": "question"})
         self.assertEqual(mock_autocomplete.call_count, 1)
         self.assertEqual(result.status_code, 200)
 
@@ -335,9 +315,7 @@ class RedirectAskSearchTestCase(TestCase):
         self.assertEqual(mock_redirect.call_count, 1)
 
     @mock.patch("ask_cfpb.views.redirect")
-    def test_spanish_redirect_ask_search_passes_query_string(
-        self, mock_redirect
-    ):
+    def test_spanish_redirect_ask_search_passes_query_string(self, mock_redirect):
         request = HttpRequest()
         request.GET["selected_facets"] = "category_exact:my_categoria"
         redirect_ask_search(request, language="es")
@@ -366,9 +344,7 @@ class RedirectAskSearchTestCase(TestCase):
         request = HttpRequest()
         request.GET = QueryDict(category_querystring)
         result = redirect_ask_search(request)
-        self.assertEqual(
-            result.get("location"), "/ask-cfpb/category-prepaid-cards/"
-        )
+        self.assertEqual(result.get("location"), "/ask-cfpb/category-prepaid-cards/")
 
     def test_redirect_search_no_query(self):
         request = HttpRequest()
@@ -388,9 +364,7 @@ class RedirectAskSearchTestCase(TestCase):
         request = HttpRequest()
         request.GET = QueryDict(category_querystring)
         result = redirect_ask_search(request)
-        self.assertEqual(
-            result.get("location"), "/ask-cfpb/category-my_category/"
-        )
+        self.assertEqual(result.get("location"), "/ask-cfpb/category-my_category/")
 
     def test_redirect_search_with_audience(self):
         audience_querystring = (
@@ -400,9 +374,7 @@ class RedirectAskSearchTestCase(TestCase):
         request = HttpRequest()
         request.GET = QueryDict(audience_querystring)
         result = redirect_ask_search(request)
-        self.assertEqual(
-            result.get("location"), "/ask-cfpb/audience-older-americans/"
-        )
+        self.assertEqual(result.get("location"), "/ask-cfpb/audience-older-americans/")
 
     def test_spanish_redirect_search_with_tag(self):
         target_tag = "spanishtag1"
@@ -415,9 +387,7 @@ class RedirectAskSearchTestCase(TestCase):
         result = redirect_ask_search(request, language="es")
         self.assertEqual(
             result.get("location"),
-            "/es/obtener-respuestas/buscar-por-etiqueta/{}/".format(
-                target_tag
-            ),
+            "/es/obtener-respuestas/buscar-por-etiqueta/{}/".format(target_tag),
         )
 
     def test_english_redirect_search_with_tag(self):
@@ -435,9 +405,7 @@ class RedirectAskSearchTestCase(TestCase):
         )
 
     def test_redirect_search_with_unrecognized_facet_raises_404(self):
-        querystring = (
-            "sort=-updated_at&selected_facets=imtkfidycqszgfdb&page=60"
-        )
+        querystring = "sort=-updated_at&selected_facets=imtkfidycqszgfdb&page=60"
         request = HttpRequest()
         request.GET = QueryDict(querystring)
         with self.assertRaises(Http404):

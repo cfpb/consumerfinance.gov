@@ -95,9 +95,7 @@ class Region(ClusterableModel):
 class State(models.Model):
     name = models.CharField(max_length=255)
     abbreviation = models.CharField(max_length=2, primary_key=True)
-    region = ParentalKey(
-        Region, related_name="states", on_delete=models.PROTECT
-    )
+    region = ParentalKey(Region, related_name="states", on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -132,6 +130,4 @@ class Office(AbstractCity):
 
 
 class MajorCity(AbstractCity):
-    region = ParentalKey(
-        Region, on_delete=models.PROTECT, related_name="major_cities"
-    )
+    region = ParentalKey(Region, on_delete=models.PROTECT, related_name="major_cities")

@@ -70,9 +70,7 @@ def get_url_resolver(page, date_str=None):
         section_kwargs["section_label"] = dest_section_label
         return "{page_url}{section_url}#{paragraph_label}".format(
             page_url=page.url,
-            section_url=page.reverse_subpage(
-                "section", kwargs=section_kwargs
-            ).lower(),
+            section_url=page.reverse_subpage("section", kwargs=section_kwargs).lower(),
             paragraph_label=dest_paragraph_label,
         )
 

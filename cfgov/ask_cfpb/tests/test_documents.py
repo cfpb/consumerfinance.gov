@@ -144,9 +144,7 @@ class AnswerPageDocumentTest(TestCase):
     def test_to_field_with_unknown_field(self):
         doc = DocType()
         with self.assertRaises(ModelFieldNotMappedError):
-            doc.to_field(
-                "answer_base", AnswerPage._meta.get_field("answer_base")
-            )
+            doc.to_field("answer_base", AnswerPage._meta.get_field("answer_base"))
 
     def test_mapping(self):
         self.assertEqual(
@@ -182,9 +180,7 @@ class AnswerPageDocumentTest(TestCase):
             {
                 "autocomplete": self.doc.prepare_autocomplete(self.en_page),
                 "language": "en",
-                "portal_categories": self.doc.prepare_portal_categories(
-                    self.en_page
-                ),
+                "portal_categories": self.doc.prepare_portal_categories(self.en_page),
                 "portal_topics": self.doc.prepare_portal_topics(self.en_page),
                 "preview": "",
                 "search_tags": self.doc.prepare_search_tags(self.en_page),
@@ -202,9 +198,7 @@ class AnswerPageDocumentTest(TestCase):
             {
                 "autocomplete": self.doc.prepare_autocomplete(self.es_page),
                 "language": "es",
-                "portal_categories": self.doc.prepare_portal_categories(
-                    self.es_page
-                ),
+                "portal_categories": self.doc.prepare_portal_categories(self.es_page),
                 "portal_topics": self.doc.prepare_portal_topics(self.es_page),
                 "preview": "",
                 "search_tags": self.doc.prepare_search_tags(self.es_page),

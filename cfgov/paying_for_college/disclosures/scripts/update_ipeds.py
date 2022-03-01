@@ -33,21 +33,15 @@ DATA_VARS = {
     "universe_url": "{}/HD{}.zip".format(ipeds_data_url, DATA_YEAR),
     "universe_zip": "{}/HD{}.zip".format(ipeds_directory, DATA_YEAR),
     "universe_csv": "{}/hd{}.csv".format(ipeds_directory, DATA_YEAR),
-    "universe_cleaned": "{}/hd{}_cleaned.csv".format(
-        ipeds_directory, DATA_YEAR
-    ),
+    "universe_cleaned": "{}/hd{}_cleaned.csv".format(ipeds_directory, DATA_YEAR),
     "data_url": "{}/{}.zip".format(ipeds_data_url, data_slug),
     "data_zip": "{}/{}.zip".format(ipeds_directory, data_slug),
     "data_csv": "{}/{}.csv".format(ipeds_directory, data_slug.lower()),
-    "data_cleaned": "{}/{}_cleaned.csv".format(
-        ipeds_directory, data_slug.lower()
-    ),
+    "data_cleaned": "{}/{}_cleaned.csv".format(ipeds_directory, data_slug.lower()),
     "services_url": "{}/IC{}.zip".format(ipeds_data_url, DATA_YEAR),
     "services_zip": "{}/IC{}.zip".format(ipeds_directory, DATA_YEAR),
     "services_csv": "{}/ic{}.csv".format(ipeds_directory, DATA_YEAR),
-    "services_cleaned": "{}/ic{}_cleaned.csv".format(
-        ipeds_directory, DATA_YEAR
-    ),
+    "services_cleaned": "{}/ic{}_cleaned.csv".format(ipeds_directory, DATA_YEAR),
 }
 
 # mapping the vars of our data_json to the IPEDS data csv

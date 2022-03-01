@@ -56,9 +56,7 @@ class FilterableDateField(forms.DateField):
         if field_id:
             self.default_widget_attrs["id"] = field_id
 
-        kwargs.setdefault(
-            "widget", widgets.DateInput(attrs=self.default_widget_attrs)
-        )
+        kwargs.setdefault("widget", widgets.DateInput(attrs=self.default_widget_attrs))
         super().__init__(*args, **kwargs)
 
 
@@ -73,13 +71,9 @@ class FilterableListForm(forms.Form):
             }
         ),
     )
-    from_date = FilterableDateField(
-        field_id="o-filterable-list-controls_from-date"
-    )
+    from_date = FilterableDateField(field_id="o-filterable-list-controls_from-date")
 
-    to_date = FilterableDateField(
-        field_id="o-filterable-list-controls_to-date"
-    )
+    to_date = FilterableDateField(field_id="o-filterable-list-controls_to-date")
 
     categories = forms.MultipleChoiceField(
         required=False,
@@ -180,9 +174,7 @@ class FilterableListForm(forms.Form):
         """Return a list of all possible filterable page ids"""
         page_ids = cache.get(f"{self.cache_key_prefix}-page_ids")
         if page_ids is None:
-            page_ids = [
-                result.meta.id for result in self.all_filterable_results
-            ]
+            page_ids = [result.meta.id for result in self.all_filterable_results]
             cache.set(f"{self.cache_key_prefix}-page_ids", page_ids)
         return page_ids
 

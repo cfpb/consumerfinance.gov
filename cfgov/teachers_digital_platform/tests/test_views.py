@@ -139,9 +139,7 @@ class TestSurveyWizard(TestCase):
         test_request = self.factory.get(
             "/", HTTP_HOST="preview.localhost", SERVER_PORT=8000
         )
-        url = _find_grade_selection_url(
-            test_request, "default", MockSublandingPage
-        )
+        url = _find_grade_selection_url(test_request, "default", MockSublandingPage)
         self.assertEqual(url, "/success")
 
     def test_survey_wizard_build_views(self):

@@ -20,9 +20,7 @@ from jobmanager.models.panels import (
 class GradePanelTests(unittest.TestCase):
     def test_str(self):
         grade = Grade(grade="53", salary_min=1, salary_max=100)
-        self.assertEqual(
-            str(GradePanel(grade=grade, job_listing_id=123)), "53"
-        )
+        self.assertEqual(str(GradePanel(grade=grade, job_listing_id=123)), "53")
 
 
 class ApplicationLinkTestCaseMixin:

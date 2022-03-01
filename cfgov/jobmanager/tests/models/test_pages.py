@@ -73,13 +73,9 @@ class JobListingPageFormTests(TestCase, WagtailTestUtils):
 
         Region.objects.create(name="Northeast region", abbreviation="NE")
 
-        State.objects.create(
-            name="New York", abbreviation="NY", region_id="NE"
-        )
+        State.objects.create(name="New York", abbreviation="NY", region_id="NE")
 
-        Office.objects.create(
-            abbreviation="NY", name="New York", state_id="NY"
-        )
+        Office.objects.create(abbreviation="NY", name="New York", state_id="NY")
 
         self.login()
 
@@ -157,17 +153,13 @@ class JobListingPageTests(TestCase):
     def setUpTestData(cls):
         cls.request = HttpRequest()
 
-        cls.grade = Grade.objects.create(
-            grade="53", salary_min=1, salary_max=100
-        )
+        cls.grade = Grade.objects.create(grade="53", salary_min=1, salary_max=100)
 
         cls.northeast = Region.objects.create(
             name="Northeast region", abbreviation="NE"
         )
 
-        State.objects.create(
-            name="New York", abbreviation="NY", region_id="NE"
-        )
+        State.objects.create(name="New York", abbreviation="NY", region_id="NE")
 
         cls.new_york = Office.objects.create(
             abbreviation="NY", name="New York", state_id="NY"
@@ -188,9 +180,7 @@ class JobListingPageTests(TestCase):
         self.assertNotIn("about_us", context)
 
     def test_get_context_with_about_us_snippet(self):
-        about_us = ReusableText.objects.create(
-            title="About us (For consumers)"
-        )
+        about_us = ReusableText.objects.create(title="About us (For consumers)")
 
         page = JobListingPage()
         context = page.get_context(self.request)

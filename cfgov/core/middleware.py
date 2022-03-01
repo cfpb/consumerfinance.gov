@@ -58,9 +58,7 @@ class ParseLinksMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        if self.should_parse_links(
-            request.path, response.get("Content-Type", "")
-        ):
+        if self.should_parse_links(request.path, response.get("Content-Type", "")):
             response.content = parse_links(
                 response.content, request.path, encoding=response.charset
             )
@@ -143,6 +141,4 @@ class PathBasedCsrfViewMiddleware(CsrfViewMiddleware):
         ):
             return None
 
-        return super().process_view(
-            request, callback, callback_args, callback_kwargs
-        )
+        return super().process_view(request, callback, callback_args, callback_kwargs)

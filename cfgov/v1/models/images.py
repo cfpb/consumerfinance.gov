@@ -67,9 +67,7 @@ class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
 
             width, height = self.apply_size_operation(operation, width, height)
 
-        return CFGOVRendition(
-            image=self, file=self.file, width=width, height=height
-        )
+        return CFGOVRendition(image=self, file=self.file, width=width, height=height)
 
     @staticmethod
     def apply_size_operation(operation, width, height):

@@ -28,8 +28,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         fix = options["fix"]
         http_image_url_mappings = [
-            tuple(mapping.split(","))
-            for mapping in options["http_image_url_mapping"]
+            tuple(mapping.split(",")) for mapping in options["http_image_url_mapping"]
         ]
 
         for mapping in http_image_url_mappings:

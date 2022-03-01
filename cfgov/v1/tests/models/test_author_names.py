@@ -13,9 +13,7 @@ class TestAuthorNames(TestCase):
 
     def test_alphabetize_authors_by_last_name(self):
         page = CFGOVPage()
-        page.authors.add(
-            "Ross Karchner", "Richa Agarwal", "Andy Chosak", "Will Barton"
-        )
+        page.authors.add("Ross Karchner", "Richa Agarwal", "Andy Chosak", "Will Barton")
         expected_result = [
             "Richa Agarwal",
             "Will Barton",
@@ -31,9 +29,7 @@ class TestAuthorNames(TestCase):
 
     def test_author_with_middle_name(self):
         page = CFGOVPage()
-        page.authors.add(
-            "Jess Schafer", "Richa Something Agarwal", "Sarah Simpson"
-        )
+        page.authors.add("Jess Schafer", "Richa Something Agarwal", "Sarah Simpson")
         expected_result = [
             "Richa Something Agarwal",
             "Jess Schafer",

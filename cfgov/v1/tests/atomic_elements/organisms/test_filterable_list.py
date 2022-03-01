@@ -26,9 +26,7 @@ class TestFilterableList(TestCase):
         page1 = BlogPage(title="test page 1")
         page1.tags.add("C-tag-3-instances")
 
-        page2 = EventPage(
-            title="test page 2", start_dt=datetime.now(timezone("UTC"))
-        )
+        page2 = EventPage(title="test page 2", start_dt=datetime.now(timezone("UTC")))
         page2.tags.add("B-tag-2-instances")
         page2.tags.add("C-tag-3-instances")
 
@@ -46,18 +44,14 @@ class TestFilterableList(TestCase):
 
     def set_up_filterable_list_page(self, value):
         self.page = BrowseFilterablePage(title="Browse filterable page")
-        self.page.content = StreamValue(
-            self.page.content.stream_block, [value], True
-        )
+        self.page.content = StreamValue(self.page.content.stream_block, [value], True)
         helpers.publish_page(child=self.page)
         self.block = self.page.get_filterable_list_wagtail_block()
 
     def test_get_filterable_topics_sort_by_frequency(self):
         self.set_up_filterable_list_page(self.topics_by_frequency())
         self.set_up_published_pages()
-        topics = FilterableList().get_filterable_topics(
-            self.page_ids, self.block.value
-        )
+        topics = FilterableList().get_filterable_topics(self.page_ids, self.block.value)
         expected_topics = [
             "C-tag-3-instances",
             "B-tag-2-instances",
@@ -68,9 +62,7 @@ class TestFilterableList(TestCase):
     def test_get_filterable_topics_sort_alphabetically(self):
         self.set_up_filterable_list_page(self.alphabetical_topics())
         self.set_up_published_pages()
-        topics = FilterableList().get_filterable_topics(
-            self.page_ids, self.block.value
-        )
+        topics = FilterableList().get_filterable_topics(self.page_ids, self.block.value)
         expected_topics = [
             "A-tag-1-instance",
             "B-tag-2-instances",

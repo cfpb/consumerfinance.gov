@@ -27,9 +27,7 @@ def update_sampling_dates():
     """
     dates = sorted(set([obj.date for obj in CountyMortgageData.objects.all()]))
     date_list = ["{}".format(date) for date in dates]
-    date_list_obj, cr = MortgageMetaData.objects.get_or_create(
-        name="sampling_dates"
-    )
+    date_list_obj, cr = MortgageMetaData.objects.get_or_create(name="sampling_dates")
     date_list_obj.json_value = date_list
     date_list_obj.save()
     logger.info(
@@ -93,9 +91,7 @@ def load_non_msa_state_values(date):
 
 
 def load_national_values(date):
-    record, cr = NationalMortgageData.objects.get_or_create(
-        date=date, fips="-----"
-    )
+    record, cr = NationalMortgageData.objects.get_or_create(date=date, fips="-----")
     record.aggregate_data()
 
 
@@ -132,7 +128,5 @@ def run():
     for state in State.objects.all():
         state.validate_non_msas()
     logger.info(
-        "{} took {} to run.".format(
-            script, (datetime.datetime.now() - starter)
-        )
+        "{} took {} to run.".format(script, (datetime.datetime.now() - starter))
     )

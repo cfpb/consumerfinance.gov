@@ -65,9 +65,7 @@ class TestFragmentCacheJinjaTag(TestCase):
         }
     )
     def test_value_that_is_not_cached_gets_rendered_properly(self):
-        self.assertEqual(
-            self._render_tag(value="foo", cache_name="default"), "foo"
-        )
+        self.assertEqual(self._render_tag(value="foo", cache_name="default"), "foo")
 
     @override_settings(
         CACHES={

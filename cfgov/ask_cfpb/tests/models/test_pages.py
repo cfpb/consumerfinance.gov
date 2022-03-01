@@ -98,9 +98,7 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
     def test_export_script_assemble_output(self):
         answer = Answer(id=1234)
         answer.save()
-        page = AnswerPage(
-            slug="mock-question1-en-1234", title="Mock question1"
-        )
+        page = AnswerPage(slug="mock-question1-en-1234", title="Mock question1")
         page.answer_base = answer
         page.question = "Mock question1"
         page.answer_content = StreamValue(
@@ -129,9 +127,7 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         with mock.patch("builtins.open", m, create=True):
             export_questions()
         self.assertEqual(mock_output.call_count, 1)
-        m.assert_called_once_with(
-            "/tmp/{}".format(slug), "w", encoding="windows-1252"
-        )
+        m.assert_called_once_with("/tmp/{}".format(slug), "w", encoding="windows-1252")
 
     @mock.patch("ask_cfpb.scripts.export_ask_data.assemble_output")
     def test_export_from_admin_post(self, mock_output):
@@ -157,9 +153,7 @@ class ArticlePageTest(TestCase):
 
     def setUp(self):
         def create_page(model, title, slug, parent, language="en", **kwargs):
-            new_page = model(
-                live=False, language=language, title=title, slug=slug
-            )
+            new_page = model(live=False, language=language, title=title, slug=slug)
             for k, v in kwargs.items():
                 setattr(new_page, k, v)
             parent.add_child(instance=new_page)
@@ -183,9 +177,7 @@ class ArticlePageTest(TestCase):
         )
 
     def test_article_page_str(self):
-        self.assertEqual(
-            self.article_page.title, "{}".format(self.article_page)
-        )
+        self.assertEqual(self.article_page.title, "{}".format(self.article_page))
 
     def test_article_page_response(self):
         response = self.client.get(self.article_page.url)
@@ -210,9 +202,7 @@ class PortalSearchPageTest(TestCase):
 
     def setUp(self):
         def create_page(model, title, slug, parent, language="en", **kwargs):
-            new_page = model(
-                live=False, language=language, title=title, slug=slug
-            )
+            new_page = model(live=False, language=language, title=title, slug=slug)
             for k, v in kwargs.items():
                 setattr(new_page, k, v)
             parent.add_child(instance=new_page)
@@ -344,9 +334,7 @@ class PortalSearchPageTest(TestCase):
 
     def test_get_english_category_heading(self):
         page = self.english_search_page
-        page.portal_category = PortalCategory.objects.get(
-            heading="How-to guides"
-        )
+        page.portal_category = PortalCategory.objects.get(heading="How-to guides")
         self.assertEqual(page.get_heading(), "How-to guides")
 
     def test_get_spanish_topic_heading(self):
@@ -355,9 +343,7 @@ class PortalSearchPageTest(TestCase):
 
     def test_get_spanish_category_heading(self):
         page = self.spanish_search_page
-        page.portal_category = PortalCategory.objects.get(
-            heading_es="Paso a paso"
-        )
+        page.portal_category = PortalCategory.objects.get(heading_es="Paso a paso")
         self.assertEqual(page.get_heading(), "Paso a paso")
 
     def test_english_portal_title(self):
@@ -406,12 +392,8 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(msg, "Showing 10 results  within auto loans")
 
     def test_results_message_no_category_with_search_term(self):
-        msg = self.english_search_page.results_message(
-            1, "Auto loans", "hoodoo"
-        )
-        self.assertEqual(
-            msg, 'Showing  1 result for "hoodoo" within auto loans'
-        )
+        msg = self.english_search_page.results_message(1, "Auto loans", "hoodoo")
+        self.assertEqual(msg, 'Showing  1 result for "hoodoo" within auto loans')
 
     def test_results_message_with_category_no_search_term(self):
         self.english_search_page.portal_category = PortalCategory.objects.get(
@@ -424,9 +406,7 @@ class PortalSearchPageTest(TestCase):
         self.english_search_page.portal_category = PortalCategory.objects.get(
             heading="How-to guides"
         )
-        msg = self.english_search_page.results_message(
-            1, "How-to guides", "hoodoo"
-        )
+        msg = self.english_search_page.results_message(1, "How-to guides", "hoodoo")
         self.assertEqual(
             msg,
             "Showing  1 result for &quot;hoodoo&quot; within how-to guides"
@@ -511,9 +491,7 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(mock_search.call_count, 1)
 
     @mock.patch.object(AnswerPageDocument, "search")
-    def test_portal_category_page_with_no_hits_with_suggestion(
-        self, mock_search
-    ):
+    def test_portal_category_page_with_no_hits_with_suggestion(self, mock_search):
         term = "hoodoo"
         mock_search.suggest.return_value = {
             "search_term": term,
@@ -525,9 +503,7 @@ class PortalSearchPageTest(TestCase):
             "portal_category_page", kwargs={"category": "how-to-guides"}
         )
         url = f"{base_url}?search_term={term}"
-        with override_settings(
-            FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]}
-        ):
+        with override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]}):
             response = self.client.get(url)
             self.assertEqual(response.context_data["search_term"], term)
             self.assertEqual(response.status_code, 200)
@@ -631,9 +607,7 @@ class AnswerPageTest(TestCase):
     fixtures = ["ask_tests", "portal_topics"]
 
     def create_answer_page(self, **kwargs):
-        kwargs.setdefault(
-            "path", get_free_path(apps, self.english_parent_page)
-        )
+        kwargs.setdefault("path", get_free_path(apps, self.english_parent_page))
         kwargs.setdefault("depth", self.english_parent_page.depth + 1)
         kwargs.setdefault("slug", "mock-answer-page-en-1234")
         kwargs.setdefault("title", "Mock answer page title")
@@ -776,9 +750,7 @@ class AnswerPageTest(TestCase):
             {
                 "type": "video_player",
                 "id": "402b933b",
-                "value": {
-                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
-                },
+                "value": {"video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"},
             },
             {
                 "type": "text",
@@ -797,9 +769,7 @@ class AnswerPageTest(TestCase):
             },
         ]
         set_streamfield_data(page, "answer_content", data)
-        self.assertTrue(
-            page.answer_content_preview().endswith("word word ...")
-        )
+        self.assertTrue(page.answer_content_preview().endswith("word word ..."))
 
     def test_answer_content_preview_char(self):
         """answer_content_preview returns truncated text by character count
@@ -812,9 +782,7 @@ class AnswerPageTest(TestCase):
             {
                 "type": "video_player",
                 "id": "402b933b",
-                "value": {
-                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
-                },
+                "value": {"video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"},
             },
             {
                 "type": "text",
@@ -865,9 +833,7 @@ class AnswerPageTest(TestCase):
             {
                 "type": "video_player",
                 "id": "402b933b",
-                "value": {
-                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
-                },
+                "value": {"video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"},
             },
             {
                 "type": "text",
@@ -921,17 +887,14 @@ class AnswerPageTest(TestCase):
         page = self.tag_results_page_en
         response = self.client.get(
             page.url
-            + page.reverse_subpage(
-                "tag_search", kwargs={"tag": "hippopotamus"}
-            )
+            + page.reverse_subpage("tag_search", kwargs={"tag": "hippopotamus"})
         )
         self.assertEqual(response.status_code, 200)
 
     def test_routable_tag_page_handles_bad_pagination(self):
         page = self.tag_results_page_en
         response = self.client.get(
-            page.url
-            + page.reverse_subpage("tag_search", kwargs={"tag": "hippodrome"}),
+            page.url + page.reverse_subpage("tag_search", kwargs={"tag": "hippodrome"}),
             {"page": "100"},
         )
         self.assertEqual(response.status_code, 200)
@@ -939,16 +902,13 @@ class AnswerPageTest(TestCase):
     def test_routable_tag_page_valid_tag_returns_200(self):
         page = self.tag_results_page_en
         response = self.client.get(
-            page.url
-            + page.reverse_subpage("tag_search", kwargs={"tag": "hippodrome"})
+            page.url + page.reverse_subpage("tag_search", kwargs={"tag": "hippodrome"})
         )
         self.assertEqual(response.status_code, 200)
 
     def test_routable_tag_page_returns_url_suffix(self):
         page = self.tag_results_page_en
-        response = page.reverse_subpage(
-            "tag_search", kwargs={"tag": "hippodrome"}
-        )
+        response = page.reverse_subpage("tag_search", kwargs={"tag": "hippodrome"})
         self.assertEqual(response, "hippodrome/")
 
     def test_view_answer_exact_slug(self):
@@ -978,9 +938,7 @@ class AnswerPageTest(TestCase):
         revision = page.save_revision()
         revision.publish()
         response_302 = self.client.get(
-            reverse(
-                "ask-english-answer", args=["mocking-answer-page", "en", 1234]
-            )
+            reverse("ask-english-answer", args=["mocking-answer-page", "en", 1234])
         )
         self.assertTrue(isinstance(response_302, HttpResponse))
         self.assertEqual(response_302.status_code, 301)
@@ -1005,9 +963,7 @@ class AnswerPageTest(TestCase):
         page = self.page1
         self.assertTrue(page.answer_base)
         result = page.__str__()
-        self.assertEqual(
-            result, "{}: {}".format(page.answer_base.pk, page.title)
-        )
+        self.assertEqual(result, "{}: {}".format(page.answer_base.pk, page.title))
 
     def test_search_tags(self):
         """Test the list produced by page.clean_search_tags()."""
@@ -1022,23 +978,15 @@ class AnswerPageTest(TestCase):
         english_answer_page_response = self.client.get(
             reverse("ask-english-answer", args=["mock-question", "en", 1234])
         )
-        self.assertContains(
-            english_answer_page_response, "An official website of the"
-        )
-        self.assertContains(
-            english_answer_page_response, "United States government"
-        )
-        self.assertNotContains(
-            english_answer_page_response, "Un sitio web oficial"
-        )
+        self.assertContains(english_answer_page_response, "An official website of the")
+        self.assertContains(english_answer_page_response, "United States government")
+        self.assertNotContains(english_answer_page_response, "Un sitio web oficial")
         self.assertNotContains(
             english_answer_page_response,
             "gobierno federal de los Estados Unidos",
         )
         self.assertContains(english_answer_page_response, "https://usa.gov/")
-        self.assertNotContains(
-            english_answer_page_response, "https://gobiernousa.gov/"
-        )
+        self.assertNotContains(english_answer_page_response, "https://gobiernousa.gov/")
 
     def test_spanish_header_and_footer(self):
         spanish_answer_page_response = self.client.get(
@@ -1047,9 +995,7 @@ class AnswerPageTest(TestCase):
                 args=["mock-spanish-question1", "es", 1234],
             )
         )
-        self.assertContains(
-            spanish_answer_page_response, "Un sitio web oficial"
-        )
+        self.assertContains(spanish_answer_page_response, "Un sitio web oficial")
         self.assertContains(
             spanish_answer_page_response,
             "gobierno federal de los Estados Unidos",
@@ -1057,15 +1003,9 @@ class AnswerPageTest(TestCase):
         self.assertNotContains(
             spanish_answer_page_response, "An official website of the"
         )
-        self.assertNotContains(
-            spanish_answer_page_response, "United States government"
-        )
-        self.assertContains(
-            spanish_answer_page_response, "https://gobiernousa.gov/"
-        )
-        self.assertNotContains(
-            spanish_answer_page_response, "https://usa.gov/"
-        )
+        self.assertNotContains(spanish_answer_page_response, "United States government")
+        self.assertContains(spanish_answer_page_response, "https://gobiernousa.gov/")
+        self.assertNotContains(spanish_answer_page_response, "https://usa.gov/")
 
     def test_category_str(self):
         category = self.category
@@ -1127,9 +1067,7 @@ class AnswerPageTest(TestCase):
         landing_page = self.english_parent_page
         test_context = landing_page.get_context(mock_request)
         self.assertEqual(len(test_context["portal_cards"]), 1)
-        self.assertEqual(
-            test_context["portal_cards"][0]["title"], "test topic"
-        )
+        self.assertEqual(test_context["portal_cards"][0]["title"], "test topic")
 
     def test_spanish_landing_page_context(self):
         page = self.page1_es
@@ -1142,9 +1080,7 @@ class AnswerPageTest(TestCase):
         landing_page = self.spanish_parent_page
         test_context = landing_page.get_context(mock_request)
         self.assertEqual(len(test_context["portal_cards"]), 1)
-        self.assertEqual(
-            test_context["portal_cards"][0]["title"], "prueba tema"
-        )
+        self.assertEqual(test_context["portal_cards"][0]["title"], "prueba tema")
 
     def test_landing_page_context_draft_portal_page(self):
         page = self.page1
@@ -1170,16 +1106,12 @@ class AnswerPageTest(TestCase):
         from v1.models.snippets import ReusableText
 
         test_snippet = ReusableText.objects.create(title="Test Snippet")
-        self.assertEqual(
-            get_reusable_text_snippet("Test Snippet"), test_snippet
-        )
+        self.assertEqual(get_reusable_text_snippet("Test Snippet"), test_snippet)
 
     def test_get_nonexistent_reusable_text_snippet(self):
         from ask_cfpb.models import get_reusable_text_snippet
 
-        self.assertEqual(
-            get_reusable_text_snippet("Nonexistent Snippet"), None
-        )
+        self.assertEqual(get_reusable_text_snippet("Nonexistent Snippet"), None)
 
     def test_get_about_us_english_standard_text(self):
         from ask_cfpb.models import get_standard_text
@@ -1238,9 +1170,7 @@ class AnswerPageTest(TestCase):
         page.full_clean()
         page.save()
 
-        dup_page = AnswerPage(
-            slug="dup-question-en", title="Duplicate question?"
-        )
+        dup_page = AnswerPage(slug="dup-question-en", title="Duplicate question?")
         dup_page.answer_base = answer
 
         with self.assertRaises(ValidationError):

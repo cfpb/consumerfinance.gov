@@ -91,9 +91,7 @@ def add_bls_dict_with_region(base_bls_dict, region, csvfile):
         if item in CATEGORIES_KEY_MAP.keys():
             print("Current processing {}.....".format(item))
             print(
-                "Will be adding {} to base_bls_dict...".format(
-                    CATEGORIES_KEY_MAP[item]
-                )
+                "Will be adding {} to base_bls_dict...".format(CATEGORIES_KEY_MAP[item])
             )
             base_bls_dict[CATEGORIES_KEY_MAP[item]].setdefault(region, {})
             for income_key, income_json_key in INCOME_KEY_MAP.items():

@@ -13,9 +13,7 @@ from model_bakery import baker
 
 class CreateEmailRequestTestCase(TestCase):
     def test_no_sites_raises_exception(self):
-        with patch(
-            "login.email.Site.objects.get", side_effect=Site.DoesNotExist
-        ):
+        with patch("login.email.Site.objects.get", side_effect=Site.DoesNotExist):
             self.assertRaises(RuntimeError, create_request_for_email)
 
     def assertRequestMatches(self, request, hostname, port, is_secure):

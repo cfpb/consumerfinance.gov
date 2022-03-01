@@ -59,9 +59,7 @@ class IdLevelState:
         return self.current_id.count("-") + 1
 
     def interp_level(self):
-        return (
-            self.current_id.partition("Interp")[-1].strip("-").count("-") + 1
-        )
+        return self.current_id.partition("Interp")[-1].strip("-").count("-") + 1
 
     def current_token(self):
         return self.current_id.split("-")[-1]
@@ -76,9 +74,7 @@ class IdLevelState:
         return self.current_id
 
     def dive(self):
-        new_id = "-".join(
-            [bit for bit in [self.current_id, self.next_token] if bit]
-        )
+        new_id = "-".join([bit for bit in [self.current_id, self.next_token] if bit])
         self.current_id = new_id
         return new_id
 
@@ -245,9 +241,7 @@ class IdLevelState:
             if self.roman_surf_test(self.current_token(), _next):
                 return self.surf()
             elif (
-                previous_digit
-                and _next.isdigit()
-                and int(_next) == previous_digit + 1
+                previous_digit and _next.isdigit() and int(_next) == previous_digit + 1
             ):
                 return self.rise(1)
             elif _next.isupper():
@@ -348,9 +342,7 @@ class IdLevelState:
             pid = self.next_appendix_id() or ""
             graph_text += "\n{" + pid + "}\n"
             graph = (
-                p_element.text.replace(
-                    "{}.".format(pid), "**{}.**".format(pid), 1
-                )
+                p_element.text.replace("{}.".format(pid), "**{}.**".format(pid), 1)
                 .replace("  ", " ")
                 .replace("** **", " ", 1)
             )

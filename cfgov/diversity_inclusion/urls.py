@@ -17,9 +17,7 @@ urlpatterns = [
     ),
     re_path(
         r"^voluntary-assessment-onboarding-form/form-submitted/$",
-        TemplateView.as_view(
-            template_name="diversity_inclusion/form-submitted.html"
-        ),
+        TemplateView.as_view(template_name="diversity_inclusion/form-submitted.html"),
         name="form_submitted",
     ),
     re_path(

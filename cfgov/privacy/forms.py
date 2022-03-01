@@ -25,18 +25,13 @@ class PrivacyActForm(forms.Form):
         widget=forms.Textarea(attrs=text_input_attrs),
     )
     system_of_record = forms.CharField(
-        label=(
-            "Name of the system of records you believe contain the "
-            "record(s)"
-        ),
+        label=("Name of the system of records you believe contain the " "record(s)"),
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
     date_of_records = forms.CharField(
         label="Date of the record(s)",
-        help_text=(
-            "Or the period in which you believe that the record was " "created"
-        ),
+        help_text=("Or the period in which you believe that the record was " "created"),
         required=False,
         widget=forms.TextInput(attrs=text_input_attrs),
     )
@@ -130,8 +125,7 @@ class PrivacyActForm(forms.Form):
         max_files = 6
         if len(files) > max_files:
             err = forms.ValidationError(
-                f"Please choose {max_files} or fewer files. "
-                f"You chose {len(files)}."
+                f"Please choose {max_files} or fewer files. " f"You chose {len(files)}."
             )
             self.add_error("supporting_documentation", err)
 

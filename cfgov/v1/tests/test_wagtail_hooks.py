@@ -71,15 +71,11 @@ class TestGetResourceTags(TestCase):
         self.page1.tags.add("tagC")
 
     def test_get_resource_tags_returns_only_resource_tags(self):
-        self.assertEqual(
-            get_resource_tags(), [("taga", "tagA"), ("tagb", "tagB")]
-        )
+        self.assertEqual(get_resource_tags(), [("taga", "tagA"), ("tagb", "tagB")])
 
     def test_get_resource_tags_returns_only_unique_tags(self):
         self.resource2.tags.add("tagA")
-        self.assertEqual(
-            get_resource_tags(), [("taga", "tagA"), ("tagb", "tagB")]
-        )
+        self.assertEqual(get_resource_tags(), [("taga", "tagA"), ("tagb", "tagB")])
 
     def test_get_resource_tags_returns_alphabetized_list(self):
         self.resource1.tags.add("aTag")
@@ -92,17 +88,11 @@ class TestGetResourceTags(TestCase):
 class TestResourceTagsFilter(TestCase, WagtailTestUtils):
     def setUp(self):
         self.login()
-        self.resource1 = Resource.objects.create(
-            title="Test resource Orange", order=1
-        )
+        self.resource1 = Resource.objects.create(title="Test resource Orange", order=1)
         self.resource1.tags.add("tagA")
-        self.resource2 = Resource.objects.create(
-            title="Test resource Banana", order=2
-        )
+        self.resource2 = Resource.objects.create(title="Test resource Banana", order=2)
         self.resource2.tags.add("tagB")
-        self.resource3 = Resource.objects.create(
-            title="Test resource Apple", order=3
-        )
+        self.resource3 = Resource.objects.create(title="Test resource Apple", order=3)
         self.resource3.tags.add("tagB")
         self.resource3.tags.add("tagC")
 

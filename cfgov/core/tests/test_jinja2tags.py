@@ -32,15 +32,11 @@ class FeatureFlagTests(TestCase):
         self.jinja_engine = engines["wagtail-env"]
 
     def test_flag_enabled_tag(self):
-        template = self.jinja_engine.from_string(
-            '{{ flag_enabled("MY_FLAG") }}'
-        )
+        template = self.jinja_engine.from_string('{{ flag_enabled("MY_FLAG") }}')
         self.assertEqual(template.render({"request": None}), "True")
 
     def test_flag_disabled_tag(self):
-        template = self.jinja_engine.from_string(
-            '{{ flag_disabled("MY_FLAG") }}'
-        )
+        template = self.jinja_engine.from_string('{{ flag_disabled("MY_FLAG") }}')
         self.assertEqual(template.render({"request": None}), "False")
 
 
@@ -77,9 +73,7 @@ class SlugifyUniqueTests(SimpleTestCase):
 
     def test_multiple_renders_multiple_unique_slugs(self):
         request = HttpRequest()
-        rendered = [
-            self.render(self.template, {"request": request}) for _ in range(5)
-        ]
+        rendered = [self.render(self.template, {"request": request}) for _ in range(5)]
 
         self.assertEqual(
             rendered,

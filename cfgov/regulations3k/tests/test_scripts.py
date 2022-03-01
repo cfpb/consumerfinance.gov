@@ -65,9 +65,7 @@ class LinkScriptTestCase(TestCase):
         run("1002")
         self.assertEqual(mock_get_url.call_count, 97)  # 97 refs in fixture
 
-    @mock.patch(
-        "regulations3k.scripts.insert_section_links.insert_section_links"
-    )
+    @mock.patch("regulations3k.scripts.insert_section_links.insert_section_links")
     def test_run_no_args(self, mock_inserter):
         """Check that passing no args will process all test regs."""
         mock_inserter.return_value = "linked Regdown"

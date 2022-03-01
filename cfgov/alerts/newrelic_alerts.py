@@ -23,9 +23,7 @@ class NewRelicAlertViolations:
     def get_current_violations(self):
         """Check for all violations currently open in New Relic"""
         headers = {"X-Api-Key": self.newrelic_token}
-        violations_url = (
-            self.newrelic_url + "alerts_violations.json?only_open=true"
-        )
+        violations_url = self.newrelic_url + "alerts_violations.json?only_open=true"
         r = requests.get(violations_url, headers=headers)
         r.raise_for_status()
         response_json = r.json()
@@ -69,8 +67,7 @@ class NewRelicAlertViolations:
             entity_name=violation["entity"]["name"],
         )
         incidents_link = (
-            "https://alerts.newrelic.com/accounts/"
-            "{account_number}/incidents"
+            "https://alerts.newrelic.com/accounts/" "{account_number}/incidents"
         ).format(account_number=self.account_number)
         body = (
             "New Relic {product}, {name}, {label} "

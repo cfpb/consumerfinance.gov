@@ -21,19 +21,13 @@ class ExternalLinksSearchViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_no_results(self):
-        response = self.client.post(
-            "/admin/external-links/", {"url": "www.foobar.com"}
-        )
-        self.assertContains(
-            response, "There are no matching pages or snippets"
-        )
+        response = self.client.post("/admin/external-links/", {"url": "www.foobar.com"})
+        self.assertContains(response, "There are no matching pages or snippets")
 
     def test_snippet_results(self):
         contact = Contact(body="<a href=https://www.foobar.com>...</a>")
         contact.save()
-        response = self.client.post(
-            "/admin/external-links/", {"url": "www.foobar.com"}
-        )
+        response = self.client.post("/admin/external-links/", {"url": "www.foobar.com"})
         self.assertContains(
             response, "There are 0 matching pages and 1 matching snippet"
         )
@@ -46,18 +40,14 @@ class ExternalLinksSearchViewTestCase(TestCase):
                 [
                     {
                         "type": "well",
-                        "value": {
-                            "content": "<a href=https://www.foobar.com>...</a>"
-                        },
+                        "value": {"content": "<a href=https://www.foobar.com>...</a>"},
                     }
                 ]
             ),
         )
         publish_page(page)
 
-        response = self.client.post(
-            "/admin/external-links/", {"url": "www.foobar.com"}
-        )
+        response = self.client.post("/admin/external-links/", {"url": "www.foobar.com"})
         self.assertContains(
             response, "There is 1 matching page and 0 matching snippets"
         )
@@ -73,9 +63,7 @@ class ExternalLinksSearchViewTestCase(TestCase):
                 [
                     {
                         "type": "well",
-                        "value": {
-                            "content": "<a href=https://www.foobar.com>...</a>"
-                        },
+                        "value": {"content": "<a href=https://www.foobar.com>...</a>"},
                     }
                 ]
             ),
@@ -83,18 +71,14 @@ class ExternalLinksSearchViewTestCase(TestCase):
                 [
                     {
                         "type": "text_introduction",
-                        "value": {
-                            "intro": "<a href=https://www.foobar.com>...</a>"
-                        },
+                        "value": {"intro": "<a href=https://www.foobar.com>...</a>"},
                     }
                 ]
             ),
         )
         publish_page(page)
 
-        response = self.client.post(
-            "/admin/external-links/", {"url": "www.foobar.com"}
-        )
+        response = self.client.post("/admin/external-links/", {"url": "www.foobar.com"})
         self.assertContains(
             response, "There is 1 matching page and 0 matching snippets"
         )
@@ -111,18 +95,14 @@ class ExternalLinksSearchViewTestCase(TestCase):
                     {
                         "type": "related_links",
                         "value": {
-                            "links": [
-                                {"url": "https://www.foobar.com", "text": ""}
-                            ]
+                            "links": [{"url": "https://www.foobar.com", "text": ""}]
                         },
                     }
                 ]
             ),
         )
         publish_page(page)
-        response = self.client.post(
-            "/admin/external-links/", {"url": "www.foobar.com"}
-        )
+        response = self.client.post("/admin/external-links/", {"url": "www.foobar.com"})
         self.assertContains(
             response, "There is 1 matching page and 0 matching snippets"
         )

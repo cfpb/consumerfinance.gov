@@ -4,9 +4,7 @@ from core.forms import ExternalURLForm
 from core.utils import sign_url
 
 
-@override_settings(
-    EXTERNAL_URL_ALLOWLIST=(r"^https:\/\/facebook\.com\/cfpb$",)
-)
+@override_settings(EXTERNAL_URL_ALLOWLIST=(r"^https:\/\/facebook\.com\/cfpb$",))
 class TestExternalURLForm(TestCase):
     def test_valid_signature(self):
         url = "https://https.cio.gov/"

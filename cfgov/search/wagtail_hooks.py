@@ -14,11 +14,7 @@ except ImportError:
 
 @hooks.register("register_admin_urls")
 def register_external_links_url():
-    return [
-        re_path(
-            r"^external-links/$", SearchView.as_view(), name="external-links"
-        )
-    ]
+    return [re_path(r"^external-links/$", SearchView.as_view(), name="external-links")]
 
 
 @hooks.register("register_admin_menu_item")

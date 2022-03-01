@@ -117,8 +117,7 @@ class ConferenceRegistrationForm(forms.Form):
         choices=ACCOMMODATIONS,
         required=False,
         label=(
-            "Please let us know of any accommodations you "
-            "need in order to attend."
+            "Please let us know of any accommodations you " "need in order to attend."
         ),
     )
     other_accommodations = forms.CharField(
@@ -152,9 +151,7 @@ class ConferenceRegistrationForm(forms.Form):
         return len(list(attendees.in_person())) >= self.capacity
 
     def save(self, commit=True):
-        registration = ConferenceRegistration(
-            govdelivery_code=self.govdelivery_code
-        )
+        registration = ConferenceRegistration(govdelivery_code=self.govdelivery_code)
 
         details = dict(self.cleaned_data)
         email = details["email"]

@@ -81,9 +81,7 @@ class TestNewRelicAlertViolations(unittest.TestCase):
         self.assertEqual(len(violations), 1)
 
     def test_format_violation(self):
-        nralert_violations = NewRelicAlertViolations(
-            "token", "cf.gov", "123456"
-        )
+        nralert_violations = NewRelicAlertViolations("token", "cf.gov", "123456")
         formatted_violation = nralert_violations.format_violation(
             self.newrelic_response["violations"][0]
         )

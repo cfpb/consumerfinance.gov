@@ -8,9 +8,7 @@ from django.test import TestCase, override_settings
 
 @override_settings(
     STATICFILES_DIRS=[
-        os.path.join(
-            os.path.dirname(os.path.dirname(__file__)), "staticfiles"
-        ),
+        os.path.join(os.path.dirname(os.path.dirname(__file__)), "staticfiles"),
     ]
 )
 class MockStaticfilesFinderTests(TestCase):

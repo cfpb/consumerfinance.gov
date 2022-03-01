@@ -4,9 +4,7 @@ from v1.atomic_elements import organisms
 
 
 class Tip(blocks.StructBlock):
-    content = blocks.RichTextBlock(
-        features=["link", "document-link"], label="Tip"
-    )
+    content = blocks.RichTextBlock(features=["link", "document-link"], label="Tip")
 
     class Meta:
         icon = "title"
@@ -35,9 +33,7 @@ class AskContent(blocks.StreamBlock):
             )
         ]
     )
-    table_block = organisms.AtomicTableBlock(
-        table_options={"renderer": "html"}
-    )
+    table_block = organisms.AtomicTableBlock(table_options={"renderer": "html"})
     tip = Tip()
     video_player = organisms.VideoPlayer()
 
@@ -112,9 +108,7 @@ class AskAnswerContent(blocks.StreamBlock):
             )
         ]
     )
-    table_block = organisms.AtomicTableBlock(
-        table_options={"renderer": "html"}
-    )
+    table_block = organisms.AtomicTableBlock(table_options={"renderer": "html"})
     tip = Tip()
     video_player = organisms.VideoPlayer()
     how_to_schema = HowTo()

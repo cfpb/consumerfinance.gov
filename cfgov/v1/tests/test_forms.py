@@ -15,9 +15,7 @@ from v1.models import CFGOVImage
 class TestFilterableListForm(TestCase):
     @mock.patch("v1.forms.FilterableListForm.__init__")
     @mock.patch("builtins.super")
-    def test_clean_returns_cleaned_data_if_in_future(
-        self, mock_super, mock_init
-    ):
+    def test_clean_returns_cleaned_data_if_in_future(self, mock_super, mock_init):
         mock_init.return_value = None
         from_date = datetime.date(2048, 1, 23)
         to_date = from_date + datetime.timedelta(weeks=52)
@@ -78,9 +76,7 @@ class TestFilterableListForm(TestCase):
     @mock.patch("v1.forms.FilterableListForm.__init__")
     @mock.patch("builtins.super")
     @freeze_time("2016-05-15")
-    def test_clean_uses_today_if_todate_field_is_empty(
-        self, mock_super, mock_init
-    ):
+    def test_clean_uses_today_if_todate_field_is_empty(self, mock_super, mock_init):
         mock_init.return_value = None
         from_date = datetime.date(2016, 5, 15)
         to_date = None

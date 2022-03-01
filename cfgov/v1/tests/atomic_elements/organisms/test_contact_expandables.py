@@ -37,18 +37,12 @@ class ContactExpandableTests(TestCase):
         self.assertNotIn(
             "World's richest duck",
             html,
-            msg=(
-                "ContactExpandable molecule should not include the Contact body"
-            ),
+            msg=("ContactExpandable molecule should not include the Contact body"),
         )
-        self.assertInHTML(
-            '<a href="https://vault.duckburg.com">Money Bin</a>', html
-        )
+        self.assertInHTML('<a href="https://vault.duckburg.com">Money Bin</a>', html)
 
     def test_bulk_to_python(self):
-        Contact.objects.bulk_create(
-            Contact(pk=i, heading=str(i)) for i in range(3)
-        )
+        Contact.objects.bulk_create(Contact(pk=i, heading=str(i)) for i in range(3))
 
         class TestStreamBlock(blocks.StreamBlock):
             contact = ContactExpandable()
@@ -119,9 +113,7 @@ class ContactExpandableGroupTests(WagtailTestUtils, TestCase):
                     "type": "contacts",
                     "value": {
                         "heading": "First",
-                        "expandables": [
-                            {"contact": pk} for pk in reversed(range(5))
-                        ],
+                        "expandables": [{"contact": pk} for pk in reversed(range(5))],
                     },
                 },
                 {

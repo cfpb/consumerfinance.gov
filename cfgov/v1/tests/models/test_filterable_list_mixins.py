@@ -20,9 +20,7 @@ class TestFilterableListMixin(TestCase):
 
     # FilterableListMixin.filterable_per_page_limit tests
     def test_per_page_limit_returns_integer(self):
-        self.assertIsInstance(
-            FilterableListMixin.filterable_per_page_limit, int
-        )
+        self.assertIsInstance(FilterableListMixin.filterable_per_page_limit, int)
 
     def test_get_form_data_returns_GET_data(self):
         request_string = "/?title=test"
@@ -102,18 +100,12 @@ class FilterableListContextTestCase(ElasticsearchTestsMixin, TestCase):
         self.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
     def test_get_context_has_archived_posts(self):
-        context = self.filterable_page.get_context(
-            request=self.factory.get("/test/")
-        )
+        context = self.filterable_page.get_context(request=self.factory.get("/test/"))
         self.assertTrue(context["has_archived_posts"])
 
-    @override_settings(
-        FLAGS={"HIDE_ARCHIVE_FILTER_OPTIONS": [("boolean", True)]}
-    )
+    @override_settings(FLAGS={"HIDE_ARCHIVE_FILTER_OPTIONS": [("boolean", True)]})
     def test_get_context_has_archived_posts_with_hide_archive_flag_on(self):
-        context = self.filterable_page.get_context(
-            request=self.factory.get("/test/")
-        )
+        context = self.filterable_page.get_context(request=self.factory.get("/test/"))
         self.assertFalse(context["has_archived_posts"])
 
 
@@ -140,9 +132,7 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
 
     def test_feed_route(self):
         response = self.client.get("/test/feed/")
-        self.assertEqual(
-            response["content-type"], "application/rss+xml; charset=utf-8"
-        )
+        self.assertEqual(response["content-type"], "application/rss+xml; charset=utf-8")
 
 
 class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
@@ -162,9 +152,7 @@ class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
         )
         self.filterable_page.add_child(instance=self.child_page)
         self.filterable_page.get_parent().add_child(instance=self.sibling_page)
-        self.filterable_page.get_parent().add_child(
-            instance=self.archived_sibling_page
-        )
+        self.filterable_page.get_parent().add_child(instance=self.archived_sibling_page)
 
         self.rebuild_elasticsearch_index("v1", stdout=StringIO())
 

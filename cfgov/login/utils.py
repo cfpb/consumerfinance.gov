@@ -36,9 +36,7 @@ def validate_password_history(user, password):
     checker = functools.partial(hashers.check_password, password)
 
     if any(checker(pass_hist.encrypted_password) for pass_hist in queryset):
-        raise ValidationError(
-            "You may not re-use any of your last 10 passwords"
-        )
+        raise ValidationError("You may not re-use any of your last 10 passwords")
 
 
 def _check_passwords(password, user, password_field):

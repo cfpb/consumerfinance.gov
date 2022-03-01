@@ -12,9 +12,7 @@ logger = logging.getLogger(__name__)
 
 def get_govdelivery_api():
     """Return object that can be used to access the GovDelivery API."""
-    clsname = getattr(
-        settings, "GOVDELIVERY_API", "govdelivery.api.GovDelivery"
-    )
+    clsname = getattr(settings, "GOVDELIVERY_API", "govdelivery.api.GovDelivery")
 
     cls = import_string(clsname)
     return cls(account_code=settings.GOVDELIVERY_ACCOUNT_CODE)
@@ -93,15 +91,12 @@ class LoggingMockGovDelivery(MockGovDelivery):
     def handle(self, method, *args, **kwargs):
         logger.info(
             (
-                "GovDelivery(account_code={account_code})."
-                "{method}({args}, {kwargs})"
+                "GovDelivery(account_code={account_code})." "{method}({args}, {kwargs})"
             ).format(
                 account_code=self.account_code,
                 method=method,
                 args=", ".join(map(str, args)),
-                kwargs=", ".join(
-                    "{k}={v}".format(k=k, v=v) for k, v in kwargs.items()
-                ),
+                kwargs=", ".join("{k}={v}".format(k=k, v=v) for k, v in kwargs.items()),
             )
         )
 
