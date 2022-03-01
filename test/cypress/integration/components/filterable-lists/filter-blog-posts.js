@@ -1,6 +1,6 @@
 /* The tests assume some blog posts already exist, and will need some test post data if they're run locally.
 The posts should be in five different categories, and tagged with at least five different topic tags.
-The posts should also have at least three different languages. */
+The posts should also have at least three different languages with some blog titles specific to those languages. */
 import { Filter } from './filter-helpers';
 import { FilterableListControl } from './filterable-list-control-helpers';
 import { Pagination } from '../pagination/pagination-helpers';
@@ -162,7 +162,7 @@ describe( 'Filter Blog Posts based on content', () => {
         'include',
         'topics=' + topic.get( 0 ).getAttribute( 'value' )
       );
-    });
+    } );
   } );
   it( 'Select multiple topics', () => {
     // get topics
@@ -210,64 +210,153 @@ describe( 'Filter Blog Posts based on content', () => {
     } );
   } );
   it( 'Type-ahead topics', () => {
-    // When I type "mortgage" in the topic input box
-    filter.typeAheadTopic( 'Mortgages' );
-    // And when I select a topic in the list
-    filter.clickTopic( 'Reverse mortgages' );
-    // And when I type "Dervicemembers" in the topic input box
-    filter.typeAheadTopic( 'Servicemembers' );
-    // And when I select a topic in the list
-    filter.clickTopic( 'Servicemembers' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then I should see only results tagged with the selected topic
-    blog.notification().should( 'be.visible' );
-    blog.resultsContent().should( 'contain', 'Reverse mortgages' );
-    blog.resultsContent().should( 'contain', 'Servicemembers' );
-    // And the page url should contain "topics=reverse-mortgages"
-    cy.url().should( 'include', 'topics=reverse-mortgages' );
-    // And the page url should contain "topics=servicemembers"
-    cy.url().should( 'include', 'topics=servicemembers' );
+    // get topics
+    filter.getTopic().then( ( topics ) => {
+      // When I type a topic in the topic input box
+      filter.typeAheadTopic(
+        topics.get( 0 ).getAttribute( 'value' ).split( '-' ).join( ' ' )
+      );
+      // And when I select a topic in the list
+      filter.clickTopic( topics.get( 0 ).getAttribute( 'value' ) );
+      // And when I type a different topic in the topic input box
+      filter.typeAheadTopic(
+        topics.get( 1 ).getAttribute( 'value' ).split( '-' ).join( ' ' )
+      );
+      // And when I select a topic in the list
+      filter.clickTopic( topics.get( 1 ).getAttribute( 'value' ) );
+      // And I click "Apply filters" button
+      blog.applyFilters();
+      // Then I should see only results tagged with the selected topic
+      blog.notification().should( 'be.visible' );
+      filter.getTopicLabel( 
+        topics.get( 0 ).getAttribute( 'value' ) 
+      ).then( ( label ) => {
+        blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
+      } );
+      filter.getTopicLabel( 
+        topics.get( 1 ).getAttribute( 'value' ) 
+      ).then( ( label ) => {
+        blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
+      } );
+      // And the page url should contain "topics=reverse-mortgages"
+      cy.url().should(
+        'include',
+        'topics=' + topics.get( 0 ).getAttribute( 'value' )
+      );
+      // And the page url should contain "topics=servicemembers"
+      cy.url().should(
+        'include',
+        'topics=' + topics.get( 1 ).getAttribute( 'value' )
+      );
+    } );
   } );
   it( 'Select category and topic', () => {
-    // When I select a checkbox in the Category list
-    filter.clickCategory( 'policy_compliance' );
-    // When I select a checkbox in the Topic list
-    filter.clickTopic( 'Students' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then I should see only results that are both in the selected category and tagged with the selected topic
-    blog.notification().should( 'be.visible' );
-    blog.resultsContent().should( 'contain', 'student' );
-    blog.resultsContent().should( 'contain', 'policy' );
-    // And the page url should contain "categories=policy_compliance"
-    cy.url().should( 'include', 'categories=policy_compliance' );
-    // And the page url should contain "topics=students"
-    cy.url().should( 'include', 'topics=students' );
+    // check results for blog post with category and topic
+    blog.getResultCategoryHasTags().then( ( category ) => {
+      blog.getResultTagHasCategories().then( ( topic ) => {
+        // When I select a checkbox in the Category list
+        filter.clickCategory(
+          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+        );
+        // When I select a checkbox in the Topic list
+        filter.clickTopic(
+          topic.get( 0 ).innerText.split( '\n' ).pop().trim()
+        );
+        // And I click "Apply filters" button
+        filter.apply();
+        // Then I should see only results that are both in the selected category and tagged with the selected topic
+        blog.notification().should( 'be.visible' );
+        blog.resultsHeaderContent().should(
+          'contain', category.get( 0 ).innerText.split( '\n' ).pop().trim()
+        );
+        filter.getTopicLabel(
+          topic.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join(
+            '-'
+          ).toLowerCase()).then((label) => {
+          blog.resultsContent().should( 'contain', label.get( 0 ).innerText);
+        } );
+        // And the page url should contain "categories=policy_compliance"
+        cy.url().should(
+          'include',
+          'categories=' + category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+        );
+        // And the page url should contain "topics=students"
+        cy.url().should(
+          'include',
+          'topics=' + topic.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+        );
+      } );
+    } );
   } );
   it( 'Clear filters', () => {
-    // When I select the last option in the Category multiselect
-    filter.clickCategory( 'Info for consumers' );
-    // When I select a checkbox in the Topic list
-    filter.clickTopic( 'Consumer complaints' );
-    // And I click "Apply filters" button
-    filter.apply();
-    // Then the page url should contain "categories=info-for-consumers"
-    cy.url().should( 'include', 'categories=info-for-consumers' );
-    // And the page url should contain "topics=consumer-complaints"
-    cy.url().should( 'include', 'topics=consumer-complaints' );
-    // Then I should see only results that are both in the selected category and tagged with the selected topic
-    blog.resultsContent().should( 'contain', 'consumer' );
-    // And when I click "Show filters"
-    filter.show();
-    // And when I click "Clear filters"
-    filter.clear();
-    // Then the page url should not contain "categories=info-for-consumers"
-    cy.url().should( 'not.include', 'categories=info-for-consumers' );
-    // And the page url should not contain "topics=consumer-complaints"
-    cy.url().should( 'not.include', 'topics=consumer-complaints' );
-    // Then there is no visible notification
-    blog.notification().should( 'not.be.visible' );
+    // check results for blog post with category and topic
+    blog.getResultCategoryHasTags().then( ( category ) => {
+      blog.getResultTagHasCategories().then( ( topic ) => {
+        // When I select a checkbox in the Category list
+        filter.clickCategory(
+          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+        );
+        // When I select a checkbox in the Topic list
+        filter.clickTopic(
+          topic.get( 0 ).innerText.split( '\n' ).pop().trim()
+        );
+        // And I click "Apply filters" button
+        filter.apply();
+        // Then I should see only results that are both in the selected category and tagged with the selected topic
+        blog.notification().should( 'be.visible' );
+        blog.resultsHeaderContent().should(
+          'contain', category.get( 0 ).innerText.split( '\n' ).pop().trim()
+        );
+        filter.getTopicLabel(
+          topic.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join(
+            '-'
+          ).toLowerCase()).then((label) => {
+          blog.resultsContent().should( 'contain', label.get( 0 ).innerText);
+        } );
+        // And the page url should contain "categories=policy_compliance"
+        cy.url().should(
+          'include',
+          'categories=' + category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+        );
+        // And the page url should contain "topics=students"
+        cy.url().should(
+          'include',
+          'topics=' + topic.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+        );
+        // And when I click "Show filters"
+        filter.show();
+        // And when I click "Clear filters"
+        filter.clear();
+        // Then the page url should not contain "categories=info-for-consumers"
+        cy.url().should(
+          'not.include',
+          'categories=' + category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+        );
+        // And the page url should not contain "topics=consumer-complaints"
+        cy.url().should(
+          'not.include',
+          'topics=' + topic.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+        );
+        // Then there is no visible notification
+        blog.notification().should( 'not.be.visible' );
+      } );
+    } );
   } );
   it( 'Hide filters', () => {
     // When I click "Hide filters"
@@ -313,61 +402,113 @@ describe( 'Filter Blog Posts based on content', () => {
     // Then I should see only results posted by the selected language
     blog.notification().should( 'be.visible' );
     blog.resultsContent().should( 'contain', 'Estafas con beneficios' );
-    blog.resultsContent().should( 'not.contain', 'Summary of the 2021' );
     // And the page url should contain "language=es"
     cy.url().should( 'include', 'language=es' );
     // And the page url should not contain "language=en"
     cy.url().should( 'not.include', 'language=en' );
   } );
   it( 'Item name search plus category', () => {
-    // When I type "loans" in the item name input box
-    blog.filterItemName( 'loans' );
-    // And I select the last option in the Category multiselect
-    filter.clickCategory( 'Info for consumers' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then I should see only results in the selected category with "loans" in the post title
-    blog.notification().should( 'be.visible' );
-    blog.resultsContent().should( 'contain', 'consumers' );
-    blog.resultsContent().should( 'contain', 'loans' );
-    // And the page url should contain "title=loans"
-    cy.url().should( 'include', 'title=loans' );
-    // And the page url should contain "categories=info-for-consumers"
-    cy.url().should( 'include', 'categories=info-for-consumers' );
+    // get the title of any blog post
+    blog.getResultCategory().then( ( category ) => {
+      // get category for that blog post
+      blog.getResultTitleHasCategory().then( ( title ) => {
+        // When I type title in the item name input box
+        blog.filterItemName( title.get( 0 ).innerText );
+        // And I select a checkbox in the category list
+        filter.clickCategory(
+          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+        );
+        // And I click "Apply filters" button
+        blog.applyFilters();
+        // Then I should see only results tagged with the selected category with title in the post title
+        blog.notification().should( 'be.visible' );
+        blog.resultsContent().should( 'contain', title.get( 0 ).innerText );
+        blog.resultsHeaderContent().should(
+          'contain', category.get( 0 ).innerText.split( '\n' ).pop().trim()
+        );
+        // And the page url should contain "title=" title
+        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        // And the page url should contain "categories=" category
+        cy.url().should(
+          'include',
+          'categories=' + category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+        );
+      } );
+    } );
   } );
   it( 'Item name search plus topic', () => {
-    // When I type "loans" in the item name input box
-    blog.filterItemName( 'loans' );
-    // And I select a checkbox in the Topic list
-    filter.clickTopic( 'Student loans' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then I should see only results tagged with the selected topic with "loans" in the post title
-    blog.notification().should( 'be.visible' );
-    blog.resultsContent().should( 'contain', 'loans' );
-    // And the page url should contain "title=loans"
-    cy.url().should( 'include', 'title=loans' );
-    // And the page url should contain "topics=student-loans"
-    cy.url().should( 'include', 'topics=student-loans' );
+    // get the title of any blog post
+    blog.getResultTag().then( ( topic ) => {
+      // get topic for that blog post
+      blog.getResultTitleHasTag().then( ( title ) => {
+        // When I type title in the item name input box
+        blog.filterItemName( title.get( 0 ).innerText );
+        // And I select a checkbox in the Topic list
+        filter.clickTopic(
+          topic.get( 0 ).innerText.split( '\n' ).pop().trim()
+        );
+        // And I click "Apply filters" button
+        blog.applyFilters();
+        // Then I should see only results tagged with the selected topic with title in the post title
+        blog.notification().should( 'be.visible' );
+        blog.resultsContent().should( 'contain', title.get( 0 ).innerText );
+        filter.getTopicLabel(
+          topic.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join(
+            '-'
+          ).toLowerCase()).then((label) => {
+          blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
+        } );
+        // And the page url should contain "title=" title
+        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        // And the page url should contain "topics=" topic
+        cy.url().should(
+          'include',
+          'topics=' + topic.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+        );
+      } );
+    } );
   } );
   it( 'Item name search plus date range', () => {
-    // When I type "loans" in the item name input box
-    blog.filterItemName( 'loans' );
-    // And I type "01/01/2020" in the From date entry field
-    blog.filterFromDate( '2020-01-01' );
-    // And I type "01/01/2021" in the To date entry field to bound the date range
-    blog.filterToDate( '2021-01-01' );
-    // And I click "Apply filters" button
-    blog.applyFilters();
-    // Then I should see only results dated "01/01/2020" or later with "loans" in the post title
-    blog.notification().should( 'be.visible' );
-    blog.lastResultHeader().should( 'contain', '2020' );
-    blog.resultsHeaderRight().should( 'not.contain', '2019' );
-    blog.resultsContent().should( 'contain', 'loans' );
-    // And the page url should contain "title=loans"
-    cy.url().should( 'include', 'title=loans' );
-    // And the page url should contain "from_date=2020-01-01"
-    cy.url().should( 'include', 'from_date=2020-01-01' );
+    // get the date from a result
+    blog.resultDate().then( ( date ) => {
+      // get the title of any blog post
+      blog.resultTitle().then( ( title ) => {
+        // When I type "loans" in the item name input box
+        blog.filterItemName( title.get( 0 ).innerText );
+        // And I type "01/01/2020" in the From date entry field
+        blog.filterFromDate(
+          date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+        );
+        // And I type "01/01/2021" in the To date entry field to bound the date range
+        blog.filterToDate(
+          date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+        );
+        // And I click "Apply filters" button
+        blog.applyFilters();
+        // Then I should see only results dated "01/01/2020" or later with "loans" in the post title
+        blog.notification().should( 'be.visible' );
+        blog.lastResultHeader().should(
+          'contain',
+          date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[ 0 ]
+        );
+        blog.resultsContent().should( 'contain', title.get( 0 ).innerText );
+        // And the page url should contain "title=loans"
+        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        // And the page url should contain "from_date=2020-01-01"
+        cy.url().should(
+          'include',
+          'from_date=' + date.get( 0 ).getAttribute(
+            'datetime'
+            ).split( 'T' )[ 0 ]
+        );
+      } );
+    } );
   } );
   it( 'Item name search plus language', () => {
     // When I type "loans" in the item name input box

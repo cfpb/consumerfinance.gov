@@ -21,6 +21,10 @@ export class Filter {
     return cy.get( '[id^="categories-"]' )
   }
 
+  getCategoryLabel( name ) {
+    return cy.get( `[for="categories-${ name }"]` )
+  }
+
   clickCategory( name ) {
     const category = name.split( ' ' ).join( '-' ).toLowerCase();
     const sel = `.o-multiselect_label[for="categories-${ category }"]`;
