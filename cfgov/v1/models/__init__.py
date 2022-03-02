@@ -8,8 +8,7 @@ from v1.models.base import (
 )
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.browse_filterable_page import (
-    NEWSROOM_CACHE_TAG, BrowseFilterablePage, EventArchivePage,
-    NewsroomLandingPage
+    BrowseFilterablePage, EventArchivePage, NewsroomLandingPage
 )
 from v1.models.browse_page import BrowsePage
 from v1.models.caching import CDNHistory

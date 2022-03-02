@@ -13,7 +13,6 @@ from v1.models import (
     BlogPage, CFGOVPage, CFGOVPageCategory, NewsroomLandingPage, NewsroomPage,
     SublandingFilterablePage
 )
-from v1.models.browse_filterable_page import NEWSROOM_CACHE_TAG
 from v1.signals import invalidate_filterable_list_caches
 
 
@@ -113,14 +112,9 @@ class FilterableListInvalidationTestCase(TestCase):
         self.non_filterable_page.save()
 
     @mock.patch('v1.signals.AkamaiBackend.purge_by_tags')
-    def test_invalidate_newsroom_by_cache_tag(self, mock_purge):
-        self.newsroom_page.save_revision().publish()
-        self.assertTrue(mock_purge.called_with(NEWSROOM_CACHE_TAG))
-
-    @mock.patch('v1.signals.PurgeBatch')
     @mock.patch('v1.signals.cache')
     def test_invalidate_filterable_list_caches(
-        self, mock_cache, mock_purge_batch,
+        self, mock_cache, mock_purge,
     ):
         invalidate_filterable_list_caches(None, instance=self.blog_page)
 
@@ -141,7 +135,11 @@ class FilterableListInvalidationTestCase(TestCase):
                 f"{cache_key_prefix}-authors"
             )
 
-        mock_purge_batch().add_page.assert_any_call(self.filterable_list_page)
+        mock_purge.assert_called_once()
+        self.assertIn(
+            self.filterable_list_page.slug,
+            mock_purge.mock_calls[0].args[0]
+        )
 
     @mock.patch('django.core.cache.cache')
     def test_invalidate_filterable_list_caches_does_nothing(self, mock_cache):

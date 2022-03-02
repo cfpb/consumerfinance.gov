@@ -3,6 +3,7 @@ import re
 from unittest.mock import Mock, patch
 from urllib.parse import urlencode
 
+from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, QueryDict
 from django.test import RequestFactory, TestCase, override_settings
 from django.urls import reverse
@@ -11,8 +12,8 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from core.govdelivery import MockGovDelivery
 from core.views import (
-    ExternalURLNoticeView, TranslatedTemplateView, govdelivery_subscribe,
-    regsgov_comment, submit_comment
+    CacheTaggedTemplateView, ExternalURLNoticeView, TranslatedTemplateView,
+    govdelivery_subscribe, regsgov_comment, submit_comment
 )
 
 
@@ -361,3 +362,26 @@ class TranslatedTemplateViewTestCase(TestCase):
         )
         response = view(request)
         self.assertEqual(response.context_data['current_language'], 'es')
+
+
+class CacheTaggedTemplateViewTestCase(TestCase):
+
+    def test_cache_tag(self):
+        request = RequestFactory().get('/')
+
+        view = CacheTaggedTemplateView.as_view(
+            template_name='test.html',
+            cache_tag='test'
+        )
+        response = view(request)
+        self.assertEqual(response['Edge-Cache-Tag'], 'test')
+
+    def test_no_cache_tag(self):
+        request = RequestFactory().get('/')
+
+        view = CacheTaggedTemplateView.as_view(
+            template_name='test.html',
+            cache_tag=None,
+        )
+        with self.assertRaises(ImproperlyConfigured):
+            view(request)
