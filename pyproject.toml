@@ -1,6 +1,3 @@
-[flake8]
-max-line-length = 79
-
 [tool.black]
 target-version = ['py36', 'py38']
 include = '\.pyi?$'

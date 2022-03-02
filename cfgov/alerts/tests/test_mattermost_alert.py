@@ -7,24 +7,19 @@ from alerts.mattermost_alert import MattermostAlert
 
 
 class TestMattermostAlert(TestCase):
-
-    @patch('requests.post')
+    @patch("requests.post")
     def test_post(self, mock):
-        """ Test that calling MattermostAlert.post
+        """Test that calling MattermostAlert.post
         makes a requests post with the right parameters
         """
-        webhook_url = 'www.testurl.com'
-        username = 'test'
-        credentials = {'username': username, 'webhook_url': webhook_url}
-        text = u'foö'
-        icon = 'http://some/icon.png'
+        webhook_url = "www.testurl.com"
+        username = "test"
+        credentials = {"username": username, "webhook_url": webhook_url}
+        text = "foö"
+        icon = "http://some/icon.png"
 
         MattermostAlert(credentials, icon_url=icon).post(text)
         mock.assert_called_once_with(
             webhook_url,
-            json={
-                'text': text,
-                'username': username,
-                'icon_url': icon
-            }
+            json={"text": text, "username": username, "icon_url": icon},
         )

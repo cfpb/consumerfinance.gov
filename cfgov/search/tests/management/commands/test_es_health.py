@@ -7,12 +7,11 @@ from django.test import TestCase
 
 
 class ESHealthTestCase(TestCase):
-
     def test_bad_connection_name(self):
         with self.assertRaises(CommandError):
             call_command("es_health", "notarealconnection", stdout=StringIO())
 
-    @mock.patch('elasticsearch_dsl.connections.get_connection')
+    @mock.patch("elasticsearch_dsl.connections.get_connection")
     def test_foo(self, mock_es_get_connection):
         mock_elasticsearch = mock.MagicMock()
         mock_elasticsearch.cat.health.return_value = "health table"

@@ -104,7 +104,6 @@ INSTALLED_APPS = (
     "django_elasticsearch_dsl",
     "corsheaders",
     "login",
-
     # Satellites
     "complaint_search",
     "countylimits",
@@ -132,11 +131,11 @@ WAGTAILSEARCH_BACKENDS = {
     # Wagtail should address these issues. In the meantime, Postgres full text
     # search with the custom search_fields defined on our models is available
     # with the "fulltext" backend defined below.
-    'default': {
-        'BACKEND': 'wagtail.search.backends.db',
+    "default": {
+        "BACKEND": "wagtail.search.backends.db",
     },
-    'fulltext': {
-        'BACKEND': 'wagtail.contrib.postgres_search.backend',
+    "fulltext": {
+        "BACKEND": "wagtail.contrib.postgres_search.backend",
     },
 }
 
@@ -237,9 +236,7 @@ if ALLOW_ADMIN_URL:
 # Override this by setting DATABASE_URL in the environment.
 # See https://github.com/jacobian/dj-database-url for URL formatting.
 DATABASES = {
-    "default": dj_database_url.config(
-        default="postgres://cfpb:cfpb@localhost/cfgov"
-    ),
+    "default": dj_database_url.config(default="postgres://cfpb:cfpb@localhost/cfgov"),
 }
 
 # Internationalization
@@ -262,7 +259,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/stable/howto/static-files/
@@ -298,7 +295,7 @@ ALLOWED_HOSTS = ["*"]
 EXTERNAL_URL_ALLOWLIST = (
     r"^https:\/\/facebook\.com\/cfpb$",
     r"^https:\/\/twitter\.com\/cfpb$",
-    r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa 501
+    r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa: B950
     r"^https:\/\/www\.youtube\.com\/user\/cfpbvideo$",
     r"https:\/\/www\.flickr\.com\/photos\/cfpbphotos$",
 )
@@ -322,33 +319,33 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 )
 
 # ElasticSearch 7 Configuration
-ES_HOST = os.getenv('ES_HOST', 'localhost')
+ES_HOST = os.getenv("ES_HOST", "localhost")
 ES_PORT = os.getenv("ES_PORT", "9200")
 ELASTICSEARCH_BIGINT = 50000
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
-if os.environ.get('USE_AWS_ES', False):
+if os.environ.get("USE_AWS_ES", False):
     awsauth = AWS4Auth(
-        os.environ.get('AWS_ES_ACCESS_KEY'),
-        os.environ.get('AWS_ES_SECRET_KEY'),
-        'us-east-1',
-        'es'
+        os.environ.get("AWS_ES_ACCESS_KEY"),
+        os.environ.get("AWS_ES_SECRET_KEY"),
+        "us-east-1",
+        "es",
     )
     ELASTICSEARCH_DSL = {
-        'default': {
-            'hosts': [{'host': ES_HOST, 'port': 443}],
-            'http_auth': awsauth,
-            'use_ssl': True,
-            'connection_class': RequestsHttpConnection,
-            'timeout': 60
+        "default": {
+            "hosts": [{"host": ES_HOST, "port": 443}],
+            "http_auth": awsauth,
+            "use_ssl": True,
+            "connection_class": RequestsHttpConnection,
+            "timeout": 60,
         },
     }
 else:
-    ELASTICSEARCH_DSL = {
-        "default": {"hosts": f"http://{ES_HOST}:{ES_PORT}"}
-    }
+    ELASTICSEARCH_DSL = {"default": {"hosts": f"http://{ES_HOST}:{ES_PORT}"}}
 
-ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'search.elasticsearch_helpers.WagtailSignalProcessor'
+ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = (
+    "search.elasticsearch_helpers.WagtailSignalProcessor"
+)
 
 # S3 Configuration
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
@@ -437,9 +434,7 @@ if ENABLE_AKAMAI_CACHE_PURGE:
         "ACCESS_TOKEN": os.environ.get("AKAMAI_ACCESS_TOKEN"),
     }
 
-ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
-    "ENABLE_CLOUDFRONT_CACHE_PURGE", False
-)
+ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get("ENABLE_CLOUDFRONT_CACHE_PURGE", False)
 if ENABLE_CLOUDFRONT_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["files"] = {
         "BACKEND": "wagtail.contrib.frontend_cache.backends.CloudfrontBackend",
@@ -628,9 +623,7 @@ WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS")
 
 # This specifies what checks Watchman should run and include in its output
 # https://github.com/mwarkentin/django-watchman#custom-checks
-WATCHMAN_CHECKS = (
-    "alerts.checks.elasticsearch_health",
-)
+WATCHMAN_CHECKS = ("alerts.checks.elasticsearch_health",)
 
 # We want the ability to serve the latest drafts of some pages on beta
 # This value is read by v1.wagtail_hooks
@@ -645,8 +638,8 @@ if DEPLOY_ENVIRONMENT == "beta":
 EMAIL_POPUP_URLS = {
     "debt": [
         "/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/",
-        "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa 501
-        "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",  # noqa 501
+        "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: B950
+        "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",  # noqa: B950
         "/consumer-tools/debt-collection/",
     ],
     "oah": ["/owning-a-home/", "/owning-a-home/mortgage-estimate/"],
@@ -717,9 +710,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
 }
 
 # Serialize Decimal(3.14) as 3.14, not "3.14"
-REST_FRAMEWORK = {
-    "COERCE_DECIMAL_TO_STRING": False
-}
+REST_FRAMEWORK = {"COERCE_DECIMAL_TO_STRING": False}
 
 # We require CSRF only on authenticated paths. This setting is handled by our
 # core.middleware.PathBasedCsrfViewMiddleware.
@@ -736,38 +727,36 @@ CSRF_REQUIRED_PATHS = (
 
 # Django 3.2 Baseline required settings
 # exempt beta from CSRF settings until it's converted to https
-SECURE_REFERRER_POLICY = 'same-origin'  # 1
-SESSION_COOKIE_SAMESITE = 'Strict'          # 3
-X_FRAME_OPTIONS = 'DENY'                # 14
+SECURE_REFERRER_POLICY = "same-origin"  # 1
+SESSION_COOKIE_SAMESITE = "Strict"  # 3
+X_FRAME_OPTIONS = "DENY"  # 14
 
 if DEPLOY_ENVIRONMENT and DEPLOY_ENVIRONMENT != "beta":
     SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_HTTPONLY = True         # 22
+    CSRF_COOKIE_HTTPONLY = True  # 22
     CSRF_COOKIE_SECURE = True
-    SECURE_BROWSER_XSS_FILTER = True    # 26
+    SECURE_BROWSER_XSS_FILTER = True  # 26
     SECURE_HSTS_SECONDS = 600
     SECURE_CONTENT_TYPE_NOSNIFF = True  # 26
 
 # Cache Settings
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'cfgov_default_cache',
-        'TIMEOUT': None,
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "cfgov_default_cache",
+        "TIMEOUT": None,
     },
-    'post_preview': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'post_preview_cache',
-        'TIMEOUT': None,
-    }
+    "post_preview": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "post_preview_cache",
+        "TIMEOUT": None,
+    },
 }
 
 # Set our CORS allowed origins based on a JSON list in the
 # CORS_ALLOWED_ORIGINS environment variable.
 try:
-    CORS_ALLOWED_ORIGINS = json.loads(
-        os.environ.get("CORS_ALLOWED_ORIGINS", "[]")
-    )
+    CORS_ALLOWED_ORIGINS = json.loads(os.environ.get("CORS_ALLOWED_ORIGINS", "[]"))
 except (TypeError, ValueError):
     raise ImproperlyConfigured(
         "Environment variable CORS_ALLOWED_ORIGINS is not valid JSON. "

@@ -15,8 +15,8 @@ def _results_data_row(row: Dict[str, str]):
     this will make a single place to fix it.
     """
     return {
-        'k': row['Key'],
-        'v': row['Content'],
+        "k": row["Key"],
+        "v": row["Content"],
     }
 
 
@@ -36,11 +36,13 @@ class ResultsContent:
         """Get the names/intros for the 3 building blocks"""
         bbs = []
         for i in range(3):
-            bbs.append({
-                'idx': i,
-                'title': self.get(f'BB{i}'),
-                'intro': self.get(f'BBIntro{i}'),
-            })
+            bbs.append(
+                {
+                    "idx": i,
+                    "title": self.get(f"BB{i}"),
+                    "intro": self.get(f"BBIntro{i}"),
+                }
+            )
         return bbs
 
     @staticmethod
@@ -58,15 +60,15 @@ class ResultsContent:
         useful for displaying the level of the user's progress and the
         position of the car.
         """
-        pos_idx = self._score_idx(f'{self.key} Overall', adjusted_score)
+        pos_idx = self._score_idx(f"{self.key} Overall", adjusted_score)
         level_idx = self.level_from_position(pos_idx)
-        heading, msg = self.get(f'{self.key} Overall{level_idx}').split('|')
+        heading, msg = self.get(f"{self.key} Overall{level_idx}").split("|")
 
         return {
-            'level_idx': level_idx,
-            'position_idx': pos_idx,
-            'heading_html': heading,
-            'msg_html': msg,
+            "level_idx": level_idx,
+            "position_idx": pos_idx,
+            "heading_html": heading,
+            "msg_html": msg,
         }
 
     def find_bb_progress(self, part: int, score: float):
@@ -74,14 +76,14 @@ class ResultsContent:
         Given a part-level score, return data useful for displaying the
         level of the user's progress and the position of the car.
         """
-        pos_idx = self._score_idx(f'{self.key} BB{part}', score)
+        pos_idx = self._score_idx(f"{self.key} BB{part}", score)
         level_idx = self.level_from_position(pos_idx)
-        word = ['Planning', 'Habits', 'Knowledge'][part]
+        word = ["Planning", "Habits", "Knowledge"][part]
 
         return {
-            'level_idx': level_idx,
-            'position_idx': pos_idx,
-            'msg_html': self.get(f'{self.key} {word}{level_idx}'),
+            "level_idx": level_idx,
+            "position_idx": pos_idx,
+            "msg_html": self.get(f"{self.key} {word}{level_idx}"),
         }
 
     def _score_idx(self, key: str, score: float):
@@ -89,7 +91,7 @@ class ResultsContent:
         if values_str is None:
             raise LookupError
         idx = 0
-        minima = (int(x) for x in values_str.split(' '))
+        minima = (int(x) for x in values_str.split(" "))
         for i, x in enumerate(minima):
             if score < x:
                 break
@@ -100,10 +102,10 @@ class ResultsContent:
     def factory(cls, survey_key: str):
         """Create a ResultsContent object for a particular survey"""
         store: Dict[str, str] = {}
-        path = f'{dirname(__file__)}/survey-data/results-content.csv'
-        with open(path, encoding='utf-8') as csv_file:
+        path = f"{dirname(__file__)}/survey-data/results-content.csv"
+        with open(path, encoding="utf-8") as csv_file:
             reader = csv.DictReader(csv_file)
             for row in (_results_data_row(row) for row in reader):
-                store[row['k']] = row['v']
+                store[row["k"]] = row["v"]
 
         return cls(store, survey_key)
