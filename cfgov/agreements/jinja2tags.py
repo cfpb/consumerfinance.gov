@@ -28,26 +28,33 @@ def issuer_select(selected_issuer_slug=None):
     #     COUNT(agreements_agreement.id) > 0
     # ORDER BY
     #     agreements_issuer.name ASC
-    issuers = Issuer.objects \
-        .annotate(number_of_agreements=Count('agreement')) \
-        .filter(number_of_agreements__gt=0) \
-        .order_by('name')
+    issuers = (
+        Issuer.objects.annotate(number_of_agreements=Count("agreement"))
+        .filter(number_of_agreements__gt=0)
+        .order_by("name")
+    )
 
-    return render_to_string('agreements/_select.html', {
-        'issuers': issuers,
-        'selected_issuer_slug': selected_issuer_slug,
-    })
+    return render_to_string(
+        "agreements/_select.html",
+        {
+            "issuers": issuers,
+            "selected_issuer_slug": selected_issuer_slug,
+        },
+    )
 
 
 class AgreementsExtension(Extension):
     """
     This will give us an {% agreements_issuer_select %} tag.
     """
+
     def __init__(self, environment):
         super().__init__(environment)
-        self.environment.globals.update({
-            'agreements_issuer_select': issuer_select,
-        })
+        self.environment.globals.update(
+            {
+                "agreements_issuer_select": issuer_select,
+            }
+        )
 
 
 agreements = AgreementsExtension

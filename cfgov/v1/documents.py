@@ -12,7 +12,10 @@ from search.elasticsearch_helpers import environment_specific_index
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.learn_page import (
-    AbstractFilterPage, DocumentDetailPage, EventPage, LearnPage
+    AbstractFilterPage,
+    DocumentDetailPage,
+    EventPage,
+    LearnPage,
 )
 from v1.models.newsroom_page import LegacyNewsroomPage, NewsroomPage
 
@@ -20,18 +23,15 @@ from v1.models.newsroom_page import LegacyNewsroomPage, NewsroomPage
 @registry.register_document
 class FilterablePagesDocument(Document):
 
-    tags = fields.ObjectField(properties={
-        'slug': fields.KeywordField(),
-        'name': fields.TextField()
-    })
-    categories = fields.ObjectField(properties={
-        'name': fields.KeywordField()
-    })
+    tags = fields.ObjectField(
+        properties={"slug": fields.KeywordField(), "name": fields.TextField()}
+    )
+    categories = fields.ObjectField(properties={"name": fields.KeywordField()})
     language = fields.KeywordField()
 
-    title = fields.TextField(attr='title')
-    is_archived = fields.KeywordField(attr='is_archived')
-    date_published = fields.DateField(attr='date_published')
+    title = fields.TextField(attr="title")
+    is_archived = fields.KeywordField(attr="is_archived")
+    date_published = fields.DateField(attr="date_published")
     url = fields.KeywordField()
     start_dt = fields.DateField()
     end_dt = fields.DateField()
@@ -51,34 +51,34 @@ class FilterablePagesDocument(Document):
         return instance.url
 
     def prepare_start_dt(self, instance):
-        return getattr(instance, 'start_dt', None)
+        return getattr(instance, "start_dt", None)
 
     def prepare_end_dt(self, instance):
-        return getattr(instance, 'end_dt', None)
+        return getattr(instance, "end_dt", None)
 
     def prepare_statuses(self, instance):
-        statuses = getattr(instance, 'statuses', None)
+        statuses = getattr(instance, "statuses", None)
         if statuses is not None:
             return [status.status for status in statuses.all()]
         else:
             return None
 
     def prepare_products(self, instance):
-        products = getattr(instance, 'products', None)
+        products = getattr(instance, "products", None)
         if products is not None:
             return [p.product for p in products.all()]
         else:
             return None
 
     def prepare_initial_filing_date(self, instance):
-        return getattr(instance, 'initial_filing_date', None)
+        return getattr(instance, "initial_filing_date", None)
 
     def prepare_model_class(self, instance):
         return instance.__class__.__name__
 
     def prepare_content(self, instance):
         try:
-            content_field = instance._meta.get_field('content')
+            content_field = instance._meta.get_field("content")
             value = content_field.value_from_object(instance)
             content = content_field.get_searchable_content(value)
             content = content.pop()
@@ -106,101 +106,98 @@ class FilterablePagesDocument(Document):
             LearnPage,
             LegacyBlogPage,
             LegacyNewsroomPage,
-            NewsroomPage
+            NewsroomPage,
         ]
 
     class Index:
-        name = environment_specific_index('filterable-pages')
-        settings = {'index.max_ngram_diff': 23}
+        name = environment_specific_index("filterable-pages")
+        settings = {"index.max_ngram_diff": 23}
 
 
 class FilterablePagesDocumentSearch:
-
-    def __init__(self, prefix='/'):
+    def __init__(self, prefix="/"):
         self.prefix = prefix
         self.document = FilterablePagesDocument()
-        self.search_obj = self.document.search().filter(
-            'prefix', url=prefix
-        )
+        self.search_obj = self.document.search().filter("prefix", url=prefix)
 
     def filter_topics(self, topics=[]):
-        if topics not in ([], '', None):
+        if topics not in ([], "", None):
             self.search_obj = self.search_obj.filter(
-                "terms",
-                tags__slug=topics
+                "terms", tags__slug=topics
             )
 
     def filter_categories(self, categories=[]):
-        if categories not in ([], '', None):
+        if categories not in ([], "", None):
             self.search_obj = self.search_obj.filter(
-                "terms",
-                categories__name=categories
+                "terms", categories__name=categories
             )
 
     def filter_language(self, language=[]):
-        if language not in ([], '', None):
+        if language not in ([], "", None):
             self.search_obj = self.search_obj.filter(
-                "terms",
-                language=language
+                "terms", language=language
             )
 
     def filter_date(self, from_date=None, to_date=None):
         if to_date is not None and from_date is not None:
             self.search_obj = self.search_obj.filter(
-                "range", **{
-                    'date_published': {
-                        'gte': from_date, 'lte': to_date
-                    }
-                }
+                "range",
+                **{"date_published": {"gte": from_date, "lte": to_date}},
             )
 
     def filter_archived(self, archived=None):
         if archived is not None:
             self.search_obj = self.search_obj.filter(
-                "terms",
-                is_archived=archived
+                "terms", is_archived=archived
             )
 
-    def search_title(self, title=''):
-        if title not in ([], '', None):
+    def search_title(self, title=""):
+        if title not in ([], "", None):
             query = MultiMatch(
                 query=title,
                 fields=[
-                    'title^10',
-                    'tags.name^10',
-                    'content',
-                    'preview_description'
+                    "title^10",
+                    "tags.name^10",
+                    "content",
+                    "preview_description",
                 ],
                 type="phrase_prefix",
-                slop=2
+                slop=2,
             )
             self.search_obj = self.search_obj.query(query)
 
-    def order(self, order_by='-date_published'):
-        """ Sort results by the given field """
+    def order(self, order_by="-date_published"):
+        """Sort results by the given field"""
         self.search_obj = self.search_obj.sort(order_by)
 
-    def filter(self, topics=[], categories=[], language=[], to_date=None,
-               from_date=None, archived=None):
-        """ Filter the results based on the given keyword arguments """
+    def filter(
+        self,
+        topics=[],
+        categories=[],
+        language=[],
+        to_date=None,
+        from_date=None,
+        archived=None,
+    ):
+        """Filter the results based on the given keyword arguments"""
         self.filter_topics(topics=topics)
         self.filter_categories(categories=categories)
         self.filter_language(language=language)
         self.filter_date(from_date=from_date, to_date=to_date)
         self.filter_archived(archived=archived)
 
-    def search(self, title='', order_by='date_published'):
-        """ Perform a search for the given title """
+    def search(self, title="", order_by="date_published"):
+        """Perform a search for the given title"""
         self.search_title(title=title)
         self.order(order_by=order_by)
-        return self.search_obj[0:self.count()].to_queryset()
+        return self.search_obj[0 : self.count()].to_queryset()
 
     def count(self):
-        """ Return the search object's current result count """
+        """Return the search object's current result count"""
         return self.search_obj.count()
 
-    def get_raw_results(self, order_by='date_published'):
-        """ Get the Elasticsearch DSL Resposne object for current results.
+    def get_raw_results(self, order_by="date_published"):
+        """Get the Elasticsearch DSL Resposne object for current results.
 
         This can be called any time, before, between, or after calls to
         filter() or search().
@@ -210,10 +207,10 @@ class FilterablePagesDocumentSearch:
         https://elasticsearch-dsl.readthedocs.io/en/latest/search_dsl.html#response
         """
         self.order(order_by=order_by)
-        search = self.search_obj[0:self.count()]
+        search = self.search_obj[0 : self.count()]
 
         # Also aggregate unique languages in the result.
-        search.aggs.bucket('languages', A('terms', field='language'))
+        search.aggs.bucket("languages", A("terms", field="language"))
 
         return search.execute()
 
@@ -222,15 +219,12 @@ class EventFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):
     def filter_date(self, from_date=None, to_date=None):
         if to_date is not None and from_date is not None:
             self.search_obj = self.search_obj.filter(
-                "range", **{'start_dt': {'gte': from_date}}
-            ).filter(
-                "range", **{'end_dt': {'lte': to_date}}
-            )
+                "range", **{"start_dt": {"gte": from_date}}
+            ).filter("range", **{"end_dt": {"lte": to_date}})
 
     def filter(self, **kwargs):
         self.search_obj = self.search_obj.filter(
-            "term",
-            model_class="EventPage"
+            "term", model_class="EventPage"
         )
         super().filter(**kwargs)
 
@@ -241,32 +235,26 @@ class EnforcementActionFilterablePagesDocumentSearch(
     def filter_date(self, from_date=None, to_date=None):
         if to_date is not None and from_date is not None:
             self.search_obj = self.search_obj.filter(
-                "range", **{
-                    "initial_filing_date": {
-                        "gte": from_date, "lte": to_date
-                    }
-                }
+                "range",
+                **{"initial_filing_date": {"gte": from_date, "lte": to_date}},
             )
 
     def filter(self, statuses=[], products=[], **kwargs):
         self.search_obj = self.search_obj.filter(
-            "term",
-            model_class="EnforcementActionPage"
+            "term", model_class="EnforcementActionPage"
         )
 
         if statuses != []:
             self.search_obj = self.search_obj.filter(
-                "terms",
-                statuses=statuses
+                "terms", statuses=statuses
             )
 
         if products != []:
             self.search_obj = self.search_obj.filter(
-                "terms",
-                products=products
+                "terms", products=products
             )
 
         super().filter(**kwargs)
 
-    def order(self, order_by='-initial_filing_date'):
-        self.search_obj = self.search_obj.sort('-initial_filing_date')
+    def order(self, order_by="-initial_filing_date"):
+        self.search_obj = self.search_obj.sort("-initial_filing_date")

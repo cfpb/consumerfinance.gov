@@ -30,8 +30,11 @@ from bs4 import BeautifulSoup as bs
 from dateutil import parser
 
 from .ss_utilities import (
-    get_current_age, get_months_past_birthday, get_months_until_next_birthday,
-    get_retirement_age, past_fra_test
+    get_current_age,
+    get_months_past_birthday,
+    get_months_until_next_birthday,
+    get_retirement_age,
+    past_fra_test,
 )
 
 

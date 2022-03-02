@@ -7,10 +7,14 @@ from agreements.models import Agreement, Issuer
 
 
 def index(request):
-    return render(request, 'agreements/index.html', {
-        'agreement_count': Agreement.objects.all().count(),
-        'pagetitle': 'Credit card agreements',
-    })
+    return render(
+        request,
+        "agreements/index.html",
+        {
+            "agreement_count": Agreement.objects.all().count(),
+            "pagetitle": "Credit card agreements",
+        },
+    )
 
 
 def issuer_search(request, issuer_slug):
@@ -22,23 +26,24 @@ def issuer_search(request, issuer_slug):
     agreements = Agreement.objects.filter(issuer__in=issuers)
 
     if agreements.exists():
-        issuer = agreements.latest('pk').issuer
+        issuer = agreements.latest("pk").issuer
     else:
-        issuer = issuers.latest('pk')
+        issuer = issuers.latest("pk")
 
-    pager = Paginator(
-        agreements.order_by('file_name'),
-        RESULTS_PER_PAGE
-    )
+    pager = Paginator(agreements.order_by("file_name"), RESULTS_PER_PAGE)
 
     try:
-        page = pager.page(request.GET.get('page'))
+        page = pager.page(request.GET.get("page"))
     except PageNotAnInteger:
         page = pager.page(1)
     except EmptyPage:
         page = pager.page(pager.num_pages)
 
-    return render(request, 'agreements/search.html', {
-        'page': page,
-        'issuer': issuer,
-    })
+    return render(
+        request,
+        "agreements/search.html",
+        {
+            "page": page,
+            "issuer": issuer,
+        },
+    )

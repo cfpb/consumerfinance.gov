@@ -1,7 +1,10 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import (
-    REDIRECT_FIELD_NAME, get_user_model, login, update_session_auth_hash
+    REDIRECT_FIELD_NAME,
+    get_user_model,
+    login,
+    update_session_auth_hash,
 )
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
@@ -21,7 +24,9 @@ from django.views.decorators.debug import sensitive_post_parameters
 from wagtail.admin.views import account
 
 from login.forms import (
-    CFGOVPasswordChangeForm, CFGOVSetPasswordForm, LoginForm
+    CFGOVPasswordChangeForm,
+    CFGOVSetPasswordForm,
+    LoginForm,
 )
 
 from v1.util.util import all_valid_destinations_for_request
@@ -48,36 +53,39 @@ def change_password(request):
             update_session_auth_hash(request, form.user)
 
             messages.success(
-                request,
-                _("Your password has been changed successfully!")
+                request, _("Your password has been changed successfully!")
             )
-            return redirect('wagtailadmin_account')
+            return redirect("wagtailadmin_account")
         else:
-            if '__all__' in form.errors:
-                for error in form.errors['__all__']:
+            if "__all__" in form.errors:
+                for error in form.errors["__all__"]:
                     messages.error(request, error)
     else:
         form = CFGOVPasswordChangeForm(user=request.user)
 
-    return render(request, 'wagtailadmin/account/change_password.html', {
-        'form': form,
-        'can_change_password': can_change_password,
-    })
+    return render(
+        request,
+        "wagtailadmin/account/change_password.html",
+        {
+            "form": form,
+            "can_change_password": can_change_password,
+        },
+    )
 
 
 @sensitive_post_parameters()
 @csrf_protect
 @never_cache
-def login_with_lockout(request, template_name='wagtailadmin/login.html'):
+def login_with_lockout(request, template_name="wagtailadmin/login.html"):
     """
     Displays the login form and handles the login action.
     """
-    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
-                                   request.GET.get(REDIRECT_FIELD_NAME,
-                                                   '/admin/'))
+    redirect_to = request.POST.get(
+        REDIRECT_FIELD_NAME, request.GET.get(REDIRECT_FIELD_NAME, "/admin/")
+    )
     # Redirects to https://example.com should not be allowed.
     if redirect_to:
-        if '//' in redirect_to:
+        if "//" in redirect_to:
             redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
     if request.method == "POST":
@@ -99,32 +107,39 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
             login(request, form.get_user())
 
             return HttpResponseRedirect(
-                '/login/check_permissions/?next=' + redirect_to)
+                "/login/check_permissions/?next=" + redirect_to
+            )
     else:
         if request.user.is_authenticated:
             return HttpResponseRedirect(
-                '/login/check_permissions/?next=' + redirect_to)
+                "/login/check_permissions/?next=" + redirect_to
+            )
         form = LoginForm(request)
 
     current_site = get_current_site(request)
 
     context = {
-        'form': form,
+        "form": form,
         REDIRECT_FIELD_NAME: redirect_to,
-        'site': current_site,
-        'site_name': current_site.name,
+        "site": current_site,
+        "site_name": current_site.name,
     }
 
-    context.update({'show_password_reset': account.password_reset_enabled(),
-                    'username_field': get_user_model().USERNAME_FIELD, })
+    context.update(
+        {
+            "show_password_reset": account.password_reset_enabled(),
+            "username_field": get_user_model().USERNAME_FIELD,
+        }
+    )
 
     return TemplateResponse(request, template_name, context)
 
 
 @never_cache
 def check_permissions(request):
-    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
-                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
+    redirect_to = request.POST.get(
+        REDIRECT_FIELD_NAME, request.GET.get(REDIRECT_FIELD_NAME, "")
+    )
 
     if not is_safe_url(url=redirect_to, allowed_hosts=request.get_host()):
         redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
@@ -135,7 +150,7 @@ def check_permissions(request):
         )
 
     view, args, kwargs = resolve(redirect_to)
-    kwargs['request'] = request
+    kwargs["request"] = request
     try:
         response = view(*args, **kwargs)
     except (Http404, TypeError):
@@ -144,14 +159,16 @@ def check_permissions(request):
     if isinstance(response, HttpResponseRedirect):
         # this indicates a permissions problem
         # (there may be a better way)
-        if REDIRECT_FIELD_NAME + '=' in response.url:
+        if REDIRECT_FIELD_NAME + "=" in response.url:
             return render(
                 request,
                 "wagtailadmin/access_denied.html",
                 context={
-                    'attempted_to_reach': redirect_to,
-                    'destinations': all_valid_destinations_for_request(request)
-                }
+                    "attempted_to_reach": redirect_to,
+                    "destinations": all_valid_destinations_for_request(
+                        request
+                    ),
+                },
             )
 
     return HttpResponseRedirect(redirect_to)
@@ -160,9 +177,12 @@ def check_permissions(request):
 @sensitive_post_parameters()
 @never_cache
 def custom_password_reset_confirm(
-        request, uidb64=None, token=None,
-        template_name='wagtailadmin/account/password_reset/confirm.html',
-        post_reset_redirect='wagtailadmin_password_reset_complete'):
+    request,
+    uidb64=None,
+    token=None,
+    template_name="wagtailadmin/account/password_reset/confirm.html",
+    post_reset_redirect="wagtailadmin_password_reset_complete",
+):
     """
     View that checks the hash in a password reset link and presents a
     form for entering a new password.
@@ -180,8 +200,8 @@ def custom_password_reset_confirm(
 
     if user is not None and default_token_generator.check_token(user, token):
         validlink = True
-        title = _('Enter new password')
-        if request.method == 'POST':
+        title = _("Enter new password")
+        if request.method == "POST":
             form = CFGOVSetPasswordForm(user, request.POST)
             if form.is_valid():
                 form.save()
@@ -193,16 +213,17 @@ def custom_password_reset_confirm(
     else:
         validlink = False
         form = None
-        title = _('Password reset unsuccessful')
+        title = _("Password reset unsuccessful")
 
     context = {
-        'form': form,
-        'title': title,
-        'validlink': validlink,
+        "form": form,
+        "title": title,
+        "validlink": validlink,
     }
 
     return TemplateResponse(request, template_name, context)
 
 
 password_reset_confirm = _wrap_password_reset_view(
-    custom_password_reset_confirm)
+    custom_password_reset_confirm
+)

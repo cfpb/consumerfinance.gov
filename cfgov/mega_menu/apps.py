@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class MegaMenuConfig(AppConfig):
-    name = 'mega_menu'
+    name = "mega_menu"

@@ -2,10 +2,15 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from wagtail.images.image_operations import (
-    DoNothingOperation, MinMaxOperation, WidthHeightOperation
+    DoNothingOperation,
+    MinMaxOperation,
+    WidthHeightOperation,
 )
 from wagtail.images.models import (
-    AbstractImage, AbstractRendition, Filter, Image
+    AbstractImage,
+    AbstractRendition,
+    Filter,
+    Image,
 )
 
 from wagtail_placeholder_images.mixins import PlaceholderRenditionMixin
@@ -16,9 +21,7 @@ from v1.atomic_elements.atoms import IMAGE_ALT_TEXT_HELP_TEXT
 class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
     alt = models.TextField(blank=True, help_text=IMAGE_ALT_TEXT_HELP_TEXT)
     file_hash = models.CharField(max_length=40, blank=True, editable=False)
-    admin_form_fields = Image.admin_form_fields + (
-        'alt',
-    )
+    admin_form_fields = Image.admin_form_fields + ("alt",)
 
     def get_rendition(self, rendition_filter):
         """Always return the source image file for GIF renditions.
@@ -27,7 +30,7 @@ class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
         always embed the original uploaded image file for GIFs, instead of
         generating new versions on the fly.
         """
-        if self.file.name.endswith('.gif'):
+        if self.file.name.endswith(".gif"):
             return self.get_mock_rendition(rendition_filter)
         else:
             return super().get_rendition(rendition_filter)
@@ -54,19 +57,18 @@ class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
             if isinstance(operation, DoNothingOperation):
                 continue
 
-            if not any([
-                isinstance(operation, WidthHeightOperation),
-                isinstance(operation, MinMaxOperation),
-            ]):
-                raise RuntimeError('non-size operations not supported on GIFs')
+            if not any(
+                [
+                    isinstance(operation, WidthHeightOperation),
+                    isinstance(operation, MinMaxOperation),
+                ]
+            ):
+                raise RuntimeError("non-size operations not supported on GIFs")
 
             width, height = self.apply_size_operation(operation, width, height)
 
         return CFGOVRendition(
-            image=self,
-            file=self.file,
-            width=width,
-            height=height
+            image=self, file=self.file, width=width, height=height
         )
 
     @staticmethod
@@ -104,9 +106,8 @@ class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
 
 class CFGOVRendition(AbstractRendition):
     image = models.ForeignKey(
-        CFGOVImage,
-        on_delete=models.CASCADE,
-        related_name='renditions')
+        CFGOVImage, on_delete=models.CASCADE, related_name="renditions"
+    )
 
     @property
     def alt(self):
@@ -114,11 +115,11 @@ class CFGOVRendition(AbstractRendition):
 
     @cached_property
     def orientation(self):
-        orientation = 'square'
+        orientation = "square"
         if self.is_portrait:
-            orientation = 'portrait'
+            orientation = "portrait"
         elif self.is_landscape:
-            orientation = 'landscape'
+            orientation = "landscape"
 
         return orientation
 
@@ -135,6 +136,4 @@ class CFGOVRendition(AbstractRendition):
         return self.height < self.width
 
     class Meta:
-        unique_together = (
-            ('image', 'filter_spec', 'focal_point_key'),
-        )
+        unique_together = (("image", "filter_spec", "focal_point_key"),)
