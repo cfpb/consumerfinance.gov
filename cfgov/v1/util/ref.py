@@ -210,13 +210,13 @@ def get_appropriate_categories(specific_categories, page_type):
 def related_posts_category_lookup(related_categories):
     related = []
     for category in related_categories:
-        for name, related_posts_cats in related_posts_categories:
+        for _, related_posts_cats in related_posts_categories:
             for cat in related_posts_cats:
                 if category == cat[0]:
                     related.append(cat[1])
     results = []
     for r in related:
-        for name, cats in categories:
+        for _, cats in categories:
             for c in cats:
                 if r == c[1]:
                     results.append(c[0])
@@ -287,7 +287,7 @@ def choices_for_page_type(page_type):
 
 
 def category_label(category):
-    for parent, children in page_type_choices():
+    for _, children in page_type_choices():
         for slug, name in children:
             if category == slug:
                 return name

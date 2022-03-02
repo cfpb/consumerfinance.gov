@@ -43,7 +43,7 @@ class TemplateDebugViewTests(SimpleTestCase):
 
         # The view should render the provided template (the hyperlink atom)
         # with each of the test cases.
-        for name, test_case in test_cases.items():
+        for _, test_case in test_cases.items():
             self.assertContains(response, f'href="{test_case["url"]}"')
 
     def test_renders_extra_js(self):
