@@ -282,6 +282,27 @@ def register_documents_report_url():
     ]
 
 
+@hooks.register('register_reports_menu_item')
+def register_documents_report_menu_item():
+    return MenuItem(
+        "Documents",
+        reverse('documents_report'),
+        classnames='icon icon-' + DocumentsReportView.header_icon,
+        order=700
+    )
+
+
+@hooks.register('register_admin_urls')
+def register_documents_report_url():
+    return [
+        re_path(
+            r'^reports/documents/$',
+            DocumentsReportView.as_view(),
+            name='documents_report'
+        ),
+    ]
+
+
 def get_resource_tags():
     tag_list = []
 
