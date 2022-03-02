@@ -144,10 +144,10 @@ def create_blog_page(
     page_title,
     page_slug,
     parent_path=None,
-    page_tags={},
-    page_categories={},
-    page_language="en",
-    date_published_override=date.today(),
+    page_tags=None,
+    page_categories=None,
+    page_language=None,
+    date_published_override=None,
 ):
     # create a new page and set it as the child of an existing page
     # get the current site
@@ -243,9 +243,9 @@ def create_learn_page(
     page_title,
     page_slug,
     parent_path=None,
-    page_tags={},
-    page_categories={},
-    date_published_override=date.today(),
+    page_tags=None,
+    page_categories=None,
+    date_published_override=None,
 ):
     # create a new page and set it as the child of an existing page
     # get the current site
