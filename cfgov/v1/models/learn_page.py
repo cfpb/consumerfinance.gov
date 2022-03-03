@@ -68,6 +68,7 @@ class AbstractFilterPage(CFGOVPage):
         ], heading='Page Preview Fields', classname='collapsible'),
         FieldPanel('schema_json', 'Structured Data'),
         FieldPanel('authors', 'Authors'),
+        FieldPanel('content_owners', 'Content Owners'),
         MultiFieldPanel([
             FieldPanel('date_published'),
             FieldPanel('date_filed'),
