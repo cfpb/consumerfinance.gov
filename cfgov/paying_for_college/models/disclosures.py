@@ -6,7 +6,6 @@ from collections import OrderedDict
 from csv import writer as csw
 from string import Template
 
-from django.contrib.postgres.fields import JSONField
 from django.core.mail import send_mail
 from django.db import models
 
@@ -249,9 +248,9 @@ class School(models.Model):
     degrees_predominant = models.TextField(blank=True)
     degrees_highest = models.TextField(blank=True)
     program_count = models.IntegerField(blank=True, null=True)
-    program_most_popular = JSONField(blank=True, null=True)
-    main_campus = models.NullBooleanField()
-    online_only = models.NullBooleanField()
+    program_most_popular = models.JSONField(blank=True, null=True)
+    main_campus = models.BooleanField(blank=True, null=True)
+    online_only = models.BooleanField(blank=True, null=True)
     operating = models.BooleanField(default=True)
     under_investigation = models.BooleanField(
         default=False,
@@ -307,13 +306,13 @@ class School(models.Model):
         blank=True,
         null=True,
         help_text="OVERALL AVERAGE")
-    avg_net_price_slices = JSONField(blank=True, null=True)
+    avg_net_price_slices = models.JSONField(blank=True, null=True)
     tuition_out_of_state = models.IntegerField(blank=True, null=True)
     tuition_in_state = models.IntegerField(blank=True, null=True)
     offers_perkins = models.BooleanField(default=False)
-    cohort_ranking_by_control = JSONField(blank=True, null=True)
-    cohort_ranking_by_highest_degree = JSONField(blank=True, null=True)
-    cohort_ranking_by_state = JSONField(blank=True, null=True)
+    cohort_ranking_by_control = models.JSONField(blank=True, null=True)
+    cohort_ranking_by_highest_degree = models.JSONField(blank=True, null=True)
+    cohort_ranking_by_state = models.JSONField(blank=True, null=True)
     associate_transfer_rate = models.DecimalField(
         max_digits=5,
         decimal_places=3,
