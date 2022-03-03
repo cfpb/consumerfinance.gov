@@ -60,7 +60,7 @@ content_main__flush-inner
                                 <img style="max-height:2.5em;" src="{{ highlight.img_src }}" alt="">
                             </div>
                             <div class="m-info-unit_heading-text">
-                                <h3>{{ highlight.heading }}</h3>
+                                <h2 class="h3">{{ highlight.heading }}</h2>
                             </div>
                             <div class="m-info-unit_content">
                                 <ul class="m-list m-list__links u-mt15">
@@ -107,7 +107,7 @@ content_main__flush-inner
 {% block content_main %}
     {% import "v1/home_page/_hardcoded_" ~ language ~ ".html" as hardcoded with context %}
     <section class="block u-text-centered">
-        <h1>{{ hardcoded.answers_heading | safe }}</h1>
+        <h2 class="h1">{{ hardcoded.answers_heading | safe }}</h2>
     </section>
 
     <section class="block">
