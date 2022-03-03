@@ -13,8 +13,10 @@ class NewRelicAlertViolations:
         newrelic_token,
         policy_filter,
         account_number,
-        known_violations=[],
+        known_violations=None,
     ):
+        if not known_violations:
+            known_violations = []
         self.newrelic_token = newrelic_token
         self.policy_filter_re = re.compile(policy_filter)
         self.account_number = account_number

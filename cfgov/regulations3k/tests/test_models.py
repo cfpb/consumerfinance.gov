@@ -211,7 +211,9 @@ class RegModelTests(DjangoTestCase):
 
         CACHE_PURGED_URLS[:] = []
 
-    def get_request(self, path="", data={}):
+    def get_request(self, path="", data=None):
+        if not data:
+            data = {}
         request = self.factory.get(path, data=data)
         request.user = AnonymousUser()
         return request

@@ -162,8 +162,10 @@ def clean_csv_headings():
         write_clean_csv(cleaned_file, fieldnames, clean_headings, data)
 
 
-def process_datafiles(add_schools=[]):
+def process_datafiles(add_schools=None):
     """Collect data points from IPEDS csvs and deliver them as a dict."""
+    if not add_schools:
+        add_schools = []
     collector = {}
     if add_schools:  # we have a list of school IDs to add to our database
         names, data = read_csv(DATA_VARS["universe_cleaned"])

@@ -36,8 +36,11 @@ def retry_notifications(days=1):
     return endmsg
 
 
-def send_stale_notifications(add_email=[]):
+def send_stale_notifications(add_email=None):
     """Gather up notifications that have failed and are more than a day old."""
+
+    if not add_email:
+        add_email = []
 
     stale_date = timezone.now() - datetime.timedelta(days=1)
     stale_notifications = Notification.objects.filter(

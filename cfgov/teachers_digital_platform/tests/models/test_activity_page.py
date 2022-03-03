@@ -131,9 +131,13 @@ class TestActivityPage(TestCase):
         self,
         title="title",
         slug="slug",
-        topic_list=[6, 7],
-        grade_level_list=[2],
+        topic_list=None,
+        grade_level_list=None,
     ):  # noqa: B950
+        if not topic_list:
+            topic_list = [6, 7]
+        if not grade_level_list:
+            grade_level_list = [2]
         activity_page = ActivityPage(
             live=True,
             title=title,

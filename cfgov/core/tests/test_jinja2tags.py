@@ -93,7 +93,7 @@ class SlugifyUniqueTests(SimpleTestCase):
         )
 
     def test_different_requests_allow_repeats(self):
-        for i in range(5):
+        for _ in range(5):
             self.assertEqual(
                 self.render(self.template, {"request": HttpRequest()}),
                 "some-text",
