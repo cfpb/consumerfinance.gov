@@ -102,7 +102,7 @@ class CFGOVPage(Page):
         + 'Use division acronyms only.',
         related_name='cfgov_content_owners')
 
-    schema_json = JSONField(
+    schema_json = models.JSONField(
         null=True,
         blank=True,
         verbose_name='Schema JSON',
