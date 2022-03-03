@@ -50,8 +50,6 @@ class CFGOVTaggedPages(TaggedItemBase):
         verbose_name_plural = _("Tags")
 
 class CFGOVContentOwner(TagBase):
-    content_object = ParentalKey('CFGOVPage')
-
     class Meta:
         verbose_name = _("Content Owner")
         verbose_name_plural = _("Content Owners")
