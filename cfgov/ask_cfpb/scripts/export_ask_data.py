@@ -7,7 +7,6 @@ from django.utils import html as html_util
 
 from ask_cfpb.models.answer_page import AnswerPage
 
-
 HEADINGS = [
     "ASK_ID",
     "PAGE_ID",

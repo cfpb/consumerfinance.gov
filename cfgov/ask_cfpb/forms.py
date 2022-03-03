@@ -4,7 +4,6 @@ from django.core.validators import RegexValidator
 from ask_cfpb.models.search import make_safe
 from search.models import AUTOCOMPLETE_MAX_CHARS
 
-
 legacy_facet_validator = RegexValidator(
     regex=r"(?:category|audience|tag)_exact:\S+",
     message="Not a valid legacy facet",

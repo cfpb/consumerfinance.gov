@@ -8,7 +8,6 @@ from math import acos, cos, radians, sin
 
 from django.template import loader
 
-
 logger = logging.getLogger(__name__)
 
 

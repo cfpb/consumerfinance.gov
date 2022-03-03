@@ -5,7 +5,6 @@ from django.core.management.base import BaseCommand
 
 from regulations3k.models import Part, Section
 
-
 logger = logging.getLogger(__name__)
 
 

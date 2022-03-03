@@ -4,7 +4,6 @@ from paying_for_college.disclosures.scripts.notifications import (
     retry_notifications,
 )
 
-
 COMMAND_HELP = (
     "Retry_notifications attempts to resend any notifications "
     "that have failed to reach a school within the past day. "

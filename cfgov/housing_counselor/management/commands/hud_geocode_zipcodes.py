@@ -4,7 +4,6 @@ from django.core.management.base import BaseCommand
 
 from housing_counselor.geocoder import BulkZipCodeGeocoder, GeocodedZipCodeCsv
 
-
 logger = logging.getLogger(__name__)
 
 

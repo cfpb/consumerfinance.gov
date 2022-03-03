@@ -6,7 +6,6 @@ import os
 
 from dateutil import parser
 
-
 TODAY = datetime.datetime.now().date()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 TOO_YOUNG = """\

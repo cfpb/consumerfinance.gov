@@ -25,7 +25,6 @@ from paying_for_college.models import (
 )
 from paying_for_college.models.search import SchoolSearch
 
-
 BASEDIR = os.path.dirname(__file__)
 DISCLOSURE_ROOT = "paying-for-college2"
 EXPENSE_FILE = "{}/fixtures/bls_data.json".format(BASEDIR)

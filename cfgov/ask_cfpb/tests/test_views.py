@@ -18,7 +18,6 @@ from ask_cfpb.models import (
 from ask_cfpb.views import annotate_links
 from v1.util.migrations import get_or_create_page
 
-
 now = timezone.now()
 
 

@@ -28,7 +28,6 @@ from django import template
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
-
 register = template.Library()
 
 

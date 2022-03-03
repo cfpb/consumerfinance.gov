@@ -2,7 +2,6 @@ from typing import List
 
 import base36
 
-
 # We won't need timestamps before this time
 # DO NOT CHANGE THIS
 _feature_launch_ts = 1623432061

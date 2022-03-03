@@ -8,7 +8,6 @@ from wagtail.core.models import Page
 
 from backports import csv
 
-
 # These lines will ensure that these strings, which are entered in Wagtail,
 # get picked up for translation by makemessages, and thus do not fail the
 # check for missing/extra translations (tox -e validate-translations).

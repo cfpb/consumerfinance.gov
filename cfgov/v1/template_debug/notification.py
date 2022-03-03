@@ -1,6 +1,5 @@
 from django.utils.safestring import mark_safe
 
-
 notification_defaults = {
     "type": "warning",
     "is_visible": True,

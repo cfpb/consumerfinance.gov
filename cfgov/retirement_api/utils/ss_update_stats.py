@@ -8,7 +8,6 @@ import sys
 import requests
 from bs4 import BeautifulSoup as bs
 
-
 """
 terms:
     PIA:  Primary Insurance Amount, the basic SS benefit

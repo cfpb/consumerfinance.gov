@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from django.db import migrations, models
-from wagtail.core import fields as core_fields
-import modelcluster.fields
 import django.db.models.deletion
 import django.utils.timezone
+import modelcluster.fields
+from django.db import migrations, models
+from wagtail.core import fields as core_fields
 
 
 class Migration(migrations.Migration):

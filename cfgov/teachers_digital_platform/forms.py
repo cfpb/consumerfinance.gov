@@ -6,7 +6,6 @@ from django.core.exceptions import ValidationError
 from django.forms import CharField, Form
 from django.utils.safestring import mark_safe
 
-
 # Don't allow this to be guessable
 _token = secrets.token_hex(20)
 _replacements = []

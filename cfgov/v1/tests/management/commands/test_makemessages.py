@@ -7,7 +7,6 @@ from django.core.management import call_command
 from django.core.management.utils import find_command
 from django.test import SimpleTestCase
 
-
 # https://github.com/django/django/blob/1.11.18/tests/i18n/test_extraction.py
 has_xgettext = find_command("xgettext")
 

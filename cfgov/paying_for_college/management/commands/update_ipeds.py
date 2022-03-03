@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 
 from paying_for_college.disclosures.scripts.update_ipeds import load_values
 
-
 COMMAND_HELP = """Update_ipeds will download, parse and load the latest
 data files from the IPEDS data center. If run without arguments, it will
 make a dry run and report how many schools and data points would have been

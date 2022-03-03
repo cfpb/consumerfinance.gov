@@ -7,7 +7,6 @@ from flags.state import flag_enabled
 
 from jobmanager.models.pages import JobListingPage
 
-
 logger = logging.getLogger(__name__)
 
 

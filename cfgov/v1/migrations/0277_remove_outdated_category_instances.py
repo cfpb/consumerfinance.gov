@@ -2,6 +2,7 @@
 
 from django.db import migrations
 
+
 def forwards(apps, schema_editor):
     CFGOVPageCategory = apps.get_model('v1', 'CFGOVPageCategory')
     CFGOVPageCategory.objects.filter(name='official-guidance').delete()

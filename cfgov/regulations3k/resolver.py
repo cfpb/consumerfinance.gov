@@ -6,7 +6,6 @@ from regdown import extract_labeled_paragraph
 
 from regulations3k.models import Section
 
-
 DEFAULT_REGULATIONS_REFERENCE_MAPPING = [
     (r"(?P<section>[\w]+)-(?P<paragraph>[\w-]*)", "{section}", "{paragraph}"),
 ]

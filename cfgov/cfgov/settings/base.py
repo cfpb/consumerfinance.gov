@@ -13,7 +13,6 @@ from requests_aws4auth import AWS4Auth
 
 from cfgov.util import admin_emails
 
-
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 

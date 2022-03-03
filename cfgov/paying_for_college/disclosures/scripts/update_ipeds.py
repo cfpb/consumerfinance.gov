@@ -3,7 +3,8 @@ import json
 import os
 import zipfile
 from collections import OrderedDict
-from csv import DictReader as cdr, writer as csw
+from csv import DictReader as cdr
+from csv import writer as csw
 from pathlib import Path
 from subprocess import call
 
@@ -13,7 +14,6 @@ import requests
 
 from paying_for_college.models import Alias, School
 from paying_for_college.views import get_school
-
 
 SCRIPT = os.path.basename(__file__).partition(".")[0]
 PFC_ROOT = Path(__file__).resolve().parents[2]
