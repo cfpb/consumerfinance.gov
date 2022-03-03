@@ -737,7 +737,7 @@ CSRF_REQUIRED_PATHS = (
 # Django 3.2 Baseline required settings
 # exempt beta from CSRF settings until it's converted to https
 SECURE_REFERRER_POLICY = 'same-origin'  # 1
-SESSION_COOKIE_SAMESITE = None          # 3
+SESSION_COOKIE_SAMESITE = 'Strict'          # 3
 X_FRAME_OPTIONS = 'DENY'                # 14
 
 if DEPLOY_ENVIRONMENT and DEPLOY_ENVIRONMENT != "beta":
