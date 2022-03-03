@@ -7,7 +7,6 @@ from django.shortcuts import get_object_or_404, render
 
 from wagtail.core.models import Collection, Page
 
-
 User = get_user_model()
 PagePermissions = namedtuple("PagePermissions", ["page", "group_permissions"])
 CollectionPermissions = namedtuple(

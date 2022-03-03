@@ -2,7 +2,6 @@ import json
 from collections import OrderedDict
 from pathlib import Path
 
-
 FIXTURES_DIR = Path(__file__).resolve().parents[2]
 NAT_DATA_FILE = "{0}/fixtures/national_stats.json".format(FIXTURES_DIR)
 BACKUP_FILE = "{0}/fixtures/national_stats_backup.json".format(FIXTURES_DIR)

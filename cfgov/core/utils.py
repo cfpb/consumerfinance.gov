@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
 
-
 NON_GOV_LINKS = re.compile(
     r"https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*"
 )

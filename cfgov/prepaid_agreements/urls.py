@@ -1,6 +1,5 @@
 from prepaid_agreements.views import detail, index
 
-
 try:
     from django.urls import re_path
 except ImportError:

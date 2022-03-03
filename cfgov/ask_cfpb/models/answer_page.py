@@ -25,7 +25,6 @@ from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager, PortalCategory, PortalTopic
 from v1.models.snippets import RelatedResource, ReusableText
 
-
 REUSABLE_TEXT_TITLES = {
     "about_us": {
         "en": "About us (For consumers)",

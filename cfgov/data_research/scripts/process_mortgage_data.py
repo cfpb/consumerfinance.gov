@@ -24,7 +24,6 @@ from data_research.scripts import (
     update_county_msa_meta,
 )
 
-
 DEFAULT_DUMP_SLUG = "/tmp/mp_countydata"
 DATAFILE = StringIO()
 SCRIPT_NAME = os.path.basename(__file__).split(".")[0]

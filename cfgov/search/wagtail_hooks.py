@@ -5,7 +5,6 @@ from wagtail.core import hooks
 
 from search.views import SearchView
 
-
 try:
     from django.urls import re_path
 except ImportError:

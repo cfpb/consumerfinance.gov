@@ -12,7 +12,6 @@ from retirement_api.views import (
     param_check,
 )
 
-
 try:
     from django.urls import reverse
 except ImportError:

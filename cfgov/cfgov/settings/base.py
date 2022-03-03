@@ -13,7 +13,6 @@ from requests_aws4auth import AWS4Auth
 
 from cfgov.util import admin_emails
 
-
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
@@ -236,7 +235,9 @@ if ALLOW_ADMIN_URL:
 # Override this by setting DATABASE_URL in the environment.
 # See https://github.com/jacobian/dj-database-url for URL formatting.
 DATABASES = {
-    "default": dj_database_url.config(default="postgres://cfpb:cfpb@localhost/cfgov"),
+    "default": dj_database_url.config(
+        default="postgres://cfpb:cfpb@localhost/cfgov"
+    ),
 }
 
 # Internationalization
@@ -434,7 +435,9 @@ if ENABLE_AKAMAI_CACHE_PURGE:
         "ACCESS_TOKEN": os.environ.get("AKAMAI_ACCESS_TOKEN"),
     }
 
-ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get("ENABLE_CLOUDFRONT_CACHE_PURGE", False)
+ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get(
+    "ENABLE_CLOUDFRONT_CACHE_PURGE", False
+)
 if ENABLE_CLOUDFRONT_CACHE_PURGE:
     WAGTAILFRONTENDCACHE["files"] = {
         "BACKEND": "wagtail.contrib.frontend_cache.backends.CloudfrontBackend",
@@ -756,7 +759,9 @@ CACHES = {
 # Set our CORS allowed origins based on a JSON list in the
 # CORS_ALLOWED_ORIGINS environment variable.
 try:
-    CORS_ALLOWED_ORIGINS = json.loads(os.environ.get("CORS_ALLOWED_ORIGINS", "[]"))
+    CORS_ALLOWED_ORIGINS = json.loads(
+        os.environ.get("CORS_ALLOWED_ORIGINS", "[]")
+    )
 except (TypeError, ValueError):
     raise ImproperlyConfigured(
         "Environment variable CORS_ALLOWED_ORIGINS is not valid JSON. "

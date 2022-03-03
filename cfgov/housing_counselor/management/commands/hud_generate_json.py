@@ -12,7 +12,6 @@ from housing_counselor.geocoder import (
 )
 from housing_counselor.results_archiver import save_list
 
-
 logger = logging.getLogger(__name__)
 
 

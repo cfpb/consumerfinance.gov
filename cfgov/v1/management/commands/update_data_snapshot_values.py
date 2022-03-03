@@ -8,7 +8,6 @@ from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_changes
 from v1.util.migrations import set_streamfield_data
 
-
 logger = logging.getLogger(__name__)
 
 

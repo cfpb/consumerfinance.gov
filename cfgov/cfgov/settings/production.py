@@ -11,7 +11,6 @@ import saml2
 
 from cfgov.settings.base import *
 
-
 default_loggers = []
 
 # Is there a syslog device available?

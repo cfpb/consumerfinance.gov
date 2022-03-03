@@ -1,7 +1,6 @@
 import re
 from itertools import chain
 
-
 REGEX_REMOVE_QUERY_STRING = re.compile(r"\?.*$")
 
 

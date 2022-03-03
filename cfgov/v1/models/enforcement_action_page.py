@@ -20,7 +20,6 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
 
-
 enforcement_statuses = [
     ("expired-terminated-dismissed", "Expired/Terminated/Dismissed"),
     ("pending-litigation", "Pending Litigation"),

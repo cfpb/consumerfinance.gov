@@ -11,7 +11,6 @@ from login.views import (
     password_reset_confirm,
 )
 
-
 if settings.SAML_AUTH:  # pragma: no cover
     urlpatterns = [
         # If SAML2 auth is enabled, /login will redirect to /saml2/login,

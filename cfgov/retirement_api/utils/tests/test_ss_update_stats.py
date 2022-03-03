@@ -17,7 +17,6 @@ from retirement_api.utils.ss_update_stats import (
     output_json,
 )
 
-
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 )

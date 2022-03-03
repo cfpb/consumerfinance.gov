@@ -15,7 +15,6 @@ from wagtail.contrib.frontend_cache.utils import PurgeBatch
 
 import regdown
 
-
 # Labels always require at least 1 alphanumeric character, then any number of
 # alphanumeric characters and hyphens.
 label_re_str = r"[\w]+[-\w]*"

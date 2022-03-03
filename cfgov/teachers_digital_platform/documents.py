@@ -4,7 +4,6 @@ from django_elasticsearch_dsl.registries import registry
 from search.elasticsearch_helpers import environment_specific_index, strip_html
 from teachers_digital_platform.models.pages import ActivityPage
 
-
 mtm_fields = [
     "building_block",
     "school_subject",

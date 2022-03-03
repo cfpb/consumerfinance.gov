@@ -17,7 +17,6 @@ from akamai.edgegrid import EdgeGridAuth
 
 from v1.models.images import CFGOVRendition
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -6,15 +6,12 @@ from django.test import RequestFactory, TestCase, override_settings
 
 from cfgov import urls
 
-
 try:
     from django.urls import URLPattern, URLResolver, re_path
 except ImportError:
     from django.conf.urls import url as re_path
-    from django.core.urlresolvers import (
-        RegexURLPattern as URLPattern,
-        RegexURLResolver as URLResolver,
-    )
+    from django.core.urlresolvers import RegexURLPattern as URLPattern
+    from django.core.urlresolvers import RegexURLResolver as URLResolver
 
 
 # Allowlist is a list of *strings* that match the beginning of a regex string.

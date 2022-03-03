@@ -3,8 +3,8 @@ from django.test import TestCase
 from wagtail.core.models import Site
 from wagtail.tests.testapp.models import SimplePage
 
-from v1.atomic_elements.organisms import (
-    AtomicTableBlock,  # import from organisms for import check
+from v1.atomic_elements.organisms import (  # import from organisms for import check
+    AtomicTableBlock,
 )
 from v1.atomic_elements.tables import RichTextTableInput
 

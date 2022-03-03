@@ -6,7 +6,6 @@ import boto3
 from alerts.github_alert import GithubAlert
 from alerts.mattermost_alert import MattermostAlert
 
-
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler())
 logger.setLevel(logging.INFO)

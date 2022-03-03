@@ -7,7 +7,6 @@ from data_research.views import (
     TimeSeriesNational,
 )
 
-
 urlpatterns = [
     re_path(
         r"^time-series/(?P<days_late>[3890-]*)/(?P<fips>[0-9non-]*)/?$",

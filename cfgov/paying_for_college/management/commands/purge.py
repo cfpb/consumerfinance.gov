@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 
 from paying_for_college.disclosures.scripts.purge_objects import purge
 
-
 COMMAND_HELP = (
     "Purge will wipe out notifications or programs "
     "in the local Django database. "
