@@ -100,7 +100,10 @@
 
     {# End of Open Graph properties #}
 
-    <link rel="shortcut icon" type="image/x-icon" href="{{ static('favicon.ico') }}">
+    <link rel="icon" href="{{ static('favicon.ico') }}" sizes="any">
+    <link rel="icon" href="{{ static('icon.svg') }}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{{ static('apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ static('site.webmanifest') }}">
 
 
 {#

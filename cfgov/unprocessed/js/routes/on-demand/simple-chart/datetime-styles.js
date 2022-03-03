@@ -1,5 +1,7 @@
 /* eslint complexity: ["error", 10] */
+import trackChartEvent from './util.js';
 import styles from './line-styles.js';
+
 const msYear = 365 * 24 * 60 * 60 * 1000;
 
 const datetime = {
@@ -15,6 +17,16 @@ const datetime = {
     startOnTick: true,
     labels: {
       ...styles.xAxis.labels
+    },
+
+    events: {
+      afterSetExtremes: function( evt ) {
+        if ( evt.trigger === 'navigator' ) {
+          trackChartEvent( evt, 'Slider Moved' );
+        } else if ( evt.trigger === 'rangeSelectorButton' ) {
+          trackChartEvent( evt, 'Time Range Selected' );
+        }
+      }
     }
   },
   rangeSelector: {

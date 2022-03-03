@@ -1,5 +1,6 @@
 FROM python:3.8-alpine as base
 
+# cfgov-dev is used for local development, as well as a base for frontend and prod.
 FROM base AS cfgov-dev
 
 # Ensure that the environment uses UTF-8 encoding by default
@@ -17,9 +18,11 @@ WORKDIR ${APP_HOME}
 
 # Install common OS packages
 RUN apk update --no-cache && apk upgrade --no-cache
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev postgresql-dev
-RUN apk add --no-cache --virtual .backend-deps postgresql curl bash
-RUN apk add --no-cache --virtual .frontend-deps nodejs yarn zlib-dev jpeg-dev
+# .build-deps are required to build and test the application (pip, tox, etc.)
+RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev postgresql-dev
+# .backend-deps and .frontend-deps are required to run the application
+RUN apk add --no-cache --virtual .backend-deps bash curl postgresql
+RUN apk add --no-cache --virtual .frontend-deps jpeg-dev nodejs yarn zlib-dev
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
 # Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
@@ -30,9 +33,6 @@ ENV PIP_NO_CACHE_DIR true
 COPY requirements requirements
 RUN pip install -r requirements/local.txt -r requirements/deployment.txt
 
-# Remove build dependencies for smaller image
-RUN apk del .build-deps
-
 EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
@@ -40,6 +40,8 @@ CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
 # Build Frontend Assets
 FROM cfgov-dev as cfgov-build
+
+ARG FRONTEND_TARGET=production
 
 ENV STATIC_PATH ${APP_HOME}/cfgov/static/
 ENV PYTHONPATH ${APP_HOME}/cfgov
@@ -53,7 +55,7 @@ ENV ALLOWED_HOSTS '["*"]'
 COPY . .
 
 # Build the front-end
-RUN ./frontend.sh production && \
+RUN ./frontend.sh  ${FRONTEND_TARGET} && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
     rm -rf node_modules npm-packages-offline-cache
@@ -107,11 +109,14 @@ COPY --from=cfgov-mod-wsgi /usr/lib/apache2/mod_wsgi.so /usr/lib/apache2/mod_wsg
 
 # Copy the cfgov directory form the build image
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
-COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/
+COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/initial-data.sh ${CFGOV_PATH}/
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PATH}/static.in
 
 RUN ln -s /usr/lib/apache2 cfgov/apache/modules
 RUN chown -R apache:apache ${APP_HOME} /usr/share/apache2 /var/run/apache2 /var/log/apache2
+
+# Remove build dependencies for smaller image
+RUN apk del .build-deps
 
 USER apache
 

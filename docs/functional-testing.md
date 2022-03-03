@@ -83,3 +83,34 @@ describe('Consumer Tools', () => {
 ```
 
 Overall it lets our tests show what is intended to be happening on a page without showing the more technical side of how we reference and interact with elements.
+
+## Creating test data
+
+Wagtail pages can be created programmatically by adding function calls to cfgov/v1/tests/wagtail_pages/create_test_data.py
+To run this file locally, run the following commands on a bash shell within
+the python container from the root folder:
+
+`./cfgov/manage.py shell`
+`from v1.tests.wagtail_pages import create_test_data`
+
+Currently supported page types:
+- blog_page
+- browse_filterable_page
+- browse_page
+- landing_page
+- learn_page
+- sublanding_filterable_page
+- sublanding_page
+
+To import "create a page" functions, import from:
+- v1.tests.wagtail_pages.helpers
+
+"Create a page" functions return a path to the created page or None if no page was created
+
+When adding tags or categories, they should be passed as a set:
+`MY_TAGS = {"a tag", "another tag"}`
+
+The first three arguments of any "create a page" function are title, slug, and parent path (optional, defaults to root)
+
+Do not include new functions that only add test data in a pull request. When you are done running the test data creation
+script, remove your created functions and only leave the documentation.
