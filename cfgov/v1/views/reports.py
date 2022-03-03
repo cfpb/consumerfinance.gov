@@ -33,6 +33,7 @@ class PageMetadataReportView(PageReportView):
         "search_description",
         "tags.names",
         "categories.all",
+        "content_owners.names",
     ]
     export_headings = dict([
         ("url", "URL"),
@@ -41,7 +42,8 @@ class PageMetadataReportView(PageReportView):
         ("language", "Language"),
         ("search_description", "Search description"),
         ("tags.names", "Tags"),
-        ("categories.all", "Categories")],
+        ("categories.all", "Categories"),
+        ("content_owners.names", "Content Owner(s)")],
         **PageReportView.export_headings,
     )
 

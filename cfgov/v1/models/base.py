@@ -1,7 +1,6 @@
 import re
 
 from django.contrib.auth.models import User
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import F, Value
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -9,7 +8,7 @@ from django.template.response import TemplateResponse
 from django.utils import timezone, translation
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
@@ -23,7 +22,7 @@ from wagtail.search import index
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
-from taggit.models import TaggedItemBase
+from taggit.models import ItemBase, TagBase, TaggedItemBase
 from wagtailinventory.helpers import get_page_blocks
 
 from v1 import blocks as v1_blocks
@@ -48,6 +47,19 @@ class CFGOVTaggedPages(TaggedItemBase):
     class Meta:
         verbose_name = _("Tag")
         verbose_name_plural = _("Tags")
+
+
+class CFGOVContentOwner(TagBase):
+    class Meta:
+        verbose_name = _("Content Owner")
+        verbose_name_plural = _("Content Owners")
+
+
+class CFGOVOwnedPages(ItemBase):
+    tag = models.ForeignKey(
+        CFGOVContentOwner, related_name="owned_pages", on_delete=models.CASCADE
+    )
+    content_object = ParentalKey('CFGOVPage')
 
 
 class BaseCFGOVPageManager(PageManager):
@@ -81,7 +93,16 @@ class CFGOVPage(Page):
             'Maximum size: 4096w x 4096h.'
         )
     )
-    schema_json = JSONField(
+
+    content_owners = ClusterTaggableManager(
+        through=CFGOVOwnedPages,
+        blank=True,
+        verbose_name='Content Owners',
+        help_text='A comma separated list of internal content owners.'
+        + 'Use division acronyms only.',
+        related_name='cfgov_content_owners')
+
+    schema_json = models.JSONField(
         null=True,
         blank=True,
         verbose_name='Schema JSON',
@@ -172,6 +193,7 @@ class CFGOVPage(Page):
         InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
+        FieldPanel('content_owners', 'Content Owners'),
         FieldPanel('schema_json', 'Structured Data'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'language'),

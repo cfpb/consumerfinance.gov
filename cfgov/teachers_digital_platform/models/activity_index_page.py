@@ -1,7 +1,6 @@
 import copy
 from collections import OrderedDict
 
-from django.contrib.postgres.fields import JSONField
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 
@@ -302,9 +301,9 @@ def default_flat_facets(class_object):
 class ActivitySetUp(models.Model):
     """A database cache of form setups for TDP activities."""
 
-    card_setup = JSONField(blank=True, null=True)
-    card_order = JSONField(blank=True, null=True)
-    facet_setup = JSONField(blank=True, null=True)
+    card_setup = models.JSONField(blank=True, null=True)
+    card_order = models.JSONField(blank=True, null=True)
+    facet_setup = models.JSONField(blank=True, null=True)
 
     def __str__(self):
         return "Cached activity facets and cards"

@@ -5,7 +5,7 @@ from pathlib import Path
 
 from django.conf import global_settings
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 import dj_database_url
 from elasticsearch import RequestsHttpConnection
@@ -154,6 +154,7 @@ MIDDLEWARE = (
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
@@ -261,6 +262,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/stable/howto/static-files/
@@ -742,16 +744,19 @@ CSRF_REQUIRED_PATHS = (
 )
 
 
-# Django 2.2 Baseline required settings
+# Django 3.2 Baseline required settings
 # exempt beta from CSRF settings until it's converted to https
+SECURE_REFERRER_POLICY = 'same-origin'  # 1
+SESSION_COOKIE_SAMESITE = 'Strict'          # 3
+X_FRAME_OPTIONS = 'DENY'                # 14
 
 if DEPLOY_ENVIRONMENT and DEPLOY_ENVIRONMENT != "beta":
     SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_HTTPONLY = True
+    CSRF_COOKIE_HTTPONLY = True         # 22
     CSRF_COOKIE_SECURE = True
-    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_BROWSER_XSS_FILTER = True    # 26
     SECURE_HSTS_SECONDS = 600
-    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True  # 26
 
 # Cache Settings
 CACHES = {
