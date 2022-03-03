@@ -22,7 +22,7 @@ from wagtail.search import index
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
-from taggit.models import TaggedItemBase
+from taggit.models import ItemBase, TagBase, TaggedItemBase
 from wagtailinventory.helpers import get_page_blocks
 
 from v1 import blocks as v1_blocks
@@ -47,6 +47,19 @@ class CFGOVTaggedPages(TaggedItemBase):
     class Meta:
         verbose_name = _("Tag")
         verbose_name_plural = _("Tags")
+
+
+class CFGOVContentOwner(TagBase):
+    class Meta:
+        verbose_name = _("Content Owner")
+        verbose_name_plural = _("Content Owners")
+
+
+class CFGOVOwnedPages(ItemBase):
+    tag = models.ForeignKey(
+        CFGOVContentOwner, related_name="owned_pages", on_delete=models.CASCADE
+    )
+    content_object = ParentalKey('CFGOVPage')
 
 
 class BaseCFGOVPageManager(PageManager):
@@ -80,7 +93,16 @@ class CFGOVPage(Page):
             'Maximum size: 4096w x 4096h.'
         )
     )
-    schema_json = models.JSONField(
+
+    content_owners = ClusterTaggableManager(
+        through=CFGOVOwnedPages,
+        blank=True,
+        verbose_name='Content Owners',
+        help_text='A comma separated list of internal content owners.'
+        + 'Use division acronyms only.',
+        related_name='cfgov_content_owners')
+
+    schema_json = JSONField(
         null=True,
         blank=True,
         verbose_name='Schema JSON',
@@ -171,6 +193,7 @@ class CFGOVPage(Page):
         InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
+        FieldPanel('content_owners', 'Content Owners'),
         FieldPanel('schema_json', 'Structured Data'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'language'),
