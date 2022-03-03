@@ -311,15 +311,6 @@ urlpatterns = [
         include('data_research.urls')
     ),
 
-    # educational resources
-    re_path(
-        r'^consumer-tools/educator-tools/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
-        TemplateView.as_view(
-            template_name='youth_employment_success/index.html'
-        ),
-        name='youth_employment_success'
-    ),
-
     # retirement redirects
     re_path(r'^retirement/(?P<path>.*)$', RedirectView.as_view(
             url='/consumer-tools/retirement/%(path)s',
