@@ -1,4 +1,5 @@
 [tool.black]
+line-length = 79
 target-version = ['py38']
 include = '\.pyi?$'
 extend-exclude = '''
@@ -11,4 +12,42 @@ extend-exclude = '''
 
 [tool.isort]
 profile = "black"
+line_length = 79
 skip = [".tox", "migrations"]
+known_django = ["django"]
+known_wagtail = ["wagtail", "wagtailsharing"]
+known_first_party = [
+    "agreements",
+    "alerts",
+    "ask_cfpb",
+    "cfgov",
+    "core",
+    "data_research",
+    "deployable_zipfile",
+    "diversity_inclusion",
+    "form_explainer",
+    "hmda",
+    "housing_counselor",
+    "jobmanager",
+    "legacy",
+    "mega_menu",
+    "paying_for_college",
+    "permissions_viewer",
+    "prepaid_agreements",
+    "regulations3k",
+    "scripts",
+    "search",
+    "teachers_digital_platform",
+    "v1",
+    "wellbeing",
+    "youth_employment",
+]
+default_section = "THIRDPARTY"
+sections = [
+    "STDLIB",
+    "DJANGO",
+    "WAGTAIL",
+    "THIRDPARTY",
+    "FIRSTPARTY",
+    "LOCALFOLDER"
+]
