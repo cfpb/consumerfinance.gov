@@ -120,19 +120,25 @@ class FilterablePagesDocumentSearch:
         self.document = FilterablePagesDocument()
         self.search_obj = self.document.search().filter("prefix", url=prefix)
 
-    def filter_topics(self, topics=[]):
+    def filter_topics(self, topics=None):
+        if not topics:
+            topics = []
         if topics not in ([], "", None):
             self.search_obj = self.search_obj.filter(
                 "terms", tags__slug=topics
             )
 
-    def filter_categories(self, categories=[]):
+    def filter_categories(self, categories=None):
+        if not categories:
+            categories = []
         if categories not in ([], "", None):
             self.search_obj = self.search_obj.filter(
                 "terms", categories__name=categories
             )
 
-    def filter_language(self, language=[]):
+    def filter_language(self, language=None):
+        if not language:
+            language = []
         if language not in ([], "", None):
             self.search_obj = self.search_obj.filter(
                 "terms", language=language
@@ -172,13 +178,21 @@ class FilterablePagesDocumentSearch:
 
     def filter(
         self,
-        topics=[],
-        categories=[],
-        language=[],
+        topics=None,
+        categories=None,
+        language=None,
         to_date=None,
         from_date=None,
         archived=None,
     ):
+
+        if not topics:
+            topics = []
+        if not categories:
+            categories = []
+        if not language:
+            language = []
+
         """Filter the results based on the given keyword arguments"""
         self.filter_topics(topics=topics)
         self.filter_categories(categories=categories)
@@ -239,7 +253,12 @@ class EnforcementActionFilterablePagesDocumentSearch(
                 **{"initial_filing_date": {"gte": from_date, "lte": to_date}},
             )
 
-    def filter(self, statuses=[], products=[], **kwargs):
+    def filter(self, statuses=None, products=None, **kwargs):
+        if not statuses:
+            statuses = []
+        if not products:
+            products = []
+
         self.search_obj = self.search_obj.filter(
             "term", model_class="EnforcementActionPage"
         )

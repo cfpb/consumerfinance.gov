@@ -2,7 +2,9 @@ import boto3
 
 
 class SQSQueue:
-    def __init__(self, queue_url, client=None, credentials={}):
+    def __init__(self, queue_url, client=None, credentials=None):
+        if not credentials:
+            credentials = {}
         self.queue_url = queue_url
         self.client = client or self.get_client(credentials)
 

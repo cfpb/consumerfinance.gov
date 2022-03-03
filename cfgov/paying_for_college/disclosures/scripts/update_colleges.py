@@ -170,12 +170,16 @@ def compile_net_prices(school, api_data):
     return school
 
 
-def update(exclude_ids=[], single_school=None, store_programs=False):
+def update(exclude_ids=None, single_school=None, store_programs=False):
     """
     Update college-level data for the latest year.
 
     Optionally, you can store program data and limit actions to one school.
     """
+
+    if not exclude_ids:
+        exclude_ids = []
+
     programs_created = 0
 
     excluded_ids = OFFICE_IDS + FAKE_SCHOOL_PKS + exclude_ids

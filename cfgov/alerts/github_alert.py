@@ -23,7 +23,9 @@ class GithubAlert:
         issues = self.repo().iter_issues(state="all")
         return next((issue for issue in issues if issue.title == title), None)
 
-    def post(self, title, body, labels=["alert"]):
+    def post(self, title, body, labels=None):
+        if not labels:
+            labels = ["alert"]
         # Truncate the title if needed, max is 256 chars
         title = title[:256]
         issue = self.matching_issue(title)

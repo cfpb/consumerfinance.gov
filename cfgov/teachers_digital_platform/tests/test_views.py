@@ -199,7 +199,7 @@ class TestSurveyWizard(TestCase):
         }
         mock_self = Mock()
         mock_self.get_all_cleaned_data.return_value = cleaned
-        setattr(mock_self, "survey_key", "3-5")
+        mock_self.survey_key = "3-5"
         response = SurveyWizard.done(mock_self, {})
 
         self.assertIsInstance(response, HttpResponseRedirect)

@@ -284,7 +284,9 @@ class TestActivityIndexPageSearch(TestCase):
         self.root_page.save_revision().publish()
         self.activity_setups = get_activity_setup()
 
-    def get_request(self, path="", data={}):
+    def get_request(self, path="", data=None):
+        if not data:
+            data = {}
         request = self.factory.get(path, data=data)
         return request
 

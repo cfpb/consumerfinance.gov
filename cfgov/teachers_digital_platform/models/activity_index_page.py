@@ -162,7 +162,7 @@ class ActivityIndexPage(CFGOVPage):
                 )
         else:
             dsl_search = dsl_search.sort("-date")
-        for facet, facet_config in FACET_MAP:
+        for facet, _ in FACET_MAP:
             if facet in request.GET and request.GET.get(facet):
                 facet_ids = [
                     value
@@ -247,10 +247,10 @@ def parse_dsl_facets(all_facets, facet_counts, selected_facets):
                 if parent["id"] in selections:
                     parent["selected"] = True
                     parent["child_selected"] = True
-                    for i, child in enumerate(parent["children"]):
+                    for _, child in enumerate(parent["children"]):
                         child["selected"] = True
                 else:
-                    for i, child in enumerate(parent["children"]):
+                    for _, child in enumerate(parent["children"]):
                         if selections and child["id"] in selections:
                             child["selected"] = True
                             parent["child_selected"] = True

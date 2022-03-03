@@ -2,7 +2,6 @@
 max-line-length = 79
 select = C,E,F,W,B,B950
 ignore =
-    B006,  # should be removed ASAP and resolved
     # black https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#line-length
     E203, E501
     # There's nothing wrong with assigning lambdas

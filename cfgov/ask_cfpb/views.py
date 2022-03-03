@@ -192,7 +192,7 @@ def redirect_ask_search(request, language="en"):
 
         try:
             for facet in facets:
-                legacy_facet_validator(facets)
+                legacy_facet_validator(facet)
         except ValidationError:
             raise Http404
 
