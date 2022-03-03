@@ -7,7 +7,6 @@ from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from mega_menu.models import Menu
 from mega_menu.views import MenuPreviewView
 
-
 try:
     from django.urls import re_path
 except ImportError:

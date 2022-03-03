@@ -7,7 +7,8 @@ from django.http import Http404
 from django.template.response import TemplateResponse
 from django.utils.html import format_html, strip_tags
 from django.utils.text import slugify
-from django.utils.translation import activate, deactivate_all, gettext as _
+from django.utils.translation import activate, deactivate_all
+from django.utils.translation import gettext as _
 
 from wagtail.admin.edit_handlers import (
     FieldPanel,
@@ -38,7 +39,6 @@ from v1.models import (
     SublandingPage,
 )
 from v1.models.snippets import ReusableText
-
 
 REUSABLE_TEXT_TITLES = {
     "about_us": {

@@ -10,7 +10,6 @@ from wagtailsharing.models import SharingSite
 
 from v1.models import HomePage
 
-
 logger = logging.getLogger(__name__)
 
 

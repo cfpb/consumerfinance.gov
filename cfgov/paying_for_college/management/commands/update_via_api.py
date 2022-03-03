@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 
 from paying_for_college.disclosures.scripts import update_colleges
 
-
 COMMAND_HELP = """update_via_api gets school-level data from the Department of \
 Education's CollegeScorecard API. The script intentionally runs slowly \
 to avoid triggering API rate limits, so allow an hour to run."""

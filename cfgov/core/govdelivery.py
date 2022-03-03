@@ -6,7 +6,6 @@ from django.utils.module_loading import import_string
 
 from requests import Response
 
-
 logger = logging.getLogger(__name__)
 
 

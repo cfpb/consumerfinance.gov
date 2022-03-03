@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import django.core.validators
-from django.db import migrations, models
 import wagtail.core.blocks
 import wagtail.core.fields
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):

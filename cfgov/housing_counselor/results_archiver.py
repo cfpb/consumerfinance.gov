@@ -1,7 +1,6 @@
 import json
 from zipfile import ZIP_DEFLATED, ZipFile
 
-
 json_file_name = "HUD_approved_housing_counselors.json"
 
 

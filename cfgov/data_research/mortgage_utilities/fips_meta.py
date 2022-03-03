@@ -3,7 +3,6 @@ import logging
 
 from django.conf import settings
 
-
 PROJECT_ROOT = settings.PROJECT_ROOT
 FIPS_DATA_PATH = "{}/data_research/data".format(PROJECT_ROOT)
 

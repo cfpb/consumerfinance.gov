@@ -4,7 +4,6 @@ from paying_for_college.disclosures.scripts.notifications import (
     send_stale_notifications,
 )
 
-
 COMMAND_HELP = "Send_stale_notifications gathers up stale notifications -- "
 "those that are more than a day old and have failed to reach a school -- "
 "assembles details and a send log for each notification and emails that "

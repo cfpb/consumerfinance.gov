@@ -16,7 +16,6 @@ from data_research.models import (
     validate_counties,
 )
 
-
 logger = logging.getLogger(__name__)
 script = os.path.basename(__file__)
 

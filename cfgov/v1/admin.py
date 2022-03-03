@@ -6,7 +6,6 @@ from login.email import send_password_reset_email
 
 from v1.models import Contact, PortalCategory, PortalTopic
 
-
 admin.site.register(Contact)
 admin.site.unregister(User)
 

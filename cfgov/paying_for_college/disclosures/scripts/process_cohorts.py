@@ -9,7 +9,6 @@ from paying_for_college.models.disclosures import (
     School,
 )
 
-
 STATES = sorted(
     [tup[0] for tup in localflavor.us.us_states.CONTIGUOUS_STATES]
     + [tup[0] for tup in localflavor.us.us_states.NON_CONTIGUOUS_STATES]

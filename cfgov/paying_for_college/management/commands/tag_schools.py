@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 
 from paying_for_college.disclosures.scripts import tag_settlement_schools
 
-
 COMMAND_HELP = """
 `tag_schools` updates the 'settlement_school' flag, which is used to mark
  schools that are participating in the disclosure program pursuant

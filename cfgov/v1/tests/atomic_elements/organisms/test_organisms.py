@@ -28,7 +28,6 @@ from v1.models import (
 )
 from v1.tests.wagtail_pages.helpers import publish_page
 
-
 django_client = Client()
 
 """

@@ -12,7 +12,6 @@ from requests.packages.urllib3.util.retry import Retry
 
 from legacy.forms import HousingCounselorForm
 
-
 logger = logging.getLogger(__name__)
 
 

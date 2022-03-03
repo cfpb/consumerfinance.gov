@@ -1,6 +1,5 @@
 from django.db import models
 
-
 AUTOCOMPLETE_MAX_CHARS = 50
 
 

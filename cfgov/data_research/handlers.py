@@ -5,7 +5,6 @@ from django.http import HttpResponseRedirect
 from data_research.forms import ConferenceRegistrationForm
 from v1.handlers import Handler
 
-
 logger = logging.getLogger(__name__)
 
 

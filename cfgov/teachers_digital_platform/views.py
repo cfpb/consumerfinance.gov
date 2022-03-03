@@ -24,7 +24,6 @@ from teachers_digital_platform.surveys import (
 from teachers_digital_platform.UrlEncoder import UrlEncoder
 from v1.models import SublandingPage
 
-
 _tdp = "teachers_digital_platform"
 _gradeSelectionPagePk = 15596
 

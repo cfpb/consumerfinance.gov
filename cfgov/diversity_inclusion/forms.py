@@ -3,7 +3,6 @@ from django.conf import settings
 from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse
 
-
 # Form input attributes for Design System compatibility.
 # Technique copied from data_research/forms.py
 #

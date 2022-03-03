@@ -1,6 +1,5 @@
 import itertools
 
-
 related_posts_categories = [
     (
         "Blog",

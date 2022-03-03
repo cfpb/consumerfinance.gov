@@ -4,7 +4,6 @@ from django.utils.functional import cached_property
 from core.govdelivery import get_govdelivery_api
 from data_research.models import ConferenceRegistration
 
-
 # Form input attributes for Design System compatibility.
 #
 # See https://cfpb.github.io/design-system/components/text-inputs

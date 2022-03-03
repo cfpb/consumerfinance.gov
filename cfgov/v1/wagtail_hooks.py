@@ -39,7 +39,6 @@ from v1.template_debug import (
 from v1.util import util
 from v1.views.reports import DocumentsReportView, PageMetadataReportView
 
-
 try:
     from django.urls import re_path
 except ImportError:
@@ -282,23 +281,23 @@ def register_documents_report_url():
     ]
 
 
-@hooks.register('register_reports_menu_item')
+@hooks.register("register_reports_menu_item")
 def register_documents_report_menu_item():
     return MenuItem(
         "Documents",
-        reverse('documents_report'),
-        classnames='icon icon-' + DocumentsReportView.header_icon,
-        order=700
+        reverse("documents_report"),
+        classnames="icon icon-" + DocumentsReportView.header_icon,
+        order=700,
     )
 
 
-@hooks.register('register_admin_urls')
+@hooks.register("register_admin_urls")
 def register_documents_report_url():
     return [
         re_path(
-            r'^reports/documents/$',
+            r"^reports/documents/$",
             DocumentsReportView.as_view(),
-            name='documents_report'
+            name="documents_report",
         ),
     ]
 

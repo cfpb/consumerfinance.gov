@@ -8,7 +8,6 @@ from .heading import heading_test_cases  # noqa 401
 from .notification import notification_test_cases  # noqa 401
 from .video_player import video_player_test_cases  # noqa 401
 
-
 try:
     from django.urls import re_path
 except ImportError:

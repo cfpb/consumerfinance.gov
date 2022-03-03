@@ -17,7 +17,6 @@ from requests.exceptions import HTTPError
 from v1.admin_forms import CacheInvalidationForm, ExportFeedbackForm
 from v1.models.caching import AkamaiBackend, CDNHistory
 
-
 try:
     from django.views.generic.edit import FormView
 except ImportError:

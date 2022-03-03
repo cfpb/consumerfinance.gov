@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 
 from jobmanager.models.pages import JobListingPage
 
-
 logger = logging.getLogger(__name__)
 
 URL = os.environ.get("USAJOBS_ARCHIVE_URL")

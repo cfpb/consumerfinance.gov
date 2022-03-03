@@ -18,7 +18,6 @@ from core.forms import ExternalURLForm
 from core.govdelivery import get_govdelivery_api
 from core.utils import extract_answers_from_request
 
-
 logger = logging.getLogger(__name__)
 
 REQUIRED_PARAMS_GOVDELIVERY = ["email", "code"]

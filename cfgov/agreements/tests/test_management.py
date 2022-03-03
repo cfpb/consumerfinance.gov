@@ -11,7 +11,6 @@ from django.test import TestCase
 from agreements.management.commands import _util
 from agreements.models import Issuer
 
-
 no_agreements_zip = os.path.dirname(__file__) + "/no-agreements.zip"
 empty_folder_zip = os.path.dirname(__file__) + "/empty-folder-agreements.zip"
 utf8_zip = os.path.dirname(__file__) + "/UTF_agreements.zip"

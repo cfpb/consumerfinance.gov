@@ -16,7 +16,6 @@ from data_research.mortgage_utilities.s3_utils import (
     read_in_s3_csv,
 )
 
-
 logger = logging.getLogger(__name__)
 script = os.path.basename(__file__)
 

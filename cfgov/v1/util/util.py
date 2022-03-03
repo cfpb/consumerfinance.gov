@@ -9,7 +9,6 @@ from django.urls import resolve
 from wagtail.core.blocks.stream_block import StreamValue
 from wagtail.core.models import Site
 
-
 # These messages are manually mirrored on the
 # Javascript side in error-messages-config.js
 

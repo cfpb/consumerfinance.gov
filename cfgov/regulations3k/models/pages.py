@@ -38,7 +38,6 @@ from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -6,7 +6,6 @@ from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.fields import RichTextField
 from wagtail.images.edit_handlers import ImageChooserPanel
 
-
 ENGLISH_PARENT_SLUG = "ask-cfpb"
 SPANISH_PARENT_SLUG = "obtener-respuestas"
 

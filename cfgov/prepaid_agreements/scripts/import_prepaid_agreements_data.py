@@ -7,7 +7,6 @@ import requests
 
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
-
 S3_PATH = "https://files.consumerfinance.gov/a/assets/prepaid-agreements/"
 METADATA_FILENAME = "prepaid_metadata.json"
 

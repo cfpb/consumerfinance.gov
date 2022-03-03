@@ -8,7 +8,6 @@ from dateutil import parser
 
 from v1.models import BrowsePage
 
-
 logger = logging.getLogger(__name__)
 
 
