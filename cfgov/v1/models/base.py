@@ -23,7 +23,7 @@ from wagtail.search import index
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
-from taggit.models import TaggedItemBase
+from taggit.models import TagBase, ItemBase, TaggedItemBase
 from wagtailinventory.helpers import get_page_blocks
 
 from v1 import blocks as v1_blocks
@@ -49,14 +49,18 @@ class CFGOVTaggedPages(TaggedItemBase):
         verbose_name = _("Tag")
         verbose_name_plural = _("Tags")
 
-
-class CFGOVOwnedPages(TaggedItemBase):
+class CFGOVContentOwner(TagBase):
     content_object = ParentalKey('CFGOVPage')
 
     class Meta:
         verbose_name = _("Content Owner")
         verbose_name_plural = _("Content Owners")
 
+class CFGOVOwnedPages(ItemBase):
+    tag = models.ForeignKey(
+        CFGOVContentOwner, related_name="owned_pages", on_delete=models.CASCADE
+    )
+    content_object = ParentalKey('CFGOVPage')
 
 class BaseCFGOVPageManager(PageManager):
     def get_queryset(self):
@@ -97,7 +101,7 @@ class CFGOVPage(Page):
                                             + 'of internal content owners. '
                                             + 'Listed names should use '
                                             + 'division acronyms.',
-                                            related_name='owned_pages')
+                                            related_name='cfgov_content_owners')
 
     schema_json = JSONField(
         null=True,
