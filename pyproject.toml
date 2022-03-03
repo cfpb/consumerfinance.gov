@@ -1,5 +1,5 @@
 [tool.black]
-target-version = ['py36', 'py38']
+target-version = ['py38']
 include = '\.pyi?$'
 extend-exclude = '''
 (
@@ -8,3 +8,7 @@ extend-exclude = '''
   )/
 )
 '''
+
+[tool.isort]
+profile = "black"
+skip = [".tox", "migrations"]
