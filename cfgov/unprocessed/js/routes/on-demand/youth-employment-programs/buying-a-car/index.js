@@ -3,7 +3,7 @@ import checkbox from './templates/checkbox';
 import checklistGroupView from './views/checklist-group';
 import checklistMap from './models/checklist-map';
 import error from './views/error';
-import printButtonView from '../../../../../apps/youth-employment-success/js/views/print-button';
+import printButtonView from './views/print-button';
 import printTableView from './views/print-table';
 import selectedItems from './models/selected-items';
 import updateExpandableButtonText from './expandables';

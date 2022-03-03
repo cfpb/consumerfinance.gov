@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 class V1AppConfig(AppConfig):
     name = 'v1'
     verbose_name = 'V1'
+    default_auto_field = 'django.db.models.BigAutoField'
 
     def ready(self):
         from v1.signals import user_save_callback

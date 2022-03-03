@@ -84,8 +84,12 @@ class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
                 self.width = width
                 self.height = height
 
+            @property
+            def size(self):
+                return self.get_size()
+
         mock_image = MockResizableImage(width, height)
-        operation.run(mock_image, image=None, env={})
+        operation.run(mock_image, image=None)
         return mock_image.width, mock_image.height
 
     @property

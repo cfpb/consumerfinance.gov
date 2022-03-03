@@ -115,7 +115,7 @@ class EffectiveVersionModelAdmin(CopyableModelAdmin):
     url_helper_class = RegsURLHelper
 
     def copy(self, instance):
-        subparts = instance.subparts.all()
+        instance_pk = instance.pk
 
         # Copy the instance
         new_version = instance
@@ -124,8 +124,9 @@ class EffectiveVersionModelAdmin(CopyableModelAdmin):
         new_version.draft = True
         new_version.save()
 
-        for subpart in subparts:
-            sections = subpart.sections.all()
+        original = self.model.objects.get(pk=instance_pk)
+        for subpart in original.subparts.all():
+            subpart_pk = subpart.pk
 
             # Copy the subpart
             new_subpart = subpart
@@ -133,6 +134,7 @@ class EffectiveVersionModelAdmin(CopyableModelAdmin):
             new_subpart.version = new_version
             new_subpart.save()
 
+            sections = Subpart.objects.get(pk=subpart_pk).sections.all()
             for section in sections:
                 # Copy the section
                 new_section = section
