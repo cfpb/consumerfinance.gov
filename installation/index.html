@@ -223,6 +223,10 @@ live and clone this project's repository:</p>
 <pre class="highlight"><code class="language-sh">git clone git@github.com:cfpb/consumerfinance.gov.git
 cd consumerfinance.gov</code></pre>
 
+<p>Configure <code>.git-blame-ignore-revs</code> by running the following command within
+the repository:</p>
+<pre class="highlight"><code class="language-sh">git config blame.ignoreRevsFile .git-blame-ignore-revs</code></pre>
+
 <h3 id="set-up-the-environment-optional">Set up the environment (optional)<a class="headerlink" href="#set-up-the-environment-optional" title="Permanent link">¶</a></h3>
 <p>The consumerfinance.gov Django site relies on environment variables defined
 in a <code>.env</code> file. If this is your first time setting up the project,
@@ -255,6 +259,19 @@ Activating the virtualenv is necessary before using it in the future as well:</p
 <p>Once activated, our Python CI requirements can be installed in the virtualenv:</p>
 <pre class="highlight"><code class="language-sh">pip install -r requirements/ci.txt</code></pre>
 
+<h3 id="install-pre-commit">Install pre-commit<a class="headerlink" href="#install-pre-commit" title="Permanent link">¶</a></h3>
+<p>We use <code>pre-commit</code> to automatically run our linting tools before a commit 
+takes place. These tools consist of <code>black</code>, <code>flake8</code>, and <code>isort</code>. To install 
+<code>pre-commit</code>, running the following commands from within the 
+<code>consumerfinance.gov</code> directory:</p>
+<pre class="highlight"><code class="language-sh">pip install -U pre-commit &amp;&amp; pre-commit install</code></pre>
+
+<p>Before each commit, <code>pre-commit</code> will execute and run our <code>pre-commit</code> checks.
+If any task fails, it will attempt to resolve the issue automatically, notify 
+you of the changes (if any), and ask for you to re-stage the changed files. If 
+all checks pass, a commit will take place as expected, allowing you to then 
+push to GitHub. This is to reduce the number of commits with failed lints, and
+to assist developers with linting without thinking.</p>
 <h3 id="install-our-private-fonts-optional">Install our private fonts (optional)<a class="headerlink" href="#install-our-private-fonts-optional" title="Permanent link">¶</a></h3>
 <p>consumerfinance.gov uses a proprietary licensed font, Avenir.</p>
 <p>If you want to pull this from a content delivery network (CDN),

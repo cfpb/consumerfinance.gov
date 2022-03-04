@@ -245,8 +245,8 @@ make sure you are in the consumerfinance.gov root and then run:</p>
 <pre class="highlight"><code class="language-sh">tox</code></pre>
 
 <p>Tox runs different isolated Python environments with different versions of dependencies.
-We use it to lint our Python files, check out import sorting, and run unit tests
-in both Python 3.6 and Python 3.8.
+We use it to format and lint our Python files, check out import sorting, and run unit tests
+in Python 3.8.
 You can select specific environments using <code>-e</code>.</p>
 <p>Running <code>tox</code> by itself is the same as running:</p>
 <pre class="highlight"><code class="language-sh">tox -e lint -e unittest</code></pre>
@@ -268,13 +268,20 @@ you can provide a dotted path to the test as the final argument to any of the ab
 
 <p>If you would like to skip running Django migrations when testing, set the
 <code>SKIP_DJANGO_MIGRATIONS</code> environment variable to any value before running <code>tox</code>.</p>
+<h3 id="formatting">Formatting<a class="headerlink" href="#formatting" title="Permanent link">¶</a></h3>
+<p>We use <code>black</code> to autoformat our Python code. <code>black</code> is invoked by Tox using 
+the <code>lint</code> environment (this will also run <code>flake8</code> and <code>isort</code>):</p>
+<pre class="highlight"><code class="language-sh">tox -e lint</code></pre>
+
+<p><strong>It is highly recommended to only invoke black via tox</strong></p>
 <h3 id="linting">Linting<a class="headerlink" href="#linting" title="Permanent link">¶</a></h3>
 <p>We use the <code>flake8</code> and <code>isort</code> tools to ensure compliance with
 <a href="https://www.python.org/dev/peps/pep-0008/">PEP8 style guide</a>,
 <a href="https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/">Django coding style guidelines</a>,
 and the
 <a href="https://github.com/cfpb/development/blob/main/standards/python.md#linting">CFPB Python style guide</a>.</p>
-<p>Both <code>flake8</code> and <code>isort</code> can be run using the Tox <code>lint</code> environment:</p>
+<p>Both <code>flake8</code> and <code>isort</code> can be run using the Tox <code>lint</code> environment (this 
+will also run <code>black</code>):</p>
 <pre class="highlight"><code class="language-sh">tox -e lint</code></pre>
 
 <p>This will run <code>isort</code> in check-only mode and it will print diffs for imports
