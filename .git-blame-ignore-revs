@@ -2,3 +2,5 @@
 7f04471f6e444095ed271eb738dec2a01af3b502
 # Post-Black import sorting
 b5981a429fed01dd021ecfba80e60d3193698b69
+# isort 2 line after import
+92e61dd8a313486496c8a682d132f01e8b2f4e87
