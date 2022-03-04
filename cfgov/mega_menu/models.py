@@ -10,19 +10,17 @@ from mega_menu.frontend_conversion import FrontendConverter
 
 class Menu(models.Model):
     language = models.CharField(
-        choices=settings.LANGUAGES,
-        max_length=2,
-        primary_key=True
+        choices=settings.LANGUAGES, max_length=2, primary_key=True
     )
 
     submenus = StreamField(MenuStreamBlock())
 
     class Meta:
-        ordering = ('language',)
+        ordering = ("language",)
 
     panels = [
-        FieldPanel('language'),
-        StreamFieldPanel('submenus'),
+        FieldPanel("language"),
+        StreamFieldPanel("submenus"),
     ]
 
     def __str__(self):

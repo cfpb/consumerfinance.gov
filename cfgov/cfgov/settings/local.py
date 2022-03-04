@@ -31,10 +31,17 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
-        "console": {"level": "DEBUG", "class": "logging.StreamHandler",}
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        }
     },
     "loggers": {
-        "": {"handlers": ["console"], "level": "INFO", "propagate": True,}
+        "": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": True,
+        }
     },
 }
 
@@ -86,8 +93,8 @@ MIDDLEWARE += CSP_MIDDLEWARE
 
 # Disable caching unless enabled via environment variable
 for _cache_name, _cache_envvar in (
-    ('default', 'ENABLE_DEFAULT_CACHE'),
-    ('post_preview', 'ENABLE_POST_PREVIEW_CACHE'),
+    ("default", "ENABLE_DEFAULT_CACHE"),
+    ("post_preview", "ENABLE_POST_PREVIEW_CACHE"),
 ):
     if not os.getenv(_cache_envvar):
         CACHES[_cache_name] = {
@@ -104,9 +111,7 @@ if not os.environ.get("GOVDELIVERY_BASE_URL"):
 WAGTAIL_PLACEHOLDERIMAGES_DUMMY = True
 WAGTAIL_PLACEHOLDERIMAGES_SOURCE = "//placekitten.com/{width}/{height}"
 
-CSP_IMG_SRC += (
-    "placekitten.com",
-)
+CSP_IMG_SRC += ("placekitten.com",)
 
 # Add django-cprofile-middleware to enable lightweight local profiling.
 # The middleware's profiling is only available if DEBUG=True

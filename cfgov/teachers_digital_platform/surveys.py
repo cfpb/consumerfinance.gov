@@ -24,9 +24,9 @@ from teachers_digital_platform.forms import SurveyForm, markup
 PREFILL_ANSWERS = False
 
 # Which survey keys will be made available.
-AVAILABLE_SURVEYS = ('3-5', '6-8', '9-12')
+AVAILABLE_SURVEYS = ("3-5", "6-8", "9-12")
 
-ITEM_SEPARATOR = '‣'
+ITEM_SEPARATOR = "‣"
 
 
 def _question_row(row: Dict[str, str]):
@@ -35,12 +35,12 @@ def _question_row(row: Dict[str, str]):
     this will make a single place to fix it.
     """
     return {
-        'q': row['Question'],
-        'pt': row['Part'],
-        'pg': row['Page'],
-        'a': row['Answer type'],
-        'w': row['Answer worth'],
-        's': row['Section'],
+        "q": row["Question"],
+        "pt": row["Part"],
+        "pg": row["Page"],
+        "a": row["Answer type"],
+        "w": row["Answer worth"],
+        "s": row["Section"],
     }
 
 
@@ -50,8 +50,8 @@ def _answer_types_row(row: Dict[str, str]):
     change, this will make a single place to fix it.
     """
     return {
-        'k': row['Key'],
-        'c': row['Choices'],
+        "k": row["Key"],
+        "c": row["Choices"],
     }
 
 
@@ -63,21 +63,19 @@ class ChoiceList:
 
     def __init__(self, labels: List[str]):
         self.labels = labels
-        self.choices = tuple(
-            (str(k), v) for k, v in enumerate(labels)
-        )
+        self.choices = tuple((str(k), v) for k, v in enumerate(labels))
 
     @classmethod
     def from_string(cls, s: str, lookup: Dict):
         """Convert a string like 'Foo | Bar | Bing' into a new ChoiceList"""
-        labels = list(x.strip() for x in s.split('|'))
+        labels = list(x.strip() for x in s.split("|"))
 
         # Allow references like: [list:Foo]
         for k, v in enumerate(labels):
-            if v[0:6] == '[list:' and v[-1] == ']':
+            if v[0:6] == "[list:" and v[-1] == "]":
                 possible_ref = v[6:-1]
                 if possible_ref in lookup:
-                    joiner = f' {ITEM_SEPARATOR} '
+                    joiner = f" {ITEM_SEPARATOR} "
                     labels[k] = joiner.join(lookup[possible_ref].labels)
 
         return cls(labels)
@@ -87,11 +85,11 @@ class ChoiceList:
         """Get a list of all available ChoiceLists from CSV"""
         ret: Dict[str, cls] = {}
 
-        path = f'{dirname(__file__)}/survey-data/answer-types.csv'
-        with open(path, encoding='utf-8') as csv_file:
+        path = f"{dirname(__file__)}/survey-data/answer-types.csv"
+        with open(path, encoding="utf-8") as csv_file:
             reader = csv.DictReader(csv_file)
             for row in (_answer_types_row(row) for row in reader):
-                ret[row['k']] = cls.from_string(row['c'], ret)
+                ret[row["k"]] = cls.from_string(row["c"], ret)
 
         return ret
 
@@ -102,7 +100,7 @@ class Question:
     """
 
     def __init__(self, num: int, part: str):
-        self.key = f'q{num}'
+        self.key = f"q{num}"
         self.num = num
         self.part = part
 
@@ -118,9 +116,15 @@ class ChoiceQuestion(Question):
     Choice question for displaying radio buttons
     """
 
-    def __init__(self, num: int, part: str, label: str,
-                 choice_list: ChoiceList, answer_values: List[float],
-                 meta: Optional[Dict] = None):
+    def __init__(
+        self,
+        num: int,
+        part: str,
+        label: str,
+        choice_list: ChoiceList,
+        answer_values: List[float],
+        meta: Optional[Dict] = None,
+    ):
         super().__init__(num, part)
         self.meta = {} if meta is None else meta
         self.choice_list = choice_list
@@ -138,7 +142,7 @@ class ChoiceQuestion(Question):
         # all_cleaned_data as empty string. We can't really handle this
         # other than to grade with some valid response, below "0".
         if type(answer) is not str or not answer.isdecimal():
-            answer = '0'
+            answer = "0"
 
         answer = int(answer)
         assert answer >= 0
@@ -147,30 +151,32 @@ class ChoiceQuestion(Question):
 
     def get_field(self):
         """Get a form field class to place this question in a form"""
-        label = ''.join([
-            markup('<strong class="question-num">'),
-            str(self.num),
-            '.',
-            markup('</strong>'),
-            ' ',
-            self.label,
-        ])
+        label = "".join(
+            [
+                markup('<strong class="question-num">'),
+                str(self.num),
+                ".",
+                markup("</strong>"),
+                " ",
+                self.label,
+            ]
+        )
 
         initial = None
         if PREFILL_ANSWERS:
             initial = self.answer_values.index(max(self.answer_values))
 
-        classes = ['ChoiceField', 'tdp-survey__choice-question']
-        if 'atype' in self.meta:
+        classes = ["ChoiceField", "tdp-survey__choice-question"]
+        if "atype" in self.meta:
             atype = self.meta["atype"]
-            classes.append(f'tdp-survey__atype-{atype}')
+            classes.append(f"tdp-survey__atype-{atype}")
 
-        widget = forms.RadioSelect({'class': ' '.join(classes)})
-        widget.template_name = 'teachers_digital_platform/choice.html'
+        widget = forms.RadioSelect({"class": " ".join(classes)})
+        widget.template_name = "teachers_digital_platform/choice.html"
 
         return {
-            'key': self.key,
-            'field': forms.ChoiceField(
+            "key": self.key,
+            "field": forms.ChoiceField(
                 widget=widget,
                 choices=self.choice_list.choices,
                 label=label,
@@ -197,7 +203,7 @@ class SurveyPage:
 
         for question in self.questions:
             obj = question.get_field()
-            fields[obj['key']] = obj['field']
+            fields[obj["key"]] = obj["field"]
 
         return fields
 
@@ -216,8 +222,8 @@ class SurveyPage:
             question_scores[question] = score
 
         return {
-            'total': total,
-            'question_scores': question_scores,
+            "total": total,
+            "question_scores": question_scores,
         }
 
     def get_form_class(self, name: str):
@@ -233,10 +239,12 @@ class Survey:
     """
     A full survey
     """
+
     ITEM_SEPARATOR = ITEM_SEPARATOR
 
-    def __init__(self, key: str, meta: Dict[str, Any],
-                 pages: List[SurveyPage]):
+    def __init__(
+        self, key: str, meta: Dict[str, Any], pages: List[SurveyPage]
+    ):
         self.key = key
         self.meta = meta
         self.pages = pages
@@ -259,46 +267,45 @@ class Survey:
 
         for page in self.pages:
             score = page.get_score(all_cleaned_data)
-            subtotal = score['total']
+            subtotal = score["total"]
             page_scores[page] = subtotal
-            question_scores.update(score['question_scores'])
+            question_scores.update(score["question_scores"])
             total += subtotal
 
         return {
-            'question_scores': question_scores,
-            'page_scores': page_scores,
-            'total': total,
+            "question_scores": question_scores,
+            "page_scores": page_scores,
+            "total": total,
         }
 
     def adjust_total_score(self, total) -> float:
         """Adjust the total score so the top score is 100"""
-        if 'score_multiplier' not in self.meta:
+        if "score_multiplier" not in self.meta:
             return total
 
-        expr = self.meta['score_multiplier']
+        expr = self.meta["score_multiplier"]
 
         if isinstance(expr, (float, int)):
             return total * expr
 
-        if type(expr) is list and len(expr) == 3 and expr[1] == '/':
+        if type(expr) is list and len(expr) == 3 and expr[1] == "/":
             return total * expr[0] / expr[2]
 
-        raise ValueError(f'score_multiplier {expr} is unsupported')
+        raise ValueError(f"score_multiplier {expr} is unsupported")
 
     def get_form_list(self):
         """Get a list of (page name, form class) tuples"""
         page_classes = []
 
         for page_i, page in enumerate(self.pages):
-            name = f'p{page_i + 1}'
+            name = f"p{page_i + 1}"
 
             # Unique class name for each survey + page (not technically
             # required but feels safer)
-            hash = hashlib.md5((self.key + '|' + name).encode())
-            classname = 'FormPage' + hash.hexdigest()
+            hash = hashlib.md5((self.key + "|" + name).encode())
+            classname = "FormPage" + hash.hexdigest()
 
-            page_classes.append((name, page.get_form_class(
-                classname)))
+            page_classes.append((name, page.get_form_class(classname)))
 
         return tuple(page_classes)
 
@@ -320,32 +327,37 @@ class Survey:
             pages.append(page)
             questions.clear()
 
-        path = f'{dirname(__file__)}/survey-data/{key}.csv'
-        with open(path, encoding='utf-8') as csv_file:
+        path = f"{dirname(__file__)}/survey-data/{key}.csv"
+        with open(path, encoding="utf-8") as csv_file:
             reader = csv.DictReader(csv_file)
             for row in (_question_row(row) for row in reader):
                 if last_page is None:
-                    last_page = row['pg']
-                if row['pg'] != last_page:
+                    last_page = row["pg"]
+                if row["pg"] != last_page:
                     end_page(last_page)
 
-                last_page = row['pg']
+                last_page = row["pg"]
 
-                values = list(int(x.strip()) for x in row['w'].split(' '))
+                values = list(int(x.strip()) for x in row["w"].split(" "))
 
-                choices_key = row['a']
+                choices_key = row["a"]
                 if choices_key not in choice_lists:
-                    msg = f'Unknown answer type {choices_key}'
+                    msg = f"Unknown answer type {choices_key}"
                     raise NameError(msg)
 
                 question = ChoiceQuestion(
-                    q, row['pt'], row['q'], choice_lists[choices_key],
-                    values, {'atype': choices_key})
+                    q,
+                    row["pt"],
+                    row["q"],
+                    choice_lists[choices_key],
+                    values,
+                    {"atype": choices_key},
+                )
                 questions.append(question)
                 q += 1
         end_page(last_page)
 
-        path = f'{dirname(__file__)}/survey-data/{key}-meta.json'
+        path = f"{dirname(__file__)}/survey-data/{key}-meta.json"
         with open(path) as json_file:
             meta = json.load(json_file)
 

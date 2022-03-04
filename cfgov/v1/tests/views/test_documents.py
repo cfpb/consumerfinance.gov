@@ -42,9 +42,7 @@ class ServeViewTestCase(TestCase):
         # named test.txt already exists, the filename will get 7 random
         # alphanumeric characters appended. See Django docs:
         # https://docs.djangoproject.com/en/stable/howto/custom-file-storage/#django.core.files.storage.get_available_name
-        self.assertRegex(
-            response["Location"], "/test(_[a-zA-Z0-9]{7})?.txt$"
-        )
+        self.assertRegex(response["Location"], "/test(_[a-zA-Z0-9]{7})?.txt$")
 
     def test_missing_document_returns_404(self):
         with self.assertRaises(Http404):

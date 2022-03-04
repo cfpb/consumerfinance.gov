@@ -9,16 +9,16 @@ from django.test import SimpleTestCase
 
 
 # https://github.com/django/django/blob/1.11.18/tests/i18n/test_extraction.py
-has_xgettext = find_command('xgettext')
+has_xgettext = find_command("xgettext")
 
 
-@skipUnless(has_xgettext, 'xgettext is mandatory for extraction tests')
+@skipUnless(has_xgettext, "xgettext is mandatory for extraction tests")
 class TestCustomMakeMessages(SimpleTestCase):
-    DATA_DIR = 'test_makemessages_data'
+    DATA_DIR = "test_makemessages_data"
 
-    LOCALE = 'de'
+    LOCALE = "de"
 
-    PO_FILE = 'locale/%s/LC_MESSAGES/django.po' % LOCALE
+    PO_FILE = "locale/%s/LC_MESSAGES/django.po" % LOCALE
 
     def setUp(self):
         # https://github.com/django/django/blob/1.11.18/tests/i18n/utils.py#L33
@@ -32,13 +32,13 @@ class TestCustomMakeMessages(SimpleTestCase):
         shutil.copytree(
             os.path.join(os.path.dirname(__file__), self.DATA_DIR),
             test_dir,
-            ignore=shutil.ignore_patterns('*.pyc', '__pycache__')
+            ignore=shutil.ignore_patterns("*.pyc", "__pycache__"),
         )
 
         # Create a destination locale directory in the temp directory. We don't
         # include this in the source data being copied because we don't want it
         # to be in the source tree when makemigrations is run normally.
-        os.mkdir(os.path.join(test_dir, 'locale'))
+        os.mkdir(os.path.join(test_dir, "locale"))
 
         # Remove the temporary test directory on cleanup.
         self.addCleanup(self._rmrf, self.temp_dir)
@@ -54,34 +54,29 @@ class TestCustomMakeMessages(SimpleTestCase):
         # Only remove this location if we're really deleting the right thing.
         # https://github.com/django/django/blob/1.11.18/tests/i18n/utils.py
         if (
-            os.path.commonprefix([self.temp_dir, os.path.abspath(dname)]) !=
-            self.temp_dir
+            os.path.commonprefix([self.temp_dir, os.path.abspath(dname)])
+            != self.temp_dir
         ):
             return
 
         shutil.rmtree(dname)
 
     def test_extraction_works_as_expected_including_jinja2_block(self):
-        call_command('makemessages', locale=[self.LOCALE], verbosity=0)
+        call_command("makemessages", locale=[self.LOCALE], verbosity=0)
 
-        with open(self.PO_FILE, 'r') as f:
+        with open(self.PO_FILE, "r") as f:
             contents = f.read()
 
-        expected = '''
-#: __init__.py:4
-msgid "Test string from Python file."
-msgstr ""
+        self.assertIn('msgid "Test string from Python file."', contents)
 
-#: jinja2/test.html:1
-msgid ""
+        self.assertIn(
+            """msgid ""
 "\\n"
 "Test string from Jinja template.\\n"
 "This is in a multi-line block.\\n"
 msgstr ""
+""",
+            contents,
+        )
 
-#: templates/test.html:2
-msgid "Test string from Django template."
-msgstr ""
-'''
-
-        self.assertIn(expected, contents)
+        self.assertIn('msgid "Test string from Django template."', contents)

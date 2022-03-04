@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import django.core.validators
-from django.db import migrations
 import jobmanager.blocks
 import v1.atomic_elements.organisms
 import v1.blocks
@@ -8,6 +7,7 @@ import wagtail.core.blocks
 import wagtail.core.fields
 import wagtail.documents.blocks
 import wagtail.images.blocks
+from django.db import migrations
 
 
 class Migration(migrations.Migration):

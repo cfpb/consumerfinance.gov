@@ -70,7 +70,7 @@ class AnswerPageSearchTest(TestCase):
             live=True,
         )
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_search_en(self, mock_search):
         term = "payday"
         mock_return = mock.Mock()
@@ -78,8 +78,9 @@ class AnswerPageSearchTest(TestCase):
         mock_return.suggestion = None
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_search().filter().query() \
-            .__getitem__().execute.return_value = [mock_es_queryset]
+        mock_search().filter().query().__getitem__().execute.return_value = [
+            mock_es_queryset
+        ]
         mock_search().filter().query().count = mock.Mock(return_value=1)
         response = self.client.get(reverse("ask-search-en"), {"q": term})
         self.assertEqual(response.status_code, 200)
@@ -89,7 +90,7 @@ class AnswerPageSearchTest(TestCase):
             mock_search.called_with(language="en", search_term=term)
         )
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_search_en_no_term(self, mock_search):
         term = ""
         mock_return = mock.Mock()
@@ -103,7 +104,7 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(response_page.result_query, term)
 
     @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_search_en_suggestion(self, mock_search):
         term = "paydya"
         mock_return = mock.Mock()
@@ -112,14 +113,15 @@ class AnswerPageSearchTest(TestCase):
         mock_return.results = []
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_search().filter().query() \
-            .__getitem__().execute.return_value = [mock_es_queryset]
+        mock_search().filter().query().__getitem__().execute.return_value = [
+            mock_es_queryset
+        ]
         mock_search().filter().query().count = mock.Mock(return_value=0)
         response = self.client.get(reverse("ask-search-en"), {"q": term})
         self.assertEqual(mock_search.call_count, 5)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get('results'), None)
-        self.assertEqual(response.get('suggestion'), None)
+        self.assertEqual(response.get("results"), None)
+        self.assertEqual(response.get("suggestion"), None)
         response_page = response.context_data["page"]
         self.assertEqual(response_page, self.en_page)
         self.assertEqual(response_page.query, term)
@@ -128,25 +130,22 @@ class AnswerPageSearchTest(TestCase):
             mock_search.called_with(language="en", search_term=term)
         )
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_search_autocomplete_honors_max_chars(self, mock_search):
         valid_term = "You saw the masterpiece, she looks a lot like you!"
         overage = " This is overage text that should not appear in the query"
         too_long_term = valid_term + overage
         self.client.get(
-            reverse("ask-autocomplete-en"),
-            {"term": too_long_term}
+            reverse("ask-autocomplete-en"), {"term": too_long_term}
         )
         self.assertTrue(mock_search.called_with(valid_term))
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_search_autocomplete(self, mock_search):
         mock_return = mock.Mock()
         mock_return.autocomplete = "Autocomplete question"
         mock_return.url = "https://autocomplete"
-        mock_search().filter().query().__getitem__.return_value = [
-            mock_return
-        ]
+        mock_search().filter().query().__getitem__.return_value = [mock_return]
 
         response = self.client.get(
             reverse("ask-autocomplete-en"), {"term": "test"}
@@ -158,11 +157,15 @@ class AnswerPageSearchTest(TestCase):
         )
         self.assertEqual(
             response.json(),
-            [{'question': 'Autocomplete question',
-              'url': 'https://autocomplete'}]
+            [
+                {
+                    "question": "Autocomplete question",
+                    "url": "https://autocomplete",
+                }
+            ],
         )
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_search_autocomplete_requesterror(self, mock_search):
         mock_return = mock.Mock()
         mock_return.autocomplete = "Autocomplete question"
@@ -187,8 +190,9 @@ class AnswerPageSearchTest(TestCase):
         mock_return.suggestion = None
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_search().filter().query() \
-            .__getitem__().execute.return_value = [mock_es_queryset]
+        mock_search().filter().query().__getitem__().execute.return_value = [
+            mock_es_queryset
+        ]
         mock_search().filter().query().count = mock.Mock(return_value=1)
         response = self.client.get(
             reverse("ask-search-es", kwargs={"language": "es"}),
@@ -208,8 +212,9 @@ class AnswerPageSearchTest(TestCase):
         mock_return.search_term = term
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_search().filter().query() \
-            .__getitem__().execute.return_value = [mock_es_queryset]
+        mock_search().filter().query().__getitem__().execute.return_value = [
+            mock_es_queryset
+        ]
         response = self.client.get(reverse("ask-search-en"), {"q": term})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 2)
@@ -222,8 +227,9 @@ class AnswerPageSearchTest(TestCase):
         mock_return.search_term = term
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_search().filter().query() \
-            .__getitem__().execute.return_value = [mock_es_queryset]
+        mock_search().filter().query().__getitem__().execute.return_value = [
+            mock_es_queryset
+        ]
         response = self.client.get(
             reverse("ask-search-es", kwargs={"language": "es"}),
             {"q": term},
@@ -247,14 +253,14 @@ class AnswerPageSearchTest(TestCase):
             live=True,
         )
         mock_search.search.return_value = {
-            'search_term': search_term,
-            'suggestion': None,
-            'results': []
+            "search_term": search_term,
+            "suggestion": None,
+            "results": [],
         }
         mock_search.suggest.return_value = {
-            'search_term': search_term,
-            'suggestion': term,
-            'results': []
+            "search_term": search_term,
+            "suggestion": term,
+            "results": [],
         }
         response = self.client.get(
             reverse("ask-search-en-json", kwargs={"as_json": "json"}),
@@ -264,12 +270,12 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(mock_search.call_count, 1)
         self.assertEqual(json.loads(response.content)["query"], term)
 
-    @mock.patch.object(AnswerPageSearch, 'autocomplete')
+    @mock.patch.object(AnswerPageSearch, "autocomplete")
     def test_ask_autocomplete_en_blank_term(self, mock_autocomplete):
         result = self.client.get(reverse("ask-autocomplete-en"), {"term": ""})
         self.assertEqual(json.loads(result.content), [])
 
-    @mock.patch.object(AnswerPageSearch, 'autocomplete')
+    @mock.patch.object(AnswerPageSearch, "autocomplete")
     def test_ask_autocomplete_es_blank_term(self, mock_autocomplete):
         result = self.client.get(
             reverse("ask-autocomplete-es", kwargs={"language": "es"}),
@@ -277,7 +283,7 @@ class AnswerPageSearchTest(TestCase):
         )
         self.assertEqual(json.loads(result.content), [])
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_autocomplete_en(self, mock_autocomplete):
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "question"
@@ -289,7 +295,7 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(mock_autocomplete.call_count, 1)
         self.assertEqual(result.status_code, 200)
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_autocomplete_es(self, mock_autocomplete):
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "question"
@@ -302,16 +308,15 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(mock_autocomplete.call_count, 1)
         self.assertEqual(result.status_code, 200)
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_suggest_no_suggestions(self, mock_search):
-        term = 'zelle'
+        term = "zelle"
         mock_response = mock.MagicMock()
         mock_response.suggest.suggestion.__getitem__.side_effect = IndexError
-        mock_search().filter().suggest() \
-            .execute.return_value = mock_response
+        mock_search().filter().suggest().execute.return_value = mock_response
         answer_search = AnswerPageSearch(search_term=term)
         response = answer_search.suggest()
-        self.assertEqual(response.get('suggestion'), None)
+        self.assertEqual(response.get("suggestion"), None)
 
 
 class RedirectAskSearchTestCase(TestCase):

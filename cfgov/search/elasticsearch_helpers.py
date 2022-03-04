@@ -9,7 +9,10 @@ from django.conf import settings
 from django.core.management import call_command
 
 from wagtail.core.signals import (
-    page_published, page_unpublished, post_page_move, pre_page_move
+    page_published,
+    page_unpublished,
+    post_page_move,
+    pre_page_move,
 )
 
 from django_elasticsearch_dsl.registries import registry
@@ -31,59 +34,67 @@ def strip_html(markup):
 
 
 UNSAFE_CHARACTERS = [
-    '#', '%', ';', '^', '~', '`', '|',
-    '<', '>', '[', ']', '{', '}', '\\'
+    "#",
+    "%",
+    ";",
+    "^",
+    "~",
+    "`",
+    "|",
+    "<",
+    ">",
+    "[",
+    "]",
+    "{",
+    "}",
+    "\\",
 ]
 
 
 def make_safe(term):
     for char in UNSAFE_CHARACTERS:
-        term = term.replace(char, '')
+        term = term.replace(char, "")
     return term
 
 
 ngram_tokenizer = analyzer(
-    'ngram_tokenizer',
+    "ngram_tokenizer",
     tokenizer=tokenizer(
-        'trigram',
-        'edge_ngram',
+        "trigram",
+        "edge_ngram",
         min_gram=2,
         max_gram=25,
-        token_chars=["letter", "digit"]
+        token_chars=["letter", "digit"],
     ),
-    filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
+    filter=["lowercase", token_filter("ascii_fold", "asciifolding")],
 )
 
 
 def get_synonyms():
     try:
-        return list(Synonym.objects.values_list('synonym', flat=True))
+        return list(Synonym.objects.values_list("synonym", flat=True))
     except Exception:
         return []
 
 
 synonym_filter = token_filter(
-    'synonym_filter',
-    'synonym',
-    synonyms=get_synonyms()
+    "synonym_filter", "synonym", synonyms=get_synonyms()
 )
 
 synonym_analyzer = analyzer(
-    'synonym_analyzer',
-    type='custom',
-    tokenizer='standard',
-    filter=[
-        synonym_filter,
-        'lowercase'
-    ])
+    "synonym_analyzer",
+    type="custom",
+    tokenizer="standard",
+    filter=[synonym_filter, "lowercase"],
+)
 
 
 def environment_specific_index(base_name):
     env = settings.DEPLOY_ENVIRONMENT
-    if not env or env.lower() in ('local', 'production'):
+    if not env or env.lower() in ("local", "production"):
         return base_name
     else:
-        return f'{env}-{base_name}'.lower()
+        return f"{env}-{base_name}".lower()
 
 
 class ElasticsearchTestsMixin:
@@ -104,10 +115,10 @@ class ElasticsearchTestsMixin:
         try:
             socket.create_connection((settings.ES_HOST, settings.ES_PORT))
         except OSError as e:  # pragma: nocover
-            if os.getenv('GITHUB_ACTIONS'):
+            if os.getenv("GITHUB_ACTIONS"):
                 raise
 
-            raise SkipTest('Cannot connect to local Elasticsearch') from e
+            raise SkipTest("Cannot connect to local Elasticsearch") from e
 
         # The django-elasticsearch-dsl package we use to interface with
         # Elasticsearch does not currently provide a way to make indexing
@@ -123,12 +134,11 @@ class ElasticsearchTestsMixin:
         from elasticsearch.helpers import bulk as original_bulk
 
         def bulk_with_refresh(*args, **kwargs):
-            kwargs.setdefault('refresh', True)
+            kwargs.setdefault("refresh", True)
             return original_bulk(*args, **kwargs)
 
         cls.patched_es_bulk = patch(
-            'django_elasticsearch_dsl.documents.bulk',
-            new=bulk_with_refresh
+            "django_elasticsearch_dsl.documents.bulk", new=bulk_with_refresh
         )
         cls.patched_es_bulk.start()
 
@@ -149,16 +159,15 @@ class ElasticsearchTestsMixin:
 
         """
         call_command(
-            'search_index',
-            action='rebuild',
+            "search_index",
+            action="rebuild",
             force=True,
             models=models,
-            stdout=stdout
+            stdout=stdout,
         )
 
 
 class WagtailSignalProcessor(BaseSignalProcessor):
-
     def handle_delete(self, sender, instance, **kwargs):
         """Handle delete.
         Given an individual model instance, delete the object from index.

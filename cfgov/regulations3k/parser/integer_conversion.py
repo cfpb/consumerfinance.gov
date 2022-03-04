@@ -11,7 +11,7 @@ def roman_to_int(roman):
 
     if not isinstance(roman, type("")):
         return
-    nums = {'m': 1000, 'd': 500, 'c': 100, 'l': 50, 'x': 10, 'v': 5, 'i': 1}
+    nums = {"m": 1000, "d": 500, "c": 100, "l": 50, "x": 10, "v": 5, "i": 1}
     total = 0
     for i in range(len(roman)):
         try:
@@ -34,16 +34,28 @@ def int_to_roman(num):
         raise TypeError("Expected integer, got {}".format(type(num)))
     if num < 1 or num > 3999:
         raise ValueError("Argument must be between 1 and 3999")
-    int_values = (1000, 900, 500, 400, 100, 90, 50, 40,
-                  10, 9, 5, 4, 1)
-    numerals = ('m', 'cm', 'd', 'cd', 'c', 'xc', 'l', 'xl',
-                'x', 'ix', 'v', 'iv', 'i')
+    int_values = (1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    numerals = (
+        "m",
+        "cm",
+        "d",
+        "cd",
+        "c",
+        "xc",
+        "l",
+        "xl",
+        "x",
+        "ix",
+        "v",
+        "iv",
+        "i",
+    )
     result = []
     for i in range(len(int_values)):
         count = int(num / int_values[i])
         result.append(numerals[i] * count)
         num -= int_values[i] * count
-    return ''.join(result)
+    return "".join(result)
 
 
 def alpha_to_int(alpha):
@@ -53,7 +65,7 @@ def alpha_to_int(alpha):
     which starts at 27.
     """
     letters = string.ascii_lowercase
-    if not isinstance(alpha, type('')):
+    if not isinstance(alpha, type("")):
         return
     if not (alpha.islower() or alpha.isupper()):
         """Handle lowercase or uppercase double letters, but not a mix."""
@@ -78,6 +90,5 @@ def int_to_alpha(num):
 
 
 LETTER_CODES = {
-    "{}".format(i + 1000): int_to_alpha(i).upper()
-    for i in list(range(1, 31))
+    "{}".format(i + 1000): int_to_alpha(i).upper() for i in list(range(1, 31))
 }
