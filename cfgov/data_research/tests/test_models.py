@@ -7,7 +7,7 @@ from django.http import HttpRequest
 from model_bakery import baker
 
 from data_research.models import (
-    County, CountyMortgageData, MetroArea, MortgageBase, MortgageDataConstant,
+    County, CountyMortgageData, MetroArea, MortgageDataConstant,
     MortgageMetaData, MortgagePerformancePage, MSAMortgageData,
     NationalMortgageData, NonMSAMortgageData, State, StateMortgageData
 )
@@ -254,7 +254,7 @@ class GeoValidationTests(django.test.TestCase):
 class MortgageBaseCountiesTest(unittest.TestCase):
     def test_bare_mortgage_base_counties(self):
         """No county_list should be applied to county data records."""
-        base = MortgageBase()
+        base = CountyMortgageData()
         self.assertEqual(base.county_list, [])
 
 

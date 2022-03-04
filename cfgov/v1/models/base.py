@@ -1,7 +1,6 @@
 import re
 
 from django.contrib.auth.models import User
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import F, Value
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -9,7 +8,7 @@ from django.template.response import TemplateResponse
 from django.utils import timezone, translation
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
@@ -103,7 +102,7 @@ class CFGOVPage(Page):
         + 'Use division acronyms only.',
         related_name='cfgov_content_owners')
 
-    schema_json = JSONField(
+    schema_json = models.JSONField(
         null=True,
         blank=True,
         verbose_name='Schema JSON',
