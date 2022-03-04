@@ -33,6 +33,7 @@ from teachers_digital_platform.molecules import TdpSearchHeroImage
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage, CFGOVPageManager
 
+
 # facet name, (facet class, is-nested)
 FACET_MAP = (
     ("building_block", (ActivityBuildingBlock, False)),

@@ -1,5 +1,6 @@
 from permissions_viewer import views
 
+
 try:
     from django.urls import re_path
 except ImportError:

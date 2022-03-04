@@ -19,6 +19,7 @@ from django import forms
 
 from teachers_digital_platform.forms import SurveyForm, markup
 
+
 # If True, all the best scoring answers will be auto-selected.
 PREFILL_ANSWERS = False
 

@@ -15,6 +15,7 @@ from teachers_digital_platform.views import (
     view_results,
 )
 
+
 _time = 1623518461
 
 

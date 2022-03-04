@@ -16,6 +16,7 @@ from data_research.models import (
     StateMortgageData,
 )
 
+
 DAYS_LATE_RANGE = ["30-89", "90"]
 
 

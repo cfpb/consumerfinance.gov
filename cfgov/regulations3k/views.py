@@ -7,6 +7,7 @@ from dateutil import parser
 from regulations3k.forms import SearchForm
 from regulations3k.models import EffectiveVersion
 
+
 # Mapping of document number to effective date
 VERSION_MAP = {
     "1002": {

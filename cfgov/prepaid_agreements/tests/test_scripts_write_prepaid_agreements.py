@@ -9,6 +9,7 @@ from prepaid_agreements.scripts.write_prepaid_agreements_data_to_csv import (
     write_agreements_data,
 )
 
+
 S3_PATH = "https://files.consumerfinance.gov/a/assets/prepaid-agreements/"
 
 

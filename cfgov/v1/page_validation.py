@@ -6,6 +6,7 @@ from wagtail.core.blocks import RawHTMLBlock
 
 from v1.tests.wagtail_pages.helpers import save_page
 
+
 HTTP_IMAGE_TAG_REGEX = r'<img[^>]*\ src=\\?\\?"(http://[^"]+)\\?\\?"'
 
 

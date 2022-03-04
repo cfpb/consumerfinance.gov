@@ -10,6 +10,7 @@ from django.utils.formats import date_format
 
 from wagtail.core.models import PageRevision
 
+
 User = get_user_model()
 
 

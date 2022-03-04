@@ -1,5 +1,6 @@
 from jobmanager.models import City, Office, Region, State
 
+
 REGIONS = (
     ("MW", "Midwest region"),
     ("NE", "Northeast region"),

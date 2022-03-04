@@ -7,6 +7,7 @@ from data_research.mortgage_utilities.fips_meta import (
     load_fips_meta,
 )
 
+
 logger = logging.getLogger(__name__)
 
 NON_STATE_FIPS = NON_STATES.values()

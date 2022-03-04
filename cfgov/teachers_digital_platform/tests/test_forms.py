@@ -5,6 +5,7 @@ from django.test import TestCase
 from teachers_digital_platform.forms import SharedUrlForm, SurveyForm, markup
 from teachers_digital_platform.UrlEncoder import UrlEncoder
 
+
 _key = "3-5"
 _scores = [0, 10, 15]
 _time = 1623518461

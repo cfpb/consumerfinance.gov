@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from flags.urls import flagged_re_path
 from privacy.views import GetDisclosureConsentForm, GetRecordsAccessForm
 
+
 urlpatterns = [
     flagged_re_path(
         "PRIVACY_FORMS",

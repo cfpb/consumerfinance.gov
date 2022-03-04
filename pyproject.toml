@@ -13,7 +13,8 @@ extend-exclude = '''
 [tool.isort]
 profile = "black"
 line_length = 79
-skip = [".tox", "migrations"]
+lines_after_imports = 2
+skip = [".tox", "migrations", ".venv", "venv"]
 known_django = ["django"]
 known_wagtail = ["wagtail", "wagtailsharing"]
 known_first_party = [

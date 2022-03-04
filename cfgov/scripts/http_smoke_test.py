@@ -6,6 +6,7 @@ import time
 
 import requests
 
+
 logger = logging.getLogger("http_smoke_tests")
 logger.setLevel(logging.FATAL)
 shell_log = logging.StreamHandler()

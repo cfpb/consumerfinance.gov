@@ -1,6 +1,7 @@
 # flake8: noqa: B950
 from hmda.models.hmda_data_file import HmdaDataFile
 
+
 # Access this using HMDA_DATA_FILES[geo][field_descriptions][records]
 LOAN_FILE_METADATA = {
     "nationwide": {

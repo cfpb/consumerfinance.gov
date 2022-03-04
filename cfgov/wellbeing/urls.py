@@ -1,6 +1,7 @@
 from core.views import TranslatedTemplateView
 from wellbeing.views import ResultsView
 
+
 try:
     from django.urls import re_path
 except ImportError:

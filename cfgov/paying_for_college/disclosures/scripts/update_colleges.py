@@ -27,6 +27,7 @@ from paying_for_college.models import (
     School,
 )
 
+
 logger = logging.getLogger(__name__)
 
 DATESTAMP = datetime.datetime.now().strftime("%Y-%m-%d")

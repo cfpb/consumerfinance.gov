@@ -7,6 +7,7 @@ from dateutil import parser
 from regulations3k.models import EffectiveVersion, Part
 from regulations3k.parser.patterns import title_pattern
 
+
 CFR_TITLE = "12"
 CFR_CHAPTER = "X"
 FR_date_query = (

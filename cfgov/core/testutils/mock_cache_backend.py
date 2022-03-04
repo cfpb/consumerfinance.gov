@@ -1,5 +1,6 @@
 from wagtail.contrib.frontend_cache.backends import BaseBackend
 
+
 CACHE_PURGED_URLS = []
 
 

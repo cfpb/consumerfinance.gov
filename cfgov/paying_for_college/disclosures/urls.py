@@ -13,6 +13,7 @@ from paying_for_college.views import (
     school_autocomplete,
 )
 
+
 app_name = "disclosures"
 
 urlpatterns = [

@@ -9,6 +9,7 @@ from treemodeladmin.helpers import TreeButtonHelper
 from treemodeladmin.options import TreeModelAdmin
 from treemodeladmin.views import TreeViewParentMixin
 
+
 try:
     from django.urls import re_path
 except ImportError:

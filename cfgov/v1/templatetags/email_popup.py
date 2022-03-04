@@ -5,6 +5,7 @@ from django.utils.safestring import mark_safe
 
 from flags.state import flag_enabled
 
+
 register = template.Library()
 
 

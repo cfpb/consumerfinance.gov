@@ -1,5 +1,6 @@
 from paying_for_college.models import Notification, Program
 
+
 error_msg = (
     "The only purge arguments that can be passed "
     "are 'notifications', 'programs' and 'test-programs'"

@@ -24,6 +24,7 @@ from data_research.mortgage_utilities.s3_utils import (
     bake_csv_to_s3,
 )
 
+
 NATION_QUERYSET = NationalMortgageData.objects.all()
 STATES_TO_IGNORE = ["72"]  # Excluding Puerto Rico from project launch
 

@@ -7,6 +7,7 @@ from django.core.management.base import BaseCommand
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_changes
 
+
 logger = logging.getLogger(__name__)
 
 

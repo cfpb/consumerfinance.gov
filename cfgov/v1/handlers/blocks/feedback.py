@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from v1.forms import FeedbackForm, ReferredFeedbackForm, SuggestionFeedbackForm
 from v1.handlers import Handler
 
+
 FEEDBACK_TYPES = {
     "helpful": FeedbackForm,
     "referred": ReferredFeedbackForm,

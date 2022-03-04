@@ -4,6 +4,7 @@ from django import template
 from django.contrib.staticfiles import finders
 from django.utils.safestring import mark_safe
 
+
 register = template.Library()
 
 

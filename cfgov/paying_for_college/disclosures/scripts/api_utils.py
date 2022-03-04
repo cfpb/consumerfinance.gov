@@ -16,6 +16,7 @@ import os
 
 import requests
 
+
 API_KEY = os.getenv("ED_API_KEY", "")
 API_ROOT = "https://api.data.gov/ed/collegescorecard/v1"
 SCHOOLS_ROOT = "{}/schools.json".format(API_ROOT)

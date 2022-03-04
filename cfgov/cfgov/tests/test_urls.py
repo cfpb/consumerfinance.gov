@@ -6,6 +6,7 @@ from django.test import RequestFactory, TestCase, override_settings
 
 from cfgov import urls
 
+
 try:
     from django.urls import URLPattern, URLResolver, re_path
 except ImportError:

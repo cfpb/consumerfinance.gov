@@ -7,6 +7,7 @@ from jobmanager.models import (
     ServiceType,
 )
 
+
 APPLICANT_TYPES = [
     {
         "title": "Open to the public",

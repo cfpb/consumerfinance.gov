@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 from v1.models.enforcement_action_page import EnforcementActionPage
 
+
 HEADINGS = [
     "Title",
     "Content",

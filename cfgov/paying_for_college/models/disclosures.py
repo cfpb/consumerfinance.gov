@@ -11,6 +11,7 @@ from django.db import models
 
 import requests
 
+
 # Our database has fake schools for demo purposes
 # They should be discoverable via search and API calls, but should be excluded
 # from cohort calculations and from College Scorecard API updates.

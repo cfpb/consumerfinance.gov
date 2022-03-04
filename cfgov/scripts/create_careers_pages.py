@@ -7,6 +7,7 @@ from wagtail.core.models import Page, Site
 from v1.models import BrowsePage, LandingPage, SublandingPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 
+
 logger = logging.getLogger(__name__)
 
 

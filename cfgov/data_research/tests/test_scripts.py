@@ -60,6 +60,7 @@ from data_research.scripts.update_county_msa_meta import (
     update_state_to_geo_meta,
 )
 
+
 STARTING_DATE = datetime.date(2008, 1, 1)
 THROUGH_DATE = datetime.date(2016, 12, 1)
 

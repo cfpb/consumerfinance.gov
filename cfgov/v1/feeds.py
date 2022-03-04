@@ -4,6 +4,7 @@ from django.contrib.syndication.views import Feed
 
 import pytz
 
+
 eastern = pytz.timezone("US/Eastern")
 
 

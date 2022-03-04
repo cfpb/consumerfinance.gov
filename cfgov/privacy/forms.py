@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.utils.html import escape
 
+
 # Form input attributes for Design System compatibility.
 # Technique copied from data_research/forms.py
 #

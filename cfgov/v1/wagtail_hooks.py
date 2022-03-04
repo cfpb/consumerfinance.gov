@@ -39,6 +39,7 @@ from v1.template_debug import (
 from v1.util import util
 from v1.views.reports import DocumentsReportView, PageMetadataReportView
 
+
 try:
     from django.urls import re_path
 except ImportError:

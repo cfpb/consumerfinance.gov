@@ -10,6 +10,7 @@ import login.utils as password_policy
 
 from v1.models import PasswordHistoryItem
 
+
 PASSWORD_RULES = [
     [r".{12,}", "Minimum allowed length is 12 characters"],
     [r"[A-Z]", "must include at least one capital letter"],

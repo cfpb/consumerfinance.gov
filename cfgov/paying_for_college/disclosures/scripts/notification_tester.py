@@ -4,6 +4,7 @@ import requests
 
 from paying_for_college.models import Contact
 
+
 # urls
 BIN = "https://httpbin.org/"
 BINPOST = "https://httpbin.org/post"

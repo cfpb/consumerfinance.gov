@@ -2,6 +2,7 @@ from django.contrib import admin
 
 import retirement_api.urls
 
+
 try:
     from django.urls import include, re_path
 except ImportError:

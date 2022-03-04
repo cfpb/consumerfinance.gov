@@ -2,6 +2,7 @@ from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.html import urlize
 
+
 register = template.Library()
 
 

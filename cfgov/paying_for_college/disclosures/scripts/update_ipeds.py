@@ -15,6 +15,7 @@ import requests
 from paying_for_college.models import Alias, School
 from paying_for_college.views import get_school
 
+
 SCRIPT = os.path.basename(__file__).partition(".")[0]
 PFC_ROOT = Path(__file__).resolve().parents[2]
 

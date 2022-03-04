@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.core.signing import BadSignature, Signer
 from django.utils.translation import gettext_lazy as _
 
+
 EXTERNAL_URL_ALLOWLIST_RAW = getattr(settings, "EXTERNAL_URL_ALLOWLIST", ())
 EXTERNAL_URL_ALLOWLIST = [
     re.compile(regex) for regex in EXTERNAL_URL_ALLOWLIST_RAW

@@ -35,6 +35,7 @@ from paying_for_college.models import (
     School,
 )
 
+
 COLLEGE_ROOT = "{}/paying_for_college".format(settings.PROJECT_ROOT)
 
 

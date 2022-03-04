@@ -5,6 +5,7 @@ except ImportError:
 
 from agreements.views import index, issuer_search
 
+
 urlpatterns = [
     re_path(r"^$", index, name="agreements_home"),
     re_path(

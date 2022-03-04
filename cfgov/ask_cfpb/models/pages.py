@@ -40,6 +40,7 @@ from v1.models import (
 )
 from v1.models.snippets import ReusableText
 
+
 REUSABLE_TEXT_TITLES = {
     "about_us": {
         "en": "About us (For consumers)",

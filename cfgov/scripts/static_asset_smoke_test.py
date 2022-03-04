@@ -8,6 +8,7 @@ import time
 import requests
 from bs4 import BeautifulSoup as bs
 
+
 logger = logging.getLogger("static_asset_smoke_tests")
 logger.setLevel(logging.ERROR)
 shell_log = logging.StreamHandler()

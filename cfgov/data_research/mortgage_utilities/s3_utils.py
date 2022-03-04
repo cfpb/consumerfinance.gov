@@ -7,6 +7,7 @@ from django.conf import settings
 import boto3
 import requests
 
+
 # bake_to_s3 functions require S3 secrets to be stored in the env
 BASE_BUCKET = settings.AWS_STORAGE_BUCKET_NAME
 MORTGAGE_SUB_BUCKET = "data/mortgage-performance"

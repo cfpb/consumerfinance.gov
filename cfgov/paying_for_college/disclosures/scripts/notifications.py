@@ -6,6 +6,7 @@ from django.utils import timezone
 
 from paying_for_college.models import Notification
 
+
 INTRO = (
     "Notification failures \n"
     "Notification delivery failed for the following offer IDs:\n\n"

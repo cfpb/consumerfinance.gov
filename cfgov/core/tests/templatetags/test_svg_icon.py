@@ -6,6 +6,7 @@ from django.utils.safestring import SafeData
 
 from core.templatetags.svg_icon import SVG_REGEX, svg_icon
 
+
 VALID_SVG = (
     '<svg width="100" height="100">\n'
     '  <circle cx="50" cy="50" r="40" stroke="green" fill="yellow" />\n'

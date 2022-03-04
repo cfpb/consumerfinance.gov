@@ -25,6 +25,7 @@ from regulations3k.parser.patterns import (
 from regulations3k.parser.payload import CFR_TITLE, PayLoad
 from regulations3k.parser.regtable import RegTable
 
+
 logger = logging.getLogger(__name__)
 
 # eCFR globals

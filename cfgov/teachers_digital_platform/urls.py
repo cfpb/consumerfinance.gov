@@ -6,6 +6,7 @@ from wagtailsharing.views import ServeView
 
 from teachers_digital_platform import views
 
+
 _tdp = "teachers_digital_platform"
 
 urlpatterns = [

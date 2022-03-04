@@ -5,6 +5,7 @@ import django
 
 from .base import *
 
+
 if sys.version_info[0] < 3:
     raise Exception(
         "Python 2 is no longer supported. "

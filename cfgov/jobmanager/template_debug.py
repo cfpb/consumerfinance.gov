@@ -1,5 +1,6 @@
 from datetime import date
 
+
 atlanta_ga = {"name": "Atlanta", "state_id": "GA"}
 boston_ma = {"name": "Boston", "state_id": "MA"}
 chicago_il = {"name": "Chicago", "state_id": "IL"}

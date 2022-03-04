@@ -6,6 +6,7 @@ import re
 from regulations3k.models import Part, Section
 from regulations3k.scripts.ecfr_importer import PART_ALLOWLIST
 
+
 REG_BASE = "/rules-policy/regulations/{}/"
 SECTION_RE = re.compile(r"(?:§|Section|12 CFR)\W+([^\s]+)")
 PARTS_RE = re.compile(
