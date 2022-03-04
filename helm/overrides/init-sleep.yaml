@@ -1,0 +1,5 @@
+initContainer:
+  command:
+    - "sleep"
+  args:
+    - "infinity"

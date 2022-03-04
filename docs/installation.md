@@ -11,20 +11,27 @@ This quickstart requires a working Docker Desktop installation and git:
     cd consumerfinance.gov
     ```
 
-- [Set up and run the Docker containers](#set-up-and-run-the-docker-containers):
+- One of the following runtimes:
+  - [Set up and run the Docker containers via docker-compose](#set-up-and-run-the-docker-containers):
 
-    ```sh
-    docker-compose up
+      ```sh
+      docker-compose up
+      ```
+  
+  - [Set up and run the Docker containers via Kubernetes via Helm](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
+
+    ```shell
+    ./build-images.sh && ./helm-install.sh
     ```
 
-    This may take some time, as it will also
-    [load initial data](#load-initial-data)
-    and
-    [build the frontend](#build-the-frontend).
+This may take some time, as it will also 
+[load initial data](#load-initial-data) 
+and 
+[build the frontend](#build-the-frontend).
 
 consumerfinance.gov should now be available at <http://localhost:8000>.
 
-This documentation will be available at <http://localhost:8888>.
+This documentation will be available at <http://localhost:8888> (docker-compose only).
 
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
@@ -51,9 +58,12 @@ git clone git@github.com:cfpb/consumerfinance.gov.git
 cd consumerfinance.gov
 ```
 
-You may also wish to fork the repository on GitHub and clone the resultant
-personal fork. This is advised if you are going to be doing development on
-`consumerfinance.gov` and contributing to the project.
+Configure `.git-blame-ignore-revs` by running the following command within
+the repository:
+
+```sh
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
 
 ### Set up the environment (optional)
 
@@ -105,6 +115,24 @@ Once activated, our Python CI requirements can be installed in the virtualenv:
 ```sh
 pip install -r requirements/ci.txt
 ```
+
+### Install pre-commit
+We use `pre-commit` to automatically run our linting tools before a commit 
+takes place. These tools consist of `black`, `flake8`, and `isort`. To install 
+`pre-commit`, running the following commands from within the 
+`consumerfinance.gov` directory:
+
+```sh
+pip install -U pre-commit && pre-commit install
+```
+
+Before each commit, `pre-commit` will execute and run our `pre-commit` checks.
+If any task fails, it will attempt to resolve the issue automatically, notify 
+you of the changes (if any), and ask for you to re-stage the changed files. If 
+all checks pass, a commit will take place as expected, allowing you to then 
+push to GitHub. This is to reduce the number of commits with failed lints, and
+to assist developers with linting without thinking.
+
 
 ### Install our private fonts (optional)
 
@@ -180,13 +208,20 @@ yarn run gulp build
 
 consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
 We use
-[`docker-compose`](https://docs.docker.com/compose/)
+[`docker-compose`](https://docs.docker.com/compose/) or 
+[Kubernetes](https://kubernetes.io/) via [Helm](https://helm.sh/)
 to run these services along side the consumerfinance.gov Django site.
 
 To build and run our Docker containers for the first time, run:
 
+#### docker-compose:
 ```sh
 docker-compose up
+```
+
+#### Kubernetes via Helm:
+```shell
+./build-images.sh && ./helm-install.sh
 ```
 
 This will build and start our PostgreSQL, Elasticsearch, Python, and

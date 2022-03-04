@@ -1,12 +1,13 @@
 import copy
 from collections import OrderedDict
 
-from django.contrib.postgres.fields import JSONField
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 
 from wagtail.admin.edit_handlers import (
-    ObjectList, StreamFieldPanel, TabbedInterface
+    ObjectList,
+    StreamFieldPanel,
+    TabbedInterface,
 )
 from wagtail.core.fields import StreamField
 
@@ -14,11 +15,18 @@ from elasticsearch_dsl import Q
 
 from teachers_digital_platform.documents import ActivityPageDocument
 from teachers_digital_platform.models.django import (
-    ActivityAgeRange, ActivityBloomsTaxonomyLevel, ActivityBuildingBlock,
-    ActivityCouncilForEconEd, ActivityDuration, ActivityGradeLevel,
-    ActivityJumpStartCoalition, ActivitySchoolSubject,
-    ActivityStudentCharacteristics, ActivityTeachingStrategy, ActivityTopic,
-    ActivityType
+    ActivityAgeRange,
+    ActivityBloomsTaxonomyLevel,
+    ActivityBuildingBlock,
+    ActivityCouncilForEconEd,
+    ActivityDuration,
+    ActivityGradeLevel,
+    ActivityJumpStartCoalition,
+    ActivitySchoolSubject,
+    ActivityStudentCharacteristics,
+    ActivityTeachingStrategy,
+    ActivityTopic,
+    ActivityType,
 )
 from teachers_digital_platform.models.pages import ActivityPage
 from teachers_digital_platform.molecules import TdpSearchHeroImage
@@ -28,76 +36,83 @@ from v1.models import CFGOVPage, CFGOVPageManager
 
 # facet name, (facet class, is-nested)
 FACET_MAP = (
-    ('building_block', (ActivityBuildingBlock, False)),
-    ('school_subject', (ActivitySchoolSubject, False)),
-    ('topic', (ActivityTopic, True)),
-    ('grade_level', (ActivityGradeLevel, False)),
-    ('age_range', (ActivityAgeRange, False)),
-    ('student_characteristics', (ActivityStudentCharacteristics, False)),
-    ('activity_type', (ActivityType, False)),
-    ('teaching_strategy', (ActivityTeachingStrategy, False)),
-    ('blooms_taxonomy_level', (ActivityBloomsTaxonomyLevel, False)),
-    ('activity_duration', (ActivityDuration, False)),
-    ('jump_start_coalition', (ActivityJumpStartCoalition, False)),
-    ('council_for_economic_education', (ActivityCouncilForEconEd, False)),
+    ("building_block", (ActivityBuildingBlock, False)),
+    ("school_subject", (ActivitySchoolSubject, False)),
+    ("topic", (ActivityTopic, True)),
+    ("grade_level", (ActivityGradeLevel, False)),
+    ("age_range", (ActivityAgeRange, False)),
+    ("student_characteristics", (ActivityStudentCharacteristics, False)),
+    ("activity_type", (ActivityType, False)),
+    ("teaching_strategy", (ActivityTeachingStrategy, False)),
+    ("blooms_taxonomy_level", (ActivityBloomsTaxonomyLevel, False)),
+    ("activity_duration", (ActivityDuration, False)),
+    ("jump_start_coalition", (ActivityJumpStartCoalition, False)),
+    ("council_for_economic_education", (ActivityCouncilForEconEd, False)),
 )
 FACET_LIST = [tup[0] for tup in FACET_MAP]
 FACET_DICT = {"aggs": {}}
 for facet in FACET_LIST:
-    FACET_DICT["aggs"].update({
-        "{}_terms".format(facet): {"terms": {"field": facet}}
-    })
-ALWAYS_EXPANDED = {'building_block', 'topic', 'school_subject'}
+    FACET_DICT["aggs"].update(
+        {"{}_terms".format(facet): {"terms": {"field": facet}}}
+    )
+ALWAYS_EXPANDED = {"building_block", "topic", "school_subject"}
 SEARCH_FIELDS = [
-    'text',
-    'related_text',
-    'title',
-    'big_idea',
-    'essential_questions',
-    'objectives',
-    'what_students_will_do'
+    "text",
+    "related_text",
+    "title",
+    "big_idea",
+    "essential_questions",
+    "objectives",
+    "what_students_will_do",
 ]
 
 
 class ActivityIndexPage(CFGOVPage):
     """A model for the Activity Search page."""
 
-    subpage_types = ['teachers_digital_platform.ActivityPage']
+    subpage_types = ["teachers_digital_platform.ActivityPage"]
 
     objects = CFGOVPageManager()
 
-    header = StreamField([
-        ('text_introduction', molecules.TextIntroduction()),
-        ('notification', molecules.Notification()),
-    ], blank=True)
+    header = StreamField(
+        [
+            ("text_introduction", molecules.TextIntroduction()),
+            ("notification", molecules.Notification()),
+        ],
+        blank=True,
+    )
 
-    header_sidebar = StreamField([
-        ('image', TdpSearchHeroImage()),
-    ], blank=True)
+    header_sidebar = StreamField(
+        [
+            ("image", TdpSearchHeroImage()),
+        ],
+        blank=True,
+    )
 
     results = {}
     activity_setups = None
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel('header'),
-        StreamFieldPanel('header_sidebar'),
+        StreamFieldPanel("header"),
+        StreamFieldPanel("header_sidebar"),
     ]
 
-    edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='General Content'),
-        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar/Footer'),
-        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
-    ])
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading="General Content"),
+            ObjectList(CFGOVPage.sidefoot_panels, heading="Sidebar/Footer"),
+            ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
+        ]
+    )
 
     @classmethod
     def can_create_at(cls, parent):
         # You can only create one of these!
-        return super().can_create_at(parent) \
-            and not cls.objects.exists()
+        return super().can_create_at(parent) and not cls.objects.exists()
 
     def get_template(self, request):
-        template = 'teachers_digital_platform/activity_index_page.html'
-        if 'partial' in request.GET:
-            template = 'teachers_digital_platform/activity_search_facets_and_results.html'  # noqa: E501
+        template = "teachers_digital_platform/activity_index_page.html"
+        if "partial" in request.GET:
+            template = "teachers_digital_platform/activity_search_facets_and_results.html"  # noqa: B950
         return template
 
     def dsl_search(self, request, *args, **kwargs):
@@ -106,34 +121,34 @@ class ActivityIndexPage(CFGOVPage):
         selected_facets = {}
         card_setup = self.activity_setups.ordered_cards
         total_activities = len(card_setup)
-        search_query = request.GET.get('q', '')
+        search_query = request.GET.get("q", "")
         facet_called = any(
-            [request.GET.get(facet, '') for facet in FACET_LIST]
+            [request.GET.get(facet, "") for facet in FACET_LIST]
         )
         # If there's no query or facet request, we can return cached setups:
         if not search_query and not facet_called:
             payload = {
-                'search_query': search_query,
-                'results': list(card_setup.values()),
-                'total_results': total_activities,
-                'total_activities': total_activities,
-                'selected_facets': selected_facets,
-                'all_facets': all_facets,
-                'expanded_facets': ALWAYS_EXPANDED,
+                "search_query": search_query,
+                "results": list(card_setup.values()),
+                "total_results": total_activities,
+                "total_activities": total_activities,
+                "selected_facets": selected_facets,
+                "all_facets": all_facets,
+                "expanded_facets": ALWAYS_EXPANDED,
             }
             self.results = payload
             results_per_page = validate_results_per_page(request)
-            paginator = Paginator(payload['results'], results_per_page)
+            paginator = Paginator(payload["results"], results_per_page)
             current_page = validate_page_number(request, paginator)
             paginated_page = paginator.page(current_page)
             context_update = {
-                'facets': all_facets,
-                'activities': paginated_page,
-                'total_results': total_activities,
-                'results_per_page': results_per_page,
-                'current_page': current_page,
-                'paginator': paginator,
-                'show_filters': bool(selected_facets),
+                "facets": all_facets,
+                "activities": paginated_page,
+                "total_results": total_activities,
+                "results_per_page": results_per_page,
+                "current_page": current_page,
+                "paginator": paginator,
+                "show_filters": bool(selected_facets),
             }
             return context_update
 
@@ -143,68 +158,70 @@ class ActivityIndexPage(CFGOVPage):
             for term in terms:
                 dsl_search = dsl_search.query(
                     "bool",
-                    must=Q("multi_match", query=term, fields=SEARCH_FIELDS)
+                    must=Q("multi_match", query=term, fields=SEARCH_FIELDS),
                 )
         else:
-            dsl_search = dsl_search.sort('-date')
-        for facet, facet_config in FACET_MAP:
+            dsl_search = dsl_search.sort("-date")
+        for facet, _ in FACET_MAP:
             if facet in request.GET and request.GET.get(facet):
                 facet_ids = [
-                    value for value in request.GET.getlist(facet)
+                    value
+                    for value in request.GET.getlist(facet)
                     if value.isdigit()
                 ]
                 selected_facets[facet] = facet_ids
         for facet, pks in selected_facets.items():
             dsl_search = dsl_search.query(
-                "bool",
-                should=[Q("match", **{facet: pk}) for pk in pks]
+                "bool", should=[Q("match", **{facet: pk}) for pk in pks]
             )
         facet_search = dsl_search.update_from_dict(FACET_DICT)
         total_results = dsl_search.count()
         dsl_search = dsl_search[:total_results]
         response = dsl_search.execute()
-        results = [
-            card_setup[str(hit.id)] for hit in response[:total_results]
-        ]
+        results = [card_setup[str(hit.id)] for hit in response[:total_results]]
         facet_response = facet_search.execute()
-        facet_counts = {facet: getattr(
-            facet_response.aggregations, f"{facet}_terms").buckets
-            for facet in FACET_LIST}
+        facet_counts = {
+            facet: getattr(
+                facet_response.aggregations, f"{facet}_terms"
+            ).buckets
+            for facet in FACET_LIST
+        }
         all_facets = parse_dsl_facets(
             all_facets, facet_counts, selected_facets
         )
         payload = {
-            'search_query': search_query,
-            'results': results,
-            'total_results': total_results,
-            'total_activities': total_activities,
-            'selected_facets': selected_facets,
-            'all_facets': all_facets,
+            "search_query": search_query,
+            "results": results,
+            "total_results": total_results,
+            "total_activities": total_activities,
+            "selected_facets": selected_facets,
+            "all_facets": all_facets,
         }
         # List all facet blocks that need to be expanded
         conditionally_expanded = {
-            facet_name for facet_name, facet_items in all_facets.items()
-            if any(
-                facet['selected'] is True for facet in facet_items
-            )
+            facet_name
+            for facet_name, facet_items in all_facets.items()
+            if any(facet["selected"] is True for facet in facet_items)
         }
         expanded_facets = ALWAYS_EXPANDED.union(set(conditionally_expanded))
-        payload.update({
-            'expanded_facets': expanded_facets,
-        })
+        payload.update(
+            {
+                "expanded_facets": expanded_facets,
+            }
+        )
         self.results = payload
         results_per_page = validate_results_per_page(request)
-        paginator = Paginator(payload['results'], results_per_page)
+        paginator = Paginator(payload["results"], results_per_page)
         current_page = validate_page_number(request, paginator)
         paginated_page = paginator.page(current_page)
         context_update = {
-            'facets': all_facets,
-            'activities': paginated_page,
-            'total_results': total_results,
-            'results_per_page': results_per_page,
-            'current_page': current_page,
-            'paginator': paginator,
-            'show_filters': bool(selected_facets),
+            "facets": all_facets,
+            "activities": paginated_page,
+            "total_results": total_results,
+            "results_per_page": results_per_page,
+            "current_page": current_page,
+            "paginator": paginator,
+            "show_filters": bool(selected_facets),
         }
         return context_update
 
@@ -222,41 +239,41 @@ class ActivityIndexPage(CFGOVPage):
 
 def parse_dsl_facets(all_facets, facet_counts, selected_facets):
     for facet, facet_config in FACET_MAP:
-        returned_facet_ids = [hit['key'] for hit in facet_counts[facet]]
+        returned_facet_ids = [hit["key"] for hit in facet_counts[facet]]
         is_nested = facet_config[1]
-        selections = selected_facets.get(facet, '')
+        selections = selected_facets.get(facet, "")
         if is_nested:
             for pi, parent in enumerate(all_facets[facet]):
-                if parent['id'] in selections:
-                    parent['selected'] = True
-                    parent['child_selected'] = True
-                    for i, child in enumerate(parent['children']):
-                        child['selected'] = True
+                if parent["id"] in selections:
+                    parent["selected"] = True
+                    parent["child_selected"] = True
+                    for _, child in enumerate(parent["children"]):
+                        child["selected"] = True
                 else:
-                    for i, child in enumerate(parent['children']):
-                        if selections and child['id'] in selections:
-                            child['selected'] = True
-                            parent['child_selected'] = True
+                    for _, child in enumerate(parent["children"]):
+                        if selections and child["id"] in selections:
+                            child["selected"] = True
+                            parent["child_selected"] = True
                 all_facets[facet][pi].update(parent)
             for pi, parent in enumerate(all_facets[facet]):
-                for child in parent['children']:
-                    if child['id'] not in returned_facet_ids:
-                        parent['children'].remove(child)
+                for child in parent["children"]:
+                    if child["id"] not in returned_facet_ids:
+                        parent["children"].remove(child)
                 all_facets[facet][pi].update(parent)
             for parent in all_facets[facet]:
-                if not parent['children']:
+                if not parent["children"]:
                     all_facets[facet].remove(parent)
         else:
             for i, flat_facet in enumerate(all_facets[facet]):
-                flat_id = flat_facet['id']
+                flat_id = flat_facet["id"]
                 if selections and flat_id in selections:
-                    flat_facet['selected'] = True
+                    flat_facet["selected"] = True
                     all_facets[facet][i].update(flat_facet)
             for flat_facet in all_facets[facet]:
-                flat_id = flat_facet['id']
+                flat_id = flat_facet["id"]
                 if (
-                        flat_id not in returned_facet_ids
-                        and flat_id not in selections
+                    flat_id not in returned_facet_ids
+                    and flat_id not in selections
                 ):
                     all_facets[facet].remove(flat_facet)
     return all_facets
@@ -278,10 +295,13 @@ def default_nested_facets(class_object):
         child_setups = []
         for child in parent.children.exclude(activitypage=None):
             _child_setup = copy.copy(default_attrs)
-            _child_setup.update({
-                "id": str(child.id),
-                "title": child.title,
-                "parent": str(child.parent_id)})
+            _child_setup.update(
+                {
+                    "id": str(child.id),
+                    "title": child.title,
+                    "parent": str(child.parent_id),
+                }
+            )
             child_setups.append(_child_setup)
         parent_setup["children"] = child_setups
         setup.append(parent_setup)
@@ -290,11 +310,7 @@ def default_nested_facets(class_object):
 
 def default_flat_facets(class_object):
     return [
-        {
-            "selected": False,
-            "id": str(obj.id),
-            "title": obj.title
-        }
+        {"selected": False, "id": str(obj.id), "title": obj.title}
         for obj in class_object.objects.all()
     ]
 
@@ -302,9 +318,9 @@ def default_flat_facets(class_object):
 class ActivitySetUp(models.Model):
     """A database cache of form setups for TDP activities."""
 
-    card_setup = JSONField(blank=True, null=True)
-    card_order = JSONField(blank=True, null=True)
-    facet_setup = JSONField(blank=True, null=True)
+    card_setup = models.JSONField(blank=True, null=True)
+    card_order = models.JSONField(blank=True, null=True)
+    facet_setup = models.JSONField(blank=True, null=True)
 
     def __str__(self):
         return "Cached activity facets and cards"
@@ -323,53 +339,51 @@ class ActivitySetUp(models.Model):
         _card_setup = {}
         # The information needed for displaying each result of a query
         facet_fields = (
-            'school_subject',
-            'grade_level',
-            'age_range',
-            'student_characteristics',
-            'activity_type',
-            'teaching_strategy',
-            'blooms_taxonomy_level',
-            'jump_start_coalition',
-            'council_for_economic_education',
+            "school_subject",
+            "grade_level",
+            "age_range",
+            "student_characteristics",
+            "activity_type",
+            "teaching_strategy",
+            "blooms_taxonomy_level",
+            "jump_start_coalition",
+            "council_for_economic_education",
         )
         base_query = ActivityPage.objects.filter(live=True).order_by(
-            '-date', 'title'
+            "-date", "title"
         )
         self.card_order = [a.pk for a in base_query]
         for activity in base_query:
             payload = {
-                'url': activity.url,
-                'title': activity.title,
-                'date': activity.date.strftime("%b %d, %Y"),
-                'date_attr': activity.date.strftime("%Y-%m-%d"),
-                'ideal_for': ", ".join([
-                    gl.title for gl in activity.grade_level.all()
-                ]),
-                'summary': activity.summary,
-                'topic': activity.get_topics_list(),
-                'activity_duration': activity.activity_duration.title,
-                'available_in_spanish': activity.activity_type.filter(
-                    title='Available in Spanish'
+                "url": activity.url,
+                "title": activity.title,
+                "date": activity.date.strftime("%b %d, %Y"),
+                "date_attr": activity.date.strftime("%Y-%m-%d"),
+                "ideal_for": ", ".join(
+                    [gl.title for gl in activity.grade_level.all()]
+                ),
+                "summary": activity.summary,
+                "topic": activity.get_topics_list(),
+                "activity_duration": activity.activity_duration.title,
+                "available_in_spanish": activity.activity_type.filter(
+                    title="Available in Spanish"
                 ).exists(),
-                'building_block': [
-                    {'title': blk.title, 'svg_icon': blk.svg_icon}
+                "building_block": [
+                    {"title": blk.title, "svg_icon": blk.svg_icon}
                     for blk in activity.building_block.all()
-                ]
+                ],
             }
             for field in facet_fields:
                 facet_queryset = getattr(activity, field).all()
-                payload.update({
-                    field: [obj.title for obj in facet_queryset]
-                })
+                payload.update({field: [obj.title for obj in facet_queryset]})
             _card_setup.update({str(activity.pk): payload})
         self.card_setup = _card_setup
 
     @property
     def ordered_cards(self):
-        return OrderedDict({
-            str(pk): self.card_setup[str(pk)] for pk in self.card_order
-        })
+        return OrderedDict(
+            {str(pk): self.card_setup[str(pk)] for pk in self.card_order}
+        )
 
     def update_setups(self):
         self.update_facets()
@@ -395,8 +409,8 @@ def validate_results_per_page(request):
     This should catch an invalid number of results and always return
     a valid number of results, defaulting to 5.
     """
-    raw_results = request.GET.get('results')
-    if raw_results in ['10', '25', '50']:
+    raw_results = request.GET.get("results")
+    if raw_results in ["10", "25", "50"]:
         return int(raw_results)
     else:
         return 5
@@ -409,7 +423,7 @@ def validate_page_number(request, paginator):
     This should catch invalid page numbers and always return
     a valid page number, defaulting to 1.
     """
-    raw_page = request.GET.get('page', 1)
+    raw_page = request.GET.get("page", 1)
     try:
         page_number = int(raw_page)
     except ValueError:

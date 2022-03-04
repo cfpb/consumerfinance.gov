@@ -14,7 +14,6 @@ from v1.models.filterable_list_mixins import FilterableListMixin
 
 
 class TestFilterableListMixin(TestCase):
-
     def setUp(self):
         self.mixin = FilterableListMixin()
         self.factory = RequestFactory()
@@ -22,8 +21,7 @@ class TestFilterableListMixin(TestCase):
     # FilterableListMixin.filterable_per_page_limit tests
     def test_per_page_limit_returns_integer(self):
         self.assertIsInstance(
-            FilterableListMixin.filterable_per_page_limit,
-            int
+            FilterableListMixin.filterable_per_page_limit, int
         )
 
     def test_get_form_data_returns_GET_data(self):
@@ -38,12 +36,12 @@ class TestFilterableListMixin(TestCase):
 
     # FilterableListMixin.get_context tests
     def test_get_context_raises_exception_for_super_obj_has_no_get_context(
-        self
+        self,
     ):
         self.assertRaises(
             AttributeError,
             self.mixin.get_context,
-            request=self.factory.get("/")
+            request=self.factory.get("/"),
         )
 
     @mock.patch("v1.models.filterable_list_mixins.Paginator")
@@ -96,20 +94,18 @@ class FilterableListContextTestCase(ElasticsearchTestsMixin, TestCase):
         self.home_page.add_child(instance=self.filterable_page)
         self.page = BlogPage(title="Child test page", live=True)
         self.archived_page = BlogPage(
-            title="Archive test page",
-            live=True,
-            is_archived='yes'
+            title="Archive test page", live=True, is_archived="yes"
         )
         self.filterable_page.add_child(instance=self.page)
         self.filterable_page.add_child(instance=self.archived_page)
 
-        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
+        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
     def test_get_context_has_archived_posts(self):
         context = self.filterable_page.get_context(
             request=self.factory.get("/test/")
         )
-        self.assertTrue(context['has_archived_posts'])
+        self.assertTrue(context["has_archived_posts"])
 
     @override_settings(
         FLAGS={"HIDE_ARCHIVE_FILTER_OPTIONS": [("boolean", True)]}
@@ -118,11 +114,10 @@ class FilterableListContextTestCase(ElasticsearchTestsMixin, TestCase):
         context = self.filterable_page.get_context(
             request=self.factory.get("/test/")
         )
-        self.assertFalse(context['has_archived_posts'])
+        self.assertFalse(context["has_archived_posts"])
 
 
 class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
-
     def setUp(self):
         self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")
         self.root = Site.objects.get(is_default_site=True).root_page
@@ -135,40 +130,36 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
         )
         self.filterable_page.add_child(instance=self.page)
 
-        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
+        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
     def test_index_route(self):
         response = self.client.get("/test/")
         self.assertEqual(
-            response.context_data["filter_data"]["page_set"][0].title,
-            "Test"
+            response.context_data["filter_data"]["page_set"][0].title, "Test"
         )
 
     def test_feed_route(self):
         response = self.client.get("/test/feed/")
         self.assertEqual(
-            response["content-type"],
-            "application/rss+xml; charset=utf-8"
+            response["content-type"], "application/rss+xml; charset=utf-8"
         )
 
 
 class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
-
     def setUp(self):
         self.filter_controls = filter_controls
 
         self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")
         self.root = Site.objects.get(is_default_site=True).root_page
         self.root.add_child(instance=self.filterable_page)
+        self.filterable_page.save_revision().publish()
 
         self.set_filterable_controls(filter_controls)
 
         self.child_page = BlogPage(title="Child test page", live=True)
         self.sibling_page = BlogPage(title="Sibling test page", live=True)
         self.archived_sibling_page = BlogPage(
-            title="Archive test page",
-            live=True,
-            is_archived='yes'
+            title="Archive test page", live=True, is_archived="yes"
         )
         self.filterable_page.add_child(instance=self.child_page)
         self.filterable_page.get_parent().add_child(instance=self.sibling_page)
@@ -176,18 +167,16 @@ class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
             instance=self.archived_sibling_page
         )
 
-        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
+        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
     def set_filterable_controls(self, value):
         self.filterable_page.content = StreamValue(
-            self.filterable_page.content.stream_block,
-            [value],
-            True
+            self.filterable_page.content.stream_block, [value], True
         )
         self.filterable_page.save()
 
     def test_get_filterable_children_pages(self):
-        filter_controls['value']['filter_children'] = True
+        filter_controls["value"]["filter_children"] = True
         self.set_filterable_controls(self.filter_controls)
 
         filterable_search = self.filterable_page.get_filterable_search()
@@ -197,8 +186,20 @@ class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
         self.assertEqual("/test/", self.filterable_page.get_filterable_root())
 
     def test_get_filterable_root_site_wide(self):
-        filter_controls['value']['filter_children'] = False
+        filter_controls["value"]["filter_children"] = False
         self.set_filterable_controls(self.filter_controls)
 
         root = self.filterable_page.get_filterable_root()
         self.assertEqual("/", root)
+
+    def test_cache_tag_applied(self):
+        response = self.client.get(self.filterable_page.url)
+        self.assertEqual(
+            response.get("Edge-Cache-Tag"), self.filterable_page.slug
+        )
+
+    def test_cache_tag_applied_to_feed(self):
+        response = self.client.get(self.filterable_page.url + "feed/")
+        self.assertEqual(
+            response.get("Edge-Cache-Tag"), self.filterable_page.slug
+        )

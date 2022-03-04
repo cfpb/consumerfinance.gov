@@ -1,11 +1,7 @@
 export class ConsumerComplaints {
 
-  click( name ) {
-    cy.get( '.m-list_link' ).contains( name ).click();
-  }
-
   clickTab( name ) {
-    cy.get( `.${ name }` ).click();
+    cy.get( `button.${ name }` ).click();
   }
 
   clickDateRange( name ) {

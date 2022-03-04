@@ -16,12 +16,9 @@ from v1.models.browse_filterable_page import BrowseFilterablePage
 
 
 class InactiveUsersTestCase(ElasticsearchTestsMixin, TestCase):
-
     def setUp(self):
         self.filterable_page = BrowseFilterablePage(
-            title="Blog",
-            slug="test",
-            live=True
+            title="Blog", slug="test", live=True
         )
         self.url_path = self.filterable_page.url
 
@@ -32,26 +29,26 @@ class InactiveUsersTestCase(ElasticsearchTestsMixin, TestCase):
             title="Page published in 2017",
             live=True,
             first_published_at=datetime.datetime(2017, 1, 1, tzinfo=pytz.UTC),
-            last_published_at=datetime.datetime(2020, 1, 1, tzinfo=pytz.UTC)
+            last_published_at=datetime.datetime(2020, 1, 1, tzinfo=pytz.UTC),
         )
         self.page2 = BlogPage(
             title="Page published in 2019",
             live=True,
             first_published_at=datetime.datetime(2018, 1, 1, tzinfo=pytz.UTC),
-            last_published_at=datetime.datetime(2018, 1, 1, tzinfo=pytz.UTC)
+            last_published_at=datetime.datetime(2018, 1, 1, tzinfo=pytz.UTC),
         )
         self.page3 = BlogPage(
             title="Page published in 2019",
             live=True,
             first_published_at=datetime.datetime(2019, 1, 1, tzinfo=pytz.UTC),
-            last_published_at=datetime.datetime(2019, 1, 1, tzinfo=pytz.UTC)
+            last_published_at=datetime.datetime(2019, 1, 1, tzinfo=pytz.UTC),
         )
         self.page4 = BlogPage(
             title="Page in archived in 2020",
             live=True,
             is_archived="yes",
             first_published_at=datetime.datetime(2020, 1, 1, tzinfo=pytz.UTC),
-            last_published_at=datetime.datetime(2020, 1, 1, tzinfo=pytz.UTC)
+            last_published_at=datetime.datetime(2020, 1, 1, tzinfo=pytz.UTC),
         )
 
         self.filterable_page.add_child(instance=self.page1)
@@ -60,7 +57,7 @@ class InactiveUsersTestCase(ElasticsearchTestsMixin, TestCase):
         self.filterable_page.add_child(instance=self.page4)
 
         self.stdout = StringIO()
-        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
+        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
     def test_archive_bad_path_errors(self):
         with self.assertRaises(CommandError):

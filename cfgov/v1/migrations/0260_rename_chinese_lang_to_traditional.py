@@ -2,6 +2,7 @@
 
 from django.db import migrations, models
 
+
 def migrate_language_fn(from_lang, to_lang):
     def migrate_language(apps, schema_editor):
         CFGOVPage = apps.get_model('v1', 'CFGOVPage')

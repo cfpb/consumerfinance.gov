@@ -10,10 +10,13 @@ from model_bakery import baker
 
 from teachers_digital_platform.models import ActivityPage, ActivitySetUp
 from v1.models import (
-    BlogPage, CFGOVPage, CFGOVPageCategory, NewsroomLandingPage, NewsroomPage,
-    SublandingFilterablePage
+    BlogPage,
+    CFGOVPage,
+    CFGOVPageCategory,
+    NewsroomLandingPage,
+    NewsroomPage,
+    SublandingFilterablePage,
 )
-from v1.models.browse_filterable_page import NEWSROOM_CACHE_TAG
 from v1.signals import invalidate_filterable_list_caches
 
 
@@ -25,10 +28,10 @@ class UserSaveTestCase(TestCase):
         return user
 
     def test_user_save_new_password_makes_history_item(self):
-        user = self.make_user(password='foo')
+        user = self.make_user(password="foo")
         first_phi = user.passwordhistoryitem_set.latest()
 
-        user.set_password('bar')
+        user.set_password("bar")
         user.save()
         new_phi = user.passwordhistoryitem_set.latest()
 
@@ -36,23 +39,23 @@ class UserSaveTestCase(TestCase):
         self.assertEqual(user.password, new_phi.encrypted_password)
 
     def test_user_save_new_password_not_expired(self):
-        user = self.make_user(password='foo')
-        user.set_password('bar')
+        user = self.make_user(password="foo")
+        user.set_password("bar")
         user.save()
 
         new_phi = user.passwordhistoryitem_set.latest()
         self.assertGreater(new_phi.expires_at, timezone.now())
 
     def test_user_save_new_password_locks_password(self):
-        user = self.make_user(password='foo')
-        user.set_password('bar')
+        user = self.make_user(password="foo")
+        user.set_password("bar")
         user.save()
 
         new_phi = user.passwordhistoryitem_set.latest()
         self.assertGreater(new_phi.locked_until, timezone.now())
 
     def test_user_save_same_password_no_history_item(self):
-        user = self.make_user(password='foo')
+        user = self.make_user(password="foo")
         first_phi = user.passwordhistoryitem_set.latest()
 
         user.save()
@@ -62,92 +65,81 @@ class UserSaveTestCase(TestCase):
         self.assertEqual(user.password, new_phi.encrypted_password)
 
     def test_user_created_expires_password(self):
-        user = self.make_user(password='foo')
+        user = self.make_user(password="foo")
         first_phi = user.passwordhistoryitem_set.latest()
         self.assertLess(first_phi.expires_at, timezone.now())
 
     def test_user_created_unlocks_password(self):
-        user = self.make_user(password='foo')
+        user = self.make_user(password="foo")
         first_phi = user.passwordhistoryitem_set.latest()
         self.assertLess(first_phi.locked_until, timezone.now())
 
     def test_superuser_created_does_not_expire_password(self):
-        user = self.make_user(password='foo', is_superuser=True)
+        user = self.make_user(password="foo", is_superuser=True)
         first_phi = user.passwordhistoryitem_set.latest()
         self.assertGreater(first_phi.expires_at, timezone.now())
 
     def test_superuser_created_unlocks_password(self):
-        user = self.make_user(password='foo', is_superuser=True)
+        user = self.make_user(password="foo", is_superuser=True)
         first_phi = user.passwordhistoryitem_set.latest()
         self.assertLess(first_phi.locked_until, timezone.now())
 
 
 class FilterableListInvalidationTestCase(TestCase):
-
     def setUp(self):
         self.root_page = Site.objects.first().root_page
 
-        self.filterable_list_page = SublandingFilterablePage(
-            title='Blog'
-        )
+        self.filterable_list_page = SublandingFilterablePage(title="Blog")
         self.root_page.add_child(instance=self.filterable_list_page)
         self.filterable_list_page.save()
 
-        self.category_filterable_list_page = NewsroomLandingPage(
-            title="News"
-        )
+        self.category_filterable_list_page = NewsroomLandingPage(title="News")
         self.root_page.add_child(instance=self.category_filterable_list_page)
         self.category_filterable_list_page.save()
         self.newsroom_page = NewsroomPage(title="News event")
         self.category_filterable_list_page.add_child(
-            instance=self.newsroom_page)
+            instance=self.newsroom_page
+        )
         self.newsroom_page.save()
 
-        self.blog_page = BlogPage(title='test blog')
+        self.blog_page = BlogPage(title="test blog")
         self.filterable_list_page.add_child(instance=self.blog_page)
-        self.blog_page.categories.add(CFGOVPageCategory(name='op-ed'))
+        self.blog_page.categories.add(CFGOVPageCategory(name="op-ed"))
         self.blog_page.save()
 
-        self.non_filterable_page = CFGOVPage(title='Page')
+        self.non_filterable_page = CFGOVPage(title="Page")
         self.root_page.add_child(instance=self.non_filterable_page)
         self.non_filterable_page.save()
 
-    @mock.patch('v1.signals.AkamaiBackend.purge_by_tags')
-    def test_invalidate_newsroom_by_cache_tag(self, mock_purge):
-        self.newsroom_page.save_revision().publish()
-        self.assertTrue(mock_purge.called_with(NEWSROOM_CACHE_TAG))
-
-    @mock.patch('v1.signals.PurgeBatch')
-    @mock.patch('v1.signals.cache')
+    @mock.patch("v1.signals.AkamaiBackend.purge_by_tags")
+    @mock.patch("v1.signals.cache")
     def test_invalidate_filterable_list_caches(
-        self, mock_cache, mock_purge_batch,
+        self,
+        mock_cache,
+        mock_purge,
     ):
         invalidate_filterable_list_caches(None, instance=self.blog_page)
 
         for cache_key_prefix in (
             self.filterable_list_page.get_cache_key_prefix(),
-            self.category_filterable_list_page.get_cache_key_prefix()
+            self.category_filterable_list_page.get_cache_key_prefix(),
         ):
             mock_cache.delete.assert_any_call(
                 f"{cache_key_prefix}-all_filterable_results"
             )
-            mock_cache.delete.assert_any_call(
-                f"{cache_key_prefix}-page_ids"
-            )
-            mock_cache.delete.assert_any_call(
-                f"{cache_key_prefix}-topics"
-            )
-            mock_cache.delete.assert_any_call(
-                f"{cache_key_prefix}-authors"
-            )
+            mock_cache.delete.assert_any_call(f"{cache_key_prefix}-page_ids")
+            mock_cache.delete.assert_any_call(f"{cache_key_prefix}-topics")
+            mock_cache.delete.assert_any_call(f"{cache_key_prefix}-authors")
 
-        mock_purge_batch().add_page.assert_any_call(self.filterable_list_page)
+        mock_purge.assert_called_once()
+        self.assertIn(
+            self.filterable_list_page.slug, mock_purge.mock_calls[0].args[0]
+        )
 
-    @mock.patch('django.core.cache.cache')
+    @mock.patch("django.core.cache.cache")
     def test_invalidate_filterable_list_caches_does_nothing(self, mock_cache):
         invalidate_filterable_list_caches(
-            None,
-            instance=self.non_filterable_page
+            None, instance=self.non_filterable_page
         )
         mock_cache.delete.assert_not_called()
 
@@ -193,7 +185,7 @@ class RefreshActivitiesTestCase(DjangoTestCase):
         self.assertTrue(ActivitySetUp.objects.exists())
         self.assertIn(
             str(self.activity_page.pk),
-            ActivitySetUp.objects.first().card_setup
+            ActivitySetUp.objects.first().card_setup,
         )
         self.assertEqual(len(ActivitySetUp.objects.first().card_setup), 1)
 
@@ -203,8 +195,7 @@ class RefreshActivitiesTestCase(DjangoTestCase):
         self.assertEqual(len(ActivitySetUp.objects.first().card_setup), 2)
         for page in [self.activity_page, self.activity_page2]:
             self.assertIn(
-                str(page.pk),
-                ActivitySetUp.objects.first().card_setup
+                str(page.pk), ActivitySetUp.objects.first().card_setup
             )
 
     def test_upublish(self):

@@ -14,6 +14,17 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+#commad:
+#  - "./docker-entrypoint.sh"
+#args:
+#  - "some arg"
+
+initContainer:
+  command:
+    - "./docker-entrypoint.sh"
+#  args:
+#    - "./cfgov/manage.py search_index --rebuild -f --parallel"
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

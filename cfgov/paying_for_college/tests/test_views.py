@@ -11,11 +11,21 @@ from django.urls import reverse
 from model_bakery import baker
 
 from paying_for_college.models import (
-    ConstantCap, ConstantRate, Program, School
+    ConstantCap,
+    ConstantRate,
+    Program,
+    School,
 )
 from paying_for_college.views import (
-    EXPENSE_FILE, Feedback, format_constants, get_json_file, get_program,
-    get_program_length, get_school, validate_oid, validate_pid
+    EXPENSE_FILE,
+    Feedback,
+    format_constants,
+    get_json_file,
+    get_program,
+    get_program_length,
+    get_school,
+    validate_oid,
+    validate_pid,
 )
 
 
@@ -87,8 +97,8 @@ class TestViews(django.test.TestCase):
         response = self.client.get(
             reverse("paying_for_college:disclosures:pfc-feedback")
         )
-        self.assertIn('form', response.context_data)
-        self.assertIn('url_root', response.context_data)
+        self.assertIn("form", response.context_data)
+        self.assertIn("url_root", response.context_data)
 
     def test_feedback_post_creates_feedback(self):
         self.assertFalse(Feedback.objects.exists())
@@ -138,31 +148,27 @@ class SchoolProgramTest(django.test.TestCase):
 
 
 class ConstantsTest(django.test.TestCase):
-
     def setUp(self):
         self.dl_origination_fee = baker.make(
             ConstantRate,
             name="DL origination fee",
             slug="DLOriginationFee",
-            value=Decimal('0.01057')
+            value=Decimal("0.01057"),
         )
         self.perkins_rate = baker.make(
             ConstantRate,
             name="Perkins rate",
             slug="perkinsRate",
-            value=Decimal('0.05000')
+            value=Decimal("0.05000"),
         )
         self.year_value = baker.make(
             ConstantCap,
             name="Constants year",
             slug="constantsYear",
-            value=2020
+            value=2020,
         )
         self.pell_cap = baker.make(
-            ConstantCap,
-            name="Pell cap",
-            slug="pellCap",
-            value=9293
+            ConstantCap, name="Pell cap", slug="pellCap", value=9293
         )
 
     def test_format_constants(self):

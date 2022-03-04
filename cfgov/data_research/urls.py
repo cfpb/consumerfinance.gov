@@ -1,7 +1,10 @@
 from django.urls import re_path
 
 from data_research.views import (
-    MapData, MetaData, TimeSeriesData, TimeSeriesNational
+    MapData,
+    MetaData,
+    TimeSeriesData,
+    TimeSeriesNational,
 )
 
 
@@ -17,7 +20,7 @@ urlpatterns = [
         name="data_research_api_mortgage_timeseries_national",
     ),
     re_path(
-        r"^map-data/(?P<days_late>[3890-]*)/(?P<geo>[a-z]*)/(?P<year_month>\d{4}-\d{2})/?$",  # noqa: E501
+        r"^map-data/(?P<days_late>[3890-]*)/(?P<geo>[a-z]*)/(?P<year_month>\d{4}-\d{2})/?$",  # noqa: B950
         MapData.as_view(),
         name="data_research_api_mortgage_mapdata",
     ),

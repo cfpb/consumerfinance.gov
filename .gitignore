@@ -79,6 +79,11 @@ __pycache__/
 #########
 .python-version
 
+# virtual envs #
+################
+.venv/
+venv/
+
 # Front-End #
 #############
 bower_components/

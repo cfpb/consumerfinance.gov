@@ -19,21 +19,27 @@ This quickstart requires a working Docker Desktop installation and git:
     git clone https://github.com/cfpb/consumerfinance.gov.git
     cd consumerfinance.gov
     ```
+- One of the following runtimes:
+  - [Set up and run the Docker containers via docker-compose](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
 
-- [Set up and run the Docker containers](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
+      ```shell
+      docker-compose up
+      ```
+  - [Set up and run the Docker containers via Kubernetes via Helm](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
 
-    ```shell
-    docker-compose up
-    ```
+      ```shell
+      ./build-images.sh && ./helm-install.sh
+      ```
 
-    This may take some time, as it will also
-    [load initial data](https://cfpb.github.io/consumerfinance.gov/installation/#load-initial-data)
-    and
-    [build the frontend](https://cfpb.github.io/consumerfinance.gov/installation/#build-the-frontend).
+
+  This may take some time, as it will also
+  [load initial data](https://cfpb.github.io/consumerfinance.gov/installation/#load-initial-data)
+  and
+  [build the frontend](https://cfpb.github.io/consumerfinance.gov/installation/#build-the-frontend).
 
 consumerfinance.gov should now be available at <http://localhost:8000>.
 
-Our documentation will be available at <http://localhost:8888>.
+Our documentation will be available at <http://localhost:8888> (docker-compose only).
 
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.

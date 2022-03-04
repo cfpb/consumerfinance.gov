@@ -6,15 +6,15 @@ boto3==1.7.80
 dj-database-url==0.5.0
 djangorestframework==3.11.2
 django-cors-headers==3.9.0
-django-csp==3.4
+django-csp==3.7
 django-elasticsearch-dsl==7.1.4
 django-extensions==2.1.3
-django-flags==5.0.4
+django-flags==5.0.8
 django-formtools==2.3
 django-health-check==3.16.5
 django-localflavor==2.2
-django-mptt==0.9.0
-django-storages==1.7.1
+django-mptt==0.12.0
+django-storages==1.11.1
 django-treebeard==4.2.0
 django-url-or-relative-url-field==0.1.2
 django-watchman==0.15.0
@@ -37,13 +37,16 @@ requests_toolbelt==0.8.0
 urllib3==1.26.5
 wagtail-autocomplete==0.6.3
 wagtail-flags==5.1.0
-wagtail-inventory==1.2.0
+wagtail-inventory==1.4
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.5.1
 wagtail-treemodeladmin==1.5.0
 wagtailmedia==0.6.0
 
 # These packages are installed from GitHub.
-https://github.com/cfpb/owning-a-home-api/releases/download/0.17.1/owning_a_home_api-0.17.1-py3-none-any.whl
-https://github.com/cfpb/ccdb5-api/releases/download/1.6.5/ccdb5_api-1.6.5-py3-none-any.whl
-https://github.com/cfpb/curriculum-review-tool/releases/download/2.1.4/crtool-2.1.4-py3-none-any.whl
+https://github.com/cfpb/owning-a-home-api/releases/download/0.17.2/owning_a_home_api-0.17.2-py3-none-any.whl
+https://github.com/cfpb/ccdb5-api/releases/download/1.6.6/ccdb5_api-1.6.6-py3-none-any.whl
+https://github.com/cfpb/curriculum-review-tool/releases/download/2.1.6/crtool-2.1.6-py3-none-any.whl
+
+# Temporarily pin Jinja 2.11's MarkupSafe dependency.
+MarkupSafe==2.0.1

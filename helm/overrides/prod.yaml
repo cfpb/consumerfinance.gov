@@ -1,26 +1,57 @@
 image:
   tag: prod
 
-# Must redefine local.yaml volumes since this is an array
+initContainer:
+  args:
+    - "./cfgov/manage.py"
+    - "search_index"
+    - "--rebuild"
+    - "-f"
+    - "--parallel"
+
+extraEnvs:
+  - name: ALLOW_ADMIN_URL
+    value: "True"
+  - name: APACHE_UPLOADS_F_ALIAS
+    value: "/src/consumerfinance.gov/cfgov/f/"
+  - name: DJANGO_ADMIN_USERNAME
+    value: "admin"
+  - name: DJANGO_ADMIN_PASSWORD
+    value: "admin"
+  - name: SECRET_KEY
+    value: "abcdefghijklmnopqrstuvwxyz"
+  - name: MEDIA_ROOT
+    value: "/src/consumerfinance.gov/cfgov/f/"
+  - name: WATCHMAN_TOKENS
+    value: "token"
+  - name: APACHE_STATUS_ALLOW_FROM
+    value: "127.0.0.1"
+
 volumes:
-  - name: code
+  - name: entrypoint
     volume:
       hostPath:
-        path: ${PROJECT_DIR}
-        type: Directory
-    mountPath: /src/consumerfinance.gov
-  - name: dev-env
-    volume:
-      hostPath:
-        path: ${PROJECT_DIR}/.env
+        path: ${PROJECT_DIR}/docker-entrypoint.sh
         type: File
-    mountPath: /src/consumerfinance.gov/.env
-  - name: extend-env
-    volume:
-      hostPath:
-        path: ${PROJECT_DIR}/extend-environment.sh
-        type: File
-    mountPath: /src/consumerfinance.gov/extend-environment.sh
+    mountPath: /src/consumerfinance.gov/docker-entrypoint.sh
+#  - name: code
+#    volume:
+#      hostPath:
+#        path: ${PROJECT_DIR}
+#        type: Directory
+#    mountPath: /src/consumerfinance.gov
+#  - name: dev-env
+#    volume:
+#      hostPath:
+#        path: ${PROJECT_DIR}/.env
+#        type: File
+#    mountPath: /src/consumerfinance.gov/.env
+#  - name: extend-env
+#    volume:
+#      hostPath:
+#        path: ${PROJECT_DIR}/extend-environment.sh
+#        type: File
+#    mountPath: /src/consumerfinance.gov/extend-environment.sh
   - name: apache-conf
     volume:
       hostPath:

@@ -16,21 +16,19 @@ class EmailApplicationLink(Orderable, models.Model):
     description = models.TextField(null=True, blank=True)
 
     job_listing = ParentalKey(
-        JobListingPage,
-        related_name='email_application_links'
+        JobListingPage, related_name="email_application_links"
     )
 
     panels = [
-        FieldPanel('address'),
-        FieldPanel('label'),
-        FieldPanel('description'),
+        FieldPanel("address"),
+        FieldPanel("label"),
+        FieldPanel("description"),
     ]
 
     @property
     def mailto_link(self):
-        return 'mailto:{0}?subject=Application for Position: {1}'.format(
-            self.address,
-            urlquote(self.job_listing.title)
+        return "mailto:{0}?subject=Application for Position: {1}".format(
+            self.address, urlquote(self.job_listing.title)
         )
 
 
@@ -40,34 +38,32 @@ class USAJobsApplicationLink(Orderable, models.Model):
     applicant_type = models.ForeignKey(
         ApplicantType,
         on_delete=models.CASCADE,
-        related_name='usajobs_application_links',
+        related_name="usajobs_application_links",
     )
 
     job_listing = ParentalKey(
-        JobListingPage,
-        related_name='usajobs_application_links'
+        JobListingPage, related_name="usajobs_application_links"
     )
 
     panels = [
-        FieldPanel('announcement_number'),
-        FieldPanel('url'),
-        FieldPanel('applicant_type'),
+        FieldPanel("announcement_number"),
+        FieldPanel("url"),
+        FieldPanel("applicant_type"),
     ]
 
 
 class GradePanel(Orderable, models.Model):
     grade = models.ForeignKey(
-        Grade,
-        on_delete=models.CASCADE,
-        related_name='grade_panels')
-    job_listing = ParentalKey(JobListingPage, related_name='grades')
+        Grade, on_delete=models.CASCADE, related_name="grade_panels"
+    )
+    job_listing = ParentalKey(JobListingPage, related_name="grades")
 
     def __str__(self):
         return str(self.grade)
 
     class Meta:
-        ordering = ('grade',)
+        ordering = ("grade",)
 
     panels = [
-        FieldPanel('grade'),
+        FieldPanel("grade"),
     ]

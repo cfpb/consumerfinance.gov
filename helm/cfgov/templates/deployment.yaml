@@ -31,7 +31,16 @@ spec:
         - name: {{ .Chart.Name }}-migrations
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["./docker-entrypoint.sh"]
+          command:
+            {{- range .Values.initContainer.command }}
+            - {{ . | quote }}
+            {{- end }}
+          {{- if .Values.initContainer.args }}
+          args:
+            {{- range .Values.initContainer.args }}
+            - {{ . | quote }}
+            {{- end }}
+          {{- end }}
           volumeMounts:
             {{- range .Values.volumes }}
             - mountPath: {{ .mountPath }}
@@ -64,13 +73,28 @@ spec:
               value: elasticsearch-master
               {{- end }}
             {{- end }}
-            {{- toYaml .Values.extraEnvs | nindent 12 }}
+            {{- range .Values.extraEnvs }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.command }}
+          command:
+            {{- range .Values.command }}
+            - {{ . | quote }}
+            {{- end }}
+          {{- end }}
+          {{ if .Values.args }}
+          args:
+            {{- range .Values.args }}
+            - {{ . | quote }}
+            {{- end }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 8000
@@ -91,6 +115,8 @@ spec:
               name: {{ .name }}
             {{- end }}
           env:
+            - name: APACHE_PORT
+              value: "8000"
             - name: RUN_MIGRATIONS
               value: "false"
             {{- if .Values.postgresql.enabled }}
@@ -113,7 +139,10 @@ spec:
               value: elasticsearch-master
               {{- end }}
             {{- end }}
-            {{- toYaml .Values.extraEnvs | nindent 12 }}
+            {{- range .Values.extraEnvs }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
