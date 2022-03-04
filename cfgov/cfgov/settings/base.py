@@ -132,7 +132,7 @@ WAGTAILSEARCH_BACKENDS = {
     # search with the custom search_fields defined on our models is available
     # with the "fulltext" backend defined below.
     'default': {
-        'BACKEND': 'wagtail.search.backends.database',
+        'BACKEND': 'wagtail.search.backends.db',
     },
     'fulltext': {
         'BACKEND': 'wagtail.search.backends.database',
