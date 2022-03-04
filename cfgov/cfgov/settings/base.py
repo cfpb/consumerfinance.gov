@@ -57,7 +57,6 @@ INSTALLED_APPS = (
     "wagtail.contrib.routable_page",
     "wagtail.contrib.modeladmin",
     "wagtail.contrib.table_block",
-    "wagtail.contrib.postgres_search",
     "localflavor",
     "modelcluster",
     "taggit",
