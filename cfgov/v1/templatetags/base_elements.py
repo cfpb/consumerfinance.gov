@@ -34,9 +34,7 @@ register = template.Library()
 
 def _render_jinja_template(template_name, context):
     html = render_to_string(
-        template_name,
-        context=context.flatten(),
-        using='wagtail-env'
+        template_name, context=context.flatten(), using="wagtail-env"
     )
 
     return mark_safe(html)
@@ -44,14 +42,14 @@ def _render_jinja_template(template_name, context):
 
 @register.simple_tag(takes_context=True)
 def include_header(context):
-    return _render_jinja_template('v1/header.html', context)
+    return _render_jinja_template("v1/header.html", context)
 
 
 @register.simple_tag(takes_context=True)
 def include_footer(context):
-    return _render_jinja_template('v1/footer.html', context)
+    return _render_jinja_template("v1/footer.html", context)
 
 
 @register.simple_tag(takes_context=True)
 def include_modernizr(context):
-    return _render_jinja_template('v1/modernizr.html', context)
+    return _render_jinja_template("v1/modernizr.html", context)

@@ -74,8 +74,8 @@ tox
 ```
 
 Tox runs different isolated Python environments with different versions of dependencies.
-We use it to lint our Python files, check out import sorting, and run unit tests
-in both Python 3.6 and Python 3.8.
+We use it to format and lint our Python files, check out import sorting, and run unit tests
+in Python 3.8.
 You can select specific environments using `-e`.
 
 Running `tox` by itself is the same as running:
@@ -106,6 +106,18 @@ tox -e unittest regulations3k.tests.test_regdown
 If you would like to skip running Django migrations when testing, set the
 `SKIP_DJANGO_MIGRATIONS` environment variable to any value before running `tox`.
 
+
+### Formatting
+We use `black` to autoformat our Python code. `black` is invoked by Tox using 
+the `lint` environment (this will also run `flake8` and `isort`):
+
+```sh
+tox -e lint
+```
+
+**It is highly recommended to only invoke black via tox**
+
+
 ### Linting
 
 We use the `flake8` and `isort` tools to ensure compliance with
@@ -114,7 +126,8 @@ We use the `flake8` and `isort` tools to ensure compliance with
 and the
 [CFPB Python style guide](https://github.com/cfpb/development/blob/main/standards/python.md#linting).
 
-Both `flake8` and `isort` can be run using the Tox `lint` environment:
+Both `flake8` and `isort` can be run using the Tox `lint` environment (this 
+will also run `black`):
 
 ```sh
 tox -e lint

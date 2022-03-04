@@ -16,19 +16,24 @@ from core.decorators import akamai_no_store
 from teachers_digital_platform.forms import SharedUrlForm
 from teachers_digital_platform.resultsContent import ResultsContent
 from teachers_digital_platform.surveys import (
-    AVAILABLE_SURVEYS, ChoiceList, Question, get_survey
+    AVAILABLE_SURVEYS,
+    ChoiceList,
+    Question,
+    get_survey,
 )
 from teachers_digital_platform.UrlEncoder import UrlEncoder
 from v1.models import SublandingPage
 
 
-_tdp = 'teachers_digital_platform'
+_tdp = "teachers_digital_platform"
 _gradeSelectionPagePk = 15596
 
 
-def _find_grade_selection_url(request: Optional[HttpRequest],
-                              default='../../../assess/survey/',
-                              page_class=SublandingPage):
+def _find_grade_selection_url(
+    request: Optional[HttpRequest],
+    default="../../../assess/survey/",
+    page_class=SublandingPage,
+):
     """
     Get URL of the survey grade selection page from Wagtail
     """
@@ -45,7 +50,8 @@ class SurveyWizard(NamedUrlCookieWizardView):
     """
     High level component representing the full multi-page form.
     """
-    survey_key = ''
+
+    survey_key = ""
 
     def done(self, form_list, **kwargs):
         """
@@ -55,7 +61,8 @@ class SurveyWizard(NamedUrlCookieWizardView):
 
         # Calc score and encode in URL
         question_scores: Dict[Question, float] = survey.get_score(
-            self.get_all_cleaned_data())['question_scores']
+            self.get_all_cleaned_data()
+        )["question_scores"]
         part_scores: Dict[str, float] = {}
 
         for question, score in question_scores.items():
@@ -74,9 +81,9 @@ class SurveyWizard(NamedUrlCookieWizardView):
         signed = signing.Signer().sign(encoded)
 
         # Send to results page (current URL is survey/6-8/done/ )
-        response = HttpResponseRedirect('../results/')
-        response.set_cookie('resultUrl', signed)
-        response.delete_cookie('wizard_survey_wizard')
+        response = HttpResponseRedirect("../results/")
+        response.set_cookie("resultUrl", signed)
+        response.delete_cookie("wizard_survey_wizard")
         return response
 
     def process_step(self, form):
@@ -88,7 +95,7 @@ class SurveyWizard(NamedUrlCookieWizardView):
         limit.
         """
         data = self.get_form_step_data(form).copy()
-        del data['csrfmiddlewaretoken']
+        del data["csrfmiddlewaretoken"]
         return data
 
     def render(self, form=None, **kwargs):
@@ -100,12 +107,12 @@ class SurveyWizard(NamedUrlCookieWizardView):
         context = self.get_context_data(form=form, **kwargs)
 
         # Push the survey and active page into template
-        page_idx = int(re.sub(r'\D+', '', context['step'])) - 1
+        page_idx = int(re.sub(r"\D+", "", context["step"])) - 1
         survey = get_survey(self.survey_key)
-        context['gradeSelectUrl'] = _find_grade_selection_url(None)
-        context['survey'] = survey
-        context['page_idx'] = page_idx
-        context['questions_by_page'] = survey.num_questions_by_page()
+        context["gradeSelectUrl"] = _find_grade_selection_url(None)
+        context["survey"] = survey
+        context["page_idx"] = page_idx
+        context["questions_by_page"] = survey.num_questions_by_page()
 
         return self.render_to_response(context)
 
@@ -129,37 +136,39 @@ class SurveyWizard(NamedUrlCookieWizardView):
                 form_list=get_survey(key, choice_lists).get_form_list(),
                 # Note it's important this is kept in sync with the name
                 # parameter in urls.py
-                url_name=f'survey_{key}_step',
-                template_name=f'{_tdp}/survey/form-page.html',
+                url_name=f"survey_{key}_step",
+                template_name=f"{_tdp}/survey/form-page.html",
             )
         return wizard_views
 
 
-def _handle_result_url(request: HttpRequest, signed_code: str, code: str,
-                       is_student: bool):
+def _handle_result_url(
+    request: HttpRequest, signed_code: str, code: str, is_student: bool
+):
     url_encoder = UrlEncoder(AVAILABLE_SURVEYS)
     res = url_encoder.loads(code)
     if res is None:
         return HttpResponseRedirect(_find_grade_selection_url(request))
 
-    survey = get_survey(res['key'])
-    total = sum(res['subtotals'])
+    survey = get_survey(res["key"])
+    total = sum(res["subtotals"])
     adjusted = survey.adjust_total_score(total)
-    student_view = False if 'share_view' in request.GET else is_student
+    student_view = False if "share_view" in request.GET else is_student
 
     rendered = render_to_string(
         f'{_tdp}/survey/results-{res["key"]}.html',
         {
-            'content': ResultsContent.factory(res['key']),
-            'is_student': student_view,
-            'gradeSelectUrl': _find_grade_selection_url(
-                request, '../../assess/survey/'),
-            'request': request,
-            'signed_code': signed_code,
-            'survey': survey,
-            'subtotals': res['subtotals'],
-            'score': adjusted,
-            'time': time.gmtime(res['time']),
+            "content": ResultsContent.factory(res["key"]),
+            "is_student": student_view,
+            "gradeSelectUrl": _find_grade_selection_url(
+                request, "../../assess/survey/"
+            ),
+            "request": request,
+            "signed_code": signed_code,
+            "survey": survey,
+            "subtotals": res["subtotals"],
+            "score": adjusted,
+            "time": time.gmtime(res["time"]),
         },
     )
     return HttpResponse(status=200, content=rendered)
@@ -172,17 +181,17 @@ def student_results(request: HttpRequest):
     """
     Request handler for the student results page
     """
-    if request.method != 'GET':
+    if request.method != "GET":
         return HttpResponse(status=404)
 
-    if 'resultUrl' not in request.COOKIES:
+    if "resultUrl" not in request.COOKIES:
         return HttpResponseRedirect(_find_grade_selection_url(request))
-    fake_get = {'r': request.COOKIES['resultUrl']}
+    fake_get = {"r": request.COOKIES["resultUrl"]}
 
     form = SharedUrlForm(fake_get)
     if not form.is_valid():
         return HttpResponseRedirect(_find_grade_selection_url(request))
-    signed_code, code = form.cleaned_data['r']
+    signed_code, code = form.cleaned_data["r"]
 
     return _handle_result_url(request, signed_code, code, True)
 
@@ -194,13 +203,13 @@ def view_results(request: HttpRequest):
     """
     Request handler for the view results page
     """
-    if request.method != 'GET':
+    if request.method != "GET":
         return HttpResponse(status=404)
 
     form = SharedUrlForm(request.GET)
     if not form.is_valid():
         return HttpResponseRedirect(_find_grade_selection_url(request))
-    signed_code, code = form.cleaned_data['r']
+    signed_code, code = form.cleaned_data["r"]
 
     return _handle_result_url(request, signed_code, code, False)
 
@@ -211,12 +220,13 @@ def view_results(request: HttpRequest):
 def _grade_level_page(request: HttpRequest, key: str):
     survey = get_survey(key)
     rendered = render_to_string(
-        f'{_tdp}/survey/grade-level-{key}.html',
+        f"{_tdp}/survey/grade-level-{key}.html",
         {
-            'request': request,
-            'survey': survey,
-            'gradeSelectUrl': _find_grade_selection_url(
-                request, '../../assess/survey/')
+            "request": request,
+            "survey": survey,
+            "gradeSelectUrl": _find_grade_selection_url(
+                request, "../../assess/survey/"
+            ),
         },
     )
     return HttpResponse(status=200, content=rendered)

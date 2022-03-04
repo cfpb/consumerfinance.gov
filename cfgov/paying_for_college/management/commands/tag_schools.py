@@ -16,8 +16,8 @@ class Command(BaseCommand):
     help = COMMAND_HELP
 
     def add_arguments(self, parser):
-        parser.add_argument('url', type=str)
+        parser.add_argument("url", type=str)
 
     def handle(self, *args, **options):
-        msg = tag_settlement_schools.tag_schools(options['url'])
+        msg = tag_settlement_schools.tag_schools(options["url"])
         self.stdout.write(msg)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.db import migrations, models
 import teachers_digital_platform.fields
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):

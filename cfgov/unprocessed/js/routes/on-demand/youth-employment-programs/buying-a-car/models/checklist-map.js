@@ -1,4 +1,4 @@
-import { assign } from '../../../../../../apps/youth-employment-success/js/util';
+import { assign } from '../util';
 
 function checklistMap( data ) {
   const lookup = data;
