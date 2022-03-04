@@ -591,7 +591,7 @@ def get_section_url(page, section, date_str=None):
 def get_secondary_nav_items(
     request, current_page, sections=None, date_str=None
 ):
-    if not sections:
+    if sections is None:
         sections = []
 
     url_bits = [bit for bit in request.path.split("/") if bit]

@@ -285,7 +285,7 @@ class TestActivityIndexPageSearch(TestCase):
         self.activity_setups = get_activity_setup()
 
     def get_request(self, path="", data=None):
-        if not data:
+        if data is None:
             data = {}
         request = self.factory.get(path, data=data)
         return request

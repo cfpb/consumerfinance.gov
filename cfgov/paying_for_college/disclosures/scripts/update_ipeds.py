@@ -165,7 +165,7 @@ def clean_csv_headings():
 
 def process_datafiles(add_schools=None):
     """Collect data points from IPEDS csvs and deliver them as a dict."""
-    if not add_schools:
+    if add_schools is None:
         add_schools = []
     collector = {}
     if add_schools:  # we have a list of school IDs to add to our database

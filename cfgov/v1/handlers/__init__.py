@@ -1,6 +1,6 @@
 class Handler:
     def __init__(self, page, request, context=None):
-        if not context:
+        if context is None:
             context = {}
         self.page = page
         self.request = request

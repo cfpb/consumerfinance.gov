@@ -67,21 +67,16 @@ class TestCustomMakeMessages(SimpleTestCase):
         with open(self.PO_FILE, "r") as f:
             contents = f.read()
 
-        expected = """
-#: __init__.py:4
-msgid "Test string from Python file."
-msgstr ""
+        self.assertIn('msgid "Test string from Python file."', contents)
 
-#: jinja2/test.html:1
-msgid ""
+        self.assertIn(
+            """msgid ""
 "\\n"
 "Test string from Jinja template.\\n"
 "This is in a multi-line block.\\n"
 msgstr ""
+""",
+            contents,
+        )
 
-#: templates/test.html:2
-msgid "Test string from Django template."
-msgstr ""
-"""
-
-        self.assertIn(expected, contents)
+        self.assertIn('msgid "Test string from Django template."', contents)

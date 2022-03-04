@@ -121,7 +121,7 @@ class FilterablePagesDocumentSearch:
         self.search_obj = self.document.search().filter("prefix", url=prefix)
 
     def filter_topics(self, topics=None):
-        if not topics:
+        if topics is None:
             topics = []
         if topics not in ([], "", None):
             self.search_obj = self.search_obj.filter(
@@ -129,7 +129,7 @@ class FilterablePagesDocumentSearch:
             )
 
     def filter_categories(self, categories=None):
-        if not categories:
+        if categories is None:
             categories = []
         if categories not in ([], "", None):
             self.search_obj = self.search_obj.filter(
@@ -137,7 +137,7 @@ class FilterablePagesDocumentSearch:
             )
 
     def filter_language(self, language=None):
-        if not language:
+        if language is None:
             language = []
         if language not in ([], "", None):
             self.search_obj = self.search_obj.filter(
@@ -186,11 +186,11 @@ class FilterablePagesDocumentSearch:
         archived=None,
     ):
 
-        if not topics:
+        if topics is None:
             topics = []
-        if not categories:
+        if categories is None:
             categories = []
-        if not language:
+        if language is None:
             language = []
 
         """Filter the results based on the given keyword arguments"""
@@ -254,9 +254,9 @@ class EnforcementActionFilterablePagesDocumentSearch(
             )
 
     def filter(self, statuses=None, products=None, **kwargs):
-        if not statuses:
+        if statuses is None:
             statuses = []
-        if not products:
+        if products is None:
             products = []
 
         self.search_obj = self.search_obj.filter(

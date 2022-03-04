@@ -8,7 +8,7 @@ from django.test import TestCase
 
 class TestPrepaidJinja2Tags(TestCase):
     def _render(self, s, context=None):
-        if not context:
+        if context is None:
             context = {}
         template = engines["wagtail-env"].from_string(s)
         return template.render(context)

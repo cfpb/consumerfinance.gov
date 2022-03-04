@@ -177,7 +177,7 @@ def update(exclude_ids=None, single_school=None, store_programs=False):
     Optionally, you can store program data and limit actions to one school.
     """
 
-    if not exclude_ids:
+    if exclude_ids is None:
         exclude_ids = []
 
     programs_created = 0

@@ -134,9 +134,9 @@ class TestActivityPage(TestCase):
         topic_list=None,
         grade_level_list=None,
     ):  # noqa: B950
-        if not topic_list:
+        if topic_list is None:
             topic_list = [6, 7]
-        if not grade_level_list:
+        if grade_level_list is None:
             grade_level_list = [2]
         activity_page = ActivityPage(
             live=True,

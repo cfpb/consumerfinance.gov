@@ -15,7 +15,7 @@ class NewRelicAlertViolations:
         account_number,
         known_violations=None,
     ):
-        if not known_violations:
+        if known_violations is None:
             known_violations = []
         self.newrelic_token = newrelic_token
         self.policy_filter_re = re.compile(policy_filter)
