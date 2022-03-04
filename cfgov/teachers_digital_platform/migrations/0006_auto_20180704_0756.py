@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from django.db import migrations, models
-import mptt.fields
 import modelcluster.fields
+import mptt.fields
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):

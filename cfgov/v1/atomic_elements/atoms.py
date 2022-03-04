@@ -6,13 +6,18 @@ from url_or_relative_url_field.forms import URLOrRelativeURLFormField
 
 
 def is_required(field_name):
-    return [str(field_name) + ' is required.']
+    return [str(field_name) + " is required."]
 
 
 class URLOrRelativeURLBlock(blocks.FieldBlock):
     def __init__(
-        self, required=True, help_text=None, max_length=None, min_length=None,
-        validators=(), **kwargs
+        self,
+        required=True,
+        help_text=None,
+        max_length=None,
+        min_length=None,
+        validators=(),
+        **kwargs,
     ):
         self.field = URLOrRelativeURLFormField(
             required=required,
@@ -24,18 +29,18 @@ class URLOrRelativeURLBlock(blocks.FieldBlock):
         super().__init__(**kwargs)
 
     class Meta:
-        icon = 'site'
+        icon = "site"
 
 
 class Hyperlink(blocks.StructBlock):
     text = blocks.CharBlock(required=False)
     aria_label = blocks.CharBlock(
         required=False,
-        help_text='Add an ARIA label if the link text does not describe the '
-                  'destination of the link (e.g. has ambiguous text like '
-                  '"Learn more" that is not descriptive on its own).'
+        help_text="Add an ARIA label if the link text does not describe the "
+        "destination of the link (e.g. has ambiguous text like "
+        '"Learn more" that is not descriptive on its own).',
     )
-    url = blocks.CharBlock(default='/', required=False)
+    url = blocks.CharBlock(default="/", required=False)
 
     def __init__(self, required=True):
         self.is_required = required
@@ -51,8 +56,8 @@ class Hyperlink(blocks.StructBlock):
         data = super().clean(data)
 
         if self.is_required:
-            if not data['text']:
-                error_dict.update({'text': is_required('Text')})
+            if not data["text"]:
+                error_dict.update({"text": is_required("Text")})
 
         if error_dict:
             raise StructBlockValidationError(block_errors=error_dict)
@@ -60,15 +65,18 @@ class Hyperlink(blocks.StructBlock):
             return data
 
     class Meta:
-        icon = 'link'
-        template = '_includes/atoms/hyperlink.html'
+        icon = "link"
+        template = "_includes/atoms/hyperlink.html"
 
 
 class Button(Hyperlink):
-    size = blocks.ChoiceBlock(choices=[
-        ('regular', 'Regular'),
-        ('large', 'Large Primary'),
-    ], default='regular')
+    size = blocks.ChoiceBlock(
+        choices=[
+            ("regular", "Regular"),
+            ("large", "Large Primary"),
+        ],
+        default="regular",
+    )
 
 
 IMAGE_ALT_TEXT_HELP_TEXT = (
@@ -81,10 +89,10 @@ IMAGE_ALT_TEXT_HELP_TEXT = (
 class ImageBasicStructValue(blocks.StructValue):
     @property
     def url(self):
-        upload = self.get('upload')
+        upload = self.get("upload")
 
         if upload:
-            return upload.get_rendition('original').url
+            return upload.get_rendition("original").url
 
     @property
     def alt_text(self):
@@ -92,11 +100,11 @@ class ImageBasicStructValue(blocks.StructValue):
         # which cannot be called here because of a circular import. It would
         # be better to deprecate the image_alt_value tag in favor of using
         # this logic wherever we use ImageBasic atoms.
-        alt = self.get('alt')
+        alt = self.get("alt")
         if alt:
             return alt
 
-        upload = self.get('upload')
+        upload = self.get("upload")
         if upload:
             return upload.alt
 
@@ -121,11 +129,11 @@ class ImageBasic(blocks.StructBlock):
 
         data = super().clean(data)
 
-        if not self.required and not data['upload']:
+        if not self.required and not data["upload"]:
             return data
 
-        if not data['upload']:
-            error_dict.update({'upload': is_required("Upload")})
+        if not data["upload"]:
+            error_dict.update({"upload": is_required("Upload")})
 
         if error_dict:
             raise StructBlockValidationError(block_errors=error_dict)
@@ -133,5 +141,5 @@ class ImageBasic(blocks.StructBlock):
             return data
 
     class Meta:
-        icon = 'image'
+        icon = "image"
         value_class = ImageBasicStructValue

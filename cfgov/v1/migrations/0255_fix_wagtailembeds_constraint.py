@@ -2,6 +2,7 @@
 
 from django.db import migrations
 
+
 # This migration was a temporary fix for an inconsistency between the expected
 # state of the wagtailembeds_embed table constrains and its actual state. This
 # manifested as a failure of the wagtailembeds_0008_allow_long_urls migration

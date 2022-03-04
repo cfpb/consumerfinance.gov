@@ -22,10 +22,7 @@ def convert_http_image_links(html, url_mappings):
         '<img src="http://to.url/path/image.png"/>'
 
     """
-    converter = partial(
-        convert_http_image_match,
-        url_mappings=url_mappings
-    )
+    converter = partial(convert_http_image_match, url_mappings=url_mappings)
 
     return re.sub(HTTP_IMAGE_TAG_REGEX, converter, html)
 
@@ -38,7 +35,7 @@ def convert_http_image_match(match, url_mappings):
             return re.sub(from_prefix, to_prefix, match.group(0))
 
     raise ValueError(
-        'cannot convert HTTP image link {}'.format(http_image_url)
+        "cannot convert HTTP image link {}".format(http_image_url)
     )
 
 
@@ -56,20 +53,21 @@ class PageValidator:
             try:
                 corrected = self.correct_html(block.value)
             except Exception:
-                print('failed page validation:', page.full_url)
+                print("failed page validation:", page.full_url)
                 raise
 
             if corrected != block.value:
-                diffset = ndiff(block.value.split('\n'), corrected.split('\n'))
+                diffset = ndiff(block.value.split("\n"), corrected.split("\n"))
                 diffsets.append(
-                    d for d in diffset
-                    if d.startswith('- ') or d.startswith('+ ')
+                    d
+                    for d in diffset
+                    if d.startswith("- ") or d.startswith("+ ")
                 )
 
                 block.value = corrected
 
         if diffsets:
-            print('\ndetected invalid page:', page.full_url)
+            print("\ndetected invalid page:", page.full_url)
             for diffset in diffsets:
                 for diff in diffset:
                     print(diff)
