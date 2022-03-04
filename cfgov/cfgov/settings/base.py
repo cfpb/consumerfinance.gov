@@ -57,7 +57,6 @@ INSTALLED_APPS = (
     "wagtail.contrib.routable_page",
     "wagtail.contrib.modeladmin",
     "wagtail.contrib.table_block",
-    "wagtail.contrib.postgres_search",
     "localflavor",
     "modelcluster",
     "taggit",
@@ -135,7 +134,7 @@ WAGTAILSEARCH_BACKENDS = {
         "BACKEND": "wagtail.search.backends.db",
     },
     "fulltext": {
-        "BACKEND": "wagtail.contrib.postgres_search.backend",
+        "BACKEND": "wagtail.search.backends.database",
     },
 }
 
