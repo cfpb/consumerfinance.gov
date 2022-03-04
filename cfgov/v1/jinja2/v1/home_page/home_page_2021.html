@@ -22,34 +22,8 @@ content_main__flush-inner
         {% endwith %}
 
         {% if minimal %}
-        {#
-            Temporary CSS well modifier for user testing.
-            Move into DS if it tests well.
-        #}
-        <style>
-            .o-well__putting {
-                background-color: #f7f8f9;
-                border-top: none;
-            }
-            .o-well__putting a {
-                color: #0061c1;
-            }
-            .o-well__putting a:visited {
-                color: #126b69;
-            }
-            .o-well__putting a:hover {
-                color: #0050b4;
-            }
-            .o-well__putting a:focus {
-                color: #0061c1;
-            }
-            .o-well__putting a:active {
-                color: #254b87;
-            }
-        </style>
-        <section class="o-well o-well__putting">
+        <section class="o-well">
             <div class="o-info-unit-group">
-                <!-- <h2>{{ hardcoded.highlights_heading }}</h2> -->
 
                 <div class="content-l">
                     {% for highlight in hardcoded.highlights %}
@@ -132,30 +106,6 @@ content_main__flush-inner
             </div>
         </div>
     </section>
-
-    <!-- <section class="content_level-1">
-        <section class="block">
-            <div class="o-info-unit-group">
-                <div class="content-l">
-                    <div class="content-l_col content-l_col-1">
-                        <div class="m-info-unit m-info-unit__inline">
-                            <a class="m-info-unit_heading-link" href="{{ hardcoded.complaint.link.url }}">
-                                <img alt="" class="m-info-unit_image m-info-unit_image__square" src="{{ static('apps/homepage/img/complaint.png') }}">
-                                <div class="m-info-unit_heading-text">
-                                    <h2>{{ hardcoded.complaint.heading }}</h2>
-                                </div>
-                            </a>
-                            <div class="m-info-unit_content">
-                                <p>{{ hardcoded.complaint.body}}</p>
-                                <a class="m-list_link a-btn" href="{{ hardcoded.complaint.link.url }}">
-                                    {{- hardcoded.complaint.link.text -}}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
 
     <section class="content_level-1">
         <section class="block">

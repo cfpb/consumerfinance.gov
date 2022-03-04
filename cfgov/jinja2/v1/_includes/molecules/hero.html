@@ -85,6 +85,9 @@
             {%- if value.background_color %}
                 background-color: {{ value.background_color }};
             {% endif -%}
+            {%- if value.is_50_50 %}
+                border-bottom: 0 !important;
+            {% endif -%}
         }
     {% if img %}
         .m-hero_image {
