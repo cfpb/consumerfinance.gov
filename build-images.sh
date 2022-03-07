@@ -1,14 +1,16 @@
 #!/bin/sh
 
-TARGET=$1
-if [ -z "$TARGET" ]; then
-  TARGET="local"
+TAG=$1
+if [ -z "$TAG" ]; then
+  TAG="local"
 fi
 
-case "$TARGET" in
+case "$TAG" in
   "local")
+    TARGET="dev"
     ;;
   "prod")
+    TARGET="prod"
     ;;
   *)
     echo "Tag must be 'local' or 'prod'"
@@ -17,5 +19,5 @@ esac
 
 echo "Building cfgov_docs..."
 docker build . -f docker/docs/Dockerfile -t cfgov_docs &
-echo "Building cfgov_python:$TARGET"
-docker build . --target "cfgov-$TARGET" -t "cfgov_python:$TARGET"
+echo "Building cfgov_python:$TAG"
+docker build . --target "cfgov-$TARGET" -t "cfgov_python:$TAG"
