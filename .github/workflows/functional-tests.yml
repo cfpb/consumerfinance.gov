@@ -61,6 +61,7 @@ jobs:
         spec: |
           test/cypress/integration/paying-for-college/repay-student-debt/repay-student-debt.js
           test/cypress/integration/data-research/consumer-complaints/consumer-complaints.js
+          test/cypress/integration/data-research/credit-card-agreements-search/credit-card-agreements-search.js
           test/cypress/integration/consumer-tools/ask-cfpb/ask-cfpb.js
           test/cypress/integration/consumer-tools/find-a-housing-counselor/find-a-housing-counselor.js
           test/cypress/integration/consumer-tools/obtener-respuestas/obtener-respuestas.js
