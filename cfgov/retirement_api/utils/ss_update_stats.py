@@ -40,20 +40,20 @@ ss_table_urls = {
     # not needed if we use SS calculator
     "bend_points": "http://www.socialsecurity.gov/OACT/COLA/bendpoints.html",
     # useful as viz
-    "early_retirement_example": "http://www.socialsecurity.gov/OACT/quickcalc/earlyretire.html",  # noqa: E501
+    "early_retirement_example": "http://www.socialsecurity.gov/OACT/quickcalc/earlyretire.html",  # noqa: B950
     # info only
-    "explainer of AMI calculations": "http://www.socialsecurity.gov/OACT/COLA/piaformula.html",  # noqa: E501
+    "explainer of AMI calculations": "http://www.socialsecurity.gov/OACT/COLA/piaformula.html",  # noqa: B950
     # explanation of terms; info only
-    "benefit_terms": "http://www.socialsecurity.gov/OACT/COLA/Benefits.html#aime",  # noqa: E501
+    "benefit_terms": "http://www.socialsecurity.gov/OACT/COLA/Benefits.html#aime",  # noqa: B950
     # out of scope: rules for achieving 40 work credits (10 years of work);
     # not envisioned for app
-    "credit_rules": "http://www.socialsecurity.gov/planners/retire/credits2.html",  # noqa: E501
+    "credit_rules": "http://www.socialsecurity.gov/planners/retire/credits2.html",  # noqa: B950
     # out of scope: basic work-credit unit to determine whether a worker is
     # covered by SS; you can earn 4 credits a year
     "quarter_of_coverage": "http://www.socialsecurity.gov/OACT/COLA/QC.html",
     # out of scope:
     # historical and projected male/female death probability tables
-    "death_probabilities": "http://www.socialsecurity.gov/OACT/HistEst/DeathProbabilities2014.html",  # noqa: E501
+    "death_probabilities": "http://www.socialsecurity.gov/OACT/HistEst/DeathProbabilities2014.html",  # noqa: B950
     # out of scope: compendium of bend points,
     # COlA and other adjustment values used in SS calculations
     "automatic_values": "http://www.socialsecurity.gov/OACT/COLA/autoAdj.html",

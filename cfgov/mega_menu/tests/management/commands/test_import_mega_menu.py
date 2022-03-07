@@ -15,15 +15,15 @@ class ImportMegaMenuTests(TestCase):
     def test_import(self):
         submenus = [
             {
-                'type': 'submenu',
-                'id': str(uuid.uuid4()),
-                'value': {
-                    'title': 'A submenu',
-                    'overview_page': 123,
-                    'links': [
+                "type": "submenu",
+                "id": str(uuid.uuid4()),
+                "value": {
+                    "title": "A submenu",
+                    "overview_page": 123,
+                    "links": [
                         {
-                            'text': 'A link',
-                            'url': '/foo/bar',
+                            "text": "A link",
+                            "url": "/foo/bar",
                         },
                     ],
                 },
@@ -33,11 +33,10 @@ class ImportMegaMenuTests(TestCase):
         stdin = StringIO(json.dumps(submenus))
         stdout = StringIO()
 
-        call_command('import_mega_menu', 'en', filename=stdin, stdout=stdout)
+        call_command("import_mega_menu", "en", filename=stdin, stdout=stdout)
         self.assertEqual(
-            stdout.getvalue(),
-            'Created mega menu for language en.\n'
+            stdout.getvalue(), "Created mega menu for language en.\n"
         )
 
-        menu = Menu.objects.get(language='en')
+        menu = Menu.objects.get(language="en")
         self.assertSequenceEqual(menu.submenus.raw_data, submenus)

@@ -9,14 +9,14 @@ from deployable_zipfile.loadenv import loadenv
 
 
 class TestLoadenv(unittest.TestCase):
-    ENVIRONMENT_VARIABLE = '_TEST_LOADENV'
+    ENVIRONMENT_VARIABLE = "_TEST_LOADENV"
 
     def setUp(self):
         self.tempdir = tempfile.mkdtemp()
 
-        self.mock_sys_prefix = os.path.join(self.tempdir, 'mock_sys_prefix')
+        self.mock_sys_prefix = os.path.join(self.tempdir, "mock_sys_prefix")
         os.mkdir(self.mock_sys_prefix)
-        mock_sys_prefix = mock.patch('sys.prefix', self.mock_sys_prefix)
+        mock_sys_prefix = mock.patch("sys.prefix", self.mock_sys_prefix)
         mock_sys_prefix.start()
         self.addCleanup(mock_sys_prefix.stop)
 
@@ -32,23 +32,23 @@ class TestLoadenv(unittest.TestCase):
         self.assertIsNone(os.environ.get(self.ENVIRONMENT_VARIABLE))
 
     def create_environment_json_file(self, value):
-        environment_json_file = os.path.join(self.tempdir, 'environment.json')
-        with open(environment_json_file, 'w') as f:
+        environment_json_file = os.path.join(self.tempdir, "environment.json")
+        with open(environment_json_file, "w") as f:
             f.write(json.dumps({self.ENVIRONMENT_VARIABLE: value}))
 
     def test_file_exists_json_is_loaded(self):
         self.assertIsNone(os.environ.get(self.ENVIRONMENT_VARIABLE))
 
-        self.create_environment_json_file('foo')
+        self.create_environment_json_file("foo")
         loadenv()
 
-        self.assertEqual(os.environ.get(self.ENVIRONMENT_VARIABLE), 'foo')
+        self.assertEqual(os.environ.get(self.ENVIRONMENT_VARIABLE), "foo")
 
     def test_file_overwrites_existing_value(self):
-        os.environ[self.ENVIRONMENT_VARIABLE] = 'bar'
-        self.assertEqual(os.environ.get(self.ENVIRONMENT_VARIABLE), 'bar')
+        os.environ[self.ENVIRONMENT_VARIABLE] = "bar"
+        self.assertEqual(os.environ.get(self.ENVIRONMENT_VARIABLE), "bar")
 
-        self.create_environment_json_file('baz')
+        self.create_environment_json_file("baz")
         loadenv()
 
-        self.assertEqual(os.environ.get(self.ENVIRONMENT_VARIABLE), 'baz')
+        self.assertEqual(os.environ.get(self.ENVIRONMENT_VARIABLE), "baz")

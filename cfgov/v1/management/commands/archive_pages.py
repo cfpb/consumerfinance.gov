@@ -103,10 +103,13 @@ class Command(BaseCommand):
                 )
 
             # Get the filterable list QuerySet and filter it.
-            filtered_pages = filterable_page.get_filterable_search().search(
-            ).filter(
-                published_date_filter,
-                is_archived="no",
+            filtered_pages = (
+                filterable_page.get_filterable_search()
+                .search()
+                .filter(
+                    published_date_filter,
+                    is_archived="no",
+                )
             )
 
             # Archive the content, letting the user know the title of the
@@ -114,8 +117,7 @@ class Command(BaseCommand):
             # archived.
             with transaction.atomic():
                 update_count = filtered_pages.select_for_update().update(
-                    is_archived="yes",
-                    archived_at=archived_at
+                    is_archived="yes", archived_at=archived_at
                 )
             self.stdout.write(
                 f"Found and archived {update_count} pages within "

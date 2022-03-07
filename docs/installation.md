@@ -51,6 +51,13 @@ git clone git@github.com:cfpb/consumerfinance.gov.git
 cd consumerfinance.gov
 ```
 
+Configure `.git-blame-ignore-revs` by running the following command within
+the repository:
+
+```sh
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
+
 ### Set up the environment (optional)
 
 The consumerfinance.gov Django site relies on environment variables defined
@@ -101,6 +108,24 @@ Once activated, our Python CI requirements can be installed in the virtualenv:
 ```sh
 pip install -r requirements/ci.txt
 ```
+
+### Install pre-commit
+We use `pre-commit` to automatically run our linting tools before a commit 
+takes place. These tools consist of `black`, `flake8`, and `isort`. To install 
+`pre-commit`, running the following commands from within the 
+`consumerfinance.gov` directory:
+
+```sh
+pip install -U pre-commit && pre-commit install
+```
+
+Before each commit, `pre-commit` will execute and run our `pre-commit` checks.
+If any task fails, it will attempt to resolve the issue automatically, notify 
+you of the changes (if any), and ask for you to re-stage the changed files. If 
+all checks pass, a commit will take place as expected, allowing you to then 
+push to GitHub. This is to reduce the number of commits with failed lints, and
+to assist developers with linting without thinking.
+
 
 ### Install our private fonts (optional)
 

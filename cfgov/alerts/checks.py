@@ -7,7 +7,7 @@ def elasticsearch_health():
     es = connections.get_connection()
     health = es.cluster.health(level="shards")
 
-    if (health["timed_out"] or health["status"] != "green"):
+    if health["timed_out"] or health["status"] != "green":
         ok = False
     else:
         ok = True

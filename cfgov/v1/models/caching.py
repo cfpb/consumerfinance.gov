@@ -29,75 +29,70 @@ class CDNHistory(models.Model):
 
 
 class AkamaiBackend(BaseBackend):
-    """ Akamai backend that performs an 'invalidate' purge """
+    """Akamai backend that performs an 'invalidate' purge"""
 
     def __init__(self, params):
-        self.client_token = params.get('CLIENT_TOKEN')
-        self.client_secret = params.get('CLIENT_SECRET')
-        self.access_token = params.get('ACCESS_TOKEN')
-        if not all((
-            self.client_token,
-            self.client_secret,
-            self.access_token,
-        )):
+        self.client_token = params.get("CLIENT_TOKEN")
+        self.client_secret = params.get("CLIENT_SECRET")
+        self.access_token = params.get("ACCESS_TOKEN")
+        if not all(
+            (
+                self.client_token,
+                self.client_secret,
+                self.access_token,
+            )
+        ):
             raise ValueError(
-                'AKAMAI_CLIENT_TOKEN, AKAMAI_CLIENT_SECRET, '
-                'AKAMAI_ACCESS_TOKEN must be configured.'
+                "AKAMAI_CLIENT_TOKEN, AKAMAI_CLIENT_SECRET, "
+                "AKAMAI_ACCESS_TOKEN must be configured."
             )
         self.auth = self.get_auth()
-        self.headers = {'content-type': 'application/json'}
+        self.headers = {"content-type": "application/json"}
 
     def get_auth(self):
         return EdgeGridAuth(
             client_token=self.client_token,
             client_secret=self.client_secret,
-            access_token=self.access_token
+            access_token=self.access_token,
         )
 
     def get_payload(self, obj, action):
-        return {
-            'action': action,
-            'objects': [obj]
-        }
+        return {"action": action, "objects": [obj]}
 
     def post_all(self, action):
-        obj = os.environ['AKAMAI_OBJECT_ID']
+        obj = os.environ["AKAMAI_OBJECT_ID"]
         resp = requests.post(
-            os.environ['AKAMAI_PURGE_ALL_URL'],
+            os.environ["AKAMAI_PURGE_ALL_URL"],
             headers=self.headers,
             data=json.dumps(self.get_payload(obj=obj, action=action)),
-            auth=self.auth
+            auth=self.auth,
         )
         logger.info(
-            u'Attempted to {action} content provider {obj}, '
-            'got back response {message}'.format(
-                action=action,
-                obj=obj,
-                message=resp.text
+            "Attempted to {action} content provider {obj}, "
+            "got back response {message}".format(
+                action=action, obj=obj, message=resp.text
             )
         )
         resp.raise_for_status()
 
     def post(self, url, action):
         resp = requests.post(
-            os.environ['AKAMAI_FAST_PURGE_URL'],
+            os.environ["AKAMAI_FAST_PURGE_URL"],
             headers=self.headers,
             data=json.dumps(self.get_payload(obj=url, action=action)),
-            auth=self.auth
+            auth=self.auth,
         )
         logger.info(
-            u'Attempted to {action} cache for page {url}, '
-            'got back response {message}'.format(
-                action=action,
-                url=url,
-                message=resp.text
+            "Attempted to {action} cache for page {url}, "
+            "got back response {message}".format(
+                action=action, url=url, message=resp.text
             )
         )
         resp.raise_for_status()
 
     def post_tags(self, tags, action):
         """Request a purge by cache_tags."""
-        _url = os.getenv('AKAMAI_FAST_PURGE_URL')
+        _url = os.getenv("AKAMAI_FAST_PURGE_URL")
         if not _url:
             logger.info(
                 "Can't purge cache. No value set for 'AKAMAI_FAST_PURGE_URL'"
@@ -108,7 +103,7 @@ class AkamaiBackend(BaseBackend):
             url,
             headers=self.headers,
             data=json.dumps({"action": action, "objects": tags}),
-            auth=self.auth
+            auth=self.auth,
         )
         logger.info(
             f"Attempted to {action} by cache_tags {', '.join(tags)}, "
@@ -120,19 +115,19 @@ class AkamaiBackend(BaseBackend):
         self.post_tags(tags, action=action)
 
     def purge(self, url):
-        self.post(url, 'invalidate')
+        self.post(url, "invalidate")
 
     def purge_all(self):
-        self.post_all('invalidate')
+        self.post_all("invalidate")
 
 
 class AkamaiDeletingBackend(AkamaiBackend):
-    """ Akamai backend that performs a 'delete' purge
+    """Akamai backend that performs a 'delete' purge
 
-    This is a special-case backend, and should not be globally configured. """
+    This is a special-case backend, and should not be globally configured."""
 
     def purge(self, url):
-        self.post(url, 'delete')
+        self.post(url, "delete")
 
     def purge_all(self):
         raise NotImplementedError(
@@ -156,4 +151,4 @@ def cloudfront_cache_invalidation(sender, instance, **kwargs):
 
     batch = PurgeBatch()
     batch.add_url(url)
-    batch.purge(backends=['files'])
+    batch.purge(backends=["files"])

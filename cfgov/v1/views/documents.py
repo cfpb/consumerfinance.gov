@@ -13,6 +13,7 @@ class DocumentServeView(View):
     Local files are served using the standard Wagtail document serve view.
     URL query string parameters are removed before the redirect is returned.
     """
+
     def get(self, request, document_id, document_filename):
         document = self.get_document_or_404(document_id)
 
@@ -38,4 +39,4 @@ class DocumentServeView(View):
     @staticmethod
     def remove_url_query_string(url):
         parts = urlparse(url)
-        return parts.scheme + '://' + parts.netloc + parts.path
+        return parts.scheme + "://" + parts.netloc + parts.path
