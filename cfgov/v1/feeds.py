@@ -5,7 +5,7 @@ from django.contrib.syndication.views import Feed
 import pytz
 
 
-eastern = pytz.timezone('US/Eastern')
+eastern = pytz.timezone("US/Eastern")
 
 
 class FilterableFeed(Feed):
@@ -22,7 +22,7 @@ class FilterableFeed(Feed):
         return "%s | Consumer Financial Protection Bureau" % self.page.title
 
     def items(self):
-        posts = self.context['filter_data']['page_set']
+        posts = self.context["filter_data"]["page_set"]
         return posts
 
     def item_link(self, item):
@@ -72,4 +72,4 @@ def get_appropriate_rss_feed_url_for_page(page, request=None):
 
     if rss_feed_providing_page:
         page_url = rss_feed_providing_page.get_url(request=request)
-        return page_url + 'feed/'
+        return page_url + "feed/"

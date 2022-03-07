@@ -12,8 +12,12 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from core.govdelivery import MockGovDelivery
 from core.views import (
-    CacheTaggedTemplateView, ExternalURLNoticeView, TranslatedTemplateView,
-    govdelivery_subscribe, regsgov_comment, submit_comment
+    CacheTaggedTemplateView,
+    ExternalURLNoticeView,
+    TranslatedTemplateView,
+    govdelivery_subscribe,
+    regsgov_comment,
+    submit_comment,
 )
 
 
@@ -346,41 +350,35 @@ class TestExternalURLNoticeView(TestCase):
 
 
 class TranslatedTemplateViewTestCase(TestCase):
-
     def test_language_activation(self):
-        request = RequestFactory().get('/')
+        request = RequestFactory().get("/")
+
+        view = TranslatedTemplateView.as_view(template_name="test.html")
+        response = view(request)
+        self.assertEqual(response.context_data["current_language"], "en")
 
         view = TranslatedTemplateView.as_view(
-            template_name='test.html'
+            template_name="test.html", language="es"
         )
         response = view(request)
-        self.assertEqual(response.context_data['current_language'], 'en')
-
-        view = TranslatedTemplateView.as_view(
-            template_name='test.html',
-            language='es'
-        )
-        response = view(request)
-        self.assertEqual(response.context_data['current_language'], 'es')
+        self.assertEqual(response.context_data["current_language"], "es")
 
 
 class CacheTaggedTemplateViewTestCase(TestCase):
-
     def test_cache_tag(self):
-        request = RequestFactory().get('/')
+        request = RequestFactory().get("/")
 
         view = CacheTaggedTemplateView.as_view(
-            template_name='test.html',
-            cache_tag='test'
+            template_name="test.html", cache_tag="test"
         )
         response = view(request)
-        self.assertEqual(response['Edge-Cache-Tag'], 'test')
+        self.assertEqual(response["Edge-Cache-Tag"], "test")
 
     def test_no_cache_tag(self):
-        request = RequestFactory().get('/')
+        request = RequestFactory().get("/")
 
         view = CacheTaggedTemplateView.as_view(
-            template_name='test.html',
+            template_name="test.html",
             cache_tag=None,
         )
         with self.assertRaises(ImproperlyConfigured):

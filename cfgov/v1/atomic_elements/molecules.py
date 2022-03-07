@@ -16,25 +16,24 @@ class InfoUnit(blocks.StructBlock):
         required=False,
     )
 
-    heading = HeadingBlock(
-        required=False,
-        default={'level': 'h3'}
-    )
+    heading = HeadingBlock(required=False, default={"level": "h3"})
 
     body = blocks.RichTextBlock(blank=True, required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
     class Meta:
-        icon = 'image'
-        template = '_includes/molecules/info-unit.html'
+        icon = "image"
+        template = "_includes/molecules/info-unit.html"
 
 
 class TextIntroduction(blocks.StructBlock):
     eyebrow = blocks.CharBlock(
         required=False,
-        help_text=('Optional: Adds an H5 eyebrow above H1 heading text. '
-                   'Only use in conjunction with heading.'),
-        label='Pre-heading'
+        help_text=(
+            "Optional: Adds an H5 eyebrow above H1 heading text. "
+            "Only use in conjunction with heading."
+        ),
+        label="Pre-heading",
     )
     heading = blocks.CharBlock(required=False)
     intro = blocks.RichTextBlock(required=False)
@@ -43,87 +42,98 @@ class TextIntroduction(blocks.StructBlock):
     has_rule = blocks.BooleanBlock(
         required=False,
         label="Has bottom rule",
-        help_text=('Check this to add a horizontal rule line to bottom of '
-                   'text introduction.')
+        help_text=(
+            "Check this to add a horizontal rule line to bottom of "
+            "text introduction."
+        ),
     )
 
     def clean(self, value):
         cleaned = super().clean(value)
 
         # Eyebrow requires a heading.
-        if cleaned.get('eyebrow') and not cleaned.get('heading'):
+        if cleaned.get("eyebrow") and not cleaned.get("heading"):
             raise StructBlockValidationError(
-                block_errors={'heading': ErrorList([
-                    'Required if a pre-heading is entered.'
-                ])})
+                block_errors={
+                    "heading": ErrorList(
+                        ["Required if a pre-heading is entered."]
+                    )
+                }
+            )
 
         return cleaned
 
     class Meta:
-        icon = 'title'
-        template = '_includes/molecules/text-introduction.html'
-        classname = 'block__flush-top'
+        icon = "title"
+        template = "_includes/molecules/text-introduction.html"
+        classname = "block__flush-top"
 
 
 class AbstractHero(blocks.StructBlock):
     heading = blocks.CharBlock(
         required=False,
         help_text=mark_safe(
-            'For complete guidelines on creating heroes, visit our '
+            "For complete guidelines on creating heroes, visit our "
             '<a href="https://cfpb.github.io/design-system/components/heroes">'
-            'Design System</a>. '
-            'Character counts (including spaces) at largest breakpoint:'
+            "Design System</a>. "
+            "Character counts (including spaces) at largest breakpoint:"
             '<ul class="help">'
-            '    <li>&bull; 41 characters max (one-line heading)</li>'
-            '    <li>&bull; 82 characters max (two-line heading)</li>'
-            '</ul>')
+            "    <li>&bull; 41 characters max (one-line heading)</li>"
+            "    <li>&bull; 82 characters max (two-line heading)</li>"
+            "</ul>"
+        ),
     )
     body = blocks.RichTextBlock(
         label="Sub-heading",
         required=False,
         help_text=mark_safe(
-            'Character counts (including spaces) at largest breakpoint:'
+            "Character counts (including spaces) at largest breakpoint:"
             '<ul class="help">'
-            '    <li>&bull; 165-186 characters (after a one-line heading)</li>'
-            '    <li>&bull; 108-124 characters (after a two-line heading)</li>'
-            '</ul>')
+            "    <li>&bull; 165-186 characters (after a one-line heading)</li>"
+            "    <li>&bull; 108-124 characters (after a two-line heading)</li>"
+            "</ul>"
+        ),
     )
     image = ImageChooserBlock(
         label="Large image",
         required=False,
         help_text=mark_safe(
-            'When saving illustrations, use a transparent background. '
-            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa: E501
-            'See image dimension guidelines.</a>')
+            "When saving illustrations, use a transparent background. "
+            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa: B950
+            "See image dimension guidelines.</a>"
+        ),
     )
     small_image = ImageChooserBlock(
         required=False,
         help_text=mark_safe(
-            '<b>Optional.</b> Provides an alternate image for '
-            'small displays when using a photo or bleeding hero. '
-            'Not required for the standard illustration. '
-            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa:E501
-            'See image dimension guidelines.</a>')
+            "<b>Optional.</b> Provides an alternate image for "
+            "small displays when using a photo or bleeding hero. "
+            "Not required for the standard illustration. "
+            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa: B950
+            "See image dimension guidelines.</a>"
+        ),
     )
     background_color = blocks.CharBlock(
         required=False,
         help_text=mark_safe(
-            'Specify a hex value (including the # sign) from our '
+            "Specify a hex value (including the # sign) from our "
             '<a href="https://cfpb.github.io/design-system/foundation/color">'
-            'official color palette</a>.')
+            "official color palette</a>."
+        ),
     )
     is_white_text = blocks.BooleanBlock(
         label="White text",
         required=False,
         help_text=mark_safe(
-            '<b>Optional.</b> Turns the hero text white. Useful if using '
-            'a dark background color or background image.')
+            "<b>Optional.</b> Turns the hero text white. Useful if using "
+            "a dark background color or background image."
+        ),
     )
 
     class Meta:
-        template = '_includes/molecules/hero.html'
-        classname = 'block__flush-top block__flush-bottom'
-        icon = 'image'
+        template = "_includes/molecules/hero.html"
+        classname = "block__flush-top block__flush-bottom"
+        icon = "image"
 
 
 class Hero(AbstractHero):
@@ -131,21 +141,23 @@ class Hero(AbstractHero):
         label="Photo",
         required=False,
         help_text=mark_safe(
-            '<b>Optional.</b> Uses the large image as a background under '
+            "<b>Optional.</b> Uses the large image as a background under "
             'the entire hero, creating the "Photo" style of hero (see '
             '<a href="https://cfpb.github.io/design-system/components/heroes">'
-            'Design System</a> for details). When using this option, '
-            'make sure to specify a background color (above) for the '
-            'left/right margins that appear when screens are wider than '
-            '1200px and for the text section when the photo and text '
-            'stack at mobile sizes.')
+            "Design System</a> for details). When using this option, "
+            "make sure to specify a background color (above) for the "
+            "left/right margins that appear when screens are wider than "
+            "1200px and for the text section when the photo and text "
+            "stack at mobile sizes."
+        ),
     )
     is_bleeding = blocks.BooleanBlock(
         label="Bleed",
         required=False,
         help_text=mark_safe(
-            '<b>Optional.</b> Select if you want the illustration to bleed '
-            'vertically off the top and bottom of the hero space.')
+            "<b>Optional.</b> Select if you want the illustration to bleed "
+            "vertically off the top and bottom of the hero space."
+        ),
     )
 
 
@@ -170,27 +182,30 @@ class JumboHero(AbstractHero):
 
 
 class Notification(blocks.StructBlock):
-    type = blocks.ChoiceBlock(choices=[
-        ('information', 'Information'),
-        ('warning', 'Warning'),
-    ], required=True, default='warning')
-    message = blocks.CharBlock(
+    type = blocks.ChoiceBlock(
+        choices=[
+            ("information", "Information"),
+            ("warning", "Warning"),
+        ],
         required=True,
-        help_text='The main notification message to display.'
+        default="warning",
+    )
+    message = blocks.CharBlock(
+        required=True, help_text="The main notification message to display."
     )
     explanation = blocks.TextBlock(
         required=False,
-        help_text='Explanation text appears below the message in smaller type.'
+        help_text="Explanation text appears below the message in smaller type.",
     )
     links = blocks.ListBlock(
         atoms.Hyperlink(required=False),
         required=False,
-        help_text='Links appear on their own lines below the explanation.'
+        help_text="Links appear on their own lines below the explanation.",
     )
 
     class Meta:
-        icon = 'warning'
-        template = '_includes/molecules/notification.html'
+        icon = "warning"
+        template = "_includes/molecules/notification.html"
 
 
 class CallToAction(blocks.StructBlock):
@@ -199,9 +214,9 @@ class CallToAction(blocks.StructBlock):
     button = atoms.Button()
 
     class Meta:
-        template = '_includes/molecules/call-to-action.html'
-        icon = 'grip'
-        label = 'Call to action'
+        template = "_includes/molecules/call-to-action.html"
+        icon = "grip"
+        label = "Call to action"
 
 
 class ContactAddress(blocks.StructBlock):
@@ -213,80 +228,102 @@ class ContactAddress(blocks.StructBlock):
     zip_code = blocks.CharBlock(max_length=15, required=False)
 
     class Meta:
-        template = '_includes/molecules/contact-address.html'
-        icon = 'mail'
-        label = 'Address'
+        template = "_includes/molecules/contact-address.html"
+        icon = "mail"
+        label = "Address"
 
 
 class ContactEmail(blocks.StructBlock):
     emails = blocks.ListBlock(
-        blocks.StructBlock([
-            ('url', blocks.EmailBlock(label="Email address")),
-            ('text', blocks.CharBlock(
-                required=False,
-                label="Link text (optional)"
-            )),
-        ])
+        blocks.StructBlock(
+            [
+                ("url", blocks.EmailBlock(label="Email address")),
+                (
+                    "text",
+                    blocks.CharBlock(
+                        required=False, label="Link text (optional)"
+                    ),
+                ),
+            ]
+        )
     )
 
     def clean(self, value):
         cleaned = super().clean(value)
 
-        if not cleaned.get('emails'):
+        if not cleaned.get("emails"):
             raise StructBlockValidationError(
-                block_errors={'heading': ErrorList([
-                    "At least one email address is required."
-                ])})
+                block_errors={
+                    "heading": ErrorList(
+                        ["At least one email address is required."]
+                    )
+                }
+            )
 
         return cleaned
 
     class Meta:
-        icon = 'mail'
-        template = '_includes/molecules/contact-email.html'
-        label = 'Email'
+        icon = "mail"
+        template = "_includes/molecules/contact-email.html"
+        label = "Email"
 
 
 def phone_number_format_validator():
     return RegexValidator(
-        regex=r'^\d*$',
-        message="Enter a numeric phone number, without punctuation.")
+        regex=r"^\d*$",
+        message="Enter a numeric phone number, without punctuation.",
+    )
 
 
 class ContactPhone(blocks.StructBlock):
-    fax = blocks.BooleanBlock(default=False, required=False,
-                              label='Is this number a fax?')
+    fax = blocks.BooleanBlock(
+        default=False, required=False, label="Is this number a fax?"
+    )
     phones = blocks.ListBlock(
-        blocks.StructBlock([
-            ('number', blocks.CharBlock(
-                max_length=15,
-                help_text='Do not include spaces or dashes. Ex. 8554112372',
-                validators=[phone_number_format_validator()]
-            )),
-            ('extension', blocks.CharBlock(max_length=4, required=False)),
-            ('vanity', blocks.CharBlock(
-                max_length=15,
-                required=False,
-                help_text='A phoneword version of the above number. '
-                          'Include any formatting. Ex. (555) 222-CFPB'
-            )),
-            ('tty', blocks.CharBlock(
-                max_length=15,
-                required=False,
-                label="TTY",
-                help_text='Do not include spaces or dashes. Ex. 8554112372',
-                validators=[phone_number_format_validator()]
-            )),
-            ('tty_ext', blocks.CharBlock(
-                max_length=4,
-                required=False,
-                label="TTY Extension"
-            )),
-        ]))
+        blocks.StructBlock(
+            [
+                (
+                    "number",
+                    blocks.CharBlock(
+                        max_length=15,
+                        help_text="Do not include spaces or dashes. Ex. 8554112372",
+                        validators=[phone_number_format_validator()],
+                    ),
+                ),
+                ("extension", blocks.CharBlock(max_length=4, required=False)),
+                (
+                    "vanity",
+                    blocks.CharBlock(
+                        max_length=15,
+                        required=False,
+                        help_text="A phoneword version of the above number. "
+                        "Include any formatting. Ex. (555) 222-CFPB",
+                    ),
+                ),
+                (
+                    "tty",
+                    blocks.CharBlock(
+                        max_length=15,
+                        required=False,
+                        label="TTY",
+                        help_text="Do not include spaces or dashes. Ex. 8554112372",
+                        validators=[phone_number_format_validator()],
+                    ),
+                ),
+                (
+                    "tty_ext",
+                    blocks.CharBlock(
+                        max_length=4, required=False, label="TTY Extension"
+                    ),
+                ),
+            ]
+        )
+    )
 
     class Meta:
-        icon = 'mail'
-        template = '_includes/molecules/contact-phone.html'
-        label = 'Phone'
+        icon = "mail"
+        template = "_includes/molecules/contact-phone.html"
+        label = "Phone"
 
 
 class ContactHyperlink(blocks.StructBlock):
@@ -294,38 +331,40 @@ class ContactHyperlink(blocks.StructBlock):
     text = blocks.CharBlock(required=False)
 
     class Meta:
-        icon = 'link'
-        template = '_includes/molecules/contact-hyperlink.html'
-        label = 'Hyperlink'
+        icon = "link"
+        template = "_includes/molecules/contact-hyperlink.html"
+        label = "Hyperlink"
 
 
 class ContentImage(blocks.StructBlock):
     image = atoms.ImageBasic()
     image_width = blocks.ChoiceBlock(
-        choices=[('full', 'Full width'),
-                 (470, '470px'),
-                 (270, '270px'),
-                 (170, '170px'),
-                 ('bleed', 'Bleed into left/right margins')],
-        default='full',)
-    image_position = blocks.ChoiceBlock(
-        choices=[('right', 'right'),
-                 ('left', 'left')],
-        default='right',
-        help_text='Does not apply if the image is full-width',
+        choices=[
+            ("full", "Full width"),
+            (470, "470px"),
+            (270, "270px"),
+            (170, "170px"),
+            ("bleed", "Bleed into left/right margins"),
+        ],
+        default="full",
     )
-    text = blocks.RichTextBlock(required=False, label='Caption')
+    image_position = blocks.ChoiceBlock(
+        choices=[("right", "right"), ("left", "left")],
+        default="right",
+        help_text="Does not apply if the image is full-width",
+    )
+    text = blocks.RichTextBlock(required=False, label="Caption")
     is_bottom_rule = blocks.BooleanBlock(
         required=False,
         default=True,
-        label='Has bottom rule line',
-        help_text='Check to add a horizontal rule line to bottom of inset.'
+        label="Has bottom rule line",
+        help_text="Check to add a horizontal rule line to bottom of inset.",
     )
 
     class Meta:
-        icon = 'image'
-        template = '_includes/molecules/content-image.html'
-        label = 'Image'
+        icon = "image"
+        template = "_includes/molecules/content-image.html"
+        label = "Image"
 
 
 class RelatedLinks(blocks.StructBlock):
@@ -334,9 +373,9 @@ class RelatedLinks(blocks.StructBlock):
     links = blocks.ListBlock(atoms.Hyperlink())
 
     class Meta:
-        icon = 'grip'
-        template = '_includes/molecules/related-content.html'
-        label = 'Related content'
+        icon = "grip"
+        template = "_includes/molecules/related-content.html"
+        label = "Related content"
 
 
 class Quote(blocks.StructBlock):
@@ -345,60 +384,89 @@ class Quote(blocks.StructBlock):
     is_large = blocks.BooleanBlock(required=False)
 
     class Meta:
-        icon = 'openquote'
-        template = '_includes/molecules/quote.html'
+        icon = "openquote"
+        template = "_includes/molecules/quote.html"
 
 
 class RelatedMetadata(blocks.StructBlock):
     slug = blocks.CharBlock(max_length=100)
-    content = blocks.StreamBlock([
-        ('text', blocks.StructBlock([
-            ('heading', blocks.CharBlock(max_length=100)),
-            ('blob', blocks.RichTextBlock())
-        ], icon='pilcrow')),
-        ('list', blocks.StructBlock([
-            ('heading', blocks.CharBlock(max_length=100)),
-            ('links', blocks.ListBlock(atoms.Hyperlink())),
-        ], icon='list-ul')),
-        ('date', blocks.StructBlock([
-            ('heading', blocks.CharBlock(max_length=100)),
-            ('date', blocks.DateBlock())
-        ], icon='date')),
-        ('topics', blocks.StructBlock([
-            ('heading', blocks.CharBlock(max_length=100, default='Topics')),
-            ('show_topics', blocks.BooleanBlock(default=True, required=False))
-        ], icon='tag'))
-    ])
+    content = blocks.StreamBlock(
+        [
+            (
+                "text",
+                blocks.StructBlock(
+                    [
+                        ("heading", blocks.CharBlock(max_length=100)),
+                        ("blob", blocks.RichTextBlock()),
+                    ],
+                    icon="pilcrow",
+                ),
+            ),
+            (
+                "list",
+                blocks.StructBlock(
+                    [
+                        ("heading", blocks.CharBlock(max_length=100)),
+                        ("links", blocks.ListBlock(atoms.Hyperlink())),
+                    ],
+                    icon="list-ul",
+                ),
+            ),
+            (
+                "date",
+                blocks.StructBlock(
+                    [
+                        ("heading", blocks.CharBlock(max_length=100)),
+                        ("date", blocks.DateBlock()),
+                    ],
+                    icon="date",
+                ),
+            ),
+            (
+                "topics",
+                blocks.StructBlock(
+                    [
+                        (
+                            "heading",
+                            blocks.CharBlock(max_length=100, default="Topics"),
+                        ),
+                        (
+                            "show_topics",
+                            blocks.BooleanBlock(default=True, required=False),
+                        ),
+                    ],
+                    icon="tag",
+                ),
+            ),
+        ]
+    )
     is_half_width = blocks.BooleanBlock(required=False, default=False)
 
     class Meta:
-        icon = 'grip'
-        template = '_includes/molecules/related-metadata.html'
-        label = 'Related metadata'
+        icon = "grip"
+        template = "_includes/molecules/related-metadata.html"
+        label = "Related metadata"
 
 
 class RSSFeed(blocks.StaticBlock):
     class Meta:
-        icon = 'plus'
-        template = '_includes/molecules/rss-feed.html'
-        label = 'RSS feed'
+        icon = "plus"
+        template = "_includes/molecules/rss-feed.html"
+        label = "RSS feed"
         admin_text = mark_safe(
-            '<h3>RSS Feed</h3>'
-            'If this page or one of its ancestors provides an RSS feed, '
-            'this block renders a link to that feed. If not, this block '
-            'renders nothing.'
+            "<h3>RSS Feed</h3>"
+            "If this page or one of its ancestors provides an RSS feed, "
+            "this block renders a link to that feed. If not, this block "
+            "renders nothing."
         )
 
     def get_context(self, value, parent_context=None):
-        context = super().get_context(
-            value,
-            parent_context=parent_context
-        )
+        context = super().get_context(value, parent_context=parent_context)
 
-        page = context.get('page')
+        page = context.get("page")
 
         if page:
-            context['value'] = get_appropriate_rss_feed_url_for_page(page)
+            context["value"] = get_appropriate_rss_feed_url_for_page(page)
 
         return context
 
@@ -407,74 +475,73 @@ class SocialMedia(blocks.StructBlock):
     is_share_view = blocks.BooleanBlock(
         default=True,
         required=False,
-        label='Desired action: share this page',
-        help_text='If unchecked, social media icons will link users to '
-                  'official CFPB accounts. Do not fill in any further fields.'
+        label="Desired action: share this page",
+        help_text="If unchecked, social media icons will link users to "
+        "official CFPB accounts. Do not fill in any further fields.",
     )
 
     blurb = blocks.CharBlock(
         required=False,
         default="Look what I found on the CFPB's site!",
-        help_text='Sets the tweet text, email subject line, '
-                  'and LinkedIn post text.'
+        help_text="Sets the tweet text, email subject line, "
+        "and LinkedIn post text.",
     )
 
     twitter_text = blocks.CharBlock(
         required=False,
         max_length=100,
-        help_text='(Optional) Custom text for Twitter shares. If blank, '
-                  'will default to value of blurb field above.'
+        help_text="(Optional) Custom text for Twitter shares. If blank, "
+        "will default to value of blurb field above.",
     )
     twitter_related = blocks.CharBlock(
         required=False,
-        help_text='(Optional) A comma-separated list of accounts related '
-                  'to the content of the shared URL. Do not enter the '
-                  ' @ symbol. If blank, it will default to just "cfpb".'
+        help_text="(Optional) A comma-separated list of accounts related "
+        "to the content of the shared URL. Do not enter the "
+        ' @ symbol. If blank, it will default to just "cfpb".',
     )
     twitter_hashtags = blocks.CharBlock(
         required=False,
-        help_text='(Optional) A comma-separated list of hashtags to be '
-                  'appended to default tweet text.'
+        help_text="(Optional) A comma-separated list of hashtags to be "
+        "appended to default tweet text.",
     )
     twitter_lang = blocks.CharBlock(
         required=False,
-        help_text='(Optional) Loads text components in the specified '
-                  'language, if other than English. E.g., use "es" '
-                  ' for Spanish. '
-                  'See https://dev.twitter.com/web/overview/languages '
-                  'for a list of supported language codes.'
+        help_text="(Optional) Loads text components in the specified "
+        'language, if other than English. E.g., use "es" '
+        " for Spanish. "
+        "See https://dev.twitter.com/web/overview/languages "
+        "for a list of supported language codes.",
     )
 
     email_title = blocks.CharBlock(
         required=False,
-        help_text='(Optional) Custom subject for email shares. If blank, '
-                  'will default to value of blurb field above.'
+        help_text="(Optional) Custom subject for email shares. If blank, "
+        "will default to value of blurb field above.",
     )
 
     email_text = blocks.CharBlock(
         required=False,
-        help_text='(Optional) Custom text for email shares. If blank, will '
-                  'default to "Check out this page from the CFPB".'
+        help_text="(Optional) Custom text for email shares. If blank, will "
+        'default to "Check out this page from the CFPB".',
     )
 
     email_signature = blocks.CharBlock(
         required=False,
-        help_text='(Optional) Adds a custom signature line to email shares. '
+        help_text="(Optional) Adds a custom signature line to email shares. ",
     )
     linkedin_title = blocks.CharBlock(
         required=False,
-        help_text='(Optional) Custom title for LinkedIn shares. If blank, '
-                  'will default to value of blurb field above.'
+        help_text="(Optional) Custom title for LinkedIn shares. If blank, "
+        "will default to value of blurb field above.",
     )
 
     linkedin_text = blocks.CharBlock(
-        required=False,
-        help_text='(Optional) Custom text for LinkedIn shares.'
+        required=False, help_text="(Optional) Custom text for LinkedIn shares."
     )
 
     class Meta:
-        icon = 'site'
-        template = '_includes/molecules/social-media.html'
+        icon = "site"
+        template = "_includes/molecules/social-media.html"
 
 
 class ContentWithAnchor(blocks.StructBlock):
@@ -482,5 +549,5 @@ class ContentWithAnchor(blocks.StructBlock):
     anchor_link = AnchorLink()
 
     class Meta:
-        icon = 'edit'
-        template = '_includes/molecules/full-width-text-anchor.html'
+        icon = "edit"
+        template = "_includes/molecules/full-width-text-anchor.html"

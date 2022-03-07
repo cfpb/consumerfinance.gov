@@ -14,7 +14,7 @@ class Command(BaseCommand):
             help=(
                 "The full URL for the page cache to invalidate "
                 "(can specify multiple)"
-            )
+            ),
         )
 
     def handle(self, *args, **options):
