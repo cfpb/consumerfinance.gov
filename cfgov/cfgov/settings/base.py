@@ -616,11 +616,11 @@ FLAGS = {
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Supports testing of a new 2021 version of the website home page.
     # Enable by appending ?home_page_2021=True to home page URLs.
-    "HOME_PAGE_2021":  [
+    "HOME_PAGE_2021": [
         ("environment is not", "production", True),
         ("parameter", "home_page_2021"),
     ],
-    "HOME_PAGE_2021_MINIMAL":  [
+    "HOME_PAGE_2021_MINIMAL": [
         ("environment is not", "production", True),
         ("parameter", "home_page_2021_minimal"),
     ],
