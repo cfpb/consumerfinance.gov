@@ -15,6 +15,7 @@ from wagtail.core.models import Orderable, PageManager
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
 
+from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
@@ -38,10 +39,14 @@ class HighlightCardValue(blocks.StructValue):
     def link_text(self):
         return _("Read more")
 
+    @property
+    def card_type(self):
+        return "highlight"
+
 
 class HighlightCardBlock(blocks.StructBlock):
     heading = blocks.CharBlock()
-    text = blocks.TextBlock()
+    text = blocks.TextBlock(required=False)
     link_url = atoms.URLOrRelativeURLBlock()
 
     class Meta:
@@ -54,6 +59,16 @@ class HighlightCardStreamBlock(blocks.StreamBlock):
 
 class AnswerPageStreamBlock(blocks.StreamBlock):
     page = blocks.PageChooserBlock(page_type="ask_cfpb.AnswerPage")
+
+
+def image_passthrough(image, *args, **kwargs):
+    """Passthrough replacement for Wagtail {{ image }} tag.
+
+    This is needed because, as written, the hero module template assumes that
+    it will get passed a Wagtail image object, which needs to get converted
+    into e.g. a URL to render. We want to pass the hero module a URL directly.
+    """
+    return image
 
 
 class HomePage(CFGOVPage):
@@ -108,10 +123,38 @@ class HomePage(CFGOVPage):
                 ],
                 "card_heading": self.card_heading,
                 "cards": self.cards.all(),
+                "image_passthrough": image_passthrough,
             }
         )
 
         return context
+
+    def get_template(self, request, *args, **kwargs):
+        preview_mode = getattr(request, "preview_mode", None)
+
+        if preview_mode is None:
+            if flag_enabled("HOME_PAGE_2021", request=request):
+                preview_mode = "home_page_2021"
+            else:
+                preview_mode = ""
+
+        templates = {
+            "": "v1/home_page/home_page.html",
+            "home_page_2021": "v1/home_page/home_page_2021.html",
+        }
+
+        return templates[preview_mode]
+
+    @property
+    def preview_modes(self):
+        return super().preview_modes + [("home_page_2021", "2021 version")]
+
+    def serve_preview(self, request, mode_name):
+        # TODO: Remove this once we are on Wagtail 2.5+.
+        # Implemented in Wagtail core in
+        # https://github.com/wagtail/wagtail/pull/7596
+        request.preview_mode = mode_name
+        return super().serve_preview(request, mode_name)
 
 
 class HomePageInfoUnit(Orderable, ClusterableModel):
@@ -190,7 +233,12 @@ class HomePageInfoUnitLink(Orderable):
     ]
 
 
+# Deprecated
 class HomePageCard(Orderable):
+    @property
+    def card_type(self):
+        return "featured"
+
     page = ParentalKey(
         "v1.HomePage", on_delete=models.CASCADE, related_name="cards"
     )
