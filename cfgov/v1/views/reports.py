@@ -17,7 +17,7 @@ def process_tags(queryset):
 
 
 def construct_absolute_url(url):
-    """Turn a relativey URL into an absolute URL"""
+    """Turn a relative URL into an absolute URL"""
     return "https://www.consumerfinance.gov" + url
 
 
