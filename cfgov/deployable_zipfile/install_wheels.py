@@ -30,21 +30,24 @@ def get_supported_wheels(wheel_directory):
 def install_wheels(wheel_directory):
     supported_wheel_filenames = get_supported_wheels(wheel_directory)
 
-    subprocess.check_call([
-        sys.executable,
-        '-m',
-        'pip',
-        'install',
-        '--no-deps',
-    ] + supported_wheel_filenames)
-
-
-if __name__ == '__main__':  # pragma: no cover
-    parser = argparse.ArgumentParser(
-        description='Extract a deployable Django project zipfile'
+    subprocess.check_call(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--no-deps",
+        ]
+        + supported_wheel_filenames
     )
 
-    parser.add_argument('wheel_directory')
+
+if __name__ == "__main__":  # pragma: no cover
+    parser = argparse.ArgumentParser(
+        description="Extract a deployable Django project zipfile"
+    )
+
+    parser.add_argument("wheel_directory")
 
     args = parser.parse_args()
 

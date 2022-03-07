@@ -7,33 +7,24 @@ from wagtailsharing.views import ServeView
 from teachers_digital_platform import views
 
 
-_tdp = 'teachers_digital_platform'
+_tdp = "teachers_digital_platform"
 
 urlpatterns = [
     re_path(
-        r'^journey',
-        TemplateView.as_view(
-            template_name=f'{_tdp}/bb-tool.html'
-        )
+        r"^journey", TemplateView.as_view(template_name=f"{_tdp}/bb-tool.html")
     ),
-
-    path(
-        r'',
-        lambda request: ServeView.as_view()(request, request.path)
-    ),
-
+    path(r"", lambda request: ServeView.as_view()(request, request.path)),
     # Handle all results (expects signed cookie "resultsUrl")
     re_path(
-        r'^survey/\d+-\d+/results/$',
+        r"^survey/\d+-\d+/results/$",
         views.student_results,
-        name='tdp_survey_student_results',
+        name="tdp_survey_student_results",
     ),
-
     # View a shared results page (expects ?r=...signed value)
     re_path(
-        r'^survey/\d+-\d+/view/$',
+        r"^survey/\d+-\d+/view/$",
         views.view_results,
-        name='tdp_survey_view_results',
+        name="tdp_survey_view_results",
     ),
 ]
 
@@ -44,20 +35,25 @@ urlpatterns = [
 for key, survey_view in views.SurveyWizard.build_views().items():
     urlpatterns.append(
         # Base URL for this survey
-        path(f'survey/{key}/', include([
-            # Handle redirect to grade-level intro page
-            path(
-                '',
-                views.create_grade_level_page_handler(key),
-                name=f'survey_{key}_grade_level',
+        path(
+            f"survey/{key}/",
+            include(
+                [
+                    # Handle redirect to grade-level intro page
+                    path(
+                        "",
+                        views.create_grade_level_page_handler(key),
+                        name=f"survey_{key}_grade_level",
+                    ),
+                    # URLs for particular steps
+                    re_path(
+                        r"^(?P<step>.+)/$",
+                        survey_view,
+                        # Note it's important this is kept in sync with the url_name
+                        # parameter in build_views()
+                        name=f"survey_{key}_step",
+                    ),
+                ]
             ),
-            # URLs for particular steps
-            re_path(
-                r'^(?P<step>.+)/$',
-                survey_view,
-                # Note it's important this is kept in sync with the url_name
-                # parameter in build_views()
-                name=f'survey_{key}_step'
-            ),
-        ]))
+        )
     )

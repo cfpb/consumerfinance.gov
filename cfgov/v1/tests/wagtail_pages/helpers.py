@@ -24,7 +24,7 @@ def save_page(page):
 
 def save_new_page(child, root=None):
     if not root:
-        root = HomePage.objects.get(title='CFGov')
+        root = HomePage.objects.get(title="CFGov")
     root.add_child(instance=child)
     return save_page(page=child)
 
@@ -47,7 +47,7 @@ def get_parent_route(site, parent_path=None):
     # if a parent path is provided, use that as parent
     if parent_path:
         path_components = [
-            component for component in parent_path.split('/') if component
+            component for component in parent_path.split("/") if component
         ]
 
         try:
@@ -60,8 +60,13 @@ def get_parent_route(site, parent_path=None):
     return parent
 
 
-def create_landing_page(page_title, page_slug, parent_path=None,
-                        has_email_signup=False, email_gd_code="USCFPB_000"):
+def create_landing_page(
+    page_title,
+    page_slug,
+    parent_path=None,
+    has_email_signup=False,
+    email_gd_code="USCFPB_000",
+):
     # get the current site
     site = Site.objects.get(is_default_site=True)
     # create a new page and set it as the child of an existing page
@@ -75,9 +80,9 @@ def create_landing_page(page_title, page_slug, parent_path=None,
     new_page = LandingPage(title=page_title, slug=page_slug)
     # update sidefoot streamfield if required
     if has_email_signup:
-        new_page.sidefoot = json.dumps([
-            {'type': 'email_signup', 'value': {'gd_code': email_gd_code}}
-        ])
+        new_page.sidefoot = json.dumps(
+            [{"type": "email_signup", "value": {"gd_code": email_gd_code}}]
+        )
 
     try:
         parent.add_child(instance=new_page)
@@ -89,10 +94,13 @@ def create_landing_page(page_title, page_slug, parent_path=None,
     return new_page.get_url(None, site)
 
 
-def create_sublanding_filterable_page(page_title, page_slug,
-                                      parent_path=None,
-                                      has_filter=True,
-                                      filter_is_expanded=False):
+def create_sublanding_filterable_page(
+    page_title,
+    page_slug,
+    parent_path=None,
+    has_filter=True,
+    filter_is_expanded=False,
+):
     # create a new page and set it as the child of an existing page
     # get the current site
     site = Site.objects.get(is_default_site=True)
@@ -108,15 +116,19 @@ def create_sublanding_filterable_page(page_title, page_slug,
 
     # if page has a filter, add it
     if has_filter:
-        new_page.content = json.dumps([{
-            'type': 'filter_controls',
-            'value': {
-                'is_expanded': filter_is_expanded,
-                'categories': {'page_type': 'blog'},
-                'topic_filtering': 'sort_alphabetically',
-                'language': True,
-            }
-        }])
+        new_page.content = json.dumps(
+            [
+                {
+                    "type": "filter_controls",
+                    "value": {
+                        "is_expanded": filter_is_expanded,
+                        "categories": {"page_type": "blog"},
+                        "topic_filtering": "sort_alphabetically",
+                        "language": True,
+                    },
+                }
+            ]
+        )
 
     try:
         parent.add_child(instance=new_page)
@@ -128,10 +140,15 @@ def create_sublanding_filterable_page(page_title, page_slug,
     return new_page.get_url(None, site)
 
 
-def create_blog_page(page_title, page_slug, parent_path=None,
-                     page_tags={}, page_categories={},
-                     page_language='en',
-                     date_published_override=date.today()):
+def create_blog_page(
+    page_title,
+    page_slug,
+    parent_path=None,
+    page_tags=None,
+    page_categories=None,
+    page_language=None,
+    date_published_override=None,
+):
     # create a new page and set it as the child of an existing page
     # get the current site
     site = Site.objects.get(is_default_site=True)
@@ -144,7 +161,7 @@ def create_blog_page(page_title, page_slug, parent_path=None,
 
     # check for optional variables set to None
     if not page_language:
-        page_language = 'en'
+        page_language = "en"
     if not page_tags:
         page_tags = {}
     if not page_categories:
@@ -153,9 +170,12 @@ def create_blog_page(page_title, page_slug, parent_path=None,
         date_published_override = date.today()
 
     # create page, add it as a child of parent, save, and publish
-    new_page = BlogPage(title=page_title, slug=page_slug,
-                        language=page_language,
-                        date_published=date_published_override)
+    new_page = BlogPage(
+        title=page_title,
+        slug=page_slug,
+        language=page_language,
+        date_published=date_published_override,
+    )
 
     # add tags and categories
     for item in page_tags:
@@ -173,8 +193,13 @@ def create_blog_page(page_title, page_slug, parent_path=None,
     return new_page.get_url(None, site)
 
 
-def create_browse_filterable_page(page_title, page_slug, parent_path=None,
-                                  has_filter=True, filter_is_expanded=False):
+def create_browse_filterable_page(
+    page_title,
+    page_slug,
+    parent_path=None,
+    has_filter=True,
+    filter_is_expanded=False,
+):
     # create a new page and set it as the child of an existing page
     # get the current site
     site = Site.objects.get(is_default_site=True)
@@ -190,15 +215,19 @@ def create_browse_filterable_page(page_title, page_slug, parent_path=None,
 
     # if page has a filter, add it
     if has_filter:
-        new_page.content = json.dumps([{
-            'type': 'filter_controls',
-            'value': {
-                'is_expanded': filter_is_expanded,
-                'categories': {'page_type': 'research-reports'},
-                'topic_filtering': 'sort_alphabetically',
-                'language': True,
-            }
-        }])
+        new_page.content = json.dumps(
+            [
+                {
+                    "type": "filter_controls",
+                    "value": {
+                        "is_expanded": filter_is_expanded,
+                        "categories": {"page_type": "research-reports"},
+                        "topic_filtering": "sort_alphabetically",
+                        "language": True,
+                    },
+                }
+            ]
+        )
 
     try:
         parent.add_child(instance=new_page)
@@ -210,9 +239,14 @@ def create_browse_filterable_page(page_title, page_slug, parent_path=None,
     return new_page.get_url(None, site)
 
 
-def create_learn_page(page_title, page_slug, parent_path=None,
-                      page_tags={}, page_categories={},
-                      date_published_override=date.today()):
+def create_learn_page(
+    page_title,
+    page_slug,
+    parent_path=None,
+    page_tags=None,
+    page_categories=None,
+    date_published_override=None,
+):
     # create a new page and set it as the child of an existing page
     # get the current site
     site = Site.objects.get(is_default_site=True)
@@ -232,8 +266,11 @@ def create_learn_page(page_title, page_slug, parent_path=None,
         date_published_override = date.today()
 
     # create page, add it as a child of parent, save, and publish
-    new_page = LearnPage(title=page_title, slug=page_slug,
-                         date_published=date_published_override)
+    new_page = LearnPage(
+        title=page_title,
+        slug=page_slug,
+        date_published=date_published_override,
+    )
 
     # add tags and categories
     for item in page_tags:
@@ -251,8 +288,9 @@ def create_learn_page(page_title, page_slug, parent_path=None,
     return new_page.get_url(None, site)
 
 
-def create_sublanding_page(page_title, page_slug, parent_path=None,
-                           has_feedback=False):
+def create_sublanding_page(
+    page_title, page_slug, parent_path=None, has_feedback=False
+):
     # create a new page and set it as the child of an existing page
     # get the current site
     site = Site.objects.get(is_default_site=True)
@@ -268,10 +306,9 @@ def create_sublanding_page(page_title, page_slug, parent_path=None,
 
     # if page has feedback, add it
     if has_feedback:
-        new_page.content = json.dumps([{
-            'type': 'feedback',
-            'value': {'intro_text': 'foo'}
-        }])
+        new_page.content = json.dumps(
+            [{"type": "feedback", "value": {"intro_text": "foo"}}]
+        )
 
     try:
         parent.add_child(instance=new_page)
@@ -283,12 +320,17 @@ def create_sublanding_page(page_title, page_slug, parent_path=None,
     return new_page.get_url(None, site)
 
 
-def create_browse_page(page_title, page_slug, parent_path=None,
-                       has_chart_block=False, chart_block_title='Chart',
-                       chart_block_chart_type='line',
-                       chart_block_color_scheme='green',
-                       chart_block_data_source='',
-                       chart_block_description='A chart'):
+def create_browse_page(
+    page_title,
+    page_slug,
+    parent_path=None,
+    has_chart_block=False,
+    chart_block_title="Chart",
+    chart_block_chart_type="line",
+    chart_block_color_scheme="green",
+    chart_block_data_source="",
+    chart_block_description="A chart",
+):
     # create a new page and set it as the child of an existing page
     # get the current site
     site = Site.objects.get(is_default_site=True)
@@ -304,18 +346,23 @@ def create_browse_page(page_title, page_slug, parent_path=None,
 
     # if page has a filter, add it
     if has_chart_block:
-        date = '2022-01-01'
-        new_page.content = json.dumps([{
-            'type': 'chart_block', 'value': {
-                'title': chart_block_title,
-                'chart_type': chart_block_chart_type,
-                'color_scheme': chart_block_color_scheme,
-                'data_source': chart_block_data_source,
-                'description': chart_block_description,
-                'date_published': date,
-                'last_updated_projected_data': date
-            }
-        }])
+        date = "2022-01-01"
+        new_page.content = json.dumps(
+            [
+                {
+                    "type": "chart_block",
+                    "value": {
+                        "title": chart_block_title,
+                        "chart_type": chart_block_chart_type,
+                        "color_scheme": chart_block_color_scheme,
+                        "data_source": chart_block_data_source,
+                        "description": chart_block_description,
+                        "date_published": date,
+                        "last_updated_projected_data": date,
+                    },
+                }
+            ]
+        )
 
     try:
         parent.add_child(instance=new_page)

@@ -18,4 +18,5 @@ def _wrap_password_reset_view(view_func):
         if not account.password_reset_enabled():
             raise Http404
         return view_func(*args, **kwargs)
+
     return wrapper

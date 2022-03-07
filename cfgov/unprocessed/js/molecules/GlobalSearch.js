@@ -72,15 +72,17 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     const clearableInput = new ClearableInput( inputContainsLabel );
     clearableInput.init();
     const handleExpandBeginBinded = _handleExpandBegin.bind( this );
+    const handleCollapseEndBinded = _handleCollapseEnd.bind( this );
+
     _flyoutMenu.addEventListener( 'expandBegin', handleExpandBeginBinded );
     _flyoutMenu.addEventListener( 'collapseBegin', _handleCollapseBegin );
-    _flyoutMenu.addEventListener( 'collapseEnd', _handleCollapseEnd );
+    _flyoutMenu.addEventListener( 'collapseEnd', handleCollapseEndBinded );
 
     _tabTrigger.init();
     _tabTrigger.addEventListener( 'tabPressed', _handleTabPress );
 
     // Set initial collapse state.
-    _handleCollapseEnd();
+    handleCollapseEndBinded();
 
     return this;
   }
@@ -166,6 +168,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    * Use this to perform post-collapseEnd actions.
    */
   function _handleCollapseEnd() {
+    this.dispatchEvent( 'collapseEnd', { target: this } );
 
     /* TODO: When tabbing is used to collapse the search flyout
        it will not animate with the below line.

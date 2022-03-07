@@ -20,7 +20,7 @@ def markup(html: str):
     On output _replace_tokens() will swap this markup back into place.
     """
     _replacements.append(html)
-    return f'{_token}{len(_replacements) - 1}_'
+    return f"{_token}{len(_replacements) - 1}_"
 
 
 def _replace_labels(html: str) -> str:
@@ -28,8 +28,8 @@ def _replace_labels(html: str) -> str:
     Replace Django's question-level labels with legend elements
     """
     return re.sub(
-        '<fieldset><label [^>]+>(.*?)</label>',
-        lambda m: f'<fieldset><legend class="tdp-question-legend">{m[1]}</legend>',  # noqa E501
+        "<fieldset><label [^>]+>(.*?)</label>",
+        lambda m: f'<fieldset><legend class="tdp-question-legend">{m[1]}</legend>',  # noqa: B950
         html,
     )
 
@@ -42,7 +42,7 @@ def _replace_tokens(html: str) -> str:
     smuggle the original markup unharmed into the output.
     """
     return re.sub(
-        f'{_token}(\\d+)_',
+        f"{_token}(\\d+)_",
         lambda m: _replacements[int(m[1])],
         html,
     )
@@ -55,16 +55,19 @@ class SurveyForm(Form):
     1. Allow embedding HTML in question titles.
     2. Make Django's markup more accessible for radio button groups.
     """
+
     def as_ul(self):
         "Return this form rendered as HTML <li>s -- excluding the <ul></ul>."
         output = self._html_output(
-            normal_row=''.join([
-                '<li%(html_class_attr)s>',
-                '<fieldset>%(label)s %(field)s%(help_text)s</fieldset>',
-                '</li>'
-            ]),
-            error_row='<li>%s</li>',
-            row_ender='</li>',
+            normal_row="".join(
+                [
+                    "<li%(html_class_attr)s>",
+                    "<fieldset>%(label)s %(field)s%(help_text)s</fieldset>",
+                    "</li>",
+                ]
+            ),
+            error_row="<li>%s</li>",
+            row_ender="</li>",
             help_text_html=' <span class="helptext">%s</span>',
             errors_on_separate_row=False,
         )
@@ -78,14 +81,15 @@ class SharedUrlForm(Form):
     """
     Form to validate and unwrap the signed code holding results
     """
+
     r = CharField(required=True)
 
     def clean_r(self):
-        signed_code = self.cleaned_data['r']
+        signed_code = self.cleaned_data["r"]
         signer = signing.Signer()
         try:
             code = signer.unsign(signed_code)
         except signing.BadSignature:
-            raise ValidationError('Failed signature check')
+            raise ValidationError("Failed signature check")
 
         return signed_code, code

@@ -15,8 +15,9 @@ except ImportError:
     from django.conf.urls import url as re_path
 
 
-def register_template_debug(app_name, url_path, template_name, test_cases,
-                            extra_js=None):
+def register_template_debug(
+    app_name, url_path, template_name, test_cases, extra_js=None
+):
     @hooks.register("register_admin_urls")
     def register_template_debug_url():
         return [
@@ -25,7 +26,7 @@ def register_template_debug(app_name, url_path, template_name, test_cases,
                 TemplateDebugView.as_view(
                     debug_template_name=template_name,
                     debug_test_cases=test_cases,
-                    extra_js=extra_js
+                    extra_js=extra_js,
                 ),
                 name=f"template_debug_{app_name}_{url_path}",
             ),
