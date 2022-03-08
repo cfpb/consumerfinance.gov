@@ -49,7 +49,6 @@ class SublandingPage(CFGOVPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
-            ("reg_comment", organisms.RegComment()),
             ("feedback", v1_blocks.Feedback()),
         ],
         blank=True,
