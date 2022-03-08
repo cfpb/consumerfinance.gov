@@ -37,7 +37,7 @@
     "autoprefixer": "10.4.0",
     "babel-loader": "8.2.3",
     "cfpb-chart-builder": "6.4.2",
-    "core-js": "3.19.2",
+    "core-js": "3.19.3",
     "cross-fetch": "3.1.4",
     "del": "6.0.0",
     "enforce-node-version": "0.1.0",
@@ -71,7 +71,7 @@
     "svg-inline-loader": "0.8.2",
     "terser-webpack-plugin": "5.2.5",
     "vinyl-named": "1.1.0",
-    "webpack": "5.64.4",
+    "webpack": "5.65.0",
     "webpack-stream": "7.0.0",
     "xdr": "0.5.3",
     "yargs": "17.3.0"
@@ -86,7 +86,7 @@
     "jest-cli": "27.4.3",
     "jsdoc": "3.6.7",
     "minimist": "1.2.5",
-    "snyk": "1.780.0",
+    "snyk": "1.786.0",
     "through2": "4.0.2"
   },
   "resolutions": {
