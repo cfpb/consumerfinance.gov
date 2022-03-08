@@ -74,7 +74,7 @@ def image_passthrough(image, *args, **kwargs):
 class HomePage(CFGOVPage):
     content = StreamField(HomePageContentBlock(), blank=True)
 
-    card_heading = models.CharField(max_length=40, null=True, blank=True)
+    card_heading = models.CharField(max_length=60, null=True, blank=True)
 
     answer_page_links = StreamField(AnswerPageStreamBlock, blank=True)
     highlight_cards = StreamField(HighlightCardStreamBlock, blank=True)
@@ -94,7 +94,7 @@ class HomePage(CFGOVPage):
             ObjectList(
                 [
                     FieldPanel("card_heading"),
-                    InlinePanel("cards", min_num=3, max_num=3, label="Card"),
+                    InlinePanel("cards", min_num=3, max_num=5, label="Card"),
                 ],
                 heading="Cards",
             ),
@@ -237,7 +237,7 @@ class HomePageInfoUnitLink(Orderable):
 class HomePageCard(Orderable):
     @property
     def card_type(self):
-        return "featured"
+        return "topic"
 
     page = ParentalKey(
         "v1.HomePage", on_delete=models.CASCADE, related_name="cards"
@@ -253,6 +253,7 @@ class HomePageCard(Orderable):
     text = models.TextField(
         max_length=100,
         help_text=("100 characters maximum (including spaces)."),
+        blank=True
     )
     link_text = models.CharField(
         max_length=25, help_text=("25 characters maximum (including spaces).")
