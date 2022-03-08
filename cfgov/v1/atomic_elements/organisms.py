@@ -258,23 +258,21 @@ class RelatedPosts(blocks.StructBlock):
         required=False,
     )
 
-    and_filtering = blocks.BooleanBlock(
+    tag_filtering = blocks.ChoiceBlock(
+        choices=[
+            (
+                "and_filtering",
+                "Only show items that match ALL tags on this page",
+            ),
+            (
+                "ignore_tags",
+                "Ignore topic tags and show all recent items",
+            ),
+        ],
         required=False,
-        default=False,
-        label="Match all topic tags",
-        help_text=(
-            "If checked, related posts will only be pulled in if they "
-            "match ALL topic tags set on this page. Otherwise, related "
-            "posts can match any one topic tag."
-        ),
-    )
-
-    ignore_tags = blocks.BooleanBlock(
-        required=False,
-        default=False,
-        label="Ignore topic tags",
-        help_text=('If checked, related items shown will be pulled from the '
-                   'full set of posts, without filtering by topic tag.')
+        help_text=('Set filtering options for topic tags. If no option is '
+                   'selected, related posts will be displayed if they '
+                   'share any one tag with this page.'),
     )
 
     alternate_view_more_url = blocks.CharBlock(
@@ -333,8 +331,7 @@ class RelatedPosts(blocks.StructBlock):
             return related_items
 
         tags = page.tags.all()
-        and_filtering = value['and_filtering']
-        ignore_tags = value['ignore_tags']
+        tag_filtering = value['tag_filtering']
         specific_categories = value['specific_categories']
         limit = int(value['limit'])
         queryset = AbstractFilterPage.objects.live().exclude(
@@ -344,7 +341,7 @@ class RelatedPosts(blocks.StructBlock):
             # Include children of this slug that match at least 1 tag
             children = Page.objects.child_of_q(Page.objects.get(slug=parent))
 
-            if ignore_tags:
+            if tag_filtering == "ignore_tags":
                 filters = children
             else:
                 filters = children & Q(('tags__in', tags))
@@ -353,7 +350,7 @@ class RelatedPosts(blocks.StructBlock):
                 # Include archived events matches
                 archive = Page.objects.get(slug="archive-past-events")
                 children = Page.objects.child_of_q(archive)
-                if ignore_tags:
+                if tag_filtering == "ignore_tags":
                     filters |= children
                 else:
                     filters |= children & Q(('tags__in', tags))
@@ -368,7 +365,7 @@ class RelatedPosts(blocks.StructBlock):
 
             related_queryset = queryset.filter(filters)
 
-            if and_filtering:
+            if tag_filtering == "and_filtering":
                 # By default, we need to match at least one tag
                 # If specified in the admin, change this to match ALL tags
                 related_queryset = match_all_topic_tags(related_queryset, tags)

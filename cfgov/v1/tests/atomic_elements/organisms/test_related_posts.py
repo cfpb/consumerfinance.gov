@@ -121,8 +121,7 @@ class RelatedPostsTestCase(TestCase):
             'relate_newsroom': False,
             'relate_events': False,
             'specific_categories': [],
-            'and_filtering': False,
-            'ignore_tags': False,
+            'tag_filtering': '',
         }
 
     def test_related_posts_blog(self):
@@ -193,8 +192,7 @@ class RelatedPostsTestCase(TestCase):
         self.block_value['relate_posts'] = True
         self.block_value['relate_newsroom'] = True
         self.block_value['relate_events'] = True
-        self.block_value['and_filtering'] = True
-        self.block_value['ignore_tags'] = False
+        self.block_value['tag_filtering'] = 'and_filtering'
 
         related_posts = RelatedPosts.related_posts(
             self.page_with_authors, self.block_value
@@ -354,8 +352,7 @@ class RelatedPostsTestCase(TestCase):
 
     def test_related_posts_rendering(self):
         block_value = {
-            'and_filtering': False,
-            'ignore_tags': False,
+            'tag_filtering': '',
             'alternate_view_more_url': None,
             'limit': 3,
             'relate_events': True,
