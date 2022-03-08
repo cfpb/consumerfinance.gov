@@ -142,20 +142,6 @@ class OrganismsTestCase(TestCase):
         response = django_client.get("/landing/")
         self.assertContains(response, "Info Unit Group")
 
-    # TODO: More comprehensive test for this organism
-    def test_reg_comment(self):
-        """RegComment correctly displays on a Sublanding Page"""
-        sublanding_page = SublandingPage(
-            title="Sublanding Page",
-            slug="sublanding",
-        )
-        sublanding_page.content = StreamValue(
-            sublanding_page.content.stream_block, [atomic.reg_comment], True
-        )
-        publish_page(child=sublanding_page)
-        response = django_client.get("/sublanding/")
-        self.assertContains(response, "Enter your comments")
-
     def test_tableblock(self):
         """Table correctly displays on a Learn Page"""
         learn_page = LearnPage(title="Learn Page", slug="learn")

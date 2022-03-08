@@ -221,44 +221,6 @@ class EmailSignUp(blocks.StructBlock):
         js = ["email-signup.js"]
 
 
-class RegComment(blocks.StructBlock):
-    document_id = blocks.CharBlock(
-        required=True,
-        label="Document ID",
-        help_text=(
-            "Federal Register document ID number to which the comment "
-            "should be submitted. Should follow this format: "
-            "CFPB-YYYY-####-####"
-        ),
-    )
-    generic_regs_link = blocks.BooleanBlock(
-        required=False,
-        default=True,
-        label="Use generic Regs.gov link?",
-        help_text=(
-            "If unchecked, the link to comment at Regulations.gov if "
-            "you want to add attachments will link directly to the "
-            "document given above. Leave this checked if this comment "
-            "form is being published before the full document is live "
-            "at Regulations.gov, then uncheck it when the full "
-            "document has been published."
-        ),
-    )
-    id = blocks.CharBlock(
-        required=False,
-        label="Form ID",
-        help_text=(
-            "Sets the `id` attribute in the form's markup. If not "
-            "set, the form will be assigned a base id of "
-            "`o-reg-comment_` with a random number appended."
-        ),
-    )
-
-    class Meta:
-        icon = "form"
-        template = "_includes/organisms/reg-comment.html"
-
-
 class RelatedPosts(blocks.StructBlock):
     limit = blocks.CharBlock(
         default="3",
