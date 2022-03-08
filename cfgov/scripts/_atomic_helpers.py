@@ -152,15 +152,6 @@ email_signup_required = {
     },
 }
 
-reg_comment = {
-    "type": "reg_comment",
-    "value": {
-        "document_id": "test document id",
-        "generic_regs_link": True,
-        "id": "test id",
-    },
-}
-
 snippet_list_show_thumbnails_false = {
     "type": "snippet_list",
     "value": {
