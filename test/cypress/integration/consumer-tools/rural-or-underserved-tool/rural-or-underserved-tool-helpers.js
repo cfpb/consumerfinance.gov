@@ -50,6 +50,10 @@ export class RuralOrUnderservedTool {
     },
     request => { request.reply( censusAPIResponses.tigerweb3 ); } )
       .as( 'censusTigerweb3' );
+    cy.wait( '@censusGeocoding' );
+    cy.wait( '@censusTigerweb1' );
+    cy.wait( '@censusTigerweb2' );
+    cy.wait( '@censusTigerweb3' );
   }
 
 }
