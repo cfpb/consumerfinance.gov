@@ -353,7 +353,10 @@ class RelatedPosts(blocks.StructBlock):
                 # Include archived events matches
                 archive = Page.objects.get(slug="archive-past-events")
                 children = Page.objects.child_of_q(archive)
-                filters |= children & Q(("tags__in", tags))
+                if ignore_tags:
+                    filters |= children
+                else:
+                    filters |= children & Q(('tags__in', tags))
 
             if specific_categories:
                 # Filter by any additional categories specified
