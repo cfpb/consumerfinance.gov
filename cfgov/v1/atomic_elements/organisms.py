@@ -271,6 +271,14 @@ class RelatedPosts(blocks.StructBlock):
                    'posts can match any one topic tag.')
     )
 
+    ignore_tags = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        label="Ignore topic tags",
+        help_text=('If checked, related items shown will be pulled from the '
+                   'full set of posts, without filtering by topic tag.')
+    )
+
     alternate_view_more_url = blocks.CharBlock(
         required=False,
         label='Alternate "View more" URL',
@@ -324,6 +332,7 @@ class RelatedPosts(blocks.StructBlock):
 
         tags = page.tags.all()
         and_filtering = value['and_filtering']
+        ignore_tags = value['ignore_tags']
         specific_categories = value['specific_categories']
         limit = int(value['limit'])
         queryset = AbstractFilterPage.objects.live().exclude(
@@ -332,7 +341,11 @@ class RelatedPosts(blocks.StructBlock):
         for parent in related_types:  # blog, newsroom or events
             # Include children of this slug that match at least 1 tag
             children = Page.objects.child_of_q(Page.objects.get(slug=parent))
-            filters = children & Q(('tags__in', tags))
+
+            if ignore_tags:
+                filters = children
+            else:
+                filters = children & Q(('tags__in', tags))
 
             if parent == 'events':
                 # Include archived events matches
