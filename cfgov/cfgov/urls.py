@@ -31,7 +31,6 @@ from core.views import (
     CacheTaggedTemplateView,
     ExternalURLNoticeView,
     govdelivery_subscribe,
-    regsgov_comment,
 )
 from housing_counselor.views import (
     HousingCounselorPDFView,
@@ -232,40 +231,6 @@ urlpatterns = [
                 "govdelivery",
             ),
             namespace="govdelivery",
-        ),
-    ),
-    re_path(r"^regulation-comment/new/$", regsgov_comment, name="reg_comment"),
-    re_path(
-        r"^regulation-comment/",
-        include(
-            (
-                [
-                    re_path(
-                        r"^success/$",
-                        TemplateView.as_view(
-                            template_name="regulation-comment/success/index.html"
-                        ),
-                        # 'core.views.comment_success',
-                        name="success",
-                    ),
-                    re_path(
-                        r"^error/$",
-                        TemplateView.as_view(
-                            template_name="regulation-comment/error/index.html"
-                        ),
-                        name="user_error",
-                    ),
-                    re_path(
-                        r"^server-error/$",
-                        TemplateView.as_view(
-                            template_name="regulation-comment/server-error/index.html"
-                        ),
-                        name="server_error",
-                    ),
-                ],
-                "reg_comment",
-            ),
-            namespace="reg_comment",
         ),
     ),
     re_path(

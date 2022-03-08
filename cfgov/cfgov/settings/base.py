@@ -419,10 +419,6 @@ DATE_FORMAT = "n/j/Y"
 GOOGLE_ANALYTICS_ID = ""
 GOOGLE_ANALYTICS_SITE = ""
 
-# Regulations.gov environment variables
-REGSGOV_BASE_URL = os.environ.get("REGSGOV_BASE_URL")
-REGSGOV_API_KEY = os.environ.get("REGSGOV_API_KEY")
-
 # CDNs
 WAGTAILFRONTENDCACHE = {}
 
