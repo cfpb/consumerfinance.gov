@@ -114,14 +114,15 @@ class RelatedPostsTestCase(TestCase):
         # specific_categories slot of the dict has to be something that it can
         # actually find.
         self.block_value = {
-            "limit": 3,
-            "show_heading": True,
-            "header_title": "Further reading",
-            "relate_posts": False,
-            "relate_newsroom": False,
-            "relate_events": False,
-            "specific_categories": [],
-            "and_filtering": False,
+            'limit': 3,
+            'show_heading': True,
+            'header_title': 'Further reading',
+            'relate_posts': False,
+            'relate_newsroom': False,
+            'relate_events': False,
+            'specific_categories': [],
+            'and_filtering': False,
+            'ignore_tags': False,
         }
 
     def test_related_posts_blog(self):
@@ -189,10 +190,11 @@ class RelatedPostsTestCase(TestCase):
         the calling page.
         """
 
-        self.block_value["relate_posts"] = True
-        self.block_value["relate_newsroom"] = True
-        self.block_value["relate_events"] = True
-        self.block_value["and_filtering"] = True
+        self.block_value['relate_posts'] = True
+        self.block_value['relate_newsroom'] = True
+        self.block_value['relate_events'] = True
+        self.block_value['and_filtering'] = True
+        self.block_value['ignore_tags'] = False
 
         related_posts = RelatedPosts.related_posts(
             self.page_with_authors, self.block_value
@@ -211,8 +213,9 @@ class RelatedPostsTestCase(TestCase):
         calling page.
         """
 
-        self.block_value["relate_posts"] = True
-        self.block_value["and_filtering"] = False
+        self.block_value['relate_posts'] = True
+        self.block_value['and_filtering'] = False
+        self.block_value['ignore_tags'] = False
 
         related_posts = RelatedPosts.related_posts(
             self.page_with_authors, self.block_value
@@ -351,13 +354,14 @@ class RelatedPostsTestCase(TestCase):
 
     def test_related_posts_rendering(self):
         block_value = {
-            "and_filtering": False,
-            "alternate_view_more_url": None,
-            "limit": 3,
-            "relate_events": True,
-            "relate_newsroom": True,
-            "relate_posts": True,
-            "specific_categories": [],
+            'and_filtering': False,
+            'ignore_tags': False,
+            'alternate_view_more_url': None,
+            'limit': 3,
+            'relate_events': True,
+            'relate_newsroom': True,
+            'relate_posts': True,
+            'specific_categories': [],
         }
 
         context = {
