@@ -1,5 +1,9 @@
 [flake8]
+max-line-length = 79
+select = C,E,F,W,B,B950
 ignore =
+    # black https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#line-length
+    E203, E501
     # There's nothing wrong with assigning lambdas
     E731,
     # PEP8 weakly recommends Knuth-style line breaks before binary
@@ -19,6 +23,7 @@ exclude =
     requirements,
     node_modules,
     site,
+    venv,
 
     # And directories in cfgov that don't have python files to lint
     cfgov/jinja2,

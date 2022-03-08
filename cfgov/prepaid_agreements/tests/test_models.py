@@ -7,7 +7,6 @@ from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
 
 class TestPrepaidProducts(TestCase):
-
     def test_valid_products(self):
         product1 = PrepaidProduct.objects.create()
         product2 = PrepaidProduct.objects.create(deleted_at=timezone.now())
@@ -17,7 +16,7 @@ class TestPrepaidProducts(TestCase):
 
 
 class TestMostRecentAgreement(TestCase):
-    """ Test that the latest agreement is based on effective date.
+    """Test that the latest agreement is based on effective date.
 
     The most_recent_agreement method on a PrepaidProduct should return the
     agreement with the latest effective_date.
@@ -67,12 +66,10 @@ class TestMostRecentAgreement(TestCase):
 
     def test_product_most_recent_agreement(self):
         self.assertEqual(
-            self.product_1.most_recent_agreement,
-            self.agreement_1
+            self.product_1.most_recent_agreement, self.agreement_1
         )
         self.assertEqual(
-            self.product_2.most_recent_agreement,
-            self.agreement_2
+            self.product_2.most_recent_agreement, self.agreement_2
         )
 
     def test_agreement_is_most_recent(self):

@@ -8,10 +8,13 @@ from pytz import timezone
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
-    EventFilterablePagesDocumentSearch, FilterablePagesDocumentSearch
+    EventFilterablePagesDocumentSearch,
+    FilterablePagesDocumentSearch,
 )
 from v1.forms import (
-    EnforcementActionsFilterForm, EventArchiveFilterForm, FilterableListForm
+    EnforcementActionsFilterForm,
+    EventArchiveFilterForm,
+    FilterableListForm,
 )
 from v1.models import BlogPage
 from v1.models.base import CFGOVPageCategory
@@ -22,158 +25,147 @@ from v1.util.categories import clean_categories
 
 
 class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        blog1 = BlogPage(title='test page')
-        blog1.categories.add(CFGOVPageCategory(name='foo'))
-        blog1.categories.add(CFGOVPageCategory(name='bar'))
-        blog1.tags.add('foo')
-        blog1.authors.add('richa-agarwal')
-        blog1.language = 'es'
-        blog2 = BlogPage(title='another test page')
-        blog2.categories.add(CFGOVPageCategory(name='bar'))
-        blog2.tags.add('blah')
-        blog2.authors.add('richard-cordray')
-        category_blog = BlogPage(title='Category Test')
-        category_blog.categories.add(
-            CFGOVPageCategory(name='info-for-consumers')
+    def setUp(self):
+        self.blog1 = BlogPage(title="test page")
+        self.blog1.categories.add(CFGOVPageCategory(name="foo"))
+        self.blog1.categories.add(CFGOVPageCategory(name="bar"))
+        self.blog1.tags.add("foo")
+        self.blog1.authors.add("richa-agarwal")
+        self.blog1.language = "es"
+        self.blog2 = BlogPage(title="another test page")
+        self.blog2.categories.add(CFGOVPageCategory(name="bar"))
+        self.blog2.tags.add("blah")
+        self.blog2.authors.add("richard-cordray")
+        self.category_blog = BlogPage(title="Category Test")
+        self.category_blog.categories.add(
+            CFGOVPageCategory(name="info-for-consumers")
         )
-        event1 = EventPage(
-            title='test page 2',
-            start_dt=datetime.now(timezone('UTC'))
+        self.event1 = EventPage(
+            title="test page 2", start_dt=datetime.now(timezone("UTC"))
         )
-        event1.tags.add('bar')
-        cool_event = EventPage(
-            title='Cool Event',
-            start_dt=datetime.now(timezone('UTC'))
+        self.event1.tags.add("bar")
+        self.cool_event = EventPage(
+            title="Cool Event", start_dt=datetime.now(timezone("UTC"))
         )
-        awesome_event = EventPage(
-            title='Awesome Event',
-            start_dt=datetime.now(timezone('UTC'))
+        self.awesome_event = EventPage(
+            title="Awesome Event", start_dt=datetime.now(timezone("UTC"))
         )
-        publish_page(blog1)
-        publish_page(blog2)
-        publish_page(event1)
-        publish_page(cool_event)
-        publish_page(awesome_event)
-        publish_page(category_blog)
-        cls.blog1 = blog1
-        cls.blog2 = blog2
-        cls.event1 = event1
-        cls.cool_event = cool_event
-        cls.awesome_event = awesome_event
-        cls.category_blog = category_blog
-
-        cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
+        publish_page(self.blog1)
+        publish_page(self.blog2)
+        publish_page(self.event1)
+        publish_page(self.cool_event)
+        publish_page(self.awesome_event)
+        publish_page(self.category_blog)
+        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
     def setUpFilterableForm(self, data=None, filterable_categories=None):
         form = FilterableListForm(
-            filterable_search=FilterablePagesDocumentSearch(
-                prefix="/"
-            ),
+            filterable_search=FilterablePagesDocumentSearch(prefix="/"),
             wagtail_block=None,
-            filterable_categories=filterable_categories
+            filterable_categories=filterable_categories,
         )
         form.is_bound = True
         form.cleaned_data = data
         return form
 
     def test_filter_by_category(self):
-        form = self.setUpFilterableForm(data={'categories': ['foo']})
+        form = self.setUpFilterableForm(data={"categories": ["foo"]})
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.blog1)
 
     def test_filter_by_nonexisting_category(self):
-        form = self.setUpFilterableForm(data={'categories': ['test filter']})
+        form = self.setUpFilterableForm(data={"categories": ["test filter"]})
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 0)
 
     def test_filter_by_tags(self):
-        form = self.setUpFilterableForm(data={'topics': ['foo', 'bar']})
-        page_set_pks = form.get_page_set().values_list('pk', flat=True)
+        form = self.setUpFilterableForm(data={"topics": ["foo", "bar"]})
+        page_set_pks = form.get_page_set().values_list("pk", flat=True)
         self.assertEqual(len(page_set_pks), 2)
         self.assertIn(self.blog1.pk, page_set_pks)
         self.assertIn(self.event1.pk, page_set_pks)
 
     def test_filter_doesnt_return_drafts(self):
-        page2 = BlogPage(title='test page 2')
-        page2.tags.add('foo')
+        page2 = BlogPage(title="test page 2")
+        page2.tags.add("foo")
         # Don't publish new page
-        form = self.setUpFilterableForm(data={'topics': ['foo']})
+        form = self.setUpFilterableForm(data={"topics": ["foo"]})
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.blog1)
 
     def test_form_language_choices(self):
         form = self.setUpFilterableForm()
-        self.assertEqual(form.fields['language'].choices, [
-            ('en', 'English'),
-            ('es', 'Spanish'),
-        ])
+        self.assertEqual(
+            form.fields["language"].choices,
+            [
+                ("en", "English"),
+                ("es", "Spanish"),
+            ],
+        )
 
     def test_filter_by_language(self):
-        form = self.setUpFilterableForm(data={'language': ['es']})
+        form = self.setUpFilterableForm(data={"language": ["es"]})
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.blog1)
 
     def test_filter_by_title(self):
-        form = self.setUpFilterableForm(data={'title': 'Cool'})
+        form = self.setUpFilterableForm(data={"title": "Cool"})
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.cool_event)
 
     def test_validate_date_after_1900_can_pass(self):
         form = self.setUpFilterableForm()
-        form.data = {'from_date': '1/1/1900', 'archived': 'exclude'}
+        form.data = {"from_date": "1/1/1900", "archived": "exclude"}
         self.assertTrue(form.is_valid())
 
     def test_validate_date_after_1900_can_fail(self):
         form = self.setUpFilterableForm()
-        form.data = {'from_date': '12/31/1899'}
+        form.data = {"from_date": "12/31/1899"}
         self.assertFalse(form.is_valid())
-        self.assertIn('from_date', form._errors)
+        self.assertIn("from_date", form._errors)
 
     def test_clean_categories_converts_blog_subcategories_correctly(self):
         form = self.setUpFilterableForm()
-        form.data = {'categories': ['blog']}
-        clean_categories(selected_categories=form.data.get('categories'))
+        form.data = {"categories": ["blog"]}
+        clean_categories(selected_categories=form.data.get("categories"))
         self.assertEqual(
-            form.data['categories'],
+            form.data["categories"],
             [
-                'blog',
-                'at-the-cfpb',
-                'directors-notebook',
-                'policy_compliance',
-                'data-research-reports',
-                'info-for-consumers'
-            ]
+                "blog",
+                "at-the-cfpb",
+                "directors-notebook",
+                "policy_compliance",
+                "data-research-reports",
+                "info-for-consumers",
+            ],
         )
 
     def test_clean_categories_converts_reports_subcategories_correctly(self):
         form = self.setUpFilterableForm()
-        form.data = {'categories': ['research-reports']}
-        clean_categories(selected_categories=form.data.get('categories'))
+        form.data = {"categories": ["research-reports"]}
+        clean_categories(selected_categories=form.data.get("categories"))
         self.assertEqual(
-            form.data['categories'],
+            form.data["categories"],
             [
-                'research-reports',
-                'consumer-complaint',
-                'super-highlight',
-                'data-point',
-                'industry-markets',
-                'consumer-edu-empower',
-                'to-congress',
-                'data-spotlight',
-            ]
+                "research-reports",
+                "consumer-complaint",
+                "super-highlight",
+                "data-point",
+                "industry-markets",
+                "consumer-edu-empower",
+                "to-congress",
+                "data-spotlight",
+            ],
         )
 
     def test_filterable_categories_sets_initial_category_list(self):
         form = self.setUpFilterableForm(
-            data={'categories': []},
-            filterable_categories=('Blog', 'Newsroom', 'Research Report')
+            data={"categories": []},
+            filterable_categories=("Blog", "Newsroom", "Research Report"),
         )
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
@@ -187,85 +179,77 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
 
 
 class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
-        cls.page1 = BlogPage(title='test page', is_archived='yes')
-        cls.page2 = BlogPage(title='another test page')
-        cls.page3 = BlogPage(title='never-archived page', is_archived='never')
+        cls.page1 = BlogPage(title="test page", is_archived="yes")
+        cls.page2 = BlogPage(title="another test page")
+        cls.page3 = BlogPage(title="never-archived page", is_archived="never")
         publish_page(cls.page1)
         publish_page(cls.page2)
         publish_page(cls.page3)
 
-        cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
+        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
     def get_filtered_pages(self, data):
         form = FilterableListForm(
-            filterable_search=FilterablePagesDocumentSearch(
-                prefix="/"
-            ),
+            filterable_search=FilterablePagesDocumentSearch(prefix="/"),
             wagtail_block=None,
             filterable_categories=None,
-            data=data
+            data=data,
         )
 
         self.assertTrue(form.is_valid())
         return form.get_page_set()
 
     def test_filter_by_archived_include(self):
-        pages = self.get_filtered_pages({'archived': 'include'})
+        pages = self.get_filtered_pages({"archived": "include"})
         self.assertEqual(len(pages), 3)
 
     def test_filter_by_archived_exclude(self):
-        pages = self.get_filtered_pages({'archived': 'exclude'})
+        pages = self.get_filtered_pages({"archived": "exclude"})
         self.assertEqual(len(pages), 2)
         self.assertEqual(pages[0].specific, self.page2)
 
     def test_filter_by_archived_only(self):
-        pages = self.get_filtered_pages({'archived': 'only'})
+        pages = self.get_filtered_pages({"archived": "only"})
         self.assertEqual(len(pages), 1)
         self.assertEqual(pages[0].specific, self.page1)
 
 
 @override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
 class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
-        cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
+        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
         event = EventPage(
-            title='test page 2',
-            start_dt=datetime.now(timezone('UTC'))
+            title="test page 2", start_dt=datetime.now(timezone("UTC"))
         )
-        event.tags.add('bar')
+        event.tags.add("bar")
         publish_page(event)
         cls.event = event
 
     def test_event_archive_elasticsearch(self):
         form = EventArchiveFilterForm(
-            filterable_search=EventFilterablePagesDocumentSearch(
-                prefix="/"
-            ),
+            filterable_search=EventFilterablePagesDocumentSearch(prefix="/"),
             wagtail_block=None,
-            filterable_categories=None
+            filterable_categories=None,
         )
         form.is_bound = True
-        form.cleaned_data = {'categories': []}
+        form.cleaned_data = {"categories": []}
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.event)
 
 
 class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         enforcement = EnforcementActionPage(title="Enforcement Action")
         publish_page(enforcement)
         cls.enforcement = enforcement
 
-        cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
+        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
     def test_enforcement_action_elasticsearch(self):
         form = EnforcementActionsFilterForm(
@@ -273,10 +257,10 @@ class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
                 prefix="/"
             ),
             wagtail_block=None,
-            filterable_categories=None
+            filterable_categories=None,
         )
         form.is_bound = True
-        form.cleaned_data = {'categories': [], 'statuses': [], 'products': []}
+        form.cleaned_data = {"categories": [], "statuses": [], "products": []}
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.enforcement)

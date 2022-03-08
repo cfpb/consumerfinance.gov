@@ -12,12 +12,11 @@ class WagtailClient:
         self.client = Client()
 
     def login(self):
-        username = input('Wagtail username:')
+        username = input("Wagtail username:")
 
-        password = getpass.getpass(prompt='Wagtail password:')
+        password = getpass.getpass(prompt="Wagtail password:")
         response = self.client.login(
-            password=password,
-            **{get_user_model().USERNAME_FIELD: username}
+            password=password, **{get_user_model().USERNAME_FIELD: username}
         )
 
         return response
