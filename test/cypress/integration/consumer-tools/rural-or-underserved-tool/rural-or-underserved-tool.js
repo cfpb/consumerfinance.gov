@@ -6,9 +6,10 @@ describe( 'Rural or Underserved Tool', () => {
 
   describe( 'Address Search', () => {
 
-    it( 'Should render a table for a series of addresses searched', () => {
+    it( 'Should render a table for a single address', () => {
       page.open();
       page.searchAddress( '1600 Pennsylvania Avenue Washington DC' );
+      page.interceptCensusAPIRequests();
       page.resultsTable().should( 'be.visible' );
     } );
 
