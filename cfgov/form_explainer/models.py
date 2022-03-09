@@ -10,7 +10,7 @@ from wagtail.search import index
 from form_explainer.blocks import Explainer
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
-from v1.models.base import CFGOVPage, CFGOVPageManager
+from v1.models.base import CFGOVPage
 
 
 class FormExplainerContent(StreamBlock):
@@ -56,7 +56,5 @@ class FormExplainerPage(CFGOVPage):
     )
 
     template = "form-explainer/index.html"
-
-    objects = CFGOVPageManager()
 
     search_fields = CFGOVPage.search_fields + [index.SearchField("header")]

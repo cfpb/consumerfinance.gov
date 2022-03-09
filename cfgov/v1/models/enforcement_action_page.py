@@ -9,7 +9,7 @@ from wagtail.admin.edit_handlers import (
     TabbedInterface,
 )
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Page, PageManager
+from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
@@ -291,8 +291,6 @@ class EnforcementActionPage(AbstractFilterPage):
     )
 
     template = "enforcement-action/index.html"
-
-    objects = PageManager()
 
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")

@@ -84,6 +84,7 @@
         background: @gray-5;
         border-bottom: 1px solid @gray-40;
 
+        /* This is to allow vertical overlap with the languages */
         .a-tagline {
             float: left;
         }
@@ -96,6 +97,10 @@
         .respond-to-max( @bp-sm-max, {
           .m-global-eyebrow_actions {
             display: none;
+          }
+          /* Prevent spacing issues since the languages aren't displayed */
+          .a-tagline {
+            float: none;
           }
         } );
     }

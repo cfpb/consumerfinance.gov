@@ -11,7 +11,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable, PageManager
+from wagtail.core.models import Orderable
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
 
@@ -109,8 +109,6 @@ class HomePage(CFGOVPage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
-
-    objects = PageManager()
 
     def get_context(self, request):
         context = super().get_context(request)
