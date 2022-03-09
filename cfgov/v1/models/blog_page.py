@@ -1,13 +1,11 @@
 from wagtail.admin.edit_handlers import StreamFieldPanel
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import PageManager
 from wagtail.search import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import organisms, schema
 from v1.feeds import get_appropriate_rss_feed_url_for_page
-from v1.models.base import CFGOVPageManager
 from v1.models.learn_page import AbstractFilterPage
 
 
@@ -30,7 +28,6 @@ class BlogPage(AbstractFilterPage):
     )
     template = "blog/blog_page.html"
 
-    objects = PageManager()
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")
     ]
@@ -61,7 +58,7 @@ class LegacyBlogPage(AbstractFilterPage):
             ),
         ]
     )
-    objects = CFGOVPageManager()
+
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel("content")
     )

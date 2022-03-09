@@ -5,7 +5,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
-from wagtail.core.models import PageManager
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
@@ -47,5 +46,3 @@ class StoryPage(CFGOVPage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
-
-    objects = PageManager()

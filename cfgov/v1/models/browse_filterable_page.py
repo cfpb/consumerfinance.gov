@@ -8,7 +8,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
-from wagtail.core.models import PageManager
 from wagtail.search import index
 
 from v1 import blocks as v1_blocks
@@ -74,8 +73,6 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
 
     template = "browse-filterable/index.html"
 
-    objects = PageManager()
-
     search_fields = CFGOVPage.search_fields + [
         index.SearchField("content"),
         index.SearchField("header"),
@@ -88,7 +85,6 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
 
 class EnforcementActionsFilterPage(BrowseFilterablePage):
     template = "browse-filterable/index.html"
-    objects = PageManager()
 
     @staticmethod
     def get_form_class():
@@ -108,8 +104,6 @@ class EnforcementActionsFilterPage(BrowseFilterablePage):
 class EventArchivePage(BrowseFilterablePage):
     template = "browse-filterable/index.html"
 
-    objects = PageManager()
-
     @staticmethod
     def get_model_class():
         return EventPage
@@ -128,5 +122,3 @@ class EventArchivePage(BrowseFilterablePage):
 class NewsroomLandingPage(CategoryFilterableMixin, BrowseFilterablePage):
     template = "newsroom/index.html"
     filterable_categories = ["Newsroom"]
-
-    objects = PageManager()
