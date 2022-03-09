@@ -19,7 +19,7 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 
 from teachers_digital_platform.fields import ParentalTreeManyToManyField
 from teachers_digital_platform.models.django import ActivityTopic
-from v1.models import CFGOVPage, CFGOVPageManager
+from v1.models import CFGOVPage
 
 
 class ActivityPageActivityDocuments(Orderable):
@@ -62,7 +62,6 @@ class ActivityPage(CFGOVPage):
     # Allow Activity pages to exist under the ActivityIndexPage or the Trash
     parent_page_types = ["ActivityIndexPage", "v1.HomePage"]
     subpage_types = []
-    objects = CFGOVPageManager()
 
     date = models.DateField("Updated", default=timezone.now)
     summary = models.TextField("Summary", blank=False)
