@@ -1,5 +1,3 @@
-from wagtail.core.models import PageManager
-
 from hmda.models.forms import HmdaFilterableForm
 from hmda.resources.hmda_data_options import (
     HMDA_FIELD_DESC_OPTIONS,
@@ -16,7 +14,6 @@ class HmdaHistoricDataPage(LearnPage):
     containing HMDA data.
     """
 
-    objects = PageManager()
     template = "hmda/hmda-explorer.html"
 
     def get_context(self, request, *args, **kwargs):
