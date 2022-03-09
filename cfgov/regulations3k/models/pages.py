@@ -22,7 +22,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core.fields import StreamField
-from wagtail.core.models import PageManager
 from wagtailsharing.models import ShareableRoutablePageMixin
 
 import requests
@@ -36,7 +35,7 @@ from regulations3k.forms import SearchForm
 from regulations3k.models import Part, Section, label_re_str
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules, organisms
-from v1.models import CFGOVPage, CFGOVPageManager
+from v1.models import CFGOVPage
 
 
 logger = logging.getLogger(__name__)
@@ -44,8 +43,6 @@ logger = logging.getLogger(__name__)
 
 class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     """A page for the custom search interface for regulations."""
-
-    objects = PageManager()
 
     parent_page_types = ["regulations3k.RegulationLandingPage"]
     subpage_types = []
@@ -197,7 +194,6 @@ class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
         ]
     )
 
-    objects = CFGOVPageManager()
     subpage_types = ["regulations3k.RegulationPage", "RegulationsSearchPage"]
     template = "regulations3k/landing-page.html"
 
@@ -235,7 +231,6 @@ class RegulationPage(
 ):
     """A routable page for serving an eregulations page by Section ID."""
 
-    objects = PageManager()
     parent_page_types = ["regulations3k.RegulationLandingPage"]
     subpage_types = []
 

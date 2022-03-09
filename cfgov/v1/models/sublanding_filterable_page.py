@@ -5,7 +5,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
-from wagtail.core.models import PageManager
 from wagtail.search import index
 
 from v1 import blocks as v1_blocks
@@ -61,8 +60,6 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
 
     template = "sublanding-page/index.html"
 
-    objects = PageManager()
-
     search_fields = CFGOVPage.search_fields + [
         index.SearchField("content"),
         index.SearchField("header"),
@@ -73,5 +70,3 @@ class ActivityLogPage(CategoryFilterableMixin, SublandingFilterablePage):
     template = "activity-log/index.html"
     filterable_categories = ("Blog", "Newsroom", "Research Report")
     filterable_per_page_limit = 100
-
-    objects = PageManager()
