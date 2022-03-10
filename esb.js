@@ -5,10 +5,12 @@ const { resolve, dirname } = require( 'path' );
 const esbuild = require( 'esbuild' );
 const postCSSPlugin = require( 'esbuild-plugin-postcss2' );
 const autoprefixer = require( 'autoprefixer' );
+const environment = require( './config/environment' );
 
 const cfpbModules = './node_modules/@cfpb';
 
-const unprocessed = './cfgov/unprocessed';
+const { unprocessed, processed } = environment.paths;
+
 const css = `${ unprocessed }/css`;
 const r = `${ unprocessed }/js/routes`;
 const a = `${ unprocessed }/apps`;
@@ -120,7 +122,7 @@ async function getFiles( dir ) {
     minify: true,
     sourcemap: true,
     external: [ '*.png', '*.woff', '*.woff2', '*.gif', '*.svg' ],
-    outdir: 'cfgov/static_built/out'
+    outdir: `${ processed }/out`
   };
 
   /*
