@@ -15,12 +15,14 @@
 
 
 {% macro render( language='en' ) %}
-    {% set complaint_link = '/es/enviar-una-queja/' if language == 'es' else '/complaint/' %}
-    {# TODO: Padding should be on link, not CTA itself #}
+    {% if request.path != '/complaint/' %}
+        {% set complaint_link = '/es/enviar-una-queja/' if language == 'es' else '/complaint/' %}
+        {# TODO: Padding should be on link, not CTA itself #}
     <div class="m-global-header-cta">
         <a href="{{ complaint_link }}">
             {{ svg_icon('complaint') }}
             {{ _('Submit a Complaint') }}
         </a>
     </div>
+    {% endif %}
 {% endmacro %}
