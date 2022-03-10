@@ -49,8 +49,8 @@ class SublandingPage(CFGOVPage):
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
             ("feedback", v1_blocks.Feedback()),
-            ('expandable_group', organisms.ExpandableGroup()),
-            ('expandable', organisms.Expandable()),
+            ("expandable_group", organisms.ExpandableGroup()),
+            ("expandable", organisms.Expandable()),
         ],
         blank=True,
     )
