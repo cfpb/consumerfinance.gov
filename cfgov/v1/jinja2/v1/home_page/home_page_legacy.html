@@ -1,0 +1,62 @@
+{% extends "layout-full.html" %}
+
+{% import "organisms/card-group.html" as card_group with context %}
+
+{% block title -%}
+    {{ _('Consumer Financial Protection Bureau') }}
+{%- endblock %}
+
+{% block css %}
+    {{ super() }}
+    <style>
+        /* Swap the homepage hero's white text to black on small screens */
+        @media only all and (max-width: 37.5625em) {
+            .m-hero__knockout {
+                /* CFPB Black #101820 */
+                color: #101820;
+            }
+        }
+    </style>
+{% endblock css %}
+
+{% block hero %}
+    {% import "v1/home_page/_hardcoded_legacy_" ~ language ~ ".html" as hardcoded %}
+
+    {% with image = image_passthrough, value = hardcoded.hero %}
+        {% include "molecules/hero.html" with context %}
+    {% endwith %}
+
+    {% with value = hardcoded.features %}
+        <section class="wrapper
+                        wrapper__match-content
+                        block
+                        block__bg
+                        block__border
+                        block__flush-top
+                        u-mb0"
+        >
+            {% include "organisms/info-unit-group-2.html" with context %}
+        </section>
+    {% endwith %}
+{% endblock hero %}
+
+{% block content_main %}
+    {% import "v1/home_page/_hardcoded_legacy_" ~ language ~ ".html" as hardcoded %}
+
+    {% with
+        image = image_passthrough,
+        image_alt_value = image_alt_value_passthrough,
+        value = hardcoded.info_units
+    %}
+        {% include 'organisms/info-unit-group-2.html' %}
+    {% endwith %}
+
+    <section class="block">
+        {{ card_group.render( {
+            'heading': hardcoded.card_heading,
+            'type_group': 'featured',
+            'type_card': 'featured',
+            'cards': hardcoded.cards
+        } ) }}
+    </section>
+{% endblock content_main %}
