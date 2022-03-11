@@ -261,18 +261,20 @@ class RelatedPosts(blocks.StructBlock):
     tag_filtering = blocks.ChoiceBlock(
         choices=[
             (
-                "and_filtering",
-                "Only show items that match ALL tags on this page",
+                "any",
+                "Include related posts that match ANY topic tags on this page",
             ),
             (
-                "ignore_tags",
-                "Ignore topic tags and show all recent items",
+                "all",
+                "Include related posts that match ALL topic tags on this page",
+            ),
+            (
+                "ignore",
+                "IGNORE topic tags when selecting related posts",
             ),
         ],
-        required=False,
-        help_text=('Set filtering options for topic tags. If no option is '
-                   'selected, related posts will be displayed if they '
-                   'share any one tag with this page.'),
+        required=True,
+        default="any",
     )
 
     alternate_view_more_url = blocks.CharBlock(
@@ -340,8 +342,7 @@ class RelatedPosts(blocks.StructBlock):
         for parent in related_types:  # blog, newsroom or events
             # Include children of this slug that match at least 1 tag
             children = Page.objects.child_of_q(Page.objects.get(slug=parent))
-
-            if tag_filtering == "ignore_tags":
+            if tag_filtering == "ignore":
                 filters = children
             else:
                 filters = children & Q(('tags__in', tags))
@@ -350,7 +351,7 @@ class RelatedPosts(blocks.StructBlock):
                 # Include archived events matches
                 archive = Page.objects.get(slug="archive-past-events")
                 children = Page.objects.child_of_q(archive)
-                if tag_filtering == "ignore_tags":
+                if tag_filtering == "ignore":
                     filters |= children
                 else:
                     filters |= children & Q(('tags__in', tags))
@@ -365,7 +366,7 @@ class RelatedPosts(blocks.StructBlock):
 
             related_queryset = queryset.filter(filters)
 
-            if tag_filtering == "and_filtering":
+            if tag_filtering == "all":
                 # By default, we need to match at least one tag
                 # If specified in the admin, change this to match ALL tags
                 related_queryset = match_all_topic_tags(related_queryset, tags)
