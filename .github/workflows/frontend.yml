@@ -35,6 +35,7 @@ jobs:
 
       - name: Store test coverage
         if: steps.filter.outputs.frontend == 'true'
+        uses: actions/upload-artifact@v2.2.4
         with:
           name: frontend_coverage
           path: ./test/unit_test_coverage/clover.xml
