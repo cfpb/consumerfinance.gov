@@ -84,7 +84,6 @@
     "gulp-eslint": "6.0.0",
     "jest": "27.4.3",
     "jest-cli": "27.4.3",
-    "jsdoc": "3.6.7",
     "minimist": "1.2.5",
     "snyk": "1.786.0",
     "through2": "4.0.2"
