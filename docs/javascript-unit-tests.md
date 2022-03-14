@@ -15,6 +15,7 @@ it would be a good idea to peruse their docs before diving in here.
 
 1. [Running unit tests](#running-unit-tests)
     1. [Running a single test file](#running-a-single-test-file)
+    1. [Run a directory of unit tests](#run-a-directory-of-unit-tests)
     1. [Run all unit tests](#run-all-unit-tests)
 1. [Where to find tests](#where-to-find-tests)
 1. [Test-driven development](#test-driven-development)
@@ -38,16 +39,24 @@ it would be a good idea to peruse their docs before diving in here.
 
 ### Run a single test file
 
-To run a single test file, use the `-t` flag, which matches the `describe` section of a given spec
+To run a single test file, pass the name (or path) of the spec:
 
 ```bash
-yarn run jest -t footer
+yarn run jest Notification-spec.js
+# Equivalent to:
+yarn run jest test/unit_tests/js/molecules/Notification-spec.js
+# The name argument would techniclly would match all Notification-spec.js files
+# This usually isn't a problem in our codebase (and you can always get more specific if needed)
 ```
 
-The above command runs the tests at `test/unit_tests/js/organisms/Footer-spec.js`
-and `test/unit_tests/js/modules/footer-button-spec.js`. This isn't fully specific
-but generally specific enough.
+### Run a directory of unit tests
 
+A directory of unit tests can be run by passing its name or path:
+
+```bash
+yarn run jest organisms
+yarn run jest test/unit_tests/js/organisms
+```
 
 ### Run all unit tests
 
@@ -62,6 +71,9 @@ To first lint all files and then run tests:
 ```bash
 yarn run test
 ```
+
+Because we invoke jest directly, you can pass any command-line args it accepts
+to filter your output or to target specific tests [see the docs for more](https://jestjs.io/docs/cli).
 
 ## Where to find tests
 
@@ -181,7 +193,7 @@ to save and commit your changes.
 1. Run your sample test using
 
     ```bash
-    yarn run jest -t=<match describe here>
+    yarn run jest sample-spec.js
     ```
 
     (substituting your own filename).
