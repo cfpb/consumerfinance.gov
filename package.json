@@ -84,7 +84,6 @@
     "eslint": "8.11.0",
     "jest": "27.4.3",
     "jest-cli": "27.4.3",
-    "minimist": "1.2.5",
     "snyk": "1.786.0"
   },
   "resolutions": {
@@ -97,6 +96,8 @@
     "postinstall": "yarn run enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
     "lint": "eslint --ignore-pattern node_modules './cfgov/unprocessed/**/*.js' './test/**/*.js'",
     "test": "yarn run lint && yarn run gulp test",
+    "jest": "./node_modules/.bin/jest",
+    "test": "yarn run lint && yarn run jest",
     "snyk": "snyk test",
     "gulp": "gulp",
     "watch": "gulp watch"

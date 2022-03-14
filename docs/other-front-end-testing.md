@@ -22,11 +22,8 @@ for detailed rule descriptions.
 
 There are a number of options to the command:
 
- - `--fix`: Add this flag (like `gulp lint --fix` or `gulp lint:build --fix`).
+ - `--fix`: Add this flag (like `yarn run lint --fix`)
    to auto-fix some errors, where ESLint has support to do so.
- - `--path`: Add this flag to specify a file to lint,
-   rather than all files. Path is relative to the project root,
-   such as `gulp lint --path=cfgov/unprocessed/js/modules/Analytics.js`.
  - [Other options available in the docs](https://eslint.org/docs/user-guide/command-line-interface)
 
 ## Cross browser testing

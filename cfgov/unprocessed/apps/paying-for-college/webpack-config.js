@@ -53,11 +53,6 @@ const COMMON_MODULE_CONFIG = {
 
       }
     }
-  }, {
-    test: /\.hbs$/,
-    use: {
-      loader: 'handlebars-loader'
-    }
   } ]
 };
 
@@ -77,14 +72,6 @@ const conf = {
   mode: 'production',
   output: {
     filename: '[name]'
-  },
-  resolveLoader: {
-    alias: {
-      'handlebars-loader': path.resolve(
-        __dirname, 'node_modules', 'handlebars-loader'
-      )
-    },
-    mainFields: [ 'loader', 'main' ]
   },
   resolve: {
     symlinks: false

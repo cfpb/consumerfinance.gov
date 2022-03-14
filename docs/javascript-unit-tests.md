@@ -15,7 +15,6 @@ it would be a good idea to peruse their docs before diving in here.
 
 1. [Running unit tests](#running-unit-tests)
     1. [Running a single test file](#running-a-single-test-file)
-    1. [Run a directory of unit tests](#run-a-directory-of-unit-tests)
     1. [Run all unit tests](#run-all-unit-tests)
 1. [Where to find tests](#where-to-find-tests)
 1. [Test-driven development](#test-driven-development)
@@ -39,22 +38,15 @@ it would be a good idea to peruse their docs before diving in here.
 
 ### Run a single test file
 
-To run a single test file, use the `--specs` flag to specify a file path:
+To run a single test file, use the `-t` flag, which matches the `describe` section of a given spec
 
 ```bash
-gulp test --specs=js/organisms/Footer-spec.js
+yarn run jest -t footer
 ```
 
-The above command tests the code at `cfgov/unprocessed/js/organisms/Footer.js`.
-
-
-### Run a directory of unit tests
-
-A directory of unit tests can be run with:
-
-```bash
-gulp test --specs=js/molecules/
-```
+The above command runs the tests at `test/unit_tests/js/organisms/Footer-spec.js`
+and `test/unit_tests/js/modules/footer-button-spec.js`. This isn't fully specific
+but generally specific enough.
 
 
 ### Run all unit tests
@@ -62,11 +54,14 @@ gulp test --specs=js/molecules/
 To run all of the unit tests:
 
 ```bash
-gulp test
+yarn run jest
 ```
 
+To first lint all files and then run tests:
 
-
+```bash
+yarn run test
+```
 
 ## Where to find tests
 
@@ -186,7 +181,7 @@ to save and commit your changes.
 1. Run your sample test using
 
     ```bash
-    gulp test --specs=js/modules/sample-spec.js
+    yarn run jest -t=<match describe here>
     ```
 
     (substituting your own filename).
