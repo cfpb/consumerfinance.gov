@@ -25,7 +25,7 @@ describe( 'Filter Blog Posts based on content', () => {
         'contain', title.get( 0 ).innerText
       );
       // And the page url should contain "title=" followed by the title
-      var plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+      let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
       cy.url().should(
         'include', 'title=' + plus_title
       );
@@ -426,7 +426,7 @@ describe( 'Filter Blog Posts based on content', () => {
           'contain', category.get( 0 ).innerText.split( '\n' ).pop().trim()
         );
         // And the page url should contain "title=" title
-        var plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
         cy.url().should( 'include', 'title=' + plus_title );
         // And the page url should contain "categories=" category
         cy.url().should(
@@ -463,7 +463,7 @@ describe( 'Filter Blog Posts based on content', () => {
           blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
         } );
         // And the page url should contain "title=" title
-        var plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
         cy.url().should( 'include', 'title=' + plus_title );
         // And the page url should contain "topics=" topic
         cy.url().should(
@@ -500,7 +500,7 @@ describe( 'Filter Blog Posts based on content', () => {
         );
         blog.resultsContent().should( 'contain', title.get( 0 ).innerText );
         // And the page url should contain "title=loans"
-        var plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
         cy.url().should( 'include', 'title=' + plus_title );
         // And the page url should contain "from_date=2020-01-01"
         cy.url().should(
