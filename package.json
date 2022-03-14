@@ -96,7 +96,7 @@
     "preinstall": "node scripts/preinstall.js",
     "postinstall": "yarn run enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
     "lint": "./node_modules/.bin/eslint --ignore-pattern node_modules './cfgov/unprocessed/**/*.js' './test/**/*.js'",
-    "test": "yarn run lint; yarn run gulp test",
+    "test": "yarn run lint && yarn run gulp test",
     "snyk": "snyk test",
     "gulp": "gulp",
     "watch": "gulp watch"
