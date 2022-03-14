@@ -86,6 +86,8 @@ jobs:
           test/cypress/integration/components/header/mega-menu.js
           test/cypress/integration/components/multiselect/multiselect.js
           test/cypress/integration/components/pagination/pagination.js
+          test/cypress/integration/data-research/prepaid-agreements-search/prepaid-agreements-search.js
+          test/cypress/integration/data-research/credit-card-agreements-search/credit-card-agreements-search.js
           test/cypress/integration/rules-policy/regulations-search.js
           test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-helpers.js
           test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-navigation.js

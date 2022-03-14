@@ -1,7 +1,7 @@
 export class ConsumerComplaints {
 
   clickTab( name ) {
-    cy.get( `.${ name }` ).click();
+    cy.get( `button.${ name }` ).click();
   }
 
   clickDateRange( name ) {

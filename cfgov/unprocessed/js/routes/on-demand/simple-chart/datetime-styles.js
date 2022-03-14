@@ -24,7 +24,7 @@ const datetime = {
         if ( evt.trigger === 'navigator' ) {
           trackChartEvent( evt, 'Slider Moved' );
         } else if ( evt.trigger === 'rangeSelectorButton' ) {
-          trackChartEvent( evt, 'Time Range Selected' );
+          trackChartEvent( evt, 'Time Range Selected', evt.rangeSelectorButton.text );
         }
       }
     }
