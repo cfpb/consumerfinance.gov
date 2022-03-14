@@ -81,12 +81,11 @@
     "chai": "4.3.4",
     "chai-as-promised": "7.1.1",
     "cypress": "9.3.1",
-    "gulp-eslint": "6.0.0",
+    "eslint": "8.11.0",
     "jest": "27.4.3",
     "jest-cli": "27.4.3",
     "minimist": "1.2.5",
-    "snyk": "1.786.0",
-    "through2": "4.0.2"
+    "snyk": "1.786.0"
   },
   "resolutions": {
     "gulp-bless/bless/css": "github:cfpb/css",
@@ -96,6 +95,7 @@
     "enforce": "enforce-node-version",
     "preinstall": "node scripts/preinstall.js",
     "postinstall": "yarn run enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
+    "lint": "./node_modules/.bin/eslint --ignore-pattern node_modules './cfgov/unprocessed/**/*.js' './test/**/*.js'",
     "test": "snyk test",
     "gulp": "gulp",
     "watch": "gulp watch"

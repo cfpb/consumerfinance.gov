@@ -20,7 +20,6 @@ let ignoreTasks = [];
 
 if ( envvars.NODE_ENV === 'production' ) {
   ignoreTasks = [
-    TASK_PATH + 'lint.js',
     TASK_PATH + 'test-unit.js'
   ];
 }
@@ -84,18 +83,6 @@ function requireAllDefaultTasks() {
     )
   );
 
-  // Define the test task, but don't run tests on production.
-  if ( envvars.NODE_ENV !== 'production' ) {
-    gulp.task( 'test',
-      gulp.series(
-        gulp.parallel(
-          'lint',
-          'test:unit'
-        )
-      )
-    );
-  }
-
   // Define the task that runs with `gulp watch`.
   gulp.task( 'watch',
     gulp.parallel(
@@ -113,7 +100,7 @@ function requireAllDefaultTasks() {
 }
 
 /*
-Check for command-line flag option (such as `lint` in `gulp lint`).
+Check for command-line flag option (such as `styles` in `gulp styles`).
 If the option maps to a task in /gulp/tasks/, we can skip loading other tasks.
 */
 const cliOption = process.argv.slice( 2 );
