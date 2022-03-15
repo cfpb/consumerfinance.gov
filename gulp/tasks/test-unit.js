@@ -78,10 +78,4 @@ function testUnitScripts( cb ) {
   } );
 }
 
-gulp.task( 'test:unit:scripts', testUnitScripts );
-
-gulp.task( 'test:unit',
-  gulp.parallel(
-    'test:unit:scripts'
-  )
-);
+gulp.task( 'test', testUnitScripts );
