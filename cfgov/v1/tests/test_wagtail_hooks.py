@@ -1,5 +1,6 @@
 from unittest import mock
 
+from django.core.exceptions import PermissionDenied
 from django.test import (
     RequestFactory,
     SimpleTestCase,
@@ -16,7 +17,12 @@ from wagtail.tests.utils import WagtailTestUtils
 from v1.blocks import Feedback
 from v1.models.base import CFGOVPage
 from v1.models.resources import Resource
-from v1.wagtail_hooks import form_module_handlers, get_resource_tags
+from v1.wagtail_hooks import (
+    form_module_handlers,
+    get_resource_tags,
+    raise_bulk_delete_error,
+    raise_delete_error,
+)
 
 
 class TestFormModuleHandlers(TestCase):
@@ -153,3 +159,18 @@ class TestAllowlistOverride(SimpleTestCase):
         input_html = '<scan class="id">Consumer <embed>Finance</embed></scan>'
         output_html = self.allowlister.clean(input_html)
         self.assertHTMLEqual(output_html, "Consumer Finance")
+
+
+class TestDeleteProtections(SimpleTestCase):
+    def test_delete_page_block(self):
+        self.assertRaises(PermissionDenied, raise_delete_error, None, None)
+
+    def test_bulk_delete_block(self):
+        self.assertRaises(
+            PermissionDenied,
+            raise_bulk_delete_error,
+            None,
+            "delete",
+            None,
+            None,
+        )
