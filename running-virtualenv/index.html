@@ -224,10 +224,10 @@ if you only want to re-build the backend or front-end, respectively.</p>
 </div>
 <h5 id="setting-environments">Setting environments<a class="headerlink" href="#setting-environments" title="Permanent link">¶</a></h5>
 <p>The <code>NODE_ENV</code> environment variable can be set in your <code>.env</code> file to either
-<code>development</code> or <code>production</code>, which will affect how the build is made and what
-gulp tasks are available. To install dependencies of one environment
-or the other run <code>./frontend.sh</code> (dependencies and devDependencies)
-or <code>./frontend.sh production</code> (dependencies but not devDependencies).</p>
+<code>development</code> or <code>production</code>, which will affect how the build is made.
+To install dependencies of one environment or the other run <code>./frontend.sh</code>
+(dependencies and devDependencies) or <code>./frontend.sh production</code>
+(dependencies but not devDependencies).</p>
 <h3 id="2-run-elasticsearch-optional">2. Run Elasticsearch (optional)<a class="headerlink" href="#2-run-elasticsearch-optional" title="Permanent link">¶</a></h3>
 <p>Elasticsearch is needed for certain pieces of this project but is not a
 requirement for basic functionality.</p>
@@ -285,10 +285,8 @@ Using the <code>yarn run gulp -- --tasks</code> command you can view all availab
 The important ones are listed below:</p>
 <pre class="highlight"><code>yarn run gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
 yarn run gulp clean           # Remove the contents of the production /dist/ directory.
-yarn run gulp lint            # Lint the scripts and build files.
 yarn run gulp docs            # Generate JSDocs from the scripts.
-yarn run gulp test            # Run linting, unit, and functional tests (see below).
-yarn run gulp test:unit       # Run only unit tests on source code.</code></pre>
+yarn run gulp test            # Run unit tests (see below).</code></pre>
 
 <h3 id="reinstalling-the-virtual-environment">Reinstalling the virtual environment<a class="headerlink" href="#reinstalling-the-virtual-environment" title="Permanent link">¶</a></h3>
 <p>To remove an existing virtual environment for

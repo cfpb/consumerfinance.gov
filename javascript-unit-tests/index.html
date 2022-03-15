@@ -229,16 +229,16 @@ it would be a good idea to peruse their docs before diving in here.</p>
 <h2 id="running-unit-tests">Running unit tests<a class="headerlink" href="#running-unit-tests" title="Permanent link">¶</a></h2>
 <h3 id="run-a-single-test-file">Run a single test file<a class="headerlink" href="#run-a-single-test-file" title="Permanent link">¶</a></h3>
 <p>To run a single test file, use the <code>--specs</code> flag to specify a file path:</p>
-<pre class="highlight"><code class="language-bash">gulp test:unit --specs=js/organisms/Footer-spec.js</code></pre>
+<pre class="highlight"><code class="language-bash">gulp test --specs=js/organisms/Footer-spec.js</code></pre>
 
 <p>The above command tests the code at <code>cfgov/unprocessed/js/organisms/Footer.js</code>.</p>
 <h3 id="run-a-directory-of-unit-tests">Run a directory of unit tests<a class="headerlink" href="#run-a-directory-of-unit-tests" title="Permanent link">¶</a></h3>
 <p>A directory of unit tests can be run with:</p>
-<pre class="highlight"><code class="language-bash">gulp test:unit --specs=js/molecules/</code></pre>
+<pre class="highlight"><code class="language-bash">gulp test --specs=js/molecules/</code></pre>
 
 <h3 id="run-all-unit-tests">Run all unit tests<a class="headerlink" href="#run-all-unit-tests" title="Permanent link">¶</a></h3>
 <p>To run all of the unit tests:</p>
-<pre class="highlight"><code class="language-bash">gulp test:unit</code></pre>
+<pre class="highlight"><code class="language-bash">gulp test</code></pre>
 
 <h2 id="where-to-find-tests">Where to find tests<a class="headerlink" href="#where-to-find-tests" title="Permanent link">¶</a></h2>
 <p>The following links list out the main directories containing tests
@@ -335,7 +335,7 @@ to save and commit your changes.</p>
 </li>
 <li>
 <p>Run your sample test using</p>
-<pre class="highlight"><code class="language-bash">gulp test:unit --specs=js/modules/sample-spec.js</code></pre>
+<pre class="highlight"><code class="language-bash">gulp test --specs=js/modules/sample-spec.js</code></pre>
 
 <p>(substituting your own filename).</p>
 <p>You should see output like this:</p>

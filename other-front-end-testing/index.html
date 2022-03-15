@@ -199,20 +199,18 @@ tab to run a performance audit.</p>
 <h2 id="source-code-linting">Source code linting<a class="headerlink" href="#source-code-linting" title="Permanent link">¶</a></h2>
 <p>The default test task includes linting of the JavaScript source, build,
 and test files.
-Use the <code>gulp lint</code> command from the command-line to run the ESLint linter,
+Use the <code>yarn run lint</code> command from the command-line to run the ESLint linter,
 which checks the JavaScript against the rules configured in <code>.eslintrc</code>.
 <a href="https://eslint.org/docs/rules/">See the ESLint docs</a>
 for detailed rule descriptions.</p>
 <p>There are a number of options to the command:</p>
 <ul>
-<li><code>gulp lint:build</code>: Lint only the gulp build scripts.</li>
-<li><code>gulp lint:tests</code>: Lint only the test scripts.</li>
-<li><code>gulp lint:scripts</code>: Lint only the project source scripts.</li>
 <li><code>--fix</code>: Add this flag (like <code>gulp lint --fix</code> or <code>gulp lint:build --fix</code>).
    to auto-fix some errors, where ESLint has support to do so.</li>
 <li><code>--path</code>: Add this flag to specify a file to lint,
    rather than all files. Path is relative to the project root,
    such as <code>gulp lint --path=cfgov/unprocessed/js/modules/Analytics.js</code>.</li>
+<li><a href="https://eslint.org/docs/user-guide/command-line-interface">Other options available in the docs</a></li>
 </ul>
 <h2 id="cross-browser-testing">Cross browser testing<a class="headerlink" href="#cross-browser-testing" title="Permanent link">¶</a></h2>
 <h3 id="sauce-labs">Sauce Labs<a class="headerlink" href="#sauce-labs" title="Permanent link">¶</a></h3>
