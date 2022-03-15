@@ -2,11 +2,9 @@
 from django.conf import settings
 
 from v1.models.base import (
-    BaseCFGOVPageManager,
     CFGOVAuthoredPages,
     CFGOVPage,
     CFGOVPageCategory,
-    CFGOVPageManager,
     CFGOVTaggedPages,
     FailedLoginAttempt,
     PasswordHistoryItem,

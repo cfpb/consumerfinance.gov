@@ -47,14 +47,31 @@ export class AdminPage {
   }
 
   addContact() {
-    cy.get( 'a[href="/admin/v1/contact/create/"]' ).click();
+    cy.get( 'a[href="/admin/v1/contact/create/"]:first' ).click();
     cy.get( '#id_heading' ).type( 'Test heading' );
     cy.get( '.DraftEditor-root' ).type( 'Random Body' );
     this.submitForm();
   }
 
+  searchContact( contact_heading ) {
+    cy.get( '#changelist-search' ).type( contact_heading ).type(
+      '{enter}'
+    ).then( () => {
+      // we need to wait for results to be populated
+      cy.wait( 1000 );
+    });
+  }
+
+  removeContact() {
+    cy.get(
+      'a[href^="/admin/v1/contact/delete/"]:first'
+    ).click( { force: true } ).then( () => {
+      cy.get( '[value="Yes, delete"]' ).click();
+    });
+  }
+
   addMortgageData( name ) {
-    cy.get( `a[href="/admin/data_research/mortgage${ name }/create/"]` )
+    cy.get( `a[href="/admin/data_research/mortgage${ name }/create/"]:first` )
       .click();
     cy.get( '#id_name' ).type( 'test' );
     this.submitForm();
@@ -79,7 +96,7 @@ export class AdminPage {
 
   editRegulation() {
     this.getFirstTableRow().trigger( 'mouseover' );
-    cy.get( 'a[href="/admin/regulations3k/part/edit/1/"]' )
+    cy.get( 'a[href^="/admin/regulations3k/part/edit/"]:first' )
       .click( { force: true } );
     this.submitForm();
   }
@@ -87,7 +104,7 @@ export class AdminPage {
   copyRegulation() {
     this.getFirstTableRow().find( '.children' ).click();
     this.getFirstTableRow().contains( 'Copy' ).click( { force: true } );
-    this.setRegulationEffectiveDate( '2020-01-01' );
+    this.setRegulationEffectiveDate( '3099-01-01' );
     this.submitForm();
   }
 
@@ -116,7 +133,7 @@ export class AdminPage {
   }
 
   addBlogChildPage() {
-    cy.visit( '/admin/pages/add/v1/blogpage/319/' );
+    cy.visit( '/admin/pages/add/v1/blogpage/1/' );
     cy.url().should( 'include', 'blogpage' );
   }
 
@@ -157,7 +174,7 @@ export class AdminPage {
   }
 
   toggleFlag() {
-    cy.get( 'table' ).siblings( 'a' ).first().click();
+    cy.get( '.flag > a' ).first().click();
   }
 
   flagHeading() {
@@ -170,7 +187,7 @@ export class AdminPage {
   }
 
   searchBlocks() {
-    cy.get( '#id_form-0-block' ).select( 'ask_cfpb.models.blocks.AskContent' );
+    cy.get( '#id_form-0-block' ).select( 'ask_cfpb.models.blocks.Tip' );
     // This form doesn't follow the standard Wagtail Format
     cy.get( 'form[action="/admin/inventory/"]' ).submit();
   }
@@ -230,7 +247,7 @@ export class AdminPage {
 
     /* We need to click near the top left of the cell, otherwise we'll click on
     a link once a link has been inserted in the cell */
-    cy.get( '@firstTableCell' ).dblclick( 5, 5 );
+    cy.get( '@firstTableCell' ).dblclick( 5, 5, { force: true } );
     this.getTableEditor();
   }
 

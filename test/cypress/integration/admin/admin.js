@@ -33,7 +33,7 @@ describe( 'Admin', () => {
   it( 'should be able to open the Images library', () => {
     admin.openImageGallery();
     admin.getImages().should( 'be.visible' );
-    admin.tags().should( 'contain', 'Mortgages' );
+    admin.tags().should( 'be.visible' );
   } );
 
   it( 'should be able to open the Documents library', () => {
@@ -44,6 +44,9 @@ describe( 'Admin', () => {
   it( 'should add a Contact Snippet', () => {
     admin.openContacts();
     admin.addContact();
+    admin.successBanner().should( 'be.visible' );
+    admin.searchContact( 'Test heading' );
+    admin.removeContact();
     admin.successBanner().should( 'be.visible' );
   } );
 
@@ -96,7 +99,7 @@ describe( 'Admin', () => {
     admin.toggleFlag();
     admin.flagHeading().should( 'contain', 'enabled for all requests' );
     admin.toggleFlag();
-    admin.flagHeading().should( 'contain', 'enabled when any condition is met.' );
+    admin.flagHeading().should( 'contain', 'disabled for all requests' );
   } );
 
   it( 'should use Block Inventory to search for blocks', () => {
