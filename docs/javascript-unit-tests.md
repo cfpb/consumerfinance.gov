@@ -42,7 +42,7 @@ it would be a good idea to peruse their docs before diving in here.
 To run a single test file, use the `--specs` flag to specify a file path:
 
 ```bash
-gulp test:unit --specs=js/organisms/Footer-spec.js
+gulp test --specs=js/organisms/Footer-spec.js
 ```
 
 The above command tests the code at `cfgov/unprocessed/js/organisms/Footer.js`.
@@ -53,7 +53,7 @@ The above command tests the code at `cfgov/unprocessed/js/organisms/Footer.js`.
 A directory of unit tests can be run with:
 
 ```bash
-gulp test:unit --specs=js/molecules/
+gulp test --specs=js/molecules/
 ```
 
 
@@ -62,7 +62,7 @@ gulp test:unit --specs=js/molecules/
 To run all of the unit tests:
 
 ```bash
-gulp test:unit
+gulp test
 ```
 
 
@@ -186,7 +186,7 @@ to save and commit your changes.
 1. Run your sample test using
 
     ```bash
-    gulp test:unit --specs=js/modules/sample-spec.js
+    gulp test --specs=js/modules/sample-spec.js
     ```
 
     (substituting your own filename).

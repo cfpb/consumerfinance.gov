@@ -8,20 +8,20 @@ describe( 'Your Financial Path to Graduation (url parameter functionality)', () 
   } );
 
   it( 'should choose the correct school', () => {
-    cy.get('#search__school-input').should( 'have.value', 'University of Maryland-College Park' );
+    cy.get( '#search__school-input' ).should( 'have.value', 'University of Maryland-College Park' );
   } );
 
   it( 'should choose the correct program options', () => {
-    cy.get('input[name="programType"]:checked').should( 'have.value', 'bachelors' );
-    cy.get('input[name="programProgress"]:checked').should( 'have.value', '0' );
-    cy.get('input[name="programLength"]:checked').should( 'have.value', '3' );
-    cy.get('input[name="programHousing"]:checked').should( 'have.value', 'onCampus' );
-    cy.get('input[name="programDependency"]:checked').should( 'have.value', 'dependent' );
+    cy.get( 'input[name="programType"]:checked' ).should( 'have.value', 'bachelors' );
+    cy.get( 'input[name="programProgress"]:checked' ).should( 'have.value', '0' );
+    cy.get( 'input[name="programLength"]:checked' ).should( 'have.value', '3' );
+    cy.get( 'input[name="programHousing"]:checked' ).should( 'have.value', 'onCampus' );
+    cy.get( 'input[name="programDependency"]:checked' ).should( 'have.value', 'dependent' );
   } );
 
   it( 'should choose the correct program', () => {
-    cy.get('#program-select option:checked').should( 'have.value', '4502-3' );
-    cy.get('#program-select option:checked').should( 'contain', 'Bachelor\'s degree - Anthropology' );
+    cy.get( '#program-select option:checked' ).should( 'have.value', '4502-3' );
+    cy.get( '#program-select option:checked' ).should( 'contain', 'Bachelor\'s degree - Anthropology' );
   } );
 
   it( 'should have the correct direct costs values', () => {
