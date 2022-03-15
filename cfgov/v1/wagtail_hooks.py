@@ -82,8 +82,9 @@ def raise_delete_error(request, page):
 
 
 @hooks.register("before_bulk_action")
-def raise_bulk_delete_error(request, action_type,
-                            objects, action_class_instance):
+def raise_bulk_delete_error(
+    request, action_type, objects, action_class_instance
+):
     if action_type == "delete":
         raise PermissionDenied("Deletion via POST is disabled")
 
