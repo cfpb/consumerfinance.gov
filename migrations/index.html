@@ -89,7 +89,7 @@
         
             <li><a class="toctree-l4" href="#data-migrations">Data migrations</a></li>
         
-            <li><a class="toctree-l4" href="#recreating-migrations">Recreating migrations</a></li>
+            <li><a class="toctree-l4" href="#squashing-migrations">Squashing migrations</a></li>
         
         </ul>
     
@@ -462,7 +462,7 @@ If commit is <code>True</code> (default),
 <code>save()</code> is called on the <code>page_or_revision</code> object.</p>
 <p><code>data</code> must be a list of <code>dict</code>-like objects
 containing the blocks within the given StreamField.</p>
-<h2 id="recreating-migrations">Recreating migrations<a class="headerlink" href="#recreating-migrations" title="Permanent link">¶</a></h2>
+<h2 id="squashing-migrations">Squashing migrations<a class="headerlink" href="#squashing-migrations" title="Permanent link">¶</a></h2>
 <p><a href="#schema-migrations">As described above</a>,
 each time a Django model's definition changes it requires the generation of a new Django migration.
 Over time, the number of migrations in our apps can grow very large,
@@ -470,77 +470,64 @@ slowing down testing and the <code>migrate</code> command.</p>
 <p>For this reason it may be desirable to periodically delete and recreate the migration files,
 so that instead of a series of files detailing every change over time
 we have a smaller set that just describes the current state of models in the code.</p>
-<p>Django does provide an automated
+<p>Django provides an automated
 <a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#squashing-migrations">squashing</a>
-process for migrations,
-but this is often not optimal when migrations contain manual <code>RunPython</code> blocks that we don't necessarily care about keeping around.</p>
-<p>Instead, we delete all existing migration files and then run <code>manage.py makemigrations</code> to create new ones.
-This will generate the smallest number of migration files needed to describe the state of models in the code;
-typically one per app although sometimes multiple are needed due to app dependencies.</p>
-<p>This process does have these critical side effects:</p>
+process for migrations, but this is often not optimal when migrations contain manual <code>RunPython</code> blocks are present.
+Before running <code>squashmigrations</code>, search existing migrations for <code>RunPython</code> blocks without <code>elidable=True</code>, and 
+correct them to have <code>elidable=True</code>. This will tell <code>squashmigrations</code> to drop that <code>RunPython</code> block.
+In almost <em>all</em> cases, we do not want to keep any <code>RunPython</code> blocks.
+It is highly recommended to get a postgres database setup with the current migrations before
+attempting to squash. </p>
+<ol>
+<li>Set all <code>RunPython</code> blocks to have the argument <code>edilable=True</code>.</li>
+<li>Squash migrations for each app that has 3 or more non-squashed migrations</li>
+</ol>
+<pre class="highlight"><code class="language-sh"># start migration number is optional for apps that have never been squashed
+cfgov/manage.py squashmigrations --squashed-name &lt;year&gt;_squash &lt;app_name&gt; &lt;starting_migration_number&gt; &lt;ending_migration_number&gt;
+
+# 2022 ask_cfp squash 0039 -&gt; 0045
+cfgov/manage.py squashmigrations --squashed-name 2022_squash ask_cfpb 0039 0045
+
+# 2022 form_explainer squash 0001 -&gt; 0007
+cfgov/manage.py squashmigrations --squashed-name 2022_squash form_explainer 0007</code></pre>
+
+<ol>
+<li>Once all apps are squashed, attempt to apply migrations to check for errors</li>
+</ol>
+<pre class="highlight"><code class="language-sh">cfgov/manage.py migrate</code></pre>
+
 <ol>
 <li>
-<p>Databases that exist at some migration state before the one at the point of the recreation will no longer be able to be migrated to the current state,
-    as the intermediate changes will have been lost.
-    This means that those databases will need to be recreated.
-    This also means that historical database archives will require a bit more work to resurrect;
-    they'll need to first be migrated to the point just before the recreation,
-    and then updated to code at or after that point.</p>
-<p>For example, say a database dump exists at a point where N migrations occur.
-At such time as N + 1 migrations occur,
-we decide to go through the recreation process.
-Now we have a new migration numbered N + 2 that represents the equivalent of all (1..N+1) migrations that it replaces.
-If you try to load and migrate the dump at point N,
-Django no longer has the code necessary to go from N-&gt;N+1 only --
-it only has the ability to go from 0-&gt;N+2.
-To recover such a dump, you'll need to check out the code at the point before the recreation was done,
-migrate from N-&gt;N+1, and then check out latest and migrate forwards.</p>
+<p>Correct errors, if any, until there are no migrations to apply or create. 
+Repeat steps 3 and 4 until no errors. 
+It may be possible that an additional migration will be generated 
+if there was an error that needed to be corrected.</p>
 </li>
 <li>
-<p>Any open pull requests at the time of the recreation that reference
-    or depend on some of the existing migrations
-    will need to be modified to instead refer to the new migration files.</p>
+<p>Unittest with squashed migrations in place</p>
 </li>
+<li>Recreate fresh database, and load <code>test.sql.gz</code>, and apply the migrations.</li>
 </ol>
-<p>Migrations can be recreated with this process:</p>
+<pre class="highlight"><code class="language-sh">./refresh-data.sh test.sql.gz</code></pre>
+
 <ol>
-<li>
-<p>Remove all existing migration files:</p>
-<pre class="highlight"><code class="language-sh">rm -f -v cfgov/*/migrations/0*</code></pre>
-
-</li>
-<li>
-<p>Create new migration files from the state of model Python code:</p>
-<pre class="highlight"><code class="language-sh">cfgov/manage.py makemigrations --noinput</code></pre>
-
-<p>As it happens this creates new initial migrations (<code>0001_initial</code>) for all apps,
-plus some subsequent migrations (<code>0002_something</code>) for apps that depend on other apps
-(for example, <code>ask_cfpb</code> has its own initial migration and then some changes that rely on <code>v1</code>).</p>
-</li>
-<li>
-<p>Rename the created migration files so that they follow in sequence the migration files that used to exist.
-   For example, if at the time of recreation there are 101 <code>v1</code> migrations,
-   the first new migration should be numbered 102.</p>
-</li>
-<li>
-<p>Manually alter all new migration files to indicate that they replace the old migration files.</p>
-<p>This involves adding lines to these files like:</p>
-<pre class="highlight"><code class="language-py">replaces = [('app_name', '0002_foo'), ('app_name', '0003_bar'), ...]</code></pre>
-
-<p>This tells Django that these new files replace the old files,
-so that when migrations are run again,
-it doesn't need to do anything.</p>
-<p>Also manually update any new subsequent migration files so that they properly refer to each other.
-For example, if an app has two new migrations 102 and 103,
-the 103 file needs to properly depend on 102.</p>
-</li>
+<li>Dump test database back to <code>test.sql.gz</code></li>
 </ol>
-<p>To apply these new migration files to an existing database, you can simply run:</p>
-<pre class="highlight"><code class="language-sh">cfgov/manage.py migrate --noinput</code></pre>
+<pre class="highlight"><code class="language-sh">./dump-data.sh test.sql.gz</code></pre>
 
-<p>You'll see that there are no changes to apply,
-as the new files should exactly describe the current model state in the same way that the old migrations did.</p>
-<p>See <a href="https://github.com/cfpb/consumerfinance.gov/pull/3770">consumerfinance.gov#3770</a> for an example of when this was done.</p>
+<ol>
+<li>Delete non-squashed migration files that were squashed.</li>
+</ol>
+<h3 id="squash-notes">Squash Notes<a class="headerlink" href="#squash-notes" title="Permanent link">¶</a></h3>
+<h4 id="2022">2022<a class="headerlink" href="#2022" title="Permanent link">¶</a></h4>
+<p><code>teachers_digital_platform</code> had an over-optimization or circular dependency
+issue, resulting in the following error.</p>
+<pre class="highlight"><code>ValueError: The field teachers_digital_platform.ActivityPage.student_characteristics was declared with a lazy reference to 'teachers_digital_platform.activityspecialpopulation', but app 'teachers_digital_platform' doesn't provide model 'activityspecialpopulation'.
+The field teachers_digital_platform.ActivityPage_student_characteristics.activityspecialpopulation was declared with a lazy reference to 'teachers_digital_platform.activityspecialpopulation', but app 'teachers_digital_platform' doesn't provide model 'activityspecialpopulation'.</code></pre>
+
+<p>Corrected the error by changing the reference to the correct field for student char.
+An additional migration was generated for <code>teachers_digital_platform</code> once this error was corrected.
+<code>ActivitySpecialPopulation</code> -&gt; <code>ActivityStudentCharacteristics</code>.</p>
               
             </div>
           </div>
