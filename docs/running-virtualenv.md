@@ -42,10 +42,10 @@ and rebuild the site's JavaScript and CSS assets.
 ##### Setting environments
 
 The `NODE_ENV` environment variable can be set in your `.env` file to either
-`development` or `production`, which will affect how the build is made and what
-gulp tasks are available. To install dependencies of one environment
-or the other run `./frontend.sh` (dependencies and devDependencies)
-or `./frontend.sh production` (dependencies but not devDependencies).
+`development` or `production`, which will affect how the build is made.
+To install dependencies of one environment or the other run `./frontend.sh`
+(dependencies and devDependencies) or `./frontend.sh production`
+(dependencies but not devDependencies).
 
 ### 2. Run Elasticsearch (optional)
 
@@ -125,10 +125,8 @@ The important ones are listed below:
 ```
 yarn run gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
 yarn run gulp clean           # Remove the contents of the production /dist/ directory.
-yarn run gulp lint            # Lint the scripts and build files.
 yarn run gulp docs            # Generate JSDocs from the scripts.
-yarn run gulp test            # Run linting, unit, and functional tests (see below).
-yarn run gulp test:unit       # Run only unit tests on source code.
+yarn run gulp test            # Run unit tests (see below).
 ```
 
 ### Reinstalling the virtual environment
