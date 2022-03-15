@@ -354,26 +354,32 @@ Once complete, our `runserver.sh` script will bring up the site at
 
 ## Additional setup
 
-### Sync local image storage (optional)
+### Sync local image and document storage (optional)
 
-If using a database dump, pages will contain links to images that exist in
-the database but don't exist on your local disk. This will cause broken or
-missing images when browsing the site locally.
+If using a database dump, pages will contain links to images or documents
+that exist in the database but don't exist on your local disk.
+This will cause broken or missing images or links when browsing the site locally.
 
-For example, in production images are stored on S3, but when running locally
-they are stored on disk.
+This is because in production images and documents are stored on S3,
+but when running locally they are stored on disk.
 
-This project includes a Django management command that can be used to download
-any remote images referenced in the database so that they can be served when
+This project includes two Django management commands that can be used to download
+any remote images or documents referenced in the database so that they can be served when
 running locally.
+
+This command downloads all remote images (and image renditions) referenced in the
+database, retrieving them from the specified URL and storing them in the
+specified local directory:
 
 ```sh
 cfgov/manage.py sync_image_storage https://files.consumerfinance.gov/f/ ./cfgov/f/
 ```
 
-This downloads all remote images (and image renditions) referenced in the
-database, retrieving them from the specified URL and storing them in the
-specified local directory.
+This command does the same, but for documents:
+
+```sh
+cfgov/manage.py sync_document_storage https://files.consumerfinance.gov/f/ ./cfgov/f/
+```
 
 ### Install GNU gettext for Django translation support (optional)
 
