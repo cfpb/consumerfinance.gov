@@ -7,19 +7,19 @@ from login.forms import CFGOVPasswordChangeForm, UserCreationForm, UserEditForm
 from login.tests.test_password_policy import TestWithUser
 
 
-@patch('login.forms.send_password_reset_email')
+@patch("login.forms.send_password_reset_email")
 class UserCreationFormTestCase(TestCase):
     def setUp(self):
         self.username = self.__class__.__name__
-        self.email = 'george@example.com'
+        self.email = "george@example.com"
 
         self.userdata = {
-            'email': self.email,
-            'username': self.username,
-            'first_name': 'George',
-            'last_name': 'Washington',
-            'password1': 'cherrytree',
-            'password2': 'cherrytree',
+            "email": self.email,
+            "username": self.username,
+            "first_name": "George",
+            "last_name": "Washington",
+            "password1": "cherrytree",
+            "password2": "cherrytree",
         }
 
     def tearDown(self):
@@ -38,19 +38,19 @@ class UserCreationFormTestCase(TestCase):
         send_email.assert_not_called()
 
     def test_duplicate_email_fails_validation(self, send_email):
-        User.objects.create(username='foo', email=self.email)
+        User.objects.create(username="foo", email=self.email)
         form = UserCreationForm(self.userdata)
         self.assertFalse(form.is_valid())
-        self.assertTrue(form.errors['email'])
+        self.assertTrue(form.errors["email"])
 
 
 class UserEditFormTestCase(TestCase):
     def setUp(self):
         self.userdata = {
-            'username': 'george',
-            'email': 'george@washington.com',
-            'first_name': 'george',
-            'last_name': 'washington',
+            "username": "george",
+            "email": "george@washington.com",
+            "first_name": "george",
+            "last_name": "washington",
         }
 
     def test_no_edits_valid(self):
@@ -62,50 +62,49 @@ class UserEditFormTestCase(TestCase):
         user = User.objects.create(**self.userdata)
 
         userdata2 = dict(self.userdata)
-        userdata2['first_name'] = 'joe'
+        userdata2["first_name"] = "joe"
         form = UserEditForm(data=userdata2, instance=user)
         self.assertTrue(form.is_valid())
 
         user = form.save()
-        self.assertEqual(user.first_name, 'joe')
-        self.assertEqual(user.username, 'george')
+        self.assertEqual(user.first_name, "joe")
+        self.assertEqual(user.username, "george")
 
     def test_duplicate_email_fails_validation(self):
         User.objects.create(**self.userdata)
 
         userdata2 = dict(self.userdata)
-        userdata2['username'] = 'patrick'
+        userdata2["username"] = "patrick"
         form = UserEditForm(data=userdata2)
 
         self.assertFalse(form.is_valid())
-        self.assertTrue(form.errors['email'])
+        self.assertTrue(form.errors["email"])
 
     def test_duplicate_emails_allowed_on_user_model(self):
         User.objects.create(**self.userdata)
 
         userdata2 = dict(self.userdata)
-        userdata2['username'] = 'patrick'
+        userdata2["username"] = "patrick"
 
         try:
             User.objects.create(**userdata2)
         except Exception:
             self.fail(
-                'users with duplicate emails are allowed, '
-                'just not when creating or editing via for '
+                "users with duplicate emails are allowed, "
+                "just not when creating or editing via for "
             )
 
 
 class PasswordValidationMixinTestCase(TestWithUser):
-
     def test_edit_password(self):
-        user = self.get_user(last_password='testing')
+        user = self.get_user(last_password="testing")
         form = CFGOVPasswordChangeForm(
             data={
-                'old_password': 'testing',
-                'new_password1': 'Testing12345!',
-                'new_password2': 'Testing12345!',
+                "old_password": "testing",
+                "new_password1": "Testing12345!",
+                "new_password2": "Testing12345!",
             },
-            user=user
+            user=user,
         )
         form.is_valid()
         self.assertTrue(form.is_valid())

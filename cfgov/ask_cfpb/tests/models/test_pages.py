@@ -18,22 +18,40 @@ from model_bakery import baker
 
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models.django import (
-    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Category, NextStep
+    ENGLISH_PARENT_SLUG,
+    SPANISH_PARENT_SLUG,
+    Answer,
+    Category,
+    NextStep,
 )
 from ask_cfpb.models.pages import (
-    REUSABLE_TEXT_TITLES, AnswerLandingPage, AnswerPage, ArticlePage,
-    PortalSearchPage, get_standard_text, strip_html, validate_page_number
+    REUSABLE_TEXT_TITLES,
+    AnswerLandingPage,
+    AnswerPage,
+    ArticlePage,
+    PortalSearchPage,
+    get_standard_text,
+    strip_html,
+    validate_page_number,
 )
 from ask_cfpb.models.snippets import GlossaryTerm
 from ask_cfpb.scripts.export_ask_data import (
-    assemble_output, clean_and_strip, export_questions
+    assemble_output,
+    clean_and_strip,
+    export_questions,
 )
 from v1.models import (
-    CFGOVImage, HomePage, PortalCategory, PortalTopic, SublandingPage
+    CFGOVImage,
+    HomePage,
+    PortalCategory,
+    PortalTopic,
+    SublandingPage,
 )
 from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import (
-    get_free_path, get_or_create_page, set_streamfield_data
+    get_free_path,
+    get_or_create_page,
+    set_streamfield_data,
 )
 
 
@@ -41,7 +59,6 @@ now = timezone.now()
 
 
 class TestStripHTML(SimpleTestCase):
-
     def test_strip_html_headline_separation(self):
         """Make sure stripped markup doesn't jam headlines into text."""
         markup = (
@@ -113,7 +130,8 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
             export_questions()
         self.assertEqual(mock_output.call_count, 1)
         m.assert_called_once_with(
-            "/tmp/{}".format(slug), "w", encoding='windows-1252')
+            "/tmp/{}".format(slug), "w", encoding="windows-1252"
+        )
 
     @mock.patch("ask_cfpb.scripts.export_ask_data.assemble_output")
     def test_export_from_admin_post(self, mock_output):
@@ -347,7 +365,7 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(str(test_page), test_page.title)
         self.assertEqual(test_page.portal_topic, PortalTopic.objects.get(pk=1))
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_english_category_title(self, mock_search):
         page = self.english_search_page
         url = page.url + page.reverse_subpage(
@@ -355,11 +373,10 @@ class PortalSearchPageTest(TestCase):
         )
         response = self.client.get(url)
         self.assertEqual(
-            response.context_data.get("page").title,
-            "Auto loans how-to guides"
+            response.context_data.get("page").title, "Auto loans how-to guides"
         )
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_spanish_category_title(self, mock_search):
         page = self.spanish_search_page
         url = page.url + page.reverse_subpage(
@@ -417,56 +434,54 @@ class PortalSearchPageTest(TestCase):
             "See all results within auto loans</a></span>",
         )
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_portal_topic_page_200(self, mock_search):
         page = self.english_search_page
         response = self.client.get(page.url)
         self.assertEqual(response.status_code, 200)
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_portal_category_page_calls_search(self, mock_search):
         page = self.english_search_page
         portal_search_url = page.url + page.reverse_subpage(
-            'portal_category_page', kwargs={"category": "basics"}
+            "portal_category_page", kwargs={"category": "basics"}
         )
         mock_search.filter.return_value = {
-            'search_term': "hipotatoes",
-            'suggestion': "potatoes",
-            'results': []
+            "search_term": "hipotatoes",
+            "suggestion": "potatoes",
+            "results": [],
         }
         response = self.client.get(portal_search_url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_spanish_portal_search_page_renders(self, mock_search):
         page = self.spanish_search_page
         portal_search_url = page.url + page.reverse_subpage(
-            'portal_category_page', kwargs={"category": "paso-a-paso"}
+            "portal_category_page", kwargs={"category": "paso-a-paso"}
         )
         mock_search.filter.return_value = {
-            'search_term': "hipotacos",
-            'suggestion': "hipotecas",
-            'results': []
+            "search_term": "hipotacos",
+            "suggestion": "hipotecas",
+            "results": [],
         }
         response = self.client.get(portal_search_url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch.object(AnswerPageDocument, 'search')
-    def test_portal_topic_page_with_no_hits_same_suggestion(
-        self, mock_search
-    ):
+    @mock.patch.object(AnswerPageDocument, "search")
+    def test_portal_topic_page_with_no_hits_same_suggestion(self, mock_search):
         term = "hipotatoes"
         mock_search.suggest.return_value = {
-            'search_term': term,
-            'suggestion': None,
-            'results': []
+            "search_term": term,
+            "suggestion": None,
+            "results": [],
         }
         mock_search.search.return_value = {
-            'search_term': term,
-            'suggestion': None,
-            'results': []
+            "search_term": term,
+            "suggestion": None,
+            "results": [],
         }
         page = self.english_search_page
         base_url = page.url
@@ -475,20 +490,18 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch.object(AnswerPageDocument, 'search')
-    def test_portal_topic_page_with_no_hits_with_suggestion(
-        self, mock_search
-    ):
+    @mock.patch.object(AnswerPageDocument, "search")
+    def test_portal_topic_page_with_no_hits_with_suggestion(self, mock_search):
         term = "hipotatoes"
         mock_search.suggest.return_value = {
-            'search_term': term,
-            'suggestion': "potatoes",
-            'results': ["hit1", "hit2"]
+            "search_term": term,
+            "suggestion": "potatoes",
+            "results": ["hit1", "hit2"],
         }
         mock_search.search.return_value = {
-            'search_term': term,
-            'suggestion': "potatoes",
-            'results': ["hit1", "hit2"]
+            "search_term": term,
+            "suggestion": "potatoes",
+            "results": ["hit1", "hit2"],
         }
         page = self.english_search_page
         base_url = page.url
@@ -497,15 +510,15 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_portal_category_page_with_no_hits_with_suggestion(
         self, mock_search
     ):
         term = "hoodoo"
         mock_search.suggest.return_value = {
-            'search_term': term,
-            'suggestion': "hoodunit",
-            'results': ["hit1", "hit2"]
+            "search_term": term,
+            "suggestion": "hoodunit",
+            "results": ["hit1", "hit2"],
         }
         page = self.english_search_page
         base_url = page.url + page.reverse_subpage(
@@ -519,15 +532,13 @@ class PortalSearchPageTest(TestCase):
             self.assertEqual(response.context_data["search_term"], term)
             self.assertEqual(response.status_code, 200)
 
-    @mock.patch.object(AnswerPageDocument, 'search')
-    def test_portal_category_page_same_suggestion(
-        self, mock_search
-    ):
+    @mock.patch.object(AnswerPageDocument, "search")
+    def test_portal_category_page_same_suggestion(self, mock_search):
         term = "hoodoo"
         mock_search.suggest.return_value = {
-            'search_term': term,
-            'suggestion': term,
-            'results': []
+            "search_term": term,
+            "suggestion": term,
+            "results": [],
         }
         page = self.english_search_page
         base_url = page.url + page.reverse_subpage(
@@ -538,13 +549,13 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(response.context_data["search_term"], term)
         self.assertEqual(response.status_code, 200)
 
-    @mock.patch.object(AnswerPageDocument, 'search')
+    @mock.patch.object(AnswerPageDocument, "search")
     def test_portal_topic_page_suggestion(self, mock_search):
         term = "hoodoo"
         mock_search.suggest.return_value = {
-            'search_term': term,
-            'suggestion': "hoodunit",
-            'results': []
+            "search_term": term,
+            "suggestion": "hoodunit",
+            "results": [],
         }
         page = self.english_search_page
         base_url = page.url
@@ -847,10 +858,7 @@ class AnswerPageTest(TestCase):
     def test_get_meta_description(self):
         page = self.page1
         # Defaults to empty string
-        self.assertEqual(
-            page.get_meta_description(),
-            ""
-        )
+        self.assertEqual(page.get_meta_description(), "")
 
         # Second fallback is truncated answer_content text block
         data = [
@@ -1015,20 +1023,17 @@ class AnswerPageTest(TestCase):
             reverse("ask-english-answer", args=["mock-question", "en", 1234])
         )
         self.assertContains(
-            english_answer_page_response,
-            "An official website of the"
+            english_answer_page_response, "An official website of the"
         )
         self.assertContains(
-            english_answer_page_response,
-            "United States government"
+            english_answer_page_response, "United States government"
+        )
+        self.assertNotContains(
+            english_answer_page_response, "Un sitio web oficial"
         )
         self.assertNotContains(
             english_answer_page_response,
-            "Un sitio web oficial"
-        )
-        self.assertNotContains(
-            english_answer_page_response,
-            "gobierno federal de los Estados Unidos"
+            "gobierno federal de los Estados Unidos",
         )
         self.assertContains(english_answer_page_response, "https://usa.gov/")
         self.assertNotContains(
@@ -1043,20 +1048,17 @@ class AnswerPageTest(TestCase):
             )
         )
         self.assertContains(
-            spanish_answer_page_response,
-            "Un sitio web oficial"
+            spanish_answer_page_response, "Un sitio web oficial"
         )
         self.assertContains(
             spanish_answer_page_response,
-            "gobierno federal de los Estados Unidos"
+            "gobierno federal de los Estados Unidos",
         )
         self.assertNotContains(
-            spanish_answer_page_response,
-            "An official website of the"
+            spanish_answer_page_response, "An official website of the"
         )
         self.assertNotContains(
-            spanish_answer_page_response,
-            "United States government"
+            spanish_answer_page_response, "United States government"
         )
         self.assertContains(
             spanish_answer_page_response, "https://gobiernousa.gov/"
@@ -1197,7 +1199,7 @@ class AnswerPageTest(TestCase):
         self.assertEqual(page.meta_image, image)
 
     def test_answer_meta_image_undefined(self):
-        """ Answer page's meta image is undefined if social image is
+        """Answer page's meta image is undefined if social image is
         not provided
         """
         answer = Answer()
@@ -1206,7 +1208,7 @@ class AnswerPageTest(TestCase):
         self.assertIsNone(page.meta_image)
 
     def test_answer_meta_image_uses_category_image_if_no_social_image(self):
-        """ Answer page's meta image is its category's image """
+        """Answer page's meta image is its category's image"""
         category = baker.make(Category, category_image=self.test_image)
         page = self.page1
         page.category.add(category)
@@ -1230,18 +1232,14 @@ class AnswerPageTest(TestCase):
         answer = baker.make(Answer)
         answer.save()
 
-        page = AnswerPage(
-            slug="question-en",
-            title="Original question?"
-        )
+        page = AnswerPage(slug="question-en", title="Original question?")
         self.ROOT_PAGE.add_child(instance=page)
         page.answer_base = answer
         page.full_clean()
         page.save()
 
         dup_page = AnswerPage(
-            slug="dup-question-en",
-            title="Duplicate question?"
+            slug="dup-question-en", title="Duplicate question?"
         )
         dup_page.answer_base = answer
 

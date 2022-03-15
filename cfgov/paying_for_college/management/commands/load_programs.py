@@ -14,18 +14,15 @@ class Command(BaseCommand):
     help = COMMAND_HELP
 
     def add_arguments(self, parser):
-        parser.add_argument('source', nargs='+', type=str)
-        parser.add_argument('--s3',
-                            help=S3_HELP,
-                            type=str,
-                            default='false')
+        parser.add_argument("source", nargs="+", type=str)
+        parser.add_argument("--s3", help=S3_HELP, type=str, default="false")
 
     def handle(self, *args, **options):
-        if options['s3'].upper() == "TRUE":
+        if options["s3"].upper() == "TRUE":
             S3 = True
         else:
             S3 = False
-        for filesource in options['source']:
+        for filesource in options["source"]:
             try:
                 if S3:
                     (FAILED, endmsg) = load_programs.load(filesource, s3=S3)

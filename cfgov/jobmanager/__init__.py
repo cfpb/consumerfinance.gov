@@ -1,1 +1,1 @@
-default_app_config = 'jobmanager.apps.JobManagerAppConfig'
+default_app_config = "jobmanager.apps.JobManagerAppConfig"

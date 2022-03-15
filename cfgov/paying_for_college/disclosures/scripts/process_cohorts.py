@@ -4,14 +4,16 @@ import logging
 import localflavor
 
 from paying_for_college.models.disclosures import (
-    DEFAULT_EXCLUSIONS, HIGHEST_DEGREES, School
+    DEFAULT_EXCLUSIONS,
+    HIGHEST_DEGREES,
+    School,
 )
 
 
 STATES = sorted(
-    [tup[0] for tup in localflavor.us.us_states.CONTIGUOUS_STATES] +
-    [tup[0] for tup in localflavor.us.us_states.NON_CONTIGUOUS_STATES] +
-    ['PR']
+    [tup[0] for tup in localflavor.us.us_states.CONTIGUOUS_STATES]
+    + [tup[0] for tup in localflavor.us.us_states.NON_CONTIGUOUS_STATES]
+    + ["PR"]
 )
 DEGREE_COHORTS = {k: [] for k in HIGHEST_DEGREES.keys()}
 logger = logging.getLogger(__name__)
@@ -20,7 +22,7 @@ logger = logging.getLogger(__name__)
 def get_grad_level(school):
     """Consider degrees higher than graduate level '4' as graduate degrees."""
     if int(school.degrees_highest) > 4:
-        return '4'
+        return "4"
     else:
         return school.degrees_highest
 
@@ -33,10 +35,11 @@ def build_base_cohorts():
     or school systems, plus our fake demo school, 999999.
     """
     global DEGREE_COHORTS
-    base_query = School.objects.filter(
-        operating=True, state__in=STATES).exclude(
-        pk__in=DEFAULT_EXCLUSIONS).exclude(
-            degrees_highest='')
+    base_query = (
+        School.objects.filter(operating=True, state__in=STATES)
+        .exclude(pk__in=DEFAULT_EXCLUSIONS)
+        .exclude(degrees_highest="")
+    )
     for key in DEGREE_COHORTS:
         DEGREE_COHORTS[key] += [
             school for school in base_query if get_grad_level(school) == key
@@ -58,12 +61,12 @@ def rank_by_metric(school, cohort, metric):
     values = [
         getattr(s, metric) for s in cohort if getattr(s, metric) is not None
     ]
-    payload = {'cohort_count': len(values)}
+    payload = {"cohort_count": len(values)}
     array = [float(val) for val in values]
     target_value = float(getattr(school, metric))
-    payload.update({
-        'percentile_rank': calculate_percentile_rank(array, target_value)
-    })
+    payload.update(
+        {"percentile_rank": calculate_percentile_rank(array, target_value)}
+    )
     return payload
 
 
@@ -85,46 +88,50 @@ def run(single_school=None):
         # base query weeds out schools without state or degrees_highest values
         degree_cohort = DEGREE_COHORTS.get(get_grad_level(school))
         state_cohort = [
-            s for s in degree_cohort
-            if s
-            and s.state
-            and s.state == school.state
+            s
+            for s in degree_cohort
+            if s and s.state and s.state == school.state
         ]
         # For school control, we want cohorts only for public and private;
         # We do not want a special cohort of for-profit schools
         if not school.control:
             control_cohort = None
-        elif school.control == 'Public':
+        elif school.control == "Public":
             control_cohort = [
                 s for s in degree_cohort if s.control == school.control
             ]
         else:
             control_cohort = [
-                s for s in degree_cohort if s.control != 'Public'
+                s for s in degree_cohort if s.control != "Public"
             ]
-        for metric in ['grad_rate', 'repay_3yr', 'median_total_debt']:
+        for metric in ["grad_rate", "repay_3yr", "median_total_debt"]:
             if getattr(school, metric) is None:
                 by_state.update({metric: None})
                 by_control.update({metric: None})
                 by_degree.update({metric: None})
             else:
                 if state_cohort:
-                    by_state.update({
-                        metric: rank_by_metric(school, state_cohort, metric)
-                    })
+                    by_state.update(
+                        {metric: rank_by_metric(school, state_cohort, metric)}
+                    )
                 if control_cohort:
-                    by_control.update({
-                        metric: rank_by_metric(school, control_cohort, metric)
-                    })
+                    by_control.update(
+                        {
+                            metric: rank_by_metric(
+                                school, control_cohort, metric
+                            )
+                        }
+                    )
                 if degree_cohort:
-                    by_degree.update({
-                        metric: rank_by_metric(school, degree_cohort, metric)
-                    })
+                    by_degree.update(
+                        {metric: rank_by_metric(school, degree_cohort, metric)}
+                    )
         school.cohort_ranking_by_state = by_state
         school.cohort_ranking_by_control = by_control
         school.cohort_ranking_by_highest_degree = by_degree
         school.save()
-    logger.info("\nCohort script took {} to process {} schools".format(
-        datetime.datetime.now() - starter,
-        count
-    ))
+    logger.info(
+        "\nCohort script took {} to process {} schools".format(
+            datetime.datetime.now() - starter, count
+        )
+    )
