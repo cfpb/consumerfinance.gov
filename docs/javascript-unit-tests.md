@@ -39,34 +39,41 @@ it would be a good idea to peruse their docs before diving in here.
 
 ### Run a single test file
 
-To run a single test file, use the `--specs` flag to specify a file path:
+To run a single test file, pass the name (or path) of the spec:
 
 ```bash
-gulp test --specs=js/organisms/Footer-spec.js
+yarn jest Notification-spec.js
+# Equivalent to:
+yarn jest test/unit_tests/js/molecules/Notification-spec.js
+# The name argument would technically would match all Notification-spec.js files
+# This usually isn't a problem in our codebase (and you can always get more specific if needed)
 ```
-
-The above command tests the code at `cfgov/unprocessed/js/organisms/Footer.js`.
-
 
 ### Run a directory of unit tests
 
-A directory of unit tests can be run with:
+A directory of unit tests can be run by passing its name or path:
 
 ```bash
-gulp test --specs=js/molecules/
+yarn jest organisms
+yarn jest test/unit_tests/js/organisms
 ```
-
 
 ### Run all unit tests
 
 To run all of the unit tests:
 
 ```bash
-gulp test
+yarn jest
 ```
 
+To first lint all files and then run tests:
 
+```bash
+yarn test
+```
 
+Because we invoke jest directly, you can pass any command-line args it accepts
+to filter your output or to target specific tests [see the docs for more](https://jestjs.io/docs/cli).
 
 ## Where to find tests
 
@@ -186,7 +193,7 @@ to save and commit your changes.
 1. Run your sample test using
 
     ```bash
-    gulp test --specs=js/modules/sample-spec.js
+    yarn jest sample-spec.js
     ```
 
     (substituting your own filename).
