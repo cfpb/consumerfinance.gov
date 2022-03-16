@@ -1,5 +1,6 @@
 from unittest import mock
 
+from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.test import (
     RequestFactory,
@@ -8,15 +9,20 @@ from django.test import (
     override_settings,
 )
 
+from wagtail.admin.views.pages.bulk_actions.delete import DeleteBulkAction
+from wagtail.admin.views.pages.delete import delete
+from wagtail.core import hooks
 from wagtail.core.blocks import BoundBlock
-from wagtail.core.models import Site
+from wagtail.core.models import Page, Site
 from wagtail.core.whitelist import Whitelister as Allowlister
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
 
 from v1.blocks import Feedback
-from v1.models.base import CFGOVPage
+from v1.models.base import CFGOVPage, CFGOVPageCategory
+from v1.models.blog_page import BlogPage
 from v1.models.resources import Resource
+from v1.tests.wagtail_pages.helpers import publish_page
 from v1.wagtail_hooks import (
     form_module_handlers,
     get_resource_tags,
@@ -161,16 +167,64 @@ class TestAllowlistOverride(SimpleTestCase):
         self.assertHTMLEqual(output_html, "Consumer Finance")
 
 
-class TestDeleteProtections(SimpleTestCase):
-    def test_delete_page_block(self):
-        self.assertRaises(PermissionDenied, raise_delete_error, None, None)
+class TestDeleteProtections(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="test",
+            email="test@cfpb.gov",
+            password="test",
+            is_superuser=True,
+            is_staff=True,
+            is_active=True,
+        )
+        self.page1 = BlogPage(title="live1", slug="test1")
+        self.page1.categories.add(CFGOVPageCategory(name="foo"))
+        self.page1.tags.add("foo")
+        self.page1.authors.add("test-author")
+        self.page1.language = "en"
+        self.page2 = BlogPage(title="live2", slug="test2")
+        self.page2.categories.add(CFGOVPageCategory(name="bar"))
+        self.page2.tags.add("bar")
+        self.page2.authors.add("test-author")
+        self.page2.language = "en"
+        publish_page(self.page1)
+        publish_page(self.page2)
+        self.request = RequestFactory().post(
+            f"/admin/bulk/wagtailcore/page/delete/"
+            f"?next=%2Fadmin%2Fpages%2F3%2F&"
+            f"id={self.page1.pk}&id={self.page2.pk}"
+        )
+        self.request.user = self.user
 
+    @hooks.register_temporarily("before_delete_page", raise_delete_error)
+    def test_delete_page_block(self):
+        """
+        Test Page Deletion Protections via proper hook and hook calling method.
+        Page delete method requires a request just to pull a user with valid
+        permissions to check, so URL is no factor. Even with valid permissions
+        this should raise PermissionDenied.
+        """
+        self.assertRaises(
+            PermissionDenied, delete, self.request, self.page1.pk
+        )
+
+    @hooks.register_temporarily("before_bulk_action", raise_bulk_delete_error)
     def test_bulk_delete_block(self):
+        """
+        Test Bulk Delete Protections via proper hook and hook calling method.
+        Action requires a request with a user with valid permissions, as well
+        as a bulk delete URL with parsable valid object id's.
+        URL determines the action type and object type.
+        form_valid is what ultimately calls before and after hooks for all
+        bulk actions. form_valid does not, however, require a valid
+        form object, so None is passed.
+        We test with Pages here, but the method should protect against all
+        object bulk deletion. Even with valid permissions this should raise
+        PermissionDenied.
+        """
+        action = DeleteBulkAction(self.request, model=Page)
         self.assertRaises(
             PermissionDenied,
-            raise_bulk_delete_error,
-            None,
-            "delete",
-            None,
+            action.form_valid,
             None,
         )
