@@ -228,18 +228,27 @@ it would be a good idea to peruse their docs before diving in here.</p>
 </ol>
 <h2 id="running-unit-tests">Running unit tests<a class="headerlink" href="#running-unit-tests" title="Permanent link">¶</a></h2>
 <h3 id="run-a-single-test-file">Run a single test file<a class="headerlink" href="#run-a-single-test-file" title="Permanent link">¶</a></h3>
-<p>To run a single test file, use the <code>--specs</code> flag to specify a file path:</p>
-<pre class="highlight"><code class="language-bash">gulp test --specs=js/organisms/Footer-spec.js</code></pre>
+<p>To run a single test file, pass the name (or path) of the spec:</p>
+<pre class="highlight"><code class="language-bash">yarn jest Notification-spec.js
+# Equivalent to:
+yarn jest test/unit_tests/js/molecules/Notification-spec.js
+# The name argument would technically would match all Notification-spec.js files
+# This usually isn't a problem in our codebase (and you can always get more specific if needed)</code></pre>
 
-<p>The above command tests the code at <code>cfgov/unprocessed/js/organisms/Footer.js</code>.</p>
 <h3 id="run-a-directory-of-unit-tests">Run a directory of unit tests<a class="headerlink" href="#run-a-directory-of-unit-tests" title="Permanent link">¶</a></h3>
-<p>A directory of unit tests can be run with:</p>
-<pre class="highlight"><code class="language-bash">gulp test --specs=js/molecules/</code></pre>
+<p>A directory of unit tests can be run by passing its name or path:</p>
+<pre class="highlight"><code class="language-bash">yarn jest organisms
+yarn jest test/unit_tests/js/organisms</code></pre>
 
 <h3 id="run-all-unit-tests">Run all unit tests<a class="headerlink" href="#run-all-unit-tests" title="Permanent link">¶</a></h3>
 <p>To run all of the unit tests:</p>
-<pre class="highlight"><code class="language-bash">gulp test</code></pre>
+<pre class="highlight"><code class="language-bash">yarn jest</code></pre>
 
+<p>To first lint all files and then run tests:</p>
+<pre class="highlight"><code class="language-bash">yarn test</code></pre>
+
+<p>Because we invoke jest directly, you can pass any command-line args it accepts
+to filter your output or to target specific tests <a href="https://jestjs.io/docs/cli">see the docs for more</a>.</p>
 <h2 id="where-to-find-tests">Where to find tests<a class="headerlink" href="#where-to-find-tests" title="Permanent link">¶</a></h2>
 <p>The following links list out the main directories containing tests
 (as of January 2019, this page’s initial publication date).</p>
@@ -335,7 +344,7 @@ to save and commit your changes.</p>
 </li>
 <li>
 <p>Run your sample test using</p>
-<pre class="highlight"><code class="language-bash">gulp test --specs=js/modules/sample-spec.js</code></pre>
+<pre class="highlight"><code class="language-bash">yarn jest sample-spec.js</code></pre>
 
 <p>(substituting your own filename).</p>
 <p>You should see output like this:</p>

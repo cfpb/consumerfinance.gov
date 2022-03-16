@@ -68,6 +68,8 @@
         
             <li><a class="toctree-l4" href="#3-launch-site">3. Launch Site</a></li>
         
+            <li><a class="toctree-l4" href="#yarn-commands">yarn commands</a></li>
+        
             <li><a class="toctree-l4" href="#reinstalling-the-virtual-environment">Reinstalling the virtual environment</a></li>
         
         </ul>
@@ -277,16 +279,20 @@ password will expire after 60 days).</p>
 <p>You'll need to ignore any browser certificate errors.</p>
 </div>
 <h4 id="available-gulp-tasks">Available Gulp Tasks<a class="headerlink" href="#available-gulp-tasks" title="Permanent link">¶</a></h4>
-<p>There are a number of important gulp tasks,
-particularly <code>build</code> and <code>test</code>,
-which will build the project and test it, respectively.
-Tasks are invoked via an <code>yarn run</code> command so that the local gulp-cli can be used.
-Using the <code>yarn run gulp -- --tasks</code> command you can view all available tasks.
+<p>There are a number of important gulp tasks, particularly <code>build</code>,
+which will build the project.
+Tasks are invoked via a <code>yarn</code> command so that the local gulp-cli can be used.
+Using the <code>yarn gulp -- --tasks</code> command you can view all available tasks.
 The important ones are listed below:</p>
-<pre class="highlight"><code>yarn run gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
-yarn run gulp clean           # Remove the contents of the production /dist/ directory.
-yarn run gulp docs            # Generate JSDocs from the scripts.
-yarn run gulp test            # Run unit tests (see below).</code></pre>
+<pre class="highlight"><code>yarn gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
+yarn gulp clean           # Remove the contents of the production /dist/ directory.
+yarn gulp docs            # Generate JSDocs from the scripts.</code></pre>
+
+<h3 id="yarn-commands">yarn commands<a class="headerlink" href="#yarn-commands" title="Permanent link">¶</a></h3>
+<p>Along with gulp tasks, the following yarn tasks are available:</p>
+<pre class="highlight"><code>yarn lint                # Run frontend linting
+yarn jest                # Run frontend tests
+yarn test                # Run both</code></pre>
 
 <h3 id="reinstalling-the-virtual-environment">Reinstalling the virtual environment<a class="headerlink" href="#reinstalling-the-virtual-environment" title="Permanent link">¶</a></h3>
 <p>To remove an existing virtual environment for

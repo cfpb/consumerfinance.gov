@@ -202,9 +202,9 @@
 <li><code>docker-compose -f docker-compose.e2e.yml up</code> runs all Docker containers</li>
 </ul>
 <h3 id="cypress-app">Cypress app<a class="headerlink" href="#cypress-app" title="Permanent link">¶</a></h3>
-<p>To run the desktop Cypress app execute <code>yarn run cypress open</code> from the command line. From the app, you can select the tests you want to run and the browser you want to run them in.</p>
+<p>To run the desktop Cypress app execute <code>yarn cypress open</code> from the command line. From the app, you can select the tests you want to run and the browser you want to run them in.</p>
 <h3 id="command-line">Command line<a class="headerlink" href="#command-line" title="Permanent link">¶</a></h3>
-<p>You can run functional tests from the command line with <code>yarn run cypress run</code>. That will run all tests in the <code>test/cypress/integration/</code> directory with the default test configuration: headless, in Cypress's default Electron browser, and against <code>localhost:8000</code>. You might want to modify the test run with some common arguments:</p>
+<p>You can run functional tests from the command line with <code>yarn cypress run</code>. That will run all tests in the <code>test/cypress/integration/</code> directory with the default test configuration: headless, in Cypress's default Electron browser, and against <code>localhost:8000</code>. You might want to modify the test run with some common arguments:</p>
 <ul>
 <li><code>--spec test/cypress/integration/{path/to/test.js}</code> runs a single test suite</li>
 <li><code>--browser chrome</code> runs the tests in Chrome, which is what we use to run tests in our continuous integration pipeline</li>
