@@ -20,7 +20,7 @@ class TestFixLinksInTableblocks(TestCase):
             "value": {
                 "data": [
                     [
-                        '<a href="/documents/6881/cfpb.pdf" id="6881" '
+                        '<a href="/documents/cfpb.pdf" id="6881" '
                         + 'linktype="document">Read/download</a>'
                     ]
                 ]
