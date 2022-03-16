@@ -45,7 +45,7 @@ To run a single test file, pass the name (or path) of the spec:
 yarn jest Notification-spec.js
 # Equivalent to:
 yarn jest test/unit_tests/js/molecules/Notification-spec.js
-# The name argument would techniclly would match all Notification-spec.js files
+# The name argument would technically would match all Notification-spec.js files
 # This usually isn't a problem in our codebase (and you can always get more specific if needed)
 ```
 
