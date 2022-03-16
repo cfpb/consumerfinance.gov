@@ -26,12 +26,12 @@
 
 ## Watching files for changes
 
-Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `gulp watch` or `yarn run gulp watch`.
+Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `gulp watch` or `yarn gulp watch`.
 
 !!! note
     You must build the assets first, so you may want a command like: 
     ```
-    ./setup.sh docker && yarn run gulp watch
+    ./setup.sh docker && yarn gulp watch
     ```
 
 

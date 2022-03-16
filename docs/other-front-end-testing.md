@@ -15,14 +15,14 @@ https://cfpb.github.io/cfgov-lighthouse/
 
 The default test task includes linting of the JavaScript source, build,
 and test files.
-Use the `yarn run lint` command from the command-line to run the ESLint linter,
+Use the `yarn lint` command from the command-line to run the ESLint linter,
 which checks the JavaScript against the rules configured in `.eslintrc`.
 [See the ESLint docs](https://eslint.org/docs/rules/)
 for detailed rule descriptions.
 
 There are a number of options to the command:
 
- - `--fix`: Add this flag (like `yarn run lint --fix`)
+ - `--fix`: Add this flag (like `yarn lint --fix`)
    to auto-fix some errors, where ESLint has support to do so.
  - [Other options available in the docs](https://eslint.org/docs/user-guide/command-line-interface)
 

@@ -93,10 +93,10 @@
   "scripts": {
     "enforce": "enforce-node-version",
     "preinstall": "node scripts/preinstall.js",
-    "postinstall": "yarn run enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
+    "postinstall": "yarn enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
     "lint": "eslint --ignore-pattern node_modules './cfgov/unprocessed/**/*.js' './test/**/*.js'",
     "jest": "jest",
-    "test": "yarn run lint && yarn run jest",
+    "test": "yarn lint && yarn jest",
     "snyk": "snyk test",
     "gulp": "gulp",
     "watch": "gulp watch"

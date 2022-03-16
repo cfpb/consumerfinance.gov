@@ -117,23 +117,23 @@ password will expire after 60 days).
 #### Available Gulp Tasks
 There are a number of important gulp tasks, particularly `build`,
 which will build the project.
-Tasks are invoked via an `yarn run` command so that the local gulp-cli can be used.
-Using the `yarn run gulp -- --tasks` command you can view all available tasks.
+Tasks are invoked via a `yarn` command so that the local gulp-cli can be used.
+Using the `yarn gulp -- --tasks` command you can view all available tasks.
 The important ones are listed below:
 
 ```
-yarn run gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
-yarn run gulp clean           # Remove the contents of the production /dist/ directory.
-yarn run gulp docs            # Generate JSDocs from the scripts.
+yarn gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
+yarn gulp clean           # Remove the contents of the production /dist/ directory.
+yarn gulp docs            # Generate JSDocs from the scripts.
 ```
 
 ### yarn commands
 Along with gulp tasks, the following yarn tasks are available:
 
 ```
-yarn run lint                # Run frontend linting
-yarn run jest                # Run frontend tests
-yarn run test                # Run both
+yarn lint                # Run frontend linting
+yarn jest                # Run frontend tests
+yarn test                # Run both
 ```
 
 ### Reinstalling the virtual environment
