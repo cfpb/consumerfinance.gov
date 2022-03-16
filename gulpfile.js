@@ -5,24 +5,15 @@
    its own file in gulp/tasks. Any files in that directory get
    automatically required below.
    To add a new task, simply add a new task file the gulp/tasks directory.
-   To ignore tasks in production environments, add to the ignoreTasks array. */
+ */
 
-const envvars = require( './config/environment' ).envvars;
 const fancyLog = require( 'fancy-log' );
 const fs = require( 'fs' );
 const glob = require( 'glob' );
 const gulp = require( 'gulp' );
 const path = require( 'path' );
 
-// Define tasks that should be ignored in production environment.
 const TASK_PATH = './gulp/tasks/';
-let ignoreTasks = [];
-
-if ( envvars.NODE_ENV === 'production' ) {
-  ignoreTasks = [
-    TASK_PATH + 'test-unit.js'
-  ];
-}
 
 /**
  * Require a gulp task and log the task to the console.
@@ -65,9 +56,7 @@ function fileExists( filePattern ) {
  */
 function requireAllDefaultTasks() {
   // Automatically add tasks in the /tasks/ directory.
-  glob.sync( `${ TASK_PATH }*.js`, {
-    ignore: ignoreTasks
-  } ).forEach( task => {
+  glob.sync( `${ TASK_PATH }*.js` ).forEach( task => {
     requireTask( task );
   } );
 
