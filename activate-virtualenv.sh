@@ -35,7 +35,7 @@ if workon $VENV_NAME; then
   echo "Virtualenv $VENV_NAME activated."
 else
   echo "Attempting to create new virtualenv $VENV_NAME..."
-  if mkvirtualenv -p `which python3.6` $VENV_NAME; then
+  if mkvirtualenv -p `which python3.8` $VENV_NAME; then
     echo "Virtualenv $VENV_NAME created and activated."
   else
     echo 'Error: virtualenv not activated.' \
