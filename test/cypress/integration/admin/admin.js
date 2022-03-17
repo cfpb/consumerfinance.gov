@@ -96,10 +96,9 @@ describe( 'Admin', () => {
 
   it( 'should be able to toggle a flag', () => {
     admin.openFlag();
+    let heading = admin.flagHeading();
     admin.toggleFlag();
-    admin.flagHeading().should( 'contain', 'enabled for all requests' );
-    admin.toggleFlag();
-    admin.flagHeading().should( 'contain', 'disabled for all requests' );
+    admin.flagHeading().should( 'not.have.value', heading );
   } );
 
   it( 'should use Block Inventory to search for blocks', () => {
