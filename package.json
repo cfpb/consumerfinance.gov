@@ -101,7 +101,8 @@
     "test": "yarn lint && yarn jest",
     "snyk": "snyk test",
     "gulp": "gulp",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "build": "node ./esbuild/esb.js"
   },
   "snyk": true
 }
