@@ -48,6 +48,7 @@ function makeTilemapOptions( data, dataAttributes ) {
   /* eslint-disable-next-line */
   defaultObj.title = { text: undefined };
   defaultObj.accessibility.description = description;
+  defaultObj.yAxis.title.text = yAxisLabel;
 
   alignMargin( defaultObj, chartType );
 
