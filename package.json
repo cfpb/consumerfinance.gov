@@ -102,7 +102,7 @@
     "snyk": "snyk test",
     "gulp": "gulp",
     "watch": "gulp watch",
-    "build": "node ./esbuild/esb.js"
+    "build": "node ./esbuild/build.js"
   },
   "snyk": true
 }

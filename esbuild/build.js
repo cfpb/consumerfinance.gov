@@ -7,10 +7,7 @@ const esbuild = require( 'esbuild' );
 const postCSSPlugin = require( 'esbuild-plugin-postcss2' );
 const autoprefixer = require( 'autoprefixer' );
 
-const root = '..';
-const modules = `${ root }/node_modules`;
-const unprocessed = `${ root }/cfgov/unprocessed`;
-const processed = `${ root }/cfgov/static_built`;
+const { processed, unprocessed, modules } = require( '../config/environment.js' ).paths;
 
 const css = `${ unprocessed }/css`;
 const r = `${ unprocessed }/js/routes`;
@@ -57,7 +54,7 @@ async function getFiles( dir ) {
     `${ r }/ask-cfpb/single.js`,
     `${ r }/credit-cards/single.js`,
     `${ r }/es/single.js`,
-    `${ r }/external-site/single.js`,
+    `${ r }/external-site.js`,
     // js for specific pages, based on url
     `${ r }/about-us/careers/current-openings/index.js`,
     `${ r }/consumer-tools/debt-collection/index.js`,
@@ -72,7 +69,6 @@ async function getFiles( dir ) {
     // apps
     ...getAll( `${ a }/admin/js` ),
     ...getAll( `${ a }/analytics-gtm/js` ),
-    `${ a }/ccdb-landing-map/js/index.js`,
     `${ a }/financial-well-being/js/home.js`,
     `${ a }/financial-well-being/js/results.js`,
     `${ a }/find-a-housing-counselor/js/common.js`,
@@ -90,12 +86,10 @@ async function getFiles( dir ) {
     `${ a }/regulations3k/js/search.js`,
     `${ a }/retirement/js/index.js`,
     `${ a }/rural-or-underserved-tool/js/common.js`,
-    `${ a }/teachers-digital-platform/js/index.js`,
-    `${ a }/youth-employment-success/js/index.js`
+    `${ a }/teachers-digital-platform/js/index.js`
   ];
 
   const styledApps = [
-    'ccdb-landing-map',
     'find-a-housing-counselor',
     'form-explainer',
     'know-before-you-owe',
@@ -105,8 +99,7 @@ async function getFiles( dir ) {
     'regulations3k',
     'retirement',
     'rural-or-underserved-tool',
-    'teachers-digital-platform',
-    'youth-employment-success'
+    'teachers-digital-platform'
   ];
 
   const cssPaths = [
@@ -171,6 +164,7 @@ async function getFiles( dir ) {
   // JS
   esbuild.build( { ...baseConfig, entryPoints: jsPaths } );
 
+
   // CSS
   esbuild.build( {
     ...baseConfig,
@@ -188,6 +182,8 @@ async function getFiles( dir ) {
     } ) ]
   } );
 
+
   // Run app-specific scripts
-  require( `${ root }/cfgov/unprocessed/apps/regulations3k/worker_and_manifest.js` );
+  require( '../cfgov/unprocessed/apps/regulations3k/worker_and_manifest.js' );
+
 } )();
