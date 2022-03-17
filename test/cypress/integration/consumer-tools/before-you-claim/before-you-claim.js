@@ -12,7 +12,7 @@ describe( 'Planning your Social Security', () => {
     claim.getEstimate();
     claim.claimGraph().should( 'be.visible' );
   } );
-  
+
   it( 'should have a spanish view', () => {
     claim.setLanguageToSpanish();
     cy.url().should( 'include', 'es' );
