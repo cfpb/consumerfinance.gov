@@ -23,11 +23,6 @@ SVG_REGEX = re.compile(
 )
 
 
-def set_fallback_icon_name(name: str):
-    global FALLBACK_ICON_NAME
-    FALLBACK_ICON_NAME = name
-
-
 def load_svg(name: str) -> str:
     relative_path = f"icons/{name}.svg"
     if not (static_filename := finders.find(relative_path)):
