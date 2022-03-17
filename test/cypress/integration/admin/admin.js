@@ -96,9 +96,12 @@ describe( 'Admin', () => {
 
   it( 'should be able to toggle a flag', () => {
     admin.openFlag();
-    let heading = admin.flagHeading();
-    admin.toggleFlag();
-    admin.flagHeading().should( 'not.have.value', heading );
+    admin.flagHeading().then( heading => {
+      admin.toggleFlag();
+      admin.flagHeading().should( 'not.contain', heading.get( 0 ).innerText );
+      // reset flag to what it was before. Only works locally.
+      admin.toggleFlag();
+    });
   } );
 
   it( 'should use Block Inventory to search for blocks', () => {
