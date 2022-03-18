@@ -25,8 +25,9 @@ describe( 'Filter Blog Posts based on content', () => {
         'contain', title.get( 0 ).innerText
       );
       // And the page url should contain "title=" followed by the title
+      let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
       cy.url().should(
-        'include', 'title=' + title.get( 0 ).innerText
+        'include', 'title=' + plus_title
       );
     } );
   } );
@@ -101,8 +102,6 @@ describe( 'Filter Blog Posts based on content', () => {
         'from_date=' + date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[
           0
         ] );
-      // When I paginate to the last page of results
-      page.lastResults();
       // Then I should see only results dated that year or later
       blog.lastResultHeader().should(
         'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[0]
@@ -427,7 +426,8 @@ describe( 'Filter Blog Posts based on content', () => {
           'contain', category.get( 0 ).innerText.split( '\n' ).pop().trim()
         );
         // And the page url should contain "title=" title
-        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plus_title );
         // And the page url should contain "categories=" category
         cy.url().should(
           'include',
@@ -463,7 +463,8 @@ describe( 'Filter Blog Posts based on content', () => {
           blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
         } );
         // And the page url should contain "title=" title
-        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plus_title );
         // And the page url should contain "topics=" topic
         cy.url().should(
           'include',
@@ -499,7 +500,8 @@ describe( 'Filter Blog Posts based on content', () => {
         );
         blog.resultsContent().should( 'contain', title.get( 0 ).innerText );
         // And the page url should contain "title=loans"
-        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plus_title );
         // And the page url should contain "from_date=2020-01-01"
         cy.url().should(
           'include',
