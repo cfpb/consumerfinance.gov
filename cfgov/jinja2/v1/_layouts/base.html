@@ -21,10 +21,7 @@
     ============================================================================
 -->
 {% endif %}
-
-<!--[if IE 8]>         <html lang="{{ language }}" class="no-js lt-ie10 lt-ie9"> <![endif]-->
-<!--[if IE 9]>         <html lang="{{ language }}" class="no-js lt-ie10"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="{{ language }}" class="no-js"> <!--<![endif]-->
+<html lang="{{ language }}" class="no-js">
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
 
@@ -116,8 +113,7 @@
 #}
 
     {% block css %}
-    <!--[if lt IE 10]><link rel="stylesheet" href="{{ static('css/main.ie.css') }}"><![endif]-->
-    <!--[if gt IE 9]><!--><link rel="stylesheet" href="{{ static('css/main.css') }}"><!--<![endif]-->
+    <link rel="stylesheet" href="{{ static('css/main.css') }}">
     {% endblock css %}
 
 {#
@@ -209,7 +205,11 @@
     </script>
     {% endblock javascript_loader %}
 
-    {% include "v1/modernizr.html" %}
+    <script>
+      if(window.Map){
+        document.documentElement.classList.remove('no-js')
+      }
+    </script>
 </head>
 
 <body{% block body_classes %}{% if page and page.archived %} class="archived-page" {% endif %}{% endblock body_classes %}>
@@ -291,10 +291,6 @@
 
     {% block javascript scoped %}
 
-    {#
-      Modernizr adds a no-js class the HTML element if ECMAScript 5 features aren't
-      available. Check for that CSS class here and act accordingly.
-    #}
     <script>
       if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
         !function(){
