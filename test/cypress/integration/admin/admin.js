@@ -96,10 +96,12 @@ describe( 'Admin', () => {
 
   it( 'should be able to toggle a flag', () => {
     admin.openFlag();
-    admin.toggleFlag();
-    admin.flagHeading().should( 'contain', 'enabled for all requests' );
-    admin.toggleFlag();
-    admin.flagHeading().should( 'contain', 'disabled for all requests' );
+    admin.flagHeading().then( heading => {
+      admin.toggleFlag();
+      admin.flagHeading().should( 'not.contain', heading.get( 0 ).innerText );
+      // reset flag to what it was before. Only works locally.
+      admin.toggleFlag();
+    });
   } );
 
   it( 'should use Block Inventory to search for blocks', () => {
