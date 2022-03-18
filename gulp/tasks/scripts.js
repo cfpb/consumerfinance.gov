@@ -9,7 +9,6 @@ const configScripts = config.scripts;
 const fs = require( 'fs' );
 const gulp = require( 'gulp' );
 const gulpNewer = require( 'gulp-newer' );
-const gulpTerser = require( 'gulp-terser' );
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
 const mergeStream = require( 'merge-stream' );
@@ -156,11 +155,9 @@ gulp.task( 'scripts:ondemand',
 
 gulp.task( 'scripts',
   gulp.parallel(
-    'scripts:polyfill',
     'scripts:modern',
     'scripts:apps',
-    'scripts:ondemand',
-    'scripts:external'
+    'scripts:ondemand'
   )
 );
 
