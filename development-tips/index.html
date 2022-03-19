@@ -122,6 +122,8 @@
     
         <ul>
         
+            <li><a class="toctree-l4" href="#editorconfig">EditorConfig</a></li>
+        
             <li><a class="toctree-l4" href="#main-front-end-templateasset-locations">Main front-end template/asset locations</a></li>
         
             <li><a class="toctree-l4" href="#installing-new-front-end-dependencies">Installing new front-end dependencies</a></li>
@@ -190,6 +192,11 @@
             <div class="section">
               
                 <h1 id="development-tips">Development tips<a class="headerlink" href="#development-tips" title="Permanent link">¶</a></h1>
+<h2 id="editorconfig">EditorConfig<a class="headerlink" href="#editorconfig" title="Permanent link">¶</a></h2>
+<p>We support <a href="https://editorconfig.org/">EditorConfig</a>. EditorConfig is a plugin for editors
+that allows for easy and quick configuration of editors for
+<a href="https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties">multiple properties</a>.
+Feel free to <a href="https://editorconfig.org/#download">install a plugin</a> for your editor.</p>
 <h2 id="main-front-end-templateasset-locations">Main front-end template/asset locations<a class="headerlink" href="#main-front-end-templateasset-locations" title="Permanent link">¶</a></h2>
 <p><strong>Templates</strong> that are served by the Django server: <code>cfgov/jinja2/v1</code></p>
 <p><strong>Static assets</strong> prior to processing (combilation, minification, etc.):
@@ -214,7 +221,7 @@ ready to be served by Django.</p>
 <p>Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using <code>gulp watch</code> or <code>yarn gulp watch</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You must build the assets first, so you may want a command like: 
+<p>You must build the assets first, so you may want a command like:
 <pre class="highlight"><code>./setup.sh docker &amp;&amp; yarn gulp watch</code></pre></p>
 </div>
 <h2 id="developing-on-nested-satellite-apps">Developing on nested satellite apps<a class="headerlink" href="#developing-on-nested-satellite-apps" title="Permanent link">¶</a></h2>

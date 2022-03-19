@@ -473,13 +473,13 @@ we have a smaller set that just describes the current state of models in the cod
 <p>Django provides an automated
 <a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#squashing-migrations">squashing</a>
 process for migrations, but this is often not optimal when migrations contain manual <code>RunPython</code> blocks are present.
-Before running <code>squashmigrations</code>, search existing migrations for <code>RunPython</code> blocks without <code>elidable=True</code>, and 
+Before running <code>squashmigrations</code>, search existing migrations for <code>RunPython</code> blocks without <code>elidable=True</code>, and
 correct them to have <code>elidable=True</code>. This will tell <code>squashmigrations</code> to drop that <code>RunPython</code> block.
 In almost <em>all</em> cases, we do not want to keep any <code>RunPython</code> blocks.
 It is highly recommended to get a postgres database setup with the current migrations before
-attempting to squash. </p>
+attempting to squash.</p>
 <ol>
-<li>Set all <code>RunPython</code> blocks to have the argument <code>edilable=True</code>.</li>
+<li>Set all <code>RunPython</code> blocks to have the argument <code>elidable=True</code>.</li>
 <li>Squash migrations for each app that has 3 or more non-squashed migrations</li>
 </ol>
 <pre class="highlight"><code class="language-sh"># start migration number is optional for apps that have never been squashed
@@ -498,9 +498,9 @@ cfgov/manage.py squashmigrations --squashed-name 2022_squash form_explainer 0007
 
 <ol>
 <li>
-<p>Correct errors, if any, until there are no migrations to apply or create. 
-Repeat steps 3 and 4 until no errors. 
-It may be possible that an additional migration will be generated 
+<p>Correct errors, if any, until there are no migrations to apply or create.
+Repeat steps 3 and 4 until no errors.
+It may be possible that an additional migration will be generated
 if there was an error that needed to be corrected.</p>
 </li>
 <li>
