@@ -2,6 +2,7 @@ from datetime import date
 
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
+from wagtail.images.models import Image
 
 from v1.models import CFGOVPage
 
@@ -106,3 +107,43 @@ class DocumentsReportView(ReportView):
 
     def get_queryset(self):
         return Document.objects.all().order_by("-id").prefetch_related("tags")
+
+
+class ImagesReportView(ReportView):
+    header_icon = "image"
+    title = "All images"
+
+    list_export = [
+        "id",
+        "title",
+        "filename",
+        "url",
+        "collection",
+        "tags.names",
+        "created_at",
+        "uploaded_by_user",
+    ]
+    export_headings = {
+        "id": "ID",
+        "title": "Title",
+        "filename": "File",
+        "url": "URL",
+        "collection": "Collection",
+        "tags.names": "Tags",
+        "created_at": "Uploaded on",
+        "uploaded_by_user": "Uploaded by",
+    }
+
+    custom_field_preprocess = {
+        "tags.names": {"csv": process_tags},
+        "url": {"csv": construct_absolute_url},
+    }
+
+    template_name = "v1/images_report.html"
+
+    def get_filename(self):
+        """Get a better filename than the default 'spreadsheet-export'."""
+        return f"all-cfgov-images-{date.today()}"
+
+    def get_queryset(self):
+        return Image.objects.all().order_by("-id").prefetch_related("tags")
