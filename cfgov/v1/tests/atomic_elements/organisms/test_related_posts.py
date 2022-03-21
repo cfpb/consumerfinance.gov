@@ -189,10 +189,10 @@ class RelatedPostsTestCase(TestCase):
         the calling page.
         """
 
-        self.block_value['relate_posts'] = True
-        self.block_value['relate_newsroom'] = True
-        self.block_value['relate_events'] = True
-        self.block_value['tag_filtering'] = 'and_filtering'
+        self.block_value["relate_posts"] = True
+        self.block_value["relate_newsroom"] = True
+        self.block_value["relate_events"] = True
+        self.block_value["tag_filtering"] = 'all'
 
         related_posts = RelatedPosts.related_posts(
             self.page_with_authors, self.block_value
@@ -211,9 +211,8 @@ class RelatedPostsTestCase(TestCase):
         calling page.
         """
 
-        self.block_value['relate_posts'] = True
-        self.block_value['and_filtering'] = False
-        self.block_value['ignore_tags'] = False
+        self.block_value["relate_posts"] = True
+        self.block_value["tag_filtering"] = 'any'
 
         related_posts = RelatedPosts.related_posts(
             self.page_with_authors, self.block_value
