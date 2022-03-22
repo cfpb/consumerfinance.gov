@@ -89,6 +89,24 @@
         {% if facets.building_block or facets.school_subject or facets.topic %}
             <div class="filter-section filter-section__first">
         {% endif %}
+
+        {% if facets.topic %}
+            {% if 'topic' in page.results.expanded_facets %}
+                {% set is_expanded = true %}
+            {% else %}
+                {% set is_expanded = false %}
+            {% endif %}
+            {% set expandable_settings = {
+                'label': 'Topic',
+                'is_expanded': is_expanded,
+                'is_midtone': true,
+                'hide_cue_label': true
+            } %}
+            {% call() expandable(expandable_settings) %}
+                {{ build_nested_facets(facets.topic, 'topic') }}
+            {% endcall %}
+        {% endif %}
+
         {% if facets.building_block %}
             {% if 'building_block' in page.results.expanded_facets %}
                 {% set is_expanded = true %}
@@ -119,6 +137,7 @@
             </div>
             {% endcall %}
         {% endif %}
+        
         {% if facets.school_subject %}
             {% if 'school_subject' in page.results.expanded_facets %}
                 {% set is_expanded = true %}
@@ -149,22 +168,7 @@
             </div>
             {% endcall %}
         {% endif %}
-        {% if facets.topic %}
-            {% if 'topic' in page.results.expanded_facets %}
-                {% set is_expanded = true %}
-            {% else %}
-                {% set is_expanded = false %}
-            {% endif %}
-            {% set expandable_settings = {
-                'label': 'Topic',
-                'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
-            } %}
-            {% call() expandable(expandable_settings) %}
-            {{ build_nested_facets(facets.topic, 'topic') }}
-            {% endcall %}
-        {% endif %}
+        
         {% if facets.building_block or facets.school_subject or facets.topic %}
             </div>
         {% endif %}
