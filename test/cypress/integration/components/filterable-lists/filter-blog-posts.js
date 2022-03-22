@@ -26,7 +26,7 @@ describe( 'Filter Blog Posts based on content', () => {
       );
       // And the page url should contain "title=" followed by the title
       cy.url().should(
-        'include', 'title=' +  encodeURIComponent(title.get( 0 ).innerText.split( ' ' ).join( '+' ))
+        'include', 'title=' + encodeURIComponent(title.get( 0 ).innerText.split( ' ' ).join( '+' ))
       );
     } );
   } );
