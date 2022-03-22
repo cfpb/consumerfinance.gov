@@ -1,5 +1,11 @@
 # Development tips
 
+## EditorConfig
+We support [EditorConfig](https://editorconfig.org/). EditorConfig is a plugin for editors
+that allows for easy and quick configuration of editors for
+[multiple properties](https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties).
+Feel free to [install a plugin](https://editorconfig.org/#download) for your editor.
+
 
 ## Main front-end template/asset locations
 
@@ -26,12 +32,12 @@
 
 ## Watching files for changes
 
-Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `gulp watch` or `yarn run gulp watch`.
+Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `gulp watch` or `yarn gulp watch`.
 
 !!! note
-    You must build the assets first, so you may want a command like: 
+    You must build the assets first, so you may want a command like:
     ```
-    ./setup.sh docker && yarn run gulp watch
+    ./setup.sh docker && yarn gulp watch
     ```
 
 
