@@ -45,7 +45,7 @@ def migrate(mapper):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("v1", "0283_removed_regs_gov_comment"),
+        ("v1", "0199_2022_squash"),
     ]
 
     operations = [
