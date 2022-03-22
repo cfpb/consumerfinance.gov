@@ -73,6 +73,14 @@ class RelatedPostsTestCase(TestCase):
             CFGOVPageCategory(name="policy_compliance")
         )
 
+        self.blog_child3 = BlogPage(
+            title="blog child 3", date_published=dt.date(2016, 9, 3)
+        )
+        self.blog_child3.tags.add("tag 3")
+        self.blog_child3.categories.add(
+            CFGOVPageCategory(name="policy_compliance")
+        )
+
         self.newsroom_child1 = NewsroomPage(
             title="newsroom child 1", date_published=dt.date(2016, 9, 2)
         )
@@ -104,6 +112,7 @@ class RelatedPostsTestCase(TestCase):
 
         helpers.save_new_page(self.blog_child1, self.blog_parent)
         helpers.save_new_page(self.blog_child2, self.blog_parent)
+        helpers.save_new_page(self.blog_child3, self.blog_parent)
         helpers.save_new_page(self.newsroom_child1, self.newsroom_parent)
         helpers.save_new_page(self.newsroom_child2, self.newsroom_parent)
         helpers.save_new_page(self.events_child1, self.events_parent)
@@ -121,7 +130,7 @@ class RelatedPostsTestCase(TestCase):
             "relate_newsroom": False,
             "relate_events": False,
             "specific_categories": [],
-            "tag_filtering": "",
+            "tag_filtering": "any",
         }
 
     def test_related_posts_blog(self):
@@ -182,11 +191,11 @@ class RelatedPostsTestCase(TestCase):
         self.assertNotIn("Newsroom", related_posts)
         self.assertNotIn("Events", related_posts)
 
-    def test_related_posts_and_filtering_true(self):
+    def test_related_posts_tag_filtering_all(self):
         """
-        Tests whether related posts are retrieved if the 'and_filtering' option
-        is checked, and that the only posts retrieved match ALL of the tags on
-        the calling page.
+        Tests whether related posts are retrieved if the 'tag_filtering' option
+        is set to 'all', and that the only posts retrieved match ALL of the
+        tags on the calling page.
         """
 
         self.block_value["relate_posts"] = True
@@ -204,10 +213,10 @@ class RelatedPostsTestCase(TestCase):
         self.assertEqual(related_posts["Newsroom"][0], self.newsroom_child1)
         self.assertNotIn("Events", related_posts)
 
-    def test_related_posts_and_filtering_false(self):
+    def test_related_posts_tag_filtering_any(self):
         """
-        Tests whether related posts are retrieved if, when the 'and_filtering'
-        option is not checked, they match at least one of the tags on the
+        Tests whether related posts are retrieved if, when the 'tag_filtering'
+        option is set to 'any', they match at least one of the tags on the
         calling page.
         """
 
@@ -222,6 +231,25 @@ class RelatedPostsTestCase(TestCase):
         self.assertEqual(len(related_posts["Blog"]), 2)
         self.assertEqual(related_posts["Blog"][0], self.blog_child2)
         self.assertEqual(related_posts["Blog"][1], self.blog_child1)
+
+    def test_related_posts_tag_filtering_ignore(self):
+        """
+        Tests whether all related posts are retrieved if the 'tag_filtering'
+        option is set to 'ignore', regardless of the tags on the calling page.
+        """
+
+        self.block_value["relate_posts"] = True
+        self.block_value["tag_filtering"] = "ignore"
+
+        related_posts = RelatedPosts.related_posts(
+            self.page_with_authors, self.block_value
+        )
+
+        self.assertIn("Blog", related_posts)
+        self.assertEqual(len(related_posts["Blog"]), 3)
+        self.assertEqual(related_posts["Blog"][0], self.blog_child3)
+        self.assertEqual(related_posts["Blog"][1], self.blog_child2)
+        self.assertEqual(related_posts["Blog"][2], self.blog_child1)
 
     def test_related_posts_newsroom(self):
         """
