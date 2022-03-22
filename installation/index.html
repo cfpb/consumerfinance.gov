@@ -428,20 +428,23 @@ pip install -r requirements/local.txt</code></pre>
 <pre class="highlight"><code class="language-sh">./runserver.sh</code></pre>
 
 <h2 id="additional-setup">Additional setup<a class="headerlink" href="#additional-setup" title="Permanent link">¶</a></h2>
-<h3 id="sync-local-image-storage-optional">Sync local image storage (optional)<a class="headerlink" href="#sync-local-image-storage-optional" title="Permanent link">¶</a></h3>
-<p>If using a database dump, pages will contain links to images that exist in
-the database but don't exist on your local disk. This will cause broken or
-missing images when browsing the site locally.</p>
-<p>For example, in production images are stored on S3, but when running locally
-they are stored on disk.</p>
-<p>This project includes a Django management command that can be used to download
-any remote images referenced in the database so that they can be served when
+<h3 id="sync-local-image-and-document-storage-optional">Sync local image and document storage (optional)<a class="headerlink" href="#sync-local-image-and-document-storage-optional" title="Permanent link">¶</a></h3>
+<p>If using a database dump, pages will contain links to images or documents
+that exist in the database but don't exist on your local disk.
+This will cause broken or missing images or links when browsing the site locally.</p>
+<p>This is because in production images and documents are stored on S3,
+but when running locally they are stored on disk.</p>
+<p>This project includes two Django management commands that can be used to download
+any remote images or documents referenced in the database so that they can be served when
 running locally.</p>
+<p>This command downloads all remote images (and image renditions) referenced in the
+database, retrieving them from the specified URL and storing them in the
+specified local directory:</p>
 <pre class="highlight"><code class="language-sh">cfgov/manage.py sync_image_storage https://files.consumerfinance.gov/f/ ./cfgov/f/</code></pre>
 
-<p>This downloads all remote images (and image renditions) referenced in the
-database, retrieving them from the specified URL and storing them in the
-specified local directory.</p>
+<p>This command does the same, but for documents:</p>
+<pre class="highlight"><code class="language-sh">cfgov/manage.py sync_document_storage https://files.consumerfinance.gov/f/ ./cfgov/f/</code></pre>
+
 <h3 id="install-gnu-gettext-for-django-translation-support-optional">Install GNU gettext for Django translation support (optional)<a class="headerlink" href="#install-gnu-gettext-for-django-translation-support-optional" title="Permanent link">¶</a></h3>
 <p>In order to generate Django translations as documented
 <a href="../translation/">here</a>, you'll need to install the
