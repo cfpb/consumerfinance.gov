@@ -114,14 +114,14 @@ class RelatedPostsTestCase(TestCase):
         # specific_categories slot of the dict has to be something that it can
         # actually find.
         self.block_value = {
-            'limit': 3,
-            'show_heading': True,
-            'header_title': 'Further reading',
-            'relate_posts': False,
-            'relate_newsroom': False,
-            'relate_events': False,
-            'specific_categories': [],
-            'tag_filtering': '',
+            "limit": 3,
+            "show_heading": True,
+            "header_title": "Further reading",
+            "relate_posts": False,
+            "relate_newsroom": False,
+            "relate_events": False,
+            "specific_categories": [],
+            "tag_filtering": "",
         }
 
     def test_related_posts_blog(self):
@@ -192,7 +192,7 @@ class RelatedPostsTestCase(TestCase):
         self.block_value["relate_posts"] = True
         self.block_value["relate_newsroom"] = True
         self.block_value["relate_events"] = True
-        self.block_value["tag_filtering"] = 'all'
+        self.block_value["tag_filtering"] = "all"
 
         related_posts = RelatedPosts.related_posts(
             self.page_with_authors, self.block_value
@@ -212,7 +212,7 @@ class RelatedPostsTestCase(TestCase):
         """
 
         self.block_value["relate_posts"] = True
-        self.block_value["tag_filtering"] = 'any'
+        self.block_value["tag_filtering"] = "any"
 
         related_posts = RelatedPosts.related_posts(
             self.page_with_authors, self.block_value
@@ -351,13 +351,13 @@ class RelatedPostsTestCase(TestCase):
 
     def test_related_posts_rendering(self):
         block_value = {
-            'tag_filtering': '',
-            'alternate_view_more_url': None,
-            'limit': 3,
-            'relate_events': True,
-            'relate_newsroom': True,
-            'relate_posts': True,
-            'specific_categories': [],
+            "tag_filtering": "",
+            "alternate_view_more_url": None,
+            "limit": 3,
+            "relate_events": True,
+            "relate_newsroom": True,
+            "relate_posts": True,
+            "specific_categories": [],
         }
 
         context = {

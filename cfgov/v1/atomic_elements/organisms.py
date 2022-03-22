@@ -333,11 +333,16 @@ class RelatedPosts(blocks.StructBlock):
             return related_items
 
         tags = page.tags.all()
-        tag_filtering = value['tag_filtering']
-        specific_categories = value['specific_categories']
-        limit = int(value['limit'])
-        queryset = AbstractFilterPage.objects.live().exclude(
-            id=page.id).order_by('-date_published').distinct().specific()
+        tag_filtering = value["tag_filtering"]
+        specific_categories = value["specific_categories"]
+        limit = int(value["limit"])
+        queryset = (
+            AbstractFilterPage.objects.live()
+            .exclude(id=page.id)
+            .order_by("-date_published")
+            .distinct()
+            .specific()
+        )
 
         for parent in related_types:  # blog, newsroom or events
             # Include children of this slug that match at least 1 tag
@@ -345,7 +350,7 @@ class RelatedPosts(blocks.StructBlock):
             if tag_filtering == "ignore":
                 filters = children
             else:
-                filters = children & Q(('tags__in', tags))
+                filters = children & Q(("tags__in", tags))
 
             if parent == "events":
                 # Include archived events matches
@@ -354,7 +359,7 @@ class RelatedPosts(blocks.StructBlock):
                 if tag_filtering == "ignore":
                     filters |= children
                 else:
-                    filters |= children & Q(('tags__in', tags))
+                    filters |= children & Q(("tags__in", tags))
 
             if specific_categories:
                 # Filter by any additional categories specified
