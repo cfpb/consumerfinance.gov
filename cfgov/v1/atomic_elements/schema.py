@@ -1,6 +1,6 @@
 from wagtail.core import blocks
 
-from v1.atomic_elements.organisms import AtomicTableBlock, VideoPlayer
+from v1.atomic_elements import organisms
 
 
 class Tip(blocks.StructBlock):
@@ -35,9 +35,11 @@ class SchemaContent(blocks.StreamBlock):
             )
         ]
     )
-    table_block = AtomicTableBlock(table_options={"renderer": "html"})
+    table_block = organisms.AtomicTableBlock(
+        table_options={"renderer": "html"}
+    )
     tip = Tip()
-    video_player = VideoPlayer()
+    video_player = organisms.VideoPlayer()
 
     class Meta:
         template = "_includes/blocks/schema/content-block.html"
@@ -67,6 +69,8 @@ class HowTo(blocks.StructBlock):
 
 
 class FAQ(blocks.StructBlock):
+    """FAQ schema with limited content options for Ask CFPB"""
+
     description = blocks.RichTextBlock(
         features=["ol", "ul", "bold", "italic", "link", "document-link"],
         blank=True,
@@ -84,4 +88,54 @@ class FAQ(blocks.StructBlock):
     class Meta:
         icon = "grip"
         template = "_includes/blocks/schema/faq.html"
+        label = "FAQ"
+
+
+class FAQGroup(blocks.StructBlock):
+    has_top_rule_line = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=(
+            "Check this to add a horizontal rule line to top of FAQ group."
+        ),
+    )
+    lines_between_items = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label="Show rule lines between items",
+        help_text=(
+            "Check this to show horizontal rule lines between FAQ items."
+        ),
+    )
+    question_tag = blocks.ChoiceBlock(
+        choices=[
+            ("h2", "h2"),
+            ("h3", "h3"),
+            ("h4", "h4"),
+            ("p", "p"),
+        ],
+        default="h2",
+        help_text="HTML tag for questions.",
+    )
+    faq_items = blocks.ListBlock(
+        blocks.StructBlock(
+            [
+                ("question", blocks.CharBlock(max_length=500)),
+                (
+                    "answer",
+                    blocks.StreamBlock(
+                        [
+                            ("full_width_text", organisms.FullWidthText()),
+                            ("info_unit_group", organisms.InfoUnitGroup()),
+                        ]
+                    ),
+                ),
+            ]
+        ),
+        label="FAQ items",
+    )
+
+    class Meta:
+        icon = "grip"
+        template = "_includes/blocks/schema/faq-group.html"
         label = "FAQ"

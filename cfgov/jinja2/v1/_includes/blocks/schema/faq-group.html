@@ -1,0 +1,58 @@
+{% import 'templates/render_block.html' as render_block with context %}
+
+{# ==========================================================================
+
+   FAQ block
+
+   ==========================================================================
+
+   Description:
+
+   Implements Google's recommended elements of FAQ schema when given:
+
+   value:                         Object defined from a Streamfield block.
+
+   value.has_top_rule_line:       Boolean for whether or not to add top
+                                  border to FAQ group. Used in
+                                  'render_block.html' to modify classes on
+                                  wrapper '.block' div.
+
+   value.lines_between_items:     Boolean for whether FAQ items should have
+                                  horizontal rules separating them.
+
+   value.question_tag             HTML tag for the question part of FAQ item
+
+   value.faq_items:               List of FAQ items
+
+   value.faq_item.question        FAQ item question text   
+
+   value.faq_item.answer          FAQ item answer streamblock
+
+   ========================================================================== #}
+
+
+<div itemscope=""
+     itemtype="http://schema.org/FAQPage">
+    {% for item in value.faq_items %}
+        <div itemscope=""
+             itemprop="mainEntity"
+             itemtype="http://schema.org/Question"
+             class="block
+                   {{ 'block__flush-top' if loop.index == 1 else '' }}
+                   {{ 'block__padded-top block__border-top'
+                   if value.lines_between_items and loop.index > 1 else '' }}">
+            <{{ value.question_tag }} itemprop="name">
+                {{ item.question | safe }}
+            </{{ value.question_tag }}>
+            <div itemprop="acceptedAnswer" 
+                 itemscope=""
+                 itemtype="http://schema.org/Answer">
+                <div itemprop="text">
+                    {% for block in item.answer -%}
+                        {{ render_block.render(block, loop.index) }}
+                    {%- endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
