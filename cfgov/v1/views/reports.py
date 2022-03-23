@@ -2,7 +2,7 @@ from datetime import date
 
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
-from wagtail.images.models import Image
+from wagtail.images import get_image_model as Image
 
 from v1.models import CFGOVPage
 
@@ -18,9 +18,14 @@ def process_tags(queryset):
 
 
 def construct_absolute_url(url):
-    """Turn a relativey URL into an absolute URL"""
+    """Turn a relative URL into an absolute URL"""
     return "https://www.consumerfinance.gov" + url
 
+def construct_files_url(url):
+    """Convert Wagtail URL path to files.cf.gov absolute URL."""
+    path = str(url)
+    prefix = "https://files.consumerfinance.gov/f/documents/"
+    return prefix + path.split("/")[1]
 
 class PageMetadataReportView(PageReportView):
     header_icon = "doc-empty-inverse"
@@ -114,20 +119,18 @@ class ImagesReportView(ReportView):
     title = "All images"
 
     list_export = [
-        "id",
         "title",
-        "filename",
-        "url",
+        "file",
+        "file_size",
         "collection",
         "tags.names",
         "created_at",
         "uploaded_by_user",
     ]
     export_headings = {
-        "id": "ID",
         "title": "Title",
-        "filename": "File",
-        "url": "URL",
+        "file": "File",
+        "file_size": "Size",
         "collection": "Collection",
         "tags.names": "Tags",
         "created_at": "Uploaded on",
@@ -136,7 +139,7 @@ class ImagesReportView(ReportView):
 
     custom_field_preprocess = {
         "tags.names": {"csv": process_tags},
-        "url": {"csv": construct_absolute_url},
+        "file": {"csv": construct_files_url},
     }
 
     template_name = "v1/images_report.html"
@@ -146,4 +149,7 @@ class ImagesReportView(ReportView):
         return f"all-cfgov-images-{date.today()}"
 
     def get_queryset(self):
-        return Image.objects.all().order_by("-id").prefetch_related("tags")
+        raw_set = Image().objects.all().order_by("-created_at").prefetch_related("tags")
+        for image in raw_set:
+            image.url = construct_files_url(image.file)
+        return raw_set
