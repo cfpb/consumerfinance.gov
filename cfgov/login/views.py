@@ -7,21 +7,20 @@ from django.contrib.auth import (
     update_session_auth_hash,
 )
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render, resolve_url
 from django.template.response import TemplateResponse
 from django.urls import resolve
-from django.utils.encoding import force_str
-from django.utils.http import is_safe_url, urlsafe_base64_decode
+from django.utils.http import is_safe_url
 from django.utils.translation import gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
 from wagtail.admin.views import account
+from wagtail.admin.views.account import PasswordResetConfirmView
 
 from login.forms import (
     CFGOVPasswordChangeForm,
@@ -30,10 +29,19 @@ from login.forms import (
 )
 
 from v1.util.util import all_valid_destinations_for_request
-from v1.util.wrap_password_reset import _wrap_password_reset_view
 
 
-# Overrided Wagtail Views
+# Override the Wagtail PasswordResetConfirmView to use our custom password
+# set form and remove lockouts when the form is valid.
+class CFGOVPasswordResetConfirmView(PasswordResetConfirmView):
+    form_class = CFGOVSetPasswordForm
+
+    def form_valid(self, form):
+        self.user.temporarylockout_set.all().delete()
+        return super().form_valid(form)
+
+
+# Overrided Django Views
 @login_required
 def change_password(request):
     if not account.password_management_enabled():
@@ -172,58 +180,3 @@ def check_permissions(request):
             )
 
     return HttpResponseRedirect(redirect_to)
-
-
-@sensitive_post_parameters()
-@never_cache
-def custom_password_reset_confirm(
-    request,
-    uidb64=None,
-    token=None,
-    template_name="wagtailadmin/account/password_reset/confirm.html",
-    post_reset_redirect="wagtailadmin_password_reset_complete",
-):
-    """
-    View that checks the hash in a password reset link and presents a
-    form for entering a new password.
-    """
-    UserModel = get_user_model()
-    assert uidb64 is not None and token is not None  # checked by URLconf
-    post_reset_redirect = resolve_url(post_reset_redirect)
-
-    try:
-        # urlsafe_base64_decode() decodes to bytestring on Python 3
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = UserModel._default_manager.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
-        user = None
-
-    if user is not None and default_token_generator.check_token(user, token):
-        validlink = True
-        title = _("Enter new password")
-        if request.method == "POST":
-            form = CFGOVSetPasswordForm(user, request.POST)
-            if form.is_valid():
-                form.save()
-                user.temporarylockout_set.all().delete()
-                return HttpResponseRedirect(post_reset_redirect)
-
-        else:
-            form = CFGOVSetPasswordForm(user)
-    else:
-        validlink = False
-        form = None
-        title = _("Password reset unsuccessful")
-
-    context = {
-        "form": form,
-        "title": title,
-        "validlink": validlink,
-    }
-
-    return TemplateResponse(request, template_name, context)
-
-
-password_reset_confirm = _wrap_password_reset_view(
-    custom_password_reset_confirm
-)
