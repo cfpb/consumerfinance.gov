@@ -635,6 +635,11 @@ class ExpandableGroup(BaseExpandableGroup):
             "expandable group."
         ),
     )
+    is_faq = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=("Check this to add FAQ schema markup to expandables."),
+    )
 
     expandables = blocks.ListBlock(Expandable())
 

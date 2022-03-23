@@ -23,6 +23,9 @@
                             Used in 'render_block.html' to modify classes
                             on wrapping 'div.block'.
 
+   value.is_faq:            Whether expandables should be output with
+                            FAQ schema.
+
    ========================================================================== #}
 
 <div
@@ -47,6 +50,8 @@
         {# Should be a stack of Expandable instances. #}
         {% if value.expandables %}
             {% for expandable in value.expandables %}
+              {% do expandable.update({'is_faq': value.is_faq}) %}
+
                 {{ expandable }}
             {% endfor %}
         {% endif %}

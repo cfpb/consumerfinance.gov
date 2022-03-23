@@ -33,6 +33,9 @@
    value.hide_cue_label:  Whether the Expandable's cue label is hidden or not.
                           Default is false. The plus/minus icon is always shown.
 
+   value.is_faq:          Whether the Expandable should be output with FAQ
+                          schema attributes.
+
    ========================================================================== #}
 
 {% macro expandable(value, expandable_cue_additional_text='') %}
@@ -41,10 +44,12 @@
      class="o-expandable
             o-expandable__padded
             {{ 'o-expandable__background' if value.is_midtone else '' }}
-            {{ 'o-expandable__border' if value.is_bordered else '' }}">
-
+            {{ 'o-expandable__border' if value.is_bordered else '' }}"
+     {{ 'itemscope="" itemprop="mainEntity" itemtype="http://schema.org/Question"'
+        if value.is_faq else '' }} >
     <button class="o-expandable_header o-expandable_target" type="button">
-        <span class="h4 o-expandable_header-left o-expandable_label">
+        <span class="h4 o-expandable_header-left o-expandable_label"
+              {{'itemprop="name"' if value.is_faq else ''}}>
             {{ value.label }}
         </span>
         <span class="o-expandable_header-right o-expandable_link">
@@ -71,18 +76,22 @@
                 {{ 'o-expandable_content__onload-open'
                     if value.is_expanded else '' }}
                 {{ 'o-expandable__mobile-collapsed'
-                    if value.is_collapsed_for_mobile else '' }}">
-        {% if caller is defined %}
-            {{ caller() }}
-        {% else %}
-            {% for block in value.content %}
-                {% if 'paragraph' in block.block_type %}
-                    {{ block.value | safe }}
-                {% else %}
-                    {{ render_stream_child(block) }}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
+                    if value.is_collapsed_for_mobile else '' }}"
+          {{ 'itemprop="acceptedAnswer" itemscope="" itemtype="http://schema.org/Answer"'
+        if value.is_faq else '' }}>
+        {% if value.is_faq %}<div itemprop='text'>{% endif %}
+            {% if caller is defined %}
+                {{ caller() }}
+            {% else %}
+                {% for block in value.content %}
+                    {% if 'paragraph' in block.block_type %}
+                        {{ block.value | safe }}
+                    {% else %}
+                        {{ render_stream_child(block) }}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% if value.is_faq %}</div>{% endif %}
     </div>
 
 </div>

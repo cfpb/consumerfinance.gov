@@ -17,7 +17,7 @@
             {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
-
+    {% set is_faq = {"value": false} %}
     {% for block in page.content -%}
         {% if block.block_type == 'feedback' %}
             {{- form_block.render(block, 'content', loop.index0) -}}
@@ -26,7 +26,14 @@
                 {% include_block block %}
             </div>
         {% else %}
+            {% if is_faq.value == false and (block.block_type == 'faq_group' or ( block.block_type == 'expandable_group' and block.value.is_faq == true ))%}
+                {% do is_faq.update({"value": true}) %}
+                <div itemscope="" itemtype="http://schema.org/FAQPage">
+            {% endif %}
             {{ render_block.render(block, loop.index) }}
+        {% endif %}
+        {% if loop.last and is_faq.value == true %}
+            </div>
         {% endif %}
     {%- endfor %}
 {% endblock %}
