@@ -25,46 +25,6 @@ button.a-btn.flex-fixed {
     border-bottom-left-radius: 0;
 }
 
-.lt-ie10 {
-    button.a-btn.flex-fixed {
-        border-radius: .25em;
-    }
-
-    .a-select {
-        margin-bottom: unit( @grid_gutter-width * 2/3 / @base-font-size-px, em );;
-    }
-
-    .flex-all {
-        margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );;
-    }
-    .respond-to-min( @bp-med-min, {
-        .a-select,
-        .flex-all {
-            margin-bottom: 0;
-        }
-        .layout-row {
-            display: table;
-            width: 100%;
-
-            .a-select{
-                display: table-cell;
-                width: 25%;
-            }
-
-            .flex-all {
-                width: 100%;
-                display: table-cell;
-            }
-
-            .a-btn {
-                display:table-cell;
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-            }
-        }
-    });
-}
-
 .respond-to-max( @bp-sm-max, {
     .a-select {
         margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -117,9 +77,4 @@ button.a-btn.flex-fixed {
         color: @white;
         border-width: 0;
     }  
-}
-
-// Hide the drop arrow in IE9
-.lt-ie10 .a-select select {
-    padding-right: unit( 6px / @base-font-size-px, em );
 }

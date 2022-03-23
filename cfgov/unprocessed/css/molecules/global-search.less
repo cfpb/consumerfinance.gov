@@ -110,11 +110,8 @@
 
     &_trigger {
         // Hide search unless we have JavaScript (JS).
-        display: none;
-
-        // Only show global search if JavaScript (JS) is enabled.
-        html.js & {
-            display: block;
+        html.no-js & {
+            display: none;
         }
 
         font-weight: 500;
