@@ -2,7 +2,7 @@ from datetime import date
 
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
-from wagtail.images import get_image_model as Image
+from wagtail.images import get_image_model
 
 from v1.models import CFGOVPage
 
@@ -139,7 +139,6 @@ class ImagesReportView(ReportView):
 
     custom_field_preprocess = {
         "tags.names": {"csv": process_tags},
-        "file": {"csv": construct_files_url},
     }
 
     template_name = "v1/images_report.html"
@@ -149,7 +148,5 @@ class ImagesReportView(ReportView):
         return f"all-cfgov-images-{date.today()}"
 
     def get_queryset(self):
-        raw_set = Image().objects.all().order_by("-created_at").prefetch_related("tags")
-        for image in raw_set:
-            image.url = construct_files_url(image.file)
-        return raw_set
+        Image = get_image_model()
+        return Image.objects.order_by("-created_at").prefetch_related("tags")
