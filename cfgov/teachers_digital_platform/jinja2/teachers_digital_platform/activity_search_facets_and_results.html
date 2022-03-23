@@ -239,7 +239,9 @@
         {% if facets.grade_level or facets.age_range or facets.student_characteristics %}
             </div>
         {% endif %}
-        {% if facets.activity_type or facets.teaching_strategy or facets.blooms_taxonomy_level or facets.activity_duration or facets.building_block %}
+
+        {# Start ACTIVITY CHARACTERISTICS #}
+        {% if facets.activity_type or facets.teaching_strategy or facets.blooms_taxonomy_level or facets.activity_duration or facets.building_block or facets.council_for_economic_education %}
             <h3 class="u-hide-on-xs u-hide-on-sm u-mt45">Activity characteristics</h3>
             <div class="filter-section filter-section__third">
         {% endif %}
@@ -393,13 +395,6 @@
             {% endcall %}
         {% endif %}
 
-        {% if facets.activity_type or facets.teaching_strategy or facets.blooms_taxonomy_level or facets.activity_duration or facets.building_block %}
-            </div>
-        {% endif %}
-        {% if facets.council_for_economic_education or facets.jump_start_coalition %}
-            <h3 class="u-hide-on-xs u-hide-on-sm u-mt45">National standards</h3>
-            <div class="filter-section u-hide-on-xs u-hide-on-sm">
-        {% endif %}
         {% if facets.council_for_economic_education %}
             {% if 'council_for_economic_education' in page.results.expanded_facets %}
                 {% set is_expanded = true %}
@@ -407,7 +402,7 @@
                 {% set is_expanded = false %}
             {% endif %}
             {% set expandable_settings = {
-                'label': 'Council for Economic Education',
+                'label': 'National Standards',
                 'is_expanded': is_expanded,
                 'is_midtone': true,
                 'hide_cue_label': true
@@ -429,38 +424,12 @@
             </div>
             {% endcall %}
         {% endif %}
-        {% if facets.jump_start_coalition %}
-            {% if 'jump_start_coalition' in page.results.expanded_facets %}
-                {% set is_expanded = true %}
-            {% else %}
-                {% set is_expanded = false %}
-            {% endif %}
-            {% set expandable_settings = {
-                'label': 'Jump$tart Coalition',
-                'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
-            } %}
-            {% call() expandable(expandable_settings) %}
-            <div class="o-form_group u-mt15">
-                <fieldset class="o-form_fieldset">
-                    <ul class="m-list m-list__unstyled">
-                        {% for facet in facets.jump_start_coalition %}
-                        <li>
-                            <div class="m-form-field m-form-field__checkbox">
-                                <input type="checkbox" class="a-checkbox" aria-label="{{ facet.title }}" id="jump-start-coalition--{{ facet.title | trim | slugify }}" name="jump_start_coalition" value="{{ facet.id }}"{% if facet.selected %} checked="checked"{% endif %}>
-                                <label class="a-label" for="jump-start-coalition--{{ facet.title | trim | slugify }}">{{ facet.title }}</label>
-                            </div>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </fieldset>
-            </div>
-            {% endcall %}
-        {% endif %}
-        {% if facets.council_for_economic_education or facets.jump_start_coalition %}
+
+        {% if facets.activity_type or facets.teaching_strategy or facets.blooms_taxonomy_level or facets.activity_duration or facets.building_block or facets.council_for_economic_education %}
             </div>
         {% endif %}
+        {# End ACTIVITY CHARACTERISTICS #}
+
         <input type="hidden" value="{% if page.results.search_query: %}{{ page.results.search_query }}{% endif %}" name="q">
         <button class="a-btn u-mb15 u-hide-on-js">Apply filters</button>
     </form>
