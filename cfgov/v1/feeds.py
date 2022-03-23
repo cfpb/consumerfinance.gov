@@ -15,6 +15,14 @@ class FilterableFeed(Feed):
         self.page = page
         self.context = context
 
+    def __call__(self, request, *args, **kwargs):
+        response = super().__call__(request, *args, **kwargs)
+
+        # Tell Akamai that the feed should have a maximum age of 10 minutes
+        response["Edge-Control"] = "cache-maxage=10m"
+
+        return response
+
     def link(self):
         return self.page.full_url
 

@@ -143,6 +143,7 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(
             response["content-type"], "application/rss+xml; charset=utf-8"
         )
+        self.assertEqual(response["Edge-Control"], "cache-maxage=10m")
 
 
 class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
