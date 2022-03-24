@@ -310,6 +310,7 @@ TAGGIT_CASE_INSENSITIVE = True
 WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
+WAGTAILDOCS_SERVE_METHOD = "direct"
 
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
@@ -610,14 +611,6 @@ FLAGS = {
     "ASK_SURVEY_INTERCEPT": [],
     # Hide archive filter options in the filterable UI
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
-    # Supports testing of a new 2021 version of the website home page.
-    # Enable by appending ?home_page_2021=True to home page URLs.
-    "HOME_PAGE_2021": [
-        ("parameter", "home_page_2021"),
-    ],
-    "HOME_PAGE_2021_MINIMAL": [
-        ("parameter", "home_page_2021_minimal"),
-    ],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }

@@ -20,7 +20,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import hooks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Page, PageManager, PageQuerySet, Site
+from wagtail.core.models import Page, Site
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
@@ -64,14 +64,6 @@ class CFGOVOwnedPages(ItemBase):
         CFGOVContentOwner, related_name="owned_pages", on_delete=models.CASCADE
     )
     content_object = ParentalKey("CFGOVPage")
-
-
-class BaseCFGOVPageManager(PageManager):
-    def get_queryset(self):
-        return PageQuerySet(self.model).order_by("path")
-
-
-CFGOVPageManager = BaseCFGOVPageManager.from_queryset(PageQuerySet)
 
 
 class CFGOVPage(Page):
@@ -158,8 +150,6 @@ class CFGOVPage(Page):
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
-
-    objects = CFGOVPageManager()
 
     search_fields = Page.search_fields + [
         index.SearchField("sidefoot"),

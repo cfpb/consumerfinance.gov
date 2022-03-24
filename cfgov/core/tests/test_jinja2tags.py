@@ -1,4 +1,5 @@
 import os
+from unittest.mock import patch
 
 from django.http import HttpRequest
 from django.template import engines
@@ -20,7 +21,19 @@ class SvgIconTests(TestCase):
         template = self.jinja_engine.from_string('{{ svg_icon("test") }}')
         self.assertEqual(template.render(), VALID_SVG)
 
-    def test_jinja_tag_invalid(self):
+    @patch("core.templatetags.svg_icon.FALLBACK_ICON_NAME", "test")
+    def test_jinja_tag_fallback(self):
+        template = self.jinja_engine.from_string('{{ svg_icon("invalid") }}')
+        self.assertEqual(template.render(), VALID_SVG)
+
+    @patch("core.templatetags.svg_icon.FALLBACK_ICON_NAME", "missing")
+    def test_jinja_tag_fallback_not_found_error(self):
+        template = self.jinja_engine.from_string('{{ svg_icon("missing") }}')
+        with self.assertRaises(FileNotFoundError):
+            template.render()
+
+    @patch("core.templatetags.svg_icon.FALLBACK_ICON_NAME", "invalid")
+    def test_jinja_tag_fallback_invalid_error(self):
         template = self.jinja_engine.from_string('{{ svg_icon("invalid") }}')
         with self.assertRaises(ValueError):
             template.render()

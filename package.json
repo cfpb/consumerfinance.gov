@@ -50,7 +50,6 @@
     "gulp-clean-css": "4.3.0",
     "gulp-header": "2.0.9",
     "gulp-less": "4.0.1",
-    "gulp-modernizr": "4.0.2",
     "gulp-newer": "1.4.0",
     "gulp-notify": "4.0.0",
     "gulp-postcss": "9.0.1",
@@ -81,13 +80,10 @@
     "chai": "4.3.4",
     "chai-as-promised": "7.1.1",
     "cypress": "9.3.1",
-    "gulp-eslint": "6.0.0",
+    "eslint": "8.11.0",
     "jest": "27.4.3",
     "jest-cli": "27.4.3",
-    "jsdoc": "3.6.7",
-    "minimist": "1.2.5",
-    "snyk": "1.786.0",
-    "through2": "4.0.2"
+    "snyk": "1.786.0"
   },
   "resolutions": {
     "gulp-bless/bless/css": "github:cfpb/css",
@@ -96,8 +92,11 @@
   "scripts": {
     "enforce": "enforce-node-version",
     "preinstall": "node scripts/preinstall.js",
-    "postinstall": "yarn run enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
-    "test": "snyk test",
+    "postinstall": "yarn enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
+    "lint": "eslint --ignore-pattern node_modules './cfgov/unprocessed/**/*.js' './test/**/*.js'",
+    "jest": "jest",
+    "test": "yarn lint && yarn jest",
+    "snyk": "snyk test",
     "gulp": "gulp",
     "watch": "gulp watch"
   },

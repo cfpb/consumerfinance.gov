@@ -1,43 +1,30 @@
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import RequestFactory, TestCase
 
-from v1.models.home_page import HighlightCardBlock, HomePage
+from wagtail.core.models import Site
+
+from v1.models.home_page import HomePage
 
 
 class HomePageTests(TestCase):
-    def setUp(self):
-        self.request = RequestFactory().get("/")
-        self.page = HomePage(title="home", live=True)
+    @classmethod
+    def setUpTestData(cls):
+        cls.request = RequestFactory().get("/")
+        cls.site_root = Site.objects.get(is_default_site=True).root_page
 
-    def check_preview_template(self, preview_mode, expected_template):
-        response = self.page.serve_preview(self.request, preview_mode)
+    def check_render_template(self, language, expected_template):
+        page = HomePage(title="foo", slug="foo", language=language)
+        self.site_root.add_child(instance=page)
+        response = self.client.get("/foo/")
         self.assertEqual(response.template_name, expected_template)
 
-    def test_preview_default_template(self):
-        self.check_preview_template("", "v1/home_page/home_page.html")
+    def test_render_english(self):
+        self.check_render_template("en", "v1/home_page/home_page.html")
 
-    def test_preview_2021_template(self):
-        self.check_preview_template(
-            "home_page_2021", "v1/home_page/home_page_2021.html"
-        )
+    def test_render_spanish_uses_legacy_template(self):
+        self.check_render_template("es", "v1/home_page/home_page_legacy.html")
 
-    def test_highlight_card_block_rendering(self):
-        block = HighlightCardBlock()
-        value = block.to_python(
-            {
-                "heading": "Highlight",
-                "text": "This is a highlight.",
-                "link_url": "/highlight/",
-            }
-        )
-        self.assertEqual(value.link_text, "Read more")
-
-    def check_render_template(self, expected_template):
-        response = self.page.serve(self.request)
-        self.assertEqual(response.template_name, expected_template)
-
-    def test_render_default_template(self):
-        self.check_render_template("v1/home_page/home_page.html")
-
-    def test_render_2021_template(self):
-        with override_settings(FLAGS={"HOME_PAGE_2021": [("boolean", True)]}):
-            self.check_render_template("v1/home_page/home_page_2021.html")
+    def test_render_other_language_raises_exception(self):
+        with self.assertRaises(NotImplementedError):
+            self.check_render_template(
+                "ar", "v1/home_page/home_page_legacy.html"
+            )

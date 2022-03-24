@@ -25,8 +25,9 @@ describe( 'Filter Blog Posts based on content', () => {
         'contain', title.get( 0 ).innerText
       );
       // And the page url should contain "title=" followed by the title
+      let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
       cy.url().should(
-        'include', 'title=' + title.get( 0 ).innerText
+        'include', 'title=' + plus_title
       );
     } );
   } );
@@ -91,7 +92,7 @@ describe( 'Filter Blog Posts based on content', () => {
     blog.resultDate().then( date => {
       // When I enter the date in the From date entry field
       blog.filterFromDate(
-        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[0]
       );
       // And I click "Apply filters" button
       blog.applyFilters();
@@ -101,11 +102,9 @@ describe( 'Filter Blog Posts based on content', () => {
         'from_date=' + date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[
           0
         ] );
-      // When I paginate to the last page of results
-      page.lastResults();
       // Then I should see only results dated that year or later
       blog.lastResultHeader().should(
-        'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[ 0 ]
+        'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[0]
       );
     } );
   } );
@@ -114,18 +113,18 @@ describe( 'Filter Blog Posts based on content', () => {
     blog.resultDate().then( date => {
       // When I enter the date in the From date entry field
       blog.filterFromDate(
-        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[0]
       );
       // And I enter the date in the To date entry field
       blog.filterToDate(
-        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[0]
       );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then I should see only results from the year belonging to that date
       blog.notification().should( 'be.visible' );
       blog.resultsHeaderRight().should(
-        'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[ 0 ]
+        'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[0]
       );
       // And the page url should contain "from_date=" date
       cy.url().should(
@@ -274,8 +273,8 @@ describe( 'Filter Blog Posts based on content', () => {
             '\n'
           ).pop().trim().split( ' ' ).join(
             '-'
-          ).toLowerCase()).then( label => {
-          blog.resultsContent().should( 'contain', label.get( 0 ).innerText);
+          ).toLowerCase() ).then( label => {
+          blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
         } );
         // And the page url should contain "categories=policy_compliance"
         cy.url().should(
@@ -318,8 +317,8 @@ describe( 'Filter Blog Posts based on content', () => {
             '\n'
           ).pop().trim().split( ' ' ).join(
             '-'
-          ).toLowerCase()).then( label => {
-          blog.resultsContent().should( 'contain', label.get( 0 ).innerText);
+          ).toLowerCase() ).then( label => {
+          blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
         } );
         // And the page url should contain "categories=policy_compliance"
         cy.url().should(
@@ -427,7 +426,8 @@ describe( 'Filter Blog Posts based on content', () => {
           'contain', category.get( 0 ).innerText.split( '\n' ).pop().trim()
         );
         // And the page url should contain "title=" title
-        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plus_title );
         // And the page url should contain "categories=" category
         cy.url().should(
           'include',
@@ -459,11 +459,12 @@ describe( 'Filter Blog Posts based on content', () => {
             '\n'
           ).pop().trim().split( ' ' ).join(
             '-'
-          ).toLowerCase()).then( label => {
+          ).toLowerCase() ).then( label => {
           blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
         } );
         // And the page url should contain "title=" title
-        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plus_title );
         // And the page url should contain "topics=" topic
         cy.url().should(
           'include',
@@ -483,11 +484,11 @@ describe( 'Filter Blog Posts based on content', () => {
         blog.filterItemName( title.get( 0 ).innerText );
         // And I type "01/01/2020" in the From date entry field
         blog.filterFromDate(
-          date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+          date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[0]
         );
         // And I type "01/01/2021" in the To date entry field to bound the date range
         blog.filterToDate(
-          date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+          date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[0]
         );
         // And I click "Apply filters" button
         blog.applyFilters();
@@ -495,17 +496,18 @@ describe( 'Filter Blog Posts based on content', () => {
         blog.notification().should( 'be.visible' );
         blog.lastResultHeader().should(
           'contain',
-          date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[ 0 ]
+          date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[0]
         );
         blog.resultsContent().should( 'contain', title.get( 0 ).innerText );
         // And the page url should contain "title=loans"
-        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plus_title );
         // And the page url should contain "from_date=2020-01-01"
         cy.url().should(
           'include',
           'from_date=' + date.get( 0 ).getAttribute(
             'datetime'
-          ).split( 'T' )[ 0 ]
+          ).split( 'T' )[0]
         );
       } );
     } );

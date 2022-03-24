@@ -2,8 +2,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   verbose: false,
   transform: {
-    '^.+\\.jsx?$': 'babel-jest',
-    '^.+\\.hbs$': '<rootDir>/test/util/preprocessor-handlebars.js'
+    '^.+\\.jsx?$': 'babel-jest'
   },
   collectCoverage: true,
   collectCoverageFrom: [
@@ -27,6 +26,7 @@ module.exports = {
     '<rootDir>/node_modules/',
     '<rootDir>/develop-apps/'
   ],
+  testRegex: 'unit_tests/.*-spec.js',
   testURL: 'http://localhost',
   transformIgnorePatterns: []
 };

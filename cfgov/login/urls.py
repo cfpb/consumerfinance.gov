@@ -1,14 +1,14 @@
 from django.conf import settings
 from django.contrib.auth import views as django_auth_views
-from django.urls import include, re_path
+from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 
 from login.forms import CFGOVPasswordChangeForm
 from login.views import (
+    CFGOVPasswordResetConfirmView,
     change_password,
     check_permissions,
     login_with_lockout,
-    password_reset_confirm,
 )
 
 
@@ -65,19 +65,13 @@ urlpatterns = urlpatterns + [
         change_password,
         name="django_admin_account_change_password",
     ),
-    # Override Django and Wagtail password views with our password policy
-    re_path(
-        r"^admin/password_reset/",
-        include(
-            [
-                re_path(
-                    r"^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",  # noqa: B950
-                    password_reset_confirm,
-                    name="password_reset_confirm",
-                )
-            ]
-        ),
+    # Override Wagtail password views with our password policy
+    path(
+        "admin/password_reset/confirm/<uidb64>/<token>/",
+        CFGOVPasswordResetConfirmView.as_view(),
+        name="wagtailadmin_password_reset_confirm",
     ),
+    # Override Django password change views
     re_path(
         r"^django-admin/password_change",
         django_auth_views.PasswordChangeView.as_view(),

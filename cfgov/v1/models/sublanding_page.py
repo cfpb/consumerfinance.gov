@@ -8,7 +8,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import PageManager
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.search import index
 
@@ -50,6 +49,8 @@ class SublandingPage(CFGOVPage):
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
             ("feedback", v1_blocks.Feedback()),
+            ("expandable_group", organisms.ExpandableGroup()),
+            ("expandable", organisms.Expandable()),
         ],
         blank=True,
     )
@@ -119,8 +120,6 @@ class SublandingPage(CFGOVPage):
     )
 
     template = "sublanding-page/index.html"
-
-    objects = PageManager()
 
     search_fields = CFGOVPage.search_fields + [
         index.SearchField("content"),
