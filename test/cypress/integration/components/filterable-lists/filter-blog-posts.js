@@ -288,7 +288,7 @@ describe( 'Filter Blog Posts based on content', () => {
           'include',
           'topics=' + topic.get( 0 ).innerText.split(
             '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase().replace(/[.\/#!$%\^&\*;:{}=\-_`'~()]/g,'')
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`'~()]/g, '')
         );
       } );
     } );
@@ -332,7 +332,7 @@ describe( 'Filter Blog Posts based on content', () => {
           'include',
           'topics=' + topic.get( 0 ).innerText.split(
             '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase().replace(/[.\/#!$%\^&\*;:{}=\-_`'~()]/g,'')
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`'~()]/g, '')
         );
         // And when I click "Show filters"
         filter.show();
@@ -350,7 +350,7 @@ describe( 'Filter Blog Posts based on content', () => {
           'not.include',
           'topics=' + topic.get( 0 ).innerText.split(
             '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`'~()]/g,'')
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`'~()]/g, '')
         );
         // Then there is no visible notification
         blog.notification().should( 'not.be.visible' );
