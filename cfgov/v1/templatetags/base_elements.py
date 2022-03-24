@@ -10,14 +10,12 @@ These elements include:
 
     - The page header.
     - The page footer.
-    - Code that includes Modernizr.js and disables JS where appropriate.
 
 An example Django template using these might look like:
 
     {% load base_elements %}
 
     {% include_header %}
-    {% include_modernizr %}
 
     /* Other content here */
 
@@ -48,8 +46,3 @@ def include_header(context):
 @register.simple_tag(takes_context=True)
 def include_footer(context):
     return _render_jinja_template("v1/footer.html", context)
-
-
-@register.simple_tag(takes_context=True)
-def include_modernizr(context):
-    return _render_jinja_template("v1/modernizr.html", context)
