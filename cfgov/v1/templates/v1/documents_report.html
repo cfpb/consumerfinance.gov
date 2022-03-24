@@ -1,13 +1,4 @@
-{% extends 'wagtailadmin/reports/base_report.html' %}
-{% load i18n wagtailadmin_tags %}
-
-{% block actions %}
-    {% if view.list_export %}
-        <div class="actionbutton">
-            <a href="{{ view.csv_export_url }}" class="button bicolor button--icon">{% icon name="download" wrapped=1 %}{% trans 'Download CSV' %}</a>
-        </div>
-    {% endif %}
-{% endblock %}
+{% extends 'v1/report_no-xlsx_base.html' %}
 
 {% block results %}
     {% if object_list %}

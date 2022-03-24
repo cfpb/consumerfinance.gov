@@ -21,11 +21,11 @@ def construct_absolute_url(url):
     """Turn a relative URL into an absolute URL"""
     return "https://www.consumerfinance.gov" + url
 
-def construct_files_url(url):
-    """Convert Wagtail URL path to files.cf.gov absolute URL."""
-    path = str(url)
-    prefix = "https://files.consumerfinance.gov/f/documents/"
-    return prefix + path.split("/")[1]
+
+def generate_filename(type):
+    """Get a dated filename for an exported spreadsheet."""
+    return f"wagtail-report_{type}_{date.today()}"
+
 
 class PageMetadataReportView(PageReportView):
     header_icon = "doc-empty-inverse"
@@ -65,8 +65,7 @@ class PageMetadataReportView(PageReportView):
     template_name = "v1/page_metadata_report.html"
 
     def get_filename(self):
-        """Get a dated base filename for the exported spreadsheet."""
-        return f"spreadsheet-export-{date.today()}"
+        return generate_filename("pages")
 
     def get_queryset(self):
         return CFGOVPage.objects.filter(live=True).prefetch_related(
@@ -107,8 +106,7 @@ class DocumentsReportView(ReportView):
     template_name = "v1/documents_report.html"
 
     def get_filename(self):
-        """Get a better filename than the default 'spreadsheet-export'."""
-        return f"all-cfgov-documents-{date.today()}"
+        return generate_filename("documents")
 
     def get_queryset(self):
         return Document.objects.all().order_by("-id").prefetch_related("tags")
@@ -120,7 +118,7 @@ class ImagesReportView(ReportView):
 
     list_export = [
         "title",
-        "file",
+        "file.url",
         "file_size",
         "collection",
         "tags.names",
@@ -129,7 +127,7 @@ class ImagesReportView(ReportView):
     ]
     export_headings = {
         "title": "Title",
-        "file": "File",
+        "file.url": "File",
         "file_size": "Size",
         "collection": "Collection",
         "tags.names": "Tags",
@@ -139,17 +137,17 @@ class ImagesReportView(ReportView):
 
     custom_field_preprocess = {
         "tags.names": {"csv": process_tags},
-        "file": {"csv": construct_files_url},
     }
 
     template_name = "v1/images_report.html"
 
     def get_filename(self):
-        """Get a better filename than the default 'spreadsheet-export'."""
-        return f"all-cfgov-images-{date.today()}"
+        return generate_filename("images")
 
     def get_queryset(self):
-        raw_set = Image().objects.all().order_by("-created_at").prefetch_related("tags")
-        for image in raw_set:
-            image.url = construct_files_url(image.file)
-        return raw_set
+        return (
+            Image()
+            .objects.all()
+            .order_by("-created_at")
+            .prefetch_related("tags")
+        )

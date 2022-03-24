@@ -37,7 +37,11 @@ from v1.template_debug import (
     video_player_test_cases,
 )
 from v1.util import util
-from v1.views.reports import DocumentsReportView, ImagesReportView, PageMetadataReportView
+from v1.views.reports import (
+    DocumentsReportView,
+    ImagesReportView,
+    PageMetadataReportView,
+)
 
 
 try:
