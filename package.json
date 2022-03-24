@@ -50,7 +50,6 @@
     "gulp-clean-css": "4.3.0",
     "gulp-header": "2.0.9",
     "gulp-less": "4.0.1",
-    "gulp-modernizr": "4.0.2",
     "gulp-newer": "1.4.0",
     "gulp-notify": "4.0.0",
     "gulp-postcss": "9.0.1",
