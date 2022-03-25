@@ -12,7 +12,6 @@ module.exports = {
     '<rootDir>/collectstatic/',
     '<rootDir>/node_modules/',
     '<rootDir>/cfgov/unprocessed/apps/.+/node_modules/',
-    '<rootDir>/cfgov/unprocessed/apps/.+/webpack-config.js$',
     '<rootDir>/cfgov/unprocessed/apps/.+/index.js$',
     '<rootDir>/cfgov/unprocessed/apps/.+/common.js$',
     '<rootDir>/cfgov/unprocessed/apps/analytics-gtm/js/[a-zA-Z-]+.js$',
