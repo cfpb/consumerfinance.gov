@@ -47,12 +47,8 @@ author or the affirmer.
 
 ## Exceptions
 
-- [HTML5 Shiv](https://github.com/aFarkas/html5shiv) by Alexander Farkas,
-  et al., is licensed under MIT/GPL2.
 - [jQuery](https://jquery.com) by The jQuery Foundation is licensed under the
   MIT License.
-- [Modernizr](https://github.com/Modernizr/Modernizr) by Faruk Ateş, et al.,
-  is licensed under MIT License.
 - [Normalize](https://necolas.github.io/normalize.css/) by Nicolas Gallagher,
   co-created with Jonathan Neal, is licensed under the MIT License.
 - Build depedencies packaged in `npm-packages-offline-cache` are individually licensed.

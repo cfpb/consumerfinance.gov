@@ -8,9 +8,7 @@ const config = require( '../config.js' );
 const configScripts = config.scripts;
 const fs = require( 'fs' );
 const gulp = require( 'gulp' );
-const gulpModernizr = require( 'gulp-modernizr' );
 const gulpNewer = require( 'gulp-newer' );
-const gulpTerser = require( 'gulp-terser' );
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
 const mergeStream = require( 'merge-stream' );
@@ -43,35 +41,6 @@ function _processScript( localWebpackConfig, src, dest ) {
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
     .pipe( gulp.dest( paths.processed + dest ) );
-}
-
-/**
- * Generate modernizr polyfill bundle.
- * @returns {PassThrough} A source stream.
- */
-function scriptsPolyfill() {
-  return gulp.src( paths.unprocessed + '/js/routes/common.js' )
-    .pipe( gulpNewer( {
-      dest:  paths.processed + '/js/modernizr.min.js',
-      extra: configScripts.otherBuildTriggerFiles
-    } ) )
-
-    /* csspointerevents is used by select menu in the Design System for IE10.
-       es5 is used for ECMAScript 5 feature detection to change js CSS to no-js.
-       setClasses sets detection checks as feat/no-feat CSS in html element.
-       html5printshiv enables use of HTML5 sectioning elements in IE8
-       See https://github.com/aFarkas/html5shiv */
-    .pipe( gulpModernizr( 'modernizr.min.js', {
-      options: [ 'setClasses', 'html5printshiv' ],
-      tests: [ 'csspointerevents', 'es5' ]
-    } ) )
-    .pipe( gulpTerser( {
-      compress: {
-        properties: false
-      }
-    } ) )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( paths.processed + '/js/' ) );
 }
 
 /**
@@ -173,7 +142,6 @@ function scriptsApps() {
 
 gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:modern', scriptsModern );
-gulp.task( 'scripts:polyfill', scriptsPolyfill );
 
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
@@ -187,7 +155,6 @@ gulp.task( 'scripts:ondemand',
 
 gulp.task( 'scripts',
   gulp.parallel(
-    'scripts:polyfill',
     'scripts:modern',
     'scripts:apps',
     'scripts:ondemand',
