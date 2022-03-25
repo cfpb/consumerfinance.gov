@@ -251,22 +251,6 @@ You can get more information by reading the following:
 
 ## Component build pipeline
 
-### Gulp
-
-Gulp is used as a task automation tool.
-Tasks include compiling CSS, creating a standard Webpack workflow for bundling
-scripts, minifying code, linting, running unit tests,
-and [more](https://github.com/cfpb/consumerfinance.gov/tree/main/gulp).
-
-### Webpack
-
-Wepback is used as a module bundler, although it's capable of more.
-We create page, global, and component-specific bundles.
-The configuration for the bundles is contained in
-[`config/webpack-config.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/config/webpack-config.js).
-An explanation for the usage of each bundle is contained in
-[`gulp/tasks/scripts.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/gulp/tasks/scripts.js).
-
 ### Routes
 
 Routes are used to serve JavaScript bundles to the browser based

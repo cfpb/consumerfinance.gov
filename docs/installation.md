@@ -134,7 +134,7 @@ consumerfinance.gov uses a proprietary licensed font, Avenir.
 If you want to pull this from a content delivery network (CDN),
 you can set the
 [`@use-font-cdn`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/css/main.less#L30)
-to `true` and rebuild the assets with `yarn gulp build`.
+to `true` and rebuild the assets with `yarn build`.
 
 If you want to install self-hosted fonts locally, you can place the font files
 in `static.in/cfgov-fonts/fonts/`.
@@ -188,10 +188,10 @@ building and
 ./frontend.sh
 ```
 
-Gulp can be used to rebuild our assets after the initial setup:
+Yarn can be used to rebuild our assets after the initial setup:
 
 ```sh
-yarn gulp build
+yarn build
 ```
 
 !!! note

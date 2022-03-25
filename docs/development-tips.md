@@ -11,11 +11,11 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
 
 **Templates** that are served by the Django server: `cfgov/jinja2/v1`
 
-**Static assets** prior to processing (combilation, minification, etc.):
+**Static assets** prior to processing (compilation, minification, etc.):
 `cfgov/unprocessed`.
 
 !!! note
-    After running `gulp build` (or `./setup.sh`) the site's assets are copied over to `cfgov/static_built`,
+    After running `yarn build` (or `./setup.sh`) the site's assets are copied over to `cfgov/static_built`,
     ready to be served by Django.
 
 
@@ -32,14 +32,7 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
 
 ## Watching files for changes
 
-Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `gulp watch` or `yarn gulp watch`.
-
-!!! note
-    You must build the assets first, so you may want a command like:
-    ```
-    ./setup.sh docker && yarn gulp watch
-    ```
-
+Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `yarn watch`.
 
 ## Developing on nested satellite apps
 
