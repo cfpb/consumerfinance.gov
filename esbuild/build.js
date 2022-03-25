@@ -11,7 +11,7 @@ const baseConfig = {
   minify: true,
   sourcemap: true,
   external: [ '*.png', '*.woff', '*.woff2', '*.gif', '*.svg' ],
-  outdir: `${ processed }/out`
+  outdir: `${ processed }`
 };
 
 const arg = process.argv.slice( 2 )[0];
