@@ -56,7 +56,7 @@ install() {
 # Run tasks to build the project for distribution.
 build() {
   echo "Building project…"
-  yarn gulp build
+  yarn build
 }
 
 # Fake our font files, if necessary, in public CI
