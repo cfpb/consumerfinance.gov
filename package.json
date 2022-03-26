@@ -16,7 +16,6 @@
     "node": ">=16.x"
   },
   "dependencies": {
-    "@babel/core": "7.16.0",
     "@babel/plugin-transform-runtime": "7.16.4",
     "@babel/preset-env": "7.16.4",
     "@cfpb/cfpb-atomic-component": "0.14.0",
@@ -33,45 +32,33 @@
     "@cfpb/cfpb-typography": "0.14.1",
     "@cfpb/rental-assistance-finder": "0.4.0",
     "autoprefixer": "10.4.0",
-    "babel-loader": "8.2.3",
     "cfpb-chart-builder": "6.4.2",
     "core-js": "3.19.3",
     "cross-fetch": "3.1.4",
-    "del": "6.0.0",
     "enforce-node-version": "0.1.0",
     "es6-promise": "4.2.8",
     "esbuild": "0.14.10",
     "esbuild-plugin-postcss2": "0.1.1",
     "fancy-log": "1.3.3",
-    "glob-all": "3.2.1",
     "highcharts": "7.2.2",
     "less": "3.13.1",
     "lightbox2": "2.11.3",
     "lodash.clonedeep": "4.5.0",
     "lodash.throttle": "4.1.1",
-    "merge-stream": "2.0.0",
     "number-to-words": "1.2.4",
     "papaparse": "5.3.1",
     "postcss": "8.4.4",
     "postcss-unmq": "1.0.2",
     "require-dir": "1.2.0",
     "svg-inline-loader": "0.8.2",
-    "vinyl-named": "1.1.0",
-    "xdr": "0.5.3",
-    "yargs": "17.3.0"
+    "xdr": "0.5.3"
   },
   "devDependencies": {
-    "babel-jest": "27.4.2",
-    "chai": "4.3.4",
-    "chai-as-promised": "7.1.1",
     "cypress": "9.3.1",
     "eslint": "8.11.0",
     "jest": "27.4.3",
     "jest-cli": "27.4.3",
     "snyk": "1.786.0"
-  },
-  "resolutions": {
-    "ua-parser-js": "^0.7.22"
   },
   "scripts": {
     "enforce": "enforce-node-version",
