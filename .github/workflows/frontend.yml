@@ -42,7 +42,7 @@ jobs:
 
       - name: Build Javascript
         if: steps.filter.outputs.frontend == 'true'
-        run: yarn run gulp build
+        run: yarn build
 
   coverage:
     runs-on: ubuntu-latest
