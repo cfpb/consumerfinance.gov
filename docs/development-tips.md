@@ -45,16 +45,9 @@ The structure looks like this:
 - List an app's own dependencies in
   `cfgov/unprocessed/apps/[project namespace]/package.json`.
 
-### Webpack
-- Apps may include their own `webpack-config.js` configuration that adjusts how
-  their app-specific assets should be built. This configuration appears in
-  `cfgov/unprocessed/apps/[project namespace]/webpack-config.js`.
-
-### Browserslist
-- Apps may include a
-  [browserslist config](https://github.com/browserslist/browserslist#config-file)
-  file, which is automatically picked up by `@babel/preset-env` inside the
-  webpack config, if no `browsers` option is supplied.
+### App build scripts
+- Apps may include their own scripts to run during the build process
+  These must be `require`d from `esbuild/build.js`
 
 ### Adding Images
 - Images should be compressed and optimized before being committed to the repo

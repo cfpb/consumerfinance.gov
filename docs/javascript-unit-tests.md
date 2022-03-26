@@ -244,8 +244,7 @@ import sample from '../../../../cfgov/unprocessed/js/modules/sample.js';
 Some test files use `const` declarations to
 `require` scripts instead of `import`,
 because those files were written before `import` was available.
-We prefer to use `import` because it allows for
-[tree shaking in Webpack](https://webpack.js.org/guides/tree-shaking/),
+We prefer to use `import` because it allows for tree shaking,
 meaning if two modules are importing the same module
 it should only be included in the bundle once,
 whereas with `require` it would be included twice.

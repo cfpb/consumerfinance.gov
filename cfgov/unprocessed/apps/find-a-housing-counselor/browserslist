@@ -1,7 +1,0 @@
-# Browsers that Google Analytics Tag manager custom tags support.
-# This file (browserlist) is picked up by babel-preset-env (in webpack config).
-# See https://github.com/browserslist/browserslist#config-file
-
-last 2 versions
-not ie < 11
-not ie_mob < 11
