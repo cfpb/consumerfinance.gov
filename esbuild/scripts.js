@@ -1,5 +1,4 @@
 const esbuild = require( 'esbuild' );
-const { resolve } = require( 'path' );
 const { getAll } = require( './utils.js' );
 const { unprocessed } = require( '../config/environment.js' ).paths;
 
@@ -48,7 +47,7 @@ const jsPaths = [
   `${ apps }/retirement/js/index.js`,
   `${ apps }/rural-or-underserved-tool/js/common.js`,
   `${ apps }/teachers-digital-platform/js/index.js`
-].map( v => resolve( v ) );
+];
 
 module.exports = function( baseConfig ) {
   esbuild.build( { ...baseConfig, entryPoints: jsPaths } );
