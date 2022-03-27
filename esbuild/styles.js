@@ -1,6 +1,6 @@
 const esbuild = require( 'esbuild' );
 const { readdirSync } = require( 'fs' );
-const postCSSPlugin = require( 'esbuild-plugin-postcss2' );
+const postCSSPlugin = require( '@frappe/esbuild-plugin-postcss2' );
 const autoprefixer = require( 'autoprefixer' );
 const { getAll } = require( './utils.js' );
 
