@@ -12,7 +12,8 @@ module.exports = {
     '<rootDir>/cfgov/unprocessed/apps/.+/index.js$',
     '<rootDir>/cfgov/unprocessed/apps/.+/common.js$',
     '<rootDir>/cfgov/unprocessed/apps/analytics-gtm/js/[a-zA-Z-]+.js$',
-    '<rootDir>/cfgov/unprocessed/js/routes/'
+    '<rootDir>/cfgov/unprocessed/js/routes/',
+    '<rootDir>/cfgov/unprocessed/js/apps/regulations3k/worker_and_manifest.js'
   ],
   coverageDirectory: '<rootDir>/test/unit_test_coverage',
   moduleNameMapper: {
