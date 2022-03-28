@@ -3,9 +3,6 @@ name: frontend
 on:
   pull_request:
 
-env:
-  GODEBUG: asyncpreemptoff=1
-
 jobs:
 
   frontend:
