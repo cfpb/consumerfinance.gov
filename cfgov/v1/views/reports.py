@@ -146,7 +146,7 @@ class ImagesReportView(ReportView):
 
     def get_queryset(self):
         return (
-            Image()
+            get_image_model()
             .objects.all()
             .order_by("-created_at")
             .prefetch_related("tags")
