@@ -3,6 +3,9 @@ import styles from './common-styles.js';
 const tilemap = {
   ...styles,
   accessibility: {},
+  navigator: {
+    enabled: false
+  },
   plotOptions: {
     tilemap: {
       tileShape: 'square',
