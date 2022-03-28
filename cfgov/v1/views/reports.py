@@ -2,7 +2,7 @@ from datetime import date
 
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
-from wagtail.images import get_image_model as Image
+from wagtail.images import get_image_model
 
 from v1.models import CFGOVPage
 
