@@ -6,7 +6,7 @@ const styles = require( './styles.js' );
 const { processed } = require( '../config/environment.js' ).paths;
 
 const baseConfig = {
-  logLevel: 'debug',
+  logLevel: 'verbose',
   bundle: true,
   minify: true,
   sourcemap: true,
