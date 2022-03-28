@@ -55,7 +55,7 @@
     "xdr": "0.5.3"
   },
   "devDependencies": {
-    "cypress": "9.3.1",
+    "cypress": "9.5.2",
     "eslint": "8.11.0",
     "jest": "27.4.3",
     "jest-cli": "27.4.3",
