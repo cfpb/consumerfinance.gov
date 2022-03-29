@@ -30,18 +30,4 @@ module.exports = async function( baseConfig ) {
 
   // Handle icons
   copyAll( `${ modules }/@cfpb/cfpb-icons/src/icons`, `${ baseConfig.outdir }/icons` );
-
-  // Handle prebuilt lightbox dep
-  [
-    `${ modules }/lightbox2/dist/css/lightbox.min.css`,
-    `${ modules }/lightbox2/dist/images/close.png`,
-    `${ modules }/lightbox2/dist/images/loading.gif`,
-    `${ modules }/lightbox2/dist/images/next.png`,
-    `${ modules }/lightbox2/dist/images/prev.png`,
-    `${ modules }/lightbox2/dist/js/lightbox-plus-jquery.min.js`
-  ].map( f => copyFile(
-    f, f.replace(
-      `${ modules }/lightbox2/dist`,
-      `${ baseConfig.outdir }/lightbox2`
-    ) ) );
 };
