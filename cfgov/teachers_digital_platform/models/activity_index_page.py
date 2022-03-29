@@ -55,7 +55,7 @@ for facet in FACET_LIST:
     FACET_DICT["aggs"].update(
         {"{}_terms".format(facet): {"terms": {"field": facet}}}
     )
-ALWAYS_EXPANDED = {"building_block", "topic", "school_subject"}
+ALWAYS_EXPANDED = {"topic", "school_subject"}
 SEARCH_FIELDS = [
     "text",
     "related_text",
