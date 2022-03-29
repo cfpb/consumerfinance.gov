@@ -10,7 +10,10 @@ const baseConfig = {
   bundle: true,
   minify: true,
   sourcemap: true,
-  external: [ '*.png', '*.woff', '*.woff2', '*.gif', '*.svg' ],
+  external: [ '*.png', '*.woff', '*.woff2', '*.gif' ],
+  loader: {
+    '.svg': 'text'
+  },
   outdir: `${ processed }`
 };
 
