@@ -147,7 +147,7 @@ class ActivityPage(CFGOVPage):
     council_for_economic_education = ParentalManyToManyField(
         "teachers_digital_platform.ActivityCouncilForEconEd",
         blank=True,
-        verbose_name="Council for Economic Education",
+        verbose_name="National Standards",
     )
     content_panels = CFGOVPage.content_panels + [
         FieldPanel("date"),
@@ -178,8 +178,8 @@ class ActivityPage(CFGOVPage):
             heading="Download activity",
         ),
         FieldPanel("building_block", widget=forms.CheckboxSelectMultiple),
-        FieldPanel("school_subject", widget=forms.CheckboxSelectMultiple),
         FieldPanel("topic", widget=forms.CheckboxSelectMultiple),
+        FieldPanel("school_subject", widget=forms.CheckboxSelectMultiple),
         MultiFieldPanel(
             [
                 FieldPanel(
@@ -209,17 +209,18 @@ class ActivityPage(CFGOVPage):
             ],
             heading="Activity characteristics",
         ),
+        FieldPanel(
+            "council_for_economic_education",
+            widget=forms.CheckboxSelectMultiple,
+        ),
         MultiFieldPanel(
             [
                 FieldPanel(
-                    "council_for_economic_education",
-                    widget=forms.CheckboxSelectMultiple,
-                ),  # noqa: B950
-                FieldPanel(
-                    "jump_start_coalition", widget=forms.CheckboxSelectMultiple
+                    "jump_start_coalition", widget=forms.CheckboxSelectMultiple,
                 ),  # noqa: B950
             ],
-            heading="National standards",
+            heading="Legacy unpublished data",
+            classname="collapsible collapsed",
         ),
     ]
 
