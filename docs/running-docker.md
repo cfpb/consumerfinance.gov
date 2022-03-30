@@ -52,7 +52,7 @@ they will work as expected once you’re inside the Python container.
 
 ## Access a container’s shell
 
-- Python: `docker-compose exec python bash`
+- Python: `docker-compose exec python sh`
 - Elasticsearch: `docker-compose exec elasticsearch bash`
 - PostgreSQL: `docker-compose exec postgres bash`
 
@@ -60,13 +60,13 @@ they will work as expected once you’re inside the Python container.
 ## Update/Change Python MAJOR.MINOR Version
 
 The [first line](https://github.com/cfpb/consumerfinance.gov/tree/main/Dockerfile) of `Dockerfile` sets the base Python Interpreter version for all
-`cfgov` images. Our current pattern is `python:MAJOR.MINOR-alpine` for 
-the base image. This allows us to rapidly incorporate `PATCH` versions without 
+`cfgov` images. Our current pattern is `python:MAJOR.MINOR-alpine` for
+the base image. This allows us to rapidly incorporate `PATCH` versions without
 the need for explicit commits.
 
 ### Updating `PATCH` version locally
 
-To update the `PATCH` version on your local Docker, replace `<MAJOR.MINOR>` 
+To update the `PATCH` version on your local Docker, replace `<MAJOR.MINOR>`
 with your target and run:
 
 ```bash
@@ -104,9 +104,9 @@ docker attach consumerfinancegov_python_1
 When you're done, you can detach with `Ctrl+P Ctrl+Q`.
 
 !!! note
-    `docker attach` takes the specific container name or ID. 
-    Yours may or may not be `consumerfinancegov_python_1`. 
-    To verify, use `docker container ls` 
+    `docker attach` takes the specific container name or ID.
+    Yours may or may not be `consumerfinancegov_python_1`.
+    To verify, use `docker container ls`
     to get the Python container's full name or ID.
 
 !!! note
@@ -173,7 +173,7 @@ change configs locally without having to rebuild the image each time.
     `cfgov` database, you will need to download and load it from within the container.
 
     ```bash
-    docker-compose exec python bash
+    docker-compose exec python sh
 
     # Once in the container...
     export CFGOV_PROD_DB_LOCATION=<database-dump-url>
@@ -189,7 +189,7 @@ change configs locally without having to rebuild the image each time.
    config and reload Apache (optional).
 
     ```bash
-    docker-compose exec python bash
+    docker-compose exec python sh
 
     # Once in the container...
     httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -k restart
