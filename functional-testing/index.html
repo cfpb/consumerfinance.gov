@@ -194,13 +194,6 @@
 <h2 id="installing-cypress">Installing Cypress<a class="headerlink" href="#installing-cypress" title="Permanent link">¶</a></h2>
 <p>We have included Cypress as a dependency of this project. The only installation step is doing a fresh <code>yarn</code> if you haven't already.</p>
 <h2 id="running-cypress-tests">Running Cypress tests<a class="headerlink" href="#running-cypress-tests" title="Permanent link">¶</a></h2>
-<h3 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">¶</a></h3>
-<p>We support a headless Docker container to execute our Cypress tests. The test files are located in the <code>test/cypress/integration/</code> directory.</p>
-<p>If you have not previously set up a local Docker network, you will need to stop any running consumerfinance.gov Docker containers, run <code>docker network create cfgov</code>, and start the containers again before you run these commands.</p>
-<ul>
-<li><code>docker-compose -f docker-compose.e2e.yml run admin-tests</code> runs a single Docker container (the Wagtail admin test suite, in this case)</li>
-<li><code>docker-compose -f docker-compose.e2e.yml up</code> runs all Docker containers</li>
-</ul>
 <h3 id="cypress-app">Cypress app<a class="headerlink" href="#cypress-app" title="Permanent link">¶</a></h3>
 <p>To run the desktop Cypress app execute <code>yarn cypress open</code> from the command line. From the app, you can select the tests you want to run and the browser you want to run them in.</p>
 <h3 id="command-line">Command line<a class="headerlink" href="#command-line" title="Permanent link">¶</a></h3>
