@@ -145,7 +145,9 @@
     {% if page.jump_start_coalition.all() or page.council_for_economic_education.all() %}
         <h4>National standards</h4>
         {% if page.council_for_economic_education.all() %}<p><strong>Standards:</strong> {{ page.council_for_economic_education.all() | join(', ') }}</p>{% endif %}
-        <p><a class="a-link" href="#">Learn more</a> about these standards.</p>
+        <p><a class="a-link" target="_blank" rel="noreferrer noopener"
+            href="https://www.councilforeconed.org/wp-content/uploads/2021/10/2021-National-Standards-for-Personal-Financial-Education.pdf"
+            >Learn more</a> about these standards.</p>
         <div class="content_line u-mt30 u-mb30"></div>
     {% endif %}
 
