@@ -113,14 +113,14 @@
         </ul>
     {% endif %}
 
-    {% if page.school_subject.all() %}
-        <h4>School subject</h4>
-        <p>{{ page.school_subject.all() | join(', ') }}</p>
-    {% endif %}
-
     {% if page.topic.all() %}
         <h4>Topic</h4>
         <p>{{ page.get_topics_list() }}</p>
+    {% endif %}
+
+    {% if page.school_subject.all() %}
+        <h4>School subject</h4>
+        <p>{{ page.school_subject.all() | join(', ') }}</p>
     {% endif %}
 
     <div class="content_line u-mt30 u-mb30"></div>
@@ -144,8 +144,8 @@
 
     {% if page.jump_start_coalition.all() or page.council_for_economic_education.all() %}
         <h4>National standards</h4>
-        {% if page.council_for_economic_education.all() %}<p><strong>Council for Economic Education:</strong> {{ page.council_for_economic_education.all() | join(', ') }}</p>{% endif %}
-        {% if page.jump_start_coalition.all() %}<p><strong><span aria-hidden="true">Jump$tart</span><span class="u-visually-hidden">JumpStart</span> Coalition:</strong> {{ page.jump_start_coalition.all() | join(', ') }}</p>{% endif %}
+        {% if page.council_for_economic_education.all() %}<p><strong>Standards:</strong> {{ page.council_for_economic_education.all() | join(', ') }}</p>{% endif %}
+        <p><a class="a-link" href="#">Learn more</a> about these standards.</p>
         <div class="content_line u-mt30 u-mb30"></div>
     {% endif %}
 
