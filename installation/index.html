@@ -260,16 +260,16 @@ Activating the virtualenv is necessary before using it in the future as well:</p
 <pre class="highlight"><code class="language-sh">pip install -r requirements/ci.txt</code></pre>
 
 <h3 id="install-pre-commit">Install pre-commit<a class="headerlink" href="#install-pre-commit" title="Permanent link">¶</a></h3>
-<p>We use <code>pre-commit</code> to automatically run our linting tools before a commit 
-takes place. These tools consist of <code>black</code>, <code>flake8</code>, and <code>isort</code>. To install 
-<code>pre-commit</code>, running the following commands from within the 
+<p>We use <code>pre-commit</code> to automatically run our linting tools before a commit
+takes place. These tools consist of <code>black</code>, <code>flake8</code>, and <code>isort</code>. To install
+<code>pre-commit</code>, running the following commands from within the
 <code>consumerfinance.gov</code> directory:</p>
 <pre class="highlight"><code class="language-sh">pip install -U pre-commit &amp;&amp; pre-commit install</code></pre>
 
 <p>Before each commit, <code>pre-commit</code> will execute and run our <code>pre-commit</code> checks.
-If any task fails, it will attempt to resolve the issue automatically, notify 
-you of the changes (if any), and ask for you to re-stage the changed files. If 
-all checks pass, a commit will take place as expected, allowing you to then 
+If any task fails, it will attempt to resolve the issue automatically, notify
+you of the changes (if any), and ask for you to re-stage the changed files. If
+all checks pass, a commit will take place as expected, allowing you to then
 push to GitHub. This is to reduce the number of commits with failed lints, and
 to assist developers with linting without thinking.</p>
 <h3 id="install-our-private-fonts-optional">Install our private fonts (optional)<a class="headerlink" href="#install-our-private-fonts-optional" title="Permanent link">¶</a></h3>
@@ -351,7 +351,7 @@ a hostname and port defined by the <code>WAGTAIL_SHARING_HOSTNAME</code> and
 <code>DJANGO_HTTP_PORT</code> environment variables.</li>
 </ul>
 <p>This script must be run inside the Docker <code>python</code> container:</p>
-<pre class="highlight"><code class="language-sh">docker-compose exec python bash
+<pre class="highlight"><code class="language-sh">docker-compose exec python sh
 ./initial-data.sh</code></pre>
 
 <h3 id="load-a-database-dump">Load a database dump<a class="headerlink" href="#load-a-database-dump" title="Permanent link">¶</a></h3>
@@ -362,7 +362,7 @@ GitHub Enterprise at
 [GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3, or
 inside a Docker <code>python</code> container sh immediately before running
 <code>refresh-data.sh</code>:</p>
-<pre class="highlight"><code class="language-sh">docker-compose exec python bash
+<pre class="highlight"><code class="language-sh">docker-compose exec python sh
 CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ./refresh-data.sh</code></pre>
 

@@ -235,7 +235,7 @@ you can still run the tests if you install Tox in your
 <a href="/installation/#docker-based-installation">a Docker-based installation of consumerfinance.gov</a>,
 you can run the tests there by
 <a href="http://localhost:8888/running-docker/#access-a-containers-shell">accessing the Python container's shell</a>:</p>
-<pre class="highlight"><code class="language-sh">docker-compose exec python bash</code></pre>
+<pre class="highlight"><code class="language-sh">docker-compose exec python sh</code></pre>
 
 <h2 id="running-tests">Running tests<a class="headerlink" href="#running-tests" title="Permanent link">¶</a></h2>
 <p>Our test suite can either be run in a local virtualenv or in Docker.
@@ -269,7 +269,7 @@ you can provide a dotted path to the test as the final argument to any of the ab
 <p>If you would like to skip running Django migrations when testing, set the
 <code>SKIP_DJANGO_MIGRATIONS</code> environment variable to any value before running <code>tox</code>.</p>
 <h3 id="formatting">Formatting<a class="headerlink" href="#formatting" title="Permanent link">¶</a></h3>
-<p>We use <code>black</code> to autoformat our Python code. <code>black</code> is invoked by Tox using 
+<p>We use <code>black</code> to autoformat our Python code. <code>black</code> is invoked by Tox using
 the <code>lint</code> environment (this will also run <code>flake8</code> and <code>isort</code>):</p>
 <pre class="highlight"><code class="language-sh">tox -e lint</code></pre>
 
@@ -280,7 +280,7 @@ the <code>lint</code> environment (this will also run <code>flake8</code> and <c
 <a href="https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/">Django coding style guidelines</a>,
 and the
 <a href="https://github.com/cfpb/development/blob/main/standards/python.md#linting">CFPB Python style guide</a>.</p>
-<p>Both <code>flake8</code> and <code>isort</code> can be run using the Tox <code>lint</code> environment (this 
+<p>Both <code>flake8</code> and <code>isort</code> can be run using the Tox <code>lint</code> environment (this
 will also run <code>black</code>):</p>
 <pre class="highlight"><code class="language-sh">tox -e lint</code></pre>
 
@@ -290,7 +290,7 @@ that need to be fixed. To automatically fix import sort issues, run:</p>
 
 <p>From the root of <code>consumerfinance.gov</code>.</p>
 <h3 id="coverage">Coverage<a class="headerlink" href="#coverage" title="Permanent link">¶</a></h3>
-<p>To see Python code coverage information immediately following a test run, 
+<p>To see Python code coverage information immediately following a test run,
 you can add the <code>coverage</code> env to the list of envs for tox to run:</p>
 <pre class="highlight"><code class="language-sh">tox -e lint -e unittest -e coverage</code></pre>
 
