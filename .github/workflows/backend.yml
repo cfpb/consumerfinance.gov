@@ -106,7 +106,7 @@ jobs:
         uses: actions/setup-python@v3
         if: steps.filter.outputs.backend == 'true'
         with:
-          python-version: '3.9.x'
+          python-version: 3.8
 
       - name: Install dependencies
         if: steps.filter.outputs.backend == 'true'
