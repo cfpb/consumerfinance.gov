@@ -58,7 +58,6 @@
     "gulp-terser": "2.1.0",
     "highcharts": "7.2.2",
     "less": "3.13.1",
-    "lightbox2": "2.11.3",
     "lodash.clonedeep": "4.5.0",
     "lodash.throttle": "4.1.1",
     "merge-stream": "2.0.0",
