@@ -39,18 +39,9 @@ gulp.task( 'copy:icons', () => {
   return stream;
 } );
 
-gulp.task( 'copy:lightbox2', () => {
-  const stream = _genericCopy(
-    `${ paths.modules }/lightbox2/dist/**/*`,
-    `${ paths.processed }/lightbox2`
-  );
-  return stream;
-} );
-
 gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
-    'copy:lightbox2',
     'copy:root'
   )
 );
