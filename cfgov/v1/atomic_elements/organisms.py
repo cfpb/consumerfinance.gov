@@ -191,12 +191,29 @@ class EmailSignUp(blocks.StructBlock):
             "etc."
         ),
     )
+    signup_method = blocks.ChoiceBlock(
+        choices=[
+            (
+                "form",
+                "Enter an email address directly in a form",
+            ),
+            ("link", "Link to a GovDelivery signup page"),
+        ],
+        required=True,
+        default="form",
+        label="Signup method",
+        help_text=(
+            "Choose how people will sign up: either by entering their email "
+            "directly or by going to a GovDelivery signup page"
+        ),
+    )
     gd_code = blocks.CharBlock(
         required=False,
-        label="GovDelivery code",
+        label="GovDelivery code or signup page URL",
         help_text=(
-            "Code for the topic (i.e., mailing list) you want people "
-            "who submit this form to subscribe to. Format: USCFPB_###"
+            "For a signup form, GovDeliery code (USCFPB_###) for the list "
+            "people who submit the form will sign up for. For a signup link, "
+            "URL for the GovDelivery signup page."
         ),
     )
     disclaimer_page = blocks.PageChooserBlock(
