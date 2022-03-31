@@ -1,5 +1,5 @@
 /* eslint complexity: ["error", 10] */
-import trackChartEvent from './util.js';
+import trackChartEvent from './analytics.js';
 import styles from './line-styles.js';
 
 const msYear = 365 * 24 * 60 * 60 * 1000;

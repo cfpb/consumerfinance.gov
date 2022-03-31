@@ -1,5 +1,5 @@
 import styles from './common-styles.js';
-import trackChartEvent from './util.js';
+import trackChartEvent from './analytics.js';
 
 const line = {
   ...styles,
