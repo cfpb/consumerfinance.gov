@@ -216,8 +216,9 @@ class ActivityPage(CFGOVPage):
         MultiFieldPanel(
             [
                 FieldPanel(
-                    "jump_start_coalition", widget=forms.CheckboxSelectMultiple,
-                ),  # noqa: B950
+                    "jump_start_coalition",
+                    widget=forms.CheckboxSelectMultiple,
+                ),
             ],
             heading="Legacy unpublished data",
             classname="collapsible collapsed",

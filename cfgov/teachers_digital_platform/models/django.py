@@ -104,4 +104,6 @@ class ActivityCouncilForEconEd(BaseActivityTaxonomy):
 
     class Meta:
         verbose_name = "National standard"
-        verbose_name_plural = "National Standards for Personal Financial Education"  # noqa: E501
+        verbose_name_plural = (
+            "National Standards for Personal Financial Education"  # noqa: E501
+        )
