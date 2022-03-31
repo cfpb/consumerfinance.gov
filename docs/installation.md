@@ -110,9 +110,9 @@ pip install -r requirements/ci.txt
 ```
 
 ### Install pre-commit
-We use `pre-commit` to automatically run our linting tools before a commit 
-takes place. These tools consist of `black`, `flake8`, and `isort`. To install 
-`pre-commit`, running the following commands from within the 
+We use `pre-commit` to automatically run our linting tools before a commit
+takes place. These tools consist of `black`, `flake8`, and `isort`. To install
+`pre-commit`, running the following commands from within the
 `consumerfinance.gov` directory:
 
 ```sh
@@ -120,9 +120,9 @@ pip install -U pre-commit && pre-commit install
 ```
 
 Before each commit, `pre-commit` will execute and run our `pre-commit` checks.
-If any task fails, it will attempt to resolve the issue automatically, notify 
-you of the changes (if any), and ask for you to re-stage the changed files. If 
-all checks pass, a commit will take place as expected, allowing you to then 
+If any task fails, it will attempt to resolve the issue automatically, notify
+you of the changes (if any), and ask for you to re-stage the changed files. If
+all checks pass, a commit will take place as expected, allowing you to then
 push to GitHub. This is to reduce the number of commits with failed lints, and
 to assist developers with linting without thinking.
 
@@ -240,7 +240,7 @@ a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
 This script must be run inside the Docker `python` container:
 
 ```sh
-docker-compose exec python bash
+docker-compose exec python sh
 ./initial-data.sh
 ```
 
@@ -255,7 +255,7 @@ inside a Docker `python` container sh immediately before running
 `refresh-data.sh`:
 
 ```sh
-docker-compose exec python bash
+docker-compose exec python sh
 CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ./refresh-data.sh
 ```
