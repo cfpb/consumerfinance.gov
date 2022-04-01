@@ -110,9 +110,9 @@ pip install -r requirements/ci.txt
 ```
 
 ### Install pre-commit
-We use `pre-commit` to automatically run our linting tools before a commit 
-takes place. These tools consist of `black`, `flake8`, and `isort`. To install 
-`pre-commit`, running the following commands from within the 
+We use `pre-commit` to automatically run our linting tools before a commit
+takes place. These tools consist of `black`, `flake8`, and `isort`. To install
+`pre-commit`, running the following commands from within the
 `consumerfinance.gov` directory:
 
 ```sh
@@ -120,9 +120,9 @@ pip install -U pre-commit && pre-commit install
 ```
 
 Before each commit, `pre-commit` will execute and run our `pre-commit` checks.
-If any task fails, it will attempt to resolve the issue automatically, notify 
-you of the changes (if any), and ask for you to re-stage the changed files. If 
-all checks pass, a commit will take place as expected, allowing you to then 
+If any task fails, it will attempt to resolve the issue automatically, notify
+you of the changes (if any), and ask for you to re-stage the changed files. If
+all checks pass, a commit will take place as expected, allowing you to then
 push to GitHub. This is to reduce the number of commits with failed lints, and
 to assist developers with linting without thinking.
 
@@ -240,7 +240,7 @@ a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
 This script must be run inside the Docker `python` container:
 
 ```sh
-docker-compose exec python bash
+docker-compose exec python sh
 ./initial-data.sh
 ```
 
@@ -255,7 +255,7 @@ inside a Docker `python` container sh immediately before running
 `refresh-data.sh`:
 
 ```sh
-docker-compose exec python bash
+docker-compose exec python sh
 CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ./refresh-data.sh
 ```
@@ -354,26 +354,32 @@ Once complete, our `runserver.sh` script will bring up the site at
 
 ## Additional setup
 
-### Sync local image storage (optional)
+### Sync local image and document storage (optional)
 
-If using a database dump, pages will contain links to images that exist in
-the database but don't exist on your local disk. This will cause broken or
-missing images when browsing the site locally.
+If using a database dump, pages will contain links to images or documents
+that exist in the database but don't exist on your local disk.
+This will cause broken or missing images or links when browsing the site locally.
 
-For example, in production images are stored on S3, but when running locally
-they are stored on disk.
+This is because in production images and documents are stored on S3,
+but when running locally they are stored on disk.
 
-This project includes a Django management command that can be used to download
-any remote images referenced in the database so that they can be served when
+This project includes two Django management commands that can be used to download
+any remote images or documents referenced in the database so that they can be served when
 running locally.
+
+This command downloads all remote images (and image renditions) referenced in the
+database, retrieving them from the specified URL and storing them in the
+specified local directory:
 
 ```sh
 cfgov/manage.py sync_image_storage https://files.consumerfinance.gov/f/ ./cfgov/f/
 ```
 
-This downloads all remote images (and image renditions) referenced in the
-database, retrieving them from the specified URL and storing them in the
-specified local directory.
+This command does the same, but for documents:
+
+```sh
+cfgov/manage.py sync_document_storage https://files.consumerfinance.gov/f/ ./cfgov/f/
+```
 
 ### Install GNU gettext for Django translation support (optional)
 

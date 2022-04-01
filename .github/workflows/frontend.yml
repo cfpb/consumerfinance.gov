@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: dorny/paths-filter@v2.10.2
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
         id: filter
         with:
           filters: |
@@ -19,7 +19,7 @@ jobs:
               - '**package.json'
 
       - name: Set up Node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v3
         if: steps.filter.outputs.frontend == 'true'
         with:
             node-version: '16.x'
@@ -35,7 +35,7 @@ jobs:
 
       - name: Store test coverage
         if: steps.filter.outputs.frontend == 'true'
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v3
         with:
           name: frontend_coverage
           path: ./test/unit_test_coverage/clover.xml
@@ -50,10 +50,10 @@ jobs:
       - frontend
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: dorny/paths-filter@v2.10.2
+      - uses: dorny/paths-filter@v2
         id: filter
         with:
           filters: |
@@ -62,7 +62,7 @@ jobs:
               - '**package.json'
 
       - name: Set up Python
-        uses: actions/setup-python@v2.2.2
+        uses: actions/setup-python@v3
         if: steps.filter.outputs.frontend == 'true'
         with:
           python-version: 3.8
@@ -74,7 +74,7 @@ jobs:
           pip install -r requirements/ci.txt
 
       - name: Retrieve frontend coverage
-        uses: actions/download-artifact@v2.0.10
+        uses: actions/download-artifact@v3
         if: steps.filter.outputs.frontend == 'true'
         with:
           name: frontend_coverage

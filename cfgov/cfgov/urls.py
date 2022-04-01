@@ -11,6 +11,7 @@ from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
+from wagtail.documents import urls as wagtaildocs_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
@@ -37,7 +38,6 @@ from housing_counselor.views import (
     HousingCounselorView,
 )
 from regulations3k.views import redirect_eregs
-from v1.views.documents import DocumentServeView
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -83,11 +83,6 @@ urlpatterns = [
             template_name="rural-or-underserved/index.html",
         ),
         name="rural-or-underserved",
-    ),
-    re_path(
-        r"^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$",
-        DocumentServeView.as_view(),
-        name="wagtaildocs_serve",
     ),
     re_path(
         r"^home/(?P<path>.*)$",
@@ -270,13 +265,6 @@ urlpatterns = [
             ),
             namespace="transcripts",
         ),
-    ),
-    re_path(
-        r"^paying-for-college/repay-student-debt/$",
-        TemplateView.as_view(
-            template_name="paying-for-college/repay_student_debt.html"
-        ),
-        name="pfc-repay",
     ),
     re_path(
         r"^paying-for-college2/",
@@ -464,6 +452,7 @@ urlpatterns = [
         r"^beta_external_testing/",
         akamai_no_store(empty_200_response),
     ),
+    path("documents/", include(wagtaildocs_urls)),
 ]
 
 # Ask CFPB category and subcategory redirects

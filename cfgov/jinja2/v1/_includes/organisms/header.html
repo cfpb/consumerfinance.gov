@@ -67,7 +67,7 @@
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
     {{ global_eyebrow.render( true, language ) }}
 
-    <div class="o-header_content no-js">
+    <div class="o-header_content">
 
         <div class="wrapper wrapper__match-content">
             {% if language == 'es' %}
@@ -115,18 +115,6 @@
         </div>
 
     </div>
-    <!--[if gt IE 9]><!-->
-      {#
-        TODO: scope no-js to individual molecules/organisms.
-        This is a hack to fix no-js on the on-demand header,
-        while also allowing the menu to be scoped to o-header
-        for on-demand pages.
-      #}
-      <script>
-      var headerDom = document.querySelector( '.o-header_content' );
-      headerDom.className = headerDom.className.replace( 'no-js', 'js' );
-      </script>
-    <!--<![endif]-->
 </header>
 
 {% endmacro %}

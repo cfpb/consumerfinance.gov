@@ -245,14 +245,14 @@
         "hasEmail": "mailto:devops@cfpb.gov"
       },
 
-      "describedBy": "https://www.consumerfinance.gov/documents/5586/cfpb_nfwbs-puf-codebook.pdf",
+      "describedBy": "https://files.consumerfinance.gov/f/documents/cfpb_nfwbs-puf-codebook.pdf",
       "describedByType":"application/pdf",
       "description": "The 2017 National Financial Well-Being in America Survey, conducted for the CFPB Offices of Financial Education and Financial Protection for Older Americans, was an online survey conducted to measure the financial well-being of adults in the United States. These data were created as a foundation for internal and external research into financial well-being and are relevant to work being done by researchers in the Office of Research who have access to the (deidentified) data.",
       "distribution": [
         {
           "@type": "dcat:Distribution",
           "accessURL": "https://www.consumerfinance.gov/data-research/financial-well-being-survey-data/",
-          "downloadURL": "https://www.consumerfinance.gov/documents/5614/NFWBS_PUF_2016_data.csv",
+          "downloadURL": "https://files.consumerfinance.gov/f/documents/NFWBS_PUF_2016_data.csv",
           "mediaType": "text/csv"
         }
       ],
@@ -281,7 +281,7 @@
         "name": "Consumer Financial Protection Bureau"
       },
       "references": [
-          "https://www.consumerfinance.gov/documents/5588/cfpb_nfwbs-puf-user-guide.pdf"
+          "https://files.consumerfinance.gov/f/documents/cfpb_nfwbs-puf-user-guide.pdf"
       ],
       "spatial": "United States",
       "temporal": "2016-01-01T00:00:00Z/2017-12-31T00:00:00Z",
@@ -306,61 +306,61 @@
         {
           "@type": "dcat:Distribution",
           "description": "College Credit Card Agreements 2009-2019",
-          "downloadURL": "https://www.consumerfinance.gov/documents/9235/cfpb_college-credit-card-agreements-database-2009-2019.csv",
+          "downloadURL": "https://files.consumerfinance.gov/f/documents/cfpb_college-credit-card-agreements-database-2009-2019.csv",
           "mediaType": "text/csv"
         },
         {
           "@type": "dcat:Distribution",
           "description": "College Credit Card Agreements 2011",
-          "downloadURL": "https://www.consumerfinance.gov/documents/3088/College_2011.zip",
+          "downloadURL": "https://files.consumerfinance.gov/f/documents/College_2011.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
           "description": "College Credit Card Agreements 2012",
-          "downloadURL": "https://www.consumerfinance.gov/documents/3098/College_2012.zip",
+          "downloadURL": "https://files.consumerfinance.gov/f/documents/College_2012.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
           "description": "College Credit Card Agreements 2013",
-          "downloadURL": "https://www.consumerfinance.gov/documents/5968/CollegeCCAgreements2013.zip",
+          "downloadURL": "https://files.consumerfinance.gov/f/documents/CollegeCCAgreements2013.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
           "description": "College Credit Card Agreements 2014",
-          "downloadURL": "https://www.consumerfinance.gov/documents/5970/CollegeCCAgreements2014.zip",
+          "downloadURL": "https://files.consumerfinance.gov/f/documents/CollegeCCAgreements2014.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
           "description": "College Credit Card Agreements 2015",
-          "downloadURL": "https://www.consumerfinance.gov/documents/5972/CollegeCCAgreements2015.zip",
+          "downloadURL": "https://files.consumerfinance.gov/f/documents/CollegeCCAgreements2015.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
           "description": "College Credit Card Agreements 2016",
-          "downloadURL": "https://www.consumerfinance.gov/documents/5964/CollegeCCAgreements2016.zip",
+          "downloadURL": "https://files.consumerfinance.gov/f/documents/CollegeCCAgreements2016.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
           "description": "College Credit Card Agreements 2017",
-          "downloadURL": "https://www.consumerfinance.gov/documents/7048/All_Agreements_PDFs_2017.zip",
+          "downloadURL": "https://files.consumerfinance.gov/f/documents/All_Agreements_PDFs_2017.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
           "description": "College Credit Card Agreements 2018",
-          "downloadURL": "https://www.consumerfinance.gov/documents/8261/CollegeCCAgreements2018.zip",
+          "downloadURL": "https://files.consumerfinance.gov/f/documents/CollegeCCAgreements2018.zip",
           "mediaType": "application/pdf"
          },
          {
           "@type": "dcat:Distribution",
           "description": "College Credit Card Agreements 2019",
-          "downloadURL": "https://www.consumerfinance.gov/documents/9234/cfpb_college-credit-card-agreements_2020-10.zip",
+          "downloadURL": "https://files.consumerfinance.gov/f/documents/cfpb_college-credit-card-agreements_2020-10.zip",
           "mediaType": "application/pdf"
          }
       ],
