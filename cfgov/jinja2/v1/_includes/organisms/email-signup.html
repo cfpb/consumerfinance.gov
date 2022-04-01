@@ -10,13 +10,15 @@
 
    Creates an email sign up form when given:
 
-   value:         An object used to customize the markup.
+   value:               An object used to customize the markup.
 
-   value.heading: A string with the title for the header slug.
+   value.heading:       A string with the title for the header slug.
 
-   value.text:    The text used within the description markup.
+   value.text:          The text used within the description markup.
 
-   value.gd_code: A GovDelivery code for a specified mailing list.
+   value.signup_method: Method used to sign up, either a form or a link.
+
+   value.gd_code:       GovDelivery code or URL for a specified mailing list.
 
    ========================================================================== #}
 
@@ -40,6 +42,25 @@
     </p>
 {% endif %}
 
+{# TODO: DRY this up so we don't repeat the m-btn-group and privacy link #}
+{% if value.signup_method == 'link' %}
+    <div class="m-btn-group">
+        <a class="a-btn"
+           href="{{ value.gd_code }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           {# TODO: Fix style in design system #}
+           style="margin-right: 10px;">
+            {{ _('Sign up') }}
+        </a>
+        <a class="a-btn a-btn__link a-btn__secondary"
+           href="{{ pageurl(value.disclaimer_page) if value.disclaimer_page else disclaimer_url }}"
+           target="_blank"
+           rel="noopener noreferrer">
+            {{ _('See Privacy Act statement') }}
+        </a>
+    </div>
+{% else %}
     <form class="o-form o-form__email-signup"
           id="{{ 'o-form__email-signup_' ~ form_id }}"
           method="POST"
@@ -72,4 +93,5 @@
 
         <input type="hidden" name="code" value="{{ value.gd_code }}">
     </form>
+{% endif %}
 </div>

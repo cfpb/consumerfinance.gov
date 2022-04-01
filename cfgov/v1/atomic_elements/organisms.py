@@ -233,6 +233,11 @@ class EmailSignUp(blocks.StructBlock):
     class Media:
         js = ["email-signup.js"]
 
+    # TODO: See if we can not include the JS on the page for link-only signups
+    # @property
+    # def media(self):
+    #     return forms.Media(js=["email-signup.js"])
+
 
 class RelatedPosts(blocks.StructBlock):
     limit = blocks.CharBlock(
