@@ -233,7 +233,7 @@
                 "@type": "QuantitativeValue",
                 "minValue": "{{ page.salary_min }}",
                 "maxValue": "{{ page.salary_max }}",
-                "unitText": "YEAR"
+                "unitText": "{{ "HOUR" if page.salary_is_hourly else "YEAR" }}"
             }
         },
         "description": "{{ page.description }}",
