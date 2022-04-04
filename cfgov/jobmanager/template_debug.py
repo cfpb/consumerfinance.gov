@@ -81,6 +81,17 @@ job_listing_details_test_cases = {
     "Job with multiple grades": {"grades": [52, 53, 60]},
     "Job with no grades": {"grades": []},
     "Job with fixed salary": {"salary_min": 10000, "salary_max": 10000},
+    "Job with decimal salary": {"salary_min": 1234.56, "salary_max": 2345.0},
+    "Job with hourly salary": {
+        "salary_min": 15.00,
+        "salary_max": 15.00,
+        "salary_is_hourly": True,
+    },
+    "Job with hourly salary range": {
+        "salary_min": 15.00,
+        "salary_max": 22.50,
+        "salary_is_hourly": True,
+    },
     "Job with month that should not get abbreviated": {
         "close_date": date(2099, 6, 1),
     },
