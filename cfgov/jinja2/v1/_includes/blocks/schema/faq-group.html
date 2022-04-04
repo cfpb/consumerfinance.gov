@@ -28,6 +28,8 @@
 
    value.faq_item.answer          FAQ item answer streamblock
 
+   value.faq_item.anchor_tag      FAQ item anchor tag
+
    ========================================================================== #}
 
 
@@ -39,7 +41,8 @@
              class="block
                    {{ 'block__flush-top' if loop.index == 1 else '' }}
                    {{ 'block__padded-top block__border-top'
-                   if value.lines_between_items and loop.index > 1 else '' }}">
+                   if value.lines_between_items and loop.index > 1 else '' }}"
+            {% if item.anchor_tag %}id="{{ item.anchor_tag }}"{% endif %}>
             <{{ value.question_tag }} itemprop="name">
                 {{ item.question | safe }}
             </{{ value.question_tag }}>

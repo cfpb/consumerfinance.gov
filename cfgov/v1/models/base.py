@@ -234,6 +234,16 @@ class CFGOVPage(Page):
         # Then sort by last name
         return sorted(author_names, key=lambda x: x.name.split()[-1])
 
+    def is_faq_block(self, item):
+        return item.block_type == "faq_group" or (
+            item.block_type == "expandable_group"
+            and item.value["is_faq"] is True
+        )
+
+    def is_faq_page(self):
+        if hasattr(self, "content"):
+            return any(self.is_faq_block(item) for item in self.content)
+
     def related_metadata_tags(self):
         # Set the tags to correct data format
         tags = {"links": []}
@@ -352,6 +362,7 @@ class CFGOVPage(Page):
             context["schema_json"] = self.schema_json
 
         context["meta_description"] = self.get_meta_description()
+        context["is_faq_page"] = self.is_faq_page()
         return context
 
     def serve(self, request, *args, **kwargs):

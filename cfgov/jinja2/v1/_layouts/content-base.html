@@ -2,7 +2,10 @@
 
 {% block content scoped %}
     <main class="content {% block content_modifiers -%}{%- endblock %}"
-          id="main">
+          id="main"
+          {%- if is_faq_page %}
+            itemscope="" itemtype="http://schema.org/FAQPage"
+          {% endif -%}>
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
             {% if breadcrumb_items | length > 0 %}

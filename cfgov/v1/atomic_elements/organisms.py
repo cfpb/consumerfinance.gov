@@ -639,6 +639,7 @@ class ExpandableGroup(BaseExpandableGroup):
         default=False,
         required=False,
         help_text=("Check this to add FAQ schema markup to expandables."),
+        label="Uses FAQ schema",
     )
 
     expandables = blocks.ListBlock(Expandable())

@@ -51,7 +51,6 @@
         {% if value.expandables %}
             {% for expandable in value.expandables %}
               {% do expandable.update({'is_faq': value.is_faq}) %}
-
                 {{ expandable }}
             {% endfor %}
         {% endif %}
