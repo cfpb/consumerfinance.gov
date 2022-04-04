@@ -40,6 +40,8 @@
 
    value.salary_max:        Maximum salary, as float.
 
+   value.salary_is_hourly:  Whether salary is hourly, as boolean.
+
    value.applicant_types:   List of applicant types, as strings.
 
    ========================================================================== #}
@@ -48,8 +50,16 @@
 {% import 'macros/util/format/datetime.html' as dt -%}
 
 {%- macro city_str( city ) -%}
-{{ city.name ~ ', ' ~ city.state_id }}
+    {{ city.name ~ ', ' ~ city.state_id }}
 {%- endmacro -%}
+
+{% macro format_salary( salary ) -%}
+    {% if salary == salary | int %}
+        {{- '{:,.0f}'.format( salary ) -}}
+    {% else %}
+        {{- '{:,.2f}'.format( salary ) -}}
+    {% endif %}
+{%- endmacro %}
 
 <section class="block
                 block__flush-top
@@ -121,11 +131,12 @@
         {% endif %}
         <dt>Salary:</dt>
         <dd>
-            ${{ '{:,.0f}'.format( value.salary_min ) -}}
+            ${{- format_salary( value.salary_min ) -}}
             {%- if value.salary_min != value.salary_max -%}
             &ndash;
-            {{- '{:,.0f}'.format( value.salary_max ) }}
+            {{- format_salary( value.salary_max ) -}}
             {%- endif %}
+            {% if value.salary_is_hourly %}per hour{% endif %}
         </dd>
         {% if value.applicant_types %}
         <dt>Who may apply:</dt>
