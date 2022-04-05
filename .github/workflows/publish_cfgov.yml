@@ -1,4 +1,4 @@
-name: Publish cf.gov Docker Image
+name: Main Branch Package
 #Creates and publishes the cf.gov root Docker image on pushes to our main branch
 on:
   push:

@@ -55,6 +55,9 @@ Documentation will be available locally at
 [http://localhost:8000/](http://localhost:8000/).
 
 
+## Getting the package
+To see our Dockeer image of the current main branch you can vist [Packages page](https://github.com/cfpb/consumerfinance.gov/pkgs/container/consumerfinance.gov) 
+
 ## Getting help
 
 Use the [issue tracker](https://github.com/cfpb/consumerfinance.gov/issues)
