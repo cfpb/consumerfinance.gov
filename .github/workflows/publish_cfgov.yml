@@ -12,8 +12,8 @@ jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
-      contents: admin
-      packages: admin
+      contents: write
+      packages: write
 
     steps:
       - name: Checkout repository
