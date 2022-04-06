@@ -146,6 +146,6 @@ they will need to be installed seperately by accessing the Python container shel
 and using `pip`:
 
 ```bash
-docker-compose exec python bash
+docker-compose exec python sh
 pip install [PACKAGE NAME]
 ```
