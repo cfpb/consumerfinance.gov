@@ -8,15 +8,6 @@ We have included Cypress as a dependency of this project. The only installation 
 
 ## Running Cypress tests
 
-### Docker
-
-We support a headless Docker container to execute our Cypress tests. The test files are located in the `test/cypress/integration/` directory.
-
-If you have not previously set up a local Docker network, you will need to stop any running consumerfinance.gov Docker containers, run `docker network create cfgov`, and start the containers again before you run these commands.
-
-* `docker-compose -f docker-compose.e2e.yml run admin-tests` runs a single Docker container (the Wagtail admin test suite, in this case)
-* `docker-compose -f docker-compose.e2e.yml up` runs all Docker containers
-
 ### Cypress app
 
 To run the desktop Cypress app execute `yarn cypress open` from the command line. From the app, you can select the tests you want to run and the browser you want to run them in.
