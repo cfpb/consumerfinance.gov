@@ -56,7 +56,8 @@ Documentation will be available locally at
 
 
 ## Getting the package
-To see our Dockeer image of the current main branch you can vist [Packages page](https://github.com/cfpb/consumerfinance.gov/pkgs/container/consumerfinance.gov) 
+Packages are tagged into one of three groups: main Branch -> latest, PRs -> pr-#, and Release -> major.minor.patch. The github SHA of the commit packaged should be listed as a label.
+To see our Docker image packages you can vist [Packages page](https://github.com/cfpb/consumerfinance.gov/pkgs/container/consumerfinance.gov) 
 
 ## Getting help
 
