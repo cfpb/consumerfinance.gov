@@ -613,6 +613,8 @@ FLAGS = {
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
+    # When enabled, feedback form will not appear on Ask answer pages
+    "HIDE_ASK_FEEDBACK": [],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
