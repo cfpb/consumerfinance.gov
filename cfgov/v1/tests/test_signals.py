@@ -11,8 +11,8 @@ from model_bakery import baker
 from teachers_digital_platform.models import ActivityPage, ActivitySetUp
 from v1.models import (
     BlogPage,
-    CFGOVPage,
     CFGOVPageCategory,
+    LearnPage,
     NewsroomLandingPage,
     NewsroomPage,
     SublandingFilterablePage,
@@ -107,7 +107,7 @@ class FilterableListInvalidationTestCase(TestCase):
         self.blog_page.categories.add(CFGOVPageCategory(name="op-ed"))
         self.blog_page.save()
 
-        self.non_filterable_page = CFGOVPage(title="Page")
+        self.non_filterable_page = LearnPage(title="Page")
         self.root_page.add_child(instance=self.non_filterable_page)
         self.non_filterable_page.save()
 
@@ -136,12 +136,16 @@ class FilterableListInvalidationTestCase(TestCase):
             self.filterable_list_page.slug, mock_purge.mock_calls[0].args[0]
         )
 
+    @mock.patch("v1.signals.AkamaiBackend.purge_by_tags")
     @mock.patch("django.core.cache.cache")
-    def test_invalidate_filterable_list_caches_does_nothing(self, mock_cache):
+    def test_invalidate_filterable_list_caches_does_nothing(
+        self, mock_cache, mock_purge
+    ):
         invalidate_filterable_list_caches(
             None, instance=self.non_filterable_page
         )
         mock_cache.delete.assert_not_called()
+        mock_purge.assert_not_called()
 
 
 class RefreshActivitiesTestCase(DjangoTestCase):
