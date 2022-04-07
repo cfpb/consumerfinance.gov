@@ -2,9 +2,6 @@
 /* eslint max-statements: ["error", 30] */
 /* eslint max-lines-per-function: ["error", 75] */
 /* eslint consistent-return: [0] */
-// Polyfill Promise for IE11
-import 'core-js/features/promise';
-
 import Highcharts from 'highcharts/highstock';
 import Papa from 'papaparse';
 import accessibility from 'highcharts/modules/accessibility';
