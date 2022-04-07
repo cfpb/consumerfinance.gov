@@ -118,9 +118,11 @@ def invalidate_filterable_list_caches(sender, **kwargs):
         # Add the filterable list's slug to the list of cache tags to purge
         cache_tags_to_purge.append(filterable_list_page.slug)
 
-    # Get the cache backend and purge filterable list page cache tags
-    cache_backend = configure_akamai_backend()
-    cache_backend.purge_by_tags(cache_tags_to_purge)
+    # Get the cache backend and purge filterable list page cache tags if this
+    # page belongs to any
+    if len(cache_tags_to_purge) > 0:
+        cache_backend = configure_akamai_backend()
+        cache_backend.purge_by_tags(cache_tags_to_purge)
 
 
 page_published.connect(invalidate_filterable_list_caches)

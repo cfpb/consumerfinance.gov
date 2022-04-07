@@ -2,7 +2,7 @@
 /* eslint max-statements: ["error", 30] */
 /* eslint max-params: ["error", 9] */
 import chartHooks from './chart-hooks.js';
-import { overrideStyles } from './utils.js';
+import { extractSeries, overrideStyles } from './utils.js';
 
 /**
  * Generates a list of options for the select filters
@@ -28,26 +28,12 @@ function getSelectOptions( filter, data, isDate ) {
 }
 
 /**
- * @param {string} filters The filters data key
- * @param {string} xAxisSource The xAxis data key
- * @returns {boolean} Whethere the filter is data-based or date-based
- */
-function isDateFilter( filters, xAxisSource ) {
-  return xAxisSource && filters && filters.match( xAxisSource );
-}
-
-/**
  * @param {number} option The JS-date formatted option
- * @param {object} filter The filter object
  * @returns {string} Specially formatted date
  */
-function processDate( option, filter ) {
-  if ( filter && filter.key === 'tilemap' ) {
-    const [ quarter, year ] = chartHooks.cci_dateToQuarter( option );
-    return `${ quarter } ${ year }`;
-  }
-  const d = new Date( option );
-  return chartHooks.getDateString( d );
+function processDate( option ) {
+  const [ quarter, year ] = chartHooks.cci_dateToQuarter( option );
+  return `${ quarter } ${ year }`;
 }
 
 /**
@@ -81,10 +67,9 @@ function makeSelectHeaderDOM( chartNode ) {
  * @param {object} chartNode The DOM node of the current chart
  * @param {object} filter key and possible label to filter on
  * @param {string} selectLabel Optional label for the select element
- * @param {boolean} selectLast Whether to select the last element
  * @returns {object} the built select DOM node
  */
-function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
+function makeFilterDOM( options, chartNode, filter, selectLabel ) {
   const name = filter.label ? filter.label : filter.key;
   const id = Math.random() + name;
   const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_selects' )[0];
@@ -104,7 +89,8 @@ function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
   select.id = id;
   select.dataset.key = filter.key;
 
-  if ( !selectLabel ) {
+  /* Explicitly pass "all" key as part of filter */
+  if ( filter.all ) {
     const allOpt = document.createElement( 'option' );
     allOpt.value = '';
     allOpt.innerText = 'View all';
@@ -114,14 +100,12 @@ function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
   options.forEach( option => {
     const opt = document.createElement( 'option' );
     opt.value = option;
-    if ( selectLabel ) opt.innerText = processDate( option, filter );
+
+    if ( name === 'tilemap' ) opt.innerText = processDate( option );
     else opt.innerText = option;
+
     select.appendChild( opt );
   } );
-
-  if ( selectLast ) {
-    select.value = options[options.length - 1];
-  }
 
   selectDiv.appendChild( select );
   wrapper.appendChild( label );
@@ -131,11 +115,29 @@ function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
   return select;
 }
 
+/** Filters raw or transformed data by a select prop
+  * @param {array} data Transformed or raw chart data
+  * @param {object} filterProp Key on which to filter
+  * @param {object} filterVal Value of the selectNode against which we're filtering
+  * @returns {array} Filtered chart data
+  *
+  * */
+function filterData( data, filterProp, filterVal ) {
+  // For the 'all' filter, where value is set to ''
+  if ( !filterVal ) return data;
+
+  return data.filter( d => {
+    const match = d[filterProp];
+    if ( Array.isArray( match ) ) return match.indexOf( filterVal ) >= 0;
+    return match === filterVal;
+  } );
+}
+
 /** Wires up select filters, if present
   * @param {object} dataAttributes Data passed via data-* tags
   * @param {object} chartNode The DOM node of the current chart
   * @param {object} chart The initialized chart
-  * @param {object} data The raw chart data, untransformed
+  * @param {object} data The chart data object, {raw, series, transformed}
   * @param {function} transform The transform function for this chart
   * */
 function initFilters( dataAttributes, chartNode, chart, data, transform ) {
@@ -146,40 +148,25 @@ function initFilters( dataAttributes, chartNode, chart, data, transform ) {
     filters = `"${ filters }"`;
   }
 
-  if ( transform ) data = data.transformed;
-  else data = data.raw;
+  let rawOrTransformed = data.raw;
+  if ( transform ) rawOrTransformed = data.transformed;
 
   try {
-
     filters = JSON.parse( filters );
-
-    if ( isDateFilter( filters, dataAttributes.xAxisSource ) ) {
-      const options =
-        getSelectOptions( filters, data, 1 );
-      const startNode = makeFilterDOM( options, chartNode,
-        { key: filters, label: filters }, 'Start date'
-      );
-      const endNode = makeFilterDOM( options, chartNode,
-        { key: filters, label: filters }, 'End date', 1
-      );
-      attachDateFilters( startNode, endNode, chart );
-
-    } else {
-      if ( !Array.isArray( filters ) ) filters = [ filters ];
-      const selects = [];
-      filters.forEach( filter => {
-        const options = getSelectOptions( filter, data );
-        selects.push( makeFilterDOM( options, chartNode, filter ) );
+    if ( !Array.isArray( filters ) ) filters = [ filters ];
+    const selects = [];
+    filters.forEach( filter => {
+      const options = getSelectOptions( filter, rawOrTransformed );
+      selects.push( makeFilterDOM( options, chartNode, filter ) );
+    } );
+    if ( selects.length ) {
+      makeSelectHeaderDOM( chartNode );
+      selects.forEach( ( selectNode, i ) => {
+        attachFilter(
+          selectNode, chartNode, chart, dataAttributes,
+          filters[i], rawOrTransformed
+        );
       } );
-      if ( selects.length ) {
-        makeSelectHeaderDOM( chartNode );
-        selects.forEach( ( selectNode, i ) => {
-          attachFilter(
-            selectNode, chartNode, chart, dataAttributes,
-            filters[i], data, transform
-          );
-        } );
-      }
     }
   } catch ( err ) {
     /* eslint-disable-next-line */
@@ -194,17 +181,20 @@ function initFilters( dataAttributes, chartNode, chart, data, transform ) {
  * @param {object} chart The Highcharts chart object
  * @param {object} dataAttributes Data passed via data-* tags
  * @param {object} filter The filter key and possible label
- * @param {object} data The raw chart data, untransformed
- * @param {function} transform The transform function for this chart
+ * @param {object} data Chart data, either raw or transformed
  */
 function attachFilter(
-  selectNode, chartNode, chart, dataAttributes, filter, data, transform
+  selectNode, chartNode, chart, dataAttributes, filter, data
 ) {
   const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_selects' )[0];
   const selectHeader = attachPoint.querySelector( 'h3' );
   const { styleOverrides } = dataAttributes;
   const title = titleCase( attachPoint.dataset.title );
-  selectNode.addEventListener( 'change', () => {
+
+  /**
+   * Filter data and update the chart on select
+   **/
+  function filterOnSelect() {
     // filter on all selects
     const selects = chartNode.querySelectorAll( '.a-select > select' );
     let filtered = data;
@@ -222,58 +212,37 @@ function attachFilter(
           headerText = headerText + ' and <b>' + value + '</b>';
         }
       }
-
-      filtered = chartHooks.filter(
-        filtered, curr.dataset.key, value );
-    }
-
-    if ( transform ) {
-      filtered = transform( filtered );
+      filtered = filterData( filtered, curr.dataset.key, value );
     }
 
     selectHeader.innerHTML = headerText;
-    const applyHooks = styleOverrides && styleOverrides.match( 'hook__' );
 
-    /* TODO filter everything instead of just the first series
-       Currently this assumes filters only apply to single series charts */
-    chart.series[0].setData( filtered, !applyHooks );
+    const filteredSeries = extractSeries( filtered, dataAttributes );
+    filteredSeries.forEach( dataSeries => {
+      chart.series.forEach( chartSeries => {
+        if ( dataSeries.name === chartSeries.name ) {
+          chartSeries.setData( dataSeries.data, false );
+        }
+      } );
+    } );
 
-    if ( applyHooks ) {
-      const obj = {};
+
+    const obj = {};
+
+    if ( styleOverrides && styleOverrides.match( 'hook__' ) ) {
       overrideStyles( styleOverrides, obj, filtered );
-      chart.update( obj );
     }
-  } );
-}
 
+    chart.update( obj );
+  }
 
-/**
- * @param {object} startNode The DOM node of the select component
- * @param {object} endNode The DOM node of the select component
- * @param {object} chart The Highcharts chart object
- */
-function attachDateFilters( startNode, endNode, chart ) {
-  startNode.addEventListener( 'change', () => {
-    if ( startNode.value < endNode.value ) {
-      chart.xAxis[0].setExtremes(
-        new Date( Number( startNode.value ) ),
-        new Date( Number( endNode.value ) )
-      );
-    }
-  } );
+  selectNode.addEventListener( 'change', filterOnSelect );
 
-  endNode.addEventListener( 'change', () => {
-    if ( startNode.value < endNode.value ) {
-      chart.xAxis[0].setExtremes(
-        new Date( Number( startNode.value ) ),
-        new Date( Number( endNode.value ) )
-      );
-    }
-  } );
+  // Filter initial view
+  filterOnSelect();
 }
 
 export {
   initFilters,
-  isDateFilter,
   makeFilterDOM
 };
