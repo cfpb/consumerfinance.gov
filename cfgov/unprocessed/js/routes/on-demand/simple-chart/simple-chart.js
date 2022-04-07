@@ -5,7 +5,6 @@
 import Highcharts from 'highcharts/highstock';
 import Papa from 'papaparse';
 import accessibility from 'highcharts/modules/accessibility';
-import fetch from 'cross-fetch';
 import cloneDeep from 'lodash.clonedeep';
 import chartHooks from './chart-hooks.js';
 import defaultBar from './bar-styles.js';
