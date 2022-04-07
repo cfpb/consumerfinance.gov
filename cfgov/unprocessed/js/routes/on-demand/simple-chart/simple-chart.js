@@ -15,8 +15,8 @@ import defaultBar from './bar-styles.js';
 import defaultDatetime from './datetime-styles.js';
 import defaultLine from './line-styles.js';
 import tilemapChart from './tilemap-chart.js';
-import { alignMargin, formatSeries, makeFormatter, overrideStyles } from './utils.js';
-import { initFilters, isDateFilter } from './select-filters.js';
+import { alignMargin, extractSeries, formatSeries, makeFormatter, overrideStyles } from './utils.js';
+import { initFilters } from './select-filters.js';
 
 accessibility( Highcharts );
 
@@ -73,58 +73,6 @@ function getDefaultChartObject( type ) {
 }
 
 /**
- * Pulls specified keys from the resolved data object
- * @param {array} rawData Array of data from JSON, CSV or directly entered
- * @param {string} series The keys for data to render into the chart
- * @param {string} x_axis_data Key or array of categories
- * @returns {array} Series data
- */
-function extractSeries( rawData, { series, xAxisSource, chartType } ) {
-  if ( series ) {
-    if ( series.match( /^\[/ ) ) {
-      series = JSON.parse( series );
-    } else {
-      series = [ series ];
-    }
-
-    if ( chartType === 'datetime' ) {
-      if ( !xAxisSource ) xAxisSource = 'x';
-    }
-
-    const seriesData = [];
-
-    // array of {name: str, data: arr (maybe of obj)}
-    series.forEach( currSeries => {
-      let name = currSeries;
-      let key = currSeries;
-      if ( typeof currSeries === 'object' ) {
-        name = name.label;
-        key = key.key;
-      }
-      const currArr = [];
-      const currObj = {
-        name,
-        data: currArr
-      };
-
-      rawData.forEach( obj => {
-        let d = Number( obj[key] );
-        if ( chartType === 'datetime' ) {
-          d = {
-            x:  Number( new Date( obj[xAxisSource] ) ),
-            y: d
-          };
-        }
-        currArr.push( d );
-      } );
-      seriesData.push( currObj );
-    } );
-    return seriesData;
-  }
-  return null;
-}
-
-/**
  * Overrides default chart options using provided Wagtail configurations
  * @param {object} data The data to provide to the chart
  * @param {object} dataAttributes Data attributes passed to the chart target node
@@ -132,7 +80,7 @@ function extractSeries( rawData, { series, xAxisSource, chartType } ) {
  */
 function makeChartOptions( data, dataAttributes ) {
   const { chartType, styleOverrides, description, xAxisSource, xAxisLabel,
-    yAxisLabel, filters } = dataAttributes;
+    yAxisLabel } = dataAttributes;
   const defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
 
   if ( styleOverrides ) {
@@ -160,11 +108,6 @@ function makeChartOptions( data, dataAttributes ) {
 
   if ( !defaultObj.tooltip.formatter && yAxisLabel ) {
     defaultObj.tooltip.formatter = makeFormatter( yAxisLabel );
-  }
-
-  if ( isDateFilter( filters, xAxisSource ) ) {
-    defaultObj.navigator.enabled = false;
-    defaultObj.xAxis.min = defaultObj.series[0].data[0].x;
   }
 
   if ( defaultObj.series.length === 1 ) {
@@ -230,10 +173,11 @@ function buildChart( chartNode ) {
   const { source, transform, chartType } = dataAttributes;
 
   resolveData( source.trim() ).then( raw => {
-    const series = extractSeries( raw, dataAttributes );
     const transformed = transform && chartHooks[transform] ?
       chartHooks[transform]( raw ) :
       null;
+
+    const series = extractSeries( transformed || raw, dataAttributes );
 
     const data = {
       raw,
