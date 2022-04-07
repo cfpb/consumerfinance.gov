@@ -1,7 +1,7 @@
 const fs = require( 'fs' );
 const fancyLog = require( 'fancy-log' );
 const workboxBuild = require( 'workbox-build' );
-const paths = require( '../../../../config/environment' ).paths;
+const paths = require( `${ process.cwd() }/config/environment` ).paths;
 const path = require( 'path' );
 
 // Constants
