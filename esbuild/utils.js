@@ -14,7 +14,7 @@ function getAll( path, regex = /.js$/ ) {
 }
 
 // Files that should not be copied and directories that should not be walked
-const blacklist = [
+const blocklist = [
   'node_modules', 'npm-packages-offline-cache', '.yarnrc', 'yarn.lock',
   'browserslist', 'package.json', 'config.json', '.gitkeep', 'root'
 ];
@@ -26,7 +26,7 @@ const rDir = resolve( '.' );
 async function getFiles( dir ) {
   const dirents = await readdir( dir, { withFileTypes: true } );
   const files = await Promise.all( dirents.map( dirent => {
-    if ( blacklist.indexOf( dirent.name ) > -1 ) return '';
+    if ( blocklist.indexOf( dirent.name ) > -1 ) return '';
     const res = resolve( dir, dirent.name );
     return dirent.isDirectory() ? getFiles( res ) : res;
   } ) );
