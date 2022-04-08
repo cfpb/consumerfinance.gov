@@ -10,6 +10,7 @@ const baseConfig = {
   bundle: true,
   minify: true,
   sourcemap: true,
+  target: [ 'chrome76', 'edge98', 'safari12', 'firefox78' ],
   external: [ '*.png', '*.woff', '*.woff2', '*.gif' ],
   loader: {
     '.svg': 'text'
