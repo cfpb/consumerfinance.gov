@@ -49,7 +49,7 @@ install() {
     yarn install
   else
     echo "Installing frontend production dependencies…"
-    yarn install --production --ignore-optional
+    yarn install --production
   fi
 }
 
