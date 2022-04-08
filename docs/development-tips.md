@@ -34,6 +34,11 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
 
 Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `yarn watch`.
 
+## Outputting browser support metrics
+
+Within the root directory, run `npx browserslist` to output the set of browser
+targets given to `esbuild` (for JS) and `autoprefixer` (CSS) transpiling.
+
 ## Developing on nested satellite apps
 
 Some projects can sit inside consumerfinance.gov, but manage their own asset
