@@ -68,7 +68,7 @@
     "styles": "yarn build styles",
     "scripts": "yarn build scripts",
     "watch": "yarn build watch",
-    "build": "node `pwd`/esbuild/build.js"
+    "build": "node ./esbuild/build.js"
   },
   "snyk": true
 }
