@@ -68,7 +68,7 @@
     "styles": "yarn build styles",
     "scripts": "yarn build scripts",
     "watch": "yarn build watch",
-    "build": "echo 'console.log(process.cwd())' | node - && node ./esbuild/build.js"
+    "build": "echo 'console.log(process.cwd());' | node - && ls ./esbuild && node ./esbuild/build.js"
   },
   "snyk": true
 }
