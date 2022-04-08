@@ -46,7 +46,6 @@
     "papaparse": "5.3.1",
     "postcss": "8.4.4",
     "postcss-unmq": "1.0.2",
-    "require-dir": "1.2.0",
     "svg-inline-loader": "0.8.2",
     "xdr": "0.5.3"
   },
