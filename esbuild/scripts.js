@@ -1,6 +1,6 @@
 const esbuild = require( 'esbuild' );
 const browserslist = require( 'browserslist' );
-const { esbuildPluginBrowserslist } = require( 'esbuild-plugin-browserslist' );
+const { resolveToEsbuildTarget } = require( 'esbuild-plugin-browserslist' );
 
 const { getAll } = require( './utils.js' );
 const { unprocessed } = require( '../config/environment.js' ).paths;
@@ -52,13 +52,13 @@ const jsPaths = [
 ];
 
 module.exports = function( baseConfig ) {
+
+  const target = resolveToEsbuildTarget(browserslist(), {
+    printUnknownTargets: false,
+  });
+
   esbuild.build( {
      ...baseConfig,
-     entryPoints: jsPaths,
-     plugins: [
-      esbuildPluginBrowserslist(browserslist(), {
-        printUnknownTargets: false
-      }),
-    ],
+     entryPoints: jsPaths
     } );
 };
