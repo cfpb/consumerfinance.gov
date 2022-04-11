@@ -29,6 +29,7 @@ const jsPaths = [
   // apps
   ...getAll( `${ apps }/admin/js` ),
   ...getAll( `${ apps }/analytics-gtm/js` ),
+  `${ apps }/ccdb-search/js/main.js`,
   `${ apps }/financial-well-being/js/home.js`,
   `${ apps }/financial-well-being/js/results.js`,
   `${ apps }/find-a-housing-counselor/js/common.js`,

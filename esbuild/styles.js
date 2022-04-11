@@ -10,6 +10,7 @@ const css = `${ unprocessed }/css`;
 const apps = `${ unprocessed }/apps`;
 
 const styledApps = [
+  'ccdb-search',
   'find-a-housing-counselor',
   'form-explainer',
   'know-before-you-owe',
