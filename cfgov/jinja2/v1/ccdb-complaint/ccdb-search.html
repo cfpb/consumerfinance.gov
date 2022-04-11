@@ -19,6 +19,17 @@
 
 {% block content_main %}
   <div id="ccdb-ui-root"></div>
+  <div style="max-width:75%;margin: 6em auto;" class="js-is-hidden">
+    <div style="padding: 2em 1em;" class="m-notification m-notification__error m-notification__visible">
+      {{ svg_icon('error-round') }}
+      <div class="m-notification_content">
+        <div class="h4 m-notification_message">
+          This interactive tool is not supported in your web browser, but you can still
+          <a style="text-decoration:underline" href="/data-research/consumer-complaints/#download-the-data">download the data</a>.
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block javascript scoped %}
