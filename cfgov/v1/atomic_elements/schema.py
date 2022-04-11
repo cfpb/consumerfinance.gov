@@ -120,6 +120,20 @@ class FAQGroup(blocks.StructBlock):
     faq_items = blocks.ListBlock(
         blocks.StructBlock(
             [
+                (
+                    "anchor_tag",
+                    blocks.CharBlock(
+                        max_length=500,
+                        help_text=(
+                            "Add an optional anchor link tag for this "
+                            "question. Tag should be unique and use "
+                            "dashes or underscores for separation "
+                            "instead of spaces (ie, 'question-one-tag')"
+                        ),
+                        blank=True,
+                        required=False,
+                    ),
+                ),
                 ("question", blocks.CharBlock(max_length=500)),
                 (
                     "answer",
