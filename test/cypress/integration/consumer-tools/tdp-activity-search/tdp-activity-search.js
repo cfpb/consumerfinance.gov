@@ -6,16 +6,25 @@ const search = new ActivitySearch();
 
 describe( 'Activity Search', () => {
   it( 'should filter results', () => {
+    search.open();
+    search.toggleFilter( 'National standards' );
+    search.selectFilter( 'council_for_economic_education', '1' );
+    cy.url().should( 'include', 'council_for_economic_education=1' );
+
     const resultsFilterText = 'financial-habits-and-norms';
     search.open();
-    search.selectFilter( 'Financial habits and norms' );
+    search.toggleFilter( 'Building block' );
+    search.selectFilter( 'building_block', '2' );
+    cy.url().should( 'include', 'building_block=2' );
+
     search.clearFilters().should( 'be.visible' );
     search.resultsFilterTag( resultsFilterText ).should( 'be.visible' );
   } );
   it( 'should clear results filters', () => {
     const resultsFilterText = 'financial-habits-and-norms';
     search.open();
-    search.selectFilter( 'Financial habits and norms' );
+    search.toggleFilter( 'Building block' );
+    search.selectFilter( 'building_block', '2' );
     search.resultsFilterTag( resultsFilterText ).should( 'be.visible' );
     search.clearFilters().click();
     search.resultsFilterTag( resultsFilterText ).should( 'not.exist' );
@@ -60,27 +69,6 @@ describe( 'Activity Search', () => {
       expect( $buttons.length ).to.eq( ordering.length );
       $buttons.each( ( idx, el ) => {
         expect( el.textContent.trim() ).to.eq( ordering[idx] );
-      } );
-    } );
-  } );
-  it( 'should have ordered National standards', () => {
-    search.open();
-    cy.get( 'input[name="council_for_economic_education"]' ).then( $inputs => {
-      // Intentionally allowing up to 10 standards as long as they're ordered
-      const ordering = [
-        'I.',
-        'II.',
-        'III.',
-        'IV.',
-        'V.',
-        'VI.',
-        'VII.',
-        'VIII.',
-        'IX.',
-        'X.'
-      ];
-      $inputs.each( ( idx, el ) => {
-        expect( el.getAttribute( 'aria-label' ) ).to.contain( ordering[idx] );
       } );
     } );
   } );
