@@ -35,27 +35,23 @@ const COMMON_MODULE_CONFIG = {
     /* The below regex will capture all node modules
        that start with `@cfpb/` or `cfpb-`.
        Regex test: https://regex101.com/r/zizz3V/5 */
-    exclude : [
-        /node_modules\/(?:cf\-.+|cfpb\-.+)/,
-        /\bcore-js\b/
-      ],
+    exclude: [
+      /node_modules\/(?:cf-.+|cfpb-.+)/,
+      /\bcore-js\b/
+    ],
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
         presets: [ [ '@babel/preset-env', {
           configPath: __dirname,
+
           /* Use useBuiltIns: 'usage' and set `debug: true` to see what
              scripts require polyfilling. */
           useBuiltIns: false,
-          debug: false,
-        } ] ],
+          debug: false
+        } ] ]
 
       }
-    }
-  }, {
-    test: /\.hbs$/,
-    use: {
-      loader: 'handlebars-loader'
     }
   } ]
 };
@@ -64,7 +60,7 @@ const COMMON_CHUNK_CONFIG = new webpack.optimize.SplitChunksPlugin( {
   name: COMMON_BUNDLE_NAME
 } );
 
-const STATS_CONFIG  = {
+const STATS_CONFIG = {
   stats: {
     entrypoints: false
   }
@@ -76,14 +72,6 @@ const conf = {
   mode: 'production',
   output: {
     filename: '[name]'
-  },
-  resolveLoader: {
-    alias: {
-      'handlebars-loader': path.resolve(
-        __dirname, 'node_modules', 'handlebars-loader'
-      )
-    },
-    mainFields: [ 'loader', 'main' ]
   },
   resolve: {
     symlinks: false

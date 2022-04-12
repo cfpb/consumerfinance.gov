@@ -8,7 +8,7 @@ from mega_menu.models import Menu
 
 def select_menu_for_context(context):
     # First try to find a menu for the language from the context.
-    language = context.get('language')
+    language = context.get("language")
 
     if language:
         try:
@@ -32,13 +32,17 @@ def get_mega_menu_content(context):
     if not menu:
         return None
 
-    return menu.get_content_for_frontend(request=context.get('request'))
+    return menu.get_content_for_frontend(request=context.get("request"))
 
 
 class MegaMenuExtension(Extension):
     def __init__(self, environment):
         super().__init__(environment)
 
-        self.environment.globals.update({
-            'get_mega_menu_content': contextfunction(get_mega_menu_content),
-        })
+        self.environment.globals.update(
+            {
+                "get_mega_menu_content": contextfunction(
+                    get_mega_menu_content
+                ),
+            }
+        )

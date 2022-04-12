@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
 from django.urls import reverse
-from django.utils.translation import ugettext, ungettext
+from django.utils.translation import gettext, ngettext
 
 from jinja2 import Environment
 
@@ -41,11 +41,11 @@ class RelativeTemplatePathEnvironment(Environment):
 
     def join_path(self, template, parent):
         dirname = os.path.dirname(parent)
-        segments = dirname.split('/')
+        segments = dirname.split("/")
         paths = []
-        collected = ''
+        collected = ""
         for segment in segments:
-            collected += segment + '/'
+            collected += segment + "/"
             paths.insert(0, collected[:])
         for p in paths:
             relativepath = os.path.join(p, template)
@@ -57,11 +57,11 @@ class RelativeTemplatePathEnvironment(Environment):
 
 
 class JinjaTranslations:
-    def ugettext(self, message):
-        return ugettext(message)
+    def gettext(self, message):
+        return gettext(message)
 
-    def ungettext(self, singular, plural, number):
-        return ungettext(singular, plural, number)
+    def ngettext(self, singular, plural, number):
+        return ngettext(singular, plural, number)
 
 
 def environment(**options):
@@ -86,8 +86,8 @@ def environment(**options):
     #
     # https://docs.djangoproject.com/en/2.2/ref/templates/builtins/#debug
     if settings.DEBUG:
-        extensions = options.setdefault('extensions', [])
-        debug_extension = 'jinja2.ext.debug'
+        extensions = options.setdefault("extensions", [])
+        debug_extension = "jinja2.ext.debug"
         if debug_extension not in extensions:
             extensions.append(debug_extension)
 
@@ -98,18 +98,22 @@ def environment(**options):
     env.install_gettext_translations(JinjaTranslations(), newstyle=True)
 
     # Expose various Django methods into the Jinja2 environment.
-    env.globals.update({
-        'autocomplete_max_chars': AUTOCOMPLETE_MAX_CHARS,
-        'get_messages': messages.get_messages,
-        'reverse': reverse,
-        'static': staticfiles_storage.url,
-        'url': reverse,
-    })
+    env.globals.update(
+        {
+            "autocomplete_max_chars": AUTOCOMPLETE_MAX_CHARS,
+            "get_messages": messages.get_messages,
+            "reverse": reverse,
+            "static": staticfiles_storage.url,
+            "url": reverse,
+        }
+    )
 
-    env.filters.update({
-        'linebreaksbr': linebreaksbr,
-        'pluralize': pluralize,
-        'slugify': slugify,
-    })
+    env.filters.update(
+        {
+            "linebreaksbr": linebreaksbr,
+            "pluralize": pluralize,
+            "slugify": slugify,
+        }
+    )
 
     return env

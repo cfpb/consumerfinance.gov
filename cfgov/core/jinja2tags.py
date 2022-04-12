@@ -9,14 +9,18 @@ from core.utils import slugify_unique
 class CoreExtension(Extension):
     def __init__(self, environment):
         super().__init__(environment)
-        self.environment.globals.update({
-            'svg_icon': svg_icon,
-        })
+        self.environment.globals.update(
+            {
+                "svg_icon": svg_icon,
+            }
+        )
 
-        self.environment.filters.update({
-            'richtext_isempty': richtext_isempty,
-            'slugify_unique': contextfilter(slugify_unique),
-        })
+        self.environment.filters.update(
+            {
+                "richtext_isempty": richtext_isempty,
+                "slugify_unique": contextfilter(slugify_unique),
+            }
+        )
 
 
 filters = CoreExtension

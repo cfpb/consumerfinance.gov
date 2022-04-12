@@ -41,6 +41,8 @@ CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 # Build Frontend Assets
 FROM cfgov-dev as cfgov-build
 
+ARG FRONTEND_TARGET=production
+
 ENV STATIC_PATH ${APP_HOME}/cfgov/static/
 ENV PYTHONPATH ${APP_HOME}/cfgov
 
@@ -53,7 +55,7 @@ ENV ALLOWED_HOSTS '["*"]'
 COPY . .
 
 # Build the front-end
-RUN ./frontend.sh production && \
+RUN ./frontend.sh  ${FRONTEND_TARGET} && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
     rm -rf node_modules npm-packages-offline-cache
@@ -115,6 +117,9 @@ RUN chown -R apache:apache ${APP_HOME} /usr/share/apache2 /var/run/apache2 /var/
 
 # Remove build dependencies for smaller image
 RUN apk del .build-deps
+
+# Cleanup *.key files
+RUN for i in $(find /usr/local/lib/python3* -type f -name "*.key*"); do rm "$i"; done
 
 USER apache
 

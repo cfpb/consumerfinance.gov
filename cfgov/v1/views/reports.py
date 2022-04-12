@@ -33,33 +33,39 @@ class PageMetadataReportView(PageReportView):
         "search_description",
         "tags.names",
         "categories.all",
+        "content_owners.names",
     ]
-    export_headings = dict([
-        ("url", "URL"),
-        ("first_published_at", "First published"),
-        ("last_published_at", "Last published"),
-        ("language", "Language"),
-        ("search_description", "Search description"),
-        ("tags.names", "Tags"),
-        ("categories.all", "Categories")],
+    export_headings = dict(
+        [
+            ("url", "URL"),
+            ("first_published_at", "First published"),
+            ("last_published_at", "Last published"),
+            ("language", "Language"),
+            ("search_description", "Search description"),
+            ("tags.names", "Tags"),
+            ("categories.all", "Categories"),
+            ("content_owners.names", "Content Owner(s)"),
+        ],
         **PageReportView.export_headings,
     )
 
     custom_field_preprocess = {
         "categories.all": {
-            "csv": process_categories, "xlsx": process_categories
+            "csv": process_categories,
+            "xlsx": process_categories,
         }
     }
 
     template_name = "v1/page_metadata_report.html"
 
     def get_filename(self):
-        """ Get a dated base filename for the exported spreadsheet."""
+        """Get a dated base filename for the exported spreadsheet."""
         return f"spreadsheet-export-{date.today()}"
 
     def get_queryset(self):
         return CFGOVPage.objects.filter(live=True).prefetch_related(
-            "tags", "categories")
+            "tags", "categories"
+        )
 
 
 class DocumentsReportView(ReportView):
@@ -88,20 +94,15 @@ class DocumentsReportView(ReportView):
     }
 
     custom_field_preprocess = {
-        "tags.names": {
-            "csv": process_tags
-        },
-        "url": {
-            "csv": construct_absolute_url
-        }
+        "tags.names": {"csv": process_tags},
+        "url": {"csv": construct_absolute_url},
     }
 
     template_name = "v1/documents_report.html"
 
     def get_filename(self):
-        """ Get a better filename than the default 'spreadsheet-export'. """
+        """Get a better filename than the default 'spreadsheet-export'."""
         return f"all-cfgov-documents-{date.today()}"
 
     def get_queryset(self):
-        return Document.objects.all().order_by('-id').prefetch_related(
-            "tags")
+        return Document.objects.all().order_by("-id").prefetch_related("tags")

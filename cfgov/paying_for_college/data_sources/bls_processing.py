@@ -34,19 +34,19 @@ This will create a new file in `paying_for_college/fixtures/bls_data.json`
 
 """
 
-BASE_DIR = 'paying_for_college/data_sources'
-WE_CSVFILE = '{}/xregnw.csv'.format(BASE_DIR)
-NE_CSVFILE = '{}/xregnne.csv'.format(BASE_DIR)
-MW_CSVFILE = '{}/xregnmw.csv'.format(BASE_DIR)
-SO_CSVFILE = '{}/xregns.csv'.format(BASE_DIR)
+BASE_DIR = "paying_for_college/data_sources"
+WE_CSVFILE = "{}/xregnw.csv".format(BASE_DIR)
+NE_CSVFILE = "{}/xregnne.csv".format(BASE_DIR)
+MW_CSVFILE = "{}/xregnmw.csv".format(BASE_DIR)
+SO_CSVFILE = "{}/xregns.csv".format(BASE_DIR)
 YEAR = 2014
 
-OUT_FILE = 'paying_for_college/fixtures/bls_data.json'
+OUT_FILE = "paying_for_college/fixtures/bls_data.json"
 
 
 def load_bls_data(csvfile):
 
-    with open(csvfile, 'rU') as f:
+    with open(csvfile, "rU") as f:
         reader = cdr(f)
         return [row for row in reader]
 
@@ -69,7 +69,7 @@ def add_bls_dict_with_region(base_bls_dict, region, csvfile):
         "Education": "Other",
         "Tobacco products and smoking supplies": "Other",
         "Miscellaneous": "Other",
-        "Cash contributions": "Other"
+        "Cash contributions": "Other",
     }
 
     INCOME_KEY_MAP = {
@@ -81,25 +81,31 @@ def add_bls_dict_with_region(base_bls_dict, region, csvfile):
         "$30,000 to $39,999": "30000_to_39999",
         "$40,000 to $49,999": "40000_to_49999",
         "$50,000 to $69,999": "50000_to_69999",
-        "$70,000 and more": "70000_or_more"
+        "$70,000 and more": "70000_or_more",
     }
 
     data = load_bls_data(csvfile)
     print("******Processing {} file...******".format(region))
     for row in data:
-        item = row['Item'].strip()
+        item = row["Item"].strip()
         if item in CATEGORIES_KEY_MAP.keys():
             print("Current processing {}.....".format(item))
-            print("Will be adding {} to base_bls_dict...".format(
-                CATEGORIES_KEY_MAP[item]))
+            print(
+                "Will be adding {} to base_bls_dict...".format(
+                    CATEGORIES_KEY_MAP[item]
+                )
+            )
             base_bls_dict[CATEGORIES_KEY_MAP[item]].setdefault(region, {})
             for income_key, income_json_key in INCOME_KEY_MAP.items():
                 print("adding {} ...".format(income_key))
-                amount = int(row[income_key].replace(',', ''))
+                amount = int(row[income_key].replace(",", ""))
                 print("amount: {}".format(amount))
                 base_bls_dict[CATEGORIES_KEY_MAP[item]][region].setdefault(
-                    income_json_key, 0)
-                base_bls_dict[CATEGORIES_KEY_MAP[item]][region][income_json_key] += amount  # noqa
+                    income_json_key, 0
+                )
+                base_bls_dict[CATEGORIES_KEY_MAP[item]][region][
+                    income_json_key
+                ] += amount  # noqa
 
 
 def bls_as_dict(we_csvfile, ne_csvfile, mw_csvfile, so_csvfile):
@@ -112,9 +118,13 @@ def bls_as_dict(we_csvfile, ne_csvfile, mw_csvfile, so_csvfile):
         "Entertainment": {"note": "Events, pets, hobbies, equipment"},
         "Retirement": {"note": "Pensions and personal insurance"},
         "Clothing": {"note": "Apparel and services"},
-        "Taxes": {"note": ("Personal federal, state, and local taxes; "
-                           "contains some imputed values")},
-        "Other": {"note": "Other expeditures"}
+        "Taxes": {
+            "note": (
+                "Personal federal, state, and local taxes; "
+                "contains some imputed values"
+            )
+        },
+        "Other": {"note": "Other expeditures"},
     }
 
     add_bls_dict_with_region(bls_dict, "WE", WE_CSVFILE)
@@ -127,9 +137,13 @@ def bls_as_dict(we_csvfile, ne_csvfile, mw_csvfile, so_csvfile):
     return bls_dict
 
 
-def create_bls_json_file(we_csvfile=WE_CSVFILE, ne_csvfile=NE_CSVFILE,
-                         mw_csvfile=MW_CSVFILE, so_csvfile=SO_CSVFILE):
+def create_bls_json_file(
+    we_csvfile=WE_CSVFILE,
+    ne_csvfile=NE_CSVFILE,
+    mw_csvfile=MW_CSVFILE,
+    so_csvfile=SO_CSVFILE,
+):
 
-    with open(OUT_FILE, 'w') as outfile:
+    with open(OUT_FILE, "w") as outfile:
         bls_dict = bls_as_dict(we_csvfile, ne_csvfile, mw_csvfile, so_csvfile)
         json.dump(bls_dict, outfile)

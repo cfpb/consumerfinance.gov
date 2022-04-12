@@ -12,7 +12,8 @@ class PrepaidProduct(models.Model):
     prepaid_type = models.CharField(max_length=255, blank=True, null=True)
     program_manager = models.CharField(max_length=255, blank=True, null=True)
     program_manager_exists = models.CharField(
-        max_length=255, blank=True, null=True)
+        max_length=255, blank=True, null=True
+    )
     other_relevant_parties = models.TextField(blank=True, null=True)
     status = models.TextField(blank=True, null=True)
     withdrawal_date = models.DateField(blank=True, null=True)
@@ -25,16 +26,17 @@ class PrepaidProduct(models.Model):
 
     @property
     def most_recent_agreement(self):
-        """ Gets most recent agreement, as determined by its created time."""
+        """Gets most recent agreement, as determined by its created time."""
         return self.agreements.first()
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
 
 class PrepaidAgreement(models.Model):
     product = models.ForeignKey(
-        PrepaidProduct, related_name='agreements', on_delete=models.CASCADE)
+        PrepaidProduct, related_name="agreements", on_delete=models.CASCADE
+    )
     created_time = models.DateTimeField(blank=True, null=True)
     effective_date = models.DateField(blank=True, null=True)
     compressed_files_url = models.TextField(blank=True, null=True)
@@ -49,4 +51,4 @@ class PrepaidAgreement(models.Model):
         return self == self.product.most_recent_agreement
 
     class Meta:
-        ordering = ['-effective_date', '-created_time']
+        ordering = ["-effective_date", "-created_time"]

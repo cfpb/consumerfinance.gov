@@ -22,15 +22,15 @@ def get_conference_details_from_page(page_id):
     """
     page = Page.objects.get(pk=page_id).specific
 
-    if hasattr(page, 'content'):
+    if hasattr(page, "content"):
         for block in page.content.raw_data:
-            if 'conference_registration_form' == block['type']:
+            if "conference_registration_form" == block["type"]:
                 return {
-                    key: block['value'][key]
-                    for key in ('govdelivery_code', 'capacity')
+                    key: block["value"][key]
+                    for key in ("govdelivery_code", "capacity")
                 }
 
-    raise RuntimeError('no registration form found on %s' % page)
+    raise RuntimeError("no registration form found on %s" % page)
 
 
 class ConferenceExporter:
@@ -38,6 +38,7 @@ class ConferenceExporter:
 
     Looks up conference attendees by GovDelivery code.
     """
+
     def __init__(self, govdelivery_code):
         self.govdelivery_code = govdelivery_code
 
@@ -53,13 +54,13 @@ class ConferenceExporter:
             govdelivery_code=self.govdelivery_code,
             govdelivery_question_id=None,
             govdelivery_answer_id=None,
-            capacity=0
+            capacity=0,
         )
 
-        return ['created'] + list(form.fields.keys())
+        return ["created"] + list(form.fields.keys())
 
     def save_xlsx(self, filename):
-        with open(filename, 'wb') as f:
+        with open(filename, "wb") as f:
             f.write(self.get_xlsx_bytes())
 
     def get_xlsx_bytes(self):
@@ -81,7 +82,7 @@ class ConferenceExporter:
         ]
 
     def _prep_value(self, value):
-        return ', '.join(value) if isinstance(value, list) else value
+        return ", ".join(value) if isinstance(value, list) else value
 
 
 class ConferenceNotifier:
@@ -89,12 +90,13 @@ class ConferenceNotifier:
 
     Looks up conference attendees by GovDelivery code.
     """
-    conference_name = '2018 CFPB FinEx Conference'
-    subject_template_name = 'data_research/conference_notify_subject.txt'
-    email_template_name = 'data_research/conference_notify_email.txt'
-    attachment_filename = 'conference_registrations.xlsx'
+
+    conference_name = "2018 CFPB FinEx Conference"
+    subject_template_name = "data_research/conference_notify_subject.txt"
+    email_template_name = "data_research/conference_notify_email.txt"
+    attachment_filename = "conference_registrations.xlsx"
     attachment_mimetype = (
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
     def __init__(self, govdelivery_code, capacity):
@@ -110,21 +112,21 @@ class ConferenceNotifier:
 
     def create_email(self, from_email, to_emails):
         context = {
-            'conference_name': self.conference_name,
-            'count': self.count,
-            'count_in_person': self.count_in_person,
-            'count_virtual': self.count_virtual,
-            'capacity': self.capacity,
-            'at_capacity': self.count_in_person >= self.capacity,
+            "conference_name": self.conference_name,
+            "count": self.count,
+            "count_in_person": self.count_in_person,
+            "count_virtual": self.count_virtual,
+            "capacity": self.capacity,
+            "at_capacity": self.count_in_person >= self.capacity,
         }
 
         subject = loader.render_to_string(self.subject_template_name, context)
         # Email subject must not contain newlines.
-        subject = ''.join(subject.splitlines()).strip()
+        subject = "".join(subject.splitlines()).strip()
 
         body = loader.render_to_string(self.email_template_name, context)
         # Condense multiple blank lines in body.
-        body = re.sub(r'\n\n+', '\n\n', body).strip()
+        body = re.sub(r"\n\n+", "\n\n", body).strip()
 
         email_message = EmailMessage(subject, body, from_email, to_emails)
 
@@ -132,7 +134,7 @@ class ConferenceNotifier:
             email_message.attach(
                 self.attachment_filename,
                 self.attachment_bytes,
-                self.attachment_mimetype
+                self.attachment_mimetype,
             )
 
         return email_message

@@ -23,7 +23,7 @@ export class BeforeYouClaim {
   }
 
   setLanguageToSpanish() {
-    cy.get( '.content-l' ).within( () => {
+    return cy.get( '.content-l' ).within( () => {
       cy.get( 'a' ).first().click();
     } );
   }

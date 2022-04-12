@@ -4,7 +4,6 @@
 
 const webpack = require( 'webpack' );
 const TerserPlugin = require( 'terser-webpack-plugin' );
-const path = require( 'path' );
 
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
@@ -31,16 +30,18 @@ const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
+
     /* Exclude modules from transpiling.
        The below regex will match and exclude all node modules
        except those that start with `@cfpb/` or `cfpb-`.
        Regex test: https://regex101.com/r/zizz3V/9 */
-    exclude: /node_modules\/(?!(?:@cfpb\/.+|cfpb\-.+)).+/,
+    exclude: /node_modules\/(?!(?:@cfpb\/.+|cfpb-.+)).+/,
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
         presets: [ [ '@babel/preset-env', {
           configPath: __dirname,
+
           /* Use useBuiltIns: 'usage' and set `debug: true` to see what
              scripts require polyfilling. */
           useBuiltIns: false,
@@ -59,7 +60,7 @@ const COMMON_CHUNK_CONFIG = new webpack.optimize.SplitChunksPlugin( {
   name: COMMON_BUNDLE_NAME
 } );
 
-const STATS_CONFIG  = {
+const STATS_CONFIG = {
   stats: {
     entrypoints: false
   }

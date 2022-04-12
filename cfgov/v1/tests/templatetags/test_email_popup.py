@@ -18,42 +18,41 @@ class TestEmailPopupSettings(TestCase):
 class TestEmailPopupTag(TestCase):
     def render(self, path):
         request = RequestFactory().get(path)
-        template = Template('{% load email_popup %}{% email_popup request %}')
-        return template.render(Context({'request': request}))
+        template = Template("{% load email_popup %}{% email_popup request %}")
+        return template.render(Context({"request": request}))
 
     @override_settings(EMAIL_POPUP_URLS={})
     def test_no_popups_configured_returns_blank(self):
-        response = self.render('/no/pages/configured/')
-        self.assertEqual(response, '')
+        response = self.render("/no/pages/configured/")
+        self.assertEqual(response, "")
 
     @override_settings(
-        EMAIL_POPUP_URLS={'foo': ['/page/configured/']},
-        FLAGS={}
+        EMAIL_POPUP_URLS={"foo": ["/page/configured/"]}, FLAGS={}
     )
     def test_popup_configured_but_no_flag(self):
-        response = self.render('/page/configured/')
-        self.assertEqual(response, '')
+        response = self.render("/page/configured/")
+        self.assertEqual(response, "")
 
     @override_settings(
-        EMAIL_POPUP_URLS={'foo': ['/page/configured/']},
-        FLAGS={'EMAIL_POPUP_FOO': [('boolean', False)]}
+        EMAIL_POPUP_URLS={"foo": ["/page/configured/"]},
+        FLAGS={"EMAIL_POPUP_FOO": [("boolean", False)]},
     )
     def test_popup_configured_but_flag_false(self):
-        response = self.render('/page/configured/')
-        self.assertEqual(response, '')
+        response = self.render("/page/configured/")
+        self.assertEqual(response, "")
 
     @override_settings(
-        EMAIL_POPUP_URLS={'foo': ['/page/configured/']},
-        FLAGS={'EMAIL_POPUP_FOO': [('boolean', False)]}
+        EMAIL_POPUP_URLS={"foo": ["/page/configured/"]},
+        FLAGS={"EMAIL_POPUP_FOO": [("boolean", False)]},
     )
     def test_popup_configured_and_flag_true_but_path_doesnt_match(self):
-        response = self.render('/page/not/configured/')
-        self.assertEqual(response, '')
+        response = self.render("/page/not/configured/")
+        self.assertEqual(response, "")
 
     @override_settings(
-        EMAIL_POPUP_URLS={'oah': ['/page/configured/']},
-        FLAGS={'EMAIL_POPUP_OAH': [('boolean', True)]}
+        EMAIL_POPUP_URLS={"oah": ["/page/configured/"]},
+        FLAGS={"EMAIL_POPUP_OAH": [("boolean", True)]},
     )
     def test_popup_configured_and_flag_true_and_path_matches(self):
-        response = self.render('/page/configured/')
-        self.assertIn('o-email-popup_body', response)
+        response = self.render("/page/configured/")
+        self.assertIn("o-email-popup_body", response)

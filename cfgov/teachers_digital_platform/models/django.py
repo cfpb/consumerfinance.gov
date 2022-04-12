@@ -7,13 +7,14 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 class BaseActivityTaxonomy(models.Model):
-    """ A base class for all activity snippets"""
+    """A base class for all activity snippets"""
+
     title = models.CharField(max_length=255, unique=True)
     weight = models.IntegerField(default=0)
 
     panels = [
-        FieldPanel('title'),
-        FieldPanel('weight'),
+        FieldPanel("title"),
+        FieldPanel("weight"),
     ]
 
     def __str__(self):
@@ -21,14 +22,14 @@ class BaseActivityTaxonomy(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ['weight', 'title']
+        ordering = ["weight", "title"]
 
 
 class ActivityBuildingBlock(BaseActivityTaxonomy):
     options = (
-        ('settings', 'Executive function'),
-        ('split', 'Financial knowledge and decision making'),
-        ('piggy-bank-check', 'Financial habits and norms'),
+        ("settings", "Executive function"),
+        ("split", "Financial knowledge and decision making"),
+        ("piggy-bank-check", "Financial habits and norms"),
     )
     svg_icon = models.CharField(
         null=True,
@@ -38,7 +39,7 @@ class ActivityBuildingBlock(BaseActivityTaxonomy):
     )
 
     panels = BaseActivityTaxonomy.panels + [
-        FieldPanel('svg_icon'),
+        FieldPanel("svg_icon"),
     ]
 
 
@@ -49,21 +50,18 @@ class ActivitySchoolSubject(BaseActivityTaxonomy):
 class ActivityTopic(MPTTModel):
     title = models.CharField(max_length=255, unique=True)
     parent = TreeForeignKey(
-        'self',
+        "self",
         on_delete=models.CASCADE,
-        null=True, blank=True,
-        related_name='children'
+        null=True,
+        blank=True,
+        related_name="children",
     )
     weight = models.IntegerField(default=0)
 
     class MPTTMeta:
-        order_insertion_by = ['weight', 'title']
+        order_insertion_by = ["weight", "title"]
 
-    panels = [
-        FieldPanel('title'),
-        FieldPanel('parent'),
-        FieldPanel('weight')
-    ]
+    panels = [FieldPanel("title"), FieldPanel("parent"), FieldPanel("weight")]
 
     def __str__(self):
         return self.title

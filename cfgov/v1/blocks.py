@@ -15,6 +15,7 @@ class AbstractFormBlock(blocks.StructBlock):
     """
     Block class to be subclassed for blocks that involve form handling.
     """
+
     def get_result(self, page, request, value, is_submitted):
         handler_class = self.get_handler_class()
         handler = handler_class(page, request, block_value=value)
@@ -24,146 +25,139 @@ class AbstractFormBlock(blocks.StructBlock):
         handler_path = self.meta.handler
         if not handler_path:
             raise AttributeError(
-                'You must set a handler attribute on the Meta class.')
+                "You must set a handler attribute on the Meta class."
+            )
         return import_string(handler_path)
 
     def is_submitted(self, request, sfname, index):
-        form_id = 'form-%s-%d' % (sfname, index)
+        form_id = "form-%s-%d" % (sfname, index)
         if request.method.lower() == self.meta.method.lower():
             query_dict = getattr(request, self.meta.method.upper())
-            return form_id in query_dict.get('form_id', '')
+            return form_id in query_dict.get("form_id", "")
         return False
 
     class Meta:
         # This should be a dotted path to the handler class for the block.
         handler = None
-        method = 'POST'
-        icon = 'form'
+        method = "POST"
+        icon = "form"
 
 
 class AnchorLink(blocks.StructBlock):
     link_id = blocks.CharBlock(
         required=False,
-        label='ID for this content block',
+        label="ID for this content block",
         help_text="""
             ID will be auto-generated on save.
             However, you may enter some human-friendly text that
             will be incorporated to make it easier to read.
-        """
+        """,
     )
 
     def clean(self, data):
-
         def format_id(string):
-            if string == 'anchor':
-                return get_unique_id('anchor_')
-            elif 'anchor' in string:
+            if string == "anchor":
+                return get_unique_id("anchor_")
+            elif "anchor" in string:
                 return slugify(string)
             else:
-                suffix = '_' if string else ''
-                return get_unique_id('anchor_' + slugify(string) + suffix)
+                suffix = "_" if string else ""
+                return get_unique_id("anchor_" + slugify(string) + suffix)
 
-        data['link_id'] = format_id(data['link_id'])
+        data["link_id"] = format_id(data["link_id"])
         data = super().clean(data)
         return data
 
     class Meta:
-        icon = 'link'
-        template = '_includes/atoms/anchor-link.html'
-        label = 'Anchor link'
+        icon = "link"
+        template = "_includes/atoms/anchor-link.html"
+        label = "Anchor link"
 
 
 class Feedback(AbstractFormBlock):
     was_it_helpful_text = blocks.CharBlock(
         required=False,
-        default='Was this page helpful to you?',
+        default="Was this page helpful to you?",
         help_text=(
-            'Use this field only for feedback forms '
+            "Use this field only for feedback forms "
             'that use "Was this helpful?" radio buttons.'
-        )
+        ),
     )
     intro_text = blocks.CharBlock(
-        required=False,
-        help_text='Optional feedback intro'
+        required=False, help_text="Optional feedback intro"
     )
     question_text = blocks.CharBlock(
-        required=False,
-        help_text='Optional expansion on intro'
+        required=False, help_text="Optional expansion on intro"
     )
     radio_intro = blocks.CharBlock(
         required=False,
         help_text=(
-            'Leave blank unless you are building a feedback form with extra '
-            'radio-button prompts, as in /owning-a-home/help-us-improve/.'
-        )
+            "Leave blank unless you are building a feedback form with extra "
+            "radio-button prompts, as in /owning-a-home/help-us-improve/."
+        ),
     )
     radio_text = blocks.CharBlock(
         required=False,
-        default='This information helps us understand your question better.'
+        default="This information helps us understand your question better.",
     )
     radio_question_1 = blocks.CharBlock(
-        required=False,
-        default='How soon do you expect to buy a home?'
-
+        required=False, default="How soon do you expect to buy a home?"
     )
     radio_question_2 = blocks.CharBlock(
-        required=False,
-        default='Do you currently own a home?'
+        required=False, default="Do you currently own a home?"
     )
-    button_text = blocks.CharBlock(
-        default='Submit'
-    )
+    button_text = blocks.CharBlock(default="Submit")
     contact_advisory = blocks.RichTextBlock(
         required=False,
-        help_text='Use only for feedback forms that ask for a contact email'
+        help_text="Use only for feedback forms that ask for a contact email",
     )
 
     class Meta:
-        handler = 'v1.handlers.blocks.feedback.FeedbackHandler'
-        template = '_includes/blocks/feedback.html'
+        handler = "v1.handlers.blocks.feedback.FeedbackHandler"
+        template = "_includes/blocks/feedback.html"
 
     class Media:
-        js = ['feedback-form.js']
+        js = ["feedback-form.js"]
 
 
 class HeadingIconBlock(blocks.CharBlock):
-    classname = 'heading-icon-block'
-    form_classname = 'heading-icon-block'
+    classname = "heading-icon-block"
+    form_classname = "heading-icon-block"
 
 
 class HeadingLevelBlock(blocks.ChoiceBlock):
     choices = [
-        ('h2', 'H2'),
-        ('h3', 'H3'),
-        ('h4', 'H4'),
+        ("h2", "H2"),
+        ("h3", "H3"),
+        ("h4", "H4"),
     ]
-    classname = 'heading-level-block'
-    form_classname = 'heading-level-block'
+    classname = "heading-level-block"
+    form_classname = "heading-level-block"
 
 
 class HeadingTextBlock(blocks.CharBlock):
-    classname = 'heading-text-block'
-    form_classname = 'heading-text-block'
+    classname = "heading-text-block"
+    form_classname = "heading-text-block"
 
 
 class HeadingBlock(blocks.StructBlock):
     text = HeadingTextBlock(required=False)
-    level = HeadingLevelBlock(default='h2')
+    level = HeadingLevelBlock(default="h2")
     icon = HeadingIconBlock(
         required=False,
         help_text=mark_safe(
-            'Input the name of an icon to appear to the left of the heading. '
-            'E.g., approved, help-round, etc. '
+            "Input the name of an icon to appear to the left of the heading. "
+            "E.g., approved, help-round, etc. "
             '<a href="https://cfpb.github.io/design-system/'
             'foundation/iconography">See full list of icons</a>'
         ),
     )
 
     class Meta:
-        icon = 'title'
-        template = '_includes/blocks/heading.html'
+        icon = "title"
+        template = "_includes/blocks/heading.html"
         form_template = (
-            'admin/form_templates/struct-with-block-wrapper-classes.html'
+            "admin/form_templates/struct-with-block-wrapper-classes.html"
         )
 
 
@@ -172,25 +166,31 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
     Provides a render_form method that outputs a block
     placeholder, for use in a custom form_template.
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.placeholder = kwargs.pop('placeholder', None)
+        self.placeholder = kwargs.pop("placeholder", None)
 
     def render_form(self, *args, **kwargs):
         # pragma: no cover
-        prefix = ''
-        value = '{}'.format(*args)
-        html = render_to_string('wagtailadmin/block_forms/field.html', {
-            'name': self.name,
-            'classes': getattr(
-                self.meta, 'form_classname', self.meta.classname),
-            'widget': self.field.widget.render(
-                prefix,
-                self.field.prepare_value(self.value_for_form(value)),
-                attrs={'id': format(prefix), 'placeholder': self.label}),
-            'field': self.field,
-            'errors': None
-        })
+        prefix = ""
+        value = "{}".format(*args)
+        html = render_to_string(
+            "wagtailadmin/block_forms/field.html",
+            {
+                "name": self.name,
+                "classes": getattr(
+                    self.meta, "form_classname", self.meta.classname
+                ),
+                "widget": self.field.widget.render(
+                    prefix,
+                    self.field.prepare_value(self.value_for_form(value)),
+                    attrs={"id": format(prefix), "placeholder": self.label},
+                ),
+                "field": self.field,
+                "errors": None,
+            },
+        )
 
         if self.placeholder is not None:
             html = self.replace_placeholder(html, self.placeholder)
@@ -199,53 +199,55 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
 
     @staticmethod
     def replace_placeholder(html, placeholder):
-        soup = BeautifulSoup(html, 'html.parser')
-        inputs = soup.findAll('input')
+        soup = BeautifulSoup(html, "html.parser")
+        inputs = soup.findAll("input")
 
         if 1 != len(inputs):
-            raise ValueError('block must contain a single input tag')
+            raise ValueError("block must contain a single input tag")
 
-        inputs[0]['placeholder'] = placeholder
+        inputs[0]["placeholder"] = placeholder
 
         return SafeText(soup)
 
 
 class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
     class Meta:
-        icon = 'placeholder'
+        icon = "placeholder"
         form_template = (
-            'admin/form_templates/struct_block_with_render_form.html'
+            "admin/form_templates/struct_block_with_render_form.html"
         )
 
 
 class ReusableTextChooserBlock(SnippetChooserBlock):
     class Meta:
-        template = '_includes/snippets/reusable_text.html'
+        template = "_includes/snippets/reusable_text.html"
 
 
 class RAFToolBlock(blocks.StaticBlock):
     class Meta:
-        icon = 'cog'
-        label = 'Rental Assistance Finder Tool'
-        admin_text = '{label} has no options to configure'.format(label=label)
-        template = '_includes/blocks/raf_tool.html'
+        icon = "cog"
+        label = "Rental Assistance Finder Tool"
+        admin_text = "{label} has no options to configure".format(label=label)
+        template = "_includes/blocks/raf_tool.html"
 
     class Media:
-        js = ['erap.js']
+        js = ["erap.js"]
 
 
 class RAFTBlock(blocks.StructBlock):
     county_threshold = blocks.IntegerBlock(
         required=False,
-        help_text=('Optional: Add a number to determine how many '
-                   'results trigger display of county dropdown '
-                   'for a state.')
+        help_text=(
+            "Optional: Add a number to determine how many "
+            "results trigger display of county dropdown "
+            "for a state."
+        ),
     )
 
     class Meta:
-        icon = 'cog'
-        label = 'RAF Tool (configurable)'
-        template = '_includes/blocks/raf_tool.html'
+        icon = "cog"
+        label = "RAF Tool (configurable)"
+        template = "_includes/blocks/raf_tool.html"
 
     class Media:
-        js = ['erap.js']
+        js = ["erap.js"]

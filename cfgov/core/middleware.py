@@ -12,15 +12,14 @@ from core.utils import add_link_markup, get_body_html, get_link_tags
 
 
 class DownstreamCacheControlMiddleware:
-
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
         response = self.get_response(request)
 
-        if 'CSRF_COOKIE_USED' in request.META:
-            response['Edge-Control'] = 'no-store'
+        if "CSRF_COOKIE_USED" in request.META:
+            response["Edge-Control"] = "no-store"
 
         return response
 
@@ -48,29 +47,22 @@ def parse_links(html, request_path=None, encoding=None):
     for tag in link_tags:
         tag_with_markup = add_link_markup(tag, request_path)
         if tag_with_markup:
-            expanded_html = expanded_html.replace(
-                tag,
-                tag_with_markup
-            )
+            expanded_html = expanded_html.replace(tag, tag_with_markup)
 
     return expanded_html
 
 
 class ParseLinksMiddleware:
-
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
         response = self.get_response(request)
         if self.should_parse_links(
-            request.path,
-            response.get('Content-Type', '')
+            request.path, response.get("Content-Type", "")
         ):
             response.content = parse_links(
-                response.content,
-                request.path,
-                encoding=response.charset
+                response.content, request.path, encoding=response.charset
             )
         return response
 
@@ -112,6 +104,7 @@ class SelfHealingMiddleware:
     If the path did not change, this is a legitimate 404, so continue handling
     that as normal.
     """
+
     def __init__(self, get_response):
         self.get_response = get_response
 
@@ -129,7 +122,7 @@ class SelfHealingMiddleware:
         extraneous_char_re = re.compile(
             r'[`~!@#$%^&*()\-_–—=+\[\]{}\\|;:\'‘’"“”,.…<>? ]+$'
         )
-        path = extraneous_char_re.sub('', path)
+        path = extraneous_char_re.sub("", path)
 
         # If the path has changed, redirect to the new path.
         if path != request.path:
@@ -145,17 +138,11 @@ class PathBasedCsrfViewMiddleware(CsrfViewMiddleware):
         # If CSRF_REQUIRED_PATHS is not configured, apply the CSRF middleware
         # to everything. Otherwise only apply it if the request path matches
         # the configured paths.
-        if (
-            csrf_required_paths is not None and
-            not any(
-                request.path.startswith(path) for path in csrf_required_paths
-            )
+        if csrf_required_paths is not None and not any(
+            request.path.startswith(path) for path in csrf_required_paths
         ):
             return None
 
         return super().process_view(
-            request,
-            callback,
-            callback_args,
-            callback_kwargs
+            request, callback, callback_args, callback_kwargs
         )

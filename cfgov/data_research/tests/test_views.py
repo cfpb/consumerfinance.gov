@@ -8,8 +8,14 @@ from django.urls import NoReverseMatch, reverse
 from model_bakery import baker
 
 from data_research.models import (
-    County, CountyMortgageData, MetroArea, MSAMortgageData,
-    NationalMortgageData, NonMSAMortgageData, State, StateMortgageData
+    County,
+    CountyMortgageData,
+    MetroArea,
+    MSAMortgageData,
+    NationalMortgageData,
+    NonMSAMortgageData,
+    State,
+    StateMortgageData,
 )
 from data_research.views import validate_year_month
 

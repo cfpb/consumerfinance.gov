@@ -14,24 +14,24 @@ class BannerContent(StreamBlock):
 
     class Meta:
         block_counts = {
-            'content': {'min_num': 1, 'max_num': 1},
+            "content": {"min_num": 1, "max_num": 1},
         }
 
 
 class Banner(models.Model):
     title = models.CharField(
         max_length=255,
-        help_text='For internal reference only; does not appear on the site.'
+        help_text="For internal reference only; does not appear on the site.",
     )
     url_pattern = models.CharField(
         max_length=1000,
-        verbose_name='URL patterns',
-        help_text=mark_safe('A regular expression pattern for matching URLs '
-                            'that should show the banner, for example: '
-                            '<code>contact-us|^/complaint/$</code>'),
-        validators=[
-            RegexValidator(regex=r'[A-Za-z0-9\-_.:/?&|\^$]')
-        ],
+        verbose_name="URL patterns",
+        help_text=mark_safe(
+            "A regular expression pattern for matching URLs "
+            "that should show the banner, for example: "
+            "<code>contact-us|^/complaint/$</code>"
+        ),
+        validators=[RegexValidator(regex=r"[A-Za-z0-9\-_.:/?&|\^$]")],
     )
     # TODO: Add `min_num` and `max_num` arguments of 1 to the StreamField
     # and eliminate the BannerContent StreamBlock
@@ -41,10 +41,10 @@ class Banner(models.Model):
     enabled = models.BooleanField()
 
     panels = [
-        FieldPanel('title'),
-        FieldPanel('url_pattern'),
-        StreamFieldPanel('content'),
-        FieldPanel('enabled'),
+        FieldPanel("title"),
+        FieldPanel("url_pattern"),
+        StreamFieldPanel("content"),
+        FieldPanel("enabled"),
     ]
 
     def __str__(self):

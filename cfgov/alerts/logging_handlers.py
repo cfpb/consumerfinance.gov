@@ -22,17 +22,17 @@ class CFGovErrorHandler(logging.Handler):
     def __init__(self):
         logging.Handler.__init__(self)
         self.sqs_queue = SQSQueue(
-            queue_url=os.environ['AWS_SQS_QUEUE_URL'],
+            queue_url=os.environ["AWS_SQS_QUEUE_URL"],
             credentials={
-                'access_key': os.environ['AWS_SQS_ACCESS_KEY_ID'],
-                'secret_key': os.environ['AWS_SQS_SECRET_ACCESS_KEY'],
-            }
+                "access_key": os.environ["AWS_SQS_ACCESS_KEY_ID"],
+                "secret_key": os.environ["AWS_SQS_SECRET_ACCESS_KEY"],
+            },
         )
 
     def emit(self, record):
         title = self.format_title(record)
         body = self.format_body(record)
-        message = '{title} - {body}'.format(title=title, body=body)
+        message = "{title} - {body}".format(title=title, body=body)
         self.sqs_queue.post(message=message)
 
     def format_title(self, record):
@@ -46,7 +46,7 @@ class CFGovErrorHandler(logging.Handler):
 
         return "%s\n\nRequest repr(): \n%s" % (
             self.format(record),
-            self._get_request_repr(request)
+            self._get_request_repr(request),
         )
 
     def _get_request_repr(self, request):
@@ -93,32 +93,33 @@ class CFGovErrorHandler(logging.Handler):
         try:
             get = pformat(request.GET)
         except Exception:
-            get = '<could not parse>'
+            get = "<could not parse>"
 
         try:
             post = pformat(POST_override)
         except Exception:
-            post = '<could not parse>'
+            post = "<could not parse>"
 
         try:
             cookies = pformat(request.COOKIES)
         except Exception:
-            cookies = '<could not parse>'
+            cookies = "<could not parse>"
 
         try:
             meta = pformat(request.META)
         except Exception:
-            meta = '<could not parse>'
+            meta = "<could not parse>"
 
         path = request.path
 
         return force_str(
-            '<%s\npath:%s,\nGET:%s,\nPOST:%s,\nCOOKIES:%s,\nMETA:%s>' % (
+            "<%s\npath:%s,\nGET:%s,\nPOST:%s,\nCOOKIES:%s,\nMETA:%s>"
+            % (
                 request.__class__.__name__,
                 path,
                 str(get),
                 str(post),
                 str(cookies),
-                str(meta)
+                str(meta),
             )
         )

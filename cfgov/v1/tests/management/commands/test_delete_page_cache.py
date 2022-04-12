@@ -28,10 +28,10 @@ class DeletePageCacheTestCase(TestCase):
                     "BACKEND": "v1.models.caching.AkamaiDeletingBackend",
                     "CLIENT_TOKEN": "fake",
                     "CLIENT_SECRET": "fake",
-                    "ACCESS_TOKEN": "fake"
+                    "ACCESS_TOKEN": "fake",
                 }
             },
-            backends=["akamai_deleting"]
+            backends=["akamai_deleting"],
         )
 
     def test_rasies_command_error_without_akamai_config(self):

@@ -9,15 +9,15 @@ from v1.models.enforcement_action_page import EnforcementActionPage
 
 
 HEADINGS = [
-    'Title',
-    'Content',
-    'Forum',
-    'Court',
-    'Docket Numbers',
-    'Initial Filing Date',
-    'Statuses',
-    'Products',
-    'URL'
+    "Title",
+    "Content",
+    "Forum",
+    "Court",
+    "Docket Numbers",
+    "Initial Filing Date",
+    "Statuses",
+    "Products",
+    "URL",
 ]
 
 
@@ -26,41 +26,45 @@ def assemble_output():
     for page in EnforcementActionPage.objects.all():
         if not page.live:
             continue
-        url = 'https://consumerfinance.gov' + page.get_url()
-        if 'enforcement/actions' not in url:
+        url = "https://consumerfinance.gov" + page.get_url()
+        if "enforcement/actions" not in url:
             continue
-        page_categories = ','.join(
-            c.get_name_display() for c in page.categories.all())
-        content = ''
-        soup = BeautifulSoup(str(page.content), 'html.parser')
-        para = soup.findAll(['p', 'h5'])
+        page_categories = ",".join(
+            c.get_name_display() for c in page.categories.all()
+        )
+        content = ""
+        soup = BeautifulSoup(str(page.content), "html.parser")
+        para = soup.findAll(["p", "h5"])
         for p in para:
             content += p.get_text()
-            link = p.find('a', href=True)
+            link = p.find("a", href=True)
             if link:
-                content += ': '
-                content += link['href']
-            content += '\n'
+                content += ": "
+                content += link["href"]
+            content += "\n"
         row = {
-            'Title': page.title,
-            'Content': content,
-            'Forum': page_categories,
-            'Court': page.court,
-            'Docket Numbers': ','.join(
-                d.docket_number for d in page.docket_numbers.all()),
-            'Initial Filing Date': page.initial_filing_date,
-            'Statuses': ','.join(
-                d.get_status_display() for d in page.statuses.all()),
-            'Products': ','.join(
-                d.get_product_display() for d in page.products.all()),
-            'URL': url
+            "Title": page.title,
+            "Content": content,
+            "Forum": page_categories,
+            "Court": page.court,
+            "Docket Numbers": ",".join(
+                d.docket_number for d in page.docket_numbers.all()
+            ),
+            "Initial Filing Date": page.initial_filing_date,
+            "Statuses": ",".join(
+                d.get_status_display() for d in page.statuses.all()
+            ),
+            "Products": ",".join(
+                d.get_product_display() for d in page.products.all()
+            ),
+            "URL": url,
         }
         rows.append(row)
 
     return rows
 
 
-def export_actions(path='/tmp', http_response=False):
+def export_actions(path="/tmp", http_response=False):
     """
     A script for exporting Enforcement Actions content
     to a CSV that can be opened easily in Excel.
@@ -77,14 +81,14 @@ def export_actions(path='/tmp', http_response=False):
     """
 
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
-    slug = 'enforcement-actions-{}.csv'.format(timestamp)
+    slug = "enforcement-actions-{}.csv".format(timestamp)
     if http_response:
-        response = HttpResponse(content_type='text/csv; charset=utf-8')
-        response['Content-Disposition'] = 'attachment;filename={}'.format(slug)
+        response = HttpResponse(content_type="text/csv; charset=utf-8")
+        response["Content-Disposition"] = "attachment;filename={}".format(slug)
         write_questions_to_csv(response)
         return response
-    file_path = '{}/{}'.format(path, slug).replace('//', '/')
-    with open(file_path, 'w', encoding='utf-8') as f:
+    file_path = "{}/{}".format(path, slug).replace("//", "/")
+    with open(file_path, "w", encoding="utf-8") as f:
         write_questions_to_csv(f)
 
 
