@@ -33,7 +33,6 @@ page_types = [
     ('newsroom', 'Newsroom'),
     ('notice-opportunity-comment', 'Notice and Opportunity for Comment'),
     ('research-reports', 'Research Report'),
-    ('research-hub', 'Research Hub'),
     ('rule-under-dev', 'Rule Under Development'),
     ('story', 'Story'),
     ('ask', 'Ask CFPB'),
@@ -101,10 +100,6 @@ categories = [
         ('intent-preempt-determ', 'Intent to make preemption determination'),
         ('info-collect-activity', 'Information collection activities'),
         ('notice-privacy-act', 'Notice related to Privacy Act'),
-    )),
-    ('Research Hub', (
-        ('data-point', 'Data point'),
-        ('industry-markets', 'Industry and markets'),
     )),
     ('Research Report', (
         ('consumer-complaint', 'Consumer complaint'),
