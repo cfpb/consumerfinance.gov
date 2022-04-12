@@ -67,8 +67,8 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
 
 
 class ResearchHubPage(CategoryFilterableMixin, SublandingFilterablePage):
-    template = 'sublanding-page/index.html'
-    filterable_categories = ['Research Hub']
+    template = "sublanding-page/index.html"
+    filterable_categories = ["Research Hub"]
 
 
 class ActivityLogPage(CategoryFilterableMixin, SublandingFilterablePage):
