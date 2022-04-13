@@ -52,14 +52,14 @@ const jsPaths = [
   `${ apps }/teachers-digital-platform/js/index.js`
 ];
 
+const target = resolveToEsbuildTarget( browserslist(), {
+  printUnknownTargets: false
+} );
+
 module.exports = function( baseConfig ) {
-
-  const target = resolveToEsbuildTarget(browserslist(), {
-    printUnknownTargets: false,
-  });
-
   esbuild.build( {
-     ...baseConfig,
-     entryPoints: jsPaths
-    } );
+    ...baseConfig,
+    entryPoints: jsPaths,
+    target
+  } );
 };

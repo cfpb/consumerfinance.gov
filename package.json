@@ -15,7 +15,7 @@
   "engines": {
     "node": ">=16.x"
   },
-  "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead",
+  "browserslist": "> 0.5%, Chrome >= 76, Edge >= 98, Firefox >= 78, safari >= 12, not dead",
   "dependencies": {
     "@babel/core": "7.17.8",
     "@babel/plugin-transform-runtime": "7.16.4",
