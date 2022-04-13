@@ -1,4 +1,4 @@
-coverage==4.5.1
+coverage==6.3.2
 diff_cover==5.1.2
 django-sslserver==0.20
 freezegun==0.3.12
