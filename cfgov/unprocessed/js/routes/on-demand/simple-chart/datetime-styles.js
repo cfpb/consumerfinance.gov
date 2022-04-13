@@ -18,7 +18,16 @@ const datetime = {
     labels: {
       ...styles.xAxis.labels
     },
-
+    plotLines: [ {
+      value: '1541030400000',
+      label: {
+        text: 'Values after Nov 1 are projected',
+        rotation: 0,
+        useHTML: true,
+        x: -300,
+        y: -326
+      }
+    } ],
     events: {
       afterSetExtremes: function( evt ) {
         if ( evt.trigger === 'navigator' ) {

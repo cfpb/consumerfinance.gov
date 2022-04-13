@@ -69,8 +69,17 @@ function overrideStyles( styleOverrides, obj, data ) {
  * @returns {object} Correctly formatted series object
  */
 function formatSeries( data ) {
-  const { series } = data;
+  let { series } = data;
   if ( series ) {
+    series = series.map(dotSeries => {
+      dotSeries.zoneAxis = 'x';
+      dotSeries.zones = [ {
+        value: '1541030400000'
+      }, {
+        dashStyle: 'dot'
+      } ];
+      return dotSeries;
+    } );
     if ( !isNaN( series[0] ) ) {
       return [ { data: series } ];
     }
@@ -159,11 +168,68 @@ function extractSeries( rawData, { series, xAxisSource, chartType } ) {
   return null;
 }
 
+function projectedDataStart ( data ) {
+  data.projectedDate = {};
+  let projectedMonths = 6;
+  // set number of months of projected data based on whether source filename includes 'inq' or 'crt' for inquiries or credit tightness
+  if ( source && source.indexOf( 'inq_' ) !== -1 ) {
+    projectedMonths = 4;
+  } else if ( source && source.indexOf( 'crt_' ) !== -1 ) {
+    projectedMonths = 0;
+  }
+  data.projectedDate.timestamp = getProjectedTimestamp(
+    data.adjusted,
+    projectedMonths
+  );
+  data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
-export {
-  alignMargin,
-  formatSeries,
-  makeFormatter,
-  overrideStyles,
+  return data;
+}
+
+function convertDate( date ) {
+  let humanFriendly = null;
+  let timestamp = null;
+  let month = null;
+  let year = null;
+  const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+  
+  if ( typeof date === 'number' && date.toString().length >= 12 && date.toString().length <= 13 ) {
+    
+    month = new Date( date ).getUTCMonth();
+    month = months[month];
+    year = new Date( date ).getUTCFullYear();
+    
+    humanFriendly = month + ' ' + year;
+    timestamp = date;
+  } else if ( typeof date === 'string' ) {
+    
+    const strLength = date.length;
+    const monthString = date.substring( 0, strLength - 5 );
+    
+    month = months.indexOf( monthString );
+    year = date.slice( date.length - 4, date.length );
+    
+    
+    timestamp = Date.UTC( year, month, 1, 0, 0, 0, 0 );
+    humanFriendly = date;
+  } else {
+    // return error
+  }
+}
+  
+  function getProjectedTimestamp( valuesList, projectedRange = 6 ) {
+    if ( projectedRange === 0 ) {
+      return UNDEFINED;
+    }
+    const projectedMonth = valuesList[valuesList.length - projectedRange][0];
+  
+    return convertDate( projectedMonth ).timestamp;
+  }
+
+  export {
+    alignMargin,
+    formatSeries,
+    makeFormatter,
+    overrideStyles,
   extractSeries
 };
