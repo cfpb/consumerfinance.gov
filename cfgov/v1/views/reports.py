@@ -2,6 +2,7 @@ from datetime import date
 
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
+from wagtail.images import get_image_model
 
 from v1.models import CFGOVPage
 
@@ -17,8 +18,13 @@ def process_tags(queryset):
 
 
 def construct_absolute_url(url):
-    """Turn a relativey URL into an absolute URL"""
+    """Turn a relative URL into an absolute URL"""
     return "https://www.consumerfinance.gov" + url
+
+
+def generate_filename(type):
+    """Get a dated filename for an exported spreadsheet."""
+    return f"wagtail-report_{type}_{date.today()}"
 
 
 class PageMetadataReportView(PageReportView):
@@ -59,8 +65,7 @@ class PageMetadataReportView(PageReportView):
     template_name = "v1/page_metadata_report.html"
 
     def get_filename(self):
-        """Get a dated base filename for the exported spreadsheet."""
-        return f"spreadsheet-export-{date.today()}"
+        return generate_filename("pages")
 
     def get_queryset(self):
         return CFGOVPage.objects.filter(live=True).prefetch_related(
@@ -101,8 +106,48 @@ class DocumentsReportView(ReportView):
     template_name = "v1/documents_report.html"
 
     def get_filename(self):
-        """Get a better filename than the default 'spreadsheet-export'."""
-        return f"all-cfgov-documents-{date.today()}"
+        return generate_filename("documents")
 
     def get_queryset(self):
         return Document.objects.all().order_by("-id").prefetch_related("tags")
+
+
+class ImagesReportView(ReportView):
+    header_icon = "image"
+    title = "All images"
+
+    list_export = [
+        "title",
+        "file.url",
+        "file_size",
+        "collection",
+        "tags.names",
+        "created_at",
+        "uploaded_by_user",
+    ]
+    export_headings = {
+        "title": "Title",
+        "file.url": "File",
+        "file_size": "Size",
+        "collection": "Collection",
+        "tags.names": "Tags",
+        "created_at": "Uploaded on",
+        "uploaded_by_user": "Uploaded by",
+    }
+
+    custom_field_preprocess = {
+        "tags.names": {"csv": process_tags},
+    }
+
+    template_name = "v1/images_report.html"
+
+    def get_filename(self):
+        return generate_filename("images")
+
+    def get_queryset(self):
+        return (
+            get_image_model()
+            .objects.all()
+            .order_by("-created_at")
+            .prefetch_related("tags")
+        )
