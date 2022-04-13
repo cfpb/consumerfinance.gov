@@ -59,7 +59,7 @@ class ServeViewTestCase(TestCase):
         today = date.today()
         self.assertEqual(
             self.page_metadata_report_view.get_filename(),
-            f"agtail-report_pages_{today}",
+            f"wagtail-report_pages_{today}",
         )
 
     def test_metadata_report_get_queryset(self):
