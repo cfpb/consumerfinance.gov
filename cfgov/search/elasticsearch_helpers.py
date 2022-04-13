@@ -8,6 +8,7 @@ from unittest.mock import patch
 from django.conf import settings
 from django.core.management import call_command
 
+from wagtail.core.models import Page
 from wagtail.core.signals import (
     page_published,
     page_unpublished,
@@ -178,14 +179,17 @@ class WagtailSignalProcessor(BaseSignalProcessor):
     downstream logic that depends on the specific page type.
     """
 
-    def handle_m2m_changed(self, sender, instance, action, **kwargs):
-        super().handle_m2m_changed(sender, instance.specific, action, **kwargs)
+    def handle_delete(self, sender, instance, **kwargs):
+        if isinstance(instance, Page):
+            instance = instance.specific
+
+        super().handle_delete(sender, instance, **kwargs)
 
     def handle_save(self, sender, instance, **kwargs):
-        super().handle_save(sender, instance.specific, **kwargs)
+        if isinstance(instance, Page):
+            instance = instance.specific
 
-    def handle_delete(self, sender, instance, **kwargs):
-        super().handle_delete(sender, instance.specific, **kwargs)
+        super().handle_save(sender, instance, **kwargs)
 
     def setup(self):
         page_published.connect(self.handle_save)
