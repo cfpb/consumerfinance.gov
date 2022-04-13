@@ -267,13 +267,6 @@ urlpatterns = [
         ),
     ),
     re_path(
-        r"^paying-for-college/repay-student-debt/$",
-        TemplateView.as_view(
-            template_name="paying-for-college/repay_student_debt.html"
-        ),
-        name="pfc-repay",
-    ),
-    re_path(
         r"^paying-for-college2/",
         include(
             ("paying_for_college.urls", "paying_for_college"),
