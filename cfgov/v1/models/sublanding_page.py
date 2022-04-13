@@ -12,7 +12,6 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.search import index
 
 from jobmanager.blocks import JobListingList
-from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
@@ -48,7 +47,6 @@ class SublandingPage(CFGOVPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
-            ("feedback", v1_blocks.Feedback()),
             ("expandable_group", organisms.ExpandableGroup()),
             ("expandable", organisms.Expandable()),
         ],
