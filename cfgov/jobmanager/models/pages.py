@@ -84,6 +84,7 @@ class JobListingPage(CFGOVPage):
     salary_max = models.DecimalField(
         "Maximum salary", max_digits=11, decimal_places=2
     )
+    salary_is_hourly = models.BooleanField(default=False)
     division = models.ForeignKey(
         JobCategory, on_delete=models.PROTECT, null=True
     )
@@ -150,6 +151,11 @@ class JobListingPage(CFGOVPage):
                         FieldPanel("salary_min", classname="col6"),
                         FieldPanel("salary_max", classname="col6"),
                     ]
+                ),
+                FieldRowPanel(
+                    [
+                        FieldPanel("salary_is_hourly"),
+                    ],
                 ),
                 FieldRowPanel(
                     [

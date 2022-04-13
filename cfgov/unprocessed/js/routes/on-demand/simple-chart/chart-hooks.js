@@ -16,14 +16,6 @@ const cci_quarterMap = {
 const msYear = 365 * 24 * 60 * 60 * 1000;
 
 const hooks = {
-  filter( data, filterProp, filterVal ) {
-    if ( !filterVal ) return data;
-    return data.filter( d => {
-      const match = d[filterProp];
-      if ( Array.isArray( match ) ) return match.indexOf( filterVal ) >= 0;
-      return match === filterVal;
-    } );
-  },
   // Example transform
   monotonicY( data ) {
     return data.map( ( item, i ) => ( {
@@ -84,7 +76,37 @@ const hooks = {
 
   enforcement_reliefBarTooltipFormatter() {
     return `<b>${ this.x }</b><br/>Total relief: <b>$${ this.y.toLocaleString() }</b>`;
+  },
+
+  cct_credit( data ) {
+    const raw = {};
+    const adjusted = {};
+    data.forEach( v => {
+      let currRaw, currAdj;
+      if ( raw[v.date] ) {
+        currRaw = raw[v.date];
+        currAdj = adjusted[v.date];
+      } else {
+        currRaw = raw[v.date] = { date: v.date, adjusted: 'Unadjusted' };
+        currAdj = adjusted[v.date] = { date: v.date, adjusted: 'Adjusted' };
+      }
+      currRaw[v.credit_score_group] = v.vol_unadj;
+      currAdj[v.credit_score_group] = v.vol;
+    } );
+
+    const newData = [];
+    [ raw, adjusted ].forEach( obj => {
+      for ( const [ , v ] of Object.entries( obj ) ) {
+        newData.push( v );
+      }
+    } );
+
+    return newData.sort( ( a, b ) => new Date( a.date ) - new Date( b.date ) );
+
+
   }
+
+
 };
 
 export default hooks;

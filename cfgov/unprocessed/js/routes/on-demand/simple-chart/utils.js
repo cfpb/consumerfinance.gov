@@ -107,9 +107,63 @@ function makeFormatter( yAxisLabel ) {
   };
 }
 
+/**
+ * Pulls specified keys from the resolved data object
+ * @param {array} rawData Array of data from JSON, CSV or directly entered
+ * @param {string} series The keys for data to render into the chart
+ * @param {string} x_axis_data Key or array of categories
+ * @returns {array} Series data
+ */
+function extractSeries( rawData, { series, xAxisSource, chartType } ) {
+  if ( series ) {
+    if ( series.match( /^\[/ ) ) {
+      series = JSON.parse( series );
+    } else {
+      series = [ series ];
+    }
+
+    if ( chartType === 'datetime' ) {
+      if ( !xAxisSource ) xAxisSource = 'x';
+    }
+
+    const seriesData = [];
+
+    // array of {name: str, data: arr (maybe of obj)}
+    series.forEach( currSeries => {
+      let name = currSeries;
+      let key = currSeries;
+      if ( typeof currSeries === 'object' ) {
+        name = name.label;
+        key = key.key;
+      }
+      const currArr = [];
+      const currObj = {
+        name,
+        data: currArr
+      };
+
+      rawData.forEach( obj => {
+        let d = Number( obj[key] );
+        if ( chartType === 'datetime' ) {
+          d = {
+            x:  Number( new Date( obj[xAxisSource] ) ),
+            y: d
+          };
+        }
+        currArr.push( d );
+      } );
+      seriesData.push( currObj );
+    } );
+    return seriesData;
+  }
+  return null;
+}
+
+
 export {
   alignMargin,
   formatSeries,
   makeFormatter,
-  overrideStyles
+  overrideStyles,
+  extractSeries
 };

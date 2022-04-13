@@ -61,10 +61,6 @@ class Well(blocks.StructBlock):
         template = "_includes/organisms/well.html"
 
 
-class WellWithAskSearch(Well):
-    ask_search = AskSearch()
-
-
 class InfoUnitGroup(blocks.StructBlock):
     format = blocks.ChoiceBlock(
         choices=[
@@ -582,7 +578,6 @@ class FullWidthText(blocks.StreamBlock):
     reusable_text = v1_blocks.ReusableTextChooserBlock("v1.ReusableText")
     email_signup = EmailSignUp()
     well = Well()
-    well_with_ask_search = WellWithAskSearch()
 
     class Meta:
         icon = "edit"
