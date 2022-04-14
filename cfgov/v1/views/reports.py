@@ -1,4 +1,5 @@
 from datetime import date
+from v1.models.enforcement_action_page import EnforcementActionPage
 
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
@@ -151,3 +152,42 @@ class ImagesReportView(ReportView):
             .order_by("-created_at")
             .prefetch_related("tags")
         )
+class EnforcementActionsReportView(ReportView):
+    header_icon = "doc-full"
+    title = "Enforcement actions report"
+
+    list_export = [
+        "title",
+        "content.full_width_text",
+        "metadata_panels.categories",
+        "metadata_panels.court",
+        "metadata_panels.docket_numbers",
+        "initial_filing_date",
+        "metadata_panels.statutes",
+        "metadata_panels.product",
+        "url",
+    ]
+    export_headings = {
+        "title": "Title",
+        "content.full_width_text": "Content",
+        "metadata_panels.categories": "Fourm",
+        "metadata_panels.court": "Court",
+        "metadata_panels.docket_number": "Docket Numbers",
+        "initial_filing_date": "Initial Filling",
+        "metadata_panels.statutes": "Statuses",
+        "metadata_panels.product": "Products",
+        "url": "URL",
+    }
+
+    custom_field_preprocess = {
+        "url": {"csv": construct_absolute_url},
+    }
+
+    template_name = "v1/enforcement_actions_report.html"
+
+    def get_filename(self):
+        """Get a better filename than the default 'spreadsheet-export'."""
+        return f"enforcement-actions-report-{date.today()}"
+
+    def get_queryset(self):
+        return EnforcementActionPage.objects.all()
