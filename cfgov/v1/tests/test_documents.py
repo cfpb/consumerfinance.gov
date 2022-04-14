@@ -7,6 +7,7 @@ from django.test import TestCase
 from wagtail.core.models import Site
 
 from dateutil.relativedelta import relativedelta
+from mock import patch
 from pytz import timezone
 
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
@@ -296,3 +297,54 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         self.assertTrue(
             results.filter(title=self.blog_topic_match.title).exists()
         )
+
+
+class TestThatWagtailPageSignalsUpdateIndex(ElasticsearchTestsMixin, TestCase):
+    def test_index_reflects_page_moves_and_deletions(self):
+        root = Site.objects.get(is_default_site=True).root_page
+
+        parent = BlogPage(title="parent", live=True)
+        root.add_child(instance=parent)
+
+        blog1 = BlogPage(title="foo 1", live=True)
+        parent.add_child(instance=blog1)
+
+        blog2 = BlogPage(title="foo 2", live=True)
+        parent.add_child(instance=blog2)
+
+        blog3 = BlogPage(title="foo 3", live=True)
+        parent.add_child(instance=blog3)
+
+        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        search = FilterablePagesDocumentSearch(prefix="/parent/")
+
+        # Initially a search at the root should return 3 results.
+        results = search.search(title="foo")
+        self.assertEqual(results.count(), 3)
+
+        # By default we set ELASTICSEARCH_DSL_AUTOSYNC to False in
+        # settings.test, and there's unfortunately no better way to override
+        # that here than by patching; see
+        # https://github.com/django-es/django-elasticsearch-dsl/issues/322.
+        with patch(
+            "django_elasticsearch_dsl.registries.DEDConfig.autosync_enabled",
+            return_value=True,
+        ):
+            # Moving a page out of the parent should update the index so that
+            # a search there now returns only 2 results.
+            blog2.move(root)
+            results = search.search(title="foo")
+            self.assertEqual(results.count(), 2)
+
+            # Updating a page should also update the index so that a search
+            # now returns only 1 result.
+            blog3.title = "bar"
+            blog3.save_revision().publish()
+            results = search.search(title="foo")
+            self.assertEqual(results.count(), 1)
+
+            # Deleting the remaining page with "blog" in the root should
+            # result in an empty search result.
+            blog1.delete()
+            results = search.search(title="foo")
+            self.assertEqual(results.count(), 0)

@@ -61,6 +61,10 @@ Documentation will be available locally at
 [http://localhost:8000/](http://localhost:8000/).
 
 
+## Getting the package
+Packages are tagged into one of three groups: main Branch -> latest, PRs -> pr-#, and Release -> major.minor.patch. The github SHA of the commit packaged should be listed as a label.
+To see our Docker image packages you can vist [Packages page](https://github.com/cfpb/consumerfinance.gov/pkgs/container/consumerfinance.gov) 
+
 ## Getting help
 
 Use the [issue tracker](https://github.com/cfpb/consumerfinance.gov/issues)

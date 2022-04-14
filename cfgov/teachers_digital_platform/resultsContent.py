@@ -105,7 +105,7 @@ class ResultsContent:
         path = f"{dirname(__file__)}/survey-data/results-content.csv"
         with open(path, encoding="utf-8") as csv_file:
             reader = csv.DictReader(csv_file)
-            for row in (_results_data_row(row) for row in reader):
+            for row in (_results_data_row(r) for r in reader):
                 store[row["k"]] = row["v"]
 
         return cls(store, survey_key)

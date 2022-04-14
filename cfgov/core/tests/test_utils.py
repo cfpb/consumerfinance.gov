@@ -138,13 +138,18 @@ class LinkUtilsTests(SimpleTestCase):
     ):
         tag = f'<a href="{url}">foo</a>'
         path = "/about-us/blog/"
+        data_pretty_href = ""
 
         expected_href = expected_href or url
         expected_pretty_href = expected_pretty_href or url
 
+        # .gov URLs don't get a data-pretty-href attribute
+        if ".gov" not in url:
+            data_pretty_href = f'data-pretty-href="{expected_pretty_href}" '
+
         expected_html = (
             '<a class="a-link a-link__icon" '
-            f'data-pretty-href="{expected_pretty_href}" '
+            f"{data_pretty_href}"
             f'href="{expected_href}">'
             '<span class="a-link_text">foo</span> '
             f"{self.external_link_icon}"
@@ -153,6 +158,14 @@ class LinkUtilsTests(SimpleTestCase):
         expected_tag = BeautifulSoup(expected_html, "html.parser")
 
         self.assertEqual(add_link_markup(tag, path), str(expected_tag))
+
+    def test_dot_gov_urls(self):
+        url = "https://www.federalreserve.gov"
+        self.check_external_link(url, expected_href=url)
+
+    def test_urls_with_gov_in_them(self):
+        url = "https://www.realgovsite.lol"
+        self.check_external_link(url, expected_href=signed_redirect(url))
 
     def test_external_links_get_signed_and_icon_added(self):
         url = "https://example.com"

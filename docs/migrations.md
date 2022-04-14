@@ -349,13 +349,13 @@ we have a smaller set that just describes the current state of models in the cod
 Django provides an automated
 [squashing](https://docs.djangoproject.com/en/1.11/topics/migrations/#squashing-migrations)
 process for migrations, but this is often not optimal when migrations contain manual `RunPython` blocks are present.
-Before running `squashmigrations`, search existing migrations for `RunPython` blocks without `elidable=True`, and 
+Before running `squashmigrations`, search existing migrations for `RunPython` blocks without `elidable=True`, and
 correct them to have `elidable=True`. This will tell `squashmigrations` to drop that `RunPython` block.
 In almost *all* cases, we do not want to keep any `RunPython` blocks.
 It is highly recommended to get a postgres database setup with the current migrations before
-attempting to squash. 
+attempting to squash.
 
-1. Set all `RunPython` blocks to have the argument `edilable=True`.
+1. Set all `RunPython` blocks to have the argument `elidable=True`.
 2. Squash migrations for each app that has 3 or more non-squashed migrations
 
 ```sh
@@ -375,9 +375,9 @@ cfgov/manage.py squashmigrations --squashed-name 2022_squash form_explainer 0007
 cfgov/manage.py migrate
 ```
 
-4. Correct errors, if any, until there are no migrations to apply or create. 
-Repeat steps 3 and 4 until no errors. 
-It may be possible that an additional migration will be generated 
+4. Correct errors, if any, until there are no migrations to apply or create.
+Repeat steps 3 and 4 until no errors.
+It may be possible that an additional migration will be generated
 if there was an error that needed to be corrected.
 
 5. Unittest with squashed migrations in place
