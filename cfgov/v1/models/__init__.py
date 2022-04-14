@@ -47,4 +47,5 @@ from v1.models.sublanding_filterable_page import (
     SublandingFilterablePage,
 )
 from v1.models.sublanding_page import SublandingPage
+from v1.models.test_page import TestPage
 from v1.util.ref import *

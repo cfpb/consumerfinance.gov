@@ -1,9 +1,9 @@
 ###########################################################
-# This is a test page containing all blocks which can be
-# used to run functional tests and ensure that blocks are
-# not causing issues on the frontend. Whenever a new
-# block is added, it should also be added to this file, and
-# new tests should be written to account for the additions.
+# This is a test page containing all elements used on the
+# frontend in Wagtail. This file can be used to run
+# frontend tests on a dynamically created page. When
+# adding new fields to wagtail pages, be sure to add them
+# here as well and add corresponding tests.
 ###########################################################
 
 from datetime import date
@@ -34,6 +34,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
 from localflavor.us.models import USStateField
+from modelcluster.fields import ParentalKey
 
 from data_research.blocks import (
     ConferenceRegistrationForm,
@@ -54,16 +55,194 @@ from v1.util.util import get_secondary_nav_items
 from youth_employment.blocks import YESChecklist
 
 
-class TestPage(FilterableListMixin, CategoryFilterableMixin, CFGOVPage):
-    portal_topic = models.ForeignKey(
-        "v1.PortalTopic",
+enforcement_statuses = [
+    ("expired-terminated-dismissed", "Expired/Terminated/Dismissed"),
+    ("pending-litigation", "Pending Litigation"),
+    ("post-order-post-judgment", "Post Order/Post Judgment"),
+]
+
+enforcement_defendant_types = [
+    ("Non-Bank", "Nonbank"),
+    ("Bank", "Bank"),
+    ("Individual", "Individual"),
+]
+
+enforcement_products = [
+    ("Auto Finance Origination", "Auto Finance Origination"),
+    ("Auto Finance Servicing", "Auto Finance Servicing"),
+    ("Business Lending (ECOA)", "Business Lending (ECOA)"),
+    ("Consumer Reporting Agencies", "Consumer Reporting Agencies"),
+    ("Consumer Reporting ? User", "Consumer Reporting - User"),
+    ("Credit Cards", "Credit Cards"),
+    ("Credit Repair", "Credit Repair"),
+    ("Debt Collection", "Debt Collection"),
+    ("Debt Relief", "Debt Relief"),
+    ("Deposits", "Deposits"),
+    ("Furnishing", "Furnishing"),
+    ("Fair Lending", "Fair Lending"),
+    ("Mortgage Origination", "Mortgage Origination"),
+    ("Mortgage Servicing", "Mortgage Servicing"),
+    ("Payments", "Payments"),
+    ("Prepaid", "Prepaid"),
+    ("Remittances", "Remittances"),
+    ("Short Term, Small Dollar", "Short Term, Small Dollar"),
+    ("Student Loan Origination", "Student Loan Origination"),
+    ("Student Loan Servicing", "Student Loan Servicing"),
+    ("Other Consumer Lending", "Other Consumer Lending"),
+    (
+        "Other Consumer Products (Not Lending)",
+        "Other Consumer Product (not lending)",
+    ),
+]
+
+enforcement_at_risk_groups = [
+    ("Fair Lending", "Fair Lending"),
+    ("Limited English Proficiency", "Limited English Proficiency"),
+    ("Older Americans", "Older Americans"),
+    ("Servicemembers", "Servicemembers"),
+    ("Students", "Students"),
+]
+
+enforcement_statutes = [
+    (
+        "CFPA Deceptive",
+        "Consumer Financial Protection Act - Deceptive Acts or Practices",
+    ),
+    (
+        "CFPA Unfair",
+        "Consumer Financial Protection Act - Unfair Acts or Practices",
+    ),
+    (
+        "CFPA Abusive",
+        "Consumer Financial Protection Act - Abusive Acts or Practices",
+    ),
+    ("CFPA", "Consumer Financial Protection Act - Other"),
+    ("AMTPA", "Alternative Mortgage Transaction Parity Act/Regulation D"),
+    ("CLA", "Consumer Leasing Act/Regulation M"),
+    ("Credit Practice Rules", "Credit Practices Rule"),
+    ("EFTA/Regulation E", "Electronic Fund Transfer Act/Regulation E"),
+    ("ECOA/Regulation B", "Equal Credit Opportunity Act/Regulation B"),
+    ("FCBA", "Fair Credit Billing Act"),
+    ("FCRA/Regulation V", "Fair Credit Reporting Act/Regulation V"),
+    ("FDCPA", "Fair Debt Collection Practices Act/Regulation F"),
+    ("FDIA", "Federal Deposit Insurance Act/Regulation I"),
+    ("GLBA/Regulation P", "Gramm-Leach-Bliley Act/Regulation P"),
+    ("HMDA", "Home Mortgage Disclosure Act/Regulation C"),
+    ("HOEPA", "Home Ownership and Equity Protection Act"),
+    ("HOPA", "Home Owners Protection Act"),
+    (
+        "ILSFDA",
+        "Interstate Land Sales Full Disclosure Act/Regulation J, K, and L",
+    ),
+    ("Military Lending Act", "Military Lending Act"),
+    (
+        "Regulation N (MAP Rule)",
+        "Mortgage Acts and Practices - Advertising Final Rule (Regulation N)",
+    ),
+    (
+        "Regulation O (MARS Rule)",
+        "Mortgage Assistance Relief Services Rule (Regulation O)",
+    ),
+    ("MRAPLA", "Mortgage Reform and Anti-Predatory Lending Act"),
+    ("RESPA", "Real Estate Settlement Procedures Act/Regulation X"),
+    ("SMLA", "S.A.F.E. Mortgage Licensing Act/Regulation H"),
+    ("Telemarketing Sales Rule (TSR)", "Telemarketing Sales Rule"),
+    ("TILA/Regulation Z", "Truth in Lending Act/Regulation Z"),
+    ("TISA/Regulation DD", "Truth in Savings Act/Regulation DD"),
+]
+
+
+def decimal_field():
+    return models.DecimalField(decimal_places=2, max_digits=13, default=0)
+
+
+class TestEnforcementActionDisposition(models.Model):
+    final_disposition = models.CharField(max_length=150, blank=True)
+    final_disposition_type = models.CharField(
+        max_length=15,
+        choices=[("Final Order", "Final Order"), ("Dismissal", "Dismissal")],
         blank=True,
-        null=True,
-        related_name="portal_pages",
-        on_delete=models.SET_NULL,
-        help_text="Select a topic if this is a MONEY TOPICS portal page.",
+    )
+    final_order_date = models.DateField(null=True, blank=True)
+    dismissal_date = models.DateField(null=True, blank=True)
+    final_order_consumer_redress = decimal_field()
+    final_order_consumer_redress_suspended = decimal_field()
+    final_order_other_consumer_relief = decimal_field()
+    final_order_other_consumer_relief_suspended = decimal_field()
+    final_order_disgorgement = decimal_field()
+    final_order_disgorgement_suspended = decimal_field()
+    final_order_civil_money_penalty = decimal_field()
+    final_order_civil_money_penalty_suspended = decimal_field()
+    estimated_consumers_entitled_to_relief = models.CharField(
+        max_length=30, blank=True
     )
 
+    action = ParentalKey(
+        "v1.TestPage",
+        on_delete=models.CASCADE,
+        related_name="enforcement_dispositions",
+    )
+
+
+class TestEnforcementActionStatus(models.Model):
+    status = models.CharField(max_length=50, choices=enforcement_statuses)
+    action = ParentalKey(
+        "v1.TestPage",
+        on_delete=models.CASCADE,
+        related_name="statuses",
+    )
+
+
+class TestEnforcementActionDocket(models.Model):
+    docket_number = models.CharField(max_length=50)
+    action = ParentalKey(
+        "v1.TestPage",
+        on_delete=models.CASCADE,
+        related_name="docket_numbers",
+    )
+
+
+class TestEnforcementActionDefendantType(models.Model):
+    defendant_type = models.CharField(
+        max_length=15, choices=enforcement_defendant_types, blank=True
+    )
+    action = ParentalKey(
+        "v1.TestPage",
+        on_delete=models.CASCADE,
+        related_name="defendant_types",
+    )
+
+
+class TestEnforcementActionProduct(models.Model):
+    product = models.CharField(max_length=50, choices=enforcement_products)
+    action = ParentalKey(
+        "v1.TestPage",
+        on_delete=models.CASCADE,
+        related_name="products",
+    )
+
+
+class TestEnforcementActionAtRisk(models.Model):
+    at_risk_group = models.CharField(
+        max_length=30, choices=enforcement_at_risk_groups
+    )
+    action = ParentalKey(
+        "v1.TestPage",
+        on_delete=models.CASCADE,
+        related_name="at_risk_groups",
+    )
+
+
+class TestEnforcementActionStatute(models.Model):
+    statute = models.CharField(max_length=30, choices=enforcement_statutes)
+    action = ParentalKey(
+        "v1.TestPage",
+        on_delete=models.CASCADE,
+        related_name="statutes",
+    )
+
+
+class TestPage(FilterableListMixin, CategoryFilterableMixin, CFGOVPage):
     header = StreamField(
         [
             ("hero", molecules.Hero()),
@@ -373,7 +552,6 @@ class TestPage(FilterableListMixin, CategoryFilterableMixin, CFGOVPage):
             ],
             heading="Live Stream Information",
         ),
-        FieldPanel("portal_topic"),
     ]
 
     sidefoot_panels = CFGOVPage.sidefoot_panels + [
@@ -471,12 +649,12 @@ class TestPage(FilterableListMixin, CategoryFilterableMixin, CFGOVPage):
     # Tab handler interface
     edit_handler = TabbedInterface(
         [
-            ObjectList(metadata_panels, heading="Metadata"),
             ObjectList(content_panels, heading="Content"),
-            ObjectList(venue_panels, heading="Venue Information"),
-            ObjectList(agenda_panels, heading="Agenda Information"),
             ObjectList(sidefoot_panels, heading="Sidefoot"),
             ObjectList(settings_panels, heading="Configuration"),
+            ObjectList(metadata_panels, heading="Metadata"),
+            ObjectList(venue_panels, heading="Venue Information"),
+            ObjectList(agenda_panels, heading="Agenda Information"),
         ]
     )
 
@@ -496,15 +674,6 @@ class TestPage(FilterableListMixin, CategoryFilterableMixin, CFGOVPage):
 
     filterable_categories = ("Blog", "Newsroom", "Research Report")
     filterable_per_page_limit = 100
-
-    class Meta:
-        block_counts = {
-            "filter_controls": {"max_num": 1},
-            "hero": {"max_num": 1},
-            "jumbo_hero": {"max_num": 1},
-            "features": {"max_num": 1},
-            "info_units": {"max_num": 2},
-        }
 
     @property
     def event_state(self):
