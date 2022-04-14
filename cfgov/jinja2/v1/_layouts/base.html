@@ -294,7 +294,7 @@
     {% block javascript scoped %}
 
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+      if ( window.Promise ) {
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [ '{{ static('js/routes/common.js') }}' ];
