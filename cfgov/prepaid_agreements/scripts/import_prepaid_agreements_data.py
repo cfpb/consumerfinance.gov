@@ -21,7 +21,7 @@ def mark_deleted_products(valid_products):
 def import_products_data(products_data):
     imported_products = []
     for item in products_data:
-        pk = item["product_id"].replace("PRODUCT-", "")
+        pk = item["product_id"].replace("PRODUCT-", "").replace("AGMNT-", "")
         imported_products.append(pk)
 
         withdrawal_date = item["withdrawal_date"]
