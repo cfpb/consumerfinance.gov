@@ -38,9 +38,11 @@ async function getFiles( dir ) {
  * @returns {array} Array of promises for each copied file
  **/
 async function copyAll( from, to ) {
-  const files = await getFiles( from );
+  const rFrom = resolve( from );
+  const rTo = resolve( to );
+  const files = await getFiles( rFrom );
   return files.map( f => copyFile(
-    f, f.replace( from, to )
+    f, f.replace( rFrom, rTo )
   ) );
 }
 
