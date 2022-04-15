@@ -18,7 +18,6 @@ const blocklist = [
   'node_modules', 'npm-packages-offline-cache', '.yarnrc', 'yarn.lock',
   'browserslist', 'package.json', 'config.json', '.gitkeep', 'root'
 ];
-const rDir = resolve( '.' );
 
 /**
  * @param {string} dir Current directory to walk
@@ -30,8 +29,7 @@ async function getFiles( dir ) {
     const res = resolve( dir, dirent.name );
     return dirent.isDirectory() ? getFiles( res ) : res;
   } ) );
-  return files.flat().filter( v => v )
-    .map( v => v.replace( rDir, '.' ) );
+  return files.flat().filter( v => v );
 }
 
 /**
@@ -40,9 +38,11 @@ async function getFiles( dir ) {
  * @returns {array} Array of promises for each copied file
  **/
 async function copyAll( from, to ) {
-  const files = await getFiles( from );
+  const rFrom = resolve( from );
+  const rTo = resolve( to );
+  const files = await getFiles( rFrom );
   return files.map( f => copyFile(
-    f, f.replace( from, to )
+    f, f.replace( rFrom, rTo )
   ) );
 }
 
