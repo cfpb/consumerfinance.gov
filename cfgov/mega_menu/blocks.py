@@ -41,10 +41,10 @@ class SubmenuBlock(blocks.StructBlock):
         page_ids = list()
 
         # The submenu overview page.
-        page_ids.append(value.get('overview_page'))
+        page_ids.append(value.get("overview_page"))
 
         # Any pages in featured, other, and column links.
-        page_ids.extend(link.get('page') for link in self.link_iterator(value))
+        page_ids.extend(link.get("page") for link in self.link_iterator(value))
 
         # Return the unique set of non-null page IDs.
         return set(page_id for page_id in page_ids if page_id is not None)
@@ -52,22 +52,24 @@ class SubmenuBlock(blocks.StructBlock):
     def replace_referenced_page_ids_with_pages(self, value, pages):
         """Replace page ID references with Page instances."""
         # The submenu overview page.
-        if 'overview_page' in value:
-            value['overview_page'] = pages.get(value['overview_page'])
+        if "overview_page" in value:
+            value["overview_page"] = pages.get(value["overview_page"])
 
         # Any pages in featured, other, and column links.
         for link in self.link_iterator(value):
-            if 'page' in link:
-                link['page'] = pages.get(link['page'])
+            if "page" in link:
+                link["page"] = pages.get(link["page"])
 
     def link_iterator(self, value):
         return chain(
-            value.get('featured_links') or [],
-            value.get('other_links') or [],
-            chain(*(
-                (column.get('links') or [])
-                for column in (value.get('columns') or [])
-            ))
+            value.get("featured_links") or [],
+            value.get("other_links") or [],
+            chain(
+                *(
+                    (column.get("links") or [])
+                    for column in (value.get("columns") or [])
+                )
+            ),
         )
 
 

@@ -15,12 +15,12 @@ def email_popup(request):
         if request.path not in urls:
             continue
 
-        feature_flag = 'EMAIL_POPUP_{}'.format(label.upper())
+        feature_flag = "EMAIL_POPUP_{}".format(label.upper())
         if not flag_enabled(feature_flag, request=request):
             continue
 
-        template = 'organisms/email-popup/{}.html'.format(label)
-        context = {'popup_label': label, 'request': request}
+        template = "organisms/email-popup/{}.html".format(label)
+        context = {"popup_label": label, "request": request}
         return mark_safe(render_to_string(template, context=context))
 
-    return ''
+    return ""

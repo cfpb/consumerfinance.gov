@@ -4,7 +4,7 @@ import sys
 
 
 def loadenv():
-    filename = os.path.join(sys.prefix, '../environment.json')
+    filename = os.path.join(sys.prefix, "../environment.json")
 
     if os.path.exists(filename):
         with open(filename) as f:

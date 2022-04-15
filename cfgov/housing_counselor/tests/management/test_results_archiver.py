@@ -18,7 +18,7 @@ class TestHousingCounselorResultsArchiver(TestCase):
             {"fake": 1, "housing": "counselor", "json": 2},
             {"fake": 3, "housing": "data", "json": 4},
         ]
-        zip_path = os.path.join(self.temp_directory, 'archive.zip')
+        zip_path = os.path.join(self.temp_directory, "archive.zip")
 
         save_list(content, zip_path)
         with ZipFile(zip_path) as zip_file:

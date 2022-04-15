@@ -8,22 +8,13 @@ We have included Cypress as a dependency of this project. The only installation 
 
 ## Running Cypress tests
 
-### Docker
-
-We support a headless Docker container to execute our Cypress tests. The test files are located in the `test/cypress/integration/` directory.
-
-If you have not previously set up a local Docker network, you will need to stop any running consumerfinance.gov Docker containers, run `docker network create cfgov`, and start the containers again before you run these commands.
-
-* `docker-compose -f docker-compose.e2e.yml run admin-tests` runs a single Docker container (the Wagtail admin test suite, in this case)
-* `docker-compose -f docker-compose.e2e.yml up` runs all Docker containers
-
 ### Cypress app
 
-To run the desktop Cypress app execute `yarn run cypress open` from the command line. From the app, you can select the tests you want to run and the browser you want to run them in.
+To run the desktop Cypress app execute `yarn cypress open` from the command line. From the app, you can select the tests you want to run and the browser you want to run them in.
 
 ### Command line
 
-You can run functional tests from the command line with `yarn run cypress run`. That will run all tests in the `test/cypress/integration/` directory with the default test configuration: headless, in Cypress's default Electron browser, and against `localhost:8000`. You might want to modify the test run with some common arguments:
+You can run functional tests from the command line with `yarn cypress run`. That will run all tests in the `test/cypress/integration/` directory with the default test configuration: headless, in Cypress's default Electron browser, and against `localhost:8000`. You might want to modify the test run with some common arguments:
 
 * `--spec test/cypress/integration/{path/to/test.js}` runs a single test suite
 * `--browser chrome` runs the tests in Chrome, which is what we use to run tests in our continuous integration pipeline

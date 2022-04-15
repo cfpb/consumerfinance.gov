@@ -1,19 +1,17 @@
 video_player_defaults = {
-    'video_id': 'dQw4w9WgXcQ',
+    "video_id": "dQw4w9WgXcQ",
 }
 
 
 video_player_test_cases = {
-    'Default': {},
-
-    'Play button at bottom right': {
-        'button_pos': 'bottom-right',
+    "Default": {},
+    "Play button at bottom right": {
+        "button_pos": "bottom-right",
     },
-
-    'Custom thumbnail image': {
-        'thumbnail_url': (
-            'https://files.consumerfinance.gov/f/images/'
-            'cfpb_buying-a-home_carousel.original.png'
+    "Custom thumbnail image": {
+        "thumbnail_url": (
+            "https://files.consumerfinance.gov/f/images/"
+            "cfpb_buying-a-home_carousel.original.png"
         ),
     },
 }

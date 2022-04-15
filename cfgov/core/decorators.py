@@ -10,6 +10,7 @@ def add_headers(view, headers):
       wrapped_view = add_headers(myview, {'key': 'value', ...})
 
     """
+
     @wraps(view)
     def inner(request, *args, **kwargs):
         response = view(request, *args, **kwargs)
@@ -22,7 +23,10 @@ def add_headers(view, headers):
     return inner
 
 
-akamai_no_store = partial(add_headers, headers={
-    'Edge-Control': 'no-store',
-    'Akamai-Cache-Control': 'no-store',
-})
+akamai_no_store = partial(
+    add_headers,
+    headers={
+        "Edge-Control": "no-store",
+        "Akamai-Cache-Control": "no-store",
+    },
+)

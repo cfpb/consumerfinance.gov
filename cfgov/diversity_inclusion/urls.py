@@ -24,9 +24,7 @@ urlpatterns = [
     ),
     re_path(
         r"^voluntary-assessment-onboarding-form/privacy-act-statement/$",
-        TemplateView.as_view(
-            template_name="diversity_inclusion/privacy.html"
-        ),
+        TemplateView.as_view(template_name="diversity_inclusion/privacy.html"),
         name="privacy",
     ),
 ]

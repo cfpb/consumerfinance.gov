@@ -13,9 +13,7 @@ logger = logging.getLogger(__name__)
 def get_govdelivery_api():
     """Return object that can be used to access the GovDelivery API."""
     clsname = getattr(
-        settings,
-        'GOVDELIVERY_API',
-        'govdelivery.api.GovDelivery'
+        settings, "GOVDELIVERY_API", "govdelivery.api.GovDelivery"
     )
 
     cls = import_string(clsname)
@@ -42,6 +40,7 @@ class MockGovDelivery:
 
     This is modeled after django.core.mail.outbox.
     """
+
     def __init__(self, account_code):
         self.account_code = account_code
         MockGovDelivery.calls = []
@@ -65,9 +64,10 @@ class ExceptionMockGovDelivery(MockGovDelivery):
     Behaves like MockGovDelivery but raises a RuntimeError upon invocation of
     any method.
     """
+
     def handle(self, method, *args, **kwargs):
         super().handle(method, *args, **kwargs)
-        raise RuntimeError('test GovDelivery exception')
+        raise RuntimeError("test GovDelivery exception")
 
 
 class ServerErrorMockGovDelivery(MockGovDelivery):
@@ -76,12 +76,9 @@ class ServerErrorMockGovDelivery(MockGovDelivery):
     Behaves like MockGovDelivery but returns a failing response that contains
     an HTTP status code of 500
     """
+
     def handle(self, method, *args, **kwargs):
-        response = super().handle(
-            method,
-            *args,
-            **kwargs
-        )
+        response = super().handle(method, *args, **kwargs)
 
         response.status_code = 500
         return response
@@ -92,6 +89,7 @@ class LoggingMockGovDelivery(MockGovDelivery):
 
     Behaves like MockGovDelivery but also logs all method calls.
     """
+
     def handle(self, method, *args, **kwargs):
         logger.info(
             (
@@ -103,12 +101,8 @@ class LoggingMockGovDelivery(MockGovDelivery):
                 args=", ".join(map(str, args)),
                 kwargs=", ".join(
                     "{k}={v}".format(k=k, v=v) for k, v in kwargs.items()
-                )
+                ),
             )
         )
 
-        return super().handle(
-            method,
-            *args,
-            **kwargs
-        )
+        return super().handle(method, *args, **kwargs)

@@ -10,13 +10,13 @@ from data_research.models import ConferenceRegistration
 # See https://cfpb.github.io/design-system/components/text-inputs
 # for documentation on the styles that are being duplicated here.
 text_input_attrs = {
-    'class': 'a-text-input a-text-input__full',
+    "class": "a-text-input a-text-input__full",
 }
 
 # This is needed to disable Django's default Textarea sizing.
 textarea_attrs = {
-    'rows': None,
-    'cols': None,
+    "rows": None,
+    "cols": None,
 }
 textarea_attrs.update(text_input_attrs)
 
@@ -31,54 +31,67 @@ class ConferenceRegistrationForm(forms.Form):
     If save(commit=False) is used, a model instance is created but not
     persisted to the database, and GovDelivery subscription is skipped.
     """
+
     ATTENDEE_IN_PERSON = ConferenceRegistration.IN_PERSON
     ATTENDEE_VIRTUALLY = ConferenceRegistration.VIRTUAL
-    ATTENDEE_TYPES = tuple((t, t) for t in (
-        ATTENDEE_IN_PERSON,
-        ATTENDEE_VIRTUALLY,
-    ))
+    ATTENDEE_TYPES = tuple(
+        (t, t)
+        for t in (
+            ATTENDEE_IN_PERSON,
+            ATTENDEE_VIRTUALLY,
+        )
+    )
 
-    SESSIONS = tuple((s, s) for s in (
-        'Thursday morning',
-        'Thursday lunch',
-        'Thursday afternoon',
-        'Friday morning',
-    ))
+    SESSIONS = tuple(
+        (s, s)
+        for s in (
+            "Thursday morning",
+            "Thursday lunch",
+            "Thursday afternoon",
+            "Friday morning",
+        )
+    )
 
-    DIETARY_RESTRICTIONS = tuple((dr, dr) for dr in (
-        'Gluten Free',
-        'Vegan',
-        'Vegetarian',
-    ))
+    DIETARY_RESTRICTIONS = tuple(
+        (dr, dr)
+        for dr in (
+            "Gluten Free",
+            "Vegan",
+            "Vegetarian",
+        )
+    )
 
-    ACCOMMODATIONS = tuple((a, a) for a in (
-        'Accessible Seating',
-        'ASL Interpreter',
-        'Assistive Listening Device',
-        'Large Print Materials',
-        'Nursing Space',
-    ))
+    ACCOMMODATIONS = tuple(
+        (a, a)
+        for a in (
+            "Accessible Seating",
+            "ASL Interpreter",
+            "Assistive Listening Device",
+            "Large Print Materials",
+            "Nursing Space",
+        )
+    )
 
     attendee_type = forms.ChoiceField(
         widget=forms.RadioSelect,
         choices=ATTENDEE_TYPES,
         required=True,
-        label='Do you plan to attend in person or virtually?',
+        label="Do you plan to attend in person or virtually?",
     )
     name = forms.CharField(
         max_length=250,
         required=True,
-        widget=forms.TextInput(attrs=text_input_attrs)
+        widget=forms.TextInput(attrs=text_input_attrs),
     )
     organization = forms.CharField(
         max_length=250,
         required=False,
-        widget=forms.TextInput(attrs=text_input_attrs)
+        widget=forms.TextInput(attrs=text_input_attrs),
     )
     email = forms.EmailField(
         max_length=250,
         required=True,
-        widget=forms.EmailInput(attrs=text_input_attrs)
+        widget=forms.EmailInput(attrs=text_input_attrs),
     )
     # sessions = forms.MultipleChoiceField(
     #     widget=CheckboxSelectMultiple,
@@ -92,12 +105,12 @@ class ConferenceRegistrationForm(forms.Form):
         widget=forms.CheckboxSelectMultiple,
         choices=DIETARY_RESTRICTIONS,
         required=False,
-        label="Please let us know about any food allergies or restrictions."
+        label="Please let us know about any food allergies or restrictions.",
     )
     other_dietary_restrictions = forms.CharField(
         widget=forms.Textarea(attrs=textarea_attrs),
         required=False,
-        label="Any other food allergies or restrictions?"
+        label="Any other food allergies or restrictions?",
     )
     accommodations = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
@@ -106,29 +119,29 @@ class ConferenceRegistrationForm(forms.Form):
         label=(
             "Please let us know of any accommodations you "
             "need in order to attend."
-        )
+        ),
     )
     other_accommodations = forms.CharField(
         widget=forms.Textarea(attrs=textarea_attrs),
         required=False,
-        label="Any other accommodations needed to attend?"
+        label="Any other accommodations needed to attend?",
     )
 
     def __init__(self, *args, **kwargs):
-        self.capacity = kwargs.pop('capacity')
-        self.govdelivery_code = kwargs.pop('govdelivery_code')
-        self.govdelivery_question_id = kwargs.pop('govdelivery_question_id')
-        self.govdelivery_answer_id = kwargs.pop('govdelivery_answer_id')
+        self.capacity = kwargs.pop("capacity")
+        self.govdelivery_code = kwargs.pop("govdelivery_code")
+        self.govdelivery_question_id = kwargs.pop("govdelivery_question_id")
+        self.govdelivery_answer_id = kwargs.pop("govdelivery_answer_id")
         super().__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super().clean()
 
         if (
-            cleaned_data.get('attendee_type') == self.ATTENDEE_IN_PERSON and
-            self.at_capacity
+            cleaned_data.get("attendee_type") == self.ATTENDEE_IN_PERSON
+            and self.at_capacity
         ):
-            raise forms.ValidationError('at capacity')
+            raise forms.ValidationError("at capacity")
 
     @property
     def at_capacity(self):
@@ -144,7 +157,7 @@ class ConferenceRegistrationForm(forms.Form):
         )
 
         details = dict(self.cleaned_data)
-        email = details['email']
+        email = details["email"]
 
         registration.details = details
 
@@ -157,7 +170,7 @@ class ConferenceRegistrationForm(forms.Form):
                 self.govdelivery_question_response(
                     email=email,
                     question_id=self.govdelivery_question_id,
-                    answer_id=self.govdelivery_answer_id
+                    answer_id=self.govdelivery_answer_id,
                 )
 
             # Persist the registration to the database.
@@ -171,9 +184,7 @@ class ConferenceRegistrationForm(forms.Form):
 
     def govdelivery_subscribe(self, email, code):
         subscription_response = self.govdelivery_api.set_subscriber_topics(
-            contact_details=email,
-            topic_codes=[code],
-            send_notifications=True
+            contact_details=email, topic_codes=[code], send_notifications=True
         )
 
         subscription_response.raise_for_status()
@@ -183,7 +194,7 @@ class ConferenceRegistrationForm(forms.Form):
             self.govdelivery_api.set_subscriber_answer_to_select_question(
                 contact_details=email,
                 question_id=question_id,
-                answer_id=answer_id
+                answer_id=answer_id,
             )
         )
 

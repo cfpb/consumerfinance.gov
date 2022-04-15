@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 
 class TemplateDebugView(TemplateView):
-    template_name = 'v1/template_debug.html'
+    template_name = "v1/template_debug.html"
     debug_template_name = None
     debug_test_cases = None
     extra_js = None
@@ -20,19 +20,24 @@ class TemplateDebugView(TemplateView):
 
         template = loader.get_template(self.debug_template_name)
 
-        context.update({
-            'debug_template_name': self.debug_template_name,
-            'debug_test_cases': {
-                name: template.render({
-                    'request': self.request,
-                    'value': data,
-                }) for name, data in self.debug_test_cases.items()
-            },
-        })
+        context.update(
+            {
+                "debug_template_name": self.debug_template_name,
+                "debug_test_cases": {
+                    name: template.render(
+                        {
+                            "request": self.request,
+                            "value": data,
+                        }
+                    )
+                    for name, data in self.debug_test_cases.items()
+                },
+            }
+        )
 
         if self.extra_js:
-            context['page'] = {
-                'media': self.extra_js,
+            context["page"] = {
+                "media": self.extra_js,
             }
 
         return context

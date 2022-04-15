@@ -6,8 +6,9 @@ from django.contrib.auth import hashers
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
 
-def validate_password_rule(regex, password,
-                           password_field, failure_message='invalid password'):
+def validate_password_rule(
+    regex, password, password_field, failure_message="invalid password"
+):
     if not re.search(regex, password):
         raise ValidationError({password_field: failure_message})
 
@@ -30,7 +31,7 @@ def validate_password_age(user):
 
 
 def validate_password_history(user, password):
-    queryset = user.passwordhistoryitem_set.order_by('-created')[:10]
+    queryset = user.passwordhistoryitem_set.order_by("-created")[:10]
 
     checker = functools.partial(hashers.check_password, password)
 

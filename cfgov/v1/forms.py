@@ -24,41 +24,41 @@ class FilterableDateField(forms.DateField):
     default_validators = [validate_after_1900]
 
     default_input_formats = (
-        '%m/%d/%y',     # 10/25/16, 9/1/16
-        '%d/%m/%y',     # 13/4/21
-        '%m-%d-%y',     # 10-25-16, 9-1-16
-        '%d-%m-%y',     # 13-4-21
-        '%m/%d/%Y',     # 10/25/2016, 9/1/2016
-        '%d/%m/%Y',     # 13/4/2021
-        '%m-%d-%Y',     # 10-25-2016, 9-1-2016
-        '%d-%m-%Y',     # 13-4-2021
-        '%Y-%m-%d',     # 2016-10-25, 2016-9-1
-        '%m/%Y',        # 10/2016, 7/2017
-        '%m-%Y',        # 10-2016, 7-2017
-        '%m/%y',        # 10/16, 4/18
-        '%m-%y',        # 10-16, 4-18
-        '%Y',           # 2016
+        "%m/%d/%y",  # 10/25/16, 9/1/16
+        "%d/%m/%y",  # 13/4/21
+        "%m-%d-%y",  # 10-25-16, 9-1-16
+        "%d-%m-%y",  # 13-4-21
+        "%m/%d/%Y",  # 10/25/2016, 9/1/2016
+        "%d/%m/%Y",  # 13/4/2021
+        "%m-%d-%Y",  # 10-25-2016, 9-1-2016
+        "%d-%m-%Y",  # 13-4-2021
+        "%Y-%m-%d",  # 2016-10-25, 2016-9-1
+        "%m/%Y",  # 10/2016, 7/2017
+        "%m-%Y",  # 10-2016, 7-2017
+        "%m/%y",  # 10/16, 4/18
+        "%m-%y",  # 10-16, 4-18
+        "%Y",  # 2016
     )
 
     default_widget_attrs = {
-        'class': 'a-text-input a-text-input__full',
-        'type': 'date',
-        'placeholder': 'mm/dd/yyyy',
-        'data-type': 'date'
+        "class": "a-text-input a-text-input__full",
+        "type": "date",
+        "placeholder": "mm/dd/yyyy",
+        "data-type": "date",
     }
 
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('required', False)
-        kwargs.setdefault('input_formats', self.default_input_formats)
-        kwargs.setdefault('error_messages', ERROR_MESSAGES['DATE_ERRORS'])
+        kwargs.setdefault("required", False)
+        kwargs.setdefault("input_formats", self.default_input_formats)
+        kwargs.setdefault("error_messages", ERROR_MESSAGES["DATE_ERRORS"])
 
-        field_id = kwargs.pop('field_id', None)
+        field_id = kwargs.pop("field_id", None)
         if field_id:
-            self.default_widget_attrs['id'] = field_id
+            self.default_widget_attrs["id"] = field_id
 
-        kwargs.setdefault('widget', widgets.DateInput(
-            attrs=self.default_widget_attrs
-        ))
+        kwargs.setdefault(
+            "widget", widgets.DateInput(attrs=self.default_widget_attrs)
+        )
         super().__init__(*args, **kwargs)
 
 
@@ -66,77 +66,85 @@ class FilterableListForm(forms.Form):
     title = forms.CharField(
         max_length=250,
         required=False,
-        widget=forms.TextInput(attrs={
-            'id': 'o-filterable-list-controls_title',
-            'class': 'a-text-input a-text-input__full',
-        })
+        widget=forms.TextInput(
+            attrs={
+                "id": "o-filterable-list-controls_title",
+                "class": "a-text-input a-text-input__full",
+            }
+        ),
     )
     from_date = FilterableDateField(
-        field_id='o-filterable-list-controls_from-date'
+        field_id="o-filterable-list-controls_from-date"
     )
 
     to_date = FilterableDateField(
-        field_id='o-filterable-list-controls_to-date'
+        field_id="o-filterable-list-controls_to-date"
     )
 
     categories = forms.MultipleChoiceField(
         required=False,
         choices=ref.page_type_choices,
-        widget=widgets.SelectMultiple(attrs={
-            'id': 'o-filterable-list-controls_categories',
-            'class': 'o-multiselect',
-            'data-placeholder': 'Search for categories',
-            'multiple': 'multiple',
-        })
+        widget=widgets.SelectMultiple(
+            attrs={
+                "id": "o-filterable-list-controls_categories",
+                "class": "o-multiselect",
+                "data-placeholder": "Search for categories",
+                "multiple": "multiple",
+            }
+        ),
     )
 
     topics = forms.MultipleChoiceField(
         required=False,
         choices=[],
-        widget=widgets.SelectMultiple(attrs={
-            'id': 'o-filterable-list-controls_topics',
-            'class': 'o-multiselect',
-            'data-placeholder': 'Search for topics',
-            'multiple': 'multiple',
-        })
+        widget=widgets.SelectMultiple(
+            attrs={
+                "id": "o-filterable-list-controls_topics",
+                "class": "o-multiselect",
+                "data-placeholder": "Search for topics",
+                "multiple": "multiple",
+            }
+        ),
     )
 
     language = forms.MultipleChoiceField(
         required=False,
         choices=[],
-        widget=widgets.SelectMultiple(attrs={
-            'id': 'o-filterable-list-controls_language',
-            'class': 'o-multiselect',
-            'data-placeholder': 'Search for language',
-            'multiple': 'multiple',
-        })
+        widget=widgets.SelectMultiple(
+            attrs={
+                "id": "o-filterable-list-controls_language",
+                "class": "o-multiselect",
+                "data-placeholder": "Search for language",
+                "multiple": "multiple",
+            }
+        ),
     )
 
     archived = forms.ChoiceField(
         choices=[
-            ('include', 'Show all items (default)'),
-            ('exclude', 'Exclude archived items'),
-            ('only', 'Show only archived items'),
+            ("include", "Show all items (default)"),
+            ("exclude", "Exclude archived items"),
+            ("only", "Show only archived items"),
         ]
     )
 
-    preferred_datetime_format = '%Y-%m-%d'
+    preferred_datetime_format = "%Y-%m-%d"
 
     def __init__(self, *args, **kwargs):
-        self.filterable_search = kwargs.pop('filterable_search')
-        self.wagtail_block = kwargs.pop('wagtail_block')
-        self.filterable_categories = kwargs.pop('filterable_categories')
+        self.filterable_search = kwargs.pop("filterable_search")
+        self.wagtail_block = kwargs.pop("wagtail_block")
+        self.filterable_categories = kwargs.pop("filterable_categories")
 
         # This cache key is used for caching the topics, page_ids,
         # and the full set of Elasticsearch results for this form used to
         # generate them.
         # Default the cache key prefix to this form's hash if it's not
         # provided.
-        self.cache_key_prefix = kwargs.pop('cache_key_prefix', hash(self))
+        self.cache_key_prefix = kwargs.pop("cache_key_prefix", hash(self))
 
         super().__init__(*args, **kwargs)
 
-        clean_categories(selected_categories=self.data.get('categories'))
+        clean_categories(selected_categories=self.data.get("categories"))
 
         self.all_filterable_results = self.get_all_filterable_results()
         page_ids = self.get_all_page_ids()
@@ -144,7 +152,7 @@ class FilterableListForm(forms.Form):
         self.set_languages()
 
     def get_all_filterable_results(self):
-        """ Get all filterable document results from Elasticsearch
+        """Get all filterable document results from Elasticsearch
 
         This set of results is used to populate the list of all page_ids,
         below, which is in turn used for populating the topics
@@ -169,7 +177,7 @@ class FilterableListForm(forms.Form):
         return all_filterable_results
 
     def get_all_page_ids(self):
-        """ Return a list of all possible filterable page ids """
+        """Return a list of all possible filterable page ids"""
         page_ids = cache.get(f"{self.cache_key_prefix}-page_ids")
         if page_ids is None:
             page_ids = [
@@ -179,38 +187,36 @@ class FilterableListForm(forms.Form):
         return page_ids
 
     def get_categories(self):
-        categories = self.cleaned_data.get('categories')
+        categories = self.cleaned_data.get("categories")
 
         # If no categories are submitted by the form
         if categories == []:
             # And we have defined a prexisting set of categories
             # to limit results by Using CategoryFilterableMixin
             if self.filterable_categories not in ([], None):
-                return ref.get_category_children(
-                    self.filterable_categories)
+                return ref.get_category_children(self.filterable_categories)
         return categories
 
     def get_order_by(self):
         if self.wagtail_block is not None:
-            return self.wagtail_block.value.get('order_by', '-date_published')
+            return self.wagtail_block.value.get("order_by", "-date_published")
         else:
-            return '-date_published'
+            return "-date_published"
 
     def get_page_set(self):
         categories = self.get_categories()
 
         self.filterable_search.filter(
-            topics=self.cleaned_data.get('topics'),
+            topics=self.cleaned_data.get("topics"),
             categories=categories,
-            language=self.cleaned_data.get('language'),
-            to_date=self.cleaned_data.get('to_date'),
-            from_date=self.cleaned_data.get('from_date'),
-            archived=self.cleaned_data.get('archived'),
+            language=self.cleaned_data.get("language"),
+            to_date=self.cleaned_data.get("to_date"),
+            from_date=self.cleaned_data.get("from_date"),
+            archived=self.cleaned_data.get("archived"),
         )
 
         results = self.filterable_search.search(
-            title=self.cleaned_data.get('title'),
-            order_by=self.get_order_by()
+            title=self.cleaned_data.get("title"), order_by=self.get_order_by()
         )
 
         return results
@@ -239,12 +245,11 @@ class FilterableListForm(forms.Form):
             topics = cache.get(f"{self.cache_key_prefix}-topics")
             if topics is None:
                 topics = self.wagtail_block.block.get_filterable_topics(
-                    page_ids,
-                    self.wagtail_block.value
+                    page_ids, self.wagtail_block.value
                 )
                 cache.set(f"{self.cache_key_prefix}-topics", topics)
 
-            self.fields['topics'].choices = topics
+            self.fields["topics"].choices = topics
 
     # Populate language choices
     def set_languages(self):
@@ -252,27 +257,26 @@ class FilterableListForm(forms.Form):
         # the language aggregation; this can happen due to the way that these
         # results were cached before the language aggregation was added.
         language_aggregation = getattr(
-            self.all_filterable_results.aggregations,
-            'languages',
-            None
+            self.all_filterable_results.aggregations, "languages", None
         )
 
         if language_aggregation:
             language_codes = {b.key for b in language_aggregation.buckets}
 
             language_options = [
-                (k, v) for k, v in dict(ref.supported_languages).items()
+                (k, v)
+                for k, v in dict(ref.supported_languages).items()
                 if k in language_codes
             ]
         else:
             # If no aggregation exists, fallback to showing all languages.
             language_options = ref.supported_languages
 
-        self.fields['language'].choices = language_options
+        self.fields["language"].choices = language_options
 
     def clean(self):
         cleaned_data = super().clean()
-        if self.errors.get('from_date') or self.errors.get('to_date'):
+        if self.errors.get("from_date") or self.errors.get("to_date"):
             return cleaned_data
         else:
             ordered_dates = self.order_from_and_to_date_filters(cleaned_data)
@@ -280,49 +284,58 @@ class FilterableListForm(forms.Form):
             return transformed_dates
 
     def order_from_and_to_date_filters(self, cleaned_data):
-        from_date = cleaned_data.get('from_date')
-        to_date = cleaned_data.get('to_date')
+        from_date = cleaned_data.get("from_date")
+        to_date = cleaned_data.get("to_date")
         # Check if both date_lte and date_gte are present.
         # If the 'start' date is after the 'end' date, swap them.
         if (from_date and to_date) and to_date < from_date:
             data = dict(self.data)
-            data_to_date = data['to_date']
-            self.cleaned_data['to_date'], data['to_date'] = \
-                from_date, data['from_date']
-            self.cleaned_data['from_date'], data['from_date'] = \
-                to_date, data_to_date
+            data_to_date = data["to_date"]
+            self.cleaned_data["to_date"], data["to_date"] = (
+                from_date,
+                data["from_date"],
+            )
+            self.cleaned_data["from_date"], data["from_date"] = (
+                to_date,
+                data_to_date,
+            )
             self.data = data
         return self.cleaned_data
 
     def set_interpreted_date_values(self, cleaned_data):
-        from_date = cleaned_data.get('from_date')
-        to_date = cleaned_data.get('to_date')
+        from_date = cleaned_data.get("from_date")
+        to_date = cleaned_data.get("to_date")
         # If from_ or to_ is filled in, fill them both with sensible values.
         # If neither is filled in, leave them both blank.
         if from_date or to_date:
             if from_date:
-                self.data['from_date'] = date.strftime(
-                    cleaned_data['from_date'], self.preferred_datetime_format)
+                self.data["from_date"] = date.strftime(
+                    cleaned_data["from_date"], self.preferred_datetime_format
+                )
             else:
                 # If there's a 'to_date' and no 'from_date',
                 #  use date of earliest possible filter result as 'from_date'.
                 earliest_results = self.first_page_date()
-                cleaned_data['from_date'] = earliest_results
-                self.data['from_date'] = date.strftime(
-                    earliest_results, self.preferred_datetime_format)
+                cleaned_data["from_date"] = earliest_results
+                self.data["from_date"] = date.strftime(
+                    earliest_results, self.preferred_datetime_format
+                )
 
             if to_date:
                 transformed_to_date = end_of_time_period(
-                    self.data['to_date'], cleaned_data['to_date'])
-                cleaned_data['to_date'] = transformed_to_date
-                self.data['to_date'] = date.strftime(
-                    transformed_to_date, self.preferred_datetime_format)
+                    self.data["to_date"], cleaned_data["to_date"]
+                )
+                cleaned_data["to_date"] = transformed_to_date
+                self.data["to_date"] = date.strftime(
+                    transformed_to_date, self.preferred_datetime_format
+                )
             else:
                 # If there's a 'from_date' but no 'to_date', use today's date.
                 today = date.today()
-                cleaned_data['to_date'] = today
-                self.data['to_date'] = date.strftime(
-                    today, self.preferred_datetime_format)
+                cleaned_data["to_date"] = today
+                self.data["to_date"] = date.strftime(
+                    today, self.preferred_datetime_format
+                )
 
         return cleaned_data
 
@@ -333,15 +346,16 @@ class FilterableListForm(forms.Form):
         allowing for a custom field name (new_name).
         """
         old_render = field.widget.render
-        field.widget.render = lambda name, value, **kwargs: \
-            old_render(new_name, value, **kwargs)
+        field.widget.render = lambda name, value, **kwargs: old_render(
+            new_name, value, **kwargs
+        )
 
     def clean_archived(self):
-        data = self.cleaned_data['archived']
-        if data == 'exclude':
-            return ['no', 'never']
-        elif data == 'only':
-            return ['yes']
+        data = self.cleaned_data["archived"]
+        if data == "exclude":
+            return ["no", "never"]
+        elif data == "only":
+            return ["yes"]
 
         return None
 
@@ -351,78 +365,82 @@ class EnforcementActionsFilterForm(FilterableListForm):
     statuses = forms.MultipleChoiceField(
         required=False,
         choices=enforcement_action_page.enforcement_statuses,
-        widget=widgets.SelectMultiple(attrs={
-            'id': 'o-filterable-list-controls_statuses',
-            'class': 'o-multiselect',
-            'data-placeholder': 'Search for statuses',
-            'multiple': 'multiple',
-        })
+        widget=widgets.SelectMultiple(
+            attrs={
+                "id": "o-filterable-list-controls_statuses",
+                "class": "o-multiselect",
+                "data-placeholder": "Search for statuses",
+                "multiple": "multiple",
+            }
+        ),
     )
 
     products = forms.MultipleChoiceField(
         required=False,
         choices=enforcement_action_page.enforcement_products,
-        widget=widgets.SelectMultiple(attrs={
-            'id': 'o-filterable-list-controls_products',
-            'class': 'o-multiselect',
-            'data-placeholder': 'Search for products',
-            'multiple': 'multiple',
-        })
+        widget=widgets.SelectMultiple(
+            attrs={
+                "id": "o-filterable-list-controls_products",
+                "class": "o-multiselect",
+                "data-placeholder": "Search for products",
+                "multiple": "multiple",
+            }
+        ),
     )
 
     def get_page_set(self):
         self.filterable_search.filter(
-            topics=self.cleaned_data.get('topics'),
-            categories=self.cleaned_data.get('categories'),
-            language=self.cleaned_data.get('language'),
-            to_date=self.cleaned_data.get('to_date'),
-            from_date=self.cleaned_data.get('from_date'),
-            statuses=self.cleaned_data.get('statuses'),
-            products=self.cleaned_data.get('products')
+            topics=self.cleaned_data.get("topics"),
+            categories=self.cleaned_data.get("categories"),
+            language=self.cleaned_data.get("language"),
+            to_date=self.cleaned_data.get("to_date"),
+            from_date=self.cleaned_data.get("from_date"),
+            statuses=self.cleaned_data.get("statuses"),
+            products=self.cleaned_data.get("products"),
         )
         results = self.filterable_search.search(
-            title=self.cleaned_data.get('title'),
+            title=self.cleaned_data.get("title"),
         )
         return results
 
 
 class EventArchiveFilterForm(FilterableListForm):
-
     def get_page_set(self):
         self.filterable_search.filter(
-            topics=self.cleaned_data.get('topics'),
-            categories=self.cleaned_data.get('categories'),
-            language=self.cleaned_data.get('language'),
-            to_date=self.cleaned_data.get('to_date'),
-            from_date=self.cleaned_data.get('from_date'),
+            topics=self.cleaned_data.get("topics"),
+            categories=self.cleaned_data.get("categories"),
+            language=self.cleaned_data.get("language"),
+            to_date=self.cleaned_data.get("to_date"),
+            from_date=self.cleaned_data.get("from_date"),
         )
         results = self.filterable_search.search(
-            title=self.cleaned_data.get('title'),
-            order_by=self.get_order_by()
+            title=self.cleaned_data.get("title"), order_by=self.get_order_by()
         )
         return results
 
 
 class FeedbackForm(forms.ModelForm):
     """For feedback modules that simply ask 'Was this page helfpul?'"""
+
     class Meta:
         model = Feedback
-        fields = ['is_helpful', 'comment', 'language']
+        fields = ["is_helpful", "comment", "language"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['is_helpful'].required = True
+        self.fields["is_helpful"].required = True
 
 
 class ReferredFeedbackForm(forms.ModelForm):
     """For feedback modules that need to capture the referring page"""
+
     class Meta:
         model = Feedback
-        fields = ['is_helpful', 'referrer', 'comment', 'language']
+        fields = ["is_helpful", "referrer", "comment", "language"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['comment'].required = True
+        self.fields["comment"].required = True
 
 
 class SuggestionFeedbackForm(forms.ModelForm):
@@ -430,16 +448,18 @@ class SuggestionFeedbackForm(forms.ModelForm):
 
     class Meta:
         model = Feedback
-        fields = ['referrer',
-                  'comment',
-                  'expect_to_buy',
-                  'currently_own',
-                  'email',
-                  'language']
+        fields = [
+            "referrer",
+            "comment",
+            "expect_to_buy",
+            "currently_own",
+            "email",
+            "language",
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['comment'].required = True
+        self.fields["comment"].required = True
 
 
 class CFGOVImageForm(BaseImageForm):
@@ -449,5 +469,6 @@ class CFGOVImageForm(BaseImageForm):
     default as a multi-line textarea field. We instead want to use a
     single-line text input field.
     """
+
     class Meta(BaseImageForm.Meta):
-        widgets = {**BaseImageForm.Meta.widgets, 'alt': forms.TextInput}
+        widgets = {**BaseImageForm.Meta.widgets, "alt": forms.TextInput}

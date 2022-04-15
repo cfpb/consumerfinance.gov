@@ -14,22 +14,23 @@ from wagtail.core.models import Site
 # Javascript side in error-messages-config.js
 
 ERROR_MESSAGES = {
-    'CHECKBOX_ERRORS': {
-        'required': 'Please select at least one of the "%s" options.'
+    "CHECKBOX_ERRORS": {
+        "required": 'Please select at least one of the "%s" options.'
     },
-    'DATE_ERRORS': {
-        'invalid': 'You have entered an invalid date.',
-    }
+    "DATE_ERRORS": {
+        "invalid": "You have entered an invalid date.",
+    },
 }
 
 
-def get_unique_id(prefix='', suffix=''):
+def get_unique_id(prefix="", suffix=""):
     index = hex(int(time() * 10000000))[2:]
     return prefix + str(index) + suffix
 
 
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowseFilterablePage, BrowsePage
+
     pages = (BrowsePage, BrowseFilterablePage)
     return isinstance(page, pages)
 
@@ -62,7 +63,7 @@ def get_secondary_nav_items(request, current_page):
     else:
         pages = filter(
             lambda p: instanceOfBrowseOrFilterablePages(p.specific),
-            page.get_appropriate_siblings()
+            page.get_appropriate_siblings(),
         )
 
     site = Site.find_for_request(request)
@@ -77,36 +78,39 @@ def get_secondary_nav_items(request, current_page):
         item_selected = current_page.pk == sibling.pk
 
         item = {
-            'title': sibling.title,
-            'slug': sibling.slug,
-            'url': sibling.relative_url(site),
-            'children': [],
-            'active': item_selected,
-            'expanded': item_selected,
+            "title": sibling.title,
+            "slug": sibling.slug,
+            "url": sibling.relative_url(site),
+            "children": [],
+            "active": item_selected,
+            "expanded": item_selected,
         }
 
         if page.id == sibling.id:
-            visible_children = list(filter(
-                lambda c: (
-                    instanceOfBrowseOrFilterablePages(c) and
-                    (c.live)
-                ),
-                sibling.get_children().specific()
-            ))
+            visible_children = list(
+                filter(
+                    lambda c: (
+                        instanceOfBrowseOrFilterablePages(c) and (c.live)
+                    ),
+                    sibling.get_children().specific(),
+                )
+            )
             if len(visible_children):
                 has_children = True
                 for child in visible_children:
                     child_selected = current_page.pk == child.pk
 
                     if child_selected:
-                        item['expanded'] = True
+                        item["expanded"] = True
 
-                    item['children'].append({
-                        'title': child.title,
-                        'slug': child.slug,
-                        'url': child.relative_url(site),
-                        'active': child_selected,
-                    })
+                    item["children"].append(
+                        {
+                            "title": child.title,
+                            "slug": child.slug,
+                            "url": child.relative_url(site),
+                            "active": child_selected,
+                        }
+                    )
 
         nav_items.append(item)
 
@@ -114,19 +118,21 @@ def get_secondary_nav_items(request, current_page):
     # TODO: Remove this when redirects for `/process/` urls
     # are added after 2018 homebuying campaign.
     journey_urls = (
-        '/owning-a-home/prepare',
-        '/owning-a-home/explore',
-        '/owning-a-home/compare',
-        '/owning-a-home/close',
-        '/owning-a-home/sources',
+        "/owning-a-home/prepare",
+        "/owning-a-home/explore",
+        "/owning-a-home/compare",
+        "/owning-a-home/close",
+        "/owning-a-home/sources",
     )
     if current_page.relative_url(site).startswith(journey_urls):
         for item in nav_items:
-            item['url'] = item['url'].replace(
-                'owning-a-home', 'owning-a-home/process')
-            for child in item['children']:
-                child['url'] = child['url'].replace(
-                    'owning-a-home', 'owning-a-home/process')
+            item["url"] = item["url"].replace(
+                "owning-a-home", "owning-a-home/process"
+            )
+            for child in item["children"]:
+                child["url"] = child["url"].replace(
+                    "owning-a-home", "owning-a-home/process"
+                )
     # END TODO
 
     return nav_items, has_children
@@ -135,7 +141,7 @@ def get_secondary_nav_items(request, current_page):
 def valid_destination_for_request(request, url):
 
     view, args, kwargs = resolve(url)
-    kwargs['request'] = request
+    kwargs["request"] = request
     try:
         response = view(*args, **kwargs)
     except (Http404, TypeError):
@@ -144,7 +150,7 @@ def valid_destination_for_request(request, url):
     if isinstance(response, HttpResponseRedirect):
         # this indicates a permissions problem
         # (there may be a better way)
-        if REDIRECT_FIELD_NAME + '=' in response.url:
+        if REDIRECT_FIELD_NAME + "=" in response.url:
             return False
 
     return True
@@ -152,11 +158,14 @@ def valid_destination_for_request(request, url):
 
 def all_valid_destinations_for_request(request):
     possible_destinations = (
-        ('Wagtail', '/admin/'),
-        ('Django admin', '/django-admin/')
+        ("Wagtail", "/admin/"),
+        ("Django admin", "/django-admin/"),
     )
-    valid_destinations = [pair for pair in possible_destinations
-                          if valid_destination_for_request(request, pair[1])]
+    valid_destinations = [
+        pair
+        for pair in possible_destinations
+        if valid_destination_for_request(request, pair[1])
+    ]
 
     return valid_destinations
 
@@ -178,12 +187,24 @@ def extended_strftime(dt, format):
     _m for custom month abbreviations,
     _d for day values without leading zeros.
     """
-    _MONTH_ABBREVIATIONS = [None, 'Jan.', 'Feb.', 'Mar.', 'Apr.',
-                            'May', 'Jun.', 'Jul.', 'Aug.',
-                            'Sept.', 'Oct.', 'Nov.', 'Dec.']
+    _MONTH_ABBREVIATIONS = [
+        None,
+        "Jan.",
+        "Feb.",
+        "Mar.",
+        "Apr.",
+        "May",
+        "Jun.",
+        "Jul.",
+        "Aug.",
+        "Sept.",
+        "Oct.",
+        "Nov.",
+        "Dec.",
+    ]
 
-    format = format.replace('%_d', dt.strftime('%d').lstrip('0'))
-    format = format.replace('%_m', _MONTH_ABBREVIATIONS[dt.month])
+    format = format.replace("%_d", dt.strftime("%d").lstrip("0"))
+    format = format.replace("%_m", _MONTH_ABBREVIATIONS[dt.month])
     return dt.strftime(format)
 
 
@@ -191,12 +212,12 @@ def validate_social_sharing_image(image):
     """Raises a validation error if the image is too large or too small."""
     if image and (image.width > 4096 or image.height > 4096):
         raise ValidationError(
-            'Social sharing image must be less than 4096w x 4096h'
+            "Social sharing image must be less than 4096w x 4096h"
         )
 
 
 def get_page_from_path(path, root=None):
-    """ Given a string path, return the corresponding page object.
+    """Given a string path, return the corresponding page object.
 
     If `root` is not passed, it is assumed you want to search from the root
     page of the default site.
@@ -206,11 +227,11 @@ def get_page_from_path(path, root=None):
     If a page cannot be found at that path, returns `None`.
     """
     if root is None:
-        site_model = apps.get_model('wagtailcore', 'Site')
+        site_model = apps.get_model("wagtailcore", "Site")
         site = site_model.objects.get(is_default_site=True)
         root = site.root_page
 
-    path_components = [component for component in path.split('/') if component]
+    path_components = [component for component in path.split("/") if component]
 
     try:
         route = root.route(None, path_components)

@@ -10,13 +10,26 @@ import requests
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 from retirement_api.utils.ss_calculator import (
-    calculate_lifetime_benefits, clean_comment, get_retire_data,
-    interpolate_benefits, interpolate_for_past_fra, num_test, parse_details,
-    parse_response, set_up_runvars, validate_date
+    calculate_lifetime_benefits,
+    clean_comment,
+    get_retire_data,
+    interpolate_benefits,
+    interpolate_for_past_fra,
+    num_test,
+    parse_details,
+    parse_response,
+    set_up_runvars,
+    validate_date,
 )
 from retirement_api.utils.ss_utilities import (
-    age_map, get_current_age, get_delay_bonus, get_months_past_birthday,
-    get_months_until_next_birthday, get_retirement_age, past_fra_test, yob_test
+    age_map,
+    get_current_age,
+    get_delay_bonus,
+    get_months_past_birthday,
+    get_months_until_next_birthday,
+    get_retirement_age,
+    past_fra_test,
+    yob_test,
 )
 
 

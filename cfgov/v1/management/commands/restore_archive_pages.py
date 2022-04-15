@@ -9,7 +9,7 @@ from wagtail.core.models import Site
 from dateutil.relativedelta import relativedelta
 
 from v1.management.commands.archive_pages import (
-    path_without_leading_trailing_slashes
+    path_without_leading_trailing_slashes,
 )
 
 
@@ -103,10 +103,13 @@ class Command(BaseCommand):
                 )
 
             # Get the filterable list QuerySet and filter it.
-            filtered_pages = filterable_page.get_filterable_search().search(
-            ).filter(
-                published_date_filter,
-                is_archived="yes",
+            filtered_pages = (
+                filterable_page.get_filterable_search()
+                .search()
+                .filter(
+                    published_date_filter,
+                    is_archived="yes",
+                )
             )
 
             # Restore the content, letting the user know the title of the
@@ -114,8 +117,7 @@ class Command(BaseCommand):
             # restored.
             with transaction.atomic():
                 update_count = filtered_pages.select_for_update().update(
-                    is_archived="no",
-                    archived_at=archived_at
+                    is_archived="no", archived_at=archived_at
                 )
             self.stdout.write(
                 f"Found and restored {update_count} pages within "

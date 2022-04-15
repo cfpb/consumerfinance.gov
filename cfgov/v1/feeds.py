@@ -5,7 +5,7 @@ from django.contrib.syndication.views import Feed
 import pytz
 
 
-eastern = pytz.timezone('US/Eastern')
+eastern = pytz.timezone("US/Eastern")
 
 
 class FilterableFeed(Feed):
@@ -15,6 +15,14 @@ class FilterableFeed(Feed):
         self.page = page
         self.context = context
 
+    def __call__(self, request, *args, **kwargs):
+        response = super().__call__(request, *args, **kwargs)
+
+        # Tell Akamai that the feed should have a maximum age of 10 minutes
+        response["Edge-Control"] = "cache-maxage=10m"
+
+        return response
+
     def link(self):
         return self.page.full_url
 
@@ -22,7 +30,7 @@ class FilterableFeed(Feed):
         return "%s | Consumer Financial Protection Bureau" % self.page.title
 
     def items(self):
-        posts = self.context['filter_data']['page_set']
+        posts = self.context["filter_data"]["page_set"]
         return posts
 
     def item_link(self, item):
@@ -72,4 +80,4 @@ def get_appropriate_rss_feed_url_for_page(page, request=None):
 
     if rss_feed_providing_page:
         page_url = rss_feed_providing_page.get_url(request=request)
-        return page_url + 'feed/'
+        return page_url + "feed/"

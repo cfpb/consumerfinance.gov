@@ -3,7 +3,6 @@ try:
 except ImportError:
     from django.conf.urls import url as re_path
 
-
 from agreements.views import index, issuer_search
 
 

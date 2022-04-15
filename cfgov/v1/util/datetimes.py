@@ -17,18 +17,16 @@ from pytz import timezone
 # https://dateutil.readthedocs.io/en/stable/parser.html
 # https://dateutil.readthedocs.io/en/stable/relativedelta.html
 
+
 def convert_date(date, tz):
-    """ Takes a string or datetime and a timezone, returns aware datetime
+    """Takes a string or datetime and a timezone, returns aware datetime
 
     If the passed `date` is a string, it first converts that to a naive
     datetime. Then (and if `date` was already a datetime), it takes the passed
     timezone and converts the datetime to one that is in that timezone.
     """
     if date and isinstance(date, str):
-        date = parser.parse(
-            date,
-            default=datetime.today().replace(day=1)
-        )
+        date = parser.parse(date, default=datetime.today().replace(day=1))
     if isinstance(date, datetime) and tz:
         this_tz = timezone(tz)
         if date.tzinfo is None:
@@ -46,11 +44,11 @@ def date_from_pattern(date_str, pattern):
 
 def end_of_time_period(user_input, input_date):
     # Full date format with month, day, and year
-    for pattern in ('%m/%d/%Y', '%m-%d-%Y', '%m/%d/%y', '%m-%d-%y'):
+    for pattern in ("%m/%d/%Y", "%m-%d-%Y", "%m/%d/%y", "%m-%d-%y"):
         if date_from_pattern(user_input, pattern) is not None:
             return input_date
     # Month and year date format
-    for pattern in ('%m/%Y', '%m-%Y', '%m/%y', '%m-%y'):
+    for pattern in ("%m/%Y", "%m-%Y", "%m/%y", "%m-%y"):
         if date_from_pattern(user_input, pattern) is not None:
             return input_date + relativedelta(day=31)
     # Year format: yy or yyyy

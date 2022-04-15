@@ -10,7 +10,7 @@ from v1.tests.wagtail_pages.helpers import publish_changes
 
 
 def get_tableblocks(page):
-    """ Get all the TableBlocks for a given page.
+    """Get all the TableBlocks for a given page.
     TableBlocks can be stored either directly in page's content,
     or in a FullWidthText item. So we must check both.
     """
@@ -19,37 +19,40 @@ def get_tableblocks(page):
     except Exception:
         return []
     tableblocks = list(
-        filter(lambda item: item['type'] == 'table_block', data))
+        filter(lambda item: item["type"] == "table_block", data)
+    )
     full_width_text_items = list(
-        filter(lambda item: item['type'] == 'full_width_text', data))
+        filter(lambda item: item["type"] == "full_width_text", data)
+    )
     for item in full_width_text_items:
-        sub_items = item['value']
+        sub_items = item["value"]
         for sub_item in list(
-                filter(lambda i: i['type'] == 'table_block', sub_items)):
+            filter(lambda i: i["type"] == "table_block", sub_items)
+        ):
             tableblocks.append(sub_item)
     return tableblocks
 
 
 def convert_links(links):
-    """ Adds a href to the link with the relative path if a
+    """Adds a href to the link with the relative path if a
     document ID or page ID is stored
     """
     updated = False
     for link in links:
-        linktype = link.get('linktype')
-        object_id = link.get('id')
-        if link.get('href'):
+        linktype = link.get("linktype")
+        object_id = link.get("id")
+        if link.get("href"):
             continue  # Don't update it if the href is already set
-        if linktype == 'document':
+        if linktype == "document":
             doc = get_object_or_404(get_document_model(), id=object_id)
             url = doc.url
-        elif linktype == 'page':
+        elif linktype == "page":
             page = Page.objects.get(id=object_id)
             url = page.relative_url(current_site=page.get_site())
         else:
             continue
         updated = True
-        link['href'] = url
+        link["href"] = url
     return updated
 
 
@@ -58,14 +61,14 @@ def run():
         changes = False
         tableblocks = get_tableblocks(page)
         for tableblock in tableblocks:
-            rows = tableblock['value']['data']
+            rows = tableblock["value"]["data"]
             for row in rows:
                 for idx, item in enumerate(row):
                     if not item:
                         continue
 
-                    soup = BeautifulSoup(item, 'html.parser')
-                    links = soup.findAll('a')
+                    soup = BeautifulSoup(item, "html.parser")
+                    links = soup.findAll("a")
                     if links and convert_links(links):
                         # Set the item to the modified HTML
                         row[idx] = str(soup)

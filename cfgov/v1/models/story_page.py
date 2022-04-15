@@ -1,9 +1,10 @@
 from wagtail.admin.edit_handlers import (
-    ObjectList, StreamFieldPanel, TabbedInterface
+    ObjectList,
+    StreamFieldPanel,
+    TabbedInterface,
 )
 from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
-from wagtail.core.models import PageManager
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
@@ -15,8 +16,8 @@ class StoryHeader(StreamBlock):
 
     class Meta:
         block_counts = {
-            'jumbo_hero': {'max_num': 1},
-            'features': {'max_num': 1},
+            "jumbo_hero": {"max_num": 1},
+            "features": {"max_num": 1},
         }
 
 
@@ -35,13 +36,13 @@ class StoryPage(CFGOVPage):
     content = StreamField(StoryContent, blank=True)
 
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel('header'),
-        StreamFieldPanel('content')
+        StreamFieldPanel("header"),
+        StreamFieldPanel("content"),
     ]
 
-    edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='Content'),
-        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
-    ])
-
-    objects = PageManager()
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading="Content"),
+            ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
+        ]
+    )

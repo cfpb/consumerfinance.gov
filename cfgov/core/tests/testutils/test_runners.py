@@ -25,9 +25,8 @@ class StderrSuppressingStdoutCapturingTestRunner(StdoutCapturingTestRunner):
     """
 
     def get_test_runner_kwargs(self):
-        kwargs = super(). \
-            get_test_runner_kwargs()
-        kwargs['stream'] = StringIO()
+        kwargs = super().get_test_runner_kwargs()
+        kwargs["stream"] = StringIO()
         return kwargs
 
 
@@ -39,7 +38,7 @@ class TestStdoutCapturingTestRunner(TestCase):
     def test_with_stdout(self):
         class LoudTestCase(TestCase):
             def test(self):
-                print('True is true, who knew!')
+                print("True is true, who knew!")
                 self.assertTrue(True)
 
         loud_suite = TestSuite(
