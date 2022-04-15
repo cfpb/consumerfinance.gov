@@ -29,7 +29,7 @@ async function getFiles( dir ) {
     const res = resolve( dir, dirent.name );
     return dirent.isDirectory() ? getFiles( res ) : res;
   } ) );
-  return files.flat().filter( v => v )
+  return files.flat().filter( v => v );
 }
 
 /**
