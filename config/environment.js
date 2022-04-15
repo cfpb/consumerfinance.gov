@@ -1,6 +1,6 @@
 /* ==========================================================================
    Settings for project environment.
-   Used by JavaScript gulp build process and JavaScript test configuration.
+   Used by JavaScript build process and JavaScript test configuration.
    ========================================================================== */
 
 
