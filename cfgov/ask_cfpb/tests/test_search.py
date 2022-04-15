@@ -132,8 +132,8 @@ class AnswerPageSearchTest(TestCase):
 
     @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_search_autocomplete_honors_max_chars(self, mock_search):
-        valid_term = "This search has 75 characters, the upper limit we have "
-        "set for Ask searches"
+        valid_term = "Years, days, makes no difference to me babe "
+        "You look exactly the same to me"
         overage = " This is overage text that should not appear in the query"
         too_long_term = valid_term + overage
         self.client.get(
