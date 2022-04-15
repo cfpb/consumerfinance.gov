@@ -18,7 +18,6 @@ const blocklist = [
   'node_modules', 'npm-packages-offline-cache', '.yarnrc', 'yarn.lock',
   'browserslist', 'package.json', 'config.json', '.gitkeep', 'root'
 ];
-const rDir = resolve( '.' );
 
 /**
  * @param {string} dir Current directory to walk
@@ -31,7 +30,6 @@ async function getFiles( dir ) {
     return dirent.isDirectory() ? getFiles( res ) : res;
   } ) );
   return files.flat().filter( v => v )
-    .map( v => v.replace( rDir, '.' ) );
 }
 
 /**
