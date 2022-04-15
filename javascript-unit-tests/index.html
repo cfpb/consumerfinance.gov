@@ -382,8 +382,7 @@ Additional dependencies should be added in the same manner.</p>
 <p>Some test files use <code>const</code> declarations to
 <code>require</code> scripts instead of <code>import</code>,
 because those files were written before <code>import</code> was available.
-We prefer to use <code>import</code> because it allows for
-<a href="https://webpack.js.org/guides/tree-shaking/">tree shaking in Webpack</a>,
+We prefer to use <code>import</code> because it allows for tree shaking,
 meaning if two modules are importing the same module
 it should only be included in the bundle once,
 whereas with <code>require</code> it would be included twice.</p>

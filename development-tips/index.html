@@ -130,6 +130,8 @@
         
             <li><a class="toctree-l4" href="#watching-files-for-changes">Watching files for changes</a></li>
         
+            <li><a class="toctree-l4" href="#outputting-browser-support-metrics">Outputting browser support metrics</a></li>
+        
             <li><a class="toctree-l4" href="#developing-on-nested-satellite-apps">Developing on nested satellite apps</a></li>
         
         </ul>
@@ -199,11 +201,11 @@ that allows for easy and quick configuration of editors for
 Feel free to <a href="https://editorconfig.org/#download">install a plugin</a> for your editor.</p>
 <h2 id="main-front-end-templateasset-locations">Main front-end template/asset locations<a class="headerlink" href="#main-front-end-templateasset-locations" title="Permanent link">¶</a></h2>
 <p><strong>Templates</strong> that are served by the Django server: <code>cfgov/jinja2/v1</code></p>
-<p><strong>Static assets</strong> prior to processing (combilation, minification, etc.):
+<p><strong>Static assets</strong> prior to processing (compilation, minification, etc.):
 <code>cfgov/unprocessed</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>After running <code>gulp build</code> (or <code>./setup.sh</code>) the site's assets are copied over to <code>cfgov/static_built</code>,
+<p>After running <code>yarn build</code> (or <code>./setup.sh</code>) the site's assets are copied over to <code>cfgov/static_built</code>,
 ready to be served by Django.</p>
 </div>
 <h2 id="installing-new-front-end-dependencies">Installing new front-end dependencies<a class="headerlink" href="#installing-new-front-end-dependencies" title="Permanent link">¶</a></h2>
@@ -218,12 +220,17 @@ ready to be served by Django.</p>
   <code>yarn cache clean</code>.</li>
 </ul>
 <h2 id="watching-files-for-changes">Watching files for changes<a class="headerlink" href="#watching-files-for-changes" title="Permanent link">¶</a></h2>
-<p>Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using <code>gulp watch</code> or <code>yarn gulp watch</code>.</p>
+<p>Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using <code>yarn watch</code>.</p>
+<h2 id="outputting-browser-support-metrics">Outputting browser support metrics<a class="headerlink" href="#outputting-browser-support-metrics" title="Permanent link">¶</a></h2>
+<p>Within the root directory, run <code>npx browserslist</code> to output the set of browser
+targets given to <code>esbuild</code> (for JS) and <code>autoprefixer</code> (CSS) transpiling.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You must build the assets first, so you may want a command like:
-<pre class="highlight"><code>./setup.sh docker &amp;&amp; yarn gulp watch</code></pre></p>
 </div>
+<p>A browserslist string is used in <code>package.json</code>.
+  See the
+  <a href="https://github.com/browserslist/browserslist#full-list">browserslist docs</a>
+  for information on this string and the defaults.</p>
 <h2 id="developing-on-nested-satellite-apps">Developing on nested satellite apps<a class="headerlink" href="#developing-on-nested-satellite-apps" title="Permanent link">¶</a></h2>
 <p>Some projects can sit inside consumerfinance.gov, but manage their own asset
 dependencies. These projects have their own <code>package.json</code> and base templates.</p>
@@ -233,18 +240,10 @@ dependencies. These projects have their own <code>package.json</code> and base t
 <li>List an app's own dependencies in
   <code>cfgov/unprocessed/apps/[project namespace]/package.json</code>.</li>
 </ul>
-<h3 id="webpack">Webpack<a class="headerlink" href="#webpack" title="Permanent link">¶</a></h3>
+<h3 id="app-build-scripts">App build scripts<a class="headerlink" href="#app-build-scripts" title="Permanent link">¶</a></h3>
 <ul>
-<li>Apps may include their own <code>webpack-config.js</code> configuration that adjusts how
-  their app-specific assets should be built. This configuration appears in
-  <code>cfgov/unprocessed/apps/[project namespace]/webpack-config.js</code>.</li>
-</ul>
-<h3 id="browserslist">Browserslist<a class="headerlink" href="#browserslist" title="Permanent link">¶</a></h3>
-<ul>
-<li>Apps may include a
-  <a href="https://github.com/browserslist/browserslist#config-file">browserslist config</a>
-  file, which is automatically picked up by <code>@babel/preset-env</code> inside the
-  webpack config, if no <code>browsers</code> option is supplied.</li>
+<li>Apps may include their own scripts to run during the build process
+  These must be <code>require</code>d from <code>esbuild/build.js</code></li>
 </ul>
 <h3 id="adding-images">Adding Images<a class="headerlink" href="#adding-images" title="Permanent link">¶</a></h3>
 <ul>
