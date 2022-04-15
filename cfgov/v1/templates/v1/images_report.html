@@ -6,13 +6,10 @@
             <thead>
                 <tr>
                     <th>
-                        ID
-                    </th>
-                    <th>
                         Title
                     </th>
                     <th>
-                        File
+                        Size (kb)
                     </th>
                     <th>
                         Collection
@@ -29,36 +26,33 @@
                 </tr>
             </thead>
             <tbody>
-                {% for document in object_list %}
+                {% for image in object_list %}
                     <tr>
                         <td>
-                            {{ document.id }}
-                        </td>
-                        <td>
-                            {{ document.title }}
-                        </td>
-                        <td>
-                            <a href="https://www.consumerfinance.gov{{ document.url }}">
-                                {{ document.filename }}
+                            <a href="{{ image.file.url }}">
+                                {{ image.title }}
                             </a>
                         </td>
                         <td>
-                            {{ document.collection }}
+                            {{ image.file_size | filesizeformat }}
                         </td>
                         <td>
-                            {{ document.tags.names|join:", " }}
+                            {{ image.collection }}
                         </td>
                         <td>
-                            {{ document.created_at }}
+                            {{ image.tags.names|join:", " }}
                         </td>
                         <td>
-                            {{ document.uploaded_by_user }}
+                            {{ image.created_at }}
+                        </td>
+                        <td>
+                            {{ image.uploaded_by_user }}
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <p>There are no documents in the document library.</p>
+        <p>There are no images in the image library.</p>
     {% endif %}
 {% endblock %}
