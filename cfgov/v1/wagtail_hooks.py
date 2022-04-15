@@ -39,7 +39,6 @@ from v1.template_debug import (
 from v1.util import util
 from v1.views.reports import (
     DocumentsReportView,
-    EnforcementActionsReportView,
     ImagesReportView,
     PageMetadataReportView,
 )
@@ -291,27 +290,6 @@ def register_documents_report_url():
             r"^reports/documents/$",
             DocumentsReportView.as_view(),
             name="documents_report",
-        ),
-    ]
-
-
-@hooks.register("register_reports_menu_item")
-def register_enforcements_actions_report_menu_item():
-    return MenuItem(
-        "Enforcement Actions",
-        reverse("enforcement_report"),
-        classnames="icon icon-" + EnforcementActionsReportView.header_icon,
-        order=700,
-    )
-
-
-@hooks.register("register_admin_urls")
-def register_documents_report_url():
-    return [
-        re_path(
-            r"^reports/enforcement-actions/$",
-            EnforcementActionsReportView.as_view(),
-            name="enforcement_report",
         ),
     ]
 
