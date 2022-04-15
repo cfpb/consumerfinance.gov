@@ -151,4 +151,3 @@ class ImagesReportView(ReportView):
             .order_by("-created_at")
             .prefetch_related("tags")
         )
-        
