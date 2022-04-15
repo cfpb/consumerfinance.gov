@@ -2,13 +2,9 @@
 /* eslint max-statements: ["error", 30] */
 /* eslint max-lines-per-function: ["error", 75] */
 /* eslint consistent-return: [0] */
-// Polyfill Promise for IE11
-import 'core-js/features/promise';
-
 import Highcharts from 'highcharts/highstock';
 import Papa from 'papaparse';
 import accessibility from 'highcharts/modules/accessibility';
-import fetch from 'cross-fetch';
 import cloneDeep from 'lodash.clonedeep';
 import chartHooks from './chart-hooks.js';
 import defaultBar from './bar-styles.js';

@@ -25,7 +25,6 @@ The standard technology stack for development of consumerfinance.gov within the 
   Used for full-text search capabilities and content indexing.
 - [Node](http://nodejs.org) and [yarn](https://yarnpkg.com/):
   Used for downloading and managing front-end dependencies and assets. Front-end dependencies are listed in the project's [package.json](https://github.com/cfpb/consumerfinance.gov/blob/main/package.json) file.
-- [Gulp](https://gulpjs.com/) for running tasks, including compiling front-end assets and running front-end tests.
 - [pyenv](https://github.com/pyenv/pyenv)
 - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
 

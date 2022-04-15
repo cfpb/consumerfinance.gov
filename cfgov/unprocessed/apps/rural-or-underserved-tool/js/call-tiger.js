@@ -1,4 +1,3 @@
-require( 'es6-promise' ).polyfill();
 const jsonP = require( 'jsonp-p' ).default;
 
 /**
