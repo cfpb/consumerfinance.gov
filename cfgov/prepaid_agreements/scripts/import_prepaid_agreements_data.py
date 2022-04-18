@@ -62,7 +62,9 @@ def import_agreements_data(agreements_data):
         )
         created_time = created_time.replace(tzinfo=pytz.timezone("EST"))
 
-        product_id = item["product_id"].replace("PRODUCT-", "")
+        product_id = (
+            item["product_id"].replace("PRODUCT-", "").replace("AGMNT-", "")
+        )
         product = PrepaidProduct.objects.get(pk=product_id)
         url = S3_PATH + item["agreements_files_location"]
 
