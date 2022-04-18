@@ -25,8 +25,6 @@ const styledApps = [
 
 const cssPaths = [
   `${ css }/main.less`,
-  `${ css }/header.less`,
-  `${ css }/footer.less`,
   ...getAll( `${ css }/on-demand/`, /.less$/ ),
   ...styledApps.map( app => `${ apps }/${ app }/css/main.less` )
 ];
