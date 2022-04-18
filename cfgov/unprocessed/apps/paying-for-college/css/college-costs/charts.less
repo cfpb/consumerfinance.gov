@@ -1,41 +1,41 @@
 .college-costs {
-	&_tool-section__school-results {
-		& .highcharts-plot-band {
-		    fill-opacity: 1;
+  &_tool-section__school-results {
+    & .highcharts-plot-band {
+      fill-opacity: 1;
 
-			&:first-child {
-				fill: @college-costs-chart-min;
-			}
-			&:nth-child(2) {
-				fill: @college-costs-chart-median;
-			}
-			&:last-child {
-				fill: @college-costs-chart-max;
-			}
-		}
-	}
+      &:first-child {
+        fill: @college-costs-chart-min;
+      }
+      &:nth-child( 2 ) {
+        fill: @college-costs-chart-median;
+      }
+      &:last-child {
+        fill: @college-costs-chart-max;
+      }
+    }
+  }
 
-	#affording-your-loans_chart,
-	#max-debt-guideline_chart {
-		.highcharts-plot-line {
-			stroke: #20aa3f;
-			stroke-width: 3px;
-		}
-	}
+  #affording-your-loans_chart,
+  #max-debt-guideline_chart {
+    .highcharts-plot-line {
+      stroke: #20aa3f;
+      stroke-width: 3px;
+    }
+  }
 
-	#make-a-plan_chart {
-		.highcharts-plot-line {
-			stroke: #d14124;
-			stroke-width: 3px;
-		}
-	}
+  #make-a-plan_chart {
+    .highcharts-plot-line {
+      stroke: #d14124;
+      stroke-width: 3px;
+    }
+  }
 
-	&_chart {
-		& + p.median-salary-note {
-			font-size: unit( 12px / @base-font-size-px, rem );
-			margin-top: unit( 15px / @base-font-size-px, rem );
-		    padding-top: unit( 15px / @base-font-size-px, rem );
-		    border-top: black 1px solid;
-		}
-	}
+  &_chart {
+    & + p.median-salary-note {
+      font-size: unit( 12px / @base-font-size-px, rem );
+      margin-top: unit( 15px / @base-font-size-px, rem );
+      padding-top: unit( 15px / @base-font-size-px, rem );
+      border-top: black 1px solid;
+    }
+  }
 }

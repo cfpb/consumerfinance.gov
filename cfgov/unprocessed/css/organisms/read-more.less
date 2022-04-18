@@ -42,18 +42,18 @@
 */
 
 .o-expandable__read-more-toggle {
-    .o-expandable_content__collapsed {
-        // shows approx. 4 lines of content
-        // !important needed to override the default o-expandable_content__collapsed
-        // max-height
-        max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
-        overflow: hidden;
-        position: relative;
-    }
+  .o-expandable_content__collapsed {
+    // shows approx. 4 lines of content
+    // !important needed to override the default o-expandable_content__collapsed
+    // max-height
+    max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
+    overflow: hidden;
+    position: relative;
+  }
 
-    .o-expandable_target {
-        font-weight: 500;
-        margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
-        width: auto;
-    }
+  .o-expandable_target {
+    font-weight: 500;
+    margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+    width: auto;
+  }
 }
