@@ -1,7 +1,7 @@
 from django.db import models
 
 
-AUTOCOMPLETE_MAX_CHARS = 50
+AUTOCOMPLETE_MAX_CHARS = 75
 
 
 class Synonym(models.Model):

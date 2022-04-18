@@ -64,7 +64,7 @@
     "enforce": "enforce-node-version",
     "preinstall": "node scripts/preinstall.js",
     "postinstall": "yarn enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
-    "lint": "eslint --ignore-pattern node_modules './cfgov/unprocessed/**/*.js' './test/**/*.js' && stylelint \"./cfgov/unprocessed/**/*.{css,less}\"",
+    "lint": "eslint --ignore-pattern node_modules './{cfgov/unprocessed,config,esbuild,scripts,test}/**/*.js' && stylelint './cfgov/unprocessed/**/*.{css,less}'",
     "jest": "jest",
     "test": "yarn lint && yarn jest",
     "snyk": "snyk test",
