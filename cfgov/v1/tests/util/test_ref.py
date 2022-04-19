@@ -1,25 +1,6 @@
-import itertools
 from unittest import TestCase
 
-from v1.util.ref import (
-    categories,
-    get_appropriate_categories,
-    get_category_children,
-)
-
-
-class TestCategories(TestCase):
-    def test_no_duplicate_slugs(self):
-        page_categories = dict(categories).values()
-        slugs = list(
-            itertools.chain(
-                *(
-                    dict(page_category).keys()
-                    for page_category in page_categories
-                )
-            )
-        )
-        self.assertCountEqual(slugs, set(slugs))
+from v1.util.ref import get_appropriate_categories, get_category_children
 
 
 class TestGetAppropriateCategories(TestCase):
