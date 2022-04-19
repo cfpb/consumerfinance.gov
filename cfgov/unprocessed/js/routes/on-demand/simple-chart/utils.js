@@ -159,11 +159,35 @@ function extractSeries( rawData, { series, xAxisSource, chartType } ) {
   return null;
 }
 
+function getProjectedDate( date ) {
+  let humanFriendly = null;
+  let timestamp = null;
+  let month = null;
+  let year = null;
+  const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+
+  if ( typeof date === 'number' && date.toString().length >= 12 && date.toString().length <= 13 ) {
+
+    month = new Date( date ).getUTCMonth();
+    month = months[month];
+    year = new Date( date ).getUTCFullYear();
+
+    humanFriendly = month + ' ' + year;
+    timestamp = date;
+  }
+
+  return {
+    humanFriendly: humanFriendly,
+    timestamp: timestamp
+  };
+}
+
 
 export {
   alignMargin,
   formatSeries,
   makeFormatter,
   overrideStyles,
-  extractSeries
+  extractSeries,
+  getProjectedDate
 };
