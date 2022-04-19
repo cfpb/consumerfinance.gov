@@ -177,6 +177,7 @@
     }
 
     &_image-container {
+        position: relative;
         grid-area: image;
 
         .respond-to-max( @bp-sm-max, {
@@ -209,10 +210,6 @@
         display: block;
         margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
     }
-}
-
-.o-post-preview_image-container {
-    position: relative;
 }
 
 /* topdoc
