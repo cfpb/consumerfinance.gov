@@ -13,11 +13,6 @@ max-empty-lines -
 no-descending-specificity -
   Turned off, but probably shouldn't be.
   TODO: Turn on this rule and see if issues can be fixed.
-selector-list-comma-newline-after -
-  Turned off because it wraps arguments in Less mixin declarations.
-selector-pseudo-element-colon-notation -
-  Set to 'single' to support IE8.
-  Remove this rule after dropping IE8 CSS support.
 less/color-no-invalid-hex
 less/no-duplicate-variables
   Both of the above settings are turned off till
@@ -49,9 +44,7 @@ module.exports = {
     'max-empty-lines': 2,
     'media-feature-parentheses-space-inside': 'always',
     'no-descending-specificity': null,
-    'selector-list-comma-newline-after': null,
     'selector-pseudo-class-parentheses-space-inside': 'always',
-    'selector-pseudo-element-colon-notation': 'single',
     'less/color-no-invalid-hex': null,
     'less/no-duplicate-variables': null
   }
