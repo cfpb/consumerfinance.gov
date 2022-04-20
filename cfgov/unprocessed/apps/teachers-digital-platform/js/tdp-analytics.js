@@ -609,7 +609,7 @@ const surveyResultsPageLoad = () => {
     return;
   }
 
-  const score = Number(el.dataset.score);
+  const score = Number( el.dataset.score );
   const subtotals = JSON.parse( el.dataset.subtotals );
 
   const wrapper = closest( el, 'div.content_wrapper.tdp-survey' );

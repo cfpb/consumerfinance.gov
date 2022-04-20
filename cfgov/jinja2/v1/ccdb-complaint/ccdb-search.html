@@ -18,7 +18,18 @@
 {%- endblock %}
 
 {% block content_main %}
-  <div id="ccdb-ui-root"></div>
+  <div id="ccdb-ui-root">
+    <div class="js-is-hidden wrapper u-mt60 u-mb60">
+      {% import 'molecules/notification.html' as notification with context %}
+      {{ notification.render(
+           'error',
+           true,
+           'This interactive tool is not supported in your web browser',
+           'Please use a newer browser or download the data.',
+           [{'text': 'Download the data', 'url': '/data-research/consumer-complaints/#download-the-data' }]
+      ) }}
+    </div>
+  </div>
 {% endblock %}
 
 {% block javascript scoped %}

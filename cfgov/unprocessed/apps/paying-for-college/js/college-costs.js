@@ -1,6 +1,3 @@
-import 'core-js/features/promise';
-import 'core-js/features/object';
-import 'core-js/features/dom-collections';
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 import { appView } from './views/app-view.js';
 import { chartView } from './views/chart-view.js';

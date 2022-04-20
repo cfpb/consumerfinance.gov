@@ -4020,7 +4020,7 @@
     },
     {
       "name": "cfgov-django-setup",
-      "description": "common code shared across our django apps that also trigger grunt/gulp builds",
+      "description": "common code shared across our django apps that also trigger frontend builds",
       "repositoryURL": "https://github.com/cfpb/cfgov-django-setup",
       "permissions": {
         "licenses": [

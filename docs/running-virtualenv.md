@@ -114,23 +114,15 @@ password will expire after 60 days).
 
     You'll need to ignore any browser certificate errors.
 
-#### Available Gulp Tasks
-There are a number of important gulp tasks, particularly `build`,
-which will build the project.
-Tasks are invoked via a `yarn` command so that the local gulp-cli can be used.
-Using the `yarn gulp -- --tasks` command you can view all available tasks.
-The important ones are listed below:
-
-```
-yarn gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
-yarn gulp clean           # Remove the contents of the production /dist/ directory.
-yarn gulp docs            # Generate JSDocs from the scripts.
-```
-
 ### yarn commands
-Along with gulp tasks, the following yarn tasks are available:
+The following yarn tasks are available:
 
 ```
+yarn scripts             # Build the Javascript with esbuild
+yarn styles              # Build the Less with esbuild w/ its PostCSSPlugin
+yarn copy                # Move static files to the output directory
+yarn build               # Run scripts, styles, and copy along with app-specific scripts
+yarn watch               # Run the build then watch JS and LESS changes
 yarn lint                # Run frontend linting
 yarn jest                # Run frontend tests
 yarn test                # Run both
