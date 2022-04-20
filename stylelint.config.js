@@ -18,6 +18,10 @@ selector-list-comma-newline-after -
 selector-pseudo-element-colon-notation -
   Set to 'single' to support IE8.
   Remove this rule after dropping IE8 CSS support.
+less/color-no-invalid-hex
+less/no-duplicate-variables
+  Both of the above settings are turned off till
+  https://github.com/ssivanatarajan/stylelint-less/issues/6 is addressed.
 */
 module.exports = {
   extends: 'stylelint-config-recommended-less',
@@ -47,7 +51,9 @@ module.exports = {
     'no-descending-specificity': null,
     'selector-list-comma-newline-after': null,
     'selector-pseudo-class-parentheses-space-inside': 'always',
-    'selector-pseudo-element-colon-notation': 'single'
+    'selector-pseudo-element-colon-notation': 'single',
+    'less/color-no-invalid-hex': null,
+    'less/no-duplicate-variables': null
   }
 };
 
