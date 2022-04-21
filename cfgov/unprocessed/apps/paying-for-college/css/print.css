@@ -1,5 +1,5 @@
 .letterhead {float:left; width:75%;}
-body {font-family: "Avenir Next"; color: #000 !important;}
+body {font-family: "Avenir Next", Arial, sans-serif; color: #000 !important;}
 .wrapper-banner {display:none;}
 .header {display:none;}
 #header {display:none;}
@@ -12,7 +12,7 @@ body {font-family: "Avenir Next"; color: #000 !important;}
 .icon {display:none;}
 
 .guide-content {margin-top:0;}
-.font-xs,.font-s,.font-m,.font-l,.font-xl,.font-xxl {font-family:"Avenir Next";}
+.font-xs,.font-s,.font-m,.font-l,.font-xl,.font-xxl {font-family:"Avenir Next", Arial, sans-serif;}
 .font-m {font-size:14px;}
 .font-xs {font-size:10px;}
 .font-s {font-size:12px; line-height:17px; margin-left: 30px;}
@@ -27,7 +27,7 @@ body {font-family: "Avenir Next"; color: #000 !important;}
 .guide-hero h1 {font-size:32px; line-height:36px; font-weight:500; letter-spacing: .5px; margin-bottom:8px; padding-top:.67em;}
 .guide-hero h2 {font-size:32px; line-height:36px;}
 
-.hero h1 {font-weight:600; line-height:1em; letter-spacing: .5px; font-family:"Avenir Next"; margin-bottom: 45px;}
+.hero h1 {font-weight:600; line-height:1em; letter-spacing: .5px; font-family:"Avenir Next", Arial, sans-serif; margin-bottom: 45px;}
 .sub-hero {font-size:24px; line-height:1.67em; margin-top:0px; margin-left:0px; margin-bottom: .67em; font-weight:500;}
 
 .label {font-size: 14px; line-height: 20px; font-weight: 400; }
@@ -45,12 +45,10 @@ body {font-family: "Avenir Next"; color: #000 !important;}
 .related-resources br{display:none;}
 .related-resources h2{color: #212121; border-top: none; font-size: 14px;}
 .uc {text-transform:uppercase; font-weight:500; }
-.tb {}
 .related-resources p {margin: 0px; font-size: 14px; line-height: 20px;}
 
-#its-important { }
 #print-questions {display:block; text-transform: none; font-size: 18px; font-weight: 400; color:#212121;}
-#print-questions ul, li {font-family:"Georgia"; font-size: 12px;}
+#print-questions ul, li {font-family:"Georgia", Arial, sans-serif; font-size: 12px;}
 #print-questions h2 {}
 
 .bubble-top-text {font-size:16px; line-height:20px; margin-top:15px; text-transform:none; font-weight:500; letter-spacing:0;}
@@ -83,11 +81,11 @@ h3 {font-size:1.5em; font-weight:500; margin-bottom: .4em; margin-top: 1.4em; te
 h4 {font-size:1em; text-transform:none; font-weight:500; margin-bottom: -.5em; margin-top: 1em;}
 #takeaction h1 {text-transform: none;}
 
-p,p.body {font-size:12px; font-family: Georgia; margin-bottom:10px; }
+p,p.body {font-size:12px; font-family: Georgia, Arial, sans-serif; margin-bottom:10px; }
 
 table {}
 th {font-size:1.5em;line-height:1em;font-weight:500;}
-td {font-family:georgia;font-size:14px;line-height:20px;text-align:center;font-weight:500;}
+td {font-family:georgia, Arial, sans-serif;font-size:14px;line-height:20px;text-align:center;font-weight:500;}
 
 
 .preheading-s,.preheading-l,.preheading-xl {text-transform:uppercase; font-weight:500;}
@@ -99,7 +97,7 @@ td {font-family:georgia;font-size:14px;line-height:20px;text-align:center;font-w
 .nc {text-transform:none; font-weight:500; letter-spacing:0px; margin-bottom: -.3em; }
 
 .s  {font-weight:normal!important; font-style:italic;}
-.ss {font-family:"Avenir Next";}
+.ss {font-family:"Avenir Next", Arial, sans-serif;}
 
     table {border-collapse:separate; border-spacing:18px 0px;padding-bottom:20px;}
 td,th { vertical-align:top;padding:10px 0px 10px;text-align:left;}
@@ -144,7 +142,7 @@ table td{border:0px;}
 .thick-line {border-top: 3px solid #212121; font-size:12px;}
 .line {border-top:1px solid #212121;}
 td{padding: 10px 0px 10px;}
-td, .smlr-text{font-family: georgia;font-size: 12px;line-height: 20px;font-weight: 500;}
+td, .smlr-text{font-family: georgia, Arial, sans-serif;font-size: 12px;line-height: 20px;font-weight: 500;}
 
 /* Modals */
 .modal {display:none;}
@@ -162,11 +160,9 @@ td, .smlr-text{font-family: georgia;font-size: 12px;line-height: 20px;font-weigh
 #print-check {margin-right:5px; height: 10px; width: 10px;}
 
 #intro-blocks-p {margin-left: 60px;}
-#print-ask-cfpb li {font-size:14px;line-height:20px;font-family: Georgia; margin:0 0 10px;}
+#print-ask-cfpb li {font-size:14px;line-height:20px;font-family: Georgia, Arial, sans-serif; margin:0 0 10px;}
 .bullet {float:left; display:inline-block;height:25px;width:25px;text-align:center;line-height:26px;font-size:1.5em;border-radius:100%;-moz-border-radius:100%;-webkit-border-radius:100%; margin-right:5px;font-weight:600; margin-top:-6px;}
 
-.ico-criteria_repayment{ background-position: -235px 0; width: 20px; height: 19px; }
-.print-hide{display:none;}
 .accordion-item{display:block !important;}
 
 .ico-criteria_repayment{ background-position: -235px 0; width: 20px; height: 19px; }

@@ -1,7 +1,7 @@
 const HIGHCHARTS_SETTINGS = {
   colors: [ '#ADDC91' ],
   style: {
-    fontFamily: '"Avenir Next", Arial, Helvetica, sans-serif',
+    fontFamily: '"Avenir Next", Arial, sans-serif',
     fontSize:   '13px'
   },
   chart: {

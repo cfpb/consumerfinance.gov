@@ -198,9 +198,7 @@ body {
 
 // Create a bar for hover purposes to the left of an item.
 .u-bar-left( @color, @position: -@menu_link_hover_bar_px - 10px ) {
-    & {
-        position: relative;
-    }
+    position: relative;
 
     &:before {
         position: absolute;
@@ -216,9 +214,7 @@ body {
 // Focus item appearance.
 .u-focus-rectangle() {
     // Position focus rectangle relative to parent container.
-    & {
-        position: relative;
-    }
+    position: relative;
 
     // Remove default focus outline.
     &:focus {
@@ -636,7 +632,7 @@ body {
                 padding-top: unit( 15px / 18px, em );
                 padding-bottom: unit( 15px / 18px, em );
 
-                // Hide ">" icon when we don't have children.
+                // Hide ">" icon when we do not have children.
                 &-icon-post {
                     display: none;
                 }
@@ -835,7 +831,7 @@ body {
                 }
 
                 // This creates the hover/selection line.
-                // We can't use a border here as it will get a slant on
+                // We cannot use a border here as it will get a slant on
                 // the edges because there are transparent left/right
                 // borders.
                 &:after {
@@ -871,7 +867,7 @@ body {
                     border-bottom: none !important;
                 }
 
-                // Don't show hover when menu is expanded.
+                // Do not show hover when menu is expanded.
                 &[aria-expanded="true"]:hover,
                 &:active:hover {
                     border-bottom: none;
@@ -1009,9 +1005,9 @@ body {
                 padding-right: 0;
             }
 
-            // Move the first link in each mega menu list group up a bit so that it aligns
-            // with the featured links box. We do this instead of removing the top padding
-            // to preserve the links' hover state.
+            // Move the first link in each mega menu list group up a bit so that
+            // it aligns with the featured links box. We do this instead of
+            // removing the top padding to preserve the link hover state.
             &-list:not( &-list__featured ) &-item:first-child &-link {
                 margin-top: unit( -12px / @base-font-size-px, em );
             }

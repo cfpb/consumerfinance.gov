@@ -207,9 +207,10 @@ function _handleInputChange( event ) {
   clearTimeout( _keyupDelay );
   _keyupDelay = setTimeout( function() {
     const searchTerm = schoolView._searchBox.value.trim();
-    // TODO - clean up searchbox text, remove non-alphanumeric characters
-    // Searches of less than 3 characters are prevented in the API fetch, so
-    // we represent that visually by hiding the search results DIV
+
+    /* TODO - clean up searchbox text, remove non-alphanumeric characters
+       Searches of less than 3 characters are prevented in the API fetch, so
+       we represent that visually by hiding the search results DIV */
     if ( searchTerm.length < 3 ) {
       schoolView._searchResults.classList.remove( 'active' );
     } else {
@@ -266,7 +267,7 @@ function _handleResultButtonClick( event ) {
   // If there's a school_id, then proceed with schoolInfo
   if ( typeof button.dataset.school_id !== 'undefined' ) {
     const iped = button.dataset.school_id;
-    if ( iped !== null && typeof iped !== 'undefined') {
+    if ( iped !== null && typeof iped !== 'undefined' ) {
       // Add schoolData to schoolModel
       updateSchoolData( iped );
     }
