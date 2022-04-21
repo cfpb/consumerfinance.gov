@@ -159,6 +159,7 @@ function extractSeries( rawData, { series, xAxisSource, chartType } ) {
   return null;
 }
 
+// Converts to human readable date from Epoch format
 function getProjectedDate( date ) {
   let humanFriendly = null;
   let timestamp = null;

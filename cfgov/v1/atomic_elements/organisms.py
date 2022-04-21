@@ -24,7 +24,6 @@ from v1.atomic_elements import atoms, molecules
 from v1.atomic_elements.tables import AtomicTableBlock
 from v1.util import ref
 
-
 class AskSearch(blocks.StructBlock):
     show_label = blocks.BooleanBlock(
         default=True, required=False, help_text="Whether to show form label."
@@ -533,6 +532,15 @@ class SimpleChart(blocks.StructBlock):
         help_text="A JSON object with style overrides for the underlying "
         "Highcharts chart. No object merging is done, nested objects should "
         'be referenced with dot notation: {"tooltip.shape": "circle"}',
+    )
+
+    projected_months = blocks.IntegerBlock(
+        blank=True,
+        null=True,
+        min_value=0,
+        max_value=12,
+        help_text='How many months of the recent data are projected?',
+        required=False
     )
 
     credits = blocks.CharBlock(
