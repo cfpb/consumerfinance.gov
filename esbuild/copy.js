@@ -1,20 +1,22 @@
 const { mkdir, copyFile } = require( 'fs' ).promises;
-const { dirname } = require( 'path' );
+const { dirname, resolve } = require( 'path' );
 const { getFiles, copyAll } = require( './utils.js' );
 const { unprocessed, modules } = require( '../config/environment.js' ).paths;
 
 module.exports = async function( baseConfig ) {
-  const files = await getFiles( unprocessed );
-  const staticFiles = files.filter( v => !v.match( /.js$|.less$|.css$/ ) );
+  const resolvedBase = resolve( unprocessed );
+  const files = await getFiles( resolvedBase );
 
-  const inDirs = [ ...new Set( staticFiles.map( v => dirname( v ) ) ) ];
+  const staticFiles = files.filter( v => !v.match( /\/\.[-.\w]*$|\.js$|\.less$|\.css$/i ) );
+
+  const inDirs = [
+    ...new Set( staticFiles.map( v => dirname( v ) ) )
+  ];
+
   const outDirs = [
-    ...inDirs.map( v => v.replace( unprocessed, baseConfig.outdir ) ),
+    ...inDirs.map( v => v.replace( resolvedBase, baseConfig.outdir ) ),
     // Create specific icon directory
-    `${ baseConfig.outdir }/icons`,
-    // Hande prebuilt lightbox dep
-    ...[ '', '/images', '/js', '/css' ]
-      .map( v => `${ baseConfig.outdir }/lightbox2${ v }` )
+    `${ baseConfig.outdir }/icons`
   ];
 
   // Make output directories
@@ -22,7 +24,7 @@ module.exports = async function( baseConfig ) {
 
   // Copy files to output directories
   staticFiles.forEach( f => copyFile(
-    f, f.replace( unprocessed, baseConfig.outdir )
+    f, f.replace( resolvedBase, baseConfig.outdir )
   ) );
 
   // Handle files that live at the root of the site

@@ -21,7 +21,7 @@ def mark_deleted_products(valid_products):
 def import_products_data(products_data):
     imported_products = []
     for item in products_data:
-        pk = item["product_id"].replace("PRODUCT-", "")
+        pk = item["product_id"].replace("PRODUCT-", "").replace("AGMNT-", "")
         imported_products.append(pk)
 
         withdrawal_date = item["withdrawal_date"]
@@ -48,8 +48,7 @@ def import_products_data(products_data):
 
 def import_agreements_data(agreements_data):
     for item in agreements_data:
-        pk = item["agreement_id"].replace("IFL-", "")
-
+        pk = item["agreement_id"].replace("IFL-", "").replace("AGMNT-", "")
         effective_date = item["effective_date"]
         if effective_date and effective_date != "None":
             effective_date = datetime.strptime(
@@ -63,7 +62,9 @@ def import_agreements_data(agreements_data):
         )
         created_time = created_time.replace(tzinfo=pytz.timezone("EST"))
 
-        product_id = item["product_id"].replace("PRODUCT-", "")
+        product_id = (
+            item["product_id"].replace("PRODUCT-", "").replace("AGMNT-", "")
+        )
         product = PrepaidProduct.objects.get(pk=product_id)
         url = S3_PATH + item["agreements_files_location"]
 
