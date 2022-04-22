@@ -528,7 +528,7 @@ class SimpleChart(blocks.StructBlock):
 
     transform = blocks.CharBlock(
         required=False,
-        help_text="Name of the javascript function in chart-hooks.js to run "
+        help_text="Name the javascript function in chart-hooks.js to run "
         "on the provided data before handing it to the chart",
     )
 
@@ -536,6 +536,10 @@ class SimpleChart(blocks.StructBlock):
         required=False,
         help_text='Array of JSON objects of the form {"key": <key>, '
         '"label": <label>} to filter the underlying chart data on',
+    )
+
+    notes = blocks.TextBlock(
+        required=False, help_text="General chart information"
     )
 
     style_overrides = blocks.TextBlock(
@@ -561,10 +565,6 @@ class SimpleChart(blocks.StructBlock):
 
     download_text = blocks.CharBlock(
         required=False, help_text="Custom text for the chart download field"
-    )
-
-    notes = blocks.TextBlock(
-        required=False, help_text="General chart information"
     )
 
     class Meta:
