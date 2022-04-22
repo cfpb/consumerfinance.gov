@@ -2,8 +2,6 @@ import logging
 
 from django.db import models
 
-from wagtail.core.models import PageManager
-
 from dateutil import parser
 
 from v1.models import BrowsePage
@@ -381,7 +379,6 @@ class MortgagePerformancePage(BrowsePage):
     and related data visualizations.
     """
 
-    objects = PageManager()
     template = "browse-basic/index.html"
 
     def get_mortgage_meta(self):

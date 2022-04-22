@@ -4,7 +4,6 @@ from wagtail.admin.edit_handlers import (
     TabbedInterface,
 )
 from wagtail.core.fields import StreamField
-from wagtail.core.models import PageManager
 from wagtail.search import index
 
 from v1 import blocks as v1_blocks
@@ -46,8 +45,6 @@ class LandingPage(CFGOVPage):
     )
 
     template = "landing-page/index.html"
-
-    objects = PageManager()
 
     search_fields = CFGOVPage.search_fields + [
         index.SearchField("content"),

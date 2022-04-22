@@ -5,7 +5,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
-from wagtail.core.models import PageManager
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
@@ -51,5 +50,3 @@ class CampaignPage(CFGOVPage):
 
     # Sets page to only be createable as the child of the homepage
     parent_page_types = ["v1.HomePage"]
-
-    objects = PageManager()

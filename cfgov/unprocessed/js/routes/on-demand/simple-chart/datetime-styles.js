@@ -1,5 +1,5 @@
 /* eslint complexity: ["error", 10] */
-import trackChartEvent from './util.js';
+import trackChartEvent from './analytics.js';
 import styles from './line-styles.js';
 
 const msYear = 365 * 24 * 60 * 60 * 1000;
@@ -24,7 +24,7 @@ const datetime = {
         if ( evt.trigger === 'navigator' ) {
           trackChartEvent( evt, 'Slider Moved' );
         } else if ( evt.trigger === 'rangeSelectorButton' ) {
-          trackChartEvent( evt, 'Time Range Selected' );
+          trackChartEvent( evt, 'Time Range Selected', evt.rangeSelectorButton.text );
         }
       }
     }

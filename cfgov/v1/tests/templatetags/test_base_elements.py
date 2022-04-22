@@ -18,8 +18,3 @@ class TestHeaderFooter(TestCase):
         tmpl = Template("{% load base_elements %}{% include_footer %}")
         html = tmpl.render(self.context)
         self.assertIn('<footer class="o-footer">', html)
-
-    def test_render_modernizr(self):
-        tmpl = Template("{% load base_elements %}{% include_modernizr %}")
-        html = tmpl.render(self.context)
-        self.assertIn("window.Modernizr", html)

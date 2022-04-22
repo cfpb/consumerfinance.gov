@@ -312,6 +312,7 @@ TAGGIT_CASE_INSENSITIVE = True
 WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
+WAGTAILDOCS_SERVE_METHOD = "direct"
 
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
@@ -420,10 +421,6 @@ DATE_FORMAT = "n/j/Y"
 
 GOOGLE_ANALYTICS_ID = ""
 GOOGLE_ANALYTICS_SITE = ""
-
-# Regulations.gov environment variables
-REGSGOV_BASE_URL = os.environ.get("REGSGOV_BASE_URL")
-REGSGOV_API_KEY = os.environ.get("REGSGOV_API_KEY")
 
 # CDNs
 WAGTAILFRONTENDCACHE = {}

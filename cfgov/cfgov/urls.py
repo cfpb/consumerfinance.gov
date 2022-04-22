@@ -11,6 +11,7 @@ from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
+from wagtail.documents import urls as wagtaildocs_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
@@ -31,14 +32,12 @@ from core.views import (
     CacheTaggedTemplateView,
     ExternalURLNoticeView,
     govdelivery_subscribe,
-    regsgov_comment,
 )
 from housing_counselor.views import (
     HousingCounselorPDFView,
     HousingCounselorView,
 )
 from regulations3k.views import redirect_eregs
-from v1.views.documents import DocumentServeView
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -84,11 +83,6 @@ urlpatterns = [
             template_name="rural-or-underserved/index.html",
         ),
         name="rural-or-underserved",
-    ),
-    re_path(
-        r"^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$",
-        DocumentServeView.as_view(),
-        name="wagtaildocs_serve",
     ),
     re_path(
         r"^home/(?P<path>.*)$",
@@ -234,40 +228,6 @@ urlpatterns = [
             namespace="govdelivery",
         ),
     ),
-    re_path(r"^regulation-comment/new/$", regsgov_comment, name="reg_comment"),
-    re_path(
-        r"^regulation-comment/",
-        include(
-            (
-                [
-                    re_path(
-                        r"^success/$",
-                        TemplateView.as_view(
-                            template_name="regulation-comment/success/index.html"
-                        ),
-                        # 'core.views.comment_success',
-                        name="success",
-                    ),
-                    re_path(
-                        r"^error/$",
-                        TemplateView.as_view(
-                            template_name="regulation-comment/error/index.html"
-                        ),
-                        name="user_error",
-                    ),
-                    re_path(
-                        r"^server-error/$",
-                        TemplateView.as_view(
-                            template_name="regulation-comment/server-error/index.html"
-                        ),
-                        name="server_error",
-                    ),
-                ],
-                "reg_comment",
-            ),
-            namespace="reg_comment",
-        ),
-    ),
     re_path(
         r"^feed/$",
         RedirectView.as_view(url="/about-us/blog/feed/", permanent=True),
@@ -305,13 +265,6 @@ urlpatterns = [
             ),
             namespace="transcripts",
         ),
-    ),
-    re_path(
-        r"^paying-for-college/repay-student-debt/$",
-        TemplateView.as_view(
-            template_name="paying-for-college/repay_student_debt.html"
-        ),
-        name="pfc-repay",
     ),
     re_path(
         r"^paying-for-college2/",
@@ -500,6 +453,8 @@ urlpatterns = [
         akamai_no_store(empty_200_response),
     ),
 
+    path("documents/", include(wagtaildocs_urls)),
+     
     # Health check
     re_path(r'^ht/', include('health_check.urls')),
 ]

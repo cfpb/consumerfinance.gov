@@ -4,6 +4,34 @@
     });
 }
 
+.content_level--1 {
+    max-width: 1230px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content_level-1 {
+    max-width: 930px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content_level-2 {
+    max-width: 870px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content_level-3 {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content_main__flush-inner {
+    padding-top: 0;
+}
+
 /* topdoc
   name: Half top padding
   family: cf-layout
@@ -275,51 +303,6 @@
  .m-list__flush-left {
      padding-left: unit( 18px / @base-font-size-px, em );
  }
-
-
-// Fix hero padding on medium screens to spec in Design System
-.respond-to-min( @bp-sm-min, {
-    .m-hero_wrapper {
-        padding-right: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-    }
-} );
-
-
-// Jumbo hero for CampaignPages and the HomePage
-.m-hero__jumbo {
-    .m-hero_subhead {
-        .lead-paragraph();
-    }
-
-    .respond-to-min( @bp-sm-min, {
-        // margin-top: unit( ( -@grid_gutter-width * 1.5 ) / @base-font-size-px, em);
-        // margin-right: unit( -@grid_gutter-width / @base-font-size-px, em);
-        // margin-left: unit( -@grid_gutter-width / @base-font-size-px, em);
-
-        > .m-hero_wrapper {
-            height: 290px;
-        }
-
-        .m-hero_heading {
-            .heading-1();
-        }
-
-        .m-hero_subhead {
-            .heading-3();
-        }
-    } );
-
-    .respond-to-min( @bp-lg-min, {
-        .m-hero_heading {
-            .superheading();
-        }
-        .m-hero_subhead {
-            .heading-2();
-        }
-    } );
-}
-
 
 // Center content and bleed full-width images into gutters
 // Used on our story pages

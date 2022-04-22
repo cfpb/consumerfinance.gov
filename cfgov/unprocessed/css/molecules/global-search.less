@@ -110,11 +110,8 @@
 
     &_trigger {
         // Hide search unless we have JavaScript (JS).
-        display: none;
-
-        // Only show global search if JavaScript (JS) is enabled.
-        html.js & {
-            display: block;
+        html.no-js & {
+            display: none;
         }
 
         font-weight: 500;
@@ -153,15 +150,12 @@
         left: 0;
 
         &-form {
+            position: absolute;
             width: 100%;
         }
 
         &.u-invisible {
             overflow-x: hidden;
-        }
-
-        &-form {
-            position: absolute;
         }
 
         &[aria-expanded="true"] &-form {
@@ -258,7 +252,7 @@
     .respond-to-min( @bp-sm-min, {
 
         // Override for the .m-btn-inside-input class from the design system.
-        // This is needed because we don't have an icon inside the input
+        // This is needed because we do not have an icon inside the input
         // at the desktop size (there is an icon at the mobile size).
         .m-btn-inside-input .a-text-input {
             padding-right: unit( 14px / @base-font-size-px, em );

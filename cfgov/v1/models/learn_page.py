@@ -19,7 +19,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page, PageManager
+from wagtail.core.models import Page
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
@@ -28,7 +28,7 @@ from localflavor.us.models import USStateField
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
-from v1.models.base import CFGOVPage, CFGOVPageManager
+from v1.models.base import CFGOVPage
 from v1.util.events import get_venue_coords
 
 
@@ -101,8 +101,6 @@ class AbstractFilterPage(CFGOVPage):
     # This page class cannot be created.
     is_creatable = False
 
-    objects = CFGOVPageManager()
-
     search_fields = CFGOVPage.search_fields + [index.SearchField("header")]
 
     @classmethod
@@ -156,8 +154,6 @@ class LearnPage(AbstractFilterPage):
     )
     template = "learn-page/index.html"
 
-    objects = PageManager()
-
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")
     ]
@@ -183,8 +179,6 @@ class DocumentDetailPage(AbstractFilterPage):
     )
     template = "document-detail/index.html"
 
-    objects = PageManager()
-
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")
     ]
@@ -205,8 +199,6 @@ class AgendaItemBlock(blocks.StructBlock):
             required=False,
         )
     )
-
-    objects = PageManager()
 
     class Meta:
         icon = "date"
@@ -346,8 +338,6 @@ class EventPage(AbstractFilterPage):
 
     # Agenda content fields
     agenda_items = StreamField([("item", AgendaItemBlock())], blank=True)
-
-    objects = CFGOVPageManager()
 
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("body"),

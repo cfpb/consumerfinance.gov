@@ -61,10 +61,6 @@ class Well(blocks.StructBlock):
         template = "_includes/organisms/well.html"
 
 
-class WellWithAskSearch(Well):
-    ask_search = AskSearch()
-
-
 class InfoUnitGroup(blocks.StructBlock):
     format = blocks.ChoiceBlock(
         choices=[
@@ -221,44 +217,6 @@ class EmailSignUp(blocks.StructBlock):
         js = ["email-signup.js"]
 
 
-class RegComment(blocks.StructBlock):
-    document_id = blocks.CharBlock(
-        required=True,
-        label="Document ID",
-        help_text=(
-            "Federal Register document ID number to which the comment "
-            "should be submitted. Should follow this format: "
-            "CFPB-YYYY-####-####"
-        ),
-    )
-    generic_regs_link = blocks.BooleanBlock(
-        required=False,
-        default=True,
-        label="Use generic Regs.gov link?",
-        help_text=(
-            "If unchecked, the link to comment at Regulations.gov if "
-            "you want to add attachments will link directly to the "
-            "document given above. Leave this checked if this comment "
-            "form is being published before the full document is live "
-            "at Regulations.gov, then uncheck it when the full "
-            "document has been published."
-        ),
-    )
-    id = blocks.CharBlock(
-        required=False,
-        label="Form ID",
-        help_text=(
-            "Sets the `id` attribute in the form's markup. If not "
-            "set, the form will be assigned a base id of "
-            "`o-reg-comment_` with a random number appended."
-        ),
-    )
-
-    class Meta:
-        icon = "form"
-        template = "_includes/organisms/reg-comment.html"
-
-
 class RelatedPosts(blocks.StructBlock):
     limit = blocks.CharBlock(
         default="3",
@@ -296,15 +254,23 @@ class RelatedPosts(blocks.StructBlock):
         required=False,
     )
 
-    and_filtering = blocks.BooleanBlock(
-        required=False,
-        default=False,
-        label="Match all topic tags",
-        help_text=(
-            "If checked, related posts will only be pulled in if they "
-            "match ALL topic tags set on this page. Otherwise, related "
-            "posts can match any one topic tag."
-        ),
+    tag_filtering = blocks.ChoiceBlock(
+        choices=[
+            (
+                "any",
+                "Include related posts that match ANY topic tags on this page",
+            ),
+            (
+                "all",
+                "Include related posts that match ALL topic tags on this page",
+            ),
+            (
+                "ignore",
+                "IGNORE topic tags when selecting related posts",
+            ),
+        ],
+        required=True,
+        default="any",
     )
 
     alternate_view_more_url = blocks.CharBlock(
@@ -363,7 +329,7 @@ class RelatedPosts(blocks.StructBlock):
             return related_items
 
         tags = page.tags.all()
-        and_filtering = value["and_filtering"]
+        tag_filtering = value["tag_filtering"]
         specific_categories = value["specific_categories"]
         limit = int(value["limit"])
         queryset = (
@@ -377,13 +343,19 @@ class RelatedPosts(blocks.StructBlock):
         for parent in related_types:  # blog, newsroom or events
             # Include children of this slug that match at least 1 tag
             children = Page.objects.child_of_q(Page.objects.get(slug=parent))
-            filters = children & Q(("tags__in", tags))
+            if tag_filtering == "ignore":
+                filters = children
+            else:
+                filters = children & Q(("tags__in", tags))
 
             if parent == "events":
                 # Include archived events matches
                 archive = Page.objects.get(slug="archive-past-events")
                 children = Page.objects.child_of_q(archive)
-                filters |= children & Q(("tags__in", tags))
+                if tag_filtering == "ignore":
+                    filters |= children
+                else:
+                    filters |= children & Q(("tags__in", tags))
 
             if specific_categories:
                 # Filter by any additional categories specified
@@ -395,7 +367,7 @@ class RelatedPosts(blocks.StructBlock):
 
             related_queryset = queryset.filter(filters)
 
-            if and_filtering:
+            if tag_filtering == "all":
                 # By default, we need to match at least one tag
                 # If specified in the admin, change this to match ALL tags
                 related_queryset = match_all_topic_tags(related_queryset, tags)
@@ -606,7 +578,6 @@ class FullWidthText(blocks.StreamBlock):
     reusable_text = v1_blocks.ReusableTextChooserBlock("v1.ReusableText")
     email_signup = EmailSignUp()
     well = Well()
-    well_with_ask_search = WellWithAskSearch()
 
     class Meta:
         icon = "edit"

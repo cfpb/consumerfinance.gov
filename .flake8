@@ -19,13 +19,14 @@ exclude =
     config,
     develop-apps,
     docs,
-    gulp,
+    esbuild,
     requirements,
     node_modules,
     site,
     venv,
 
     # And directories in cfgov that don't have python files to lint
+    cfgov/f,
     cfgov/jinja2,
     cfgov/static_built,
     cfgov/templates,

@@ -49,14 +49,14 @@ install() {
     yarn install
   else
     echo "Installing frontend production dependencies…"
-    yarn install --production --ignore-optional
+    yarn install --production
   fi
 }
 
 # Run tasks to build the project for distribution.
 build() {
   echo "Building project…"
-  yarn run gulp build
+  yarn build
 }
 
 # Fake our font files, if necessary, in public CI

@@ -1,8 +1,3 @@
-import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys';
-import { Cookie } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/grade-level-page';
-import { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
-import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
-
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/';
 const tdpAnalytics = require(

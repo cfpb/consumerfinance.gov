@@ -22,7 +22,7 @@ from wagtailautocomplete.edit_handlers import AutocompletePanel
 from ask_cfpb.models import blocks as ask_blocks
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
-from v1.models import CFGOVPage, CFGOVPageManager, PortalCategory, PortalTopic
+from v1.models import CFGOVPage, PortalCategory, PortalTopic
 from v1.models.snippets import RelatedResource, ReusableText
 
 
@@ -316,8 +316,6 @@ class AnswerPage(CFGOVPage):
     )
 
     template = "ask-cfpb/answer-page.html"
-
-    objects = CFGOVPageManager()
 
     def get_sibling_url(self):
         if self.answer_base:

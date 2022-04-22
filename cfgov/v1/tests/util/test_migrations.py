@@ -11,6 +11,7 @@ from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import (
     get_streamfield_data,
     is_page,
+    migrate_block,
     migrate_page_types_and_fields,
     migrate_stream_field,
     migrate_streamfield_data,
@@ -340,3 +341,26 @@ class MigrateDataTests(SimpleTestCase):
                 },
             ],
         )
+
+    def test_migrate_block_migrated_true_if_data_is_modified(self):
+        def mapper_modifies_data(page_or_revision, data):
+            data["b"] = "d"
+            return data
+
+        modified_data, migrated = migrate_block(
+            self.page, ["a"], {"a": {"b": "c"}}, mapper_modifies_data
+        )
+
+        self.assertTrue(migrated)
+        self.assertEqual(modified_data, {"a": {"b": "d"}})
+
+    def test_migrate_block_migrated_false_if_data_is_modified(self):
+        def mapper_leaves_data_alone(page_or_revision, data):
+            return data
+
+        modified_data, migrated = migrate_block(
+            self.page, ["a"], {"a": {"b": "c"}}, mapper_leaves_data_alone
+        )
+
+        self.assertFalse(migrated)
+        self.assertEqual(modified_data, {"a": {"b": "c"}})

@@ -37,7 +37,11 @@ from v1.template_debug import (
     video_player_test_cases,
 )
 from v1.util import util
-from v1.views.reports import DocumentsReportView, PageMetadataReportView
+from v1.views.reports import (
+    DocumentsReportView,
+    ImagesReportView,
+    PageMetadataReportView,
+)
 
 
 try:
@@ -79,6 +83,14 @@ def register_export_url():
 @hooks.register("before_delete_page")
 def raise_delete_error(request, page):
     raise PermissionDenied("Deletion via POST is disabled")
+
+
+@hooks.register("before_bulk_action")
+def raise_bulk_delete_error(
+    request, action_type, objects, action_class_instance
+):
+    if action_type == "delete":
+        raise PermissionDenied("Deletion via POST is disabled")
 
 
 @hooks.register("after_delete_page")
@@ -278,6 +290,27 @@ def register_documents_report_url():
             r"^reports/documents/$",
             DocumentsReportView.as_view(),
             name="documents_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_images_report_menu_item():
+    return MenuItem(
+        "Images",
+        reverse("images_report"),
+        classnames="icon icon-" + ImagesReportView.header_icon,
+        order=700,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_images_report_url():
+    return [
+        re_path(
+            r"^reports/images/$",
+            ImagesReportView.as_view(),
+            name="images_report",
         ),
     ]
 

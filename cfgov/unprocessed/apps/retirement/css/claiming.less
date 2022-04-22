@@ -51,20 +51,14 @@ form {
   -ms-transform: rotate(-90deg);
 }
 
-.lt-ie9 #claiming-social-security p.y-axis-label {
-  top: 240px;
-  left: 0;
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-}
-
-#claim-canvas {
-  position: relative;
-  left: 40px;
-}
-
 #claiming-social-security {
   font-style: normal;
   font-weight: normal;
+
+  .step-one-hidden, .before-step-two, .step-two,
+  .step-two + hr, .step-three {
+    display: none;
+  }
 }
 
 #claiming-social-security .intro {
@@ -119,13 +113,6 @@ form {
 #claiming-social-security .step-one {
   padding-bottom: 14px;
   padding-top: 45px;
-}
-
-#claiming-social-security {
-  .step-one-hidden, .before-step-two, .step-two,
-  .step-two + hr, .step-three {
-    display: none;
-  }
 }
 
 #claiming-social-security .step-one h2 {
@@ -227,6 +214,9 @@ form {
 }
 
 #claim-canvas {
+  position: relative;
+  left: 40px;
+
   #full-age-benefits-text {
     color: #919395;
   }
@@ -285,8 +275,8 @@ form {
 }
 
 #claiming-social-security input[type='text'] {
-  // TODO: Replace hardcoded color with a color variable for Capital Framework.
-  border-color: #BABBBD;
+  border: 1px solid @gray-80;
+  border-color: @gray-40;
 }
 
 #claiming-social-security .input-labels {
@@ -587,7 +577,7 @@ form {
    Medium screens
 ==================================================================== */
 
-@media (max-width: 1190px) and (min-width: 1100px) {\
+@media (max-width: 1190px) and (min-width: 1100px) {
   #claiming-social-security p.y-axis-label {
     top: 310px;
   }
@@ -982,12 +972,6 @@ form {
   font-weight: bolder;
   font-size: 0.75em;
   text-transform: uppercase;
-}
-.lt-ie9 .allcaps-demi {
-  font-weight: normal !important;
-}
-.lt-ie9 .allcaps-demi {
-  font-weight: normal !important;
 }
 
 /* ====================================================================

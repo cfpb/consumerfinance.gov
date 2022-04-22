@@ -1,3 +1,4 @@
+import copy
 import json
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -116,7 +117,9 @@ def migrate_block(page_or_revision, child_block_path, block_value, mapper):
     is_listblock = _is_listblock(block_value)
 
     if not child_block_path and not is_listblock:
-        return mapper(page_or_revision, block_value), True
+        original_value = copy.deepcopy(block_value)
+        mapped_value = mapper(page_or_revision, block_value)
+        return mapped_value, (original_value != mapped_value)
 
     if is_listblock:
         migrator = migrate_listblock

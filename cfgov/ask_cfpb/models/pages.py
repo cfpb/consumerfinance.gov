@@ -32,7 +32,6 @@ from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (
     CFGOVPage,
-    CFGOVPageManager,
     LandingPage,
     PortalCategory,
     PortalTopic,
@@ -151,8 +150,6 @@ class AnswerLandingPage(LandingPage):
 
     template = "ask-cfpb/landing-page.html"
 
-    objects = CFGOVPageManager()
-
     def get_portal_cards(self):
         """Return an array of dictionaries used to populate portal cards."""
         portal_cards = []
@@ -214,7 +211,6 @@ class PortalSearchPage(
     A routable page type for Ask CFPB portal search ("see-all") pages.
     """
 
-    objects = CFGOVPageManager()
     portal_topic = models.ForeignKey(
         PortalTopic,
         blank=True,
@@ -401,8 +397,6 @@ class PortalSearchPage(
 
 
 class AnswerResultsPage(CFGOVPage):
-
-    objects = CFGOVPageManager()
     answers = []
 
     edit_handler = TabbedInterface(
@@ -436,8 +430,6 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     """A routable page for serving Answers by tag"""
 
     template = "ask-cfpb/answer-search-results.html"
-
-    objects = CFGOVPageManager()
 
     def get_context(self, request, *args, **kwargs):
         if self.language != "en":
@@ -648,8 +640,6 @@ class ArticlePage(CFGOVPage):
     )
 
     template = "ask-cfpb/article-page.html"
-
-    objects = CFGOVPageManager()
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request)

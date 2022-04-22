@@ -8,9 +8,6 @@
 #rental-assistance-finder .m-form-field + .m-form-field {
   margin-top: 15px;
 }
-.no-js .js-is-hidden {
-  display: block !important;
-}
 </style>
 
 <div id="rental-assistance-finder"
@@ -25,7 +22,7 @@
     {{ notification.render(
       'error',
       true,
-      'This tool is not supported in your browser.
-       Please try a newer browser or confirm that JavaScript is enabled.'
+      'This interactive tool is not supported in your web browser, but you can still
+       <a style="text-decoration:underline" href="https://files.consumerfinance.gov/data/rental-assistance.html">view the full list of rental assistance programs</a>.'
     ) }}
 </div>

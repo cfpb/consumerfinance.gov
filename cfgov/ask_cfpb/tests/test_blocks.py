@@ -1,12 +1,7 @@
 from django.test import TestCase, override_settings
 
-from ask_cfpb.models.blocks import (
-    FAQ,
-    AskAnswerContent,
-    AskContent,
-    HowTo,
-    Tip,
-)
+from ask_cfpb.models.blocks import AskAnswerContent
+from v1.atomic_elements.schema import FAQ, HowTo, SchemaContent, Tip
 
 
 @override_settings(LANGUAGE_CODE="en-US", LANGUAGES=(("en", "English"),))
@@ -118,9 +113,9 @@ class SchemaBlocksTestCase(TestCase):
         self.assertHTMLEqual(html, expected_html)
 
 
-class AskContentTestCase(TestCase):
+class SchemaContentTestCase(TestCase):
     def test_table_block_autoescape(self):
-        block = AskContent()
+        block = SchemaContent()
         data = block.to_python(
             [
                 {

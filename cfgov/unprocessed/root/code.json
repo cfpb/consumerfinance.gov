@@ -4020,7 +4020,7 @@
     },
     {
       "name": "cfgov-django-setup",
-      "description": "common code shared across our django apps that also trigger grunt/gulp builds",
+      "description": "common code shared across our django apps that also trigger frontend builds",
       "repositoryURL": "https://github.com/cfpb/cfgov-django-setup",
       "permissions": {
         "licenses": [
@@ -4125,26 +4125,6 @@
       "name": "ansible-role-apache",
       "description": "Ansible Role - Apache 2.x.",
       "repositoryURL": "https://github.com/cfpb/ansible-role-apache",
-      "permissions": {
-        "licenses": [
-          {
-            "name": "Public Domain"
-          }
-        ],
-        "usageType": "openSource"
-      },
-      "laborHours": -1,
-      "tags": [
-        "cfpb"
-      ],
-      "contact": {
-        "email": "tech@consumerfinance.gov"
-      }
-    },
-    {
-      "name": "ansible-pdf-reactor",
-      "description": "A ansible playbook to install PDF reactor. ",
-      "repositoryURL": "https://github.com/cfpb/ansible-pdf-reactor",
       "permissions": {
         "licenses": [
           {

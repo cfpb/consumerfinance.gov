@@ -1,0 +1,58 @@
+{% extends 'v1/report_no-xlsx_base.html' %}
+
+{% block results %}
+    {% if object_list %}
+        <table class="listing">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Size (kb)
+                    </th>
+                    <th>
+                        Collection
+                    </th>
+                    <th>
+                        Tags
+                    </th>
+                    <th>
+                        Uploaded on
+                    </th>
+                    <th>
+                        Uploaded by
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for image in object_list %}
+                    <tr>
+                        <td>
+                            <a href="{{ image.file.url }}">
+                                {{ image.title }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ image.file_size | filesizeformat }}
+                        </td>
+                        <td>
+                            {{ image.collection }}
+                        </td>
+                        <td>
+                            {{ image.tags.names|join:", " }}
+                        </td>
+                        <td>
+                            {{ image.created_at }}
+                        </td>
+                        <td>
+                            {{ image.uploaded_by_user }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no images in the image library.</p>
+    {% endif %}
+{% endblock %}

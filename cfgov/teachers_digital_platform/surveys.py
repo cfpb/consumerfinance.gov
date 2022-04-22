@@ -88,7 +88,7 @@ class ChoiceList:
         path = f"{dirname(__file__)}/survey-data/answer-types.csv"
         with open(path, encoding="utf-8") as csv_file:
             reader = csv.DictReader(csv_file)
-            for row in (_answer_types_row(row) for row in reader):
+            for row in (_answer_types_row(r) for r in reader):
                 ret[row["k"]] = cls.from_string(row["c"], ret)
 
         return ret
@@ -330,7 +330,7 @@ class Survey:
         path = f"{dirname(__file__)}/survey-data/{key}.csv"
         with open(path, encoding="utf-8") as csv_file:
             reader = csv.DictReader(csv_file)
-            for row in (_question_row(row) for row in reader):
+            for row in (_question_row(r) for r in reader):
                 if last_page is None:
                     last_page = row["pg"]
                 if row["pg"] != last_page:

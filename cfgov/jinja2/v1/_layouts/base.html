@@ -21,10 +21,7 @@
     ============================================================================
 -->
 {% endif %}
-
-<!--[if IE 8]>         <html lang="{{ language }}" class="no-js lt-ie10 lt-ie9"> <![endif]-->
-<!--[if IE 9]>         <html lang="{{ language }}" class="no-js lt-ie10"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="{{ language }}" class="no-js"> <!--<![endif]-->
+<html lang="{{ language }}" class="no-js">
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
 
@@ -116,8 +113,7 @@
 #}
 
     {% block css %}
-    <!--[if lt IE 10]><link rel="stylesheet" href="{{ static('css/main.ie.css') }}"><![endif]-->
-    <!--[if gt IE 9]><!--><link rel="stylesheet" href="{{ static('css/main.css') }}"><!--<![endif]-->
+    <link rel="stylesheet" href="{{ static('css/main.css') }}">
     {% endblock css %}
 
 {#
@@ -204,12 +200,18 @@
     <script>
       {# Minified dynamic JavaScript loader that injects a script tag in the head of the page. #}
       function jsl(a){
-        for(var b,c,d=[],f=document.scripts[0];b=a.shift();)c=document.createElement("script"),"async"in c?(c.async=!1,c.src=b,document.head.appendChild(c)):(d.push(c),c.onreadystatechange=function(){for(var e;d[0]&&"loaded"==d[0].readyState;)e=d.shift(),e.onreadystatechange=null,f.parentNode.insertBefore(e,f)},c.src=b);
+        if(window.Promise){
+          for(var b,c,d=[],f=document.scripts[0];b=a.shift();)c=document.createElement("script"),"async"in c?(c.async=!1,c.src=b,document.head.appendChild(c)):(d.push(c),c.onreadystatechange=function(){for(var e;d[0]&&"loaded"==d[0].readyState;)e=d.shift(),e.onreadystatechange=null,f.parentNode.insertBefore(e,f)},c.src=b);
+        }
       }
     </script>
     {% endblock javascript_loader %}
 
-    {% include "v1/modernizr.html" %}
+    <script>
+      if(window.Promise){
+        document.documentElement.className = document.documentElement.className.replace('no-js', 'js')
+      }
+    </script>
 </head>
 
 <body{% block body_classes %}{% if page and page.archived %} class="archived-page" {% endif %}{% endblock body_classes %}>
@@ -291,12 +293,8 @@
 
     {% block javascript scoped %}
 
-    {#
-      Modernizr adds a no-js class the HTML element if ECMAScript 5 features aren't
-      available. Check for that CSS class here and act accordingly.
-    #}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+      if ( window.Promise ) {
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [ '{{ static('js/routes/common.js') }}' ];

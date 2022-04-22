@@ -7,7 +7,7 @@ from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
-from v1.models import CFGOVPage, CFGOVPageManager
+from v1.models import CFGOVPage
 
 
 class PayingForCollegePage(CFGOVPage):
@@ -33,7 +33,6 @@ class PayingForCollegePage(CFGOVPage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
-    objects = CFGOVPageManager()
 
     class Meta:
         abstract = True
@@ -80,7 +79,6 @@ class CollegeCostsPage(PayingForCollegePage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
-    objects = CFGOVPageManager()
     content = StreamField(PayingForCollegeContent, blank=True)
     template = "paying-for-college/college-costs.html"
 

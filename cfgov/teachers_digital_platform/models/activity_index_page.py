@@ -31,7 +31,7 @@ from teachers_digital_platform.models.django import (
 from teachers_digital_platform.models.pages import ActivityPage
 from teachers_digital_platform.molecules import TdpSearchHeroImage
 from v1.atomic_elements import molecules
-from v1.models import CFGOVPage, CFGOVPageManager
+from v1.models import CFGOVPage
 
 
 # facet name, (facet class, is-nested)
@@ -71,8 +71,6 @@ class ActivityIndexPage(CFGOVPage):
     """A model for the Activity Search page."""
 
     subpage_types = ["teachers_digital_platform.ActivityPage"]
-
-    objects = CFGOVPageManager()
 
     header = StreamField(
         [

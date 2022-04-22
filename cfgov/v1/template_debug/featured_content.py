@@ -44,6 +44,20 @@ featured_content_test_cases = {
             },
         ],
     },
+    "Image-on-the-left layout": {
+        "layout_left": True,
+        "image": {"url": FEATURED_CONTENT_IMAGE_URL},
+        "links": [
+            {
+                "text": "Consumer Financial Protection Bureau",
+                "url": "https://www.consumerfinance.gov",
+            },
+            {
+                "text": "Oficina para la Protección Financiera del Consumidor",
+                "url": "https://www.consumerfinance.gov/es/",
+            },
+        ],
+    },
     "Video": {
         "video": {"video_id": "dQw4w9WgXcQ"},
     },
