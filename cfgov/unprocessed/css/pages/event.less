@@ -6,45 +6,45 @@
 /* Event template settings
    ========================================================================== */
 .t-event {
-    &_details {
-        .respond-to-min( @bp-sm-min, {
-            .date {
-                float: right;
-            }
-        } );
-    }
+  &_details {
+    .respond-to-min( @bp-sm-min, {
+      .date {
+        float: right;
+      }
+    } );
+  }
 }
 
 /* Event-Agenda Table
    ========================================================================== */
 .event-agenda_table {
-    h2 + & td[data-label]:before {
-        margin-top: 0;
-    }
+  h2 + & td[data-label]:before {
+    margin-top: 0;
+  }
 
-    th, td {
-        font-size: 16px;
-    }
+  th, td {
+    font-size: 16px;
+  }
 
-    .respond-to-min(@bp-med-min, {
-        th {
-            width: 25%;
-        }
-    } );
+  .respond-to-min(@bp-med-min, {
+    th {
+      width: 25%;
+    }
+  } );
 }
 
 /* Event-Post
    ========================================================================== */
 
 .post__event {
-    > footer {
-        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-    }
+  > footer {
+    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+  }
 
-    .respond-to-min(@bp-med-min, {
-        padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
-        margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
-    });
+  .respond-to-min(@bp-med-min, {
+    padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
+  });
 }
 
 
@@ -52,7 +52,7 @@
    ========================================================================== */
 
 .event-media_container {
-    border: 1px solid @gray-10;
+  border: 1px solid @gray-10;
 }
 
 
@@ -60,34 +60,34 @@
    ========================================================================== */
 
 .event-meta {
-    &__medium {
-        font-weight: 500;
-    }
+  &__medium {
+    font-weight: 500;
+  }
 }
 
 .event-meta_description {
-    text-transform: none;
+  text-transform: none;
 
-    &__block {
-        display: block;
-    }
+  &__block {
+    display: block;
+  }
 }
 
 .event-meta_address {
-    text-transform: capitalize;
-    display: inline-block;
+  text-transform: capitalize;
+  display: inline-block;
 
-    .event-meta_street:not(:empty):after,
-    .event-meta_suite:not(:empty):after {
-        // Adding a linebreak after the street if it's contents
-        // aren't empty.
-        content: '\A';
-        white-space: pre;
-    }
+  .event-meta_street:not( :empty ):after,
+  .event-meta_suite:not( :empty ):after {
+    // Adding a linebreak after the street if it's contents
+    // aren't empty.
+    content: '\A';
+    white-space: pre;
+  }
 }
 
 .event-calendar_container .datetime {
-    letter-spacing: normal;
+  letter-spacing: normal;
 }
 
 
@@ -95,29 +95,29 @@
    ========================================================================== */
 
 .event-status {
-    color: @black;
+  color: @black;
 
-    .event-meta {
-        color: @gray-40;
-    }
+  .event-meta {
+    color: @gray-40;
+  }
 }
 
 // The spacing for the RSVP/Livestream aside on the event details.
 // Spacing should follow a 1/2/1 ratio (15px/30px/15px).
 .event-status_rsvp p:first-child {
-    line-height: 1;
-    margin-bottom: unit(15px / @base-font-size-px, em);
+  line-height: 1;
+  margin-bottom: unit( 15px / @base-font-size-px, em );
 }
 
 .event-status_rsvp p:last-child {
-    margin-bottom: unit(30px / @base-font-size-px, em);
+  margin-bottom: unit( 30px / @base-font-size-px, em );
 }
 
 .event-status_livestream p:first-child {
-    line-height: 1;
-    // The margin is kept at 10px to accommodate the line-height
-    // of the text so that the gap appears to be 15px.
-    margin-bottom: unit(10px / @base-font-size-px, em);
+  line-height: 1;
+  // The margin is kept at 10px to accommodate the line-height
+  // of the text so that the gap appears to be 15px.
+  margin-bottom: unit( 10px / @base-font-size-px, em );
 }
 
 
@@ -125,54 +125,54 @@
    ========================================================================== */
 
 .event-venue {
-    background: @gray-10;
-    border-top: 5px solid @green;
+  background: @gray-10;
+  border-top: 5px solid @green;
 }
 
 .event-venue_details {
-    padding: 1.5em 1.5em .5em;
+  padding: 1.5em 1.5em .5em;
 
+  .respond-to-max(@bp-xs-max, {
+    padding: 1.5em;
+  });
+
+  .datetime {
+    .h5();
+    text-transform: uppercase;
+  }
+
+  .event-meta_address {
     .respond-to-max(@bp-xs-max, {
-        padding: 1.5em;
+      margin: 0;
     });
+  }
 
-    .datetime {
-        .h5();
-        text-transform: uppercase;
-    }
-
-    .event-meta_address {
-        .respond-to-max(@bp-xs-max, {
-            margin: 0;
-        });
-    }
-
-    .event-meta_venue {
-        display: block;
-    }
+  .event-meta_venue {
+    display: block;
+  }
 }
 
 .event-venue_header {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .event-venue_live-btn {
-    margin-right: 10px;
-    background-color: @green;
-    color: @black;
-    text-transform: uppercase;
-    padding: 6px 15px 4px;
+  margin-right: 10px;
+  background-color: @green;
+  color: @black;
+  text-transform: uppercase;
+  padding: 6px 15px 4px;
 }
 
 .event-venu_live-btn_text {
-    font-size: 12px;
-    vertical-align: middle;
+  font-size: 12px;
+  vertical-align: middle;
 }
 
 .event-venue_heading {
-    display: inline-block;
-    margin-bottom: 0;
-    vertical-align: middle;
+  display: inline-block;
+  margin-bottom: 0;
+  vertical-align: middle;
 }
 
 

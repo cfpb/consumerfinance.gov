@@ -55,13 +55,16 @@
     "eslint": "8.11.0",
     "jest": "27.4.3",
     "jest-cli": "27.4.3",
-    "snyk": "1.786.0"
+    "postcss-less": "6.0.0",
+    "snyk": "1.786.0",
+    "stylelint": "14.6.1",
+    "stylelint-config-recommended-less": "1.0.4"
   },
   "scripts": {
     "enforce": "enforce-node-version",
     "preinstall": "node scripts/preinstall.js",
     "postinstall": "yarn enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
-    "lint": "eslint --ignore-pattern node_modules './{cfgov/unprocessed,config,esbuild,scripts,test}/**/*.js'",
+    "lint": "eslint --ignore-pattern node_modules './{cfgov/unprocessed,config,esbuild,scripts,test}/**/*.js' --fix && stylelint './cfgov/unprocessed/**/*.{css,less}' --fix",
     "jest": "jest",
     "test": "yarn lint && yarn jest",
     "snyk": "snyk test",
