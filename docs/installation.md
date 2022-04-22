@@ -11,19 +11,12 @@ This quickstart requires a working Docker Desktop installation and git:
     cd consumerfinance.gov
     ```
 
-- One of the following runtimes:
-  - [Set up and run the Docker containers via docker-compose](#set-up-and-run-the-docker-containers):
+- [Set up and run the Docker containers via docker-compose](#set-up-and-run-the-docker-containers):
 
-      ```sh
-      docker-compose up
-      ```
-  
-  - [Set up and run the Docker containers via Kubernetes via Helm](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
-
-    ```shell
-    ./build-images.sh && ./helm-install.sh
+    ```sh
+    docker-compose up
     ```
-
+  
 This may take some time, as it will also 
 [load initial data](#load-initial-data) 
 and 
@@ -207,7 +200,7 @@ yarn build
 ### Set up and run the Docker containers
 
 consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
-We use
+You can use either 
 [`docker-compose`](https://docs.docker.com/compose/) or 
 [Kubernetes](https://kubernetes.io/) via [Helm](https://helm.sh/)
 to run these services along side the consumerfinance.gov Django site.
@@ -224,8 +217,8 @@ docker-compose up
 ./build-images.sh && ./helm-install.sh
 ```
 
-This will build and start our PostgreSQL, Elasticsearch, Python, and
-documentation services.
+Either approach will build and start our 
+PostgreSQL, Elasticsearch, and Python services.
 
 The first time this is fun, it will
 [load initial data](#load-initial-data)
