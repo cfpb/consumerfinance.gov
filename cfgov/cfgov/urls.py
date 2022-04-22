@@ -452,11 +452,9 @@ urlpatterns = [
         r"^beta_external_testing/",
         akamai_no_store(empty_200_response),
     ),
-
     path("documents/", include(wagtaildocs_urls)),
-     
     # Health check
-    re_path(r'^ht/', include('health_check.urls')),
+    re_path(r"^ht/", include("health_check.urls")),
 ]
 
 # Ask CFPB category and subcategory redirects
@@ -613,11 +611,6 @@ if settings.ALLOW_ADMIN_URL:
     ]
 
     urlpatterns = patterns + urlpatterns
-
-if settings.WATCHMAN_TOKENS is not None:
-    urlpatterns.append(
-        re_path(r"^_status/", include("watchman.urls")),
-    )
 
 if settings.DEBUG:
     urlpatterns += static(

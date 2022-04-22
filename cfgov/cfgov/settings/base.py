@@ -65,7 +65,6 @@ INSTALLED_APPS = (
     "flags",
     "wagtailautocomplete",
     "wagtailflags",
-    "watchman",
     "ask_cfpb",
     "agreements",
     "django.contrib.admin",
@@ -616,16 +615,6 @@ FLAGS = {
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
-
-# Watchman tokens, a comma-separated string of tokens used to authenticate
-# global status endpoint. The Watchman status URL endpoint is only included if
-# WATCHMAN_TOKENS is defined as an environment variable. A blank value for
-# WATCHMAN_TOKENS will make the status endpoint accessible without a token.
-WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS")
-
-# This specifies what checks Watchman should run and include in its output
-# https://github.com/mwarkentin/django-watchman#custom-checks
-WATCHMAN_CHECKS = ("alerts.checks.elasticsearch_health",)
 
 # We want the ability to serve the latest drafts of some pages on beta
 # This value is read by v1.wagtail_hooks
