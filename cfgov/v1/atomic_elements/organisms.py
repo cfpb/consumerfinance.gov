@@ -6,7 +6,10 @@ from django.apps import apps
 from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
+from django.templatetags.static import static
+from django.utils.html import format_html
 
+from wagtail.core import hooks
 from wagtail.core import blocks
 from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.core.models import Page
@@ -23,6 +26,13 @@ from v1.atomic_elements import atoms, molecules
 # maintain import structure across the project
 from v1.atomic_elements.tables import AtomicTableBlock
 from v1.util import ref
+
+@hooks.register('insert_editor_css')
+def editor_css():
+    return format_html(
+        '<link rel="stylesheet" href="{}">',
+        static('/css/on-demand/simple-chart-admin.css')
+    )
 
 
 class AskSearch(blocks.StructBlock):
@@ -561,6 +571,7 @@ class SimpleChart(blocks.StructBlock):
         label = "Simple Chart"
         icon = "image"
         template = "_includes/organisms/simple-chart.html"
+        form_classname = "struct-block simple-chart-block"
 
     class Media:
         js = ["simple-chart/simple-chart.js"]
