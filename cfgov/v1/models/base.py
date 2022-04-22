@@ -351,7 +351,8 @@ class CFGOVPage(Page):
         if self.schema_json:
             context["schema_json"] = self.schema_json
 
-        context["meta_description"] = self.get_meta_description()
+        context["meta_description"] = "temp meta description - bfl"
+        # context["meta_description"] = self.get_meta_description()
         return context
 
     def serve(self, request, *args, **kwargs):
