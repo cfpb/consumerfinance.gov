@@ -229,3 +229,6 @@ class ResearchReportPage(CFGOVPage):
             'researchers': get_researchers()
         })
         return context
+
+    class Media:
+        js = ["reports-sidenav.js"]
