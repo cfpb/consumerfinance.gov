@@ -43,7 +43,7 @@ function _findElements( behaviorSelector, baseElement ) {
   try {
     behaviorElements = baseElement.querySelectorAll( behaviorSelector );
   } catch ( error ) {
-    const msg = behaviorSelector + ' not found in DOM!';
+    const msg = `${ behaviorSelector } not found in DOM! ${ error }`;
     throw new Error( msg );
   }
 
