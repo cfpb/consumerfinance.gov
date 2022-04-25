@@ -17,22 +17,22 @@
 */
 
 .o-sidebar-content {
-    border-width: 0;
+  border-width: 0;
 
-    .respond-to-range( @bp-sm-min, @bp-sm-max, {
-        border-width: 0 unit(@grid_gutter-width / 2 / @base-font-size-px, em);
-    } );
+  .respond-to-range( @bp-sm-min, @bp-sm-max, {
+    border-width: 0 unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+  } );
 
-    > [class^="o-"] + [class^="m-"],
-    > [class^="o-"] + [class^="o-"],
-    > [class^="m-"] + [class^="o-"],
-    > [class^="m-"] + [class^="m-"]{
-        margin-top: unit(@grid_gutter-width * 2 / @base-font-size-px, em);
-    }
+  > [class^="o-"] + [class^="m-"],
+  > [class^="o-"] + [class^="o-"],
+  > [class^="m-"] + [class^="o-"],
+  > [class^="m-"] + [class^="m-"]{
+    margin-top: unit( @grid_gutter-width * 2 / @base-font-size-px, em );
+  }
 
-    > [class^="m-"]:last-child, > [class^="o-"]:last-child {
-        margin-bottom: unit(@grid_gutter-width * 2 / @base-font-size-px, em);
-    }
+  > [class^="m-"]:last-child, > [class^="o-"]:last-child {
+    margin-bottom: unit( @grid_gutter-width * 2 / @base-font-size-px, em );
+  }
 }
 
 /* topdoc

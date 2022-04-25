@@ -108,238 +108,238 @@
 
 .m-global-search {
 
-    &_trigger {
-        // Hide search unless we have JavaScript (JS).
-        html.no-js & {
-            display: none;
+  &_trigger {
+    // Hide search unless we have JavaScript (JS).
+    html.no-js & {
+      display: none;
+    }
+
+    font-weight: 500;
+
+    // Resets for default button styles.
+    background-color: transparent;
+    border: none;
+
+    box-sizing: border-box;
+    border-left: 1px solid transparent;
+
+    .respond-to-max( @bp-xs-max, {
+      font-size: 18px;
+    } );
+
+    &:focus {
+      outline: 1px dotted @black;
+    }
+
+    &-open-label {
+      vertical-align: text-top;
+    }
+
+    &-close-label {
+      display: none;
+    }
+
+    // Hover state for desktop.
+    &:hover {
+      color: @gray-90;
+    }
+  }
+
+  &_content {
+    position: absolute;
+    left: 0;
+
+    &-form {
+      position: absolute;
+      width: 100%;
+    }
+
+    &.u-invisible {
+      overflow-x: hidden;
+    }
+
+    &[aria-expanded="true"] &-form {
+      display: block;
+    }
+
+    // Hide suggestions outside of tablet sizes.
+    &-suggestions {
+      display: none;
+
+      .h5,
+      .list {
+        display: inline-block;
+      }
+    }
+  }
+
+  // Up to desktops.
+  .respond-to-max( @bp-sm-max, {
+
+    &_fallback {
+      margin: @margin_half__em;
+    }
+
+    &_trigger{
+      padding-top: 5px;
+      height: @mobile_trigger_ht__px;
+      min-width: @mobile_trigger_ht__px;
+
+      &[aria-expanded="true"] {
+        background: @gray-10;
+        border-left: 1px solid @gray-40;
+
+        .m-global-search_trigger-open-label {
+          display: none;
         }
 
-        font-weight: 500;
-
-        // Resets for default button styles.
-        background-color: transparent;
-        border: none;
-
-        box-sizing: border-box;
-        border-left: 1px solid transparent;
-
-        .respond-to-max( @bp-xs-max, {
-            font-size: 18px;
-        } );
-
-        &:focus {
-            outline: 1px dotted @black;
+        .m-global-search_trigger-close-label {
+          display: block;
         }
+      }
 
-        &-open-label {
-            vertical-align: text-top;
-        }
-
-        &-close-label {
-            display: none;
-        }
-
-        // Hover state for desktop.
+      // Hover state for (x) close button.
+      @media (hover: hover) {
         &:hover {
-            color: @gray-90;
+          color: @black;
+          border-left: 1px solid @gray-40;
+
+          // Important needed to override background color in expanded state.
+          background: @gray-20 !important;
         }
+      }
     }
 
     &_content {
-        position: absolute;
+      width: 100%;
+
+      &-form {
+        .u-drop-shadow-after();
+
+        box-sizing: border-box;
+        width: 100%;
+        padding: @margin__em
+        @margin_half__em
+        @margin_half__em;
+
         left: 0;
+        z-index: 10;
 
-        &-form {
-            position: absolute;
-            width: 100%;
-        }
+        background-color: @gray-5;
+        border-top: 1px solid @gray-40;
+        border-bottom: 1px solid @gray-40;
+      }
+    }
+  } );
 
-        &.u-invisible {
-            overflow-x: hidden;
-        }
+  // Tablet size only.
+  .respond-to-range( @bp-sm-min, @bp-sm-max, {
+    &_trigger {
+      // Min-width sets open/close states to same size.
+      min-width: 110px;
 
-        &[aria-expanded="true"] &-form {
-            display: block;
-        }
-
-        // Hide suggestions outside of tablet sizes.
-        &-suggestions {
-            display: none;
-
-            .h5,
-            .list {
-                display: inline-block;
-            }
-        }
+      padding-left: unit( @grid_gutter-width / 2 / 18px, em );
+      padding-right: unit( @grid_gutter-width / 2 / 18px, em );
     }
 
-    // Up to desktops.
-    .respond-to-max( @bp-sm-max, {
-
-        &_fallback {
-            margin: @margin_half__em;
-        }
-
-        &_trigger{
-            padding-top: 5px;
-            height: @mobile_trigger_ht__px;
-            min-width: @mobile_trigger_ht__px;
-
-            &[aria-expanded="true"] {
-                background: @gray-10;
-                border-left: 1px solid @gray-40;
-
-                .m-global-search_trigger-open-label {
-                    display: none;
-                }
-
-                .m-global-search_trigger-close-label {
-                    display: block;
-                }
-            }
-
-            // Hover state for (x) close button.
-            @media (hover: hover) {
-            &:hover {
-                color: @black;
-                border-left: 1px solid @gray-40;
-
-                // Important needed to override background color in expanded state.
-                background: @gray-20 !important;
-            }
-          }
-        }
-
-         &_content {
-            width: 100%;
-
-            &-form {
-                .u-drop-shadow-after();
-
-                box-sizing: border-box;
-                width: 100%;
-                padding: @margin__em
-                         @margin_half__em
-                         @margin_half__em;
-
-                left: 0;
-                z-index: 10;
-
-                background-color: @gray-5;
-                border-top: 1px solid @gray-40;
-                border-bottom: 1px solid @gray-40;
-            }
-        }
-    } );
-
-    // Tablet size only.
-    .respond-to-range( @bp-sm-min, @bp-sm-max, {
-        &_trigger {
-            // Min-width sets open/close states to same size.
-            min-width: 110px;
-
-            padding-left: unit( @grid_gutter-width / 2 / 18px, em );
-            padding-right: unit( @grid_gutter-width / 2 / 18px, em );
-        }
-
-        // Only show search suggestions at tablet size.
-        &_content-suggestions {
-            display: block;
-        }
-    } );
-
-    // Tablet and above
-    .respond-to-min( @bp-sm-min, {
-
-        // Override for the .m-btn-inside-input class from the design system.
-        // This is needed because we do not have an icon inside the input
-        // at the desktop size (there is an icon at the mobile size).
-        .m-btn-inside-input .a-text-input {
-            padding-right: unit( 14px / @base-font-size-px, em );
-        }
-
-    } );
-
-    // Desktop and above
-    .respond-to-min( @bp-med-min, {
-
-        // Center on the call to action (CTA) divider to right of search.
-        padding-top: 6px;
-        padding-bottom: 5px;
-        // Match CTA offset from divider.
-        padding-right: @margin_half__em;
-        position: relative;
-
-        overflow: hidden;
-
-        &_trigger {
-            // Match height of input with button.
-            padding: 8px 0;
-
-            &[aria-expanded="true"] {
-                .u-invisible();
-            }
-        }
-
-        &_trigger {
-            float: right;
-        }
-
-        &_content {
-            right: @margin_half__em;
-            width: auto;
-            // Add margin so that the focus rectangle isn't cropped by
-            // the hidden overflow of the search container element.
-            margin-left: 3px;
-        }
-    } );
-
-    // Mobile size.
-    .respond-to-min( 480px, {
-        &_content-form {
-            // Attach button to input.
-            .o-form__input-w-btn_input-container {
-                width: 75%;
-
-                [lang="es"] & {
-                    width: 70%;
-                }
-            }
-            .o-form__input-w-btn_btn-container {
-                width: 25%;
-                border-left: 0;
-
-                button {
-                    border-top-left-radius: 0;
-                    border-bottom-left-radius: 0;
-                }
-
-                [lang="es"] & {
-                    width: 30%;
-                }
-            }
-        }
-    } );
-
-    // Hide on print.
-    .respond-to-print( {
-        & {
-            // Important needed to override JS display settings.
-            display: none !important;
-        }
-    } );
-
-    // Hide fallback by default.
-    &_fallback {
-        display: none;
-        padding: 8px;
-        padding-right: 0;
-
-        // Only show fallback if JavaScript (JS) is not enabled.
-        .no-js & {
-            display: block;
-        }
+    // Only show search suggestions at tablet size.
+    &_content-suggestions {
+      display: block;
     }
+  } );
+
+  // Tablet and above
+  .respond-to-min( @bp-sm-min, {
+
+    // Override for the .m-btn-inside-input class from the design system.
+    // This is needed because we do not have an icon inside the input
+    // at the desktop size (there is an icon at the mobile size).
+    .m-btn-inside-input .a-text-input {
+      padding-right: unit( 14px / @base-font-size-px, em );
+    }
+
+  } );
+
+  // Desktop and above
+  .respond-to-min( @bp-med-min, {
+
+    // Center on the call to action (CTA) divider to right of search.
+    padding-top: 6px;
+    padding-bottom: 5px;
+    // Match CTA offset from divider.
+    padding-right: @margin_half__em;
+    position: relative;
+
+    overflow: hidden;
+
+    &_trigger {
+      // Match height of input with button.
+      padding: 8px 0;
+
+      &[aria-expanded="true"] {
+        .u-invisible();
+      }
+    }
+
+    &_trigger {
+      float: right;
+    }
+
+    &_content {
+      right: @margin_half__em;
+      width: auto;
+      // Add margin so that the focus rectangle is not cropped by
+      // the hidden overflow of the search container element.
+      margin-left: 3px;
+    }
+  } );
+
+  // Mobile size.
+  .respond-to-min( 480px, {
+    &_content-form {
+      // Attach button to input.
+      .o-form__input-w-btn_input-container {
+        width: 75%;
+
+        [lang="es"] & {
+          width: 70%;
+        }
+      }
+      .o-form__input-w-btn_btn-container {
+        width: 25%;
+        border-left: 0;
+
+        button {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+
+        [lang="es"] & {
+          width: 30%;
+        }
+      }
+    }
+  } );
+
+  // Hide on print.
+  .respond-to-print( {
+    & {
+      // Important needed to override JS display settings.
+      display: none !important;
+    }
+  } );
+
+  // Hide fallback by default.
+  &_fallback {
+    display: none;
+    padding: 8px;
+    padding-right: 0;
+
+    // Only show fallback if JavaScript (JS) is not enabled.
+    .no-js & {
+      display: block;
+    }
+  }
 }
 
 /* topdoc

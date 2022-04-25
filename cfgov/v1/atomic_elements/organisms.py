@@ -549,6 +549,15 @@ class SimpleChart(blocks.StructBlock):
         'be referenced with dot notation: {"tooltip.shape": "circle"}',
     )
 
+    projected_months = blocks.IntegerBlock(
+        blank=True,
+        null=True,
+        min_value=0,
+        max_value=12,
+        help_text="How many months of the recent data are projected?",
+        required=False,
+    )
+
     credits = blocks.CharBlock(
         required=False, help_text="Attribution for the data source"
     )
