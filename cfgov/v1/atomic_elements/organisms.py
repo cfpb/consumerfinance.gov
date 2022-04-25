@@ -24,6 +24,7 @@ from v1.atomic_elements import atoms, molecules
 from v1.atomic_elements.tables import AtomicTableBlock
 from v1.util import ref
 
+
 class AskSearch(blocks.StructBlock):
     show_label = blocks.BooleanBlock(
         default=True, required=False, help_text="Whether to show form label."

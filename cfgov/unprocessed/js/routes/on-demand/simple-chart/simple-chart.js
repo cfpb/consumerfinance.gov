@@ -78,7 +78,7 @@ function getDefaultChartObject( type ) {
 function makeChartOptions( data, dataAttributes ) {
   const { chartType, styleOverrides, description, xAxisSource, xAxisLabel,
     yAxisLabel, projectedMonths } = dataAttributes;
-  const defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
+  let defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
 
   if ( styleOverrides ) {
     overrideStyles( styleOverrides, defaultObj, data );
@@ -118,30 +118,43 @@ function makeChartOptions( data, dataAttributes ) {
     };
   }
 
-  if (projectedMonths) {
+  if ( projectedMonths ) defaultObj = addProjectedMonths( defaultObj, projectedMonths );
+
+  alignMargin( defaultObj, chartType );
+
+  return defaultObj;
+}
+
+/**
+ * Adds projected months to config object for Highcharts
+ * @param {object} chartObject The config object for Highcharts
+ * @param {integer} numMonths The number of months input into wagtail field
+ * @returns {object} The config object with projected months
+ */
+function addProjectedMonths( chartObject, numMonths ) {
+
   // Convert the number of projected months into a timestamp
-  const lastChartDate = defaultObj.series[0].data.at(-1).x;
+  const lastChartDate = chartObject.series[0].data.at( -1 ).x;
 
   // Convert lastChartDate from months to milliseconds for Epoch format
-  const convertedProjectedDate = lastChartDate - projectedMonths * 30 * 24 * 60 * 60 * 1000;
+  const convertedProjectedDate = lastChartDate - numMonths * 30 * 24 * 60 * 60 * 1000;
   const projectedDate = getProjectedDate( convertedProjectedDate );
 
-  // Add a vertical line and some explanatory text at the starting
-  // point of the projected data
-  defaultObj.xAxis.plotLines = [ {
+  /* Add a vertical line and some explanatory text at the starting
+     point of the projected data */
+  chartObject.xAxis.plotLines = [ {
     value: projectedDate.timestamp,
     label: {
-      text: `Values after ${projectedDate.humanFriendly} are projected`,
+      text: `Values after ${ projectedDate.humanFriendly } are projected`,
       rotation: 0,
-      useHTML: true,
       x: -300,
       y: -20
     }
-  } ]
+  } ];
 
-  // Add a zone to each series with a dashed line starting
-  // at the projected data starting point
-  defaultObj.series = defaultObj.series.map(singluarSeries => {
+  /* Add a zone to each series with a dashed line starting
+     at the projected data starting point */
+  chartObject.series = chartObject.series.map( singluarSeries => {
     singluarSeries.zoneAxis = 'x';
     singluarSeries.zones = [ {
       value: projectedDate.timestamp
@@ -150,11 +163,7 @@ function makeChartOptions( data, dataAttributes ) {
     } ];
     return singluarSeries;
   } );
-}
-
-  alignMargin( defaultObj, chartType );
-
-  return defaultObj;
+  return chartObject;
 }
 
 /**
