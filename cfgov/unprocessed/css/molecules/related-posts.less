@@ -47,66 +47,66 @@
 
 @list_half-width: {
 
-    .grid_nested-col-group();
+  .grid_nested-col-group();
+
+  .m-list_item {
+    .grid_column(6);
+  }
+
+  // Using .m-list__spaced items within a grid column causes unwanted
+  // extra margins because grid columns suppress margin collapsing.
+  // To counteract that we need to use a negative margin on the list.
+  // This means we also need to add a top margin to the first list
+  // item since the default .m-list__spaced only applies margins to
+  // .m-list_item + .m-list_item.
+  &.m-list__spaced {
+    margin-top: @margin_half__em * -1;
 
     .m-list_item {
-        .grid_column(6);
+      margin-top: @margin_half__em;
     }
-
-    // Using .m-list__spaced items within a grid column causes unwanted
-    // extra margins because grid columns suppress margin collapsing.
-    // To counteract that we need to use a negative margin on the list.
-    // This means we also need to add a top margin to the first list
-    // item since the default .m-list__spaced only applies margins to
-    // .m-list_item + .m-list_item.
-    &.m-list__spaced {
-        margin-top: @margin_half__em * -1;
-
-        .m-list_item {
-            margin-top: @margin_half__em;
-        }
-    }
-};
+  }
+}
 
 .m-related-posts__half-width {
-    .m-related-posts_list {
-        .respond-to-min(@bp-sm-min, {
-            @list_half-width();
-        });
-    }
+  .m-related-posts_list {
+    .respond-to-min(@bp-sm-min, {
+      @list_half-width();
+    });
+  }
 }
 
 .m-related-posts_list {
-    .m-list_link {
-        .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
-        .u-link__no-border();
+  .m-list_link {
+    .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
+    .u-link__no-border();
 
-        &:hover {
-            border-bottom: 1px dotted;
-        }
+    &:hover {
+      border-bottom: 1px dotted;
     }
+  }
 
-    .m-list_item .a-date {
-        margin-bottom:0;
-        margin-top: unit(10px / @base-font-size-px, em);
-    }
-    .respond-to-range(@bp-sm-min, @bp-sm-max, {
-        @list_half-width();
-    });
+  .m-list_item .a-date {
+    margin-bottom:0;
+    margin-top: unit( 10px / @base-font-size-px, em );
+  }
+  .respond-to-range(@bp-sm-min, @bp-sm-max, {
+    @list_half-width();
+  });
 }
 
 .m-related-posts_list-container {
-    margin-bottom: @margin_half__em * 2;
+  margin-bottom: @margin_half__em * 2;
 
-    &:last-child {
-        margin-bottom: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .respond-to-range(@bp-sm-min, @bp-sm-max, {
+    .m-related-posts_list {
+      .grid_nested-col-group();
     }
-
-    .respond-to-range(@bp-sm-min, @bp-sm-max, {
-        .m-related-posts_list {
-            .grid_nested-col-group();
-        }
-    });
+  });
 }
 
 /* topdoc
