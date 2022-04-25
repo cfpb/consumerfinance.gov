@@ -139,7 +139,7 @@ function makeChartOptions( data, dataAttributes ) {
     }
   } ]
 
-  // Add a zone to each series with a dashed line starting
+  // Add a zone to each series with a dotted line starting
   // at the projected data starting point
   defaultObj.series = defaultObj.series.map(singluarSeries => {
     singluarSeries.zoneAxis = 'x';
