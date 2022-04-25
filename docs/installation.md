@@ -11,20 +11,20 @@ This quickstart requires a working Docker Desktop installation and git:
     cd consumerfinance.gov
     ```
 
-- [Set up and run the Docker containers](#set-up-and-run-the-docker-containers):
+- [Set up and run the Docker containers via docker-compose](#set-up-and-run-the-docker-containers):
 
     ```sh
     docker-compose up
     ```
-
-    This may take some time, as it will also
-    [load initial data](#load-initial-data)
-    and
-    [build the frontend](#build-the-frontend).
+  
+This may take some time, as it will also 
+[load initial data](#load-initial-data) 
+and 
+[build the frontend](#build-the-frontend).
 
 consumerfinance.gov should now be available at <http://localhost:8000>.
 
-This documentation will be available at <http://localhost:8888>.
+This documentation will be available at <http://localhost:8888> (docker-compose only).
 
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
@@ -200,18 +200,25 @@ yarn build
 ### Set up and run the Docker containers
 
 consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
-We use
-[`docker-compose`](https://docs.docker.com/compose/)
+You can use either 
+[`docker-compose`](https://docs.docker.com/compose/) or 
+[Kubernetes](https://kubernetes.io/) via [Helm](https://helm.sh/)
 to run these services along side the consumerfinance.gov Django site.
 
 To build and run our Docker containers for the first time, run:
 
+#### docker-compose:
 ```sh
 docker-compose up
 ```
 
-This will build and start our PostgreSQL, Elasticsearch, Python, and
-documentation services.
+#### Kubernetes via Helm:
+```shell
+./build-images.sh && ./helm-install.sh
+```
+
+Either approach will build and start our 
+PostgreSQL, Elasticsearch, and Python services.
 
 The first time this is fun, it will
 [load initial data](#load-initial-data)
