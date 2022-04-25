@@ -32,57 +32,57 @@
     @foreground-color [Color] A color value for the color behind the day.
     @scale [Number] A multiplier for the size of the icon (1 is the default). */
 .cf-calendar-icon( @month, @date, @background-color, @foreground-color, @scale ) {
+  // Display & Box Model.
+  display: block;
+  width: 3em * @scale;
+  border: 0.25em solid @background-color;
+  border-radius: 0.375em * @scale;
+
+  // Background.
+  background-color: @background-color;
+
+  // Foreground.
+  line-height: 1;
+  text-align: center;
+
+  &:before,
+  &:after {
     // Display & Box Model.
     display: block;
-    width: 3em * @scale;
-    border: 0.25em solid @background-color;
-    border-radius: 0.375em * @scale;
+  }
 
-    // Background.
-    background-color: @background-color;
+  &:before {
+    // Display & Box Model.
+    padding-bottom: 0.15em;
 
     // Foreground.
-    line-height: 1;
-    text-align: center;
+    color: @foreground-color;
+    font-size: 1em * @scale;
+    text-transform: uppercase;
 
-    &:before,
-    &:after {
-        // Display & Box Model.
-        display: block;
-    }
+    // Miscellaneous, alphabetic.
+    content: @month;
+  }
 
-    &:before {
-        // Display & Box Model.
-        padding-bottom: 0.15em;
+  &:after {
+    // Display & Box Model.
+    padding: 0.15em 0 0;
+    border-radius: 0 0 0.16em 0.16em;
 
-        // Foreground.
-        color: @foreground-color;
-        font-size: 1em * @scale;
-        text-transform: uppercase;
+    // Background.
+    background: @foreground-color;
 
-        // Miscellaneous, alphabetic.
-        content: @month;
-    }
+    // Foreground.
+    color: @background-color;
+    font-size: 1.5em * @scale;
 
-    &:after {
-        // Display & Box Model.
-        padding: 0.15em 0 0;
-        border-radius: 0 0 0.16em 0.16em;
-
-        // Background.
-        background: @foreground-color;
-
-        // Foreground.
-        color: @background-color;
-        font-size: 1.5em * @scale;
-
-        // Miscellaneous, alphabetic.
-        content: @date;
-    }
+    // Miscellaneous, alphabetic.
+    content: @date;
+  }
 }
 
 .calendar-icon {
-    .cf-calendar-icon( attr(data-month), attr(data-day), @gray-40, @white, 1 );
+  .cf-calendar-icon( attr(data-month), attr(data-day), @gray-40, @white, 1 );
 }
 
 /* topdoc

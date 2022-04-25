@@ -98,7 +98,7 @@ ENV ALLOWED_HOSTS '["*"]'
 # Install Apache server and curl (container healthcheck),
 # and converts all Docker Secrets into environment variables.
 RUN apk add --no-cache apache2 curl && \
-    echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
+    echo '[ -d /var/run/secrets ] && for s in $(find /var/run/secrets -type f -name "*" -maxdepth 1) ; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
 
 # Link mime.types for RHEL Compatability in apache config.
 # TODO: Remove this link once RHEL is replaced
@@ -130,6 +130,6 @@ RUN rm -rf cfgov/apache/www cfgov/unprocessed && \
 
 # Healthcheck retry set high since database loads take a while
 HEALTHCHECK --start-period=300s --interval=30s --retries=30 \
-            CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
+            CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000/ht/
 
 CMD ["httpd", "-d", "/src/consumerfinance.gov/cfgov/apache", "-f", "/src/consumerfinance.gov/cfgov/apache/conf/httpd.conf", "-D", "FOREGROUND"]

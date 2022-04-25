@@ -83,63 +83,63 @@
 */
 
 .input-contains-label {
-    position: relative;
+  position: relative;
 
-    .a-text-input {
-        box-sizing: border-box;
-        width: 100%;
-    }
+  .a-text-input {
+    box-sizing: border-box;
+    width: 100%;
+  }
 
-    &_before ~ .a-text-input {
-        padding-left: unit( 30px / @btn-font-size, em );
-
-        &.input__super {
-            padding-left: unit( 40px / @btn__super-font-size, em );
-        }
-    }
-
-    &_after ~ .a-text-input {
-        padding-right: unit( 30px / @btn-font-size, em );
-
-        &.input__super {
-            padding-right: unit( 35px / @btn__super-font-size, em );
-        }
-    }
-
-    &_before,
-    &_after {
-        position: absolute;
-        top: unit( 8px / @btn-font-size, em );
-        cursor: pointer;
-        font-size: unit( @btn-font-size / @base-font-size-px, em );
-    }
-
-    &_before {
-        left: unit( 12px / @btn-font-size, em );
-    }
-
-    &_after {
-        right: unit( 14px / @btn-font-size, em );
-
-        .respond-to-min( @bp-sm-min, {
-            display: none;
-        } );
-    }
+  &_before ~ .a-text-input {
+    padding-left: unit( 30px / @btn-font-size, em );
 
     &.input__super {
-        .input-contains-label_before,
-        .input-contains-label_after {
-            font-size: unit( @btn__super-font-size / @base-font-size-px, em );
-        }
-
-        .input-contains-label_before {
-            left: unit( 12px / @btn__super-font-size, em );
-        }
-
-        .input-contains-label_after {
-            right: unit( 12px / @btn__super-font-size, em );
-        }
+      padding-left: unit( 40px / @btn__super-font-size, em );
     }
+  }
+
+  &_after ~ .a-text-input {
+    padding-right: unit( 30px / @btn-font-size, em );
+
+    &.input__super {
+      padding-right: unit( 35px / @btn__super-font-size, em );
+    }
+  }
+
+  &_before,
+  &_after {
+    position: absolute;
+    top: unit( 8px / @btn-font-size, em );
+    cursor: pointer;
+    font-size: unit( @btn-font-size / @base-font-size-px, em );
+  }
+
+  &_before {
+    left: unit( 12px / @btn-font-size, em );
+  }
+
+  &_after {
+    right: unit( 14px / @btn-font-size, em );
+
+    .respond-to-min( @bp-sm-min, {
+      display: none;
+    } );
+  }
+
+  &.input__super {
+    .input-contains-label_before,
+    .input-contains-label_after {
+      font-size: unit( @btn__super-font-size / @base-font-size-px, em );
+    }
+
+    .input-contains-label_before {
+      left: unit( 12px / @btn__super-font-size, em );
+    }
+
+    .input-contains-label_after {
+      right: unit( 12px / @btn__super-font-size, em );
+    }
+  }
 }
 
 
@@ -155,18 +155,18 @@
 */
 
 input {
-    .input-with-btn & {
-        // Match button 8px padding minus border width
-        padding-top: 7px;
-        padding-bottom: 7px;
+  .input-with-btn & {
+    // Match button 8px padding minus border width
+    padding-top: 7px;
+    padding-bottom: 7px;
 
-        // Match button font-size
-        font-size: unit( 14px / @base-font-size-px, em );
+    // Match button font-size
+    font-size: unit( 14px / @base-font-size-px, em );
 
-        &:focus {
-            box-shadow: 0 0 0 1px @pacific inset;
-        }
+    &:focus {
+      box-shadow: 0 0 0 1px @pacific inset;
     }
+  }
 }
 
 // TODO: Move to the DM and update existing o-form__input-w-btn in CF
@@ -203,51 +203,50 @@ input {
 */
 
 .input-with-btn__bar {
-    display: table;
+  display: table;
+  width: 100%;
+
+  @supports( display: flex ) {
+    display: flex;
+    width: auto;
+  }
+
+  .input-with-btn_input {
+    display: table-cell;
     width: 100%;
+    float: left;
+    margin-bottom: 0;
 
     @supports( display: flex ) {
-        display: flex;
-        width: auto;
+      display: flex;
+      width: auto;
+      float: none;
+      flex: 1;
+    }
+  }
+
+  .input-with-btn_btn {
+    margin: 0;
+    border: 0;
+    display: table-cell;
+    // overrides default .input-with-btn_btn width.
+    // setting button to very small width & input to 100%
+    // means button will only take up space it needs
+    width: 1%;
+    vertical-align: middle;
+
+    @supports( display: flex ) {
+      display: flex;
+      width: auto;
     }
 
-    .input-with-btn_input {
-        display: table-cell;
-        width: 100%;
-        float: left;
-        margin-bottom: 0;
-
-        @supports( display: flex ) {
-            display: flex;
-            width: auto;
-            float: none;
-            flex: 1;
-        }
+    button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      height: 33px;
     }
-
-    .input-with-btn_btn {
-        margin: 0;
-        border: 0;
-        display: table-cell;
-        // overrides default .input-with-btn_btn width.
-        // setting button to very small width & input to 100%
-        // means button will only take up space it needs
-        width: 1%;
-        vertical-align: middle;
-
-        @supports( display: flex ) {
-            display: flex;
-            width: auto;
-        }
-
-        button {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            height: 33px;
-        }
-    }
+  }
 }
-
 
 
 // TODO: Move to the DM & CF
@@ -261,69 +260,69 @@ input {
 
 .o-scale {
 
-    + .o-scale {
-        padding-top: unit( 30px / @base-font-size-px, em );
-        border-top: 1px solid @gray-40;
-        margin-top: unit( 30px / @base-font-size-px, em );
+  + .o-scale {
+    padding-top: unit( 30px / @base-font-size-px, em );
+    border-top: 1px solid @gray-40;
+    margin-top: unit( 30px / @base-font-size-px, em );
+  }
+
+  .m-form-field + .m-form-field {
+    margin-top: 0;
+  }
+
+  .respond-to-min( @bp-sm-min, {
+    .m-form-field__radio {
+      width: percentage( 1 / @scale-point-count );
+
+      float: left;
+      position: relative;
+
+      &:not(:last-child):before {
+        border-top: 1px solid @gray-80;
+
+        position: absolute;
+        top: ( @radio-button-diameter / 2 );
+        right: 0;
+        left: 0;
+
+        content: '';
+      }
     }
 
-    .m-form-field + .m-form-field {
-        margin-top: 0;
+    .a-label,
+    .a-label:before, {
+      display: block;
     }
 
-    .respond-to-min( @bp-sm-min, {
-        .m-form-field__radio {
-            width: percentage( 1 / @scale-point-count );
+    .a-label:before {
+      margin-bottom: unit( 3px / @base-font-size-px, em );
 
-            float: left;
-            position: relative;
+      position: relative;
+      z-index: 1;
+    }
+  } );
 
-            &:not(:last-child):before {
-                border-top: 1px solid @gray-80;
+  .respond-to-max( @bp-lg-max, {
+    .o-scale_answer-prefix {
+      margin-bottom: unit( 15px / @base-font-size-px, em );
+    }
+  } );
 
-                position: absolute;
-                top: ( @radio-button-diameter / 2 );
-                right: 0;
-                left: 0;
+  .respond-to-min( @bp-xl-min, {
+    .o-scale_answer-prefix {
+      box-sizing: border-box;
+      padding-right: unit( 15px / @base-font-size-px, em );
+      width: 20%;
 
-                content: '';
-            }
-        }
+      float: left;
+    }
 
-        .a-label,
-        .a-label:before, {
-            display: block;
-        }
+    .o-scale_answer-options {
+      width: 80%;
 
-        .a-label:before {
-            margin-bottom: unit( 3px / @base-font-size-px, em );
-
-            position: relative;
-            z-index: 1;
-        }
-    } );
-
-    .respond-to-max( @bp-lg-max, {
-        .o-scale_answer-prefix {
-            margin-bottom: unit( 15px / @base-font-size-px, em );
-        }
-    } );
-
-    .respond-to-min( @bp-xl-min, {
-        .o-scale_answer-prefix {
-            box-sizing: border-box;
-            padding-right: unit( 15px / @base-font-size-px, em );
-            width: 20%;
-
-            float: left;
-        }
-
-        .o-scale_answer-options {
-            width: 80%;
-
-            float: left;
-        }
-    } );
+      float: left;
+    }
+  } );
 }
 
 /*
@@ -334,7 +333,7 @@ input {
  * consistently applied to either the label or the input
  */
 .m-form-field .a-label__heading + .a-text-input {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 /*
@@ -342,7 +341,7 @@ input {
  * This is for an issue in iOS Safari where the input is collapsed.
  */
 input[type=date] {
-    min-height: unit( 35px / @base-font-size-px, rem );
+  min-height: unit( 35px / @base-font-size-px, rem );
 }
 
 /* topdoc

@@ -3,25 +3,25 @@
    Global banner in the header.
    ========================================================================== */
 .m-global-banner {
-    padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
-    background: @gold-10;
-    border-bottom: 1px solid @gray-40;
-    font-size: 0.875em;
+  padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
+  background: @gold-10;
+  border-bottom: 1px solid @gray-40;
+  font-size: 0.875em;
 
-    // Override notification box styling to align notification in header.
-    .m-notification {
-        border: none;
-        padding: 0;
+  // Override notification box styling to align notification in header.
+  .m-notification {
+    border: none;
+    padding: 0;
 
-        &_icon {
-          left: 0;
-          top: 0;
-        }
+    &_icon {
+      left: 0;
+      top: 0;
     }
+  }
 
-    .respond-to-min( @bp-sm-min, {
-        font-size: 1em;
-    } );
+  .respond-to-min( @bp-sm-min, {
+    font-size: 1em;
+  } );
 }
 /* topdoc
     name: EOF
