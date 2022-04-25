@@ -89,7 +89,6 @@ INSTALLED_APPS = (
     "paying_for_college",
     "prepaid_agreements",
     "regulations3k",
-    "research_reports",
     "retirement_api",
     "treemodeladmin",
     "housing_counselor",
