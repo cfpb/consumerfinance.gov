@@ -76,13 +76,13 @@ class NewRelicAlertViolations:
         ).format(account_number=self.account_number)
         body = (
             "New Relic {product}, {name}, {label} "
-            "({priority}, opened {opened}, violation id {id})."
-            "View incidents: {link}"
+            "({priority}, opened {opened}, incident ID {id})."
+            " View incidents: {link}"
         ).format(
             product=violation["entity"]["product"],
             label=violation["label"],
             name=violation["entity"]["name"],
-            id=violation["id"],
+            id=violation["links"]["incident_id"],
             priority=violation["priority"],
             opened=opened_str,
             link=incidents_link,
