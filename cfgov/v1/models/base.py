@@ -279,7 +279,6 @@ class CFGOVPage(Page):
         return re.sub(clean, " ", text)
 
     def get_streamfield_content(self, section, blockType, value):
-        import pdb;pdb.set_trace()
         for item in section:
             if item.block_type is blockType:
                 return self.remove_html_tags(item.value[value].source)
@@ -351,7 +350,7 @@ class CFGOVPage(Page):
 
         if self.schema_json:
             context["schema_json"] = self.schema_json
-            
+
         context["meta_description"] = self.get_meta_description()
         return context
 
