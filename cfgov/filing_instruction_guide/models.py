@@ -13,6 +13,10 @@ from wagtail.admin.forms.pages import WagtailAdminPageForm
 from wagtail.core.models import PageManager
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 
+from wagtail.core.fields import StreamField
+from v1.atomic_elements import molecules, organisms
+
+
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
@@ -37,13 +41,13 @@ def get_report_parts(is_appendix=False):
 
         return [{
             'expanded': False,
-            'title': section.header,
-            'body': section.body,
+            'title': section.section_title,
+            'body': section.section_content,
             'id': format('section-{}', i),
             'numbering': format('{}: ' if is_appendix else '{}. ', i),
             'children': [{
-                'title': subsection.header,
-                'body': subsection.body,
+                'title': subsection.sub_section_title,
+                'body': subsection.sub_section_content,
                 'id': format('section-{}.{}', i, j),
                 'numbering': '' if is_appendix else format('{}.{} ', i, j),
                 'children': [{
@@ -67,38 +71,27 @@ get_report_sections = get_report_parts()
 get_report_appendices = get_report_parts(True)
 
 
-def get_researchers():
-    return dict([
-        (r.title, r.url) for r in
-        DocumentDetailPage.objects.all()
-    ])
-
-
-def _get_deploy_environment():
-    return getattr(settings, 'DEPLOY_ENVIRONMENT')
-
-
 class ReportSection(ClusterableModel):
-    header = models.CharField(max_length=200, blank=True)
+    section_title = models.CharField(max_length=200, blank=True)
     is_appendix = models.BooleanField(default=False)
-    body = models.TextField(blank=True)
+    section_content = StreamField([("full_width_text", organisms.FullWidthText())], blank=True)
     panels = [
-        FieldPanel('header'),
+        FieldPanel('section_title'),
         FieldPanel('is_appendix'),
-        FieldPanel('body'),
+        StreamFieldPanel('section_content'),
         InlinePanel('report_subsections', label='Subsection'),
     ]
-    report = ParentalKey('ResearchReportPage',
+    report = ParentalKey('FIGContentPage',
                          on_delete=models.CASCADE,
                          related_name='report_sections')
 
 
 class ReportSubSection(ClusterableModel):
-    header = models.CharField(max_length=200)
-    body = models.TextField(blank=True)
+    sub_section_title = models.CharField(max_length=200)
+    sub_section_content = StreamField([("full_width_text", organisms.FullWidthText())], blank=True)
     panels = [
-        FieldPanel('header'),
-        FieldPanel('body'),
+        FieldPanel('sub_section_title'),
+        StreamFieldPanel('sub_section_content'),
         InlinePanel(
             'report_sections_level_three',
             label='Section Level Three'
@@ -117,116 +110,51 @@ class ReportSectionLevelThree(models.Model):
                              related_name='report_sections_level_three')
 
 
-class ReportAuthor(models.Model):
-    name = models.CharField(max_length=50)
-    report = ParentalKey('ResearchReportPage',
-                         on_delete=models.CASCADE,
-                         related_name='report_authors')
-
-
 class ReportMetaclass(WagtailAdminModelFormMetaclass):
     @classmethod
     def child_form(cls):
         return ReportForm
 
 
-class ReportForm(WagtailAdminPageForm, metaclass=ReportMetaclass):
-    pass
+class FIGContentPage(CFGOVPage):
 
-
-class ResearchReportPage(CFGOVPage):
-    # Report Upload Fields
-    report_file = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    process_report = models.BooleanField(
-        default=False,
-        help_text=mark_safe(
-            'If this is checked, when you save or publish this page, the '
-            'system will read in the report document and use its contents to '
-            'overwrite the fields in the "Report Content" tab.'
-            '<ul class="help">'
-            '    <li>&bull; If you uploaded a new report file for '
-            'processing, check this box.</li>'
-            '    <li>&bull; If you manually edited fields in the '
-            '"Report Content" tab, do not check this box.</li>'
-            '</ul>'
-        )
-    )
-
-    # Report Content Fields
-    base_form_class = ReportForm
+    # FIG Header Section Fields
     report_type = models.CharField(max_length=100, blank=True)
     header = models.CharField(max_length=200, blank=True)
     subheader = models.TextField(blank=True)
-    pdf_location = models.CharField(max_length=150, blank=True)
-    footnotes = models.TextField(blank=True)
 
     # Report upload tab
     content_panels = [
         MultiFieldPanel([
             FieldPanel('title'),
-        ], heading="Report Title"),
-        # MultiFieldPanel([
-        #     DocumentChooserPanel('report_file'),
-        #     FieldPanel('process_report'),
-        # ], heading='Report Document'),
-    # ]
-
-    # # Report content tab
-    # content_panels = [
+        ], heading="Page Title"),
         MultiFieldPanel([
             FieldPanel('report_type'),
             FieldPanel('header'),
             FieldPanel('subheader'),
-            # InlinePanel(
-            #     'report_authors',
-            #     label='Author Name',
-            #     min_num=0
-            # ),
-            FieldPanel('pdf_location')
-        ], heading='Report Header'),
+        ], heading='Filing Instruction Guide Header'),
         InlinePanel(
             'report_sections',
-            label='Section',
+            label='Filing Instruction Guide Sections',
             min_num=0
         ),
-        # FieldPanel('footnotes')
     ]
 
     # Tab handler interface
     edit_handler = TabbedInterface([
-        # ObjectList(upload_panels, heading='Report Upload'),
-        ObjectList(content_panels, heading='Report Content'),
+        ObjectList(content_panels, heading='Filing Instruction Guide Content'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    template = 'research_reports/index.html'
+    template = 'filing_instruction_guide/index.html'
 
     objects = PageManager()
-
-    def parse_report_file(self):
-        if self.report_file and self.process_report:
-            deploy_env = _get_deploy_environment()
-            if os.environ.get("JENKINS_API_ENABLED"):
-                management.call_command('trigger_jenkins_build', self.id)
-            elif deploy_env == 'local':
-                management.call_command('parse_research_report', self.id)
-            else:
-                # deployed to another environment where s3 isn't configured
-                # TODO: show a friendly error message to the user
-                pass
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context.update({
             'report_sections': get_report_sections(request, self),
             'report_appendices': get_report_appendices(request, self),
-            'researchers': get_researchers()
         })
         return context
 

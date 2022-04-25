@@ -104,6 +104,7 @@ INSTALLED_APPS = (
     "django_elasticsearch_dsl",
     "corsheaders",
     "login",
+    "filing_instruction_guide",
     # Satellites
     "complaint_search",
     "countylimits",
