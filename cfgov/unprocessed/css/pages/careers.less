@@ -1,35 +1,35 @@
 
 .m-jobs-list .m-list__links {
-    .respond-to-min( @bp-sm-min, {
-        .m-list_item + .m-list_item {
-            margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        }
-    } );
-
-    .m-list_link-subtext {
-       .u-link__colors( @black );
-       display: block;
-       margin-top: unit( 2px / @base-font-size-px, em );
-       font-weight: normal;
+  .respond-to-min( @bp-sm-min, {
+    .m-list_item + .m-list_item {
+      margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
     }
+  } );
+
+  .m-list_link-subtext {
+    .u-link__colors( @black );
+    display: block;
+    margin-top: unit( 2px / @base-font-size-px, em );
+    font-weight: normal;
+  }
 }
 
 .pay-grade-link {
-    margin-top: 5px;
-    .respond-to-min( @bp-sm-min, {
-        margin: 0 0 0 unit( 5px / @base-font-size-px, em );
-    } );
+  margin-top: 5px;
+  .respond-to-min( @bp-sm-min, {
+    margin: 0 0 0 unit( 5px / @base-font-size-px, em );
+  } );
 }
 
 .vacancy-announcement_details dt {
-    margin-top: unit( 12px / @base-font-size-px, em );
-    margin-bottom: 0;
+  margin-top: unit( 12px / @base-font-size-px, em );
+  margin-bottom: 0;
 }
 
 .vacancy-announcement_description .o-expandable_content__collapsed {
-    .respond-to-max( @bp-xs-max, {
-        // shows approx. 10 lines of content
+  .respond-to-max( @bp-xs-max, {
+    // shows approx. 10 lines of content
         max-height:  unit( @base-line-height-px * 10 / @base-font-size-px, em );
-    } );
+  } );
 }
 

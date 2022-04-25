@@ -8,38 +8,39 @@
 
 // Select menu inside the h2 header on the search tool view.
 .u-inline-select {
-    display: inline-block;
-    width: 130px;
+  display: inline-block;
+  width: 130px;
 }
 
 // Loading icon color.
 #countMessage .cf-icon-svg {
-    color: @green;
+  color: @green;
 }
 
 // Error coloring.
 .warn {
-    background-color: @gold-20;
-    border-color: @gold;
+  background-color: @gold-20;
+  border-color: @gold;
 }
+
 .error {
-    background-color: @red-20;
-    border-color: @red;
+  background-color: @red-20;
+  border-color: @red;
 }
 
 // Position search result totals.
 #results-total .content-l_col {
-    display: inline-flex;
-    min-width: 12em;
+  display: inline-flex;
+  min-width: 12em;
 
-    & > h1 {
-        text-align: right;
-    }
+  & > h1 {
+    text-align: right;
+  }
 
-    & > h4 {
-        margin-top: 0.5em;
-        margin-left: 1em;
-    }
+  & > h4 {
+    margin-top: 0.5em;
+    margin-left: 1em;
+  }
 }
 
 // Result counts.
@@ -47,12 +48,12 @@
 #results-total .notRuralCnt,
 #results-total .notFoundCnt,
 #results-total .duplicateCnt {
-    font-size: 3rem;
+  font-size: 3rem;
 }
 
 // Map in the results table.
 .hide-print.right {
-    float: right;
+  float: right;
 }
 
 // TODO: Overrides to cf-tables should be incorporated into the available
@@ -60,25 +61,26 @@
 
 // Override .o-table-wrapper__scrolling table added border.
 .o-table table {
-    border: none;
-    width: 100%;
+  border: none;
+  width: 100%;
 }
 // Override zebra-striping of table rows.
-.o-table-wrapper__scrolling table>tbody>tr:nth-child(even)>td {
-    background: #fff;
+.o-table-wrapper__scrolling table>tbody>tr:nth-child( even )>td {
+  background: #fff;
 }
 
 tr.data + tr[class=""] {
-    border-top: 2px solid @white;
+  border-top: 2px solid @white;
 }
 
 .map {
-    overflow: hidden;
-    height: 200px;
-    width: 100%;
+  overflow: hidden;
+  height: 200px;
+  width: 100%;
 }
 
 // Print-related styling.
+/* stylelint-disable-next-line no-invalid-position-at-import-rule */
 @import (less) './print.less';
 
 // u-hidden is duplicated from cf-core,
@@ -86,5 +88,5 @@ tr.data + tr[class=""] {
 // making it necessary to define here so it overrides cf-grid display: block.
 .u-hidden,
 .print-only {
-    display: none;
+  display: none;
 }
