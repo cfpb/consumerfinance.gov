@@ -47,114 +47,114 @@
 */
 
 .m-inset {
-    width: 100%;
-    clear: right;
-    margin-left: auto;
-    margin-right: auto;
+  width: 100%;
+  clear: right;
+  margin-left: auto;
+  margin-right: auto;
 
-    &__bottom-rule {
-        padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-        border-bottom: 1px solid @horizontal-rule;
+  &__bottom-rule {
+    padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    border-bottom: 1px solid @horizontal-rule;
+  }
+
+  &_caption {
+    margin-top: unit( 15px / @base-font-size-px, em );
+  }
+
+  &__bordered { // Styling for "Tip" insets, most commonly used in Ask CFPB
+    border-top: 4px solid @teal-60;
+    border-bottom: 2px solid @teal-40;
+    padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
+    margin-bottom: unit( @grid_gutter-width /2 / @base-font-size-px, em );
+
+    .respond-to-min(@bp-sm-min, {
+      margin: unit( 3px / @base-font-size-px, em )
+      0
+      unit( @grid_gutter-width / @base-font-size-px, em )
+      unit( @grid_gutter-width / @base-font-size-px, em );
+      padding: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+    } );
+  }
+
+  &.m-inset__170 {
+    // Ensure that 170px inset images are that same size on XS screens
+    width: unit( 170px / @base-font-size-px, em );
+  }
+
+  &__270 {
+    // Ensure that 270px inset images are that same size on XS screens
+    width: unit( 270px / @base-font-size-px, em );
+  }
+
+  .respond-to-min( @bp-sm-min, {
+    // Default anything with just an .m-inset class to 270px floating right,
+    // e.g., quote and related links blocks.
+    float: right;
+    width: unit( 270px / @base-font-size-px, em );
+
+    &__left {
+      float: left;
+      clear: left;
     }
 
-    &_caption {
-        margin-top: unit( 15px / @base-font-size-px, em );
+    .m-call-to-action {
+      width: 100%;
     }
+  } );
 
-    &__bordered { // Styling for "Tip" insets, most commonly used in Ask CFPB
-        border-top: 4px solid @teal-60;
-        border-bottom: 2px solid @teal-40;
-        padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
-        margin-bottom: unit( @grid_gutter-width /2 / @base-font-size-px, em );
-
-        .respond-to-min(@bp-sm-min, {
-            margin: unit( 3px / @base-font-size-px, em )
-                    0
-                    unit( @grid_gutter-width / @base-font-size-px, em )
-                    unit( @grid_gutter-width / @base-font-size-px, em );
-            padding: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
-        } );
+  .respond-to-min( @bp-xl-min, {
+    &__470 {
+      width: unit( 470px / @base-font-size-px, em );
     }
+  } );
 
-    &.m-inset__170 {
-        // Ensure that 170px inset images are that same size on XS screens
-        width: unit( 170px / @base-font-size-px, em );
-    }
+  .m-call-to-action,
+  .m-related-links {
+    padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+    border-bottom: 1px solid @horizontal-rule;
+  }
 
-    &__270 {
-        // Ensure that 270px inset images are that same size on XS screens
-        width: unit( 270px / @base-font-size-px, em );
-    }
+  .m-full-width-text,
+  .m-quote {
+    padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    padding-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    border-top: 1px solid @horizontal-rule;
+    border-bottom: 1px solid @horizontal-rule;
+    margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+  }
 
+  &__email {
     .respond-to-min( @bp-sm-min, {
-        // Default anything with just an .m-inset class to 270px floating right,
-        // e.g., quote and related links blocks.
-        float: right;
-        width: unit( 270px / @base-font-size-px, em );
-
-        &__left {
-            float: left;
-            clear: left;
-        }
-
-        .m-call-to-action {
-            width: 100%;
-        }
+      box-sizing: border-box;
+      width: 50%;
+      padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
+      float: right;
     } );
 
-    .respond-to-min( @bp-xl-min, {
-        &__470 {
-            width: unit( 470px / @base-font-size-px, em );
-        }
-    } );
+    .o-email-signup {
+      padding: unit( @grid_gutter-width / @base-font-size-px, em );
+      border: 1px solid @block__border-top;
+      margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+      background-color: @block__bg;
 
-    .m-call-to-action,
-    .m-related-links {
-        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-        border-bottom: 1px solid @horizontal-rule;
+      .respond-to-range( @bp-sm-min, @bp-sm-max, {
+        width: 100%;
+      } );
+
+      .respond-to-max( 320px, {
+        padding: unit( @grid_gutter-width / @base-font-size-px, em )
+        unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+      } );
     }
-
-    .m-full-width-text,
-    .m-quote {
-        padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
-        padding-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        border-top: 1px solid @horizontal-rule;
-        border-bottom: 1px solid @horizontal-rule;
-        margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-    }
-
-    &__email {
-        .respond-to-min(@bp-sm-min, {
-            box-sizing: border-box;
-            width: 50%;
-            padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
-            float: right;
-        });
-
-        .o-email-signup {
-            padding: unit( @grid_gutter-width / @base-font-size-px, em );
-            border: 1px solid @block__border-top;
-            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-            background-color: @block__bg;
-
-            .respond-to-range(@bp-sm-min, @bp-sm-max, {
-                width: 100%;
-            });
-
-            .respond-to-max(320px, {
-                padding: unit( @grid_gutter-width / @base-font-size-px, em )
-                         unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-            });
-        }
-    }
+  }
 }
 
 // in .content__1-3 pages, inset should be 4 of 9 columns
 // except in the 600-650px range, where it becomes unusably narrow
 .content__1-3 .m-inset__email {
-    .respond-to-min(650px, {
-        width: percentage( 4 / 9 );
-    });
+  .respond-to-min( 650px, {
+    width: percentage( 4 / 9 );
+  } );
 }
 
 
