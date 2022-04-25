@@ -58,7 +58,7 @@ you can run the tests there by
 [accessing the Python container's shell](http://localhost:8888/running-docker/#access-a-containers-shell):
 
 ```sh
-docker-compose exec python bash
+docker-compose exec python sh
 ```
 
 ## Running tests
@@ -108,7 +108,7 @@ If you would like to skip running Django migrations when testing, set the
 
 
 ### Formatting
-We use `black` to autoformat our Python code. `black` is invoked by Tox using 
+We use `black` to autoformat our Python code. `black` is invoked by Tox using
 the `lint` environment (this will also run `flake8` and `isort`):
 
 ```sh
@@ -126,7 +126,7 @@ We use the `flake8` and `isort` tools to ensure compliance with
 and the
 [CFPB Python style guide](https://github.com/cfpb/development/blob/main/standards/python.md#linting).
 
-Both `flake8` and `isort` can be run using the Tox `lint` environment (this 
+Both `flake8` and `isort` can be run using the Tox `lint` environment (this
 will also run `black`):
 
 ```sh
@@ -144,7 +144,7 @@ From the root of `consumerfinance.gov`.
 
 ### Coverage
 
-To see Python code coverage information immediately following a test run, 
+To see Python code coverage information immediately following a test run,
 you can add the `coverage` env to the list of envs for tox to run:
 
 ```sh

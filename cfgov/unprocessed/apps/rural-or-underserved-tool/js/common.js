@@ -16,26 +16,6 @@ import textInputs from './text-inputs';
 import tiger from './call-tiger';
 
 require( './show-map' );
-// Polyfill ES6 Promise for IE11.
-require( 'es6-promise' ).polyfill();
-
-// Polyfill SVG classList API for IE11.
-if ( !( 'classList' in SVGElement.prototype ) ) {
-  Object.defineProperty( SVGElement.prototype, 'classList', {
-    get() {
-      return {
-        contains: className => this.className.baseVal.split( ' ' ).indexOf( className ) !== -1,
-        add: className => this.setAttribute( 'class', this.getAttribute( 'class' ) + ' ' + className ),
-        remove: className => {
-          const removedClass = this.getAttribute( 'class' ).replace( new RegExp( '(\\s|^)' + className + '(\\s|$)', 'g' ), '$2' );
-          if ( this.classList.contains( className ) ) {
-            this.setAttribute( 'class', removedClass );
-          }
-        }
-      };
-    }
-  } );
-}
 
 Expandable.init();
 

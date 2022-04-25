@@ -11,20 +11,20 @@ This quickstart requires a working Docker Desktop installation and git:
     cd consumerfinance.gov
     ```
 
-- [Set up and run the Docker containers](#set-up-and-run-the-docker-containers):
+- [Set up and run the Docker containers via docker-compose](#set-up-and-run-the-docker-containers):
 
     ```sh
     docker-compose up
     ```
-
-    This may take some time, as it will also
-    [load initial data](#load-initial-data)
-    and
-    [build the frontend](#build-the-frontend).
+  
+This may take some time, as it will also 
+[load initial data](#load-initial-data) 
+and 
+[build the frontend](#build-the-frontend).
 
 consumerfinance.gov should now be available at <http://localhost:8000>.
 
-This documentation will be available at <http://localhost:8888>.
+This documentation will be available at <http://localhost:8888> (docker-compose only).
 
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
@@ -110,9 +110,9 @@ pip install -r requirements/ci.txt
 ```
 
 ### Install pre-commit
-We use `pre-commit` to automatically run our linting tools before a commit 
-takes place. These tools consist of `black`, `flake8`, and `isort`. To install 
-`pre-commit`, running the following commands from within the 
+We use `pre-commit` to automatically run our linting tools before a commit
+takes place. These tools consist of `black`, `flake8`, and `isort`. To install
+`pre-commit`, running the following commands from within the
 `consumerfinance.gov` directory:
 
 ```sh
@@ -120,9 +120,9 @@ pip install -U pre-commit && pre-commit install
 ```
 
 Before each commit, `pre-commit` will execute and run our `pre-commit` checks.
-If any task fails, it will attempt to resolve the issue automatically, notify 
-you of the changes (if any), and ask for you to re-stage the changed files. If 
-all checks pass, a commit will take place as expected, allowing you to then 
+If any task fails, it will attempt to resolve the issue automatically, notify
+you of the changes (if any), and ask for you to re-stage the changed files. If
+all checks pass, a commit will take place as expected, allowing you to then
 push to GitHub. This is to reduce the number of commits with failed lints, and
 to assist developers with linting without thinking.
 
@@ -134,7 +134,7 @@ consumerfinance.gov uses a proprietary licensed font, Avenir.
 If you want to pull this from a content delivery network (CDN),
 you can set the
 [`@use-font-cdn`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/css/main.less#L30)
-to `true` and rebuild the assets with `yarn gulp build`.
+to `true` and rebuild the assets with `yarn build`.
 
 If you want to install self-hosted fonts locally, you can place the font files
 in `static.in/cfgov-fonts/fonts/`.
@@ -188,10 +188,10 @@ building and
 ./frontend.sh
 ```
 
-Gulp can be used to rebuild our assets after the initial setup:
+Yarn can be used to rebuild our assets after the initial setup:
 
 ```sh
-yarn gulp build
+yarn build
 ```
 
 !!! note
@@ -200,18 +200,25 @@ yarn gulp build
 ### Set up and run the Docker containers
 
 consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
-We use
-[`docker-compose`](https://docs.docker.com/compose/)
+You can use either 
+[`docker-compose`](https://docs.docker.com/compose/) or 
+[Kubernetes](https://kubernetes.io/) via [Helm](https://helm.sh/)
 to run these services along side the consumerfinance.gov Django site.
 
 To build and run our Docker containers for the first time, run:
 
+#### docker-compose:
 ```sh
 docker-compose up
 ```
 
-This will build and start our PostgreSQL, Elasticsearch, Python, and
-documentation services.
+#### Kubernetes via Helm:
+```shell
+./build-images.sh && ./helm-install.sh
+```
+
+Either approach will build and start our 
+PostgreSQL, Elasticsearch, and Python services.
 
 The first time this is fun, it will
 [load initial data](#load-initial-data)
@@ -240,7 +247,7 @@ a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
 This script must be run inside the Docker `python` container:
 
 ```sh
-docker-compose exec python bash
+docker-compose exec python sh
 ./initial-data.sh
 ```
 
@@ -255,7 +262,7 @@ inside a Docker `python` container sh immediately before running
 `refresh-data.sh`:
 
 ```sh
-docker-compose exec python bash
+docker-compose exec python sh
 CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ./refresh-data.sh
 ```

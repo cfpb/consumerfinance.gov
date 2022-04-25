@@ -101,7 +101,7 @@ describe( 'Admin', () => {
       admin.flagHeading().should( 'not.contain', heading.get( 0 ).innerText );
       // reset flag to what it was before. Only works locally.
       admin.toggleFlag();
-    });
+    } );
   } );
 
   it( 'should use Block Inventory to search for blocks', () => {
