@@ -31,7 +31,7 @@ from v1.util import ref
 def editor_css():
     return format_html(
         '<link rel="stylesheet" href="{}">',
-        static('/css/on-demand/simple-chart-admin.css')
+        static('cfgov/templates/wagtailadmin/css/simple-chart-admin.css')
     )
 
 
