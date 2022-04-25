@@ -23,7 +23,9 @@ class TestNewRelicAlertViolations(unittest.TestCase):
                         "product": "Synthetic",
                         "type": "Monitor",
                     },
-                    "id": 12345678,
+                    "links": {
+                        "incident_id": 12345678
+                    },
                     "label": "This test opened just now",
                     "policy_name": "cf.gov unit tests",
                     "priority": "Critical",
@@ -36,7 +38,9 @@ class TestNewRelicAlertViolations(unittest.TestCase):
                         "product": "Apm",
                         "type": "Application",
                     },
-                    "id": 23456781,
+                    "links": {
+                        "incident_id": 23456781
+                    },
                     "label": "This test opened 2 min ago",
                     "policy_name": "cf.gov unit tests",
                     "priority": "Critical",
@@ -49,7 +53,9 @@ class TestNewRelicAlertViolations(unittest.TestCase):
                         "product": "Apm",
                         "type": "Application",
                     },
-                    "id": 34567812,
+                    "links": {
+                        "incident_id": 34567812
+                    },
                     "label": "This is a different application",
                     "policy_name": "other unit tests",
                     "priority": "Critical",
