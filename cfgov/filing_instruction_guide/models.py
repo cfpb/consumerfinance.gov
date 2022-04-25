@@ -120,7 +120,7 @@ class FIGContentPage(CFGOVPage):
 
     # FIG Header Section Fields
     report_type = models.CharField(max_length=100, blank=True)
-    header = models.CharField(max_length=200, blank=True)
+    page_header = models.CharField(max_length=200, blank=True)
     subheader = models.TextField(blank=True)
 
     # Report upload tab
@@ -130,7 +130,7 @@ class FIGContentPage(CFGOVPage):
         ], heading="Page Title"),
         MultiFieldPanel([
             FieldPanel('report_type'),
-            FieldPanel('header'),
+            FieldPanel('page_header'),
             FieldPanel('subheader'),
         ], heading='Filing Instruction Guide Header'),
         InlinePanel(
