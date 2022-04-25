@@ -47,10 +47,10 @@ class NewRelicAlertViolations:
         this method are automatically added to known_violations."""
         violations = []
         for violation in self.get_current_violations():
-            if violation["links"]["incident_id"] in self.known_violations:
+            if violation["id"] in self.known_violations:
                 continue
 
-            self.known_violations.append(violation["links"]["incident_id"])
+            self.known_violations.append(violation["id"])
             violations.append(violation)
 
         return violations
@@ -76,13 +76,13 @@ class NewRelicAlertViolations:
         ).format(account_number=self.account_number)
         body = (
             "New Relic {product}, {name}, {label} "
-            "({priority}, opened {opened}, incident ID {id})."
+            "({priority}, opened {opened}, incident ID {incident_id})."
             " View incidents: {link}"
         ).format(
             product=violation["entity"]["product"],
             label=violation["label"],
             name=violation["entity"]["name"],
-            id=violation["links"]["incident_id"],
+            incident_id=violation["links"]["incident_id"],
             priority=violation["priority"],
             opened=opened_str,
             link=incidents_link,

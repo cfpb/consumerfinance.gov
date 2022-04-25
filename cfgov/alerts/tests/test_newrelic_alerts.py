@@ -23,6 +23,7 @@ class TestNewRelicAlertViolations(unittest.TestCase):
                         "product": "Synthetic",
                         "type": "Monitor",
                     },
+                    "id": 12345678,
                     "links": {
                         "incident_id": 12345678,
                     },
@@ -38,6 +39,7 @@ class TestNewRelicAlertViolations(unittest.TestCase):
                         "product": "Apm",
                         "type": "Application",
                     },
+                    "id": 23456781,
                     "links": {
                         "incident_id": 23456781,
                     },
@@ -53,6 +55,7 @@ class TestNewRelicAlertViolations(unittest.TestCase):
                         "product": "Apm",
                         "type": "Application",
                     },
+                    "id": 34567812,
                     "links": {
                         "incident_id": 34567812,
                     },
