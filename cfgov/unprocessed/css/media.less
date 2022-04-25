@@ -140,81 +140,81 @@
     - cfgov-media
 */
 .media {
+  display: block;
+  .u-clearfix;
+
+  &_image-container {
+    .respond-to-min(@bp-sm-min, {
+      float: left;
+      margin-right: @grid_gutter-width;
+    });
+
+    .respond-to-max(@bp-xs-max, {
+      margin-left: 0;
+      margin-right: 0;
+    });
+
+    &.media_image-container__wide-margin {
+      margin-right: @grid_gutter-width;
+
+      .respond-to-max(@bp-xs-max, {
+        margin-left: 0;
+        margin-right: 0;
+      });
+    }
+
+  }
+
+  &_image-container__right {
     display: block;
-    .u-clearfix;
 
-    &_image-container {
-        .respond-to-min(@bp-sm-min, {
-            float: left;
-            margin-right: @grid_gutter-width;
-        });
+    .respond-to-min(@bp-sm-min, {
+      float: right;
+      margin-left: @grid_gutter-width / 2;
+      margin-right: 0;
+    });
 
-        .respond-to-max(@bp-xs-max, {
-            margin-left: 0;
-            margin-right: 0;
-        });
+    &.media_image-container__wide-margin {
+      margin-left: @grid_gutter-width;
+      margin-right: 0;
 
-        &.media_image-container__wide-margin {
-            margin-right: @grid_gutter-width;
-
-            .respond-to-max(@bp-xs-max, {
-                margin-left: 0;
-                margin-right: 0;
-            });
-        }
-
+      .respond-to-max(@bp-xs-max, {
+        margin-left: 0;
+      });
     }
 
-    &_image-container__right {
-        display: block;
+  }
 
-        .respond-to-min(@bp-sm-min, {
-            float: right;
-            margin-left: @grid_gutter-width / 2;
-            margin-right: 0;
-        });
+  &_image {
+    display: block;
+  }
 
-        &.media_image-container__wide-margin {
-            margin-left: @grid_gutter-width;
-            margin-right: 0;
+  &_image__100 {
+    width: 100px;
+  }
 
-            .respond-to-max(@bp-xs-max, {
-                margin-left: 0;
-            });
-        }
+  &_image__150 {
+    width: 150px;
+  }
 
-    }
+  &_image__130-to-150 {
+    width: 130px;
+    .respond-to-min(@bp-med-min, {
+      width: 150px;
+    });
+  }
 
-    &_image {
-        display: block;
-    }
+  &_body {
+    .respond-to-max(@bp-xs-max, {
+      margin-top: @grid_gutter-width / 2;
+    });
 
-    &_image__100 {
-        width: 100px;
-    }
-
-    &_image__150 {
-        width: 150px;
-    }
-
-    &_image__130-to-150 {
-        width: 130px;
-        .respond-to-min(@bp-med-min, {
-            width: 150px;
-        });
-    }
-
-    &_body {
-        .respond-to-max(@bp-xs-max, {
-            margin-top: @grid_gutter-width / 2;
-        });
-
-        .respond-to-min(@bp-sm-min, {
-            display: table-cell;
-            width: 10000px;
-            vertical-align:top;
-        });
-    }
+    .respond-to-min(@bp-sm-min, {
+      display: table-cell;
+      width: 10000px;
+      vertical-align:top;
+    });
+  }
 }
 
 /* topdoc
@@ -296,23 +296,23 @@
     - cfgov-media
 */
 .media-stack {
-    margin-bottom: unit(45px / @base-font-size-px, em);
+  margin-bottom: unit( 45px / @base-font-size-px, em );
 
-    .media-stack_item {
-        border-top: 1px solid @gray-40;
-        padding-top: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-        margin-top: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-    }
+  .media-stack_item {
+    border-top: 1px solid @gray-40;
+    padding-top: unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+    margin-top: unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+  }
 
-    .media-stack_item:first-child {
-        padding-top: unit( @grid_gutter-width / @base-font-size-px, em);
-        border-top: none;
-    }
+  .media-stack_item:first-child {
+    padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    border-top: none;
+  }
 
-    .media {
-        margin-left: @grid_gutter-width / 2;
-        margin-right: @grid_gutter-width / 2;
-    }
+  .media {
+    margin-left: @grid_gutter-width / 2;
+    margin-right: @grid_gutter-width / 2;
+  }
 }
 
 /* topdoc

@@ -36,57 +36,57 @@
 */
 
 .m-social-media {
+  display: inline-block;
+
+  // This could be wrapped in the `m-social-media__share` modifier,
+  // but it's ok on its own too.
+  &_heading {
+    .heading-5();
     display: inline-block;
+    // 0.25em subtracted to compensate for inline spacing
+    padding-right: unit( @grid_gutter-width / @font-size - 0.25em, em );
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
 
-    // This could be wrapped in the `m-social-media__share` modifier,
-    // but it's ok on its own too.
-    &_heading {
-        .heading-5();
-        display: inline-block;
-        // 0.25em subtracted to compensate for inline spacing
-        padding-right: unit( @grid_gutter-width / @font-size - 0.25em, em );
-        margin-bottom: 0;
-        vertical-align: middle;
+  .m-list {
+    display: inline-block;
+    vertical-align: middle;
+
+    .m-list_item {
+      // 0.25em subtracted to compensate for inline spacing
+      margin-right: unit( (@grid_gutter-width / 2) / @base-font-size-px - 0.25em, em );
+      margin-bottom: 0;
     }
 
-    .m-list {
-        display: inline-block;
-        vertical-align: middle;
-
-        .m-list_item {
-            // 0.25em subtracted to compensate for inline spacing
-            margin-right: unit( (@grid_gutter-width / 2) / @base-font-size-px - 0.25em, em );
-            margin-bottom: 0;
-        }
-
-        .m-list_item:last-child {
-            margin-right: 0;
-        }
+    .m-list_item:last-child {
+      margin-right: 0;
     }
+  }
 
-    &_icon {
-        color: @gray-dark;
-        font-size: unit( @grid_gutter-width / @base-font-size-px, em );
-        line-height: 1;
-        .u-link__colors( @gray-dark, @pacific-80 );
-        .u-link__no-border();
+  &_icon {
+    color: @gray-dark;
+    font-size: unit( @grid_gutter-width / @base-font-size-px, em );
+    line-height: 1;
+    .u-link__colors( @gray-dark, @pacific-80 );
+    .u-link__no-border();
+  }
+
+  &_print {
+    padding-left: unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+    border-left: 1px solid @black;
+  }
+
+  // Hide on print.
+  .respond-to-print( {
+    & {
+      display: none;
     }
-
-    &_print {
-        padding-left: unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
-        border-left: 1px solid @black;
-    }
-
-    // Hide on print.
-    .respond-to-print( {
-        & {
-            display: none;
-        }
-    } );
+  } );
 }
 
 .no-js .m-social-media_print {
-    display: none;
+  display: none;
 }
 
 /* topdoc
