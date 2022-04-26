@@ -39,8 +39,8 @@ function toolTipper( elem ) {
 
   $ttc.show();
   const newTop = $elem.offset().top + $elem.outerHeight() + 10;
-  newLeft = $elem.offset().left + $elem.outerWidth() / 2 -
-            $ttc.outerWidth( true ) / 2;
+  newLeft = $elem.offset().left + ( $elem.outerWidth() / 2 ) -
+            ( $ttc.outerWidth( true ) / 2 );
   $ttc.css( { top: newTop, left: newLeft } );
 
   // check offset again, properly set tips to point to the element clicked
@@ -54,11 +54,11 @@ function toolTipper( elem ) {
     $ttc.css( 'left', pagePadding );
     innerTip.css(
       'left',
-      elemCenter - innerTip.outerWidth() / 2 - pagePadding
+      elemCenter - ( innerTip.outerWidth() / 2 ) - pagePadding
     );
     outerTip.css(
       'left',
-      elemCenter - outerTip.outerWidth() / 2 - pagePadding
+      elemCenter - ( outerTip.outerWidth() / 2 ) - pagePadding
     );
   }
 
