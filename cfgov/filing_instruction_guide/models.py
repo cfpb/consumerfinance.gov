@@ -184,4 +184,4 @@ class FIGContentPage(CFGOVPage):
         return context
 
     class Media:
-        js = ["reports-sidenav.js"]
+        js = ["fig-sidenav.js"]
