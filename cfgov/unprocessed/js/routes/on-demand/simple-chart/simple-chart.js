@@ -12,7 +12,7 @@ import defaultDatetime from './datetime-styles.js';
 import defaultLine from './line-styles.js';
 import tilemapChart from './tilemap-chart.js';
 import { alignMargin, extractSeries, formatSeries, makeFormatter, overrideStyles } from './utils.js';
-import { initFilters } from './select-filters.js';
+import { initFilters } from './data-filters.js';
 
 accessibility( Highcharts );
 
@@ -192,8 +192,7 @@ function buildChart( chartNode ) {
       );
 
       initFilters(
-        dataAttributes, chartNode, chart, data,
-        transform && chartHooks[transform]
+        dataAttributes, chartNode, chart, data
       );
     }
 

@@ -6,7 +6,7 @@ import cloneDeep from 'lodash.clonedeep';
 import chartHooks from './chart-hooks.js';
 import defaultTilemap from './tilemap-styles.js';
 import usLayout from './us-layout.js';
-import { makeFilterDOM } from './select-filters.js';
+import { makeSelectFilterDOM } from './data-filters.js';
 import { alignMargin, formatSeries, overrideStyles } from './utils.js';
 
 tilemap( Highmaps );
@@ -69,7 +69,7 @@ function makeTilemapSelect( chartNode, chart, data, transform ) {
   else d = data.raw;
 
   const options = getTilemapDates( d );
-  const selectNode = makeFilterDOM( options, chartNode, { key: 'tilemap' },
+  const selectNode = makeSelectFilterDOM( options, chartNode, { key: 'tilemap' },
     'Select date'
   );
 
