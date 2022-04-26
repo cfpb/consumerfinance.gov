@@ -33,4 +33,4 @@ jobs:
           context: ./docker/deployable-zipfile/
           load: true
           tag: ${{ env.TEST_TAG }}
-          build-args: FRONTEND_TARGET=ci
+          build-args: FRONTEND_TARGET=production
