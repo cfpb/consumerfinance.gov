@@ -556,7 +556,7 @@ class SimpleChart(blocks.StructBlock):
         null=True,
         min_value=0,
         max_value=12,
-        help_text="How many months of the recent data are projected?",
+        help_text="A number to determine how many months of the data are projected values",
         required=False,
     )
 
