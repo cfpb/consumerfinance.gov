@@ -201,9 +201,9 @@ cd consumerfinance.gov</code></pre>
 
 </li>
 </ul>
-<p>This may take some time, as it will also 
-<a href="#load-initial-data">load initial data</a> 
-and 
+<p>This may take some time, as it will also
+<a href="#load-initial-data">load initial data</a>
+and
 <a href="#build-the-frontend">build the frontend</a>.</p>
 <p>consumerfinance.gov should now be available at <a href="http://localhost:8000">http://localhost:8000</a>.</p>
 <p>This documentation will be available at <a href="http://localhost:8888">http://localhost:8888</a> (docker-compose only).</p>
@@ -272,18 +272,12 @@ you of the changes (if any), and ask for you to re-stage the changed files. If
 all checks pass, a commit will take place as expected, allowing you to then
 push to GitHub. This is to reduce the number of commits with failed lints, and
 to assist developers with linting without thinking.</p>
-<h3 id="install-our-private-fonts-optional">Install our private fonts (optional)<a class="headerlink" href="#install-our-private-fonts-optional" title="Permanent link">¶</a></h3>
+<h3 id="use-our-private-fonts-from-a-cdn">Use our private fonts from a CDN<a class="headerlink" href="#use-our-private-fonts-from-a-cdn" title="Permanent link">¶</a></h3>
 <p>consumerfinance.gov uses a proprietary licensed font, Avenir.</p>
 <p>If you want to pull this from a content delivery network (CDN),
 you can set the
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/css/main.less#L30"><code>@use-font-cdn</code></a>
 to <code>true</code> and rebuild the assets with <code>yarn build</code>.</p>
-<p>If you want to install self-hosted fonts locally, you can place the font files
-in <code>static.in/cfgov-fonts/fonts/</code>.</p>
-<p>If you are a CFPB employee, you can perform this step with:</p>
-<pre class="highlight"><code>git clone https://[GHE]/CFGOV/cfgov-fonts/ static.in/cfgov-fonts</code></pre>
-
-<p>Where <code>[GHE]</code> is our GitHub Enterprise URL.</p>
 <h3 id="build-the-frontend">Build the frontend<a class="headerlink" href="#build-the-frontend" title="Permanent link">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -320,8 +314,8 @@ building and
 </div>
 <h3 id="set-up-and-run-the-docker-containers">Set up and run the Docker containers<a class="headerlink" href="#set-up-and-run-the-docker-containers" title="Permanent link">¶</a></h3>
 <p>consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
-You can use either 
-<a href="https://docs.docker.com/compose/"><code>docker-compose</code></a> or 
+You can use either
+<a href="https://docs.docker.com/compose/"><code>docker-compose</code></a> or
 <a href="https://kubernetes.io/">Kubernetes</a> via <a href="https://helm.sh/">Helm</a>
 to run these services along side the consumerfinance.gov Django site.</p>
 <p>To build and run our Docker containers for the first time, run:</p>
@@ -331,7 +325,7 @@ to run these services along side the consumerfinance.gov Django site.</p>
 <h4 id="kubernetes-via-helm">Kubernetes via Helm:<a class="headerlink" href="#kubernetes-via-helm" title="Permanent link">¶</a></h4>
 <pre class="highlight"><code class="language-shell">./build-images.sh &amp;&amp; ./helm-install.sh</code></pre>
 
-<p>Either approach will build and start our 
+<p>Either approach will build and start our
 PostgreSQL, Elasticsearch, and Python services.</p>
 <p>The first time this is fun, it will
 <a href="#load-initial-data">load initial data</a>
@@ -422,7 +416,6 @@ that are specific to Postgres. The <code>CREATEDB</code> keyword above allows th
 <p>After you have chosen a means to run PostgreSQL and Elasticsearch,
 <a href="#set-up-the-environment">set up the environment</a>,
 <a href="#set-up-a-local-python-environment">set up a local Python environment</a>,
-optionally <a href="#install-our-private-fonts">installed our private fonts</a>,
 and <a href="#build-the-frontend">built the frontend</a>,
 all the Python dependencies for running locally can be installed:</p>
 <pre class="highlight"><code class="language-sh">pyenv activate consumerfinance.gov
@@ -432,6 +425,9 @@ pip install -r requirements/local.txt</code></pre>
 <a href="http://localhost:8000">http://localhost:8000</a>.</p>
 <pre class="highlight"><code class="language-sh">./runserver.sh</code></pre>
 
+<p>You can optionally
+<a href="#use-our-private-fonts-from-a-cdn">use our private fonts from a CDN</a>
+as well.</p>
 <h2 id="additional-setup">Additional setup<a class="headerlink" href="#additional-setup" title="Permanent link">¶</a></h2>
 <h3 id="sync-local-image-and-document-storage-optional">Sync local image and document storage (optional)<a class="headerlink" href="#sync-local-image-and-document-storage-optional" title="Permanent link">¶</a></h3>
 <p>If using a database dump, pages will contain links to images or documents
