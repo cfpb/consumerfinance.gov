@@ -1,4 +1,3 @@
-require( 'es6-promise' ).polyfill();
 const jsonP = require( 'jsonp-p' ).default;
 import DT from './dom-tools';
 import count from './count';

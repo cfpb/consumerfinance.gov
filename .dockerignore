@@ -4,10 +4,11 @@
 # ...except these directories
 !cfgov
 !config
-!gulp
+!esbuild
 !requirements
 !static.in
 !scripts
+!npm-packages-offline-cache
 
 # ...and these files
 !.npmrc
@@ -15,10 +16,8 @@
 !babel.config.js
 !docker-entrypoint.sh
 !frontend.sh
-!gulpfile.js
 !initial-data.sh
 !jest.config.js
-!npm-packages-offline-cache
 !package.json
 !refresh-data.sh
 !yarn.lock

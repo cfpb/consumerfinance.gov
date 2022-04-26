@@ -1,0 +1,23 @@
+{# ==========================================================================
+
+   pdf download link
+
+   ==========================================================================
+
+   Description:
+
+   Create a link to download a pdf when given:
+
+   value:         An object with the following options for value.
+
+   value.pdf_url:     A string for the URL of the pdf.
+
+   ========================================================================== #}
+
+{% macro render(value) -%}
+<a class="a-link a-link__jump" href="{{ value.pdf_url }}">
+    <span class="a-link_text">
+        Download PDF
+    </span>
+</a>
+{%- endmacro %}

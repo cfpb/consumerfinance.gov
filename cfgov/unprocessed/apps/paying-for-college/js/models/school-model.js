@@ -83,13 +83,13 @@ const schoolModel = {
    */
   getProgramInfo: function( pid ) {
     const level = getStateValue( 'programLevel' );
-    const hasLevel = ( level !== null || level !== false );
-    const hasProgram = ( pid !== null || typeof pid !== 'undefined' );
+    const hasLevel = level !== null || level !== false;
+    const hasProgram = pid !== null || typeof pid !== 'undefined';
 
     if ( !hasProgram || !hasLevel ) {
       return false;
-    } else if ( !schoolModel.values.hasOwnProperty( 'programList' )
-        || !schoolModel.values.programList[level].hasOwnProperty( pid ) ) {
+    } else if ( !schoolModel.values.hasOwnProperty( 'programList' ) ||
+        !schoolModel.values.programList[level].hasOwnProperty( pid ) ) {
       return false;
     }
 

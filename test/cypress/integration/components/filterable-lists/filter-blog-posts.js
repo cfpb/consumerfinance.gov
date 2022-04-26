@@ -7,7 +7,6 @@ import { Pagination } from '../pagination/pagination-helpers';
 
 const blog = new FilterableListControl();
 const filter = new Filter();
-const page = new Pagination();
 
 describe( 'Filter Blog Posts based on content', () => {
   beforeEach( () => {
@@ -25,9 +24,9 @@ describe( 'Filter Blog Posts based on content', () => {
         'contain', title.get( 0 ).innerText
       );
       // And the page url should contain "title=" followed by the title
-      let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+      const plusTitle = title.get( 0 ).innerText.split( ' ' ).join( '+' );
       cy.url().should(
-        'include', 'title=' + plus_title
+        'include', 'title=' + plusTitle
       );
     } );
   } );
@@ -426,8 +425,8 @@ describe( 'Filter Blog Posts based on content', () => {
           'contain', category.get( 0 ).innerText.split( '\n' ).pop().trim()
         );
         // And the page url should contain "title=" title
-        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
-        cy.url().should( 'include', 'title=' + plus_title );
+        const plusTitle = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plusTitle );
         // And the page url should contain "categories=" category
         cy.url().should(
           'include',
@@ -463,8 +462,8 @@ describe( 'Filter Blog Posts based on content', () => {
           blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
         } );
         // And the page url should contain "title=" title
-        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
-        cy.url().should( 'include', 'title=' + plus_title );
+        const plusTitle = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plusTitle );
         // And the page url should contain "topics=" topic
         cy.url().should(
           'include',
@@ -500,8 +499,8 @@ describe( 'Filter Blog Posts based on content', () => {
         );
         blog.resultsContent().should( 'contain', title.get( 0 ).innerText );
         // And the page url should contain "title=loans"
-        let plus_title = title.get( 0 ).innerText.split( ' ' ).join( '+' );
-        cy.url().should( 'include', 'title=' + plus_title );
+        const plusTitle = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plusTitle );
         // And the page url should contain "from_date=2020-01-01"
         cy.url().should(
           'include',

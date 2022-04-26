@@ -16,26 +16,6 @@ import textInputs from './text-inputs';
 import tiger from './call-tiger';
 
 require( './show-map' );
-// Polyfill ES6 Promise for IE11.
-require( 'es6-promise' ).polyfill();
-
-// Polyfill SVG classList API for IE11.
-if ( !( 'classList' in SVGElement.prototype ) ) {
-  Object.defineProperty( SVGElement.prototype, 'classList', {
-    get() {
-      return {
-        contains: className => this.className.baseVal.split( ' ' ).indexOf( className ) !== -1,
-        add: className => this.setAttribute( 'class', this.getAttribute( 'class' ) + ' ' + className ),
-        remove: className => {
-          const removedClass = this.getAttribute( 'class' ).replace( new RegExp( '(\\s|^)' + className + '(\\s|$)', 'g' ), '$2' );
-          if ( this.classList.contains( className ) ) {
-            this.setAttribute( 'class', removedClass );
-          }
-        }
-      };
-    }
-  } );
-}
 
 Expandable.init();
 
@@ -70,7 +50,9 @@ function censusAPI( data, ruralCounties ) {
 
         if ( addressUtils.isRural( fips, ruralCounties ) ) {
           result.type = 'rural';
-        } else if ( addressUtils.isRuralCensus( censusUC.features, censusUA.features ) ) {
+        } else if (
+          addressUtils.isRuralCensus( censusUC.features, censusUA.features )
+        ) {
           result.type = 'rural';
         } else {
           result.type = 'notRural';
@@ -102,7 +84,7 @@ function processAddresses( addresses ) {
 
   getRuralCounties( DT.getEl( '#year' ).value )
     .then( function( ruralCounties ) {
-      addresses.forEach( function( address, index ) {
+      addresses.forEach( function( address ) {
 
         if ( addressUtils.isDup( address, processed ) ) {
           // setup the result to render
@@ -125,8 +107,8 @@ function processAddresses( addresses ) {
 
 // On submit of address entered manually.
 const addressFormDom = document.querySelector( '#geocode' );
-addressFormDom.addEventListener( 'submit', function( e ) {
-  e.preventDefault();
+addressFormDom.addEventListener( 'submit', function( evt ) {
+  evt.preventDefault();
 
   window.location.hash = 'rural-or-underserved';
   const addresses = [];
@@ -407,19 +389,18 @@ function generateCSV() {
   function _loopHandler( element ) {
     const isHidden = DT.hasClass( DT.getParentEls( '.js-table' ), 'u-hidden' );
 
-    // add a data row, if table isn't hidden (!)
-    if ( isHidden === false ) {
+    /* Add a data row, if table isn't hidden (!)
+       and map cols have colspan and we don't want those. */
+    if ( isHidden === false && element.getAttribute( 'colspan' ) === null ) {
+      const CSVLabel = element.textContent.replace( 'Show map', '' );
 
-      // map cols have colspan and we don't want those
-      if ( element.getAttribute( 'colspan' ) === null ) {
-        const CSVLabel = element.textContent.replace( 'Show map', '' );
-        theCSV += '"' + CSVLabel + '"'; // put the content in first
+      // Put the content in first.
+      theCSV += '"' + CSVLabel + '"';
 
-        if ( element.matches( ':last-child' ) ) {
-          theCSV = theCSV + ',' + monthIndex + '/' + day + '/' + year + '\n';
-        } else {
-          theCSV += ',';
-        }
+      if ( element.matches( ':last-child' ) ) {
+        theCSV = theCSV + ',' + monthIndex + '/' + day + '/' + year + '\n';
+      } else {
+        theCSV += ',';
       }
     }
   }

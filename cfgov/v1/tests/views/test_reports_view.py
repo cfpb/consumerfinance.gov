@@ -59,7 +59,7 @@ class ServeViewTestCase(TestCase):
         today = date.today()
         self.assertEqual(
             self.page_metadata_report_view.get_filename(),
-            f"spreadsheet-export-{today}",
+            f"wagtail-report_pages_{today}",
         )
 
     def test_metadata_report_get_queryset(self):
@@ -71,7 +71,7 @@ class ServeViewTestCase(TestCase):
         today = date.today()
         self.assertEqual(
             self.documents_report_view.get_filename(),
-            f"all-cfgov-documents-{today}",
+            f"wagtail-report_documents_{today}",
         )
 
     def test_documents_report_get_queryset(self):

@@ -94,6 +94,6 @@ jobs:
           test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-program-tests.js
           test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-url-params.js
           test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path.js
-        build: yarn run gulp
+        build: yarn build
         start: python cfgov/manage.py runserver 0.0.0.0:8000
         wait-on: 'http://localhost:8000'

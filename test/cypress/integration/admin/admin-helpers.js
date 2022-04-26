@@ -59,7 +59,7 @@ export class AdminPage {
     ).then( () => {
       // we need to wait for results to be populated
       cy.wait( 1000 );
-    });
+    } );
   }
 
   removeContact() {
@@ -67,7 +67,7 @@ export class AdminPage {
       'a[href^="/admin/v1/contact/delete/"]:first'
     ).click( { force: true } ).then( () => {
       cy.get( '[value="Yes, delete"]' ).click();
-    });
+    } );
   }
 
   addMortgageData( name ) {

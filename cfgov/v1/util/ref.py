@@ -38,6 +38,7 @@ page_types = [
     ("leadership-calendar", "Leadership Calendar"),
     ("newsroom", "Newsroom"),
     ("notice-opportunity-comment", "Notice and Opportunity for Comment"),
+    ("research-hub", "Research Hub"),
     ("research-reports", "Research Report"),
     ("rule-under-dev", "Rule Under Development"),
     ("story", "Story"),
@@ -138,6 +139,13 @@ categories = [
             ),
             ("info-collect-activity", "Information collection activities"),
             ("notice-privacy-act", "Notice related to Privacy Act"),
+        ),
+    ),
+    (
+        "Research Hub",
+        (
+            ("data-point", "Data point"),
+            ("industry-markets", "Industry and markets"),
         ),
     ),
     (

@@ -1,10 +1,6 @@
 import axios from 'axios';
 import config from '../../config.json';
 
-// Polyfill Promise for IE11.
-import es6Promise from 'es6-promise';
-es6Promise.polyfill();
-
 const CancelToken = axios.CancelToken;
 
 let _cancelToken;
