@@ -296,7 +296,8 @@ function placeBenefitsText() {
   benefitsTop = parseInt( $selectedBar.css( 'top' ), 10 );
   benefitsTop -= $( '#benefits-text' ).height() + 10;
   benefitsLeft = parseInt( $selectedBar.css( 'left' ), 10 );
-  benefitsLeft -= $( '#benefits-text' ).width() / 2 - graphSettings.barWidth / 2;
+  benefitsLeft -= ( $( '#benefits-text' ).width() / 2 ) -
+                  ( graphSettings.barWidth / 2 );
   $( '#benefits-text' ).css( 'top', benefitsTop );
   $( '#benefits-text' ).css( 'left', benefitsLeft );
 
@@ -306,8 +307,8 @@ function placeBenefitsText() {
   fullAgeTop = parseInt( $fullAgeBar.css( 'top' ), 10 );
   fullAgeTop -= $fullAgeBenefits.height() + 10;
   fullAgeLeft = parseInt( $fullAgeBar.css( 'left' ), 10 );
-  fullAgeLeft -= $fullAgeBenefits.width() / 2 -
-    graphSettings.barWidth / 2;
+  fullAgeLeft -= ( $fullAgeBenefits.width() / 2 ) -
+                 ( graphSettings.barWidth / 2 );
   $fullAgeBenefits.css( 'top', fullAgeTop );
   $fullAgeBenefits.css( 'left', fullAgeLeft );
 
