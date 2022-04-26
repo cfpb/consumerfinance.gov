@@ -513,7 +513,8 @@ class SimpleChart(blocks.StructBlock):
         required=False,
         help_text="For charts pulling from a separate source file, "
         "include a list of the column headers (from a CSV file) or "
-        'keys (from a JSON file) to include in the chart as ["HEADER/KEY1", "HEADER/KEY2"]. '
+        "keys (from a JSON file) to include in the chart as "
+        ' ["HEADER/KEY1", "HEADER/KEY2"]. '
         "To change how the data is labeled in the chart, include the correct "
         'labels with the format [{"key": "HEADER/KEY1", "label": "NEWLABEL"}, '
         '{"key": "HEADER/KEY2", "label": "NEWLABEL2"}]',
@@ -539,7 +540,8 @@ class SimpleChart(blocks.StructBlock):
         required=False,
         help_text="If the chart needs the option for users to filter "
         "the data shown, for example by date or geographic region, "
-        'provide the JSON objects to filter on, in the format {key: "KEY", "label": "LABEL"}',
+        "provide the JSON objects to filter on, in the format "
+        ' {key: "KEY", "label": "LABEL"}',
     )
 
     style_overrides = blocks.TextBlock(
