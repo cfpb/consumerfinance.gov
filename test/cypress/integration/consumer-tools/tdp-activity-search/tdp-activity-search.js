@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { ActivitySearch } from './tdp-activity-search-helpers';
 const $ = Cypress.$;
 
