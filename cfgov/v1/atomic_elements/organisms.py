@@ -5,12 +5,11 @@ from urllib.parse import urlencode
 from django.apps import apps
 from django.db.models import Q
 from django.forms.utils import ErrorList
-from django.utils.safestring import mark_safe
 from django.templatetags.static import static
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
-from wagtail.core import hooks
-from wagtail.core import blocks
+from wagtail.core import blocks, hooks
 from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.core.models import Page
 from wagtail.images import blocks as images_blocks
