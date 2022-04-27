@@ -2571,14 +2571,6 @@ esbuild-openbsd-64@0.14.34:
   resolved "https://registry.yarnpkg.com/esbuild-openbsd-64/-/esbuild-openbsd-64-0.14.34.tgz#b9bc44b4f70031fb01b173b279daeffc4d4f54b7"
   integrity sha512-vmy9DxXVnRiI14s8GKuYBtess+EVcDALkbpTqd5jw4XITutIzyB7n4x0Tj5utAkKsgZJB22lLWGekr0ABnSLow==
 
-esbuild-plugin-browserslist@0.4.9:
-  version "0.4.9"
-  resolved "https://registry.yarnpkg.com/esbuild-plugin-browserslist/-/esbuild-plugin-browserslist-0.4.9.tgz#6c8baea81f8d23be020496022082da80c9f46d1a"
-  integrity sha512-PMB9eVoAvilMR+VzorCFusuO4jDYaqWE8jFePWFQ27oyL1hrTYQo39CBA0cv5AHh9cgGAWpFR7AzCTw9crq+DA==
-  dependencies:
-    debug "^4.3.4"
-    zod "^3.14.4"
-
 esbuild-sunos-64@0.14.34:
   version "0.14.34"
   resolved "https://registry.yarnpkg.com/esbuild-sunos-64/-/esbuild-sunos-64-0.14.34.tgz#512dd6085ac1a0dccc20c5f932f16a618bea409c"
@@ -6031,8 +6023,3 @@ yauzl@^2.10.0:
   dependencies:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.1.0"
-
-zod@^3.14.4:
-  version "3.14.4"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.14.4.tgz#e678fe9e5469f4663165a5c35c8f3dc66334a5d6"
-  integrity sha512-U9BFLb2GO34Sfo9IUYp0w3wJLlmcyGoMd75qU9yf+DrdGA4kEx6e+l9KOkAlyUO0PSQzZCa3TR4qVlcmwqSDuw==

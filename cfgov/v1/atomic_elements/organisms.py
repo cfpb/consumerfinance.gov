@@ -5,9 +5,11 @@ from urllib.parse import urlencode
 from django.apps import apps
 from django.db.models import Q
 from django.forms.utils import ErrorList
+from django.templatetags.static import static
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-from wagtail.core import blocks
+from wagtail.core import blocks, hooks
 from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.core.models import Page
 from wagtail.images import blocks as images_blocks
@@ -23,6 +25,14 @@ from v1.atomic_elements import atoms, molecules
 # maintain import structure across the project
 from v1.atomic_elements.tables import AtomicTableBlock
 from v1.util import ref
+
+
+@hooks.register("insert_editor_css")
+def editor_css():
+    return format_html(
+        '<link rel="stylesheet" href="{}">',
+        static("cfgov/templates/wagtailadmin/css/simple-chart-admin.css"),
+    )
 
 
 class AskSearch(blocks.StructBlock):
@@ -495,13 +505,18 @@ class SimpleChart(blocks.StructBlock):
     data_source = blocks.TextBlock(
         required=True,
         help_text="URL of the chart's data source or an array of JSON data",
+        rows=2,
     )
 
     data_series = blocks.TextBlock(
         required=False,
-        help_text="A list of column headers (CSV) or keys (JSON) to include "
-        "as data in the chart in the format [<key>, <key>, <key>]. "
-        'Other labels may be included via: {"key": <key>, "label": <label>}',
+        help_text="For charts pulling from a separate source file, "
+        "include a list of the column headers (from a CSV file) or "
+        "keys (from a JSON file) to include in the chart as "
+        ' ["HEADER/KEY1", "HEADER/KEY2"]. '
+        "To change how the data is labeled in the chart, include the correct "
+        'labels with the format [{"key": "HEADER/KEY1", "label": "NEWLABEL"}, '
+        '{"key": "HEADER/KEY2", "label": "NEWLABEL2"}]',
     )
 
     x_axis_source = blocks.TextBlock(
@@ -510,22 +525,22 @@ class SimpleChart(blocks.StructBlock):
         "to include as the source of x-axis values.",
     )
 
-    y_axis_label = blocks.CharBlock(required=False, help_text="y-axis label")
-
-    x_axis_label = blocks.CharBlock(
-        required=False, help_text="x-axis label, if needed"
-    )
-
     transform = blocks.CharBlock(
         required=False,
-        help_text="Name of the javascript function in chart-hooks.js to run "
+        help_text="Name the javascript function in chart-hooks.js to run "
         "on the provided data before handing it to the chart",
     )
 
-    filters = blocks.CharBlock(
+    x_axis_label = blocks.CharBlock(required=False)
+
+    y_axis_label = blocks.CharBlock(required=False)
+
+    filters = blocks.TextBlock(
         required=False,
-        help_text='Array of JSON objects of the form {"key": <key>, '
-        '"label": <label>} to filter the underlying chart data on',
+        help_text="If the chart needs the option for users to filter "
+        "the data shown, for example by date or geographic region, "
+        "provide the JSON objects to filter on, in the format "
+        ' {key: "KEY", "label": "LABEL"}',
     )
 
     style_overrides = blocks.TextBlock(
@@ -540,11 +555,12 @@ class SimpleChart(blocks.StructBlock):
         null=True,
         min_value=0,
         max_value=12,
-        help_text="How many months of the recent data are projected?",
+        help_text="A number to determine how many months of the "
+        "data are projected values",
         required=False,
     )
 
-    credits = blocks.CharBlock(
+    source_credits = blocks.CharBlock(
         required=False, help_text="Attribution for the data source"
     )
 
@@ -552,14 +568,14 @@ class SimpleChart(blocks.StructBlock):
         required=False, help_text="When the underlying data was published"
     )
 
+    download_text = blocks.CharBlock(
+        required=False, help_text="Custom text for the chart download field"
+    )
+
     download_file = blocks.CharBlock(
         required=False,
         help_text="Location of a file to download, if different from the "
         "data source",
-    )
-
-    download_text = blocks.CharBlock(
-        required=False, help_text="Custom text for the chart download field"
     )
 
     notes = blocks.TextBlock(
@@ -570,6 +586,7 @@ class SimpleChart(blocks.StructBlock):
         label = "Simple Chart"
         icon = "image"
         template = "_includes/organisms/simple-chart.html"
+        form_classname = "struct-block simple-chart-block"
 
     class Media:
         js = ["simple-chart/simple-chart.js"]
