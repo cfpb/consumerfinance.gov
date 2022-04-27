@@ -36,10 +36,6 @@ build_args=(
     "$build_artifact_name"
 )
 
-if [ -d "$webfonts_path" ]; then
-    build_args+=("--extra-static" "$webfonts_path")
-fi
-
 # Build the deployable zipfile.
 "$cfgov_refresh_volume/cfgov/deployable_zipfile/create.py" "${build_args[@]}"
 
