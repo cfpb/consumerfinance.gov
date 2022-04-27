@@ -3,17 +3,11 @@ import isElementInView from '../utils/is-element-in-view';
 // TODO: remove jquery.
 import $ from 'jquery';
 
-let currentAge = 0;
-let fullAge = 0;
-
-function init( ageRightNow, fullRetirementAge ) {
-  currentAge = ageRightNow;
-  fullAge = fullRetirementAge;
-
-  limitAgeSelector( currentAge );
+function init( ageRightNow = 0, fullRetirementAge = 0 ) {
+  limitAgeSelector( ageRightNow );
 
   $( '#retirement-age-selector' ).change( function() {
-    chooseClaimingAge();
+    chooseClaimingAge( fullRetirementAge );
   } );
 
   $( '#age-selector-response .helpful-btn' ).click( function() {
@@ -21,10 +15,12 @@ function init( ageRightNow, fullRetirementAge ) {
   } );
 }
 
-/* This function updates the text in Step 3
-    based on the user's chosen retirement age
-    @param {number} fullAge   The user's full retirement age */
-function chooseClaimingAge() {
+/**
+ * This function updates the text in Step 3
+ * based on the user's chosen retirement age
+ * @param {number} fullAge   The user's full retirement age
+ */
+function chooseClaimingAge( fullAge ) {
 
   if ( $( '#retirement-age-selector' ).find(
     'option:selected'

@@ -7,7 +7,6 @@ import { Pagination } from '../pagination/pagination-helpers';
 
 const blog = new FilterableListControl();
 const filter = new Filter();
-const page = new Pagination();
 
 describe( 'Filter Blog Posts based on content', () => {
   beforeEach( () => {
