@@ -18,6 +18,10 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
     After running `yarn build` (or `./setup.sh`) the site's assets are copied over to `cfgov/static_built`,
     ready to be served by Django.
 
+## Adding new Javascript entrypoints
+
+- In order to build standalone javascript files that are to be included in a template, they
+  need to be included in the `jsPaths` variable in `esbuild/scripts`.
 
 ## Installing new front-end dependencies
 
