@@ -126,6 +126,8 @@
         
             <li><a class="toctree-l4" href="#main-front-end-templateasset-locations">Main front-end template/asset locations</a></li>
         
+            <li><a class="toctree-l4" href="#adding-new-javascript-entrypoints">Adding new Javascript entrypoints</a></li>
+        
             <li><a class="toctree-l4" href="#installing-new-front-end-dependencies">Installing new front-end dependencies</a></li>
         
             <li><a class="toctree-l4" href="#watching-files-for-changes">Watching files for changes</a></li>
@@ -208,6 +210,11 @@ Feel free to <a href="https://editorconfig.org/#download">install a plugin</a> f
 <p>After running <code>yarn build</code> (or <code>./setup.sh</code>) the site's assets are copied over to <code>cfgov/static_built</code>,
 ready to be served by Django.</p>
 </div>
+<h2 id="adding-new-javascript-entrypoints">Adding new Javascript entrypoints<a class="headerlink" href="#adding-new-javascript-entrypoints" title="Permanent link">¶</a></h2>
+<ul>
+<li>In order to build standalone javascript files that are to be included in a template, they
+  need to be included in the <code>jsPaths</code> variable in <code>esbuild/scripts</code>.</li>
+</ul>
 <h2 id="installing-new-front-end-dependencies">Installing new front-end dependencies<a class="headerlink" href="#installing-new-front-end-dependencies" title="Permanent link">¶</a></h2>
 <ul>
 <li>Use <code>yarn add new_dep@se.m.ver</code> to install new dependencies
