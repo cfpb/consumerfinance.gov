@@ -252,7 +252,6 @@ function attachFilters( selectors, chart, dataAttributes, data ) {
     // filter on all selects
     let filtered = data;
 
-    // filters should provide an interface to to manage them
     for ( let i = 0; i < selectors.length; i++ ) {
       const selector = selectors[i];
       const { filterProp, value } = selector;
