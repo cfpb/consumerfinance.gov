@@ -155,7 +155,7 @@ function makeRadioFilterDOM( buckets, chartNode, filter, radioLabel ) {
 
   /* Explicitly pass "all" key as part of filter */
   if ( filter.all ) {
-    makeRadioGroup( 'View all' );
+    buckets.unshift( 'View all' );
   }
 
   buckets.forEach( makeRadioGroup );
