@@ -91,7 +91,7 @@ function makeSelectFilterDOM( options, chartNode, filter, selectLabel ) {
     filterProp: filter.key,
     value: select.value,
     attach( filterFn ) {
-      select.addEventListener( evt => {
+      select.addEventListener( 'change', evt => {
         selector.value = select.value;
         filterFn.call( this, evt );
       } );
@@ -129,13 +129,14 @@ function makeRadioFilterDOM( buckets, chartNode, filter, radioLabel ) {
   function makeRadioGroup( bucket, i ) {
     const id = Math.random() + bucket;
     const radioWrapper = document.createElement( 'div' );
-    radioWrapper.className = 'm-form-field m-form-field__radio';
+    radioWrapper.className = 'm-form-field m-form-field__radio u-mb5';
 
     const input = document.createElement( 'input' );
     input.className = 'a-radio';
     input.type = 'radio';
     input.id = id;
     input.value = bucket;
+    input.name = name;
     if ( i === 0 ) input.checked = true;
 
 
