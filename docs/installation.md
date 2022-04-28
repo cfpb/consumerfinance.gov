@@ -11,20 +11,20 @@ This quickstart requires a working Docker Desktop installation and git:
     cd consumerfinance.gov
     ```
 
-- [Set up and run the Docker containers](#set-up-and-run-the-docker-containers):
+- [Set up and run the Docker containers via docker-compose](#set-up-and-run-the-docker-containers):
 
     ```sh
     docker-compose up
     ```
 
-    This may take some time, as it will also
-    [load initial data](#load-initial-data)
-    and
-    [build the frontend](#build-the-frontend).
+This may take some time, as it will also
+[load initial data](#load-initial-data)
+and
+[build the frontend](#build-the-frontend).
 
 consumerfinance.gov should now be available at <http://localhost:8000>.
 
-This documentation will be available at <http://localhost:8888>.
+This documentation will be available at <http://localhost:8888> (docker-compose only).
 
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
@@ -127,7 +127,7 @@ push to GitHub. This is to reduce the number of commits with failed lints, and
 to assist developers with linting without thinking.
 
 
-### Install our private fonts (optional)
+### Use our private fonts from a CDN
 
 consumerfinance.gov uses a proprietary licensed font, Avenir.
 
@@ -136,16 +136,6 @@ you can set the
 [`@use-font-cdn`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/css/main.less#L30)
 to `true` and rebuild the assets with `yarn build`.
 
-If you want to install self-hosted fonts locally, you can place the font files
-in `static.in/cfgov-fonts/fonts/`.
-
-If you are a CFPB employee, you can perform this step with:
-
-```
-git clone https://[GHE]/CFGOV/cfgov-fonts/ static.in/cfgov-fonts
-```
-
-Where `[GHE]` is our GitHub Enterprise URL.
 
 ### Build the frontend
 
@@ -200,18 +190,25 @@ yarn build
 ### Set up and run the Docker containers
 
 consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
-We use
-[`docker-compose`](https://docs.docker.com/compose/)
+You can use either
+[`docker-compose`](https://docs.docker.com/compose/) or
+[Kubernetes](https://kubernetes.io/) via [Helm](https://helm.sh/)
 to run these services along side the consumerfinance.gov Django site.
 
 To build and run our Docker containers for the first time, run:
 
+#### docker-compose:
 ```sh
 docker-compose up
 ```
 
-This will build and start our PostgreSQL, Elasticsearch, Python, and
-documentation services.
+#### Kubernetes via Helm:
+```shell
+./build-images.sh && ./helm-install.sh
+```
+
+Either approach will build and start our
+PostgreSQL, Elasticsearch, and Python services.
 
 The first time this is fun, it will
 [load initial data](#load-initial-data)
@@ -336,7 +333,6 @@ that are specific to Postgres. The `CREATEDB` keyword above allows the
 After you have chosen a means to run PostgreSQL and Elasticsearch,
 [set up the environment](#set-up-the-environment),
 [set up a local Python environment](#set-up-a-local-python-environment),
-optionally [installed our private fonts](#install-our-private-fonts),
 and [built the frontend](#build-the-frontend),
 all the Python dependencies for running locally can be installed:
 
@@ -351,6 +347,10 @@ Once complete, our `runserver.sh` script will bring up the site at
 ```sh
 ./runserver.sh
 ```
+
+You can optionally
+[use our private fonts from a CDN](#use-our-private-fonts-from-a-cdn)
+as well.
 
 ## Additional setup
 

@@ -1,19 +1,19 @@
 // Expandable facets.
 
 .o-expandable-facets {
-    &.is-open > div .o-expandable-facets_cue-close {
-        display: inline-block;
+  &.is-open > div .o-expandable-facets_cue-close {
+    display: inline-block;
+  }
+
+  &.is-closed {
+    > div .o-expandable-facets_cue-open {
+      display: inline-block;
     }
 
-    &.is-closed {
-        > div .o-expandable-facets_cue-open {
-            display: inline-block;
-        }
-
-        > .o-expandable-facets_content {
-            display: none;
-        }
+    > .o-expandable-facets_content {
+      display: none;
     }
+  }
 }
 
 .o-expandable-facets_target {
@@ -27,12 +27,12 @@
 }
 
 .o-expandable-facets_cue {
-    display: none;
+  display: none;
 }
 
 .o-expandable-facets_content {
-    &.o-expandable-facets_content__collapsed {
-        display: none;
-    }
+  &.o-expandable-facets_content__collapsed {
+    display: none;
+  }
 
 }

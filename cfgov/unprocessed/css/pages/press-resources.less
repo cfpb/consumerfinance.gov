@@ -4,91 +4,91 @@
    ========================================================================== */
 
 .press-section + .press-section {
-    padding-top: unit(30px / @base-font-size-px, em);
-    border-top: 1px solid @gray-40;
-    margin-top: unit(45px / @base-font-size-px, em);
+  padding-top: unit( 30px / @base-font-size-px, em );
+  border-top: 1px solid @gray-40;
+  margin-top: unit( 45px / @base-font-size-px, em );
 }
 
 .press-section_title {
-    .h3();
+  .h3();
 }
 
 .press-contacts_people {
-    // Works out to about 30px including line-height.
-    margin-top: 1.75em;
+  // Works out to about 30px including line-height.
+  margin-top: 1.75em;
 }
 
 .contact-person {
-    margin-bottom: unit(30px / @base-font-size-px, em);
+  margin-bottom: unit( 30px / @base-font-size-px, em );
 }
 
 .contact-person__director {
-    margin-top: unit(30px / @base-font-size-px, em);
+  margin-top: unit( 30px / @base-font-size-px, em );
 
-    .contact-person_photo {
-        display: block;
-        margin: 0 auto unit(10px / @base-font-size-px, em);
-    }
+  .contact-person_photo {
+    display: block;
+    margin: 0 auto unit( 10px / @base-font-size-px, em );
+  }
+
+  .contact-person_title {
+    .h6();
+    line-height: 1;
+  }
+
+  .contact-person_name {
+    .h4();
+    margin-bottom: unit( 15px / @font-size, em );
+  }
+}
+
+.respond-to-min( @bp-sm-min, {
+  .press-section_title {
+    .h2();
+    margin-bottom: unit(30px / @font-size, em);
+  }
+
+  .press-contacts_main-contact-list {
+    .grid_nested-col-group();
+  }
+  .press-contacts_main-contact-list .m-list_item {
+    .grid_column(6);
+  }
+
+  .contact-person__director {
+    text-align: center;
 
     .contact-person_title {
-        .h6();
-        line-height: 1;
+      .h5();
+      line-height: 1;
     }
 
     .contact-person_name {
-        .h4();
-        margin-bottom: unit(15px / @font-size, em);
+      .h3();
+      margin-bottom: unit(15px / @font-size, em);
     }
-}
+  }
+} );
 
-.respond-to-min(@bp-sm-min, {
-    .press-section_title {
-        .h2();
-        margin-bottom: unit(30px / @font-size, em);
+.respond-to-min( @bp-lg-min, {
+  .press-contacts_main-contact-list .m-list_item,
+  .press-contacts .contact-person {
+    .grid_column(4);
+  }
+
+  .contact-person__director {
+    text-align: left;
+
+    .contact-person_photo {
+      width: 150px;
+      margin-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+      float: left;
     }
+  }
+} );
 
-    .press-contacts_main-contact-list {
-        .grid_nested-col-group();
-    }
-    .press-contacts_main-contact-list .m-list_item {
-        .grid_column(6);
-    }
-
-    .contact-person__director {
-        text-align: center;
-
-        .contact-person_title {
-            .h5();
-            line-height: 1;
-        }
-
-        .contact-person_name {
-            .h3();
-            margin-bottom: unit(15px / @font-size, em);
-        }
-    }
-});
-
-.respond-to-min(@bp-lg-min, {
-    .press-contacts_main-contact-list .m-list_item,
-    .press-contacts .contact-person {
-        .grid_column(4);
-    }
-
-    .contact-person__director {
-        text-align: left;
-
-        .contact-person_photo {
-            width: 150px;
-            margin-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
-            float: left;
-        }
-    }
-});
-
-.respond-to-min(@bp-xl-min, {
-    .contact-person__director  .contact-person_photo {
-        width: 180px;
-        margin-right: unit(@grid_gutter-width / @base-font-size-px, em);
-    }
-});
+.respond-to-min( @bp-xl-min, {
+  .contact-person__director  .contact-person_photo {
+    width: 180px;
+    margin-right: unit(@grid_gutter-width / @base-font-size-px, em);
+  }
+} );

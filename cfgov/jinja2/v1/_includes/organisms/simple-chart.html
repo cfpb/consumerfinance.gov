@@ -40,6 +40,7 @@
     <div data-title="{{value.title}}" class="o-simple-chart_filters"></div>
 
     <div class="o-simple-chart_target"
+         data-projected-months="{{ value.projected_months }}"
          data-chart-type="{{ value.chart_type }}"
          data-source='{{ data_location }}'
          data-series='{{ value.data_series }}'
@@ -60,7 +61,7 @@
     {% set download_source = value.download_file %}
 
     <p class="m-chart-footnote block__sub block__border-top block short-desc">
-        {% if value.credits %}<strong>Source:</strong> {{value.credits}}<br>{% endif %}
+        {% if value.source_credits %}<strong>Source:</strong> {{value.source_credits}}<br>{% endif %}
         {% if value.date_published %}<strong>Date Published:</strong> {{value.date_published}}<br>{% endif %}
         {% if download_source %}
           <strong>Download:</strong>

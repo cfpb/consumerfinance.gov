@@ -60,72 +60,72 @@
 
 .o-secondary-navigation {
 
-    // TODO: If secondary navigation is overriding o-expandables appearance,
-    //       they aren't atomic expandables anymore per the design spec.
-    //       Secondary navigation should use FlyoutMenu for expandable-like
-    //       behavior and handle its own styling
-    //       (possibly shared with expandables).
+  // TODO: If secondary navigation is overriding o-expandables appearance,
+  //       they are not atomic expandables anymore per the design spec.
+  //       Secondary navigation should use FlyoutMenu for expandable-like
+  //       behavior and handle its own styling
+  //       (possibly shared with expandables).
 
-    .respond-to-max( @bp-sm-max, {
-        &__no-children {
-            display: none;
-        }
+  .respond-to-max( @bp-sm-max, {
+    &__no-children {
+      display: none;
+    }
 
-        &_list__parents {
-            li[data-nav-is-active="False"]{
-                display: none;
-            }
-        }
+    &_list__parents {
+      li[data-nav-is-active="False"]{
+        display: none;
+      }
+    }
 
-        .o-expandable {
-            border-top: 1px solid @gray-40;
-            border-bottom: 1px solid @gray-40;
-        }
-    } );
+    .o-expandable {
+      border-top: 1px solid @gray-40;
+      border-bottom: 1px solid @gray-40;
+    }
+  } );
 
+
+  .respond-to-min( @bp-med-min, {
+    .o-expandable {
+      background: none;
+    }
+
+    .o-expandable_target {
+      display: none;
+    }
+
+    .o-expandable_content {
+      // These two !important values override basic expandable styling,
+      // because these do not function like expandables on med+ screens.
+      display: block !important;
+      max-height: 100% !important;
+      padding: 0;
+
+      &:before {
+        display: none;
+      }
+    }
+  } );
+
+  .o-expandable_label {
+    .h5();
+
+    line-height: unit( 22 / @size-v );
+    margin-bottom: 0;
+  }
+
+  &_list__children {
+    margin-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
     .respond-to-min( @bp-med-min, {
-        .o-expandable {
-            background: none;
-        }
-
-        .o-expandable_target {
-            display: none;
-        }
-
-        .o-expandable_content {
-            // These two !important values override basic expandable styling,
-            // because these don't function like expandables on med+ screens.
-            display: block !important;
-            max-height: 100% !important;
-            padding: 0;
-
-            &:before {
-                display: none;
-            }
-        }
+      // Add 5px for the border to half the gutter
+      margin-left: unit( ( (@grid_gutter-width / 2 ) + 5px ) / @base-font-size-px, em) ;
     } );
+  }
 
-    .o-expandable_label {
-        .h5();
-
-        line-height: unit( 22 / @size-v );
-        margin-bottom: 0;
-    }
-
-    &_list__children {
-        margin-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
-
-        .respond-to-min( @bp-med-min, {
-            // Add 5px for the border to half the gutter
-            margin-left: unit( ( (@grid_gutter-width / 2 ) + 5px ) / @base-font-size-px, em) ;
-        } );
-    }
-
-    // Hide on print.
-    .respond-to-print( {
-        display: none;
-    } );
+  // Hide on print.
+  .respond-to-print( {
+    display: none;
+  } );
 }
 
 /* topdoc
