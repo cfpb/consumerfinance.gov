@@ -36,31 +36,6 @@ function processDate( option ) {
   return `${ quarter } ${ year }`;
 }
 
-/**
- * @param {string} title The title to be case adjusted
- * @returns {string} The case adjusted title
- */
-function titleCase( title ) {
-  if ( title[0].match( /[A-Z]/ ) && !title[1].match( /[A-Z]/ ) ) {
-    return title[0].toLowerCase() + title.slice( 1 );
-  }
-  return title;
-}
-
-
-/**
- * @param {object} chartNode The DOM node of the current chart
- * @returns {object} the built header
- */
-function makeFilterHeaderDOM( chartNode ) {
-  const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_filters' )[0];
-  const header = document.createElement( 'h3' );
-  header.innerText = 'Total ' + titleCase( attachPoint.dataset.title );
-  attachPoint.appendChild( header );
-
-  return header;
-}
-
 
 /**
  * @param {array} options List of options to build for the select component
@@ -87,7 +62,6 @@ function makeSelectFilterDOM( options, chartNode, filter, selectLabel ) {
 
   const select = document.createElement( 'select' );
   select.id = id;
-  select.dataset.key = filter.key;
 
   /* Explicitly pass "all" key as part of filter */
   if ( filter.all ) {
@@ -112,7 +86,19 @@ function makeSelectFilterDOM( options, chartNode, filter, selectLabel ) {
   wrapper.appendChild( selectDiv );
   attachPoint.appendChild( wrapper );
 
-  return wrapper;
+  const selector = {
+    nodes: [ select ],
+    filterProp: filter.key,
+    value: select.value,
+    attach( filterFn ) {
+      select.addEventListener( evt => {
+        selector.value = select.value;
+        filterFn.call( this, evt );
+      } );
+    }
+  };
+
+  return selector;
 }
 
 
@@ -126,6 +112,7 @@ function makeSelectFilterDOM( options, chartNode, filter, selectLabel ) {
 function makeRadioFilterDOM( buckets, chartNode, filter, radioLabel ) {
   const name = filter.label ? filter.label : filter.key;
   const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_filters' )[0];
+  const radios = [];
 
   const wrapper = document.createElement( 'div' );
   wrapper.className = 'filter-wrapper';
@@ -137,9 +124,9 @@ function makeRadioFilterDOM( buckets, chartNode, filter, radioLabel ) {
 
   /**
    * @param {string} bucket The bucket on which to filter data
-   * @param {string} value The bucket on which to filter data
+   * @param {number} i Calling order
    */
-  function makeRadioGroup( bucket ) {
+  function makeRadioGroup( bucket, i ) {
     const id = Math.random() + bucket;
     const radioWrapper = document.createElement( 'div' );
     radioWrapper.className = 'm-form-field m-form-field__radio';
@@ -149,7 +136,8 @@ function makeRadioFilterDOM( buckets, chartNode, filter, radioLabel ) {
     input.type = 'radio';
     input.id = id;
     input.value = bucket;
-    input.dataset.key = filter.key;
+    if ( i === 0 ) input.checked = true;
+
 
     const label = document.createElement( 'label' );
     label.className = 'a-label';
@@ -159,6 +147,8 @@ function makeRadioFilterDOM( buckets, chartNode, filter, radioLabel ) {
     radioWrapper.appendChild( input );
     radioWrapper.appendChild( label );
     wrapper.appendChild( radioWrapper );
+
+    radios.push( input );
   }
 
   /* Explicitly pass "all" key as part of filter */
@@ -170,7 +160,21 @@ function makeRadioFilterDOM( buckets, chartNode, filter, radioLabel ) {
 
   attachPoint.appendChild( wrapper );
 
-  return wrapper;
+  const selector = {
+    nodes: radios,
+    filterProp: filter.key,
+    value: radios[0].value,
+    attach( filterFn ) {
+      radios.forEach( r => {
+        r.addEventListener( 'change', evt => {
+          selector.value = r.value;
+          filterFn.call( this, evt );
+        } );
+      } );
+    }
+  };
+
+  return selector;
 }
 
 /** Filters raw or transformed data by a select prop
@@ -210,26 +214,19 @@ function initFilters( dataAttributes, chartNode, chart, data ) {
     filters = JSON.parse( filters );
     if ( !Array.isArray( filters ) ) filters = [ filters ];
 
-    const filterGroups = [];
+    const selectors = [];
 
     filters.forEach( filter => {
       const buckets = getDataBuckets( filter, rawOrTransformed );
       if ( buckets.length < 6 ) {
-        filterGroups.push( makeRadioFilterDOM( buckets, chartNode, filter ) );
+        selectors.push( makeRadioFilterDOM( buckets, chartNode, filter ) );
       } else {
-        filterGroups.push( makeSelectFilterDOM( buckets, chartNode, filter ) );
+        selectors.push( makeSelectFilterDOM( buckets, chartNode, filter ) );
       }
     } );
 
-    if ( filterGroups.length ) {
-      makeFilterHeaderDOM( chartNode );
-      filterGroups.forEach( ( node, i ) => {
-        // TODO attach correctly to radio or select
-        attachFilter(
-          node, chartNode, chart, dataAttributes,
-          filters[i], rawOrTransformed
-        );
-      } );
+    if ( selectors.length ) {
+      attachFilters( selectors, chart, dataAttributes, rawOrTransformed );
     }
   } catch ( err ) {
     /* eslint-disable-next-line */
@@ -239,46 +236,27 @@ function initFilters( dataAttributes, chartNode, chart, data ) {
 
 
 /**
- * @param {object} selectNode The DOM node of the select component
- * @param {object} chartNode The DOM node of the chart
+ * @param {object} selectors List of selectors that need to be run
  * @param {object} chart The Highcharts chart object
  * @param {object} dataAttributes Data passed via data-* tags
- * @param {object} filter The filter key and possible label
  * @param {object} data Chart data, either raw or transformed
  */
-function attachFilter(
-  selectNode, chartNode, chart, dataAttributes, filter, data
-) {
-  const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_filters' )[0];
-  const selectHeader = attachPoint.querySelector( 'h3' );
+function attachFilters( selectors, chart, dataAttributes, data ) {
   const { styleOverrides } = dataAttributes;
-  const title = titleCase( attachPoint.dataset.title );
 
   /**
    * Filter data and update the chart on select
    **/
   function filterOnSelect() {
     // filter on all selects
-    const selects = chartNode.querySelectorAll( '.a-select > select' );
     let filtered = data;
-    let headerText = 'Total ' + title;
-    let isFirst = true;
 
-    for ( let i = 0; i < selects.length; i++ ) {
-      const curr = selects[i];
-      const { value } = curr;
-      if ( value ) {
-        if ( isFirst ) {
-          headerText = attachPoint.dataset.title + ' for <b>' + value + '</b>';
-          isFirst = false;
-        } else {
-          headerText = headerText + ' and <b>' + value + '</b>';
-        }
-      }
-      filtered = filterData( filtered, curr.dataset.key, value );
+    // filters should provide an interface to to manage them
+    for ( let i = 0; i < selectors.length; i++ ) {
+      const selector = selectors[i];
+      const { filterProp, value } = selector;
+      filtered = filterData( filtered, filterProp, value );
     }
-
-    selectHeader.innerHTML = headerText;
 
     const filteredSeries = extractSeries( filtered, dataAttributes );
     filteredSeries.forEach( dataSeries => {
@@ -299,10 +277,10 @@ function attachFilter(
     chart.update( obj );
   }
 
-  selectNode.addEventListener( 'change', filterOnSelect );
+  selectors.forEach( selector => {
+    selector.attach( filterOnSelect );
+  } );
 
-  // Filter initial view
-  filterOnSelect();
 }
 
 export {

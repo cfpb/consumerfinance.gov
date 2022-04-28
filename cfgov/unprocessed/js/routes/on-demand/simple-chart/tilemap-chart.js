@@ -71,7 +71,7 @@ function makeTilemapSelect( chartNode, chart, data, transform ) {
   const options = getTilemapDates( d );
   const selectNode = makeSelectFilterDOM( options, chartNode, { key: 'tilemap' },
     'Select date'
-  );
+  ).nodes[0];
 
   attachTilemapFilter( selectNode, chart, data );
 }
@@ -89,13 +89,12 @@ function getTilemapDates( data ) {
 
 /**
  * Wires up the tilemap filter
- * @param {object} node The created select node
+ * @param {object} select The select node
  * @param {object} chart The chart object
  * @param {object} data The data object
  */
-function attachTilemapFilter( node, chart, data ) {
-
-  node.addEventListener( 'change', evt => {
+function attachTilemapFilter( select, chart, data ) {
+  select.addEventListener( 'change', evt => {
     const formatted = formatSeries( data );
     const updated = getMapConfig( formatted, evt.target.value );
     chart.update( updated );
