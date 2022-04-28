@@ -91,10 +91,11 @@ function makeSelectFilterDOM( options, chartNode, filter, selectLabel ) {
     filterProp: filter.key,
     value: select.value,
     attach( filterFn ) {
-      select.addEventListener( 'change', evt => {
+      select.addEventListener( 'change', () => {
         selector.value = select.value;
-        filterFn.call( this, evt );
+        filterFn();
       } );
+      filterFn();
     }
   };
 
@@ -167,11 +168,12 @@ function makeRadioFilterDOM( buckets, chartNode, filter, radioLabel ) {
     value: radios[0].value,
     attach( filterFn ) {
       radios.forEach( r => {
-        r.addEventListener( 'change', evt => {
+        r.addEventListener( 'change', () => {
           selector.value = r.value;
-          filterFn.call( this, evt );
+          filterFn();
         } );
       } );
+      filterFn();
     }
   };
 
