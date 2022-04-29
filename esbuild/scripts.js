@@ -1,6 +1,4 @@
 const esbuild = require( 'esbuild' );
-const browserslist = require( 'browserslist' );
-const { resolveToEsbuildTarget } = require( 'esbuild-plugin-browserslist' );
 
 const { getAll } = require( './utils.js' );
 const { unprocessed } = require( '../config/environment.js' ).paths;
@@ -41,6 +39,7 @@ const jsPaths = [
   `${ apps }/owning-a-home/js/explore-rates/index.js`,
   `${ apps }/owning-a-home/js/mortgage-estimate/index.js`,
   `${ apps }/owning-a-home/js/form-explainer/index.js`,
+  `${ apps }/paying-for-college/js/disclosures/index.js`,
   `${ apps }/paying-for-college/js/disclosure-feedback.js`,
   `${ apps }/paying-for-college/js/college-costs.js`,
   `${ apps }/regulations3k/js/index.js`,
@@ -49,17 +48,14 @@ const jsPaths = [
   `${ apps }/regulations3k/js/search.js`,
   `${ apps }/retirement/js/index.js`,
   `${ apps }/rural-or-underserved-tool/js/common.js`,
-  `${ apps }/teachers-digital-platform/js/index.js`
+  `${ apps }/teachers-digital-platform/js/index.js`,
+  `${ apps }/filing-instruction-guide/js/fig-sidenav.js`
 ];
-
-const target = resolveToEsbuildTarget( browserslist(), {
-  printUnknownTargets: false
-} );
 
 module.exports = function( baseConfig ) {
   esbuild.build( {
     ...baseConfig,
     entryPoints: jsPaths,
-    target
+    target: 'es6'
   } );
 };

@@ -15,22 +15,22 @@
 */
 
 .a-overlay {
-    // Only show overlay at mobile/tablet size.
-    .respond-to-max( @bp-sm-max, {
-        height: 100%;
-        width: 100%;
+  // Only show overlay at mobile/tablet size.
+  .respond-to-max( @bp-sm-max, {
+    height: 100%;
+    width: 100%;
 
-        position: fixed;
-        // TODO: Update z-index value with standard z-index variable.
+    position: fixed;
+    // TODO: Update z-index value with standard z-index variable.
         z-index: 10;
 
-        background: @black;
-        opacity: 0.6;
+    background: @black;
+    opacity: 0.6;
 
-        // Cursor needs to be set for iOS to capture clicks of the overlay
+    // Cursor needs to be set for iOS to capture clicks of the overlay
         // and bubble them up to the body.
         cursor: pointer;
-    } );
+  } );
 }
 
 

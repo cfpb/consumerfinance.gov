@@ -9,7 +9,7 @@
   }
 
   h5 {
-   margin-bottom: unit( @size-v / 14, em );
+    margin-bottom: unit( @size-v / 14, em );
   }
 
   h3 {
@@ -19,7 +19,7 @@
   }
 
   .o-simple-chart_subtitle {
-    margin: 0 0 unit(30 / @base-font-size-px, em) 0;
+    margin: 0 0 unit( 30 / @base-font-size-px, em ) 0;
   }
 
   .o-simple-chart_selects {
@@ -36,7 +36,7 @@
       stroke-width: 2px;
     }
     .highcharts-label {
-      font-family: 'Avenir Next';
+      font-family: 'Avenir Next', Arial, sans-serif;
       font-size: 12px;
       color: '#101820';
       text {
@@ -53,7 +53,7 @@
   .select-wrapper {
     .grid_column(1,2);
     box-sizing: inherit;
-    margin-bottom: unit( 10 / @base-font-size-px, em);
+    margin-bottom: unit( 10 / @base-font-size-px, em );
     border-width: 0 30px 0 0;
     .respond-to-max( @bp-xs-max, {
       display: block;
@@ -71,7 +71,7 @@
   }
 
   .o-simple-chart_target {
-    margin-top: unit( 14 / @base-font-size-px, em);
+    margin-top: unit( 14 / @base-font-size-px, em );
     .respond-to-max( @bp-xs-max, {
       margin-top: 0;
     })
@@ -95,7 +95,7 @@
   .highcharts-xaxis-grid.highcharts-navigator-xaxis > .highcharts-grid-line {
     stroke: @gray-40;
   }
-/* Testing line patterns
+  /* Testing line patterns
   .highcharts-line-series.highcharts-series-0 {
     stroke-dasharray: 45, 7;
   }
@@ -146,13 +146,13 @@
     text {
       color: @gray !important;
       fill: @gray !important;
-      transform:translate(0, 5px);
+      transform:translate( 0, 5px );
       font-size: @base-font-size-px;
       font-weight: 400;
     }
     & > text {
       &:first-child{
-        transform:translate(48px,-28px);
+        transform:translate( 48px,-28px );
         .respond-to-max( 600px, {
           transform:translate(128px,-28px)
         })
@@ -217,15 +217,15 @@
       width: 19.75%;
       text-align: center;
     }
-   .legend-label {
-     line-height: 2;
-     font-size: 14px;
-   }
-   .legend-color {
+    .legend-label {
+      line-height: 2;
+      font-size: 14px;
+    }
+    .legend-color {
       height: 15px;
       border: 1px solid @gray-60;
       width: 19.5%;
-      &:not(:nth-child(2)){
+      &:not( :nth-child( 2 ) ){
         border-left: none;
       }
     }
@@ -243,8 +243,8 @@
   }
 
   .m-chart-footnote {
-    max-width: unit(670 / @size-vi, rem);
-    margin-top: unit(45 / @size-vi, em);
-    padding-top: unit(15 / @size-vi, em);
+    max-width: unit( 670 / @size-vi, rem );
+    margin-top: unit( 45 / @size-vi, em );
+    padding-top: unit( 15 / @size-vi, em );
   }
 }

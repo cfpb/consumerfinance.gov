@@ -7,10 +7,12 @@ module.exports = async function( baseConfig ) {
   const resolvedBase = resolve( unprocessed );
   const files = await getFiles( resolvedBase );
 
-  const staticFiles = files.filter( v => !v.match( /^\.|\.js$|\.less$|\.css$/ ) );
+  const staticFiles = files.filter( v => !v.match( /\/\.[-.\w]*$|\.js$|\.less$|\.css$/i ) );
+
   const inDirs = [
     ...new Set( staticFiles.map( v => dirname( v ) ) )
   ];
+
   const outDirs = [
     ...inDirs.map( v => v.replace( resolvedBase, baseConfig.outdir ) ),
     // Create specific icon directory
