@@ -9,7 +9,21 @@ from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
 
+LINK_PATTERN = re.compile(
+    r'^(?P<schema>https?)://(?P<domain>[^/:]+):?(?P<port>\d+)?(?P<path>/?.*)?$'
+)
 
+
+def should_interstitial(url: str) -> bool:
+    match = LINK_PATTERN.match(url)
+    if not match:
+        return True
+    if match.group('domain').endswith('.gov'):
+        return False
+    if match.group('domain') == 'localhost':
+        return False
+    return True
+    
 NON_GOV_LINKS = re.compile(
     r"https?:\/\/(?:www\.)?(?![^\?]+\.gov)(?!(content\.)?localhost).*"
 )
@@ -162,7 +176,7 @@ def add_link_markup(tag, request_path):
     elif NON_CFPB_LINKS.match(href):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = "external-link"
-        if NON_GOV_LINKS.match(href):
+        if should_interstitial(href):
             # Add pretty URL for print styles
             tag["data-pretty-href"] = href
             # Add the redirect notice as well

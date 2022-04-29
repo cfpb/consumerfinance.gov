@@ -159,8 +159,24 @@ class LinkUtilsTests(SimpleTestCase):
 
         self.assertEqual(add_link_markup(tag, path), str(expected_tag))
 
+    def test_govdelivery_url1(self):
+        url = "https://public.govdelivery.com"
+        self.check_external_link(url, expected_href=signed_redirect(url))
+    
+    def test_govdelivery_url2(self):
+        url = "https://www.govdelivery.com"
+        self.check_external_link(url, expected_href=signed_redirect(url))
+
     def test_dot_gov_urls(self):
         url = "https://www.federalreserve.gov"
+        self.check_external_link(url, expected_href=url)
+    
+    def test_dot_gov_urls2(self):
+        url = "https://www.federalreserve.gov/something"
+        self.check_external_link(url, expected_href=url)
+    
+    def test_localhost(self):
+        url = "http://localhost:8000/admin"
         self.check_external_link(url, expected_href=url)
 
     def test_urls_with_gov_in_them(self):
