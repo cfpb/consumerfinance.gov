@@ -10,9 +10,8 @@ from bs4 import BeautifulSoup
 from core.templatetags.svg_icon import svg_icon
 
 LINK_PATTERN = re.compile(
-    r'^(?P<schema>https?)://(?P<domain>[^/:]+):?(?P<port>\d+)?(?P<path>/?.*)?$'
+    r'^(?P<schema>https?):\/\/(?P<domain>[^\/:]+):?(?P<port>\d+)?\/?(?P<path>.*)$'
 )
-
 
 def should_interstitial(url: str) -> bool:
     match = LINK_PATTERN.match(url)
