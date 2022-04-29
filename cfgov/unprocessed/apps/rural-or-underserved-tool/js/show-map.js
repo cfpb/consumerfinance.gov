@@ -5,11 +5,6 @@ const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css';
 const mapboxAccessToken = 'pk.eyJ1IjoiY2ZwYiIsImEiOiJodmtiSk5zIn0.VkCynzmVYcLBxbyHzlvaQw';
 const mapIdString = 'mapbox://styles/mapbox/streets-v11';
 
-let map;
-const marker_array = [];
-const zip_marker = null;
-const markerDomCache = {};
-
 /**
  * Dynamically add mapbox CSS to document head.
  */
