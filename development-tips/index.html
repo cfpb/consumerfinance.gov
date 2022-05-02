@@ -132,8 +132,6 @@
         
             <li><a class="toctree-l4" href="#watching-files-for-changes">Watching files for changes</a></li>
         
-            <li><a class="toctree-l4" href="#outputting-browser-support-metrics">Outputting browser support metrics</a></li>
-        
             <li><a class="toctree-l4" href="#developing-on-nested-satellite-apps">Developing on nested satellite apps</a></li>
         
         </ul>
@@ -228,16 +226,6 @@ ready to be served by Django.</p>
 </ul>
 <h2 id="watching-files-for-changes">Watching files for changes<a class="headerlink" href="#watching-files-for-changes" title="Permanent link">¶</a></h2>
 <p>Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using <code>yarn watch</code>.</p>
-<h2 id="outputting-browser-support-metrics">Outputting browser support metrics<a class="headerlink" href="#outputting-browser-support-metrics" title="Permanent link">¶</a></h2>
-<p>Within the root directory, run <code>npx browserslist</code> to output the set of browser
-targets given to <code>esbuild</code> (for JS) and <code>autoprefixer</code> (CSS) transpiling.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-</div>
-<p>A browserslist string is used in <code>package.json</code>.
-  See the
-  <a href="https://github.com/browserslist/browserslist#full-list">browserslist docs</a>
-  for information on this string and the defaults.</p>
 <h2 id="developing-on-nested-satellite-apps">Developing on nested satellite apps<a class="headerlink" href="#developing-on-nested-satellite-apps" title="Permanent link">¶</a></h2>
 <p>Some projects can sit inside consumerfinance.gov, but manage their own asset
 dependencies. These projects have their own <code>package.json</code> and base templates.</p>
