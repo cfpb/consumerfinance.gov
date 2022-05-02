@@ -11,7 +11,7 @@ from core.templatetags.svg_icon import svg_icon
 
 
 LINK_PATTERN = re.compile(
-    r"^(?P<schema>https?):\/\/(?P<domain>[^\/:]+):?(?P<port>\d+)?\/?(?P<path>.*)$"
+    r"^(?P<schema>https?)://(?P<domain>[^/:]+):?(?P<port>\d+)?(?P<path>/?.*)?$"
 )
 
 
