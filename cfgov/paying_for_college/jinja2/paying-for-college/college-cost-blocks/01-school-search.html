@@ -25,7 +25,7 @@
     </div>
 
     <div class="school-search_additional-info">
-        <div class="block block__sub program-question" id="school-search_program-type">
+        <form class="block block__sub program-question" id="school-search_program-type">
             <fieldset>
               <h3 class="h4"><legend>Select your program type</legend></h3>
               {{ notification.render(
@@ -86,7 +86,7 @@
         </div>
 
         <div class="block block__sub program-select">
-          <h3 class="h4"><label for="program-select">Select your program</label></h3>
+          <label for="program-select" class="h4">Select your program</label>
           <div class="a-select">
             <select id="program-select"></select>
           </div>
@@ -214,7 +214,7 @@
 
         <div class="block block__sub program-question" id="school-search_program-rate" data-state-based-visibility="control-nonprivate">
             <fieldset>
-                <h3 class="h4"><legend>Which tuition rate will apply to you?</legend></h3>
+                <legend class="h4">Which tuition rate will apply to you?</legend>
                 <div class="a-form-alert a-form-alert__error" data-state-based-visibility="rate-required" role="alert">
                   {{ svg_icon( 'warning-round' ) }}
                   <span class="a-form-alert_text">
@@ -243,7 +243,7 @@
 
         <div class="block block__sub program-question" id="school-search_program-housing">
             <fieldset>
-                <h3 class="h4"><legend>Where do you plan to live while in school?</legend></h3>
+                <legend class="h4">Where do you plan to live while in school?</legend>
                 <div class="a-form-alert a-form-alert__error" data-state-based-visibility="housing-required" role="alert">
                 {{ svg_icon( 'warning-round' ) }}
                 <span class="a-form-alert_text">
@@ -279,7 +279,7 @@
 
         <div class="block block__sub program-question undergrad-content" id="school-search_program-dependency">
             <fieldset>
-                <h3 class="h4"><legend>Are you considered a dependent or independent student?</legend></h3>
+                <legend class="h4">Are you considered a dependent or independent student?</legend>
                 <p><a href="https://studentaid.gov/help/view-sar" target="_blank" rel="noreferrer noopener">Check your Student Aid Report (SAR)</a> if you’re not sure.</p>
                 <div class="a-form-alert a-form-alert__error" data-state-based-visibility="dependency-required" role="alert">
                 {{ svg_icon( 'warning-round' ) }}
@@ -306,7 +306,7 @@
                 }}
             </fieldset>
         </div>
-    </div>
+    </form>
     <div data-state-based-visibility="school-fields-errors">
         {{ notification.render(
             'error',
