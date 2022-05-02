@@ -528,15 +528,6 @@ msgstr ""
 "deba reconsiderar la edad en la que solicitará sus beneficios de Seguro "
 "Social. ¡Vuelva a visitarnos!"
 
-#: retirement_api/jinja2/retirement_api/claiming.html:951
-msgid ""
-"Was this page helpful in thinking about when to start collecting benefits?"
-msgstr "¿Le resultó útil esta información?"
-
-#: retirement_api/jinja2/retirement_api/claiming.html:956
-msgid "Thank you for your feedback!"
-msgstr "¡Gracias por sus comentarios!"
-
 #: retirement_api/jinja2/retirement_api/claiming.html:957
 msgid "Legal Disclaimer:"
 msgstr "Aviso legal:"
