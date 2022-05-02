@@ -12,10 +12,12 @@ import defaultDatetime from './datetime-styles.js';
 import defaultLine from './line-styles.js';
 import tilemapChart from './tilemap-chart.js';
 import { alignMargin, extractSeries, formatSeries, makeFormatter, overrideStyles } from './utils.js';
-import { initFilters } from './select-filters.js';
+import { initFilters } from './data-filters.js';
+import { getProjectedDate } from './utils';
 
 accessibility( Highcharts );
 
+const msInDay = 24 * 60 * 60 * 1000;
 const promiseCache = {};
 
 /**
@@ -76,8 +78,8 @@ function getDefaultChartObject( type ) {
  */
 function makeChartOptions( data, dataAttributes ) {
   const { chartType, styleOverrides, description, xAxisSource, xAxisLabel,
-    yAxisLabel } = dataAttributes;
-  const defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
+    yAxisLabel, projectedMonths } = dataAttributes;
+  let defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
 
   if ( styleOverrides ) {
     overrideStyles( styleOverrides, defaultObj, data );
@@ -117,9 +119,54 @@ function makeChartOptions( data, dataAttributes ) {
     };
   }
 
+  if ( projectedMonths ) {
+    defaultObj = addProjectedMonths( defaultObj, projectedMonths );
+  }
+
   alignMargin( defaultObj, chartType );
 
   return defaultObj;
+}
+
+/**
+ * Adds projected months to config object for Highcharts
+ * @param {object} chartObject The config object for Highcharts
+ * @param {integer} numMonths The number of months input into wagtail field
+ * @returns {object} The config object with projected months
+ */
+function addProjectedMonths( chartObject, numMonths ) {
+
+  // Convert the number of projected months into a timestamp
+  const lastChartDate = chartObject.series[0].data.at( -1 ).x;
+
+  // Convert lastChartDate from months to milliseconds for Epoch format
+  const convertedProjectedDate = lastChartDate - ( numMonths * 30 * msInDay );
+  const projectedDate = getProjectedDate( convertedProjectedDate );
+
+  /* Add a vertical line and some explanatory text at the starting
+     point of the projected data */
+  chartObject.xAxis.plotLines = [ {
+    value: projectedDate.timestamp,
+    label: {
+      text: `Values after ${ projectedDate.humanFriendly } are projected`,
+      rotation: 0,
+      x: -300,
+      y: -20
+    }
+  } ];
+
+  /* Add a zone to each series with a dotted line starting
+     at the projected data starting point */
+  chartObject.series = chartObject.series.map( singluarSeries => {
+    singluarSeries.zoneAxis = 'x';
+    singluarSeries.zones = [ {
+      value: projectedDate.timestamp
+    }, {
+      dashStyle: 'dot'
+    } ];
+    return singluarSeries;
+  } );
+  return chartObject;
 }
 
 /**
@@ -192,8 +239,7 @@ function buildChart( chartNode ) {
       );
 
       initFilters(
-        dataAttributes, chartNode, chart, data,
-        transform && chartHooks[transform]
+        dataAttributes, chartNode, chart, data
       );
     }
 

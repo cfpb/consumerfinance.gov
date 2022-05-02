@@ -18,6 +18,10 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
     After running `yarn build` (or `./setup.sh`) the site's assets are copied over to `cfgov/static_built`,
     ready to be served by Django.
 
+## Adding new Javascript entrypoints
+
+- In order to build standalone javascript files that are to be included in a template, they
+  need to be included in the `jsPaths` variable in `esbuild/scripts`.
 
 ## Installing new front-end dependencies
 
@@ -33,17 +37,6 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
 ## Watching files for changes
 
 Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `yarn watch`.
-
-## Outputting browser support metrics
-
-Within the root directory, run `npx browserslist` to output the set of browser
-targets given to `esbuild` (for JS) and `autoprefixer` (CSS) transpiling.
-
-!!! note
-  A browserslist string is used in `package.json`.
-  See the
-  [browserslist docs](https://github.com/browserslist/browserslist#full-list)
-  for information on this string and the defaults.
 
 ## Developing on nested satellite apps
 
