@@ -144,7 +144,6 @@ class LearnPage(AbstractFilterPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
-            ("feedback", v1_blocks.Feedback()),
         ],
         blank=True,
     )
@@ -170,7 +169,6 @@ class DocumentDetailPage(AbstractFilterPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
-            ("feedback", v1_blocks.Feedback()),
         ],
         blank=True,
     )
