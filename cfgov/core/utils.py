@@ -175,7 +175,7 @@ def add_link_markup(tag, request_path):
             # Add the redirect notice as well
             tag["href"] = signed_redirect(external_url)
 
-    elif NON_CFPB_LINKS.match(href):
+    elif should_interstitial(href):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = "external-link"
         if should_interstitial(href):
