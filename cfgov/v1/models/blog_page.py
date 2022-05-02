@@ -18,7 +18,6 @@ class BlogPage(AbstractFilterPage):
             ("well", organisms.Well()),
             ("video_player", organisms.VideoPlayer()),
             ("email_signup", organisms.EmailSignUp()),
-            ("feedback", v1_blocks.Feedback()),
             ("faq_schema", schema.FAQ(label="FAQ schema")),
             ("how_to_schema", schema.HowTo(label="HowTo schema")),
         ]
@@ -51,7 +50,6 @@ class LegacyBlogPage(AbstractFilterPage):
                     help_text="Content from WordPress unescaped."
                 ),
             ),
-            ("feedback", v1_blocks.Feedback()),
             (
                 "reusable_text",
                 v1_blocks.ReusableTextChooserBlock("v1.ReusableText"),
