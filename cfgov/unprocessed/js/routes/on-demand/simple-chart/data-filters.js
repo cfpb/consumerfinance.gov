@@ -41,12 +41,10 @@ function processDate( option ) {
  * @param {array} options List of options to build for the select component
  * @param {object} chartNode The DOM node of the current chart
  * @param {object} filter key and possible label to filter on
- * @param {string} selectLabel Optional label for the select element
  * @returns {object} the built select DOM node
  */
-function makeSelectFilterDOM( options, chartNode, filter, selectLabel ) {
-  const name = filter.label ? filter.label : filter.key;
-  const id = Math.random() + name;
+function makeSelectFilterDOM( options, chartNode, filter ) {
+  const id = Math.random() + filter.key;
   const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_filters' )[0];
 
   const wrapper = document.createElement( 'div' );
@@ -54,7 +52,7 @@ function makeSelectFilterDOM( options, chartNode, filter, selectLabel ) {
 
   const label = document.createElement( 'label' );
   label.className = 'a-label a-label__heading';
-  label.innerText = selectLabel ? selectLabel : 'Select ' + name;
+  label.innerText = filter.label ? filter.label : 'Select ' + filter.key;
   label.htmlFor = id;
 
   const selectDiv = document.createElement( 'div' );
@@ -75,7 +73,7 @@ function makeSelectFilterDOM( options, chartNode, filter, selectLabel ) {
     const opt = document.createElement( 'option' );
     opt.value = option;
 
-    if ( name === 'tilemap' ) opt.innerText = processDate( option );
+    if ( filter.key === 'tilemap' ) opt.innerText = processDate( option );
     else opt.innerText = option;
 
     select.appendChild( opt );
@@ -107,11 +105,9 @@ function makeSelectFilterDOM( options, chartNode, filter, selectLabel ) {
  * @param {array} buckets List of buckets to build radio inputs from
  * @param {object} chartNode The DOM node of the current chart
  * @param {object} filter key and possible label to filter on
- * @param {string} radioLabel Optional label for the group of radio buttons
  * @returns {object} the built select DOM node
  */
-function makeRadioFilterDOM( buckets, chartNode, filter, radioLabel ) {
-  const name = filter.label ? filter.label : filter.key;
+function makeRadioFilterDOM( buckets, chartNode, filter ) {
   const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_filters' )[0];
   const radios = [];
 
@@ -119,7 +115,7 @@ function makeRadioFilterDOM( buckets, chartNode, filter, radioLabel ) {
   wrapper.className = 'filter-wrapper';
 
   const bucketLabel = document.createElement( 'h4' );
-  bucketLabel.innerText = radioLabel ? radioLabel : 'Select ' + name;
+  bucketLabel.innerText = filter.label ? filter.label : 'Select ' + filter.key;
 
   wrapper.appendChild( bucketLabel );
 
@@ -137,7 +133,7 @@ function makeRadioFilterDOM( buckets, chartNode, filter, radioLabel ) {
     input.type = 'radio';
     input.id = id;
     input.value = bucket;
-    input.name = name;
+    input.name = filter.key;
     if ( i === 0 ) input.checked = true;
 
 

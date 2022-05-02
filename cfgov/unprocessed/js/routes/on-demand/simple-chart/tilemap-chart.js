@@ -69,8 +69,7 @@ function makeTilemapSelect( chartNode, chart, data, transform ) {
   else d = data.raw;
 
   const options = getTilemapDates( d );
-  const selectNode = makeSelectFilterDOM( options, chartNode, { key: 'tilemap' },
-    'Select date'
+  const selectNode = makeSelectFilterDOM( options, chartNode, { key: 'tilemap', label: 'Select date'}
   ).nodes[0];
 
   attachTilemapFilter( selectNode, chart, data );
