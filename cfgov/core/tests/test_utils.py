@@ -2,7 +2,6 @@ from django.test import SimpleTestCase
 
 from bs4 import BeautifulSoup
 
-from cfgov.core.utils import should_interstitial
 from core.templatetags.svg_icon import svg_icon
 from core.utils import (
     add_link_markup,
@@ -10,6 +9,7 @@ from core.utils import (
     format_file_size,
     get_body_html,
     get_link_tags,
+    should_interstitial,
     signed_redirect,
 )
 
