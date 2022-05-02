@@ -2,6 +2,7 @@ from django.test import SimpleTestCase
 
 from bs4 import BeautifulSoup
 
+from cfgov.core.utils import should_interstitial
 from core.templatetags.svg_icon import svg_icon
 from core.utils import (
     add_link_markup,
@@ -144,7 +145,7 @@ class LinkUtilsTests(SimpleTestCase):
         expected_pretty_href = expected_pretty_href or url
 
         # .gov URLs don't get a data-pretty-href attribute
-        if ".gov" not in url:
+        if should_interstitial(url):
             data_pretty_href = f'data-pretty-href="{expected_pretty_href}" '
 
         expected_html = (
@@ -162,23 +163,23 @@ class LinkUtilsTests(SimpleTestCase):
     def test_govdelivery_url1(self):
         url = "https://public.govdelivery.com"
         self.check_external_link(url, expected_href=signed_redirect(url))
-    
+
     def test_govdelivery_url2(self):
         url = "https://www.govdelivery.com"
         self.check_external_link(url, expected_href=signed_redirect(url))
-    
+
     def test_govdelivery_url3(self):
         url = "https://www.govdelivery.com/something"
         self.check_external_link(url, expected_href=signed_redirect(url))
-        
+
     def test_dot_gov_urls(self):
         url = "https://www.federalreserve.gov"
         self.check_external_link(url, expected_href=url)
-    
+
     def test_dot_gov_urls2(self):
         url = "https://www.federalreserve.gov/something"
         self.check_external_link(url, expected_href=url)
-    
+
     def test_localhost(self):
         url = "http://localhost:8000/admin"
         self.check_external_link(url, expected_href=url)
