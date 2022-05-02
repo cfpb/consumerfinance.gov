@@ -12,11 +12,12 @@ import defaultDatetime from './datetime-styles.js';
 import defaultLine from './line-styles.js';
 import tilemapChart from './tilemap-chart.js';
 import { alignMargin, extractSeries, formatSeries, makeFormatter, overrideStyles } from './utils.js';
-import { initFilters } from './select-filters.js';
+import { initFilters } from './data-filters.js';
 import { getProjectedDate } from './utils';
 
 accessibility( Highcharts );
 
+const msInDay = 24 * 60 * 60 * 1000;
 const promiseCache = {};
 
 /**
@@ -118,7 +119,9 @@ function makeChartOptions( data, dataAttributes ) {
     };
   }
 
-  if ( projectedMonths ) defaultObj = addProjectedMonths( defaultObj, projectedMonths );
+  if ( projectedMonths ) {
+    defaultObj = addProjectedMonths( defaultObj, projectedMonths );
+  }
 
   alignMargin( defaultObj, chartType );
 
@@ -137,7 +140,7 @@ function addProjectedMonths( chartObject, numMonths ) {
   const lastChartDate = chartObject.series[0].data.at( -1 ).x;
 
   // Convert lastChartDate from months to milliseconds for Epoch format
-  const convertedProjectedDate = lastChartDate - numMonths * 30 * 24 * 60 * 60 * 1000;
+  const convertedProjectedDate = lastChartDate - ( numMonths * 30 * msInDay );
   const projectedDate = getProjectedDate( convertedProjectedDate );
 
   /* Add a vertical line and some explanatory text at the starting
@@ -236,8 +239,7 @@ function buildChart( chartNode ) {
       );
 
       initFilters(
-        dataAttributes, chartNode, chart, data,
-        transform && chartHooks[transform]
+        dataAttributes, chartNode, chart, data
       );
     }
 
