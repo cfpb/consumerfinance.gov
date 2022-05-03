@@ -180,8 +180,8 @@ class LinkUtilsTests(SimpleTestCase):
         url = "https://www.federalreserve.gov/something"
         self.check_external_link(url, expected_href=url)
 
-    def test_localhost(self):
-        url = "http://localhost:8000/admin"
+    def test_content_cfgov(self):
+        url = "http://content.cfpb.gov"
         self.check_external_link(url, expected_href=url)
 
     def test_urls_with_gov_in_them(self):
