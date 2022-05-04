@@ -26,6 +26,11 @@ spec:
                 {{- range .args }}
                 - {{ . | quote }}
                 {{- end }}
+              volumeMounts:
+                {{- range $.Values.volumes }}
+                - mountPath: {{  .mountPath }}
+                  name: {{ .name }}
+                {{- end }}
               env:
                 {{- if $.Values.postgresql.enabled }}
                 - name: DATABASE_URL
@@ -52,4 +57,9 @@ spec:
                   value: {{ .value | quote }}
                 {{- end }}
           restartPolicy: {{ .restartPolicy }}
+          volumes:
+            {{- range $.Values.volumes }}
+            - name: {{ .name }}
+              {{- toYaml .volume | nindent 14 }}
+            {{- end }}
 {{- end }}
