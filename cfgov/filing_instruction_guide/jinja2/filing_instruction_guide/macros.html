@@ -1,0 +1,69 @@
+{% macro report_part(sections, is_appendix) %}
+  {% for section in sections -%}
+    <h2 class="report-header">
+      <a
+        id="{{ section.id }}"
+        href="#{{ section.id }}">
+          {{ ( 'Appendix ' if is_appendix else '' ) + section.numbering + section.title }}
+      </a>
+    </h2>
+
+    {{ section.body | safe }}
+
+    {% for subsection in section.children -%}
+      <h3 class="report-header">
+        <a
+          id="{{ subsection.id }}"
+          href="#{{ subsection.id }}">
+            {{ subsection.numbering + subsection.title }}
+        </a>
+      </h3>
+
+      {{ subsection.body | safe }}
+
+      {% for section3 in subsection.children -%}
+        <h4 class="report-header">
+          <a
+            id="{{ section3.id }}"
+            href="#{{ section3.id }}">
+              {{ section3.numbering + section3.title }}
+          </a>
+        </h4>
+
+        {{ section3.body | safe }}
+    {%- endfor %}
+    {%- endfor %}
+  {%- endfor %}
+{% endmacro %}
+
+{% macro make_sections(list) %}
+  {% for item in list %}
+    {% if item.section_type == "main" %}
+      <h2 class="report-header">
+        <a
+          id="{{ item.id }}"
+          href="#{{ item.id }}">
+          {{item.id + " " + item.data}}
+        </a>
+      </h2>
+    {% elif item.section_type == "sub" %}
+      <h3 class="report-header">
+        <a
+          id="{{ item.id }}"
+          href="#{{ item.id }}">
+          {{item.id + " " + item.data}}
+        </a>
+      </h3>
+    {% elif item.section_type == "sub3" %}
+      <h4 class="report-header">
+        <a
+          id="{{ item.id }}"
+          href="#{{ item.id }}">
+          {{item.id + " " + item.data}}
+        </a>
+      </h4>
+    {% else %}
+    {%- endif %}
+  {%- endfor %}
+
+{% endmacro %}

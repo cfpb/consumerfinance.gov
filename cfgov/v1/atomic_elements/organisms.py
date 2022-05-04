@@ -10,6 +10,7 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from wagtail.core import blocks, hooks
+from wagtail.core.fields import StreamField
 from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.core.models import Page
 from wagtail.images import blocks as images_blocks
@@ -1359,3 +1360,40 @@ class DataSnapshot(blocks.StructBlock):
         icon = "image"
         label = "CCT Data Snapshot"
         template = "_includes/organisms/data_snapshot.html"
+
+class FigSectionContent(blocks.StreamBlock):
+    content = blocks.RichTextBlock(icon="edit")
+    content_with_anchor = molecules.ContentWithAnchor()
+    image = molecules.ContentImage()
+    table_block = AtomicTableBlock(table_options={"renderer": "html"})
+    quote = molecules.Quote()
+    well = Well()
+
+# class FigSubSection(blocks.StreamBlock):
+#     Fig_Sub_Section_Title = blocks.TextBlock()
+#     content = blocks.RichTextBlock(icon="edit")
+#     content_with_anchor = molecules.ContentWithAnchor()
+#     image = molecules.ContentImage()
+#     table_block = AtomicTableBlock(table_options={"renderer": "html"})
+#     quote = molecules.Quote()
+#     well = Well()
+
+#     class Meta:
+#         icon = "edit"
+#         template = "_includes/organisms/fig-sub-section.html"
+
+class FigSubSection(blocks.StructBlock):
+    sub_section_header = blocks.TextBlock()
+    content = FigSectionContent()
+
+    class Meta:
+        icon = "edit"
+        template = "_includes/organisms/fig-sub-section.html"
+
+class FigSub3Section(blocks.StructBlock):
+    sub_section3_header = blocks.TextBlock()
+    content = FigSectionContent()
+
+    class Meta:
+        icon = "edit"
+        template = "_includes/organisms/fig-sub-section.html"

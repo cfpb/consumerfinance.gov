@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.core.validators import RegexValidator
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
@@ -552,3 +553,12 @@ class ContentWithAnchor(blocks.StructBlock):
     class Meta:
         icon = "edit"
         template = "_includes/molecules/full-width-text-anchor.html"
+
+
+class FigSection(blocks.StructBlock):
+    header = blocks.TextBlock()
+    content = blocks.RichTextBlock(required=False)
+
+    class Meta:
+        icon = "edit"
+        template = "_includes/molecules/fig-section.html"
