@@ -1,0 +1,55 @@
+{{- range .Values.cronJobs }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "cfgov.fullname" $  | lower }}-cronjob-{{ .name | lower }}
+  labels:
+    {{- include "cfgov.labels" $ | nindent 4 }}
+spec:
+  schedule: {{ .schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          securityContext:
+            {{- toYaml $.Values.securityContext | nindent 12 }}
+          containers:
+            - name: {{ $.Chart.Name | lower }}-cronjob-{{ .name | lower }}
+              image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
+              imagePullPolicy: {{ $.Values.image.pullPolicy }}
+              command:
+                {{- range .command }}
+                - {{ . | quote }}
+                {{- end }}
+              args:
+                {{- range .args }}
+                - {{ . | quote }}
+                {{- end }}
+              env:
+                {{- if $.Values.postgresql.enabled }}
+                - name: DATABASE_URL
+                  {{- if $.Values.postgresql.nameOverride }}
+                  value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ $.Values.postgresql.nameOverride }}-postgresql/{{ $.Values.postgresql.postgresqlDatabase }}"
+                  {{- else if $.Values.postgresql.fullnameOverride }}
+                  value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ $.Values.postgresql.fullNameOverride }}/{{ $.Values.postgresql.postgresqlDatabase }}"
+                  {{- else }}
+                  value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ include "cfgov.fullname" $ }}-postgresql/{{ $.Values.postgresql.postgresqlDatabase }}"
+                  {{- end }}
+                {{- end }}
+                {{- if $.Values.elasticsearch.enabled }}
+                - name: ES_HOST
+                  {{- if $.Values.elasticsearch.nameOverride }}
+                  value: "{{ $.Values.elasticsearch.nameOverride }}-master"
+                  {{- else if $.Values.elasticsearch.fullnameOverride }}
+                  value: {{ $.Values.elasticsearch.fullnameOverride | quote }}
+                  {{- else }}
+                  value: elasticsearch-master
+                  {{- end }}
+                {{- end }}
+                {{- range $.Values.extraEnvs }}
+                - name: {{ .name }}
+                  value: {{ .value | quote }}
+                {{- end }}
+          restartPolicy: {{ .restartPolicy }}
+  {{- end }}

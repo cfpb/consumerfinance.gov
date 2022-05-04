@@ -13,6 +13,15 @@ LABEL maintainer="tech@cfpb.gov"
 ENV PYTHONUNBUFFERED 1
 
 ENV APP_HOME /src/consumerfinance.gov
+ENV CFGOV_PATH ${APP_HOME}
+ENV CFGOV_CURRENT ${APP_HOME}
+ENV PYTHONPATH ${APP_HOME}/cfgov
+
+# Django Settings
+ENV DJANGO_SETTINGS_MODULE cfgov.settings.local
+# ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
+ENV ALLOWED_HOSTS '["*"]'
+
 RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
 
