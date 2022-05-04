@@ -4,9 +4,12 @@ export class CreditCardAgreementSearch {
     cy.visit( '/credit-cards/agreements/' );
   }
 
+  getIssuer() {
+    return cy.get( '#issuer_select' ).children().first();
+  }
+
   selectIssuer( issuer ) {
-    const element = issuer.split( ' ' ).join( '-' ).toLowerCase();
-    cy.get( '#issuer_select' ).select( element, { force: true } );
+    cy.get( '#issuer_select' ).select( issuer, { force: true } );
   }
 
   agreementsList() {
