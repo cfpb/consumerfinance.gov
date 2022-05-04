@@ -563,7 +563,7 @@ class TestCFGOVPageMediaCSSProperty(TestCase):
             [
                 {
                     "type": "sidebar_contact",
-                    "value": {"contact": "Consumer Advisory Board"},
+                    "value": {},
                 },
             ],
             True,
