@@ -505,17 +505,17 @@ class TestCFGOVPageQuerySet(TestCase):
         self.check_live_counts(on_live_host=2)
 
 
-class TestCFGOVPageMediaProperty(TestCase):
-    """Tests how the page.media property pulls in child block JS."""
+class TestCFGOVPageMediaJSProperty(TestCase):
+    """Tests how the page.media_js property pulls in child block JS."""
 
     def test_empty_page_has_no_media(self):
-        return self.assertEqual(CFGOVPage().media, [])
+        return self.assertEqual(CFGOVPage().media_js, [])
 
     def test_empty_page_has_no_page_js(self):
         return self.assertEqual(CFGOVPage().page_js, [])
 
     def test_empty_page_has_no_streamfield_js(self):
-        return self.assertEqual(CFGOVPage().streamfield_js, [])
+        return self.assertEqual(CFGOVPage().streamfield_media("js"), [])
 
     def test_page_pulls_in_child_block_media(self):
         page = CFGOVPage()
@@ -527,7 +527,7 @@ class TestCFGOVPageMediaProperty(TestCase):
             True,
         )
 
-        self.assertEqual(page.media, ["email-signup.js"])
+        self.assertEqual(page.media_js, ["email-signup.js"])
 
     def test_doesnt_pull_in_media_for_nonexistent_child_blocks(self):
         page = BrowsePage()
@@ -542,9 +542,9 @@ class TestCFGOVPageMediaProperty(TestCase):
             True,
         )
 
-        # The page media should only include the default BrowsePae media, and
+        # The page media should only include the default BrowsePage media, and
         # shouldn't add any additional files because of the FullWithText.
-        self.assertEqual(page.media, ["secondary-navigation.js"])
+        self.assertEqual(page.media_js, ["secondary-navigation.js"])
 
 
 class TestCFGOVPageCopy(TestCase):

@@ -435,27 +435,33 @@ class CFGOVPage(Page):
         parent = self.get_ancestors(inclusive=False).reverse()[0].specific
         return parent
 
+    def streamfield_media(self, media_type):
+        media = []
+
+        block_cls_names = get_page_blocks(self)
+        for block_cls_name in block_cls_names:
+            block_cls = import_string(block_cls_name)
+            if hasattr(block_cls, "Media") and hasattr(
+                block_cls.Media, media_type
+            ):
+                media.extend(getattr(block_cls.Media, media_type))
+
+        return media
+
     # To be overriden if page type requires JS files every time
     @property
     def page_js(self):
         return []
 
-    @property
-    def streamfield_js(self):
-        js = []
-
-        block_cls_names = get_page_blocks(self)
-        for block_cls_name in block_cls_names:
-            block_cls = import_string(block_cls_name)
-            if hasattr(block_cls, "Media") and hasattr(block_cls.Media, "js"):
-                js.extend(block_cls.Media.js)
-
-        return js
-
     # Returns the JS files required by this page and its StreamField blocks.
     @property
-    def media(self):
-        return sorted(set(self.page_js + self.streamfield_js))
+    def media_js(self):
+        return sorted(set(self.page_js + self.streamfield_media("js")))
+
+    # Returns the CSS files required by this page and its StreamField blocks.
+    @property
+    def media_css(self):
+        return sorted(set(self.streamfield_media("css")))
 
     # Returns an image for the page's meta Open Graph tag
     @property
