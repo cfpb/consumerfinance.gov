@@ -9,7 +9,6 @@ from core.utils import (
     format_file_size,
     get_body_html,
     get_link_tags,
-    should_interstitial,
     signed_redirect,
 )
 
@@ -135,7 +134,7 @@ class LinkUtilsTests(SimpleTestCase):
         )
 
     def check_external_link(
-        self, url, expected_href=None, expected_pretty_href=None
+        self, url, expected_href=None, expected_pretty_href=None, is_gov=False
     ):
         tag = f'<a href="{url}">foo</a>'
         path = "/about-us/blog/"
@@ -145,7 +144,7 @@ class LinkUtilsTests(SimpleTestCase):
         expected_pretty_href = expected_pretty_href or url
 
         # .gov URLs don't get a data-pretty-href attribute
-        if should_interstitial(url):
+        if not is_gov:
             data_pretty_href = f'data-pretty-href="{expected_pretty_href}" '
 
         expected_html = (
@@ -174,15 +173,21 @@ class LinkUtilsTests(SimpleTestCase):
 
     def test_dot_gov_urls(self):
         url = "https://www.federalreserve.gov"
-        self.check_external_link(url, expected_href=url)
+        self.check_external_link(
+            url, expected_href=url, expected_pretty_href=None, is_gov=True
+        )
 
     def test_dot_gov_urls2(self):
         url = "https://www.federalreserve.gov/something"
-        self.check_external_link(url, expected_href=url)
+        self.check_external_link(
+            url, expected_href=url, expected_pretty_href=None, is_gov=True
+        )
 
     def test_content_cfgov(self):
         url = "http://content.cfpb.gov"
-        self.check_external_link(url, expected_href=url)
+        self.check_external_link(
+            url, expected_href=url, expected_pretty_href=None, is_gov=True
+        )
 
     def test_urls_with_gov_in_them(self):
         url = "https://www.realgovsite.lol"

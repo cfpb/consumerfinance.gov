@@ -175,23 +175,18 @@ def add_link_markup(tag, request_path):
             # Add the redirect notice as well
             tag["href"] = signed_redirect(external_url)
 
-    elif should_interstitial(href):
+    elif NON_CFPB_LINKS.match(href) or should_interstitial(href):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = "external-link"
-        # Add pretty URL for print styles
-        tag["data-pretty-href"] = href
-        # Add the redirect notice as well
-        tag["href"] = signed_redirect(href)
+        if should_interstitial(href):
+            # Add pretty URL for print styles
+            tag["data-pretty-href"] = href
+            # Add the redirect notice as well
+            tag["href"] = signed_redirect(href)
 
     elif DOWNLOAD_LINKS.search(href):
         # Sets the icon to indicate you're downloading a file
         icon = "download"
-
-    else:
-        # localhost and .gov links were returning none in our tests without
-        # an icon attached so we either get rid of the check
-        # or have this default icon to use
-        icon = "local-link"
 
     # If the tag already ends in an SVG, we never want to append an icon.
     # If it has one or more SVGs but other content comes after them, we still
