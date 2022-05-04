@@ -547,6 +547,48 @@ class TestCFGOVPageMediaJSProperty(TestCase):
         self.assertEqual(page.media_js, ["secondary-navigation.js"])
 
 
+class TestCFGOVPageMediaCSSProperty(TestCase):
+    """Tests how the page.media_css property pulls in child block CSS."""
+
+    def test_empty_page_has_no_media(self):
+        return self.assertEqual(CFGOVPage().media_css, [])
+
+    def test_empty_page_has_no_streamfield_css(self):
+        return self.assertEqual(CFGOVPage().streamfield_media("css"), [])
+
+    def test_page_pulls_in_child_block_media(self):
+        page = CFGOVPage()
+        page.sidefoot = blocks.StreamValue(
+            page.sidefoot.stream_block,
+            [
+                {
+                    "type": "sidebar_contact",
+                    "value": {"contact": "Consumer Advisory Board"},
+                },
+            ],
+            True,
+        )
+
+        self.assertEqual(page.media_css, ["sidebar-contact-info.css"])
+
+    def test_doesnt_pull_in_media_for_nonexistent_child_blocks(self):
+        page = BrowsePage()
+        page.content = blocks.StreamValue(
+            page.content.stream_block,
+            [
+                {
+                    "type": "full_width_text",
+                    "value": [],
+                },
+            ],
+            True,
+        )
+
+        # The page media should only include the default BrowsePage media, and
+        # shouldn't add any additional files because of the FullWithText.
+        self.assertEqual(page.media_css, [])
+
+
 class TestCFGOVPageCopy(TestCase):
     def setUp(self):
         self.site = Site.objects.first()

@@ -409,9 +409,6 @@ class MortgagePerformancePage(BrowsePage):
             context.update({"delinquency": "percent_90", "time_frame": "90"})
         return context
 
-    class Media:
-        css = ["secondary-navigation.css"]
-
 
 def validate_counties():
     for each in County.objects.all():

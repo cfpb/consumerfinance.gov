@@ -428,6 +428,9 @@ class SidebarContactInfo(MainContactInfo):
     class Meta:
         template = "_includes/organisms/sidebar-contact-info.html"
 
+    class Media:
+        css = ["sidebar-contact-info.css"]
+
 
 class ModelBlock(blocks.StructBlock):
     """Abstract StructBlock that provides Django model instances to subclasses.

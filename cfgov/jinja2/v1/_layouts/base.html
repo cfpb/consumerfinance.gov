@@ -114,7 +114,7 @@
 
     {% block css %}
     <link rel="stylesheet" href="{{ static('css/main.css') }}">
-      <link>{{page.media_css}}</link>
+    <link>{{page.media_css}} and {{page.media_js}}</link>
       {% if page and page.media_css %}
         {% for css in page.media_css %}
           <link rel="stylesheet" href="{{ static('css/on-demand/' + css) }}" );
