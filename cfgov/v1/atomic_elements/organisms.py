@@ -5,11 +5,9 @@ from urllib.parse import urlencode
 from django.apps import apps
 from django.db.models import Q
 from django.forms.utils import ErrorList
-from django.templatetags.static import static
-from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-from wagtail.core import blocks, hooks
+from wagtail.core import blocks
 from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.core.models import Page
 from wagtail.images import blocks as images_blocks
@@ -25,14 +23,6 @@ from v1.atomic_elements import atoms, molecules
 # maintain import structure across the project
 from v1.atomic_elements.tables import AtomicTableBlock
 from v1.util import ref
-
-
-@hooks.register("insert_editor_css")
-def editor_css():
-    return format_html(
-        '<link rel="stylesheet" href="{}">',
-        static("cfgov/templates/wagtailadmin/css/simple-chart-admin.css"),
-    )
 
 
 class AskSearch(blocks.StructBlock):
