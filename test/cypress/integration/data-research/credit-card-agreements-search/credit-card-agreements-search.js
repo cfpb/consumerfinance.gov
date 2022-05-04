@@ -9,7 +9,9 @@ describe( 'Credit Card Agreements Search', () => {
     searchPage.getIssuer().then( issuer => {
       searchPage.selectIssuer( issuer.get( 0 ).innerText );
       searchPage.agreementsList().should( 'be.visible' );
-      searchPage.agreementsList().should( 'contain', issuer.get( 0 ).innerText );
+      searchPage.agreementsList().should(
+        'contain', issuer.get( 0 ).innerText
+      );
     } );
   } );
 

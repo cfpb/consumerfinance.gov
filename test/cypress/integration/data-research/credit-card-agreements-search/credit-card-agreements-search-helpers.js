@@ -5,7 +5,7 @@ export class CreditCardAgreementSearch {
   }
 
   getIssuer() {
-    return cy.get( '#issuer_select' ).children().first();
+    return cy.get( '#issuer_select' ).children().first().siblings().first();
   }
 
   selectIssuer( issuer ) {
