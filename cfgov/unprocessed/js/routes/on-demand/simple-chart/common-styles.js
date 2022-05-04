@@ -23,17 +23,23 @@ const styles = {
   },
   legend: {
     enabled: true,
-    symbolWidth: 45,
+    symbolWidth: 30,
     floating: true,
     layout: 'vertical',
     align: 'right',
     verticalAlign: 'top',
     itemMarginBottom: 4,
-    itemStyle: {
+    title: {
+      text: '<br/><span style="font-size: 12px; color: #666; font-weight: normal">(Click to show/hide data)</span>',
+      style: {
+      fontStyle: 'italic'
+      }
+        },    
+        itemStyle: {
       color: '#5a5d61',
       fontFamily: '"AvenirNextLTW01-Regular", Arial, sans-serif',
       fontSize: 16
-    }
+    },
   },
   plotOptions: {
     series: {
@@ -102,7 +108,7 @@ const styles = {
           legend: {
             align: 'left',
             margin: 0,
-            padding: 0
+            padding: 0,
           },
           yAxis: {
             title: {

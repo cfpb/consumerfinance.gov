@@ -122,6 +122,8 @@ function makeChartOptions( data, dataAttributes ) {
   if ( projectedMonths > 0 ) {
     defaultObj = addProjectedMonths( defaultObj, projectedMonths );
     defaultObj.legend.y = -10;
+    defaultObj.chart.marginTop = 180;
+
   }
 
   alignMargin( defaultObj, chartType );
