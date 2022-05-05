@@ -18,7 +18,7 @@ LINK_PATTERN = re.compile(
 def should_interstitial(url: str) -> bool:
     match = LINK_PATTERN.match(url)
     if not match:
-        return False
+        return True
     if match.group("domain").endswith(".gov"):
         return False
     if match.group("domain") == "localhost":
@@ -186,6 +186,11 @@ def add_link_markup(tag, request_path):
     elif DOWNLOAD_LINKS.search(href):
         # Sets the icon to indicate you're downloading a file
         icon = "download"
+    else:
+        # localhost and  content.gov links were returning none in our tests without
+        # an icon attached so we either get rid of the check
+        # or have this default icon to use
+        icon = "local-link"
 
     # If the tag already ends in an SVG, we never want to append an icon.
     # If it has one or more SVGs but other content comes after them, we still
