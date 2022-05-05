@@ -33,6 +33,20 @@ spec:
                 {{- end }}
               env:
                 {{- if $.Values.postgresql.enabled }}
+                - name: PGHOST
+                  {{- if $.Values.postgresql.nameOverride }}
+                  value: "{{ $.Values.postgresql.nameOverride }}-postgresql"
+                  {{- else if $.Values.postgresql.fullnameOverride }}
+                  value: "{{ $.Values.postgresql.fullNameOverride }}"
+                  {{- else }}
+                  value: "{{ include "cfgov.fullname" $ }}-postgresql"
+                  {{- end }}
+                - name: PGUSER
+                  value: "{{ $.Values.postgresql.postgresqlUsername }}"
+                - name: PGPASSWORD
+                  value: "{{ $.Values.postgresql.postgresqlPassword }}"
+                - name: PGDATABASE
+                  value: "{{ $.Values.postgresql.postgresqlDatabase }}"
                 - name: DATABASE_URL
                   {{- if $.Values.postgresql.nameOverride }}
                   value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ $.Values.postgresql.nameOverride }}-postgresql/{{ $.Values.postgresql.postgresqlDatabase }}"
