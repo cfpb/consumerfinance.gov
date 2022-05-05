@@ -119,8 +119,9 @@ function makeChartOptions( data, dataAttributes ) {
     };
   }
 
-  if ( projectedMonths ) {
+  if ( projectedMonths > 0 ) {
     defaultObj = addProjectedMonths( defaultObj, projectedMonths );
+    defaultObj.legend.y = -10;
   }
 
   alignMargin( defaultObj, chartType );
@@ -150,8 +151,8 @@ function addProjectedMonths( chartObject, numMonths ) {
     label: {
       text: `Values after ${ projectedDate.humanFriendly } are projected`,
       rotation: 0,
-      x: -300,
-      y: -20
+      x: -260,
+      y: -10
     }
   } ];
 
