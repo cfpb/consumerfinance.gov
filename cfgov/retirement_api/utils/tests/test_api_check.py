@@ -1,8 +1,8 @@
 import datetime
 import json
 import unittest
+from unittest import mock
 
-import mock
 import requests
 
 from ..check_api import Collector, TimeoutError, build_msg, check_data, run

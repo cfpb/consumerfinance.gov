@@ -1,46 +1,45 @@
 FROM python:3.8-alpine as base
 
-# cfgov-dev is used for local development, as well as a base for frontend and prod.
-FROM base AS cfgov-dev
+# Hard labels
+LABEL maintainer="tech@cfpb.gov"
 
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
 ENV ENV /etc/profile
-
-LABEL maintainer="tech@cfpb.gov"
-
+ENV PIP_NO_CACHE_DIR true
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
-
 ENV APP_HOME /src/consumerfinance.gov
+
+WORKDIR ${APP_HOME}
+
+# Install and update common OS packages, pip, setuptools, wheel, and awscli
+RUN apk update --no-cache && apk upgrade --no-cache
+RUN pip install --upgrade pip setuptools wheel awscli
+
+# Add `$HOME/.local/bin` to PATH
+RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> /etc/profile
+
+# cfgov-dev is used for local development, as well as a base for frontend and prod.
+FROM base AS cfgov-dev
+
 ENV CFGOV_PATH ${APP_HOME}
 ENV CFGOV_CURRENT ${APP_HOME}
 ENV PYTHONPATH ${APP_HOME}/cfgov
 
 # Django Settings
 ENV DJANGO_SETTINGS_MODULE cfgov.settings.local
-# ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
 ENV ALLOWED_HOSTS '["*"]'
 
-RUN mkdir -p ${APP_HOME}
-WORKDIR ${APP_HOME}
-
-# Install common OS packages
-RUN apk update --no-cache && apk upgrade --no-cache
 # .build-deps are required to build and test the application (pip, tox, etc.)
 RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev postgresql-dev
 # .backend-deps and .frontend-deps are required to run the application
 RUN apk add --no-cache --virtual .backend-deps bash curl postgresql
 RUN apk add --no-cache --virtual .frontend-deps jpeg-dev nodejs yarn zlib-dev
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
-
-# Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
-# NOTE: MUST be after pip upgrade. Build fails otherwise due to bug in old pip.
-ENV PIP_NO_CACHE_DIR true
 
 # Install python requirements
 COPY requirements requirements
-RUN pip install -r requirements/local.txt -r requirements/deployment.txt
+RUN pip install --user -r requirements/local.txt -r requirements/deployment.txt
 
 EXPOSE 8000
 
@@ -77,12 +76,12 @@ RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar
 RUN echo -n "0a6f380af854b85a3151e54a3c33b520c4a6e21a99bcad7ae5ddfbfe31a74b50  mod_wsgi.tar.gz" | sha256sum -c
 RUN tar xvf mod_wsgi.tar.gz
 RUN cd mod_wsgi* && ./configure && make install
-RUN ls /usr/lib/apache2/mod_wsgi.so  # Ensure it compiled and is where it's expected
+RUN ls /usr/lib/apache2/mod_wsgi.so  # Ensure it compiled and is where expected
 RUN apk del .build-deps
 RUN rm -Rf /tmp/mod_wsgi*
 
 # Production-like Apache-based image
-FROM cfgov-dev as cfgov-prod
+FROM base as cfgov-prod
 
 ENV HTTPD_ROOT /etc/apache2
 
@@ -116,6 +115,9 @@ RUN ln -s /etc/apache2/mime.types /etc/mime.types
 # Copy mod_wsgi.so from mod_wsgi image
 COPY --from=cfgov-mod-wsgi /usr/lib/apache2/mod_wsgi.so /usr/lib/apache2/mod_wsgi.so
 
+# Copy installed requirements from the build image
+COPY --from=cfgov-build --chown=apache:apache /root/.local /var/www/.local
+
 # Copy the cfgov directory form the build image
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/initial-data.sh ${CFGOV_PATH}/
@@ -124,12 +126,14 @@ COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PA
 RUN ln -s /usr/lib/apache2 cfgov/apache/modules
 RUN chown -R apache:apache ${APP_HOME} /usr/share/apache2 /var/run/apache2 /var/log/apache2
 
-# Remove build dependencies for smaller image
-RUN apk del .build-deps
-
 # Cleanup *.key files
 RUN for i in $(find /usr/local/lib/python3* -type f -name "*.key*"); do rm "$i"; done
+RUN for i in $(find /var/www/.local/lib/python3* -type f -name "*.key*"); do rm "$i"; done
 
+# .backend-deps are required to run the application
+RUN apk add --no-cache --virtual .backend-deps bash postgresql
+
+# Swap to apache user
 USER apache
 
 # Build frontend, cleanup excess file, and setup filesystem
