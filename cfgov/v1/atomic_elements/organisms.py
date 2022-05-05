@@ -498,6 +498,16 @@ class SimpleChart(blocks.StructBlock):
         rows=2,
     )
 
+    show_all_series_by_default = blocks.BooleanBlock(
+    default=True,
+    required=False,
+    help_text=(
+        "To reduce visual clutter, charts with multiple series have all but "
+        "the first series hidden by default. If you'd prefer to have all "
+        "series shown by default, enable this option."
+    ),
+)
+
     data_series = blocks.TextBlock(
         required=False,
         help_text="For charts pulling from a separate source file, "

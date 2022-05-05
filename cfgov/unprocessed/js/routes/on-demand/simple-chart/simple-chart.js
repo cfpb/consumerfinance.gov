@@ -78,7 +78,7 @@ function getDefaultChartObject( type ) {
  */
 function makeChartOptions( data, dataAttributes ) {
   const { chartType, styleOverrides, description, xAxisSource, xAxisLabel,
-    yAxisLabel, projectedMonths } = dataAttributes;
+    yAxisLabel, projectedMonths, defaultSeries } = dataAttributes;
   let defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
 
   if ( styleOverrides ) {
@@ -122,6 +122,16 @@ function makeChartOptions( data, dataAttributes ) {
   if ( projectedMonths > 0 ) {
     defaultObj = addProjectedMonths( defaultObj, projectedMonths );
     defaultObj.legend.y = -10;
+  }
+
+  if ( defaultSeries === "False" ) {
+    defaultObj.series = defaultObj.series.map( ( singluarSeries, i ) => {
+      // Skip the first series
+      if ( i > 0 ) {
+        singluarSeries.visible = false;
+      }
+      return singluarSeries;
+    } );
   }
 
   alignMargin( defaultObj, chartType );
@@ -169,6 +179,17 @@ function addProjectedMonths( chartObject, numMonths ) {
   } );
   return chartObject;
 }
+
+/* function defaultSeriesCheckbox( chartObject ) {
+     chartObject.series = chartObject.series.map( ( singluarSeries, i ) => {
+     // Skip the first series
+     if ( i > 0 ) {
+       singluarSeries.visible = false;
+     }
+     return singluarSeries;
+   } );
+   return chartObject;
+   } */
 
 /**
  * Resolves provided x axis or series data
