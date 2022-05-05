@@ -1,68 +1,38 @@
-{% macro report_part(sections, is_appendix) %}
-  {% for section in sections -%}
-    <h2 class="report-header">
-      <a
-        id="{{ section.id }}"
-        href="#{{ section.id }}">
-          {{ ( 'Appendix ' if is_appendix else '' ) + section.numbering + section.title }}
-      </a>
-    </h2>
-
-    {{ section.body | safe }}
-
-    {% for subsection in section.children -%}
-      <h3 class="report-header">
-        <a
-          id="{{ subsection.id }}"
-          href="#{{ subsection.id }}">
-            {{ subsection.numbering + subsection.title }}
-        </a>
-      </h3>
-
-      {{ subsection.body | safe }}
-
-      {% for section3 in subsection.children -%}
-        <h4 class="report-header">
-          <a
-            id="{{ section3.id }}"
-            href="#{{ section3.id }}">
-              {{ section3.numbering + section3.title }}
-          </a>
-        </h4>
-
-        {{ section3.body | safe }}
-    {%- endfor %}
-    {%- endfor %}
-  {%- endfor %}
-{% endmacro %}
-
 {% macro make_sections(list) %}
   {% for item in list %}
-    {% if item.section_type == "main" %}
+    {% if item.block_type == "Fig_Section" %}
       <h2 class="report-header">
         <a
           id="{{ item.id }}"
           href="#{{ item.id }}">
-          {{item.id + " " + item.data}}
+          {{item.id + " " + item.contents[0].data}}
         </a>
       </h2>
-    {% elif item.section_type == "sub" %}
+        {% for content in item.contents[1:] %}
+            {{content.data}}
+        {% endfor %}
+    {% elif item.block_type == "Fig_Sub_Section" %}
       <h3 class="report-header">
         <a
           id="{{ item.id }}"
           href="#{{ item.id }}">
-          {{item.id + " " + item.data}}
+          {{item.id + " " + item.contents[0].data}}
         </a>
       </h3>
-    {% elif item.section_type == "sub3" %}
+        {% for content in item.contents[1:] %}
+            {{content.data}}
+        {% endfor %}
+    {% elif item.block_type == "Fig_Sub_3_Section" %}
       <h4 class="report-header">
         <a
           id="{{ item.id }}"
           href="#{{ item.id }}">
-          {{item.id + " " + item.data}}
+          {{item.id + " " + item.contents[0].data}}
         </a>
       </h4>
-    {% else %}
+        {% for content in item.contents[1:] %}
+            {{content.data}}
+        {% endfor %}
     {%- endif %}
   {%- endfor %}
 

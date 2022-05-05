@@ -17,12 +17,6 @@
     ========================================================================== #}
  
  <div class="o-full-width-text-group">
-     {% if value.sub_section_header %}
-        <h3 class="report-header">{{value.sub_section_header}}</h3>
-     {% elif value.sub_section3_header %}
-        <h4 class="report-header">{{value.sub_section3_header}}</h4>
-     {% endif %}
-
      {% for block in value.content %}
         {% set block_type = block.block_type %}
         {% if 'content_with_anchor' in block_type %}

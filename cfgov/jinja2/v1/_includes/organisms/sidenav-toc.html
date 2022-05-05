@@ -23,55 +23,23 @@
 
 <nav class="o-report-sidenav o-secondary-navigation o-secondary-navigation__no-children"
      aria-label="Section navigation">
-      {% import 'molecules/nav-link.html' as nav_link %}
+     {% import 'molecules/nav-link.html' as nav_link %}
       <h3>Table of contents</h3>
-      <ul class="m-list
-                 m-list__unstyled
-                 o-secondary-navigation_list
-                 o-secondary-navigation_list__parents">
-       {%- for item in report_sections %}
-          <li class="m-list_item">
-            {{ nav_link.render(item.numbering + item.title, "#" + item.id, true) }}
-          {% if item.children %}
-              <ul class="m-list
-                         m-list__unstyled
-                         o-secondary-navigation_list
-                         o-secondary-navigation_list__children">
-              {%- for child in item.children -%}
-                  <li class="m-list_item">
-                      {{ nav_link.render(child.title, "#" + child.id, false) }}
-                  </li>
-              {%- endfor %}
-              </ul>
-          {% endif %}
-          </li>
-      {%- endfor %}
-      </ul>
-      {% if report_appendices %}
-        <h4>Appendices</h4>
-      {% endif %}
-      <ul class="m-list
-                 m-list__unstyled
-                 o-secondary-navigation_list
-                 o-secondary-navigation_list__parents
-                 o-report-sidenav__appendix">
-       {%- for item in report_appendices %}
-          <li class="m-list_item">
-            {{ nav_link.render(item.numbering + item.title, "#" + item.id, true) }}
-          {%- if item.children -%}
-              <ul class="m-list
-                         m-list__unstyled
-                         o-secondary-navigation_list
-                         o-secondary-navigation_list__children">
-              {%- for child in item.children -%}
-                  <li class="m-list_item">
-                      {{ nav_link.render(child.title, "#" + child.id, false) }}
-                  </li>
-              {%- endfor %}
-              </ul>
-          {%- endif -%}
-          </li>
-      {%- endfor %}
+      <ul class="m-list">
+       {%- for item in get_sections %}
+        {% if item.block_type == "Fig_Section" %}
+        <li class="m-list_item">
+          {{ nav_link.render(item.id + " " + item.contents[0].data, "#" + item.id, true) }}
+        </a>
+        </li>
+        {% elif item.block_type == "Fig_Sub_Section" %}
+        <ul class="m-list">
+            <li class="m-list_item">
+              {{ nav_link.render(item.id + " " + item.contents[0].data, "#" + item.id, false) }}
+            </li>
+        </ul>
+        {% endif %}
+       {%- endfor %}
       </ul>
 </nav>
 {% endmacro %}

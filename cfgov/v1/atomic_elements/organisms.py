@@ -1369,19 +1369,6 @@ class FigSectionContent(blocks.StreamBlock):
     quote = molecules.Quote()
     well = Well()
 
-# class FigSubSection(blocks.StreamBlock):
-#     Fig_Sub_Section_Title = blocks.TextBlock()
-#     content = blocks.RichTextBlock(icon="edit")
-#     content_with_anchor = molecules.ContentWithAnchor()
-#     image = molecules.ContentImage()
-#     table_block = AtomicTableBlock(table_options={"renderer": "html"})
-#     quote = molecules.Quote()
-#     well = Well()
-
-#     class Meta:
-#         icon = "edit"
-#         template = "_includes/organisms/fig-sub-section.html"
-
 class FigSubSection(blocks.StructBlock):
     sub_section_header = blocks.TextBlock()
     content = FigSectionContent()
