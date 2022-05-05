@@ -30,7 +30,7 @@ const styles = {
     verticalAlign: 'top',
     itemMarginBottom: 4,
     title: {
-      text: '<br/><span style="font-size: 12px; color: #666; font-weight: normal">(Click to show/hide data)</span>',
+      text: '<br/><span style="font-size: 14px; color: #666; font-weight: normal">(Click to show/hide data)</span>',
       style: {
       fontStyle: 'italic'
       }
