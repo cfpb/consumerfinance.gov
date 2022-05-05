@@ -14,6 +14,10 @@
     padding-top: 0;
     padding-bottom: 0.5em;
   }
+
+  .struct-block.simple-chart-block > .field > .widget-checkbox_input > .field-content {
+    padding-top: 0.5em;
+  }
   
   .struct-block.simple-chart-block > .field[data-contentpath="data_series"] {
     min-width: calc( 100% - 1.5em );
@@ -29,5 +33,10 @@
 
   .struct-block.simple-chart-block > .field[data-contentpath="download_file"] {
     margin-left: 0;
+  }
+
+  .struct-block.simple-chart-block > .field[data-contentpath="show_all_series_by_default"] {
+    /* margin-left: 0; */
+    min-width: calc( 100% - 1.5em );
   }
 }

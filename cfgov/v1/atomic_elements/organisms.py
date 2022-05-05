@@ -498,16 +498,6 @@ class SimpleChart(blocks.StructBlock):
         rows=2,
     )
 
-    show_all_series_by_default = blocks.BooleanBlock(
-    default=True,
-    required=False,
-    help_text=(
-        "To reduce visual clutter, charts with multiple series have all but "
-        "the first series hidden by default. If you'd prefer to have all "
-        "series shown by default, enable this option."
-    ),
-)
-
     data_series = blocks.TextBlock(
         required=False,
         help_text="For charts pulling from a separate source file, "
@@ -517,6 +507,15 @@ class SimpleChart(blocks.StructBlock):
         "To change how the data is labeled in the chart, include the correct "
         'labels with the format [{"key": "HEADER/KEY1", "label": "NEWLABEL"}, '
         '{"key": "HEADER/KEY2", "label": "NEWLABEL2"}]',
+    )
+
+    show_all_series_by_default = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        help_text="Uncheck this option to initially only show the first data "
+        " series in the chart. Leave checked to show all data "
+        " series by default. Users can always turn data series on "
+        " or off by interacting with the chart legend. ",
     )
 
     x_axis_source = blocks.TextBlock(
