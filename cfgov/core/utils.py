@@ -5,8 +5,6 @@ from django.core.signing import Signer
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 
-from wagtailsharing.models import SharingSite
-
 from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
@@ -20,12 +18,10 @@ LINK_PATTERN = re.compile(
 def should_interstitial(url: str) -> bool:
     match = LINK_PATTERN.match(url)
     if not match:
-        return True
+        return False
     if match.group("domain").endswith(".gov"):
         return False
     if match.group("domain") == "localhost":
-        return False
-    if match.group("domain") in SharingSite.objects.values_list("hostname"):
         return False
     return True
 
