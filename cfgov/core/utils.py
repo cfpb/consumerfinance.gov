@@ -5,6 +5,8 @@ from django.core.signing import Signer
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 
+from wagtailsharing.models import SharingSite
+
 from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
@@ -22,6 +24,8 @@ def should_interstitial(url: str) -> bool:
     if match.group("domain").endswith(".gov"):
         return False
     if match.group("domain") == "localhost":
+        return False
+    if match.group("domain") in SharingSite.objects.values_list("hostname"):
         return False
     return True
 
@@ -175,14 +179,13 @@ def add_link_markup(tag, request_path):
             # Add the redirect notice as well
             tag["href"] = signed_redirect(external_url)
 
-    elif NON_CFPB_LINKS.match(href) or should_interstitial(href):
+    elif should_interstitial(href):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = "external-link"
-        if should_interstitial(href):
-            # Add pretty URL for print styles
-            tag["data-pretty-href"] = href
-            # Add the redirect notice as well
-            tag["href"] = signed_redirect(href)
+        # Add pretty URL for print styles
+        tag["data-pretty-href"] = href
+        # Add the redirect notice as well
+        tag["href"] = signed_redirect(href)
 
     elif DOWNLOAD_LINKS.search(href):
         # Sets the icon to indicate you're downloading a file
@@ -206,7 +209,7 @@ def add_link_markup(tag, request_path):
         return str(tag)
 
     if not icon:
-        return None
+        return "there was no icon"
 
     icon_classes = {"class": LINK_ICON_TEXT_CLASSES}
     spans = tag.findAll("span", icon_classes)
