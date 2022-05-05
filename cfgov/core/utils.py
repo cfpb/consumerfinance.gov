@@ -14,12 +14,17 @@ LINK_PATTERN = re.compile(
     r"^(?P<schema>https?)://(?P<domain>[^/:]+):?(?P<port>\d+)?(?P<path>/?.*)?$"
 )
 
+NON_CFPB_LINKS = re.compile(
+    r"(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)"
+    r"(?!(content\.)?localhost).*)"
+)
+
 
 def should_interstitial(url: str) -> bool:
     match = LINK_PATTERN.match(url)
     if not match:
         return True
-    if match.group("domain").endswith(".gov"):
+    if match.group("domain").endswith(".gov") and NON_CFPB_LINKS.match(url):
         return False
     if match.group("domain") == "localhost":
         return False
@@ -28,10 +33,6 @@ def should_interstitial(url: str) -> bool:
 
 NON_GOV_LINKS = re.compile(
     r"https?:\/\/(?:www\.)?(?![^\?]+\.gov)(?!(content\.)?localhost).*"
-)
-NON_CFPB_LINKS = re.compile(
-    r"(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)"
-    r"(?!(content\.)?localhost).*)"
 )
 DOWNLOAD_LINKS = re.compile(
     r"(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$"
@@ -175,22 +176,18 @@ def add_link_markup(tag, request_path):
             # Add the redirect notice as well
             tag["href"] = signed_redirect(external_url)
 
-    elif should_interstitial(href):
+    elif NON_CFPB_LINKS.match(href):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = "external-link"
-        # Add pretty URL for print styles
-        tag["data-pretty-href"] = href
-        # Add the redirect notice as well
-        tag["href"] = signed_redirect(href)
+        if should_interstitial(href):
+            # Add pretty URL for print styles
+            tag["data-pretty-href"] = href
+            # Add the redirect notice as well
+            tag["href"] = signed_redirect(href)
 
     elif DOWNLOAD_LINKS.search(href):
         # Sets the icon to indicate you're downloading a file
         icon = "download"
-    else:
-        # localhost and  content.gov links were returning none in our tests without
-        # an icon attached so we either get rid of the check
-        # or have this default icon to use
-        icon = "local-link"
 
     # If the tag already ends in an SVG, we never want to append an icon.
     # If it has one or more SVGs but other content comes after them, we still
@@ -210,7 +207,7 @@ def add_link_markup(tag, request_path):
         return str(tag)
 
     if not icon:
-        return "there was no icon"
+        return
 
     icon_classes = {"class": LINK_ICON_TEXT_CLASSES}
     spans = tag.findAll("span", icon_classes)
