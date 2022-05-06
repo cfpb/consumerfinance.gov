@@ -1,7 +1,7 @@
 coverage==6.3.2
 diff_cover==6.5.0
 freezegun==1.2.1
-github3.py==3.2.0
+github3.py==0.9.6  # TODO: Remove once GitHub notifications are deprecated, or update cfgov.alerts
 model-bakery==1.5.0
 moto==3.1.7
 pip==22.0.4
