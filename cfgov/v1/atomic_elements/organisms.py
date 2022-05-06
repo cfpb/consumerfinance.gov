@@ -509,6 +509,15 @@ class SimpleChart(blocks.StructBlock):
         '{"key": "HEADER/KEY2", "label": "NEWLABEL2"}]',
     )
 
+    show_all_series_by_default = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        help_text="Uncheck this option to initially only show the first data "
+        " series in the chart. Leave checked to show all data "
+        " series by default. Users can always turn data series on "
+        " or off by interacting with the chart legend. ",
+    )
+
     x_axis_source = blocks.TextBlock(
         required=False,
         help_text="The column header (CSV), key or data array (JSON) "
