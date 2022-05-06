@@ -124,7 +124,7 @@ function makeChartOptions( data, dataAttributes ) {
     defaultObj.legend.y = -10;
   }
 
-  if ( defaultSeries === "False" ) {
+  if ( defaultSeries === 'False' ) {
     defaultObj.series = defaultObj.series.map( ( singluarSeries, i ) => {
       // Skip the first series
       if ( i > 0 ) {
@@ -179,17 +179,6 @@ function addProjectedMonths( chartObject, numMonths ) {
   } );
   return chartObject;
 }
-
-/* function defaultSeriesCheckbox( chartObject ) {
-     chartObject.series = chartObject.series.map( ( singluarSeries, i ) => {
-     // Skip the first series
-     if ( i > 0 ) {
-       singluarSeries.visible = false;
-     }
-     return singluarSeries;
-   } );
-   return chartObject;
-   } */
 
 /**
  * Resolves provided x axis or series data

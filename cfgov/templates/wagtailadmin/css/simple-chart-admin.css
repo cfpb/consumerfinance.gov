@@ -36,7 +36,6 @@
   }
 
   .struct-block.simple-chart-block > .field[data-contentpath="show_all_series_by_default"] {
-    /* margin-left: 0; */
     min-width: calc( 100% - 1.5em );
   }
 }
