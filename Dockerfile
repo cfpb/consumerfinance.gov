@@ -20,8 +20,18 @@ RUN pip install --upgrade pip setuptools wheel awscli
 # Add `$HOME/.local/bin` to PATH
 RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> /etc/profile
 
-# cfgov-dev is used for local development, as well as a base for frontend and prod.
-FROM base AS cfgov-dev
+# Intermediate layer to build only prod deps
+FROM base as cfgov-python-builder
+
+# .build-deps are required to build and test the application (pip, tox, etc.)
+RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev postgresql-dev
+
+# Install python requirements
+COPY requirements requirements
+RUN pip install --user -r requirements/deployment.txt
+
+# cfgov-dev is used for local development, as well as a base for frontend.
+FROM cfgov-python-builder AS cfgov-dev
 
 ENV CFGOV_PATH ${APP_HOME}
 ENV CFGOV_CURRENT ${APP_HOME}
@@ -31,23 +41,21 @@ ENV PYTHONPATH ${APP_HOME}/cfgov
 ENV DJANGO_SETTINGS_MODULE cfgov.settings.local
 ENV ALLOWED_HOSTS '["*"]'
 
-# .build-deps are required to build and test the application (pip, tox, etc.)
-RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev postgresql-dev
 # .backend-deps and .frontend-deps are required to run the application
 RUN apk add --no-cache --virtual .backend-deps bash curl postgresql
 RUN apk add --no-cache --virtual .frontend-deps jpeg-dev nodejs yarn zlib-dev
 
 # Install python requirements
 COPY requirements requirements
-RUN pip install --user -r requirements/local.txt -r requirements/deployment.txt
+RUN pip install --user -r requirements/local.txt
 
 EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
-# Build Frontend Assets
-FROM cfgov-dev as cfgov-build
+# Build Frontend Assets using cfgov-dev as base
+FROM cfgov-dev as cfgov-frontend-builder
 
 ARG FRONTEND_TARGET=production
 
@@ -115,13 +123,13 @@ RUN ln -s /etc/apache2/mime.types /etc/mime.types
 # Copy mod_wsgi.so from mod_wsgi image
 COPY --from=cfgov-mod-wsgi /usr/lib/apache2/mod_wsgi.so /usr/lib/apache2/mod_wsgi.so
 
-# Copy installed requirements from the build image
-COPY --from=cfgov-build --chown=apache:apache /root/.local /var/www/.local
+# Copy installed production requirements from the cfgov-python-builder layer
+COPY --from=cfgov-python-builder --chown=apache:apache /root/.local /var/www/.local
 
 # Copy the cfgov directory form the build image
-COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
-COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/initial-data.sh ${CFGOV_PATH}/
-COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PATH}/static.in
+COPY --from=cfgov-frontend-builder --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
+COPY --from=cfgov-frontend-builder --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/initial-data.sh ${CFGOV_PATH}/
+COPY --from=cfgov-frontend-builder --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PATH}/static.in
 
 RUN ln -s /usr/lib/apache2 cfgov/apache/modules
 RUN chown -R apache:apache ${APP_HOME} /usr/share/apache2 /var/run/apache2 /var/log/apache2
@@ -136,7 +144,7 @@ RUN apk add --no-cache --virtual .backend-deps bash postgresql
 # Swap to apache user
 USER apache
 
-# Build frontend, cleanup excess file, and setup filesystem
+# Cleanup excess files, and setup folder structure
 # - cfgov/f/ - Wagtail file uploads
 RUN rm -rf cfgov/apache/www cfgov/unprocessed && \
     mkdir -p cfgov/f
