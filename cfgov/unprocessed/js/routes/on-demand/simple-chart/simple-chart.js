@@ -117,11 +117,23 @@ function makeChartOptions( data, dataAttributes ) {
         }
       }
     };
+  } else {
+    defaultObj.legend.title = {
+      text: '(Click to show/hide data)',
+      style: {
+        fontStyle: 'italic',
+        fontWeight: 'normal',
+        fontSize: '14px',
+        color: '#666'
+      }
+    };
   }
 
   if ( projectedMonths > 0 ) {
     defaultObj = addProjectedMonths( defaultObj, projectedMonths );
     defaultObj.legend.y = -10;
+    defaultObj.chart.marginTop = 180;
+
   }
 
   if ( defaultSeries === 'False' ) {
