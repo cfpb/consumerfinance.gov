@@ -1,3 +1,42 @@
+{% macro render_section(value, num) %}
+<div id="section-{{num}}">
+  <h2>{{num}}. {{value.header}}</h2>
+  {% set ns = namespace(subsection = 0) %}
+  {% for block in value.content %} 
+    {% if block.block_type == 'subsection' %}
+      {% set ns.subsection = ns.subsection + 1 %}
+      {{render_subsection(block.value, num, ns.subsection)}}
+    {% else %}
+      {{block.value}}
+    {%  endif %}
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro render_subsection(value, section, subsection) %}
+<div id="section-{{section}}-{{subsection}}">
+  <h3>{{section}}.{{subsection}}. {{value.header}}</h3>
+  {% set ns = namespace(level_three = 0) %}
+  {% for block in value.content %} 
+    {% if block.block_type == 'level_three_section' %}
+      {% set ns.level_three = ns.level_three + 1 %}
+      {{render_level_three_section(block.value, section, subsection, ns.level_three)}}
+    {% else %}
+      {{block.value}}
+    {%  endif %}
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro render_level_three_section(value, section, subsection, level_three) %}
+<div id="section-{{section}}-{{subsection}}-{{level_three}}">
+  <h4>{{section}}.{{subsection}}.{{level_three}}. {{value.header}}</h4>
+  {% for block in value.content %} 
+    {{block.value}}
+  {% endfor %}
+</div>
+{% endmacro %}
+
 {% macro make_sections(list) %}
   {% for item in list %}
     {% if item.block_type == "Fig_Section" %}

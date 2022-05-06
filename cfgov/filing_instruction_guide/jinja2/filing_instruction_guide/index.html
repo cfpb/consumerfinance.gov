@@ -21,7 +21,9 @@
       <div class="lead-paragraph">{{ page.subheader }}</div>
     </div>
 
-    {{ macros.make_sections(get_sections) }}
+    {% for block in page.content %}
+      {{macros.render_section(block.value, loop.index)}}
+    {% endfor %}
     
 {% endblock %}
 
