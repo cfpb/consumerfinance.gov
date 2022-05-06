@@ -5,11 +5,9 @@ from urllib.parse import urlencode
 from django.apps import apps
 from django.db.models import Q
 from django.forms.utils import ErrorList
-from django.templatetags.static import static
-from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-from wagtail.core import blocks, hooks
+from wagtail.core import blocks
 from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.core.models import Page
 from wagtail.images import blocks as images_blocks
@@ -25,14 +23,6 @@ from v1.atomic_elements import atoms, molecules
 # maintain import structure across the project
 from v1.atomic_elements.tables import AtomicTableBlock
 from v1.util import ref
-
-
-@hooks.register("insert_editor_css")
-def editor_css():
-    return format_html(
-        '<link rel="stylesheet" href="{}">',
-        static("cfgov/templates/wagtailadmin/css/simple-chart-admin.css"),
-    )
 
 
 class AskSearch(blocks.StructBlock):
@@ -517,6 +507,15 @@ class SimpleChart(blocks.StructBlock):
         "To change how the data is labeled in the chart, include the correct "
         'labels with the format [{"key": "HEADER/KEY1", "label": "NEWLABEL"}, '
         '{"key": "HEADER/KEY2", "label": "NEWLABEL2"}]',
+    )
+
+    show_all_series_by_default = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        help_text="Uncheck this option to initially only show the first data "
+        " series in the chart. Leave checked to show all data "
+        " series by default. Users can always turn data series on "
+        " or off by interacting with the chart legend. ",
     )
 
     x_axis_source = blocks.TextBlock(
