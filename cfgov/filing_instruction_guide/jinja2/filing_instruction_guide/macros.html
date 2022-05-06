@@ -1,11 +1,11 @@
-{% macro render_section(value, num) %}
-<div id="section-{{num}}">
-  <h2>{{num}}. {{value.header}}</h2>
+{% macro render_section(value, section) %}
+<div id="section-{{section}}">
+  <h2>{{section}}. {{value.header}}</h2>
   {% set ns = namespace(subsection = 0) %}
   {% for block in value.content %} 
     {% if block.block_type == 'subsection' %}
       {% set ns.subsection = ns.subsection + 1 %}
-      {{render_subsection(block.value, num, ns.subsection)}}
+      {{render_subsection(block.value, section, ns.subsection)}}
     {% else %}
       {{block.value}}
     {%  endif %}
@@ -35,44 +35,4 @@
     {{block.value}}
   {% endfor %}
 </div>
-{% endmacro %}
-
-{% macro make_sections(list) %}
-  {% for item in list %}
-    {% if item.block_type == "Fig_Section" %}
-      <h2 class="report-header">
-        <a
-          id="{{ item.id }}"
-          href="#{{ item.id }}">
-          {{item.id + " " + item.contents[0].data}}
-        </a>
-      </h2>
-        {% for content in item.contents[1:] %}
-            {{content.data}}
-        {% endfor %}
-    {% elif item.block_type == "Fig_Sub_Section" %}
-      <h3 class="report-header">
-        <a
-          id="{{ item.id }}"
-          href="#{{ item.id }}">
-          {{item.id + " " + item.contents[0].data}}
-        </a>
-      </h3>
-        {% for content in item.contents[1:] %}
-            {{content.data}}
-        {% endfor %}
-    {% elif item.block_type == "Fig_Sub_3_Section" %}
-      <h4 class="report-header">
-        <a
-          id="{{ item.id }}"
-          href="#{{ item.id }}">
-          {{item.id + " " + item.contents[0].data}}
-        </a>
-      </h4>
-        {% for content in item.contents[1:] %}
-            {{content.data}}
-        {% endfor %}
-    {%- endif %}
-  {%- endfor %}
-
 {% endmacro %}
