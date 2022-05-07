@@ -26,19 +26,10 @@
      {% import 'molecules/nav-link.html' as nav_link %}
       <h3>Table of contents</h3>
       <ul class="m-list">
-       {%- for item in get_sections %}
-        {% if item.block_type == "Fig_Section" %}
-        <li class="m-list_item">
-          {{ nav_link.render(item.id + " " + item.contents[0].data, "#" + item.id, true) }}
-        </a>
-        </li>
-        {% elif item.block_type == "Fig_Sub_Section" %}
-        <ul class="m-list">
-            <li class="m-list_item">
-              {{ nav_link.render(item.id + " " + item.contents[0].data, "#" + item.id, false) }}
-            </li>
-        </ul>
-        {% endif %}
+       {%- for item in sections %}
+          <li class="m-list_item">
+            {{ nav_link.render(item.id + ". " + item.name, "#section-" + item.id, '-' not in item.id) }}
+          </li>
        {%- endfor %}
       </ul>
 </nav>

@@ -14,7 +14,7 @@
 {% endmacro %}
 
 {% macro render_subsection(value, section, subsection) %}
-<div id="section-{{section}}-{{subsection}}">
+<div id="section-{{section}}.{{subsection}}">
   <h3>{{section}}.{{subsection}}. {{value.header}}</h3>
   {% set ns = namespace(level_three = 0) %}
   {% for block in value.content %} 
@@ -29,7 +29,7 @@
 {% endmacro %}
 
 {% macro render_level_three_section(value, section, subsection, level_three) %}
-<div id="section-{{section}}-{{subsection}}-{{level_three}}">
+<div id="section-{{section}}.{{subsection}}.{{level_three}}">
   <h4>{{section}}.{{subsection}}.{{level_three}}. {{value.header}}</h4>
   {% for block in value.content %} 
     {{block.value}}

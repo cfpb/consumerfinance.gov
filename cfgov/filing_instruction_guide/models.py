@@ -13,6 +13,35 @@ from v1.atomic_elements import organisms
 from v1.models.base import CFGOVPage
 
 
+def build_sections(request, self):
+    sections = []
+
+    for i, block in enumerate(self.content, start=1):
+        val = block.value
+        header = val.get("header")
+        content = val.get("content")
+        sections.append({"id": f"{i}", "name": header})
+
+        j = 1
+        for num in range(len(content)):
+            val = content[num]
+            if val.block_type == "subsection":
+                h2 = val.value.get("header")
+                c2 = val.value.get("content")
+                sections.append({"id": f"{i}.{j}", "name": h2})
+
+                k = 1
+                for num in range(len(c2)):
+                    val = c2[num]
+                    if val.block_type == "level_three_section":
+                        h3 = val.value.get("header")
+                        sections.append({"id": f"{i}.{j}.{k}", "name": h3})
+                        k += 1
+                j += 1
+
+    return sections
+
+
 # Template page
 class FIGContentPage(CFGOVPage):
 
@@ -56,3 +85,9 @@ class FIGContentPage(CFGOVPage):
     )
 
     template = "filing_instruction_guide/index.html"
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context.update({"sections": build_sections(request, self)})
+
+        return context
