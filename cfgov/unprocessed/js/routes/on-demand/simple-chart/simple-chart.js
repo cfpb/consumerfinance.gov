@@ -78,7 +78,7 @@ function getDefaultChartObject( type ) {
  */
 function makeChartOptions( data, dataAttributes ) {
   const { chartType, styleOverrides, description, xAxisSource, xAxisLabel,
-    yAxisLabel, projectedMonths } = dataAttributes;
+    yAxisLabel, projectedMonths, defaultSeries } = dataAttributes;
   let defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
 
   if ( styleOverrides ) {
@@ -117,10 +117,33 @@ function makeChartOptions( data, dataAttributes ) {
         }
       }
     };
+  } else {
+    defaultObj.legend.title = {
+      text: '(Click to show/hide data)',
+      style: {
+        fontStyle: 'italic',
+        fontWeight: 'normal',
+        fontSize: '14px',
+        color: '#666'
+      }
+    };
   }
 
-  if ( projectedMonths ) {
+  if ( projectedMonths > 0 ) {
     defaultObj = addProjectedMonths( defaultObj, projectedMonths );
+    defaultObj.legend.y = -10;
+    defaultObj.chart.marginTop = 180;
+
+  }
+
+  if ( defaultSeries === 'False' ) {
+    defaultObj.series = defaultObj.series.map( ( singluarSeries, i ) => {
+      // Skip the first series
+      if ( i > 0 ) {
+        singluarSeries.visible = false;
+      }
+      return singluarSeries;
+    } );
   }
 
   alignMargin( defaultObj, chartType );
@@ -150,8 +173,8 @@ function addProjectedMonths( chartObject, numMonths ) {
     label: {
       text: `Values after ${ projectedDate.humanFriendly } are projected`,
       rotation: 0,
-      x: -300,
-      y: -20
+      x: -260,
+      y: -10
     }
   } ];
 

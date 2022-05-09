@@ -6,9 +6,13 @@ describe( 'Credit Card Agreements Search', () => {
 
   it( 'should render agreements for a selected lender', () => {
     searchPage.open();
-    searchPage.selectIssuer( 'Bank of America' );
-    searchPage.agreementsList().should( 'be.visible' );
-    searchPage.agreementsList().should( 'contain', 'Bank of America' );
+    searchPage.getIssuer().then( issuer => {
+      searchPage.selectIssuer( issuer.get( 0 ).innerText );
+      searchPage.agreementsList().should( 'be.visible' );
+      searchPage.agreementsList().should(
+        'contain', issuer.get( 0 ).innerText
+      );
+    } );
   } );
 
 } );
