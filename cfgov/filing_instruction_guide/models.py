@@ -81,7 +81,7 @@ class FIGContentPage(CFGOVPage):
 
     # FIG Content Section Fields
     content = StreamField([
-        ("Fig_Section", molecules.FigSection()),
+        ("Fig_Section", organisms.FigSection()),
         ("Fig_Sub_Section", organisms.FigSubSection()),
         ("Fig_Sub_3_Section", organisms.FigSub3Section()),
 
