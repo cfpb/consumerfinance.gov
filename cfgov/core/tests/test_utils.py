@@ -185,9 +185,9 @@ class LinkUtilsTests(SimpleTestCase):
 
     def test_content_cfgov(self):
         url = "http://content.cfpb.gov"
-        self.check_external_link(
-            url, expected_href=url, expected_pretty_href=None, is_gov=True
-        )
+        tag = "<a href='{}'>foo</a>".format(url)
+        path = "/"
+        self.assertIsNone(add_link_markup(tag, path))
 
     def test_urls_with_gov_in_them(self):
         url = "https://www.realgovsite.lol"
