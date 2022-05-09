@@ -488,7 +488,6 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     "*.consumerfinance.gov",
-    "fast.fonts.net",
     "tagmanager.google.com",
     "optimize.google.com",
     "api.mapbox.com",
@@ -546,7 +545,6 @@ CSP_FONT_SRC = (
     "'self'",
     "data:",
     "*.consumerfinance.gov",
-    "fast.fonts.net",
     "fonts.google.com",
     "fonts.gstatic.com",
 )

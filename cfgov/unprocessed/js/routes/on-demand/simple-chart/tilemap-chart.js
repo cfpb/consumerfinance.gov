@@ -6,7 +6,7 @@ import cloneDeep from 'lodash.clonedeep';
 import chartHooks from './chart-hooks.js';
 import defaultTilemap from './tilemap-styles.js';
 import usLayout from './us-layout.js';
-import { makeFilterDOM } from './select-filters.js';
+import { makeSelectFilterDOM } from './data-filters.js';
 import { alignMargin, formatSeries, overrideStyles } from './utils.js';
 
 tilemap( Highmaps );
@@ -69,9 +69,8 @@ function makeTilemapSelect( chartNode, chart, data, transform ) {
   else d = data.raw;
 
   const options = getTilemapDates( d );
-  const selectNode = makeFilterDOM( options, chartNode, { key: 'tilemap' },
-    'Select date'
-  );
+  const selectNode = makeSelectFilterDOM( options, chartNode, { key: 'tilemap', label: 'Select date'}
+  ).nodes[0];
 
   attachTilemapFilter( selectNode, chart, data );
 }
@@ -89,13 +88,12 @@ function getTilemapDates( data ) {
 
 /**
  * Wires up the tilemap filter
- * @param {object} node The created select node
+ * @param {object} select The select node
  * @param {object} chart The chart object
  * @param {object} data The data object
  */
-function attachTilemapFilter( node, chart, data ) {
-
-  node.addEventListener( 'change', evt => {
+function attachTilemapFilter( select, chart, data ) {
+  select.addEventListener( 'change', evt => {
     const formatted = formatSeries( data );
     const updated = getMapConfig( formatted, evt.target.value );
     chart.update( updated );

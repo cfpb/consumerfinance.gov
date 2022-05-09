@@ -481,6 +481,54 @@ class TestCFGOVPageContext(TestCase):
         expectedWithSpaces = "  " + expected + "  "
         self.assertEqual(expectedWithSpaces, result)
 
+    def test_get_context_sets_is_faq_page_to_false_without_faq(self):
+        self.page = BrowsePage(
+            title="test",
+            content=json.dumps(
+                [
+                    {
+                        "type": "expandable_group",
+                        "value": {},
+                    }
+                ]
+            ),
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context["is_faq_page"]
+        self.assertEqual(False, result)
+
+    def test_get_context_sets_is_faq_page_to_true_with_faq_expandable(self):
+        self.page = BrowsePage(
+            title="test",
+            content=json.dumps(
+                [
+                    {
+                        "type": "expandable_group",
+                        "value": {"is_faq": True},
+                    }
+                ]
+            ),
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context["is_faq_page"]
+        self.assertEqual(True, result)
+
+    def test_get_context_sets_is_faq_page_to_true_with_faq_group(self):
+        self.page = BrowsePage(
+            title="test",
+            content=json.dumps(
+                [
+                    {
+                        "type": "faq_group",
+                        "value": {},
+                    }
+                ]
+            ),
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context["is_faq_page"]
+        self.assertEqual(True, result)
+
 
 class TestCFGOVPageQuerySet(TestCase):
     def setUp(self):
