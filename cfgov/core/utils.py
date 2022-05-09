@@ -22,11 +22,7 @@ NON_CFPB_LINKS = re.compile(
 
 def should_interstitial(url: str) -> bool:
     match = LINK_PATTERN.match(url)
-    if not match:
-        return True
     if match.group("domain").endswith(".gov") and NON_CFPB_LINKS.match(url):
-        return False
-    if match.group("domain") == "localhost":
         return False
     return True
 
