@@ -1366,6 +1366,7 @@ class FigSub3Section(blocks.StructBlock):
 
     class Meta:
         icon = "edit"
+        form_classname = 'fig-block fig-sub3-section'
 
 
 class FigSubSectionContent(FigSectionsContent):
@@ -1378,6 +1379,7 @@ class FigSubSection(blocks.StructBlock):
 
     class Meta:
         icon = "edit"
+        form_classname = 'fig-block fig-sub-section'
 
 
 class FigSectionContent(blocks.StreamBlock):
@@ -1392,3 +1394,4 @@ class FigSection(blocks.StructBlock):
 
     class Meta:
         icon = "edit"
+        form_classname = 'fig-block fig-section'

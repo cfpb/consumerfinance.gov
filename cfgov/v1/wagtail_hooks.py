@@ -131,6 +131,7 @@ def editor_css():
         "css/model-admin.css",
         "css/table-block.css",
         "css/simple-chart-admin.css",
+        "css/fig-admin.css"
     ]
 
     css_includes = format_html_join(
