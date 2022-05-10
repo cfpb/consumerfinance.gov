@@ -1,4 +1,62 @@
 <div>
-    <h2 class="report-header">{{ value.section_id }} {{value.header}} (fig section.html)</h2>
-    <p>{{value.content}}</p>
+    {% if block.block_type == 'Fig_Section' %}
+        <h2 class="report-header">
+	    <a id="{{ value.section_id }}" 
+	        href="#{{ value.section_id }}">
+		    {{value.section_id}} {{value.header}}
+	    </a>
+	</h2>
+    {% elif block.block_type == 'Fig_Sub_Section' %}
+        <h3 class="report-header">
+	    <a id="{{ value.section_id }}" 
+	        href="#{{ value.section_id }}">
+		    {{value.section_id}} {{value.header}}
+	    </a>
+	</h3>
+    {% else %}
+        <h4 class="report-header">
+	    <a id="{{ value.section_id }}" 
+	        href="#{{ value.section_id }}">
+		    {{value.section_id}} {{value.header}}
+	    </a>
+	</h4>
+    {% endif %}
 </div>
+
+<div class="o-full-width-text-group">
+     {% for block in value.content %}
+        {% set block_type = block.block_type %}
+        {% if 'content_with_anchor' in block_type %}
+                {{ render_stream_child(block) | safe }}
+        {% elif 'content' in block_type %}
+            <div class="m-full-width-text">
+                {{ block.value | safe }}
+            </div>
+        {% elif 'table' in block_type %}
+            <div class="m-full-width-text">
+                {# TODO: We have not historically disallowed raw HTML in
+                   table blocks. We should not allow raw HTML. #}
+                {% autoescape off %}
+                    {% include_block block %}
+                {% endautoescape %}
+            </div>
+        {% elif block_type in ['quote', 'related_links']
+           or 'cta' in block_type and block.value.is_inset %}
+            <div class="m-inset
+                    {{ 'm-inset__test'
+                       if flag_enabled('INSET_TEST') else '' }}">
+                {{ block | safe }}
+            </div>
+        {% elif block_type in ['email_signup'] %}
+            <div class="m-inset__email">
+                {% include_block block %}
+            </div>
+        {% elif block_type in ['well'] %}
+            <div class="block">
+                {% include_block block %}
+            </div>
+        {% else %}
+            {{ block | safe }}
+        {% endif %}
+    {% endfor %}
+ </div>

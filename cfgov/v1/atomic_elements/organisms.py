@@ -1373,7 +1373,7 @@ class FigSection(blocks.StructBlock):
         template = "_includes/molecules/fig-section.html"
 
 class FigSubSection(blocks.StructBlock):
-    sub_section_header = blocks.TextBlock()
+    header = blocks.TextBlock()
     content = FigSectionContent()
     section_id = blocks.TextBlock(
         required=False, help_text="Will be filled in automatically upon save."
@@ -1381,10 +1381,10 @@ class FigSubSection(blocks.StructBlock):
 
     class Meta:
         icon = "edit"
-        template = "_includes/organisms/fig-sub-section.html"
+        template = "_includes/molecules/fig-section.html"
 
 class FigSub3Section(blocks.StructBlock):
-    sub_section3_header = blocks.TextBlock()
+    header = blocks.TextBlock()
     content = FigSectionContent()
     section_id = blocks.TextBlock(
         required=False, help_text="Will be filled in automatically upon save."
@@ -1392,4 +1392,4 @@ class FigSub3Section(blocks.StructBlock):
 
     class Meta:
         icon = "edit"
-        template = "_includes/organisms/fig-sub-section.html"
+        template = "_includes/molecules/fig-section.html"
