@@ -52,7 +52,6 @@ class FilterablePagesDocumentTest(TestCase):
                 "language",
                 "title",
                 "url",
-                "is_archived",
                 "date_published",
                 "start_dt",
                 "end_dt",
@@ -234,12 +233,6 @@ class FilterableSearchFilteringTests(
                         language="es",
                         date_published=cls.yesterday,
                     ),
-                    BlogPage(
-                        title="archived",
-                        language="en",
-                        date_published=cls.yesterday,
-                        is_archived="yes",
-                    ),
                 ],
             ),
         ]
@@ -263,14 +256,14 @@ class FilterableSearchFilteringTests(
 
     def test_no_filters(self):
         search = FilterablePagesDocumentSearch(self.page_tree[0])
-        self.assertEqual(search.count(), 3)
+        self.assertEqual(search.count(), 2)
 
         search.filter()
-        self.assertEqual(search.count(), 3)
+        self.assertEqual(search.count(), 2)
 
     def test_filter_by_language(self):
         search = FilterablePagesDocumentSearch(self.page_tree[0])
-        self.assertEqual(search.count(), 3)
+        self.assertEqual(search.count(), 2)
 
         search.filter_language(["es"])
         self.assertEqual(search.count(), 1)
@@ -282,7 +275,7 @@ class FilterableSearchFilteringTests(
 
         search = FilterablePagesDocumentSearch(self.page_tree[0])
         search.filter_date(from_date=self.yesterday, to_date=self.yesterday)
-        self.assertEqual(search.count(), 2)
+        self.assertEqual(search.count(), 1)
 
     def test_filter_by_topics(self):
         search = FilterablePagesDocumentSearch(self.page_tree[0])
@@ -292,11 +285,6 @@ class FilterableSearchFilteringTests(
     def test_filter_by_categories(self):
         search = FilterablePagesDocumentSearch(self.page_tree[0])
         search.filter_categories(["bar"])
-        self.assertEqual(search.count(), 1)
-
-    def test_filter_by_archived(self):
-        search = FilterablePagesDocumentSearch(self.page_tree[0])
-        search.filter_archived(["yes"])
         self.assertEqual(search.count(), 1)
 
 

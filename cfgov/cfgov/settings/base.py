@@ -584,8 +584,6 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
-    # Hide archive filter options in the filterable UI
-    "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
