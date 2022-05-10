@@ -1362,7 +1362,7 @@ class FigSectionContent(blocks.StreamBlock):
     well = Well()
 
 class FigSection(blocks.StructBlock):
-    header = blocks.TextBlock()
+    header = blocks.TextBlock(label="Section header")
     content = FigSectionContent()
     section_id = blocks.TextBlock(
         required=False, help_text="Will be filled in automatically upon save."
@@ -1373,7 +1373,7 @@ class FigSection(blocks.StructBlock):
         template = "_includes/molecules/fig-section.html"
 
 class FigSubSection(blocks.StructBlock):
-    header = blocks.TextBlock()
+    header = blocks.TextBlock(label="Subsection header")
     content = FigSectionContent()
     section_id = blocks.TextBlock(
         required=False, help_text="Will be filled in automatically upon save."
@@ -1384,7 +1384,7 @@ class FigSubSection(blocks.StructBlock):
         template = "_includes/molecules/fig-section.html"
 
 class FigSub3Section(blocks.StructBlock):
-    header = blocks.TextBlock()
+    header = blocks.TextBlock(label="Level 3 subsection header")
     content = FigSectionContent()
     section_id = blocks.TextBlock(
         required=False, help_text="Will be filled in automatically upon save."

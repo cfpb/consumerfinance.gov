@@ -13,6 +13,20 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 
 
+def new_sectionator(request, self):
+    toc_headers = []
+    for section in self.content:
+        header = section.value.get("header")
+        id = section.value.get("section_id")
+        if section.block_type == "Fig_Section":
+            level = 1
+        elif section.block_type == "Fig_Sub_Section":
+            level = 2
+        toc_headers.append({"header": header, "id": id, "level": level})
+    return toc_headers
+
+
+
 # function passed to context processor 
 def parse_section_builder(request, self):
 
@@ -126,7 +140,7 @@ class FIGContentPage(CFGOVPage):
         context = super().get_context(request, *args, **kwargs)
         context.update(
             {
-                "get_sections": parse_section_builder(request, self)
+                "get_sections": new_sectionator(request, self)
             }
         )
         return context
