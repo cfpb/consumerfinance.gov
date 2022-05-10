@@ -2,6 +2,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
 
 from wagtail.contrib.routable_page.models import route
+from wagtail.core.models import Site
 from wagtailsharing.models import ShareableRoutablePageMixin
 
 from flags.state import flag_enabled
@@ -41,29 +42,36 @@ class FilterableListMixin(ShareableRoutablePageMixin):
         return FilterablePagesDocumentSearch
 
     def get_filterable_list_wagtail_block(self):
+        """Find a FilterableList StreamField block in a content field."""
         return next(
             (b for b in self.content if b.block_type == "filter_controls"),
             None,
         )
 
-    def get_filterable_root(self):
-        filterable_list_block = self.get_filterable_list_wagtail_block()
-        if filterable_list_block is None:
-            return "/"
-
-        if filterable_list_block.value["filter_children"]:
-            return self.get_url()
-
-        return "/"
-
     def get_filterable_search(self):
-        """Return a FilterablePagesDocumentSearch object"""
-        site = self.get_site()
+        # By default, filterable pages only search their direct children.
+        # But this can be overriden by a setting on a FilterableList block
+        # added to the page's content StreamField.
+        if filter_block := self.get_filterable_list_wagtail_block():
+            children_only = filter_block.value.get("filter_children", True)
+        else:
+            children_only = True
 
-        if not site:
-            return None
+        # If searching globally, use the root page of this page's Wagtail
+        # Site. If the page doesn't live under a Site (for example, it is
+        # in the Trash), use the default Site.
+        if not children_only:
+            site = self.get_site()
 
-        return self.get_search_class()(prefix=self.get_filterable_root())
+            if not site:
+                site = Site.objects.get(is_default_site=True)
+
+            search_root = site.root_page
+        else:
+            search_root = self
+
+        search_cls = self.get_search_class()
+        return search_cls(search_root, children_only)
 
     def get_cache_key_prefix(self):
         return self.url
@@ -204,9 +212,7 @@ class CategoryFilterableMixin:
         will only filter pages that are tagged with a tag in those categories.
         By default this is an empty list and all page tags are eligible.
         """
+        search = super().get_filterable_search()
         category_names = get_category_children(self.filterable_categories)
-        filterable_search = self.get_search_class()(
-            prefix=self.get_filterable_root()
-        )
-        filterable_search.filter_categories(categories=category_names)
-        return filterable_search
+        search.filter_categories(categories=category_names)
+        return search
