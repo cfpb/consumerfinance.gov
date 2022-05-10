@@ -84,7 +84,7 @@ describe( 'SectionLink', () => {
     } );
 
     let clicks = 0;
-    document.body.addEventListener( 'click', event => {
+    document.body.addEventListener( 'click', () => {
       clicks++;
     } );
 
