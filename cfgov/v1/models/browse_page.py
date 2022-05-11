@@ -46,7 +46,6 @@ class BrowsePage(CFGOVPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
-            ("feedback", v1_blocks.Feedback()),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
             ("conference_registration_form", ConferenceRegistrationForm()),
             ("chart_block", organisms.ChartBlock()),

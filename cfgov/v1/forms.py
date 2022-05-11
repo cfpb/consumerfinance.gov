@@ -9,7 +9,6 @@ from django.forms import widgets
 from wagtail.images.forms import BaseImageForm
 
 from v1.models import enforcement_action_page
-from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
 from v1.util.datetimes import end_of_time_period
@@ -417,49 +416,6 @@ class EventArchiveFilterForm(FilterableListForm):
             title=self.cleaned_data.get("title"), order_by=self.get_order_by()
         )
         return results
-
-
-class FeedbackForm(forms.ModelForm):
-    """For feedback modules that simply ask 'Was this page helfpul?'"""
-
-    class Meta:
-        model = Feedback
-        fields = ["is_helpful", "comment", "language"]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["is_helpful"].required = True
-
-
-class ReferredFeedbackForm(forms.ModelForm):
-    """For feedback modules that need to capture the referring page"""
-
-    class Meta:
-        model = Feedback
-        fields = ["is_helpful", "referrer", "comment", "language"]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["comment"].required = True
-
-
-class SuggestionFeedbackForm(forms.ModelForm):
-    """For feedback modules seeking content suggestions"""
-
-    class Meta:
-        model = Feedback
-        fields = [
-            "referrer",
-            "comment",
-            "expect_to_buy",
-            "currently_own",
-            "email",
-            "language",
-        ]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["comment"].required = True
 
 
 class CFGOVImageForm(BaseImageForm):
