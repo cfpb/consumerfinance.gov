@@ -168,18 +168,6 @@ const BYCAnalytics = ( function() {
       );
     } );
 
-    const helpfulBtns = document.querySelectorAll( 'button.helpful-btn' );
-    for ( let i = 0, len = helpfulBtns.length; i < len; i++ ) {
-      helpfulBtns[i].addEventListener( 'click', function( event ) {
-        const val = event.currentTarget.value;
-        track(
-          'Before You Claim Interaction',
-          'Was This Page Helpful clicked',
-          val
-        );
-      } );
-    }
-
     document.querySelector( '[data-tooltip-target]' ).addEventListener( 'click', function( event ) {
       const target = event.currentTarget.getAttribute( 'data-tooltip-target' );
       track(

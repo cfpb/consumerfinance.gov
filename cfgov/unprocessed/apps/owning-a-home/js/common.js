@@ -2,7 +2,6 @@
    Common application-wide scripts for owning-a-home.
    ========================================================================== */
 
-import * as ratingsForm from './ratings-form';
 import * as validators from '../../../js/modules/util/validators';
 import FormSubmit from '../../../js/organisms/FormSubmit.js';
 
@@ -24,5 +23,3 @@ if ( emailSignup ) {
 
   formSubmit.init();
 }
-
-ratingsForm.init();

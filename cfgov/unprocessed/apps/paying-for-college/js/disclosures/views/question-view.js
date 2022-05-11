@@ -21,7 +21,6 @@ const questionView = {
   $workWhileStudying: $( '.option__work-while-studying' ),
   $takeAction: $( '.option__take-action' ),
   $nextSteps: $( '.next-steps' ),
-  $feedback: $( '.feedback' ),
 
   /**
    * Initiates the object
@@ -88,7 +87,6 @@ const questionView = {
       // Show the rest of the page
       questionView.$getOptions.show();
       questionView.$nextSteps.show();
-      questionView.$feedback.show();
       $( 'html, body' ).stop().animate( {
         scrollTop: questionView.$getOptions.offset().top - 120
       }, 900, 'swing', function() {

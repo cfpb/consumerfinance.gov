@@ -1,6 +1,5 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{% import 'form_block.html' as form_block with context %}
 {% import 'organisms/post-preview.html' as post_preview with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
@@ -33,8 +32,6 @@
             <div class="block{{ ' block__flush-top' if loop.first else '' }}">
                 {% include_block block %}
             </div>
-        {% elif block.block_type == 'feedback' %}
-            {{- form_block.render(block, 'content', loop.index0) -}}
         {% elif 'post_preview_snapshot' in block.block_type %}
             {% include_block block %}
         {% elif 'filter_controls' in block.block_type %}
