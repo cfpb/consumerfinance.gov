@@ -20,11 +20,11 @@ def new_sectionator(request, self):
         id = section.value.get("section_id")
         if section.block_type == "Fig_Section":
             level = 1
+            toc_headers.append({"header": header, "id": id, "level": level})
         elif section.block_type == "Fig_Sub_Section":
             level = 2
-        toc_headers.append({"header": header, "id": id, "level": level})
+            toc_headers.append({"header": header, "id": id, "level": level})
     return toc_headers
-
 
 
 # function passed to context processor 
@@ -133,6 +133,9 @@ class FIGContentPage(CFGOVPage):
     )
 
     template = "filing_instruction_guide/index.html"
+
+    def assign_section_ids(self):
+        print('assign_section_ids ***************************')
 
     # Context Processor that provides the context for the template
     # Note: 'context' is key/value pair that is sent ot the template for mapping
