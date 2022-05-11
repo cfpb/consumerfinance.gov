@@ -509,13 +509,13 @@ class TestCFGOVPageMediaJSProperty(TestCase):
     """Tests how the page.media_js property pulls in child block JS."""
 
     def test_empty_page_has_no_media(self):
-        return self.assertEqual(CFGOVPage().media_js, [])
+        self.assertEqual(CFGOVPage().media_js, [])
 
     def test_empty_page_has_no_page_js(self):
-        return self.assertEqual(CFGOVPage().page_js, [])
+        self.assertEqual(CFGOVPage().page_js, [])
 
     def test_empty_page_has_no_streamfield_js(self):
-        return self.assertEqual(CFGOVPage().streamfield_media("js"), [])
+        self.assertEqual(CFGOVPage().streamfield_media("js"), [])
 
     def test_page_pulls_in_child_block_media(self):
         page = CFGOVPage()
@@ -551,10 +551,10 @@ class TestCFGOVPageMediaCSSProperty(TestCase):
     """Tests how the page.media_css property pulls in child block CSS."""
 
     def test_empty_page_has_no_media(self):
-        return self.assertEqual(CFGOVPage().media_css, [])
+        self.assertEqual(CFGOVPage().media_css, [])
 
     def test_empty_page_has_no_streamfield_css(self):
-        return self.assertEqual(CFGOVPage().streamfield_media("css"), [])
+        self.assertEqual(CFGOVPage().streamfield_media("css"), [])
 
     def test_page_pulls_in_child_block_media(self):
         page = CFGOVPage()
