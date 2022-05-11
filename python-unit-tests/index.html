@@ -280,8 +280,10 @@ the <code>lint</code> environment (this will also run <code>flake8</code> and <c
 <a href="https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/">Django coding style guidelines</a>,
 and the
 <a href="https://github.com/cfpb/development/blob/main/standards/python.md#linting">CFPB Python style guide</a>.</p>
-<p>Both <code>flake8</code> and <code>isort</code> can be run using the Tox <code>lint</code> environment (this
-will also run <code>black</code>):</p>
+<p>We also use <a href="https://bandit.readthedocs.io/">Bandit</a> to find any common
+security issues in our Python code.</p>
+<p><code>flake8</code>, <code>isort</code>, and <code>bandit</code> can all be run using the Tox <code>lint</code> environment
+(this will also run <code>black</code>):</p>
 <pre class="highlight"><code class="language-sh">tox -e lint</code></pre>
 
 <p>This will run <code>isort</code> in check-only mode and it will print diffs for imports
