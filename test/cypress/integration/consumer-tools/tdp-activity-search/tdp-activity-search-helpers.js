@@ -4,8 +4,14 @@ export class ActivitySearch {
     cy.visit( '/consumer-tools/educator-tools/youth-financial-education/teach/activities/' );
   }
 
-  selectFilter( label ) {
-    cy.contains( label ).siblings( 'input' ).check( { force: true } );
+  toggleFilter( label ) {
+    cy.get( '.content_sidebar' ).within( () => {
+      cy.contains( label ).click();
+    } );
+  }
+
+  selectFilter( name, value ) {
+    cy.get( `input[name="${name}"][value="${value}"]` ).check( { force: true } );
   }
 
   clearFilters() {
