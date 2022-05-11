@@ -4,7 +4,7 @@ import argparse
 import os
 import shutil
 import stat
-import subprocess
+import subprocess  # nosec
 import sys
 import tempfile
 from contextlib import contextmanager
@@ -31,7 +31,7 @@ def save_wheels(python_executable, destination, *args):
 
     https://pip.pypa.io/en/stable/user_guide/#using-pip-from-your-program
     """
-    subprocess.check_call(
+    subprocess.check_call(  # nosec
         [python_executable, "-m", "pip", "wheel"]
         + ["--wheel-dir=%s" % destination]
         + ["--find-links=%s" % destination]

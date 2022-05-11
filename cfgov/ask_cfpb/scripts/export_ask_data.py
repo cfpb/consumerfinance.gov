@@ -1,12 +1,15 @@
 import csv
 import datetime
 import html
+import tempfile
 
 from django.http import HttpResponse
 from django.utils import html as html_util
 
 from ask_cfpb.models.answer_page import AnswerPage
 
+
+TEMPDIR = tempfile.gettempdir()
 
 HEADINGS = [
     "ASK_ID",
@@ -129,7 +132,7 @@ def assemble_output():
     return output_rows
 
 
-def export_questions(path="/tmp", http_response=False):
+def export_questions(path=TEMPDIR, http_response=False):
     """
     A script for exporting Ask CFPB Answer content to an Excel-friendly CSV.
 
