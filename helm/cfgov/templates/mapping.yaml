@@ -1,0 +1,10 @@
+---
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+    name: {{ include "cfgov.fullname" . }}
+spec:
+    host: {{ include "cfgov.fullname" . }}-eks.{{ default "dev-internal" .Values.environmentName }}.cfpb.gov
+    prefix: /
+    service: {{ include "cfgov.fullname" . }}
+    port: {{ .Values.service.port }}
