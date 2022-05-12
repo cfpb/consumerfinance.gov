@@ -126,8 +126,11 @@ We use the `flake8` and `isort` tools to ensure compliance with
 and the
 [CFPB Python style guide](https://github.com/cfpb/development/blob/main/standards/python.md#linting).
 
-Both `flake8` and `isort` can be run using the Tox `lint` environment (this
-will also run `black`):
+We also use [Bandit](https://bandit.readthedocs.io/) to find any common
+security issues in our Python code.
+
+`flake8`, `isort`, and `bandit` can all be run using the Tox `lint` environment
+(this will also run `black`):
 
 ```sh
 tox -e lint

@@ -6,7 +6,6 @@ from wagtail.admin.edit_handlers import (
 from wagtail.core.fields import StreamField
 from wagtail.search import index
 
-from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 
@@ -24,7 +23,6 @@ class LandingPage(CFGOVPage):
         [
             ("info_unit_group", organisms.InfoUnitGroup()),
             ("well", organisms.Well()),
-            ("feedback", v1_blocks.Feedback()),
         ],
         blank=True,
     )
