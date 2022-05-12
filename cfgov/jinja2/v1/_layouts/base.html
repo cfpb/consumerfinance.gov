@@ -114,6 +114,11 @@
 
     {% block css %}
     <link rel="stylesheet" href="{{ static('css/main.css') }}">
+      {% if page and page.media_css %}
+        {% for css in page.media_css %}
+          <link rel="stylesheet" href="{{ static('css/on-demand/' + css) }}" );
+        {% endfor %}
+      {% endif %}
     {% endblock css %}
 
 {#
@@ -314,8 +319,8 @@
             unprocessed/js/routes/on-demand/[component].js
             to the page, based on what components were added in Wagtail.
           #}
-          {% if page and page.media %}
-            {% for js in page.media %}
+          {% if page and page.media_js %}
+            {% for js in page.media_js %}
               s.push( '{{ static('js/routes/on-demand/' + js) }}' );
             {% endfor %}
           {% endif %}

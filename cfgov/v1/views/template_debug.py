@@ -37,7 +37,7 @@ class TemplateDebugView(TemplateView):
 
         if self.extra_js:
             context["page"] = {
-                "media": self.extra_js,
+                "media_js": self.extra_js,
             }
 
         return context

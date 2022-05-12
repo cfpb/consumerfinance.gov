@@ -418,6 +418,9 @@ class SidebarContactInfo(MainContactInfo):
     class Meta:
         template = "_includes/organisms/sidebar-contact-info.html"
 
+    class Media:
+        css = ["sidebar-contact-info.css"]
+
 
 class ModelBlock(blocks.StructBlock):
     """Abstract StructBlock that provides Django model instances to subclasses.
@@ -1211,6 +1214,7 @@ class MortgageChartBlock(blocks.StructBlock):
 
     class Media:
         js = ["mortgage-performance-trends.js"]
+        css = ["mortgage-performance-trends.css"]
 
 
 class MortgageMapBlock(MortgageChartBlock):
@@ -1221,6 +1225,7 @@ class MortgageMapBlock(MortgageChartBlock):
 
     class Media:
         js = ["mortgage-performance-trends.js"]
+        css = ["mortgage-performance-trends.css"]
 
 
 class ResourceList(blocks.StructBlock):
