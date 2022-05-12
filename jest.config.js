@@ -24,6 +24,8 @@ module.exports = {
     '<rootDir>/develop-apps/'
   ],
   testRegex: 'unit_tests/.*-spec.js',
-  testURL: 'http://localhost',
+  testEnvironmentOptions: {
+    url: 'http://localhost'
+  },
   transformIgnorePatterns: []
 };
