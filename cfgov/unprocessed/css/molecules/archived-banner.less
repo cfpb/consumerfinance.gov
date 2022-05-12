@@ -19,29 +19,29 @@
 */
 
 .m-archived-banner {
-    background-color: @teal-mid-dark;
-    position: relative;
-    color: @white;
+  background-color: @teal-mid-dark;
+  position: relative;
+  color: @white;
     
-    .content_wrapper {
-      padding: unit( @grid_gutter-width / @base-font-size-px, em )
+  .content_wrapper {
+    padding: unit( @grid_gutter-width / @base-font-size-px, em )
                unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-      box-sizing: border-box;
-    }
+    box-sizing: border-box;
+  }
+  .cf-icon-svg {
+    fill: @white;
+    position: absolute;
+  }
+
+  .cf-icon-svg + &_content {
+    padding-left: unit( 25px / @base-font-size-px, em );
+  }
+
+  .respond-to-min( @bp-sm-min, {
     .cf-icon-svg {
-        fill: @white;
-        position: absolute;
+      font-size: unit( @size-iv / @base-font-size-px, em );
     }
-
-    .cf-icon-svg + &_content {
-        padding-left: unit( 25px / @base-font-size-px, em );
-    }
-
-     .respond-to-min( @bp-sm-min, {
-        .cf-icon-svg {
-            font-size: unit( @size-iv / @base-font-size-px, em );
-        }
-    });
+  });
 }
 
 /* topdoc

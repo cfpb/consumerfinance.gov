@@ -36,7 +36,8 @@ class MockStaticfilesFinder(BaseFinder):
     currently considered a private interface, and this interface is thus
     undocumented." Use at your own risk.
     """
-    setting = 'MOCK_STATICFILES_PATTERNS'
+
+    setting = "MOCK_STATICFILES_PATTERNS"
 
     @property
     def patterns(self):
@@ -44,12 +45,12 @@ class MockStaticfilesFinder(BaseFinder):
             patterns = getattr(settings, self.setting)
         except AttributeError:
             raise ImproperlyConfigured(
-                'settings.{} must be defined'.format(self.setting)
+                "settings.{} must be defined".format(self.setting)
             )
 
         if not isinstance(patterns, dict):
             raise ImproperlyConfigured(
-                'settings.{} must be a dict'.format(self.setting)
+                "settings.{} must be a dict".format(self.setting)
             )
 
         return patterns

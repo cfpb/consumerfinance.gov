@@ -1,26 +1,24 @@
 call_to_action_defaults = {
-    'slug_text': 'Take action',
-    'paragraph_text': 'Click this button.',
-    'button': {
-        'text': 'Click me',
+    "slug_text": "Take action",
+    "paragraph_text": "Click this button.",
+    "button": {
+        "text": "Click me",
     },
 }
 
 
 call_to_action_test_cases = {
-    'Default': {},
-
-    'External link': {
-        'button': {
-            'text': 'External link',
-            'url': 'https://example.com',
+    "Default": {},
+    "External link": {
+        "button": {
+            "text": "External link",
+            "url": "https://example.com",
         },
     },
-
-    'Download': {
-        'button': {
-            'text': 'Download me',
-            'url': '/something.pdf',
+    "Download": {
+        "button": {
+            "text": "Download me",
+            "url": "/something.pdf",
         },
     },
 }

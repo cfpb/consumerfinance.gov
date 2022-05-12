@@ -9,12 +9,12 @@ from v1.tests.wagtail_pages.helpers import save_page
 class TestCreateCareersPages(TestCase):
     def setUp(self):
         self.slugs = (
-            'about-us',
-            'careers',
-            'working-at-cfpb',
-            'application-process',
-            'students-and-graduates',
-            'current-openings',
+            "about-us",
+            "careers",
+            "working-at-cfpb",
+            "application-process",
+            "students-and-graduates",
+            "current-openings",
         )
 
     def test_assert_careers_pages_do_not_exist_before_script(self):
@@ -34,11 +34,11 @@ class TestCreateCareersPages(TestCase):
     def test_assert_script_keeps_page_content_if_pages_already_exist(self):
         create_careers_pages.run()
 
-        careers = Page.objects.get(slug='careers')
-        careers.title = 'test title'
+        careers = Page.objects.get(slug="careers")
+        careers.title = "test title"
         save_page(careers)
 
         create_careers_pages.run()
 
-        careers_after_rerun = Page.objects.get(slug='careers')
-        self.assertEqual(careers_after_rerun.title, 'test title')
+        careers_after_rerun = Page.objects.get(slug="careers")
+        self.assertEqual(careers_after_rerun.title, "test title")

@@ -1,5 +1,3 @@
-import { assign } from '../../../../../../apps/youth-employment-success/js/util';
-
 const defaultProps = {
   maxElements: 3,
   minElements: 1
@@ -13,7 +11,7 @@ const defaultProps = {
  * @returns {Object} The public methods of this data structure
  */
 function selectedItems( props ) {
-  const finalProps = assign( {}, defaultProps, props );
+  const finalProps = { ...defaultProps, ...props };
   let items = [];
 
   function isMaxItemsSelected() {

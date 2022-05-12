@@ -49,98 +49,112 @@
 */
 
 .m-global-eyebrow {
-    font-size: unit( 12px / @base-font-size-px, em);
+  font-size: unit( 12px / @base-font-size-px, em );
 
-    &_actions {
-        text-align: right;
+  &_actions {
+    text-align: right;
+  }
+
+  &_languages {
+    display: inline;
+
+    .m-list_item:not( :last-child ) {
+      margin-right: unit( 7px / 12px, em );
+      margin-bottom: 0;
+
+      .respond-to-min( @bp-lg-min, {
+        margin-right: unit( 10px / 12px, em );
+      } );
     }
 
-    &_languages {
-        display: inline;
+    a {
+      .u-link__no-border();
+    }
+  }
 
-        .m-list_item:not(:last-child) {
-            margin-right: unit( 7px / 12px, em );
-            margin-bottom: 0;
+  &_phone {
+    padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+  }
 
-            .respond-to-min( @bp-lg-min, {
-                margin-right: unit( 10px / 12px, em );
-            } );
-        }
+  &__horizontal {
+    width: 100%;
+    display: inline-block;
+    padding-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+    padding-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+    background: @gray-5;
+    border-bottom: 1px solid @gray-40;
 
-        a {
-            .u-link__no-border();
-        }
+    /* This is to allow vertical overlap with the languages */
+    .a-tagline {
+      float: left;
     }
 
-    &_phone {
-        padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    .m-global-eyebrow_languages {
+      text-align: right;
     }
 
-    &__horizontal {
-        padding-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
-        padding-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
-        background: @gray-5;
-        border-bottom: 1px solid @gray-40;
+    // Tablet/mobile sizes.
+    .respond-to-max( @bp-sm-max, {
+      .m-global-eyebrow_actions {
+        display: none;
+      }
+      /* Prevent spacing issues since the languages aren't displayed */
+      .a-tagline {
+        float: none;
+      }
+    } );
+  }
 
-        .a-tagline {
-            float: left;
-        }
+  &__list {
+    padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+    padding-left: unit( @grid_gutter-width / @base-font-size-px, rem );
+    padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+    padding-bottom: unit( @grid_gutter-width / @base-font-size-px, rem );
 
-        .m-global-eyebrow_languages {
-            text-align: right;
-        }
+    .a-tagline {
+      display: none;
     }
 
-    &__list {
+    .m-global-eyebrow_actions {
+      padding: 0;
+      border: 0;
+      margin: 0;
+
+      text-align: left;
+    }
+
+    .m-global-eyebrow_phone,
+    .m-global-eyebrow_languages {
+      display: block;
+      padding-left: 0;
+    }
+
+    .m-global-eyebrow_phone {
+      border-top: 1px solid @gray-40;
+      padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+
+      // Apply padding to the phone number to increase the touch area.
+      a {
         padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-        padding-left: unit( @grid_gutter-width / @base-font-size-px, rem );
-        padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, rem );
-
-        .a-tagline {
-            line-height: unit( 18px / @base-font-size-px, rem );
-        }
-
-        .m-global-eyebrow_actions {
-            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-            border-top: 1px solid @gray-40;
-            margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-
-            text-align: left;
-        }
-
-        .m-global-eyebrow_phone,
-        .m-global-eyebrow_languages {
-            display: block;
-            padding-left: 0;
-        }
-
-        .m-global-eyebrow_phone {
-          border-top: 1px solid @gray-40;
-          padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-
-          // Apply padding to the phone number to increase the touch area.
-          a {
-            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-            padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-          }
-        }
-
-        .m-global-eyebrow_languages {
-          margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-
-          .m-list_item {
-            // Apply padding to the language links to increase their touch area.
-            a {
-              display: block;
-              text-align: center;
-              min-width: 48px;
-              padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-              padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-            }
-          }
-        }
+        padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+      }
     }
+
+    .m-global-eyebrow_languages {
+      margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+
+      .m-list_item {
+        // Apply padding to the language links to increase their touch area.
+        a {
+          display: block;
+          text-align: center;
+          min-width: 48px;
+          padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+          padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+        }
+      }
+    }
+  }
 }
 
 /* topdoc

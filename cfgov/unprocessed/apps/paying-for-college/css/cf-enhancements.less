@@ -59,14 +59,12 @@ a.btn__full-small.btn__link {
    ========================================================================== */
 
 .form-label {
-  font: @webfont-medium;
   font-size: 1.125em;
 }
 
 .form-label_text-wrapper {
   display: block;
-  margin-bottom: unit(5px / @base-font-size-px, em);
-  font: @webfont-medium;
+  margin-bottom: unit( 5px / @base-font-size-px, em );
   font-size: 1.125em;
 }
 
@@ -163,11 +161,10 @@ a.btn__full-small.btn__link {
     margin-right: @char-icon-spacing;
     position: absolute;
     left: 0;
-    top: unit(@base-line-height - @char-icon-size, em);
+    top: unit( @base-line-height - @char-icon-size, em );
     background: @green-20;
     color: @black;
-    font: @webfont-medium;
-    font-size: unit(18px / @base-font-size-px, em);
+    font-size: unit( 18px / @base-font-size-px, em );
     line-height: @char-icon-size;
     text-align: center;
     text-indent: 0;
@@ -196,7 +193,7 @@ a.btn__full-small.btn__link {
   }
 
   & > li:before {
-    content: counter(steps);
+    content: counter( steps );
   }
 }
 
@@ -205,8 +202,8 @@ a.btn__full-small.btn__link {
    ========================================================================== */
 
 .column-well {
-  padding-top: unit(25px / @base-font-size-px, em);
-  padding-bottom: unit(10px / @base-font-size-px, em);
+  padding-top: unit( 25px / @base-font-size-px, em );
+  padding-bottom: unit( 10px / @base-font-size-px, em );
   position: relative;
 
   .respond-to-min(@bp-sm-min, {
@@ -220,7 +217,7 @@ a.btn__full-small.btn__link {
     height: 9999px;
     position: absolute;
     top: 0;
-    left: unit(-(@grid_gutter-width / @base-font-size-px) / 2, em);
+    left: unit( -( @grid_gutter-width / @base-font-size-px ) / 2, em );
     z-index: 0;
     background-color: @gray-5;
     content: '';

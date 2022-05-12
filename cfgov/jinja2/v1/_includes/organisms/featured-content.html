@@ -26,10 +26,12 @@
 
    value.video:     (Optional) A VideoPlayer organism.
 
+   value.layout_left (Optional) If True, Use the image-on-the-left layout.
+
    ========================================================================== #}
 
 <section class="o-featured-content-module
-                o-featured-content-module__center">
+                {{ 'o-featured-content-module__left' if value.layout_left }}">
     <div class="o-featured-content-module_text">
         <h2 class="h3">{{ value.heading }}</h2>
 

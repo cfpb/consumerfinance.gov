@@ -1,10 +1,8 @@
-import { assign } from '../../../../../../apps/youth-employment-success/js/util';
-
 function checklistMap( data ) {
   const lookup = data;
 
   function checklist() {
-    return assign( {}, lookup );
+    return { ...lookup };
   }
 
   function filterKeysBy( predicate ) {

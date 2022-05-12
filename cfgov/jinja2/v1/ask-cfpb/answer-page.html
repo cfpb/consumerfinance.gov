@@ -76,6 +76,17 @@
                 </button>
             </div>
 
+            {% if page.related_resource and page.related_resource.trans_text(page.language) | striptags %}
+            <div class="block next-steps">
+                <div class="o-well">
+                    <h2>
+                        {{ page.related_resource.trans_title(page.language) | safe }}
+                    </h2>
+                    {{ page.related_resource.trans_text(page.language) | safe }}
+                </div>
+            </div>
+            {% endif %}
+
             <div class="block related-questions">
                 <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
                 {% if related_questions %}
@@ -106,10 +117,6 @@
                     {{ ask_search.render( language=page.language ) }}
                 </div>
             </div>
-            {# This brings in the feedback module #}
-            {% for block in page.user_feedback %}
-                {{- form_block.render(block, 'user_feedback', loop.index0) -}}
-            {% endfor %}
         </div>
 
     </div>

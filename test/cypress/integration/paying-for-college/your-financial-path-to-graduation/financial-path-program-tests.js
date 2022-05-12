@@ -4,7 +4,6 @@ const page = new PfcFinancialPathToGraduation();
 
 describe( 'Your Financial Path to Graduation (program-level functionality)', () => {
   before( () => {
-    cy.intercept( '/paying-for-college2/understanding-your-financial-aid-offer/api/constants/', { fixture: 'constants' } ).as( 'constants' );
     cy.visit( '/paying-for-college/your-financial-path-to-graduation/' );
   } );
 
@@ -21,10 +20,10 @@ describe( 'Your Financial Path to Graduation (program-level functionality)', () 
     page.clickLeftNav( 'federal-loans' );
     page.setText( 'loans__directSub', '999999' );
     cy.get( '#loans__directSub' ).blur();
-    cy.get( '#loans__directSub' ).should( 'have.value', '$1,000' );
+    cy.get( '#loans__directSub' ).should( 'have.value', '$3,500' );
     page.setText( 'loans__directUnsub', '999999' );
     cy.get( '#loans__directUnsub' ).blur();
-    cy.get( '#loans__directUnsub' ).should( 'have.value', '$4,500' );
+    cy.get( '#loans__directUnsub' ).should( 'have.value', '$5,500' );
   } );
 
   it( 'should change limits when the user changes their program progress', () => {
@@ -33,20 +32,20 @@ describe( 'Your Financial Path to Graduation (program-level functionality)', () 
     page.clickLeftNav( 'federal-loans' );
     page.setText( 'loans__directSub', '999999' );
     cy.get( '#loans__directSub' ).blur();
-    cy.get( '#loans__directSub' ).should( 'have.value', '$2,000' );
+    cy.get( '#loans__directSub' ).should( 'have.value', '$4,500' );
     page.setText( 'loans__directUnsub', '999999' );
     cy.get( '#loans__directUnsub' ).blur();
-    cy.get( '#loans__directUnsub' ).should( 'have.value', '$5,500' );
+    cy.get( '#loans__directUnsub' ).should( 'have.value', '$6,500' );
 
     page.clickLeftNav( 'school-info' );
     page.selectProgram( 'years-spent', 'a' );
     page.clickLeftNav( 'federal-loans' );
     page.setText( 'loans__directSub', '999999' );
     cy.get( '#loans__directSub' ).blur();
-    cy.get( '#loans__directSub' ).should( 'have.value', '$3,000' );
+    cy.get( '#loans__directSub' ).should( 'have.value', '$5,500' );
     page.setText( 'loans__directUnsub', '999999' );
     cy.get( '#loans__directUnsub' ).blur();
-    cy.get( '#loans__directUnsub' ).should( 'have.value', '$6,500' );
+    cy.get( '#loans__directUnsub' ).should( 'have.value', '$7,500' );
   } );
 
   it( 'should display associates content for associates students', () => {

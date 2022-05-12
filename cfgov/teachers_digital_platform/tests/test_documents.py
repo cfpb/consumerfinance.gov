@@ -10,7 +10,7 @@ from teachers_digital_platform.models import ActivityIndexPage, ActivityPage
 
 class TeachersDigitalPlatformDocumentTest(TestCase):
 
-    fixtures = ['tdp_initial_data']
+    fixtures = ["tdp_initial_data"]
 
     def setUp(self):
         self.site = Site.objects.get(is_default_site=True)
@@ -61,46 +61,42 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
         self.activity_page.save()
         self.doc = ActivityPageDocument()
         self.text_fields = [
-            'big_idea',
-            'essential_questions',
-            'objectives',
-            'related_text',
-            'text',
-            'title',
-            'what_students_will_do',
-            'id',
+            "big_idea",
+            "essential_questions",
+            "objectives",
+            "related_text",
+            "text",
+            "title",
+            "what_students_will_do",
+            "id",
         ]
-        self.date_fields = ['date']
+        self.date_fields = ["date"]
         self.keyword_fields = [
-            'activity_duration',
-            'activity_type',
-            'age_range',
-            'blooms_taxonomy_level',
-            'building_block',
-            'council_for_economic_education',
-            'grade_level',
-            'jump_start_coalition',
-            'school_subject',
-            'student_characteristics',
-            'teaching_strategy',
-            'topic',
+            "activity_duration",
+            "activity_type",
+            "age_range",
+            "blooms_taxonomy_level",
+            "building_block",
+            "council_for_economic_education",
+            "grade_level",
+            "jump_start_coalition",
+            "school_subject",
+            "student_characteristics",
+            "teaching_strategy",
+            "topic",
         ]
         self.doc = ActivityPageDocument()
 
     def test_prepare(self):
         prepared_data = self.doc.prepare(self.activity_page)
-        self.assertEqual(
-            prepared_data.get('text'),
-            self.activity_page.summary
-        )
-        for field in ['title', 'date']:
+        self.assertEqual(prepared_data.get("text"), self.activity_page.summary)
+        for field in ["title", "date"]:
             self.assertEqual(
-                prepared_data.get(field),
-                getattr(self.activity_page, field)
+                prepared_data.get(field), getattr(self.activity_page, field)
             )
         self.assertEqual(
-            prepared_data.get('big_idea'),
-            strip_html(self.activity_page.big_idea)
+            prepared_data.get("big_idea"),
+            strip_html(self.activity_page.big_idea),
         )
 
     def test_model_class(self):
@@ -109,6 +105,5 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
     def test_get_queryset(self):
         qs = ActivityPageDocument().get_queryset()
         self.assertEqual(
-            qs.count(),
-            ActivityPage.objects.filter(live=True).count()
+            qs.count(), ActivityPage.objects.filter(live=True).count()
         )

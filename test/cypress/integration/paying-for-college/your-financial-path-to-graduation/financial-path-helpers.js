@@ -9,9 +9,6 @@ export class PfcFinancialPathToGraduation {
   }
 
   enter( name ) {
-    // Intercept calls to the schools API so results are immediately returned.
-    cy.intercept( '/paying-for-college2/understanding-your-financial-aid-offer/api/search-schools.json?q=Harvard%20University', { fixture: 'search-schools' } ).as( 'searchSchools' );
-
     /* The following pastes the `name` value into the input and manually fires
        the keyup event. This is used so that the search-schools API is only
        called once, instead of each time a key is typed in. This prevents
@@ -25,11 +22,8 @@ export class PfcFinancialPathToGraduation {
   }
 
   clickSearchResult( name ) {
-    // Intercept calls to the schools API so results are immediately returned.
-    cy.intercept( '/paying-for-college2/understanding-your-financial-aid-offer/api/school/166027/', { fixture: 'harvard-university' } ).as( 'harvardUniversity' );
 
     cy.contains( '#search-results button', name ).click();
-    cy.wait( '@harvardUniversity' );
     cy.get( '#search-results' ).should( 'not.be.visible' );
   }
 

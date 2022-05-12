@@ -8,22 +8,13 @@ We have included Cypress as a dependency of this project. The only installation 
 
 ## Running Cypress tests
 
-### Docker
-
-We support a headless Docker container to execute our Cypress tests. The test files are located in the `test/cypress/integration/` directory.
-
-If you have not previously set up a local Docker network, you will need to stop any running consumerfinance.gov Docker containers, run `docker network create cfgov`, and start the containers again before you run these commands.
-
-* `docker-compose -f docker-compose.e2e.yml run admin-tests` runs a single Docker container (the Wagtail admin test suite, in this case)
-* `docker-compose -f docker-compose.e2e.yml up` runs all Docker containers
-
 ### Cypress app
 
-To run the desktop Cypress app execute `yarn run cypress open` from the command line. From the app, you can select the tests you want to run and the browser you want to run them in.
+To run the desktop Cypress app execute `yarn cypress open` from the command line. From the app, you can select the tests you want to run and the browser you want to run them in.
 
 ### Command line
 
-You can run functional tests from the command line with `yarn run cypress run`. That will run all tests in the `test/cypress/integration/` directory with the default test configuration: headless, in Cypress's default Electron browser, and against `localhost:8000`. You might want to modify the test run with some common arguments:
+You can run functional tests from the command line with `yarn cypress run`. That will run all tests in the `test/cypress/integration/` directory with the default test configuration: headless, in Cypress's default Electron browser, and against `localhost:8000`. You might want to modify the test run with some common arguments:
 
 * `--spec test/cypress/integration/{path/to/test.js}` runs a single test suite
 * `--browser chrome` runs the tests in Chrome, which is what we use to run tests in our continuous integration pipeline
@@ -83,3 +74,34 @@ describe('Consumer Tools', () => {
 ```
 
 Overall it lets our tests show what is intended to be happening on a page without showing the more technical side of how we reference and interact with elements.
+
+## Creating test data
+
+Wagtail pages can be created programmatically by adding function calls to cfgov/v1/tests/wagtail_pages/create_test_data.py
+To run this file locally, run the following commands on a bash shell within
+the python container from the root folder:
+
+`./cfgov/manage.py shell`
+`from v1.tests.wagtail_pages import create_test_data`
+
+Currently supported page types:
+- blog_page
+- browse_filterable_page
+- browse_page
+- landing_page
+- learn_page
+- sublanding_filterable_page
+- sublanding_page
+
+To import "create a page" functions, import from:
+- v1.tests.wagtail_pages.helpers
+
+"Create a page" functions return a path to the created page or None if no page was created
+
+When adding tags or categories, they should be passed as a set:
+`MY_TAGS = {"a tag", "another tag"}`
+
+The first three arguments of any "create a page" function are title, slug, and parent path (optional, defaults to root)
+
+Do not include new functions that only add test data in a pull request. When you are done running the test data creation
+script, remove your created functions and only leave the documentation.

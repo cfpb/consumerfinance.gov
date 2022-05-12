@@ -5,17 +5,25 @@ from decimal import Decimal
 from unittest import mock
 
 import django
-from django.http import HttpRequest
 from django.urls import reverse
 
 from model_bakery import baker
 
 from paying_for_college.models import (
-    ConstantCap, ConstantRate, Program, School
+    ConstantCap,
+    ConstantRate,
+    Program,
+    School,
 )
 from paying_for_college.views import (
-    EXPENSE_FILE, Feedback, format_constants, get_json_file, get_program,
-    get_program_length, get_school, validate_oid, validate_pid
+    EXPENSE_FILE,
+    format_constants,
+    get_json_file,
+    get_program,
+    get_program_length,
+    get_school,
+    validate_oid,
+    validate_pid,
 )
 
 
@@ -45,21 +53,6 @@ class ValidatorTests(unittest.TestCase):
 
 
 class TestViews(django.test.TestCase):
-
-    landing_page_views = [
-        "pfc-landing",
-        "pfc-repay",
-        "pfc-choose",
-        "pfc-manage",
-    ]
-    POST = HttpRequest()
-    POST.POST = {"school_program": "999999", "ba": True, "is_valid": True}
-    feedback_post_data = {
-        "csrfmiddlewaretoken": "abc",
-        "message": "test",
-        "referrer": "disclosure/page",
-    }
-
     def test_get_json_file(self):
         test_json = get_json_file(EXPENSE_FILE)
         test_data = json.loads(test_json)
@@ -82,27 +75,6 @@ class TestViews(django.test.TestCase):
         self.assertEqual(test4, 4)
         bad_school_test = get_program_length(program="", school=bad_school)
         self.assertIs(bad_school_test, None)
-
-    def test_feedback(self):
-        response = self.client.get(
-            reverse("paying_for_college:disclosures:pfc-feedback")
-        )
-        self.assertIn('form', response.context_data)
-        self.assertIn('url_root', response.context_data)
-
-    def test_feedback_post_creates_feedback(self):
-        self.assertFalse(Feedback.objects.exists())
-        self.client.post(
-            reverse("paying_for_college:disclosures:pfc-feedback"),
-            data=self.feedback_post_data,
-        )
-        self.assertTrue(Feedback.objects.exists())
-
-    def test_feedback_post_invalid(self):
-        response = self.client.post(
-            reverse("paying_for_college:disclosures:pfc-feedback")
-        )
-        self.assertTrue(response.status_code == 400)
 
     def test_technote(self):
         response = self.client.get(
@@ -138,31 +110,27 @@ class SchoolProgramTest(django.test.TestCase):
 
 
 class ConstantsTest(django.test.TestCase):
-
     def setUp(self):
         self.dl_origination_fee = baker.make(
             ConstantRate,
             name="DL origination fee",
             slug="DLOriginationFee",
-            value=Decimal('0.01057')
+            value=Decimal("0.01057"),
         )
         self.perkins_rate = baker.make(
             ConstantRate,
             name="Perkins rate",
             slug="perkinsRate",
-            value=Decimal('0.05000')
+            value=Decimal("0.05000"),
         )
         self.year_value = baker.make(
             ConstantCap,
             name="Constants year",
             slug="constantsYear",
-            value=2020
+            value=2020,
         )
         self.pell_cap = baker.make(
-            ConstantCap,
-            name="Pell cap",
-            slug="pellCap",
-            value=9293
+            ConstantCap, name="Pell cap", slug="pellCap", value=9293
         )
 
     def test_format_constants(self):

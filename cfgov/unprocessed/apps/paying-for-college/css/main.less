@@ -17,29 +17,14 @@
 // Import the brand color palette.
 @import (less) "brand-palette.less";
 
-// Uncomment to import Avenir font on CFPB projects.
-// If this project is on a non-CFPB domain,
-// use this file as a template for adding web fonts.
-@import (less) 'licensed-fonts.css';
-
 // Override the Design System theme variables with colors from the brand color palette.
 @import (less) "cf-theme-overrides.less";
 
 // Import the Design System enhancements
 @import (less) "cf-enhancements.less";
 
-// import CFPB nemo theme header and footer styles
-.nemo {
-  @import (less) "../../../css/nemo.less";
-  // and a shim to override some things
-  @import (less) "../../../css/nemo-shim.less";
-}
-
 // Import the disclosures.less file
 @import (less) "disclosures.less";
-
-// Import the repay.less file
-@import (less) "repay.less";
 
 // Import the college-costs.less file
 @import (less) "college-costs/vars.less";
@@ -55,5 +40,5 @@
 @import (less) "guides.less";
 
 .respond-to-print( {
-    @import (less) "print.css";
+  @import (less) "print.css";
 } );

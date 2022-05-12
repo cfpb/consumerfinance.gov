@@ -1,98 +1,98 @@
 
 .o-email-popup {
-    // !important needed to override the default o-email-signup width
-    width: 270px !important;
-    position: fixed;
-    bottom: 1em;
-    right: 1em;
-    z-index: 2000;
-    background-color: white;
-    border: 1px solid @gray-20;
-    visibility: hidden;
-    transition: visibility .4s ease-in;
+  // !important needed to override the default o-email-signup width
+  width: 270px !important;
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  z-index: 2000;
+  background-color: white;
+  border: 1px solid @gray-20;
+  visibility: hidden;
+  transition: visibility .4s ease-in;
 
-    .respond-to-max( @bp-xs-max, {
-        margin-left: -135px;
-        left: 50%;
+  .respond-to-max( @bp-xs-max, {
+    margin-left: -135px;
+    left: 50%;
 
-        button {
-            // !important needed to override the default o-email-signup margin
+    button {
+      // !important needed to override the default o-email-signup margin
             margin-right: 0 !important;
-        }
-    } );
+    }
+  } );
 
-    .respond-to-min( @bp-sm-min, {
-        // !important needed to override the default o-email-signup width
+  .respond-to-min( @bp-sm-min, {
+    // !important needed to override the default o-email-signup width
         width: 555px !important;
-    } );
+  } );
 
   &__visible {
-      visibility: visible;
+    visibility: visible;
   }
 
   &_header {
-      margin: 0 unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-      height: 40px;
+    margin: 0 unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+    height: 40px;
 
-      .respond-to-min( @bp-sm-min, {
-          margin: 0
-                  unit( (@grid_gutter-width / 2) / @base-font-size-px, em)
-                  0
-                  unit(@grid_gutter-width / @base-font-size-px, em);
-          height: 26px;
-      } );
+    .respond-to-min( @bp-sm-min, {
+      margin: 0
+      unit( (@grid_gutter-width / 2) / @base-font-size-px, em)
+      0
+      unit(@grid_gutter-width / @base-font-size-px, em);
+      height: 26px;
+    } );
 
-      .close {
-          position: absolute;
-          top: unit( (@grid_gutter-width / 3) / @base-font-size-px, em);
-          right: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-          cursor: pointer;
-      }
+    .close {
+      position: absolute;
+      top: unit( (@grid_gutter-width / 3) / @base-font-size-px, em );
+      right: unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+      cursor: pointer;
+    }
   }
 
   &_body {
-      margin: 0
-              unit( (@grid_gutter-width / 2) / @base-font-size-px, em)
-              unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+    margin: 0
+              unit( (@grid_gutter-width / 2) / @base-font-size-px, em )
+              unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
 
     h2 {
-        .h4();
-        margin-bottom:  unit( (@grid_gutter-width / 2) / @font-size, em);
+      .h4();
+      margin-bottom:  unit( (@grid_gutter-width / 2) / @font-size, em );
     }
 
     .respond-to-max( @bp-xs-max, {
-        // This is needed because the image can vary and so is specified in the
-        // template. "!important" is needed to override the element's style tag.
+      // This is needed because the image can vary and so is specified in the
+        // template. "!important" is needed to override the <style> tag rule.
         background-image: none !important;
     } );
 
     .respond-to-min( @bp-sm-min, {
-        margin: 0
-                unit( @grid_gutter-width  / @base-font-size-px, em)
-                unit( @grid_gutter-width  / @base-font-size-px, em);
+      margin: 0
+      unit( @grid_gutter-width  / @base-font-size-px, em)
+      unit( @grid_gutter-width  / @base-font-size-px, em);
 
-        padding-right: 155px;
-        background-repeat: no-repeat;
-        background-position: right 20px;
-        background-size: 130px;
+      padding-right: 155px;
+      background-repeat: no-repeat;
+      background-position: right 20px;
+      background-size: 130px;
 
-        h2 {
-            .h3();
-            margin-bottom: unit( (@grid_gutter-width / 3) / @font-size, em);
-        }
+      h2 {
+        .h3();
+        margin-bottom: unit( (@grid_gutter-width / 3) / @font-size, em);
+      }
     } );
   }
 
   &_footer .m-notification {
-      border: none;
-      padding: unit( (@grid_gutter-width / 3) / @base-font-size-px, em)
-               unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-      // !important needed to override the default o-email-signup margin
-      margin-bottom: 0 !important;
+    border: none;
+    padding: unit( (@grid_gutter-width / 3) / @base-font-size-px, em )
+               unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+    // !important needed to override the default o-email-signup margin
+    margin-bottom: 0 !important;
 
-      .respond-to-min( @bp-sm-min, {
-          padding: unit( (@grid_gutter-width / 3) / @base-font-size-px, em)
-                   unit( @grid_gutter-width / @base-font-size-px, em);
-      } );
+    .respond-to-min( @bp-sm-min, {
+      padding: unit( (@grid_gutter-width / 3) / @base-font-size-px, em)
+      unit( @grid_gutter-width / @base-font-size-px, em);
+    } );
   }
 }

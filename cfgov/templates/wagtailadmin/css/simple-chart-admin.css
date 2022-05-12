@@ -1,0 +1,41 @@
+@media ( min-width: 970px ) {
+  .struct-block.simple-chart-block {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -1.5em;
+  }
+
+  .struct-block.simple-chart-block > .field {
+    min-width: calc( 50% - 1.5em );
+    margin-right: 1.5em;
+  }
+
+  .struct-block.simple-chart-block > .field + .field {
+    padding-top: 0;
+    padding-bottom: 0.5em;
+  }
+
+  .struct-block.simple-chart-block > .field > .widget-checkbox_input > .field-content {
+    padding-top: 0.5em;
+  }
+  
+  .struct-block.simple-chart-block > .field[data-contentpath="data_series"] {
+    min-width: calc( 100% - 1.5em );
+  }
+
+  .struct-block.simple-chart-block > .field[data-contentpath="filters"] {
+    min-width: calc( 100% - 1.5em );
+  }
+
+  .struct-block.simple-chart-block > .field[data-contentpath="style_overrides"] {
+    min-width: calc( 100% - 1.5em );
+  }
+
+  .struct-block.simple-chart-block > .field[data-contentpath="download_file"] {
+    margin-left: 0;
+  }
+
+  .struct-block.simple-chart-block > .field[data-contentpath="show_all_series_by_default"] {
+    min-width: calc( 100% - 1.5em );
+  }
+}

@@ -8,9 +8,8 @@
 
 set -e
 
-refresh_dump_name=$1
-
-USAGE=$(cat << 'EOF'
+usage() {
+    cat << EOF
 Please download a recent database dump before running this script:
 
   ./refresh-data.sh production_django.sql.gz
@@ -20,8 +19,14 @@ download it for you:
 
   export CFGOV_PROD_DB_LOCATION=https://example.com/production_django.sql.gz
   ./refresh-data.sh
+
+Additional options:
+
+      --noindex  Do not update search indexes after refreshing
+
 EOF
-)
+    exit 1;
+}
 
 download_data() {
     echo 'Downloading fresh production Django database dump...'
@@ -56,20 +61,44 @@ refresh_data() {
     ./cfgov/manage.py runscript initial_data
 }
 
-if [[ -z "$refresh_dump_name" ]]; then
-    if [[ -z "$CFGOV_PROD_DB_LOCATION" ]]; then
-        printf "%s\n\n" "$USAGE"
-        exit 1
-    fi
+update_index() {
+    echo 'Updating search indexes'
+    ./cfgov/manage.py search_index --rebuild -f
+}
 
-    refresh_dump_name='production_django.sql.gz'
-    download_data
-else
-    if [[ $refresh_dump_name != *.sql.gz ]]; then
-        echo "Input dump '$refresh_dump_name' expected to end with .sql.gz."
-        exit 2
-    fi
-fi
+get_data() {
+    if [[ -z "$refresh_dump_name" ]]; then
+        if [[ -z "$CFGOV_PROD_DB_LOCATION" ]]; then
+            usage
+        fi
 
+        refresh_dump_name='production_django.sql.gz'
+        download_data
+    else
+        if [[ $refresh_dump_name != *.sql.gz ]]; then
+            echo "Input dump '$refresh_dump_name' expected to end with .sql.gz."
+            exit 2
+        fi
+    fi
+}
+
+noindex=false
+for arg in "$@"; do
+    shift
+    case "$arg" in
+        "--noindex")
+            noindex=1
+            ;;
+        *)
+            refresh_dump_name=$arg
+            ;;
+    esac
+done
+
+get_data
 check_data
 refresh_data
+
+if [[ $noindex -ne 1 ]]; then
+    update_index
+fi

@@ -9,17 +9,14 @@ from modelcluster.models import ClusterableModel
 
 class ApplicantType(models.Model):
     applicant_type = models.CharField(max_length=255)
-    display_title = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True)
+    display_title = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField()
 
     def __str__(self):
         return self.display_title or self.applicant_type
 
     class Meta:
-        ordering = ['applicant_type']
+        ordering = ["applicant_type"]
 
     def __lt__(self, other):
         return self.applicant_type < other.applicant_type
@@ -37,7 +34,7 @@ class Grade(models.Model):
         return self.grade
 
     class Meta:
-        ordering = ['grade']
+        ordering = ["grade"]
 
     def __lt__(self, other):
         return self.grade < other.grade
@@ -54,7 +51,7 @@ class JobCategory(models.Model):
         return self.job_category
 
     class Meta:
-        ordering = ['job_category']
+        ordering = ["job_category"]
 
 
 class ServiceType(models.Model):
@@ -64,7 +61,7 @@ class ServiceType(models.Model):
         return self.service_type
 
     class Meta:
-        ordering = ['service_type']
+        ordering = ["service_type"]
 
 
 class JobLength(models.Model):
@@ -74,7 +71,7 @@ class JobLength(models.Model):
         return self.job_length
 
     class Meta:
-        ordering = ['job_length']
+        ordering = ["job_length"]
 
 
 class Region(ClusterableModel):
@@ -85,13 +82,13 @@ class Region(ClusterableModel):
         return self.name
 
     class Meta:
-        ordering = ('abbreviation',)
+        ordering = ("abbreviation",)
 
     panels = [
-        FieldPanel('name'),
-        FieldPanel('abbreviation'),
-        InlinePanel('states', label="States"),
-        InlinePanel('major_cities', label="Major cities"),
+        FieldPanel("name"),
+        FieldPanel("abbreviation"),
+        InlinePanel("states", label="States"),
+        InlinePanel("major_cities", label="Major cities"),
     ]
 
 
@@ -99,16 +96,14 @@ class State(models.Model):
     name = models.CharField(max_length=255)
     abbreviation = models.CharField(max_length=2, primary_key=True)
     region = ParentalKey(
-        Region,
-        related_name='states',
-        on_delete=models.PROTECT
+        Region, related_name="states", on_delete=models.PROTECT
     )
 
     def __str__(self):
         return self.name
 
     class Meta:
-        ordering = ('abbreviation',)
+        ordering = ("abbreviation",)
 
     def __lt__(self, other):
         return self.abbreviation < other.abbreviation
@@ -123,22 +118,20 @@ class AbstractCity(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ('state', 'name')
+        ordering = ("state", "name")
 
     def __str__(self):
-        return ', '.join((self.name, self.state_id))
+        return ", ".join((self.name, self.state_id))
 
 
 class Office(AbstractCity):
     abbreviation = models.CharField(max_length=2, primary_key=True)
 
     class Meta:
-        ordering = ('abbreviation',)
+        ordering = ("abbreviation",)
 
 
 class MajorCity(AbstractCity):
     region = ParentalKey(
-        Region,
-        on_delete=models.PROTECT,
-        related_name='major_cities'
+        Region, on_delete=models.PROTECT, related_name="major_cities"
     )

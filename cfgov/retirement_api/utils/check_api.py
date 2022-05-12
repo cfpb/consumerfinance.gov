@@ -31,7 +31,7 @@ def handler(signum, frame):
     raise TimeoutError("Request timed out")
 
 
-class Collector(object):
+class Collector:
     data = ""
     date = ("{0}".format(timestamp))[:16]
     domain = ""
@@ -70,7 +70,7 @@ def check_data(data):
 prefix = "http://"
 suffix = ".consumerfinance.gov/retirement"
 api_string = "retirement-api/estimator/{0}-{1}-{2}/{3}/".format(
-    dob.month, dob.day, dob.year, random.randrange(20000, 100000)
+    dob.month, dob.day, dob.year, random.randrange(20000, 100000)  # nosec
 )
 BASES = {
     "unitybox": "http://localhost:8080/retirement",

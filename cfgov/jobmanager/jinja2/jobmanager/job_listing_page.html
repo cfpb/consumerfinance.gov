@@ -20,6 +20,7 @@
         'grades': grades,
         'salary_min': page.salary_min,
         'salary_max': page.salary_max,
+        'salary_is_hourly': page.salary_is_hourly,
         'applicant_types': usajobs_links | map( attribute='applicant_type' )
     } %}
         {% include 'jobmanager/job_listing_details.html' %}
@@ -232,7 +233,7 @@
                 "@type": "QuantitativeValue",
                 "minValue": "{{ page.salary_min }}",
                 "maxValue": "{{ page.salary_max }}",
-                "unitText": "YEAR"
+                "unitText": "{{ "HOUR" if page.salary_is_hourly else "YEAR" }}"
             }
         },
         "description": "{{ page.description }}",

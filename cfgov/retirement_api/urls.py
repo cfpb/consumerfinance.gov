@@ -15,34 +15,30 @@ urlpatterns = [
     re_path(
         r"^before-you-claim/about/$",
         TranslatedTemplateView.as_view(
-            template_name="retirement_api/about.html",
-            language="en"
+            template_name="retirement_api/about.html", language="en"
         ),
-        name="retirement_about_en"
+        name="retirement_about_en",
     ),
     re_path(
         r"^before-you-claim/about/es/$",
         TranslatedTemplateView.as_view(
-            template_name="retirement_api/about.html",
-            language="es"
+            template_name="retirement_api/about.html", language="es"
         ),
-        name="retirement_about_es"
+        name="retirement_about_es",
     ),
     re_path(
         r"^before-you-claim/$",
         TranslatedTemplateView.as_view(
-            template_name="retirement_api/claiming.html",
-            language="en"
+            template_name="retirement_api/claiming.html", language="en"
         ),
-        name="claiming_en"
+        name="claiming_en",
     ),
     re_path(
         r"^before-you-claim/es/$",
         TranslatedTemplateView.as_view(
-            template_name="retirement_api/claiming-es.html",
-            language="es"
+            template_name="retirement_api/claiming-es.html", language="es"
         ),
-        name="claiming_es"
+        name="claiming_es",
     ),
     re_path(
         r"^retirement-api/estimator/(?P<dob>[^/]+)/(?P<income>\d+)/$",

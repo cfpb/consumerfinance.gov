@@ -11,10 +11,9 @@ BINPOST = "https://httpbin.org/post"
 BINGET = "https://httpbin.org/get"
 
 # test values
-OID = '9e0280139f3238cbc9702c7b0d62e5c238a835d0'
-ERRORS = 'INVALID: test notification via Python'
-REPORT = ('URL is {}\nOK is {}\nReason is {}\n'
-          'Status is {}\nTime sent is {}')
+OID = "9e0280139f3238cbc9702c7b0d62e5c238a835d0"
+ERRORS = "INVALID: test notification via Python"
+REPORT = "URL is {}\nOK is {}\nReason is {}\n" "Status is {}\nTime sent is {}"
 
 
 def send_test_notifications(url=None, oid=OID, errors=ERRORS):
@@ -30,18 +29,18 @@ def send_test_notifications(url=None, oid=OID, errors=ERRORS):
     """
     prod_endpoints = {
         # 'edmc': Contact.objects.get(name='EDMC').endpoint,
-        'bpi': Contact.objects.get(name='Bridgepoint Education').endpoint,
-        'su': Contact.objects.get(name='South University').endpoint,
-        'ai': Contact.objects.get(name='Art Institutes').endpoint,
+        "bpi": Contact.objects.get(name="Bridgepoint Education").endpoint,
+        "su": Contact.objects.get(name="South University").endpoint,
+        "ai": Contact.objects.get(name="Art Institutes").endpoint,
     }
     if not url:
         urls = list(prod_endpoints.values())
     else:
         urls = [url]
     payload = {
-        'oid': oid,
-        'time': f"{datetime.datetime.now().isoformat()}+00:00",  # noqa
-        'errors': errors
+        "oid": oid,
+        "time": f"{datetime.datetime.now().isoformat()}+00:00",  # noqa
+        "errors": errors,
     }
     msg = ""
     for _url in urls:
@@ -55,7 +54,7 @@ def send_test_notifications(url=None, oid=OID, errors=ERRORS):
                 resp.ok,
                 resp.reason,
                 resp.status_code,
-                payload['time'],
+                payload["time"],
             )
             msg += f"{report}\n"
             if resp.content:

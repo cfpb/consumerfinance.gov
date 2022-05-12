@@ -24,5 +24,6 @@ Disallow: /askcfpb/search/
 Disallow: /es/obtener-respuestas/buscar/
 Disallow: /es/obtener-respuestas/buscar-por-etiqueta/
 Disallow: /consumer-tools/educator-tools/youth-financial-education/curriculum-review/tool/*
+Disallow: /paying-for-college2/*
 
 sitemap: {{ request.build_absolute_uri( url( 'sitemap' ) ) }}

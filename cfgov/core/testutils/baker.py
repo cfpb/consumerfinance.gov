@@ -31,5 +31,5 @@ class ActualContentTypeBaker(baker.Baker):
         # content type.
         self.type_mapping[ContentType] = lambda: ContentType.objects.get(
             app_label=self.model._meta.app_label,
-            model=self.model._meta.model_name
+            model=self.model._meta.model_name,
         )

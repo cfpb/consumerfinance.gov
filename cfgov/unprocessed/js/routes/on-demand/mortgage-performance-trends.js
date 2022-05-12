@@ -11,10 +11,6 @@
    MP uses a custom API so point our charts to it instead. */
 window.CFPB_CHART_DATA_SOURCE_BASE = '/data-research/mortgages/api/v1/';
 
-// Polyfill Promise and Object.assign for IE11
-import 'core-js/features/promise';
-import 'core-js/features/object';
-
 import { Chart, Map } from '../../organisms/MortgagePerformanceTrends';
 
 const chart = new Chart( { container: 'mp-line-chart-container' } );

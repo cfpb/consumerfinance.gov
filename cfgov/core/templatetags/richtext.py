@@ -21,17 +21,14 @@ def richtext_isempty(value):
     nothing but whitespace will also be determined to be empty.
     """
 
-    blank_values = [None, '', '<p></p>']
+    blank_values = [None, "", "<p></p>"]
 
-    if hasattr(value, 'source'):
+    if hasattr(value, "source"):
         # This is a RichTextBlock
         return (
             value.source is None
-            or value.source.replace(' ', '') in blank_values
+            or value.source.replace(" ", "") in blank_values
         )
 
     # This is a RichTextField
-    return (
-        value is None
-        or value.replace(' ', '') in blank_values
-    )
+    return value is None or value.replace(" ", "") in blank_values

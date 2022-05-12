@@ -9,8 +9,7 @@ from django.test import TestCase, override_settings
 @override_settings(
     STATICFILES_DIRS=[
         os.path.join(
-            os.path.dirname(os.path.dirname(__file__)),
-            'staticfiles'
+            os.path.dirname(os.path.dirname(__file__)), "staticfiles"
         ),
     ]
 )
@@ -22,11 +21,11 @@ class MockStaticfilesFinderTests(TestCase):
         This test serves as a baseline to demonstrate the default behavior if
         Django has no staticfiles finders at all.
         """
-        self.assertFalse(finders.find('icons/test.svg'))
+        self.assertFalse(finders.find("icons/test.svg"))
 
     @override_settings(
         STATICFILES_FINDERS=[
-            'django.contrib.staticfiles.finders.FileSystemFinder',
+            "django.contrib.staticfiles.finders.FileSystemFinder",
         ]
     )
     def test_filesystem_finder_finds_test_file(self):
@@ -38,40 +37,37 @@ class MockStaticfilesFinderTests(TestCase):
 
         This test serves as a baseline to demonstrate default Django behavior.
         """
-        self.assertRegex(
-            finders.find('icons/test.svg'),
-            'icons/test.svg$'
-        )
+        self.assertRegex(finders.find("icons/test.svg"), "icons/test.svg$")
 
     @override_settings(
         STATICFILES_FINDERS=[
-            'core.testutils.mock_staticfiles.MockStaticfilesFinder',
+            "core.testutils.mock_staticfiles.MockStaticfilesFinder",
         ]
     )
     def test_mock_finder_no_setting_raises_improperlyconfigured(self):
         """MockStaticfilesFinder requires the presence of a certain setting."""
         del settings.MOCK_STATICFILES_PATTERNS
         with self.assertRaises(ImproperlyConfigured):
-            finders.find('icons/test.svg')
+            finders.find("icons/test.svg")
 
     @override_settings(
         STATICFILES_FINDERS=[
-            'core.testutils.mock_staticfiles.MockStaticfilesFinder',
+            "core.testutils.mock_staticfiles.MockStaticfilesFinder",
         ],
-        MOCK_STATICFILES_PATTERNS=('this', 'should', 'be', 'a', 'dict')
+        MOCK_STATICFILES_PATTERNS=("this", "should", "be", "a", "dict"),
     )
     def test_mock_finder_invalid_setting_raises_improperlyconfigured(self):
         """MockStaticfilesFinder needs its setting to be a dict."""
         with self.assertRaises(ImproperlyConfigured):
-            finders.find('icons/test.svg')
+            finders.find("icons/test.svg")
 
     @override_settings(
         STATICFILES_FINDERS=[
-            'core.testutils.mock_staticfiles.MockStaticfilesFinder',
+            "core.testutils.mock_staticfiles.MockStaticfilesFinder",
         ],
         MOCK_STATICFILES_PATTERNS={
-            'missing/*.svg': 'icons/test.svg',
-        }
+            "missing/*.svg": "icons/test.svg",
+        },
     )
     def test_mock_finder_only_test_file_not_found(self):
         """If only MockStaticfilesFinder is used, the file should not be found.
@@ -82,16 +78,16 @@ class MockStaticfilesFinderTests(TestCase):
         icons/test.svg that the mock finder is redirecting to, and we expect
         this call to fail.
         """
-        self.assertFalse(finders.find('missing/file.svg'))
+        self.assertFalse(finders.find("missing/file.svg"))
 
     @override_settings(
         STATICFILES_FINDERS=[
-            'django.contrib.staticfiles.finders.FileSystemFinder',
-            'core.testutils.mock_staticfiles.MockStaticfilesFinder',
+            "django.contrib.staticfiles.finders.FileSystemFinder",
+            "core.testutils.mock_staticfiles.MockStaticfilesFinder",
         ],
         MOCK_STATICFILES_PATTERNS={
-            'missing/*.svg': 'icons/test.svg',
-        }
+            "missing/*.svg": "icons/test.svg",
+        },
     )
     def test_mock_finder_falls_back_to_filesystem_finder(self):
         """If both finders are defined, the request should succeed.
@@ -101,19 +97,16 @@ class MockStaticfilesFinderTests(TestCase):
         icons/test.svg instead. Because we have a FileSystemFinder that can
         handle that redirected request, this call should succeed.
         """
-        self.assertRegex(
-            finders.find('missing/file.svg'),
-            'icons/test.svg$'
-        )
+        self.assertRegex(finders.find("missing/file.svg"), "icons/test.svg$")
 
     @override_settings(
         STATICFILES_FINDERS=[
-            'django.contrib.staticfiles.finders.FileSystemFinder',
-            'core.testutils.mock_staticfiles.MockStaticfilesFinder',
+            "django.contrib.staticfiles.finders.FileSystemFinder",
+            "core.testutils.mock_staticfiles.MockStaticfilesFinder",
         ],
         MOCK_STATICFILES_PATTERNS={
-            'missing/*.svg': 'icons/test.svg',
-        }
+            "missing/*.svg": "icons/test.svg",
+        },
     )
     def test_no_match_if_pattern_doesnt_match_input(self):
         """If a request is made that no finder can handle, it should fail.
@@ -121,4 +114,4 @@ class MockStaticfilesFinderTests(TestCase):
         Even if both finders are enabled, requests should fail if there are no
         finders that can locate the requested file.
         """
-        self.assertFalse(finders.find('does-not-exist'))
+        self.assertFalse(finders.find("does-not-exist"))

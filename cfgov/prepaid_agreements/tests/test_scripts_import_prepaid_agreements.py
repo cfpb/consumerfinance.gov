@@ -1,7 +1,8 @@
 import unittest
 
 from prepaid_agreements.scripts.import_prepaid_agreements_data import (
-    import_agreements_data, import_products_data
+    import_agreements_data,
+    import_products_data,
 )
 
 
@@ -15,7 +16,7 @@ class TestImports(unittest.TestCase):
                     "created_date": "2020-01-01 12:34:56",
                     "effective_date": "01/01/2020",
                     "path": "CFPB Bank1/Bank1 of CFPB/20200101",
-                    "product_id": "PRODUCT-1"
+                    "product_id": "PRODUCT-1",
                 },
                 {
                     "agreement_id": "IFL-2",
@@ -23,7 +24,7 @@ class TestImports(unittest.TestCase):
                     "created_date": "2020-02-02 12:34:56",
                     "effective_date": "02/02/2020",
                     "path": "CFPB Bank2/Bank2_of_CFPB/20200202",
-                    "product_id": "PRODUCT-2"
+                    "product_id": "PRODUCT-2",
                 },
                 {
                     "agreement_id": "IFL-3",
@@ -31,7 +32,7 @@ class TestImports(unittest.TestCase):
                     "created_date": "2020-03-03 12:34:56",
                     "effective_date": "03/03/2020",
                     "path": "CFPB Bank3/Bank3_of CFPB/20200303",
-                    "product_id": "PRODUCT-3"
+                    "product_id": "PRODUCT-3",
                 },
                 {
                     "agreement_id": "IFL-4",
@@ -39,7 +40,7 @@ class TestImports(unittest.TestCase):
                     "created_date": "2020-04-04 12:34:56",
                     "effective_date": "04/04/2020",
                     "path": "CFPB Bank4/Bank4 of CFPB/20200404",
-                    "product_id": "PRODUCT-4"
+                    "product_id": "PRODUCT-4",
                 },
                 {
                     "agreement_id": "IFL-5",
@@ -47,7 +48,7 @@ class TestImports(unittest.TestCase):
                     "created_date": "2020-05-05 12:34:56",
                     "effective_date": "05/05/2020",
                     "path": "CFPB Bank5/Bank5_of_CFPB/20200505",
-                    "product_id": "PRODUCT-5"
+                    "product_id": "PRODUCT-5",
                 },
                 {
                     "agreement_id": "IFL-6",
@@ -55,8 +56,8 @@ class TestImports(unittest.TestCase):
                     "created_date": "2020-06-06 12:34:56",
                     "effective_date": "06/06/2020",
                     "path": "CFPB Bank6/Bank6_of CFPB/20200606",
-                    "product_id": "PRODUCT-6"
-                }
+                    "product_id": "PRODUCT-6",
+                },
             ],
             "products": [
                 {
@@ -69,7 +70,7 @@ class TestImports(unittest.TestCase):
                     "program_manager": "CFPB",
                     "program_manager_exists": "Yes",
                     "status": "Active",
-                    "withdrawal_date": "01/01/2020"
+                    "withdrawal_date": "01/01/2020",
                 },
                 {
                     "issuer_id": "2",
@@ -81,7 +82,7 @@ class TestImports(unittest.TestCase):
                     "program_manager": "CFPB",
                     "program_manager_exists": "Yes",
                     "status": "Active",
-                    "withdrawal_date": "02/02/2020"
+                    "withdrawal_date": "02/02/2020",
                 },
                 {
                     "issuer_id": "3",
@@ -93,7 +94,7 @@ class TestImports(unittest.TestCase):
                     "program_manager": "CFPB",
                     "program_manager_exists": "Yes",
                     "status": "Active",
-                    "withdrawal_date": "03/03/2020"
+                    "withdrawal_date": "03/03/2020",
                 },
                 {
                     "issuer_id": "4",
@@ -105,7 +106,7 @@ class TestImports(unittest.TestCase):
                     "program_manager": "CFPB",
                     "program_manager_exists": "Yes",
                     "status": "Active",
-                    "withdrawal_date": "04/04/2020"
+                    "withdrawal_date": "04/04/2020",
                 },
                 {
                     "issuer_id": "5",
@@ -117,7 +118,7 @@ class TestImports(unittest.TestCase):
                     "program_manager": "CFPB",
                     "program_manager_exists": "Yes",
                     "status": "Active",
-                    "withdrawal_date": "05/05/2020"
+                    "withdrawal_date": "05/05/2020",
                 },
                 {
                     "issuer_id": "6",
@@ -129,12 +130,12 @@ class TestImports(unittest.TestCase):
                     "program_manager": "CFPB",
                     "program_manager_exists": "Yes",
                     "status": "Active",
-                    "withdrawal_date": "06/06/2020"
-                }
-            ]
+                    "withdrawal_date": "06/06/2020",
+                },
+            ],
         }
-        imported_products = import_products_data(data['products'])
-        self.assertEqual(imported_products, ['1', '2', '3', '4', '5', '6'])
+        imported_products = import_products_data(data["products"])
+        self.assertEqual(imported_products, ["1", "2", "3", "4", "5", "6"])
 
-        imported_agreements = import_agreements_data(data['agreements'])
+        imported_agreements = import_agreements_data(data["agreements"])
         self.assertEqual(imported_agreements, None)

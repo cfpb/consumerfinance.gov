@@ -1,0 +1,155 @@
+{%- set hero = {
+    "heading": "Estamos aquí para usted",
+    "body": "La Oficina para la Protección Financiera del Consumidor (CFPB, siglas en inglés), es una agencia gubernamental que se asegura de que bancos, prestamistas y otras compañías financieras le traten justamente.",
+    "image": {
+        "url": static( "apps/homepage/img/legacy-hero.jpg" ),
+        "height": 390,
+        "width": 1230,
+    },
+    "small_image": {
+        "url": static( "apps/homepage/img/legacy-hero-sm.jpg" ),
+        "height": 338,
+        "width": 600,
+    },
+    "background_color": "#FFFFFF",
+    "is_jumbo": true,
+    "is_white_text": true,
+} -%}
+
+{%- set features = {
+    "format": "50-50",
+    "info_units": [
+        {
+            "heading": {
+                "text": "Proteja sus finanzas del coronavirus",
+                "level": "h2",
+            },
+            "body": "El CFPB está comprometido a ofrecerle a los consumidores información actualizada para que protejan y manejen sus finanzas.",
+            "links": [
+                {
+                    "text": "Use nuestros recursos",
+                    "url": "/es/coronavirus/",
+                },
+            ],
+        },
+        {
+            "heading": {
+                "text": "Ayuda a propietarios e inquilinos",
+                "level": "h2",
+            },
+            "body": "¿Le preocupa no poder pagar su hipoteca o renta por culpa de la emergencia nacional del coronavirus?",
+            "links": [
+                {
+                    "text": "Visite la página de vivienda",
+                    "url": "/es/coronavirus/asistencia-hipotecas-y-viviendas/",
+                },
+            ],
+        },
+    ],
+} -%}
+
+{%- set info_units = {
+    "format": "33-33-33",
+    "info_units": [
+        {
+            "heading": {
+                "text": "Para consumidores",
+                "level": "h2",
+                "level_class": "h3",
+            },
+            "body": "Nuestras herramientas y recursos ayudan a los consumidores a tomar decisiones financieras informadas y crear habilidades con el dinero.",
+            "image": {
+                "upload": {
+                    "url": static( "apps/homepage/img/cfpb_empowering_consumers.png" ),
+                    "height": 300,
+                    "width": 300,
+                    "is_square": true,
+                },
+            },
+            "links": [
+                {
+                    "text": "Herramientas para el consumidor",
+                    "url": "/es/herramientas-del-consumidor/",
+                },
+            ],
+        },
+        {
+            "heading": {
+                "text": "Aprendiendo de data e investigación",
+                "level": "h2",
+                "level_class": "h3",
+            },
+            "body": "Publicamos los resultados de investigaciones e información que recolectamos sobre el mercado financiero.",
+            "image": {
+                "upload": {
+                    "url": static( "apps/homepage/img/cfpb_learning_through_data_and_research.png" ),
+                    "height": 300,
+                    "width": 300,
+                    "is_square": true,
+                },
+            },
+            "links": [
+            {
+                "text": "Datos e investigación (Inglés)",
+                "url": "/data-research/",
+            },
+            {
+                "text": "Resultados de la encuesta (Inglés)",
+                "url": "/data-research/financial-well-being-survey-data/",
+            },
+        ],
+        },
+        {
+            "heading": {
+                "text": "Las reglas del camino",
+                "level": "h2",
+                "level_class": "h3",
+            },
+            "body": "Hemos creado reglas claras para ejercer las leyes y preservar la libertad de escoger de los consumidores.",
+            "image": {
+                "upload": {
+                    "url": static( "apps/homepage/img/cfpb_rules_of_the_road.png" ),
+                    "height": 300,
+                    "width": 300,
+                    "is_square": true,
+                },
+            },
+            "links": [
+            {
+                "text": "Reglamentación (Inglés)",
+                "url": "/policy-compliance/rulemaking/",
+            },
+            {
+                "text": "Avisos y comentarios (Inglés)",
+                "url": "/policy-compliance/notice-opportunities-comment/",
+            },
+        ],
+        },
+    ],
+} -%}
+
+{%- set card_heading = "Envíenos sus comentarios" -%}
+
+{%- set cards = [
+    {
+        "card_type": "featured",
+        "icon": "complaint",
+        "text": "¿Tiene problemas con algún producto o servicio financiero?",
+        "link_text": "Envíe una queja",
+        "link_url": "/es/enviar-una-queja/",
+    },
+    {
+        "card_type": "featured",
+        "icon": "lightbulb",
+        "text": "¿Tiene alguna pregunta sobre finanzas? Tenemos respuestas a cientos de preguntas sobre finanzas.",
+        "link_text": "Obtenga respuestas",
+        "link_url": "/es/obtener-respuestas/",
+    },
+    {
+        "card_type": "featured",
+        "icon": "open-quote",
+        "text": "Cuéntenos sus experiencias con el dinero y los servicios financieros. El CFPB está para escucharle.",
+        "link_text": "Diga su historia (Inglés)",
+        "link_url": "/your-story/",
+    },
+] -%}

@@ -1,5 +1,4 @@
 import DT from './dom-tools';
-const fullCountyList = require( '../data/counties.json' );
 
 /**
  * Checks whether an address is a duplicate to that in an array of addresses.
@@ -27,18 +26,13 @@ function isFound( response ) {
  *
  * @param {string} fips - An ID.
  * @param {Object} counties - Object from the census API.
- * @returns {boolean} True if the address is in county, false otherwise.
+ * @returns {boolean} Whether the county is rural.
  */
-function isInCounty( fips, counties ) {
-  let pass = false;
-  for ( const i in counties.fips ) {
-    if ( fips === counties.fips[i][0] ) {
-      pass = true;
-      break;
-    }
+function isRural( fips, counties ) {
+  for ( let i = 0; i < counties.length; i++ ) {
+    if ( fips === counties[i] ) return true;
   }
-
-  return pass;
+  return false;
 }
 
 /**
@@ -60,27 +54,6 @@ function isValid( row ) {
          row.meta.fields[1] === 'City' &&
          row.meta.fields[2] === 'State' &&
          row.meta.fields[3] === 'Zip';
-}
-
-/**
- * TODO: this function appears to be unused. Check and delete it if so.
- * @param {string} fipsCode - An ID.
- * @returns {string} A county name.
- */
-function setCountyName( fipsCode ) {
-  let countyName = '';
-
-  for ( const i in fullCountyList.counties ) {
-    if ( fullCountyList.counties[i][0] === fipsCode ) {
-      countyName = fullCountyList.counties[i][1]
-        .substring( fullCountyList.counties[i][1].indexOf( ',' ) + 1 )
-        .replace( 'County', '' )
-        .replace( /^\s+|\s+$/gm, '' );
-      break;
-    }
-  }
-
-  return countyName;
 }
 
 /**
@@ -155,10 +128,9 @@ function pushAddress( row, addresses ) {
 export default {
   isDup,
   isFound,
-  isInCounty,
+  isRural,
   isRuralCensus,
   isValid,
-  setCountyName,
   render,
   pushAddress
 };

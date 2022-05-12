@@ -16,6 +16,10 @@ export class FilterableListControl {
     return this.filterableListElement( 'title' ).type( name );
   }
 
+  resultDate() {
+    return cy.get( '.datetime_date:first' );
+  }
+
   filterFromDate( date ) {
     return this.filterableListElement( 'from-date' ).type( date );
   }
@@ -24,12 +28,68 @@ export class FilterableListControl {
     return this.filterableListElement( 'to-date' ).type( date );
   }
 
+  getResultCategoryHasTags() {
+    return cy.get(
+      '.o-filterable-list_results .tags_tag'
+    ).closest(
+      '.o-post-preview'
+    ).find(
+      '.m-meta-header_category:first'
+    );
+  }
+
+  getResultTagHasCategories() {
+    return cy.get(
+      '.o-filterable-list_results .m-meta-header_category'
+    ).closest(
+      '.o-post-preview'
+    ).find(
+      '.tags_tag:first'
+    );
+  }
+
+  getResultTag() {
+    return cy.get( '.o-filterable-list_results .tags_tag:first' );
+  }
+
+  getResultTitleHasTag() {
+    return cy.get(
+      '.o-filterable-list_results .tags_tag:first'
+    ).closest(
+      '.o-post-preview'
+    ).find(
+      '.o-post-preview_title:first'
+    );
+  }
+
+  getResultCategory() {
+    return cy.get( '.o-filterable-list_results .m-meta-header_category:first' );
+  }
+
+  getResultTitleHasCategory() {
+    return cy.get(
+      '.o-filterable-list_results .m-meta-header_category:first'
+    ).closest(
+      '.o-post-preview'
+    ).find(
+      '.o-post-preview_title:first'
+    );
+  }
+
+  resultsHeaderContent() {
+    return cy.get( '.o-filterable-list_results .m-meta-header' );
+  }
+
   resultsContent() {
     return cy.get( '.o-filterable-list_results .o-post-preview_content' );
   }
 
   firstResultContent() {
     return this.resultsContent().first();
+  }
+
+  resultTitle() {
+    return cy.get( '.o-post-preview_title:first' );
   }
 
   lastResultContent() {

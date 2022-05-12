@@ -63,142 +63,136 @@
 */
 
 .o-header {
-    min-width: @min_app_width__px;
-    border-bottom: 5px solid @green;
+  min-width: @min_app_width__px;
+  border-bottom: 5px solid @green;
+  position: relative;
+  z-index: 10;
+  background-color: @white;
+
+  .respond-to-min( @bp-lg-min, {
+    min-width: @bp-lg-min;
+  } );
+  &_content {
     position: relative;
-    z-index: 10;
-    background-color: @white;
+
+    > .wrapper {
+      // TODO: Remove when Capital Framework is updated to 3.x.x.
+      //       on outdated consumerfinance.gov projects.
+      position: initial;
+
+      > .m-global-search {
+        float: right;
+
+        // Mobile size.
+        .respond-to-max( @bp-xs-max, {
+          margin-right: -15px;
+        } );
+
+        // Tablet size.
+        .respond-to-range( @bp-sm-min, @bp-sm-max, {
+          margin-right: -30px;
+        } );
+      }
+    }
+
+    // Desktop size.
+    .respond-to-min( @bp-med-min, {
+      padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
+      > .wrapper {
+        > .m-global-header-cta {
+          float: right;
+        }
+
+        html.js & > .m-global-search {
+          // Width should visually be 370px, plus 3px to accommodate
+          // the focus state.
+          min-width: 373px;
+        }
+      }
+    } );
+
+    // Tablet/mobile sizes.
+    // Hide Global Header Call to Action.
+    // Adjust Mobile Megamenu margin
+    .respond-to-max( @bp-sm-max, {
+      > .wrapper {
+        > .m-global-header-cta {
+          display: none;
+        }
+      }
+
+      // Set the mobile hamburger mega menu next to the logo.
+      > .o-mega-menu {
+        .js & {
+          top: 0;
+          left: 0;
+          position: absolute;
+        }
+      }
+    } );
+  }
+
+  &_logo {
+
+    &-img {
+      // Size is to fit 320px minimum width for older iPhones, etc.
+      height: @mobile_trigger_ht__px - 20px;
+      width: auto;
+      // Margin is to bring height to menu trigger's 60px (40 + 10 + 10).
+      margin-top: 10px;
+      margin-bottom: 10px;
+      // Removes typical inline vertical whitespace.
+      vertical-align: middle;
+
+      // Desktop size.
+      .respond-to-min( @bp-med-min, {
+        margin: 0 0 unit( 20px / @base-font-size-px, em ) 0;
+        height: 50px;
+      } );
+    }
+  }
+
+  &__mega-menu {
+
+    // Setting the minimum height allocates room for the mega menu
+    // so the header height doesn't change when it loads in.
+    .respond-to-min( @bp-med-min, {
+      min-height: 167px;
+    } );
+
+  }
+
+  &__mega-menu &_logo  {
 
     // Tablet/mobile sizes.
     .respond-to-max( @bp-sm-max, {
-        > .m-global-eyebrow {
-            display: none;
-        }
+      .js & {
+        // Offset logo by width of mega menu trigger + 15px gap.
+        // The margin-left starts inside the 15px padding of the page
+        // page already, so a value that matches the width of the trigger
+        // will give it the desired spacing to the right of the trigger.
+        margin-left: @mobile_trigger_ht__px;
+      }
     } );
-
-    .respond-to-min( @bp-lg-min, {
-        min-width: @bp-lg-min;
-    } );
-    &_content {
-        position: relative;
-
-        > .wrapper {
-            // TODO: Remove when Capital Framework is updated to 3.x.x.
-            //       on outdated consumerfinance.gov projects.
-            position: initial;
-
-            > .m-global-search {
-                float: right;
-
-                // Mobile size.
-                .respond-to-max( @bp-xs-max, {
-                    margin-right: -15px;
-                } );
-
-                // Tablet size.
-                .respond-to-range( @bp-sm-min, @bp-sm-max, {
-                    margin-right: -30px;
-                } );
-            }
-        }
-
-        // Desktop size.
-        .respond-to-min( @bp-med-min, {
-            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-
-            > .wrapper {
-                > .m-global-header-cta {
-                    float: right;
-                }
-
-                html.js & > .m-global-search {
-                    // Width should visually be 370px, plus 3px to accommodate
-                    // the focus state.
-                    min-width: 373px;
-                }
-            }
-        } );
-
-        // Tablet/mobile sizes.
-        // Hide Global Header Call to Action.
-        .respond-to-max( @bp-sm-max, {
-            > .wrapper {
-                > .m-global-header-cta {
-                    display: none;
-                }
-            }
-
-            // Set the mobile hamburger mega menu next to the logo.
-            > .o-mega-menu {
-                .js & {
-                    top: 0;
-                    left: 0;
-                    position: absolute;
-                }
-            }
-        } );
-    }
-
-    &_logo {
-
-        &-img {
-            // Size is to fit 320px minimum width for older iPhones, etc.
-            height: @mobile_trigger_ht__px - 20px;
-            width: auto;
-            // Margin is to bring height to menu trigger's 60px (40 + 10 + 10).
-            margin-top: 10px;
-            margin-bottom: 10px;
-            // Removes typical inline vertical whitespace.
-            vertical-align: middle;
-
-            // Desktop size.
-            .respond-to-min( @bp-med-min, {
-                margin: 0 0 unit( 20px / @base-font-size-px, em ) 0;
-                height: 50px;
-            } );
-        }
-    }
-
-    &__mega-menu {
-
-        // Setting the minimum height allocates room for the mega menu
-        // so the header height doesn't change when it loads in.
-        .respond-to-min( @bp-med-min, {
-            min-height: 167px;
-        } );
-
-    }
-
-    &__mega-menu &_logo  {
-
-        // Tablet/mobile sizes.
-        .respond-to-max( @bp-sm-max, {
-            .js & {
-                // Offset logo by width of mega menu trigger + 15px gap.
-                // The margin-left starts inside the 15px padding of the page
-                // page already, so a value that matches the width of the trigger
-                // will give it the desired spacing to the right of the trigger.
-                margin-left: @mobile_trigger_ht__px;
-            }
-        } );
-    }
+  }
 }
 
 
 // Used on /external-site/ template, where the header has no nav and eyebrow.
 .o-header__no-nav {
-    min-height: auto;
-    .respond-to-min( @bp-med-min, {
-        margin-top: 15px;
-    } );
+  min-height: auto;
+  .respond-to-min( @bp-med-min, {
+    margin-top: 15px;
+  } );
 }
 
 // Move logo on print.
 .respond-to-print( {
-    .o-header_logo {
-        // Mega menu is hidden, so we need to remove logo offset.
-        margin-left: 15px !important;
-    }
+  .o-header_logo {
+    // Mega menu is hidden, so we need to remove logo offset.
+    margin-left: 15px !important;
+  }
 } );
 
 /* topdoc

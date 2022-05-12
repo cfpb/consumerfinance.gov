@@ -16,10 +16,6 @@ form {
   margin-top: 1px;
 }
 
-#claiming-social-security input[type='text'] {
-  border: 1px solid @gray-80;
-}
-
 #claiming-social-security .canvas-container {
   position: relative;
 }
@@ -36,39 +32,29 @@ form {
   left: -50px;
 
   /* Safari */
-  -webkit-transform: rotate(-90deg);
+  -webkit-transform: rotate( -90deg );
 
   /* Firefox */
-  -moz-transform: rotate(-90deg);
+  -moz-transform: rotate( -90deg );
 
   /* Opera */
-  -o-transform: rotate(-90deg);
+  -o-transform: rotate( -90deg );
 
   /* CSS3 */
-  transform: rotate(-90deg);
+  transform: rotate( -90deg );
 
   /* IE9 (this must come after the pure CSS3 to prevent autoprefixer from stripping it out) */
-  -ms-transform: rotate(-90deg);
-}
-
-.lt-ie9 #claiming-social-security p.y-axis-label {
-  top: 240px;
-  left: 0;
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-}
-
-#claim-canvas {
-  position: relative;
-  left: 40px;
-}
-#claim-canvas text {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
+  -ms-transform: rotate( -90deg );
 }
 
 #claiming-social-security {
-  font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
+
+  .step-one-hidden, .before-step-two, .step-two,
+  .step-two + hr, .step-three {
+    display: none;
+  }
 }
 
 #claiming-social-security .intro {
@@ -79,14 +65,14 @@ form {
 }
 
 [lang="es"] #claiming-social-security .intro  {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 [lang="en"] #claiming-social-security .intro  {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
-@media (min-width: 850px) {
+@media ( min-width: 850px ) {
   #claiming-social-security .intro {
     margin-bottom: 45px;
 
@@ -101,13 +87,13 @@ form {
   [lang="es"] #claiming-social-security .intro  {
     margin-top: 60px;
     .img {
-      background-image: url('/static/apps/retirement/img/before-you-claim-es.png');
+      background-image: url( '/static/apps/retirement/img/before-you-claim-es.png' );
     }
   }
 
   [lang="en"] #claiming-social-security .intro  {
     .img {
-      background-image: url('/static/apps/retirement/img/before-you-claim.png');
+      background-image: url( '/static/apps/retirement/img/before-you-claim.png' );
     }
   }
 }
@@ -123,13 +109,6 @@ form {
 #claiming-social-security .step-one {
   padding-bottom: 14px;
   padding-top: 45px;
-}
-
-#claiming-social-security {
-  .step-one-hidden, .before-step-two, .step-two,
-  .step-two + hr, .step-three {
-    display: none;
-  }
 }
 
 #claiming-social-security .step-one h2 {
@@ -197,7 +176,6 @@ form {
 #claim-canvas .age-text {
   color: #919395;
   cursor: pointer;
-  font-family: 'AvenirNextLTW01-Regular', Arial, sans-serif;
   position: absolute;
   top: 292px;
   height: 75px;
@@ -210,8 +188,7 @@ form {
 
 #claim-canvas .age-text.selected-age p {
   color: #000;
-  font-family: 'AvenirNextLTW01-Demi', Arial, sans-serif;
-  font-weight: bold;
+  font-weight: bolder;
 }
 
 #claim-canvas #min-age-text {
@@ -229,14 +206,15 @@ form {
 #claim-canvas #benefits-text,
 #claim-canvas #full-age-benefits-text {
   position: absolute;
-  font-family: 'AvenirNextLTW01-Demi', 'Arial', sans-serif;
-  font-weight: 500;
+  font-weight: bolder;
 }
 
 #claim-canvas {
+  position: relative;
+  left: 40px;
+
   #full-age-benefits-text {
     color: #919395;
-    font-family: 'AvenirNextLTW01-Regular', 'Arial', sans-serif;
   }
 
   .graph__element {
@@ -279,9 +257,9 @@ form {
   display: block;
 
 }
+
 #claiming-social-security .lifetime-benefits-value {
-  font-family: 'AvenirNextLTW01-Demi', 'Arial', sans-serif;
-  font-weight: bold;
+  font-weight: bolder;
 }
 
 #claiming-social-security .explainer {
@@ -294,8 +272,8 @@ form {
 }
 
 #claiming-social-security input[type='text'] {
-  // TODO: Replace hardcoded color with a color variable for Capital Framework.
-  border-color: #BABBBD;
+  border: 1px solid @gray-80;
+  border-color: @gray-40;
 }
 
 #claiming-social-security .input-labels {
@@ -447,14 +425,14 @@ form {
 }
 
 .step-two .lifestyle-question_container hr {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 [lang="es"] #claiming-social-security .step-two .question-working img {
   display: block;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  background: url("/static/apps/retirement/img/sus60s.png") no-repeat;
+  background: url( "/static/apps/retirement/img/sus60s.png" ) no-repeat;
   width: 200px;
   height: 200px;
   padding-left: 200px; /* Move english image out of view */
@@ -464,7 +442,7 @@ form {
   display: block;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  background: url("/static/apps/retirement/img/gastos.png") no-repeat;
+  background: url( "/static/apps/retirement/img/gastos.png" ) no-repeat;
   width: 200px;
   height: 200px;
   padding-left: 200px; /* Move english image out of view */
@@ -512,7 +490,7 @@ form {
 #claiming-social-security #age-selector-response .next-steps li.next-step-one,
 #claiming-social-security #age-selector-response .next-steps li.next-step-two,
 #claiming-social-security #age-selector-response .next-steps li.next-step-three {
-  background-image: url('/static/apps/retirement/img/step_check.png');
+  background-image: url( '/static/apps/retirement/img/step_check.png' );
 }
 
 #claiming-social-security .step-three .helpful-btn {
@@ -532,7 +510,7 @@ form {
    Medium and small screens
 ==================================================================== */
 
-@media (max-width: 1190px) {
+@media ( max-width: 1190px ) {
   #claiming-social-security .birthdate-inputs {
     border-width: 0 15px;
   }
@@ -571,7 +549,7 @@ form {
 }
 
 
-@media (max-width: 940px) {
+@media ( max-width: 940px ) {
   #claiming-social-security .hero_image,
   [lang="en"] #claiming-social-security .hero_image,
   [lang="es"] #claiming-social-security .hero_image {
@@ -596,7 +574,7 @@ form {
    Medium screens
 ==================================================================== */
 
-@media (max-width: 1190px) and (min-width: 1100px) {\
+@media ( max-width: 1190px ) and ( min-width: 1100px ) {
   #claiming-social-security p.y-axis-label {
     top: 310px;
   }
@@ -607,7 +585,7 @@ form {
 
 }
 
-@media (max-width: 1100px) and (min-width: 850px) {
+@media ( max-width: 1100px ) and ( min-width: 850px ) {
   #claiming-social-security .step-one {
     padding-top: 30px;
   }
@@ -707,7 +685,7 @@ form {
    Small screens
 ==================================================================== */
 
-@media (max-width: 849px) {
+@media ( max-width: 849px ) {
   #claiming-social-security .content-l {
     margin-left: 0;
     margin-right: 0;
@@ -812,7 +790,6 @@ form {
   }
 
   #claiming-social-security .content-l.step-two h3.lifestyle-question {
-    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-size: 22px;
   }
 
@@ -877,7 +854,7 @@ form {
   }
 }
 
-@media (max-width: 600px) {
+@media ( max-width: 600px ) {
   #claiming-social-security .claiming-hero p.hero_translation-link {
     position: absolute;
     width: auto;
@@ -899,55 +876,55 @@ form {
 }
 
 #claiming-social-security *[data-tooltip-target] {
-    cursor: auto;
-    border-bottom: none;
-    color: @pacific;
-    font-size: 0.9rem;
+  cursor: auto;
+  border-bottom: none;
+  color: @pacific;
+  font-size: 0.9rem;
 }
 
 #claiming-social-security #tooltip-container {
-    background-color: #E4E2E0;
-    border: 0px solid #000;
-    display: none;
-    font-style: normal;
-    font-size: .8em;
-    padding: 15px;
-    position: absolute;
-    width: 20em;
-    z-index: 3000;
+  background-color: #E4E2E0;
+  border: 0px solid #000;
+  display: none;
+  font-style: normal;
+  font-size: .8em;
+  padding: 15px;
+  position: absolute;
+  width: 20em;
+  z-index: 3000;
 }
 
 #claiming-social-security #tooltip-container .content {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 #claiming-social-security #tooltip-container .content p:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 /* These elements, .outertip and .innertip, make the little speech-balloon styled
    tip appear along the top of the tooltip. */
 #claiming-social-security  #tooltip-container .outertip {
-    border: 0px solid transparent;
-    border-bottom-color: #000;
-    content: ' ';
-    height: 0;
-    position: absolute;
-    left: -5px;
-    top: -20px;
-    width: 0;
+  border: 0px solid transparent;
+  border-bottom-color: #000;
+  content: ' ';
+  height: 0;
+  position: absolute;
+  left: -5px;
+  top: -20px;
+  width: 0;
 }
 
 #claiming-social-security #tooltip-container .innertip {
-    border: 7px solid transparent;
-    border-bottom-color: #E4E2E0;
-    content: ' ';
-    height: 0;
-    position: absolute;
-    left: 8px;
-    top: -14px;
-    width: 0;
+  border: 7px solid transparent;
+  border-bottom-color: #E4E2E0;
+  content: ' ';
+  height: 0;
+  position: absolute;
+  left: 8px;
+  top: -14px;
+  width: 0;
 }
 
 #claiming-social-security .tooltip-target {
@@ -975,7 +952,7 @@ form {
 /* Hide only visually, but have it available for screenreaders: h5bp.com/v */
 .visuallyhidden {
   border: 0;
-  clip: rect(0 0 0 0);
+  clip: rect( 0 0 0 0 );
   height: 1px;
   margin: -1px;
   overflow: hidden;
@@ -983,22 +960,16 @@ form {
   position: absolute;
   width: 1px;
 }
+
 .hidden {
   display: none !important;
 }
 /* typography mixins */
 .allcaps-demi {
-  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
   font-style: normal;
-  font-weight: bold;
+  font-weight: bolder;
   font-size: 0.75em;
   text-transform: uppercase;
-}
-.lt-ie9 .allcaps-demi {
-  font-weight: normal !important;
-}
-.lt-ie9 .allcaps-demi {
-  font-weight: normal !important;
 }
 
 /* ====================================================================
@@ -1016,10 +987,10 @@ form {
 
 #claiming-social-security_about .about-subhead {
   .h2;
-  margin-bottom: unit(60px / @font-size, em);
+  margin-bottom: unit( 60px / @font-size, em );
 
   .respond-to-max( @bp-sm-min, {
-   .h3;
-   margin-bottom: unit(45px / @font-size, em);
+    .h3;
+    margin-bottom: unit(45px / @font-size, em);
   } );
 }

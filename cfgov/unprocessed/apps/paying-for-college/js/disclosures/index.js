@@ -15,8 +15,6 @@ const metricView = require( './views/metric-view' );
 const questionView = require( './views/question-view' );
 const publish = require( './dispatchers/publish-update' );
 
-require( './utils/nemo' );
-require( './utils/nemo-shim' );
 require( './utils/print-page' );
 
 const app = {

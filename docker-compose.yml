@@ -13,6 +13,7 @@ services:
             - 127.0.0.1:9300:9300
         environment:
             discovery.type: single-node
+            ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     kibana:
         image: docker.elastic.co/kibana/kibana:7.16.0
         depends_on:
@@ -32,11 +33,10 @@ services:
         ports:
             - 127.0.0.1:5432:5432
     python:
+        image: cfgov_python:local
         build:
             context: .
             dockerfile: Dockerfile
-            args:
-                scl_python_version: rh-python38
         depends_on:
             - elasticsearch
             - postgres
@@ -45,6 +45,7 @@ services:
         environment:
             DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
             ES_HOST: elasticsearch
+            SECRET_KEY: abcdefghijklmnopqrstuvwxyz
     docs:
         build:
             context: ./

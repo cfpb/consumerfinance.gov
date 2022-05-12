@@ -18,7 +18,7 @@
         </div>
 
         {% if results %}
-            {% if flag_enabled('ASK_SEARCH_TYPOS') %}
+           
                 {% if tag %}
                     <h3 class="results-header">{{ _('Showing results for ') }} “{{ tag }}”</h3>
                 {% else %}
@@ -27,13 +27,7 @@
                 {% if page.suggestion %}
                     <p>{{ _('Search instead for') }} <a href="{{ _('/ask-cfpb/search') }}?q={{ page.suggestion }}&correct=0">{{ page.suggestion }}</a></p>
                 {% endif %}
-            {% else %}
-                {% if tag %}
-                    <h3 class="results-header">{{ _('Showing results for ') }} “{{ tag }}”</h3>
-                {% else %}
-                    <h3 class="results-header">{{ _('Showing results for ') }} “{{ page.query }}”</h3>
-                {% endif %}
-            {% endif %}
+           
 
             <section class="search-results block
                         block__flush-top">
@@ -72,14 +66,9 @@
                     <h3 class="results-header">{{ _('No results found for') }} “{{ page.query }}”</h3>
                 {% endif %}
 
-                {% if flag_enabled('ASK_SEARCH_TYPOS') %}
                     {% if page.suggestion %}
                     <p>{{ _('Search instead for') }} <a href="{{ _('/ask-cfpb/search') }}?q={{ page.suggestion }}">{{ page.suggestion }}</a></p>
                     {% endif %}
-                {% else %}
-                <p class="short-desc u-mb30">
-                    {{ _("Can't find your question?") }} <a href="{{ _('/ask-cfpb/') }}">{{ _('Browse questions by category') }}</a>
-                {% endif %}
                 </p>
             </div>
         </section>

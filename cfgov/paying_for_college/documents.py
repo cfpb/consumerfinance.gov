@@ -5,7 +5,8 @@ from django_elasticsearch_dsl.registries import registry
 
 from paying_for_college.models import School
 from search.elasticsearch_helpers import (
-    environment_specific_index, ngram_tokenizer
+    environment_specific_index,
+    ngram_tokenizer,
 )
 
 
@@ -13,7 +14,7 @@ from search.elasticsearch_helpers import (
 class SchoolDocument(Document):
 
     autocomplete = fields.TextField(analyzer=ngram_tokenizer)
-    text = fields.TextField(attr='primary_alias', boost=10)
+    text = fields.TextField(attr="primary_alias", boost=10)
     url = fields.TextField()
     nicknames = fields.TextField()
 
@@ -32,20 +33,21 @@ class SchoolDocument(Document):
         return ", ".join([n.nickname for n in instance.nickname_set.all()])
 
     def prepare_url(self, instance):
-        return reverse("paying_for_college:disclosures:school-json",
-                       args=[instance.school_id])
+        return reverse(
+            "paying_for_college:disclosures:school-json",
+            args=[instance.school_id],
+        )
 
     class Index:
-        name = environment_specific_index('paying-for-college')
-        settings = {'number_of_shards': 1,
-                    'number_of_replicas': 0}
+        name = environment_specific_index("paying-for-college")
+        settings = {"number_of_shards": 1, "number_of_replicas": 0}
 
     class Django:
         model = School
 
         fields = [
-            'school_id',
-            'city',
-            'state',
-            'zip5',
+            "school_id",
+            "city",
+            "state",
+            "zip5",
         ]

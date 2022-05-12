@@ -11,7 +11,9 @@ from wagtailsharing.models import SharingSite
 from model_bakery import baker
 
 from ask_cfpb.models import (
-    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, AnswerPage
+    ENGLISH_PARENT_SLUG,
+    SPANISH_PARENT_SLUG,
+    AnswerPage,
 )
 from ask_cfpb.views import annotate_links
 from v1.util.migrations import get_or_create_page
@@ -120,21 +122,18 @@ class AnswerPagePreviewTestCase(TestCase):
         page.unpublish()
         test_request = self.factory.get("/")
         with self.assertRaises(Http404):
-            view_answer(
-                test_request, page.slug, "en", page.answer_base.pk
-            )
+            view_answer(test_request, page.slug, "en", page.answer_base.pk)
 
     @mock.patch("ask_cfpb.views.ServeView.serve")
     def test_answer_page_not_live_on_sharing_site(self, mock_serve):
         from ask_cfpb.views import view_answer
+
         page = self.test_answer.english_page
         page.unpublish()
         test_request = self.factory.get(
             "/", HTTP_HOST="preview.localhost", SERVER_PORT=8000
         )
-        view_answer(
-            test_request, "test-question1", "en", self.test_answer.pk
-        )
+        view_answer(test_request, "test-question1", "en", self.test_answer.pk)
         self.assertEqual(mock_serve.call_count, 1)
 
     def test_page_redirected(self):

@@ -269,12 +269,12 @@ describe( 'The TDP custom analytics', () => {
     document.body.innerHTML = EMPTY_SEARCH_HTML;
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    tdpAnalytics.bindAnalytics( spy );
 
     handleFetchSearchResults( 'Not Found' );
 
-    expect(spy.mock.calls[0][0]).toEqual( 'noSearchResults' );
-    expect(spy.mock.calls[0][1]).toEqual('not found:0');
+    expect( spy.mock.calls[0][0] ).toEqual( 'noSearchResults' );
+    expect( spy.mock.calls[0][1] ).toEqual( 'not found:0' );
   } );
 
 } );

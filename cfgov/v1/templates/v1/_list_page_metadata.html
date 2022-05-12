@@ -9,6 +9,7 @@
     <th>Search Description</th>
     <th>Tags</th>
     <th>Categories</th>
+    <th>Content Owner(s)</th>
 {% endblock %}
 
 {% block extra_page_data %}
@@ -35,6 +36,9 @@
         {% if cat.get_name_display and not forloop.last %}
         {{ cat.get_name_display }}, {% else %}{{ cat.get_name_display }}
         {% endif %}{% endfor %}
+    </td>
+    <td>
+        {{ page.content_owners.names|join:", " }}
     </td>
 {% endblock %}
 

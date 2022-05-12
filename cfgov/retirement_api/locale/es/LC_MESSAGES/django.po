@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: retirement\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-21 14:57-0400\n"
+"POT-Creation-Date: 2022-03-21 11:59-0400\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -527,15 +527,6 @@ msgstr ""
 "Si sus ingresos, situación laboral o estado civil cambian, es posible que "
 "deba reconsiderar la edad en la que solicitará sus beneficios de Seguro "
 "Social. ¡Vuelva a visitarnos!"
-
-#: retirement_api/jinja2/retirement_api/claiming.html:951
-msgid ""
-"Was this page helpful in thinking about when to start collecting benefits?"
-msgstr "¿Le resultó útil esta información?"
-
-#: retirement_api/jinja2/retirement_api/claiming.html:956
-msgid "Thank you for your feedback!"
-msgstr "¡Gracias por sus comentarios!"
 
 #: retirement_api/jinja2/retirement_api/claiming.html:957
 msgid "Legal Disclaimer:"

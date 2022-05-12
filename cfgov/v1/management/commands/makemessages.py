@@ -14,11 +14,10 @@ from django.utils.translation import template as trans_real
 
 
 class Command(makemessages.Command):
-
     def handle(self, *args, **options):
         # Jinja2 uses {% trans %}…{% endtrans %}
-        jinja_block_re = re.compile(r'^\s*trans(?:\s+|$)')
-        jinja_endblock_re = re.compile(r'^\s*endtrans$')
+        jinja_block_re = re.compile(r"^\s*trans(?:\s+|$)")
+        jinja_endblock_re = re.compile(r"^\s*endtrans$")
 
         # Django uses {% blocktrans %}…{% endblocktrans %}
         django_block_re = trans_real.block_re
@@ -33,14 +32,16 @@ class Command(makemessages.Command):
         # plural_re, constant_re, and one_percent_re should match both Jinja2
         # and Django conventions.
         trans_real.block_re = re.compile(
-            django_block_re.pattern + '|' + jinja_block_re.pattern)
+            django_block_re.pattern + "|" + jinja_block_re.pattern
+        )
         trans_real.endblock_re = re.compile(
-            django_endblock_re.pattern + '|' + jinja_endblock_re.pattern)
+            django_endblock_re.pattern + "|" + jinja_endblock_re.pattern
+        )
 
         # The rest of trans_real's regular expressions should match conventions
         # used in both Django and Jinja2 templates.
         # Call makemessages
-        super(Command, self).handle(*args, **options)
+        super().handle(*args, **options)
 
         # Restore just the Django-matching regular expressions
         trans_real.endblock_re = django_endblock_re
