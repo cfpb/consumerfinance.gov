@@ -148,7 +148,6 @@ class ConferenceRegistrationForm(forms.Form):
         attendees = ConferenceRegistration.objects.filter(
             govdelivery_code=self.govdelivery_code
         )
-
         return len(list(attendees.in_person())) >= self.capacity
 
     def save(self, commit=True):

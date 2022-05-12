@@ -3,7 +3,7 @@
 import argparse
 import os
 import shutil
-import subprocess
+import subprocess  # nosec
 import sys
 from glob import glob
 from zipfile import ZipFile
@@ -15,13 +15,13 @@ def locate_virtualenv_site_packages(virtualenv_python):
     stdout_encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
 
     return (
-        subprocess.check_output(
+        subprocess.check_output(  # nosec
             [
                 virtualenv_python,
                 "-c",
                 "import sys; print(sys.path[-1])",
             ]
-        )
+        )  # nosec
         .decode(stdout_encoding)
         .strip()
     )
@@ -36,7 +36,7 @@ def extract_zipfile(zipfile_filename, extract_location):
     virtualenv_dir = os.path.join(extract_location, "venv")
     bootstrap_wheels = os.path.join(extract_location, "bootstrap_wheels")
 
-    subprocess.check_call(
+    subprocess.check_call(  # nosec
         [
             sys.executable,
             "-m",
@@ -60,7 +60,7 @@ def extract_zipfile(zipfile_filename, extract_location):
     wheel_install_script = os.path.join(extract_location, "install_wheels.py")
     wheels = os.path.join(extract_location, "wheels")
 
-    subprocess.check_call(
+    subprocess.check_call(  # nosec
         [
             virtualenv_python,
             wheel_install_script,

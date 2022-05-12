@@ -40,7 +40,7 @@
   .information-right, .information-wrong,
   .offer-part_content-positive-cost, .offer-part_content-negative-cost,
   .evaluate, .question, .get-options, .followup__no-not-sure, .followup__yes,
-  .next-steps, .feedback {
+  .next-steps {
     display: none;
   }
 
@@ -1766,35 +1766,6 @@
   .respond-to-min( @bp-sm-min, {
     padding-left: 2em;
   } );
-}
-
-/* ==========================================================================
-   Feedback
-   ========================================================================== */
-
-.feedback {
-  margin-bottom: unit( 60px / @base-font-size-px, em );
-
-  &_wrapper {
-    margin-top: unit( 30px / @base-font-size-px, em );
-    margin-bottom: unit( 15px / @base-font-size-px, em );
-
-    .respond-to-min( @bp-sm-min, {
-      margin-top: unit(45px / @base-font-size-px, em);
-      .grid_nested-col-group();
-    } );
-  }
-
-  &_intro {
-
-    .respond-to-min( @bp-sm-min, {
-      .grid_column(9);
-    } );
-
-    .respond-to-min( @bp-xl-min, {
-      .grid_column(6);
-    } );
-  }
 }
 
 /* ==========================================================================

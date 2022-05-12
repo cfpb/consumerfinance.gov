@@ -92,8 +92,8 @@ class TestCFGOVPage(TestCase):
         response = page.serve_post(request)
         self.assertIsInstance(response, HttpResponseBadRequest)
 
-    def test_serve_post_valid_calls_feedback_block_handler(self):
-        """A valid post should call the feedback block handler.
+    def test_serve_post_valid_calls_form_block_handler(self):
+        """A valid post should call the form block handler.
 
         This returns a redirect to the calling page and also uses the
         Django messages framework to set a message.
@@ -101,19 +101,33 @@ class TestCFGOVPage(TestCase):
         page = BrowsePage(title="test", slug="test")
         page.content = blocks.StreamValue(
             page.content.stream_block,
-            [{"type": "feedback", "value": "something"}],
+            [
+                {
+                    "type": "conference_registration_form",
+                    "value": {"capacity": 1, "govdelivery_code": "test"},
+                }
+            ],
             True,
         )
         save_new_page(page)
 
-        request = self.factory.post("/", {"form_id": "form-content-0"})
+        request = self.factory.post(
+            "/",
+            {
+                "form_id": "form-content-0",
+                "attendee_type": "In person",
+                "email": "user@example.com",
+                "name": "Attendee",
+            },
+        )
         SessionMiddleware().process_request(request)
         MessageMiddleware().process_request(request)
 
         response = page.serve_post(request)
 
         self.assertEqual(
-            (response.status_code, response["Location"]), (302, request.path)
+            (response.status_code, response["Location"]),
+            (302, f"{request.path}?success"),
         )
 
     @mock.patch("v1.models.base.TemplateResponse")
@@ -480,6 +494,54 @@ class TestCFGOVPageContext(TestCase):
         result = test_context["meta_description"]
         expectedWithSpaces = "  " + expected + "  "
         self.assertEqual(expectedWithSpaces, result)
+
+    def test_get_context_sets_is_faq_page_to_false_without_faq(self):
+        self.page = BrowsePage(
+            title="test",
+            content=json.dumps(
+                [
+                    {
+                        "type": "expandable_group",
+                        "value": {},
+                    }
+                ]
+            ),
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context["is_faq_page"]
+        self.assertEqual(False, result)
+
+    def test_get_context_sets_is_faq_page_to_true_with_faq_expandable(self):
+        self.page = BrowsePage(
+            title="test",
+            content=json.dumps(
+                [
+                    {
+                        "type": "expandable_group",
+                        "value": {"is_faq": True},
+                    }
+                ]
+            ),
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context["is_faq_page"]
+        self.assertEqual(True, result)
+
+    def test_get_context_sets_is_faq_page_to_true_with_faq_group(self):
+        self.page = BrowsePage(
+            title="test",
+            content=json.dumps(
+                [
+                    {
+                        "type": "faq_group",
+                        "value": {},
+                    }
+                ]
+            ),
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context["is_faq_page"]
+        self.assertEqual(True, result)
 
 
 class TestCFGOVPageQuerySet(TestCase):

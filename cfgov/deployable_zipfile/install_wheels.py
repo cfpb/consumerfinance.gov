@@ -1,6 +1,6 @@
 import argparse
 import os
-import subprocess
+import subprocess  # nosec
 import sys
 
 from pip._internal.exceptions import InstallationError
@@ -30,7 +30,7 @@ def get_supported_wheels(wheel_directory):
 def install_wheels(wheel_directory):
     supported_wheel_filenames = get_supported_wheels(wheel_directory)
 
-    subprocess.check_call(
+    subprocess.check_call(  # nosec
         [
             sys.executable,
             "-m",

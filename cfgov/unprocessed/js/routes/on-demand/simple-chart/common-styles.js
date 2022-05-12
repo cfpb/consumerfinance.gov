@@ -23,7 +23,7 @@ const styles = {
   },
   legend: {
     enabled: true,
-    symbolWidth: 45,
+    symbolWidth: 30,
     floating: true,
     layout: 'vertical',
     align: 'right',

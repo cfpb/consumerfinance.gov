@@ -1,7 +1,6 @@
 import os.path
 
 from django.conf import settings
-from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
 from django.urls import reverse
@@ -101,7 +100,6 @@ def environment(**options):
     env.globals.update(
         {
             "autocomplete_max_chars": AUTOCOMPLETE_MAX_CHARS,
-            "get_messages": messages.get_messages,
             "reverse": reverse,
             "static": staticfiles_storage.url,
             "url": reverse,
