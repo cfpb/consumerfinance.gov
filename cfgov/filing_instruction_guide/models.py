@@ -77,7 +77,23 @@ class FIGContentPage(CFGOVPage):
     )
 
     def assign_section_ids(self):
-        print("assign section IDs here ????? ****")
+        ind = sub_ind = sub3_ind = 0
+        for section in self.content:
+            sec_type = section.block_type
+            if sec_type == "Fig_Section":
+                ind += 1
+                sub_ind = 0
+                sub3_ind = 0
+                id = f"{ind}."
+            if sec_type == "Fig_Sub_Section":
+                sub_ind += 1
+                sub3_ind = 0
+                id = f"{ind}.{sub_ind}."
+            if sec_type == "Fig_Sub_3_Section":
+                sub3_ind += 1
+                id = f"{ind}.{sub_ind}.{sub3_ind}."
+            section.value['section_id'] = id
+        self.save()
 
 
     template = "filing_instruction_guide/index.html"
