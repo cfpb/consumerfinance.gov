@@ -1,3 +1,4 @@
+{{- if .Values.mapping.enabled }}
 ---
 apiVersion: getambassador.io/v2
 kind: Mapping
@@ -8,3 +9,4 @@ spec:
     prefix: /
     service: {{ include "cfgov.fullname" . }}
     port: {{ .Values.service.port }}
+{{- end }}
