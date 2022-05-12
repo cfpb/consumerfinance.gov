@@ -556,8 +556,8 @@ class TestScripts(django.test.TestCase):
 
     @patch("paying_for_college.disclosures.scripts.update_ipeds.requests.get")
     @patch("paying_for_college.disclosures.scripts.update_ipeds.unzip_file")
-    @patch("paying_for_college.disclosures.scripts.update_ipeds.call")
-    def test_download_zip_file(self, mock_call, mock_unzip, mock_requests):
+    @patch("paying_for_college.disclosures.scripts.update_ipeds.os.remove")
+    def test_download_zip_file(self, mock_remove, mock_unzip, mock_requests):
         mock_response = mock.Mock()
         mock_response.ok = False
         mock_requests.return_value = mock_response
@@ -569,7 +569,7 @@ class TestScripts(django.test.TestCase):
         mock_requests.return_value = mock_response2
         down2 = update_ipeds.download_zip_file("fake.zip", "/tmp/fakefile.zip")
         self.assertTrue(mock_unzip.call_count == 1)
-        self.assertTrue(mock_call.call_count == 1)
+        self.assertTrue(mock_remove.call_count == 1)
         self.assertTrue(down2)
 
     @patch(
