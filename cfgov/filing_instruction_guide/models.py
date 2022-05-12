@@ -16,14 +16,22 @@ from v1.models.base import CFGOVPage
 
 def get_toc_headers(request, self):
     toc_headers = []
+    current_top_level = {}
+    parent = None
     for section in self.content:
         header = section.value.get("header")
         id = section.value.get("section_id")
         if section.block_type == "Fig_Section":
-            toc_headers.append({"header": header, "id": id, "level": 1})
+            if parent:
+                toc_headers.append(parent)
+            parent = {"header": header, "id": id, "children": []}
         elif section.block_type == "Fig_Sub_Section":
-            toc_headers.append({"header": header, "id": id, "level": 2})
-        return toc_headers
+            # if the first block is a subsection instead of a section
+            if not parent:
+                parent = {"header": "", "id": "", "children": []}
+            parent["children"].append({"header": header, "id": id})
+    toc_headers.append(parent)
+    return toc_headers
 
 
 class FIGContentPage(CFGOVPage):
