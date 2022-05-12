@@ -1373,10 +1373,10 @@ class DataSnapshot(blocks.StructBlock):
 
 class FigSection(blocks.StructBlock):
     header = blocks.TextBlock(label="Section header")
-    content = FullWidthText()
     section_id = blocks.TextBlock(
         required=False, help_text="Will be filled in automatically upon save."
     )
+    content = FullWidthText()
 
     class Meta:
         icon = "edit"
