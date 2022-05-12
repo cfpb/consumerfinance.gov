@@ -9,7 +9,6 @@ from django.utils.safestring import mark_safe
 
 from wagtail.core import blocks
 from wagtail.core.blocks.struct_block import StructBlockValidationError
-from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
 from wagtail.images import blocks as images_blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
@@ -1376,11 +1375,13 @@ class FigSection(blocks.StructBlock):
     header = blocks.TextBlock(label="Section header")
     content = FullWidthText()
     section_id = blocks.TextBlock(
-        required=False, help_text="Will be filled in automatically upon save.")
+        required=False, help_text="Will be filled in automatically upon save."
+    )
 
     class Meta:
         icon = "edit"
         template = "_includes/organisms/fig-section.html"
+
 
 class FigSubSection(FigSection):
     header = blocks.TextBlock(label="Subsection header")

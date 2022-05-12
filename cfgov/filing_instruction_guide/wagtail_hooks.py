@@ -8,5 +8,5 @@ def assign_content_section_ids(request, page):
         page.assign_section_ids()
 
 
-hooks.register('after_create_page', assign_content_section_ids)
-hooks.register('after_edit_page', assign_content_section_ids)
+hooks.register("after_create_page", assign_content_section_ids)
+hooks.register("after_edit_page", assign_content_section_ids)

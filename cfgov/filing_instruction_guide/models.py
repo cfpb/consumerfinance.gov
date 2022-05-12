@@ -13,10 +13,8 @@ from v1.atomic_elements import organisms
 from v1.models.base import CFGOVPage
 
 
-
 def get_toc_headers(request, self):
     toc_headers = []
-    current_top_level = {}
     parent = None
     for section in self.content:
         header = section.value.get("header")
@@ -41,11 +39,14 @@ class FIGContentPage(CFGOVPage):
     page_header = models.CharField(max_length=200, blank=True)
     subheader = models.TextField(blank=True)
 
-    content = StreamField([
-        ("Fig_Section", organisms.FigSection()),
-        ("Fig_Sub_Section", organisms.FigSubSection()),
-        ("Fig_Sub_3_Section", organisms.FigSub3Section()),
-    ], blank=True)
+    content = StreamField(
+        [
+            ("Fig_Section", organisms.FigSection()),
+            ("Fig_Sub_Section", organisms.FigSubSection()),
+            ("Fig_Sub_3_Section", organisms.FigSub3Section()),
+        ],
+        blank=True,
+    )
 
     # Report upload tab
     content_panels = [
@@ -92,13 +93,12 @@ class FIGContentPage(CFGOVPage):
             if sec_type == "Fig_Sub_3_Section":
                 sub3_ind += 1
                 id = f"{ind}.{sub_ind}.{sub3_ind}."
-            section.value['section_id'] = id
+            section.value["section_id"] = id
         self.save()
-
 
     template = "filing_instruction_guide/index.html"
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context.update( { "get_sections": get_toc_headers(request, self) })
+        context.update({"get_sections": get_toc_headers(request, self)})
         return context
