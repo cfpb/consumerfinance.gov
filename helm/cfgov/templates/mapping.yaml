@@ -7,6 +7,5 @@ metadata:
 spec:
     host: {{ include "cfgov.fullname" . }}-eks.{{ default "dev-internal" .Values.environmentName }}.cfpb.gov
     prefix: /
-    service: {{ include "cfgov.fullname" . }}
-    port: {{ .Values.service.port }}
+    service: {{ include "cfgov.fullname" . }}:{{ .Values.service.port }}
 {{- end }}
