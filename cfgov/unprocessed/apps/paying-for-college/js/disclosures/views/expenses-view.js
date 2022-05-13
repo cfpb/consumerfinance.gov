@@ -17,7 +17,6 @@ const expensesView = {
     this.expenseInputChangeListener();
     this.keyupListener();
     this.regionSelectListener();
-    this.feedbackBtnListener();
   },
 
   /**
@@ -148,19 +147,7 @@ const expensesView = {
       expensesView.updateView( getExpenses.values() );
       Analytics.sendEvent( getDataLayerOptions( 'Region Changed', region ) );
     } );
-  },
-
-  /**
-   * Listener for the Feedback BUTTON
-   */
-  feedbackBtnListener: function() {
-    $( '[data-qa=feedback-btn]' ).click( function() {
-      Analytics.sendEvent( getDataLayerOptions(
-        'Was this page helpful?', 'Tell us how' ) );
-    } );
   }
-
-
 };
 
 module.exports = expensesView;

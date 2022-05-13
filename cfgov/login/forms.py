@@ -21,7 +21,7 @@ from v1.models import base
 
 
 class PasswordValidationMixin:
-    password_key = "new_password"
+    password_key = "new_password"  # nosec
     user_attribute = "user"
 
     def clean(self):
@@ -36,7 +36,7 @@ class PasswordValidationMixin:
 
 
 class UserEditValidationMixin(PasswordValidationMixin):
-    password_key = "password"
+    password_key = "password"  # nosec
     user_attribute = "instance"
 
 
