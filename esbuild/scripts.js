@@ -40,7 +40,6 @@ const jsPaths = [
   `${ apps }/owning-a-home/js/mortgage-estimate/index.js`,
   `${ apps }/owning-a-home/js/form-explainer/index.js`,
   `${ apps }/paying-for-college/js/disclosures/index.js`,
-  `${ apps }/paying-for-college/js/disclosure-feedback.js`,
   `${ apps }/paying-for-college/js/college-costs.js`,
   `${ apps }/regulations3k/js/index.js`,
   `${ apps }/regulations3k/js/permalinks.js`,
@@ -48,7 +47,8 @@ const jsPaths = [
   `${ apps }/regulations3k/js/search.js`,
   `${ apps }/retirement/js/index.js`,
   `${ apps }/rural-or-underserved-tool/js/common.js`,
-  `${ apps }/teachers-digital-platform/js/index.js`
+  `${ apps }/teachers-digital-platform/js/index.js`,
+  `${ apps }/filing-instruction-guide/js/fig-sidenav.js`
 ];
 
 module.exports = function( baseConfig ) {

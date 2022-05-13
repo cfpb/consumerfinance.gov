@@ -5,11 +5,9 @@ from urllib.parse import urlencode
 from django.apps import apps
 from django.db.models import Q
 from django.forms.utils import ErrorList
-from django.templatetags.static import static
-from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-from wagtail.core import blocks, hooks
+from wagtail.core import blocks
 from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.core.models import Page
 from wagtail.images import blocks as images_blocks
@@ -25,14 +23,6 @@ from v1.atomic_elements import atoms, molecules
 # maintain import structure across the project
 from v1.atomic_elements.tables import AtomicTableBlock
 from v1.util import ref
-
-
-@hooks.register("insert_editor_css")
-def editor_css():
-    return format_html(
-        '<link rel="stylesheet" href="{}">',
-        static("cfgov/templates/wagtailadmin/css/simple-chart-admin.css"),
-    )
 
 
 class AskSearch(blocks.StructBlock):
@@ -428,6 +418,9 @@ class SidebarContactInfo(MainContactInfo):
     class Meta:
         template = "_includes/organisms/sidebar-contact-info.html"
 
+    class Media:
+        css = ["sidebar-contact-info.css"]
+
 
 class ModelBlock(blocks.StructBlock):
     """Abstract StructBlock that provides Django model instances to subclasses.
@@ -517,6 +510,15 @@ class SimpleChart(blocks.StructBlock):
         "To change how the data is labeled in the chart, include the correct "
         'labels with the format [{"key": "HEADER/KEY1", "label": "NEWLABEL"}, '
         '{"key": "HEADER/KEY2", "label": "NEWLABEL2"}]',
+    )
+
+    show_all_series_by_default = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        help_text="Uncheck this option to initially only show the first data "
+        " series in the chart. Leave checked to show all data "
+        " series by default. Users can always turn data series on "
+        " or off by interacting with the chart legend. ",
     )
 
     x_axis_source = blocks.TextBlock(
@@ -669,6 +671,12 @@ class ExpandableGroup(BaseExpandableGroup):
             "Check this to add a horizontal rule line to top of "
             "expandable group."
         ),
+    )
+    is_faq = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=("Check this to add FAQ schema markup to expandables."),
+        label="Uses FAQ schema",
     )
 
     expandables = blocks.ListBlock(Expandable())
@@ -1206,6 +1214,7 @@ class MortgageChartBlock(blocks.StructBlock):
 
     class Media:
         js = ["mortgage-performance-trends.js"]
+        css = ["mortgage-performance-trends.css"]
 
 
 class MortgageMapBlock(MortgageChartBlock):
@@ -1216,6 +1225,7 @@ class MortgageMapBlock(MortgageChartBlock):
 
     class Media:
         js = ["mortgage-performance-trends.js"]
+        css = ["mortgage-performance-trends.css"]
 
 
 class ResourceList(blocks.StructBlock):

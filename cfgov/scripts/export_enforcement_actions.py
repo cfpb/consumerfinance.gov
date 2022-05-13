@@ -1,5 +1,6 @@
 import csv
 import datetime
+import tempfile
 
 from django.http import HttpResponse
 
@@ -7,6 +8,8 @@ from bs4 import BeautifulSoup
 
 from v1.models.enforcement_action_page import EnforcementActionPage
 
+
+TEMPDIR = tempfile.gettempdir()
 
 HEADINGS = [
     "Title",
@@ -64,7 +67,7 @@ def assemble_output():
     return rows
 
 
-def export_actions(path="/tmp", http_response=False):
+def export_actions(path=TEMPDIR, http_response=False):
     """
     A script for exporting Enforcement Actions content
     to a CSV that can be opened easily in Excel.

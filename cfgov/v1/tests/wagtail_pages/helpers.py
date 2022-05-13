@@ -288,9 +288,7 @@ def create_learn_page(
     return new_page.get_url(None, site)
 
 
-def create_sublanding_page(
-    page_title, page_slug, parent_path=None, has_feedback=False
-):
+def create_sublanding_page(page_title, page_slug, parent_path=None):
     # create a new page and set it as the child of an existing page
     # get the current site
     site = Site.objects.get(is_default_site=True)
@@ -303,12 +301,6 @@ def create_sublanding_page(
 
     # create page, add it as a child of parent, save, and publish
     new_page = SublandingPage(title=page_title, slug=page_slug)
-
-    # if page has feedback, add it
-    if has_feedback:
-        new_page.content = json.dumps(
-            [{"type": "feedback", "value": {"intro_text": "foo"}}]
-        )
 
     try:
         parent.add_child(instance=new_page)

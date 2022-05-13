@@ -55,7 +55,7 @@ for facet in FACET_LIST:
     FACET_DICT["aggs"].update(
         {"{}_terms".format(facet): {"terms": {"field": facet}}}
     )
-ALWAYS_EXPANDED = {"building_block", "topic", "school_subject"}
+ALWAYS_EXPANDED = {"topic", "school_subject"}
 SEARCH_FIELDS = [
     "text",
     "related_text",
@@ -309,7 +309,8 @@ def default_nested_facets(class_object):
 def default_flat_facets(class_object):
     return [
         {"selected": False, "id": str(obj.id), "title": obj.title}
-        for obj in class_object.objects.all()
+        # For some reason weight ordering not working on .all()
+        for obj in class_object.objects.order_by("weight", "title")
     ]
 
 
