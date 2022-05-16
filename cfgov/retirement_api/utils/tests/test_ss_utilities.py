@@ -4,8 +4,8 @@ import os
 import sys
 import unittest
 from datetime import date, timedelta
+from unittest import mock
 
-import mock
 import requests
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time

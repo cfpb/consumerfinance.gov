@@ -2,8 +2,8 @@
 
 # build-images.sh
 In the main `consumerfinance.gov` directory, there is [`build-images.sh`](../build-images.sh).
-This script will build the required images for Kubernetes. **You must run this 
-script as a pre-requisite to `helm-install.sh`. `build-images.sh` takes 1 argument, 
+This script will build the required images for Kubernetes. **You must run this
+script as a pre-requisite to `helm-install.sh`. `build-images.sh` takes 1 argument,
 which is the tag. Valid values are `local` and `prod`.
 
 ## Usage
@@ -13,8 +13,8 @@ which is the tag. Valid values are `local` and `prod`.
     ./build-images.sh prod
 
 # helm-install.sh
-In the main `consumerfinance.gov` directory, there is [`helm-install.sh`](../helm-install.sh). 
-This script is built to inject environment variables into the provided 
+In the main `consumerfinance.gov` directory, there is [`helm-install.sh`](../helm-install.sh).
+This script is built to inject environment variables into the provided
 override yamls in [`overrides`](overrides).
 
 ## Usage
@@ -69,3 +69,25 @@ run the following command in the correct namespace
 
 # Override Values
 TODO: Add Table with commonly overridden values.
+
+
+# Cron jobs
+
+To make a new
+[Kubernetes cron job](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)
+based on our [CronJob template](cfgov/templates/cronjob.yaml),
+add a new item to the cronJobs array in
+[`cfgov/values.yaml`](cfgov/values.yaml).
+
+For example, our Django
+`clearsessions` management command runs in a cron job defined like this:
+
+```yaml
+- name: "clearSessions"
+  schedule: "@daily"
+  command:
+    - "django-admin"
+  args:
+    - "clearsessions"
+  restartPolicy: OnFailure
+```
