@@ -7,6 +7,7 @@ from wagtail.admin.edit_handlers import (
     StreamFieldPanel,
     TabbedInterface,
 )
+from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.fields import StreamField
 
 from v1.atomic_elements import organisms
@@ -30,6 +31,16 @@ def get_toc_headers(request, self):
             parent["children"].append({"header": header, "id": id})
     toc_headers.append(parent)
     return toc_headers
+
+
+class FIGPageForm(WagtailAdminPageForm):
+    # Upon saving or previewing the page, assign section IDs
+    def save(self, commit=True):
+        page = super().save(commit=False)
+        page.assign_section_ids()
+        if commit:
+            page.save()
+        return page
 
 
 class FIGContentPage(CFGOVPage):
@@ -94,8 +105,8 @@ class FIGContentPage(CFGOVPage):
                 sub3_ind += 1
                 id = f"{ind}.{sub_ind}.{sub3_ind}."
             section.value["section_id"] = id
-        self.save()
 
+    base_form_class = FIGPageForm
     template = "filing_instruction_guide/index.html"
 
     def get_context(self, request, *args, **kwargs):
