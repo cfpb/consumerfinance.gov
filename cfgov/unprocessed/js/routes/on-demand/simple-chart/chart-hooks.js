@@ -104,16 +104,17 @@ const hooks = {
     return newData.sort( ( a, b ) => new Date( a.date ) - new Date( b.date ) );
   },
 
-  // Rename YoY fields and convert them from decimals to percentages
-  cct_credit_yoy( data ) {
-    data = data.map( v => ( {
-      'date': v.date,
-      'Deep subprime': Math.round( v['deep-subprime_yoy'] * 10000 ) / 100,
-      'Near prime': Math.round( v['near-prime_yoy'] * 10000 ) / 100,
-      'Prime': Math.round( v.prime_yoy * 10000 ) / 100,
-      'Subprime': Math.round( v.subprime_yoy * 10000 ) / 100,
-      'Super-prime': Math.round( v['super-prime_yoy'] * 10000 ) / 100
-    } ) );
+  // Convert YoY fields from decimals to percentages
+  // e.g. .308798278 becomes 30.88%
+  cct_yoy( data ) {
+    data = data.map( datum => {
+      for ( const [ k, v ] of Object.entries( datum ) ) {
+        if ( k.endsWith( '_yoy' ) ) {
+          datum[k] = Math.round( v * 10000 ) / 100;
+        }
+      }
+      return datum;
+    } );
 
     return data.sort( ( a, b ) => new Date( a.date ) - new Date( b.date ) );
   }
