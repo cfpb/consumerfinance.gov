@@ -170,6 +170,16 @@ docs:
 
 importDbPath: ""
 
+cronJobs:
+  - name: "clearSessions"
+    schedule: "@weekly"
+    command:
+      - "django-admin"
+    args:
+      - "clearsessions"
+    restartPolicy: OnFailure
+
+
 postgresql:
   enabled: false
 
