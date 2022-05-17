@@ -111,5 +111,5 @@ class FIGContentPage(CFGOVPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context.update({"get_sections": self.get_toc_headers(request)})
+        context.update({"toc_headers": self.get_toc_headers(request)})
         return context
