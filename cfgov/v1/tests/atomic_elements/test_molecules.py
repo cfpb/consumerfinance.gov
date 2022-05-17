@@ -28,10 +28,11 @@ class MoleculesTestCase(ElasticsearchTestsMixin, TestCase):
     def setUpTestData(cls):
         # Create a clean index for the test suite
         management.call_command(
-            "search_index",
-            action="rebuild",
+            "opensearch",
+            "index",
+            "create",
+            "v1",
             force=True,
-            models=["v1"],
             stdout=StringIO(),
         )
 

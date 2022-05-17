@@ -23,7 +23,7 @@ initContainer:
   command:
     - "./docker-entrypoint.sh"
 #  args:
-#    - "./cfgov/manage.py search_index --rebuild -f --parallel"
+#    - "./cfgov/manage.py opensearch index --force rebuild"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -183,7 +183,7 @@ cronJobs:
 postgresql:
   enabled: false
 
-elasticsearch:
+opensearch:
   enabled: false
 
 kibana:

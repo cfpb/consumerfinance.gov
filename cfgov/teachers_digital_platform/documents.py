@@ -1,5 +1,5 @@
-from django_elasticsearch_dsl import Document, fields
-from django_elasticsearch_dsl.registries import registry
+from django_opensearch_dsl import Document, fields
+from django_opensearch_dsl.registries import registry
 
 from search.elasticsearch_helpers import environment_specific_index, strip_html
 from teachers_digital_platform.models.pages import ActivityPage

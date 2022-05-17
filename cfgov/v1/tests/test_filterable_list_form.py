@@ -216,7 +216,7 @@ class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(pages[0].specific, self.page1)
 
 
-@override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
+@override_settings(OPENSEARCH_DSL_AUTOSYNC=True)
 class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
     @classmethod
     def setUpTestData(cls):

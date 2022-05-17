@@ -16,8 +16,8 @@ from wagtail.core.signals import (
     pre_page_move,
 )
 
-from django_elasticsearch_dsl.signals import BaseSignalProcessor
-from elasticsearch_dsl import analyzer, token_filter, tokenizer
+from django_opensearch_dsl.signals import BaseSignalProcessor
+from opensearch_dsl import analyzer, token_filter, tokenizer
 
 from search.models import Synonym
 
@@ -130,14 +130,14 @@ class ElasticsearchTestsMixin:
         # See https://github.com/django-es/django-elasticsearch-dsl/pull/323
         # for a proposed pull request to django-elasticsearch-dsl to support
         # this blocking behavior.
-        from elasticsearch.helpers import bulk as original_bulk
+        from opensearchpy.helpers import bulk as original_bulk
 
         def bulk_with_refresh(*args, **kwargs):
             kwargs.setdefault("refresh", True)
             return original_bulk(*args, **kwargs)
 
         cls.patched_es_bulk = patch(
-            "django_elasticsearch_dsl.documents.bulk", new=bulk_with_refresh
+            "django_opensearch_dsl.documents.bulk", new=bulk_with_refresh
         )
         cls.patched_es_bulk.start()
 
@@ -154,14 +154,15 @@ class ElasticsearchTestsMixin:
         """Rebuild an Elasticsearch index, waiting for its completion.
 
         This method is an alias for the built-in search_index Django management
-        command provided by django-elasticsearch-dsl.
+        command provided by django-opensearch-dsl.
 
         """
         call_command(
-            "search_index",
-            action="rebuild",
+            "opensearch",
+            "index",
+            "rebuild",
+            *models,
             force=True,
-            models=models,
             stdout=stdout,
         )
 

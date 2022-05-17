@@ -7,9 +7,9 @@ from django.test import TestCase
 
 from wagtail.core.models import Site
 
-from django_elasticsearch_dsl import fields
-from django_elasticsearch_dsl.documents import DocType
-from django_elasticsearch_dsl.exceptions import ModelFieldNotMappedError
+from django_opensearch_dsl import fields
+from django_opensearch_dsl.documents import Document
+from django_opensearch_dsl.exceptions import ModelFieldNotMappedError
 from model_bakery import baker
 
 from ask_cfpb.documents import AnswerPageDocument
@@ -121,7 +121,7 @@ class AnswerPageDocumentTest(TestCase):
         )
 
     def test_to_field(self):
-        doc = DocType()
+        doc = Document()
         for f in ["question", "statement"]:
             nameField = doc.to_field(f, AnswerPage._meta.get_field(f))
             self.assertIsInstance(nameField, fields.TextField)
@@ -142,7 +142,7 @@ class AnswerPageDocumentTest(TestCase):
         self.assertEqual(intField._path, ["featured_rank"])
 
     def test_to_field_with_unknown_field(self):
-        doc = DocType()
+        doc = Document()
         with self.assertRaises(ModelFieldNotMappedError):
             doc.to_field(
                 "answer_base", AnswerPage._meta.get_field("answer_base")
@@ -217,6 +217,6 @@ class AnswerPageDocumentTest(TestCase):
         self.es_parent_page.add_child(instance=self.es_page)
         self.es_page.save_revision().publish()
         self.doc.django.auto_refresh = False
-        with patch("django_elasticsearch_dsl.documents.bulk") as mock:
+        with patch("django_opensearch_dsl.documents.bulk") as mock:
             self.doc.update(self.es_page)
             self.assertNotIn("refresh", mock.call_args_list[0][1])

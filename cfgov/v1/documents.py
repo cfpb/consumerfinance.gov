@@ -3,10 +3,10 @@ from html import unescape
 from django.core.exceptions import FieldDoesNotExist
 from django.utils.html import strip_tags
 
-from django_elasticsearch_dsl import Document, fields
-from django_elasticsearch_dsl.registries import registry
-from elasticsearch_dsl import A
-from elasticsearch_dsl.query import MultiMatch
+from django_opensearch_dsl import Document, fields
+from django_opensearch_dsl.registries import registry
+from opensearch_dsl import A
+from opensearch_dsl.query import MultiMatch
 
 from search.elasticsearch_helpers import environment_specific_index
 from v1.models.blog_page import BlogPage, LegacyBlogPage

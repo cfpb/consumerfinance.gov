@@ -1,7 +1,7 @@
 from django.urls import reverse
 
-from django_elasticsearch_dsl import Document, fields
-from django_elasticsearch_dsl.registries import registry
+from django_opensearch_dsl import Document, fields
+from django_opensearch_dsl.registries import registry
 
 from paying_for_college.models import School
 from search.elasticsearch_helpers import (

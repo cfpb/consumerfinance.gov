@@ -8,7 +8,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
 import dj_database_url
-from elasticsearch import RequestsHttpConnection
+from opensearchpy import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
 from cfgov.util import admin_emails
@@ -99,7 +99,7 @@ INSTALLED_APPS = (
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
     "wagtailmedia",
-    "django_elasticsearch_dsl",
+    "django_opensearch_dsl",
     "corsheaders",
     "login",
     "filing_instruction_guide",
@@ -323,10 +323,11 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 )
 
 # ElasticSearch 7 Configuration
+TESTING = False
 ES_HOST = os.getenv("ES_HOST", "localhost")
 ES_PORT = os.getenv("ES_PORT", "9200")
-ELASTICSEARCH_BIGINT = 50000
-ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
+OPENSEARCH_BIGINT = 50000
+OPENSEARCH_DEFAULT_ANALYZER = "snowball"
 
 if os.environ.get("USE_AWS_ES", False):
     awsauth = AWS4Auth(
@@ -335,7 +336,7 @@ if os.environ.get("USE_AWS_ES", False):
         "us-east-1",
         "es",
     )
-    ELASTICSEARCH_DSL = {
+    OPENSEARCH_DSL = {
         "default": {
             "hosts": [{"host": ES_HOST, "port": 443}],
             "http_auth": awsauth,
@@ -345,9 +346,9 @@ if os.environ.get("USE_AWS_ES", False):
         },
     }
 else:
-    ELASTICSEARCH_DSL = {"default": {"hosts": f"http://{ES_HOST}:{ES_PORT}"}}
+    OPENSEARCH_DSL = {"default": {"hosts": f"http://{ES_HOST}:{ES_PORT}"}}
 
-ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = (
+OPENSEARCH_DSL_SIGNAL_PROCESSOR = (
     "search.elasticsearch_helpers.WagtailSignalProcessor"
 )
 

@@ -10,37 +10,45 @@ postgresql:
   service:
     type: LoadBalancer
 
-### ELASTICSEARCH OVERRIDES ###
-elasticsearch:
+### OPENSEARCH OVERRIDES ###
+opensearch:
   enabled: true
 
-  # Disable persistence for local by default
   persistence:
-    enabled: false
+    enabled: false  # Disable persistence for local by default
+#    # Request smaller persistent volumes, if enabled.
+#    accessModes: [ "ReadWriteOnce" ]
+#    storageClass: "hostpath"
+#    size: 100M
 
-  replicas: 1
-  minimumMasterNodes: 0
-  antiAffinity: "soft"
+  extraEnvs:
+    - name: DISABLE_INSTALL_DEMO_CONFIG
+      value: "true"
+
+  replicas: 2
+
+  config:
+    opensearch.yml: |
+      cluster.name: opensearch-cluster
+      # Bind to all interfaces because we don't know what IP address Docker will assign to us.
+      network.host: 0.0.0.0
+      # Setting network.host to a non-loopback address enables the annoying bootstrap checks. "Single-node" mode disables them again.
+      # discovery.type: single-node
+      # Disable Security
+      plugins.security.disabled: true
+  # antiAffinity: "soft"
 
   # Shrink default JVM heap.
-  esJavaOpts: "-Xmx512m -Xms512m"
-
-  # Allocate smaller chunks of memory per pod.
-  resources:
-    requests:
-      cpu: "100m"
-      memory: "1024M"
-    limits:
-      cpu: "1000m"
-      memory: "2048M"
-
-  # Request smaller persistent volumes, if enabled.
-  volumeClaimTemplate:
-    accessModes: [ "ReadWriteOnce" ]
-    storageClassName: "hostpath"
-    resources:
-      requests:
-        storage: 100M
+  # opensearchJavaOpts: "-Xmx512m -Xms512m"
+#
+#  # Allocate smaller chunks of memory per pod.
+#  resources:
+#    requests:
+#      cpu: "25m"
+#      memory: "100M"
+#    limits:
+#      cpu: "500m"
+#      memory: "2048M"
 
   service:
     type: LoadBalancer

@@ -6,7 +6,7 @@ boto3==1.22.7
 dj-database-url==0.5.0
 django-cors-headers==3.11.0
 django-csp==3.7
-django-elasticsearch-dsl==7.2.2
+django-opensearch-dsl==0.2.0
 django-extensions==3.1.5
 django-flags==5.0.9
 django-formtools==2.3
@@ -18,10 +18,11 @@ django-treebeard==4.5.1
 django-url-or-relative-url-field==0.2.0
 djangosaml2==1.5.0
 edgegrid-python==1.2.1
-elasticsearch<7.11  # Keep pinned to the deployed ES version
 govdelivery==1.4.0
 Jinja2==2.11.3
 lxml==4.8.0
+opensearch-dsl==1.0.0
+opensearch-py==1.1.0
 psycopg2-binary==2.8.6
 python-dateutil==2.8.2
 regdown==1.0.3

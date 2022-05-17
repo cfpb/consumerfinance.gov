@@ -4,10 +4,10 @@ image:
 initContainer:
   args:
     - "./cfgov/manage.py"
-    - "search_index"
-    - "--rebuild"
-    - "-f"
-    - "--parallel"
+    - "opensearch"
+    - "index"
+    - "--force"
+    - "rebuild"
 
 extraEnvs:
   - name: ALLOW_ADMIN_URL

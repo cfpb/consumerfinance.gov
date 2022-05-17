@@ -29,10 +29,10 @@ dependencies:
     version: "10.16.2"
     repository: "https://charts.bitnami.com/bitnami"
     condition: postgresql.enabled
-  - name: elasticsearch
-    version: "7.16.3"
-    repository: "https://helm.elastic.co/"
-    condition: elasticsearch.enabled
+  - name: opensearch
+    version: "2.0.0"
+    repository: "https://opensearch-project.github.io/helm-charts/"
+    condition: opensearch.enabled
   - name: kibana
     version: "7.16.3"
     repository: "https://helm.elastic.co/"

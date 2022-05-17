@@ -322,12 +322,12 @@ class TestThatWagtailPageSignalsUpdateIndex(ElasticsearchTestsMixin, TestCase):
         results = search.search(title="foo")
         self.assertEqual(results.count(), 3)
 
-        # By default we set ELASTICSEARCH_DSL_AUTOSYNC to False in
+        # By default we set OPENSEARCH_DSL_AUTOSYNC to False in
         # settings.test, and there's unfortunately no better way to override
         # that here than by patching; see
         # https://github.com/django-es/django-elasticsearch-dsl/issues/322.
         with patch(
-            "django_elasticsearch_dsl.registries.DEDConfig.autosync_enabled",
+            "django_opensearch_dsl.registries.DEDConfig.autosync_enabled",
             return_value=True,
         ):
             # Moving a page out of the parent should update the index so that
