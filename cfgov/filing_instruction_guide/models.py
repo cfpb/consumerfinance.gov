@@ -14,25 +14,6 @@ from v1.atomic_elements import organisms
 from v1.models.base import CFGOVPage
 
 
-def get_toc_headers(request, self):
-    toc_headers = []
-    parent = None
-    for section in self.content:
-        header = section.value.get("header")
-        id = section.value.get("section_id")
-        if section.block_type == "Fig_Section":
-            if parent:
-                toc_headers.append(parent)
-            parent = {"header": header, "id": id, "children": []}
-        elif section.block_type == "Fig_Sub_Section":
-            # if the first block is a subsection instead of a section
-            if not parent:
-                parent = {"header": "", "id": "", "children": []}
-            parent["children"].append({"header": header, "id": id})
-    toc_headers.append(parent)
-    return toc_headers
-
-
 class FIGPageForm(WagtailAdminPageForm):
     # Upon saving or previewing the page, assign section IDs
     def save(self, commit=True):
@@ -88,6 +69,24 @@ class FIGContentPage(CFGOVPage):
         ]
     )
 
+    def get_toc_headers(self, request):
+        toc_headers = []
+        parent = None
+        for section in self.content:
+            header = section.value.get("header")
+            id = section.value.get("section_id")
+            if section.block_type == "Fig_Section":
+                if parent:
+                    toc_headers.append(parent)
+                parent = {"header": header, "id": id, "children": []}
+            elif section.block_type == "Fig_Sub_Section":
+                # if the first block is a subsection instead of a section
+                if not parent:
+                    parent = {"header": "", "id": "", "children": []}
+                parent["children"].append({"header": header, "id": id})
+        toc_headers.append(parent)
+        return toc_headers
+
     def assign_section_ids(self):
         ind = sub_ind = sub3_ind = 0
         for section in self.content:
@@ -111,5 +110,5 @@ class FIGContentPage(CFGOVPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context.update({"get_sections": get_toc_headers(request, self)})
+        context.update({"get_sections": self.get_toc_headers(request)})
         return context
