@@ -134,7 +134,7 @@ class LinkUtilsTests(SimpleTestCase):
         )
 
     def check_external_link(
-        self, url, expected_href=None, expected_pretty_href=None
+        self, url, expected_href=None, expected_pretty_href=None, is_gov=False
     ):
         tag = f'<a href="{url}">foo</a>'
         path = "/about-us/blog/"
@@ -144,7 +144,7 @@ class LinkUtilsTests(SimpleTestCase):
         expected_pretty_href = expected_pretty_href or url
 
         # .gov URLs don't get a data-pretty-href attribute
-        if ".gov" not in url:
+        if not is_gov:
             data_pretty_href = f'data-pretty-href="{expected_pretty_href}" '
 
         expected_html = (
@@ -159,9 +159,35 @@ class LinkUtilsTests(SimpleTestCase):
 
         self.assertEqual(add_link_markup(tag, path), str(expected_tag))
 
+    def test_govdelivery_url1(self):
+        url = "https://public.govdelivery.com"
+        self.check_external_link(url, expected_href=signed_redirect(url))
+
+    def test_govdelivery_url2(self):
+        url = "https://www.govdelivery.com"
+        self.check_external_link(url, expected_href=signed_redirect(url))
+
+    def test_govdelivery_url3(self):
+        url = "https://www.govdelivery.com/something"
+        self.check_external_link(url, expected_href=signed_redirect(url))
+
     def test_dot_gov_urls(self):
         url = "https://www.federalreserve.gov"
-        self.check_external_link(url, expected_href=url)
+        self.check_external_link(
+            url, expected_href=url, expected_pretty_href=None, is_gov=True
+        )
+
+    def test_dot_gov_urls2(self):
+        url = "https://www.federalreserve.gov/something"
+        self.check_external_link(
+            url, expected_href=url, expected_pretty_href=None, is_gov=True
+        )
+
+    def test_content_cfgov(self):
+        url = "http://content.cfpb.gov"
+        tag = "<a href='{}'>foo</a>".format(url)
+        path = "/"
+        self.assertIsNone(add_link_markup(tag, path))
 
     def test_urls_with_gov_in_them(self):
         url = "https://www.realgovsite.lol"
