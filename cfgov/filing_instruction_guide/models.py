@@ -90,6 +90,7 @@ class FIGContentPage(CFGOVPage):
     def assign_section_ids(self):
         ind = sub_ind = sub3_ind = 0
         for section in self.content:
+            id = ""
             sec_type = section.block_type
             if sec_type == "Fig_Section":
                 ind += 1
