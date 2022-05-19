@@ -2,139 +2,43 @@ from django.db import models
 
 from wagtail.admin.edit_handlers import (
     FieldPanel,
-    InlinePanel,
     MultiFieldPanel,
     ObjectList,
     StreamFieldPanel,
     TabbedInterface,
 )
+from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.fields import StreamField
-from wagtail.core.models import PageManager
-
-from modelcluster.fields import ParentalKey
-from modelcluster.models import ClusterableModel
 
 from v1.atomic_elements import organisms
 from v1.models.base import CFGOVPage
 
 
-alpha_map = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-
-def get_report_parts(is_appendix=False):
-    def format(s, *args):
-        if is_appendix:
-            return s.format(*[alpha_map[arg] for arg in args])
-        else:
-            return s.format(*[arg + 1 for arg in args])
-
-    def sec(request, page):
-        sections = [
-            section
-            for section in page.report_sections.all().order_by("pk")
-            if section.is_appendix == is_appendix
-        ]
-
-        return [
-            {
-                "expanded": False,
-                "title": section.section_title,
-                "body": section.section_content,
-                "id": format("section-{}", i),
-                "numbering": format("{}: " if is_appendix else "{}. ", i),
-                "children": [
-                    {
-                        "title": subsection.sub_section_title,
-                        "body": subsection.sub_section_content,
-                        "id": format("section-{}.{}", i, j),
-                        "numbering": ""
-                        if is_appendix
-                        else format("{}.{} ", i, j),
-                        "children": [
-                            {
-                                "title": section3.header,
-                                "body": section3.body,
-                                "id": format("section-{}.{}.{}", i, j, k),
-                                "numbering": ""
-                                if is_appendix
-                                else format("{}.{}.{} ", i, j, k),
-                            }
-                            for k, section3 in enumerate(
-                                subsection.report_sections_level_three.all().order_by(
-                                    "pk"
-                                )
-                            )
-                        ],
-                    }
-                    for j, subsection in enumerate(
-                        section.report_subsections.all().order_by("pk")
-                    )
-                ],
-            }
-            for i, section in enumerate(sections)
-        ]
-
-    return sec
-
-
-get_report_sections = get_report_parts()
-get_report_appendices = get_report_parts(True)
-
-
-class ReportSection(ClusterableModel):
-    section_title = models.CharField(max_length=200, blank=True)
-    is_appendix = models.BooleanField(default=False)
-    section_content = StreamField(
-        [("full_width_text", organisms.FullWidthText())], blank=True
-    )
-    panels = [
-        FieldPanel("section_title"),
-        FieldPanel("is_appendix"),
-        StreamFieldPanel("section_content"),
-        InlinePanel("report_subsections", label="Subsection"),
-    ]
-    report = ParentalKey(
-        "FIGContentPage",
-        on_delete=models.CASCADE,
-        related_name="report_sections",
-    )
-
-
-class ReportSubSection(ClusterableModel):
-    sub_section_title = models.CharField(max_length=200)
-    sub_section_content = StreamField(
-        [("full_width_text", organisms.FullWidthText())], blank=True
-    )
-    panels = [
-        FieldPanel("sub_section_title"),
-        StreamFieldPanel("sub_section_content"),
-        InlinePanel(
-            "report_sections_level_three", label="Section Level Three"
-        ),
-    ]
-    section = ParentalKey(
-        "ReportSection",
-        on_delete=models.CASCADE,
-        related_name="report_subsections",
-    )
-
-
-class ReportSectionLevelThree(models.Model):
-    header = models.CharField(max_length=200)
-    body = models.TextField(blank=True)
-    subsection = ParentalKey(
-        "ReportSubSection",
-        on_delete=models.CASCADE,
-        related_name="report_sections_level_three",
-    )
+class FIGPageForm(WagtailAdminPageForm):
+    # Upon saving or previewing the page, assign section IDs
+    def save(self, commit=True):
+        page = super().save(commit=False)
+        page.assign_section_ids()
+        if commit:
+            page.save()
+        return page
 
 
 class FIGContentPage(CFGOVPage):
 
     # FIG Header Section Fields
-    report_type = models.CharField(max_length=100, blank=True)
+    eyebrow = models.CharField(max_length=100, blank=True)
     page_header = models.CharField(max_length=200, blank=True)
     subheader = models.TextField(blank=True)
+
+    content = StreamField(
+        [
+            ("Fig_Section", organisms.FigSection()),
+            ("Fig_Sub_Section", organisms.FigSubSection()),
+            ("Fig_Sub_3_Section", organisms.FigSub3Section()),
+        ],
+        blank=True,
+    )
 
     # Report upload tab
     content_panels = [
@@ -146,17 +50,13 @@ class FIGContentPage(CFGOVPage):
         ),
         MultiFieldPanel(
             [
-                FieldPanel("report_type"),
+                FieldPanel("eyebrow"),
                 FieldPanel("page_header"),
                 FieldPanel("subheader"),
             ],
             heading="Filing Instruction Guide Header",
         ),
-        InlinePanel(
-            "report_sections",
-            label="Filing Instruction Guide Sections",
-            min_num=0,
-        ),
+        StreamFieldPanel("content"),
     ]
 
     # Tab handler interface
@@ -169,16 +69,47 @@ class FIGContentPage(CFGOVPage):
         ]
     )
 
-    template = "filing_instruction_guide/index.html"
+    def get_toc_headers(self, request):
+        toc_headers = []
+        parent = None
+        for section in self.content:
+            header = section.value.get("header")
+            id = section.value.get("section_id")
+            if section.block_type == "Fig_Section":
+                if parent:
+                    toc_headers.append(parent)
+                parent = {"header": header, "id": id, "children": []}
+            elif section.block_type == "Fig_Sub_Section":
+                # if the first block is a subsection instead of a section
+                if not parent:
+                    parent = {"header": "", "id": "", "children": []}
+                parent["children"].append({"header": header, "id": id})
+        toc_headers.append(parent)
+        return toc_headers
 
-    objects = PageManager()
+    def assign_section_ids(self):
+        ind = sub_ind = sub3_ind = 0
+        for section in self.content:
+            id = ""
+            sec_type = section.block_type
+            if sec_type == "Fig_Section":
+                ind += 1
+                sub_ind = 0
+                sub3_ind = 0
+                id = f"{ind}."
+            if sec_type == "Fig_Sub_Section":
+                sub_ind += 1
+                sub3_ind = 0
+                id = f"{ind}.{sub_ind}."
+            if sec_type == "Fig_Sub_3_Section":
+                sub3_ind += 1
+                id = f"{ind}.{sub_ind}.{sub3_ind}."
+            section.value["section_id"] = id
+
+    base_form_class = FIGPageForm
+    template = "filing_instruction_guide/index.html"
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context.update(
-            {
-                "report_sections": get_report_sections(request, self),
-                "report_appendices": get_report_appendices(request, self),
-            }
-        )
+        context.update({"toc_headers": self.get_toc_headers(request)})
         return context

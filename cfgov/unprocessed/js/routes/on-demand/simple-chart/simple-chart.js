@@ -17,6 +17,12 @@ import { getProjectedDate } from './utils';
 
 accessibility( Highcharts );
 
+Highcharts.setOptions( {
+  lang: {
+    numericSymbols: [ 'K', 'M', 'B' ]
+  }
+} );
+
 const msInDay = 24 * 60 * 60 * 1000;
 const promiseCache = {};
 
