@@ -592,6 +592,7 @@ class SimpleChart(blocks.StructBlock):
 
     class Media:
         js = ["simple-chart/simple-chart.js"]
+        css = ["simple-chart.css"]
 
 
 class FullWidthText(blocks.StreamBlock):
@@ -1187,6 +1188,7 @@ class ChartBlock(blocks.StructBlock):
 
     class Media:
         js = ["chart.js"]
+        css = ["chart.css"]
 
 
 class MortgageChartBlock(blocks.StructBlock):
