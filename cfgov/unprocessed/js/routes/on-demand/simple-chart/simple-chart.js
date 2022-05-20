@@ -12,11 +12,18 @@ import defaultDatetime from './datetime-styles.js';
 import defaultLine from './line-styles.js';
 import tilemapChart from './tilemap-chart.js';
 import { alignMargin, extractSeries, formatSeries, makeFormatter, overrideStyles } from './utils.js';
-import { initFilters } from './select-filters.js';
+import { initFilters } from './data-filters.js';
 import { getProjectedDate } from './utils';
 
 accessibility( Highcharts );
 
+Highcharts.setOptions( {
+  lang: {
+    numericSymbols: [ 'K', 'M', 'B' ]
+  }
+} );
+
+const msInDay = 24 * 60 * 60 * 1000;
 const promiseCache = {};
 
 /**
@@ -77,7 +84,7 @@ function getDefaultChartObject( type ) {
  */
 function makeChartOptions( data, dataAttributes ) {
   const { chartType, styleOverrides, description, xAxisSource, xAxisLabel,
-    yAxisLabel, projectedMonths } = dataAttributes;
+    yAxisLabel, projectedMonths, defaultSeries } = dataAttributes;
   let defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
 
   if ( styleOverrides ) {
@@ -116,9 +123,34 @@ function makeChartOptions( data, dataAttributes ) {
         }
       }
     };
+  } else {
+    defaultObj.legend.title = {
+      text: '(Click to show/hide data)',
+      style: {
+        fontStyle: 'italic',
+        fontWeight: 'normal',
+        fontSize: '14px',
+        color: '#666'
+      }
+    };
   }
 
-  if ( projectedMonths ) defaultObj = addProjectedMonths( defaultObj, projectedMonths );
+  if ( projectedMonths > 0 ) {
+    defaultObj = addProjectedMonths( defaultObj, projectedMonths );
+    defaultObj.legend.y = -10;
+    defaultObj.chart.marginTop = 180;
+
+  }
+
+  if ( defaultSeries === 'False' ) {
+    defaultObj.series = defaultObj.series.map( ( singluarSeries, i ) => {
+      // Skip the first series
+      if ( i > 0 ) {
+        singluarSeries.visible = false;
+      }
+      return singluarSeries;
+    } );
+  }
 
   alignMargin( defaultObj, chartType );
 
@@ -137,7 +169,7 @@ function addProjectedMonths( chartObject, numMonths ) {
   const lastChartDate = chartObject.series[0].data.at( -1 ).x;
 
   // Convert lastChartDate from months to milliseconds for Epoch format
-  const convertedProjectedDate = lastChartDate - numMonths * 30 * 24 * 60 * 60 * 1000;
+  const convertedProjectedDate = lastChartDate - ( numMonths * 30 * msInDay );
   const projectedDate = getProjectedDate( convertedProjectedDate );
 
   /* Add a vertical line and some explanatory text at the starting
@@ -147,8 +179,8 @@ function addProjectedMonths( chartObject, numMonths ) {
     label: {
       text: `Values after ${ projectedDate.humanFriendly } are projected`,
       rotation: 0,
-      x: -300,
-      y: -20
+      x: -260,
+      y: -10
     }
   } ];
 
@@ -236,8 +268,7 @@ function buildChart( chartNode ) {
       );
 
       initFilters(
-        dataAttributes, chartNode, chart, data,
-        transform && chartHooks[transform]
+        dataAttributes, chartNode, chart, data
       );
     }
 

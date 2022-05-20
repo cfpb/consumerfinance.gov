@@ -6,7 +6,6 @@ from collections import OrderedDict
 from csv import DictReader as cdr
 from csv import writer as csw
 from pathlib import Path
-from subprocess import call
 
 from django.contrib.humanize.templatetags.humanize import intcomma
 
@@ -109,7 +108,7 @@ def download_zip_file(url, zip_file):
                 if chunk:
                     f.write(chunk)
         unzip_file(zip_file)
-        call(["rm", zip_file])
+        os.remove(zip_file)
         return True
     else:
         return False

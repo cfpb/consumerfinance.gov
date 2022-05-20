@@ -52,3 +52,14 @@ sections = [
     "FIRSTPARTY",
     "LOCALFOLDER"
 ]
+
+[tool.bandit]
+exclude_dirs = [
+    "*/tests/*",
+    "settings/local.py",
+    "settings/test.py",
+]
+skips = [
+    "B308",
+    "B703",
+]

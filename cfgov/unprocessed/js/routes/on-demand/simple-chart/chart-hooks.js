@@ -88,24 +88,36 @@ const hooks = {
         currAdj = adjusted[v.date];
       } else {
         currRaw = raw[v.date] = { date: v.date, adjusted: 'Unadjusted' };
-        currAdj = adjusted[v.date] = { date: v.date, adjusted: 'Adjusted' };
+        currAdj = adjusted[v.date] = { date: v.date, adjusted: 'Seasonally adjusted' };
       }
       currRaw[v.credit_score_group] = v.vol_unadj;
       currAdj[v.credit_score_group] = v.vol;
     } );
 
     const newData = [];
-    [ raw, adjusted ].forEach( obj => {
+    [ adjusted, raw ].forEach( obj => {
       for ( const [ , v ] of Object.entries( obj ) ) {
         newData.push( v );
       }
     } );
 
     return newData.sort( ( a, b ) => new Date( a.date ) - new Date( b.date ) );
+  },
 
+  // Convert YoY fields from decimals to percentages
+  // e.g. .308798278 becomes 30.88%
+  cct_yoy( data ) {
+    data = data.map( datum => {
+      for ( const [ k, v ] of Object.entries( datum ) ) {
+        if ( k.endsWith( '_yoy' ) ) {
+          datum[k] = Math.round( v * 10000 ) / 100;
+        }
+      }
+      return datum;
+    } );
 
+    return data.sort( ( a, b ) => new Date( a.date ) - new Date( b.date ) );
   }
-
 
 };
 

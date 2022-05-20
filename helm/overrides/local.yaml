@@ -37,3 +37,12 @@ extraEnvs:
     value: "${DJANGO_ADMIN_USERNAME}"
   - name: DJANGO_ADMIN_PASSWORD
     value: "${DJANGO_ADMIN_PASSWORD}"
+
+cronJobs:
+  - name: "clearSessions"
+    schedule: "@daily"
+    command:
+      - "django-admin"
+    args:
+      - "clearsessions"
+    restartPolicy: OnFailure

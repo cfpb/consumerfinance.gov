@@ -71,6 +71,7 @@ class ConferenceExporter:
         worksheet.append(self.fields)
 
         for registrant in self.registrants:
+            registrant.created = registrant.created.replace(tzinfo=None)
             worksheet.append(self._registrant_to_row(registrant))
 
         return bytes(save_virtual_workbook(workbook))

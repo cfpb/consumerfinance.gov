@@ -153,7 +153,6 @@ class BlogPage(AbstractFilterPage):
         ('expandable', organisms.Expandable()),
         ('well', organisms.Well()),
         ('email_signup', organisms.EmailSignUp()),
-        ('feedback', v1_blocks.Feedback()),
     ])
     …
 ```

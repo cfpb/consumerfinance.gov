@@ -15,7 +15,6 @@ from wagtail.search import index
 
 from modelcluster.fields import ParentalKey
 
-from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
@@ -228,7 +227,6 @@ class EnforcementActionPage(AbstractFilterPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
-            ("feedback", v1_blocks.Feedback()),
         ],
         blank=True,
     )

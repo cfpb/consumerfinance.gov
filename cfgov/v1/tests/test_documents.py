@@ -1,13 +1,13 @@
 import json
 from datetime import datetime
 from io import StringIO
+from unittest.mock import patch
 
 from django.test import TestCase
 
 from wagtail.core.models import Site
 
 from dateutil.relativedelta import relativedelta
-from mock import patch
 from pytz import timezone
 
 from search.elasticsearch_helpers import ElasticsearchTestsMixin

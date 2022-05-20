@@ -79,28 +79,6 @@ msgstr "gobierno federal de los Estados Unidos"
 msgid "Your browser does not support this audio player."
 msgstr ""
 
-#: jinja2/v1/_includes/blocks/feedback.html:62
-msgid "Yes"
-msgstr "Sí"
-
-#: jinja2/v1/_includes/blocks/feedback.html:97
-msgid "Additional comment"
-msgstr "Comentario adicional"
-
-#: jinja2/v1/_includes/blocks/feedback.html:98
-msgid "optional"
-msgstr "opcional"
-
-#: jinja2/v1/_includes/blocks/feedback.html:102
-msgid ""
-"Please do not share any personally identifiable information (PII), "
-"including, but not limited to: your name, address, phone number, email "
-"address, Social Security number, account information, or any other "
-"information of a sensitive nature."
-msgstr ""
-"No incluya información confidencial, como su nombre, información de "
-"contacto, número de cuenta o número de seguro social en este campo."
-
 #: jinja2/v1/_includes/blocks/schema/tip.html:19
 msgid "Tip"
 msgstr "Consejo"

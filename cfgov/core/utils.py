@@ -13,10 +13,16 @@ from core.templatetags.svg_icon import svg_icon
 NON_GOV_LINKS = re.compile(
     r"https?:\/\/(?:www\.)?(?![^\?]+\.gov)(?!(content\.)?localhost).*"
 )
+
 NON_CFPB_LINKS = re.compile(
     r"(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)"
     r"(?!(content\.)?localhost).*)"
 )
+
+LINK_PATTERN = re.compile(
+    r"^(?P<schema>https?)://(?P<domain>[^/:]+):?(?P<port>\d+)?(?P<path>/?.*)?$"
+)
+
 DOWNLOAD_LINKS = re.compile(
     r"(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$"
 )
@@ -60,6 +66,13 @@ ICONLESS_LINK_CHILD_ELEMENTS = [
     "h5",
     "h6",
 ]
+
+
+def should_interstitial(url: str) -> bool:
+    match = LINK_PATTERN.match(url)
+    if match.group("domain").endswith(".gov") and NON_CFPB_LINKS.match(url):
+        return False
+    return True
 
 
 def sign_url(url):
@@ -162,7 +175,7 @@ def add_link_markup(tag, request_path):
     elif NON_CFPB_LINKS.match(href):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = "external-link"
-        if NON_GOV_LINKS.match(href):
+        if should_interstitial(href):
             # Add pretty URL for print styles
             tag["data-pretty-href"] = href
             # Add the redirect notice as well
@@ -190,7 +203,7 @@ def add_link_markup(tag, request_path):
         return str(tag)
 
     if not icon:
-        return None
+        return
 
     icon_classes = {"class": LINK_ICON_TEXT_CLASSES}
     spans = tag.findAll("span", icon_classes)

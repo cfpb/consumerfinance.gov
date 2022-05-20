@@ -5,7 +5,6 @@ from decimal import Decimal
 from unittest import mock
 
 import django
-from django.http import HttpRequest
 from django.urls import reverse
 
 from model_bakery import baker
@@ -18,7 +17,6 @@ from paying_for_college.models import (
 )
 from paying_for_college.views import (
     EXPENSE_FILE,
-    Feedback,
     format_constants,
     get_json_file,
     get_program,
@@ -55,21 +53,6 @@ class ValidatorTests(unittest.TestCase):
 
 
 class TestViews(django.test.TestCase):
-
-    landing_page_views = [
-        "pfc-landing",
-        "pfc-repay",
-        "pfc-choose",
-        "pfc-manage",
-    ]
-    POST = HttpRequest()
-    POST.POST = {"school_program": "999999", "ba": True, "is_valid": True}
-    feedback_post_data = {
-        "csrfmiddlewaretoken": "abc",
-        "message": "test",
-        "referrer": "disclosure/page",
-    }
-
     def test_get_json_file(self):
         test_json = get_json_file(EXPENSE_FILE)
         test_data = json.loads(test_json)
@@ -92,27 +75,6 @@ class TestViews(django.test.TestCase):
         self.assertEqual(test4, 4)
         bad_school_test = get_program_length(program="", school=bad_school)
         self.assertIs(bad_school_test, None)
-
-    def test_feedback(self):
-        response = self.client.get(
-            reverse("paying_for_college:disclosures:pfc-feedback")
-        )
-        self.assertIn("form", response.context_data)
-        self.assertIn("url_root", response.context_data)
-
-    def test_feedback_post_creates_feedback(self):
-        self.assertFalse(Feedback.objects.exists())
-        self.client.post(
-            reverse("paying_for_college:disclosures:pfc-feedback"),
-            data=self.feedback_post_data,
-        )
-        self.assertTrue(Feedback.objects.exists())
-
-    def test_feedback_post_invalid(self):
-        response = self.client.post(
-            reverse("paying_for_college:disclosures:pfc-feedback")
-        )
-        self.assertTrue(response.status_code == 400)
 
     def test_technote(self):
         response = self.client.get(
