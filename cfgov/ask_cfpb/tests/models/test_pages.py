@@ -1,4 +1,5 @@
 import datetime
+import tempfile
 from unittest import mock
 
 from django.apps import apps
@@ -54,6 +55,8 @@ from v1.util.migrations import (
     set_streamfield_data,
 )
 
+
+TEMPDIR = tempfile.gettempdir()
 
 now = timezone.now()
 
@@ -130,7 +133,7 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
             export_questions()
         self.assertEqual(mock_output.call_count, 1)
         m.assert_called_once_with(
-            "/tmp/{}".format(slug), "w", encoding="windows-1252"
+            f"{TEMPDIR}/{slug}", "w", encoding="windows-1252"
         )
 
     @mock.patch("ask_cfpb.scripts.export_ask_data.assemble_output")
