@@ -30,7 +30,7 @@ requests-aws4auth==1.1.2
 s3transfer==0.5.2
 wagtail-autocomplete==0.8.0
 wagtail-flags==5.1.0
-wagtail-inventory==1.4.1
+wagtail-inventory==1.5
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.6
 wagtail-treemodeladmin==1.5.0
