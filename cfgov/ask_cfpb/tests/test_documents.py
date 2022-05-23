@@ -218,8 +218,6 @@ class AnswerPageDocumentTest(TestCase):
         self.es_parent_page.add_child(instance=self.es_page)
         self.es_page.save_revision().publish()
         self.doc.Index.auto_refresh = False
-        print(self.doc.django.auto_refresh)
-        print(self.doc.django.ignore_signals)
         with patch("django_opensearch_dsl.documents.bulk") as mock:
             self.doc.update(self.es_page, "update")
             self.assertFalse(mock.call_args_list[0][1]["refresh"])
