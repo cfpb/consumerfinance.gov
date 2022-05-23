@@ -99,7 +99,7 @@ function makeFormatter( yAxisLabel ) {
     if ( x instanceof Date ) {
       x = chartHooks.getDateString( x );
     }
-    let str = `<b>${ x }</b><br/>${ yAxisLabel }: <b>${ this.y }</b>`;
+    let str = `<b>${ x }</b><br/>${ yAxisLabel }: <b>${ this.y.toLocaleString() }</b>`;
     if ( this.series && this.series.name ) {
       str = `<b>${ this.series.name }</b><br/>` + str;
     }

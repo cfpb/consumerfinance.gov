@@ -470,7 +470,6 @@ CSP_SCRIPT_SRC = (
     "*.googleoptimize.com",
     "tagmanager.google.com",
     "optimize.google.com",
-    "ajax.googleapis.com",
     "search.usa.gov",
     "api.mapbox.com",
     "js-agent.newrelic.com",
@@ -479,17 +478,12 @@ CSP_SCRIPT_SRC = (
     "gov-bam.nr-data.net",
     "*.youtube.com",
     "*.ytimg.com",
-    "trk.cetrk.com",
-    "universal.iperceptions.com",
     "cdn.mouseflow.com",
     "n2.mouseflow.com",
     "us.mouseflow.com",
-    "geocoding.geo.census.gov",
-    "tigerweb.geo.census.gov",
+    "*.geo.census.gov",
     "about:",
-    "connect.facebook.net",
     "www.federalregister.gov",
-    "storage.googleapis.com",
     "*.qualtrics.com",
 )
 
@@ -501,7 +495,6 @@ CSP_STYLE_SRC = (
     "tagmanager.google.com",
     "optimize.google.com",
     "api.mapbox.com",
-    "fonts.googleapis.com",
 )
 
 # These specify valid image sources
@@ -510,27 +503,21 @@ CSP_IMG_SRC = (
     "*.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
-    "www.gstatic.com",
-    "ssl.gstatic.com",
-    "stats.g.doubleclick.net",
     "img.youtube.com",
     "*.google-analytics.com",
-    "trk.cetrk.com",
     "searchstats.usa.gov",
-    "gtrk.s3.amazonaws.com",
     "*.googletagmanager.com",
     "tagmanager.google.com",
-    "maps.googleapis.com",
     "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
     "stats.search.usa.gov",
     "blob:",
     "data:",
-    "www.facebook.com",
     "www.gravatar.com",
     "*.qualtrics.com",
     "*.mouseflow.com",
+    "i.ytimg.com",
 )
 
 # These specify what URL's we allow to appear in frames/iframes
@@ -542,22 +529,11 @@ CSP_FRAME_SRC = (
     "*.googleoptimize.com",
     "optimize.google.com",
     "www.youtube.com",
-    "*.doubleclick.net",
-    "universal.iperceptions.com",
-    "www.facebook.com",
-    "staticxx.facebook.com",
-    "mediasite.yorkcast.com",
     "*.qualtrics.com",
 )
 
 # These specify where we allow fonts to come from
-CSP_FONT_SRC = (
-    "'self'",
-    "data:",
-    "*.consumerfinance.gov",
-    "fonts.google.com",
-    "fonts.gstatic.com",
-)
+CSP_FONT_SRC = "'self'"
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to
 CSP_CONNECT_SRC = (
@@ -572,7 +548,6 @@ CSP_CONNECT_SRC = (
     "s3.amazonaws.com",
     "public.govdelivery.com",
     "n2.mouseflow.com",
-    "api.iperceptions.com",
     "*.qualtrics.com",
     "raw.githubusercontent.com",
 )
