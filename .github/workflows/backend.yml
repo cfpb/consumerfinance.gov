@@ -70,6 +70,7 @@ jobs:
           tox -e ${{ matrix.toxenv }}
         env:
           TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner
+          ES_HOST: localhost
           ES_PORT: 9200
 
       - name: Prepare test coverage
