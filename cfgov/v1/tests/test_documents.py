@@ -198,7 +198,9 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         cls.blog_content_match = blog_content_match
         cls.blog_topic_match = blog_topic_match
 
-        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def test_search_event_all_fields(self):
         to_date_dt = datetime(2021, 3, 16)
@@ -315,7 +317,9 @@ class TestThatWagtailPageSignalsUpdateIndex(ElasticsearchTestsMixin, TestCase):
         blog3 = BlogPage(title="foo 3", live=True)
         parent.add_child(instance=blog3)
 
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
         search = FilterablePagesDocumentSearch(prefix="/parent/")
 
         # Initially a search at the root should return 3 results.

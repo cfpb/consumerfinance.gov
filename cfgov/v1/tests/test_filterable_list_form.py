@@ -9,6 +9,7 @@ from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
     EventFilterablePagesDocumentSearch,
+    FilterablePagesDocument,
     FilterablePagesDocumentSearch,
 )
 from v1.forms import (
@@ -56,7 +57,9 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         publish_page(self.cool_event)
         publish_page(self.awesome_event)
         publish_page(self.category_blog)
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def setUpFilterableForm(self, data=None, filterable_categories=None):
         form = FilterableListForm(
@@ -188,7 +191,9 @@ class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):
         publish_page(cls.page2)
         publish_page(cls.page3)
 
-        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def get_filtered_pages(self, data):
         form = FilterableListForm(
@@ -220,7 +225,9 @@ class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):
 class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
         event = EventPage(
             title="test page 2", start_dt=datetime.now(timezone("UTC"))
@@ -249,7 +256,9 @@ class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
         publish_page(enforcement)
         cls.enforcement = enforcement
 
-        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def test_enforcement_action_elasticsearch(self):
         form = EnforcementActionsFilterForm(

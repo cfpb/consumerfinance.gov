@@ -150,7 +150,7 @@ class ElasticsearchTestsMixin:
         cls.patched_es_bulk.stop()
 
     @staticmethod
-    def rebuild_elasticsearch_index(*models, stdout=sys.stdout):
+    def rebuild_elasticsearch_index(*indices, stdout=sys.stdout):
         """Rebuild an Elasticsearch index, waiting for its completion.
 
         This method is an alias for the built-in search_index Django management
@@ -161,7 +161,7 @@ class ElasticsearchTestsMixin:
             "opensearch",
             "index",
             "rebuild",
-            *models,
+            *indices,
             force=True,
             stdout=stdout,
         )
@@ -169,7 +169,7 @@ class ElasticsearchTestsMixin:
             "opensearch",
             "document",
             "update",
-            indices=models,
+            indices=indices,
             force=True,
             stdout=stdout,
         )

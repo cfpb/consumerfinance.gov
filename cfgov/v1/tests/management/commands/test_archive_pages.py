@@ -11,6 +11,7 @@ import pytz
 from freezegun import freeze_time
 
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
+from v1.documents import FilterablePagesDocument
 from v1.models import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 
@@ -57,7 +58,9 @@ class InactiveUsersTestCase(ElasticsearchTestsMixin, TestCase):
         self.filterable_page.add_child(instance=self.page4)
 
         self.stdout = StringIO()
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def test_archive_bad_path_errors(self):
         with self.assertRaises(CommandError):

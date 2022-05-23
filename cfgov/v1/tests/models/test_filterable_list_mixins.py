@@ -8,6 +8,7 @@ from wagtail.core.models import Page, Site
 
 from scripts._atomic_helpers import filter_controls
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
+from v1.documents import FilterablePagesDocument
 from v1.models import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.filterable_list_mixins import FilterableListMixin
@@ -99,7 +100,9 @@ class FilterableListContextTestCase(ElasticsearchTestsMixin, TestCase):
         self.filterable_page.add_child(instance=self.page)
         self.filterable_page.add_child(instance=self.archived_page)
 
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def test_get_context_has_archived_posts(self):
         context = self.filterable_page.get_context(
@@ -130,7 +133,9 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
         )
         self.filterable_page.add_child(instance=self.page)
 
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def test_index_route(self):
         response = self.client.get("/test/")
@@ -168,7 +173,9 @@ class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
             instance=self.archived_sibling_page
         )
 
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def set_filterable_controls(self, value):
         self.filterable_page.content = StreamValue(
