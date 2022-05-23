@@ -32,7 +32,7 @@ jobs:
       opensearch:
         image: opensearchproject/opensearch:2.0.0-rc1
         ports:
-        - 9200/tcp
+          - 9200:9200
         options: -e="discovery.type=single-node" --health-cmd="curl -XGET https://localhost:9200/_cluster/health -u 'admin:admin' --insecure" --health-interval=10s --health-timeout=5s --health-retries=10
 
     steps:
@@ -69,9 +69,7 @@ jobs:
         run: |
           tox -e ${{ matrix.toxenv }}
         env:
-          TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner
-          ES_HOST: localhost
-          ES_PORT: 9200
+          TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner]
 
       - name: Prepare test coverage
         if: steps.filter.outputs.backend == 'true' && matrix.toxenv == 'unittest'
