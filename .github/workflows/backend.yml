@@ -70,7 +70,7 @@ jobs:
           tox -e ${{ matrix.toxenv }}
         env:
           TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner
-          ES_PORT: ${{ job.services.elasticsearch.ports[9200] }}
+          ES_PORT: 9200
 
       - name: Prepare test coverage
         if: steps.filter.outputs.backend == 'true' && matrix.toxenv == 'unittest'
