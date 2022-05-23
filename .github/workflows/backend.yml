@@ -69,7 +69,7 @@ jobs:
         run: |
           tox -e ${{ matrix.toxenv }}
         env:
-          TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner]
+          TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner
 
       - name: Prepare test coverage
         if: steps.filter.outputs.backend == 'true' && matrix.toxenv == 'unittest'
