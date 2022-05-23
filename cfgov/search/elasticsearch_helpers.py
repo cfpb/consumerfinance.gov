@@ -165,6 +165,14 @@ class ElasticsearchTestsMixin:
             force=True,
             stdout=stdout,
         )
+        call_command(
+            "opensearch",
+            "document",
+            "update",
+            indices=models,
+            force=True,
+            stdout=stdout,
+        )
 
 
 class WagtailSignalProcessor(BaseSignalProcessor):

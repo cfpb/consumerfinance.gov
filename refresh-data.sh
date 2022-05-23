@@ -64,6 +64,7 @@ refresh_data() {
 update_index() {
     echo 'Updating search indexes'
     ./cfgov/manage.py opensearch index --force rebuild
+    ./cfgov/manage.py opensearch document --force update
 }
 
 get_data() {
