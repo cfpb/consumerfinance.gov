@@ -16,9 +16,9 @@
 
    value.text:          The text used within the description markup.
 
-   value.signup_method: Method used to sign up, either a form or a link.
+   value.code:          GovDelivery code for a specified mailing list.
 
-   value.gd_code:       GovDelivery code or URL for a specified mailing list.
+   value.url:           GovDelivery URL for a specified mailing list.
 
    ========================================================================== #}
 
@@ -43,21 +43,15 @@
 {% endif %}
 
 {# TODO: DRY this up so we don't repeat the m-btn-group and privacy link #}
-{% if value.signup_method == 'link' %}
+{% if value.url is not none %}
     <div class="m-btn-group">
         <a class="a-btn"
-           href="{{ value.gd_code }}"
+           href="{{ value.url }}"
            target="_blank"
            rel="noopener noreferrer"
            {# TODO: Fix style in design system #}
            style="margin-right: 10px;">
             {{ _('Sign up') }}
-        </a>
-        <a class="a-btn a-btn__link a-btn__secondary"
-           href="{{ pageurl(value.disclaimer_page) if value.disclaimer_page else disclaimer_url }}"
-           target="_blank"
-           rel="noopener noreferrer">
-            {{ _('See Privacy Act statement') }}
         </a>
     </div>
 {% else %}
@@ -91,7 +85,7 @@
             </a>
         </div>
 
-        <input type="hidden" name="code" value="{{ value.gd_code }}">
+        <input type="hidden" name="code" value="{{ value.code }}">
     </form>
 {% endif %}
 </div>

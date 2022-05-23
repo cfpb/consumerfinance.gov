@@ -172,73 +172,6 @@ class PostPreviewSnapshot(blocks.StructBlock):
         template = "_includes/organisms/post-preview-snapshot.html"
 
 
-class EmailSignUp(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False, default="Stay informed")
-    default_heading = blocks.BooleanBlock(
-        required=False,
-        default=True,
-        label="Default heading style",
-        help_text=(
-            "If selected, heading will be styled as an H5 "
-            "with green top rule. Deselect to style header as H3."
-        ),
-    )
-    text = blocks.CharBlock(
-        required=False,
-        help_text=(
-            "Write a sentence or two about what kinds of emails the "
-            "user is signing up for, how frequently they will be sent, "
-            "etc."
-        ),
-    )
-    signup_method = blocks.ChoiceBlock(
-        choices=[
-            (
-                "form",
-                "Enter an email address directly in a form",
-            ),
-            ("link", "Link to a GovDelivery signup page"),
-        ],
-        required=True,
-        default="form",
-        label="Signup method",
-        help_text=(
-            "Choose how people will sign up: either by entering their email "
-            "directly or by going to a GovDelivery signup page"
-        ),
-    )
-    gd_code = blocks.CharBlock(
-        required=False,
-        label="GovDelivery code or signup page URL",
-        help_text=(
-            "For a signup form, GovDeliery code (USCFPB_###) for the list "
-            "people who submit the form will sign up for. For a signup link, "
-            "URL for the GovDelivery signup page."
-        ),
-    )
-    disclaimer_page = blocks.PageChooserBlock(
-        required=False,
-        label="Privacy Act statement",
-        help_text=(
-            'Choose the page that the "See Privacy Act statement" link '
-            'should go to. If in doubt, use "Generic Email Sign-Up '
-            'Privacy Act Statement".'
-        ),
-    )
-
-    class Meta:
-        icon = "mail"
-        template = "_includes/organisms/email-signup.html"
-
-    class Media:
-        js = ["email-signup.js"]
-
-    # TODO: See if we can not include the JS on the page for link-only signups
-    # @property
-    # def media(self):
-    #     return forms.Media(js=["email-signup.js"])
-
-
 class RelatedPosts(blocks.StructBlock):
     limit = blocks.CharBlock(
         default="3",
@@ -627,7 +560,7 @@ class FullWidthText(blocks.StreamBlock):
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
     reusable_text = v1_blocks.ReusableTextChooserBlock("v1.ReusableText")
-    email_signup = EmailSignUp()
+    email_signup = v1_blocks.EmailSignUpChooserBlock()
     well = Well()
 
     class Meta:
