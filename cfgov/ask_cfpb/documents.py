@@ -19,8 +19,8 @@ class AnswerPageDocument(Document):
     url = fields.TextField()
     preview = fields.TextField(attr="answer_content_preview")
 
-    def get_queryset(self):
-        query_set = super().get_queryset()
+    def get_queryset(self, *args, **kwargs):
+        query_set = super().get_queryset(*args, **kwargs)
         return query_set.filter(live=True, redirect_to_page=None)
 
     def prepare_autocomplete(self, instance):

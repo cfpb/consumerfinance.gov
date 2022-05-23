@@ -44,7 +44,7 @@ class FilterablePagesDocument(Document):
     path = fields.TextField()
     depth = fields.IntegerField()
 
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         return AbstractFilterPage.objects.live().public().specific()
 
     def prepare_url(self, instance):

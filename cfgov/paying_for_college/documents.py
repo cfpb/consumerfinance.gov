@@ -18,9 +18,9 @@ class SchoolDocument(Document):
     url = fields.TextField()
     nicknames = fields.TextField()
 
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         """Prevent schools that have closed from being indexed."""
-        query_set = super().get_queryset()
+        query_set = super().get_queryset(*args, **kwargs)
         return query_set.filter(operating=True)
 
     def prepare_autocomplete(self, instance):

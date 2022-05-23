@@ -21,21 +21,8 @@ opensearch:
 #    storageClass: "hostpath"
 #    size: 100M
 
-  extraEnvs:
-    - name: DISABLE_INSTALL_DEMO_CONFIG
-      value: "true"
-
   replicas: 2
 
-  config:
-    opensearch.yml: |
-      cluster.name: opensearch-cluster
-      # Bind to all interfaces because we don't know what IP address Docker will assign to us.
-      network.host: 0.0.0.0
-      # Setting network.host to a non-loopback address enables the annoying bootstrap checks. "Single-node" mode disables them again.
-      # discovery.type: single-node
-      # Disable Security
-      plugins.security.disabled: true
   # antiAffinity: "soft"
 
   # Shrink default JVM heap.
@@ -54,7 +41,7 @@ opensearch:
     type: LoadBalancer
 
 ### KIBANA OVERRIDES ###
-kibana:
+opensearch-dashboards:
   enabled: true
 
   persistence:
