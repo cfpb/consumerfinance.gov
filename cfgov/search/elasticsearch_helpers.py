@@ -165,11 +165,13 @@ class ElasticsearchTestsMixin:
             force=True,
             stdout=stdout,
         )
+        if indices:
+            indices = ("-i", *indices)
         call_command(
             "opensearch",
             "document",
-            "update",
-            indices=indices,
+            "index",
+            *indices,
             force=True,
             stdout=stdout,
         )

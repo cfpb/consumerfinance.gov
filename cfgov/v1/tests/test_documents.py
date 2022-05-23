@@ -38,7 +38,7 @@ class FilterablePagesDocumentTest(TestCase):
         self.assertFalse(FilterablePagesDocument.django.ignore_signals)
 
     def test_auto_refresh_default(self):
-        self.assertFalse(FilterablePagesDocument.django.auto_refresh)
+        self.assertFalse(FilterablePagesDocument.Index.auto_refresh)
 
     def test_fields_populated(self):
         mapping = FilterablePagesDocument._doc_type.mapping

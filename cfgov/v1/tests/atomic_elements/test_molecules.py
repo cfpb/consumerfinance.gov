@@ -1,6 +1,5 @@
 from io import StringIO
 
-from django.core import management
 from django.test import SimpleTestCase, TestCase
 
 from wagtail.core.blocks import StreamValue
@@ -14,6 +13,7 @@ from v1.atomic_elements.molecules import (
     RSSFeed,
     TextIntroduction,
 )
+from v1.documents import FilterablePagesDocument
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.browse_page import BrowsePage
 from v1.models.landing_page import LandingPage
@@ -27,13 +27,8 @@ class MoleculesTestCase(ElasticsearchTestsMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
         # Create a clean index for the test suite
-        management.call_command(
-            "opensearch",
-            "index",
-            "create",
-            "v1",
-            force=True,
-            stdout=StringIO(),
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
         )
 
     def test_text_intro(self):

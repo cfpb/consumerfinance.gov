@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 from django.apps import apps
 from django.db import models
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from wagtail.core.models import Site
 
@@ -100,7 +100,7 @@ class AnswerPageDocumentTest(TestCase):
         self.assertFalse(AnswerPageDocument.django.ignore_signals)
 
     def test_auto_refresh_default(self):
-        self.assertFalse(AnswerPageDocument.django.auto_refresh)
+        self.assertFalse(AnswerPageDocument.Index.auto_refresh)
 
     def test_fields_populated(self):
         mapping = AnswerPageDocument._doc_type.mapping
@@ -213,10 +213,13 @@ class AnswerPageDocumentTest(TestCase):
             },
         )
 
+    @override_settings(OPENSEARCH_DSL_AUTO_REFRESH=True)
     def test_model_instance_update_no_refresh(self):
         self.es_parent_page.add_child(instance=self.es_page)
         self.es_page.save_revision().publish()
-        self.doc.django.auto_refresh = False
+        self.doc.Index.auto_refresh = False
+        print(self.doc.django.auto_refresh)
+        print(self.doc.django.ignore_signals)
         with patch("django_opensearch_dsl.documents.bulk") as mock:
-            self.doc.update(self.es_page)
-            self.assertNotIn("refresh", mock.call_args_list[0][1])
+            self.doc.update(self.es_page, "update")
+            self.assertFalse(mock.call_args_list[0][1]["refresh"])

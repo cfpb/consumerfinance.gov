@@ -112,6 +112,7 @@ class FilterablePagesDocument(Document):
     class Index:
         name = environment_specific_index("filterable-pages")
         settings = {"index.max_ngram_diff": 23}
+        auto_refresh = False
 
 
 class FilterablePagesDocumentSearch:

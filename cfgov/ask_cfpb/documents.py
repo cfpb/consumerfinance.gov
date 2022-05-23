@@ -41,6 +41,7 @@ class AnswerPageDocument(Document):
     class Index:
         name = environment_specific_index("ask-cfpb")
         settings = {"number_of_shards": 1, "number_of_replicas": 0}
+        auto_refresh = False
 
     class Django:
         model = AnswerPage
