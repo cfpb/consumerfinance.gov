@@ -102,10 +102,22 @@ const hooks = {
     } );
 
     return newData.sort( ( a, b ) => new Date( a.date ) - new Date( b.date ) );
+  },
 
+  // Convert YoY fields from decimals to percentages
+  // e.g. .308798278 becomes 30.88%
+  cct_yoy( data ) {
+    data = data.map( datum => {
+      for ( const [ k, v ] of Object.entries( datum ) ) {
+        if ( k.endsWith( '_yoy' ) ) {
+          datum[k] = Math.round( v * 10000 ) / 100;
+        }
+      }
+      return datum;
+    } );
 
+    return data.sort( ( a, b ) => new Date( a.date ) - new Date( b.date ) );
   }
-
 
 };
 
