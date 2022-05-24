@@ -592,6 +592,7 @@ class SimpleChart(blocks.StructBlock):
 
     class Media:
         js = ["simple-chart/simple-chart.js"]
+        css = ["simple-chart.css"]
 
 
 class FullWidthText(blocks.StreamBlock):
@@ -871,7 +872,6 @@ class FilterableList(BaseExpandable):
         help_text="Add links to post preview images and"
         " headings in filterable list results",
     )
-
     filter_children = blocks.BooleanBlock(
         default=True,
         required=False,
@@ -1187,6 +1187,7 @@ class ChartBlock(blocks.StructBlock):
 
     class Media:
         js = ["chart.js"]
+        css = ["chart.css"]
 
 
 class MortgageChartBlock(blocks.StructBlock):
@@ -1369,3 +1370,23 @@ class DataSnapshot(blocks.StructBlock):
         icon = "image"
         label = "CCT Data Snapshot"
         template = "_includes/organisms/data_snapshot.html"
+
+
+class FigSection(blocks.StructBlock):
+    header = blocks.TextBlock(label="Section header")
+    section_id = blocks.TextBlock(
+        required=False, help_text="Will be filled in automatically upon save."
+    )
+    content = FullWidthText()
+
+    class Meta:
+        icon = "edit"
+        template = "_includes/organisms/fig-section.html"
+
+
+class FigSubSection(FigSection):
+    header = blocks.TextBlock(label="Subsection header")
+
+
+class FigSub3Section(FigSection):
+    header = blocks.TextBlock(label="Level 3 subsection header")

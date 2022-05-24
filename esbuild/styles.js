@@ -39,7 +39,8 @@ module.exports = function( baseConfig ) {
         math: 'always',
         paths: [
           ...readdirSync( `${ modules }/@cfpb` ).map( v => `${ modules }/@cfpb/${ v }/src` ),
-          `${ modules }/cfpb-chart-builder/src/css`
+          `${ modules }/cfpb-chart-builder/src/css`,
+          `${ modules }`
         ]
       }
     } ) ]
