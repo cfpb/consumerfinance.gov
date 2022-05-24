@@ -91,8 +91,8 @@ function updateView() {
   let request = params.getVal( 'request' );
 
   // Abort the previous request.
-  if ( request && typeof request.cancel === 'function' ) {
-    request.cancel( 'Aborting request for a new request.' );
+  if ( request ) {
+    request.controller.abort();
   }
 
   // And start a new one.
@@ -118,13 +118,14 @@ function updateView() {
     params.setVal( 'request', request );
 
     // Handle errors
-    request.promise.catch( () => {
+    request.promise.catch( err => {
+      if ( err.name === 'AbortError' ) return;
       resultFailWarning();
     } );
 
     // If it succeeds, update the DOM.
-    request.promise.then( rawResults => {
-      const results = rawResults.data.data;
+    request.promise.then( res => res.json() ).then( respData => {
+      const results = respData.data;
 
       // sort results by interest rate, ascending
       const sortedKeys = [];
@@ -194,20 +195,7 @@ function updateView() {
       chart.render( data );
 
       // Update timestamp
-      let _timestamp = rawResults.data.timestamp;
-
-      try {
-        /* Safari 8 seems to have a bug with date conversion:
-           The following: new Date("2015-01-07T05:00:00Z")
-           Incorrectly returns: Tue Jan 06 2015 21:00:00 GMT-0800 (PST)
-           The following will detect it and will offset the timezone enough
-           to get the correct date (but not time) */
-        if ( new Date( results.timestamp ).getDate() !== parseInt( results.timestamp.split( 'T' )[0].split( '-' )[2], 10 ) ) {
-          _timestamp = _timestamp.split( 'T' )[0] + 'T15:00:00Z';
-        }
-      } catch ( err ) {
-        // An error occurred.
-      }
+      const _timestamp = respData.timestamp;
 
       renderDatestamp( timeStampDom, _timestamp );
 
@@ -274,9 +262,7 @@ function renderMedian( totalVals ) {
  */
 function loadCounties() {
 
-  // And request 'em.
-  const request = getCounties( params.getVal( 'location' ) );
-  request.promise.then( resp => {
+  getCounties( params.getVal( 'location' ) ).then( respData => {
 
     if ( params.getVal( 'location' ) ) {
       /* Empty the current counties and cache the current state so we
@@ -284,7 +270,7 @@ function loadCounties() {
       $( '#county' ).html( '' ).data( 'state', params.getVal( 'location' ) );
 
       // Inject each county into the DOM.
-      const parseCountyData = resp.data.data;
+      const parseCountyData = respData.data;
       $.each( parseCountyData, function( i, countyData ) {
         if ( countyData.county ) {
           countyData.county = countyData.county.replace( ' County', '' );
