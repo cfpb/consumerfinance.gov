@@ -71,12 +71,7 @@ def create_zipfile(
         # Other wheels get stored in the zip under /wheels/.
         wheel_dir = os.path.join(temp_dir, "wheels")
 
-        wheel_executables = [sys.executable]
-
-        for wheel_executable in wheel_executables:
-            save_wheels(
-                wheel_executable, wheel_dir, "-r%s" % requirements_file
-            )
+        save_wheels(sys.executable, wheel_dir, "-r%s" % requirements_file)
 
         # Copy the project code into the zip.
         project_name = os.path.basename(os.path.realpath(project_path))
