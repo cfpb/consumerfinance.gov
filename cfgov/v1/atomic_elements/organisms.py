@@ -872,7 +872,6 @@ class FilterableList(BaseExpandable):
         help_text="Add links to post preview images and"
         " headings in filterable list results",
     )
-
     filter_children = blocks.BooleanBlock(
         default=True,
         required=False,

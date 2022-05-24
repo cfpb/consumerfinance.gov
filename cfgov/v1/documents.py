@@ -41,7 +41,7 @@ class FilterablePagesDocument(Document):
     model_class = fields.KeywordField()
     content = fields.TextField()
     preview_description = fields.TextField()
-    path = fields.TextField()
+    path = fields.KeywordField()
     depth = fields.IntegerField()
 
     def get_queryset(self):
@@ -115,10 +115,16 @@ class FilterablePagesDocument(Document):
 
 
 class FilterablePagesDocumentSearch:
-    def __init__(self, prefix="/"):
-        self.prefix = prefix
-        self.document = FilterablePagesDocument()
-        self.search_obj = self.document.search().filter("prefix", url=prefix)
+    def __init__(self, root_page, children_only=True):
+        search = FilterablePagesDocument.search()
+        search = search.filter("prefix", path=root_page.path)
+
+        if children_only:
+            search = search.filter("term", depth=root_page.depth + 1)
+        else:
+            search = search.filter("range", depth={"gt": root_page.depth})
+
+        self.search_obj = search
 
     def filter_topics(self, topics=None):
         if topics is None:

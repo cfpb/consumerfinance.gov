@@ -3,6 +3,8 @@ from io import StringIO
 
 from django.test import TestCase, override_settings
 
+from wagtail.core.models import Site
+
 from pytz import timezone
 
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
@@ -16,10 +18,12 @@ from v1.forms import (
     EventArchiveFilterForm,
     FilterableListForm,
 )
-from v1.models import BlogPage
-from v1.models.base import CFGOVPageCategory
-from v1.models.enforcement_action_page import EnforcementActionPage
-from v1.models.learn_page import EventPage
+from v1.models import (
+    BlogPage,
+    CFGOVPageCategory,
+    EnforcementActionPage,
+    EventPage,
+)
 from v1.tests.wagtail_pages.helpers import publish_page
 from v1.util.categories import clean_categories
 
@@ -59,8 +63,9 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         self.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
     def setUpFilterableForm(self, data=None, filterable_categories=None):
+        site_root = Site.objects.get(is_default_site=True).root_page
         form = FilterableListForm(
-            filterable_search=FilterablePagesDocumentSearch(prefix="/"),
+            filterable_search=FilterablePagesDocumentSearch(site_root),
             wagtail_block=None,
             filterable_categories=filterable_categories,
         )
@@ -184,6 +189,7 @@ class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):
         cls.page1 = BlogPage(title="test page", is_archived="yes")
         cls.page2 = BlogPage(title="another test page")
         cls.page3 = BlogPage(title="never-archived page", is_archived="never")
+
         publish_page(cls.page1)
         publish_page(cls.page2)
         publish_page(cls.page3)
@@ -191,8 +197,9 @@ class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):
         cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
     def get_filtered_pages(self, data):
+        site_root = Site.objects.get(is_default_site=True).root_page
         form = FilterableListForm(
-            filterable_search=FilterablePagesDocumentSearch(prefix="/"),
+            filterable_search=FilterablePagesDocumentSearch(site_root),
             wagtail_block=None,
             filterable_categories=None,
             data=data,
@@ -230,8 +237,9 @@ class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
         cls.event = event
 
     def test_event_archive_elasticsearch(self):
+        site_root = Site.objects.get(is_default_site=True).root_page
         form = EventArchiveFilterForm(
-            filterable_search=EventFilterablePagesDocumentSearch(prefix="/"),
+            filterable_search=EventFilterablePagesDocumentSearch(site_root),
             wagtail_block=None,
             filterable_categories=None,
         )
@@ -252,9 +260,10 @@ class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
         cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
 
     def test_enforcement_action_elasticsearch(self):
+        site_root = Site.objects.get(is_default_site=True).root_page
         form = EnforcementActionsFilterForm(
             filterable_search=EnforcementActionFilterablePagesDocumentSearch(
-                prefix="/"
+                site_root
             ),
             wagtail_block=None,
             filterable_categories=None,
