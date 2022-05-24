@@ -62,7 +62,6 @@ def create_zipfile(
     requirements_file,
     zipfile_basename,
     extra_static,
-    extra_python,
 ):
     with temp_directory() as temp_dir:
         # Bootstrap wheels get stored in the zip under /bootstrap_wheels/.
@@ -73,8 +72,6 @@ def create_zipfile(
         wheel_dir = os.path.join(temp_dir, "wheels")
 
         wheel_executables = [sys.executable]
-        if extra_python:
-            wheel_executables.append(extra_python)
 
         for wheel_executable in wheel_executables:
             save_wheels(
@@ -148,10 +145,6 @@ if __name__ == "__main__":  # pragma: no cover
         "--extra-static",
         action="append",
         help="Optionally include additional static file directories",
-    )
-    parser.add_argument(
-        "--extra-python",
-        help="Optionally build wheels for a second Python version",
     )
 
     args = parser.parse_args()
