@@ -11,11 +11,11 @@ jobs:
       MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
 
     services:
-      opensearch:
-        image: opensearchproject/opensearch:2.0.0-rc1
+      elasticsearch:
+        image: elasticsearch:7.10.1
         ports:
           - 9200:9200
-        options: -e="discovery.type=single-node" --health-cmd="curl -XGET https://localhost:9200/_cluster/health -u 'admin:admin' --insecure" --health-interval=10s --health-timeout=5s --health-retries=10
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
 
       postgres:
         image: postgres
