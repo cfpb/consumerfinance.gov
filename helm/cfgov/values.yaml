@@ -186,5 +186,11 @@ postgresql:
 opensearch:
   enabled: false
 
+opensearch-dashboards:
+  enabled: false
+
+elasticsearch:
+  enabled: false
+
 kibana:
   enabled: false

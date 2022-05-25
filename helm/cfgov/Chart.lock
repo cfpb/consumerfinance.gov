@@ -8,5 +8,11 @@ dependencies:
 - name: opensearch-dashboards
   repository: https://opensearch-project.github.io/helm-charts/
   version: 2.0.0
-digest: sha256:046341b4eb61cfdd6511fcaf79e5a1dbc8c457d4497e55f9198598e2be234b7b
-generated: "2022-05-22T02:34:20.238667-06:00"
+- name: elasticsearch
+  repository: https://helm.elastic.co/
+  version: 7.16.3
+- name: kibana
+  repository: https://helm.elastic.co/
+  version: 7.16.3
+digest: sha256:a608eae267a7b5596a7e81aa70b617099fb11500c5489cdc3417368da01bcefd
+generated: "2022-05-25T11:23:12.810459-06:00"

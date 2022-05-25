@@ -66,6 +66,18 @@ spec:
                   value: opensearch-cluster-master
                   {{- end }}
                 {{- end }}
+                {{- if $.Values.elasticsearch.enabled }}
+                - name: ES_SCHEMA
+                  value: http
+                - name: ES_HOST
+                  {{- if $.Values.elasticsearch.nameOverride }}
+                  value: "{{ $.Values.elasticsearch.nameOverride }}-master"
+                  {{- else if $.Values.elasticsearch.fullnameOverride }}
+                  value: {{  $.Values.elasticsearch.fullnameOverride | quote }}
+                  {{- else }}
+                  value: elasticsearch-master
+                  {{- end }}
+                {{- end }}
                 {{- range $.Values.extraEnvs }}
                 - name: {{ .name }}
                   value: {{ .value | quote }}
