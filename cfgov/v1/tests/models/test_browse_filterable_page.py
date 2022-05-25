@@ -1,3 +1,4 @@
+import json
 from io import StringIO
 
 from django.test import TestCase
@@ -25,7 +26,20 @@ class EventArchivePageTestCase(TestCase):
 
 class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
     def setUp(self):
-        self.newsroom_page = NewsroomLandingPage(title="News", slug="newsroom")
+        self.newsroom_page = NewsroomLandingPage(
+            title="News",
+            slug="newsroom",
+            content=json.dumps(
+                [
+                    {
+                        "type": "filter_controls",
+                        "value": {
+                            "filter_children": False,
+                        },
+                    },
+                ]
+            ),
+        )
         self.about_us_page = LandingPage(title="About us", slug="about-us")
         self.site_root = Site.objects.get(is_default_site=True).root_page
         self.site_root.add_child(instance=self.about_us_page)

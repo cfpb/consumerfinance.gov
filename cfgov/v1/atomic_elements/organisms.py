@@ -592,6 +592,7 @@ class SimpleChart(blocks.StructBlock):
 
     class Media:
         js = ["simple-chart/simple-chart.js"]
+        css = ["simple-chart.css"]
 
 
 class FullWidthText(blocks.StreamBlock):
@@ -871,7 +872,6 @@ class FilterableList(BaseExpandable):
         help_text="Add links to post preview images and"
         " headings in filterable list results",
     )
-
     filter_children = blocks.BooleanBlock(
         default=True,
         required=False,
@@ -1187,6 +1187,7 @@ class ChartBlock(blocks.StructBlock):
 
     class Media:
         js = ["chart.js"]
+        css = ["chart.css"]
 
 
 class MortgageChartBlock(blocks.StructBlock):
