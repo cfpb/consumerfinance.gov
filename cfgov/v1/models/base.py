@@ -131,23 +131,6 @@ class CFGOVPage(Page):
         ),
     )
 
-    is_archived = models.CharField(
-        max_length=16,
-        choices=[
-            ("no", "No"),
-            ("yes", "Yes"),
-            ("never", "Never"),
-        ],
-        default="no",
-        verbose_name="This page is archived",
-        help_text='If "Never" is selected, the page will not be archived '
-        "automatically after a certain period of time.",
-    )
-
-    archived_at = models.DateField(
-        blank=True, null=True, verbose_name="Archive date"
-    )
-
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
 
@@ -185,11 +168,6 @@ class CFGOVPage(Page):
         StreamFieldPanel("sidefoot"),
     ]
 
-    archive_panels = [
-        FieldPanel("is_archived"),
-        FieldPanel("archived_at"),
-    ]
-
     settings_panels = [
         MultiFieldPanel(promote_panels, "Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
@@ -199,7 +177,6 @@ class CFGOVPage(Page):
         FieldPanel("schema_json", "Structured Data"),
         MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
         FieldPanel("language", "language"),
-        MultiFieldPanel(archive_panels, "Archive"),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass
@@ -482,13 +459,6 @@ class CFGOVPage(Page):
     @property
     def post_preview_cache_key(self):
         return "post_preview_{}".format(self.id)
-
-    @property
-    def archived(self):
-        if self.is_archived == "yes":
-            return True
-
-        return False
 
 
 class CFGOVPageCategory(models.Model):

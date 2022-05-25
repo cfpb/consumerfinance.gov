@@ -5,8 +5,6 @@ from wagtail.contrib.routable_page.models import route
 from wagtail.core.models import Site
 from wagtailsharing.models import ShareableRoutablePageMixin
 
-from flags.state import flag_enabled
-
 from v1.documents import FilterablePagesDocumentSearch
 from v1.feeds import FilterableFeed
 from v1.models.learn_page import AbstractFilterPage
@@ -91,22 +89,11 @@ class FilterableListMixin(ShareableRoutablePageMixin):
         )
         filter_data = self.process_form(request, form)
 
-        # flag check to enable or disable archive filter options
-        if flag_enabled("HIDE_ARCHIVE_FILTER_OPTIONS", request=request):
-            has_archived_posts = False
-        else:
-            has_archived_posts = any(
-                result
-                for result in form.all_filterable_results
-                if result.is_archived == "yes"
-            )
-
         context.update(
             {
                 "filter_data": filter_data,
                 "get_secondary_nav_items": get_secondary_nav_items,
                 "has_active_filters": has_active_filters,
-                "has_archived_posts": has_archived_posts,
                 "has_unfiltered_results": has_unfiltered_results,
             }
         )
@@ -146,7 +133,7 @@ class FilterableListMixin(ShareableRoutablePageMixin):
     # Set up the form's data either with values from the GET request
     # or with defaults based on whether it's a dropdown/list or a text field
     def get_form_data(self, request_dict):
-        form_data = {"archived": "include"}
+        form_data = {}
         has_active_filters = False
         for field in self.get_form_class().declared_fields:
             if field in [
