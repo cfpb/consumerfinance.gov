@@ -111,8 +111,8 @@ pip install -r requirements/ci.txt
 
 ### Install pre-commit
 We use `pre-commit` to automatically run our linting tools before a commit
-takes place. These tools consist of `black`, `flake8`, and `isort`. To install
-`pre-commit`, running the following commands from within the
+takes place. These tools consist of `black`, `flake8`, `isort`, and `bandit`.
+To install `pre-commit`, running the following commands from within the
 `consumerfinance.gov` directory:
 
 ```sh

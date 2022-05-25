@@ -1,6 +1,5 @@
 {% extends 'layout-full.html' %}
 
-{% import 'form_block.html' as form_block with context %}
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
@@ -18,11 +17,7 @@
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
     {% for block in page.content -%}
-        {% if block.block_type in ['feedback'] %}
-            {{- form_block.render(block, 'content', loop.index0) -}}
-        {% else %}
-            {{ render_block.render(block, loop.index) }}
-        {% endif %}
+        {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 {% endblock %}
 

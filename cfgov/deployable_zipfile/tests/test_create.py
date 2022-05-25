@@ -61,13 +61,12 @@ class TestCreateDeployableZip(TestCase):
             self.requirements_file,
             zipfile_basename,
             extra_static=[self.extra_static],
-            extra_python="python4",
         )
 
         # save_wheels should be called three times; once for the bootstrap
         # wheels (pip, setuptools), and once per Python version for the
         # requirements file.
-        self.assertEqual(save_wheels.call_count, 3)
+        self.assertEqual(save_wheels.call_count, 2)
 
         self.assertEqual(zipfile_filename, "%s.zip" % zipfile_basename)
 

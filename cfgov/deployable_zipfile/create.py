@@ -4,7 +4,7 @@ import argparse
 import os
 import shutil
 import stat
-import subprocess
+import subprocess  # nosec
 import sys
 import tempfile
 from contextlib import contextmanager
@@ -31,7 +31,7 @@ def save_wheels(python_executable, destination, *args):
 
     https://pip.pypa.io/en/stable/user_guide/#using-pip-from-your-program
     """
-    subprocess.check_call(
+    subprocess.check_call(  # nosec
         [python_executable, "-m", "pip", "wheel"]
         + ["--wheel-dir=%s" % destination]
         + ["--find-links=%s" % destination]
@@ -62,7 +62,6 @@ def create_zipfile(
     requirements_file,
     zipfile_basename,
     extra_static,
-    extra_python,
 ):
     with temp_directory() as temp_dir:
         # Bootstrap wheels get stored in the zip under /bootstrap_wheels/.
@@ -72,14 +71,7 @@ def create_zipfile(
         # Other wheels get stored in the zip under /wheels/.
         wheel_dir = os.path.join(temp_dir, "wheels")
 
-        wheel_executables = [sys.executable]
-        if extra_python:
-            wheel_executables.append(extra_python)
-
-        for wheel_executable in wheel_executables:
-            save_wheels(
-                wheel_executable, wheel_dir, "-r%s" % requirements_file
-            )
+        save_wheels(sys.executable, wheel_dir, "-r%s" % requirements_file)
 
         # Copy the project code into the zip.
         project_name = os.path.basename(os.path.realpath(project_path))
@@ -148,10 +140,6 @@ if __name__ == "__main__":  # pragma: no cover
         "--extra-static",
         action="append",
         help="Optionally include additional static file directories",
-    )
-    parser.add_argument(
-        "--extra-python",
-        help="Optionally build wheels for a second Python version",
     )
 
     args = parser.parse_args()

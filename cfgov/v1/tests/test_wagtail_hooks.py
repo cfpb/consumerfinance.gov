@@ -1,3 +1,4 @@
+from collections import defaultdict
 from unittest import mock
 
 from django.contrib.auth.models import User
@@ -18,7 +19,7 @@ from wagtail.core.whitelist import Whitelister as Allowlister
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
 
-from v1.blocks import Feedback
+from data_research.blocks import ConferenceRegistrationForm
 from v1.models.base import CFGOVPage, CFGOVPageCategory
 from v1.models.blog_page import BlogPage
 from v1.models.resources import Resource
@@ -39,11 +40,13 @@ class TestFormModuleHandlers(TestCase):
 
     @mock.patch("v1.wagtail_hooks.util.get_streamfields")
     def test_sets_context(self, mock_getstreamfields):
-        child = BoundBlock(Feedback(), value="")
-        mock_getstreamfields().items.return_value = [("feedback", [child])]
+        child = BoundBlock(
+            ConferenceRegistrationForm(), value=defaultdict(int)
+        )
+        mock_getstreamfields().items.return_value = [("form", [child])]
         form_module_handlers(self.page, self.request, self.context)
         self.assertIn("form_modules", self.context)
-        self.assertIsInstance(self.context["form_modules"]["feedback"], dict)
+        self.assertIsInstance(self.context["form_modules"]["form"], dict)
 
     @mock.patch("v1.wagtail_hooks.util.get_streamfields")
     def test_does_not_set_context(self, mock_getstreamfields):

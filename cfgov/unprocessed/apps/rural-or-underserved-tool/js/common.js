@@ -4,7 +4,6 @@
 
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 import addressUtils from './address-utils';
-import axios from 'axios';
 import callCensus from './call-census';
 import contentControl from './content-control';
 import count from './count';
@@ -33,14 +32,14 @@ function censusAPI( data, ruralCounties ) {
     64 = 2010 Census Urban Clusters
     62 = 2010 Census Urbanized Areas
     */
-    axios.all(
+    Promise.all(
       [
         tiger( result.x, result.y, '84' ),
         tiger( result.x, result.y, '64' ),
         tiger( result.x, result.y, '62' )
       ]
     )
-      .then( axios.spread( function( censusCounty, censusUC, censusUA ) {
+      .then( function( [ censusCounty, censusUC, censusUA ] ) {
         result.input = data.result.input.address.address;
         result.address = data.result.addressMatches[0].matchedAddress;
         result.countyName = censusCounty.features[0].attributes.BASENAME;
@@ -62,7 +61,7 @@ function censusAPI( data, ruralCounties ) {
 
         addressUtils.render( result );
         count.updateCount( result.type );
-      } ) )
+      } )
       .catch( function() {
         const addressElement = DT.createEl( '<li>' + result.address + '</li>' );
         DT.addEl( DT.getEl( '#process-error-desc' ), addressElement );
