@@ -323,7 +323,7 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 
 # ElasticSearch 7 Configuration
 TESTING = False
-ES_SCHEMA = os.getenv("ES_SCHEMA", "https")
+ES_SCHEMA = os.getenv("ES_SCHEMA", "http")
 ES_HOST = os.getenv("ES_HOST", "localhost")
 ES_PORT = os.getenv("ES_PORT", "9200")
 OPENSEARCH_BIGINT = 50000

@@ -57,6 +57,8 @@ spec:
                   {{- end }}
                 {{- end }}
                 {{- if $.Values.opensearch.enabled }}
+                - name: ES_SCHEMA
+                  value: https
                 - name: ES_HOST
                   {{- if $.Values.opensearch.nameOverride }}
                   value: "{{ $.Values.opensearch.nameOverride }}-master"
