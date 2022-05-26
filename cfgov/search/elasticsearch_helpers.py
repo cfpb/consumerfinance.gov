@@ -171,6 +171,7 @@ class ElasticsearchTestsMixin:
             "opensearch",
             "document",
             "index",
+            "--refresh",
             *indices,
             force=True,
             stdout=stdout,
