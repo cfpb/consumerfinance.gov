@@ -1,8 +1,6 @@
 import json
 from unittest import mock
 
-from django.contrib.messages.middleware import MessageMiddleware
-from django.contrib.sessions.middleware import SessionMiddleware
 from django.http import HttpResponseBadRequest
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -91,44 +89,6 @@ class TestCFGOVPage(TestCase):
         request = self.factory.post("/", {"form_id": "form-content-0"})
         response = page.serve_post(request)
         self.assertIsInstance(response, HttpResponseBadRequest)
-
-    def test_serve_post_valid_calls_form_block_handler(self):
-        """A valid post should call the form block handler.
-
-        This returns a redirect to the calling page and also uses the
-        Django messages framework to set a message.
-        """
-        page = BrowsePage(title="test", slug="test")
-        page.content = blocks.StreamValue(
-            page.content.stream_block,
-            [
-                {
-                    "type": "conference_registration_form",
-                    "value": {"capacity": 1, "govdelivery_code": "test"},
-                }
-            ],
-            True,
-        )
-        save_new_page(page)
-
-        request = self.factory.post(
-            "/",
-            {
-                "form_id": "form-content-0",
-                "attendee_type": "In person",
-                "email": "user@example.com",
-                "name": "Attendee",
-            },
-        )
-        SessionMiddleware().process_request(request)
-        MessageMiddleware().process_request(request)
-
-        response = page.serve_post(request)
-
-        self.assertEqual(
-            (response.status_code, response["Location"]),
-            (302, f"{request.path}?success"),
-        )
 
     @mock.patch("v1.models.base.TemplateResponse")
     @mock.patch("v1.models.base.CFGOVPage.get_template")
