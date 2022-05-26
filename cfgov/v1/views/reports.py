@@ -1,11 +1,11 @@
 from datetime import date
-from v1.models.enforcement_action_page import EnforcementActionPage
 
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
 from wagtail.images import get_image_model
 
 from v1.models import CFGOVPage
+from v1.models.enforcement_action_page import EnforcementActionPage
 
 
 def process_categories(queryset):
@@ -16,6 +16,33 @@ def process_categories(queryset):
 def process_tags(queryset):
     """Prep the set of tags assocaited with a document or page."""
     return ", ".join([tag for tag in queryset])
+
+
+def process_content(querryset):
+    return (
+        EnforcementActionPage.get_content_string
+        for EnforcementActionPage in querryset
+    )
+
+
+def process_forum(queryset):
+    """Grab the one to two Forum values"""
+    return ", ".join([categories for categories in queryset])
+
+
+def process_docket_numbers(queryset):
+    """Grab the one to many Docket Numbers values"""
+    return ", ".join([docket_numbers for docket_numbers in queryset])
+
+
+def process_products(queryset):
+    """Grab the one to many Docket Numbers values"""
+    return ", ".join([products for products in queryset])
+
+
+def process_statuses(queryset):
+    """Grab the one to many Docket Numbers values"""
+    return ", ".join([statutes for statutes in queryset])
 
 
 def construct_absolute_url(url):
@@ -152,34 +179,43 @@ class ImagesReportView(ReportView):
             .order_by("-created_at")
             .prefetch_related("tags")
         )
+
+
 class EnforcementActionsReportView(ReportView):
     header_icon = "doc-full"
     title = "Enforcement actions report"
 
     list_export = [
         "title",
-        "content.full_width_text",
-        "metadata_panels.categories",
-        "metadata_panels.court",
-        "metadata_panels.docket_numbers",
+        "content.all",
+        "categories.all",
+        "court",
+        "docket_numbers.all",
         "initial_filing_date",
-        "metadata_panels.statutes",
-        "metadata_panels.product",
+        "statutes.all",
+        "product.all",
         "url",
     ]
     export_headings = {
-        "title": "Title",
-        "content.full_width_text": "Content",
-        "metadata_panels.categories": "Fourm",
-        "metadata_panels.court": "Court",
-        "metadata_panels.docket_number": "Docket Numbers",
+        "page.title": "Title",
+        "content.all": "Content",
+        "categories.all": "Forum",
+        "court": "Court",
+        "docket_number.all": "Docket Numbers",
         "initial_filing_date": "Initial Filling",
-        "metadata_panels.statutes": "Statuses",
-        "metadata_panels.product": "Products",
+        "statutes.all": "Statuses",
+        "product.all": "Products",
         "url": "URL",
     }
 
     custom_field_preprocess = {
+        "content.all": {"csv:": process_content},
+        "categories.all": {"csv": process_categories},
+        "docket_number.all": {
+            "csv": EnforcementActionPage.get_docket_number_string
+        },
+        "statutes.all": {"csv": process_statuses},
+        "product.all": {"csv": process_products},
         "url": {"csv": construct_absolute_url},
     }
 
@@ -190,4 +226,6 @@ class EnforcementActionsReportView(ReportView):
         return f"enforcement-actions-report-{date.today()}"
 
     def get_queryset(self):
-        return EnforcementActionPage.objects.all()
+        return EnforcementActionPage.objects.all().prefetch_related(
+            "categories", "statutes"
+        )

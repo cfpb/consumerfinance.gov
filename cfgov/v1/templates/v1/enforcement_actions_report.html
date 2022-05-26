@@ -12,7 +12,7 @@
                         Content
                     </th>
                     <th>
-                        Fourm
+                        Forum
                     </th>
                     <th>
                         Court
@@ -41,26 +41,29 @@
                             {{ page.title }}
                         </td>
                         <td>
-                            {{ page.content.full_width_text }}
+                            {{ page.get_content_string }}
                         </td>
                         <td>
-                            {{ page.categories }}
+                            {% for cat in page.categories.all %}
+                            {% if cat.get_name_display and not forloop.last %}
+                            {{ cat.get_name_display }}, {% else %}{{ cat.get_name_display }}
+                            {% endif %}{% endfor %}
                         </td>
                         <td>
                             {{ page.court }}
                         </td>
                         <td>
-                            {{ page.docket_numbers }}
+                            {{ page.get_docket_number_string }}
                         </td>
                         <td>
                             {{page.initial_filing_date}}
                         </td>
                         <td>
-                            {{page.statutes}}
+                            {{page.get_status_strings}}
                         </td>
                         <td>
 
-                            {{page.products}}
+                            {{page.get_product_strings}}
                         </td>
                         <td>
                             <a href="https://www.consumerfinance.gov{{ document.url }}">
