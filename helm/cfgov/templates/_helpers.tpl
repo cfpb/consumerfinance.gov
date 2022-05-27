@@ -80,3 +80,37 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Postgres Environment Vars
+*/}}
+{{- define "cfgov.postgresEnv" -}}
+{{- if .Values.postgresql.enabled -}}
+- name: DB_USER
+  value: "{{ include "postgresql.username" .Subcharts.postgresql | default "postgres"  }}"
+- name: PGUSER
+  value: "{{ include "postgresql.username" .Subcharts.postgresql | default "postgres"  }}"
+- name: DB_PASS
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "postgresql.secretName" .Subcharts.postgresql }}
+      key: {{ include "postgresql.userPasswordKey" .Subcharts.postgresql }}
+- name: PGPASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "postgresql.secretName" .Subcharts.postgresql }}
+      key: {{ include "postgresql.userPasswordKey" .Subcharts.postgresql }}
+- name: DB_HOST
+  value: "{{ include "postgresql.primary.fullname" .Subcharts.postgresql | trunc 63 | trimSuffix "-" }}"
+- name: PGHOST
+  value: "{{ include "postgresql.primary.fullname" .Subcharts.postgresql | trunc 63 | trimSuffix "-" }}"
+- name: DB_NAME
+  value: "{{ include "postgresql.database" .Subcharts.postgresql | default "postgres" }}"
+- name: PGDATABASE
+  value: "{{ include "postgresql.database" .Subcharts.postgresql | default "postgres" }}"
+- name: DB_PORT
+  value: "{{ include "postgresql.service.port" .Subcharts.postgresql }}"
+- name: PGPORT
+  value: "{{ include "postgresql.service.port" .Subcharts.postgresql }}"
+{{- end }}
+{{- end }}

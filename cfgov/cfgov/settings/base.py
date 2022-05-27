@@ -238,7 +238,12 @@ if ALLOW_ADMIN_URL:
 # See https://github.com/jacobian/dj-database-url for URL formatting.
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgres://cfpb:cfpb@localhost/cfgov"
+        default="postgres://"
+        f"{os.getenv('DB_USER', 'cfpb')}:"
+        f"{os.getenv('DB_PASS', 'cfpb')}@"
+        f"{os.getenv('DB_HOST', 'localhost')}:"
+        f"{os.getenv('DB_PORT', '5432')}/"
+        f"{os.getenv('DB_NAME', 'cfgov')}"
     ),
 }
 
