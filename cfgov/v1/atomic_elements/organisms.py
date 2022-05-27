@@ -418,6 +418,9 @@ class SidebarContactInfo(MainContactInfo):
     class Meta:
         template = "_includes/organisms/sidebar-contact-info.html"
 
+    class Media:
+        css = ["sidebar-contact-info.css"]
+
 
 class ModelBlock(blocks.StructBlock):
     """Abstract StructBlock that provides Django model instances to subclasses.
@@ -589,6 +592,7 @@ class SimpleChart(blocks.StructBlock):
 
     class Media:
         js = ["simple-chart/simple-chart.js"]
+        css = ["simple-chart.css"]
 
 
 class FullWidthText(blocks.StreamBlock):
@@ -668,6 +672,12 @@ class ExpandableGroup(BaseExpandableGroup):
             "Check this to add a horizontal rule line to top of "
             "expandable group."
         ),
+    )
+    is_faq = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=("Check this to add FAQ schema markup to expandables."),
+        label="Uses FAQ schema",
     )
 
     expandables = blocks.ListBlock(Expandable())
@@ -862,7 +872,6 @@ class FilterableList(BaseExpandable):
         help_text="Add links to post preview images and"
         " headings in filterable list results",
     )
-
     filter_children = blocks.BooleanBlock(
         default=True,
         required=False,
@@ -1178,6 +1187,7 @@ class ChartBlock(blocks.StructBlock):
 
     class Media:
         js = ["chart.js"]
+        css = ["chart.css"]
 
 
 class MortgageChartBlock(blocks.StructBlock):
@@ -1205,6 +1215,7 @@ class MortgageChartBlock(blocks.StructBlock):
 
     class Media:
         js = ["mortgage-performance-trends.js"]
+        css = ["mortgage-performance-trends.css"]
 
 
 class MortgageMapBlock(MortgageChartBlock):
@@ -1215,6 +1226,7 @@ class MortgageMapBlock(MortgageChartBlock):
 
     class Media:
         js = ["mortgage-performance-trends.js"]
+        css = ["mortgage-performance-trends.css"]
 
 
 class ResourceList(blocks.StructBlock):
@@ -1358,3 +1370,23 @@ class DataSnapshot(blocks.StructBlock):
         icon = "image"
         label = "CCT Data Snapshot"
         template = "_includes/organisms/data_snapshot.html"
+
+
+class FigSection(blocks.StructBlock):
+    header = blocks.TextBlock(label="Section header")
+    section_id = blocks.TextBlock(
+        required=False, help_text="Will be filled in automatically upon save."
+    )
+    content = FullWidthText()
+
+    class Meta:
+        icon = "edit"
+        template = "_includes/organisms/fig-section.html"
+
+
+class FigSubSection(FigSection):
+    header = blocks.TextBlock(label="Subsection header")
+
+
+class FigSub3Section(FigSection):
+    header = blocks.TextBlock(label="Level 3 subsection header")

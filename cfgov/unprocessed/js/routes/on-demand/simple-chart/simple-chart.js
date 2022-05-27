@@ -17,6 +17,12 @@ import { getProjectedDate } from './utils';
 
 accessibility( Highcharts );
 
+Highcharts.setOptions( {
+  lang: {
+    numericSymbols: [ 'K', 'M', 'B' ]
+  }
+} );
+
 const msInDay = 24 * 60 * 60 * 1000;
 const promiseCache = {};
 
@@ -169,14 +175,25 @@ function addProjectedMonths( chartObject, numMonths ) {
   /* Add a vertical line and some explanatory text at the starting
      point of the projected data */
   chartObject.xAxis.plotLines = [ {
-    value: projectedDate.timestamp,
-    label: {
-      text: `Values after ${ projectedDate.humanFriendly } are projected`,
-      rotation: 0,
-      x: -260,
-      y: -10
-    }
+    value: projectedDate.timestamp
   } ];
+
+  // Save a reference to the common styles render event
+  const commonRenderCallback = chartObject.chart.events.render;
+
+  // Add a new render event that will draw the projected data label
+  chartObject.chart.events.render = function() {
+    commonRenderCallback.apply( this, arguments );
+
+    if ( this.projectedMonthsLabel ) this.projectedMonthsLabel.destroy();
+
+    this.projectedMonthsLabel = this.renderer
+      .text( `Values after ${ projectedDate.humanFriendly } are projected`, this.plotWidth - 218, 165 )
+      .css( {
+        fontSize: '15px'
+      } )
+      .add();
+  };
 
   /* Add a zone to each series with a dotted line starting
      at the projected data starting point */

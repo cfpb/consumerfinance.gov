@@ -155,7 +155,7 @@ class PageCreationTestCase(TestCase):
     def test_sublanding_page_with_optional_arguments(self):
         """sublanding page should be created correctly with one or more \
             optional arguments provided"""
-        path = create_sublanding_page("Test", "test", None, True)
+        path = create_sublanding_page("Test", "test", None)
 
         www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)
@@ -163,7 +163,7 @@ class PageCreationTestCase(TestCase):
     def test_sublanding_filterable_page_with_optional_arguments(self):
         """sublanding filterable page should be created correctly with one \
             or more optional arguments provided"""
-        path = create_sublanding_filterable_page("Test", "test", None, True)
+        path = create_sublanding_filterable_page("Test", "test", None)
 
         www_response = self.client.get(path)
         self.assertEqual(www_response.status_code, 200)

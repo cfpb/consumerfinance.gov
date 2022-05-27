@@ -111,8 +111,8 @@ pip install -r requirements/ci.txt
 
 ### Install pre-commit
 We use `pre-commit` to automatically run our linting tools before a commit
-takes place. These tools consist of `black`, `flake8`, and `isort`. To install
-`pre-commit`, running the following commands from within the
+takes place. These tools consist of `black`, `flake8`, `isort`, and `bandit`.
+To install `pre-commit`, running the following commands from within the
 `consumerfinance.gov` directory:
 
 ```sh
@@ -125,16 +125,6 @@ you of the changes (if any), and ask for you to re-stage the changed files. If
 all checks pass, a commit will take place as expected, allowing you to then
 push to GitHub. This is to reduce the number of commits with failed lints, and
 to assist developers with linting without thinking.
-
-
-### Use our private fonts from a CDN
-
-consumerfinance.gov uses a proprietary licensed font, Avenir.
-
-If you want to pull this from a content delivery network (CDN),
-you can set the
-[`@use-font-cdn`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/css/main.less#L30)
-to `true` and rebuild the assets with `yarn build`.
 
 
 ### Build the frontend

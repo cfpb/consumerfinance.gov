@@ -16,7 +16,7 @@ from data_research.blocks import (
 )
 from jobmanager.blocks import JobListingTable
 from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
+from v1.atomic_elements import molecules, organisms, schema
 from v1.models.base import CFGOVPage
 from v1.util.util import get_secondary_nav_items
 from youth_employment.blocks import YESChecklist
@@ -46,7 +46,6 @@ class BrowsePage(CFGOVPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
-            ("feedback", v1_blocks.Feedback()),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
             ("conference_registration_form", ConferenceRegistrationForm()),
             ("chart_block", organisms.ChartBlock()),
@@ -58,6 +57,7 @@ class BrowsePage(CFGOVPage):
             ("yes_checklist", YESChecklist()),
             ("erap_tool", v1_blocks.RAFToolBlock()),
             ("raf_tool", v1_blocks.RAFTBlock()),
+            ("faq_group", schema.FAQGroup()),
         ],
         blank=True,
     )

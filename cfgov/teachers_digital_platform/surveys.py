@@ -145,8 +145,8 @@ class ChoiceQuestion(Question):
             answer = "0"
 
         answer = int(answer)
-        assert answer >= 0
-        assert answer < len(self.choice_list.labels)
+        if answer < 0 or answer > len(self.choice_list.labels):
+            raise AssertionError
         return self.answer_values[answer]
 
     def get_field(self):
@@ -302,7 +302,12 @@ class Survey:
 
             # Unique class name for each survey + page (not technically
             # required but feels safer)
-            hash = hashlib.md5((self.key + "|" + name).encode())
+            # TODO: Once we're on Python 3.9+, add usedforsecurity=False to
+            # this call and remove the "nosec" comment.
+            hash = hashlib.md5(  # nosec
+                (self.key + "|" + name).encode(),
+                # usedforsecurity=False
+            )
             classname = "FormPage" + hash.hexdigest()
 
             page_classes.append((name, page.get_form_class(classname)))
@@ -312,7 +317,8 @@ class Survey:
     @classmethod
     def factory(cls, key: str, choice_lists: Optional[Dict] = None):
         """Build an survey from CSV"""
-        assert key in AVAILABLE_SURVEYS
+        if key not in AVAILABLE_SURVEYS:
+            raise AssertionError
 
         if choice_lists is None:
             choice_lists = ChoiceList.get_all()
@@ -366,5 +372,6 @@ class Survey:
 
 def get_survey(key, choice_lists: Optional[Dict] = None) -> Survey:
     """Get a survey object by its key"""
-    assert key in AVAILABLE_SURVEYS
+    if key not in AVAILABLE_SURVEYS:
+        raise AssertionError
     return Survey.factory(key, choice_lists)

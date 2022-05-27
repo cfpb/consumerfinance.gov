@@ -96,7 +96,7 @@ class ActivityJumpStartCoalitionModelAdmin(ModelAdmin):
 class ActivityCouncilForEconEdModelAdmin(ModelAdmin):
     model = ActivityCouncilForEconEd
     menu_icon = "list-ul"
-    menu_label = "Council for Economic Education"
+    menu_label = "National standards"
 
 
 @modeladmin_register

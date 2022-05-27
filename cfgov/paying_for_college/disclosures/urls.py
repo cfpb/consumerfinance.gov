@@ -4,7 +4,6 @@ from paying_for_college.views import (
     BaseTemplateView,
     ConstantsRepresentation,
     ExpenseRepresentation,
-    FeedbackView,
     OfferView,
     ProgramRepresentation,
     SchoolRepresentation,
@@ -24,7 +23,6 @@ urlpatterns = [
         {"test": True},
         name="offer_test",
     ),
-    re_path(r"^feedback/$", FeedbackView.as_view(), name="pfc-feedback"),
     re_path(
         r"^about-this-tool/$",
         BaseTemplateView.as_view(

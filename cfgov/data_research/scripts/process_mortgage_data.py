@@ -25,7 +25,6 @@ from data_research.scripts import (
 )
 
 
-DEFAULT_DUMP_SLUG = "/tmp/mp_countydata"
 DATAFILE = StringIO()
 SCRIPT_NAME = os.path.basename(__file__).split(".")[0]
 logger = logging.getLogger(__name__)
