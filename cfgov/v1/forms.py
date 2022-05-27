@@ -119,14 +119,6 @@ class FilterableListForm(forms.Form):
         ),
     )
 
-    archived = forms.ChoiceField(
-        choices=[
-            ("include", "Show all items (default)"),
-            ("exclude", "Exclude archived items"),
-            ("only", "Show only archived items"),
-        ]
-    )
-
     preferred_datetime_format = "%Y-%m-%d"
 
     def __init__(self, *args, **kwargs):
@@ -211,7 +203,6 @@ class FilterableListForm(forms.Form):
             language=self.cleaned_data.get("language"),
             to_date=self.cleaned_data.get("to_date"),
             from_date=self.cleaned_data.get("from_date"),
-            archived=self.cleaned_data.get("archived"),
         )
 
         results = self.filterable_search.search(
@@ -348,15 +339,6 @@ class FilterableListForm(forms.Form):
         field.widget.render = lambda name, value, **kwargs: old_render(
             new_name, value, **kwargs
         )
-
-    def clean_archived(self):
-        data = self.cleaned_data["archived"]
-        if data == "exclude":
-            return ["no", "never"]
-        elif data == "only":
-            return ["yes"]
-
-        return None
 
 
 class EnforcementActionsFilterForm(FilterableListForm):

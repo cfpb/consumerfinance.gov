@@ -2,7 +2,7 @@ import json
 from io import StringIO
 from unittest import mock
 
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import RequestFactory, TestCase
 
 from wagtail.core.models import Page, Site
 
@@ -73,39 +73,6 @@ class TestFilterableListMixin(TestCase):
         request_string = "/?topic=test1&topic=test2"
         self.mixin.get_form_data(self.factory.get(request_string).GET)
         assert self.mixin.do_not_index is False
-
-
-class FilterableListContextTestCase(ElasticsearchTestsMixin, TestCase):
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")
-        self.root = Site.objects.get(is_default_site=True).root_page
-        self.home_page = Page(title="Home")
-        self.root.add_child(instance=self.home_page)
-        self.home_page.add_child(instance=self.filterable_page)
-        self.page = BlogPage(title="Child test page", live=True)
-        self.archived_page = BlogPage(
-            title="Archive test page", live=True, is_archived="yes"
-        )
-        self.filterable_page.add_child(instance=self.page)
-        self.filterable_page.add_child(instance=self.archived_page)
-
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
-
-    def test_get_context_has_archived_posts(self):
-        context = self.filterable_page.get_context(
-            request=self.factory.get("/test/")
-        )
-        self.assertTrue(context["has_archived_posts"])
-
-    @override_settings(
-        FLAGS={"HIDE_ARCHIVE_FILTER_OPTIONS": [("boolean", True)]}
-    )
-    def test_get_context_has_archived_posts_with_hide_archive_flag_on(self):
-        context = self.filterable_page.get_context(
-            request=self.factory.get("/test/")
-        )
-        self.assertFalse(context["has_archived_posts"])
 
 
 class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):

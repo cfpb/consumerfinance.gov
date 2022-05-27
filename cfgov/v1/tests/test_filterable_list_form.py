@@ -124,7 +124,7 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
 
     def test_validate_date_after_1900_can_pass(self):
         form = self.setUpFilterableForm()
-        form.data = {"from_date": "1/1/1900", "archived": "exclude"}
+        form.data = {"from_date": "1/1/1900"}
         self.assertTrue(form.is_valid())
 
     def test_validate_date_after_1900_can_fail(self):
@@ -181,46 +181,6 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(form.first_page_date(), self.blog1.date_published)
         form.all_filterable_results = []
         self.assertEqual(form.first_page_date(), date(2010, 1, 1))
-
-
-class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.page1 = BlogPage(title="test page", is_archived="yes")
-        cls.page2 = BlogPage(title="another test page")
-        cls.page3 = BlogPage(title="never-archived page", is_archived="never")
-
-        publish_page(cls.page1)
-        publish_page(cls.page2)
-        publish_page(cls.page3)
-
-        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
-
-    def get_filtered_pages(self, data):
-        site_root = Site.objects.get(is_default_site=True).root_page
-        form = FilterableListForm(
-            filterable_search=FilterablePagesDocumentSearch(site_root),
-            wagtail_block=None,
-            filterable_categories=None,
-            data=data,
-        )
-
-        self.assertTrue(form.is_valid())
-        return form.get_page_set()
-
-    def test_filter_by_archived_include(self):
-        pages = self.get_filtered_pages({"archived": "include"})
-        self.assertEqual(len(pages), 3)
-
-    def test_filter_by_archived_exclude(self):
-        pages = self.get_filtered_pages({"archived": "exclude"})
-        self.assertEqual(len(pages), 2)
-        self.assertEqual(pages[0].specific, self.page2)
-
-    def test_filter_by_archived_only(self):
-        pages = self.get_filtered_pages({"archived": "only"})
-        self.assertEqual(len(pages), 1)
-        self.assertEqual(pages[0].specific, self.page1)
 
 
 @override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)

@@ -116,7 +116,7 @@
     <link rel="stylesheet" href="{{ static('css/main.css') }}">
       {% if page and page.media_css %}
         {% for css in page.media_css %}
-          <link rel="stylesheet" href="{{ static('css/on-demand/' + css) }}" );
+          <link rel="stylesheet" href="{{ static('css/on-demand/' + css) }}" />
         {% endfor %}
       {% endif %}
     {% endblock css %}
@@ -139,18 +139,18 @@
           type="font/woff2" crossorigin>
     <link rel="preload" href="{{ static('js/routes/common.js') }}" as="script">
 
-    {# Preconnecting comes from the 3rd best practice in 
+    {# Preconnecting comes from the 3rd best practice in
        https://developer.mozilla.org/en-US/docs/Web/Performance/dns-prefetch#best_practices #}
-    <link rel="preconnect" href="//google-analytics.com/" crossorigin>    
+    <link rel="preconnect" href="//google-analytics.com/" crossorigin>
     <link rel="dns-prefetch" href="//google-analytics.com/">
 
-    <link rel="preconnect" href="//googletagmanager.com/" crossorigin>    
+    <link rel="preconnect" href="//googletagmanager.com/" crossorigin>
     <link rel="dns-prefetch" href="//googletagmanager.com/">
 
-    <link rel="preconnect" href="//js-agent.newrelic.com/" crossorigin>    
+    <link rel="preconnect" href="//js-agent.newrelic.com/" crossorigin>
     <link rel="dns-prefetch" href="//js-agent.newrelic.com/">
 
-    <link rel="preconnect" href="//search.usa.gov/" crossorigin>    
+    <link rel="preconnect" href="//search.usa.gov/" crossorigin>
     <link rel="dns-prefetch" href="//search.usa.gov/">
 
     {# These domains are called on pages with youtube videos.  #}
@@ -216,7 +216,7 @@
     </script>
 </head>
 
-<body{% block body_classes %}{% if page and page.archived %} class="archived-page" {% endif %}{% endblock body_classes %}>
+<body{% block body_classes %}{% endblock body_classes %}>
 
 {#
   =========
@@ -264,9 +264,6 @@
     {% endblock %}
 
     {% block banner_top %}
-        {% if page and page.archived %}
-            {% include 'molecules/archived-banner.html' %}
-        {% endif %}
     {% endblock %}
 
     {# PRIMARY CONTENT #}

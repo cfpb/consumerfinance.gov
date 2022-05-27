@@ -273,7 +273,6 @@ class EnforcementActionPage(AbstractFilterPage):
         ),
         MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
         FieldPanel("language", "Language"),
-        MultiFieldPanel(CFGOVPage.archive_panels, "Archive"),
     ]
 
     edit_handler = TabbedInterface(
