@@ -12,8 +12,6 @@ let offsets = [];
 let primaryOffsets = [];
 let set = 0;
 let lastTargetIndex;
-let screenX = window.innerWidth || document.documentElement.clientWidth || doc.getElementsByTagName('body')[0].clientWidth;
-let screenY = window.innerHeight|| document.documentElement.clientHeight|| doc.getElementsByTagName('body')[0].clientHeight;
 
 (function(){
   for(let i=0; i<headers.length; i++){
@@ -25,10 +23,11 @@ let screenY = window.innerHeight|| document.documentElement.clientHeight|| doc.g
 document.querySelector('.o-footer').classList.add( 'report-global-footer' );
 
 function scrunchIfNeeded() {
+  let screenX = window.innerWidth || document.documentElement.clientWidth || doc.getElementsByTagName('body')[0].clientWidth;
   if (screenX < 900) {
-      sidenav.classList.add ( 'scrunch' );
+      sidenav.classList.add( 'scrunch' );
   } else {
-    sidenav.classList.remove ( 'scrunch' );
+    sidenav.classList.remove( 'scrunch' );
   }
 }
 
