@@ -34,7 +34,7 @@ describe( 'Filter Blog Posts based on content', () => {
     // retrieve the category
     filter.getCategory().then( category => {
       // When I select the first option in the Category multiselect
-      filter.clickCategory( category.get( 0 ).getAttribute( 'value' ) );
+      filter.clickCategory( category.get( 0 ) );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then I should see only results in that category
@@ -50,11 +50,11 @@ describe( 'Filter Blog Posts based on content', () => {
     // retrieve the categories
     filter.getCategory().then( categories => {
       // When I select all options checkboxes in the Category multiselect
-      filter.clickCategory( categories.get( 0 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 1 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 2 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 3 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 4 ).getAttribute( 'value' ) );
+      filter.clickCategory( categories.get( 0 ) );
+      filter.clickCategory( categories.get( 1 ) );
+      filter.clickCategory( categories.get( 2 ) );
+      filter.clickCategory( categories.get( 3 ) );
+      filter.clickCategory( categories.get( 4 ) );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then I should see only results that are in at least one of the selected categories
@@ -254,7 +254,7 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+          category.get( 0 )
         );
         // When I select a checkbox in the Topic list
         filter.clickTopic(
@@ -298,7 +298,7 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+          category.get( 0 )
         );
         // When I select a checkbox in the Topic list
         filter.clickTopic(
@@ -414,7 +414,7 @@ describe( 'Filter Blog Posts based on content', () => {
         blog.filterItemName( title.get( 0 ).innerText );
         // And I select a checkbox in the category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+          category.get( 0 )
         );
         // And I click "Apply filters" button
         blog.applyFilters();
