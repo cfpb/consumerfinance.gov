@@ -1,4 +1,6 @@
 @import (reference) '../main.less';
+@nonMobileResize:   ~"only screen and (min-width: 900px) and (max-width: 1049px)";
+
 
 .research-report {
   max-width: unit( (670 + 30) / 16, em );
@@ -26,12 +28,17 @@
 .o-report-sidenav {
   &.sticky {
     position: fixed;
-    width: 230px !important;
     top: 0;
   }
   display: block;
   overflow-y: scroll;
-  width: 230px;
+  @media (min-width: 1050px) {
+    width: 230px !important;
+  }
+  @media @nonMobileResize {
+    width: 180px !important;
+  } 
+
   background-color: white;
 
   .o-secondary-navigation_list__parents > li > a {

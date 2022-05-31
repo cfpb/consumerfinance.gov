@@ -79,6 +79,7 @@ function onScroll() {
 }
 
 window.addEventListener( 'scroll', onScroll );
+window.addEventListener( 'resize', scrunchIfNeeded );
 onScroll();
 scrunchIfNeeded();
 
