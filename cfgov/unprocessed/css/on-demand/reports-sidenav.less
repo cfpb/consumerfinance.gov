@@ -19,15 +19,21 @@
   }
 }
 
+.scrunch{
+  width: 100% !important;
+}
+
 .o-report-sidenav {
   &.sticky {
     position: fixed;
+    width: 230px !important;
     top: 0;
-    width: 240px;
   }
   display: block;
   overflow-y: scroll;
-  height: 100%;
+  width: 230px;
+  background-color: white;
+
   .o-secondary-navigation_list__parents > li > a {
     padding-left: unit( 30px / @base-font-size-px, em );
     text-indent: unit( -18px / @base-font-size-px, em );
