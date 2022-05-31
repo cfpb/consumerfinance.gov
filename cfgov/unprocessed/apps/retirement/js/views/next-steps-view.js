@@ -9,10 +9,6 @@ function init( ageRightNow = 0, fullRetirementAge = 0 ) {
   $( '#retirement-age-selector' ).change( function() {
     chooseClaimingAge( fullRetirementAge );
   } );
-
-  $( '#age-selector-response .helpful-btn' ).click( function() {
-    feedbackButton();
-  } );
 }
 
 /**
@@ -76,14 +72,6 @@ function limitAgeSelector( currentAge ) {
     elem += '">' + x + '</option>';
     $select.append( elem );
   }
-}
-
-/* This function defines the feedback button interactions in Step 3. */
-function feedbackButton() {
-  $( '#age-selector-response .thank-you' ).show();
-  $( '#age-selector-response .helpful-btn' )
-    .attr( 'disabled', true )
-    .addClass( 'btn__disabled' ).hide();
 }
 
 export default {

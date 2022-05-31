@@ -25,7 +25,7 @@ const styledApps = [
 
 const cssPaths = [
   `${ css }/main.less`,
-  ...getAll( `${ css }/on-demand/`, /.less$/ ),
+  ...getAll( `${ css }/on-demand`, /.less$/ ),
   ...styledApps.map( app => `${ apps }/${ app }/css/main.less` )
 ];
 
@@ -39,7 +39,8 @@ module.exports = function( baseConfig ) {
         math: 'always',
         paths: [
           ...readdirSync( `${ modules }/@cfpb` ).map( v => `${ modules }/@cfpb/${ v }/src` ),
-          `${ modules }/cfpb-chart-builder/src/css`
+          `${ modules }/cfpb-chart-builder/src/css`,
+          `${ modules }`
         ]
       }
     } ) ]

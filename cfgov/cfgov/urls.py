@@ -426,7 +426,7 @@ urlpatterns = [
         include("crtool.urls"),
     ),
     re_path(
-        r"^regulations3k-service-worker.js",
+        r"^regulations3k-service-worker.js$",
         TemplateView.as_view(
             template_name="regulations3k/regulations3k-service-worker.js",
             content_type="application/javascript",

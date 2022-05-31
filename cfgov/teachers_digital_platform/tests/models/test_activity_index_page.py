@@ -72,7 +72,6 @@ class ActivityIndexPageTests(WagtailPageTests):
                 "categories-MIN_NUM_FORMS": "0",
                 "categories-MAX_NUM_FORMS": "2",
                 "language": "en",
-                "is_archived": "no",
             },
         )
 

@@ -139,7 +139,7 @@ class AnswerPageSearchTest(TestCase):
         self.client.get(
             reverse("ask-autocomplete-en"), {"term": too_long_term}
         )
-        self.assertTrue(mock_search.called_with(valid_term))
+        self.assertTrue(mock_search.called_with(too_long_term))
 
     @mock.patch.object(AnswerPageDocument, "search")
     def test_ask_search_autocomplete(self, mock_search):
