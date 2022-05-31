@@ -43,13 +43,11 @@ function stickIfNeeded() {
   }
 }
 
-
 function getParentHeader(index){
   for(let i=index; i>=0; i--){
     if(primaryOffsets[i]) return tocHeaders[i].parentNode
   }
 }
-
 
 function hightlightTOC() {
   const sY = window.scrollY;
