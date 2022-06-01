@@ -3,6 +3,7 @@
    Scripts for Report Sidenav organism
    ========================================================================== */
 
+import { buildMobileTOC } from "./fig-toc-frame";
 const sidenav = document.querySelector( '.o-report-sidenav' );
 const tocHeaders = document.querySelectorAll( '.o-report-sidenav .m-nav-link' );
 const top = sidenav.offsetTop;
@@ -22,12 +23,34 @@ let lastTargetIndex;
 
 document.querySelector('.o-footer').classList.add( 'report-global-footer' );
 
+let mobileTOC = buildMobileTOC();
+
 function scrunchIfNeeded() {
-  let screenX = window.innerWidth || document.documentElement.clientWidth || doc.getElementsByTagName('body')[0].clientWidth;
+  let screenX = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
   if (screenX < 900) {
       sidenav.classList.add( 'scrunch' );
+      sidenav.appendChild(mobileTOC);
+      let tocContent = document.querySelector( '.toc-expandable_content' );
+      for (let i = 0; i < sidenav.children.length; i++){
+        if (sidenav.children[i].className !== 'toc-div'){
+          if (sidenav.children[i].tagName !== 'H3'){
+            tocContent.appendChild(sidenav.children[i]);
+          } else {
+            sidenav.children[i].style.display = 'none';
+          }
+        }
+      }
+      
   } else {
-    sidenav.classList.remove( 'scrunch' );
+      sidenav.classList.remove( 'scrunch' );
+      let tocContent = document.querySelector( '.toc-expandable_content' );
+      for (let i = 0; i < tocContent.children.length; i ++){
+        sidenav.append(tocContent.children[i]);
+      }
+      sidenav.removeChild(document.querySelector('.toc-div'));
+      for (let i = 0; i < sidenav.children.length; i++){
+        sidenav.children[i].style.display = 'block';
+      }
   }
 }
 
@@ -77,6 +100,6 @@ function onScroll() {
 
 window.addEventListener( 'scroll', onScroll );
 window.addEventListener( 'resize', scrunchIfNeeded );
+
 onScroll();
 scrunchIfNeeded();
-
