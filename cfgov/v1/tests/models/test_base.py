@@ -606,7 +606,17 @@ class TestCFGOVPageMediaCSSProperty(TestCase):
         self.assertEqual(CFGOVPage().streamfield_media("css"), [])
 
     def test_page_pulls_in_child_block_media(self):
-        page = CFGOVPage()
+        page = BrowsePage()
+        page.content = blocks.StreamValue(
+            page.content.stream_block,
+            [
+                {
+                    "type": "simple_chart",
+                    "value": {},
+                }
+            ],
+            True,
+        )
         page.sidefoot = blocks.StreamValue(
             page.sidefoot.stream_block,
             [
@@ -618,7 +628,9 @@ class TestCFGOVPageMediaCSSProperty(TestCase):
             True,
         )
 
-        self.assertEqual(page.media_css, ["sidebar-contact-info.css"])
+        self.assertEqual(
+            page.media_css, ["sidebar-contact-info.css", "simple-chart.css"]
+        )
 
     def test_doesnt_pull_in_media_for_nonexistent_child_blocks(self):
         page = BrowsePage()
