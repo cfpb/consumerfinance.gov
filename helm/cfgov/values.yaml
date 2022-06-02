@@ -179,6 +179,14 @@ cronJobs:
       - "clearsessions"
     restartPolicy: OnFailure
 
+  - name: "publishPages"
+    schedule: "* * * * *"
+    command:
+      - "publish_scheduled_pages"
+    args:
+      - "publishPages"
+    restartPolicy: OnFailure
+
 
 postgresql:
   enabled: false

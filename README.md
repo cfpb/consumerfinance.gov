@@ -31,7 +31,10 @@ This quickstart requires a working Docker Desktop installation and git:
       ./build-images.sh && ./helm-install.sh
       ```
 
-
+  if you see an error like:
+  ``` Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp [::1]:8080: connect: connection refused
+  ```
+  then you need to activatee Kubeerneetes in your docker deesktop settings!
   This may take some time, as it will also
   [load initial data](https://cfpb.github.io/consumerfinance.gov/installation/#load-initial-data)
   and
@@ -63,7 +66,7 @@ Documentation will be available locally at
 
 ## Getting the package
 Packages are tagged into one of three groups: main Branch -> latest, PRs -> pr-#, and Release -> major.minor.patch. The github SHA of the commit packaged should be listed as a label.
-To see our Docker image packages you can vist [Packages page](https://github.com/cfpb/consumerfinance.gov/pkgs/container/consumerfinance.gov) 
+To see our Docker image packages you can vist [Packages page](https://github.com/cfpb/consumerfinance.gov/pkgs/container/consumerfinance.gov)
 
 ## Getting help
 
