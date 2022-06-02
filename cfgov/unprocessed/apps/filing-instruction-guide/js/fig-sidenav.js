@@ -23,7 +23,7 @@ let lastTargetIndex;
 document.querySelector('.o-footer').classList.add( 'report-global-footer' );
 
 function scrunchIfNeeded() {
-  let screenX = window.innerWidth || document.documentElement.clientWidth || doc.getElementsByTagName('body')[0].clientWidth;
+  let screenX = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   if (screenX < 900) {
       sidenav.classList.add( 'scrunch' );
   } else {
