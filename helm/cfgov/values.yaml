@@ -179,12 +179,12 @@ cronJobs:
       - "clearsessions"
     restartPolicy: OnFailure
 
-  - name: "publishPages"
+  - name: "publish_scheduled_pages"
     schedule: "* * * * *"
     command:
-      - "publish_scheduled_pages"
+      - "django-admin"
     args:
-      - "publishPages"
+      - "publish_scheduled_pages"
     restartPolicy: OnFailure
 
 
