@@ -6,7 +6,6 @@ from django.core.exceptions import ValidationError
 from django.http import Http404, HttpResponseRedirect
 from django.urls import resolve
 
-from wagtail.core.blocks.stream_block import StreamValue
 from wagtail.core.models import Site
 
 
@@ -147,17 +146,6 @@ def all_valid_destinations_for_request(request):
     ]
 
     return valid_destinations
-
-
-def get_streamfields(page):
-    """
-    Retrieves the stream values on a page from its Streamfield
-    """
-    blocks_dict = {}
-    for key, value in vars(page).items():
-        if isinstance(value, StreamValue):
-            blocks_dict.update({key: value})
-    return blocks_dict
 
 
 def extended_strftime(dt, format):
