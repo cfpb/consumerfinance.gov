@@ -33,6 +33,12 @@ const styles = {
       color: '#5a5d61',
       fontFamily: '"AvenirNextLTW01-Regular", Arial, sans-serif',
       fontSize: 16
+    },
+    itemHiddenStyle: {
+      color: '#ccc !important'
+    },
+    itemHoverStyle: {
+      color: '#000 !important'
     }
   },
   plotOptions: {

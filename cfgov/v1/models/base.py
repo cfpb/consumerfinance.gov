@@ -3,8 +3,6 @@ import re
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import F, Value
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from django.template.response import TemplateResponse
 from django.utils import timezone, translation
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
@@ -18,7 +16,6 @@ from wagtail.admin.edit_handlers import (
     StreamFieldPanel,
     TabbedInterface,
 )
-from wagtail.core import hooks
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, Site
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -319,9 +316,6 @@ class CFGOVPage(Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
-        for hook in hooks.get_hooks("cfgovpage_context_handlers"):
-            hook(self, request, context, *args, **kwargs)
-
         # Add any banners that are enabled and match the current request path
         # to a context variable.
         context["banners"] = (
@@ -343,78 +337,10 @@ class CFGOVPage(Page):
         return context
 
     def serve(self, request, *args, **kwargs):
-        """
-        If request is ajax, then return the ajax request handler response, else
-        return the super.
-        """
-        if request.method == "POST":
-            return self.serve_post(request, *args, **kwargs)
-
         # Force the page's language on the request
         translation.activate(self.language)
         request.LANGUAGE_CODE = translation.get_language()
         return super().serve(request, *args, **kwargs)
-
-    def _return_bad_post_response(self, request):
-        if request.is_ajax():
-            return JsonResponse({"result": "error"}, status=400)
-
-        return HttpResponseBadRequest(self.url)
-
-    def serve_post(self, request, *args, **kwargs):
-        """Handle a POST to a specific form on the page.
-
-        Attempts to retrieve form_id from the POST request, which must be
-        formatted like "form-name-index" where the "name" part is the name of a
-        StreamField on the page and the "index" part refers to the index of the
-        form element in the StreamField.
-
-        If form_id is found, it returns the response from the block method
-        retrieval.
-
-        If form_id is not found, or if form_id is not a block that implements
-        get_result() to process the POST, it returns an error response.
-        """
-        form_module = None
-        form_id = request.POST.get("form_id", None)
-
-        if form_id:
-            form_id_parts = form_id.split("-")
-
-            if len(form_id_parts) == 3:
-                streamfield_name = form_id_parts[1]
-                streamfield = getattr(self, streamfield_name, None)
-
-                if streamfield is not None:
-                    try:
-                        streamfield_index = int(form_id_parts[2])
-                    except ValueError:
-                        streamfield_index = None
-
-                    if streamfield_index is not None:
-                        try:
-                            form_module = streamfield[streamfield_index]
-                        except IndexError:
-                            form_module = None
-
-        try:
-            result = form_module.block.get_result(
-                self, request, form_module.value, True
-            )
-        except AttributeError:
-            return self._return_bad_post_response(request)
-
-        if isinstance(result, HttpResponse):
-            return result
-
-        context = self.get_context(request, *args, **kwargs)
-        context["form_modules"][streamfield_name].update(
-            {streamfield_index: result}
-        )
-
-        return TemplateResponse(
-            request, self.get_template(request, *args, **kwargs), context
-        )
 
     class Meta:
         app_label = "v1"
