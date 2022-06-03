@@ -1,5 +1,5 @@
 export function buildMobileTOC() {
-    expandableTOCFrame = `<div class="o-expandable
+    const expandableTOCFrame = `<div class="o-expandable
     o-expandable__padded
     o-expandable__background
     o-expandable__border">
@@ -11,7 +11,8 @@ export function buildMobileTOC() {
 <span class="o-expandable_header-right o-expandable_link">
     <span class="o-expandable_cue o-expandable_cue-open">
         <span class="u-visually-hidden-on-mobile">Show</span>
-        {% include icons/plus-round.svg %}
+        
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg"><path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V6.12a.792.792 0 1 0-1.583 0V9.5H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 0 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791z"/></svg>
     </span>
     <span class="o-expandable_cue o-expandable_cue-close">
         <span class="u-visually-hidden-on-mobile">Hide</span>

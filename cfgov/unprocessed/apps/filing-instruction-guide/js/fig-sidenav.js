@@ -44,12 +44,15 @@ function scrunchIfNeeded() {
   } else {
       sidenav.classList.remove( 'scrunch' );
       let tocContent = document.querySelector( '.toc-expandable_content' );
-      for (let i = 0; i < tocContent.children.length; i ++){
-        sidenav.append(tocContent.children[i]);
-      }
-      sidenav.removeChild(document.querySelector('.toc-div'));
-      for (let i = 0; i < sidenav.children.length; i++){
-        sidenav.children[i].style.display = 'block';
+      if (tocContent !== null){
+        for (let i = 0; i < tocContent.children.length; i ++){
+          console.log('fired');
+          sidenav.append(tocContent.children[i]);
+        }
+        sidenav.removeChild(document.querySelector('.toc-div'));
+        for (let i = 0; i < sidenav.children.length; i++){
+          sidenav.children[i].style.display = 'block';
+        }
       }
   }
 }
