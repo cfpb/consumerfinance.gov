@@ -10,10 +10,7 @@ from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.search import index
 
-from data_research.blocks import (
-    ConferenceRegistrationForm,
-    MortgageDataDownloads,
-)
+from data_research.blocks import MortgageDataDownloads
 from jobmanager.blocks import JobListingTable
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms, schema
@@ -47,7 +44,6 @@ class BrowsePage(CFGOVPage):
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
-            ("conference_registration_form", ConferenceRegistrationForm()),
             ("chart_block", organisms.ChartBlock()),
             ("mortgage_chart_block", organisms.MortgageChartBlock()),
             ("mortgage_map_block", organisms.MortgageMapBlock()),
