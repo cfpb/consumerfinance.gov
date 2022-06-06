@@ -34,15 +34,15 @@ describe( 'Filter Blog Posts based on content', () => {
     // retrieve the category
     filter.getCategory().then( category => {
       // When I select the first option in the Category multiselect
-      filter.clickCategory( category.get( 0 ) );
+      filter.clickCategory( category.get( 0 ).getAttribute( 'data-option' ) );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then I should see only results in that category
-      blog.notification().should( 'be.visible' );
+      //blog.notification().should( 'be.visible' );
       // And the page url should contain "categories=" category
       cy.url().should(
         'include',
-        'categories=' + category.get( 0 ).getAttribute( 'value' )
+        'categories=' + category.get( 0 ).getAttribute( 'data-option' )
       );
     } );
   } );
@@ -50,11 +50,21 @@ describe( 'Filter Blog Posts based on content', () => {
     // retrieve the categories
     filter.getCategory().then( categories => {
       // When I select all options checkboxes in the Category multiselect
-      filter.clickCategory( categories.get( 0 ) );
-      filter.clickCategory( categories.get( 1 ) );
-      filter.clickCategory( categories.get( 2 ) );
-      filter.clickCategory( categories.get( 3 ) );
-      filter.clickCategory( categories.get( 4 ) );
+      filter.clickCategory( categories.get( 0 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 1 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 2 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 3 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 4 ).getAttribute(
+        'data-option'
+      ) );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then I should see only results that are in at least one of the selected categories
@@ -62,27 +72,27 @@ describe( 'Filter Blog Posts based on content', () => {
       // And the page url should contain "categories=at-the-cfpb"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 0 ).getAttribute( 'value' )
+        'categories=' + categories.get( 0 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=directors-notebook"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 1 ).getAttribute( 'value' )
+        'categories=' + categories.get( 1 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=policy_compliance"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 2 ).getAttribute( 'value' )
+        'categories=' + categories.get( 2 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=data-research-reports"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 3 ).getAttribute( 'value' )
+        'categories=' + categories.get( 3 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=info-for-consumers"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 4 ).getAttribute( 'value' )
+        'categories=' + categories.get( 4 ).getAttribute( 'data-option' )
       );
     } );
   } );

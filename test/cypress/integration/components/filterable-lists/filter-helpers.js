@@ -18,15 +18,20 @@ export class Filter {
   }
 
   getCategory() {
-    return cy.get( '[data-cy=category]' );
+    // return the list of categories
+    return cy.get( '[data-cy=categories-heading]' ).siblings().find(
+      '[data-cy=multiselect-option]'
+    );
   }
 
   getCategoryLabel( name ) {
     return cy.get( `[for="categories-${ name }"]` );
   }
 
-  clickCategory( category ) {
-    return category.click();
+  clickCategory( option ) {
+    const sel = `[data-option=${ option }`
+    cy.get( '[data-cy=categories-heading]' ).click();
+    return cy.get( sel ).click();
   }
 
   typeAheadTopic( name ) {
