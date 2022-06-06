@@ -93,16 +93,14 @@ const styles = {
         fontSize: '16px'
       },
       formatter: function() {
-        // If chart data is above 1 billion return "B" in y-axis
+        /* If chart data is above 1 billion return "B" in y-axis.
+         If chart data is above 1 million return "M" in y-axis.
+         If chart data is above 1 thousand return "K" in y-axis */
         if ( this.value >= 1000000000 ) {
           return this.value / 1000000000 + 'B';
-        }
-        // If chart data is above 1 million return "M" in y-axis
-        else if ( this.value >= 1000000 ) {
+        } else if ( this.value >= 1000000 ) {
           return this.value / 1000000 + 'M';
-        }
-        // If chart data is above 1 thousand return "K" in y-axis
-        else if ( this.value >= 1000 ) {
+        } else if ( this.value >= 1000 ) {
           return this.value / 1000 + 'K';
         }
         return this.value;
