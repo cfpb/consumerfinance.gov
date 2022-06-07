@@ -1,6 +1,3 @@
-from collections import defaultdict
-from unittest import mock
-
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.test import (
@@ -13,46 +10,20 @@ from django.test import (
 from wagtail.admin.views.pages.bulk_actions.delete import DeleteBulkAction
 from wagtail.admin.views.pages.delete import delete
 from wagtail.core import hooks
-from wagtail.core.blocks import BoundBlock
 from wagtail.core.models import Page, Site
 from wagtail.core.whitelist import Whitelister as Allowlister
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
 
-from data_research.blocks import ConferenceRegistrationForm
 from v1.models.base import CFGOVPage, CFGOVPageCategory
 from v1.models.blog_page import BlogPage
 from v1.models.resources import Resource
 from v1.tests.wagtail_pages.helpers import publish_page
 from v1.wagtail_hooks import (
-    form_module_handlers,
     get_resource_tags,
     raise_bulk_delete_error,
     raise_delete_error,
 )
-
-
-class TestFormModuleHandlers(TestCase):
-    def setUp(self):
-        self.context = {}
-        self.page = CFGOVPage(title="live", slug="test")
-        self.request = RequestFactory().get("/")
-
-    @mock.patch("v1.wagtail_hooks.util.get_streamfields")
-    def test_sets_context(self, mock_getstreamfields):
-        child = BoundBlock(
-            ConferenceRegistrationForm(), value=defaultdict(int)
-        )
-        mock_getstreamfields().items.return_value = [("form", [child])]
-        form_module_handlers(self.page, self.request, self.context)
-        self.assertIn("form_modules", self.context)
-        self.assertIsInstance(self.context["form_modules"]["form"], dict)
-
-    @mock.patch("v1.wagtail_hooks.util.get_streamfields")
-    def test_does_not_set_context(self, mock_getstreamfields):
-        mock_getstreamfields().items.return_value = []
-        form_module_handlers(self.page, self.request, self.context)
-        self.assertNotIn("form_modules", self.context)
 
 
 class TestServeLatestDraftPage(TestCase):

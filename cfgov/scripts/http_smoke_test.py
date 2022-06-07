@@ -88,7 +88,7 @@ APPS = [
     "/about-us/careers/",
     "/about-us/careers/current-openings/",
     "/about-us/doing-business-with-us/",
-    "/rules-policy/innovation/",
+    "/rules-policy/competition-innovation/",
     "/activity-log/",
     "/ask-cfpb/",
     "/your-story/",
