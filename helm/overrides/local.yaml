@@ -46,3 +46,10 @@ cronJobs:
     args:
       - "clearsessions"
     restartPolicy: OnFailure
+  - name: "inactive-users"
+    schedule: "* * * * *"
+    command:
+      - "django-admin"
+    args:
+      - "inactive_users --period  ${PERIOD} --email ${EMAIL_ADDRESSES} --deactivate-users --warn-users"
+    restartPolicy: OnFailure

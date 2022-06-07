@@ -178,7 +178,13 @@ cronJobs:
     args:
       - "clearsessions"
     restartPolicy: OnFailure
-
+  - name: "inactive-susers"
+    schedule: "@weekly"
+    command:
+      - "django-admin"
+    args:
+      - "inactive_users --period  ${PERIOD} --email ${EMAIL_ADDRESSES} --deactivate-users --warn-users"
+    restartPolicy: OnFailure
 
 postgresql:
   enabled: false
