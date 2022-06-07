@@ -1,19 +1,30 @@
 @import (reference) '../main.less';
+@nonMobileResize:   ~"only screen and (min-width: 900px) and (max-width: 1049px)";
 
 .m-nav-link{
   padding-left: unit( 40px / @base-font-size-px, em );
   text-indent: unit( -30px / @base-font-size-px, em );
 }
 
+.scrunch{
+  width: 100%;
+}
+
 .o-report-sidenav {
   &.sticky {
     position: fixed;
     top: 0;
-    width: 240px;
   }
   display: block;
   overflow-y: scroll;
-  height: 100%;
+  @media (min-width: 1050px) {
+    width: 230px;
+  }
+  @media @nonMobileResize {
+    width: 180px;
+  } 
+  background-color: white;
+
   .o-secondary-navigation_list__parents > li > a {
     padding-left: unit( 30px / @base-font-size-px, em );
     text-indent: unit( -18px / @base-font-size-px, em );
