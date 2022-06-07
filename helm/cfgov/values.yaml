@@ -178,11 +178,10 @@ cronJobs:
     args:
       - "clearsessions"
     restartPolicy: OnFailure
-
-  - name: "publish_scheduled_pages"
-    schedule: "* * * * *"
+  - name: "publish-scheduled-pages"
+    schedule: '* * * * *' # every minute
     command:
-      - "django-admin"
+      - "cfgov/manage.py"
     args:
       - "publish_scheduled_pages"
     restartPolicy: OnFailure

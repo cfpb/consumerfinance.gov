@@ -39,6 +39,14 @@ extraEnvs:
     value: "${DJANGO_ADMIN_PASSWORD}"
 
 cronJobs:
+  - name: "publish-scheduled-pages"
+    schedule: '@hourly'
+    command:
+      - "cfgov/manage.py"
+    args:
+      - "publish_scheduled_pages"
+    restartPolicy: OnFailure
+
   - name: "clearSessions"
     schedule: "@daily"
     command:
