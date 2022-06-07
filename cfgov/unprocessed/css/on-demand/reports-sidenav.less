@@ -1,22 +1,8 @@
 @import (reference) '../main.less';
 
-.research-report {
-  max-width: unit( (670 + 30) / 16, em );
-
-  .lead-paragraph, .author-names {
-    margin: 30px 0 30px 0;
-  }
-
-  .appendix-header {
-    margin: 0.83em 0;
-  }
-
-  .report-header > a {
-    color: black;
-    &:visited {
-      color: black;
-    }
-  }
+.m-nav-link{
+  padding-left: unit( 40px / @base-font-size-px, em );
+  text-indent: unit( -30px / @base-font-size-px, em );
 }
 
 .o-report-sidenav {
@@ -54,6 +40,27 @@
         padding-top: 0.5em;
         padding-bottom: 0.5em;
       }
+    }
+  }
+}
+
+
+.research-report {
+  // 670px, plus a 15px gutter on each side (standard paragrah widths)
+  max-width: unit( (670 + 30) / 16, em );
+
+  .lead-paragraph, .author-names {
+    margin: 30px 0 30px 0;
+  }
+
+  .appendix-header {
+    margin: 0.83em 0;
+  }
+
+  .report-header > a {
+    color: black;
+    &:visited {
+      color: black;
     }
   }
 }
