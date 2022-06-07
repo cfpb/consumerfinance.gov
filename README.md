@@ -34,7 +34,7 @@ This quickstart requires a working Docker Desktop installation and git:
   if you see an error like:
   ``` Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp [::1]:8080: connect: connection refused
   ```
-  then you need to activatee Kubeerneetes in your docker deesktop settings!
+  then you need to activate Kubernetes in your docker desktop settings!
   This may take some time, as it will also
   [load initial data](https://cfpb.github.io/consumerfinance.gov/installation/#load-initial-data)
   and
