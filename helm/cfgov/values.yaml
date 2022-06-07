@@ -178,6 +178,13 @@ cronJobs:
     args:
       - "clearsessions"
     restartPolicy: OnFailure
+  - name: "publish-scheduled-pages"
+    schedule: '* * * * *' # every minute
+    command:
+      - "cfgov/manage.py"
+    args:
+      - "publish_scheduled_pages"
+    restartPolicy: OnFailure
 
 
 postgresql:
