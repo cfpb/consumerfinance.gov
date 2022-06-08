@@ -47,7 +47,7 @@ function tocEventListener () {
 };
 
 function scrunchIfNeeded() {
-  let screenX = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
+  let screenX = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   if (screenX < 900) {
       sidenav.classList.add( 'scrunch' );
       sidenav.appendChild(mobileTOC);
