@@ -121,15 +121,6 @@ urlpatterns = [
         ),
         name="loan-estimate",
     ),
-    # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
-    # TODO: change to redirects after 2018 homebuying campaign.
-    re_path(
-        r"^owning-a-home/process/(?P<path>.*)$",
-        lambda req, path: ServeView.as_view()(
-            req, "owning-a-home/{}".format(path or "prepare/")
-        ),
-    ),
-    # END TODO
     re_path(
         r"^know-before-you-owe/$",
         TemplateView.as_view(template_name="know-before-you-owe/index.html"),
