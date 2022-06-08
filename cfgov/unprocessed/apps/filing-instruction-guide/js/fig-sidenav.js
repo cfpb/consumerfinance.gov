@@ -9,10 +9,16 @@ const tocHeaders = document.querySelectorAll( '.o-report-sidenav .m-nav-link' );
 const top = sidenav.offsetTop;
 const headerOffset = 224
 const headers = document.querySelectorAll( '.content_main .report-header' )
+const toc_open_icon = '<path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V6.12a.792.792 0 1 0-1.583 0V9.5H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 0 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791z"></path>';
+const toc_close_icon = '<path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H4.32a.792.792 0 0 0 0 1.583h8.346a.792.792 0 0 0 .792-.791z"></path>';
+
+let mobileTOC = buildMobileTOC();
 let offsets = [];
 let primaryOffsets = [];
 let set = 0;
 let lastTargetIndex;
+
+
 
 (function(){
   for(let i=0; i<headers.length; i++){
@@ -23,7 +29,22 @@ let lastTargetIndex;
 
 document.querySelector('.o-footer').classList.add( 'report-global-footer' );
 
-let mobileTOC = buildMobileTOC();
+function tocActions() {
+  if (this.children[0].innerHTML === toc_open_icon){
+    this.children[0].innerHTML = toc_close_icon;
+    document.getElementById('toc-expand').style.display = 'block';
+  } else {
+    this.children[0].innerHTML = toc_open_icon;
+    document.getElementById('toc-expand').style.display = 'none';
+  }
+};
+
+function tocEventListener () {
+  list = document.querySelectorAll(".toc-expandable_link");
+      for (var i = 0; i < list.length; i++) {
+        list[i].addEventListener("click", tocActions);
+  }
+};
 
 function scrunchIfNeeded() {
   let screenX = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
@@ -40,13 +61,15 @@ function scrunchIfNeeded() {
           }
         }
       }
+
+      //expandable TOC mechanics
+      tocEventListener();
       
   } else {
       sidenav.classList.remove( 'scrunch' );
       let tocContent = document.querySelector( '.toc-expandable_content' );
       if (tocContent !== null){
         for (let i = 0; i < tocContent.children.length; i ++){
-          console.log('fired');
           sidenav.append(tocContent.children[i]);
         }
         sidenav.removeChild(document.querySelector('.toc-div'));
@@ -101,7 +124,9 @@ function onScroll() {
   hightlightTOC();
 }
 
+
 window.addEventListener( 'scroll', onScroll );
+window.addEventListener( 'load', scrunchIfNeeded );
 window.addEventListener( 'resize', scrunchIfNeeded );
 
 onScroll();
