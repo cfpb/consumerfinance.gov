@@ -178,7 +178,7 @@ cronJobs:
     args:
       - "clearsessions"
     restartPolicy: OnFailure
-  - name: "inactive-susers"
+  - name: "inactive-users"
     schedule: "@weekly"
     command:
       - "django-admin"
