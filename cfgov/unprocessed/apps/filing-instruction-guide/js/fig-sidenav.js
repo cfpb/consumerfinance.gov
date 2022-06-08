@@ -22,6 +22,14 @@ let lastTargetIndex;
 
 document.querySelector('.o-footer').classList.add( 'report-global-footer' );
 
+function scrunchIfNeeded() {
+  let screenX = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  if (screenX < 900) {
+      sidenav.classList.add( 'scrunch' );
+  } else {
+    sidenav.classList.remove( 'scrunch' );
+  }
+}
 
 function stickIfNeeded() {
   if ( window.scrollY > top ) {
@@ -35,13 +43,11 @@ function stickIfNeeded() {
   }
 }
 
-
 function getParentHeader(index){
   for(let i=index; i>=0; i--){
     if(primaryOffsets[i]) return tocHeaders[i].parentNode
   }
 }
-
 
 function hightlightTOC() {
   const sY = window.scrollY;
@@ -64,11 +70,13 @@ function hightlightTOC() {
   }
 }
 
-
 function onScroll() {
   stickIfNeeded();
   hightlightTOC();
 }
 
 window.addEventListener( 'scroll', onScroll );
+window.addEventListener( 'resize', scrunchIfNeeded );
 onScroll();
+scrunchIfNeeded();
+

@@ -6,7 +6,6 @@ from django.core.exceptions import ValidationError
 from django.http import Http404, HttpResponseRedirect
 from django.urls import resolve
 
-from wagtail.core.blocks.stream_block import StreamValue
 from wagtail.core.models import Site
 
 
@@ -114,27 +113,6 @@ def get_secondary_nav_items(request, current_page):
 
         nav_items.append(item)
 
-    # Add `/process/` segment to BAH journey page nav urls.
-    # TODO: Remove this when redirects for `/process/` urls
-    # are added after 2018 homebuying campaign.
-    journey_urls = (
-        "/owning-a-home/prepare",
-        "/owning-a-home/explore",
-        "/owning-a-home/compare",
-        "/owning-a-home/close",
-        "/owning-a-home/sources",
-    )
-    if current_page.relative_url(site).startswith(journey_urls):
-        for item in nav_items:
-            item["url"] = item["url"].replace(
-                "owning-a-home", "owning-a-home/process"
-            )
-            for child in item["children"]:
-                child["url"] = child["url"].replace(
-                    "owning-a-home", "owning-a-home/process"
-                )
-    # END TODO
-
     return nav_items, has_children
 
 
@@ -168,17 +146,6 @@ def all_valid_destinations_for_request(request):
     ]
 
     return valid_destinations
-
-
-def get_streamfields(page):
-    """
-    Retrieves the stream values on a page from its Streamfield
-    """
-    blocks_dict = {}
-    for key, value in vars(page).items():
-        if isinstance(value, StreamValue):
-            blocks_dict.update({key: value})
-    return blocks_dict
 
 
 def extended_strftime(dt, format):

@@ -16,6 +16,11 @@
       <div class="eyebrow">{{ page.eyebrow }}</div>
       <h1>{{ page.page_header }}</h1>
       <div class="lead-paragraph">{{ page.subheader }}</div>
+      <a class="a-link a-link__jump" href="javascript:window.print()">
+          <span class="a-link_text">
+		  Print this page
+          </span>
+      </a>
     </div>
 
     {% for block in page.content %}
