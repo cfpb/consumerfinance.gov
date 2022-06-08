@@ -1,21 +1,15 @@
 import itertools
 from collections import Counter
-from functools import cached_property
 from urllib.parse import urlencode
 
-from django import forms
 from django.apps import apps
 from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
 from wagtail.core import blocks
-from wagtail.core.blocks.struct_block import (
-    StructBlockAdapter,
-    StructBlockValidationError,
-)
+from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.core.models import Page
-from wagtail.core.telepath import register
 from wagtail.images import blocks as images_blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 
@@ -1376,38 +1370,3 @@ class DataSnapshot(blocks.StructBlock):
         icon = "image"
         label = "CCT Data Snapshot"
         template = "_includes/organisms/data_snapshot.html"
-
-
-class FigSection(blocks.StructBlock):
-    header = blocks.TextBlock(label="Section header")
-    section_id = blocks.TextBlock(
-        required=False, help_text="Will be filled in automatically upon save."
-    )
-    content = FullWidthText()
-
-    class Meta:
-        icon = "edit"
-        template = "_includes/organisms/fig-section.html"
-
-
-class FigSectionAdapter(StructBlockAdapter):
-    js_constructor = "filing_instruction_guide.blocks.FigSection"
-
-    @cached_property
-    def media(self):
-        structblock_media = super().media
-        return forms.Media(
-            js=structblock_media._js + ["js/fig-section-block.js"],
-            css=structblock_media._css,
-        )
-
-
-register(FigSectionAdapter(), FigSection)
-
-
-class FigSubSection(FigSection):
-    header = blocks.TextBlock(label="Subsection header")
-
-
-class FigSub3Section(FigSection):
-    header = blocks.TextBlock(label="Level 3 subsection header")
