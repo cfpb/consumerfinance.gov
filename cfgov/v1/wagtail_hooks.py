@@ -36,7 +36,6 @@ from v1.template_debug import (
     register_template_debug,
     video_player_test_cases,
 )
-from v1.util import util
 from v1.views.reports import (
     DocumentsReportView,
     ImagesReportView,
@@ -156,33 +155,6 @@ def global_admin_css():
     )
 
     return css_includes
-
-
-@hooks.register("cfgovpage_context_handlers")
-def form_module_handlers(page, request, context, *args, **kwargs):
-    """
-    Hook function that iterates over every Streamfield's blocks on a page and
-    sets the context for any form modules.
-    """
-    form_modules = {}
-    streamfields = util.get_streamfields(page)
-
-    for fieldname, blocks in streamfields.items():
-        for index, child in enumerate(blocks):
-            if hasattr(child.block, "get_result"):
-                if fieldname not in form_modules:
-                    form_modules[fieldname] = {}
-
-                if not request.method == "POST":
-                    is_submitted = child.block.is_submitted(
-                        request, fieldname, index
-                    )
-                    module_context = child.block.get_result(
-                        page, request, child.value, is_submitted
-                    )
-                    form_modules[fieldname].update({index: module_context})
-    if form_modules:
-        context["form_modules"] = form_modules
 
 
 class PermissionCheckingMenuItem(MenuItem):
