@@ -264,7 +264,9 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
-          category.get( 0 )
+          category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
         );
         // When I select a checkbox in the Topic list
         filter.clickTopic(
@@ -308,7 +310,9 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
-          category.get( 0 )
+          category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
         );
         // When I select a checkbox in the Topic list
         filter.clickTopic(
@@ -424,7 +428,9 @@ describe( 'Filter Blog Posts based on content', () => {
         blog.filterItemName( title.get( 0 ).innerText );
         // And I select a checkbox in the category list
         filter.clickCategory(
-          category.get( 0 )
+          category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
         );
         // And I click "Apply filters" button
         blog.applyFilters();
