@@ -53,7 +53,7 @@ ss_table_urls = {
     "quarter_of_coverage": "https://www.ssa.gov/OACT/COLA/QC.html",
     # out of scope:
     # historical and projected male/female death probability tables
-    "death_probabilities": "https://www.ssa.gov/OACT/HistEst/DeathProbabilities2014.html",  # noqa: B950
+    "death_probabilities": "https://www.ssa.gov/oact/STATS/table4c6.html",  # noqa: B950
     # out of scope: compendium of bend points,
     # COlA and other adjustment values used in SS calculations
     "automatic_values": "https://www.ssa.gov/OACT/COLA/autoAdj.html",
