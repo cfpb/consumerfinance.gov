@@ -2,9 +2,6 @@ class FigSectionDefintion extends window.wagtailStreamField.blocks.StructBlockDe
     render(placeholder, prefix, initialState, initialError) {
         const block = super.render(placeholder, prefix, initialState, initialError);
 
-        console.log(placeholder);
-        console.log(prefix);
-
         const sectionID = $(document).find('#' + prefix + '-section_id');
         sectionID.prop('disabled', true);
 
