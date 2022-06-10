@@ -1,37 +1,26 @@
 @import (reference) '../main.less';
-@nonMobileResize:   ~"only screen and (min-width: 900px) and (max-width: 1049px)";
-
-.m-nav-link{
-  padding-left: unit( 40px / @base-font-size-px, em );
-  text-indent: unit( -30px / @base-font-size-px, em );
-}
-
-.scrunch{
-  width: 100%;
-}
 
 .o-report-sidenav {
-  &.sticky {
-    position: fixed;
-    top: 0;
-  }
+  position: sticky;
+  top: 0;
   display: block;
   overflow-y: scroll;
-  @media (min-width: 1050px) {
-    width: 230px;
+
+  .m-nav-link{
+    padding-left: unit( 40px / @base-font-size-px, em );
+    text-indent: unit( -30px / @base-font-size-px, em );
   }
-  @media @nonMobileResize {
-    width: 180px;
-  } 
-  background-color: white;
+
 
   .o-secondary-navigation_list__parents > li > a {
     padding-left: unit( 30px / @base-font-size-px, em );
     text-indent: unit( -18px / @base-font-size-px, em );
   }
+
   h3 {
     padding-left: unit( 19px / @size-iii, em );
   }
+
   h4 {
     padding-left: unit( 19px / @size-iv, em );
   }
@@ -39,9 +28,11 @@
   .o-report-sidenav__appendix > li > a {
     text-indent: unit( -20px / @base-font-size-px, em );
   }
+
   .o-secondary-navigation_list__children {
     display: none;
   }
+
   .parent-header {
     .o-secondary-navigation_list__children  {
       display: block;
