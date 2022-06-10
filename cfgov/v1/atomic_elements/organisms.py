@@ -637,6 +637,7 @@ class Expandable(BaseExpandable):
             ("email", molecules.ContactEmail()),
             ("phone", molecules.ContactPhone()),
             ("address", molecules.ContactAddress()),
+            ("info_unit_group", InfoUnitGroup()),
         ],
         blank=True,
     )
