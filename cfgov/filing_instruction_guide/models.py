@@ -10,7 +10,12 @@ from wagtail.admin.edit_handlers import (
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.fields import StreamField
 
-from v1.atomic_elements import organisms
+from filing_instruction_guide.blocks import (
+    FigSection,
+    FigSub3Section,
+    FigSubSection,
+)
+
 from v1.models.base import CFGOVPage
 
 
@@ -33,9 +38,9 @@ class FIGContentPage(CFGOVPage):
 
     content = StreamField(
         [
-            ("Fig_Section", organisms.FigSection()),
-            ("Fig_Sub_Section", organisms.FigSubSection()),
-            ("Fig_Sub_3_Section", organisms.FigSub3Section()),
+            ("Fig_Section", FigSection()),
+            ("Fig_Sub_Section", FigSubSection()),
+            ("Fig_Sub_3_Section", FigSub3Section()),
         ],
         blank=True,
     )
