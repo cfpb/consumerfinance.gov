@@ -7,6 +7,9 @@ metadata:
   labels:
     {{- include "cfgov.labels" $ | nindent 4 }}
 spec:
+  {{- if .suspend }}
+  suspend: {{.suspend}}
+  {{- end }}
   schedule: {{ .schedule | quote }}
   jobTemplate:
     spec:
