@@ -9,4 +9,4 @@ class FigSectionDefintion extends window.wagtailStreamField.blocks.StructBlockDe
     }
 }
 
-window.telepath.register('filing_instruction_guide.blocks.FigSection', FigSectionDefintion);
+window.telepath.register('filing_instruction_guide.blocks.FigSection', FigSectionDefinition);
