@@ -32,7 +32,7 @@ def forwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0211_convert_email_signups_blocks_in_pages_to_snippets'),
+        ('v1', '0212_convert_email_signups_blocks_in_pages_to_snippets'),
     ]
 
     operations = [

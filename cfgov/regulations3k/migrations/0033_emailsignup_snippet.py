@@ -13,7 +13,7 @@ import v1.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0210_emailsignup_snippet'),
+        ('v1', '0211_emailsignup_snippet'),
         ('regulations3k', '0032_remove_well_with_ask_search'),
     ]
 

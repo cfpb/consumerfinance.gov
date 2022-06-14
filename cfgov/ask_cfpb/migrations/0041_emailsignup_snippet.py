@@ -14,7 +14,7 @@ import v1.models.snippets
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0210_emailsignup_snippet'),
+        ('v1', '0211_emailsignup_snippet'),
         ('ask_cfpb', '0040_deprecate_feedback_block'),
     ]
 

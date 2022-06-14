@@ -12,8 +12,9 @@ from v1.util.migrations import (
 
 def forwards(apps, schema_editor):
     page_types_and_fields = [
-        ('paying_for_college', 'CollegeCostsPage', 'content', ['full_width_text', 'email_signup']),
-        ('paying_for_college', 'RepayingStudentDebtPage', 'content', ['full_width_text', 'email_signup']),
+        ('v1', 'CFGOVPage', 'sidefoot', 'email_signup'),
+        ('v1', 'BlogPage', 'content', 'email_signup'),
+        ('v1', 'LearnPage', 'content', 'email_signup'),
     ]
     migrate_page_types_and_fields(
         apps,
@@ -22,14 +23,10 @@ def forwards(apps, schema_editor):
     )
 
 
-
-from django.db import migrations
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('paying_for_college', '0012_emailsignup_snippet'),
+        ('v1', '0211_emailsignup_snippet'),
     ]
 
     operations = [

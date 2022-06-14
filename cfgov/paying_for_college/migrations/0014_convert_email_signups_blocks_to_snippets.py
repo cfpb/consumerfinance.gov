@@ -12,9 +12,8 @@ from v1.util.migrations import (
 
 def forwards(apps, schema_editor):
     page_types_and_fields = [
-        ('v1', 'CFGOVPage', 'sidefoot', 'email_signup'),
-        ('v1', 'BlogPage', 'content', 'email_signup'),
-        ('v1', 'LearnPage', 'content', 'email_signup'),
+        ('paying_for_college', 'CollegeCostsPage', 'content', ['full_width_text', 'email_signup']),
+        ('paying_for_college', 'RepayingStudentDebtPage', 'content', ['full_width_text', 'email_signup']),
     ]
     migrate_page_types_and_fields(
         apps,
@@ -26,7 +25,7 @@ def forwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0210_emailsignup_snippet'),
+        ('paying_for_college', '0013_emailsignup_snippet'),
     ]
 
     operations = [
