@@ -9,6 +9,8 @@ jobs:
     env:
       DATABASE_URL: postgres://cfpb:cfpb@localhost/cfgov
       MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+      DJANGO_ADMIN_USERNAME: admin
+      DJANGO_ADMIN_PASSWORD: admin
 
     services:
       elasticsearch:
@@ -49,12 +51,8 @@ jobs:
     - name: Set up initial data
       run: ./refresh-data.sh test.sql.gz
 
-
-    # - name: Run server
-    #   run: python cfgov/manage.py runserver
-
     - name: Run Cypress
-      uses: cypress-io/github-action@v2
+      uses: cypress-io/github-action@v4
       env:
           MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
       with:
