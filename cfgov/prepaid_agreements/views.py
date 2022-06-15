@@ -1,11 +1,8 @@
-from urllib.parse import urlparse
-
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.template.response import TemplateResponse
-from django.urls import reverse
 
 from prepaid_agreements.forms import FilterForm, SearchForm
 from prepaid_agreements.models import PrepaidProduct
@@ -157,29 +154,12 @@ def index(request):
     )
 
 
-def get_detail_page_breadcrumb(request):
-    """
-    Determines link back to search page from detail page.
-    If referrer is search page and contains a query
-    string, returns referrer so query is preserved.
-    Otherwise, returns base search page path.
-    """
-    http_referer = request.META.get("HTTP_REFERER", "")
-    referrer = urlparse(http_referer)
-    search_page_path = reverse("prepaid_agreements:index")
-    if referrer.query and referrer.path == search_page_path:
-        return http_referer
-    else:
-        return search_page_path
-
-
 def detail(request, product_id):
     return render(
         request,
         "prepaid_agreements/detail.html",
         {
             "product": get_object_or_404(PrepaidProduct, pk=product_id),
-            "search_page_url": get_detail_page_breadcrumb(request),
             "disclaimer_text": get_disclaimer_text(),
             "support_text": get_support_text(),
         },
