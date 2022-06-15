@@ -46,6 +46,7 @@ cronJobs:
     args:
       - "publish_scheduled_pages"
     restartPolicy: OnFailure
+    suspend: true
 
   - name: "clearSessions"
     schedule: "@daily"

@@ -14,7 +14,6 @@ const datetime = {
   xAxis: {
     ...styles.xAxis,
     type: 'datetime',
-    startOnTick: true,
     labels: {
       ...styles.xAxis.labels
     },
