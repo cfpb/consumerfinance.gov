@@ -836,7 +836,7 @@ body {
         &:after {
           position: absolute;
           left: 0;
-          top: unit( 46px / @base-font-size-px, em );
+          bottom: 0;
           content: '';
           background: transparent;
           width: 100%;
@@ -844,8 +844,6 @@ body {
         }
 
         &:hover {
-          padding-bottom: ( @grid_gutter-width / 2) - 6px;
-          border-bottom: 6px solid transparent;
           cursor: pointer;
 
           // Change hover border color.
