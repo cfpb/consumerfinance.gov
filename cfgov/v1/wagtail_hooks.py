@@ -43,6 +43,7 @@ from v1.template_debug import (
 )
 from v1.views.reports import (
     DocumentsReportView,
+    EmailSignupReportView,
     ImagesReportView,
     PageMetadataReportView,
 )
@@ -289,6 +290,27 @@ def register_images_report_url():
             r"^reports/images/$",
             ImagesReportView.as_view(),
             name="images_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_page_emailsignups_report_menu_item():
+    return MenuItem(
+        "Page Email Signups",
+        reverse("page_emailsignups_report"),
+        classnames="icon icon-" + EmailSignupReportView.header_icon,
+        order=700,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_page_emailsignups_report_url():
+    return [
+        re_path(
+            r"^reports/page-emailsignups/$",
+            EmailSignupReportView.as_view(),
+            name="page_emailsignups_report",
         ),
     ]
 

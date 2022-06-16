@@ -1,0 +1,19 @@
+{% extends 'wagtailadmin/reports/listing/_list_page_report.html' %}
+
+{% block extra_columns %}
+    <th>URL</th>
+    <th>Email signup</th>
+{% endblock %}
+
+{% block extra_page_data %}
+    <td valign="top">
+        {{ page.url }}
+    </td>
+    <td valign="top">
+        {{ page.email_signup_value }}
+
+        <ul class="actions">
+            <li><a  class="button button-secondary button-small" href="{% url "wagtailsnippets:edit" app_label="v1" model_name="emailsignup" pk=page.email_signup_value %}" title="Edit">Edit</a></li>
+        </ul>
+    </td>
+{% endblock %}

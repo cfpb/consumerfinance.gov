@@ -1,4 +1,6 @@
+import json
 from datetime import date
+from unittest import mock
 
 from django.test import TestCase
 
@@ -8,10 +10,12 @@ from wagtail.documents.models import Document
 from model_bakery import baker
 from taggit.models import Tag
 
-from v1.models import BlogPage, CFGOVPageCategory
+from v1.models import BlogPage, CFGOVPage, CFGOVPageCategory
+from v1.models.snippets import EmailSignUp
 from v1.util.ref import categories
 from v1.views.reports import (
     DocumentsReportView,
+    EmailSignupReportView,
     PageMetadataReportView,
     construct_absolute_url,
     process_categories,
@@ -76,3 +80,97 @@ class ServeViewTestCase(TestCase):
 
     def test_documents_report_get_queryset(self):
         self.assertEqual(self.documents_report_view.get_queryset().count(), 1)
+
+
+class EmailSignupReportViewTestCase(TestCase):
+    def setUp(self):
+        self.email_signup_report_view = EmailSignupReportView()
+
+        self.email_signup1 = EmailSignUp(
+            topic="Test signup 1",
+            code="TEST_CODE_1",
+        )
+        self.email_signup2 = EmailSignUp(
+            topic="Test signup 2",
+            code="TEST_CODE_2",
+        )
+
+        self.site = Site.objects.get(is_default_site=True)
+        self.root_page = self.site.root_page
+
+        self.regular_page = CFGOVPage(
+            title="Random page",
+            live=True,
+            sidefoot=json.dumps(
+                [
+                    {
+                        "type": "email_signup",
+                        "value": self.email_signup1.pk,
+                    }
+                ]
+            ),
+        )
+        self.root_page.add_child(instance=self.regular_page)
+
+        self.blog_page = BlogPage(
+            title="Blogojevich",
+            live=True,
+            content=json.dumps(
+                [
+                    {
+                        "type": "email_signup",
+                        "value": self.email_signup2.pk,
+                    }
+                ]
+            ),
+        )
+        self.root_page.add_child(instance=self.blog_page)
+
+    def test_get_filename(self):
+        today = date.today()
+        self.assertEqual(
+            self.email_signup_report_view.get_filename(),
+            f"wagtail-report_pages_with_email_signups_{today}",
+        )
+
+    def test_get_models_with_block(self):
+        models_and_fields = list(
+            self.email_signup_report_view.get_models_with_block(
+                "email_signups"
+            )
+        )
+
+        # Each model's field containing email_signups should be in this list
+        self.assertIn((CFGOVPage, "sidefoot"), models_and_fields)
+        self.assertIn((BlogPage, "content"), models_and_fields)
+
+        # A super class's fields containing email_signups should not
+        self.assertNotIn((BlogPage, "sidefoot"), models_and_fields)
+
+    def test_get_queryset(self):
+        # To keep this test simple, we patch the get_models_with_block method
+        # on the report to
+        with mock.patch.object(
+            self.email_signup_report_view, "get_models_with_block"
+        ) as mock_get_models_with_block:
+            mock_get_models_with_block.return_value = [
+                (CFGOVPage, "sidefoot"),
+                (BlogPage, "content"),
+            ]
+
+            # The ORM complexity in this method should only result in 2 queries.
+            with self.assertNumQueries(2):
+                # One query should be evaluated within the get_queryset method.
+                page_qs = self.email_signup_report_view.get_queryset()
+
+                # The second query should be when we evaluate the returned
+                # queryset.
+                pages = list(page_qs)
+
+        # We should get back our two test pages
+        self.assertEqual(len(pages), 2)
+
+        # They should have their respective email signup snippet pks as
+        # email_signup_value
+        self.assertEqual(pages[0].email_signup_value, self.email_signup1.pk)
+        self.assertEqual(pages[1].email_signup_value, self.email_signup2.pk)
