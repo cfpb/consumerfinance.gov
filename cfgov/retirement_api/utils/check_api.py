@@ -67,7 +67,7 @@ def check_data(data):
         return "BAD DATA"
 
 
-prefix = "http://"
+prefix = "https://"
 suffix = ".consumerfinance.gov/retirement"
 api_string = "retirement-api/estimator/{0}-{1}-{2}/{3}/".format(
     dob.month, dob.day, dob.year, random.randrange(20000, 100000)  # nosec
