@@ -1,6 +1,25 @@
 /* ==========================================================================
    "Form explainer" custom styles
    ========================================================================== */
+@color1-dark: #FF9E1B;
+@color1-med: #FFCE8D;
+@color1-light: #FFD8A3;
+@color1-tint: #FFF8F0;
+
+@color2-dark: #D486B2;
+@color2-med: #DC9CBF;
+@color2-light: #F0D8E2;
+@color2-tint: #F9F6F6;
+
+@color3-dark: #6F88B2;
+@color3-med: #9DAECC;
+@color3-light: #D3DAEB;
+@color3-tint: #F4F7FA;
+
+@color4-dark: #579695;
+@color4-med: #70A6A5;
+@color4-light: #D4E7E6;
+@color4-tint: #F2F8F8; 
 
 .form-explainer {
 
@@ -30,41 +49,81 @@
   }
 
   .image-map_overlay__category-1 {
-    background: rgba( 255, 147, 27, 0.2 );
+    background: rgba( 255, 158, 27, 0.2 );
 
     &:hover,
     &.hover-has-attention {
-      border-color: @gold-80;
+      border-color: @color1-dark;
     }
 
     &:focus,
     &.has-attention {
-      border-color: @gold-80;
-      background: rgba( 255, 147, 27, 0.5 );
+      border-color: @color1-dark;
+      background: rgba( 255, 158, 27, 0.5 );
     }
 
     &:focus {
-      outline: 1px dotted @gold;
+      outline: 1px dotted @color1-dark;
       outline-offset: 1px;
     }
   }
 
   .image-map_overlay__category-2 {
-    background: rgba( 0, 94, 93, 0.2 );
+    background: rgba( 212, 134, 178, 0.2 );
 
     &:hover,
     &.hover-has-attention {
-      border-color: @teal;
+      border-color: @color2-dark;
     }
 
     &:focus,
     &.has-attention {
-      border-color: @teal;
-      background: rgba( 0, 94, 93, 0.5 );
+      border-color: @color2-dark;
+      background: rgba( 212, 134, 178, 0.5 );
     }
 
     &:focus {
-      outline: 1px dotted @teal-dark;
+      outline: 1px dotted @color2-dark;
+      outline-offset: 1px;
+    }
+  }
+
+  .image-map_overlay__category-3 {
+    background: rgba( 212, 134, 178, 0.2 );
+
+    &:hover,
+    &.hover-has-attention {
+      border-color: @color3-dark;
+    }
+
+    &:focus,
+    &.has-attention {
+      border-color: @color3-dark;
+      background: rgba( 111, 136, 178, 0.5 );
+    }
+
+    &:focus {
+      outline: 1px dotted @color3-dark;
+      outline-offset: 1px;
+    }
+  }
+
+  .image-map_overlay__category-4 {
+    background: rgba( 87, 150, 149, 0.2 );
+
+    &:hover,
+    &.hover-has-attention {
+      border-color: @color4-dark;
+    }
+
+    &:focus,
+    &.has-attention {
+      border-color: @color4-dark;
+      background: rgba( 87, 150, 149, 0.5 );
+    }
+
+    &:focus {
+      outline: 1px dotted @color4-dark;
       outline-offset: 1px;
     }
   }
@@ -100,16 +159,22 @@
     }
 
     &.o-expandable__form-explainer-category-1 {
-      background-color: @gold-20;
+      background-color: @color1-tint;
+
+      .o-expandable_target {
+        background-color: @color1-light;
+      }
+
+      border-color: @color1-light;
 
       &.has-attention,
       &:hover {
-        border-color: @gold-80;
+        border-color: @color1-med;
       }
 
       &.has-attention {
         .o-expandable_target {
-          background-color: @gold-80;
+          background-color: @color1-med;
         }
 
         .o-expandable_label .cf-icon-svg {
@@ -118,22 +183,27 @@
       }
 
       .o-expandable_label .cf-icon-svg {
-        color: @gold-80;
+        color: @color1-dark;
       }
     }
 
 
     &.o-expandable__form-explainer-category-2 {
-      background-color: @teal-20;
+      background-color: @color2-tint;
+
+      .o-expandable_target {
+        background-color: @color2-light;
+      }
+      border-color: @color2-light;
 
       &.has-attention,
       &:hover {
-        border-color: @teal-80;
+        border-color: @color2-med;
       }
 
       &.has-attention {
         .o-expandable_target {
-          background-color: @teal-80;
+          background-color: @color2-med;
         }
 
         .o-expandable_label .cf-icon-svg {
@@ -142,7 +212,63 @@
       }
 
       .o-expandable_label .cf-icon-svg {
-        color: @teal-80;
+        color: @color2-dark;
+      }
+    }
+
+    &.o-expandable__form-explainer-category-3 {
+      background-color: @color3-tint;
+      border-color: @color3-light;
+
+      .o-expandable_target {
+        background-color: @color3-light;
+      }
+
+      &.has-attention,
+      &:hover {
+        border-color: @color3-med;
+      }
+
+      &.has-attention {
+        .o-expandable_target {
+          background-color: @color3-med;
+        }
+
+        .o-expandable_label .cf-icon-svg {
+          color: @black;
+        }
+      }
+
+      .o-expandable_label .cf-icon-svg {
+        color: @color3-dark;
+      }
+    }
+
+    &.o-expandable__form-explainer-category-4 {
+      background-color: @color4-tint;
+      border-color: @color4-light;
+
+      .o-expandable_target {
+        background-color: @color4-light;
+      }
+
+      &.has-attention,
+      &:hover {
+        border-color: @color4-med;
+      }
+
+      &.has-attention {
+        .o-expandable_target {
+          background-color: @color4-med;
+        }
+
+        .o-expandable_label .cf-icon-svg {
+          color: @black;
+        }
+      }
+
+      .o-expandable_label .cf-icon-svg {
+        color: @color4-dark;
       }
     }
 
