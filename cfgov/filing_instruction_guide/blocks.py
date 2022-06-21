@@ -36,7 +36,7 @@ class FigSection(blocks.StructBlock):
 
     class Meta:
         icon = "edit"
-        template = "_includes/organisms/fig-section.html"
+        template = "filing_instruction_guide/section.html"
 
 
 class FigSectionAdapter(StructBlockAdapter):
