@@ -22,4 +22,33 @@
 	</h4>
     {% endif %}
 </div>
-{% include_block value.content %}
+{% if value.content %}
+    <div class="o-full-width-text-group">
+        {% for block in value.content %}
+            {% set block_type = block.block_type %}
+            {% if 'content' in block_type %}
+                <div class="m-full-width-text">
+                    {{ block.value | safe }}
+                </div>
+            {% elif 'table' in block_type %}
+                <div class="m-full-width-text">
+                    {# TODO: We have not historically disallowed raw HTML in
+                       table blocks. We should not allow raw HTML. #}
+                    {% autoescape off %}
+                        {% include_block block %}
+                    {% endautoescape %}
+                </div>
+            {% elif block_type in ['email_signup'] %}
+                <div class="m-inset__email">
+                    {% include_block block %}
+                </div>
+            {% elif block_type in ['well'] %}
+                <div class="block">
+                    {% include_block block %}
+                </div>
+            {% else %}
+                {{ block | safe }}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
