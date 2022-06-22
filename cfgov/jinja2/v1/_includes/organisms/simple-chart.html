@@ -12,7 +12,7 @@
 {% macro make_download_href(download_source, data_source) -%}
   {% if download_source %}
     {{download_source}}
-  {% else %}
+  {% elif "https://" in data_source %}
     {{data_source}}
   {% endif %}
 {%- endmacro %}
@@ -63,10 +63,13 @@
         {% if value.source_credits %}<strong>Source:</strong> {{value.source_credits}}<br>{% endif %}
         {% if value.date_published %}<strong>Date Published:</strong> {{value.date_published}}<br>{% endif %}
         {% if value.download_text %}
-          <strong>Download:</strong>
-          <a class="icon-link icon-link__download"
-             href="{{make_download_href(value.download_file, data_location)}}">
-            <span class="icon-link_text">{{value.download_text}}</span></a><br>
+          {% set href =  make_download_href(value.download_file, data_location) %}
+          {% if href %}
+            <strong>Download:</strong>
+            <a class="icon-link icon-link__download"
+               href="{{href}}">
+              <span class="icon-link_text">{{value.download_text}}</span></a><br>
+          {% endif %}
         {% endif %}
         {% if value.notes%}<strong>Notes:</strong> {{value.notes}}{% endif %}
     </p>
