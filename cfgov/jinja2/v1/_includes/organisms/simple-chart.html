@@ -9,11 +9,11 @@
    Create a chart organism with data
 
    ========================================================================== #}
-{% macro make_download_name(download_source, download_text) -%}
-  {% if download_text %}
-    {{download_text}}
-  {% else %}
+{% macro make_download_href(download_source, data_source) -%}
+  {% if download_source %}
     {{download_source}}
+  {% else %}
+    {{data_source}}
   {% endif %}
 {%- endmacro %}
 
@@ -59,16 +59,14 @@
          >
     </div>
     <div class="o-simple-chart_tilemap_legend"></div>
-    {% set download_source = value.download_file %}
-
     <p class="m-chart-footnote block__sub block__border-top block short-desc">
         {% if value.source_credits %}<strong>Source:</strong> {{value.source_credits}}<br>{% endif %}
         {% if value.date_published %}<strong>Date Published:</strong> {{value.date_published}}<br>{% endif %}
-        {% if download_source %}
+        {% if value.download_text %}
           <strong>Download:</strong>
           <a class="icon-link icon-link__download"
-             href="{{ download_source }}">
-            <span class="icon-link_text">{{make_download_name(download_source, value.download_text)}}</span></a><br>
+             href="{{make_download_href(value.download_file, data_location)}}">
+            <span class="icon-link_text">{{value.download_text}}</span></a><br>
         {% endif %}
         {% if value.notes%}<strong>Notes:</strong> {{value.notes}}{% endif %}
     </p>
