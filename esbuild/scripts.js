@@ -34,7 +34,7 @@ const jsPaths = [
   `${ apps }/financial-well-being/js/home.js`,
   `${ apps }/financial-well-being/js/results.js`,
   `${ apps }/find-a-housing-counselor/js/common.js`,
-  `${ apps }/form-explainer/js/FormExplainer.js`,
+  `${ apps }/form-explainer/js/index.js`,
   `${ apps }/owning-a-home/js/common.js`,
   `${ apps }/owning-a-home/js/explore-rates/index.js`,
   `${ apps }/owning-a-home/js/mortgage-estimate/index.js`,
