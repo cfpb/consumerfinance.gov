@@ -26,7 +26,7 @@ def forwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0211_emailsignup_snippet'),
+        ('v1', '0212_emailsignup_snippet'),
     ]
 
     operations = [

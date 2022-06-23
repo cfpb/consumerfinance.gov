@@ -166,7 +166,7 @@ class EmailSignUp(index.Indexed, models.Model):
     )
 
     search_fields = [
-        index.SearchField("title", partial_match=True),
+        index.SearchField("topic", partial_match=True),
         index.SearchField("code", partial_match=True),
         index.SearchField("url", partial_match=True),
     ]
