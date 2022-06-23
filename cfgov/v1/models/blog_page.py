@@ -17,7 +17,10 @@ class BlogPage(AbstractFilterPage):
             ("expandable", organisms.Expandable()),
             ("well", organisms.Well()),
             ("video_player", organisms.VideoPlayer()),
-            ("email_signup", organisms.EmailSignUp()),
+            (
+                "email_signup",
+                v1_blocks.EmailSignUpChooserBlock(),
+            ),
             ("faq_schema", schema.FAQ(label="FAQ schema")),
             ("how_to_schema", schema.HowTo(label="HowTo schema")),
         ]

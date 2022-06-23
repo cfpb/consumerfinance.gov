@@ -13,6 +13,7 @@ from v1.models.browse_page import BrowsePage
 from v1.models.home_page import HomePage
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import LearnPage
+from v1.models.snippets import EmailSignUp
 from v1.models.sublanding_filterable_page import SublandingFilterablePage
 from v1.models.sublanding_page import SublandingPage
 
@@ -80,8 +81,10 @@ def create_landing_page(
     new_page = LandingPage(title=page_title, slug=page_slug)
     # update sidefoot streamfield if required
     if has_email_signup:
+        email_signup = EmailSignUp(code=email_gd_code)
+        email_signup.save()
         new_page.sidefoot = json.dumps(
-            [{"type": "email_signup", "value": {"gd_code": email_gd_code}}]
+            [{"type": "email_signup", "value": email_signup.pk}]
         )
 
     try:

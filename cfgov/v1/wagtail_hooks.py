@@ -27,7 +27,12 @@ from v1.admin_views import ExportFeedbackView, manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
-from v1.models.snippets import Contact, RelatedResource, ReusableText
+from v1.models.snippets import (
+    Contact,
+    EmailSignUp,
+    RelatedResource,
+    ReusableText,
+)
 from v1.template_debug import (
     call_to_action_test_cases,
     featured_content_test_cases,
@@ -399,6 +404,14 @@ class GlossaryTermModelAdmin(ModelAdmin):
     search_fields = ("name_en", "definition_en", "name_es", "definition_es")
 
 
+class EmailSignUpModelAdmin(ModelAdmin):
+    model = EmailSignUp
+    menu_icon = "snippet"
+    list_display = ("topic", "heading", "text", "code", "url")
+    ordering = ("topic",)
+    search_fields = ("topic", "code", "url")
+
+
 class SnippetModelAdminGroup(ModelAdminGroup):
     menu_label = "Snippets"
     menu_icon = "snippet"
@@ -411,6 +424,7 @@ class SnippetModelAdminGroup(ModelAdminGroup):
         PortalTopicModelAdmin,
         PortalCategoryModelAdmin,
         GlossaryTermModelAdmin,
+        EmailSignUpModelAdmin,
     )
 
 

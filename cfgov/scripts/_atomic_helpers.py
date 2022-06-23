@@ -114,44 +114,6 @@ info_unit_group = {
     },
 }
 
-email_signup = {
-    "type": "email_signup",
-    "value": {
-        "heading": "Email Sign Up",
-        "text": "Sign up for our newsletter.",
-        "gd_code": "TEST-GD-CODE",
-        "form_field": [
-            {
-                "btn_text": "this is a form field with button",
-                "required": False,
-                "info": "We will never share your email address.",
-                "label": "Learn more",
-                "type": "email",
-                "placeholder": "email@domain.com",
-            }
-        ],
-    },
-}
-
-email_signup_required = {
-    "type": "email_signup",
-    "value": {
-        "heading": "Email Sign Up",
-        "text": "Sign up for our newsletter.",
-        "gd_code": "TEST-GD-CODE",
-        "form_field": [
-            {
-                "btn_text": "this is a form field with button",
-                "required": True,
-                "info": "We will never share your email address.",
-                "label": "Learn more",
-                "type": "email",
-                "placeholder": "email@domain.com",
-            }
-        ],
-    },
-}
-
 snippet_list_show_thumbnails_false = {
     "type": "snippet_list",
     "value": {
