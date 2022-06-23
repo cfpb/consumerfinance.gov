@@ -183,7 +183,13 @@ cronJobs:
     command:
       - "django-admin"
     args:
-      - "inactive_users --period  ${PERIOD} --email ${EMAIL_ADDRESSES} --deactivate-users --warn-users"
+      - "inactive_users"
+      - "--period"
+      - "${PERIOD}"
+      - "--email"
+      - "${EMAIL_ADDRESSES}"
+      - "--deactivate-users"
+      - "--warn-users"
     restartPolicy: OnFailure
 
 postgresql:
