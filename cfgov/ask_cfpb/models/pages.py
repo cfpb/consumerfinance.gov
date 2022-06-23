@@ -29,7 +29,7 @@ from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models.answer_page import AnswerPage
 from ask_cfpb.models.search import AnswerPageSearch
 from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
+from v1.atomic_elements import molecules
 from v1.models import (
     CFGOVPage,
     LandingPage,
@@ -618,7 +618,10 @@ class ArticlePage(CFGOVPage):
             ("call_to_action", molecules.CallToAction()),
             ("related_links", molecules.RelatedLinks()),
             ("related_metadata", molecules.RelatedMetadata()),
-            ("email_signup", organisms.EmailSignUp()),
+            (
+                "email_signup",
+                v1_blocks.EmailSignUpChooserBlock(),
+            ),
             (
                 "reusable_text",
                 v1_blocks.ReusableTextChooserBlock(ReusableText),

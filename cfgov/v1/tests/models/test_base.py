@@ -353,7 +353,7 @@ class TestCFGOVPageMediaJSProperty(TestCase):
         page.sidefoot = blocks.StreamValue(
             page.sidefoot.stream_block,
             [
-                {"type": "email_signup", "value": {"heading": "Heading"}},
+                {"type": "email_signup", "value": 1},
             ],
             True,
         )
