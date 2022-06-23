@@ -526,7 +526,9 @@ class SimpleChart(blocks.StructBlock):
     )
 
     download_text = blocks.CharBlock(
-        required=False, help_text="Custom text for the chart download field"
+        required=False,
+        help_text="Custom text for the chart download field. Required to "
+        "display a download link.",
     )
 
     download_file = blocks.CharBlock(
