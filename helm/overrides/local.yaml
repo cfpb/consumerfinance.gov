@@ -56,6 +56,16 @@ cronJobs:
       - "clearsessions"
     restartPolicy: OnFailure
 
+  - name: "elasticsearch-Rebuild-Index"
+    schedule: "@daily"
+    command:
+      - "django-admin"
+    args:
+      - "search_index"
+      - "--rebuild"
+      - "--parallel"
+      - "-f"
+
   - name: "dump-Postgres-DB"
     schedule: "@daily"
     command:

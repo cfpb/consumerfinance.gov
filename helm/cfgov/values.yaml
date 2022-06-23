@@ -185,6 +185,17 @@ cronJobs:
     args:
       - "publish_scheduled_pages"
     restartPolicy: OnFailure
+  - name: "elasticsearch-Rebuild-Index"
+    schedule: "@daily"
+    command:
+      - "django-admin"
+    args:
+      - "search_index"
+      - "--rebuild"
+      - "--parallel"
+      - "-f"
+    restartPolicy: OnFailure
+    suspend: true
   - name: "dump-Postgres-DB"
     schedule: "@daily"
     command:
