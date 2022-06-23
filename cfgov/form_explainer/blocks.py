@@ -62,6 +62,9 @@ class ExplainerPage(blocks.StructBlock):
     categories = blocks.ListBlock(ExplainerCategory(required=False))
 
 
+class ImagelessExplainerPage(blocks.StructBlock):
+    categories = blocks.ListBlock(ExplainerCategory(required=False))
+
 class Explainer(blocks.StructBlock):
     pages = blocks.ListBlock(ExplainerPage(required=False))
 
@@ -69,3 +72,19 @@ class Explainer(blocks.StructBlock):
         template = "form-explainer/blocks/explainer.html"
         icon = "doc-full-inverse"
         label = "Explainer"
+
+class PrepaidExplainer(blocks.StructBlock):
+    pages = blocks.ListBlock(ImagelessExplainerPage(required=False))
+
+    class Meta:
+        template = "form-explainer/blocks/prepaid-explainer.html"
+        icon = "doc-full-inverse"
+        label = "Prepaid Explainer"
+
+class LoanEstimateExplainer(blocks.StructBlock):
+    pages = blocks.ListBlock(ImagelessExplainerPage(required=False))
+
+    class Meta:
+        template = "form-explainer/blocks/loan-estimate-explainer.html"
+        icon = "doc-full-inverse"
+        label = "Loan Estimate Explainer"

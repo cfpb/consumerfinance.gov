@@ -7,7 +7,10 @@ from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
 from wagtail.search import index
 
-from form_explainer.blocks import Explainer
+from form_explainer.blocks import (
+    Explainer, LoanEstimateExplainer,
+    PrepaidExplainer
+)
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 
@@ -18,6 +21,8 @@ class FormExplainerContent(StreamBlock):
     """
 
     explainer = Explainer()
+    loan_estimate_explainer = LoanEstimateExplainer()
+    prepaid_explainer = PrepaidExplainer()
     well = organisms.Well()
     info_unit_group = organisms.InfoUnitGroup()
 
