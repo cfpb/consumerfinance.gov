@@ -42,7 +42,7 @@ cronJobs:
   - name: "publish-scheduled-pages"
     schedule: '@hourly'
     command:
-      - "cfgov/manage.py"
+      - "django-admin"
     args:
       - "publish_scheduled_pages"
     restartPolicy: OnFailure
@@ -55,3 +55,13 @@ cronJobs:
     args:
       - "clearsessions"
     restartPolicy: OnFailure
+
+  - name: "dump-Postgres-DB"
+    schedule: "@daily"
+    command:
+      - "bash"
+    args:
+      - "-c"
+      - "pg_dump --no-owner --no-privileges | gzip > test.gz"
+    restartPolicy: OnFailure
+    suspend: true
