@@ -274,7 +274,10 @@ class AnswerPage(CFGOVPage):
             ("call_to_action", molecules.CallToAction()),
             ("related_links", molecules.RelatedLinks()),
             ("related_metadata", molecules.RelatedMetadata()),
-            ("email_signup", organisms.EmailSignUp()),
+            (
+                "email_signup",
+                v1_blocks.EmailSignUpChooserBlock(),
+            ),
             ("sidebar_contact", organisms.SidebarContactInfo()),
             ("rss_feed", molecules.RSSFeed()),
             ("social_media", molecules.SocialMedia()),
