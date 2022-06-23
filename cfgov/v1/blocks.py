@@ -172,3 +172,15 @@ class RAFTBlock(blocks.StructBlock):
 
     class Media:
         js = ["erap.js"]
+
+
+class EmailSignUpChooserBlock(SnippetChooserBlock):
+    def __init__(self, **kwargs):
+        super().__init__("v1.EmailSignUp", **kwargs)
+
+    class Meta:
+        icon = "mail"
+        template = "_includes/blocks/email-signup.html"
+
+    class Media:
+        js = ["email-signup.js"]
