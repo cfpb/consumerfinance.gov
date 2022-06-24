@@ -61,7 +61,11 @@ services:
       ALLOW_ADMIN_URL: "True"
       APACHE_PORT: 8000
       APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
-      DATABASE_URL: postgres://cfpb@postgres/cfgov
+      PGDATABASE: cfgov
+      PGUSER: cfpb
+      PGPASSWORD: cfpb
+      POSTGRES_USER: cfpb
+      PGHOST: localhost
       DJANGO_ADMIN_USERNAME: admin
       ES_HOST: elasticsearch
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/

@@ -54,13 +54,27 @@ spec:
               value: {{ .Values.importDbPath | quote }}
             {{- end }}
             {{- if .Values.postgresql.enabled }}
-            - name: DATABASE_URL
-              {{- if .Values.postgresql.nameOverride }}
-              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ .Values.postgresql.nameOverride }}-postgresql/{{ .Values.postgresql.postgresqlDatabase }}"
-              {{- else if .Values.postgresql.fullnameOverride }}
-              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ .Values.postgresql.fullNameOverride }}/{{ .Values.postgresql.postgresqlDatabase }}"
+            - name: PGHOST
+              {{- if $.Values.postgresql.nameOverride }}
+              value: "{{ $.Values.postgresql.nameOverride }}-postgresql"
+              {{- else if $.Values.postgresql.fullnameOverride }}
+              value: "{{ $.Values.postgresql.fullNameOverride }}"
               {{- else }}
-              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ include "cfgov.fullname" . }}-postgresql/{{ .Values.postgresql.postgresqlDatabase }}"
+              value: "{{ include "cfgov.fullname" $ }}-postgresql"
+              {{- end }}
+            - name: PGUSER
+              value: "{{ $.Values.postgresql.postgresqlUsername }}"
+            - name: PGPASSWORD
+              value: "{{ $.Values.postgresql.postgresqlPassword }}"
+            - name: PGDATABASE
+              value: "{{ $.Values.postgresql.postgresqlDatabase }}"
+            - name: DATABASE_URL
+              {{- if $.Values.postgresql.nameOverride }}
+              value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ $.Values.postgresql.nameOverride }}-postgresql/{{ $.Values.postgresql.postgresqlDatabase }}"
+              {{- else if $.Values.postgresql.fullnameOverride }}
+              value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ $.Values.postgresql.fullNameOverride }}/{{ $.Values.postgresql.postgresqlDatabase }}"
+              {{- else }}
+              value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ include "cfgov.fullname" $ }}-postgresql/{{ $.Values.postgresql.postgresqlDatabase }}"
               {{- end }}
             {{- end }}
             {{- if .Values.elasticsearch.enabled }}

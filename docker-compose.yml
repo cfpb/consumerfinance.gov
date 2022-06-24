@@ -43,6 +43,11 @@ services:
         stdin_open: true
         tty: true
         environment:
+            PGDATABASE: cfgov
+            PGUSER: cfpb
+            PGPASSWORD: cfpb
+            POSTGRES_USER: cfpb
+            PGHOST: localhost
             DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
             ES_HOST: elasticsearch
             SECRET_KEY: abcdefghijklmnopqrstuvwxyz

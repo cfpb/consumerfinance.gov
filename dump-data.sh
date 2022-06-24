@@ -14,7 +14,7 @@ fi
 
 # If DATABASE_URL is not set, or is empty, default to localhost.
 if [ -z "$DATABASE_URL" ]; then
-    DATABASE_URL=postgres://cfpb:cfpb@localhost/cfgov
+    DATABASE_URL=postgresql://$PGUSER:$PGPASSWORD@postgres/$PGDATABASE
 fi
 
 dump_data() {

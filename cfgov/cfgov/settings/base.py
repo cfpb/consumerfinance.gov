@@ -238,9 +238,9 @@ if ALLOW_ADMIN_URL:
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("PGDATABASE", "cfpb"),
-        "USER": os.getenv("PGUSER", "user"),
-        "PASSWORD": os.getenv("PGPASSWORD", "password"),
+        "NAME": os.getenv("PGDATABASE", "cfgov"),
+        "USER": os.getenv("PGUSER", "cfpb"),
+        "PASSWORD": os.getenv("PGPASSWORD", "cfpb"),
         "HOST": os.getenv("PGHOST", "localhost"),
         "PORT": "5432",
     }
