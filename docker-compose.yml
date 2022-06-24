@@ -48,7 +48,7 @@ services:
             PGPASSWORD: cfpb
             POSTGRES_USER: cfpb
             PGHOST: localhost
-            DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
+            DATABASE_URL: postgres://cfpb:cfpb@localhost/cfgov
             ES_HOST: elasticsearch
             SECRET_KEY: abcdefghijklmnopqrstuvwxyz
     docs:
