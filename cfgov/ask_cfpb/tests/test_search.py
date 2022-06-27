@@ -87,7 +87,7 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(response.context_data["page"], self.en_page)
         self.assertEqual(mock_search.call_count, 3)
         self.assertTrue(
-            mock_search.called_with(language="blah", search_term=term)
+            mock_search.called_with(language="en", search_term=term)
         )
 
     @mock.patch.object(AnswerPageDocument, "search")
