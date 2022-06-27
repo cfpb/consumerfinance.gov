@@ -9,7 +9,7 @@ fi
 echo "Using $(python3 --version 2>&1) located at $(which python3)"
 
 # Wait for the database to be ready
-until psql "postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}" -c '\q' >/dev/null 2>&1; do
+until psql "postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}" -c '\q' >/dev/null 2>&1; do
   >&2 echo "Postgres is unavailable - waiting"
   sleep 1
 done
@@ -17,7 +17,7 @@ done
 # Do first-time set up of the database if necessary
 RUN_MIGRATIONS=${RUN_MIGRATIONS:-"true"}
 if [ "$RUN_MIGRATIONS" = true ]; then
-  if ! psql "postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}" -c 'SELECT COUNT(*) FROM auth_user' >/dev/null 2>&1; then
+  if ! psql "postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}" -c 'SELECT COUNT(*) FROM auth_user' >/dev/null 2>&1; then
       echo "Doing first-time database and search index setup..."
       if [ -n "$CFGOV_PROD_DB_LOCATION" ]; then
           echo "Running refresh-data.sh..."

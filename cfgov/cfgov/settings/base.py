@@ -242,7 +242,7 @@ DATABASES = {
         "USER": os.getenv("PGUSER", "cfpb"),
         "PASSWORD": os.getenv("PGPASSWORD", "cfpb"),
         "HOST": os.getenv("PGHOST", "localhost"),
-        "PORT": "5432",
+        "PORT": os.getenv("PGHPORT", "5432"),
     }
 }
 

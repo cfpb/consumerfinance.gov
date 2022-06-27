@@ -66,6 +66,7 @@ services:
       PGPASSWORD: cfpb
       POSTGRES_USER: cfpb
       PGHOST: localhost
+      PGPORT: 5432
       DJANGO_ADMIN_USERNAME: admin
       ES_HOST: elasticsearch
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/

@@ -46,6 +46,8 @@ spec:
                   value: "{{ $.Values.postgresql.postgresqlUsername }}"
                 - name: PGPASSWORD
                   value: "{{ $.Values.postgresql.postgresqlPassword }}"
+                - name: PGPORT
+                  value: "{{ $.Values.postgresql.postgresqlPort }}"
                 - name: PGDATABASE
                   value: "{{ $.Values.postgresql.postgresqlDatabase }}"
                 - name: DATABASE_URL
