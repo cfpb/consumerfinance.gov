@@ -1,10 +1,11 @@
 ### POSTGRESQL OVERRIDES ###
 postgresql:
   enabled: true
-  postgresqlPostgresPassword: cfpb  # Admin password, admin user is postgres
-  postgresqlPassword: cfpb  # User password
-  postgresqlUsername: cfpb  # User username
-  postgresqlDatabase: cfgov
+  auth:
+    postgresPassword: cfpb  # Admin password, admin user is postgres
+    password: cfpb  # User password
+    username: cfpb  # User username
+    database: cfgov
   persistence:
     enabled: false
   service:
