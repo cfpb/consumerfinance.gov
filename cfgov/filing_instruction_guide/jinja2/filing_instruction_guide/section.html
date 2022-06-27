@@ -1,27 +1,17 @@
 <div class="block block__flush-bottom">
-    {% if block.block_type == 'Fig_Section' %}
-        <h2 class="report-header">
-	    <a id="{{ value.section_id }}" 
-	        href="#{{ value.section_id }}">
-		    {{value.section_id}} {{value.header}}
-	    </a>
-	</h2>
-    {% elif block.block_type == 'Fig_Sub_Section' %}
-        <h3 class="report-header">
-	    <a id="{{ value.section_id }}" 
-	        href="#{{ value.section_id }}">
-		    {{value.section_id}} {{value.header}}
-	    </a>
-	</h3>
-    {% else %}
-        <h4 class="report-header">
-	    <a id="{{ value.section_id }}" 
-	        href="#{{ value.section_id }}">
-		    {{value.section_id}} {{value.header}}
-	    </a>
-	</h4>
-    {% endif %}
-</div>
+  {% set block = {
+    'Fig_Section': 'h2',
+    'Fig_Sub_Section': 'h3'
+    }[block.block_type] | default('h4')
+  %}
+  <div class="block block__flush-bottom">
+    <{{block}} class="report-header">
+            <a id="{{ value.section_id }}"
+                href="#{{ value.section_id }}">
+                    {{value.section_id}} {{value.header}}
+            </a>
+    </{{block}}>
+  </div>
 {% if value.content %}
     <div class="o-full-width-text-group">
         {% for block in value.content %}
