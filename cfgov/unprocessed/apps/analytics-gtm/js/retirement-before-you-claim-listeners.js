@@ -81,6 +81,7 @@ const BYCAnalytics = ( function() {
           'Age ' + age
         );
       }
+      console.log(event)
     } );
 
     document.querySelector( '#graph_slider-input' ).addEventListener( 'mousedown', function() {
@@ -91,6 +92,7 @@ const BYCAnalytics = ( function() {
         'Slider clicked',
         'Slider clicked ' + sliderClicks + ' times'
       );
+      console.log(val);
     } );
 
     document.querySelector( '#claim-canvas' ).addEventListener( 'click', function( event ) {
@@ -102,6 +104,8 @@ const BYCAnalytics = ( function() {
           'Age Text Box clicked',
           'Age ' + age
         );
+        console.log(val);
+
       }
     } );
 
@@ -140,7 +144,7 @@ const BYCAnalytics = ( function() {
           'Lifestyle Button clicked',
           'Question: ' + question + ' - ' + value
         );
-      } );
+            } );
     }
 
     const benefitsRadios = document.querySelectorAll( 'input[name="benefits-display"]' );
@@ -154,8 +158,9 @@ const BYCAnalytics = ( function() {
             'Benefits View clicked',
             val
           );
+          console.log(val);
         }
-      } );
+            } );
     }
 
     document.querySelector( '#retirement-age-selector' ).addEventListener( 'change', function( event ) {
@@ -166,6 +171,7 @@ const BYCAnalytics = ( function() {
         'Planned Retirement Age selected',
         val
       );
+
     } );
 
     document.querySelector( '[data-tooltip-target]' ).addEventListener( 'click', function( event ) {
@@ -175,6 +181,7 @@ const BYCAnalytics = ( function() {
         'Tooltip clicked',
         'Target: ' + target
       );
+
     } );
   }
 
