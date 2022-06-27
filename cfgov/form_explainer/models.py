@@ -8,7 +8,10 @@ from wagtail.core.fields import StreamField
 from wagtail.search import index
 
 from form_explainer.blocks import (
-    Explainer, LoanEstimateExplainer,
+    Explainer, 
+    AdverseActionEnglishExplainer,
+    AdverseActionSpanishExplainer,
+    LoanEstimateExplainer,
     PrepaidExplainer
 )
 from v1.atomic_elements import molecules, organisms
@@ -23,6 +26,8 @@ class FormExplainerContent(StreamBlock):
     explainer = Explainer()
     loan_estimate_explainer = LoanEstimateExplainer()
     prepaid_explainer = PrepaidExplainer()
+    adverse_action_english = AdverseActionEnglishExplainer()
+    adverse_action_spanish = AdverseActionSpanishExplainer()
     well = organisms.Well()
     info_unit_group = organisms.InfoUnitGroup()
 

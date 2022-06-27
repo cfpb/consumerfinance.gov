@@ -88,3 +88,19 @@ class LoanEstimateExplainer(blocks.StructBlock):
         template = "form-explainer/blocks/loan-estimate-explainer.html"
         icon = "doc-full-inverse"
         label = "Loan Estimate Explainer"
+
+class AdverseActionEnglishExplainer(blocks.StructBlock):
+    pages = blocks.ListBlock(ImagelessExplainerPage(required=False))
+
+    class Meta:
+        template = "form-explainer/blocks/adverse-action-english.html"
+        icon = "doc-full-inverse"
+        label = "Adverse Action English Explainer"
+
+class AdverseActionSpanishExplainer(blocks.StructBlock):
+    pages = blocks.ListBlock(ImagelessExplainerPage(required=False))
+
+    class Meta:
+        template = "form-explainer/blocks/adverse-action-spanish.html"
+        icon = "doc-full-inverse"
+        label = "Adverse Action Spanish Explainer"
