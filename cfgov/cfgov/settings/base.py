@@ -236,14 +236,14 @@ if ALLOW_ADMIN_URL:
 # Override this by setting DATABASE_URL in the environment.
 # See https://github.com/jacobian/dj-database-url for URL formatting.
 DATABASES = {
-   "default": {
-         "ENGINE": "django.db.backends.postgresql",
-         "NAME": os.getenv("PGDATABASE", "cfgov"),
-         "USER": os.getenv("PGUSER", "cfpb"),
-         "PASSWORD": os.getenv("PGPASSWORD", "cfpb"),
-         "HOST": os.getenv("PGHOST", "localhost"),
-         "PORT": os.getenv("PGHPORT", "5432"),
-     },
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("PGDATABASE", "cfgov"),
+        "USER": os.getenv("PGUSER", "cfpb"),
+        "PASSWORD": os.getenv("PGPASSWORD", "cfpb"),
+        "HOST": os.getenv("PGHOST", "localhost"),
+        "PORT": os.getenv("PGHPORT", "5432"),
+    },
 }
 
 # Internationalization
