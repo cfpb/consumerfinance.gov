@@ -189,7 +189,7 @@ class EmailSignupReportView(PageReportView):
     def get_models_with_block(self, target_block):
         for page_cls in get_page_models():
             if page_cls._meta.abstract:
-                continue
+                continue  # pragma: no cover
 
             for field in page_cls._meta.get_fields(include_parents=False):
                 if not isinstance(field, StreamField):
