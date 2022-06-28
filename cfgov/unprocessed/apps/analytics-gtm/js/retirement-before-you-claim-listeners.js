@@ -140,7 +140,7 @@ const BYCAnalytics = ( function() {
           'Lifestyle Button clicked',
           'Question: ' + question + ' - ' + value
         );
-            } );
+      } );
     }
 
     const benefitsRadios = document.querySelectorAll( 'input[name="benefits-display"]' );
@@ -155,7 +155,7 @@ const BYCAnalytics = ( function() {
             val
           );
         }
-            } );
+      } );
     }
 
     document.querySelector( '#retirement-age-selector' ).addEventListener( 'change', function( event ) {
@@ -166,7 +166,6 @@ const BYCAnalytics = ( function() {
         'Planned Retirement Age selected',
         val
       );
-
     } );
 
     document.querySelector( '[data-tooltip-target]' ).addEventListener( 'click', function( event ) {
@@ -176,7 +175,6 @@ const BYCAnalytics = ( function() {
         'Tooltip clicked',
         'Target: ' + target
       );
-
     } );
   }
 
