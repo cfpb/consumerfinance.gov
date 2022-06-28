@@ -7,7 +7,6 @@ describe( 'Planning your Social Security', () => {
     claim.open();
   } );
 
-
   it( 'should display estimated benefits', () => {
     claim.setBirthDate( '1', '1', '1980' );
     claim.setHighestAnnualSalary( '115000' );
