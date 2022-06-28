@@ -81,7 +81,6 @@ const BYCAnalytics = ( function() {
           'Age ' + age
         );
       }
-      console.log(event)
     } );
 
     document.querySelector( '#graph_slider-input' ).addEventListener( 'mousedown', function() {
@@ -92,7 +91,6 @@ const BYCAnalytics = ( function() {
         'Slider clicked',
         'Slider clicked ' + sliderClicks + ' times'
       );
-      console.log(val);
     } );
 
     document.querySelector( '#claim-canvas' ).addEventListener( 'click', function( event ) {
@@ -104,8 +102,6 @@ const BYCAnalytics = ( function() {
           'Age Text Box clicked',
           'Age ' + age
         );
-        console.log(val);
-
       }
     } );
 
@@ -158,7 +154,6 @@ const BYCAnalytics = ( function() {
             'Benefits View clicked',
             val
           );
-          console.log(val);
         }
             } );
     }
