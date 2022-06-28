@@ -47,7 +47,7 @@ services:
             PGUSER: cfpb
             PGPASSWORD: cfpb
             POSTGRES_USER: cfpb
-            PGHOST: localhost
+            PGHOST: postgres
             PGPORT: 5432
             ES_HOST: elasticsearch
             SECRET_KEY: abcdefghijklmnopqrstuvwxyz
