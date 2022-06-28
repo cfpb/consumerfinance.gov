@@ -17,7 +17,6 @@ const datetime = {
     labels: {
       ...styles.xAxis.labels
     },
-
     events: {
       afterSetExtremes: function( evt ) {
         if ( evt.trigger === 'navigator' ) {
@@ -27,6 +26,13 @@ const datetime = {
         }
       }
     }
+  },
+  yAxis: {
+    ...styles.yAxis,
+    plotLines: [ {
+      value: 0,
+      width: 2
+    } ]
   },
   rangeSelector: {
     inputEnabled: false,
