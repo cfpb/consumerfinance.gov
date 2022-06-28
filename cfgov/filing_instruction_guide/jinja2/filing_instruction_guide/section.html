@@ -1,8 +1,8 @@
 <div class="block block__flush-bottom">
   {% set block = {
     'Fig_Section': 'h2',
-    'Fig_Sub_Section': 'h3'
     }[block.block_type] | default('h4')
+    'Fig_Subsection': 'h3'
   %}
   <div class="block block__flush-bottom">
     <{{block}} class="report-header">

@@ -11,9 +11,9 @@ from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.fields import StreamField
 
 from filing_instruction_guide.blocks import (
+    FigLevel3Subsection,
     FigSection,
-    FigSub3Section,
-    FigSubSection,
+    FigSubsection,
 )
 
 from v1.models.base import CFGOVPage
@@ -39,8 +39,8 @@ class FIGContentPage(CFGOVPage):
     content = StreamField(
         [
             ("Fig_Section", FigSection()),
-            ("Fig_Sub_Section", FigSubSection()),
-            ("Fig_Sub_3_Section", FigSub3Section()),
+            ("Fig_Subsection", FigSubsection()),
+            ("Fig_Level_3_Subsection", FigLevel3Subsection()),
         ],
         blank=True,
     )
@@ -84,7 +84,7 @@ class FIGContentPage(CFGOVPage):
                 if parent:
                     toc_headers.append(parent)
                 parent = {"header": header, "id": id, "children": []}
-            elif section.block_type == "Fig_Sub_Section":
+            elif section.block_type == "Fig_Subsection":
                 # if the first block is a subsection instead of a section
                 if not parent:
                     parent = {"header": "", "id": "", "children": []}
@@ -102,11 +102,11 @@ class FIGContentPage(CFGOVPage):
                 sub_ind = 0
                 sub3_ind = 0
                 id = f"{ind}."
-            if sec_type == "Fig_Sub_Section":
+            if sec_type == "Fig_Subsection":
                 sub_ind += 1
                 sub3_ind = 0
                 id = f"{ind}.{sub_ind}."
-            if sec_type == "Fig_Sub_3_Section":
+            if sec_type == "Fig_Level_3_Subsection":
                 sub3_ind += 1
                 id = f"{ind}.{sub_ind}.{sub3_ind}."
             section.value["section_id"] = id
