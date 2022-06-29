@@ -1,21 +1,27 @@
 <div class="block block__flush-bottom">
-  {% set block = {
+  {% set block_type = block.block_type %}
+  {% set block_level = {
     'Fig_Section': 'h2',
-    'Fig_Sub_Section': 'h3'
-    }[block.block_type] | default('h4')
+    'Fig_Subsection': 'h3'
+    }[block_type] | default('h4')
   %}
+  {% if block_type in ['Fig_Section', 'Fig_Subsection'] %}
+      {% set header = value.section_id + " " + value.header %}
+  {% else %}
+      {% set header = value.header %}
+  {% endif %}
+
   <div class="block block__flush-bottom">
-    <{{block}} class="report-header">
+    <{{block_level}} class="report-header">
             <a id="{{ value.section_id }}"
                 href="#{{ value.section_id }}">
-                    {{value.section_id}} {{value.header}}
+                    {{header}}
             </a>
-    </{{block}}>
+    </{{block_level}}>
   </div>
 {% if value.content %}
     <div class="o-full-width-text-group">
         {% for block in value.content %}
-            {% set block_type = block.block_type %}
             {% if 'content' in block_type %}
                 <div class="m-full-width-text">
                     {{ block.value | safe }}
