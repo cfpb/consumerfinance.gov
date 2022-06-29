@@ -1,6 +1,10 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import (
+    FieldPanel,
+    PageChooserPanel,
+    StreamFieldPanel,
+)
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -99,3 +103,84 @@ class RelatedResource(index.Indexed, models.Model):
 
     def __str__(self):
         return self.title
+
+
+@register_snippet
+class EmailSignUp(index.Indexed, models.Model):
+    topic = models.CharField(
+        verbose_name="Topic name (internal only)",
+        max_length=255,
+        null=True,
+        blank=True,
+    )
+    code = models.TextField(
+        verbose_name="GovDelivery Code",
+        null=True,
+        blank=True,
+        help_text=(
+            "GovDelivery Code (USCFPB_###) for the list people who submit "
+            "the form will sign up for. Provide either this or the signup "
+            "URL, but not both."
+        ),
+    )
+    url = models.URLField(
+        verbose_name="GovDelivery URL",
+        null=True,
+        blank=True,
+        help_text=(
+            "URL for the GovDelivery signup page people will be linked to "
+            "in order to signup. Provide either this or the signup "
+            "URL, but not both."
+        ),
+    )
+    heading = models.TextField(blank=True, default="Stay informed")
+    default_heading = models.BooleanField(
+        null=True,
+        blank=True,
+        default=True,
+        verbose_name="Default heading style",
+        help_text=(
+            "If selected, heading will be styled as an H5 "
+            "with green top rule. Deselect to style header as H3."
+        ),
+    )
+    text = RichTextField(
+        blank=True,
+        help_text=(
+            "Write a sentence or two about what kinds of emails the "
+            "user is signing up for, how frequently they will be sent, "
+            "etc."
+        ),
+    )
+    disclaimer_page = models.ForeignKey(
+        "wagtailcore.Page",
+        verbose_name="Privacy Act statement",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        help_text=(
+            'Choose the page that the "See Privacy Act statement" link '
+            'should go to. If in doubt, use "Generic Email Sign-Up '
+            'Privacy Act Statement".'
+        ),
+    )
+
+    search_fields = [
+        index.SearchField("topic", partial_match=True),
+        index.SearchField("code", partial_match=True),
+        index.SearchField("url", partial_match=True),
+    ]
+
+    panels = [
+        FieldPanel("topic"),
+        FieldPanel("code"),
+        FieldPanel("url"),
+        FieldPanel("heading"),
+        FieldPanel("text"),
+        PageChooserPanel("disclaimer_page", "wagtailcore.Page"),
+    ]
+
+    def __str__(self):
+        return (
+            f"{self.topic} ({self.url if self.url is not None else self.code})"
+        )

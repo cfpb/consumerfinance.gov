@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.conf import settings
 from django.http import HttpRequest
 from django.test import TestCase
 from django.urls import reverse
@@ -7,6 +8,8 @@ from django.utils import timezone
 
 from wagtail.core.models import Site
 from wagtail.tests.utils import WagtailTestUtils
+
+import pytz
 
 from jobmanager.models.django import (
     Grade,
@@ -23,7 +26,10 @@ from v1.models.snippets import ReusableText
 class JobListingPageQuerySetTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        today = timezone.now().date()
+        today = timezone.localtime(
+            timezone=pytz.timezone(settings.TIME_ZONE)
+        ).date()
+
         root_page = Site.objects.get(is_default_site=True).root_page
         division = JobCategory.objects.create(job_category="Division")
 
