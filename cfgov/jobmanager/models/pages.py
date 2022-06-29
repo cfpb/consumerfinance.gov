@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.safestring import mark_safe
@@ -16,6 +17,7 @@ from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import PageManager, PageQuerySet
 
+import pytz
 from modelcluster.fields import ParentalManyToManyField
 
 from jobmanager.models.django import (
@@ -31,7 +33,9 @@ from v1.models.snippets import ReusableText
 
 class JobListingPageQuerySet(PageQuerySet):
     def open(self):
-        today = timezone.now().date()
+        today = timezone.localtime(
+            timezone=pytz.timezone(settings.TIME_ZONE)
+        ).date()
 
         return (
             self.filter(live=True)
