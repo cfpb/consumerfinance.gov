@@ -328,7 +328,9 @@ def parse_appendix_elements(appendix_soup, label):
     for form_line in appendix_soup.find_all("FP-DASH"):
         form_line.string = form_line.text.replace("\n", "") + "__\n"
     for i, image in enumerate(appendix_soup.find_all("img")):
-        ref = "![image-{}-{}]({})".format(label, i + 1, image.get("src"))
+        ref = "![image-{}-{}]({}){}".format(
+            label, i + 1, image.get("src"), '{:lazy="loading"}'
+        )
         image.replaceWith("\n{}\n".format(ref))
     LEVEL_STATE.current_id = ""
     id_type = LEVEL_STATE.sniff_appendix_id_type(paragraphs)
