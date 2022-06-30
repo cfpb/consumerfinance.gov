@@ -26,3 +26,9 @@
         {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
     </aside>
 {% endif %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script src="{{ static('apps/form-explainer/js/index.js') }}"></script>
+
+{% endblock javascript %}
