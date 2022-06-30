@@ -6,6 +6,7 @@ describe( 'Planning your Social Security', () => {
   beforeEach( () => {
     claim.open();
   } );
+
   it( 'should display estimated benefits', () => {
     claim.setBirthDate( '1', '1', '1980' );
     claim.setHighestAnnualSalary( '115000' );
@@ -14,7 +15,6 @@ describe( 'Planning your Social Security', () => {
   } );
 
   it( 'should have a spanish view', () => {
-    claim.open();
     cy.intercept( '/consumer-tools/retirement/before-you-claim/es' )
       .as( 'getSpanish' );
     claim.setLanguageToSpanish();
