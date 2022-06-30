@@ -236,3 +236,30 @@ def migrate_page_types_and_fields(apps, page_types_and_fields, mapper):
             )
             for revision in revisions:
                 migrate_stream_field(revision, field_name, block_path, mapper)
+
+
+# This is a temporary function that is used in the following migrations:
+#   v1.migrations.0210_convert_email_signup_blocks.
+#
+# Once that migration is complete, those migrations should be converted to
+# noops and this function can be deleted.
+def convert_emailsignup_block_to_snippet(apps, page_or_revision, data):
+    # Get the models we need
+    EmailSignUp = apps.get_model("v1", "EmailSignUp")
+    Page = apps.get_model("wagtailcore", "Page")
+
+    # Get or create a snippet for the EmailSignUpBlock data we received.
+    emailsignup_snippet, created = EmailSignUp.objects.get_or_create(
+        heading=data["heading"],
+        default_heading=data.get("default_heading", True),
+        text=data["text"],
+        code=data["gd_code"],
+        disclaimer_page=(
+            Page.objects.get(pk=data["disclaimer_page"])
+            if data["disclaimer_page"] is not None
+            else None
+        ),
+    )
+
+    # Return the primary key of that snippet object
+    return emailsignup_snippet.pk
