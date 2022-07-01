@@ -149,6 +149,7 @@ MIDDLEWARE = (
     "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "wagtailadmin_overrides.middleware.WagtailAdminViewOverrideMiddleware",
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "core.middleware.SelfHealingMiddleware",
