@@ -44,6 +44,7 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 INSTALLED_APPS = (
     "permissions_viewer",
     "wagtail.core",
+    "wagtailadmin_overrides",
     "wagtail.admin",
     "wagtail.documents",
     "wagtail.snippets",
@@ -281,11 +282,9 @@ STATICFILES_FINDERS = [
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-# Used to include directories not traditionally found,
-# app-specific 'static' directories.
+# Add the frontend build output to static files.
 STATICFILES_DIRS = [
     PROJECT_ROOT.joinpath("static_built"),
-    PROJECT_ROOT.joinpath("templates", "wagtailadmin"),
 ]
 
 # Also include any directories under static.in
