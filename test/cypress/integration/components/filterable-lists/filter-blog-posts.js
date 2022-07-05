@@ -39,7 +39,7 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.applyFilters();
 
       /*  Then I should see only results in that category
-         blog.notification().should( 'be.visible' );
+          blog.notification().should( 'be.visible' );
           And the page url should contain "categories=" category */
       cy.url().should(
         'include',
