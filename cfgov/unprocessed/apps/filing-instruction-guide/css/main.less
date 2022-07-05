@@ -21,8 +21,14 @@
   h5 {
     .h4();
   }
-  .o-table td {
-    vertical-align: top;
+  .o-table {
+    margin-top: unit( 30px / @base-font-size-px, em );
+    td {
+      vertical-align: top;
+    }
+    br {
+      display: none;
+    }
   }
 }
 
