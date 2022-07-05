@@ -6,11 +6,11 @@
     },
     'Fig_Subsection': {
         'heading': 'h3',
-        'class': 'o-fig-section__sub'
+        'class': 'o-fig_section__sub'
     },
     'Fig_Level_3_Subsection': {
         'heading': 'h4',
-        'class': 'o-fig-section__sub-sub'
+        'class': 'o-fig_section__sub-sub'
     },
 } %}
 {% set block_heading_level = block_types[block_type].heading | default('h4') %}
@@ -23,13 +23,13 @@
 {% endif %}
 
 <div class="block {{ block_class }}">
-    <{{ block_heading_level }}>
+    <{{ block_heading_level }} class="report-header o-fig_heading">
         <a id="{{ value.section_id }}"
-            href="#{{ value.section_id }}">
+           href="#{{ value.section_id }}">
                 {{ header }}
         </a>
     </{{ block_heading_level }}>
     {% for block in value.content %}
-        {% include_block block %}
+        {{ block | safe }}
     {% endfor %}
 </div>
