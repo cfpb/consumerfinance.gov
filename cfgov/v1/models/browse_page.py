@@ -87,6 +87,8 @@ class BrowsePage(CFGOVPage):
 
     template = "browse-basic/index.html"
 
+    page_description = "Left-hand navigation, no right-hand sidebar."
+
     search_fields = CFGOVPage.search_fields + [
         index.SearchField("content"),
         index.SearchField("header"),
