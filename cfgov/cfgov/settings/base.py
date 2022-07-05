@@ -65,7 +65,6 @@ INSTALLED_APPS = (
     "flags",
     "wagtailautocomplete",
     "wagtailflags",
-    "watchman",
     "ask_cfpb",
     "agreements",
     "django.contrib.admin",
@@ -103,6 +102,9 @@ INSTALLED_APPS = (
     "django_elasticsearch_dsl",
     "corsheaders",
     "login",
+    "filing_instruction_guide",
+    "health_check",
+    "health_check.db",
     # Satellites
     "complaint_search",
     "countylimits",
@@ -458,7 +460,6 @@ CSP_SCRIPT_SRC = (
     "*.googleoptimize.com",
     "tagmanager.google.com",
     "optimize.google.com",
-    "ajax.googleapis.com",
     "search.usa.gov",
     "api.mapbox.com",
     "js-agent.newrelic.com",
@@ -467,17 +468,12 @@ CSP_SCRIPT_SRC = (
     "gov-bam.nr-data.net",
     "*.youtube.com",
     "*.ytimg.com",
-    "trk.cetrk.com",
-    "universal.iperceptions.com",
     "cdn.mouseflow.com",
     "n2.mouseflow.com",
     "us.mouseflow.com",
-    "geocoding.geo.census.gov",
-    "tigerweb.geo.census.gov",
+    "*.geo.census.gov",
     "about:",
-    "connect.facebook.net",
     "www.federalregister.gov",
-    "storage.googleapis.com",
     "*.qualtrics.com",
 )
 
@@ -486,11 +482,9 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     "*.consumerfinance.gov",
-    "fast.fonts.net",
     "tagmanager.google.com",
     "optimize.google.com",
     "api.mapbox.com",
-    "fonts.googleapis.com",
 )
 
 # These specify valid image sources
@@ -499,27 +493,21 @@ CSP_IMG_SRC = (
     "*.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
-    "www.gstatic.com",
-    "ssl.gstatic.com",
-    "stats.g.doubleclick.net",
     "img.youtube.com",
     "*.google-analytics.com",
-    "trk.cetrk.com",
     "searchstats.usa.gov",
-    "gtrk.s3.amazonaws.com",
     "*.googletagmanager.com",
     "tagmanager.google.com",
-    "maps.googleapis.com",
     "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
     "stats.search.usa.gov",
     "blob:",
     "data:",
-    "www.facebook.com",
     "www.gravatar.com",
     "*.qualtrics.com",
     "*.mouseflow.com",
+    "i.ytimg.com",
 )
 
 # These specify what URL's we allow to appear in frames/iframes
@@ -531,23 +519,11 @@ CSP_FRAME_SRC = (
     "*.googleoptimize.com",
     "optimize.google.com",
     "www.youtube.com",
-    "*.doubleclick.net",
-    "universal.iperceptions.com",
-    "www.facebook.com",
-    "staticxx.facebook.com",
-    "mediasite.yorkcast.com",
     "*.qualtrics.com",
 )
 
 # These specify where we allow fonts to come from
-CSP_FONT_SRC = (
-    "'self'",
-    "data:",
-    "*.consumerfinance.gov",
-    "fast.fonts.net",
-    "fonts.google.com",
-    "fonts.gstatic.com",
-)
+CSP_FONT_SRC = "'self'"
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to
 CSP_CONNECT_SRC = (
@@ -562,7 +538,6 @@ CSP_CONNECT_SRC = (
     "s3.amazonaws.com",
     "public.govdelivery.com",
     "n2.mouseflow.com",
-    "api.iperceptions.com",
     "*.qualtrics.com",
     "raw.githubusercontent.com",
 )
@@ -609,21 +584,9 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
-    # Hide archive filter options in the filterable UI
-    "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
-
-# Watchman tokens, a comma-separated string of tokens used to authenticate
-# global status endpoint. The Watchman status URL endpoint is only included if
-# WATCHMAN_TOKENS is defined as an environment variable. A blank value for
-# WATCHMAN_TOKENS will make the status endpoint accessible without a token.
-WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS")
-
-# This specifies what checks Watchman should run and include in its output
-# https://github.com/mwarkentin/django-watchman#custom-checks
-WATCHMAN_CHECKS = ("alerts.checks.elasticsearch_health",)
 
 # We want the ability to serve the latest drafts of some pages on beta
 # This value is read by v1.wagtail_hooks
@@ -764,3 +727,7 @@ except (TypeError, ValueError):
         "Environment variable CORS_ALLOWED_ORIGINS is not valid JSON. "
         "Expected a JSON array of allowed origins."
     )
+
+# A list of domain names that are allowed to be linked to without adding the
+# interstitial page.
+ALLOWED_LINKS_WITHOUT_INTERSTITIAL = ("public.govdelivery.com",)

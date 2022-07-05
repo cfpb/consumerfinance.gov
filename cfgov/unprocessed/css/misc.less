@@ -78,24 +78,24 @@
 //       Refactor to use CF classes.
 
 .line-container {
-    margin: 0 0 unit(30px / @base-font-size-px, em);
-    border-top: 1px solid @gray-20;
-    border-bottom: 1px solid @gray-20;
+  margin: 0 0 unit( 30px / @base-font-size-px, em );
+  border-top: 1px solid @gray-20;
+  border-bottom: 1px solid @gray-20;
 
-    &_body {
-        // 26px is eyeballed to 30px when considering line heights of potential
-        // children.
-        margin: unit(26px / @base-font-size-px, em)
+  &_body {
+    // 26px is eyeballed to 30px when considering line heights of potential
+    // children.
+    margin: unit( 26px / @base-font-size-px, em )
                 0
-                unit(26px / @base-font-size-px, em);
-    }
+                unit( 26px / @base-font-size-px, em );
+  }
 
-    &__no-top {
-        border-top: 0;
-        .line-container_body {
-            margin-top: 0;
-        }
+  &__no-top {
+    border-top: 0;
+    .line-container_body {
+      margin-top: 0;
     }
+  }
 }
 
 
@@ -122,83 +122,83 @@
 @icon-size: 1.5em;
 
 .char-icon {
-    &:before {
-        display: inline-block;
-        box-sizing: border-box;
-        width: @icon-size;
-        height: @icon-size;
-        border-radius: 100%;
-        margin-right: 0.375em;
-        position: relative;
-        background: @green;
-        color: @white;
-        font-weight: 500;
-        line-height: @icon-size;
-        text-align: center;
-    }
+  &:before {
+    display: inline-block;
+    box-sizing: border-box;
+    width: @icon-size;
+    height: @icon-size;
+    border-radius: 100%;
+    margin-right: 0.375em;
+    position: relative;
+    background: @green;
+    color: @white;
+    font-weight: 500;
+    line-height: @icon-size;
+    text-align: center;
+  }
 
-    &__1:before { content: '1'; }
-    &__2:before { content: '2'; }
-    &__3:before { content: '3'; }
-    &__4:before { content: '4'; }
-    &__5:before { content: '5'; }
-    &__6:before { content: '6'; }
-    &__7:before { content: '7'; }
-    &__8:before { content: '8'; }
-    &__9:before { content: '9'; }
-    &__0:before { content: '0'; }
-    &__A:before { content: 'A'; }
-    &__B:before { content: 'B'; }
-    &__C:before { content: 'C'; }
-    &__D:before { content: 'D'; }
-    &__E:before { content: 'E'; }
-    &__F:before { content: 'F'; }
-    &__G:before { content: 'G'; }
-    &__H:before { content: 'H'; }
-    &__I:before { content: 'I'; }
-    &__J:before { content: 'J'; }
-    &__K:before { content: 'K'; }
-    &__L:before { content: 'L'; }
-    &__M:before { content: 'M'; }
-    &__N:before { content: 'N'; }
-    &__O:before { content: 'O'; }
-    &__P:before { content: 'P'; }
-    &__Q:before { content: 'Q'; }
-    &__R:before { content: 'R'; }
-    &__S:before { content: 'S'; }
-    &__T:before { content: 'T'; }
-    &__U:before { content: 'U'; }
-    &__V:before { content: 'V'; }
-    &__W:before { content: 'W'; }
-    &__X:before { content: 'X'; }
-    &__Y:before { content: 'Y'; }
-    &__Z:before { content: 'Z'; }
-    &__a:before { content: 'a'; }
-    &__b:before { content: 'b'; }
-    &__c:before { content: 'c'; }
-    &__d:before { content: 'd'; }
-    &__e:before { content: 'e'; }
-    &__f:before { content: 'f'; }
-    &__g:before { content: 'g'; }
-    &__h:before { content: 'h'; }
-    &__i:before { content: 'i'; }
-    &__j:before { content: 'j'; }
-    &__k:before { content: 'k'; }
-    &__l:before { content: 'l'; }
-    &__m:before { content: 'm'; }
-    &__n:before { content: 'n'; }
-    &__o:before { content: 'o'; }
-    &__p:before { content: 'p'; }
-    &__q:before { content: 'q'; }
-    &__r:before { content: 'r'; }
-    &__s:before { content: 's'; }
-    &__t:before { content: 't'; }
-    &__u:before { content: 'u'; }
-    &__v:before { content: 'v'; }
-    &__w:before { content: 'w'; }
-    &__x:before { content: 'x'; }
-    &__y:before { content: 'y'; }
-    &__z:before { content: 'z'; }
+  &__1:before { content: '1'; }
+  &__2:before { content: '2'; }
+  &__3:before { content: '3'; }
+  &__4:before { content: '4'; }
+  &__5:before { content: '5'; }
+  &__6:before { content: '6'; }
+  &__7:before { content: '7'; }
+  &__8:before { content: '8'; }
+  &__9:before { content: '9'; }
+  &__0:before { content: '0'; }
+  &__A:before { content: 'A'; }
+  &__B:before { content: 'B'; }
+  &__C:before { content: 'C'; }
+  &__D:before { content: 'D'; }
+  &__E:before { content: 'E'; }
+  &__F:before { content: 'F'; }
+  &__G:before { content: 'G'; }
+  &__H:before { content: 'H'; }
+  &__I:before { content: 'I'; }
+  &__J:before { content: 'J'; }
+  &__K:before { content: 'K'; }
+  &__L:before { content: 'L'; }
+  &__M:before { content: 'M'; }
+  &__N:before { content: 'N'; }
+  &__O:before { content: 'O'; }
+  &__P:before { content: 'P'; }
+  &__Q:before { content: 'Q'; }
+  &__R:before { content: 'R'; }
+  &__S:before { content: 'S'; }
+  &__T:before { content: 'T'; }
+  &__U:before { content: 'U'; }
+  &__V:before { content: 'V'; }
+  &__W:before { content: 'W'; }
+  &__X:before { content: 'X'; }
+  &__Y:before { content: 'Y'; }
+  &__Z:before { content: 'Z'; }
+  &__a:before { content: 'a'; }
+  &__b:before { content: 'b'; }
+  &__c:before { content: 'c'; }
+  &__d:before { content: 'd'; }
+  &__e:before { content: 'e'; }
+  &__f:before { content: 'f'; }
+  &__g:before { content: 'g'; }
+  &__h:before { content: 'h'; }
+  &__i:before { content: 'i'; }
+  &__j:before { content: 'j'; }
+  &__k:before { content: 'k'; }
+  &__l:before { content: 'l'; }
+  &__m:before { content: 'm'; }
+  &__n:before { content: 'n'; }
+  &__o:before { content: 'o'; }
+  &__p:before { content: 'p'; }
+  &__q:before { content: 'q'; }
+  &__r:before { content: 'r'; }
+  &__s:before { content: 's'; }
+  &__t:before { content: 't'; }
+  &__u:before { content: 'u'; }
+  &__v:before { content: 'v'; }
+  &__w:before { content: 'w'; }
+  &__x:before { content: 'x'; }
+  &__y:before { content: 'y'; }
+  &__z:before { content: 'z'; }
 }
 
 
@@ -233,16 +233,16 @@
 //       Refactor to use CF classes.
 
 .step-slug {
-    display: block;
-    margin-bottom: unit(15px / 14px, em);
+  display: block;
+  margin-bottom: unit( 15px / 14px, em );
 
-    color: @gray-dark;
-    font-size: 14px; // fallback for browsers that don't support rem units
-    // rem units needed because the main use case for this is within a heading
-    font-size: unit(14px / @base-font-size-px, rem);
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  color: @gray-dark;
+  font-size: 14px; // fallback for browsers that don't support rem units
+  // rem units needed because the main use case for this is within a heading
+  font-size: unit( 14px / @base-font-size-px, rem );
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 /* topdoc
@@ -254,30 +254,21 @@
     - cfgov-misc
 */
 .u-drop-shadow-after() {
-    &:after {
-        display: block;
-        height: 5px;
-        width: 100%;
+  &:after {
+    display: block;
+    height: 5px;
+    width: 100%;
 
-        position: absolute;
-        // Offset for thickness of shadow.
-        bottom: -5px;
-        left: 0;
+    position: absolute;
+    // Offset for thickness of shadow.
+    bottom: -5px;
+    left: 0;
 
-        background: @gray;
-        // Whitespace in content so element can have dimensions set.
-        content: '';
-        opacity: 0.2;
-    }
-}
-
-.archived-page main {
-    img,
-    .m-hero,
-    .m-info-unit_image,
-    .embed-container {
-        filter: grayscale();
-    }
+    background: @gray;
+    // Whitespace in content so element can have dimensions set.
+    content: '';
+    opacity: 0.2;
+  }
 }
 
 /* topdoc

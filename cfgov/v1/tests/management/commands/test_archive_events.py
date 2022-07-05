@@ -104,8 +104,13 @@ class TestArchiveEvents(TestCase):
         single_day_event_page.refresh_from_db()
         multi_day_event_page.refresh_from_db()
 
-        self.assertEqual(single_day_event_page.parent(), archive_page)
-        self.assertEqual(multi_day_event_page.parent(), archive_page)
+        self.assertEqual(
+            single_day_event_page.get_parent(update=True).specific,
+            archive_page,
+        )
+        self.assertEqual(
+            multi_day_event_page.get_parent(update=True).specific, archive_page
+        )
 
     @freeze_time("2020-02-02")
     def test_append_date_to_duplicate_slug(self):

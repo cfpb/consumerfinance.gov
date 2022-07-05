@@ -1,9 +1,6 @@
 import json
 from unittest import mock
 
-from django.contrib.messages.middleware import MessageMiddleware
-from django.contrib.sessions.middleware import SessionMiddleware
-from django.http import HttpResponseBadRequest
 from django.test import TestCase
 from django.test.client import RequestFactory
 
@@ -38,215 +35,6 @@ class TestCFGOVPage(TestCase):
         mock_super.assert_called_once()
         mock_super().serve.assert_called_with(self.request)
 
-    @mock.patch("v1.models.base.CFGOVPage.serve_post")
-    def test_serve_calls_serve_post_on_post_request(self, mock_serve_post):
-        self.request = self.factory.post("/")
-        self.page.serve(self.request)
-        mock_serve_post.assert_called_with(self.request)
-
-    def test_serve_post_returns_400_for_no_form_id(self):
-        request = self.factory.post("/")
-        response = self.page.serve_post(request)
-        self.assertIsInstance(response, HttpResponseBadRequest)
-
-    def test_serve_post_returns_json_400_for_no_form_id(self):
-        request = self.factory.post(
-            "/", HTTP_X_REQUESTED_WITH="XMLHttpRequest"
-        )
-        response = self.page.serve_post(request)
-        self.assertEqual(response.content, b'{"result": "error"}')
-        self.assertEqual(response.status_code, 400)
-
-    def test_serve_post_returns_400_for_invalid_form_id_wrong_parts(self):
-        request = self.factory.post("/", {"form_id": "foo"})
-        response = self.page.serve_post(request)
-        self.assertIsInstance(response, HttpResponseBadRequest)
-
-    def test_serve_post_returns_400_for_invalid_form_id_invalid_field(self):
-        request = self.factory.post("/", {"form_id": "form-foo-2"})
-        response = self.page.serve_post(request)
-        self.assertIsInstance(response, HttpResponseBadRequest)
-
-    def test_serve_post_returns_400_for_invalid_form_id_invalid_index(self):
-        page = BrowsePage(title="test", slug="test")
-        request = self.factory.post("/", {"form_id": "form-content-99"})
-        response = page.serve_post(request)
-        self.assertIsInstance(response, HttpResponseBadRequest)
-
-    def test_serve_post_returns_400_for_invalid_form_id_non_number_index(self):
-        page = BrowsePage(title="test", slug="test")
-        request = self.factory.post("/", {"form_id": "form-content-abc"})
-        response = page.serve_post(request)
-        self.assertIsInstance(response, HttpResponseBadRequest)
-
-    def test_serve_post_returns_400_for_invalid_form_id_no_form_present(self):
-        page = BrowsePage(title="test", slug="test")
-        page.content = blocks.StreamValue(
-            page.content.stream_block,
-            [{"type": "full_width_text", "value": []}],
-            True,
-        )
-        save_new_page(page)
-
-        request = self.factory.post("/", {"form_id": "form-content-0"})
-        response = page.serve_post(request)
-        self.assertIsInstance(response, HttpResponseBadRequest)
-
-    def test_serve_post_valid_calls_feedback_block_handler(self):
-        """A valid post should call the feedback block handler.
-
-        This returns a redirect to the calling page and also uses the
-        Django messages framework to set a message.
-        """
-        page = BrowsePage(title="test", slug="test")
-        page.content = blocks.StreamValue(
-            page.content.stream_block,
-            [{"type": "feedback", "value": "something"}],
-            True,
-        )
-        save_new_page(page)
-
-        request = self.factory.post("/", {"form_id": "form-content-0"})
-        SessionMiddleware().process_request(request)
-        MessageMiddleware().process_request(request)
-
-        response = page.serve_post(request)
-
-        self.assertEqual(
-            (response.status_code, response["Location"]), (302, request.path)
-        )
-
-    @mock.patch("v1.models.base.TemplateResponse")
-    @mock.patch("v1.models.base.CFGOVPage.get_template")
-    @mock.patch("v1.models.base.CFGOVPage.get_context")
-    @mock.patch("v1.models.base.getattr")
-    def test_serve_post_gets_streamfield_from_page_using_form_id(
-        self, mock_getattr, mock_get_context, mock_get_template, mock_response
-    ):
-        mock_getattr.return_value = mock.MagicMock()
-        mock_get_context.return_value = mock.MagicMock()
-        self.request = self.factory.post(
-            "/",
-            {"form_id": "form-content-0"},
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-        self.page.serve_post(self.request)
-        mock_getattr.assert_called_with(self.page, "content", None)
-
-    @mock.patch("v1.models.base.TemplateResponse")
-    @mock.patch("v1.models.base.CFGOVPage.get_template")
-    @mock.patch("v1.models.base.CFGOVPage.get_context")
-    @mock.patch("v1.models.base.getattr")
-    def test_serve_post_calls_module_get_result(
-        self, mock_getattr, mock_get_context, mock_get_template, mock_response
-    ):
-        self.request = self.factory.post(
-            "/",
-            {"form_id": "form-content-0"},
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-        self.page.serve_post(self.request)
-        module = mock_getattr()[0]
-        module.block.get_result.assert_called_with(
-            self.page, self.request, module.value, True
-        )
-
-    @mock.patch("v1.models.base.isinstance")
-    @mock.patch("v1.models.base.TemplateResponse")
-    @mock.patch("v1.models.base.CFGOVPage.get_template")
-    @mock.patch("v1.models.base.CFGOVPage.get_context")
-    @mock.patch("v1.models.base.getattr")
-    def test_serve_post_returns_result_if_response(
-        self,
-        mock_getattr,
-        mock_get_context,
-        mock_get_template,
-        mock_response,
-        mock_isinstance,
-    ):
-        mock_getattr.return_value = mock.MagicMock()
-        mock_get_context.return_value = mock.MagicMock()
-        self.request = self.factory.post(
-            "/",
-            {"form_id": "form-content-0"},
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-        result = self.page.serve_post(self.request)
-        module = mock_getattr()[0]
-        self.assertEqual(result, module.block.get_result())
-
-    @mock.patch("v1.models.base.TemplateResponse")
-    @mock.patch("v1.models.base.CFGOVPage.get_template")
-    @mock.patch("v1.models.base.CFGOVPage.get_context")
-    @mock.patch("v1.models.base.getattr")
-    def test_serve_post_calls_get_context(
-        self, mock_getattr, mock_get_context, mock_get_template, mock_response
-    ):
-        mock_getattr.return_value = mock.MagicMock()
-        mock_get_context.return_value = mock.MagicMock()
-        self.request = self.factory.post(
-            "/",
-            {"form_id": "form-content-0"},
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-        self.page.serve_post(self.request)
-        self.assertTrue(mock_get_context.called)
-
-    @mock.patch("v1.models.base.TemplateResponse")
-    @mock.patch("v1.models.base.CFGOVPage.get_template")
-    @mock.patch("v1.models.base.CFGOVPage.get_context")
-    @mock.patch("v1.models.base.getattr")
-    def test_serve_post_sets_context(
-        self, mock_getattr, mock_get_context, mock_get_template, mock_response
-    ):
-        context = {"form_modules": {"content": {}}}
-        mock_getattr.return_value = mock.MagicMock()
-        mock_get_context.return_value = context
-        self.request = self.factory.post(
-            "/",
-            {"form_id": "form-content-0"},
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-        self.page.serve_post(self.request)
-        module = mock_getattr()[0]
-        self.assertIn(0, context["form_modules"]["content"])
-        self.assertEqual(
-            module.block.get_result(), context["form_modules"]["content"][0]
-        )
-
-    @mock.patch("v1.models.base.TemplateResponse")
-    @mock.patch("v1.models.base.CFGOVPage.get_template")
-    @mock.patch("v1.models.base.CFGOVPage.get_context")
-    @mock.patch("v1.models.base.getattr")
-    def test_serve_post_returns_template_response_if_result_not_response(
-        self, mock_getattr, mock_get_context, mock_get_template, mock_response
-    ):
-        mock_getattr.return_value = mock.MagicMock()
-        mock_get_context.return_value = mock.MagicMock()
-        self.request = self.factory.post(
-            "/",
-            {"form_id": "form-content-0"},
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
-        )
-        result = self.page.serve_post(self.request)
-        mock_response.assert_called_with(
-            self.request, mock_get_template(), mock_get_context()
-        )
-        self.assertEqual(result, mock_response())
-
-    def test_archived_property(self):
-        # Test default value of is_archived results in False property
-        self.assertFalse(self.page.archived)
-
-        self.page.is_archived = "no"
-        self.assertFalse(self.page.archived)
-
-        self.page.is_archived = "never"
-        self.assertFalse(self.page.archived)
-
-        self.page.is_archived = "yes"
-        self.assertTrue(self.page.archived)
-
 
 class TestCFGOVPageContext(TestCase):
     def setUp(self):
@@ -258,11 +46,6 @@ class TestCFGOVPageContext(TestCase):
         save_new_page(self.page)
         key = self.page.post_preview_cache_key
         self.assertIn(str(self.page.id), key)
-
-    @mock.patch("v1.models.base.hooks.get_hooks")
-    def test_get_context_calls_get_hooks(self, mock_get_hooks):
-        self.page.get_context(self.request)
-        mock_get_hooks.assert_called_with("cfgovpage_context_handlers")
 
     def test_get_context_no_banners(self):
         test_context = self.page.get_context(self.request)
@@ -481,6 +264,54 @@ class TestCFGOVPageContext(TestCase):
         expectedWithSpaces = "  " + expected + "  "
         self.assertEqual(expectedWithSpaces, result)
 
+    def test_get_context_sets_is_faq_page_to_false_without_faq(self):
+        self.page = BrowsePage(
+            title="test",
+            content=json.dumps(
+                [
+                    {
+                        "type": "expandable_group",
+                        "value": {},
+                    }
+                ]
+            ),
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context["is_faq_page"]
+        self.assertEqual(False, result)
+
+    def test_get_context_sets_is_faq_page_to_true_with_faq_expandable(self):
+        self.page = BrowsePage(
+            title="test",
+            content=json.dumps(
+                [
+                    {
+                        "type": "expandable_group",
+                        "value": {"is_faq": True},
+                    }
+                ]
+            ),
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context["is_faq_page"]
+        self.assertEqual(True, result)
+
+    def test_get_context_sets_is_faq_page_to_true_with_faq_group(self):
+        self.page = BrowsePage(
+            title="test",
+            content=json.dumps(
+                [
+                    {
+                        "type": "faq_group",
+                        "value": {},
+                    }
+                ]
+            ),
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context["is_faq_page"]
+        self.assertEqual(True, result)
+
 
 class TestCFGOVPageQuerySet(TestCase):
     def setUp(self):
@@ -505,29 +336,29 @@ class TestCFGOVPageQuerySet(TestCase):
         self.check_live_counts(on_live_host=2)
 
 
-class TestCFGOVPageMediaProperty(TestCase):
-    """Tests how the page.media property pulls in child block JS."""
+class TestCFGOVPageMediaJSProperty(TestCase):
+    """Tests how the page.media_js property pulls in child block JS."""
 
     def test_empty_page_has_no_media(self):
-        return self.assertEqual(CFGOVPage().media, [])
+        self.assertEqual(CFGOVPage().media_js, [])
 
     def test_empty_page_has_no_page_js(self):
-        return self.assertEqual(CFGOVPage().page_js, [])
+        self.assertEqual(CFGOVPage().page_js, [])
 
     def test_empty_page_has_no_streamfield_js(self):
-        return self.assertEqual(CFGOVPage().streamfield_js, [])
+        self.assertEqual(CFGOVPage().streamfield_media("js"), [])
 
     def test_page_pulls_in_child_block_media(self):
         page = CFGOVPage()
         page.sidefoot = blocks.StreamValue(
             page.sidefoot.stream_block,
             [
-                {"type": "email_signup", "value": {"heading": "Heading"}},
+                {"type": "email_signup", "value": 1},
             ],
             True,
         )
 
-        self.assertEqual(page.media, ["email-signup.js"])
+        self.assertEqual(page.media_js, ["email-signup.js"])
 
     def test_doesnt_pull_in_media_for_nonexistent_child_blocks(self):
         page = BrowsePage()
@@ -542,9 +373,63 @@ class TestCFGOVPageMediaProperty(TestCase):
             True,
         )
 
-        # The page media should only include the default BrowsePae media, and
+        # The page media should only include the default BrowsePage media, and
         # shouldn't add any additional files because of the FullWithText.
-        self.assertEqual(page.media, ["secondary-navigation.js"])
+        self.assertEqual(page.media_js, ["secondary-navigation.js"])
+
+
+class TestCFGOVPageMediaCSSProperty(TestCase):
+    """Tests how the page.media_css property pulls in child block CSS."""
+
+    def test_empty_page_has_no_media(self):
+        self.assertEqual(CFGOVPage().media_css, [])
+
+    def test_empty_page_has_no_streamfield_css(self):
+        self.assertEqual(CFGOVPage().streamfield_media("css"), [])
+
+    def test_page_pulls_in_child_block_media(self):
+        page = BrowsePage()
+        page.content = blocks.StreamValue(
+            page.content.stream_block,
+            [
+                {
+                    "type": "simple_chart",
+                    "value": {},
+                }
+            ],
+            True,
+        )
+        page.sidefoot = blocks.StreamValue(
+            page.sidefoot.stream_block,
+            [
+                {
+                    "type": "sidebar_contact",
+                    "value": {},
+                },
+            ],
+            True,
+        )
+
+        self.assertEqual(
+            page.media_css, ["sidebar-contact-info.css", "simple-chart.css"]
+        )
+
+    def test_doesnt_pull_in_media_for_nonexistent_child_blocks(self):
+        page = BrowsePage()
+        page.content = blocks.StreamValue(
+            page.content.stream_block,
+            [
+                {
+                    "type": "full_width_text",
+                    "value": [],
+                },
+            ],
+            True,
+        )
+
+        # The page media should only include the default BrowsePage media, and
+        # shouldn't add any additional files because of the FullWithText.
+        self.assertEqual(page.media_css, [])
 
 
 class TestCFGOVPageCopy(TestCase):

@@ -9,6 +9,8 @@ jobs:
     env:
       DATABASE_URL: postgres://cfpb:cfpb@localhost/cfgov
       MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+      DJANGO_ADMIN_USERNAME: admin
+      DJANGO_ADMIN_PASSWORD: admin
 
     services:
       elasticsearch:
@@ -49,12 +51,8 @@ jobs:
     - name: Set up initial data
       run: ./refresh-data.sh test.sql.gz
 
-
-    # - name: Run server
-    #   run: python cfgov/manage.py runserver
-
     - name: Run Cypress
-      uses: cypress-io/github-action@v2
+      uses: cypress-io/github-action@v4
       env:
           MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
       with:
@@ -79,7 +77,6 @@ jobs:
           test/cypress/integration/components/footer/footer.js
           test/cypress/integration/components/cct-charts/cct-charts.js
           test/cypress/integration/components/email-signup/email-signup.js
-          test/cypress/integration/components/feedback/feedback.js
           test/cypress/integration/components/filterable-lists/filterable-lists.js
           test/cypress/integration/components/filterable-lists/filter-blog-posts.js
           test/cypress/integration/components/header/header.js
@@ -94,6 +91,6 @@ jobs:
           test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-program-tests.js
           test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-url-params.js
           test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path.js
-        build: yarn run gulp
+        build: yarn build
         start: python cfgov/manage.py runserver 0.0.0.0:8000
         wait-on: 'http://localhost:8000'

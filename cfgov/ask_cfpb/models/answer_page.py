@@ -196,13 +196,6 @@ class AnswerPage(CFGOVPage):
     )
     portal_category = ParentalManyToManyField(PortalCategory, blank=True)
 
-    user_feedback = StreamField(
-        [
-            ("feedback", v1_blocks.Feedback()),
-        ],
-        blank=True,
-    )
-
     share_and_print = models.BooleanField(
         default=False,
         help_text="Include share and print buttons above answer.",
@@ -274,11 +267,6 @@ class AnswerPage(CFGOVPage):
             heading="Redirect to another answer",
             classname="collapsible",
         ),
-        MultiFieldPanel(
-            [StreamFieldPanel("user_feedback")],
-            heading="User feedback",
-            classname="collapsible collapsed",
-        ),
     ]
 
     sidebar = StreamField(
@@ -286,7 +274,10 @@ class AnswerPage(CFGOVPage):
             ("call_to_action", molecules.CallToAction()),
             ("related_links", molecules.RelatedLinks()),
             ("related_metadata", molecules.RelatedMetadata()),
-            ("email_signup", organisms.EmailSignUp()),
+            (
+                "email_signup",
+                v1_blocks.EmailSignUpChooserBlock(),
+            ),
             ("sidebar_contact", organisms.SidebarContactInfo()),
             ("rss_feed", molecules.RSSFeed()),
             ("social_media", molecules.SocialMedia()),

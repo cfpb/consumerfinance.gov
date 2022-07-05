@@ -10,44 +10,6 @@ from v1.models import BrowsePage
 logger = logging.getLogger(__name__)
 
 
-class ConferenceRegistrationQuerySet(models.QuerySet):
-    # TODO: In Django 1.9+, this logic can be optimized through use of
-    # Django's built-in Postgres JSONFields. This will require migrating
-    # the details field of the ConferenceRegistration model.
-    #
-    # return self.filter(
-    #     details__attendee_type=self.IN_PERSON
-    # )
-    def in_person(self):
-        return filter(
-            lambda a: (
-                a.details.get("attendee_type")
-                == ConferenceRegistration.IN_PERSON
-            ),
-            self,
-        )
-
-    def virtual(self):
-        return filter(
-            lambda a: (
-                a.details.get("attendee_type")
-                == ConferenceRegistration.VIRTUAL
-            ),
-            self,
-        )
-
-
-class ConferenceRegistration(models.Model):
-    IN_PERSON = "In person"
-    VIRTUAL = "Virtually"
-
-    created = models.DateTimeField(auto_now_add=True)
-    govdelivery_code = models.CharField(max_length=250)
-    details = models.JSONField()
-
-    objects = ConferenceRegistrationQuerySet.as_manager()
-
-
 # mortgage metadata models
 class MortgageDataConstant(models.Model):
     """Constant values that Research can change via the admin."""
@@ -407,9 +369,6 @@ class MortgagePerformancePage(BrowsePage):
         elif "90" in self.url:
             context.update({"delinquency": "percent_90", "time_frame": "90"})
         return context
-
-    class Media:
-        css = ["secondary-navigation.css"]
 
 
 def validate_counties():

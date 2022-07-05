@@ -14,11 +14,9 @@ const datetime = {
   xAxis: {
     ...styles.xAxis,
     type: 'datetime',
-    startOnTick: true,
     labels: {
       ...styles.xAxis.labels
     },
-
     events: {
       afterSetExtremes: function( evt ) {
         if ( evt.trigger === 'navigator' ) {
@@ -28,6 +26,14 @@ const datetime = {
         }
       }
     }
+  },
+  yAxis: {
+    ...styles.yAxis,
+    plotLines: [ {
+      className: 'zeroLine',
+      value: 0,
+      width: 2
+    } ]
   },
   rangeSelector: {
     inputEnabled: false,

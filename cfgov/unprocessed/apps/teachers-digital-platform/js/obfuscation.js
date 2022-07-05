@@ -34,7 +34,7 @@ function decode( encoded ) {
   }
 
   // Trim leading "=="
-  let value = encoded.substr( 2 );
+  const value = encoded.substr( 2 );
 
   try {
     const dec = base64UrlDecode;

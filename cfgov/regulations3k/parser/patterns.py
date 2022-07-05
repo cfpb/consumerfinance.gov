@@ -53,7 +53,7 @@ class IdLevelState:
 
     def __init__(self):
         self.current_id = ""
-        self.next_token = ""
+        self.next_token = ""  # nosec
 
     def level(self):
         return self.current_id.count("-") + 1

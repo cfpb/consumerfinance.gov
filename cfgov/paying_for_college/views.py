@@ -14,11 +14,9 @@ from django.utils import timezone
 from django.views.generic import TemplateView, View
 
 from paying_for_college.disclosures.scripts import nat_stats
-from paying_for_college.forms import FeedbackForm
 from paying_for_college.models import (
     ConstantCap,
     ConstantRate,
-    Feedback,
     Notification,
     Program,
     School,
@@ -192,37 +190,6 @@ class OfferView(TemplateView):
                 "url_root": DISCLOSURE_ROOT,
             },
         )
-
-
-class FeedbackView(TemplateView):
-    template_name = "paying-for-college/disclosure_feedback.html"
-
-    @property
-    def form(self):
-        if self.request.method == "GET":
-            return FeedbackForm()
-
-        elif self.request.method == "POST":
-            return FeedbackForm(self.request.POST)
-
-    def get_context_data(self):
-        cdict = dict(form=self.form)
-        cdict["url_root"] = DISCLOSURE_ROOT
-        return cdict
-
-    def post(self, request):
-        form = self.form
-        if form.is_valid():
-            feedback = Feedback(
-                message=form.cleaned_data["message"][:2000],
-                url=request.build_absolute_uri(),
-            )
-            feedback.save()
-            return render(
-                request, "paying-for-college/disclosure_feedback_thanks.html"
-            )
-        else:
-            return HttpResponseBadRequest("Invalid form")
 
 
 class SchoolRepresentation(View):

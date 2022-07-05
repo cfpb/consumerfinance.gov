@@ -13,6 +13,7 @@ from v1.models.browse_page import BrowsePage
 from v1.models.home_page import HomePage
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import LearnPage
+from v1.models.snippets import EmailSignUp
 from v1.models.sublanding_filterable_page import SublandingFilterablePage
 from v1.models.sublanding_page import SublandingPage
 
@@ -80,8 +81,10 @@ def create_landing_page(
     new_page = LandingPage(title=page_title, slug=page_slug)
     # update sidefoot streamfield if required
     if has_email_signup:
+        email_signup = EmailSignUp(code=email_gd_code)
+        email_signup.save()
         new_page.sidefoot = json.dumps(
-            [{"type": "email_signup", "value": {"gd_code": email_gd_code}}]
+            [{"type": "email_signup", "value": email_signup.pk}]
         )
 
     try:
@@ -288,9 +291,7 @@ def create_learn_page(
     return new_page.get_url(None, site)
 
 
-def create_sublanding_page(
-    page_title, page_slug, parent_path=None, has_feedback=False
-):
+def create_sublanding_page(page_title, page_slug, parent_path=None):
     # create a new page and set it as the child of an existing page
     # get the current site
     site = Site.objects.get(is_default_site=True)
@@ -303,12 +304,6 @@ def create_sublanding_page(
 
     # create page, add it as a child of parent, save, and publish
     new_page = SublandingPage(title=page_title, slug=page_slug)
-
-    # if page has feedback, add it
-    if has_feedback:
-        new_page.content = json.dumps(
-            [{"type": "feedback", "value": {"intro_text": "foo"}}]
-        )
 
     try:
         parent.add_child(instance=new_page)

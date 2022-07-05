@@ -10,7 +10,6 @@ from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
 from wagtail.search import index
 
-from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
@@ -33,7 +32,6 @@ class BrowseFilterableContent(StreamBlock):
 
     full_width_text = organisms.FullWidthText()
     filter_controls = organisms.FilterableList()
-    feedback = v1_blocks.Feedback()
 
     class Meta:
         block_counts = {

@@ -1,2 +1,2 @@
 -r base.txt
-newrelic==6.4.3.160
+newrelic==7.10.0.175

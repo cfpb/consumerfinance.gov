@@ -27,7 +27,7 @@ from wagtail.search import index
 from localflavor.us.models import USStateField
 
 from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
+from v1.atomic_elements import molecules, organisms, schema
 from v1.models.base import CFGOVPage
 from v1.util.events import get_venue_coords
 
@@ -95,7 +95,6 @@ class AbstractFilterPage(CFGOVPage):
         ),
         MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
         FieldPanel("language", "Language"),
-        MultiFieldPanel(CFGOVPage.archive_panels, "Archive"),
     ]
 
     # This page class cannot be created.
@@ -137,14 +136,17 @@ class LearnPage(AbstractFilterPage):
             ("expandable", organisms.Expandable()),
             ("well", organisms.Well()),
             ("call_to_action", molecules.CallToAction()),
-            ("email_signup", organisms.EmailSignUp()),
+            (
+                "email_signup",
+                v1_blocks.EmailSignUpChooserBlock(),
+            ),
             ("video_player", organisms.VideoPlayer()),
             ("audio_player", organisms.AudioPlayer()),
             (
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
-            ("feedback", v1_blocks.Feedback()),
+            ("faq_group", schema.FAQGroup()),
         ],
         blank=True,
     )
@@ -170,7 +172,6 @@ class DocumentDetailPage(AbstractFilterPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
-            ("feedback", v1_blocks.Feedback()),
         ],
         blank=True,
     )

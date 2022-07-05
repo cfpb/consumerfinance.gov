@@ -27,7 +27,12 @@ from v1.admin_views import ExportFeedbackView, manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
-from v1.models.snippets import Contact, RelatedResource, ReusableText
+from v1.models.snippets import (
+    Contact,
+    EmailSignUp,
+    RelatedResource,
+    ReusableText,
+)
 from v1.template_debug import (
     call_to_action_test_cases,
     featured_content_test_cases,
@@ -36,7 +41,6 @@ from v1.template_debug import (
     register_template_debug,
     video_player_test_cases,
 )
-from v1.util import util
 from v1.views.reports import (
     DocumentsReportView,
     EnforcementActionsReportView,
@@ -131,6 +135,7 @@ def editor_css():
         "css/heading-block.css",
         "css/model-admin.css",
         "css/table-block.css",
+        "css/simple-chart-admin.css",
     ]
 
     css_includes = format_html_join(
@@ -156,33 +161,6 @@ def global_admin_css():
     )
 
     return css_includes
-
-
-@hooks.register("cfgovpage_context_handlers")
-def form_module_handlers(page, request, context, *args, **kwargs):
-    """
-    Hook function that iterates over every Streamfield's blocks on a page and
-    sets the context for any form modules.
-    """
-    form_modules = {}
-    streamfields = util.get_streamfields(page)
-
-    for fieldname, blocks in streamfields.items():
-        for index, child in enumerate(blocks):
-            if hasattr(child.block, "get_result"):
-                if fieldname not in form_modules:
-                    form_modules[fieldname] = {}
-
-                if not request.method == "POST":
-                    is_submitted = child.block.is_submitted(
-                        request, fieldname, index
-                    )
-                    module_context = child.block.get_result(
-                        page, request, child.value, is_submitted
-                    )
-                    form_modules[fieldname].update({index: module_context})
-    if form_modules:
-        context["form_modules"] = form_modules
 
 
 class PermissionCheckingMenuItem(MenuItem):
@@ -448,6 +426,14 @@ class GlossaryTermModelAdmin(ModelAdmin):
     search_fields = ("name_en", "definition_en", "name_es", "definition_es")
 
 
+class EmailSignUpModelAdmin(ModelAdmin):
+    model = EmailSignUp
+    menu_icon = "snippet"
+    list_display = ("topic", "heading", "text", "code", "url")
+    ordering = ("topic",)
+    search_fields = ("topic", "code", "url")
+
+
 class SnippetModelAdminGroup(ModelAdminGroup):
     menu_label = "Snippets"
     menu_icon = "snippet"
@@ -460,6 +446,7 @@ class SnippetModelAdminGroup(ModelAdminGroup):
         PortalTopicModelAdmin,
         PortalCategoryModelAdmin,
         GlossaryTermModelAdmin,
+        EmailSignUpModelAdmin,
     )
 
 

@@ -114,6 +114,11 @@
 
     {% block css %}
     <link rel="stylesheet" href="{{ static('css/main.css') }}">
+      {% if page and page.media_css %}
+        {% for css in page.media_css %}
+          <link rel="stylesheet" href="{{ static('css/on-demand/' + css) }}" />
+        {% endfor %}
+      {% endif %}
     {% endblock css %}
 
 {#
@@ -134,21 +139,18 @@
           type="font/woff2" crossorigin>
     <link rel="preload" href="{{ static('js/routes/common.js') }}" as="script">
 
-    {# Preconnecting comes from the 3rd best practice in 
+    {# Preconnecting comes from the 3rd best practice in
        https://developer.mozilla.org/en-US/docs/Web/Performance/dns-prefetch#best_practices #}
-    <link rel="preconnect" href="//fast.fonts.net/" crossorigin>    
-    <link rel="dns-prefetch" href="//fast.fonts.net/">
-
-    <link rel="preconnect" href="//google-analytics.com/" crossorigin>    
+    <link rel="preconnect" href="//google-analytics.com/" crossorigin>
     <link rel="dns-prefetch" href="//google-analytics.com/">
 
-    <link rel="preconnect" href="//googletagmanager.com/" crossorigin>    
+    <link rel="preconnect" href="//googletagmanager.com/" crossorigin>
     <link rel="dns-prefetch" href="//googletagmanager.com/">
 
-    <link rel="preconnect" href="//js-agent.newrelic.com/" crossorigin>    
+    <link rel="preconnect" href="//js-agent.newrelic.com/" crossorigin>
     <link rel="dns-prefetch" href="//js-agent.newrelic.com/">
 
-    <link rel="preconnect" href="//search.usa.gov/" crossorigin>    
+    <link rel="preconnect" href="//search.usa.gov/" crossorigin>
     <link rel="dns-prefetch" href="//search.usa.gov/">
 
     {# These domains are called on pages with youtube videos.  #}
@@ -200,19 +202,21 @@
     <script>
       {# Minified dynamic JavaScript loader that injects a script tag in the head of the page. #}
       function jsl(a){
-        for(var b,c,d=[],f=document.scripts[0];b=a.shift();)c=document.createElement("script"),"async"in c?(c.async=!1,c.src=b,document.head.appendChild(c)):(d.push(c),c.onreadystatechange=function(){for(var e;d[0]&&"loaded"==d[0].readyState;)e=d.shift(),e.onreadystatechange=null,f.parentNode.insertBefore(e,f)},c.src=b);
+        if(window.fetch){
+          for(var b,c,d=[],f=document.scripts[0];b=a.shift();)c=document.createElement("script"),"async"in c?(c.async=!1,c.src=b,document.head.appendChild(c)):(d.push(c),c.onreadystatechange=function(){for(var e;d[0]&&"loaded"==d[0].readyState;)e=d.shift(),e.onreadystatechange=null,f.parentNode.insertBefore(e,f)},c.src=b);
+        }
       }
     </script>
     {% endblock javascript_loader %}
 
     <script>
-      if(window.Map){
+      if(window.fetch){
         document.documentElement.className = document.documentElement.className.replace('no-js', 'js')
       }
     </script>
 </head>
 
-<body{% block body_classes %}{% if page and page.archived %} class="archived-page" {% endif %}{% endblock body_classes %}>
+<body{% block body_classes %}{% endblock body_classes %}>
 
 {#
   =========
@@ -260,9 +264,6 @@
     {% endblock %}
 
     {% block banner_top %}
-        {% if page and page.archived %}
-            {% include 'molecules/archived-banner.html' %}
-        {% endif %}
     {% endblock %}
 
     {# PRIMARY CONTENT #}
@@ -292,7 +293,7 @@
     {% block javascript scoped %}
 
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+      if ( window.fetch ) {
         !function(){
           {# Include site-wide JavaScript. #}
           var s = [ '{{ static('js/routes/common.js') }}' ];
@@ -315,8 +316,8 @@
             unprocessed/js/routes/on-demand/[component].js
             to the page, based on what components were added in Wagtail.
           #}
-          {% if page and page.media %}
-            {% for js in page.media %}
+          {% if page and page.media_js %}
+            {% for js in page.media_js %}
               s.push( '{{ static('js/routes/on-demand/' + js) }}' );
             {% endfor %}
           {% endif %}
@@ -355,31 +356,5 @@
     {% endif %}
 
     {% endblock javascript %}
-
-    {% block font_tracker %}
-    <!--[if gt IE 8]><!-->
-    {#
-      Media type (print) doesn't match the current environment,
-      so browser decides it's not that important and loads the stylesheet
-      asynchronously (without delaying page rendering).
-      On load, we change media type so that the stylesheet
-      gets applied to screens.
-
-      See https://stackoverflow.com/questions/32759272/how-to-load-css-asynchronously/46750893#46750893
-    #}
-    <link rel="stylesheet"
-          href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50"
-          media="print"
-          onload="this.media='all'">
-    {#
-      Fallback that only gets inserted when JavaScript is disabled,
-      in which case we can't load CSS asynchronously.
-    #}
-    <noscript>
-      <link rel="stylesheet" href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50">
-    </noscript>
-    <!--<![endif]-->
-    {% endblock font_tracker %}
-
 </body>
 </html>

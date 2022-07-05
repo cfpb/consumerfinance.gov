@@ -9,7 +9,6 @@ from django.forms import widgets
 from wagtail.images.forms import BaseImageForm
 
 from v1.models import enforcement_action_page
-from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
 from v1.util.datetimes import end_of_time_period
@@ -120,14 +119,6 @@ class FilterableListForm(forms.Form):
         ),
     )
 
-    archived = forms.ChoiceField(
-        choices=[
-            ("include", "Show all items (default)"),
-            ("exclude", "Exclude archived items"),
-            ("only", "Show only archived items"),
-        ]
-    )
-
     preferred_datetime_format = "%Y-%m-%d"
 
     def __init__(self, *args, **kwargs):
@@ -212,7 +203,6 @@ class FilterableListForm(forms.Form):
             language=self.cleaned_data.get("language"),
             to_date=self.cleaned_data.get("to_date"),
             from_date=self.cleaned_data.get("from_date"),
-            archived=self.cleaned_data.get("archived"),
         )
 
         results = self.filterable_search.search(
@@ -350,15 +340,6 @@ class FilterableListForm(forms.Form):
             new_name, value, **kwargs
         )
 
-    def clean_archived(self):
-        data = self.cleaned_data["archived"]
-        if data == "exclude":
-            return ["no", "never"]
-        elif data == "only":
-            return ["yes"]
-
-        return None
-
 
 class EnforcementActionsFilterForm(FilterableListForm):
 
@@ -417,49 +398,6 @@ class EventArchiveFilterForm(FilterableListForm):
             title=self.cleaned_data.get("title"), order_by=self.get_order_by()
         )
         return results
-
-
-class FeedbackForm(forms.ModelForm):
-    """For feedback modules that simply ask 'Was this page helfpul?'"""
-
-    class Meta:
-        model = Feedback
-        fields = ["is_helpful", "comment", "language"]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["is_helpful"].required = True
-
-
-class ReferredFeedbackForm(forms.ModelForm):
-    """For feedback modules that need to capture the referring page"""
-
-    class Meta:
-        model = Feedback
-        fields = ["is_helpful", "referrer", "comment", "language"]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["comment"].required = True
-
-
-class SuggestionFeedbackForm(forms.ModelForm):
-    """For feedback modules seeking content suggestions"""
-
-    class Meta:
-        model = Feedback
-        fields = [
-            "referrer",
-            "comment",
-            "expect_to_buy",
-            "currently_own",
-            "email",
-            "language",
-        ]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["comment"].required = True
 
 
 class CFGOVImageForm(BaseImageForm):

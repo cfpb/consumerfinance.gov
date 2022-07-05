@@ -4,11 +4,13 @@ from django.apps import apps
 from django.test import SimpleTestCase, TestCase
 
 from wagtail.core import blocks
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 from wagtail.tests.testapp.models import StreamPage
 
+from v1.models.snippets import EmailSignUp
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import (
+    convert_emailsignup_block_to_snippet,
     get_streamfield_data,
     is_page,
     migrate_block,
@@ -364,3 +366,72 @@ class MigrateDataTests(SimpleTestCase):
 
         self.assertFalse(migrated)
         self.assertEqual(modified_data, {"a": {"b": "c"}})
+
+
+class EmailSignupSnippetMigrationTestCase(TestCase):
+    def setUp(self):
+        root = Site.objects.get(is_default_site=True).root_page
+        self.privacy_page = Page(title="Privacy Disclosure")
+        root.add_child(instance=self.privacy_page)
+        self.privacy_page.save()
+
+    def test_creates_new_emailsignup_snippet_from_data(self):
+        data = {
+            "heading": "Stay informed",
+            "default_heading": True,
+            "text": "Sign up!",
+            "gd_code": "USCFPB_1234",
+            "disclaimer_page": self.privacy_page.pk,
+        }
+
+        # The migration should take the data, create a new EmailSignUp object,
+        # and return the primary key of that new object.
+        migrated_data = convert_emailsignup_block_to_snippet(apps, None, data)
+
+        # Ensure we got an integer back
+        self.assertIsInstance(migrated_data, int)
+
+        # Get the new EmailSignUp object
+        new_email_signup = EmailSignUp.objects.get(pk=migrated_data)
+
+        # Check that it holds the same data as the old one
+        self.assertEqual(new_email_signup.heading, data["heading"])
+        self.assertEqual(
+            new_email_signup.default_heading, data["default_heading"]
+        )
+        self.assertEqual(new_email_signup.text, data["text"])
+        self.assertEqual(new_email_signup.code, data["gd_code"])
+        self.assertEqual(new_email_signup.disclaimer_page, self.privacy_page)
+
+    def test_uses_existing_email_signup_from_data(self):
+        data = {
+            "heading": "Stay informed",
+            "default_heading": True,
+            "text": "Sign up!",
+            "gd_code": "USCFPB_1234",
+            "disclaimer_page": self.privacy_page.pk,
+        }
+
+        # Create the snippet manually
+        existing_emailsignup = EmailSignUp(
+            topic=data["heading"],
+            heading=data["heading"],
+            default_heading=data["default_heading"],
+            text=data["text"],
+            code=data["gd_code"],
+            disclaimer_page=Page.objects.get(pk=data["disclaimer_page"]),
+        )
+        existing_emailsignup.save()
+
+        # The migration should take the data, find the existing EmailSignUp
+        # object, and return the primary key of that existing object.
+        migrated_data = convert_emailsignup_block_to_snippet(apps, None, data)
+
+        # Ensure we got an integer back
+        self.assertIsInstance(migrated_data, int)
+
+        # Get the new EmailSignUp object
+        migrated_emailsignup = EmailSignUp.objects.get(pk=migrated_data)
+
+        # Check that the migrated one is the same as the existing one.
+        self.assertEqual(migrated_emailsignup.pk, existing_emailsignup.pk)

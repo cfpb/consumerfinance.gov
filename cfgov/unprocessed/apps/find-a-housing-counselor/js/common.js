@@ -21,8 +21,8 @@ if ( printPageLink ) {
 }
 
 let map;
-let marker_array = [];
-let zip_marker = null;
+let markerArray = [];
+let zipMarker = null;
 let markerDomCache = {};
 
 /**
@@ -79,12 +79,6 @@ function initializeMap() {
  * @returns {HTMLNode} The DOM node of the result item.
  */
 function queryMarkerDom( num ) {
-
-  // Polyfill parseInt on Number for IE11.
-  if ( typeof Number.parseInt === 'undefined' ) {
-    Number.parseInt = window.parseInt;
-  }
-
   const selector = '#hud-result-' + Number.parseInt( num, 10 );
   let cachedItem = markerDomCache[selector];
   if ( typeof cachedItem === 'undefined' ) {
@@ -102,12 +96,12 @@ function queryMarkerDom( num ) {
 function updateMap( data ) {
   // reset the map
   markerDomCache = {};
-  for ( let i = 0; i < marker_array.length; i++ ) {
-    map.removeLayer( marker_array[i] );
+  for ( let i = 0; i < markerArray.length; i++ ) {
+    map.removeLayer( markerArray[i] );
   }
-  marker_array = [];
-  if ( zip_marker !== null ) {
-    map.removeLayer( zip_marker );
+  markerArray = [];
+  if ( zipMarker !== null ) {
+    map.removeLayer( zipMarker );
   }
   map.setZoom( 2 );
   map.setView( [ 40, -80 ] );
@@ -127,7 +121,7 @@ function updateMap( data ) {
     let ymax = -Infinity;
     let ymin = Infinity;
 
-    zip_marker = window.L.circle( ziplatlng, 3 ).addTo( map );
+    zipMarker = window.L.circle( ziplatlng, 3 ).addTo( map );
 
     data.counseling_agencies.forEach( ( val, i ) => {
       const lat = val.agc_ADDR_LATITUDE;
@@ -155,7 +149,7 @@ function updateMap( data ) {
         position,
         { icon: icon }
       ).addTo( map );
-      marker_array[i] = marker;
+      markerArray[i] = marker;
 
       marker.on( 'click', function() {
         const resultEntryDom = queryMarkerDom( number );

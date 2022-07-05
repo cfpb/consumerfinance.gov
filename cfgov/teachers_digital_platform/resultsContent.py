@@ -29,7 +29,8 @@ class ResultsContent:
         self.key = survey_key
 
     def get(self, key: str):
-        assert key in self.store
+        if key not in self.store:
+            raise AssertionError
         return self.store[key]
 
     def building_blocks(self):

@@ -1,6 +1,5 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{% import 'form_block.html' as form_block with context %}
 {% import 'hmda-explorer-controls.html' as controls with context %}
 {% import 'hmda-explorer-results.html' as results with context %}
 {% import 'hmda-explorer-institutions.html' as institutions with context %}
@@ -35,11 +34,7 @@
     </div>
 
     {% for block in page.content -%}
-        {% if block.block_type == 'feedback' %}
-            {{- form_block.render(block, 'content', loop.index0) -}}
-        {% else %}
-            {{ render_block.render(block, loop.index) }}
-        {% endif %}
+        {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 {% endblock %}
 

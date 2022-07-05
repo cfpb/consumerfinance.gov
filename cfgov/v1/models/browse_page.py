@@ -10,13 +10,10 @@ from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.search import index
 
-from data_research.blocks import (
-    ConferenceRegistrationForm,
-    MortgageDataDownloads,
-)
+from data_research.blocks import MortgageDataDownloads
 from jobmanager.blocks import JobListingTable
 from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
+from v1.atomic_elements import molecules, organisms, schema
 from v1.models.base import CFGOVPage
 from v1.util.util import get_secondary_nav_items
 from youth_employment.blocks import YESChecklist
@@ -46,9 +43,7 @@ class BrowsePage(CFGOVPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
-            ("feedback", v1_blocks.Feedback()),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
-            ("conference_registration_form", ConferenceRegistrationForm()),
             ("chart_block", organisms.ChartBlock()),
             ("mortgage_chart_block", organisms.MortgageChartBlock()),
             ("mortgage_map_block", organisms.MortgageMapBlock()),
@@ -58,6 +53,7 @@ class BrowsePage(CFGOVPage):
             ("yes_checklist", YESChecklist()),
             ("erap_tool", v1_blocks.RAFToolBlock()),
             ("raf_tool", v1_blocks.RAFTBlock()),
+            ("faq_group", schema.FAQGroup()),
         ],
         blank=True,
     )

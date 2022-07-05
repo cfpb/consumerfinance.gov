@@ -99,7 +99,7 @@ function makeFormatter( yAxisLabel ) {
     if ( x instanceof Date ) {
       x = chartHooks.getDateString( x );
     }
-    let str = `<b>${ x }</b><br/>${ yAxisLabel }: <b>${ this.y }</b>`;
+    let str = `<b>${ x }</b><br/>${ yAxisLabel }: <b>${ this.y.toLocaleString() }</b>`;
     if ( this.series && this.series.name ) {
       str = `<b>${ this.series.name }</b><br/>` + str;
     }
@@ -159,11 +159,36 @@ function extractSeries( rawData, { series, xAxisSource, chartType } ) {
   return null;
 }
 
+// Converts to human readable date from Epoch format
+function getProjectedDate( date ) {
+  let humanFriendly = null;
+  let timestamp = null;
+  let month = null;
+  let year = null;
+  const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+
+  if ( typeof date === 'number' && date.toString().length >= 12 && date.toString().length <= 13 ) {
+
+    month = new Date( date ).getUTCMonth();
+    month = months[month];
+    year = new Date( date ).getUTCFullYear();
+
+    humanFriendly = month + ' ' + year;
+    timestamp = date;
+  }
+
+  return {
+    humanFriendly: humanFriendly,
+    timestamp: timestamp
+  };
+}
+
 
 export {
   alignMargin,
   formatSeries,
   makeFormatter,
   overrideStyles,
-  extractSeries
+  extractSeries,
+  getProjectedDate
 };

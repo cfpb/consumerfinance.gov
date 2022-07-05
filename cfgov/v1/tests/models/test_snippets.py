@@ -5,7 +5,12 @@ from wagtail.core.models import Site
 from wagtail.tests.testapp.models import SimplePage
 
 from v1.blocks import ReusableTextChooserBlock
-from v1.models.snippets import Contact, RelatedResource, ReusableText
+from v1.models.snippets import (
+    Contact,
+    EmailSignUp,
+    RelatedResource,
+    ReusableText,
+)
 
 
 class TestUnicodeCompatibility(TestCase):
@@ -41,6 +46,20 @@ class TestModelStrings(TestCase):
             text="Snippet text",
         )
         self.assertEqual(str(test_snippet), test_snippet.title)
+
+    def test_email_signup_string(self):
+        test_snippet = EmailSignUp(
+            topic="Test signup",
+            url="http://test/signup",
+            code="TEST_CODE",
+        )
+        self.assertEqual(str(test_snippet), "Test signup (http://test/signup)")
+
+        test_snippet = EmailSignUp(
+            topic="Test signup",
+            code="TEST_CODE",
+        )
+        self.assertEqual(str(test_snippet), "Test signup (TEST_CODE)")
 
 
 class TestReusableTextRendering(TestCase):

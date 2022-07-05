@@ -22,7 +22,7 @@
 
     {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
     {% set breadcrumb_items = [{
-        'href': search_page_url,
+        'href': url('prepaid_agreements:index'),
         'title': 'Prepaid Product Agreements Database'
     }]%}
     {{ breadcrumbs.render(breadcrumb_items) }}

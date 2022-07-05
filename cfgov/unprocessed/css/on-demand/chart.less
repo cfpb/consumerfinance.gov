@@ -1,0 +1,33 @@
+/* topdoc
+  name: Chart
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-chart">
+            <div class="m-chart-image"></div>
+            <div class="m-inset"></div>
+            <p class="m-chart-footnote"></p>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-chart
+            .m-chart-image
+            .m-chart-footnote
+  tags:
+    - cfgov-organisms
+*/
+
+// Import external cfpb-chart-builder stylesheet
+@import (less) 'cfpb-chart-builder';
+
+// Footnote text below charts
+.m-chart-footnote {
+  padding-top: unit( 15px / @base-font-size-px, em );
+  margin-top: unit( 30px / @base-font-size-px, em );
+  color: @black;
+  @font-size: 12px;
+  font-size: unit( @font-size / @base-font-size-px, em );
+}

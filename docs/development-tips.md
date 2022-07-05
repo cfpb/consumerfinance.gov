@@ -11,13 +11,17 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
 
 **Templates** that are served by the Django server: `cfgov/jinja2/v1`
 
-**Static assets** prior to processing (combilation, minification, etc.):
+**Static assets** prior to processing (compilation, minification, etc.):
 `cfgov/unprocessed`.
 
 !!! note
-    After running `gulp build` (or `./setup.sh`) the site's assets are copied over to `cfgov/static_built`,
+    After running `yarn build` (or `./setup.sh`) the site's assets are copied over to `cfgov/static_built`,
     ready to be served by Django.
 
+## Adding new Javascript entrypoints
+
+- In order to build standalone javascript files that are to be included in a template, they
+  need to be included in the `jsPaths` variable in `esbuild/scripts`.
 
 ## Installing new front-end dependencies
 
@@ -32,14 +36,7 @@ Feel free to [install a plugin](https://editorconfig.org/#download) for your edi
 
 ## Watching files for changes
 
-Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `gulp watch` or `yarn gulp watch`.
-
-!!! note
-    You must build the assets first, so you may want a command like:
-    ```
-    ./setup.sh docker && yarn gulp watch
-    ```
-
+Some (but not all) JavaScript and CSS files can be rebuilt automatically when they are changed by using `yarn watch`.
 
 ## Developing on nested satellite apps
 
@@ -52,16 +49,9 @@ The structure looks like this:
 - List an app's own dependencies in
   `cfgov/unprocessed/apps/[project namespace]/package.json`.
 
-### Webpack
-- Apps may include their own `webpack-config.js` configuration that adjusts how
-  their app-specific assets should be built. This configuration appears in
-  `cfgov/unprocessed/apps/[project namespace]/webpack-config.js`.
-
-### Browserslist
-- Apps may include a
-  [browserslist config](https://github.com/browserslist/browserslist#config-file)
-  file, which is automatically picked up by `@babel/preset-env` inside the
-  webpack config, if no `browsers` option is supplied.
+### App build scripts
+- Apps may include their own scripts to run during the build process
+  These must be `require`d from `esbuild/build.js`
 
 ### Adding Images
 - Images should be compressed and optimized before being committed to the repo
