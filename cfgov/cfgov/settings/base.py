@@ -727,3 +727,7 @@ except (TypeError, ValueError):
         "Environment variable CORS_ALLOWED_ORIGINS is not valid JSON. "
         "Expected a JSON array of allowed origins."
     )
+
+# A list of domain names that are allowed to be linked to without adding the
+# interstitial page.
+ALLOWED_LINKS_WITHOUT_INTERSTITIAL = ("public.govdelivery.com",)
