@@ -68,9 +68,8 @@ ICONLESS_LINK_CHILD_ELEMENTS = [
 def should_interstitial(url: str) -> bool:
     match = LINK_PATTERN.match(url)
 
-    # If this is another link to .gov and it's not a CFPB link, do not
-    # interstitial.
-    if match.group("domain").endswith(".gov") and NON_CFPB_LINKS.match(url):
+    # If this is another link to .gov do not interstitial.
+    if match.group("domain").endswith(".gov"):
         return False
 
     # If this is not a link to a .gov, but it's still subject to CFPB's privacy
