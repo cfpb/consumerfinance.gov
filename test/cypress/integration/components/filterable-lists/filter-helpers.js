@@ -29,7 +29,7 @@ export class Filter {
   }
 
   clickCategory( option ) {
-    const sel = `[data-option=${ option }`
+    const sel = `[data-option=${ option }`;
     cy.get( '[data-cy=categories-heading]' ).click();
     return cy.get( sel ).click();
   }
