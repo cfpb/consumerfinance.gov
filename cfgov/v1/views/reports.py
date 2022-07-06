@@ -186,15 +186,18 @@ class EnforcementActionsReportView(ReportView):
     title = "Enforcement actions report"
 
     list_export = [
-        "title",
-        "content.all",
-        "categories.all",
-        "court",
-        "docket_numbers.all",
-        "initial_filing_date",
-        "statutes.all",
-        "product.all",
-        "url",
+        'title',
+        'content',
+        'categories.all',
+        'court',
+        'docket_numbers',
+        'initial_filing_date',
+        'statuses.values_list',
+        'products',
+        'url',
+
+
+
     ]
     export_headings = {
         "page.title": "Title",
@@ -203,7 +206,7 @@ class EnforcementActionsReportView(ReportView):
         "court": "Court",
         "docket_number.all": "Docket Numbers",
         "initial_filing_date": "Initial Filling",
-        "statutes.all": "Statuses",
+        "statuses.all": "Statuses",
         "product.all": "Products",
         "url": "URL",
     }
@@ -214,7 +217,7 @@ class EnforcementActionsReportView(ReportView):
         "docket_number.all": {
             "csv": EnforcementActionPage.get_docket_number_string
         },
-        "statutes.all": {"csv": process_statuses},
+        "statuses.all": {"csv": process_statuses},
         "product.all": {"csv": process_products},
         "url": {"csv": construct_absolute_url},
     }
