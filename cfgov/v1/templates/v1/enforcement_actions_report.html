@@ -41,7 +41,7 @@
                             {{ page.title }}
                         </td>
                         <td>
-                            {{ page.get_content_string }}
+                            {{ page.content }}
                         </td>
                         <td>
                             {% for cat in page.categories.all %}
@@ -53,17 +53,17 @@
                             {{ page.court }}
                         </td>
                         <td>
-                            {{ page.get_docket_number_string }}
+                            {{ page.docket_number_string }}
                         </td>
                         <td>
                             {{page.initial_filing_date}}
                         </td>
                         <td>
-                            {{page.get_status_strings}}
+                            {{page.status_strings}}
                         </td>
                         <td>
 
-                            {{page.get_product_strings}}
+                            {{page.product_strings}}
                         </td>
                         <td>
                             <a href="https://www.consumerfinance.gov{{ document.url }}">

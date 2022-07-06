@@ -293,16 +293,16 @@ class EnforcementActionPage(AbstractFilterPage):
         index.SearchField("content")
     ]
 
-    def get_content_string(self):
-        return self.content
-
-    def get_status_strings(self):
+    @property
+    def status_strings(self):
         return ",".join(self.statuses.values_list("status", flat=True))
 
-    def get_product_strings(self):
+    @property
+    def product_strings(self):
         return ", ".join(self.products.values_list("product", flat=True))
 
-    def get_docket_number_string(self):
+    @property
+    def docket_number_string(self):
         return ", ".join(
             self.docket_numbers.values_list("docket_number", flat=True)
         )

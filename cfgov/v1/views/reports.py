@@ -6,6 +6,7 @@ from wagtail.images import get_image_model
 
 from v1.models import CFGOVPage
 from v1.models.enforcement_action_page import EnforcementActionPage
+from bs4 import BeautifulSoup
 
 
 def process_categories(queryset):
@@ -18,31 +19,33 @@ def process_tags(queryset):
     return ", ".join([tag for tag in queryset])
 
 
-def process_content(querryset):
-    return (
-        EnforcementActionPage.get_content_string
-        for EnforcementActionPage in querryset
-    )
-
-
-def process_forum(queryset):
-    """Grab the one to two Forum values"""
-    return ", ".join([categories for categories in queryset])
-
-
 def process_docket_numbers(queryset):
     """Grab the one to many Docket Numbers values"""
-    return ", ".join([docket_numbers for docket_numbers in queryset])
+    return ",".join([d.docket_number for d in queryset])
+
+
+def process_content(page_content):
+    content = ""
+    soup = BeautifulSoup(str(page_content), "html.parser")
+    para = soup.findAll(["p", "h5"])
+    for p in para:
+        content += p.get_text()
+        link = p.find("a", href=True)
+        if link:
+            content += ": "
+            content += link["href"]
+        content += "\n"
+    return content
 
 
 def process_products(queryset):
     """Grab the one to many Docket Numbers values"""
-    return ", ".join([products for products in queryset])
+    return ", ".join([p.product for p in queryset])
 
 
 def process_statuses(queryset):
     """Grab the one to many Docket Numbers values"""
-    return ", ".join([statutes for statutes in queryset])
+    return ", ".join([s.status for s in queryset])
 
 
 def construct_absolute_url(url):
@@ -186,39 +189,34 @@ class EnforcementActionsReportView(ReportView):
     title = "Enforcement actions report"
 
     list_export = [
-        'title',
-        'content',
-        'categories.all',
-        'court',
-        'docket_numbers',
-        'initial_filing_date',
-        'statuses.values_list',
-        'products',
-        'url',
-
-
-
+        "title",
+        "content",
+        "categories.all",
+        "court",
+        "docket_numbers.all",
+        "initial_filing_date",
+        "statuses.all",
+        "products.all",
+        "url",
     ]
     export_headings = {
-        "page.title": "Title",
-        "content.all": "Content",
+        "title": "Title",
+        "content": "Content",
         "categories.all": "Forum",
         "court": "Court",
-        "docket_number.all": "Docket Numbers",
+        "docket_numbers.all": "Docket Numbers",
         "initial_filing_date": "Initial Filling",
         "statuses.all": "Statuses",
-        "product.all": "Products",
+        "products.all": "Products",
         "url": "URL",
     }
 
     custom_field_preprocess = {
-        "content.all": {"csv:": process_content},
+        "content": {"csv": process_content},
         "categories.all": {"csv": process_categories},
-        "docket_number.all": {
-            "csv": EnforcementActionPage.get_docket_number_string
-        },
+        "docket_numbers.all": {"csv": process_docket_numbers},
         "statuses.all": {"csv": process_statuses},
-        "product.all": {"csv": process_products},
+        "products.all": {"csv": process_products},
         "url": {"csv": construct_absolute_url},
     }
 
