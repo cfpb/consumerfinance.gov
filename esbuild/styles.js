@@ -20,7 +20,8 @@ const styledApps = [
   'regulations3k',
   'retirement',
   'rural-or-underserved-tool',
-  'teachers-digital-platform'
+  'teachers-digital-platform',
+  'filing-instruction-guide'
 ];
 
 const cssPaths = [

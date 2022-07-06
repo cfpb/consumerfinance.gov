@@ -1,4 +1,53 @@
-@import (reference) '../main.less';
+@import (reference) '../../../css/main.less';
+
+.o-fig {
+  // Bump up all heading sizes to improve readability
+  h1 {
+    .superheading();
+  }
+
+  h2 {
+    .h1();
+  }
+
+  h3 {
+    .h2();
+  }
+
+  h4 {
+    .h3();
+  }
+
+  h5 {
+    .h4();
+  }
+  .o-table {
+    margin-top: unit( 30px / @base-font-size-px, em );
+    td {
+      vertical-align: top;
+    }
+    br {
+      display: none;
+    }
+  }
+}
+
+.o-fig_heading {
+  a {
+    color: @black;
+  }
+}
+
+.o-fig_section__sub-sub {
+  // Put a horizontal rule above all sub level 3 headings
+  &:before {
+    display: inline-block;
+    content: "";
+    border-top: 2px solid @gray-50;
+    width: calc( 100% + 30px );
+    margin: 0 0 unit( 30px / @base-font-size-px, em ) unit( -30px / @base-font-size-px, em );
+  }
+}
 
 .o-report-sidenav {
   position: sticky;
