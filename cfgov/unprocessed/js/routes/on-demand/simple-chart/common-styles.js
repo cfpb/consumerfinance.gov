@@ -29,7 +29,6 @@ const styles = {
     }
   },
   credits: false,
-  // CFPB Green, Navy, Pacific 60, Gold 80, Purple 80
   colors: [
     colorMap['@green'],
     colorMap['@navy'],
