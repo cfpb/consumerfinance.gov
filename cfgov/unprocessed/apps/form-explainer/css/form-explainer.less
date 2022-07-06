@@ -2,25 +2,25 @@
    "Form explainer" custom styles
    ========================================================================== */
 
-@gold-dark: #FF9E1B; // gold
-@gold-med: #FFCE8D; // gold-60
-@gold-light: #FFD8A3;
-@gold-tint: #FFF8F0;
+@gold-dk: #FF9E1B; // gold
+@gold-md: #FFCE8D; // gold-60
+@gold-lt: #FFD8A3;
+@gold-bg: #FFF8F0;
 
-@red-dark: #D486B2;
-@red-med: #DC9CBF;
-@red-light: #F0D8E2;
-@red-tint: #F9F6F6;
+@red-dk: #D486B2;
+@red-md: #DC9CBF;
+@red-lt: #F0D8E2;
+@red-bg: #F9F6F6;
 
-@blue-dark: #6F88B2;
-@blue-med: #9DAECC;
-@blue-light: #D3DAEB;
-@blue-tint: #F4F7FA;
+@blue-dk: #6F88B2;
+@blue-md: #9DAECC;
+@blue-lt: #D3DAEB;
+@blue-bg: #F4F7FA;
 
-@teal-dark: #579695; // teal-80
-@teal-med: #70A6A5;
-@teal-light: #D4E7E6; // teal-20
-@teal-tint: #F2F8F8; 
+@teal-dk: #579695; // teal-80
+@teal-md: #70A6A5;
+@teal-lt: #D4E7E6; // teal-20
+@teal-bg: #F2F8F8; 
 
 @colors: gold, red, blue, teal;
 
@@ -52,7 +52,7 @@
   }
 
   each( @colors, {
-    @color: @{value}-dark;
+    @color: @{value}-dk;
 
     .image-map_overlay__category-@{index} {
       background: fade( @@color, 20% );
@@ -107,9 +107,9 @@
     }
 
     each( @colors, {
-      @tint: @{value}-tint;
-      @light: @{value}-light;
-      @med: @{value}-med;
+      @tint: @{value}-bg;
+      @light: @{value}-lt;
+      @med: @{value}-md;
 
       &.o-expandable__form-explainer-category-@{index} {
         background-color: @@tint;
