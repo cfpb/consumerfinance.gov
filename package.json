@@ -54,6 +54,7 @@
     "jest": "28.1.0",
     "jest-cli": "28.1.0",
     "jest-environment-jsdom": "28.1.0",
+    "postcss-less": "6.0.0",
     "snyk": "1.786.0",
     "stylelint": "14.8.2",
     "stylelint-config-recommended-less": "1.0.4"
