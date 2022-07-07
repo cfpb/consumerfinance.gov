@@ -19,12 +19,7 @@ def process_tags(queryset):
     return ", ".join([tag for tag in queryset])
 
 
-def process_docket_numbers(queryset):
-    """Grab the one to many Docket Numbers values"""
-    return ",".join([d.docket_number for d in queryset])
-
-
-def process_content(page_content):
+def process_enforcement_action_page_content(page_content):
     content = ""
     soup = BeautifulSoup(str(page_content), "html.parser")
     para = soup.findAll(["p", "h5"])
@@ -36,16 +31,6 @@ def process_content(page_content):
             content += link["href"]
         content += "\n"
     return content
-
-
-def process_products(queryset):
-    """Grab the one to many Docket Numbers values"""
-    return ", ".join([p.product for p in queryset])
-
-
-def process_statuses(queryset):
-    """Grab the one to many Docket Numbers values"""
-    return ", ".join([s.status for s in queryset])
 
 
 def construct_absolute_url(url):
@@ -193,10 +178,10 @@ class EnforcementActionsReportView(ReportView):
         "content",
         "categories.all",
         "court",
-        "docket_numbers.all",
+        "docket_number_string",
         "initial_filing_date",
-        "statuses.all",
-        "products.all",
+        "status_strings",
+        "product_strings",
         "url",
     ]
     export_headings = {
@@ -204,19 +189,16 @@ class EnforcementActionsReportView(ReportView):
         "content": "Content",
         "categories.all": "Forum",
         "court": "Court",
-        "docket_numbers.all": "Docket Numbers",
+        "docket_number_string": "Docket Numbers",
         "initial_filing_date": "Initial Filling",
-        "statuses.all": "Statuses",
-        "products.all": "Products",
+        "status_strings": "Statuses",
+        "product_strings": "Products",
         "url": "URL",
     }
 
     custom_field_preprocess = {
-        "content": {"csv": process_content},
+        "content": {"csv": process_enforcement_action_page_content},
         "categories.all": {"csv": process_categories},
-        "docket_numbers.all": {"csv": process_docket_numbers},
-        "statuses.all": {"csv": process_statuses},
-        "products.all": {"csv": process_products},
         "url": {"csv": construct_absolute_url},
     }
 
