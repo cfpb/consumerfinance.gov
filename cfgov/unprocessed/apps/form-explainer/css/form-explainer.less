@@ -2,6 +2,28 @@
    "Form explainer" custom styles
    ========================================================================== */
 
+@gold-dk: #FF9E1B; // gold
+@gold-md: #FFCE8D; // gold-60
+@gold-lt: #FFD8A3;
+@gold-bg: #FFF8F0;
+
+@red-dk: #D486B2;
+@red-md: #DC9CBF;
+@red-lt: #F0D8E2;
+@red-bg: #F9F6F6;
+
+@blue-dk: #6F88B2;
+@blue-md: #9DAECC;
+@blue-lt: #D3DAEB;
+@blue-bg: #F4F7FA;
+
+@teal-dk: #579695; // teal-80
+@teal-md: #70A6A5;
+@teal-lt: #D4E7E6; // teal-20
+@teal-bg: #F2F8F8; 
+
+@colors: gold, red, blue, teal;
+
 .form-explainer {
 
   .image-map {
@@ -29,45 +51,30 @@
     transition: border 100ms ease-out;
   }
 
-  .image-map_overlay__category-1 {
-    background: rgba( 255, 147, 27, 0.2 );
+  each( @colors, {
+    @color: @{value}-dk;
 
-    &:hover,
-    &.hover-has-attention {
-      border-color: @gold-80;
+    .image-map_overlay__category-@{index} {
+      background: fade( @@color, 20% );
+
+      &:hover,
+      &.hover-has-attention {
+        border-color: @@color;
+      }
+
+      &:focus,
+      &.has-attention {
+        border-color: @@color;
+        background: fade( @@color, 50% );
+      }
+
+      &:focus {
+        outline: 1px dotted @@color;
+        outline-offset: 1px;
+      }
     }
+  } );
 
-    &:focus,
-    &.has-attention {
-      border-color: @gold-80;
-      background: rgba( 255, 147, 27, 0.5 );
-    }
-
-    &:focus {
-      outline: 1px dotted @gold;
-      outline-offset: 1px;
-    }
-  }
-
-  .image-map_overlay__category-2 {
-    background: rgba( 0, 94, 93, 0.2 );
-
-    &:hover,
-    &.hover-has-attention {
-      border-color: @teal;
-    }
-
-    &:focus,
-    &.has-attention {
-      border-color: @teal;
-      background: rgba( 0, 94, 93, 0.5 );
-    }
-
-    &:focus {
-      outline: 1px dotted @teal-dark;
-      outline-offset: 1px;
-    }
-  }
 
   // Expandable overrides
 
@@ -99,52 +106,38 @@
       font-size: unit( 16 / @base-font-size-px, em );
     }
 
-    &.o-expandable__form-explainer-category-1 {
-      background-color: @gold-20;
+    each( @colors, {
+      @tint: @{value}-bg;
+      @light: @{value}-lt;
+      @med: @{value}-md;
 
-      &.has-attention,
-      &:hover {
-        border-color: @gold-80;
-      }
+      &.o-expandable__form-explainer-category-@{index} {
+        background-color: @@tint;
 
-      &.has-attention {
         .o-expandable_target {
-          background-color: @gold-80;
+          background-color: @@light;
         }
 
-        .o-expandable_label .cf-icon-svg {
-          color: @black;
-        }
-      }
+        border-color: @@light;
 
-      .o-expandable_label .cf-icon-svg {
-        color: @gold-80;
-      }
-    }
-
-
-    &.o-expandable__form-explainer-category-2 {
-      background-color: @teal-20;
-
-      &.has-attention,
-      &:hover {
-        border-color: @teal-80;
-      }
-
-      &.has-attention {
-        .o-expandable_target {
-          background-color: @teal-80;
+        &.has-attention,
+        &:hover {
+          border-color: @@med;
         }
 
-        .o-expandable_label .cf-icon-svg {
-          color: @black;
+        &.has-attention {
+          .o-expandable_target {
+            background-color: @@med;
+          }
+        }
+
+        &.has-attention {
+          .o-expandable_target {
+            background-color: @@med;
+          }
         }
       }
-
-      .o-expandable_label .cf-icon-svg {
-        color: @teal-80;
-      }
-    }
+    } );
 
     &.o-expandable__form-explainer + h3 {
       margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
