@@ -37,9 +37,10 @@ describe( 'Filter Blog Posts based on content', () => {
       filter.clickCategory( category.get( 0 ).getAttribute( 'data-option' ) );
       // And I click "Apply filters" button
       blog.applyFilters();
-      // Then I should see only results in that category
-      //blog.notification().should( 'be.visible' );
-      // And the page url should contain "categories=" category
+
+      /*  Then I should see only results in that category
+          blog.notification().should( 'be.visible' );
+          And the page url should contain "categories=" category */
       cy.url().should(
         'include',
         'categories=' + category.get( 0 ).getAttribute( 'data-option' )
