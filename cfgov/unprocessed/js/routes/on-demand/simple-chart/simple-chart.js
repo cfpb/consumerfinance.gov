@@ -13,7 +13,7 @@ import defaultLine from './line-styles.js';
 import tilemapChart from './tilemap-chart.js';
 import { alignMargin, extractSeries, formatSeries, makeFormatter, overrideStyles } from './utils.js';
 import { initFilters } from './data-filters.js';
-import { getProjectedDate } from './utils';
+import { convertEpochToDateString } from './utils';
 
 accessibility( Highcharts );
 
@@ -170,7 +170,10 @@ function addProjectedMonths( chartObject, numMonths ) {
 
   // Convert lastChartDate from months to milliseconds for Epoch format
   const convertedProjectedDate = lastChartDate - ( numMonths * 30 * msInDay );
-  const projectedDate = getProjectedDate( convertedProjectedDate );
+  const projectedDate = {
+    humanFriendly: convertEpochToDateString( convertedProjectedDate ),
+    timestamp: convertedProjectedDate
+  };
 
   /* Add a vertical line and some explanatory text at the starting
      point of the projected data */

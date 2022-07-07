@@ -69,6 +69,3 @@ class Explainer(blocks.StructBlock):
         template = "form-explainer/blocks/explainer.html"
         icon = "doc-full-inverse"
         label = "Explainer"
-
-    class Media:
-        js = ["form-explainer/form-explainer.js"]
