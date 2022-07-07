@@ -58,33 +58,6 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
-def export_data(request):
-    if request.method == "POST":
-        return export_enforcement_actions.export_actions(http_response=True)
-    return render(request, "wagtailadmin/export_data.html")
-
-
-@hooks.register("register_admin_menu_item")
-def register_export_menu_item():
-    return MenuItem(
-        "Enforcement actions",
-        reverse("export-enforcement-actions"),
-        classnames="icon icon-download",
-        order=99999,
-    )
-
-
-@hooks.register("register_admin_urls")
-def register_export_url():
-    return [
-        re_path(
-            "export-enforcement-actions",
-            export_data,
-            name="export-enforcement-actions",
-        )
-    ]
-
-
 @hooks.register("before_delete_page")
 def raise_delete_error(request, page):
     raise PermissionDenied("Deletion via POST is disabled")
