@@ -44,6 +44,7 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 INSTALLED_APPS = (
     "permissions_viewer",
     "wagtail.core",
+    "wagtailadmin_overrides",
     "wagtail.admin",
     "wagtail.documents",
     "wagtail.snippets",
@@ -148,6 +149,7 @@ MIDDLEWARE = (
     "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "wagtailadmin_overrides.middleware.WagtailAdminViewOverrideMiddleware",
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "core.middleware.SelfHealingMiddleware",
@@ -281,11 +283,9 @@ STATICFILES_FINDERS = [
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-# Used to include directories not traditionally found,
-# app-specific 'static' directories.
+# Add the frontend build output to static files.
 STATICFILES_DIRS = [
     PROJECT_ROOT.joinpath("static_built"),
-    PROJECT_ROOT.joinpath("templates", "wagtailadmin"),
 ]
 
 # Also include any directories under static.in
@@ -670,6 +670,15 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
             ]
         },
     },
+}
+
+# Override certain Wagtail admin views with our own.
+#
+# See wagtailadmin_pages.middleware.WagtailAdminViewOverrideMiddleware.
+WAGTAILADMIN_OVERRIDDEN_VIEWS = {
+    "wagtailadmin_pages:add_subpage": (
+        "wagtailadmin_overrides.views.add_subpage"
+    ),
 }
 
 # Serialize Decimal(3.14) as 3.14, not "3.14"
