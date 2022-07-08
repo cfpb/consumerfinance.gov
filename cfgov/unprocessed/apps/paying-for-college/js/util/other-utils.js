@@ -52,6 +52,10 @@ const statesByCode = {
   WY: 'Wyoming'
 };
 
+/**
+ * @param {string} code - An abbreviated state name.
+ * @returns {string} A full state name, spelled out.
+ */
 function getStateByCode( code ) {
   if ( statesByCode.hasOwnProperty( code ) ) {
     return statesByCode[code];
