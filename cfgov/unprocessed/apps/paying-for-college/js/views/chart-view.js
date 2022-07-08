@@ -568,9 +568,15 @@ const chartView = {
 
   updateCostOfBorrowingChart: () => {
     const totalBorrowingAtGrad = getFinancialValue( 'debt_totalAtGrad' );
-    const borrowedString = numberToMoney( { amount: totalBorrowingAtGrad, decimalPlaces: 0 } );
+    const borrowedString = numberToMoney( {
+      amount: totalBorrowingAtGrad,
+      decimalPlaces: 0
+    } );
     const interest10years = getFinancialValue( 'debt_tenYearInterest' );
-    const interestString = numberToMoney( { amount: interest10years, decimalPlaces: 0 } );
+    const interestString = numberToMoney( {
+      amount: interest10years,
+      decimalPlaces: 0
+    } );
 
     chartView.costOfBorrowingChart.yAxis[0].update( {
       max: Math.floor( getFinancialValue( 'debt_tenYearTotal' ) * 1.10 )
@@ -589,7 +595,10 @@ const chartView = {
     const totalCosts = getFinancialValue( 'total_costs' );
     const totalFunding = getFinancialValue( 'total_funding' );
     const max = Math.max( totalCosts * 1.1, totalFunding * 1.1 );
-    const text = 'Your costs<br>' + numberToMoney( { amount: totalCosts, decimalPlaces: 0 } );
+    const text = 'Your costs<br>' + numberToMoney( {
+      amount: totalCosts,
+      decimalPlaces: 0
+    } );
 
     chartView.makePlanChart.yAxis[0].update( {
       max: max,
@@ -654,13 +663,24 @@ const chartView = {
 
   updateAffordingChart: () => {
     const monthlyExpenses = getExpensesValue( 'total_expenses' );
-    const expensesString = numberToMoney( { amount: monthlyExpenses, decimalPlaces: 0 } );
+    const expensesString = numberToMoney( {
+      amount: monthlyExpenses,
+      decimalPlaces: 0
+    } );
     const monthlyPayment = getFinancialValue( 'debt_tenYearMonthly' );
-    const paymentString = numberToMoney( { amount: monthlyPayment, decimalPlaces: 0 } );
+    const paymentString = numberToMoney( {
+      amount: monthlyPayment,
+      decimalPlaces: 0
+    } );
     const monthlySalary = getFinancialValue( 'salary_monthly' );
-    const salaryString = numberToMoney( { amount: monthlySalary, decimalPlaces: 0 } );
+    const salaryString = numberToMoney( {
+      amount: monthlySalary,
+      decimalPlaces: 0
+    } );
 
-    const max = Math.max( monthlySalary * 1.1, ( monthlyExpenses + monthlyPayment ) * 1.1 );
+    const totalMonthlySalary = monthlySalary * 1.1;
+    const totalMonthlyExpenses = ( monthlyExpenses + monthlyPayment ) * 1.1;
+    const max = Math.max( totalMonthlySalary, totalMonthlyExpenses );
     const text = 'Monthly Salary<br>' + numberToMoney( { amount: monthlySalary, decimalPlaces: 0 } );
 
     chartView.affordingChart.yAxis[0].update( {

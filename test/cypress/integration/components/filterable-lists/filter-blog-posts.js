@@ -3,7 +3,6 @@ The posts should be in five different categories, and tagged with at least five 
 The posts should also have at least three different languages with some blog titles specific to those languages. */
 import { Filter } from './filter-helpers';
 import { FilterableListControl } from './filterable-list-control-helpers';
-import { Pagination } from '../pagination/pagination-helpers';
 
 const blog = new FilterableListControl();
 const filter = new Filter();
