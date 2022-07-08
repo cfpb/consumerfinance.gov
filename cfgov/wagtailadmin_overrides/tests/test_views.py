@@ -2,6 +2,7 @@ from unittest.mock import patch
 
 from django.contrib.auth.models import Permission
 from django.test import TestCase
+from django.test.utils import isolate_apps
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -45,6 +46,28 @@ class TestAddSubpage(TestCase, WagtailTestUtils):
         )
 
         self.assertRedirects(response, reverse("wagtailadmin_home"))
+
+    @isolate_apps()
+    def test_descriptions_hidden_from_inherited_page_types(self):
+        class InheritingPageWithoutDescription(BrowsePage):
+            class Meta:
+                pass
+
+        with patch(
+            "v1.models.BrowsePage.page_description", "I am a BrowsePage"
+        ):
+            response = self.client.get(
+                reverse(
+                    "wagtailadmin_pages:add_subpage", args=(self.root_page.id,)
+                )
+            )
+
+            self.assertEqual(response.status_code, 200)
+
+            # If we didn't hide descriptions on inherited page types without
+            # their own page_description, the response would include this
+            # description more than once.
+            self.assertContains(response, "I am a BrowsePage", count=1)
 
     def test_lazy_description(self):
         page = BrowsePage(title="test", slug="test")

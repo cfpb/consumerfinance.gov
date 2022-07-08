@@ -6,13 +6,19 @@ from wagtail.admin.views.pages.utils import get_valid_next_url_from_request
 from wagtail.core.models import Page
 
 
-# This code was backported from Wagtail 3.0 to support this feature:
+# This code was backported rom Wagtail 3.0 to support this feature:
 #
 # https://docs.wagtail.org/en/stable/releases/3.0.html#page-descriptions
 #
 # The original code lives at:
 #
 # https://github.com/wagtail/wagtail/blob/v2.15.5/wagtail/admin/views/pages/create.py#L21
+#
+# This code has been further modified to hide inherited page descriptions for
+# derived page types who inherit from a page type that defines one. For
+# example, if class FooPage defines a description, and class BarPage inherits
+# from FooPage but does not define one, BarPage should not show FooPage's
+# description.
 def add_subpage(request, parent_page_id):
     parent_page = get_object_or_404(Page, id=parent_page_id).specific
     if not parent_page.permissions_for_user(request.user).can_add_subpage():
@@ -23,6 +29,10 @@ def add_subpage(request, parent_page_id):
     # page model classes that may not inherit from our CFGOVPage.
     def get_page_description(cls):
         description = getattr(cls, "page_description", None)
+
+        # Only show page descriptions defined on the specific page type.
+        if "page_description" not in cls.__dict__:
+            return ""
 
         # Make sure that page_description is actually a string rather than a
         # model field.
