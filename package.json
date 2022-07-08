@@ -50,13 +50,13 @@
   },
   "devDependencies": {
     "cypress": "9.5.2",
-    "eslint": "8.15.0",
-    "jest": "28.1.0",
-    "jest-cli": "28.1.0",
+    "eslint": "8.19.0",
+    "jest": "28.1.2",
+    "jest-cli": "28.1.2",
     "jest-environment-jsdom": "28.1.0",
     "postcss-less": "6.0.0",
-    "snyk": "1.786.0",
-    "stylelint": "14.8.2",
+    "snyk": "1.963.0",
+    "stylelint": "14.9.1",
     "stylelint-config-recommended-less": "1.0.4"
   },
   "scripts": {
