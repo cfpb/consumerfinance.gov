@@ -6,7 +6,7 @@
  * @param {String} url - The url to be requested
  * @returns {Object} Promise of the XHR request
  */
-const promiseRequest = function( method, url ) {
+function promiseRequest( method, url ) {
   const xhr = new XMLHttpRequest();
 
   return new Promise( function( resolve, reject ) {
@@ -27,7 +27,7 @@ const promiseRequest = function( method, url ) {
     xhr.send();
 
   } );
-};
+}
 
 export {
   promiseRequest

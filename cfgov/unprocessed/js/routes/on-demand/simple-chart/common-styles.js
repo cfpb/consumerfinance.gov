@@ -8,7 +8,7 @@ const colorMap = {
   '@navy': '#254b87',
   '@pacific-60': '#7eb7e8',
   '@gold-80': '#ffb858',
-  '@purple-80': '#c55998',
+  '@purple-80': '#c55998'
 };
 
 const styles = {
