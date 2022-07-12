@@ -1,6 +1,31 @@
 @import (reference) '../../../css/main.less';
 
 .o-fig {
+
+  // .respond-to-min( @bp-med-min, {
+    // Make the side navigation sticky
+    .content_sidebar {
+      position: sticky;
+      top: 0;
+      overflow: auto;
+      height: 100vh;
+    }
+  // } );
+
+  .u-hide-on-desktop {
+    .respond-to-min( @bp-med-min, {
+      display: none;
+    } );
+  }
+
+  .u-hide-on-mobile {
+    .respond-to-max( @bp-sm-max, {
+      display: none;
+    } );
+  }
+}
+
+.o-fig_main {
   // Bump up all heading sizes to improve readability
   h1 {
     .superheading();
@@ -40,13 +65,8 @@
     }
   }
 
-  .content_sidebar {
-    position: sticky;
-    top: 0;
-  }
-
-  // Increase the sidebar border from 1px to 2px
   .respond-to-min( @bp-med-min, {
+    // Increase the sidebar border from 1px to 2px
     .content &:after {
       border-left-width: 2px;
     }
@@ -76,16 +96,8 @@
 .o-fig_sidebar {
 
   h3 {
-    padding-left: 1em;
+    padding-left: unit( 15px / @base-font-size-px, em );
   }
-
-  .respond-to-min( @bp-med-min, {
-    height: 100vh;
-    overflow-y: auto;
-    position: sticky;
-    top: 0;
-  } );
-
 
   .m-nav-link {
     padding-left: unit( 40px / @base-font-size-px, em );
@@ -103,10 +115,6 @@
 
   .o-report-sidenav__appendix > li > a {
     text-indent: unit( -20px / @base-font-size-px, em );
-  }
-
-  .o-secondary-navigation_list__children {
-    display: none;
   }
 
   .parent-header {
