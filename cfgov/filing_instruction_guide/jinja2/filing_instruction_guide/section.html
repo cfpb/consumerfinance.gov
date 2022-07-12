@@ -17,7 +17,7 @@
 {% set block_class = block_types[block_type].class | default('o-fig_section') %}
 
 {% if block_type in ['Fig_Section', 'Fig_Subsection'] %}
-    {% set header = value.section_id + " " + value.header %}
+    {% set header = value.section_id + ". " + value.header %}
 {% else %}
     {% set header = value.header %}
 {% endif %}
