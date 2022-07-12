@@ -3,8 +3,9 @@ import pdb
 import unittest
 import json
 from unittest import mock
+from ask_cfpb.models.answer_page import AnswerPage
 
-from django_elasticsearch_dsl.registries import DocumentRegistry
+from django_elasticsearch_dsl.registries import DocumentRegistry, registry
 from django.apps import apps
 from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
@@ -14,7 +15,7 @@ from ask_cfpb.models.search import UNSAFE_CHARACTERS
 
 from elasticsearch.exceptions import RequestError
 
-from ask_cfpb.documents import AnswerPageDocument, TestAnswerPageDocument
+from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models import ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG
 from ask_cfpb.models.search import AnswerPageSearch, make_safe
 from ask_cfpb.views import ask_search, redirect_ask_search
@@ -28,7 +29,6 @@ class TestSearchMakeSafe(unittest.TestCase):
         self.assertEqual(term, make_safe(unsafe_term))
 
 
-dummyRegistry = DocumentRegistry()
 
 
 class TestAnswerPageSearch(unittest.TestCase):
@@ -99,10 +99,17 @@ class TestAnswerPageSearch(unittest.TestCase):
 
 
     def test_AnswerPageSearch_autocomplete_en(self):
-        test_answer_page = TestAnswerPageDocument()
-        test_answer_page.autocomplete = "hello"
+        test_answer_page = AnswerPage(title="Hello", question="Hello?", slug="/test-answer-page")
+        test_answer_page.save()
+        test_answer_page.get_latest_revision().publish()
+        registry.update(test_answer_page)
+        # print('printttt')
+        # print(test_answer_page.search()
+        #         .filter("term", language=self.language)
+        #         .query(
+        #             "match",
+        #             autocomplete="hello",
+        #         ))
         search_term = "hell"
-        dummyRegistry.register_document(test_answer_page)
-        dummyRegistry.update(test_answer_page)
         test_answer_page_search = AnswerPageSearch(search_term=search_term)
         self.assertEqual(test_answer_page_search.autocomplete(), "hello")
