@@ -40,6 +40,11 @@
     }
   }
 
+  .content_sidebar {
+    position: sticky;
+    top: 0;
+  }
+
   // Increase the sidebar border from 1px to 2px
   .respond-to-min( @bp-med-min, {
     .content &:after {
@@ -68,25 +73,28 @@
   }
 }
 
-.o-report-sidenav {
-  position: sticky;
-  top: 0;
-  display: block;
-  overflow-y: scroll;
+.o-fig_sidebar {
 
-  .m-nav-link{
+  h3 {
+    padding-left: 1em;
+  }
+
+  .respond-to-min( @bp-med-min, {
+    height: 100vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 0;
+  } );
+
+
+  .m-nav-link {
     padding-left: unit( 40px / @base-font-size-px, em );
     text-indent: unit( -30px / @base-font-size-px, em );
   }
 
-
   .o-secondary-navigation_list__parents > li > a {
     padding-left: unit( 30px / @base-font-size-px, em );
     text-indent: unit( -18px / @base-font-size-px, em );
-  }
-
-  h3 {
-    padding-left: unit( 19px / @size-iii, em );
   }
 
   h4 {

@@ -1,68 +1,73 @@
-/* eslint-disable complexity, no-undefined */
-/* ==========================================================================
-   Scripts for Report Sidenav organism
-   ========================================================================== */
+let prevTarget;
 
-const main = document.querySelector( 'main' );
-const sidenav = main.querySelector( '.o-report-sidenav' );
-const tocHeaders = sidenav.querySelectorAll( '.m-nav-link' );
-const headerOffset = main.offsetTop - 10;
-const headers = main.querySelectorAll( 'h2.report-header, h3.report-header' );
+const appRoot = () => document.querySelector( 'main.o-fig' );
+const getNavItem = target => appRoot().querySelector( `.m-nav-link[href="${ target }"]` );
+const getNavItemContainer = target => getNavItem( target ).closest( '.o-secondary-navigation_list__children' );
+const highlightNavItem = target => getNavItem( target ).classList.add( 'm-nav-link__current' );
+const unHighlightNavItem = target => getNavItem( target ).classList.remove( 'm-nav-link__current' );
 
-const offsets = [];
-const primaryOffsets = [];
-let lastTargetIndex;
-
-// Initialize offsets for calculating what to highlight
-( function() {
-  for ( let i = 0; i < headers.length; i++ ) {
-    offsets.push( headers[i].offsetTop + headerOffset );
-    primaryOffsets.push( headers[i].tagName === 'H2' );
-  }
-} )();
-
-// Keep sidenav content from clipping into footer
-document.querySelector( '.o-footer' ).classList.add( 'report-global-footer' );
-
-// Set sidebar height on parent of sticky sidenav
-sidenav.parentElement.style.height = main.clientHeight + 'px';
+const showElement = el => el && el.classList.remove('u-hidden');
+const hideElement = el => el && el.classList.add('u-hidden');
 
 /**
- * Gets the node in the sidenav that wraps the section and subsections
- * @param {number} index from which to search for the parent
- * @returns {object} The parent node of the section
- **/
-function getParentHeader( index ) {
-  for ( let i = index; i >= 0; i-- ) {
-    if ( primaryOffsets[i] ) return tocHeaders[i].parentNode;
-  }
-  return null;
-}
+ * Description
+ * @param {string} target - `href` value of the nav item to highlight
+ */
+const updateNav = target => {
+  if ( target === prevTarget ) return;
 
-/**
- * Highlights the appropriate sidenav header and reveals children on scroll
- **/
-function hightlightTOC() {
-  const sY = window.scrollY;
-  const len = offsets.length;
+  // Highlight the current nav item and expand its container if necessary
+  const targetContainer = getNavItemContainer( target );
+  showElement( targetContainer );
+  highlightNavItem( target );
 
-  for ( let i = 0; i <= len; i++ ) {
-    if ( i === len || sY < offsets[i] ) {
-      const hl = i ? i - 1 : i;
-      if ( hl === lastTargetIndex ) return;
-
-      if ( lastTargetIndex !== undefined ) {
-        tocHeaders[lastTargetIndex].classList.remove( 'm-nav-link__current' );
-        getParentHeader( lastTargetIndex ).classList.remove( 'parent-header' );
-      }
-
-      tocHeaders[hl].classList.add( 'm-nav-link__current' );
-      getParentHeader( hl ).classList.add( 'parent-header' );
-      lastTargetIndex = hl;
-      return;
+  // Remove the highlighting from the previous menu item and close its container
+  if ( prevTarget ) {
+    unHighlightNavItem( prevTarget );
+    const prevTargetContainer = getNavItemContainer( prevTarget );
+    if ( prevTargetContainer !== targetContainer ) {
+      hideElement( prevTargetContainer );
     }
   }
-}
 
-window.addEventListener( 'scroll', hightlightTOC );
-hightlightTOC();
+  prevTarget = target;
+};
+
+/**
+ * Callback for IntersectionObserver
+ * @param {IntersectionObserverEntry} entries - array of observer entries
+ * See https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry
+ */
+const handleIntersect = entries => {
+  entries.forEach( entry => {
+    if ( entry.intersectionRatio > 0 ) {
+      updateNav( entry.target.getAttribute( 'href' ) );
+    }
+  } );
+};
+
+/**
+ * init - Initialize everything on page load.
+ */
+const init = () => {
+  // Only proceed if IntersectionObserver is supported (everything except IE)
+  // See https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+  if ( 'IntersectionObserver' in window ) {
+    appRoot().querySelectorAll('.o-secondary-navigation_list__children').forEach( ul => {
+      hideElement( ul );
+    } );
+
+    const observer = new IntersectionObserver( handleIntersect, {
+      // Sets an intersection area that spans 5% above the top of the viewport and
+      // 95% above the bottom of the viewport, resulting in a box that is 10% of
+      // the viewport height with 5% hanging over the top.
+      rootMargin: '5% 0px -95% 0px'
+    } );
+
+    const sections = appRoot().querySelectorAll( 'a[data-scrollspy]' );
+
+    sections.forEach( section => observer.observe( section ) );
+  }
+};
+
+window.addEventListener( 'load', init );
