@@ -12,7 +12,7 @@ HUD Counselors by zip code. See hud_api_replace for more details on the
 API queries. -wernerc */
 
 // Set up print results list button functionality, if it exists.
-const printPageLink = document.querySelector( '#hud_print-page-link' );
+const printPageLink = document.getElementById( 'hud_print-page-link' );
 if ( printPageLink ) {
   printPageLink.addEventListener( 'click', evt => {
     evt.preventDefault();
@@ -64,7 +64,7 @@ function initializeMap() {
   );
 
   if ( showMap ) {
-    const fcm = document.querySelector( '#hud_search_container' );
+    const fcm = document.getElementById( 'hud_search_container' );
     fcm.classList.remove( 'no-js' );
     window.L.mapbox.accessToken = mapboxAccessToken;
     map = window.L.mapbox.map( 'hud_hca_api_map_container' )
@@ -85,10 +85,10 @@ function initializeMap() {
  * @returns {HTMLNode} The DOM node of the result item.
  */
 function queryMarkerDom( num ) {
-  const selector = '#hud-result-' + Number.parseInt( num, 10 );
+  const selector = 'hud-result-' + Number.parseInt( num, 10 );
   let cachedItem = markerDomCache[selector];
   if ( typeof cachedItem === 'undefined' ) {
-    cachedItem = document.querySelector( selector );
+    cachedItem = document.getElementById( selector );
     markerDomCache[selector] = cachedItem;
   }
 
