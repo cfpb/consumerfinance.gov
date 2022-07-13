@@ -2,7 +2,7 @@ import DT from './dom-tools';
 
 const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js';
 const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css';
-const mapboxAccessToken = 'pk.eyJ1IjoiY2ZwYiIsImEiOiJodmtiSk5zIn0.VkCynzmVYcLBxbyHzlvaQw';
+const { mapboxAccessToken } = window;
 const mapIdString = 'mapbox://styles/mapbox/streets-v11';
 
 /**

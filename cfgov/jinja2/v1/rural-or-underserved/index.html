@@ -23,6 +23,7 @@ home price, down payment, and more can affect mortgage interest rates.
     {{ super() }}
     <script>
       if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        window.mapboxAccessToken = '{{ mapbox_access_token }}'
         !function() {
           var s = [
             '{{ static('apps/rural-or-underserved-tool/js/common.js') }}'
