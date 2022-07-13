@@ -39,7 +39,7 @@ class AnswerPageDocument(Document):
         return instance.url
 
     class Index:
-        name = environment_specific_index("askcfpb")
+        name = environment_specific_index("ask-cfpb")
         settings = {"number_of_shards": 1, "number_of_replicas": 0}
 
     class Django:
