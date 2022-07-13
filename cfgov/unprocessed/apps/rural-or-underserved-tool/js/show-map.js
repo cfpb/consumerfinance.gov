@@ -2,7 +2,6 @@ import DT from './dom-tools';
 
 const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js';
 const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css';
-const { mapboxAccessToken } = window;
 const mapIdString = 'mapbox://styles/mapbox/streets-v11';
 
 /**
@@ -39,7 +38,7 @@ function scriptLoaded( evt ) {
  * Set access map options and create map.
  */
 function initializeMap() {
-  window.L.mapbox.accessToken = mapboxAccessToken;
+  window.L.mapbox.accessToken = window.cfpb_mapboxAccessToken;
 }
 
 // when a.jsLoadMap is clicked
