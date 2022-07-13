@@ -59,15 +59,21 @@ function scriptLoaded( evt ) {
  * Set access map options and create map.
  */
 function initializeMap() {
-  const fcm = document.querySelector( '#hud_search_container' );
-  fcm.classList.remove( 'no-js' );
-  window.L.mapbox.accessToken = mapboxAccessToken;
-  map = window.L.mapbox.map( 'hud_hca_api_map_container' )
-    .setView( [ 40, -80 ], 2 )
-    .addLayer( window.L.mapbox.styleLayer( 'mapbox://styles/mapbox/streets-v11' ) );
+  const showMap = Boolean(
+    document.getElementById( 'hud_hca_api_map_container' )
+  );
 
-  if ( hudData.counseling_agencies ) {
-    updateMap( hudData );
+  if ( showMap ) {
+    const fcm = document.querySelector( '#hud_search_container' );
+    fcm.classList.remove( 'no-js' );
+    window.L.mapbox.accessToken = mapboxAccessToken;
+    map = window.L.mapbox.map( 'hud_hca_api_map_container' )
+      .setView( [ 40, -80 ], 2 )
+      .addLayer( window.L.mapbox.styleLayer( 'mapbox://styles/mapbox/streets-v11' ) );
+
+    if ( hudData.counseling_agencies ) {
+      updateMap( hudData );
+    }
   }
 }
 
