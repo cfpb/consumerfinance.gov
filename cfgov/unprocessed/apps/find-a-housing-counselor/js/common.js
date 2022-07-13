@@ -85,11 +85,11 @@ function initializeMap() {
  * @returns {HTMLNode} The DOM node of the result item.
  */
 function queryMarkerDom( num ) {
-  const selector = 'hud-result-' + Number.parseInt( num, 10 );
-  let cachedItem = markerDomCache[selector];
+  const id = 'hud-result-' + Number.parseInt( num, 10 );
+  let cachedItem = markerDomCache[id];
   if ( typeof cachedItem === 'undefined' ) {
-    cachedItem = document.getElementById( selector );
-    markerDomCache[selector] = cachedItem;
+    cachedItem = document.getElementById( id );
+    markerDomCache[id] = cachedItem;
   }
 
   return cachedItem;
