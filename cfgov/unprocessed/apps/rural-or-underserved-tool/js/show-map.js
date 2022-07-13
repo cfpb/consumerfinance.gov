@@ -38,7 +38,7 @@ function scriptLoaded( evt ) {
  * Set access map options and create map.
  */
 function initializeMap() {
-  window.L.mapbox.accessToken = window.cfpb_mapboxAccessToken;
+  window.L.mapbox.accessToken = window.cfpbMapboxAccessToken;
 }
 
 // when a.jsLoadMap is clicked
