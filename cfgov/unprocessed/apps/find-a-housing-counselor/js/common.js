@@ -12,7 +12,7 @@ HUD Counselors by zip code. See hud_api_replace for more details on the
 API queries. -wernerc */
 
 // Set up print results list button functionality, if it exists.
-const printPageLink = document.querySelector( '#hud_print-page-link' );
+const printPageLink = document.getElementById( 'hud_print-page-link' );
 if ( printPageLink ) {
   printPageLink.addEventListener( 'click', evt => {
     evt.preventDefault();
@@ -59,15 +59,21 @@ function scriptLoaded( evt ) {
  * Set access map options and create map.
  */
 function initializeMap() {
-  const fcm = document.querySelector( '#hud_search_container' );
-  fcm.classList.remove( 'no-js' );
-  window.L.mapbox.accessToken = mapboxAccessToken;
-  map = window.L.mapbox.map( 'hud_hca_api_map_container' )
-    .setView( [ 40, -80 ], 2 )
-    .addLayer( window.L.mapbox.styleLayer( 'mapbox://styles/mapbox/streets-v11' ) );
+  const showMap = Boolean(
+    document.getElementById( 'hud_hca_api_map_container' )
+  );
 
-  if ( hudData.counseling_agencies ) {
-    updateMap( hudData );
+  if ( showMap ) {
+    const fcm = document.getElementById( 'hud_search_container' );
+    fcm.classList.remove( 'no-js' );
+    window.L.mapbox.accessToken = mapboxAccessToken;
+    map = window.L.mapbox.map( 'hud_hca_api_map_container' )
+      .setView( [ 40, -80 ], 2 )
+      .addLayer( window.L.mapbox.styleLayer( 'mapbox://styles/mapbox/streets-v11' ) );
+
+    if ( hudData.counseling_agencies ) {
+      updateMap( hudData );
+    }
   }
 }
 
@@ -79,11 +85,11 @@ function initializeMap() {
  * @returns {HTMLNode} The DOM node of the result item.
  */
 function queryMarkerDom( num ) {
-  const selector = '#hud-result-' + Number.parseInt( num, 10 );
-  let cachedItem = markerDomCache[selector];
+  const id = 'hud-result-' + Number.parseInt( num, 10 );
+  let cachedItem = markerDomCache[id];
   if ( typeof cachedItem === 'undefined' ) {
-    cachedItem = document.querySelector( selector );
-    markerDomCache[selector] = cachedItem;
+    cachedItem = document.getElementById( id );
+    markerDomCache[id] = cachedItem;
   }
 
   return cachedItem;
