@@ -11,7 +11,7 @@ from ask_cfpb.models.search import UNSAFE_CHARACTERS
 from elasticsearch.exceptions import RequestError
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 
-
+from ask_cfpb.forms import AutocompleteForm
 from ask_cfpb.models.answer_page import AnswerPage
 from ask_cfpb.models.search import AnswerPageSearch, make_safe
 
@@ -85,3 +85,11 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
                 AnswerPageSearch.suggest('money')
             except IndexError:
                 assert True
+
+    @mock.patch("ask_cfpb.forms.AutocompleteForm")
+    def test_ask_search_autocomplete_honors_max_chars(self, mock_query):
+         valid_term = "Here is an ask_cfpb query that is exactly, like 100 percent, 75 characters."
+         overage = " This is overage text that should not appear in the query"
+         too_long_term = valid_term + overage
+         mock_query.cleaned_data = {'term': too_long_term}
+         self.assertEqual(valid_term, AutocompleteForm.clean_term(mock_query))
