@@ -176,14 +176,16 @@
                                 {% endif %}
 
                             </div>
-                            <div class="hud-search-container_map">
-                                <!-- Mapbox map is ignored during voiceover navigation
-                                     as set by aria-hidden. -->
-                                <div id="hud_hca_api_map_container"
-                                     aria-hidden="true">
-                                    <div id="hud_hca_api_map_canvas"></div>
-                                </div><!-- end .hud_hca_api_map -->
-                            </div>
+                            {% if zipcode and zipcode_valid %}
+                              <div class="hud-search-container_map">
+                                  <!-- Mapbox map is ignored during voiceover navigation
+                                       as set by aria-hidden. -->
+                                  <div id="hud_hca_api_map_container"
+                                       aria-hidden="true">
+                                      <div id="hud_hca_api_map_canvas"></div>
+                                  </div><!-- end .hud_hca_api_map -->
+                              </div>
+                            {% endif %}
                         </section>
 
                     </div>
