@@ -1,0 +1,75 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "post-release-job"
+  labels:
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": test
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    metadata:
+      name: "post-release-job"
+      labels:
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: pre-release-test-job
+        image: "cfgov_python:local"
+        imagePullPolicy: {{ $.Values.image.pullPolicy }}
+        command:
+          - "django-admin"
+        args:
+          - "runscript  "
+          - "http_smoke_test"
+          - "--script-args"
+          - "--base"
+          - "http://localhost:8000"
+          - "-v"
+          #- "python cfgov/scripts/http_smoke_test.py --base http://localhost:8000 -v"
+        env:
+          {{- if $.Values.postgresql.enabled }}
+          - name: PGHOST
+            {{- if $.Values.postgresql.nameOverride }}
+            value: "{{ $.Values.postgresql.nameOverride }}-postgresql"
+            {{- else if $.Values.postgresql.fullnameOverride }}
+            value: "{{ $.Values.postgresql.fullNameOverride }}"
+            {{- else }}
+            value: "{{ include "cfgov.fullname" $ }}-postgresql"
+            {{- end }}
+          - name: PGUSER
+            value: "{{ $.Values.postgresql.postgresqlUsername }}"
+          - name: PGPASSWORD
+            value: "{{ $.Values.postgresql.postgresqlPassword }}"
+          - name: PGDATABASE
+            value: "{{ $.Values.postgresql.postgresqlDatabase }}"
+          - name: DATABASE_URL
+            {{- if $.Values.postgresql.nameOverride }}
+            value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ $.Values.postgresql.nameOverride }}-postgresql/{{ $.Values.postgresql.postgresqlDatabase }}"
+            {{- else if $.Values.postgresql.fullnameOverride }}
+            value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ $.Values.postgresql.fullNameOverride }}/{{ $.Values.postgresql.postgresqlDatabase }}"
+            {{- else }}
+            value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ include "cfgov.fullname" $ }}-postgresql/{{ $.Values.postgresql.postgresqlDatabase }}"
+            {{- end }}
+          {{- end }}
+          {{- if $.Values.elasticsearch.enabled }}
+          - name: ES_HOST
+            {{- if $.Values.elasticsearch.nameOverride }}
+            value: "{{ $.Values.elasticsearch.nameOverride }}-master"
+            {{- else if $.Values.elasticsearch.fullnameOverride }}
+            value: {{ $.Values.elasticsearch.fullnameOverride | quote }}
+            {{- else }}
+            value: elasticsearch-master
+            {{- end }}
+          {{- end }}
+          {{- range $.Values.extraEnvs }}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+          {{- end }}
