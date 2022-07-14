@@ -156,6 +156,8 @@ class LearnPage(AbstractFilterPage):
     )
     template = "learn-page/index.html"
 
+    page_description = "Right-hand sidebar, no left-hand sidebar."
+
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")
     ]

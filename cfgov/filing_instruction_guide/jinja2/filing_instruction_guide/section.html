@@ -1,44 +1,35 @@
-<div class="block block__flush-bottom">
-  {% set block = {
-    'Fig_Section': 'h2',
-    'Fig_Sub_Section': 'h3'
-    }[block.block_type] | default('h4')
-  %}
-  <div class="block block__flush-bottom">
-    <{{block}} class="report-header">
-            <a id="{{ value.section_id }}"
-                href="#{{ value.section_id }}">
-                    {{value.section_id}} {{value.header}}
-            </a>
-    </{{block}}>
-  </div>
-{% if value.content %}
-    <div class="o-full-width-text-group">
-        {% for block in value.content %}
-            {% set block_type = block.block_type %}
-            {% if 'content' in block_type %}
-                <div class="m-full-width-text">
-                    {{ block.value | safe }}
-                </div>
-            {% elif 'table' in block_type %}
-                <div class="m-full-width-text">
-                    {# TODO: We have not historically disallowed raw HTML in
-                       table blocks. We should not allow raw HTML. #}
-                    {% autoescape off %}
-                        {% include_block block %}
-                    {% endautoescape %}
-                </div>
-            {% elif block_type in ['email_signup'] %}
-                <div class="m-inset__email">
-                    {% include_block block %}
-                </div>
-            {% elif block_type in ['well'] %}
-                <div class="block">
-                    {% include_block block %}
-                </div>
-            {% else %}
-                {{ block | safe }}
-            {% endif %}
-        {% endfor %}
-    </div>
+{% set block_type = block.block_type %}
+{% set block_types = {
+    'Fig_Section': {
+        'heading': 'h2',
+        'class': 'o-fig_section'
+    },
+    'Fig_Subsection': {
+        'heading': 'h3',
+        'class': 'o-fig_section__sub'
+    },
+    'Fig_Level_3_Subsection': {
+        'heading': 'h4',
+        'class': 'o-fig_section__sub-sub'
+    },
+} %}
+{% set block_heading_level = block_types[block_type].heading | default('h4') %}
+{% set block_class = block_types[block_type].class | default('o-fig_section') %}
+
+{% if block_type in ['Fig_Section', 'Fig_Subsection'] %}
+    {% set header = value.section_id + ". " + value.header %}
+{% else %}
+    {% set header = value.header %}
 {% endif %}
+
+<div class="block {{ block_class }}">
+    <{{ block_heading_level }} class="report-header o-fig_heading">
+        <a id="{{ value.section_id }}"
+           href="#{{ value.section_id }}">
+                {{ header }}
+        </a>
+    </{{ block_heading_level }}>
+    {% for block in value.content %}
+        {{ block | safe }}
+    {% endfor %}
+</div>

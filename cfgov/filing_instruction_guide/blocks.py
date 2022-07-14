@@ -10,7 +10,7 @@ from v1.atomic_elements import organisms, schema
 
 
 class FigSection(blocks.StructBlock):
-    header = blocks.TextBlock(label="Section header")
+    header = blocks.TextBlock(label="Section header (h2)")
     section_id = blocks.TextBlock(
         required=False, help_text="Will be filled in automatically upon save."
     )
@@ -54,9 +54,9 @@ class FigSectionAdapter(StructBlockAdapter):
 register(FigSectionAdapter(), FigSection)
 
 
-class FigSubSection(FigSection):
-    header = blocks.TextBlock(label="Subsection header")
+class FigSubsection(FigSection):
+    header = blocks.TextBlock(label="Subsection header (h3)")
 
 
-class FigSub3Section(FigSection):
-    header = blocks.TextBlock(label="Level 3 subsection header")
+class FigLevel3Subsection(FigSection):
+    header = blocks.TextBlock(label="Level 3 subsection header (h4)")

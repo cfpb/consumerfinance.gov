@@ -30,6 +30,7 @@ const datetime = {
   yAxis: {
     ...styles.yAxis,
     plotLines: [ {
+      className: 'zeroLine',
       value: 0,
       width: 2
     } ]
