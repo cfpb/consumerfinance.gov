@@ -14,13 +14,22 @@
     .h2();
   }
 
-  h4 {
+  :not(.m-info-unit_heading-text) > h4 {
     .h3();
   }
 
   h5 {
     .h4();
   }
+
+  // Set the gap above all headings to 30px
+  * + h2,
+  * + h3,
+  * + h4,
+  * + h5 {
+    margin-top: unit( 30px / @base-font-size-px, em );
+  }
+
   .o-table {
     margin-top: unit( 30px / @base-font-size-px, em );
     td {
@@ -30,6 +39,13 @@
       display: none;
     }
   }
+
+  // Increase the sidebar border from 1px to 2px
+  .respond-to-min( @bp-med-min, {
+    .content &:after {
+      border-left-width: 2px;
+    }
+  } );
 }
 
 .o-fig_heading {
@@ -39,6 +55,9 @@
 }
 
 .o-fig_section__sub-sub {
+  margin-top: unit( 45px / @base-font-size-px, em );
+  margin-bottom: unit( 45px / @base-font-size-px, em );
+
   // Put a horizontal rule above all sub level 3 headings
   &:before {
     display: inline-block;

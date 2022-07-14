@@ -104,8 +104,8 @@ const hooks = {
     return newData.sort( ( a, b ) => new Date( a.date ) - new Date( b.date ) );
   },
 
-  // TODO: Create a hook that accounts for both
-  // credit_score_group and income_level_group
+  /* TODO: Create a hook that accounts for both
+     credit_score_group and income_level_group */
   cct_income( data ) {
     const raw = {};
     const adjusted = {};
@@ -158,8 +158,8 @@ const hooks = {
     return newData.sort( ( a, b ) => new Date( a.date ) - new Date( b.date ) );
   },
 
-  // Convert YoY fields from decimals to percentages
-  // e.g. .308798278 becomes 30.88%
+  /* Convert YoY fields from decimals to percentages
+     e.g. .308798278 becomes 30.88% */
   cct_yoy( data ) {
     data = data.map( datum => {
       for ( const [ k, v ] of Object.entries( datum ) ) {

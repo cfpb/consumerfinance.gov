@@ -101,14 +101,14 @@ class FIGContentPage(CFGOVPage):
                 ind += 1
                 sub_ind = 0
                 sub3_ind = 0
-                id = f"{ind}."
+                id = f"{ind}"
             if sec_type == "Fig_Subsection":
                 sub_ind += 1
                 sub3_ind = 0
-                id = f"{ind}.{sub_ind}."
+                id = f"{ind}.{sub_ind}"
             if sec_type == "Fig_Level_3_Subsection":
                 sub3_ind += 1
-                id = f"{ind}.{sub_ind}.{sub3_ind}."
+                id = f"{ind}.{sub_ind}.{sub3_ind}"
             section.value["section_id"] = id
 
     base_form_class = FIGPageForm
