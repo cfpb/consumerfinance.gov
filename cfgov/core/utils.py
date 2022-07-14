@@ -1,6 +1,7 @@
 import re
 from urllib.parse import parse_qs, urlencode, urlparse
 
+from django.conf import settings
 from django.core.signing import Signer
 from django.template.defaultfilters import slugify
 from django.urls import reverse
@@ -9,10 +10,6 @@ from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
 
-
-NON_GOV_LINKS = re.compile(
-    r"https?:\/\/(?:www\.)?(?![^\?]+\.gov)(?!(content\.)?localhost).*"
-)
 
 NON_CFPB_LINKS = re.compile(
     r"(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)"
@@ -70,8 +67,16 @@ ICONLESS_LINK_CHILD_ELEMENTS = [
 
 def should_interstitial(url: str) -> bool:
     match = LINK_PATTERN.match(url)
-    if match.group("domain").endswith(".gov") and NON_CFPB_LINKS.match(url):
+
+    # If this is another link to .gov do not interstitial.
+    if match.group("domain").endswith(".gov"):
         return False
+
+    # If this is not a link to a .gov, but it's still subject to CFPB's privacy
+    # policy, do not interstitial
+    elif match.group("domain") in settings.ALLOWED_LINKS_WITHOUT_INTERSTITIAL:
+        return False
+
     return True
 
 

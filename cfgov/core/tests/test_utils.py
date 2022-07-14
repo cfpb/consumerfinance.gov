@@ -1,4 +1,4 @@
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase, override_settings
 
 from bs4 import BeautifulSoup
 
@@ -159,17 +159,27 @@ class LinkUtilsTests(SimpleTestCase):
 
         self.assertEqual(add_link_markup(tag, path), str(expected_tag))
 
+    @override_settings(
+        ALLOWED_LINKS_WITHOUT_INTERSTITIAL=[
+            "public.govdelivery.com",
+        ]
+    )
     def test_govdelivery_url1(self):
         url = "https://public.govdelivery.com"
-        self.check_external_link(url, expected_href=signed_redirect(url))
+        self.check_external_link(url, expected_href=url, is_gov=True)
 
     def test_govdelivery_url2(self):
         url = "https://www.govdelivery.com"
-        self.check_external_link(url, expected_href=signed_redirect(url))
+        self.check_external_link(url, signed_redirect(url))
 
+    @override_settings(
+        ALLOWED_LINKS_WITHOUT_INTERSTITIAL=[
+            "public.govdelivery.com",
+        ]
+    )
     def test_govdelivery_url3(self):
-        url = "https://www.govdelivery.com/something"
-        self.check_external_link(url, expected_href=signed_redirect(url))
+        url = "https://public.govdelivery.com/something"
+        self.check_external_link(url, expected_href=url, is_gov=True)
 
     def test_dot_gov_urls(self):
         url = "https://www.federalreserve.gov"

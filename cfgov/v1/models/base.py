@@ -345,13 +345,6 @@ class CFGOVPage(Page):
         request.LANGUAGE_CODE = translation.get_language()
         return super().serve(request, *args, **kwargs)
 
-    class Meta:
-        app_label = "v1"
-
-    def parent(self):
-        parent = self.get_ancestors(inclusive=False).reverse()[0].specific
-        return parent
-
     def streamfield_media(self, media_type):
         media = []
 

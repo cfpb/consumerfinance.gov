@@ -130,7 +130,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 "label": hit.title,
                 "snippet": snippet,
                 "url": "{}{}/{}/#{}".format(
-                    self.parent().url,
+                    self.get_parent().specific.url,
                     hit.part,
                     hit.section_label.lower(),
                     hit.paragraph_id,

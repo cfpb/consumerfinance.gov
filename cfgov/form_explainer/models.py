@@ -20,6 +20,7 @@ class FormExplainerContent(StreamBlock):
     explainer = Explainer()
     well = organisms.Well()
     info_unit_group = organisms.InfoUnitGroup()
+    full_width_text = organisms.FullWidthText()
 
     class Meta:
         block_counts = {
