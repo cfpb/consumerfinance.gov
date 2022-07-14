@@ -4,9 +4,10 @@ from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
 from wagtail.images import get_image_model
 
+from bs4 import BeautifulSoup
+
 from v1.models import CFGOVPage
 from v1.models.enforcement_action_page import EnforcementActionPage
-from bs4 import BeautifulSoup
 
 
 def process_categories(queryset):

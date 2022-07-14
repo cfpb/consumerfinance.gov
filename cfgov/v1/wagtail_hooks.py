@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html_join
 
@@ -22,7 +21,6 @@ from wagtail.core import hooks
 from wagtail.core.whitelist import attribute_rule
 
 from ask_cfpb.models.snippets import GlossaryTerm
-from scripts import export_enforcement_actions
 from v1.admin_views import ExportFeedbackView, manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
@@ -257,7 +255,7 @@ def register_enforcements_actions_report_menu_item():
 
 
 @hooks.register("register_admin_urls")
-def register_documents_report_url():
+def register_enforcements_actions_documents_report_url():
     return [
         re_path(
             r"^reports/enforcement-actions/$",
