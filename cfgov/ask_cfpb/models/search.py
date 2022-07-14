@@ -82,6 +82,7 @@ class AnswerPageSearch:
             .suggest("suggestion", self.search_term, term={"field": "text"})
         )
         response = s.execute()
+        # pdb.set_trace()
         try:
             self.suggestion = response.suggest.suggestion[0].options[0].text
         except IndexError:
