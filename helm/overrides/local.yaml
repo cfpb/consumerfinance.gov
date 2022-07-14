@@ -3,7 +3,7 @@
 ### CFGOV OVERRIDES ###
 image:
   repository: cfgov_python
-  pullPolicy: Never
+  pullPolicy: IfNotPresent
   tag: local
 
 service:
@@ -65,6 +65,7 @@ cronJobs:
       - "--rebuild"
       - "--parallel"
       - "-f"
+    restartPolicy: OnFailure
 
   - name: "dump-Postgres-DB"
     schedule: "@daily"

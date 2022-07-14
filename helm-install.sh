@@ -40,7 +40,7 @@ done
 # Install/Upgrade cfgov release to current context namespace
 # To install to different namespace, set context with namespace
 # kubectl config set-context --current --namespace=<insert-namespace-name-here>
-helm upgrade --install --create-namespace cfgov $OVERRIDES ./helm/cfgov
+helm upgrade --install --create-namespace cfgov $OVERRIDES ./helm/cfgov --wait
 
 # Cleanup temp files
 for i in "${tempFiles[@]}"; do
