@@ -65,6 +65,7 @@ cronJobs:
       - "--rebuild"
       - "--parallel"
       - "-f"
+    restartPolicy: OnFailure
 
   - name: "dump-Postgres-DB"
     schedule: "@daily"
