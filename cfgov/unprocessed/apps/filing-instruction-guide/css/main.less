@@ -58,13 +58,13 @@
   margin-top: unit( 45px / @base-font-size-px, em );
   margin-bottom: unit( 45px / @base-font-size-px, em );
 
-  // Put a horizontal rule above all sub level 3 headings
-  &:before {
+  // Put a horizontal rule below all sub level 3 headings
+  &:after {
     display: inline-block;
     content: "";
     border-top: 2px solid @gray-50;
     width: calc( 100% + 30px );
-    margin: 0 0 unit( 30px / @base-font-size-px, em ) unit( -30px / @base-font-size-px, em );
+    margin: unit( 45px / @base-font-size-px, em ) 0 0 unit( -30px / @base-font-size-px, em );
   }
 }
 
