@@ -4,7 +4,7 @@ from datetime import date
 from django.test import TestCase
 from django.utils import timezone
 
-from wagtail.core.models import Page, Site
+from wagtail.core.models import Site
 from wagtail.documents.models import Document
 
 from model_bakery import baker
@@ -47,16 +47,6 @@ class ServeViewTestCase(TestCase):
         self.document = Document(title="Test document 1")
         self.document.save()
         self.document.tags.add(self.tag1, self.tag2)
-        self.site_root = Site.objects.get(is_default_site=True).root_page
-
-        self.policy_compliance_page = Page(
-            title="Policy & Compliance", slug="policy-compliance"
-        )
-        save_new_page(self.policy_compliance_page, root=self.site_root)
-        self.enforcement_page = Page(title="Enforcement", slug="enforcement")
-        save_new_page(self.enforcement_page, root=self.policy_compliance_page)
-        self.actions_page = Page(title="Actions", slug="actions")
-        save_new_page(self.actions_page, root=self.enforcement_page)
 
         self.enforcement = EnforcementActionPage(
             title="Great Test Page",
@@ -70,7 +60,8 @@ class ServeViewTestCase(TestCase):
                     "value": [
                         {
                             "type": "content",
-                            "value": "Blog Text",
+                            "value": "<p>Blog Text<\\p>\
+                            <a href='www.test.com'>test<\\a>",
                         },
                     ],
                 },
@@ -82,7 +73,7 @@ class ServeViewTestCase(TestCase):
         self.enforcement.content = content
         product = EnforcementActionProduct(product="Fair Lending")
         self.enforcement.products.add(product)
-        save_new_page(self.enforcement, root=self.actions_page)
+        save_new_page(self.enforcement)
 
         self.enforcement_actions_report_view = EnforcementActionsReportView()
 
@@ -92,9 +83,17 @@ class ServeViewTestCase(TestCase):
         )
 
     def test_process_enforcement_content(self):
+        self.assertTrue(
+            process_enforcement_action_page_content(
+                self.enforcement.content
+            ).__contains__("Blog Text")
+        )
+
+    def test_enforcements_report_get_filename(self):
+        today = date.today()
         self.assertEqual(
-            process_enforcement_action_page_content(self.enforcement.content),
-            "Blog Text",
+            self.enforcement_actions_report_view.get_filename(),
+            f"enforcement-actions-report-{today}",
         )
 
     def test_construct_absolute_url(self):
