@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 
 from wagtail.admin.edit_handlers import (
@@ -36,6 +38,21 @@ class FIGContentPage(CFGOVPage):
     page_header = models.CharField(max_length=200, blank=True)
     subheader = models.TextField(blank=True)
 
+    # FIG Version fields
+    version_status = models.CharField(
+        choices=[
+            ("current", "Current"),
+            ("old", "Out-of-date"),
+            ("archived", "Archived"),
+        ],
+        default="current",
+        max_length=20,
+    )
+    effective_start_date = models.DateField(
+        blank=True, null=True, default=date.today
+    )
+    effective_end_date = models.DateField(blank=True, null=True)
+
     content = StreamField(
         [
             ("Fig_Section", FigSection()),
@@ -45,7 +62,7 @@ class FIGContentPage(CFGOVPage):
         blank=True,
     )
 
-    # Report upload tab
+    # Main content panel
     content_panels = [
         MultiFieldPanel(
             [
@@ -61,15 +78,21 @@ class FIGContentPage(CFGOVPage):
             ],
             heading="Filing Instruction Guide Header",
         ),
+        MultiFieldPanel(
+            [
+                FieldPanel("version_status"),
+                FieldPanel("effective_start_date"),
+                FieldPanel("effective_end_date"),
+            ],
+            heading="FIG Version Information",
+        ),
         StreamFieldPanel("content"),
     ]
 
     # Tab handler interface
     edit_handler = TabbedInterface(
         [
-            ObjectList(
-                content_panels, heading="Filing Instruction Guide Content"
-            ),
+            ObjectList(content_panels, heading="Content"),
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
