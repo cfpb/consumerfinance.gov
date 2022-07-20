@@ -25,15 +25,10 @@ spec:
         image: "cfgov_python:local"
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
         command:
-          - "django-admin"
+          - "bash"
         args:
-          - "runscript  "
-          - "http_smoke_test"
-          - "--script-args"
-          - "--base"
-          - "http://localhost:8000"
-          - "-v"
-          #- "python cfgov/scripts/http_smoke_test.py --base http://localhost:8000 -v"
+          - '-c'
+          - "python cfgov/scripts/http_smoke_test.py --base http://localhost:8000 -v"
         env:
           {{- if $.Values.postgresql.enabled }}
           - name: PGHOST
