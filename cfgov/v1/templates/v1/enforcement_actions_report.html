@@ -1,0 +1,80 @@
+{% extends 'v1/report_no-xlsx_base.html' %}
+
+{% block results %}
+    {% if object_list %}
+        <table class="listing">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Content
+                    </th>
+                    <th>
+                        Forum
+                    </th>
+                    <th>
+                        Court
+                    </th>
+                    <th>
+                        Docket Numbers
+                    </th>
+                    <th>
+                        Initial Filling
+                    </th>
+                    <th>
+                        Statuses
+                    </th>
+                    <th>
+                        Products
+                    </th>
+                    <th>
+                        URL
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for page in object_list %}
+                    <tr>
+                        <td>
+                            {{ page.title }}
+                        </td>
+                        <td>
+                            {{ page.content }}
+                        </td>
+                        <td>
+                            {% for cat in page.categories.all %}
+                            {% if cat.get_name_display and not forloop.last %}
+                            {{ cat.get_name_display }}, {% else %}{{ cat.get_name_display }}
+                            {% endif %}{% endfor %}
+                        </td>
+                        <td>
+                            {{ page.court }}
+                        </td>
+                        <td>
+                            {{ page.docket_number_string }}
+                        </td>
+                        <td>
+                            {{page.initial_filing_date}}
+                        </td>
+                        <td>
+                            {{page.status_strings}}
+                        </td>
+                        <td>
+
+                            {{page.product_strings}}
+                        </td>
+                        <td>
+                            <a href="https://www.consumerfinance.gov{{ document.url }}">
+                                {{ page.title }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no Enforcement Actions to report.</p>
+    {% endif %}
+{% endblock %}
