@@ -21,7 +21,7 @@ from wagtail.core import hooks
 from wagtail.core.whitelist import attribute_rule
 
 from ask_cfpb.models.snippets import GlossaryTerm
-from v1.admin_views import ExportFeedbackView, manage_cdn
+from v1.admin_views import manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
@@ -151,17 +151,6 @@ class PermissionCheckingMenuItem(MenuItem):
 
 
 @hooks.register("register_admin_menu_item")
-def register_export_feedback_menu_item():
-    return PermissionCheckingMenuItem(
-        "Export feedback",
-        reverse("export-feedback"),
-        classnames="icon icon-download",
-        order=99999,
-        permission="v1.export_feedback",
-    )
-
-
-@hooks.register("register_admin_menu_item")
 def register_django_admin_menu_item():
     return MenuItem(
         "Django Admin",
@@ -185,11 +174,6 @@ def register_frank_menu_item():
 def register_admin_urls():
     return [
         re_path(r"^cdn/$", manage_cdn, name="manage-cdn"),
-        re_path(
-            r"^export-feedback/$",
-            ExportFeedbackView.as_view(),
-            name="export-feedback",
-        ),
     ]
 
 
