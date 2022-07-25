@@ -101,10 +101,6 @@ const updateFinancialViewAndFinancialCharts = () => {
   updateAffordingChart();
 };
 
-const updateSchoolFormWithErrors = () => {
-  schoolView.updateViewWithErrors();
-};
-
 export {
   updateAppView,
   updateExpensesView,
