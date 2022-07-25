@@ -46,6 +46,7 @@ class AnswerPageSearch:
                     autocomplete=self.search_term[:AUTOCOMPLETE_MAX_CHARS],
                 )
             )
+
             results = [
                 {"question": result.autocomplete, "url": result.url}
                 for result in s[:20]

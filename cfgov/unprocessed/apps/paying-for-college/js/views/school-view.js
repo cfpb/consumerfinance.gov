@@ -73,21 +73,6 @@ const schoolView = {
 
   },
 
-  /**
-   * updateViewWithErrors - updates form fields with classes to show error states.
-   * NOTE: The appearance of error messages is mostly found in the state-based.less rules
-   */
-  updateViewWithErrors: () => {
-    const errorChecks = [ 'programType', 'programProgress', 'programLength',
-      'programLevel', 'programRate', 'programHousing', 'programDependency' ];
-
-    if ( getStateValue( 'schoolSelected' ) === false ) {
-      schoolView._searchBox.classList.add( 'a-text-input__warning' );
-    } else {
-      schoolView._searchBox.classList.remove( 'a-text-input__warning' );
-    }
-  },
-
   _updateProgramList: () => {
     let level = 'undergrad';
     if ( getStateValue( 'programType' ) === 'graduate' ) {

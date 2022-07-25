@@ -24,7 +24,6 @@ from v1.models.enforcement_action_page import (
     EnforcementActionProduct,
     EnforcementActionStatus,
 )
-from v1.models.feedback import Feedback
 from v1.models.home_page import HomePage
 from v1.models.images import CFGOVImage, CFGOVRendition
 from v1.models.indexed_page_revision import IndexedPageRevision

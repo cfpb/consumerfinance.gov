@@ -1,7 +1,7 @@
 export default class EmailSignup {
 
   open() {
-    cy.visit( '/consumer-tools/' );
+    cy.visit( '/about-us/blog/' );
   }
 
   signUp( email ) {
