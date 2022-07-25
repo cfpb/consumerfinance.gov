@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 
 from wagtail.admin.edit_handlers import (
@@ -10,7 +12,12 @@ from wagtail.admin.edit_handlers import (
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.fields import StreamField
 
-from v1.atomic_elements import organisms
+from filing_instruction_guide.blocks import (
+    FigLevel3Subsection,
+    FigSection,
+    FigSubsection,
+)
+
 from v1.models.base import CFGOVPage
 
 
@@ -31,16 +38,31 @@ class FIGContentPage(CFGOVPage):
     page_header = models.CharField(max_length=200, blank=True)
     subheader = models.TextField(blank=True)
 
+    # FIG Version fields
+    version_status = models.CharField(
+        choices=[
+            ("current", "Current"),
+            ("old", "Out-of-date"),
+            ("archived", "Archived"),
+        ],
+        default="current",
+        max_length=20,
+    )
+    effective_start_date = models.DateField(
+        blank=True, null=True, default=date.today
+    )
+    effective_end_date = models.DateField(blank=True, null=True)
+
     content = StreamField(
         [
-            ("Fig_Section", organisms.FigSection()),
-            ("Fig_Sub_Section", organisms.FigSubSection()),
-            ("Fig_Sub_3_Section", organisms.FigSub3Section()),
+            ("Fig_Section", FigSection()),
+            ("Fig_Subsection", FigSubsection()),
+            ("Fig_Level_3_Subsection", FigLevel3Subsection()),
         ],
         blank=True,
     )
 
-    # Report upload tab
+    # Main content panel
     content_panels = [
         MultiFieldPanel(
             [
@@ -56,15 +78,21 @@ class FIGContentPage(CFGOVPage):
             ],
             heading="Filing Instruction Guide Header",
         ),
+        MultiFieldPanel(
+            [
+                FieldPanel("version_status"),
+                FieldPanel("effective_start_date"),
+                FieldPanel("effective_end_date"),
+            ],
+            heading="FIG Version Information",
+        ),
         StreamFieldPanel("content"),
     ]
 
     # Tab handler interface
     edit_handler = TabbedInterface(
         [
-            ObjectList(
-                content_panels, heading="Filing Instruction Guide Content"
-            ),
+            ObjectList(content_panels, heading="Content"),
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
@@ -79,7 +107,7 @@ class FIGContentPage(CFGOVPage):
                 if parent:
                     toc_headers.append(parent)
                 parent = {"header": header, "id": id, "children": []}
-            elif section.block_type == "Fig_Sub_Section":
+            elif section.block_type == "Fig_Subsection":
                 # if the first block is a subsection instead of a section
                 if not parent:
                     parent = {"header": "", "id": "", "children": []}
@@ -96,14 +124,14 @@ class FIGContentPage(CFGOVPage):
                 ind += 1
                 sub_ind = 0
                 sub3_ind = 0
-                id = f"{ind}."
-            if sec_type == "Fig_Sub_Section":
+                id = f"{ind}"
+            if sec_type == "Fig_Subsection":
                 sub_ind += 1
                 sub3_ind = 0
-                id = f"{ind}.{sub_ind}."
-            if sec_type == "Fig_Sub_3_Section":
+                id = f"{ind}.{sub_ind}"
+            if sec_type == "Fig_Level_3_Subsection":
                 sub3_ind += 1
-                id = f"{ind}.{sub_ind}.{sub3_ind}."
+                id = f"{ind}.{sub_ind}.{sub3_ind}"
             section.value["section_id"] = id
 
     base_form_class = FIGPageForm

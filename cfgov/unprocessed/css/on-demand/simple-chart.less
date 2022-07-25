@@ -251,3 +251,14 @@
     padding-top: unit( 15 / @size-vi, em );
   }
 }
+
+.highcharts-legend-item-hidden * {
+  fill: unset !important;
+  transition: fill 0ms;
+}
+
+.highcharts-plot-line.zeroLine {
+  fill: unset;
+  stroke: black;
+  stroke-width: 2px;
+}

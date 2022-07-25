@@ -172,51 +172,6 @@ class PostPreviewSnapshot(blocks.StructBlock):
         template = "_includes/organisms/post-preview-snapshot.html"
 
 
-class EmailSignUp(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False, default="Stay informed")
-    default_heading = blocks.BooleanBlock(
-        required=False,
-        default=True,
-        label="Default heading style",
-        help_text=(
-            "If selected, heading will be styled as an H5 "
-            "with green top rule. Deselect to style header as H3."
-        ),
-    )
-    text = blocks.CharBlock(
-        required=False,
-        help_text=(
-            "Write a sentence or two about what kinds of emails the "
-            "user is signing up for, how frequently they will be sent, "
-            "etc."
-        ),
-    )
-    gd_code = blocks.CharBlock(
-        required=False,
-        label="GovDelivery code",
-        help_text=(
-            "Code for the topic (i.e., mailing list) you want people "
-            "who submit this form to subscribe to. Format: USCFPB_###"
-        ),
-    )
-    disclaimer_page = blocks.PageChooserBlock(
-        required=False,
-        label="Privacy Act statement",
-        help_text=(
-            'Choose the page that the "See Privacy Act statement" link '
-            'should go to. If in doubt, use "Generic Email Sign-Up '
-            'Privacy Act Statement".'
-        ),
-    )
-
-    class Meta:
-        icon = "mail"
-        template = "_includes/organisms/email-signup.html"
-
-    class Media:
-        js = ["email-signup.js"]
-
-
 class RelatedPosts(blocks.StructBlock):
     limit = blocks.CharBlock(
         default="3",
@@ -571,7 +526,9 @@ class SimpleChart(blocks.StructBlock):
     )
 
     download_text = blocks.CharBlock(
-        required=False, help_text="Custom text for the chart download field"
+        required=False,
+        help_text="Custom text for the chart download field. Required to "
+        "display a download link.",
     )
 
     download_file = blocks.CharBlock(
@@ -605,7 +562,7 @@ class FullWidthText(blocks.StreamBlock):
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
     reusable_text = v1_blocks.ReusableTextChooserBlock("v1.ReusableText")
-    email_signup = EmailSignUp()
+    email_signup = v1_blocks.EmailSignUpChooserBlock()
     well = Well()
 
     class Meta:
@@ -637,6 +594,7 @@ class Expandable(BaseExpandable):
             ("email", molecules.ContactEmail()),
             ("phone", molecules.ContactPhone()),
             ("address", molecules.ContactAddress()),
+            ("info_unit_group", InfoUnitGroup()),
         ],
         blank=True,
     )
@@ -1370,23 +1328,3 @@ class DataSnapshot(blocks.StructBlock):
         icon = "image"
         label = "CCT Data Snapshot"
         template = "_includes/organisms/data_snapshot.html"
-
-
-class FigSection(blocks.StructBlock):
-    header = blocks.TextBlock(label="Section header")
-    section_id = blocks.TextBlock(
-        required=False, help_text="Will be filled in automatically upon save."
-    )
-    content = FullWidthText()
-
-    class Meta:
-        icon = "edit"
-        template = "_includes/organisms/fig-section.html"
-
-
-class FigSubSection(FigSection):
-    header = blocks.TextBlock(label="Subsection header")
-
-
-class FigSub3Section(FigSection):
-    header = blocks.TextBlock(label="Level 3 subsection header")

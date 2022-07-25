@@ -576,14 +576,6 @@ msgstr ""
 msgid "password"
 msgstr ""
 
-#: v1/models/feedback.py:15
-msgid "Was this page helpful to you?"
-msgstr "¿Fue útil esta página?"
-
-#: v1/models/feedback.py:16
-msgid "Was this answer helpful to you?"
-msgstr "¿Fue útil esta respuesta?"
-
 #: v1/templates/cdnadmin/disabled.html:3 v1/templates/cdnadmin/index.html:5
 msgid "CDN Manager"
 msgstr ""
@@ -594,10 +586,6 @@ msgstr ""
 #| msgid "Download CSV file"
 msgid "Download CSV"
 msgstr "Descargue CSV file"
-
-#: v1/templates/v1/export_feedback.html:3
-msgid "Export feedback"
-msgstr ""
 
 #: v1/tests/management/commands/test_makemessages_data/__init__.py:4
 msgid "Test string from Python file."

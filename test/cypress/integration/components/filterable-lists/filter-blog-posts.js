@@ -3,7 +3,6 @@ The posts should be in five different categories, and tagged with at least five 
 The posts should also have at least three different languages with some blog titles specific to those languages. */
 import { Filter } from './filter-helpers';
 import { FilterableListControl } from './filterable-list-control-helpers';
-import { Pagination } from '../pagination/pagination-helpers';
 
 const blog = new FilterableListControl();
 const filter = new Filter();
@@ -34,15 +33,16 @@ describe( 'Filter Blog Posts based on content', () => {
     // retrieve the category
     filter.getCategory().then( category => {
       // When I select the first option in the Category multiselect
-      filter.clickCategory( category.get( 0 ).getAttribute( 'value' ) );
+      filter.clickCategory( category.get( 0 ).getAttribute( 'data-option' ) );
       // And I click "Apply filters" button
       blog.applyFilters();
-      // Then I should see only results in that category
-      blog.notification().should( 'be.visible' );
-      // And the page url should contain "categories=" category
+
+      /*  Then I should see only results in that category
+          blog.notification().should( 'be.visible' );
+          And the page url should contain "categories=" category */
       cy.url().should(
         'include',
-        'categories=' + category.get( 0 ).getAttribute( 'value' )
+        'categories=' + category.get( 0 ).getAttribute( 'data-option' )
       );
     } );
   } );
@@ -50,11 +50,21 @@ describe( 'Filter Blog Posts based on content', () => {
     // retrieve the categories
     filter.getCategory().then( categories => {
       // When I select all options checkboxes in the Category multiselect
-      filter.clickCategory( categories.get( 0 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 1 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 2 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 3 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 4 ).getAttribute( 'value' ) );
+      filter.clickCategory( categories.get( 0 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 1 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 2 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 3 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 4 ).getAttribute(
+        'data-option'
+      ) );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then I should see only results that are in at least one of the selected categories
@@ -62,27 +72,27 @@ describe( 'Filter Blog Posts based on content', () => {
       // And the page url should contain "categories=at-the-cfpb"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 0 ).getAttribute( 'value' )
+        'categories=' + categories.get( 0 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=directors-notebook"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 1 ).getAttribute( 'value' )
+        'categories=' + categories.get( 1 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=policy_compliance"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 2 ).getAttribute( 'value' )
+        'categories=' + categories.get( 2 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=data-research-reports"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 3 ).getAttribute( 'value' )
+        'categories=' + categories.get( 3 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=info-for-consumers"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 4 ).getAttribute( 'value' )
+        'categories=' + categories.get( 4 ).getAttribute( 'data-option' )
       );
     } );
   } );
@@ -254,7 +264,9 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+          category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
         );
         // When I select a checkbox in the Topic list
         filter.clickTopic(
@@ -298,7 +310,9 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+          category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
         );
         // When I select a checkbox in the Topic list
         filter.clickTopic(
@@ -414,7 +428,9 @@ describe( 'Filter Blog Posts based on content', () => {
         blog.filterItemName( title.get( 0 ).innerText );
         // And I select a checkbox in the category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+          category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
         );
         // And I click "Apply filters" button
         blog.applyFilters();

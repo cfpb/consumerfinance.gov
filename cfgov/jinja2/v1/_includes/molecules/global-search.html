@@ -17,8 +17,7 @@
 {%- set search_url_base = "https://search.consumerfinance.gov/search" -%}
 {%- set search_url = (
     search_url_base
-    ~ "?utf8=✓"
-    ~ "&affiliate=" ~ search_gov_affiliate()
+    ~ "?affiliate=" ~ search_gov_affiliate()
     ~ "&query="
 ) -%}
 
