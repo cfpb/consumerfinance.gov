@@ -159,10 +159,14 @@ function extractSeries( rawData, { series, xAxisSource, chartType } ) {
   return null;
 }
 
-// Converts to human readable date from Epoch format
-function getProjectedDate( date ) {
+/**
+ * Converts to human readable date from Epoch format.
+ * @param {number} date - UNIX timestamp (seconds since Epoch).
+ * @returns {string|null} Human readable date string,
+ *   or null if supplied timestamp is invalid.
+ */
+function convertEpochToDateString( date ) {
   let humanFriendly = null;
-  let timestamp = null;
   let month = null;
   let year = null;
   const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
@@ -174,13 +178,9 @@ function getProjectedDate( date ) {
     year = new Date( date ).getUTCFullYear();
 
     humanFriendly = month + ' ' + year;
-    timestamp = date;
   }
 
-  return {
-    humanFriendly: humanFriendly,
-    timestamp: timestamp
-  };
+  return humanFriendly;
 }
 
 
@@ -190,5 +190,5 @@ export {
   makeFormatter,
   overrideStyles,
   extractSeries,
-  getProjectedDate
+  convertEpochToDateString
 };

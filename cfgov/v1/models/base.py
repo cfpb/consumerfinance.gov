@@ -143,7 +143,10 @@ class CFGOVPage(Page):
             ("related_links", molecules.RelatedLinks()),
             ("related_posts", organisms.RelatedPosts()),
             ("related_metadata", molecules.RelatedMetadata()),
-            ("email_signup", organisms.EmailSignUp()),
+            (
+                "email_signup",
+                v1_blocks.EmailSignUpChooserBlock(),
+            ),
             ("sidebar_contact", organisms.SidebarContactInfo()),
             ("rss_feed", molecules.RSSFeed()),
             ("social_media", molecules.SocialMedia()),
@@ -341,13 +344,6 @@ class CFGOVPage(Page):
         translation.activate(self.language)
         request.LANGUAGE_CODE = translation.get_language()
         return super().serve(request, *args, **kwargs)
-
-    class Meta:
-        app_label = "v1"
-
-    def parent(self):
-        parent = self.get_ancestors(inclusive=False).reverse()[0].specific
-        return parent
 
     def streamfield_media(self, media_type):
         media = []

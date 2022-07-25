@@ -55,3 +55,24 @@ cronJobs:
     args:
       - "clearsessions"
     restartPolicy: OnFailure
+
+  - name: "elasticsearch-Rebuild-Index"
+    schedule: "@daily"
+    command:
+      - "django-admin"
+    args:
+      - "search_index"
+      - "--rebuild"
+      - "--parallel"
+      - "-f"
+    restartPolicy: OnFailure
+
+  - name: "dump-Postgres-DB"
+    schedule: "@daily"
+    command:
+      - "bash"
+    args:
+      - "-c"
+      - "pg_dump --no-owner --no-privileges | gzip > test.gz"
+    restartPolicy: OnFailure
+    suspend: true

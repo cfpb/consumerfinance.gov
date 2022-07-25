@@ -16,7 +16,7 @@ import {
   getStateValue
 } from '../dispatchers/get-model-values.js';
 import { updateSchoolView, updateExpensesView } from './update-view.js';
-import { updateState } from '../dispatchers/update-state.js';
+// import { updateState } from '../dispatchers/update-state.js';
 import { urlParameters } from '../util/url-parameter-utils.js';
 
 /**
@@ -99,6 +99,12 @@ function refreshExpenses() {
   expensesModel.setValuesByRegion( schoolModel.values.region );
 }
 
+/**
+ * 
+ */
+function clearFinancialCosts() {
+  financialModel.clearCosts();
+}
 
 /**
  * getTopThreePrograms - Update the expenses with stored values
@@ -135,6 +141,7 @@ function setSchoolValues( data ) {
   * @returns {Object} Promise of the XHR request
   */
 function updateSchoolData( iped ) {
+  stateModel.setValue( 'schoolID', iped );
   return new Promise( ( resolve, reject ) => {
     getSchoolData( iped )
       .then( resp => {
@@ -162,7 +169,7 @@ function updateSchoolData( iped ) {
         // Some values must migrate to the financial model
         if ( programInfo ) {
           financialModel.setValue( 'salary_annual', stringToNum( programInfo.salary ) );
-          updateState.byProperty( 'programName', programInfo.name );
+          stateModel.setValue( 'programName', programInfo.name );
         } else {
           financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
         }
@@ -279,6 +286,7 @@ function updateExpensesFromQueryObj( queryObj ) {
 }
 
 export {
+  clearFinancialCosts,
   createFinancial,
   initializeExpenseValues,
   initializeFinancialValues,

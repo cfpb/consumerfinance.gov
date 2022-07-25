@@ -1,5 +1,4 @@
 # These packages are installed from PyPI.
-backports.csv==1.0.7
 base36==0.1.1
 beautifulsoup4==4.8.2
 boto3==1.22.7
@@ -21,10 +20,10 @@ edgegrid-python==1.2.1
 elasticsearch<7.11  # Keep pinned to the deployed ES version
 govdelivery==1.4.0
 Jinja2==2.11.3
-lxml==4.8.0
+lxml==4.9.1
 psycopg2-binary==2.8.6
 python-dateutil==2.8.2
-regdown==1.0.3
+regdown==1.0.5
 requests==2.27.1
 requests-aws4auth==1.1.2
 s3transfer==0.5.2

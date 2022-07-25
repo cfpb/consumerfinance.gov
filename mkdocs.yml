@@ -39,7 +39,6 @@ nav:
     - Ask CFPB: ask-cfpb.md
     - Consumer Complaints: consumer-complaint-database.md
     - Find a Housing Counselor Tool: housing-counselor-tool.md
-    - Website Feedback: website-feedback.md
 
 theme:
     name: readthedocs
