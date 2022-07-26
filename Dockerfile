@@ -28,7 +28,7 @@ RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev
 
 # Install python requirements
 COPY requirements requirements
-RUN pip install --user -r requirements/deployment.txt
+RUN mkdir /build && pip install --prefix=/build -r requirements/deployment.txt
 
 # cfgov-dev is used for local development, as well as a base for frontend.
 FROM cfgov-python-builder AS cfgov-dev
@@ -47,7 +47,7 @@ RUN apk add --no-cache --virtual .frontend-deps jpeg-dev nodejs yarn zlib-dev
 
 # Install python requirements
 COPY requirements requirements
-RUN pip install --user -r requirements/local.txt
+RUN cp -Rfp /build/* /usr/local && rm -Rf /build && pip install -r requirements/local.txt
 
 EXPOSE 8000
 
@@ -55,7 +55,7 @@ ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
 # Build Frontend Assets using cfgov-dev as base
-FROM cfgov-dev as cfgov-frontend-builder
+FROM cfgov-python-builder as cfgov-frontend-builder
 
 ARG FRONTEND_TARGET=production
 
@@ -66,6 +66,10 @@ ENV PYTHONPATH ${APP_HOME}/cfgov
 ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
 ENV ALLOWED_HOSTS '["*"]'
+
+# Install Python dependencies, install frontend dependencies
+RUN cp -Rfp /build/* /usr/local && rm -Rf /build && \
+    apk add --no-cache --virtual .frontend-deps jpeg-dev nodejs yarn zlib-dev
 
 # See .dockerignore for details on which files are included
 COPY . .
@@ -124,9 +128,10 @@ RUN ln -s /etc/apache2/mime.types /etc/mime.types
 COPY --from=cfgov-mod-wsgi /usr/lib/apache2/mod_wsgi.so /usr/lib/apache2/mod_wsgi.so
 
 # Copy installed production requirements from the cfgov-python-builder layer
-COPY --from=cfgov-python-builder --chown=apache:apache /root/.local /var/www/.local
+COPY --from=cfgov-python-builder /build /usr/local
 
-RUN chown -R apache:apache ${APP_HOME}
+# Setup .local dir for apache user and set permissions on code and .local
+RUN mkdir -p /var/www/.local && chown -R apache:apache ${APP_HOME} /var/www/.local
 
 # Copy the cfgov directory form the build image
 COPY --from=cfgov-frontend-builder --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
