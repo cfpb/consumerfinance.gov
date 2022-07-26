@@ -175,6 +175,44 @@ docs:
 
 importDbPath: ""
 
+cronJobs:
+  - name: "clearSessions"
+    schedule: "@weekly"
+    command:
+      - "django-admin"
+    args:
+      - "clearsessions"
+    restartPolicy: OnFailure
+  - name: "publish-scheduled-pages"
+    schedule: '* * * * *' # every minute
+    command:
+      - "django-admin"
+    args:
+      - "publish_scheduled_pages"
+    restartPolicy: OnFailure
+  - name: "elasticsearch-Rebuild-Index"
+    schedule: "@daily"
+    command:
+      - "django-admin"
+    args:
+      - "search_index"
+      - "--rebuild"
+      - "--parallel"
+      - "-f"
+    restartPolicy: OnFailure
+    suspend: true
+  - name: "dump-Postgres-DB"
+    schedule: "@daily"
+    command:
+      - "bash"
+    args:
+      - "-c"
+      - "pg_dump --no-owner --no-privileges | gzip > test.gz"
+    restartPolicy: OnFailure
+    suspend: true
+
+
+
 postgresql:
   enabled: false
 

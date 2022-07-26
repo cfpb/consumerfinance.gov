@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html_join
 
@@ -22,12 +21,16 @@ from wagtail.core import hooks
 from wagtail.core.whitelist import attribute_rule
 
 from ask_cfpb.models.snippets import GlossaryTerm
-from scripts import export_enforcement_actions
-from v1.admin_views import ExportFeedbackView, manage_cdn
+from v1.admin_views import manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
-from v1.models.snippets import Contact, RelatedResource, ReusableText
+from v1.models.snippets import (
+    Contact,
+    EmailSignUp,
+    RelatedResource,
+    ReusableText,
+)
 from v1.template_debug import (
     call_to_action_test_cases,
     featured_content_test_cases,
@@ -36,9 +39,9 @@ from v1.template_debug import (
     register_template_debug,
     video_player_test_cases,
 )
-from v1.util import util
 from v1.views.reports import (
     DocumentsReportView,
+    EnforcementActionsReportView,
     ImagesReportView,
     PageMetadataReportView,
 )
@@ -51,33 +54,6 @@ except ImportError:
 
 
 logger = logging.getLogger(__name__)
-
-
-def export_data(request):
-    if request.method == "POST":
-        return export_enforcement_actions.export_actions(http_response=True)
-    return render(request, "wagtailadmin/export_data.html")
-
-
-@hooks.register("register_admin_menu_item")
-def register_export_menu_item():
-    return MenuItem(
-        "Enforcement actions",
-        reverse("export-enforcement-actions"),
-        classnames="icon icon-download",
-        order=99999,
-    )
-
-
-@hooks.register("register_admin_urls")
-def register_export_url():
-    return [
-        re_path(
-            "export-enforcement-actions",
-            export_data,
-            name="export-enforcement-actions",
-        )
-    ]
 
 
 @hooks.register("before_delete_page")
@@ -158,33 +134,6 @@ def global_admin_css():
     return css_includes
 
 
-@hooks.register("cfgovpage_context_handlers")
-def form_module_handlers(page, request, context, *args, **kwargs):
-    """
-    Hook function that iterates over every Streamfield's blocks on a page and
-    sets the context for any form modules.
-    """
-    form_modules = {}
-    streamfields = util.get_streamfields(page)
-
-    for fieldname, blocks in streamfields.items():
-        for index, child in enumerate(blocks):
-            if hasattr(child.block, "get_result"):
-                if fieldname not in form_modules:
-                    form_modules[fieldname] = {}
-
-                if not request.method == "POST":
-                    is_submitted = child.block.is_submitted(
-                        request, fieldname, index
-                    )
-                    module_context = child.block.get_result(
-                        page, request, child.value, is_submitted
-                    )
-                    form_modules[fieldname].update({index: module_context})
-    if form_modules:
-        context["form_modules"] = form_modules
-
-
 class PermissionCheckingMenuItem(MenuItem):
     """
     MenuItem that only displays if the user has a certain permission.
@@ -199,17 +148,6 @@ class PermissionCheckingMenuItem(MenuItem):
 
     def is_shown(self, request):
         return request.user.has_perm(self.permission)
-
-
-@hooks.register("register_admin_menu_item")
-def register_export_feedback_menu_item():
-    return PermissionCheckingMenuItem(
-        "Export feedback",
-        reverse("export-feedback"),
-        classnames="icon icon-download",
-        order=99999,
-        permission="v1.export_feedback",
-    )
 
 
 @hooks.register("register_admin_menu_item")
@@ -236,11 +174,6 @@ def register_frank_menu_item():
 def register_admin_urls():
     return [
         re_path(r"^cdn/$", manage_cdn, name="manage-cdn"),
-        re_path(
-            r"^export-feedback/$",
-            ExportFeedbackView.as_view(),
-            name="export-feedback",
-        ),
     ]
 
 
@@ -291,6 +224,27 @@ def register_documents_report_url():
             r"^reports/documents/$",
             DocumentsReportView.as_view(),
             name="documents_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_enforcements_actions_report_menu_item():
+    return MenuItem(
+        "Enforcement Actions",
+        reverse("enforcement_report"),
+        classnames="icon icon-" + EnforcementActionsReportView.header_icon,
+        order=700,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_enforcements_actions_documents_report_url():
+    return [
+        re_path(
+            r"^reports/enforcement-actions/$",
+            EnforcementActionsReportView.as_view(),
+            name="enforcement_report",
         ),
     ]
 
@@ -427,6 +381,14 @@ class GlossaryTermModelAdmin(ModelAdmin):
     search_fields = ("name_en", "definition_en", "name_es", "definition_es")
 
 
+class EmailSignUpModelAdmin(ModelAdmin):
+    model = EmailSignUp
+    menu_icon = "snippet"
+    list_display = ("topic", "heading", "text", "code", "url")
+    ordering = ("topic",)
+    search_fields = ("topic", "code", "url")
+
+
 class SnippetModelAdminGroup(ModelAdminGroup):
     menu_label = "Snippets"
     menu_icon = "snippet"
@@ -439,6 +401,7 @@ class SnippetModelAdminGroup(ModelAdminGroup):
         PortalTopicModelAdmin,
         PortalCategoryModelAdmin,
         GlossaryTermModelAdmin,
+        EmailSignUpModelAdmin,
     )
 
 

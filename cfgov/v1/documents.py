@@ -30,7 +30,6 @@ class FilterablePagesDocument(Document):
     language = fields.KeywordField()
 
     title = fields.TextField(attr="title")
-    is_archived = fields.KeywordField(attr="is_archived")
     date_published = fields.DateField(attr="date_published")
     url = fields.KeywordField()
     start_dt = fields.DateField()
@@ -41,7 +40,7 @@ class FilterablePagesDocument(Document):
     model_class = fields.KeywordField()
     content = fields.TextField()
     preview_description = fields.TextField()
-    path = fields.TextField()
+    path = fields.KeywordField()
     depth = fields.IntegerField()
 
     def get_queryset(self):
@@ -115,10 +114,16 @@ class FilterablePagesDocument(Document):
 
 
 class FilterablePagesDocumentSearch:
-    def __init__(self, prefix="/"):
-        self.prefix = prefix
-        self.document = FilterablePagesDocument()
-        self.search_obj = self.document.search().filter("prefix", url=prefix)
+    def __init__(self, root_page, children_only=True):
+        search = FilterablePagesDocument.search()
+        search = search.filter("prefix", path=root_page.path)
+
+        if children_only:
+            search = search.filter("term", depth=root_page.depth + 1)
+        else:
+            search = search.filter("range", depth={"gt": root_page.depth})
+
+        self.search_obj = search
 
     def filter_topics(self, topics=None):
         if topics is None:
@@ -151,12 +156,6 @@ class FilterablePagesDocumentSearch:
                 **{"date_published": {"gte": from_date, "lte": to_date}},
             )
 
-    def filter_archived(self, archived=None):
-        if archived is not None:
-            self.search_obj = self.search_obj.filter(
-                "terms", is_archived=archived
-            )
-
     def search_title(self, title=""):
         if title not in ([], "", None):
             query = MultiMatch(
@@ -183,7 +182,6 @@ class FilterablePagesDocumentSearch:
         language=None,
         to_date=None,
         from_date=None,
-        archived=None,
     ):
 
         if topics is None:
@@ -198,7 +196,6 @@ class FilterablePagesDocumentSearch:
         self.filter_categories(categories=categories)
         self.filter_language(language=language)
         self.filter_date(from_date=from_date, to_date=to_date)
-        self.filter_archived(archived=archived)
 
     def search(self, title="", order_by="date_published"):
         """Perform a search for the given title"""

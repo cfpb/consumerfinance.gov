@@ -46,7 +46,7 @@ When in doubt, mimic the styles and patterns in the existing codebase.
 ### Browser support
 
 - We serve JavaScript to any browser that
-[supports Promises](https://caniuse.com/promises).
+[supports fetch](https://caniuse.com/fetch).
 We use [esbuild](https://github.com/evanw/esbuild) to transpile
 and minify our JavaScript.
 
@@ -67,7 +67,7 @@ targets given to `autoprefixer` (CSS) transpiling.
 
 For JavaScript, `esbuild` uses the [`es6`](http://es6-features.org/) target and
 our code conditionally includes JavaScript in browsers that
-[support Promises](https://caniuse.com/promises).
+[support fetch](https://caniuse.com/fetch).
 
 !!! note
   JavaScript may still

@@ -44,6 +44,7 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 INSTALLED_APPS = (
     "permissions_viewer",
     "wagtail.core",
+    "wagtailadmin_overrides",
     "wagtail.admin",
     "wagtail.documents",
     "wagtail.snippets",
@@ -148,6 +149,7 @@ MIDDLEWARE = (
     "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "wagtailadmin_overrides.middleware.WagtailAdminViewOverrideMiddleware",
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "core.middleware.SelfHealingMiddleware",
@@ -281,11 +283,9 @@ STATICFILES_FINDERS = [
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-# Used to include directories not traditionally found,
-# app-specific 'static' directories.
+# Add the frontend build output to static files.
 STATICFILES_DIRS = [
     PROJECT_ROOT.joinpath("static_built"),
-    PROJECT_ROOT.joinpath("templates", "wagtailadmin"),
 ]
 
 # Also include any directories under static.in
@@ -460,7 +460,6 @@ CSP_SCRIPT_SRC = (
     "*.googleoptimize.com",
     "tagmanager.google.com",
     "optimize.google.com",
-    "ajax.googleapis.com",
     "search.usa.gov",
     "api.mapbox.com",
     "js-agent.newrelic.com",
@@ -469,17 +468,12 @@ CSP_SCRIPT_SRC = (
     "gov-bam.nr-data.net",
     "*.youtube.com",
     "*.ytimg.com",
-    "trk.cetrk.com",
-    "universal.iperceptions.com",
     "cdn.mouseflow.com",
     "n2.mouseflow.com",
     "us.mouseflow.com",
-    "geocoding.geo.census.gov",
-    "tigerweb.geo.census.gov",
+    "*.geo.census.gov",
     "about:",
-    "connect.facebook.net",
     "www.federalregister.gov",
-    "storage.googleapis.com",
     "*.qualtrics.com",
 )
 
@@ -491,7 +485,6 @@ CSP_STYLE_SRC = (
     "tagmanager.google.com",
     "optimize.google.com",
     "api.mapbox.com",
-    "fonts.googleapis.com",
 )
 
 # These specify valid image sources
@@ -500,27 +493,21 @@ CSP_IMG_SRC = (
     "*.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
-    "www.gstatic.com",
-    "ssl.gstatic.com",
-    "stats.g.doubleclick.net",
     "img.youtube.com",
     "*.google-analytics.com",
-    "trk.cetrk.com",
     "searchstats.usa.gov",
-    "gtrk.s3.amazonaws.com",
     "*.googletagmanager.com",
     "tagmanager.google.com",
-    "maps.googleapis.com",
     "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
     "stats.search.usa.gov",
     "blob:",
     "data:",
-    "www.facebook.com",
     "www.gravatar.com",
     "*.qualtrics.com",
     "*.mouseflow.com",
+    "i.ytimg.com",
 )
 
 # These specify what URL's we allow to appear in frames/iframes
@@ -532,22 +519,11 @@ CSP_FRAME_SRC = (
     "*.googleoptimize.com",
     "optimize.google.com",
     "www.youtube.com",
-    "*.doubleclick.net",
-    "universal.iperceptions.com",
-    "www.facebook.com",
-    "staticxx.facebook.com",
-    "mediasite.yorkcast.com",
     "*.qualtrics.com",
 )
 
 # These specify where we allow fonts to come from
-CSP_FONT_SRC = (
-    "'self'",
-    "data:",
-    "*.consumerfinance.gov",
-    "fonts.google.com",
-    "fonts.gstatic.com",
-)
+CSP_FONT_SRC = "'self'"
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to
 CSP_CONNECT_SRC = (
@@ -562,7 +538,6 @@ CSP_CONNECT_SRC = (
     "s3.amazonaws.com",
     "public.govdelivery.com",
     "n2.mouseflow.com",
-    "api.iperceptions.com",
     "*.qualtrics.com",
     "raw.githubusercontent.com",
 )
@@ -609,8 +584,6 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
-    # Hide archive filter options in the filterable UI
-    "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
@@ -699,6 +672,15 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
     },
 }
 
+# Override certain Wagtail admin views with our own.
+#
+# See wagtailadmin_pages.middleware.WagtailAdminViewOverrideMiddleware.
+WAGTAILADMIN_OVERRIDDEN_VIEWS = {
+    "wagtailadmin_pages:add_subpage": (
+        "wagtailadmin_overrides.views.add_subpage"
+    ),
+}
+
 # Serialize Decimal(3.14) as 3.14, not "3.14"
 REST_FRAMEWORK = {"COERCE_DECIMAL_TO_STRING": False}
 
@@ -754,3 +736,7 @@ except (TypeError, ValueError):
         "Environment variable CORS_ALLOWED_ORIGINS is not valid JSON. "
         "Expected a JSON array of allowed origins."
     )
+
+# A list of domain names that are allowed to be linked to without adding the
+# interstitial page.
+ALLOWED_LINKS_WITHOUT_INTERSTITIAL = ("public.govdelivery.com",)

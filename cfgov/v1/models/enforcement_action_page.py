@@ -273,7 +273,6 @@ class EnforcementActionPage(AbstractFilterPage):
         ),
         MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
         FieldPanel("language", "Language"),
-        MultiFieldPanel(CFGOVPage.archive_panels, "Archive"),
     ]
 
     edit_handler = TabbedInterface(
@@ -293,6 +292,20 @@ class EnforcementActionPage(AbstractFilterPage):
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")
     ]
+
+    @property
+    def status_strings(self):
+        return ",".join(self.statuses.values_list("status", flat=True))
+
+    @property
+    def product_strings(self):
+        return ", ".join(self.products.values_list("product", flat=True))
+
+    @property
+    def docket_number_string(self):
+        return ", ".join(
+            self.docket_numbers.values_list("docket_number", flat=True)
+        )
 
     def get_context(self, request):
         context = super().get_context(request)

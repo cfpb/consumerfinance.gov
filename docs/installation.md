@@ -127,16 +127,6 @@ push to GitHub. This is to reduce the number of commits with failed lints, and
 to assist developers with linting without thinking.
 
 
-### Use our private fonts from a CDN
-
-consumerfinance.gov uses a proprietary licensed font, Avenir.
-
-If you want to pull this from a content delivery network (CDN),
-you can set the
-[`@use-font-cdn`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/css/main.less#L30)
-to `true` and rebuild the assets with `yarn build`.
-
-
 ### Build the frontend
 
 !!! note

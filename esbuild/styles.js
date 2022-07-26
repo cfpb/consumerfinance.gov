@@ -20,7 +20,8 @@ const styledApps = [
   'regulations3k',
   'retirement',
   'rural-or-underserved-tool',
-  'teachers-digital-platform'
+  'teachers-digital-platform',
+  'filing-instruction-guide'
 ];
 
 const cssPaths = [
@@ -39,7 +40,8 @@ module.exports = function( baseConfig ) {
         math: 'always',
         paths: [
           ...readdirSync( `${ modules }/@cfpb` ).map( v => `${ modules }/@cfpb/${ v }/src` ),
-          `${ modules }/cfpb-chart-builder/src/css`
+          `${ modules }/cfpb-chart-builder/src/css`,
+          `${ modules }`
         ]
       }
     } ) ]

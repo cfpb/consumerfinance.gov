@@ -78,7 +78,8 @@ urlpatterns = [
         r"^rural-or-underserved-tool/$",
         TemplateView.as_view(
             extra_context={
-                "years": [year for year in range(2014, datetime.now().year)]
+                "years": [year for year in range(2014, datetime.now().year)],
+                "mapbox_access_token": settings.MAPBOX_ACCESS_TOKEN,
             },
             template_name="rural-or-underserved/index.html",
         ),
@@ -121,15 +122,6 @@ urlpatterns = [
         ),
         name="loan-estimate",
     ),
-    # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
-    # TODO: change to redirects after 2018 homebuying campaign.
-    re_path(
-        r"^owning-a-home/process/(?P<path>.*)$",
-        lambda req, path: ServeView.as_view()(
-            req, "owning-a-home/{}".format(path or "prepare/")
-        ),
-    ),
-    # END TODO
     re_path(
         r"^know-before-you-owe/$",
         TemplateView.as_view(template_name="know-before-you-owe/index.html"),
@@ -435,7 +427,7 @@ urlpatterns = [
         include("crtool.urls"),
     ),
     re_path(
-        r"^regulations3k-service-worker.js",
+        r"^regulations3k-service-worker.js$",
         TemplateView.as_view(
             template_name="regulations3k/regulations3k-service-worker.js",
             content_type="application/javascript",

@@ -172,51 +172,6 @@ class PostPreviewSnapshot(blocks.StructBlock):
         template = "_includes/organisms/post-preview-snapshot.html"
 
 
-class EmailSignUp(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False, default="Stay informed")
-    default_heading = blocks.BooleanBlock(
-        required=False,
-        default=True,
-        label="Default heading style",
-        help_text=(
-            "If selected, heading will be styled as an H5 "
-            "with green top rule. Deselect to style header as H3."
-        ),
-    )
-    text = blocks.CharBlock(
-        required=False,
-        help_text=(
-            "Write a sentence or two about what kinds of emails the "
-            "user is signing up for, how frequently they will be sent, "
-            "etc."
-        ),
-    )
-    gd_code = blocks.CharBlock(
-        required=False,
-        label="GovDelivery code",
-        help_text=(
-            "Code for the topic (i.e., mailing list) you want people "
-            "who submit this form to subscribe to. Format: USCFPB_###"
-        ),
-    )
-    disclaimer_page = blocks.PageChooserBlock(
-        required=False,
-        label="Privacy Act statement",
-        help_text=(
-            'Choose the page that the "See Privacy Act statement" link '
-            'should go to. If in doubt, use "Generic Email Sign-Up '
-            'Privacy Act Statement".'
-        ),
-    )
-
-    class Meta:
-        icon = "mail"
-        template = "_includes/organisms/email-signup.html"
-
-    class Media:
-        js = ["email-signup.js"]
-
-
 class RelatedPosts(blocks.StructBlock):
     limit = blocks.CharBlock(
         default="3",
@@ -418,6 +373,9 @@ class SidebarContactInfo(MainContactInfo):
     class Meta:
         template = "_includes/organisms/sidebar-contact-info.html"
 
+    class Media:
+        css = ["sidebar-contact-info.css"]
+
 
 class ModelBlock(blocks.StructBlock):
     """Abstract StructBlock that provides Django model instances to subclasses.
@@ -568,7 +526,9 @@ class SimpleChart(blocks.StructBlock):
     )
 
     download_text = blocks.CharBlock(
-        required=False, help_text="Custom text for the chart download field"
+        required=False,
+        help_text="Custom text for the chart download field. Required to "
+        "display a download link.",
     )
 
     download_file = blocks.CharBlock(
@@ -589,6 +549,7 @@ class SimpleChart(blocks.StructBlock):
 
     class Media:
         js = ["simple-chart/simple-chart.js"]
+        css = ["simple-chart.css"]
 
 
 class FullWidthText(blocks.StreamBlock):
@@ -601,7 +562,7 @@ class FullWidthText(blocks.StreamBlock):
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
     reusable_text = v1_blocks.ReusableTextChooserBlock("v1.ReusableText")
-    email_signup = EmailSignUp()
+    email_signup = v1_blocks.EmailSignUpChooserBlock()
     well = Well()
 
     class Meta:
@@ -633,6 +594,7 @@ class Expandable(BaseExpandable):
             ("email", molecules.ContactEmail()),
             ("phone", molecules.ContactPhone()),
             ("address", molecules.ContactAddress()),
+            ("info_unit_group", InfoUnitGroup()),
         ],
         blank=True,
     )
@@ -868,7 +830,6 @@ class FilterableList(BaseExpandable):
         help_text="Add links to post preview images and"
         " headings in filterable list results",
     )
-
     filter_children = blocks.BooleanBlock(
         default=True,
         required=False,
@@ -1184,6 +1145,7 @@ class ChartBlock(blocks.StructBlock):
 
     class Media:
         js = ["chart.js"]
+        css = ["chart.css"]
 
 
 class MortgageChartBlock(blocks.StructBlock):
@@ -1211,6 +1173,7 @@ class MortgageChartBlock(blocks.StructBlock):
 
     class Media:
         js = ["mortgage-performance-trends.js"]
+        css = ["mortgage-performance-trends.css"]
 
 
 class MortgageMapBlock(MortgageChartBlock):
@@ -1221,6 +1184,7 @@ class MortgageMapBlock(MortgageChartBlock):
 
     class Media:
         js = ["mortgage-performance-trends.js"]
+        css = ["mortgage-performance-trends.css"]
 
 
 class ResourceList(blocks.StructBlock):
