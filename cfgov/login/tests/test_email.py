@@ -3,7 +3,7 @@ from unittest.mock import patch
 from django.contrib.auth.models import User
 from django.core import mail
 from django.http import HttpRequest
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from wagtail.core.models import Site
 
@@ -62,6 +62,20 @@ class SendEmailTestCase(TestCase):
         message = mail.outbox[0]
         self.assertEqual(message.to, [self.email])
         self.assertEqual(message.from_email, "webmaster@localhost")
+        self.assertEqual(message.subject, "Password reset")
+        self.assertIn(
+            "http://{SERVER_NAME}:{SERVER_PORT}".format(**self.request.META),
+            message.message().as_string(),
+        )
+
+    @override_settings(DEFAULT_FROM_EMAIL="from@email.com")
+    def test_send_password_reset_from_email(self):
+        send_password_reset_email(self.email, request=self.request)
+        self.assertEqual(len(mail.outbox), 1)
+
+        message = mail.outbox[0]
+        self.assertEqual(message.to, [self.email])
+        self.assertEqual(message.from_email, "from@email.com")
         self.assertEqual(message.subject, "Password reset")
         self.assertIn(
             "http://{SERVER_NAME}:{SERVER_PORT}".format(**self.request.META),
