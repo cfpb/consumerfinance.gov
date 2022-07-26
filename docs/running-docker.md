@@ -59,10 +59,11 @@ they will work as expected once you’re inside the Python container.
 
 ## Update/Change Python MAJOR.MINOR Version
 
-The [first line](https://github.com/cfpb/consumerfinance.gov/tree/main/Dockerfile) of `Dockerfile` sets the base Python Interpreter version for all
-`cfgov` images. Our current pattern is `python:MAJOR.MINOR-alpine` for
-the base image. This allows us to rapidly incorporate `PATCH` versions without
-the need for explicit commits.
+The [first line](https://github.com/cfpb/consumerfinance.gov/tree/main/Dockerfile)
+of `Dockerfile` sets the base Python Interpreter version for all `cfgov`
+images. Our current pattern is `python:MAJOR.MINOR-alpine` for the base image.
+This allows us to rapidly incorporate `PATCH` versions without the need
+for explicit commits.
 
 ### Updating `PATCH` version locally
 
@@ -212,19 +213,21 @@ It follows a standard Docker build/scan/push workflow,
 optionally deploying to our Docker Swarm cluster.
 
 ### How does it work?
+This project heavily utilizes
+"[multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/)".
 
-The production image extends the development image. If you look at the `Dockerfile`, this is spelled out by the line:
+There are a few layers at work here, with the hierarchy represented by the list structure:
+* `base` - This is the bare minimum base Python layer for building up any further layers.
+  * `cfgov-python-builder` - Installs deployment Python dependencies to `/build` for use
+in `cfgov-dev` and `cfgov-prod`.
+    * `cfgov-dev` - Dev layer used for local development. Contains no code
+(requires code volume mount), and installs additional dependencies only needed for local development.
+    * `cfgov-frontend-builder` - Frontend builder layer, builds static files for Django
+  * `cfgov-mod-wsgi` - mod_wsgi compile layer for Apache2
+(helps to guarantee mod_wsgi compatability with Python, Alpine, and Apache)
+  * `cfgov-prod` - Final layer for Production. Installs and uses Apache2,
+swaps to `apache` user, copies in all files from previous layers to maintain a lightweight image.
 
-```
-FROM cfgov-dev as cfgov-prod
-```
-
-Both 'cfgov-dev' and 'cfgov-prod' are called "[build stages](https://docs.docker.com/develop/develop-images/multistage-build/)". That line means, "create a new stage, starting from cfgov-dev, called cfgov-prod".
-
-From there, we:
-
-- Install Apache 2.4 HTTPD, and copy over the `mod_wsgi.so` Apache module from `cfgov-mod-wsgi` build stage to ensure compatibility.
-- Run frontend.sh, Django's collectstatic command, and then *uninstall* node and yarn.
-- Set the default command on container startup to `httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -D FOREGROUND`, which runs Apache using
-    the [configuration in consumerfinance.gov](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache), in the
-    foreground (typical when running Apache in a container).
+The production image extends **ONLY** the base layer to maintain a lightweight final image.
+Everything from previous layers is copied in from those layers using `COPY --from=<layer-name>`.
+This dramatically improves the overall final image size.
