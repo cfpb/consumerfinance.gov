@@ -88,6 +88,6 @@ Mapping/Ingress Hostname FQDN
 {{- if .Values.fqdnOverride }}
 {{- .Values.fqdnOverride }}
 {{- else }}
-{{- include "cfgov.fullname" . }}.{{ default "dev-internal" .Values.environmentName }}.aws.cfpb.gov
+{{- include "cfgov.fullname" . }}-eks.{{ default "dev-internal" .Values.environmentName }}.aws.cfpb.gov
 {{- end }}
 {{- end }}
