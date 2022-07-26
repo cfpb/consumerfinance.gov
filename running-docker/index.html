@@ -218,10 +218,11 @@ they will work as expected once you’re inside the Python container.</p>
 <li>PostgreSQL: <code>docker-compose exec postgres bash</code></li>
 </ul>
 <h2 id="updatechange-python-majorminor-version">Update/Change Python MAJOR.MINOR Version<a class="headerlink" href="#updatechange-python-majorminor-version" title="Permanent link">¶</a></h2>
-<p>The <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/Dockerfile">first line</a> of <code>Dockerfile</code> sets the base Python Interpreter version for all
-<code>cfgov</code> images. Our current pattern is <code>python:MAJOR.MINOR-alpine</code> for
-the base image. This allows us to rapidly incorporate <code>PATCH</code> versions without
-the need for explicit commits.</p>
+<p>The <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/Dockerfile">first line</a>
+of <code>Dockerfile</code> sets the base Python Interpreter version for all <code>cfgov</code>
+images. Our current pattern is <code>python:MAJOR.MINOR-alpine</code> for the base image.
+This allows us to rapidly incorporate <code>PATCH</code> versions without the need
+for explicit commits.</p>
 <h3 id="updating-patch-version-locally">Updating <code>PATCH</code> version locally<a class="headerlink" href="#updating-patch-version-locally" title="Permanent link">¶</a></h3>
 <p>To update the <code>PATCH</code> version on your local Docker, replace <code>&lt;MAJOR.MINOR&gt;</code>
 with your target and run:</p>
@@ -328,17 +329,22 @@ This file is intended for use with the project's <code>Jenkinsfile</code>
 It follows a standard Docker build/scan/push workflow,
 optionally deploying to our Docker Swarm cluster.</p>
 <h3 id="how-does-it-work">How does it work?<a class="headerlink" href="#how-does-it-work" title="Permanent link">¶</a></h3>
-<p>The production image extends the development image. If you look at the <code>Dockerfile</code>, this is spelled out by the line:</p>
-<pre class="highlight"><code>FROM cfgov-dev as cfgov-prod</code></pre>
-<p>Both 'cfgov-dev' and 'cfgov-prod' are called "<a href="https://docs.docker.com/develop/develop-images/multistage-build/">build stages</a>". That line means, "create a new stage, starting from cfgov-dev, called cfgov-prod".</p>
-<p>From there, we:</p>
-<ul>
-<li>Install Apache 2.4 HTTPD, and copy over the <code>mod_wsgi.so</code> Apache module from <code>cfgov-mod-wsgi</code> build stage to ensure compatibility.</li>
-<li>Run frontend.sh, Django's collectstatic command, and then <em>uninstall</em> node and yarn.</li>
-<li>Set the default command on container startup to <code>httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -D FOREGROUND</code>, which runs Apache using
-    the <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache">configuration in consumerfinance.gov</a>, in the
-    foreground (typical when running Apache in a container).</li>
-</ul>
+<p>This project heavily utilizes
+"<a href="https://docs.docker.com/develop/develop-images/multistage-build/">multi-stage builds</a>".</p>
+<p>There are a few layers at work here, with the hierarchy represented by the list structure:
+* <code>base</code> - This is the bare minimum base Python layer for building up any further layers.
+  * <code>cfgov-python-builder</code> - Installs deployment Python dependencies to <code>/build</code> for use
+in <code>cfgov-dev</code> and <code>cfgov-prod</code>.
+    * <code>cfgov-dev</code> - Dev layer used for local development. Contains no code
+(requires code volume mount), and installs additional dependencies only needed for local development.
+    * <code>cfgov-frontend-builder</code> - Frontend builder layer, builds static files for Django
+  * <code>cfgov-mod-wsgi</code> - mod_wsgi compile layer for Apache2
+(helps to guarantee mod_wsgi compatability with Python, Alpine, and Apache)
+  * <code>cfgov-prod</code> - Final layer for Production. Installs and uses Apache2,
+swaps to <code>apache</code> user, copies in all files from previous layers to maintain a lightweight image.</p>
+<p>The production image extends <strong>ONLY</strong> the base layer to maintain a lightweight final image.
+Everything from previous layers is copied in from those layers using <code>COPY --from=&lt;layer-name&gt;</code>.
+This dramatically improves the overall final image size.</p>
               
             </div>
           </div><footer>
