@@ -3,9 +3,11 @@
 apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
-    name: {{ include "cfgov.fullname" . }}
+  name: {{ include "cfgov.fullname" . }}
+  labels:
+    {{- include "cfgov.labels" . | nindent 4 }}
 spec:
-    host: {{ include "cfgov.fullname" . }}-eks.{{ default "dev-internal" .Values.environmentName }}.cfpb.gov
-    prefix: /
-    service: {{ include "cfgov.fullname" . }}:{{ .Values.service.port }}
+  host: {{ include "cfgov.fqdn" . }}
+  prefix: /
+  service: {{ include "cfgov.fullname" . }}:{{ .Values.service.port }}
 {{- end }}

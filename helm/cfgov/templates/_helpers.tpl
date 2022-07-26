@@ -80,3 +80,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Mapping/Ingress Hostname FQDN
+*/}}
+{{- define "cfgov.fqdn" -}}
+{{- if .Values.fqdnOverride }}
+{{- .Values.fqdnOverride }}
+{{- else }}
+{{- include "cfgov.fullname" . }}.{{ default "dev-internal" .Values.environmentName }}.aws.cfpb.gov
+{{- end }}
+{{- end }}
