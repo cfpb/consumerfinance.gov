@@ -56,6 +56,7 @@ const SERVICE_WORKER_CONFIG = {
       }
     }
   ],
+  sourcemap: false,
   inlineWorkboxRuntime: true
 };
 
