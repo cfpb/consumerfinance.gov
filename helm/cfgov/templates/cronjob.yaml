@@ -3,11 +3,11 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "cfgov.fullname" $  | lower }}-cronjob-{{ .name | lower }}
+  name: {{ include "cfgov.fullname" $ | lower }}-cronjob-{{ .name | lower }}
   labels:
     {{- include "cfgov.labels" $ | nindent 4 }}
 spec:
-  suspend: {{.suspend}}
+  suspend: {{ default false .suspend }}
   schedule: {{ .schedule | quote }}
   jobTemplate:
     spec:
