@@ -83,5 +83,5 @@ cronJobs:
     args:
       - '-c'
       - "python cfgov/scripts/http_smoke_test.py -v"
-    restartPolicy: OnFailure
+    restartPolicy: Never
 
