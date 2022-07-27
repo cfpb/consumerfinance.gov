@@ -33,6 +33,10 @@ spec:
                   name: {{ .name }}
                 {{- end }}
               env:
+                - name: CFGOV_HOST
+                  value: {{ include "cfgov.fullname" $  | lower }}
+                - name: CFGOV_PORT
+                  value: "8000"
                 {{- if $.Values.postgresql.enabled }}
                 - name: PGHOST
                   {{- if $.Values.postgresql.nameOverride }}

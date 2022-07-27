@@ -12,7 +12,7 @@ image:
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "test"
 
 #commad:
 #  - "./docker-entrypoint.sh"
@@ -191,7 +191,7 @@ cronJobs:
       - "bash"
     args:
       - '-c'
-      - "python cfgov/scripts/http_smoke_test.py --base http://localhost:8000 -v"
+      - "python cfgov/scripts/http_smoke_test.py --base $CFGOV_HOST:$CFGOV_PORT -v"
     restartPolicy: OnFailure
   - name: "elasticsearch-Rebuild-Index"
     schedule: "@daily"

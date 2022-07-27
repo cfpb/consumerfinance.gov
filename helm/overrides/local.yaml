@@ -1,6 +1,7 @@
 ---
 # Overrides for running in a local development cluster (Ex: Docker Desktop)
 ### CFGOV OVERRIDES ###
+fullnameOverride: "test"
 image:
   repository: cfgov_python
   pullPolicy: IfNotPresent
@@ -82,6 +83,6 @@ cronJobs:
       - "bash"
     args:
       - '-c'
-      - "python cfgov/scripts/http_smoke_test.py --base http://localhost:8000 -v"
+      - "python cfgov/scripts/http_smoke_test.py --base  ${CFGOV_HOST}:$C{FGOV_PORT} -v"
     restartPolicy: OnFailure
 
