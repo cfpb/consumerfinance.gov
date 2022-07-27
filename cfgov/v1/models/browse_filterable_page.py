@@ -71,6 +71,11 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
 
     template = "browse-filterable/index.html"
 
+    page_description = (
+        "Left-hand navigation, no right-hand sidebar. Use if children should "
+        "be searchable using standard search filters module."
+    )
+
     search_fields = CFGOVPage.search_fields + [
         index.SearchField("content"),
         index.SearchField("header"),
