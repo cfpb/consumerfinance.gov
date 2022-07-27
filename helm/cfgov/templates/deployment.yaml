@@ -53,17 +53,8 @@ spec:
             - name: CFGOV_PROD_DB_LOCATION
               value: {{ .Values.importDbPath | quote }}
             {{- end }}
-            {{- include "cfgov.postgresEnv" . | nindent 12}}
-            {{- if .Values.elasticsearch.enabled }}
-            - name: ES_HOST
-              {{- if .Values.elasticsearch.nameOverride }}
-              value: "{{ .Values.elasticsearch.nameOverride }}-master"
-              {{- else if .Values.elasticsearch.fullnameOverride }}
-              value: {{ .Values.elasticsearch.fullnameOverride | quote }}
-              {{- else }}
-              value: elasticsearch-master
-              {{- end }}
-            {{- end }}
+            {{- include "cfgov.postgresEnv" . | nindent 12 }}
+            {{- include "cfgov.elasticsearchEnv" . | nindent 12 }}
             {{- range .Values.extraEnvs }}
             - name: {{ .name }}
               value: {{ .value | quote }}
@@ -110,17 +101,8 @@ spec:
               value: "8000"
             - name: RUN_MIGRATIONS
               value: "false"
-            {{- include "cfgov.postgresEnv" . | nindent 12}}
-            {{- if .Values.elasticsearch.enabled }}
-            - name: ES_HOST
-              {{- if .Values.elasticsearch.nameOverride }}
-              value: "{{ .Values.elasticsearch.nameOverride }}-master"
-              {{- else if .Values.elasticsearch.fullnameOverride }}
-              value: {{  .Values.elasticsearch.fullnameOverride | quote }}
-              {{- else }}
-              value: elasticsearch-master
-              {{- end }}
-            {{- end }}
+            {{- include "cfgov.postgresEnv" . | nindent 12 }}
+            {{- include "cfgov.elasticsearchEnv" . | nindent 12 }}
             {{- range .Values.extraEnvs }}
             - name: {{ .name }}
               value: {{ .value | quote }}

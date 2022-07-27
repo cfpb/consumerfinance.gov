@@ -9,9 +9,10 @@ fi
 echo "Using $(python3 --version 2>&1) located at $(which python3)"
 
 # Wait for the database to be ready
-until psql "postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}" -c '\q' >/dev/null 2>&1; do
-  >&2 echo "Postgres is unavailable - waiting"
-  sleep 1
+until pg_isready
+do
+  echo "Waiting for postgres at: $PGHOST:$PGPORT"
+  sleep 1;
 done
 
 # Do first-time set up of the database if necessary

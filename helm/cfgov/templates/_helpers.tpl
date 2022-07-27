@@ -103,6 +103,27 @@ Postgres Environment Vars
 {{- end }}
 
 {{/*
+Elasticsearch Environment Vars
+*/}}
+{{- define "cfgov.elasticsearchEnv" -}}
+- name: ES_HOST
+{{- if .Values.elasticsearch.enabled }}
+{{- if eq .Values.elasticsearch.nodeGroup "master" }}
+  value: "{{ include "elasticsearch.masterService" .Subcharts.elasticsearch | trunc 63 | trimSuffix "-" }}"
+{{- else }}
+  value: "{{ include "elasticsearch.uname" .Subcharts.elasticsearch | trunc 63 | trimSuffix "-" }}"
+{{- end }}
+- name: ES_PORT
+  value: "{{ default "9200" .Values.elasticsearch.httpPort }}"
+{{- else }}
+- name: ES_HOST
+  value: "{{ default "elasticsearch-master" .Values.elasticsearch.externalHostname }}"
+- name: ES_PORT
+  value: "{{ default "9200" .Values.elasticsearch.httpPort }}"
+{{- end }}
+{{- end }}
+
+{{/*
 Mapping/Ingress Hostname FQDN
 */}}
 {{- define "cfgov.fqdn" -}}

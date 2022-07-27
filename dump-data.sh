@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==========================================================================
-# Dump the contents of the $DATABASE_URL into a gzipped SQL file.
+# Dump the contents of the Database into a gzipped SQL file.
 # ==========================================================================
 
 set -e
@@ -10,11 +10,6 @@ set -e
 dump_filename=$1
 if [ -z "$dump_filename" ]; then
     dump_filename=test.sql.gz
-fi
-
-# If DATABASE_URL is not set, or is empty, default to localhost.
-if [ -z "$DATABASE_URL" ]; then
-    DATABASE_URL=postgres://$PGUSER:$PGPASSWORD@$PGHOST:$PGPORT/$PGDATABASE
 fi
 
 dump_data() {
@@ -32,9 +27,6 @@ EOF
         pg_dump \
             --no-owner \
             --no-privileges \
-            --user=cfpb \
-            --schema=cfpb \
-            $DATABASE_URL \
     ) | gzip > $dump_filename
 }
 

@@ -235,8 +235,8 @@ if ALLOW_ADMIN_URL:
 
 # Default database is PostgreSQL running on localhost.
 # Database name cfgov, username cfpb, password cfpb.
-# Override this by setting DATABASE_URL in the environment.
-# See https://github.com/jacobian/dj-database-url for URL formatting.
+# Override this by setting using the PG environment variables.
+# See also https://www.postgresql.org/docs/current/libpq-envars.html.
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",

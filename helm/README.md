@@ -26,22 +26,25 @@ and [`services.yaml`](overrides/services.yaml).
 ### Default Execution
 The following commands are equivalent
 
-    ./helm-install
-    ./helm-install helm/overrides/local.yaml helm/overrides/services.yaml
+    ./helm-install.sh
+    ./helm-install.sh helm/overrides/local.yaml helm/overrides/services.yaml helm/overrides/cfgov-lb.yaml
 
 If you provide any arguments, it will only include those provided.
 
 ### Local (no services)
 
-    ./helm-install helm/overrides/local.yaml
+    ./helm-install.sh helm/overrides/local.yaml
+
+    # With LoadBalancer for cfgov service
+    ./helm-install.sh helm/overrides/local.yaml helm/overrides/cfgov-lb.yaml
 
 ### Prod (with services)
 
     # ClusterIP
-    ./helm-install helm/overrides/prod.yaml helm/overrides/services.yaml
+    ./helm-install.sh helm/overrides/prod.yaml helm/overrides/services.yaml
 
-    # LoadBalancer - Port 8000
-    ./helm-install helm/overrides/prod.yaml helm/overrides/services.yaml helm/overrides/lb8000.yaml
+    # LoadBalancer - CFGOV Port 8000, PSQL Port 5432, ES Port 9200, Kibana Port 5601
+    ./helm-install.sh helm/overrides/prod.yaml helm/overrides/services.yaml helm/overrides/load-balancer.yaml
 
 ## Remove Helm Release
 To remove a cfgov release installed with [`./helm-install`](../helm-install.sh),
@@ -54,7 +57,8 @@ run the following command in the correct namespace
 * [`local.yaml`](overrides/local.yaml) - Local dev stack (minus services)
 * [`services.yaml`](overrides/services.yaml) - Services Stack (Postgres, ElasticSearch, Kibana)
 * [`prod.yaml`](overrides/prod.yaml) - Prod stack (minus services)
-* [`lb8000.yaml`](overrides/lb8000.yaml) - LoadBalancer bound to port 8000 (useful for local prod stack, already part of [`local.yaml`](overrides/local.yaml))
+* [`cfgov-lb.yaml`](overrides/cfgov-lb.yaml) - Sets CFGOV Service to LoadBalancer with Port 8000
+* [`load-balancer.yaml`](overrides/load-balancer.yaml) - Sets all service types to `LoadBalancer` (includes services, if enabled)
 * [`init-sleep.yaml`](overrides/init-sleep.yaml) - Sleep cfgov initContainer to infinity (debug use)
 * [`sleep.yaml`](overrides/sleep.yaml) - Sleep cfgov container to infinity (debug use)
 
@@ -64,7 +68,7 @@ run the following command in the correct namespace
     ./helm-install.sh helm/overrides/local.yaml helm/overrides/services.yaml helm/overrides/init-sleep.yaml
 
     # Prod and Services Stack with CFGOV LoadBalancer bound to port 8000 (Local Prod Testing)
-    ./helm-install.sh helm/overrides/prod.yaml helm/overrides/services.yaml helm/overrides/lb8000.yaml helm/overrides/sleep.yaml
+    ./helm-install.sh helm/overrides/prod.yaml helm/overrides/services.yaml helm/overrides/cfgov-lb.yaml helm/overrides/sleep.yaml
 
 
 # Override Values

@@ -1,12 +1,12 @@
 dependencies:
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
-  version: 11.4.0
+  version: 11.6.19
 - name: elasticsearch
   repository: https://helm.elastic.co/
   version: 7.16.3
 - name: kibana
   repository: https://helm.elastic.co/
   version: 7.16.3
-digest: sha256:cb40644c002089874edfefcf0c4f459e41be8a8c5eadf543728fd876057e6f5e
-generated: "2022-05-27T05:17:43.950414-06:00"
+digest: sha256:6fc78af7478f1943ff3749ca0caa89340e19a0039758db3a2d4b9fd730836152
+generated: "2022-07-27T11:23:33.971176-06:00"
