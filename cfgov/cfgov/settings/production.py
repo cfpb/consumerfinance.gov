@@ -85,6 +85,7 @@ if "syslog" in default_loggers:
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST")
+DEFAULT_FROM_EMAIL = "wagtail@cfpb.gov"
 
 STATICFILES_STORAGE = (
     "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
