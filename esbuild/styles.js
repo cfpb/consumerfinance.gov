@@ -1,6 +1,6 @@
 const esbuild = require( 'esbuild' );
 const { readdirSync } = require( 'fs' );
-const postCSSPlugin = require( '@frappe/esbuild-plugin-postcss2' );
+const postCSSPlugin = require( './plugins/postcss.js' );
 const autoprefixer = require( 'autoprefixer' );
 const { getAll } = require( './utils.js' );
 
@@ -34,7 +34,7 @@ module.exports = function( baseConfig ) {
   esbuild.build( {
     ...baseConfig,
     entryPoints: cssPaths,
-    plugins: [ postCSSPlugin.default( {
+    plugins: [ postCSSPlugin( {
       plugins: [ autoprefixer ],
       lessOptions: {
         math: 'always',
