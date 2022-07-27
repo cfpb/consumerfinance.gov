@@ -1,6 +1,8 @@
+import json
 from datetime import date
 
 from django.test import TestCase
+from django.utils import timezone
 
 from wagtail.core.models import Site
 from wagtail.documents.models import Document
@@ -8,13 +10,22 @@ from wagtail.documents.models import Document
 from model_bakery import baker
 from taggit.models import Tag
 
-from v1.models import BlogPage, CFGOVPageCategory
+from v1.models import (
+    BlogPage,
+    CFGOVPageCategory,
+    EnforcementActionPage,
+    EnforcementActionProduct,
+    EnforcementActionStatus,
+)
+from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.ref import categories
 from v1.views.reports import (
     DocumentsReportView,
+    EnforcementActionsReportView,
     PageMetadataReportView,
     construct_absolute_url,
     process_categories,
+    process_enforcement_action_page_content,
     process_tags,
 )
 
@@ -36,6 +47,54 @@ class ServeViewTestCase(TestCase):
         self.document = Document(title="Test document 1")
         self.document.save()
         self.document.tags.add(self.tag1, self.tag2)
+
+        self.enforcement = EnforcementActionPage(
+            title="Great Test Page",
+            preview_description="This is a great test page.",
+            initial_filing_date=timezone.now(),
+        )
+        content = json.dumps(
+            [
+                {
+                    "type": "full_width_text",
+                    "value": [
+                        {
+                            "type": "content",
+                            "value": "<p>Blog Text<\\p>\
+                            <a href='www.test.com'>test<\\a>",
+                        },
+                    ],
+                },
+            ]
+        )
+
+        status = EnforcementActionStatus(status="expired-terminated-dismissed")
+        self.enforcement.statuses.add(status)
+        self.enforcement.content = content
+        product = EnforcementActionProduct(product="Fair Lending")
+        self.enforcement.products.add(product)
+        save_new_page(self.enforcement)
+
+        self.enforcement_actions_report_view = EnforcementActionsReportView()
+
+    def test_enforcement_report_get_queryset(self):
+        self.assertEqual(
+            self.enforcement_actions_report_view.get_queryset().count(), 1
+        )
+
+    def test_process_enforcement_content(self):
+        self.assertTrue(
+            process_enforcement_action_page_content(
+                self.enforcement.content
+            ).__contains__("Blog Text")
+        )
+
+    def test_enforcements_report_get_filename(self):
+        today = date.today()
+        self.assertEqual(
+            self.enforcement_actions_report_view.get_filename(),
+            f"enforcement-actions-report-{today}",
+        )
 
     def test_construct_absolute_url(self):
         self.assertEqual(
@@ -64,7 +123,7 @@ class ServeViewTestCase(TestCase):
 
     def test_metadata_report_get_queryset(self):
         self.assertEqual(
-            self.page_metadata_report_view.get_queryset().count(), 2
+            self.page_metadata_report_view.get_queryset().count(), 3
         )
 
     def test_documents_report_get_filename(self):

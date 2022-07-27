@@ -15,8 +15,6 @@ from paying_for_college.models.disclosures import (
     ConstantCap,
     ConstantRate,
     Contact,
-    DisclosureBase,
-    Feedback,
     Nickname,
     Notification,
     Program,

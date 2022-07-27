@@ -11,7 +11,7 @@ export class ActivitySearch {
   }
 
   selectFilter( name, value ) {
-    cy.get( `input[name="${name}"][value="${value}"]` ).check( { force: true } );
+    cy.get( `input[name="${ name }"][value="${ value }"]` ).check( { force: true } );
   }
 
   clearFilters() {

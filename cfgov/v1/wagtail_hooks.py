@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html_join
 
@@ -22,8 +21,7 @@ from wagtail.core import hooks
 from wagtail.core.whitelist import attribute_rule
 
 from ask_cfpb.models.snippets import GlossaryTerm
-from scripts import export_enforcement_actions
-from v1.admin_views import ExportFeedbackView, manage_cdn
+from v1.admin_views import manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
@@ -43,6 +41,7 @@ from v1.template_debug import (
 )
 from v1.views.reports import (
     DocumentsReportView,
+    EnforcementActionsReportView,
     ImagesReportView,
     PageMetadataReportView,
 )
@@ -55,33 +54,6 @@ except ImportError:
 
 
 logger = logging.getLogger(__name__)
-
-
-def export_data(request):
-    if request.method == "POST":
-        return export_enforcement_actions.export_actions(http_response=True)
-    return render(request, "wagtailadmin/export_data.html")
-
-
-@hooks.register("register_admin_menu_item")
-def register_export_menu_item():
-    return MenuItem(
-        "Enforcement actions",
-        reverse("export-enforcement-actions"),
-        classnames="icon icon-download",
-        order=99999,
-    )
-
-
-@hooks.register("register_admin_urls")
-def register_export_url():
-    return [
-        re_path(
-            "export-enforcement-actions",
-            export_data,
-            name="export-enforcement-actions",
-        )
-    ]
 
 
 @hooks.register("before_delete_page")
@@ -179,17 +151,6 @@ class PermissionCheckingMenuItem(MenuItem):
 
 
 @hooks.register("register_admin_menu_item")
-def register_export_feedback_menu_item():
-    return PermissionCheckingMenuItem(
-        "Export feedback",
-        reverse("export-feedback"),
-        classnames="icon icon-download",
-        order=99999,
-        permission="v1.export_feedback",
-    )
-
-
-@hooks.register("register_admin_menu_item")
 def register_django_admin_menu_item():
     return MenuItem(
         "Django Admin",
@@ -213,11 +174,6 @@ def register_frank_menu_item():
 def register_admin_urls():
     return [
         re_path(r"^cdn/$", manage_cdn, name="manage-cdn"),
-        re_path(
-            r"^export-feedback/$",
-            ExportFeedbackView.as_view(),
-            name="export-feedback",
-        ),
     ]
 
 
@@ -268,6 +224,27 @@ def register_documents_report_url():
             r"^reports/documents/$",
             DocumentsReportView.as_view(),
             name="documents_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_enforcements_actions_report_menu_item():
+    return MenuItem(
+        "Enforcement Actions",
+        reverse("enforcement_report"),
+        classnames="icon icon-" + EnforcementActionsReportView.header_icon,
+        order=700,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_enforcements_actions_documents_report_url():
+    return [
+        re_path(
+            r"^reports/enforcement-actions/$",
+            EnforcementActionsReportView.as_view(),
+            name="enforcement_report",
         ),
     ]
 

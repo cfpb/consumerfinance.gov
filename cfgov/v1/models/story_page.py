@@ -46,3 +46,5 @@ class StoryPage(CFGOVPage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
+
+    page_description = "For single-column, image- and narrative-focused pages."
