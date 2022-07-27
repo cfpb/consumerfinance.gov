@@ -33,6 +33,12 @@ spec:
                   name: {{ .name }}
                 {{- end }}
               env:
+                - name: CFGOV_SCHEMA
+                  value: "http"
+                - name: CFGOV_HOST
+                  value: {{ include "cfgov.fullname" $ | trunc 63 | trimSuffix "-" }}
+                - name: CFGOV_PORT
+                  value: {{ $.Values.service.port | quote }}
                 {{- if $.Values.postgresql.enabled }}
                 - name: PGHOST
                   {{- if $.Values.postgresql.nameOverride }}

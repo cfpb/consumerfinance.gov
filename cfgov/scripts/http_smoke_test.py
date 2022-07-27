@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import argparse
 import logging
+import os
 import sys
 import time
 
@@ -16,6 +17,16 @@ logger.addHandler(shell_log)
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "--base", help="choose a server base other than www.consumerfinance.gov"
+)
+# Parameterized Host, all 3 must be defined to be used, can define via envvar
+parser.add_argument(
+    "--schema", help="HTTP/S", default=os.getenv("CFGOV_SCHEMA")
+)
+parser.add_argument(
+    "--host", help="DNS Hostname", default=os.getenv("CFGOV_HOST")
+)
+parser.add_argument(
+    "--port", help="CFGOV Port", default=os.getenv("CFGOV_PORT")
 )
 parser.add_argument(
     "--url_list",
@@ -240,6 +251,8 @@ if __name__ == "__main__":  # pragma: nocover
         logger.setLevel(logging.INFO)
     if args.base:
         BASE = args.base
+    if args.schema and args.host and args.port:
+        BASE = f"{args.schema}://{args.host}:{args.port}"
     if args.url_list:
         url_list = args.url_list
     if args.timeout:
