@@ -1,17 +1,9 @@
-from datetime import date
 from unittest import mock
 
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission, User
 from django.contrib.contenttypes.models import ContentType
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import TestCase, override_settings
 from django.urls import reverse
-
-from wagtail.core.models import Site
-from wagtail.tests.testapp.models import SimplePage
-
-from v1.admin_views import ExportFeedbackView
-from v1.tests.wagtail_pages.helpers import save_new_page
 
 
 def create_admin_access_permissions():
@@ -143,59 +135,3 @@ class TestCDNManagerNotEnabled(TestCase):
         response = self.client.get(reverse("manage-cdn"))
         expected_message = "CDN management is not currently enabled"
         self.assertContains(response, expected_message)
-
-
-class TestExportFeedbackView(TestCase):
-    def test_get_most_recent_quarter_jan1(self):
-        self.assertEqual(
-            ExportFeedbackView.get_most_recent_quarter(date(2019, 1, 1)),
-            (date(2018, 10, 1), date(2018, 12, 31)),
-        )
-
-    def test_get_most_recent_quarter_mar31(self):
-        self.assertEqual(
-            ExportFeedbackView.get_most_recent_quarter(date(2019, 3, 31)),
-            (date(2018, 10, 1), date(2018, 12, 31)),
-        )
-
-    def test_get_most_recent_quarter_apr1(self):
-        self.assertEqual(
-            ExportFeedbackView.get_most_recent_quarter(date(2019, 4, 1)),
-            (date(2019, 1, 1), date(2019, 3, 31)),
-        )
-
-    def test_post_generates_zipfile(self):
-        root_page = Site.objects.get(is_default_site=True).root_page
-        save_new_page(
-            SimplePage(title="Ask CFPB", slug="ask-cfpb", content="ask cfpb"),
-            root=root_page,
-        )
-        save_new_page(
-            SimplePage(
-                title="Obtener respuestas",
-                slug="obtener-respuestas",
-                content="obtener respuestas",
-            ),
-            root=root_page,
-        )
-        save_new_page(
-            SimplePage(
-                title="Buying a House",
-                slug="owning-a-home",
-                content="buying a house",
-            ),
-            root=root_page,
-        )
-
-        request = RequestFactory().post(
-            "/", {"from_date": "2019-01-01", "to_date": "2019-03-31"}
-        )
-        request.user = get_user_model().objects.get(is_superuser=True)
-
-        response = ExportFeedbackView.as_view()(request)
-
-        self.assertEqual(response["Content-Type"], "application/zip")
-        self.assertEqual(
-            response["Content-Disposition"],
-            "attachment;filename=feedback_20190101_to_20190331.zip",
-        )

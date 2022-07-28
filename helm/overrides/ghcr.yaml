@@ -1,0 +1,3 @@
+image:
+  repository: "ghcr.io/cfpb/consumerfinance.gov"
+  tag: "latest"

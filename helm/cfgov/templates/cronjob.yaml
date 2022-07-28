@@ -29,40 +29,11 @@ spec:
                 {{- end }}
               volumeMounts:
                 {{- range $.Values.volumes }}
-                - mountPath: {{  .mountPath }}
+                - mountPath: {{ .mountPath }}
                   name: {{ .name }}
                 {{- end }}
               env:
-                - name: CFGOV_SCHEMA
-                  value: "http"
-                - name: CFGOV_HOST
-                  value: {{ include "cfgov.fullname" $ | trunc 63 | trimSuffix "-" }}
-                - name: CFGOV_PORT
-                  value: {{ $.Values.service.port | quote }}
-                {{- if $.Values.postgresql.enabled }}
-                - name: PGHOST
-                  {{- if $.Values.postgresql.nameOverride }}
-                  value: "{{ $.Values.postgresql.nameOverride }}-postgresql"
-                  {{- else if $.Values.postgresql.fullnameOverride }}
-                  value: "{{ $.Values.postgresql.fullNameOverride }}"
-                  {{- else }}
-                  value: "{{ include "cfgov.fullname" $ }}-postgresql"
-                  {{- end }}
-                - name: PGUSER
-                  value: "{{ $.Values.postgresql.postgresqlUsername }}"
-                - name: PGPASSWORD
-                  value: "{{ $.Values.postgresql.postgresqlPassword }}"
-                - name: PGDATABASE
-                  value: "{{ $.Values.postgresql.postgresqlDatabase }}"
-                - name: DATABASE_URL
-                  {{- if $.Values.postgresql.nameOverride }}
-                  value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ $.Values.postgresql.nameOverride }}-postgresql/{{ $.Values.postgresql.postgresqlDatabase }}"
-                  {{- else if $.Values.postgresql.fullnameOverride }}
-                  value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ $.Values.postgresql.fullNameOverride }}/{{ $.Values.postgresql.postgresqlDatabase }}"
-                  {{- else }}
-                  value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ include "cfgov.fullname" $ }}-postgresql/{{ $.Values.postgresql.postgresqlDatabase }}"
-                  {{- end }}
-                {{- end }}
+                {{- include "cfgov.postgresEnv" $ | nindent 16}}
                 {{- if $.Values.elasticsearch.enabled }}
                 - name: ES_HOST
                   {{- if $.Values.elasticsearch.nameOverride }}

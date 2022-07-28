@@ -1,3 +1,16 @@
+// Map of CFPB brand colors to their hex values that are used in this file.
+const colorMap = {
+  '@gray': '#5a5d61',
+  '@gray-20': '#d2d3d5',
+  '@gray-40': '#b4b5b6',
+  '@gray-60': '#919395',
+  '@green': '#20aa3f',
+  '@navy': '#254b87',
+  '@pacific-60': '#7eb7e8',
+  '@gold-80': '#ffb858',
+  '@purple-80': '#c55998'
+};
+
 const styles = {
   accessibility: {},
   chart: {
@@ -5,7 +18,7 @@ const styles = {
     style: {
       fontFamily: '"Avenir Next", Arial, sans-serif',
       fontSize: '16px',
-      color: '#5a5d61',
+      color: colorMap['@gray'],
       lineHeight: 1.375
     },
     events: {
@@ -16,8 +29,13 @@ const styles = {
     }
   },
   credits: false,
-  // CFPB Green, Navy, Pacific 60, Gold 80, Purple 80
-  colors: [ '#20aa3f', '#254b87', '#7eb7e8', '#ffb858', '#c55998' ],
+  colors: [
+    colorMap['@green'],
+    colorMap['@navy'],
+    colorMap['@pacific-60'],
+    colorMap['@gold-80'],
+    colorMap['@purple-80']
+  ],
   scrollbar: {
     enabled: false
   },
@@ -30,7 +48,7 @@ const styles = {
     verticalAlign: 'top',
     itemMarginBottom: 4,
     itemStyle: {
-      color: '#5a5d61',
+      color: colorMap['@gray'],
       fontFamily: '"AvenirNextLTW01-Regular", Arial, sans-serif',
       fontSize: 16
     },
@@ -55,10 +73,10 @@ const styles = {
   },
   tooltip: {
     animation: false,
-    borderColor: '#919395',
+    borderColor: colorMap['@gray-60'],
     distance: 15,
     padding: 15,
-    shadow: { color: '#b4b5b6', opacity: 0.2 },
+    shadow: { color: colorMap['@gray-40'], opacity: 0.2 },
     shared: false,
     split: false,
     style: {
@@ -68,7 +86,7 @@ const styles = {
     useHTML: true
   },
   xAxis: {
-    lineColor: '#d2d3d5',
+    lineColor: colorMap['@gray-20'],
     minRange: 3 * 30 * 24 * 3600 * 1000,
     title: {
       margin: 10
@@ -83,13 +101,13 @@ const styles = {
       rotation: 270,
       textAlign: 'center',
       style: {
-        color: '#5a5d61'
+        color: colorMap['@gray']
       }
     },
-    lineColor: '#d2d3d5',
+    lineColor: colorMap['@gray-20'],
     labels: {
       style: {
-        color: '#5a5d61',
+        color: colorMap['@gray'],
         fontSize: '16px'
       },
       formatter: function() {

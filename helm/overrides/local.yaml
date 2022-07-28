@@ -8,7 +8,6 @@ image:
 
 service:
   port: 8000
-  type: LoadBalancer
 
 volumes:
   - name: code

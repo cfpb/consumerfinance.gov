@@ -97,7 +97,6 @@ describe( 'Paying For College', () => {
       page.selectProgram( 'type', 'graduate' );
       page.selectProgram( 'years-spent', 'n' );
       page.selectProgram( 'length', '4' );
-      page.selectProgram( 'housing', 'off-campus' );
       page.clickNextStep( );
       page.costsQuestionChoice( 'no' );
       page.setText( 'costs__tuition-fees', '400000' );

@@ -15,7 +15,8 @@ jobs:
     permissions:
       packages: write
       contents: read
-
+    env:
+      DOCKER_BUILDKIT: 1
     steps:
       - uses: actions/checkout@v3
 
