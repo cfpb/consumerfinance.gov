@@ -7,7 +7,6 @@ from django.conf import global_settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
-import dj_database_url
 from elasticsearch import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
@@ -236,12 +235,17 @@ if ALLOW_ADMIN_URL:
 
 # Default database is PostgreSQL running on localhost.
 # Database name cfgov, username cfpb, password cfpb.
-# Override this by setting DATABASE_URL in the environment.
-# See https://github.com/jacobian/dj-database-url for URL formatting.
+# Override this by setting using the PG environment variables.
+# See also https://www.postgresql.org/docs/current/libpq-envars.html.
 DATABASES = {
-    "default": dj_database_url.config(
-        default="postgres://cfpb:cfpb@localhost/cfgov"
-    ),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("PGDATABASE", "cfgov"),
+        "USER": os.getenv("PGUSER", "cfpb"),
+        "PASSWORD": os.getenv("PGPASSWORD", "cfpb"),
+        "HOST": os.getenv("PGHOST", "localhost"),
+        "PORT": os.getenv("PGPORT", "5432"),
+    },
 }
 
 # Internationalization
