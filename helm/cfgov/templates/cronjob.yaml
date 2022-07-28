@@ -28,8 +28,14 @@ spec:
                 - {{ . | quote }}
                 {{- end }}
               volumeMounts:
+                # Add in main container volumes
                 {{- range $.Values.volumes }}
-                - mountPath: {{  .mountPath }}
+                - mountPath: {{ .mountPath }}
+                  name: {{ .name }}
+                {{- end }}
+                # Add in the cronjob volumes
+                {{- range .volumes }}
+                - mountPath: {{ .mountPath }}
                   name: {{ .name }}
                 {{- end }}
               env:
@@ -73,7 +79,13 @@ spec:
                 {{- end }}
           restartPolicy: {{ .restartPolicy }}
           volumes:
+            # Add in main container volumes
             {{- range $.Values.volumes }}
+            - name: {{ .name }}
+              {{- toYaml .volume | nindent 14 }}
+            {{- end }}
+            # Add in cronjob volumes
+            {{- range .volumes }}
             - name: {{ .name }}
               {{- toYaml .volume | nindent 14 }}
             {{- end }}
