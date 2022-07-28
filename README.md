@@ -19,21 +19,31 @@ This quickstart requires a working Docker Desktop installation and git:
     git clone https://github.com/cfpb/consumerfinance.gov.git
     cd consumerfinance.gov
     ```
+- One of the following runtimes:
+  - [Set up and run the Docker containers via docker-compose](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
 
-- [Set up and run the Docker containers](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
+      ```shell
+      docker-compose up
+      ```
+  - [Set up and run the Docker containers via Kubernetes via Helm](https://cfpb.github.io/consumerfinance.gov/installation/#set-up-and-run-the-docker-containers):
 
-    ```shell
-    docker-compose up
-    ```
+      ```shell
+      ./build-images.sh && ./helm-install.sh
+      ```
 
-    This may take some time, as it will also
-    [load initial data](https://cfpb.github.io/consumerfinance.gov/installation/#load-initial-data)
-    and
-    [build the frontend](https://cfpb.github.io/consumerfinance.gov/installation/#build-the-frontend).
+  if you see an error like:
+  ``` Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp [::1]:8080: connect: connection refused
+  ```
+  then you need to activate Kubernetes in your docker desktop settings!
+
+  This may take some time, as it will also
+  [load initial data](https://cfpb.github.io/consumerfinance.gov/installation/#load-initial-data)
+  and
+  [build the frontend](https://cfpb.github.io/consumerfinance.gov/installation/#build-the-frontend).
 
 consumerfinance.gov should now be available at <http://localhost:8000>.
 
-Our documentation will be available at <http://localhost:8888>.
+Our documentation will be available at <http://localhost:8888> (docker-compose only).
 
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
@@ -54,6 +64,10 @@ mkdocs serve
 Documentation will be available locally at
 [http://localhost:8000/](http://localhost:8000/).
 
+
+## Getting the package
+Packages are tagged into one of three groups: main Branch -> latest, PRs -> pr-#, and Release -> major.minor.patch. The github SHA of the commit packaged should be listed as a label.
+To see our Docker image packages you can vist [Packages page](https://github.com/cfpb/consumerfinance.gov/pkgs/container/consumerfinance.gov)
 
 ## Getting help
 

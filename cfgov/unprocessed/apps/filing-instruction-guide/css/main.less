@@ -1,0 +1,132 @@
+@import (reference) '../../../css/main.less';
+
+.o-fig {
+  // Bump up all heading sizes to improve readability
+  h1 {
+    .superheading();
+  }
+
+  h2 {
+    .h1();
+  }
+
+  h3 {
+    .h2();
+  }
+
+  h4 {
+    .h3();
+  }
+
+  h5 {
+    .h4();
+  }
+  .o-table {
+    margin-top: unit( 30px / @base-font-size-px, em );
+    td {
+      vertical-align: top;
+    }
+    br {
+      display: none;
+    }
+  }
+}
+
+.o-fig_heading {
+  a {
+    color: @black;
+  }
+}
+
+.o-fig_section__sub-sub {
+  // Put a horizontal rule above all sub level 3 headings
+  &:before {
+    display: inline-block;
+    content: "";
+    border-top: 2px solid @gray-50;
+    width: calc( 100% + 30px );
+    margin: 0 0 unit( 30px / @base-font-size-px, em ) unit( -30px / @base-font-size-px, em );
+  }
+}
+
+.o-report-sidenav {
+  position: sticky;
+  top: 0;
+  display: block;
+  overflow-y: scroll;
+
+  .m-nav-link{
+    padding-left: unit( 40px / @base-font-size-px, em );
+    text-indent: unit( -30px / @base-font-size-px, em );
+  }
+
+
+  .o-secondary-navigation_list__parents > li > a {
+    padding-left: unit( 30px / @base-font-size-px, em );
+    text-indent: unit( -18px / @base-font-size-px, em );
+  }
+
+  h3 {
+    padding-left: unit( 19px / @size-iii, em );
+  }
+
+  h4 {
+    padding-left: unit( 19px / @size-iv, em );
+  }
+
+  .o-report-sidenav__appendix > li > a {
+    text-indent: unit( -20px / @base-font-size-px, em );
+  }
+
+  .o-secondary-navigation_list__children {
+    display: none;
+  }
+
+  .parent-header {
+    .o-secondary-navigation_list__children  {
+      display: block;
+      margin-top: 0;
+      margin-bottom:0.5em;
+      .m-nav-link {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+      }
+    }
+  }
+}
+
+
+.research-report {
+  // 670px, plus a 15px gutter on each side (standard paragrah widths)
+  max-width: unit( (670 + 30) / 16, em );
+
+  .lead-paragraph, .author-names {
+    margin: 30px 0 30px 0;
+  }
+
+  .appendix-header {
+    margin: 0.83em 0;
+  }
+
+  .report-header > a {
+    color: black;
+    &:visited {
+      color: black;
+    }
+  }
+}
+
+.report-footnotes {
+  margin-left: 4px;
+}
+
+.report-global-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.respond-to-print({
+  .o-report-sidenav {
+    display: none;
+  }
+});

@@ -1,0 +1,54 @@
+
+/* topdoc
+  name: Contact Information (Sidebar)
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-sidebar-contact-info">
+            <header class="m-slug-header">
+                <h2 class="a-heading">
+                    Contact Information
+                </h2>
+            </header>
+            <div class="o-sidebar-contact-info_column">
+                <figure>
+                    <a href="#">
+                        <img src="map.png" alt="">
+                    </a>
+                </figure>
+
+                <h3>Content heading</h3>
+                <p>Content body</p>
+            </div>
+            <div class="o-sidebar-contact-info_column">
+                Contact methods.
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-sidebar-contact-info
+            .o-sidebar-contact-info_column
+  tags:
+    - cfgov-organisms
+*/
+@import (reference) '../main.less';
+
+.o-sidebar-contact-info {
+
+  &_content {
+    margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+  }
+
+  .m-contact + .m-contact {
+    // Adds margin top to info contacts that follow another
+    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+  }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

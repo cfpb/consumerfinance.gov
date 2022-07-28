@@ -8,7 +8,6 @@ describe( 'Consumer Complaint Database', () => {
   } );
 
   it( 'should limit results by a date range', () => {
-    page.clickTab( 'trends' );
     page.clickDateRange( '3m' );
     cy.url().should( 'include', 'dateRange=3m' );
     page.clickDateRange( '6m' );
@@ -22,7 +21,6 @@ describe( 'Consumer Complaint Database', () => {
   } );
 
   it( 'should limit results by search query', () => {
-    page.clickTab( 'trends' );
     cy.url().should( 'include', 'tab=Trends' );
     page.enter( 'money' );
     page.search();

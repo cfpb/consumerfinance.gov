@@ -9,7 +9,6 @@ from v1.tests.wagtail_pages.helpers import publish_page
 
 
 class ExternalLinksSearchViewTestCase(TestCase):
-
     def setUp(self):
         self.client.login(username="admin", password="admin")
 
@@ -60,12 +59,11 @@ class ExternalLinksSearchViewTestCase(TestCase):
             "/admin/external-links/", {"url": "www.foobar.com"}
         )
         self.assertContains(
-            response,
-            "There is 1 matching page and 0 matching snippets"
+            response, "There is 1 matching page and 0 matching snippets"
         )
 
     def test_single_result_per_page(self):
-        """ Page should show up once in results,
+        """Page should show up once in results,
         even if the same link occurs multiple times in it.
         """
         page = BlogPage(
@@ -98,12 +96,11 @@ class ExternalLinksSearchViewTestCase(TestCase):
             "/admin/external-links/", {"url": "www.foobar.com"}
         )
         self.assertContains(
-            response,
-            "There is 1 matching page and 0 matching snippets"
+            response, "There is 1 matching page and 0 matching snippets"
         )
 
     def test_no_duplicates(self):
-        """ Page should show up once in results,
+        """Page should show up once in results,
         even if field the link is in belongs to a parent page
         """
         page = BlogPage(

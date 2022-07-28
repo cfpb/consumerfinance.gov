@@ -1,7 +1,35 @@
 .wrapper__match-content {
-    .respond-to-min(@bp-sm-min, {
-        max-width: @grid_wrapper-width - ( @grid_gutter-width * 2 );
-    });
+  .respond-to-min( @bp-sm-min, {
+    max-width: @grid_wrapper-width - ( @grid_gutter-width * 2 );
+  } );
+}
+
+.content_level--1 {
+  max-width: 1230px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content_level-1 {
+  max-width: 930px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content_level-2 {
+  max-width: 870px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content_level-3 {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content_main__flush-inner {
+  padding-top: 0;
 }
 
 /* topdoc
@@ -19,13 +47,13 @@
   tags: cf-layout
 */
 .content__half-top-on-desk {
-    .respond-to-min(@bp-med-min, {
-        padding-top: unit( @grid_gutter-width / @base-font-size-px, em);
+  .respond-to-min( @bp-med-min, {
+    padding-top: unit( @grid_gutter-width / @base-font-size-px, em);
 
-        &:after {
-            top: unit( @grid_gutter-width / @base-font-size-px, em) !important;
-        }
-    });
+    &:after {
+      top: unit( @grid_gutter-width / @base-font-size-px, em) !important;
+    }
+  } );
 }
 
 /* topdoc
@@ -43,11 +71,11 @@
   tags: cf-layout
 */
 .content__flush-sides-on-small {
-    .respond-to-max(@bp-sm-max, {
-        padding-left: 0;
-        padding-right: 0;
-        border-width: 0;
-    });
+  .respond-to-max( @bp-sm-max, {
+    padding-left: 0;
+    padding-right: 0;
+    border-width: 0;
+  } );
 }
 
 /* topdoc
@@ -59,9 +87,9 @@
     - cf-layout
 */
 .content-l_col {
-    &.content-l_col-1 + &.content-l_col-1 {
-        margin-top: 0;
-    }
+  &.content-l_col-1 + &.content-l_col-1 {
+    margin-top: 0;
+  }
 }
 
 /* topdoc
@@ -74,55 +102,55 @@
     - cf-layout
 */
 .content-l_col-1-3__on-lg {
-    + .content-l_col-1-3__on-lg {
-        .respond-to-max( @bp-med-max, {
-            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-        } );
-
-        .respond-to-range( @bp-sm-min, @bp-med-max, {
-            &:before {
-                .a-rule-break();
-                content: '';
-                display: block;
-            }
-        } );
-    }
+  + .content-l_col-1-3__on-lg {
+    .respond-to-max( @bp-med-max, {
+      margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    } );
 
     .respond-to-range( @bp-sm-min, @bp-med-max, {
-        .grid_column( 1, 1 );
+      &:before {
+        .a-rule-break();
+        content: '';
+        display: block;
+      }
     } );
+  }
 
-    .respond-to-min( @bp-lg-min, {
-        .grid_column(4);
-    } );
+  .respond-to-range( @bp-sm-min, @bp-med-max, {
+    .grid_column( 1, 1 );
+  } );
+
+  .respond-to-min( @bp-lg-min, {
+    .grid_column(4);
+  } );
 }
 
 .content-l_col-1-2__on-lg {
-    .respond-to-max( @bp-med-max, {
-        + .content-l_col-1-2__on-lg {
-            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-        }
-    } );
+  .respond-to-max( @bp-med-max, {
+    + .content-l_col-1-2__on-lg {
+      margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+  } );
 
-    .respond-to-range( @bp-sm-min, @bp-med-max, {
-        .grid_column( 1, 1 );
-    } );
+  .respond-to-range( @bp-sm-min, @bp-med-max, {
+    .grid_column( 1, 1 );
+  } );
 
-    .respond-to-min( @bp-lg-min, {
-        .grid_column(6);
-    } );
+  .respond-to-min( @bp-lg-min, {
+    .grid_column(6);
+  } );
 }
 
 .content-l_col-1-2__on-med {
-    .respond-to-max( @bp-xs-max, {
-        + .content-l_col-1-2__on-med {
-            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-        }
-    } );
+  .respond-to-max( @bp-xs-max, {
+    + .content-l_col-1-2__on-med {
+      margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+  } );
 
-    .respond-to-range( @bp-sm-min, @bp-med-max, {
-        .grid_column( 6 );
-    } );
+  .respond-to-range( @bp-sm-min, @bp-med-max, {
+    .grid_column( 6 );
+  } );
 }
 
 
@@ -165,43 +193,43 @@
 */
 
 .equal-height_container {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .equal-height_col {
-    display: flex !important;
+  display: flex !important;
 }
 
 .equal-height_body {
-    display: flex !important;
-    flex-direction: column;
-    align-content: stretch;
-    flex: 1;
+  display: flex !important;
+  flex-direction: column;
+  align-content: stretch;
+  flex: 1;
 }
 
 .equal-height_footer {
-    margin-top: auto;
+  margin-top: auto;
 }
 
 .content-l {
-    .respond-to-min( @bp-sm-min, {
-        &__equal-height {
-            .equal-height_container;
-        }
+  .respond-to-min( @bp-sm-min, {
+    &__equal-height {
+      .equal-height_container;
+    }
 
-        &_col__equal-height {
-            .equal-height_col;
-        }
+    &_col__equal-height {
+      .equal-height_col;
+    }
 
-        &_body__equal-height {
-            .equal-height_body;
-        }
+    &_body__equal-height {
+      .equal-height_body;
+    }
 
-        &_footer__equal-height {
-            .equal-height_footer;
-        }
-    } );
+    &_footer__equal-height {
+      .equal-height_footer;
+    }
+  } );
 }
 
 /* topdoc
@@ -212,7 +240,7 @@
 */
 
 .content__hide-horizontal-overflow {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 /* topdoc
@@ -240,27 +268,27 @@
 @banner_border: @gray-40;
 
 .content_banner {
-    background-color: @banner_bg;
+  background-color: @banner_bg;
 
-    .wrapper {
-        padding: unit( @grid_gutter-width / @base-font-size-px, em )
+  .wrapper {
+    padding: unit( @grid_gutter-width / @base-font-size-px, em )
                  unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
 
-        .respond-to-range(@bp-sm-min, @bp-lg-max, {
-            padding: unit( @grid_gutter-width / @base-font-size-px, em );
-        } );
-    }
+    .respond-to-range(@bp-sm-min, @bp-lg-max, {
+      padding: unit( @grid_gutter-width / @base-font-size-px, em );
+    } );
+  }
 
-    &__border-bottom {
-        border-bottom: 1px solid @banner_border;
-    }
+  &__border-bottom {
+    border-bottom: 1px solid @banner_border;
+  }
 
-    &__border-top {
-        border-top: 1px solid @banner_border;
-    }
+  &__border-top {
+    border-top: 1px solid @banner_border;
+  }
 }
 
- /* topdoc
+/* topdoc
    name: Bulleted list with flush left alignment
    family: cf-layout
    notes:
@@ -272,94 +300,49 @@
 // TODO: Explore setting this padding value as a base style
 // on lists instead of using a modifier
 
- .m-list__flush-left {
-     padding-left: unit( 18px / @base-font-size-px, em );
- }
-
-
-// Fix hero padding on medium screens to spec in Design System
-.respond-to-min( @bp-sm-min, {
-    .m-hero_wrapper {
-        padding-right: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-        padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-    }
-} );
-
-
-// Jumbo hero for CampaignPages and the HomePage
-.m-hero__jumbo {
-    .m-hero_subhead {
-        .lead-paragraph();
-    }
-
-    .respond-to-min( @bp-sm-min, {
-        // margin-top: unit( ( -@grid_gutter-width * 1.5 ) / @base-font-size-px, em);
-        // margin-right: unit( -@grid_gutter-width / @base-font-size-px, em);
-        // margin-left: unit( -@grid_gutter-width / @base-font-size-px, em);
-
-        > .m-hero_wrapper {
-            height: 290px;
-        }
-
-        .m-hero_heading {
-            .heading-1();
-        }
-
-        .m-hero_subhead {
-            .heading-3();
-        }
-    } );
-
-    .respond-to-min( @bp-lg-min, {
-        .m-hero_heading {
-            .superheading();
-        }
-        .m-hero_subhead {
-            .heading-2();
-        }
-    } );
+.m-list__flush-left {
+  padding-left: unit( 18px / @base-font-size-px, em );
 }
-
 
 // Center content and bleed full-width images into gutters
 // Used on our story pages
 .content__center-image-bleed {
 
-    .content_main-inner {
-        max-width: 41.875rem;
-        margin: 0 auto;
+  .content_main-inner {
+    max-width: 41.875rem;
+    margin: 0 auto;
 
-        .o-full-width-text-group {
-            overflow: inherit;
-        }
-
-        .image-bleed {
-            @half-gutter-width: @grid_gutter-width / 2;
-            @two-gutter-widths: @grid_gutter-width * 2;
-
-            width: ~'calc( 100vw - @{grid_gutter-width} )';
-            max-width: ~'calc( 100vw - @{grid_gutter-width} )';
-            margin-left: ~'calc( -50vw + @{half-gutter-width} )';
-            margin-right: ~'calc( -50vw + @{half-gutter-width} )';
-            position: relative;
-            left: 50%;
-            right: 50%;
-
-            .respond-to-min( @bp-sm-min, {
-                width: ~'calc( 100vw - @{two-gutter-widths} )';
-                max-width: ~'calc( 100vw - @{two-gutter-widths} )';
-                margin-left: ~'calc( -50vw + @{grid_gutter-width} )';
-                margin-right: ~'calc( -50vw + @{grid_gutter-width} )';
-            } );
-
-            .respond-to-min( @bp-xl-min, {
-                width: @grid_wrapper-width - @two-gutter-widths;
-                max-width: @grid_wrapper-width - @two-gutter-widths;
-                margin-left: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
-                margin-right: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
-            } );
-        }
+    .o-full-width-text-group {
+      overflow: inherit;
     }
+
+    .image-bleed {
+      @half-gutter-width: @grid_gutter-width / 2;
+      @two-gutter-widths: @grid_gutter-width * 2;
+
+      width: ~'calc( 100vw - @{grid_gutter-width} )';
+      max-width: ~'calc( 100vw - @{grid_gutter-width} )';
+      margin-left: ~'calc( -50vw + @{half-gutter-width} )';
+      margin-right: ~'calc( -50vw + @{half-gutter-width} )';
+      position: relative;
+      left: 50%;
+      right: 50%;
+
+      .respond-to-min( @bp-sm-min, {
+        width: ~'calc( 100vw - @{two-gutter-widths} )';
+        max-width: ~'calc( 100vw - @{two-gutter-widths} )';
+        margin-left: ~'calc( -50vw + @{grid_gutter-width} )';
+        margin-right: ~'calc( -50vw + @{grid_gutter-width} )';
+      } );
+
+      .respond-to-min( @bp-xl-min, {
+        width: @grid_wrapper-width - @two-gutter-widths;
+        max-width: @grid_wrapper-width - @two-gutter-widths;
+        margin-left: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
+        margin-right: -( ( @grid_wrapper-width - @two-gutter-widths ) / 2 );
+      } );
+    }
+  }
 
 }
 
@@ -367,9 +350,9 @@
 // Used on our story pages
 // @TODO: Expose heading class modifiers in wagtail
 .content__supersize-headings {
-    .o-full-width-text-group h2 {
-        .h1();
-    }
+  .o-full-width-text-group h2 {
+    .h1();
+  }
 }
 
 

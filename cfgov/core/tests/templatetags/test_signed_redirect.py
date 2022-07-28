@@ -8,13 +8,13 @@ class TestIsUrl(TestCase):
         self.assertFalse(is_url(None))
 
     def test_blank(self):
-        self.assertFalse(is_url(''))
+        self.assertFalse(is_url(""))
 
     def test_http(self):
-        self.assertTrue(is_url('http://www.foo.com'))
+        self.assertTrue(is_url("http://www.foo.com"))
 
     def test_https(self):
-        self.assertTrue(is_url('https://www.foo.com'))
+        self.assertTrue(is_url("https://www.foo.com"))
 
     def test_no_http(self):
-        self.assertTrue(is_url('www.foo.com'))
+        self.assertTrue(is_url("www.foo.com"))

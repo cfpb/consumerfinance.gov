@@ -11,10 +11,7 @@ class Command(BaseCommand):
             "--cache_tag",
             required=True,
             nargs="+",
-            help=(
-                "The cache tag to invalidate "
-                "(can specify multiple)"
-            ),
+            help=("The cache tag to invalidate " "(can specify multiple)"),
         )
         parser.add_argument(
             "--action",

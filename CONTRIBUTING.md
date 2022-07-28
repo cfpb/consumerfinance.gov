@@ -45,89 +45,46 @@ When in doubt, mimic the styles and patterns in the existing codebase.
 
 ### Browser support
 
-We configure [Autoprefixer](#autoprefixer) and [Babel](#babel) to support the
-following list of browsers.
+- We serve JavaScript to any browser that
+[supports fetch](https://caniuse.com/fetch).
+We use [esbuild](https://github.com/evanw/esbuild) to transpile
+and minify our JavaScript.
 
-- Latest 2 releases of all browsers including:
-    - Chrome
-    - Firefox
-    - Safari
-    - Internet Explorer
-    - Edge
-    - Opera
-    - iOS Safari
-    - Opera Mini
-    - Android Browser
-    - BlackBerry Browser
-    - Opera Mobile
-    - Chrome for Android
-    - Firefox for Android
-    - Samsung Internet
+- We prefix CSS for [every browser in our browserslist](https://github.com/cfpb/consumerfinance.gov/blob/main/package.json#L18).
+We use [autoprefixer](https://github.com/postcss/autoprefixer) to add
+vendor-specific prefixes to rules where necessary.
 
-https://browserl.ist/?q=last+2+versions
+#### Outputting browser support metrics
 
-As well as additional Autoprefixer support for:
+Within the root directory, run `npx browserslist` to output the set of browser
+targets given to `autoprefixer` (CSS) transpiling.
 
-- Internet Explorer 8
-- Internet Explorer 9
+!!! note
+  A browserslist string is used in `package.json`.
+  See the
+  [browserslist docs](https://github.com/browserslist/browserslist#full-list)
+  for information on this string and the defaults.
 
-https://browserl.ist/?q=last+2+versions%2C+Explorer+%3E%3D+8
+For JavaScript, `esbuild` uses the [`es6`](http://es6-features.org/) target and
+our code conditionally includes JavaScript in browsers that
+[support fetch](https://caniuse.com/fetch).
 
-What this means to the end-user is we've added a level of backward
-compatibility for modern features as much as possible. This doesn't
-necessarily mean feature parity. Where it's impossible or impractical to
-implement a modern feature, we fallback to standard practices for that browser.
-For example, we do not deliver interactive scripting
-for Internet Explorer 8 and 9,
-but we do ensure that default browser features continue to work so users
-that can't or don't want to upgrade continue to have access to the site and
-our content.
+!!! note
+  JavaScript may still
+  be delivered to legacy browsers in the form of our analytics and
+  related scripts.
+
+#### Browser Testing
+
+We run automated browser tests in headless Chrome with `yarn cypress run`.
+See our [cross browser testing docs](https://cfpb.github.io/consumerfinance.gov/other-front-end-testing/#cross-browser-testing) for other testing methods.
 
 #### Satellite app assets
 
 Satellite apps may run within consumerfinance.gov, but manage their own assets
 within the
 [unprocessed/apps](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/unprocessed/apps)
-directory. These apps can have their own package.json file, webpack config file,
-and
-[browserlist config](https://github.com/browserslist/browserslist#config-file)
-file. Together of which may create a different level of browser support,
-third-party assets, or configuration for these apps, relative to the main site.
-
-#### Browser Testing
-
-We have automated tests that use a headless version of Chrome to ensure
-the majority of the site is working as expected. For manual testing, we
-realistically test this project locally or in a virtual environment with the
-following list of browsers:
-
-- Chrome
-- Firefox
-- Safari
-- Internet Explorer 8, 9, 10, and 11
-- Edge
-- iOS Safari
-- Chrome for Android
-
-#### Autoprefixer
-
-Autoprefixer parses our CSS and adds vendor prefixes to rules where necessary
-using reported feature support by [Can I Use](https://caniuse.com/). For more
-information visit the [Autoprefixer documentation site]
-(https://autoprefixer.github.io/).
-
-#### Babel
-
-Babel compiles our [ES6](http://es6-features.org/) JavaScript where necessary
-for the browsers that either don't support or have limited support of ES6
-features. For more information visit the [Babel documentation site]
-(https://babeljs.io/).
-
-#### Known feature differences
-
-- JavaScript:
-  We do not serve interactive scripting to Internet Explorer 8 and 9,
-  but we do collect analytics via JavaScript.
+directory. These apps can have their own dependencies within their package.json file.
 
 #### Resources
 

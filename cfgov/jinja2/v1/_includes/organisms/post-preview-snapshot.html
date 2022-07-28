@@ -25,8 +25,8 @@
 {% for post in posts %}
     {{ post_preview.render(
         post,
-        controls=none, 
-        url=pageurl(post.parent()),
+        controls=none,
+        url=pageurl(post.get_parent().specific),
         post_date_description=value.post_date_description
     ) }}
 {% endfor %}

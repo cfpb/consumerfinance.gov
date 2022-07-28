@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.db import migrations, models
-
 from wagtail.core import fields as core_fields
 
 

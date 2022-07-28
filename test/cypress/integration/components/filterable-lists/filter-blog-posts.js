@@ -7,7 +7,6 @@ import { Pagination } from '../pagination/pagination-helpers';
 
 const blog = new FilterableListControl();
 const filter = new Filter();
-const page = new Pagination();
 
 describe( 'Filter Blog Posts based on content', () => {
   beforeEach( () => {
@@ -25,8 +24,9 @@ describe( 'Filter Blog Posts based on content', () => {
         'contain', title.get( 0 ).innerText
       );
       // And the page url should contain "title=" followed by the title
+      const plusTitle = title.get( 0 ).innerText.split( ' ' ).join( '+' );
       cy.url().should(
-        'include', 'title=' + title.get( 0 ).innerText
+        'include', 'title=' + plusTitle
       );
     } );
   } );
@@ -34,15 +34,15 @@ describe( 'Filter Blog Posts based on content', () => {
     // retrieve the category
     filter.getCategory().then( category => {
       // When I select the first option in the Category multiselect
-      filter.clickCategory( category.get( 0 ).getAttribute( 'value' ) );
+      filter.clickCategory( category.get( 0 ).getAttribute( 'data-option' ) );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then I should see only results in that category
-      blog.notification().should( 'be.visible' );
+      //blog.notification().should( 'be.visible' );
       // And the page url should contain "categories=" category
       cy.url().should(
         'include',
-        'categories=' + category.get( 0 ).getAttribute( 'value' )
+        'categories=' + category.get( 0 ).getAttribute( 'data-option' )
       );
     } );
   } );
@@ -50,11 +50,21 @@ describe( 'Filter Blog Posts based on content', () => {
     // retrieve the categories
     filter.getCategory().then( categories => {
       // When I select all options checkboxes in the Category multiselect
-      filter.clickCategory( categories.get( 0 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 1 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 2 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 3 ).getAttribute( 'value' ) );
-      filter.clickCategory( categories.get( 4 ).getAttribute( 'value' ) );
+      filter.clickCategory( categories.get( 0 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 1 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 2 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 3 ).getAttribute(
+        'data-option'
+      ) );
+      filter.clickCategory( categories.get( 4 ).getAttribute(
+        'data-option'
+      ) );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then I should see only results that are in at least one of the selected categories
@@ -62,27 +72,27 @@ describe( 'Filter Blog Posts based on content', () => {
       // And the page url should contain "categories=at-the-cfpb"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 0 ).getAttribute( 'value' )
+        'categories=' + categories.get( 0 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=directors-notebook"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 1 ).getAttribute( 'value' )
+        'categories=' + categories.get( 1 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=policy_compliance"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 2 ).getAttribute( 'value' )
+        'categories=' + categories.get( 2 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=data-research-reports"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 3 ).getAttribute( 'value' )
+        'categories=' + categories.get( 3 ).getAttribute( 'data-option' )
       );
       // And the page url should contain "categories=info-for-consumers"
       cy.url().should(
         'include',
-        'categories=' + categories.get( 4 ).getAttribute( 'value' )
+        'categories=' + categories.get( 4 ).getAttribute( 'data-option' )
       );
     } );
   } );
@@ -91,7 +101,7 @@ describe( 'Filter Blog Posts based on content', () => {
     blog.resultDate().then( date => {
       // When I enter the date in the From date entry field
       blog.filterFromDate(
-        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[0]
       );
       // And I click "Apply filters" button
       blog.applyFilters();
@@ -101,11 +111,9 @@ describe( 'Filter Blog Posts based on content', () => {
         'from_date=' + date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[
           0
         ] );
-      // When I paginate to the last page of results
-      page.lastResults();
       // Then I should see only results dated that year or later
       blog.lastResultHeader().should(
-        'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[ 0 ]
+        'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[0]
       );
     } );
   } );
@@ -114,18 +122,18 @@ describe( 'Filter Blog Posts based on content', () => {
     blog.resultDate().then( date => {
       // When I enter the date in the From date entry field
       blog.filterFromDate(
-        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[0]
       );
       // And I enter the date in the To date entry field
       blog.filterToDate(
-        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+        date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[0]
       );
       // And I click "Apply filters" button
       blog.applyFilters();
       // Then I should see only results from the year belonging to that date
       blog.notification().should( 'be.visible' );
       blog.resultsHeaderRight().should(
-        'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[ 0 ]
+        'contain', date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[0]
       );
       // And the page url should contain "from_date=" date
       cy.url().should(
@@ -256,7 +264,9 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+          category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
         );
         // When I select a checkbox in the Topic list
         filter.clickTopic(
@@ -274,8 +284,8 @@ describe( 'Filter Blog Posts based on content', () => {
             '\n'
           ).pop().trim().split( ' ' ).join(
             '-'
-          ).toLowerCase()).then( label => {
-          blog.resultsContent().should( 'contain', label.get( 0 ).innerText);
+          ).toLowerCase() ).then( label => {
+          blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
         } );
         // And the page url should contain "categories=policy_compliance"
         cy.url().should(
@@ -300,7 +310,9 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+          category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
         );
         // When I select a checkbox in the Topic list
         filter.clickTopic(
@@ -318,8 +330,8 @@ describe( 'Filter Blog Posts based on content', () => {
             '\n'
           ).pop().trim().split( ' ' ).join(
             '-'
-          ).toLowerCase()).then( label => {
-          blog.resultsContent().should( 'contain', label.get( 0 ).innerText);
+          ).toLowerCase() ).then( label => {
+          blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
         } );
         // And the page url should contain "categories=policy_compliance"
         cy.url().should(
@@ -416,7 +428,9 @@ describe( 'Filter Blog Posts based on content', () => {
         blog.filterItemName( title.get( 0 ).innerText );
         // And I select a checkbox in the category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split( '\n' ).pop().trim()
+          category.get( 0 ).innerText.split(
+            '\n'
+          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
         );
         // And I click "Apply filters" button
         blog.applyFilters();
@@ -427,7 +441,8 @@ describe( 'Filter Blog Posts based on content', () => {
           'contain', category.get( 0 ).innerText.split( '\n' ).pop().trim()
         );
         // And the page url should contain "title=" title
-        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        const plusTitle = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plusTitle );
         // And the page url should contain "categories=" category
         cy.url().should(
           'include',
@@ -459,11 +474,12 @@ describe( 'Filter Blog Posts based on content', () => {
             '\n'
           ).pop().trim().split( ' ' ).join(
             '-'
-          ).toLowerCase()).then( label => {
+          ).toLowerCase() ).then( label => {
           blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
         } );
         // And the page url should contain "title=" title
-        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        const plusTitle = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plusTitle );
         // And the page url should contain "topics=" topic
         cy.url().should(
           'include',
@@ -483,11 +499,11 @@ describe( 'Filter Blog Posts based on content', () => {
         blog.filterItemName( title.get( 0 ).innerText );
         // And I type "01/01/2020" in the From date entry field
         blog.filterFromDate(
-          date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+          date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[0]
         );
         // And I type "01/01/2021" in the To date entry field to bound the date range
         blog.filterToDate(
-          date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[ 0 ]
+          date.get( 0 ).getAttribute( 'datetime' ).split( 'T' )[0]
         );
         // And I click "Apply filters" button
         blog.applyFilters();
@@ -495,17 +511,18 @@ describe( 'Filter Blog Posts based on content', () => {
         blog.notification().should( 'be.visible' );
         blog.lastResultHeader().should(
           'contain',
-          date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[ 0 ]
+          date.get( 0 ).getAttribute( 'datetime' ).split( '-' )[0]
         );
         blog.resultsContent().should( 'contain', title.get( 0 ).innerText );
         // And the page url should contain "title=loans"
-        cy.url().should( 'include', 'title=' + title.get( 0 ).innerText );
+        const plusTitle = title.get( 0 ).innerText.split( ' ' ).join( '+' );
+        cy.url().should( 'include', 'title=' + plusTitle );
         // And the page url should contain "from_date=2020-01-01"
         cy.url().should(
           'include',
           'from_date=' + date.get( 0 ).getAttribute(
             'datetime'
-          ).split( 'T' )[ 0 ]
+          ).split( 'T' )[0]
         );
       } );
     } );

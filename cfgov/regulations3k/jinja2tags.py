@@ -1,7 +1,7 @@
 import datetime
 
-from wagtail.contrib.routable_page.templatetags.wagtailroutablepage_tags import (  # noqa: E501
-    routablepageurl
+from wagtail.contrib.routable_page.templatetags.wagtailroutablepage_tags import (  # noqa: B950
+    routablepageurl,
 )
 
 import jinja2
@@ -12,7 +12,7 @@ from regdown import regdown as regdown_func
 
 
 def ap_date(date):
-    """ Convert a date object or date string into an AP-styled date string. """
+    """Convert a date object or date string into an AP-styled date string."""
     if date is None:
         return None
     if type(date) != datetime.date:
@@ -33,27 +33,31 @@ def regdown_filter(text):
 
 
 def regs_hide_on_mobile(text):
-    """ Mark specific patterns in text as hidden on mobile """
-    text = do_mark_safe(text.replace(
-        'Regulation',
-        'Reg<span class="u-hide-on-mobile">ulation</span>'
-    ))
+    """Mark specific patterns in text as hidden on mobile"""
+    text = do_mark_safe(
+        text.replace(
+            "Regulation", 'Reg<span class="u-hide-on-mobile">ulation</span>'
+        )
+    )
     return text
 
 
 class RegulationsExtension(Extension):
-
     def __init__(self, environment):
         super().__init__(environment)
 
-        self.environment.globals.update({
-            'routablepageurl': jinja2.contextfunction(routablepageurl),
-            'ap_date': ap_date,
-        })
-        self.environment.filters.update({
-            'regdown': regdown_filter,
-            'regs_hide_on_mobile': regs_hide_on_mobile,
-        })
+        self.environment.globals.update(
+            {
+                "routablepageurl": jinja2.contextfunction(routablepageurl),
+                "ap_date": ap_date,
+            }
+        )
+        self.environment.filters.update(
+            {
+                "regdown": regdown_filter,
+                "regs_hide_on_mobile": regs_hide_on_mobile,
+            }
+        )
 
 
 regulations = RegulationsExtension

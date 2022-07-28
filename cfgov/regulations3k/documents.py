@@ -8,7 +8,7 @@ from search.elasticsearch_helpers import environment_specific_index
 @registry.register_document
 class SectionParagraphDocument(Document):
 
-    text = fields.TextField(attr='paragraph', boost=10)
+    text = fields.TextField(attr="paragraph", boost=10)
     title = fields.TextField()
     part = fields.KeywordField()
     date = fields.DateField()
@@ -35,13 +35,10 @@ class SectionParagraphDocument(Document):
         return instance.section.title
 
     class Index:
-        name = environment_specific_index('regulations3k')
-        settings = {'number_of_shards': 1,
-                    'number_of_replicas': 0}
+        name = environment_specific_index("regulations3k")
+        settings = {"number_of_shards": 1, "number_of_replicas": 0}
 
     class Django:
         model = SectionParagraph
 
-        fields = [
-            'paragraph_id'
-        ]
+        fields = ["paragraph_id"]

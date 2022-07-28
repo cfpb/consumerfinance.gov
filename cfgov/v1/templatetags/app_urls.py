@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.simple_tag
 def app_url(request):
-    return request.path.split('/')[1]
+    return request.path.split("/")[1]
 
 
 @register.simple_tag

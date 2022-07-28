@@ -7,13 +7,13 @@ logger = logging.getLogger(__name__)
 
 
 HUD_COUNSELORS_URL = (
-    'https://data.hud.gov/Housing_Counselor/searchByLocation?'
-    'Lat=38.8951&Long=-77.0367&Distance=5000'
+    "https://data.hud.gov/Housing_Counselor/searchByLocation?"
+    "Lat=38.8951&Long=-77.0367&Distance=5000"
 )
 
-HUD_LANGUAGES_URL = 'https://data.hud.gov/Housing_Counselor/getLanguages'
+HUD_LANGUAGES_URL = "https://data.hud.gov/Housing_Counselor/getLanguages"
 
-HUD_SERVICES_URL = 'https://data.hud.gov/Housing_Counselor/getServices'
+HUD_SERVICES_URL = "https://data.hud.gov/Housing_Counselor/getServices"
 
 
 def fetch_counselors():
@@ -25,8 +25,8 @@ def fetch_counselors():
     counselors = download_housing_counselors(HUD_COUNSELORS_URL)
 
     for key, url in (
-        ('languages', HUD_LANGUAGES_URL),
-        ('services', HUD_SERVICES_URL),
+        ("languages", HUD_LANGUAGES_URL),
+        ("services", HUD_SERVICES_URL),
     ):
         replace_abbreviations(counselors, key, url)
 
@@ -35,28 +35,30 @@ def fetch_counselors():
 
 def download_housing_counselors(url):
     """Download HUD counselors from a given URL."""
-    logger.info('Downloading HUD counselors from %s', url)
+    logger.info("Downloading HUD counselors from %s", url)
     counselors = get_json_from_url(url)
 
     if not counselors:
-        raise RuntimeError('Could not download HUD counselors')
+        raise RuntimeError("Could not download HUD counselors")
 
-    logger.info('Retrieved %d counselors', len(counselors))
+    logger.info("Retrieved %d counselors", len(counselors))
     return counselors
 
 
 def replace_abbreviations(counselors, attribute, url):
     """Replace attribute abbreviations with names from a given URL."""
-    logger.info('Downloading counselor %s from %s', attribute, url)
+    logger.info("Downloading counselor %s from %s", attribute, url)
     values = get_json_from_url(url)
-    values_dict = dict((lang['key'], lang['value']) for lang in values)
+    values_dict = dict((lang["key"], lang["value"]) for lang in values)
 
     for counselor in counselors:
         abbreviations = counselor[attribute]
-        counselor[attribute] = list(map(
-            lambda key: values_dict[key],
-            abbreviations.split(',') if abbreviations else []
-        ))
+        counselor[attribute] = list(
+            map(
+                lambda key: values_dict[key],
+                abbreviations.split(",") if abbreviations else [],
+            )
+        )
 
 
 def get_json_from_url(url):

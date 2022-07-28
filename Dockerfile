@@ -1,45 +1,61 @@
 FROM python:3.8-alpine as base
 
-# cfgov-dev is used for local development, as well as a base for frontend and prod.
-FROM base AS cfgov-dev
+# Hard labels
+LABEL maintainer="tech@cfpb.gov"
 
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
 ENV ENV /etc/profile
-
-LABEL maintainer="tech@cfpb.gov"
-
+ENV PIP_NO_CACHE_DIR true
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
-
 ENV APP_HOME /src/consumerfinance.gov
-RUN mkdir -p ${APP_HOME}
+
 WORKDIR ${APP_HOME}
 
-# Install common OS packages
+# Install and update common OS packages, pip, setuptools, wheel, and awscli
 RUN apk update --no-cache && apk upgrade --no-cache
+RUN pip install --upgrade pip setuptools wheel awscli
+
+# Add `$HOME/.local/bin` to PATH
+RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> /etc/profile
+
+# Intermediate layer to build only prod deps
+FROM base as cfgov-python-builder
+
 # .build-deps are required to build and test the application (pip, tox, etc.)
 RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev postgresql-dev
-# .backend-deps and .frontend-deps are required to run the application
-RUN apk add --no-cache --virtual .backend-deps bash curl postgresql
-RUN apk add --no-cache --virtual .frontend-deps jpeg-dev nodejs yarn zlib-dev
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
-
-# Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
-# NOTE: MUST be after pip upgrade. Build fails otherwise due to bug in old pip.
-ENV PIP_NO_CACHE_DIR true
 
 # Install python requirements
 COPY requirements requirements
-RUN pip install -r requirements/local.txt -r requirements/deployment.txt
+RUN pip install --user -r requirements/deployment.txt
+
+# cfgov-dev is used for local development, as well as a base for frontend.
+FROM cfgov-python-builder AS cfgov-dev
+
+ENV CFGOV_PATH ${APP_HOME}
+ENV CFGOV_CURRENT ${APP_HOME}
+ENV PYTHONPATH ${APP_HOME}/cfgov
+
+# Django Settings
+ENV DJANGO_SETTINGS_MODULE cfgov.settings.local
+ENV ALLOWED_HOSTS '["*"]'
+
+# .backend-deps and .frontend-deps are required to run the application
+RUN apk add --no-cache --virtual .backend-deps bash curl postgresql
+RUN apk add --no-cache --virtual .frontend-deps jpeg-dev nodejs yarn zlib-dev
+
+# Install python requirements
+COPY requirements requirements
+RUN pip install --user -r requirements/local.txt
 
 EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
-# Build Frontend Assets
-FROM cfgov-dev as cfgov-build
+# Build Frontend Assets using cfgov-dev as base
+FROM cfgov-dev as cfgov-frontend-builder
 
 ARG FRONTEND_TARGET=production
 
@@ -58,7 +74,7 @@ COPY . .
 RUN ./frontend.sh  ${FRONTEND_TARGET} && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
-    rm -rf node_modules npm-packages-offline-cache
+    rm -rf node_modules npm-packages-offline-cache cfgov/unprocessed
 
 # Build mod_wsgi against target Python version
 FROM base as cfgov-mod-wsgi
@@ -68,12 +84,12 @@ RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.0.tar
 RUN echo -n "0a6f380af854b85a3151e54a3c33b520c4a6e21a99bcad7ae5ddfbfe31a74b50  mod_wsgi.tar.gz" | sha256sum -c
 RUN tar xvf mod_wsgi.tar.gz
 RUN cd mod_wsgi* && ./configure && make install
-RUN ls /usr/lib/apache2/mod_wsgi.so  # Ensure it compiled and is where it's expected
+RUN ls /usr/lib/apache2/mod_wsgi.so  # Ensure it compiled and is where expected
 RUN apk del .build-deps
 RUN rm -Rf /tmp/mod_wsgi*
 
 # Production-like Apache-based image
-FROM cfgov-dev as cfgov-prod
+FROM base as cfgov-prod
 
 ENV HTTPD_ROOT /etc/apache2
 
@@ -98,7 +114,7 @@ ENV ALLOWED_HOSTS '["*"]'
 # Install Apache server and curl (container healthcheck),
 # and converts all Docker Secrets into environment variables.
 RUN apk add --no-cache apache2 curl && \
-    echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
+    echo '[ -d /var/run/secrets ] && for s in $(find /var/run/secrets -type f -name "*" -maxdepth 1) ; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
 
 # Link mime.types for RHEL Compatability in apache config.
 # TODO: Remove this link once RHEL is replaced
@@ -107,26 +123,35 @@ RUN ln -s /etc/apache2/mime.types /etc/mime.types
 # Copy mod_wsgi.so from mod_wsgi image
 COPY --from=cfgov-mod-wsgi /usr/lib/apache2/mod_wsgi.so /usr/lib/apache2/mod_wsgi.so
 
+# Copy installed production requirements from the cfgov-python-builder layer
+COPY --from=cfgov-python-builder --chown=apache:apache /root/.local /var/www/.local
+
+RUN chown -R apache:apache ${APP_HOME}
+
 # Copy the cfgov directory form the build image
-COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
-COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/initial-data.sh ${CFGOV_PATH}/
-COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PATH}/static.in
+COPY --from=cfgov-frontend-builder --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
+COPY --from=cfgov-frontend-builder --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/initial-data.sh ${CFGOV_PATH}/
+COPY --from=cfgov-frontend-builder --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PATH}/static.in
 
 RUN ln -s /usr/lib/apache2 cfgov/apache/modules
-RUN chown -R apache:apache ${APP_HOME} /usr/share/apache2 /var/run/apache2 /var/log/apache2
+RUN chown -R apache:apache /usr/share/apache2 /var/run/apache2 /var/log/apache2
 
-# Remove build dependencies for smaller image
-RUN apk del .build-deps
+# Cleanup *.key files
+RUN for i in $(find /usr/local/lib/python3* -type f -name "*.key*"); do rm "$i"; done
+RUN for i in $(find /var/www/.local/lib/python3* -type f -name "*.key*"); do rm "$i"; done
 
+# .backend-deps are required to run the application
+RUN apk add --no-cache --virtual .backend-deps bash postgresql-client
+
+# Swap to apache user
 USER apache
 
-# Build frontend, cleanup excess file, and setup filesystem
-# - cfgov/f/ - Wagtail file uploads
-RUN rm -rf cfgov/apache/www cfgov/unprocessed && \
-    mkdir -p cfgov/f
+# Create additional structure
+# cfgov/f/ - Wagtail file uploads
+RUN mkdir -p cfgov/f
 
 # Healthcheck retry set high since database loads take a while
 HEALTHCHECK --start-period=300s --interval=30s --retries=30 \
-            CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
+            CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000/ht/
 
 CMD ["httpd", "-d", "/src/consumerfinance.gov/cfgov/apache", "-f", "/src/consumerfinance.gov/cfgov/apache/conf/httpd.conf", "-D", "FOREGROUND"]

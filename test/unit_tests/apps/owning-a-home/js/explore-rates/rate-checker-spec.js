@@ -1,13 +1,10 @@
 import * as rateChecker from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/rate-checker.js';
-import axios from '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/axios';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 
-// Mock the XmlHttpRequest call from axios.
-jest.mock(
-  '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/axios'
+global.fetch = jest.fn( () => Promise.resolve( {
+  json: () => new Promise( r => r )
+} )
 );
-const mockResp = { data: 'mock data' };
-axios.get.mockImplementation( () => Promise.resolve( mockResp ) );
 
 const HTML_SNIPPET = `
 <div class="rate-checker">

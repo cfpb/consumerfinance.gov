@@ -58,7 +58,7 @@ class Views(TestCase):
         """
         count = random.randint(3, 10)
 
-        for i in range(count):
+        for _ in range(count):
             agreement_factory()
 
         self.client.get(reverse("agreements_home"))

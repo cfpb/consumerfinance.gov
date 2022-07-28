@@ -106,7 +106,7 @@ def get_months_past_birthday(dob):
 
 
 def get_months_until_next_birthday(dob):
-    """return number of months until next birthday, with a minimum of 1 """
+    """return number of months until next birthday, with a minimum of 1"""
     today = datetime.date.today()
     try:
         bday_this_year = datetime.date(today.year, dob.month, dob.day)

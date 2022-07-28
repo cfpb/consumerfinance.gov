@@ -1,0 +1,45 @@
+{% set has_toc = True %}
+{% extends 'layout-side-nav.html' %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ static('apps/filing-instruction-guide/css/main.css') }}">
+{% endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom research-report o-fig
+{%- endblock %}
+
+
+{% block content_main %}
+    <div class="block block__flush-top">
+      <div class="eyebrow">{{ page.eyebrow }}</div>
+      <h1>{{ page.page_header }}</h1>
+      <div class="lead-paragraph">{{ page.subheader }}</div>
+      <a class="a-link a-link__jump" href="javascript:window.print()">
+          <span class="a-link_text">
+		  Print this page
+          </span>
+      </a>
+    </div>
+
+    {% for block in page.content %}
+      {% include_block block %}
+    {% endfor %}
+
+{% endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/filing-instruction-guide/js/fig-sidenav.js') }}',
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

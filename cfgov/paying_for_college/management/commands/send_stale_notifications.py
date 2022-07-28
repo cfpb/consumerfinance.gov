@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from paying_for_college.disclosures.scripts.notifications import (
-    send_stale_notifications
+    send_stale_notifications,
 )
 
 
@@ -19,14 +19,13 @@ class Command(BaseCommand):
     help = COMMAND_HELP
 
     def add_arguments(self, parser):
-        parser.add_argument('--add-email',
-                            help=PARSER_HELP,
-                            nargs='+',
-                            type=str)
+        parser.add_argument(
+            "--add-email", help=PARSER_HELP, nargs="+", type=str
+        )
 
     def handle(self, *args, **options):
-        if options['add_email']:
-            msg = send_stale_notifications(add_email=options['add_email'])
+        if options["add_email"]:
+            msg = send_stale_notifications(add_email=options["add_email"])
         else:
             msg = send_stale_notifications()
         self.stdout.write(msg)

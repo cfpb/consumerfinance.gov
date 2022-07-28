@@ -6,16 +6,7 @@
 // Project-specific Less rules go after the imports.
 
 // Import Design System components.
-@import (reference) "cfpb-core.less";
-@import (reference) "cfpb-buttons.less";
-@import (reference) "cfpb-forms.less";
-@import (reference) "cfpb-grid.less";
-@import (reference) "cfpb-icons.less";
-@import (less) "cfpb-layout.less";
-@import (reference) "cfpb-typography.less";
-
-// Import the brand color palette.
-@import (less) "brand-palette.less";
+@import (reference) "../../../css/main.less";
 
 // Override the Design System theme variables with colors from the brand color palette.
 @import (less) "cf-theme-overrides.less";
@@ -25,9 +16,6 @@
 
 // Import the disclosures.less file
 @import (less) "disclosures.less";
-
-// Import the repay.less file
-@import (less) "repay.less";
 
 // Import the college-costs.less file
 @import (less) "college-costs/vars.less";
@@ -43,5 +31,5 @@
 @import (less) "guides.less";
 
 .respond-to-print( {
-    @import (less) "print.css";
+  @import (less) "print.css";
 } );

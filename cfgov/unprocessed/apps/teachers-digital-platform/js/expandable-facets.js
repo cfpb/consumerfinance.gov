@@ -2,9 +2,6 @@
    Expandable Facets Organism
    ========================================================================== */
 
-// polyfill for ie9 compatibility
-require( 'classlist-polyfill' );
-
 import AtomicComponent from '@cfpb/cfpb-atomic-component/src/components/AtomicComponent.js';
 import ExpandableFacetTransition from './ExpandableFacetTransition';
 

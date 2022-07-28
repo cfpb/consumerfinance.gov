@@ -167,28 +167,24 @@ class TestExportFeedbackView(TestCase):
     def test_post_generates_zipfile(self):
         root_page = Site.objects.get(is_default_site=True).root_page
         save_new_page(
-            SimplePage(
-                title='Ask CFPB',
-                slug='ask-cfpb',
-                content='ask cfpb'
-            ),
-            root=root_page
+            SimplePage(title="Ask CFPB", slug="ask-cfpb", content="ask cfpb"),
+            root=root_page,
         )
         save_new_page(
             SimplePage(
-                title='Obtener respuestas',
-                slug='obtener-respuestas',
-                content='obtener respuestas'
+                title="Obtener respuestas",
+                slug="obtener-respuestas",
+                content="obtener respuestas",
             ),
-            root=root_page
+            root=root_page,
         )
         save_new_page(
             SimplePage(
-                title='Buying a House',
-                slug='owning-a-home',
-                content='buying a house'
+                title="Buying a House",
+                slug="owning-a-home",
+                content="buying a house",
             ),
-            root=root_page
+            root=root_page,
         )
 
         request = RequestFactory().post(
