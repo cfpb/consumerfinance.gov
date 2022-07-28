@@ -43,7 +43,12 @@ services:
         stdin_open: true
         tty: true
         environment:
-            DATABASE_URL: postgres://cfpb:cfpb@postgres/cfgov
+            PGDATABASE: cfgov
+            PGUSER: cfpb
+            PGPASSWORD: cfpb
+            POSTGRES_USER: cfpb
+            PGHOST: postgres
+            PGPORT: 5432
             ES_HOST: elasticsearch
             SECRET_KEY: abcdefghijklmnopqrstuvwxyz
     docs:

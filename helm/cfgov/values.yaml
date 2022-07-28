@@ -220,6 +220,7 @@ postgresql:
 
 elasticsearch:
   enabled: false
+  externalHostname: ""  # AWS OpenSearch
 
 kibana:
   enabled: false
