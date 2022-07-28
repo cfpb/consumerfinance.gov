@@ -20,7 +20,7 @@ jobs:
       postgres:
         # https://help.github.com/en/actions/configuring-and-managing-workflows/creating-postgresql-service-containers
         # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
-        image: postgres
+        image: postgres:13
         env:
           POSTGRES_USER: cfpb
           POSTGRES_PASSWORD: cfpb
@@ -29,6 +29,7 @@ jobs:
         - 5432:5432
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
       elasticsearch:
         image: elasticsearch:7.10.1
         ports:
