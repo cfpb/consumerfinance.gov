@@ -192,14 +192,6 @@ cronJobs:
     args:
       - "publish_scheduled_pages"
     restartPolicy: OnFailure
-  - name: "smoke-test"
-    schedule:  "@weekly"
-    command:
-      - "bash"
-    args:
-      - '-c'
-      - "python cfgov/scripts/http_smoke_test.py -v"
-    restartPolicy: Never
   - name: "elasticsearch-Rebuild-Index"
     schedule: "@daily"
     command:
