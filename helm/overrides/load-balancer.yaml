@@ -1,0 +1,16 @@
+service:
+  type: LoadBalancer
+  port: 8000
+
+postgresql:
+  primary:
+    service:
+      type: LoadBalancer
+
+elasticsearch:
+  service:
+    type: LoadBalancer
+
+kibana:
+  service:
+    type: LoadBalancer
