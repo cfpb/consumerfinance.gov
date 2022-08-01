@@ -85,7 +85,7 @@ const init = () => {
     } );
 
     const observer = new IntersectionObserver( handleIntersect, {
-
+      root: document,
       // Sets an intersection area that spans 5% above the top of the viewport and
       // 95% above the bottom of the viewport, resulting in a box that is 10% of
       // the viewport height with 5% hanging over the top.
