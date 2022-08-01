@@ -28,6 +28,12 @@ volumes:
         path: ${PROJECT_DIR}/extend-environment.sh
         type: File
     mountPath: /src/consumerfinance.gov/extend-environment.sh
+  - name: aws-creds
+    volume:
+      hostPath:
+        path: ${HOME}/.aws
+        type: Directory
+    mountPath: /root/.aws
 
 importDbPath: "${CFGOV_PROD_DB_LOCATION}"
 
