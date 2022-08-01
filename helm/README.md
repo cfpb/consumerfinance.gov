@@ -75,10 +75,9 @@ run the following command in the correct namespace
 TODO: Add Table with commonly overridden values.
 
 
-# Cron jobs
-
+# CronJobs
 To make a new
-[Kubernetes cron job](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)
+[Kubernetes CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)
 based on our [CronJob template](cfgov/templates/cronjob.yaml),
 add a new item to the cronJobs array in
 [`cfgov/values.yaml`](cfgov/values.yaml).
@@ -95,3 +94,37 @@ For example, our Django
     - "clearsessions"
   restartPolicy: OnFailure
 ```
+
+# Manually Loading Data
+To manually load data (such as `test.sql.gz`), deploy the Helm chart as normal.
+You can wait for it to finish deploying, or not. Scale the main deployment to 0.
+
+    kubectl scale deployment --replicas=0 cfgov
+
+Once the main container has terminated, expose the Postgres and ElasticSearch
+ports via port-forwarding. This is a blocking command, so you will need to
+use multiple terminals (or use OpenLens). The will need to be exposed on their
+respective ports (or update your `.env` accordingly).
+
+    kubectl port-forward service/cfgov-postgresql 5432:5432
+    kubectl port-forward service/cfgov-elasticsearch-master 9200:9200
+
+Ensure you source your `.env` file, where it will set the `PG*` and `ES`
+environment variables to `localhost`. Activate your virtual environment locally
+as well.
+
+    source .env  # Source .env file
+    source venv/bin/activate  # Activate your virtualenv (however you do it)
+
+Now you can run `./refresh-data.sh` to load your data.
+
+    ./refresh-data.sh test.sql.gz
+
+Once this has completed, scale the main deployment back up.
+
+    kubectl scale deployment --replicas=1 cfgov
+
+The main container should be created, and skip migrations
+(assuming a user was created `SELECT COUNT(*) FROM auth_user`).
+The main container should now be loaded with Postgres and ElasticSearch with
+your manually loaded data.
