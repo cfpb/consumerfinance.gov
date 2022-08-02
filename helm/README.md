@@ -136,10 +136,10 @@ your manually loaded data.
 
 ## Optionals
 ### `ingress-nginx`
-We use `ingress-nginx` as a cluster wide proxy similar to how
-we used an `nginx` container in `explorer-docker`. To deploy
+We use `ingress-nginx` as a cluster wide proxy to be able to map
+`*.localhost` to multiple deployments (CFGOV, Grafana, etc) locally. To deploy
 `ingress-nginx` to your local Kubernetes, run the following (change the ports
-that the services binds to localhost on if needed, default is 80 and 443):
+that the services binds to on localhost if needed, default is 80 and 443):
 
     helm upgrade --install ingress-nginx ingress-nginx \
       --set controller.service.ports.http=80 \
@@ -149,7 +149,10 @@ that the services binds to localhost on if needed, default is 80 and 443):
 
 This will allow us to access the application via
 [http://<release>.localhost](http://<release>.localhost).
-This allows us to mimic Ambassador `Mapping`'s locally.
+This enables ingress to mimic Ambassador `Mapping`'s locally.
+
+*NOTE:* You will need to add the http port to the URL if you change
+from 80.
 
 Example:
   * default -> [http://cfgov.localhost](http://cfgov.localhost)
