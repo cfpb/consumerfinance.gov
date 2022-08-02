@@ -83,5 +83,6 @@ cronJobs:
     args:
       - "-c"
       - "pg_dump --no-owner --no-privileges | gzip > test.gz"
+      - "aws s3 ls"
     restartPolicy: OnFailure
     suspend: true
