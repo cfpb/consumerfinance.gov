@@ -50,7 +50,6 @@ cronJobs:
       - "django-admin"
     args:
       - "publish_scheduled_pages"
-    restartPolicy: OnFailure
     suspend: true
 
   - name: "clearSessions"
@@ -59,7 +58,6 @@ cronJobs:
       - "django-admin"
     args:
       - "clearsessions"
-    restartPolicy: OnFailure
 
   - name: "elasticsearch-Rebuild-Index"
     schedule: "@daily"
@@ -70,7 +68,6 @@ cronJobs:
       - "--rebuild"
       - "--parallel"
       - "-f"
-    restartPolicy: OnFailure
 
   - name: "dump-Postgres-DB"
     schedule: "@daily"
@@ -78,6 +75,5 @@ cronJobs:
       - "bash"
     args:
       - "-c"
-      - "pg_dump --no-owner --no-privileges | gzip > test.gz"
-    restartPolicy: OnFailure
+      - "pg_dump --no-owner --no-privileges | gzip > test.sql.gz"
     suspend: true
