@@ -6,6 +6,7 @@ import {
   getStateValue
 } from '../dispatchers/get-model-values.js';
 import {
+  clearFinancialCosts,
   recalculateFinancials,
   refreshExpenses,
   updateFinancial,
@@ -70,21 +71,6 @@ const schoolView = {
       elem.innerText = val;
     } );
 
-  },
-
-  /**
-   * updateViewWithErrors - updates form fields with classes to show error states.
-   * NOTE: The appearance of error messages is mostly found in the state-based.less rules
-   */
-  updateViewWithErrors: () => {
-    const errorChecks = [ 'programType', 'programProgress', 'programLength',
-      'programLevel', 'programRate', 'programHousing', 'programDependency' ];
-
-    if ( getStateValue( 'schoolSelected' ) === false ) {
-      schoolView._searchBox.classList.add( 'a-text-input__warning' );
-    } else {
-      schoolView._searchBox.classList.remove( 'a-text-input__warning' );
-    }
   },
 
   _updateProgramList: () => {
@@ -263,6 +249,14 @@ function _handleResultButtonClick( event ) {
 
   // Clear pid from state
   updateState.byProperty( 'pid', false );
+
+
+  // If there's an existing school, clear financials and choice value
+  if ( getStateValue( 'schoolID') !== false ) {
+    clearFinancialCosts();
+    updateState.byProperty( 'costsQuestion', false );
+
+  }
 
   // If there's a school_id, then proceed with schoolInfo
   if ( typeof button.dataset.school_id !== 'undefined' ) {

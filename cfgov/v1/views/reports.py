@@ -4,7 +4,10 @@ from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
 from wagtail.images import get_image_model
 
+from bs4 import BeautifulSoup
+
 from v1.models import CFGOVPage
+from v1.models.enforcement_action_page import EnforcementActionPage
 
 
 def process_categories(queryset):
@@ -15,6 +18,20 @@ def process_categories(queryset):
 def process_tags(queryset):
     """Prep the set of tags assocaited with a document or page."""
     return ", ".join([tag for tag in queryset])
+
+
+def process_enforcement_action_page_content(page_content):
+    content = ""
+    soup = BeautifulSoup(str(page_content), "html.parser")
+    para = soup.findAll(["p", "h5"])
+    for p in para:
+        content += p.get_text()
+        link = p.find("a", href=True)
+        if link:
+            content += ": "
+            content += link["href"]
+        content += "\n"
+    return content
 
 
 def construct_absolute_url(url):
@@ -150,4 +167,49 @@ class ImagesReportView(ReportView):
             .objects.all()
             .order_by("-created_at")
             .prefetch_related("tags")
+        )
+
+
+class EnforcementActionsReportView(ReportView):
+    header_icon = "doc-full"
+    title = "Enforcement actions report"
+
+    list_export = [
+        "title",
+        "content",
+        "categories.all",
+        "court",
+        "docket_number_string",
+        "initial_filing_date",
+        "status_strings",
+        "product_strings",
+        "url",
+    ]
+    export_headings = {
+        "title": "Title",
+        "content": "Content",
+        "categories.all": "Forum",
+        "court": "Court",
+        "docket_number_string": "Docket Numbers",
+        "initial_filing_date": "Initial Filling",
+        "status_strings": "Statuses",
+        "product_strings": "Products",
+        "url": "URL",
+    }
+
+    custom_field_preprocess = {
+        "content": {"csv": process_enforcement_action_page_content},
+        "categories.all": {"csv": process_categories},
+        "url": {"csv": construct_absolute_url},
+    }
+
+    template_name = "v1/enforcement_actions_report.html"
+
+    def get_filename(self):
+        """Get a better filename than the default 'spreadsheet-export'."""
+        return f"enforcement-actions-report-{date.today()}"
+
+    def get_queryset(self):
+        return EnforcementActionPage.objects.all().prefetch_related(
+            "categories", "statutes"
         )

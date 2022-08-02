@@ -1,14 +1,17 @@
 ### POSTGRESQL OVERRIDES ###
 postgresql:
   enabled: true
-  postgresqlPostgresPassword: cfpb  # Admin password, admin user is postgres
-  postgresqlPassword: cfpb  # User password
-  postgresqlUsername: cfpb  # User username
-  postgresqlDatabase: cfgov
-  persistence:
-    enabled: false
-  service:
-    type: LoadBalancer
+  auth:
+    enablePostgresUser: true
+    postgresPassword: cfpb  # Admin password, admin user is postgres
+    password: cfpb  # User password
+    username: cfpb  # User username
+    database: cfgov
+  primary:
+    persistence:
+      enabled: false
+    service:
+      type: ClusterIP
 
 ### OPENSEARCH OVERRIDES ###
 opensearch:
@@ -83,7 +86,7 @@ elasticsearch:
         storage: 100M
 
   service:
-    type: LoadBalancer
+    type: ClusterIP
 
 ### KIBANA OVERRIDES ###
 kibana:
@@ -93,4 +96,4 @@ kibana:
     enabled: false
 
   service:
-    type: LoadBalancer
+    type: ClusterIP

@@ -1,74 +1,68 @@
-/* eslint-disable */
+/* eslint-disable complexity, no-undefined */
 /* ==========================================================================
    Scripts for Report Sidenav organism
    ========================================================================== */
 
-const sidenav = document.querySelector( '.o-report-sidenav' );
-const tocHeaders = document.querySelectorAll( '.o-report-sidenav .m-nav-link' );
-const top = sidenav.offsetTop;
-const headerOffset = 224
-const headers = document.querySelectorAll( '.content_main .report-header' )
-let offsets = [];
-let primaryOffsets = [];
-let set = 0;
+const main = document.querySelector( 'main' );
+const sidenav = main.querySelector( '.o-report-sidenav' );
+const tocHeaders = sidenav.querySelectorAll( '.m-nav-link' );
+const headerOffset = main.offsetTop - 10;
+const headers = main.querySelectorAll( 'h2.report-header, h3.report-header' );
+
+const offsets = [];
+const primaryOffsets = [];
 let lastTargetIndex;
 
-(function(){
-  for(let i=0; i<headers.length; i++){
-    offsets.push(headers[i].offsetTop + headerOffset)
-    primaryOffsets.push(headers[i].tagName === 'H2')
+// Initialize offsets for calculating what to highlight
+( function() {
+  for ( let i = 0; i < headers.length; i++ ) {
+    offsets.push( headers[i].offsetTop + headerOffset );
+    primaryOffsets.push( headers[i].tagName === 'H2' );
   }
-})();
+} )();
 
-document.querySelector('.o-footer').classList.add( 'report-global-footer' );
+// Keep sidenav content from clipping into footer
+document.querySelector( '.o-footer' ).classList.add( 'report-global-footer' );
 
+// Set sidebar height on parent of sticky sidenav
+sidenav.parentElement.style.height = main.clientHeight + 'px';
 
-function stickIfNeeded() {
-  if ( window.scrollY > top ) {
-    if ( !set ) {
-      sidenav.classList.add( 'sticky' );
-      set = 1;
-    }
-  } else if ( set ) {
-    sidenav.classList.remove( 'sticky' );
-    set = 0;
+/**
+ * Gets the node in the sidenav that wraps the section and subsections
+ * @param {number} index from which to search for the parent
+ * @returns {object} The parent node of the section
+ **/
+function getParentHeader( index ) {
+  for ( let i = index; i >= 0; i-- ) {
+    if ( primaryOffsets[i] ) return tocHeaders[i].parentNode;
   }
+  return null;
 }
 
-
-function getParentHeader(index){
-  for(let i=index; i>=0; i--){
-    if(primaryOffsets[i]) return tocHeaders[i].parentNode
-  }
-}
-
-
+/**
+ * Highlights the appropriate sidenav header and reveals children on scroll
+ **/
 function hightlightTOC() {
   const sY = window.scrollY;
   const len = offsets.length;
 
   for ( let i = 0; i <= len; i++ ) {
     if ( i === len || sY < offsets[i] ) {
-      let hl = i ? i - 1 : i;
+      const hl = i ? i - 1 : i;
       if ( hl === lastTargetIndex ) return;
-      if ( lastTargetIndex !== undefined ){
+
+      if ( lastTargetIndex !== undefined ) {
         tocHeaders[lastTargetIndex].classList.remove( 'm-nav-link__current' );
-        getParentHeader(lastTargetIndex).classList.remove('parent-header')
+        getParentHeader( lastTargetIndex ).classList.remove( 'parent-header' );
       }
 
       tocHeaders[hl].classList.add( 'm-nav-link__current' );
-      getParentHeader(hl).classList.add( 'parent-header' );
+      getParentHeader( hl ).classList.add( 'parent-header' );
       lastTargetIndex = hl;
       return;
     }
   }
 }
 
-
-function onScroll() {
-  stickIfNeeded();
-  hightlightTOC();
-}
-
-window.addEventListener( 'scroll', onScroll );
-onScroll();
+window.addEventListener( 'scroll', hightlightTOC );
+hightlightTOC();

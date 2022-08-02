@@ -7,8 +7,15 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: postgres://cfpb:cfpb@localhost/cfgov
+      PGDATABASE: cfgov
+      PGUSER: cfpb
+      PGPASSWORD: cfpb
+      POSTGRES_USER: cfpb
+      PGHOST: localhost
+      PGPORT: 5432
       MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+      DJANGO_ADMIN_USERNAME: admin
+      DJANGO_ADMIN_PASSWORD: admin
 
     services:
       elasticsearch:
@@ -18,7 +25,7 @@ jobs:
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
 
       postgres:
-        image: postgres
+        image: postgres:13
         env:
           POSTGRES_USER: cfpb
           POSTGRES_PASSWORD: cfpb
@@ -49,12 +56,8 @@ jobs:
     - name: Set up initial data
       run: ./refresh-data.sh test.sql.gz
 
-
-    # - name: Run server
-    #   run: python cfgov/manage.py runserver
-
     - name: Run Cypress
-      uses: cypress-io/github-action@v2
+      uses: cypress-io/github-action@v4
       env:
           MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           ES_SCHEMA: http

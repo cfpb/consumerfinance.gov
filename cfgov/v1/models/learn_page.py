@@ -136,7 +136,10 @@ class LearnPage(AbstractFilterPage):
             ("expandable", organisms.Expandable()),
             ("well", organisms.Well()),
             ("call_to_action", molecules.CallToAction()),
-            ("email_signup", organisms.EmailSignUp()),
+            (
+                "email_signup",
+                v1_blocks.EmailSignUpChooserBlock(),
+            ),
             ("video_player", organisms.VideoPlayer()),
             ("audio_player", organisms.AudioPlayer()),
             (
@@ -152,6 +155,8 @@ class LearnPage(AbstractFilterPage):
         content_panel=StreamFieldPanel("content")
     )
     template = "learn-page/index.html"
+
+    page_description = "Right-hand sidebar, no left-hand sidebar."
 
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")

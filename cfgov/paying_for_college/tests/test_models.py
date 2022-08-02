@@ -1,4 +1,3 @@
-import datetime
 import smtplib
 import unittest
 from unittest import mock
@@ -16,7 +15,6 @@ from paying_for_college.models import (
     ConstantCap,
     ConstantRate,
     Contact,
-    Feedback,
     Nickname,
     Notification,
     Program,
@@ -132,22 +130,6 @@ class SchoolModelsTest(TestCase):
             oid=oid,
             timestamp=timezone.now(),
             errors="none",
-        )
-
-    def create_feedback(self):
-        return Feedback.objects.create(
-            created=datetime.datetime.now(),
-            message="Thank you, FPO",
-            url=(
-                "www.cfpb.gov/paying-for-college2/"
-                "understanding-your-financial-aid-offer/feedback/"
-                "?iped=451796&pid=2736"
-                "&oid=1234567890123456789012345678901234567890"
-                "&book=1832&gib=0&gpl=0&hous=4431&insi=3.36&insl=4339"
-                "&inst=35&leng=0&mta=0&othg=0&othr=2517&parl=0&pelg=2070"
-                "&perl=0&ppl=0&prvl=0&prvf=0&prvi=0&schg=2444&stag=0"
-                "&subl=3464&totl=81467&tran=1503&tuit=16107&unsl=5937"
-            ),
         )
 
     def test_school_related_models(self):
@@ -276,117 +258,6 @@ class SchoolModelsTest(TestCase):
         mock_post.side_effect = requests.exceptions.RequestException
         msg = noti.notify_school()
         self.assertTrue("Error" in msg)
-
-    def test_feedback_parsed_url(self):
-        sorted_keys = [
-            "book",
-            "gib",
-            "gpl",
-            "hous",
-            "insi",
-            "insl",
-            "inst",
-            "iped",
-            "leng",
-            "mta",
-            "oid",
-            "othg",
-            "othr",
-            "parl",
-            "pelg",
-            "perl",
-            "pid",
-            "ppl",
-            "prvf",
-            "prvi",
-            "prvl",
-            "schg",
-            "stag",
-            "subl",
-            "totl",
-            "tran",
-            "tuit",
-            "unsl",
-        ]
-        feedback = self.create_feedback()
-        self.assertEqual(sorted(feedback.parsed_url.keys()), sorted_keys)
-        self.assertEqual(feedback.parsed_url["iped"], "451796")
-        self.assertEqual(
-            feedback.parsed_url["oid"],
-            "1234567890123456789012345678901234567890",
-        )
-        feedback.url = feedback.url.split("?")[0]
-        self.assertEqual(feedback.parsed_url, {})
-        feedback.url = "www.cfpb.gov/feedback/"
-        self.assertEqual(feedback.parsed_url, {})
-
-    def test_feedback_school(self):
-        school = self.create_school(school_id=451796)
-        feedback = self.create_feedback()
-        self.assertEqual(feedback.school, school)
-        feedback.url = feedback.url.replace("iped=451796&", "")
-        self.assertEqual(feedback.school, None)
-        feedback.url = ""
-        self.assertEqual(feedback.school, None)
-
-    def test_feedback_unmet_cost(self):
-        feedback = self.create_feedback()
-        self.assertEqual(feedback.unmet_cost, 8136)
-        feedback.url = feedback.url.replace("&book=1832", "&book=voodoo")
-        self.assertEqual(feedback.unmet_cost, 6304)
-        feedback.url = feedback.url = (
-            "www.cfpb.gov/paying-for-college2/"
-            "understanding-your-financial-aid-offer/feedback/"
-        )
-        self.assertIs(feedback.unmet_cost, None)
-
-    def test_feedback_cost_error_valid_values(self):
-        feedback = self.create_feedback()
-        self.assertEqual(feedback.cost_error, 0)
-
-    def test_feedback_cost_error_true(self):
-        feedback = self.create_feedback()
-        feedback.url = feedback.url.replace("totl=81467", "totl=1000")
-        self.assertEqual(feedback.cost_error, 1)
-
-    def test_feedback_cost_error_blank_totl(self):
-        feedback = self.create_feedback()
-        feedback.url = feedback.url.replace("totl=81467", "totl=")
-        self.assertEqual(feedback.cost_error, 1)
-
-    def test_feedback_cost_error_blank_tuition(self):
-        feedback = self.create_feedback()
-        feedback.url = feedback.url.replace("tuit=16107", "tuit=")
-        self.assertEqual(feedback.cost_error, 0)
-
-    def test_feedback_cost_error_missing_tuit_field(self):
-        feedback = self.create_feedback()
-        feedback.url = feedback.url.replace("&tuit=16107", "")
-        self.assertEqual(feedback.cost_error, 0)
-
-    def test_feedback_cost_error_missing_totl_field(self):
-        feedback = self.create_feedback()
-        feedback.url = feedback.url.replace("&totl=81467", "")
-        self.assertEqual(feedback.cost_error, 1)
-
-    def test_feedback_cost_error_missing_totl_and_tuit_fields(self):
-        feedback = self.create_feedback()
-        feedback.url = feedback.url.replace("&tuit=16107", "")
-        feedback.url = feedback.url.replace("&totl=81467", "")
-        self.assertEqual(feedback.cost_error, 0)
-
-    def test_feedback_cost_error_missing_url(self):
-        feedback = self.create_feedback()
-        feedback.url = ""
-        self.assertEqual(feedback.cost_error, 0)
-
-    def test_feedback_tuition_plan(self):
-        feedback = self.create_feedback()
-        self.assertEqual(feedback.tuition_plan, 4339)
-        feedback.url = feedback.url.replace("insl=4339", "insl=a")
-        self.assertEqual(feedback.tuition_plan, None)
-        feedback.url = feedback.url.replace("insl=a", "insl=")
-        self.assertEqual(feedback.tuition_plan, None)
 
 
 class NonSettlementNotification(TestCase):

@@ -1,6 +1,6 @@
 const esbuild = require( 'esbuild' );
 const { readdirSync } = require( 'fs' );
-const postCSSPlugin = require( '@frappe/esbuild-plugin-postcss2' );
+const postCSSPlugin = require( './plugins/postcss.js' );
 const autoprefixer = require( 'autoprefixer' );
 const { getAll } = require( './utils.js' );
 
@@ -20,7 +20,8 @@ const styledApps = [
   'regulations3k',
   'retirement',
   'rural-or-underserved-tool',
-  'teachers-digital-platform'
+  'teachers-digital-platform',
+  'filing-instruction-guide'
 ];
 
 const cssPaths = [
@@ -33,7 +34,7 @@ module.exports = function( baseConfig ) {
   esbuild.build( {
     ...baseConfig,
     entryPoints: cssPaths,
-    plugins: [ postCSSPlugin.default( {
+    plugins: [ postCSSPlugin( {
       plugins: [ autoprefixer ],
       lessOptions: {
         math: 'always',

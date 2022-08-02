@@ -18,17 +18,19 @@ export class Filter {
   }
 
   getCategory() {
-    return cy.get( '[id^="categories-"]' );
+    // return the list of categories
+    return cy.get( '[data-cy=categories-heading]' ).siblings().find(
+      '[data-cy=multiselect-option]'
+    );
   }
 
   getCategoryLabel( name ) {
     return cy.get( `[for="categories-${ name }"]` );
   }
 
-  clickCategory( name ) {
-    const category = name.split( ' ' ).join( '-' ).toLowerCase();
-    const sel = `.o-multiselect_label[for="categories-${ category }"]`;
-    cy.get( '#o-filterable-list-controls_categories' ).click();
+  clickCategory( option ) {
+    const sel = `[data-option=${ option }`;
+    cy.get( '[data-cy=categories-heading]' ).click();
     return cy.get( sel ).click();
   }
 

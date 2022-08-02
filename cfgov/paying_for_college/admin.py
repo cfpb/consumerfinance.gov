@@ -7,7 +7,6 @@ from paying_for_college.models import (
     ConstantCap,
     ConstantRate,
     Contact,
-    Feedback,
     Nickname,
     Program,
     School,
@@ -57,7 +56,6 @@ admin.site.register(ConstantRate, ConstantRateAdmin)
 admin.site.register(ConstantCap, ConstantCapAdmin)
 admin.site.register(School, SchoolAdmin)
 admin.site.register(Alias, AliasAdmin)
-admin.site.register(Feedback)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(Nickname, NicknameAdmin)
 admin.site.register(Program)

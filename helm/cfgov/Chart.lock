@@ -1,7 +1,7 @@
 dependencies:
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
-  version: 10.16.2
+  version: 11.6.19
 - name: opensearch
   repository: https://opensearch-project.github.io/helm-charts/
   version: 2.0.0
@@ -14,5 +14,5 @@ dependencies:
 - name: kibana
   repository: https://helm.elastic.co/
   version: 7.16.3
-digest: sha256:a608eae267a7b5596a7e81aa70b617099fb11500c5489cdc3417368da01bcefd
-generated: "2022-05-25T11:23:12.810459-06:00"
+digest: sha256:6fc78af7478f1943ff3749ca0caa89340e19a0039758db3a2d4b9fd730836152
+generated: "2022-07-27T11:23:33.971176-06:00"
