@@ -19,7 +19,7 @@ spec:
             - name: {{ $.Chart.Name | lower }}-cronjob-{{ .name | lower }}
               {{- if .image }}
               image: "{{ .image.repository }}:{{ default "latest" .image.tag }}"
-              imagePullPolicy: {{ .image.pullPolicy }}
+              imagePullPolicy: {{ default "IfNotPresent" .image.pullPolicy }}
               {{- else }}
               image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
               imagePullPolicy: {{ $.Values.image.pullPolicy }}
