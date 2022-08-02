@@ -179,15 +179,22 @@ importDbPath: ""
 
 cronJobs:
 #  - name: "example"
+#    includeEnv: true  # includes the same volumes and environment variables as the main application container
+#    image:  # ONLY if different from chart image, default is chart image
+#      repository: "busybox"
+#      tag: "latest"
 #    schedule: "@daily"  # default
 #    suspend: false  # default
+#    restartPolicy: OnFailure  # default
 #    command:
 #      - "some-exec"
 #    args:
 #      - "space"
 #      - "separated"
 #      - "arguments"
-#    restartPolicy: OnFailure  # default
+#    env:  # environment variables for this cronjob (does not affect includeEnv), default is not defined
+#      - name: A_CRONJOB_ENV
+#        value: "A_CRONJOB_ENV_VALUE"
 
   - name: "clearSessions"
     schedule: "@weekly"

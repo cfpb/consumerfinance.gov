@@ -92,7 +92,29 @@ For example, our Django
     - "django-admin"
   args:
     - "clearsessions"
-  restartPolicy: OnFailure
+```
+
+The following shows the all the available values and default values
+for a cronJob object.
+
+```yaml
+- name: ""  # There is no default for name, this is required
+  includeEnv: true  # includes the same volumes and environment variables as the main application container
+  image:  # ONLY define if different from cfgov_python
+    repository: cfogv_python  # default is the chart image repository
+    tag: ""  # default is the chart image tag
+  schedule: "@daily"  # default
+  suspend: false  # default
+  restartPolicy: OnFailure  # default
+  command:  # there is no default for command, this is required
+    - "some-exec"
+  args:  # there is no default for args, this is required
+    - "space"
+    - "separated"
+    - "arguments"
+  env:  # default is empty (not defined), but can define extra cronjob only environment variables as follows
+    - name: MY_CRONJOB_ENV
+      value: "MY_CRONJOB_ENV_VALUE"
 ```
 
 # Manually Loading Data
