@@ -18,7 +18,7 @@ spec:
           containers:
             - name: {{ $.Chart.Name | lower }}-cronjob-{{ .name | lower }}
               {{- if .image }}
-              image: "{{ .image.repository }}:{{ default "latest" .image.tag }}"
+              image: "{{ .image.repository }}:{{ .image.tag | default "latest" }}"
               imagePullPolicy: {{ default "IfNotPresent" .image.pullPolicy }}
               {{- else }}
               image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
