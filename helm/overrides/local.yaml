@@ -18,6 +18,9 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls: []
+#    - secretName: cfgov-tls
+#      hosts:
+#        - cfgov.localhost
 
 volumes:
   - name: code

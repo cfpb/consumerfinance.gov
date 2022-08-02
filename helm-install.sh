@@ -18,7 +18,9 @@ if [ ! -d ./helm/cfgov/charts ]; then
   helm repo update
   helm dependency build ./helm/cfgov
 else
-  helm dependency update ./helm/cfgov
+  if [ -z $SKIP_DEP_UPDATE ]; then
+    helm dependency update ./helm/cfgov
+  fi
 fi
 
 # Parse overrides list
@@ -49,6 +51,10 @@ helm upgrade --install --wait --timeout=10m0s "${RELEASE}" $OVERRIDES \
   --set elasticsearch.clusterName="${RELEASE}-elasticsearch" \
   --set kibana.elasticsearchHosts="http://${RELEASE}-elasticsearch-master:9200" \
   ./helm/cfgov
+
+# Add these in for local SSL.
+#  --set ingress.tls[0].secretName="${RELEASE}-tls" \  # local SSL
+#  --set ingress.tls[0].hosts[0]="${RELEASE}.localhost" \  # local SSL
 
 # Cleanup temp files
 for i in "${tempFiles[@]}"; do
