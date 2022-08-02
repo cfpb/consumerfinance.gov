@@ -9,6 +9,16 @@ image:
 service:
   port: 8000
 
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: cfgov.localhost
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
 volumes:
   - name: code
     volume:

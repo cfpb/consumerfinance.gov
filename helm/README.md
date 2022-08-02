@@ -13,6 +13,10 @@ which is the tag. Valid values are `local` and `prod`.
     ./build-images.sh prod
 
 # helm-install.sh
+**NOTE:** It is *highly* recommended to install `ingress-nginx` to gain
+access to the application via `Ingress`. You can find instructions for this
+at the bottom of the document under [`ingress-nginx`](#`ingress-nginx`).
+
 In the main `consumerfinance.gov` directory, there is [`helm-install.sh`](../helm-install.sh).
 This script is built to inject environment variables into the provided
 override yamls in [`overrides`](overrides).
@@ -27,7 +31,7 @@ and [`services.yaml`](overrides/services.yaml).
 The following commands are equivalent
 
     ./helm-install.sh
-    ./helm-install.sh helm/overrides/local.yaml helm/overrides/services.yaml helm/overrides/cfgov-lb.yaml
+    ./helm-install.sh helm/overrides/local.yaml helm/overrides/services.yaml
 
 If you provide any arguments, it will only include those provided.
 
@@ -128,3 +132,22 @@ The main container should be created, and skip migrations
 (assuming a user was created `SELECT COUNT(*) FROM auth_user`).
 The main container should now be loaded with Postgres and ElasticSearch with
 your manually loaded data.
+
+
+## Optionals
+### `ingress-nginx`
+We use `ingress-nginx` as a cluster wide proxy similar to how
+we used an `nginx` container in `explorer-docker`. To deploy
+`ingress-nginx` to your local Kubernetes, run the following:
+
+    helm upgrade --install ingress-nginx ingress-nginx \
+      --repo https://kubernetes.github.io/ingress-nginx \
+      --namespace ingress-nginx --create-namespace
+
+This will allow us to access the application via
+[http://<release>.localhost](http://<release>.localhost).
+This allows us to mimic Ambassador `Mapping`'s locally.
+
+Example:
+  * default -> [http://cfgov.localhost](http://cfgov.localhost)
+  * RELEASE=my-test -> [http://my-test.localhost](http://my-test.localhost)
