@@ -133,17 +133,7 @@ spec:
               value: "8000"
             - name: RUN_MIGRATIONS
               value: "false"
-<<<<<<< HEAD
-            {{- if .Values.postgresql.enabled }}
-            - name: DATABASE_URL
-              {{- if .Values.postgresql.nameOverride }}
-              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ .Values.postgresql.nameOverride }}-postgresql/{{ .Values.postgresql.postgresqlDatabase }}"
-              {{- else if .Values.postgresql.fullnameOverride }}
-              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ .Values.postgresql.fullNameOverride }}/{{ .Values.postgresql.postgresqlDatabase }}"
-              {{- else }}
-              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ include "cfgov.fullname" . }}-postgresql/{{ .Values.postgresql.postgresqlDatabase }}"
-              {{- end }}
-            {{- end }}
+            {{- include "cfgov.postgresEnv" . | nindent 12 }}
             {{- if .Values.opensearch.enabled }}
             - name: ES_SCHEMA
               value: https
@@ -168,10 +158,6 @@ spec:
               value: elasticsearch-master
               {{- end }}
             {{- end }}
-=======
-            {{- include "cfgov.postgresEnv" . | nindent 12 }}
-            {{- include "cfgov.elasticsearchEnv" . | nindent 12 }}
->>>>>>> 90019acfa5f6f73414028278fc351aa4a052fe2b
             {{- range .Values.extraEnvs }}
             - name: {{ .name }}
               value: {{ .value | quote }}
