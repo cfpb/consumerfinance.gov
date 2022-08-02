@@ -8,6 +8,7 @@ const getNavItemContainer = target => getNavItem( target ).closest( '.o-secondar
 
 const highlightNavItem = target => getNavItem( target ).classList.add( 'm-nav-link__current' );
 const unHighlightNavItem = target => getNavItem( target ).classList.remove( 'm-nav-link__current' );
+
 const scrollNavItem = target => getNavItem( target ).scrollIntoView( {
   behavior: 'auto',
   block: 'nearest',
@@ -76,9 +77,9 @@ const handleIntersect = entries => {
  * init - Initialize everything on page load.
  */
 const init = () => {
-  // Only proceed if IntersectionObserver is supported (everything except IE)
-  // and we're on a larger screen
-  // See https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+  /* Only proceed if IntersectionObserver is supported (everything except IE)
+     and we're on a larger screen
+     See https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API */
   if ( 'IntersectionObserver' in window && viewportIsIn( DESKTOP ) ) {
     appRoot().querySelectorAll( '.o-secondary-navigation_list__children' ).forEach( ul => {
       hideElement( ul );
@@ -86,9 +87,10 @@ const init = () => {
 
     const observer = new IntersectionObserver( handleIntersect, {
       root: document,
-      // Sets an intersection area that spans 5% above the top of the viewport and
-      // 95% above the bottom of the viewport, resulting in a box that is 10% of
-      // the viewport height with 5% hanging over the top.
+
+      /* Sets an intersection area that spans 5% above the top of the viewport and
+         95% above the bottom of the viewport, resulting in a box that is 10% of
+         the viewport height with 5% hanging over the top. */
       rootMargin: '5% 0px -95% 0px'
     } );
 
@@ -105,9 +107,10 @@ const init = () => {
       if ( event.target.classList.contains( 'm-nav-link' ) ) {
         event.preventDefault();
         document.querySelector( '.o-fig_sidebar .o-expandable_header' ).click();
+        // Scrolling before the expandable closes causes jitters on some devices
         setTimeout( () => {
           scrollIntoViewWithOffset( document.getElementById( event.target.getAttribute( 'href' ).replace( '#', '' ) ), 60 );
-        }, 300);
+        }, 300 );
       }
     } );
   }

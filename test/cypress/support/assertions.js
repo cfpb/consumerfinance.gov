@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const isInViewport = ( _chai, utils ) => {
   function assertIsInViewport( options ) {
 

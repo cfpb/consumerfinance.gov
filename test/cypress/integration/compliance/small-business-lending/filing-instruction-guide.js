@@ -8,137 +8,197 @@ describe( '1071 Filing Instruction Guide (FIG)', () => {
 
     context( 'Desktop experience', () => {
 
-      beforeEach( () => {
-        cy.viewport( 'macbook-13' );
-      } );
+      const desktops = [
+        'macbook-13',
+        'macbook-15'
+      ];
 
-      it( 'should be present', () => {
-        fig.open();
-        fig.toc().should( 'be.visible' );
-      } );
+      desktops.forEach( desktop => {
 
-      it( 'should highlight the first section by default', () => {
-        fig.getNavItem( 1 ).should( 'have.class', 'm-nav-link__current' );
-      } );
+        context( desktop, () => {
 
-      it( 'should be sticky', () => {
-        fig.toc().should( 'be.visible' );
-        cy.scrollTo( 0, 1000 );
-        // Verify it's still in the viewport after scrolling down the page
-        fig.toc().should( 'be.visible' );
-      } );
+          beforeEach( () => {
+            cy.viewport( desktop );
+          } );
 
-      it( 'should highlight the current section', () => {
-        fig.goToSection( 2 );
-        fig.getNavItem( 2 ).should( 'have.class', 'm-nav-link__current' );
-      } );
+          it( 'should be present', () => {
+            fig.open();
+            fig.toc().should( 'be.visible' );
+          } );
 
-      it( 'should auto-expand subsections', () => {
-        fig.goToSection( 4.1 );
-        fig.getNavItem( 4 ).should( 'be.visible' );
-        fig.getNavItem( 4.1 ).should( 'be.visible' );
-      } );
+          it( 'should highlight the first section by default', () => {
+            fig.getNavItem( 1 ).should( 'have.class', 'm-nav-link__current' );
+            fig.getNavItem( 2 ).should( 'not.have.class', 'm-nav-link__current' );
+            fig.getNavItem( 3 ).should( 'not.have.class', 'm-nav-link__current' );
+            fig.getNavItem( 4 ).should( 'not.have.class', 'm-nav-link__current' );
+          } );
 
-      it( 'should auto-close subsections', () => {
-        fig.goToSection( 2 );
-        fig.getNavItem( 4 ).should( 'be.visible' );
-        fig.getNavItem( 4.1 ).should( 'not.be.visible' );
-      } );
+          it( 'should be sticky', () => {
+            fig.toc().should( 'be.visible' );
+            cy.scrollTo( 0, 1000 );
+            // Verify it's still in the viewport after scrolling down the page
+            fig.toc().should( 'be.visible' );
+          } );
 
-      it( 'jump to correct sections', () => {
-        fig.clickNavItem( 4 );
-        fig.getSection( 4 ).should( 'be.inViewport' );
-        fig.getSection( 2 ).should( 'not.be.inViewport' );
-      } );
+          it( 'should highlight the current section', () => {
+            fig.goToSection( 2 );
+            fig.getNavItem( 2 ).should( 'have.class', 'm-nav-link__current' );
+            fig.getNavItem( 1 ).should( 'not.have.class', 'm-nav-link__current' );
+            fig.getNavItem( 3 ).should( 'not.have.class', 'm-nav-link__current' );
+            fig.getNavItem( 4 ).should( 'not.have.class', 'm-nav-link__current' );
+          } );
 
-      it( 'highlight correction section when clicking heading', () => {
-        fig.clickSectionHeading( 1 );
-        fig.getNavItem( 1 ).should( 'have.class', 'm-nav-link__current' );
-        fig.getNavItem( 4.1 ).should( 'not.be.visible' );
+          it( 'should auto-expand subsections', () => {
+            fig.goToSection( 4.1 );
+            fig.getNavItem( 4 ).should( 'be.visible' );
+            fig.getNavItem( 4.1 ).should( 'be.visible' );
+            fig.getNavItem( 4.2 ).should( 'be.visible' );
+
+            fig.goToSection( 4.2 );
+            fig.getNavItem( 4 ).should( 'be.visible' );
+            fig.getNavItem( 4.1 ).should( 'be.visible' );
+            fig.getNavItem( 4.2 ).should( 'be.visible' );
+          } );
+
+          it( 'should auto-close subsections', () => {
+            fig.goToSection( 2 );
+            fig.getNavItem( 4 ).should( 'be.visible' );
+            fig.getNavItem( 4.1 ).should( 'not.be.visible' );
+          } );
+
+          it( 'jump to correct sections', () => {
+            fig.clickNavItem( 4 );
+            fig.getSection( 4 ).should( 'be.inViewport' );
+            fig.getSection( 1 ).should( 'not.be.inViewport' );
+            fig.getSection( 2 ).should( 'not.be.inViewport' );
+            fig.getSection( 3 ).should( 'not.be.inViewport' );
+          } );
+
+          it( 'highlight correction section when clicking heading', () => {
+            fig.clickSectionHeading( 1 );
+            fig.getNavItem( 1 ).should( 'have.class', 'm-nav-link__current' );
+            fig.getNavItem( 4.1 ).should( 'not.be.visible' );
+
+            fig.clickSectionHeading( 2 );
+            fig.getNavItem( 2 ).should( 'have.class', 'm-nav-link__current' );
+            fig.getNavItem( 4.1 ).should( 'not.be.visible' );
+
+            fig.clickSectionHeading( 4 );
+            fig.getNavItem( 4 ).should( 'have.class', 'm-nav-link__current' );
+            fig.getNavItem( 4.1 ).should( 'be.visible' );
+          } );
+
+        } );
+
       } );
 
     } );
 
     context( 'Tablet experience', () => {
 
-      beforeEach( () => {
-        cy.viewport( 'ipad-2' );
-      } );
+      const tablets = [
+        'ipad-2',
+        'ipad-mini'
+      ];
 
-      it( 'should be present', () => {
-        fig.open();
-        fig.toc().should( 'be.visible' );
-      } );
+      tablets.forEach( tablet => {
 
-      it( 'should expand', () => {
-        fig.toggleToc();
-        fig.getNavItem( 1 ).should( 'be.visible' );
-      } );
+        context( tablet, () => {
 
-      it( 'should collapse', () => {
-        fig.toggleToc();
-        fig.getNavItem( 1 ).should( 'not.be.visible' );
-      } );
+          beforeEach( () => {
+            cy.viewport( tablet );
+          } );
 
-      it( 'should be sticky', () => {
-        fig.toc().should( 'be.visible' );
-        cy.scrollTo( 0, 1000 );
-        // Verify it's still in the viewport after scrolling down the page
-        fig.toc().should( 'be.visible' );
-      } );
+          it( 'should be present', () => {
+            fig.open();
+            fig.toc().should( 'be.visible' );
+          } );
 
-      it( 'jump to correct sections', () => {
-        fig.toggleToc();
-        fig.clickNavItem( 4 );
-        fig.getSection( 4 ).should( 'be.inViewport' );
-        fig.getSection( 2 ).should( 'not.be.inViewport' );
+          it( 'should expand', () => {
+            fig.toggleToc();
+            fig.getNavItem( 1 ).should( 'be.visible' );
+          } );
 
-        fig.toggleToc();
-        fig.clickNavItem( 1 );
-        fig.getSection( 1 ).should( 'be.inViewport' );
-        fig.getSection( 4 ).should( 'not.be.inViewport' );
+          it( 'should collapse', () => {
+            fig.toggleToc();
+            fig.getNavItem( 1 ).should( 'not.be.visible' );
+          } );
+
+          it( 'should be sticky', () => {
+            fig.toc().should( 'be.visible' );
+            cy.scrollTo( 0, 1000 );
+            fig.toc().should( 'be.visible' );
+          } );
+
+          it( 'jump to correct sections', () => {
+            fig.toggleToc();
+            fig.clickNavItem( 4 );
+            fig.getSection( 4 ).should( 'be.inViewport' );
+            fig.getSection( 2 ).should( 'not.be.inViewport' );
+
+            fig.toggleToc();
+            fig.clickNavItem( 1 );
+            fig.getSection( 1 ).should( 'be.inViewport' );
+            fig.getSection( 4 ).should( 'not.be.inViewport' );
+          } );
+
+        } );
+
       } );
 
     } );
 
     context( 'Mobile experience', () => {
 
-      beforeEach( () => {
-        cy.viewport( 'iphone-xr' );
-      } );
+      const mobiles = [
+        'iphone-6',
+        'iphone-xr',
+        'samsung-note9'
+      ];
 
-      it( 'should be present', () => {
-        fig.open();
-        fig.toc().should( 'be.visible' );
-      } );
+      mobiles.forEach( mobile => {
 
-      it( 'should expand', () => {
-        fig.toggleToc();
-        fig.getNavItem( 1 ).should( 'be.visible' );
-      } );
+        context( mobile, () => {
 
-      it( 'should collapse', () => {
-        fig.toggleToc();
-        fig.getNavItem( 1 ).should( 'not.be.visible' );
-      } );
+          beforeEach( () => {
+            cy.viewport( mobile );
+          } );
 
-      it( 'should be sticky', () => {
-        fig.toc().should( 'be.visible' );
-        cy.scrollTo( 0, 1000 );
-        // Verify it's still in the viewport after scrolling down the page
-        fig.toc().should( 'be.visible' );
-      } );
+          it( 'should be present', () => {
+            fig.open();
+            fig.toc().should( 'be.visible' );
+          } );
 
-      it( 'jump to correct sections', () => {
-        fig.toggleToc();
-        fig.clickNavItem( 4 );
-        fig.getSection( 4 ).should( 'be.inViewport' );
-        fig.getSection( 2 ).should( 'not.be.inViewport' );
+          it( 'should expand', () => {
+            fig.toggleToc();
+            fig.getNavItem( 1 ).should( 'be.visible' );
+          } );
 
-        fig.toggleToc();
-        fig.clickNavItem( 1 );
-        fig.getSection( 1 ).should( 'be.inViewport' );
-        fig.getSection( 4 ).should( 'not.be.inViewport' );
+          it( 'should collapse', () => {
+            fig.toggleToc();
+            fig.getNavItem( 1 ).should( 'not.be.visible' );
+          } );
+
+          it( 'should be sticky', () => {
+            fig.toc().should( 'be.visible' );
+            cy.scrollTo( 0, 1000 );
+            fig.toc().should( 'be.visible' );
+          } );
+
+          it( 'jump to correct sections', () => {
+            fig.toggleToc();
+            fig.clickNavItem( 4 );
+            fig.getSection( 4 ).should( 'be.inViewport' );
+            fig.getSection( 2 ).should( 'not.be.inViewport' );
+
+            fig.toggleToc();
+            fig.clickNavItem( 1 );
+            fig.getSection( 1 ).should( 'be.inViewport' );
+            fig.getSection( 4 ).should( 'not.be.inViewport' );
+          } );
+
+        } );
+
       } );
 
     } );
