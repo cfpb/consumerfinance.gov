@@ -15,7 +15,7 @@ which is the tag. Valid values are `local` and `prod`.
 # helm-install.sh
 **NOTE:** It is *highly* recommended to install `ingress-nginx` to gain
 access to the application via `Ingress`. You can find instructions for this
-at the bottom of the document under [`ingress-nginx`](#`ingress-nginx`).
+at the bottom of the document under [`ingress-nginx`](#ingress-nginx).
 
 In the main `consumerfinance.gov` directory, there is [`helm-install.sh`](../helm-install.sh).
 This script is built to inject environment variables into the provided
