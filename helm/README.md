@@ -138,9 +138,12 @@ your manually loaded data.
 ### `ingress-nginx`
 We use `ingress-nginx` as a cluster wide proxy similar to how
 we used an `nginx` container in `explorer-docker`. To deploy
-`ingress-nginx` to your local Kubernetes, run the following:
+`ingress-nginx` to your local Kubernetes, run the following (change the ports
+that the services binds to localhost on if needed, default is 80 and 443):
 
     helm upgrade --install ingress-nginx ingress-nginx \
+      --set controller.service.ports.http=80 \
+      --set controller.service.ports.https=443 \
       --repo https://kubernetes.github.io/ingress-nginx \
       --namespace ingress-nginx --create-namespace
 
