@@ -148,7 +148,7 @@ that the services binds to on localhost if needed, default is 80 and 443):
       --namespace ingress-nginx --create-namespace
 
 This will allow us to access the application via
-[http://<release>.localhost](http://<release>.localhost).
+[http://\<release\>.localhost](http://<release>.localhost).
 This enables ingress to mimic Ambassador `Mapping`'s locally.
 
 *NOTE:* You will need to add the http port to the URL if you change
