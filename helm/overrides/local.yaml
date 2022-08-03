@@ -46,6 +46,8 @@ extraEnvs:
     value: /var/run/secrets/.aws/config
   - name: AWS_SHARED_CREDENTIALS_FILE
     value: /var/run/secrets/.aws/credentials
+  - name: AWS_PROFILE
+    value: ${AWS_PROFILE}
 
 cronJobs:
   - name: "publish-scheduled-pages"

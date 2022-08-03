@@ -132,19 +132,15 @@ your manually loaded data.
 # AWS CLI
 To use the AWS CLI, the chart must be deployed with `$HOME/.aws` mounted,
 or with keys and tokens passed in via environment variables or mounted in
-the correct files within `/root/.aws` for `local` image, or `/var/www/.aws`
-for the `prod` image. You can also mount the secrets to a different path
-and set `AWS_CONFIG_FILE` and `AWS_SHARED_CREDENTIALS_FILE` variables,
-pointing to the appropriate files. More info on AWS CLI Environment
-Variables can be found [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
+the correct files within `/root/.aws` for `local` image, or `/var/www/.aws` for the `prod` image. You can also mount the secrets to a different path and set `AWS_CONFIG_FILE` and `AWS_SHARED_CREDENTIALS_FILE` variables, pointing to the appropriate files. Additionally, you must have the `AWS_PROFILE` env variable set on your local AWS configuration in order for the CLI to use your credentials within the container.  More info on AWS CLI Environment Variables can be found [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
 
-Currently, `local.yaml` override will mount your `.aws` directory to the
-containers for local development. This directory is mounted to
+Currently, the `local.yaml` override will mount your `.aws` directory to the containers for local development. This directory is mounted to
 `/var/run/secrets/.aws`, then `AWS_CONFIG_FILE` and
 `AWS_SHARED_CREDENTIALS_FILE` are set to the appropriate files within that
 directory. To make use of AWS CLI in the containers locally, you will need
 to run your `gimme-aws-creds` in your local terminal to get valid credentials
 locally. AWS CLI will then work within the containers.
+
 
 ## TODO
 In production, an AWS Service Account is used, and its credentials are
