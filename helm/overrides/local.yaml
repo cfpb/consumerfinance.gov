@@ -3,7 +3,7 @@
 ### CFGOV OVERRIDES ###
 image:
   repository: cfgov_python
-  pullPolicy: IfNotPresent
+  pullPolicy: Never
   tag: local
 
 service:

@@ -252,7 +252,7 @@ if __name__ == "__main__":  # pragma: nocover
     if args.base:
         BASE = args.base
     if args.schema and args.host and args.port:
-        BASE = f"{args.schema}://{args.host}:{args.port}"
+        BASE = f"{args.schema.lower()}://{args.host}:{args.port}"
     if args.url_list:
         url_list = args.url_list
     if args.timeout:

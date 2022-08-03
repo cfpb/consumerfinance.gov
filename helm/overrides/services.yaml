@@ -21,7 +21,7 @@ elasticsearch:
   persistence:
     enabled: false
 
-  replicas: 2
+  replicas: 1
   minimumMasterNodes: 0
   antiAffinity: "soft"
 
