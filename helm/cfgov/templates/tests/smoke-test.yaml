@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "cfgov.fullname" . }}-smoke-test"
+  labels:
+    {{- include "cfgov.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  restartPolicy: Never
+  containers:
+    - name: "{{ include "cfgov.fullname" . }}-smoke-test"
+      image:  "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      command:
+        - "bash"
+      args:
+        - '-c'
+        - "python cfgov/scripts/http_smoke_test.py -v"
+      volumeMounts:
+        {{- range .Values.volumes }}
+        - mountPath: {{ .mountPath }}
+          name: {{ .name }}
+        {{- end }}
+      env:
+        - name: CFGOV_SCHEMA
+          value: "http"
+        - name: CFGOV_HOST
+          value: {{ include "cfgov.fullname" . | trunc 63 | trimSuffix "-" }}
+        - name: CFGOV_PORT
+          value: {{ .Values.service.port | quote }}
+  volumes:
+  {{- range .Values.volumes }}
+    - name: {{ .name }}
+      {{- toYaml .volume | nindent 6 }}
+  {{- end }}
