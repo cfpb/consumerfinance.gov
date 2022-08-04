@@ -68,16 +68,6 @@
                               <button class="a-btn">Search</button>
                           </div>
                       </div>
-
-                      <div class="m-global-search_content-suggestions">
-                          <p class="h5">Suggested search terms:</p>
-                          <ul class="m-list m-list__horizontal">
-                              <li class="m-list_item"><a class="m-list_link" href="#">Regulations</a></li>
-                              <li class="m-list_item"><a class="m-list_link" href="#">Compliance guides</a></li>
-                              <li class="m-list_item"><a class="m-list_link" href="#">Mortgage</a></li>
-                              <li class="m-list_item"><a class="m-list_link" href="#">College loans</a></li>
-                          </ul>
-                      </div>
                   </form>
               </div>
           </div>
@@ -96,12 +86,6 @@
                 .input-contains-label
                 from cf-forms
                 …]
-                .m-global-search_content-suggestions
-                  .h5
-                  […
-                  .list.list__horizontal
-                  from cf-typography
-                  …]
   tags:
     - cfgov-molecules
 */
@@ -162,15 +146,6 @@
       display: block;
     }
 
-    // Hide suggestions outside of tablet sizes.
-    &-suggestions {
-      display: none;
-
-      .h5,
-      .list {
-        display: inline-block;
-      }
-    }
   }
 
   // Up to desktops.
@@ -242,10 +217,6 @@
       padding-right: unit( @grid_gutter-width / 2 / 18px, em );
     }
 
-    // Only show search suggestions at tablet size.
-    &_content-suggestions {
-      display: block;
-    }
   } );
 
   // Tablet and above
