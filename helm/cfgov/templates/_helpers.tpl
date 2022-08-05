@@ -80,3 +80,56 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Postgres Environment Vars
+*/}}
+{{- define "cfgov.postgresEnv" -}}
+{{- if .Values.postgresql.enabled -}}
+- name: PGUSER
+  value: "{{ include "postgresql.username" .Subcharts.postgresql | default "postgres"  }}"
+- name: PGPASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "postgresql.secretName" .Subcharts.postgresql }}
+      key: {{ include "postgresql.userPasswordKey" .Subcharts.postgresql }}
+- name: PGHOST
+  value: "{{ include "postgresql.primary.fullname" .Subcharts.postgresql | trunc 63 | trimSuffix "-" }}"
+- name: PGDATABASE
+  value: "{{ include "postgresql.database" .Subcharts.postgresql | default "postgres" }}"
+- name: PGPORT
+  value: "{{ include "postgresql.service.port" .Subcharts.postgresql }}"
+{{- end }}
+{{- end }}
+
+{{/*
+Elasticsearch Environment Vars
+*/}}
+{{- define "cfgov.elasticsearchEnv" -}}
+- name: ES_HOST
+{{- if .Values.elasticsearch.enabled }}
+{{- if eq .Values.elasticsearch.nodeGroup "master" }}
+  value: "{{ include "elasticsearch.masterService" .Subcharts.elasticsearch | trunc 63 | trimSuffix "-" }}"
+{{- else }}
+  value: "{{ include "elasticsearch.uname" .Subcharts.elasticsearch | trunc 63 | trimSuffix "-" }}"
+{{- end }}
+- name: ES_PORT
+  value: "{{ default "9200" .Values.elasticsearch.httpPort }}"
+{{- else }}
+- name: ES_HOST
+  value: "{{ default "elasticsearch-master" .Values.elasticsearch.externalHostname }}"
+- name: ES_PORT
+  value: "{{ default "9200" .Values.elasticsearch.httpPort }}"
+{{- end }}
+{{- end }}
+
+{{/*
+Mapping/Ingress Hostname FQDN
+*/}}
+{{- define "cfgov.fqdn" -}}
+{{- if .Values.fqdnOverride }}
+{{- .Values.fqdnOverride }}
+{{- else }}
+{{- include "cfgov.fullname" . }}-eks.{{ default "dev-internal" .Values.environmentName }}.aws.cfpb.gov
+{{- end }}
+{{- end }}

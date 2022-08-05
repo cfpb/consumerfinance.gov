@@ -43,6 +43,7 @@ const stateModel = {
     programProgress: 'not-selected',
     repayMeterCohort: 'cohortRankByHighestDegree',
     repayMeterCohortName: 'U.S.',
+    schoolID: false,
     initialQuery: null
   },
   textVersions: {
@@ -111,7 +112,7 @@ const stateModel = {
       programLengthSelected: smv.programLength === 'not-selected',
       programProgressSelected: smv.programProgress === 'not-selected',
       rateSelected: smv.programRate === 'not-selected' && control === 'Public',
-      housingSelected: smv.programHousing === 'not-selected',
+      housingSelected: smv.programLevel === 'undergrad' && smv.programHousing === 'not-selected',
       dependencySelected:  smv.programLevel === 'undergrad' && smv.programDependency === 'not-selected'
     };
 

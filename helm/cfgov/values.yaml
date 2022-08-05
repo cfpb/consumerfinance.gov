@@ -67,6 +67,13 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+mapping:
+  enabled: false
+
+environmentName: dev-internal
+
+fqdnOverride: ""
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -181,7 +188,7 @@ cronJobs:
   - name: "publish-scheduled-pages"
     schedule: '* * * * *' # every minute
     command:
-      - "cfgov/manage.py"
+      - "django-admin"
     args:
       - "publish_scheduled_pages"
     restartPolicy: OnFailure
@@ -213,6 +220,7 @@ postgresql:
 
 elasticsearch:
   enabled: false
+  externalHostname: ""  # AWS OpenSearch
 
 kibana:
   enabled: false

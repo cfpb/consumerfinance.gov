@@ -7,7 +7,6 @@ from django.conf import global_settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
-import dj_database_url
 from elasticsearch import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
@@ -44,6 +43,7 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 INSTALLED_APPS = (
     "permissions_viewer",
     "wagtail.core",
+    "wagtailadmin_overrides",
     "wagtail.admin",
     "wagtail.documents",
     "wagtail.snippets",
@@ -148,6 +148,7 @@ MIDDLEWARE = (
     "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "wagtailadmin_overrides.middleware.WagtailAdminViewOverrideMiddleware",
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "core.middleware.SelfHealingMiddleware",
@@ -234,12 +235,17 @@ if ALLOW_ADMIN_URL:
 
 # Default database is PostgreSQL running on localhost.
 # Database name cfgov, username cfpb, password cfpb.
-# Override this by setting DATABASE_URL in the environment.
-# See https://github.com/jacobian/dj-database-url for URL formatting.
+# Override this by setting using the PG environment variables.
+# See also https://www.postgresql.org/docs/current/libpq-envars.html.
 DATABASES = {
-    "default": dj_database_url.config(
-        default="postgres://cfpb:cfpb@localhost/cfgov"
-    ),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("PGDATABASE", "cfgov"),
+        "USER": os.getenv("PGUSER", "cfpb"),
+        "PASSWORD": os.getenv("PGPASSWORD", "cfpb"),
+        "HOST": os.getenv("PGHOST", "localhost"),
+        "PORT": os.getenv("PGPORT", "5432"),
+    },
 }
 
 # Internationalization
@@ -281,11 +287,9 @@ STATICFILES_FINDERS = [
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-# Used to include directories not traditionally found,
-# app-specific 'static' directories.
+# Add the frontend build output to static files.
 STATICFILES_DIRS = [
     PROJECT_ROOT.joinpath("static_built"),
-    PROJECT_ROOT.joinpath("templates", "wagtailadmin"),
 ]
 
 # Also include any directories under static.in
@@ -670,6 +674,15 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
             ]
         },
     },
+}
+
+# Override certain Wagtail admin views with our own.
+#
+# See wagtailadmin_pages.middleware.WagtailAdminViewOverrideMiddleware.
+WAGTAILADMIN_OVERRIDDEN_VIEWS = {
+    "wagtailadmin_pages:add_subpage": (
+        "wagtailadmin_overrides.views.add_subpage"
+    ),
 }
 
 # Serialize Decimal(3.14) as 3.14, not "3.14"

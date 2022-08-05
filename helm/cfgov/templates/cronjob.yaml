@@ -3,11 +3,11 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "cfgov.fullname" $  | lower }}-cronjob-{{ .name | lower }}
+  name: {{ include "cfgov.fullname" $ | lower }}-cronjob-{{ .name | lower }}
   labels:
     {{- include "cfgov.labels" $ | nindent 4 }}
 spec:
-  suspend: {{.suspend}}
+  suspend: {{ default false .suspend }}
   schedule: {{ .schedule | quote }}
   jobTemplate:
     spec:
@@ -28,35 +28,18 @@ spec:
                 - {{ . | quote }}
                 {{- end }}
               volumeMounts:
+                # Add in main container volumes
                 {{- range $.Values.volumes }}
-                - mountPath: {{  .mountPath }}
+                - mountPath: {{ .mountPath }}
+                  name: {{ .name }}
+                {{- end }}
+                # Add in the cronjob volumes
+                {{- range .volumes }}
+                - mountPath: {{ .mountPath }}
                   name: {{ .name }}
                 {{- end }}
               env:
-                {{- if $.Values.postgresql.enabled }}
-                - name: PGHOST
-                  {{- if $.Values.postgresql.nameOverride }}
-                  value: "{{ $.Values.postgresql.nameOverride }}-postgresql"
-                  {{- else if $.Values.postgresql.fullnameOverride }}
-                  value: "{{ $.Values.postgresql.fullNameOverride }}"
-                  {{- else }}
-                  value: "{{ include "cfgov.fullname" $ }}-postgresql"
-                  {{- end }}
-                - name: PGUSER
-                  value: "{{ $.Values.postgresql.postgresqlUsername }}"
-                - name: PGPASSWORD
-                  value: "{{ $.Values.postgresql.postgresqlPassword }}"
-                - name: PGDATABASE
-                  value: "{{ $.Values.postgresql.postgresqlDatabase }}"
-                - name: DATABASE_URL
-                  {{- if $.Values.postgresql.nameOverride }}
-                  value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ $.Values.postgresql.nameOverride }}-postgresql/{{ $.Values.postgresql.postgresqlDatabase }}"
-                  {{- else if $.Values.postgresql.fullnameOverride }}
-                  value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ $.Values.postgresql.fullNameOverride }}/{{ $.Values.postgresql.postgresqlDatabase }}"
-                  {{- else }}
-                  value: "postgres://{{ $.Values.postgresql.postgresqlUsername }}:{{ $.Values.postgresql.postgresqlPassword }}@{{ include "cfgov.fullname" $ }}-postgresql/{{ $.Values.postgresql.postgresqlDatabase }}"
-                  {{- end }}
-                {{- end }}
+                {{- include "cfgov.postgresEnv" $ | nindent 16}}
                 {{- if $.Values.elasticsearch.enabled }}
                 - name: ES_HOST
                   {{- if $.Values.elasticsearch.nameOverride }}
@@ -73,7 +56,13 @@ spec:
                 {{- end }}
           restartPolicy: {{ .restartPolicy }}
           volumes:
+            # Add in main container volumes
             {{- range $.Values.volumes }}
+            - name: {{ .name }}
+              {{- toYaml .volume | nindent 14 }}
+            {{- end }}
+            # Add in cronjob volumes
+            {{- range .volumes }}
             - name: {{ .name }}
               {{- toYaml .volume | nindent 14 }}
             {{- end }}

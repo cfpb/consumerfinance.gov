@@ -1,0 +1,13 @@
+{{- if .Values.mapping.enabled }}
+---
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: {{ include "cfgov.fullname" . }}
+  labels:
+    {{- include "cfgov.labels" . | nindent 4 }}
+spec:
+  host: {{ include "cfgov.fqdn" . }}
+  prefix: /
+  service: {{ include "cfgov.fullname" . }}:{{ .Values.service.port }}
+{{- end }}
