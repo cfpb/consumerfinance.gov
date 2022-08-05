@@ -46,7 +46,7 @@ volumes:
       hostPath:
         path: ${HOME}/.aws
         type: Directory
-    mountPath: /root/.aws
+    mountPath: /var/run/secrets/.aws
 
 importDbPath: "${CFGOV_PROD_DB_LOCATION}"
 
@@ -55,6 +55,10 @@ extraEnvs:
     value: "${DJANGO_ADMIN_USERNAME}"
   - name: DJANGO_ADMIN_PASSWORD
     value: "${DJANGO_ADMIN_PASSWORD}"
+  - name: AWS_CONFIG_FILE
+    value: /var/run/secrets/.aws/config
+  - name: AWS_SHARED_CREDENTIALS_FILE
+    value: /var/run/secrets/.aws/credentials
 
 cronJobs:
   - name: "publish-scheduled-pages"
@@ -94,3 +98,4 @@ cronJobs:
       - "pg_dump --no-owner --no-privileges | gzip > test.gz"
     restartPolicy: OnFailure
     suspend: true
+
