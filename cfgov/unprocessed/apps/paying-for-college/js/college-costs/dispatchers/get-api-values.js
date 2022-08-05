@@ -13,7 +13,7 @@ function getApi( url ) {
         resolve( resp );
       } )
       .catch( function( error ) {
-        console.log( 'An error occurred accessing ' + url, error );
+        console.log( 'An error occurred accessing ' + url.replace(/[^a-z0-9]/gi, ''), error );
         reject( new Error( error ) );
       } );
   } );
@@ -25,7 +25,7 @@ function getApi( url ) {
  * @returns {Object} Promise
  */
 function schoolSearch( searchTerm ) {
-  searchTerm = searchTerm.trim();
+  searchTerm = searchTerm.trim();.replace(/\D/g,'');
   if ( searchTerm.length > 2 ) {
     const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
       '/api/search-schools.json?q=' + searchTerm;

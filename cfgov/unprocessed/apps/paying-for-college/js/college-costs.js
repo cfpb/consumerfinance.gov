@@ -1,15 +1,15 @@
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
-import { appView } from './views/app-view.js';
-import { chartView } from './views/chart-view.js';
-import { constantsModel } from './models/constants-model.js';
-import { expensesModel } from './models/expenses-model.js';
-import { expensesView } from './views/expenses-view.js';
-import { financialModel } from './models/financial-model.js';
-import { financialView } from './views/financial-view.js';
-import { getQueryVariables } from './util/url-parameter-utils.js';
-import { navigationView } from './views/navigation-view.js';
-import { schoolView } from './views/school-view.js';
-import { updateModelsFromQueryString } from './dispatchers/update-models.js';
+import { appView } from './college-costs/views/app-view.js';
+import { chartView } from './college-costs/views/chart-view.js';
+import { constantsModel } from './college-costs/models/constants-model.js';
+import { expensesModel } from './college-costs/models/expenses-model.js';
+import { expensesView } from './college-costs/views/expenses-view.js';
+import { financialModel } from './college-costs/models/financial-model.js';
+import { financialView } from './college-costs/views/financial-view.js';
+import { getQueryVariables } from './college-costs/util/url-parameter-utils.js';
+import { navigationView } from './college-costs/views/navigation-view.js';
+import { schoolView } from './college-costs/views/school-view.js';
+import { updateModelsFromQueryString } from './college-costs/dispatchers/update-models.js';
 
 
 /**
