@@ -11,7 +11,7 @@
   .respond-to-min( @bp-med-min, {
     // Expand it to full height on desktop with optional scrolling
     .content_sidebar {
-      height: 100vh;
+      max-height: 100vh;
       overflow-y: auto;
     }
   } );
@@ -202,7 +202,7 @@
   } );
 }
 
-.u-hide-on-mobile {
+.u-hide-on-tablet {
   .respond-to-max( @bp-sm-max, {
     display: none;
   } );

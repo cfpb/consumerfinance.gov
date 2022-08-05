@@ -38,6 +38,13 @@ describe( '1071 Filing Instruction Guide (FIG)', () => {
             cy.scrollTo( 0, 1000 );
             // Verify it's still in the viewport after scrolling down the page
             fig.toc().should( 'be.visible' );
+            fig.getNavItem( 1 ).should( 'be.visible' );
+          } );
+
+          it( 'should be sticky when scrolled to bottom of page', () => {
+            fig.toc().should( 'be.visible' );
+            fig.scrollToBottom();
+            fig.toc().should( 'be.visible' );
           } );
 
           it( 'should highlight the current section', () => {
@@ -66,7 +73,7 @@ describe( '1071 Filing Instruction Guide (FIG)', () => {
             fig.getNavItem( 4.1 ).should( 'not.be.visible' );
           } );
 
-          it( 'jump to correct sections', () => {
+          it( 'should jump to correct sections', () => {
             fig.clickNavItem( 4 );
             fig.getSection( 4 ).should( 'be.inViewport' );
             fig.getSection( 1 ).should( 'not.be.inViewport' );
@@ -74,7 +81,7 @@ describe( '1071 Filing Instruction Guide (FIG)', () => {
             fig.getSection( 3 ).should( 'not.be.inViewport' );
           } );
 
-          it( 'highlight correction section when clicking heading', () => {
+          it( 'should highlight correction section when clicking heading', () => {
             fig.clickSectionHeading( 1 );
             fig.getNavItem( 1 ).should( 'have.class', 'm-nav-link__current' );
             fig.getNavItem( 4.1 ).should( 'not.be.visible' );

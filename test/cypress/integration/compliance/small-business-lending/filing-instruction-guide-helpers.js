@@ -40,4 +40,8 @@ export class FilingInstructionGuide {
     return cy.get( '.o-expandable_header' ).click();
   }
 
+  scrollToBottom() {
+    return cy.get( 'footer' ).scrollIntoView( { duration: 1000 } );
+  }
+
 }
