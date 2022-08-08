@@ -18,6 +18,12 @@ mtm_fields = [
     "jump_start_coalition",
     "council_for_economic_education",
 ]
+doc_fields = [
+    "activity_file",
+    "handout_file",
+    "handout_file_2",
+    "handout_file_3",
+]
 
 
 @registry.register_document
@@ -32,6 +38,7 @@ class ActivityPageDocument(Document):
     objectives = fields.TextField()
     what_students_will_do = fields.TextField()
     related_text = fields.TextField()
+    file_titles = fields.TextField()
     # Foreign-key field:
     activity_duration = fields.KeywordField()
     # MTM fields
@@ -119,6 +126,14 @@ class ActivityPageDocument(Document):
             content_bits += [
                 entry.title for entry in getattr(instance, field).all()
             ]
+        return " ".join(content_bits)
+
+    def prepare_file_titles(self, instance):
+        content_bits = []
+        for field in doc_fields:
+            file = getattr(instance, field)
+            if file:
+                content_bits.append(file.title)
         return " ".join(content_bits)
 
     def prepare_big_idea(self, instance):
