@@ -37,6 +37,7 @@ class FigSection(blocks.StructBlock):
     class Meta:
         icon = "edit"
         template = "filing_instruction_guide/section.html"
+        collapsed = True
 
 
 class FigSectionAdapter(StructBlockAdapter):
