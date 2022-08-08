@@ -134,6 +134,10 @@ class ActivityPageDocument(Document):
             file = getattr(instance, field)
             if file:
                 content_bits.append(file.title)
+        for item in instance.activity_documents.all():
+            content_bits.append(item.title)
+        for item in instance.handout_documents.all():
+            content_bits.append(item.title)
         return " ".join(content_bits)
 
     def prepare_big_idea(self, instance):
