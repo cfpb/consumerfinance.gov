@@ -7,11 +7,7 @@
 #}
 
 {% block content_sidebar %}
-    {% if has_toc == True %}
-      {% import 'organisms/secondary-navigation-toc.html' as secondary_navigation with context %}
-    {% else %}
-      {% import 'organisms/secondary-navigation.html' as secondary_navigation with context %}
-    {% endif %}
+    {% import 'organisms/secondary-navigation.html' as secondary_navigation with context %}
     {{ secondary_navigation.render() }}
 {% endblock %}
 
