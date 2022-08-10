@@ -6,10 +6,13 @@
 <link rel="stylesheet" href="{{ static('apps/filing-instruction-guide/css/main.css') }}">
 {% endblock %}
 
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom research-report o-fig
+{% block content_modifiers -%}
+    {{ super() }} o-fig
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom research-report o-fig_main
+{%- endblock %}
 
 {% block content_main %}
     <div class="block block__flush-top">
@@ -26,7 +29,6 @@
     {% for block in page.content %}
       {% include_block block %}
     {% endfor %}
-
 {% endblock %}
 
 {% block javascript scoped %}
