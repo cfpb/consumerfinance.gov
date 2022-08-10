@@ -15,7 +15,6 @@
 {% endif %}
 {% set banner_modification = ' o-banner__dark' if version_status == 'Archived' else ''  %}
 
-
 {% block banner_top %}
     {% if version_status %}
         {% import 'molecules/notification.html' as notification with context %}

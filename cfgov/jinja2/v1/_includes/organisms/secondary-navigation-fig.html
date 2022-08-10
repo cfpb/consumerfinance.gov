@@ -26,11 +26,9 @@
     {% set tag_modification = 'dark' if version_status == 'Archived' else 'info'  %}
     <div class="u-hide-on-tablet">
         {% if version_status %}
-            <p>
-                <div class="a-tag a-tag__{{ tag_modification }}">
-                    {{ version_status }}
-                </div>
-            </p>
+            <div class="a-tag a-tag__{{ tag_modification }} u-mb20">
+                {{ version_status }}
+            </div>
             <p>
                 Effective {{ effective_start_date }} to {{ effective_end_date }}
             </p>
