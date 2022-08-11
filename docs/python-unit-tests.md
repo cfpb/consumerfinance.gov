@@ -83,7 +83,7 @@ To recreate the virtualenv for testing, run
 tox -r
 ```
 
-For additional information on tox arguments, refer to the [tox documentation](https://tox.wiki/en/latest/config.html?highlight=commands#cmdoption-tox-arg-args)
+For additional information on tox arguments, refer to the [tox documentation](https://tox.wiki/en/latest/config.html?#cmdoption-tox-arg-args)
 
 
 You can select specific environments using `-e`.
