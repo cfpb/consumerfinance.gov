@@ -264,9 +264,7 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split(
-            '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+          filter.formatOptionFromString( category.get( 0 ).innerText )
         );
         // When I select a checkbox in the Topic list
         filter.clickTopic(
@@ -280,26 +278,20 @@ describe( 'Filter Blog Posts based on content', () => {
           'contain', category.get( 0 ).innerText.split( '\n' ).pop().trim()
         );
         filter.getTopicLabel(
-          topic.get( 0 ).innerText.split(
-            '\n'
-          ).pop().trim().split( ' ' ).join(
-            '-'
-          ).toLowerCase() ).then( label => {
+          filter.formatOptionFromString( topic.get( 0 ).innerText )
+        ).then( label => {
           blog.resultsContent().should( 'contain', label.get( 0 ).innerText );
         } );
         // And the page url should contain "categories=policy_compliance"
         cy.url().should(
           'include',
-          'categories=' + category.get( 0 ).innerText.split(
-            '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+          'categories=' +
+          filter.formatOptionFromString( category.get( 0 ).innerText )
         );
         // And the page url should contain "topics=students"
         cy.url().should(
           'include',
-          'topics=' + topic.get( 0 ).innerText.split(
-            '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+          'topics=' + filter.formatOptionFromString( topic.get( 0 ).innerText )
         );
       } );
     } );
@@ -310,9 +302,7 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.getResultTagHasCategories().then( topic => {
         // When I select a checkbox in the Category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split(
-            '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+          filter.formatOptionFromString( category.get( 0 ).innerText )
         );
         // When I select a checkbox in the Topic list
         filter.clickTopic(
@@ -336,16 +326,13 @@ describe( 'Filter Blog Posts based on content', () => {
         // And the page url should contain "categories=policy_compliance"
         cy.url().should(
           'include',
-          'categories=' + category.get( 0 ).innerText.split(
-            '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+          'categories=' +
+          filter.formatOptionFromString( category.get( 0 ).innerText )
         );
         // And the page url should contain "topics=students"
         cy.url().should(
           'include',
-          'topics=' + topic.get( 0 ).innerText.split(
-            '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+          'topics=' + filter.formatOptionFromString( topic.get( 0 ).innerText )
         );
         // And when I click "Show filters"
         filter.show();
@@ -354,16 +341,13 @@ describe( 'Filter Blog Posts based on content', () => {
         // Then the page url should not contain "categories=info-for-consumers"
         cy.url().should(
           'not.include',
-          'categories=' + category.get( 0 ).innerText.split(
-            '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+          'categories=' +
+          filter.formatOptionFromString( category.get( 0 ).innerText )
         );
         // And the page url should not contain "topics=consumer-complaints"
         cy.url().should(
           'not.include',
-          'topics=' + topic.get( 0 ).innerText.split(
-            '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+          'topics=' + filter.formatOptionFromString( topic.get( 0 ).innerText )
         );
         // Then there is no visible notification
         blog.notification().should( 'not.be.visible' );
@@ -428,9 +412,7 @@ describe( 'Filter Blog Posts based on content', () => {
         blog.filterItemName( title.get( 0 ).innerText );
         // And I select a checkbox in the category list
         filter.clickCategory(
-          category.get( 0 ).innerText.split(
-            '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+          filter.formatOptionFromString( category.get( 0 ).innerText )
         );
         // And I click "Apply filters" button
         blog.applyFilters();
@@ -446,9 +428,8 @@ describe( 'Filter Blog Posts based on content', () => {
         // And the page url should contain "categories=" category
         cy.url().should(
           'include',
-          'categories=' + category.get( 0 ).innerText.split(
-            '\n'
-          ).pop().trim().split( ' ' ).join( '-' ).toLowerCase()
+          'categories=' +
+          filter.formatOptionFromString( category.get( 0 ).innerText )
         );
       } );
     } );
