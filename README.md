@@ -32,7 +32,8 @@ This quickstart requires a working Docker Desktop installation and git:
       ```
 
   if you see an error like:
-  ``` Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp [::1]:8080: connect: connection refused
+  ``` 
+  Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp [::1]:8080: connect: connection refused
   ```
   then you need to activate Kubernetes in your docker desktop settings!
 
