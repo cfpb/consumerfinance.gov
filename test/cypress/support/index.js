@@ -21,3 +21,6 @@ import './commands';
 
 // Import assertions
 import './assertions';
+
+// Require skip-test
+require('@cypress/skip-test/support')
