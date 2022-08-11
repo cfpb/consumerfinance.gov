@@ -76,6 +76,16 @@ tox
 Tox runs different isolated Python environments with different versions of dependencies.
 We use it to format and lint our Python files, check out import sorting, and run unit tests
 in Python 3.8.
+
+To recreate the virtualenv for testing, run
+
+```sh
+tox -r
+```
+
+For additional information on tox arguments, refer to [the tox documentation](https://tox.wiki/en/latest/config.html?highlight=commands#cmdoption-tox-arg-args):
+
+
 You can select specific environments using `-e`.
 
 Running `tox` by itself is the same as running:
