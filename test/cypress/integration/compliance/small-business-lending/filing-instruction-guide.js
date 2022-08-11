@@ -5,15 +5,6 @@ const fig = new FilingInstructionGuide();
 
 skipOn( 'staging' , () => {
 
-  describe( 'testing', () => {
-
-    it('should print cypress environment', () => {
-      console.log(Cypress.env());
-      console.log(Cypress.env('ENVIRONMENT'));
-    });
-
-  });
-
   describe( '1071 Filing Instruction Guide (FIG)', () => {
 
     describe( 'FIG table of contents', () => {
