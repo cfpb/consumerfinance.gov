@@ -27,8 +27,4 @@ export class GlobalSearch {
   button() {
     return this.globalSearch( '[data-js-hook="behavior_flyout-menu_content"] .a-btn' );
   }
-
-  suggest() {
-    return this.globalSearch( '.m-global-search_content-suggestions' );
-  }
 }
