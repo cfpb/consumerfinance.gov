@@ -361,7 +361,7 @@ const financialModel = {
    */
   clearCosts: () => {
     for ( const key in financialModel.values ) {
-      if ( key.indexOf( 'dirCost_') > 0 || ( key.indexOf( 'indiCost_' ) > 0 ) ) {
+      if ( key.indexOf( 'dirCost_' ) > 0 || ( key.indexOf( 'indiCost_' ) > 0 ) ) {
         financialModel.values[key] = 0;
       }
     }
