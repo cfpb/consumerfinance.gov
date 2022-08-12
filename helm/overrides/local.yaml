@@ -85,6 +85,6 @@ cronJobs:
     args:
       - "-c"
       # supply the desired s3 bucket you wish to test with
-      - "pg_dump --no-owner --no-privileges | gzip > test.gz | aws s3 cp test.gz <insert-bucket-name>"
+      - "pg_dump --no-owner --no-privileges | gzip > test.gz | aws s3 cp test.gz s3://$S3_BUCKET_ROUTE/"
     restartPolicy: OnFailure
     suspend: true
