@@ -335,7 +335,7 @@ and overrides the <code>content_sidebar</code> block to include a separate <code
 class RegulationLandingPage(CFGOVPage):
     template = 'regulations3k/landing-page.html'</code></pre>
 <p>And in <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/regulations3k/jinja2/regulations3k/landing-page.html"><code>regulations3k/landing-page.html</code></a>:</p>
-<pre class="highlight"><code class="language-jinja2">{% extends 'layout-2-1-bleedbar.html' %}
+<pre class="highlight"><code class="language-jinja2">{% extends 'layout-2-1.html' %}
 
 {% import 'recent-notices.html' as recent_notices with context %}
 
