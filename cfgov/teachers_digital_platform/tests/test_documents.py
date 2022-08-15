@@ -19,8 +19,9 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
             title="Search for activities",
             slug="activities",
         )
-        self.wagtail_document = Document.objects.first()
+        docs = list(Document.objects.get(id=id) for id in range(8335, 8339))
         self.root_page.add_child(instance=self.activity_index_page)
+
         self.activity_page = ActivityPage(
             title="Storing my savings",
             slug="storing-my-savings",
@@ -43,7 +44,10 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
                 "worksheet to review real-world savingssituations.</li>"
                 "<li>Recommend a savings tool(s) for each scenario.</li></ul>"
             ),
-            activity_file=self.wagtail_document,
+            activity_file=docs[0],
+            handout_file=docs[1],
+            handout_file_2=docs[2],
+            handout_file_3=docs[3],
             activity_duration_id=1,
         )
         self.activity_index_page.add_child(instance=self.activity_page)
@@ -57,14 +61,19 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
         self.activity_page.blooms_taxonomy_level = [1]
         self.activity_page.jump_start_coalition = [1]
         self.activity_page.council_for_economic_education = [1]
-        self.activity_page.activity_file = self.wagtail_document
+        self.activity_page.activity_file = docs[0]
+        self.activity_page.handout_file = docs[1]
+        self.activity_page.handout_file_2 = docs[2]
+        self.activity_page.handout_file_3 = docs[3]
         self.activity_page.save()
+
         self.doc = ActivityPageDocument()
         self.text_fields = [
             "big_idea",
             "essential_questions",
             "objectives",
             "related_text",
+            "file_titles",
             "text",
             "title",
             "what_students_will_do",
@@ -98,6 +107,17 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
             prepared_data.get("big_idea"),
             strip_html(self.activity_page.big_idea),
         )
+        prepared_file_titles = prepared_data.get("file_titles")
+        for field in [
+            "activity_file",
+            "handout_file",
+            "handout_file_2",
+            "handout_file_3",
+        ]:
+            self.assertIn(
+                getattr(self.activity_page, field).title,
+                prepared_file_titles,
+            )
 
     def test_model_class(self):
         self.assertEqual(self.doc.django.model, ActivityPage)

@@ -719,5 +719,38 @@
             "file_size": null,
             "file_hash": ""
         }
+    },
+    {
+        "model": "wagtaildocs.document",
+        "pk": 8336,
+        "fields": {
+            "title": "Storing my savings (handout file)",
+            "file": "documents/handout-file.pdf",
+            "created_at": "2020-01-09T22:07:29.625Z",
+            "file_size": null,
+            "file_hash": ""
+        }
+    },
+    {
+      "model": "wagtaildocs.document",
+      "pk": 8337,
+      "fields": {
+        "title": "Test PDF Title 2",
+        "file": "documents/test-pdf-title-2.pdf",
+        "created_at": "2020-01-09T22:07:29.625Z",
+        "file_size": null,
+        "file_hash": ""
+      }
+    },
+    {
+      "model": "wagtaildocs.document",
+      "pk": 8338,
+      "fields": {
+        "title": "Test PDF Title 3",
+        "file": "documents/test-pdf-title-3.pdf",
+        "created_at": "2020-01-09T22:07:29.625Z",
+        "file_size": null,
+        "file_hash": ""
+      }
     }
 ]
