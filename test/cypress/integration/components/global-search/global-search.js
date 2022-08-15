@@ -11,8 +11,6 @@ describe( 'Global Search molecule to search for content on the site', () => {
     search.trigger().should( 'be.visible' );
     // And it shouldn't have search input content
     search.content().should( 'contain', '' );
-    // And it shouldn't have suggested search terms
-    search.suggest().should( 'contain', '' );
   } );
   it( 'after clicking search', () => {
     // When I click on the search molecule
