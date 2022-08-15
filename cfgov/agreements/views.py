@@ -1,16 +1,36 @@
+from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import Http404
 from django.shortcuts import render
+
+import boto3
 
 from agreements import RESULTS_PER_PAGE
 from agreements.models import Agreement, Issuer
 
 
+s3 = boto3.resource("s3")
+bucket = s3.Bucket(settings.AWS_S3_CUSTOM_DOMAIN)
+agreements_prefix = "a/assets/bulk_agreements/"
+flexibilities = ["Q1-2020", "Q2-2020", "Q3-2020", "Q4-2020", "Q1-2021"]
+notes = {
+    "Q2-2019": "Agreements are incomplete due to technical submission"
+    " issues at the Bureau"
+}
+
+
 def index(request):
+    objects = bucket.objects.filter(Prefix=agreements_prefix)
+    agmts = [f.key for f in objects]
+    agmts.sort(reverse=True)
+
     return render(
         request,
         "agreements/index.html",
         {
+            "agreements": agmts,
+            "flexibilities": flexibilities,
+            "notes": notes,
             "agreement_count": Agreement.objects.all().count(),
             "pagetitle": "Credit card agreements",
         },
