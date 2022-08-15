@@ -17,6 +17,12 @@ export class Filter {
     return cy.get( `label.o-multiselect_label[for="language-${ name }"]` ).click();
   }
 
+  formatOptionFromString (str) {
+      return str.split('\n').pop().trim().replace(
+        /(?:and|[,'])+/g, ''
+      ).split( / +/ ).join( '-' ).toLowerCase()
+  }
+
   getCategory() {
     // return the list of categories
     return cy.get( '[data-cy=categories-heading]' ).siblings().find(
