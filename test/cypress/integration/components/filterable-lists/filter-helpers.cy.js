@@ -17,10 +17,10 @@ export class Filter {
     return cy.get( `label.o-multiselect_label[for="language-${ name }"]` ).click();
   }
 
-  formatOptionFromString (str) {
-      return str.split('\n').pop().trim().replace(
-        /(?:and|[,'])+/g, ''
-      ).split( / +/ ).join( '-' ).toLowerCase()
+  formatOptionFromString( str ) {
+    return str.split( '\n' ).pop().trim().replace(
+      /(?:and|[,'])+/g, ''
+    ).split( / +/ ).join( '-' ).toLowerCase();
   }
 
   getCategory() {
