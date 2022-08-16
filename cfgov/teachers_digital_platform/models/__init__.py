@@ -21,4 +21,8 @@ from teachers_digital_platform.models.django import (
     ActivityType,
     BaseActivityTaxonomy,
 )
-from teachers_digital_platform.models.pages import ActivityPage
+from teachers_digital_platform.models.pages import (
+    ActivityPage,
+    ActivityPageActivityDocuments,
+    ActivityPageHandoutDocuments,
+)

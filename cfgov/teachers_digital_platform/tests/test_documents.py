@@ -5,7 +5,12 @@ from wagtail.documents.models import Document
 
 from search.elasticsearch_helpers import strip_html
 from teachers_digital_platform.documents import ActivityPageDocument
-from teachers_digital_platform.models import ActivityIndexPage, ActivityPage
+from teachers_digital_platform.models import (
+    ActivityIndexPage,
+    ActivityPage,
+    ActivityPageActivityDocuments,
+    ActivityPageHandoutDocuments,
+)
 
 
 class TeachersDigitalPlatformDocumentTest(TestCase):
@@ -48,8 +53,12 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
             handout_file=docs[1],
             handout_file_2=docs[2],
             handout_file_3=docs[3],
-            activity_documents=[docs[4]],
-            handout_documents=[docs[5]],
+            activity_documents=[
+                ActivityPageActivityDocuments(documents=docs[4])
+            ],
+            handout_documents=[
+                ActivityPageHandoutDocuments(documents=docs[5]),
+            ],
             activity_duration_id=1,
         )
         self.activity_index_page.add_child(instance=self.activity_page)
@@ -68,8 +77,6 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
         self.activity_page.handout_file = docs[1]
         self.activity_page.handout_file_2 = docs[2]
         self.activity_page.handout_file_3 = docs[3]
-        self.activity_page.activity_documents = [docs[4]]
-        self.activity_page.handout_documents = [docs[5]]
         self.activity_page.save()
 
         self.doc = ActivityPageDocument()
@@ -124,9 +131,9 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
                 prepared_file_titles,
             )
         for field in ["activity_documents", "handout_documents"]:
-            for doc in getattr(self.activity_page, field).all():
+            for link in getattr(self.activity_page, field).all():
                 self.assertIn(
-                    doc.title,
+                    link.documents.title,
                     prepared_file_titles,
                 )
 
