@@ -44,7 +44,10 @@ RELEASE=${RELEASE:-cfgov}
 # Install/Upgrade cfgov release to current context namespace
 # To install to different namespace, set context with namespace
 # kubectl config set-context --current --namespace=<insert-namespace-name-here>
-helm upgrade --install --wait --timeout=10m0s "${RELEASE}" $OVERRIDES ./helm/cfgov
+helm upgrade --install --wait --timeout=10m0s "${RELEASE}" $OVERRIDES \
+  --set elasticsearch.clusterName="${RELEASE}-elasticsearch" \
+  --set kibana.elasticsearchHosts="http://${RELEASE}-elasticsearch-master:9200" \
+  ./helm/cfgov
 
 # Cleanup temp files
 for i in "${tempFiles[@]}"; do
