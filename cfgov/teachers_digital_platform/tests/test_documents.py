@@ -19,7 +19,7 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
             title="Search for activities",
             slug="activities",
         )
-        docs = list(Document.objects.get(id=id) for id in range(8335, 8339))
+        docs = list(Document.objects.get(id=x) for x in range(8335, 8341))
         self.root_page.add_child(instance=self.activity_index_page)
 
         self.activity_page = ActivityPage(
@@ -48,6 +48,8 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
             handout_file=docs[1],
             handout_file_2=docs[2],
             handout_file_3=docs[3],
+            activity_documents=[docs[4]],
+            handout_documents=[docs[5]],
             activity_duration_id=1,
         )
         self.activity_index_page.add_child(instance=self.activity_page)
@@ -61,10 +63,13 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
         self.activity_page.blooms_taxonomy_level = [1]
         self.activity_page.jump_start_coalition = [1]
         self.activity_page.council_for_economic_education = [1]
+        # Re-add attached docs directly to object
         self.activity_page.activity_file = docs[0]
         self.activity_page.handout_file = docs[1]
         self.activity_page.handout_file_2 = docs[2]
         self.activity_page.handout_file_3 = docs[3]
+        self.activity_page.activity_documents = [docs[4]]
+        self.activity_page.handout_documents = [docs[5]]
         self.activity_page.save()
 
         self.doc = ActivityPageDocument()
@@ -118,6 +123,12 @@ class TeachersDigitalPlatformDocumentTest(TestCase):
                 getattr(self.activity_page, field).title,
                 prepared_file_titles,
             )
+        for field in ["activity_documents", "handout_documents"]:
+            for doc in getattr(self.activity_page, field).all():
+                self.assertIn(
+                    doc.title,
+                    prepared_file_titles,
+                )
 
     def test_model_class(self):
         self.assertEqual(self.doc.django.model, ActivityPage)
