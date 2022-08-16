@@ -252,7 +252,7 @@ function _handleResultButtonClick( event ) {
 
 
   // If there's an existing school, clear financials and choice value
-  if ( getStateValue( 'schoolID') !== false ) {
+  if ( getStateValue( 'schoolID' ) !== false ) {
     clearFinancialCosts();
     updateState.byProperty( 'costsQuestion', false );
 

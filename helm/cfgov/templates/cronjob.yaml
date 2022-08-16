@@ -7,8 +7,8 @@ metadata:
   labels:
     {{- include "cfgov.labels" $ | nindent 4 }}
 spec:
-  suspend: {{.suspend}}
-  schedule: {{ .schedule | quote }}
+  suspend: {{ default false .suspend }}
+  schedule: {{ default "@daily" .schedule | quote }}
   jobTemplate:
     spec:
       template:
@@ -17,8 +17,13 @@ spec:
             {{- toYaml $.Values.securityContext | nindent 12 }}
           containers:
             - name: {{ $.Chart.Name | lower }}-cronjob-{{ .name | lower }}
+              {{- if .image }}
+              image: "{{ .image.repository }}:{{ .image.tag | default "latest" }}"
+              imagePullPolicy: {{ default "IfNotPresent" .image.pullPolicy }}
+              {{- else }}
               image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
               imagePullPolicy: {{ $.Values.image.pullPolicy }}
+              {{- end }}
               command:
                 {{- range .command }}
                 - {{ . | quote }}
@@ -28,10 +33,12 @@ spec:
                 - {{ . | quote }}
                 {{- end }}
               volumeMounts:
+                {{- if or .includeEnv (not (hasKey . "includeEnv")) }}
                 # Add in main container volumes
                 {{- range $.Values.volumes }}
                 - mountPath: {{ .mountPath }}
                   name: {{ .name }}
+                {{- end }}
                 {{- end }}
                 # Add in the cronjob volumes
                 {{- range .volumes }}
@@ -39,6 +46,7 @@ spec:
                   name: {{ .name }}
                 {{- end }}
               env:
+                {{- if or .includeEnv (not (hasKey . "includeEnv")) }}
                 {{- include "cfgov.postgresEnv" $ | nindent 16}}
                 {{- if $.Values.elasticsearch.enabled }}
                 - name: ES_HOST
@@ -64,12 +72,19 @@ spec:
                 - name: {{ .name }}
                   value: {{ .value | quote }}
                 {{- end }}
-          restartPolicy: {{ .restartPolicy }}
+                {{- end }}
+                {{- range .env }}
+                - name: {{ .name }}
+                  value: {{ .value | quote }}
+                {{- end }}
+          restartPolicy: {{ default "OnFailure" .restartPolicy }}
           volumes:
+            {{- if or .includeEnv (not (hasKey . "includeEnv")) }}
             # Add in main container volumes
             {{- range $.Values.volumes }}
             - name: {{ .name }}
               {{- toYaml .volume | nindent 14 }}
+            {{- end }}
             {{- end }}
             # Add in cronjob volumes
             {{- range .volumes }}

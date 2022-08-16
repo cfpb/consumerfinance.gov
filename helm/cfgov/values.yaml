@@ -178,20 +178,36 @@ docs:
 importDbPath: ""
 
 cronJobs:
+#  - name: "example"
+#    includeEnv: true  # includes the same volumes and environment variables as the main application container
+#    image:  # ONLY if different from chart image, default is chart image
+#      repository: "busybox"
+#      tag: "latest"
+#    schedule: "@daily"  # default
+#    suspend: false  # default
+#    restartPolicy: OnFailure  # default
+#    command:
+#      - "some-exec"
+#    args:
+#      - "space"
+#      - "separated"
+#      - "arguments"
+#    env:  # environment variables for this cronjob (does not affect includeEnv), default is not defined
+#      - name: A_CRONJOB_ENV
+#        value: "A_CRONJOB_ENV_VALUE"
+
   - name: "clearSessions"
     schedule: "@weekly"
     command:
       - "django-admin"
     args:
       - "clearsessions"
-    restartPolicy: OnFailure
   - name: "publish-scheduled-pages"
     schedule: '* * * * *' # every minute
     command:
       - "django-admin"
     args:
       - "publish_scheduled_pages"
-    restartPolicy: OnFailure
   - name: "elasticsearch-Rebuild-Index"
     schedule: "@daily"
     command:
@@ -201,7 +217,6 @@ cronJobs:
       - "--rebuild"
       - "--parallel"
       - "-f"
-    restartPolicy: OnFailure
     suspend: true
   - name: "dump-Postgres-DB"
     schedule: "@daily"
@@ -209,8 +224,7 @@ cronJobs:
       - "bash"
     args:
       - "-c"
-      - "pg_dump --no-owner --no-privileges | gzip > test.gz"
-    restartPolicy: OnFailure
+      - "pg_dump --no-owner --no-privileges | gzip > test.sql.gz"
     suspend: true
 
 
