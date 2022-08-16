@@ -60,7 +60,6 @@ jobs:
       uses: cypress-io/github-action@v4
       env:
           MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-          ES_SCHEMA: http
       with:
         spec: |
           test/cypress/integration/admin/admin.js

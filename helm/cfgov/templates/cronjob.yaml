@@ -38,28 +38,26 @@ spec:
                 - mountPath: {{ .mountPath }}
                   name: {{ .name }}
                 {{- end }}
+              env:
+                {{- include "cfgov.postgresEnv" $ | nindent 16}}
+                {{- if $.Values.elasticsearch.enabled }}
+                - name: ES_HOST
+                  {{- if $.Values.elasticsearch.nameOverride }}
+                  value: "{{ $.Values.elasticsearch.nameOverride }}-master"
+                  {{- else if $.Values.elasticsearch.fullnameOverride }}
+                  value: {{ $.Values.elasticsearch.fullnameOverride | quote }}
+                  {{- else }}
+                  value: elasticsearch-master
+                  {{- end }}
+                {{- end }}
                 {{- if $.Values.opensearch.enabled }}
-                - name: ES_SCHEMA
-                  value: https
                 - name: ES_HOST
                   {{- if $.Values.opensearch.nameOverride }}
                   value: "{{ $.Values.opensearch.nameOverride }}-master"
                   {{- else if $.Values.opensearch.fullnameOverride }}
                   value: {{ $.Values.opensearch.fullnameOverride | quote }}
                   {{- else }}
-                  value: opensearch-cluster-master
-                  {{- end }}
-                {{- end }}
-                {{- if $.Values.elasticsearch.enabled }}
-                - name: ES_SCHEMA
-                  value: http
-                - name: ES_HOST
-                  {{- if $.Values.elasticsearch.nameOverride }}
-                  value: "{{ $.Values.elasticsearch.nameOverride }}-master"
-                  {{- else if $.Values.elasticsearch.fullnameOverride }}
-                  value: {{  $.Values.elasticsearch.fullnameOverride | quote }}
-                  {{- else }}
-                  value: elasticsearch-master
+                  value: opensearch-master
                   {{- end }}
                 {{- end }}
                 {{- range $.Values.extraEnvs }}

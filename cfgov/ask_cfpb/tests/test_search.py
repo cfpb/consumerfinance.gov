@@ -57,7 +57,7 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             live=True,
         )
         self.ROOT_PAGE.add_child(instance=test_answer_page)
-        self.rebuild_elasticsearch_index("ask_cfpb", stdout=StringIO())
+        self.rebuild_elasticsearch_index("test-ask-cfpb", stdout=StringIO())
         search_term = "mone"
         test_answer_page_search = AnswerPageSearch(search_term=search_term)
         self.assertEqual(
@@ -82,7 +82,7 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             live=True,
         )
         self.ROOT_PAGE.add_child(instance=test_answer_page)
-        self.rebuild_elasticsearch_index("ask_cfpb", stdout=StringIO())
+        self.rebuild_elasticsearch_index("test-ask-cfpb", stdout=StringIO())
         search_term = "What is money?"
         test_answer_page_search = AnswerPageSearch(search_term=search_term)
         test_answer_page_search_results = test_answer_page_search.search()[
@@ -99,7 +99,7 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             live=True,
         )
         self.ROOT_PAGE.add_child(instance=test_answer_page)
-        self.rebuild_elasticsearch_index("ask_cfpb", stdout=StringIO())
+        self.rebuild_elasticsearch_index("test-ask-cfpb", stdout=StringIO())
         search_term = "monye"
         test_answer_page_search = AnswerPageSearch(search_term=search_term)
         test_answer_page_search_results = test_answer_page_search.suggest()

@@ -53,40 +53,9 @@ spec:
             - name: CFGOV_PROD_DB_LOCATION
               value: {{ .Values.importDbPath | quote }}
             {{- end }}
-            {{- if .Values.postgresql.enabled }}
-            - name: DATABASE_URL
-              {{- if .Values.postgresql.nameOverride }}
-              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ .Values.postgresql.nameOverride }}-postgresql/{{ .Values.postgresql.postgresqlDatabase }}"
-              {{- else if .Values.postgresql.fullnameOverride }}
-              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ .Values.postgresql.fullNameOverride }}/{{ .Values.postgresql.postgresqlDatabase }}"
-              {{- else }}
-              value: "postgres://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ include "cfgov.fullname" . }}-postgresql/{{ .Values.postgresql.postgresqlDatabase }}"
-              {{- end }}
-            {{- end }}
-            {{- if .Values.opensearch.enabled }}
-            - name: ES_SCHEMA
-              value: https
-            - name: ES_HOST
-              {{- if .Values.opensearch.nameOverride }}
-              value: "{{ .Values.opensearch.nameOverride }}-master"
-              {{- else if .Values.opensearch.fullnameOverride }}
-              value: {{ .Values.opensearch.fullnameOverride | quote }}
-              {{- else }}
-              value: opensearch-cluster-master
-              {{- end }}
-            {{- end }}
-            {{- if .Values.elasticsearch.enabled }}
-            - name: ES_SCHEMA
-              value: http
-            - name: ES_HOST
-              {{- if .Values.elasticsearch.nameOverride }}
-              value: "{{ .Values.elasticsearch.nameOverride }}-master"
-              {{- else if .Values.elasticsearch.fullnameOverride }}
-              value: {{  .Values.elasticsearch.fullnameOverride | quote }}
-              {{- else }}
-              value: elasticsearch-master
-              {{- end }}
-            {{- end }}
+            {{- include "cfgov.postgresEnv" . | nindent 12 }}
+            {{- include "cfgov.opensearchEnv" . | nindent 12 }}
+            {{- include "cfgov.elasticsearchEnv" . | nindent 12 }}
             {{- range .Values.extraEnvs }}
             - name: {{ .name }}
               value: {{ .value | quote }}
@@ -134,30 +103,8 @@ spec:
             - name: RUN_MIGRATIONS
               value: "false"
             {{- include "cfgov.postgresEnv" . | nindent 12 }}
-            {{- if .Values.opensearch.enabled }}
-            - name: ES_SCHEMA
-              value: https
-            - name: ES_HOST
-              {{- if .Values.opensearch.nameOverride }}
-              value: "{{ .Values.opensearch.nameOverride }}-master"
-              {{- else if .Values.opensearch.fullnameOverride }}
-              value: {{  .Values.opensearch.fullnameOverride | quote }}
-              {{- else }}
-              value: opensearch-cluster-master
-              {{- end }}
-            {{- end }}
-            {{- if .Values.elasticsearch.enabled }}
-            - name: ES_SCHEMA
-              value: http
-            - name: ES_HOST
-              {{- if .Values.elasticsearch.nameOverride }}
-              value: "{{ .Values.elasticsearch.nameOverride }}-master"
-              {{- else if .Values.elasticsearch.fullnameOverride }}
-              value: {{  .Values.elasticsearch.fullnameOverride | quote }}
-              {{- else }}
-              value: elasticsearch-master
-              {{- end }}
-            {{- end }}
+            {{- include "cfgov.opensearchEnv" . | nindent 12 }}
+            {{- include "cfgov.elasticsearchEnv" . | nindent 12 }}
             {{- range .Values.extraEnvs }}
             - name: {{ .name }}
               value: {{ .value | quote }}

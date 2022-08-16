@@ -41,7 +41,7 @@ opensearch:
 #      memory: "2048M"
 
   service:
-    type: LoadBalancer
+    type: ClusterIP
 
 ### OPENSEARCH DASHBOARDS OVERRIDES ###
 opensearch-dashboards:
@@ -51,7 +51,7 @@ opensearch-dashboards:
     enabled: false
 
   service:
-    type: LoadBalancer
+    type: ClusterIP
 
 ### ELASTICSEARCH OVERRIDES ###
 elasticsearch:

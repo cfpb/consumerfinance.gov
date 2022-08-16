@@ -1,5 +1,6 @@
 import json
 from io import StringIO
+from time import sleep
 from unittest.mock import patch
 
 from django.test import TestCase
@@ -198,10 +199,10 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
         self.assertEqual(len(results.hits), 2)
 
     # Mocking is necessary here because unfortunately it's not currently
-    # possible to use override_settings with DED autosync. See
+    # possible to use override_settings with DOD autosync. See
     # https://github.com/django-es/django-elasticsearch-dsl/issues/322.
     @patch(
-        "django_opensearch_dsl.apps.DEDConfig.autosync_enabled",
+        "django_opensearch_dsl.apps.DODConfig.autosync_enabled",
         return_value=True,
     )
     def test_index_updates_automatically(self, _):
@@ -210,6 +211,7 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
         indexed_page = Page.objects.get(slug="child1")
         indexed_page.title = "child1 foo"
         indexed_page.save_revision().publish()
+        sleep(1)
         self.assertEqual(search.search(title="foo").count(), 1)
 
 
@@ -461,12 +463,13 @@ class TestThatWagtailPageSignalsUpdateIndex(ElasticsearchTestsMixin, TestCase):
         # that here than by patching; see
         # https://github.com/django-es/django-elasticsearch-dsl/issues/322.
         with patch(
-            "django_opensearch_dsl.registries.DEDConfig.autosync_enabled",
+            "django_opensearch_dsl.apps.DODConfig.autosync_enabled",
             return_value=True,
         ):
             # Moving a page out of the parent should update the index so that
             # a search there now returns only 2 results.
             blog2.move(root)
+            sleep(1)
             results = search.search(title="foo")
             self.assertEqual(results.count(), 2)
 
@@ -474,6 +477,7 @@ class TestThatWagtailPageSignalsUpdateIndex(ElasticsearchTestsMixin, TestCase):
             # now returns only 1 result.
             blog3.title = "bar"
             blog3.save_revision().publish()
+            sleep(1)
             results = search.search(title="foo")
             self.assertEqual(results.count(), 1)
 

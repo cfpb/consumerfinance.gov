@@ -123,6 +123,21 @@ Elasticsearch Environment Vars
 {{- end }}
 {{- end }}
 
+
+{{/*
+Opensearch Environment Vars
+*/}}
+{{- define "cfgov.opensearchEnv" -}}
+- name: ES_HOST
+{{- if .Values.opensearch.nameOverride }}
+  value: "{{ .Values.opensearch.nameOverride }}-master"
+{{- else if .Values.opensearch.fullnameOverride }}
+  value: {{ .Values.opensearch.fullnameOverride | quote }}
+{{- else }}
+  value: opensearch-cluster-master
+{{- end }}
+{{- end }}
+
 {{/*
 Mapping/Ingress Hostname FQDN
 */}}

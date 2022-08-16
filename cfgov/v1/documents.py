@@ -202,7 +202,7 @@ class FilterablePagesDocumentSearch:
         """Perform a search for the given title"""
         self.search_title(title=title)
         self.order(order_by=order_by)
-        return self.search_obj[0 : self.count()].to_queryset()
+        return self.search_obj[0 : self.count()].to_queryset(keep_order=True)
 
     def count(self):
         """Return the search object's current result count"""
