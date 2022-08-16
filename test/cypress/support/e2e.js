@@ -23,4 +23,4 @@ import './commands';
 import './assertions';
 
 // Require skip-test
-require('@cypress/skip-test/support')
+require( '@cypress/skip-test/support' );

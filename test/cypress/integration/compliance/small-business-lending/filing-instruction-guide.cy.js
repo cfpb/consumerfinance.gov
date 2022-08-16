@@ -1,9 +1,9 @@
 import { FilingInstructionGuide } from './filing-instruction-guide-helpers.cy.js';
-import { skipOn } from '@cypress/skip-test'
+import { skipOn } from '@cypress/skip-test';
 
 const fig = new FilingInstructionGuide();
 
-skipOn( 'staging' , () => {
+skipOn( 'staging', () => {
 
   describe( '1071 Filing Instruction Guide (FIG)', () => {
 
