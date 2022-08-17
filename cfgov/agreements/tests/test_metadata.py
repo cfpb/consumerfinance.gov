@@ -1,0 +1,59 @@
+from unittest.mock import patch
+
+from django.test import TestCase, override_settings
+
+import boto3
+import moto
+
+from agreements.metadata import Metadata
+
+
+class MetadataTests(TestCase):
+    @moto.mock_s3
+    @override_settings(AWS_S3_CUSTOM_DOMAIN="test.bucket")
+    def test_metadata(self):
+        s3 = boto3.resource("s3")
+        bucket = s3.Bucket("test.bucket")
+        bucket.create()
+
+        metadata = Metadata()
+
+        self.assertEqual(metadata.prefix, "a/assets/bulk_agreements/")
+
+        self.assertEqual(
+            metadata.flexibilities,
+            ["Q1-2020", "Q2-2020", "Q3-2020", "Q4-2020", "Q1-2021"],
+        )
+
+        self.assertEqual(
+            metadata.notes,
+            {
+                "Q2-2019": "Agreements are incomplete due to"
+                " technical submission issues at the Bureau"
+            },
+        )
+
+        self.assertEqual(
+            str(metadata.get_objects_by_prefix()),
+            "s3.Bucket.objectsCollection(s3.Bucket(name='test.bucket')"
+            ", s3.ObjectSummary)",
+        )
+
+    def fake(self):
+        class A:
+            key = 1
+
+        class B:
+            key = 2
+
+        class C:
+            key = 3
+
+        return [A(), B(), C()]
+
+    @moto.mock_s3
+    @override_settings(AWS_S3_CUSTOM_DOMAIN="test.bucket")
+    @patch.object(Metadata, "get_objects_by_prefix", fake)
+    def test_get_sorted(self):
+        m = Metadata()
+        self.assertEqual(m.get_sorted_agreements(), [3, 2, 1])

@@ -1,9 +1,11 @@
+from unittest.mock import patch
+
 from django.http import Http404
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
 
 from agreements.models import Agreement, Issuer
-from agreements.views import issuer_search
+from agreements.views import index, issuer_search
 
 
 class TestIssuerSearch(TestCase):
@@ -62,3 +64,25 @@ class TestIssuerSearch(TestCase):
             reverse("issuer_search", kwargs={"issuer_slug": "a-b-bank"})
         )
         self.assertContains(response, "A &amp; B Bank")
+
+
+class TestIndexRender(TestCase):
+    def setUp(self):
+        self.request = RequestFactory().get("/")
+
+    @patch("agreements.views.Metadata")
+    @patch("agreements.views.render")
+    def test_index(self, render, Metadata):
+        index(self.request)
+
+        render.assert_called_with(
+            self.request,
+            "agreements/index.html",
+            {
+                "agreements": Metadata().get_sorted_agreements(),
+                "flexibilities": Metadata().flexibilities,
+                "notes": Metadata().notes,
+                "agreement_count": 0,
+                "pagetitle": "Credit card agreements",
+            },
+        )
