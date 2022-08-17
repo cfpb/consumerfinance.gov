@@ -1,6 +1,6 @@
 # Page Search
 
-For page searches on consumerfinance.gov, we use Elasticsearch and the [django-elasticsearch-dsl](https://django-elasticsearch-dsl.readthedocs.io/en/latest/) library, which is a lightweight wrapper around [elasticsearch-dsl](https://elasticsearch-dsl.readthedocs.io/en/latest/).
+For page searches on consumerfinance.gov, we use Elasticsearch and the [django-opensearch-dsl](https://django-opensearch-dsl.readthedocs.io/en/latest/) library, which is a lightweight wrapper around [opensearch-dsl-py](https://opensearch.org/docs/latest/).
 
 - [Indexing](#indexing)
     - [Elasticsearch index configuration](#elasticsearch-index-configuration)
@@ -15,19 +15,19 @@ For page searches on consumerfinance.gov, we use Elasticsearch and the [django-e
 
 ## Indexing
 
-For any of our Django apps that need to implement search for their Django models or [Wagtail page types](../wagtail-pages/), we include a `documents.py` file that defines the Elasticsearch documents that will [map the model or page to the Elasticsearch index](https://django-elasticsearch-dsl.readthedocs.io/en/latest/quickstart.html#declare-data-to-index).
+For any of our Django apps that need to implement search for their Django models or [Wagtail page types](../wagtail-pages/), we include a `documents.py` file that defines the Elasticsearch documents that will [map the model or page to the Elasticsearch index](https://django-opensearch-dsl.readthedocs.io/en/latest/getting_started/#create-document-classes).
 
 The `Document` class includes three things:
 
-1. The [Elasticsearch index configuration](https://django-elasticsearch-dsl.readthedocs.io/en/latest/quickstart.html#declare-data-to-index)
+1. The [Elasticsearch index configuration](https://django-opensearch-dsl.readthedocs.io/en/latest/getting_started/#create-document-classes)
 2. The Django model information
-3. [Custom fields to index](https://django-elasticsearch-dsl.readthedocs.io/en/latest/fields.html), and any preparation that they require
+3. [Custom fields to index](https://django-opensearch-dsl.readthedocs.io/en/latest/fields/), and any preparation that they require
 
 We'll use our [Ask CFPB answer search document as an example](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/ask_cfpb/documents.py) for each of these:
 
 ```python
-from django_elasticsearch_dsl import Document
-from django_elasticsearch_dsl.registries import registry
+from django_opensearch_dsl import Document
+from django_opensearch_dsl.registries import registry
 
 @registry.register_document
 class AnswerPageDocument(Document):
@@ -36,7 +36,7 @@ class AnswerPageDocument(Document):
 
 ### Elasticsearch index configuration
 
-The index configuration is provided by an `Index` class on the document class that defines the [elasticsearch-dsl index options](https://elasticsearch-dsl.readthedocs.io/en/latest/persistence.html#class-index-options).
+The index configuration is provided by an `Index` subclass on the document class that defines the [django-opensearch-dsl index options](https://django-opensearch-dsl.readthedocs.io/en/latest/document/#index-subclass).
 
 ```python
 from search.elasticsearch_helpers import environment_specific_index
@@ -81,12 +81,12 @@ Sometimes it might be desirable to index a field as an alternative type — say,
 
 It might also be desirable to construct a field to index from multiple fields on the model, particularly for Wagtail pages with stream fields. 
 
-We may also want to specify Elasticsearch-specific [field properties](https://elasticsearch-dsl.readthedocs.io/en/stable/persistence.html#mappings), like a custom analyzer.
+We may also want to specify Elasticsearch-specific [field properties](https://django-opensearch-dsl.readthedocs.io/en/latest/fields/#field-classes), like a custom analyzer.
 
-To do so, we specify [custom fields](https://django-elasticsearch-dsl.readthedocs.io/en/latest/fields.html) as attributes on the document class, with an `attr` argument that specifies the field on the model to reference.
+To do so, we specify [custom fields](https://django-opensearch-dsl.readthedocs.io/en/latest/fields/#using-attr-argument) as attributes on the document class, with an `attr` argument that specifies the field on the model to reference.
 
 ```python
-from django_elasticsearch_dsl import fields
+from django_opensearch_dsl import fields
 
 from search.elasticsearch_helpers import synonym_analyzer
 
@@ -96,10 +96,10 @@ class AnswerPageDocument(Document):
 
 The `attr` on the model can be a `@property` or a Django model field.
 
-We can also do any data preparation/manipulation for fields using [`prepare_`-prefixed methods](https://django-elasticsearch-dsl.readthedocs.io/en/latest/fields.html#using-prepare-field).
+We can also do any data preparation/manipulation for fields using [`prepare_`-prefixed methods](https://django-opensearch-dsl.readthedocs.io/en/latest/fields/#using-prepare_field).
 
 ```python
-from django_elasticsearch_dsl import fields
+from django_opensearch_dsl import fields
 
 class AnswerPageDocument(Document):
     portal_topics = fields.KeywordField()
@@ -126,7 +126,7 @@ from search.elasticsearch_helpers import (
 
 ### Building the index
 
-With the `Document` class created for your model in a `documents.py` module within a Django app listed in `INSTALLED_APPS`, all that is left to do is to use the [django-elasticsearch-dsl management commands](https://django-elasticsearch-dsl.readthedocs.io/en/latest/management.html) to rebuild the index:
+With the `Document` class created for your model in a `documents.py` module within a Django app listed in `INSTALLED_APPS`, all that is left to do is to use the [django-opensearch-dsl management commands](https://django-opensearch-dsl.readthedocs.io/en/latest/management/) to rebuild the index:
 
 ```shell
 ./cfgov/manage.py search_index --create --models [app]
@@ -146,9 +146,9 @@ Finally, the indexes for all apps can be rebuilt using:
 
 ## Searching
 
-The document class [provides a `search()` class method](https://django-elasticsearch-dsl.readthedocs.io/en/latest/quickstart.html#search) that returns a [`Search` object](https://elasticsearch-dsl.readthedocs.io/en/stable/search_dsl.html). The `Search` object is elasticsearch-dsl's representation of Elasticsearch search requests.
+The document class [provides a `search()` class method](https://django-opensearch-dsl.readthedocs.io/en/latest/getting_started/#search) that returns a [`Search` object](https://opensearch.org/docs/latest/opensearch/rest-api/search/). The `Search` object is opensearch-dsl-py's representation of Elasticsearch search requests.
 
-To [query](https://elasticsearch-dsl.readthedocs.io/en/stable/search_dsl.html#queries) for a specific term, for example:
+To [query](https://django-opensearch-dsl.readthedocs.io/en/latest/getting_started/#search) for a specific term, for example:
 
 ```python
 from ask_cfpb.documents import AnswerPageDocument
@@ -158,7 +158,7 @@ AnswerPageDocument.search().query(
 )
 ```
 
-We can also [add a filter context](https://elasticsearch-dsl.readthedocs.io/en/stable/search_dsl.html#filters) before querying, which we do to limit results to a specific language in Ask CFPB:
+We can also [add a filter context](https://django-opensearch-dsl.readthedocs.io/en/latest/getting_started/#search) before querying, which we do to limit results to a specific language in Ask CFPB:
 
 ```python
 from ask_cfpb.documents import AnswerPageDocument
@@ -187,7 +187,7 @@ search.query('match', autocomplete=search_term)
 
 ### Suggestions
 
-For suggested spelling corrections for search terms, [the `Search` object has a `suggest()` method](https://elasticsearch-dsl.readthedocs.io/en/stable/search_dsl.html#suggestions) that provides spelling suggestions for a given term on a given field.
+For suggested spelling corrections for search terms, [the `Search` object has a `suggest()` method](https://opensearch.org/docs/latest/opensearch/rest-api/search/) that provides spelling suggestions for a given term on a given field.
 
 Using the Ask CFPB document search above, with its language filter context, this looks like:
 
@@ -201,5 +201,5 @@ search.suggest('suggestion', search_term, term={'field': 'text'})
 
 ## References
 
-- [django-elasticsearch-dsl](https://django-elasticsearch-dsl.readthedocs.io/en/latest/)
-- [elasticsearch-dsl](https://elasticsearch-dsl.readthedocs.io/en/latest/)
+- [django-opensearch-dsl](https://django-opensearch-dsl.readthedocs.io/en/latest/)
+- [elasticsearch-dsl](https://opensearch.org/docs/latest/)
