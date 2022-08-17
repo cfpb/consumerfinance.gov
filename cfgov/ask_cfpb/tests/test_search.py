@@ -6,6 +6,7 @@ from django.test import TestCase
 
 from opensearchpy.exceptions import RequestError
 
+from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.forms import AutocompleteForm
 from ask_cfpb.models.answer_page import AnswerPage
 from ask_cfpb.models.search import (
@@ -57,7 +58,9 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             live=True,
         )
         self.ROOT_PAGE.add_child(instance=test_answer_page)
-        self.rebuild_elasticsearch_index("test-ask-cfpb", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            AnswerPageDocument.Index.name, stdout=StringIO()
+        )
         search_term = "mone"
         test_answer_page_search = AnswerPageSearch(search_term=search_term)
         self.assertEqual(

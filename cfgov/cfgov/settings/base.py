@@ -6,7 +6,6 @@ from django.conf import global_settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
-import dj_database_url
 from opensearchpy import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
