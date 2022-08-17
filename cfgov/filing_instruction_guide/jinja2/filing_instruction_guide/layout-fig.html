@@ -1,0 +1,55 @@
+{% extends 'layout-1-3.html' %}
+
+{% set version_statuses = {
+    'current': '',
+    'old': 'Previous version',
+    'archived': 'Archived'
+} %}
+{% set version_status = version_statuses[page.version_status] %}
+{% set effective_start_date = page.effective_start_date.strftime('%B %d, %Y') if page.effective_start_date %}
+{% set effective_end_date = page.effective_end_date.strftime('%B %d, %Y') if page.effective_end_date %}
+{% set version_message = 'This version has been archived.' if version_status == 'Archived' else 'This version is not the current FIG.' %}
+{% set date_message = 'You are viewing a previous version of the FIG.' %}
+{% if effective_start_date and effective_end_date %}
+    {% set date_message = 'You are viewing a previous version of the FIG, effective ' + effective_start_date + ' to ' + effective_end_date + '.' %}
+{% endif %}
+{% set banner_modification = ' o-banner__dark' if version_status == 'Archived' else ''  %}
+
+{% block banner_top %}
+    {% if version_status %}
+        {% import 'molecules/notification.html' as notification with context %}
+        <div class="o-banner{{ banner_modification }}">
+            <div class="wrapper
+                        wrapper__match-content">
+                {{ notification.render(
+                    'warning',
+                    true,
+                    version_message,
+                    date_message,
+                    [ {
+                        'text': 'View all versions of the FIG.',
+                        'url': '../'
+                    } ]
+                ) }}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content_sidebar %}
+    {% import 'organisms/secondary-navigation-fig.html' as secondary_navigation with context %}
+    {{ secondary_navigation.render(version_status, effective_start_date, effective_end_date) }}
+{% endblock %}
+
+{# Extra classes needed for .content_sidebar #}
+{% block content_sidebar_modifiers -%}
+    content__flush-top-on-small
+    content__flush-sides-on-small
+    {{ 'content__half-top-on-desk' if breadcrumb_items | length > 0 else '' }}
+{%- endblock %}
+
+{# Extra classes needed for .content_main #}
+{% block content_main_modifiers -%}
+    content__flush-top-on-small
+    {{ 'content__half-top-on-desk' if breadcrumb_items | length > 0 else '' }}
+{%- endblock %}
