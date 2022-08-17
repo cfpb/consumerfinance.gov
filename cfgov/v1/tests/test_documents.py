@@ -211,6 +211,7 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
         indexed_page = Page.objects.get(slug="child1")
         indexed_page.title = "child1 foo"
         indexed_page.save_revision().publish()
+        # wait for the index to update
         sleep(1)
         self.assertEqual(search.search(title="foo").count(), 1)
 
