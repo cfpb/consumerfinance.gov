@@ -10,7 +10,7 @@ from agreements.metadata import Metadata
 
 class MetadataTests(TestCase):
     @moto.mock_s3
-    @override_settings(AWS_S3_CUSTOM_DOMAIN="test.bucket")
+    @override_settings(AWS_STORAGE_BUCKET_NAME="test.bucket")
     def test_metadata(self):
         s3 = boto3.resource("s3")
         bucket = s3.Bucket("test.bucket")
@@ -47,7 +47,7 @@ class MetadataTests(TestCase):
         return [Keyed(1), Keyed(2), Keyed(3)]
 
     @moto.mock_s3
-    @override_settings(AWS_S3_CUSTOM_DOMAIN="test.bucket")
+    @override_settings(AWS_STORAGE_BUCKET_NAME="test.bucket")
     @patch.object(Metadata, "get_objects_by_prefix", fake)
     def test_get_sorted(self):
         m = Metadata()

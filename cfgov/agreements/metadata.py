@@ -6,7 +6,7 @@ import boto3
 class Metadata:
     def __init__(self):
         s3 = boto3.resource("s3")
-        self.bucket = s3.Bucket(settings.AWS_S3_CUSTOM_DOMAIN)
+        self.bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
         self.prefix = "a/assets/bulk_agreements/"
         self.flexibilities = [
             "Q1-2020",
