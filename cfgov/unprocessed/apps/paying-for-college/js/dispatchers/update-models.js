@@ -100,7 +100,7 @@ function refreshExpenses() {
 }
 
 /**
- * 
+ *
  */
 function clearFinancialCosts() {
   financialModel.clearCosts();
