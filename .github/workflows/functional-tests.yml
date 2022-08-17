@@ -16,9 +16,6 @@ jobs:
       MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
       DJANGO_ADMIN_USERNAME: admin
       DJANGO_ADMIN_PASSWORD: admin
-      AWS_STORAGE_BUCKET_NAME: files.consumerfinance.gov
-      AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     services:
       elasticsearch:

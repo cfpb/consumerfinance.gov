@@ -24,6 +24,9 @@ class Metadata:
         return self.bucket.objects.filter(Prefix=self.prefix)
 
     def get_sorted_agreements(self, reverse=True):
-        agreements = [f.key for f in self.get_objects_by_prefix()]
-        agreements.sort(reverse=reverse)
-        return agreements
+        try:
+            agreements = [f.key for f in self.get_objects_by_prefix()]
+            agreements.sort(reverse=reverse)
+            return agreements
+        except Exception:
+            return []
