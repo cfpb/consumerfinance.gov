@@ -48,6 +48,10 @@ extraEnvs:
     value: /var/run/secrets/.aws/credentials
   - name: AWS_PROFILE
     value: ${AWS_PROFILE}
+  # add in desired S3 Bucket for PG_Dump
+  # - name: S3_BUCKET
+  #   value: <enter_bucket>
+
 
 cronJobs:
   - name: "publish-scheduled-pages"
@@ -85,6 +89,6 @@ cronJobs:
     args:
       - "-c"
       # supply the desired s3 bucket you wish to test with
-      - "pg_dump --no-owner --no-privileges | gzip > test.gz | aws s3 cp test.gz s3://$S3_BUCKET_ROUTE/"
+      - "pg_dump --no-owner --no-privileges | gzip > test.gz | aws s3 cp test.gz s3://$S3_BUCKET/"
     restartPolicy: OnFailure
     suspend: true
