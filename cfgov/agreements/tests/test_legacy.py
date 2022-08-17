@@ -34,8 +34,9 @@ def agreement_factory(**kwargs):
 
 
 class Views(TestCase):
+    @patch("agreements.views.Metadata")
     @patch("agreements.views.render", return_value=HttpResponse())
-    def test_index_empty(self, render):
+    def test_index_empty(self, render, m):
         """
         Test index without any agreements.
         """
@@ -47,12 +48,14 @@ class Views(TestCase):
         self.assertTrue("agreement_count" in context)
         self.assertEqual(0, context["agreement_count"])
 
-    def test_index_renders(self):
+    @patch("agreements.views.Metadata")
+    def test_index_renders(self, m):
         response = self.client.get(reverse("agreements_home"))
         str(response.content.decode("utf-8"))
 
+    @patch("agreements.views.Metadata")
     @patch("agreements.views.render", return_value=HttpResponse())
-    def test_index_with_agreements(self, render):
+    def test_index_with_agreements(self, render, m):
         """
         Test index with some agreements.
         """

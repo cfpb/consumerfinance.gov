@@ -40,16 +40,11 @@ class MetadataTests(TestCase):
         )
 
     def fake(self):
-        class A:
-            key = 1
+        class Keyed:
+            def __init__(self, k):
+                self.key = k
 
-        class B:
-            key = 2
-
-        class C:
-            key = 3
-
-        return [A(), B(), C()]
+        return [Keyed(1), Keyed(2), Keyed(3)]
 
     @moto.mock_s3
     @override_settings(AWS_S3_CUSTOM_DOMAIN="test.bucket")
