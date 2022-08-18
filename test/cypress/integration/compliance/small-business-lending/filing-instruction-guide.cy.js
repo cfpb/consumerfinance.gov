@@ -11,7 +11,7 @@ skipOn( 'staging', () => {
 
       // putting a request in a beforeEach hook will cause the rest of the
       // spec to be skipped if the response is not ok.
-      beforeEach( () => {
+      before( () => {
         cy.request( {
           url: '/compliance/compliance-resources/small-business-lending/1071-filing-instruction-guide/',
           failOnStatusCode: true
