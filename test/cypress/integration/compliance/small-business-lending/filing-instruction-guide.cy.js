@@ -9,6 +9,15 @@ skipOn( 'staging', () => {
 
     describe( 'FIG table of contents', () => {
 
+      // putting a request in a beforeEach hook will cause the rest of the
+      // spec to be skipped if the response is not ok.
+      beforeEach( () => {
+        cy.request( {
+          url: '/compliance/compliance-resources/small-business-lending/1071-filing-instruction-guide/',
+          failOnStatusCode: true
+        } )
+      } );
+
       context( 'Desktop experience', () => {
 
         const desktops = [
