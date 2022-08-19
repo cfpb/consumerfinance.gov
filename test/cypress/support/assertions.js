@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-const isInViewport = ( _chai, utils ) => {
-  function assertIsInViewport( options ) {
+const isInViewport = _chai => {
+  function assertIsInViewport() {
 
     const subject = this._obj;
 
