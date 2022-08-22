@@ -141,6 +141,21 @@ Opensearch Environment Vars
   value: {{ .Values.opensearch.httpPort }}
 {{- end }}
 
+{{- define "cfgov.searchEnv" -}}
+{{- if .Values.elasticsearch.enabled }}
+{{- include "cfgov.elasticsearchEnv" . }}
+{{- else if .Values.opensearch.enabled }}
+{{- include "cfgov.opensearchEnv" . }}
+{{- else }}
+- name: ES_SCHEMA
+  value: "{{ default "http" .Values.search.schema }}"
+- name: ES_HOST
+  value: "{{ .Values.search.host }}"
+- name: ES_PORT
+  value: "{{ default "9200" .Values.search.port }}"
+{{- end }}
+{{- end }}
+
 {{/*
 Mapping/Ingress Hostname FQDN
 */}}

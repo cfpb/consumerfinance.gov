@@ -47,8 +47,8 @@ spec:
                 {{- end }}
               env:
                 {{- if or .includeEnv (not (hasKey . "includeEnv")) }}
-                {{- include "cfgov.postgresEnv" $ | nindent 16}}
-                {{- include "cfgov.elasticsearchEnv" $ | nindent 16 }}
+                {{- include "cfgov.postgresEnv" $ | nindent 16 }}
+                {{- include "cfgov.searchEnv" $ | nindent 16 }}
                 {{- range $.Values.extraEnvs }}
                 - name: {{ .name }}
                   value: {{ .value | quote }}
