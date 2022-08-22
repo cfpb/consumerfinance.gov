@@ -92,7 +92,29 @@ For example, our Django
     - "django-admin"
   args:
     - "clearsessions"
-  restartPolicy: OnFailure
+```
+
+The following shows the all the available values and default values
+for a cronJob object.
+
+```yaml
+- name: ""  # There is no default for name, this is required
+  includeEnv: true  # includes the same volumes and environment variables as the main application container
+  image:  # ONLY define if different from cfgov_python
+    repository: cfogv_python  # default is the chart image repository
+    tag: ""  # default is the chart image tag
+  schedule: "@daily"  # default
+  suspend: false  # default
+  restartPolicy: OnFailure  # default
+  command:  # there is no default for command, this is required
+    - "some-exec"
+  args:  # there is no default for args, this is required
+    - "space"
+    - "separated"
+    - "arguments"
+  env:  # default is empty (not defined), but can define extra cronjob only environment variables as follows
+    - name: MY_CRONJOB_ENV
+      value: "MY_CRONJOB_ENV_VALUE"
 ```
 
 # Manually Loading Data
@@ -128,3 +150,22 @@ The main container should be created, and skip migrations
 (assuming a user was created `SELECT COUNT(*) FROM auth_user`).
 The main container should now be loaded with Postgres and ElasticSearch with
 your manually loaded data.
+
+# AWS CLI
+To use the AWS CLI, the chart must be deployed with `$HOME/.aws` mounted,
+or with keys and tokens passed in via environment variables or mounted in
+the correct files within `/root/.aws` for `local` image, or `/var/www/.aws` for the `prod` image. You can also mount the secrets to a different path and set `AWS_CONFIG_FILE` and `AWS_SHARED_CREDENTIALS_FILE` variables, pointing to the appropriate files. Additionally, you must have the `AWS_PROFILE` env variable set on your local AWS configuration in order for the CLI to use your credentials within the container.  More info on AWS CLI Environment Variables can be found [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
+
+Currently, the `local.yaml` override will mount your `.aws` directory to the containers for local development. This directory is mounted to
+`/var/run/secrets/.aws`, then `AWS_CONFIG_FILE` and
+`AWS_SHARED_CREDENTIALS_FILE` are set to the appropriate files within that
+directory. To make use of AWS CLI in the containers locally, you will need
+to run your `gimme-aws-creds` in your local terminal to get valid credentials
+locally. AWS CLI will then work within the containers.
+
+
+## TODO
+In production, an AWS Service Account is used, and its credentials are
+mounted within the containers to `/var/run/secrets/.aws`, then
+`AWS_CONFIG_FILE` and `AWS_SHARED_CREDENTIALS_FILE` are set to the appropriate
+files within that directory.

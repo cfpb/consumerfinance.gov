@@ -33,7 +33,7 @@ volumes:
       hostPath:
         path: ${HOME}/.aws
         type: Directory
-    mountPath: /root/.aws
+    mountPath: /var/run/secrets/.aws
 
 importDbPath: "${CFGOV_PROD_DB_LOCATION}"
 
@@ -42,6 +42,16 @@ extraEnvs:
     value: "${DJANGO_ADMIN_USERNAME}"
   - name: DJANGO_ADMIN_PASSWORD
     value: "${DJANGO_ADMIN_PASSWORD}"
+  - name: AWS_CONFIG_FILE
+    value: /var/run/secrets/.aws/config
+  - name: AWS_SHARED_CREDENTIALS_FILE
+    value: /var/run/secrets/.aws/credentials
+  - name: AWS_PROFILE
+    value: ${AWS_PROFILE}
+  # add in desired S3 Bucket for PG_Dump
+  # - name: S3_BUCKET
+  #   value: <enter_bucket>
+
 
 cronJobs:
   - name: "publish-scheduled-pages"
@@ -50,7 +60,6 @@ cronJobs:
       - "django-admin"
     args:
       - "publish_scheduled_pages"
-    restartPolicy: OnFailure
     suspend: true
 
   - name: "clearSessions"
@@ -59,7 +68,6 @@ cronJobs:
       - "django-admin"
     args:
       - "clearsessions"
-    restartPolicy: OnFailure
 
   - name: "elasticsearch-Rebuild-Index"
     schedule: "@daily"
@@ -70,7 +78,6 @@ cronJobs:
       - "--rebuild"
       - "--parallel"
       - "-f"
-    restartPolicy: OnFailure
 
   - name: "dump-Postgres-DB"
     schedule: "@daily"
@@ -78,6 +85,8 @@ cronJobs:
       - "bash"
     args:
       - "-c"
-      - "pg_dump --no-owner --no-privileges | gzip > test.gz"
+      # supply the desired s3 bucket you wish to test with
+      - "pg_dump --no-owner --no-privileges | gzip > test.gz | aws s3 cp test.gz s3://$S3_BUCKET/"
     restartPolicy: OnFailure
     suspend: true
+
