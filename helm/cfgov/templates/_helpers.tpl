@@ -113,14 +113,11 @@ Elasticsearch Environment Vars
 {{- else }}
   value: "{{ include "elasticsearch.uname" .Subcharts.elasticsearch | trunc 63 | trimSuffix "-" }}"
 {{- end }}
-- name: ES_PORT
-  value: "{{ default "9200" .Values.elasticsearch.httpPort }}"
 {{- else }}
-- name: ES_HOST
   value: "{{ default "elasticsearch-master" .Values.elasticsearch.externalHostname }}"
+{{- end }}
 - name: ES_PORT
   value: "{{ default "9200" .Values.elasticsearch.httpPort }}"
-{{- end }}
 {{- end }}
 
 
