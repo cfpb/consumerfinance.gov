@@ -187,7 +187,7 @@ function updateSchoolData( iped ) {
       } )
       .catch( function( error ) {
         reject( error );
-        iped = iped.replace(/\D/g,'');
+        iped = iped.replace( /\D/g, '' );
         console.log( 'An error occurred when accessing school data for ' + iped, error );
       } );
   } );
