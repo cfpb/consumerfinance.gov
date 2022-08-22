@@ -106,6 +106,8 @@ Postgres Environment Vars
 Elasticsearch Environment Vars
 */}}
 {{- define "cfgov.elasticsearchEnv" -}}
+- name: ES_SCHEMA
+  value: "{{ default "http" .Values.elasticsearch.protocol }}"
 - name: ES_HOST
 {{- if .Values.elasticsearch.enabled }}
 {{- if eq .Values.elasticsearch.nodeGroup "master" }}
@@ -125,6 +127,8 @@ Elasticsearch Environment Vars
 Opensearch Environment Vars
 */}}
 {{- define "cfgov.opensearchEnv" -}}
+- name: ES_SCHEMA
+  value: "{{ default "https" .Values.opensearch.protocol }}"
 - name: ES_HOST
 {{- if .Values.opensearch.nameOverride }}
   value: "{{ .Values.opensearch.nameOverride }}-master"
@@ -133,6 +137,8 @@ Opensearch Environment Vars
 {{- else }}
   value: opensearch-cluster-master
 {{- end }}
+- name: ES_PORT
+  value: {{ .Values.opensearch.httpPort }}
 {{- end }}
 
 {{/*
