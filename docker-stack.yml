@@ -109,6 +109,8 @@ services:
 
                 ./cfgov/manage.py opensearch index --force rebuild
 
+                ./cfgov/manage.py opensearch document --force --refresh --parallel index
+
                 httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -D FOREGROUND"
 
 networks:
