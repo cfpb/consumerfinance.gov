@@ -19,6 +19,7 @@
 !initial-data.sh
 !jest.config.js
 !package.json
+!README.md
 !refresh-data.sh
 !yarn.lock
 
