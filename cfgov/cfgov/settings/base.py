@@ -327,6 +327,7 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 
 # ElasticSearch 7 Configuration
 TESTING = False
+ES_SCHEMA = os.getenv("ES_SCHEMA", "http")
 ES_HOST = os.getenv("ES_HOST", "localhost")
 ES_PORT = os.getenv("ES_PORT", "9200")
 OPENSEARCH_BIGINT = 50000
@@ -351,7 +352,7 @@ if os.environ.get("USE_AWS_ES", False):
 else:
     OPENSEARCH_DSL = {
         "default": {
-            "hosts": f"http://{ES_HOST}:{ES_PORT}",
+            "hosts": f"{ES_SCHEMA}://{ES_HOST}:{ES_PORT}",
             "http_auth": (
                 os.getenv("ES_USER", "admin"),
                 os.getenv("ES_PASS", "admin"),
