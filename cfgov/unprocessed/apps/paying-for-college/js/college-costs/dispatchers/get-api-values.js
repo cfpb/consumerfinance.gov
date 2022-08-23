@@ -25,7 +25,7 @@ function getApi( url ) {
  * @returns {Object} Promise
  */
 function schoolSearch( searchTerm ) {
-  searchTerm = searchTerm.trim().replace(/\D/g,'');
+  searchTerm = searchTerm.trim().replace(/\W+/g, " ")
   if ( searchTerm.length > 2 ) {
     const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
       '/api/search-schools.json?q=' + searchTerm;
