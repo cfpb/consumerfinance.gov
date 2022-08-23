@@ -47,27 +47,8 @@ spec:
                 {{- end }}
               env:
                 {{- if or .includeEnv (not (hasKey . "includeEnv")) }}
-                {{- include "cfgov.postgresEnv" $ | nindent 16}}
-                {{- if $.Values.elasticsearch.enabled }}
-                - name: ES_HOST
-                  {{- if $.Values.elasticsearch.nameOverride }}
-                  value: "{{ $.Values.elasticsearch.nameOverride }}-master"
-                  {{- else if $.Values.elasticsearch.fullnameOverride }}
-                  value: {{ $.Values.elasticsearch.fullnameOverride | quote }}
-                  {{- else }}
-                  value: elasticsearch-master
-                  {{- end }}
-                {{- end }}
-                {{- if $.Values.opensearch.enabled }}
-                - name: ES_HOST
-                  {{- if $.Values.opensearch.nameOverride }}
-                  value: "{{ $.Values.opensearch.nameOverride }}-master"
-                  {{- else if $.Values.opensearch.fullnameOverride }}
-                  value: {{ $.Values.opensearch.fullnameOverride | quote }}
-                  {{- else }}
-                  value: opensearch-master
-                  {{- end }}
-                {{- end }}
+                {{- include "cfgov.postgresEnv" $ | nindent 16 }}
+                {{- include "cfgov.searchEnv" $ | nindent 16 }}
                 {{- range $.Values.extraEnvs }}
                 - name: {{ .name }}
                   value: {{ .value | quote }}

@@ -244,3 +244,9 @@ elasticsearch:
 
 kibana:
   enabled: false
+
+# search is used when not deploying ES/OS via chart. Ergo, external to k8s
+search:
+  # schema: http
+  host: ""
+  # port: 9200
