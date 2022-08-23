@@ -5,6 +5,7 @@
 !cfgov
 !config
 !esbuild
+!helm
 !requirements
 !static.in
 !scripts
@@ -15,6 +16,7 @@
 !.yarnrc
 !babel.config.js
 !docker-entrypoint.sh
+!Dockerfile
 !frontend.sh
 !initial-data.sh
 !jest.config.js
