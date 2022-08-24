@@ -18,13 +18,15 @@ if [ ! -d ./helm/cfgov/charts ]; then
   helm repo update
   helm dependency build ./helm/cfgov
 else
-  helm dependency update ./helm/cfgov
+  if [ -z $SKIP_DEP_UPDATE ]; then
+    helm dependency update ./helm/cfgov
+  fi
 fi
 
 # Parse overrides list
 export PROJECT_DIR="$(dirname "$(realpath "$0")")"
 if [ $# -eq 0 ]; then
-  ARGS="$PROJECT_DIR/helm/overrides/local.yaml $PROJECT_DIR/helm/overrides/services.yaml $PROJECT_DIR/helm/overrides/cfgov-lb.yaml"
+  ARGS="$PROJECT_DIR/helm/overrides/local.yaml $PROJECT_DIR/helm/overrides/services.yaml"
 else
   ARGS=$@
 fi
@@ -45,9 +47,14 @@ RELEASE=${RELEASE:-cfgov}
 # To install to different namespace, set context with namespace
 # kubectl config set-context --current --namespace=<insert-namespace-name-here>
 helm upgrade --install --wait --timeout=10m0s "${RELEASE}" $OVERRIDES \
+  --set ingress.hosts[0].host="${RELEASE}.localhost" \
   --set elasticsearch.clusterName="${RELEASE}-elasticsearch" \
   --set kibana.elasticsearchHosts="http://${RELEASE}-elasticsearch-master:9200" \
   ./helm/cfgov
+
+# Add these in for local SSL.
+#  --set ingress.tls[0].secretName="${RELEASE}-tls" \  # local SSL
+#  --set ingress.tls[0].hosts[0]="${RELEASE}.localhost" \  # local SSL
 
 # Cleanup temp files
 for i in "${tempFiles[@]}"; do
