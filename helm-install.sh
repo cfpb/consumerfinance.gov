@@ -41,12 +41,18 @@ for i in $ARGS; do
   tempFiles+=($tempFile)
 done
 
+if [ -z $TAG ]; then
+  TAG=""
+else
+  TAG="--set image.tag=${TAG}"
+fi
+
 # Set release name
 RELEASE=${RELEASE:-cfgov}
 # Install/Upgrade cfgov release to current context namespace
 # To install to different namespace, set context with namespace
 # kubectl config set-context --current --namespace=<insert-namespace-name-here>
-helm upgrade --install --wait --timeout=10m0s "${RELEASE}" $OVERRIDES \
+helm upgrade --install --wait --timeout=10m0s "${RELEASE}" $OVERRIDES ${TAG} \
   --set ingress.hosts[0].host="${RELEASE}.localhost" \
   --set elasticsearch.clusterName="${RELEASE}-elasticsearch" \
   --set kibana.elasticsearchHosts="http://${RELEASE}-elasticsearch-master:9200" \
