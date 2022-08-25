@@ -70,6 +70,13 @@ if [ ! -z $NAMESPACE ]; then
   fi
 fi
 
+# Image Option
+if [ -z $IMAGE ]; then
+  IMAGE=""
+else
+  IMAGE="--set image.repository=${IMAGE}"
+fi
+
 # Tag Option
 if [ -z $TAG ]; then
   TAG=""
@@ -83,7 +90,7 @@ RELEASE=${RELEASE:-cfgov}
 # To install to different namespace, set context with namespace
 # kubectl config set-context --current --namespace=<insert-namespace-name-here>
 helm upgrade --install ${WAIT_OPT} \
-  "${RELEASE}" ${NAMESPACE_OPT} ${OVERRIDES} ${TAG} \
+  "${RELEASE}" ${NAMESPACE_OPT} ${OVERRIDES} ${IMAGE} ${TAG} \
   --set ingress.hosts[0].host="${RELEASE}.localhost" \
   --set elasticsearch.clusterName="${RELEASE}-elasticsearch" ${ES_TEST_OVERRIDE} \
   --set kibana.elasticsearchHosts="http://${RELEASE}-elasticsearch-master:9200" \
