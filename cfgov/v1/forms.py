@@ -250,7 +250,7 @@ class FilterableListForm(forms.Form):
             self.all_filterable_results.aggregations, "languages", None
         )
 
-        if language_aggregation:
+        if language_aggregation is not None or language_aggregation != []:
             language_codes = {b.key for b in language_aggregation.buckets}
 
             language_options = [
