@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ -f .env ]; then
+  source .env
+fi
+
 realpath() {
     [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
 }
@@ -41,20 +45,50 @@ for i in $ARGS; do
   tempFiles+=($tempFile)
 done
 
+# Disable ES Chart Tests by default
+# This should also be a pipeline parameter for deployments
+ES_TEST_OVERRIDE="--set elasticsearch.tests.enabled=false"
+if [ ! -z $ES_ENABLE_CHART_TESTS ]; then
+  ES_TEST_OVERRIDE="--set elasticsearch.tests.enabled=true"
+fi
+
+# Option to skip --wait and set timeout
+WAIT_TIMEOUT="--timeout=${WAIT_TIMEOUT:-10m0s}"
+WAIT_OPT="--wait ${WAIT_TIMEOUT}"
+if [ -z $RUN_CHART_TESTS ] && [ ! -z $SKIP_WAIT ]; then
+  echo "WARNING: Skipping --wait!"
+  WAIT_OPT=""
+fi
+
+# Namespace
+NAMESPACE_OPT=""
+if [ ! -z $NAMESPACE ]; then
+  NAMESPACE_OPT="--namespace ${NAMESPACE}"
+  if [ ! -z $CREATE_NAMESPACE ]; then
+    NAMESPACE_OPT="${NAMESPACE_OPT} --create-namespace"
+  fi
+fi
+
 # Set release name
 RELEASE=${RELEASE:-cfgov}
 # Install/Upgrade cfgov release to current context namespace
 # To install to different namespace, set context with namespace
 # kubectl config set-context --current --namespace=<insert-namespace-name-here>
-helm upgrade --install --wait --timeout=10m0s "${RELEASE}" $OVERRIDES \
+helm upgrade --install ${WAIT_OPT} "${RELEASE}" ${NAMESPACE_OPT} ${OVERRIDES} \
   --set ingress.hosts[0].host="${RELEASE}.localhost" \
-  --set elasticsearch.clusterName="${RELEASE}-elasticsearch" \
+  --set elasticsearch.clusterName="${RELEASE}-elasticsearch" ${ES_TEST_OVERRIDE} \
   --set kibana.elasticsearchHosts="http://${RELEASE}-elasticsearch-master:9200" \
   ./helm/cfgov
 
 # Add these in for local SSL.
 #  --set ingress.tls[0].secretName="${RELEASE}-tls" \  # local SSL
 #  --set ingress.tls[0].hosts[0]="${RELEASE}.localhost" \  # local SSL
+
+# Run chart tests, if RUN_CHART_TESTS is set
+if [ ! -z $RUN_CHART_TESTS ]; then
+  echo "Running chart tests against ${RELEASE}..."
+  helm test "${RELEASE}"
+fi
 
 # Cleanup temp files
 for i in "${tempFiles[@]}"; do

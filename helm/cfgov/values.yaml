@@ -233,7 +233,6 @@ postgresql:
   enabled: false
 
 elasticsearch:
-  test: false
   enabled: false
   externalHostname: ""  # AWS OpenSearch
 
