@@ -2,7 +2,9 @@ initContainer:
   args:
     - "bash"
     - "-c"
-    - "./cfgov/manage.py opensearch index --force rebuild && ./cfgov/manage.py opensearch document --force --refresh index"
+    - >-
+      django-admin opensearch index --force rebuild &&
+      django-admin opensearch document --force --refresh index
 
 extraEnvs:
   - name: ALLOW_ADMIN_URL
