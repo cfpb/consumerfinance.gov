@@ -21,6 +21,52 @@ In the main `consumerfinance.gov` directory, there is [`helm-install.sh`](../hel
 This script is built to inject environment variables into the provided
 override yamls in [`overrides`](overrides).
 
+## Flags and Environment Variables
+`helm-install.sh` is quite flexible in what you can configure via
+Flags and Environment Variables.
+
+It is highly recommended to set these variables inline when calling
+`helm-install.sh`, as follows:
+
+    SKIP_WAIT=y ./helm-install.sh
+
+If you want to set a variable on your terminal session, you may:
+
+    export SKIP_DEP_UPDATE=y
+    ./helm-install.sh
+
+You can clear a terminal session variable using `unset`
+
+    unset SKIP_DEP_UPDATE
+    ./helm-install.sh
+
+**NOTE:** `helm-install.sh` will **ALWAYS** source `.env` if it exists.
+If you have a variable set in `.env`, `unset` will not work for that variable.
+
+### Flags
+Flags are treated as `True` if the corresponding
+Environment Variable is set to any value beyond empty string,
+including `False`. Use `unset VARIABLE` to clear a set variable.
+
+| Variable                | Description                                                                |
+|-------------------------|----------------------------------------------------------------------------|
+| `ES_ENABLE_CHART_TESTS` | Enable ElasticSearch Chart Tests                                           |
+| `SKIP_WAIT`             | Skips `--wait`                                                             |
+| `CREATE_NAMESPACE`      | Create namespace if it doesn't exist. Used in conjunction with `NAMESPACE` |
+| `RUN_CHART_TESTS`       | Run `helm test ${RELEASE}` after deployment. Ignores `SKIP_WAIT`.          |
+| `SKIP_DEP_UPDATE`       | Skip `helm dependency update` for faster iteration                         |
+
+### Environment Variables
+Environment Variables **need** a valid value to be set.
+
+| Variable        | Description                                       |
+|-----------------|---------------------------------------------------|
+| `RELEASE`       | Set the release name.<br/>Default is `cfgov`.     |
+| `NAMESPACE`     | Override the namespace for the release.           |
+| `IMAGE`         | Set the `repository/image` for the release.       |
+| `TAG`           | Set the image `tag` for the release.              |
+| `WAIT_TIMEOUT`  | Set the `--wait` timeout.<br/>Default is `10m0s`  |
+
 ## Usage
 In all cases, make sure you have built images via `build-images.sh`.
 Arguments passed in to `helm-install.sh`, should be a spaced separated list of override yamls.
@@ -50,6 +96,13 @@ If you provide any arguments, it will only include those provided.
     # LoadBalancer - CFGOV Port 8000, PSQL Port 5432, ES Port 9200, Kibana Port 5601
     ./helm-install.sh helm/overrides/prod.yaml helm/overrides/services.yaml helm/overrides/load-balancer.yaml
 
+### EKS (with GHCR Image and with services)
+
+    NAMESPACE=my-namespace IMAGE=ghcr.io/cfpb/consumerfinance.gov TAG=latest \
+      ./helm-install.sh \
+      ./helm/overrides/services.yaml \
+      ./helm/overrides/eks.yaml
+
 ## Remove Helm Release
 To remove a cfgov release installed with [`./helm-install`](../helm-install.sh),
 run the following command in the correct namespace
@@ -75,7 +128,8 @@ run the following command in the correct namespace
     ./helm-install.sh helm/overrides/prod.yaml helm/overrides/services.yaml helm/overrides/cfgov-lb.yaml helm/overrides/sleep.yaml
 
 
-# Override Values
+# Chart Override Values
+The actual Chart Value overrides.
 TODO: Add Table with commonly overridden values.
 
 
