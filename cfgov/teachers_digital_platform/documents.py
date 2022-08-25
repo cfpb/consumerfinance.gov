@@ -34,6 +34,7 @@ class ActivityPageDocument(Document):
     title = fields.TextField(attr="title", boost=10)
     date = fields.DateField(attr="date")
     big_idea = fields.TextField()
+    search_tags = fields.TextField()
     essential_questions = fields.TextField()
     objectives = fields.TextField()
     what_students_will_do = fields.TextField()
