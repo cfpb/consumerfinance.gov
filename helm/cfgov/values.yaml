@@ -235,19 +235,29 @@ cronJobs:
 
 postgresql:
   enabled: false
+  service:
+    type: ClusterIP
 
 opensearch:
   enabled: false
+  service:
+    type: ClusterIP
 
 opensearch-dashboards:
   enabled: false
+  service:
+    type: ClusterIP
 
 elasticsearch:
   enabled: false
   externalHostname: ""  # AWS OpenSearch
+  service:
+    type: ClusterIP
 
 kibana:
   enabled: false
+  service:
+    type: ClusterIP
 
 # search is used when not deploying ES/OS via chart. Ergo, external to k8s
 search:

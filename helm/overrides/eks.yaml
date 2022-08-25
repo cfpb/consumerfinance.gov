@@ -26,17 +26,3 @@ extraEnvs:
 
 mapping:
   enabled: true
-
-# If services are enabled, set service type to ClusterIP, as EKS doesn't have LoadBalancer
-
-postgresql:
-  service:
-    type: ClusterIP
-
-elasticsearch:
-  service:
-    type: ClusterIP
-
-kibana:
-  service:
-    type: ClusterIP
