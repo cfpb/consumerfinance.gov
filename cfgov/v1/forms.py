@@ -232,8 +232,9 @@ class FilterableListForm(forms.Form):
         if self.wagtail_block:
             # Cache the topics for this filterable list form to avoid
             # repeated database lookups of the same data.
+            sentinel = object()
             topics = cache.get(f"{self.cache_key_prefix}-topics")
-            if topics is None or topics == []:
+            if topics is None or topics is sentinel:
                 topics = self.wagtail_block.block.get_filterable_topics(
                     page_ids, self.wagtail_block.value
                 )
@@ -246,11 +247,15 @@ class FilterableListForm(forms.Form):
         # Support case where self.all_filterable_results does not contain
         # the language aggregation; this can happen due to the way that these
         # results were cached before the language aggregation was added.
+        sentinel = object()
         language_aggregation = getattr(
             self.all_filterable_results.aggregations, "languages", None
         )
 
-        if language_aggregation is not None or language_aggregation != []:
+        if (
+            language_aggregation is not None
+            or language_aggregation is sentinel
+        ):
             language_codes = {b.key for b in language_aggregation.buckets}
 
             language_options = [
