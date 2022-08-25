@@ -154,6 +154,7 @@ Opensearch Environment Vars
 - name: ES_PORT
   value: "{{ default "9200" .Values.search.port }}"
 {{- end }}
+{{- end }}
 
 {{/*
 Mapping/Ingress Hostname FQDN
