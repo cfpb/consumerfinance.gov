@@ -75,6 +75,7 @@ if [ -z $TAG ]; then
   TAG=""
 else
   TAG="--set image.tag=${TAG}"
+fi
 
 # Set release name
 RELEASE=${RELEASE:-cfgov}
