@@ -13,6 +13,10 @@ which is the tag. Valid values are `local` and `prod`.
     ./build-images.sh prod
 
 # helm-install.sh
+**NOTE:** It is *highly* recommended to install `ingress-nginx` to gain
+access to the application via `Ingress`. You can find instructions for this
+at the bottom of the document under [`ingress-nginx`](#ingress-nginx).
+
 In the main `consumerfinance.gov` directory, there is [`helm-install.sh`](../helm-install.sh).
 This script is built to inject environment variables into the provided
 override yamls in [`overrides`](overrides).
@@ -27,7 +31,7 @@ and [`services.yaml`](overrides/services.yaml).
 The following commands are equivalent
 
     ./helm-install.sh
-    ./helm-install.sh helm/overrides/local.yaml helm/overrides/services.yaml helm/overrides/cfgov-lb.yaml
+    ./helm-install.sh helm/overrides/local.yaml helm/overrides/services.yaml
 
 If you provide any arguments, it will only include those provided.
 
@@ -150,6 +154,31 @@ The main container should be created, and skip migrations
 (assuming a user was created `SELECT COUNT(*) FROM auth_user`).
 The main container should now be loaded with Postgres and ElasticSearch with
 your manually loaded data.
+
+
+# `ingress-nginx`
+We use `ingress-nginx` as a cluster wide proxy to be able to map
+`*.localhost` to multiple deployments (CFGOV, Grafana, etc) locally. To deploy
+`ingress-nginx` to your local Kubernetes, run the following (change the ports
+that the services binds to on localhost if needed, default is 80 and 443):
+
+    helm upgrade --install ingress-nginx ingress-nginx \
+      --set controller.service.ports.http=80 \
+      --set controller.service.ports.https=443 \
+      --repo https://kubernetes.github.io/ingress-nginx \
+      --namespace ingress-nginx --create-namespace
+
+This will allow us to access the application via
+[http://\<release\>.localhost](http://<release>.localhost).
+This enables ingress to mimic Ambassador `Mapping`'s locally.
+
+*NOTE:* You will need to add the http port to the URL if you change
+from 80.
+
+Example:
+  * default -> [http://cfgov.localhost](http://cfgov.localhost)
+  * RELEASE=my-test -> [http://my-test.localhost](http://my-test.localhost)
+
 
 # AWS CLI
 To use the AWS CLI, the chart must be deployed with `$HOME/.aws` mounted,
