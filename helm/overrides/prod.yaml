@@ -3,11 +3,9 @@ image:
 
 initContainer:
   args:
-    - "./cfgov/manage.py"
-    - "opensearch"
-    - "index"
-    - "--force"
-    - "rebuild"
+    - "bash"
+    - "-c"
+    - "./cfgov/manage.py opensearch index --force rebuild && ./cfgov/manage.py opensearch document --force --refresh index"
 
 extraEnvs:
   - name: ALLOW_ADMIN_URL
