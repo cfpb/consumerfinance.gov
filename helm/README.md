@@ -79,29 +79,30 @@ of override YAMLs. If no arguments are provided, it includes
 The following commands are equivalent
 
     ./helm-install.sh
-    ./helm-install.sh helm/overrides/local-dev.yaml helm/overrides/services.yaml
+    ./helm-install.sh helm/overrides/local-dev.yaml helm/overrides/dev-vars.yaml helm/overrides/services.yaml
 
 If you provide any arguments, it will only include those provided.
 
 ### Local (no services)
 
-    ./helm-install.sh helm/overrides/local-dev.yaml
+    ./helm-install.sh helm/overrides/local-dev.yaml helm/overrides/dev-vars.yaml
 
     # With LoadBalancer for cfgov service
-    ./helm-install.sh helm/overrides/local-dev.yaml helm/overrides/cfgov-lb.yaml
+    ./helm-install.sh helm/overrides/local-dev.yaml helm/overrides/dev-vars.yaml helm/overrides/cfgov-lb.yaml
 
-### Local Prod (with services)
+### Local Prod (with Dev Vars and services)
 
     # ClusterIP
-    ./helm-install.sh helm/overrides/local-prod.yaml helm/overrides/services.yaml
+    ./helm-install.sh helm/overrides/local-prod.yaml helm/overrides/dev-vars.yaml helm/overrides/services.yaml
 
     # LoadBalancer - CFGOV Port 8000, PSQL Port 5432, ES Port 9200, Kibana Port 5601
-    ./helm-install.sh helm/overrides/local-prod.yaml helm/overrides/services.yaml helm/overrides/load-balancer.yaml
+    ./helm-install.sh helm/overrides/local-prod.yaml helm/overrides/dev-vars.yaml helm/overrides/services.yaml helm/overrides/load-balancer.yaml
 
-### EKS (with GHCR Image and with services)
+### EKS (with Dev Vars, GHCR Image, and services)
 
     NAMESPACE=my-namespace IMAGE=ghcr.io/cfpb/consumerfinance.gov TAG=latest \
       ./helm-install.sh \
+      helm/overrides/dev-vars.yaml \
       ./helm/overrides/services.yaml \
       ./helm/overrides/eks.yaml
 
@@ -114,8 +115,9 @@ run the following command in the correct namespace
 
 ## Provided Overrides
 * [`local-dev.yaml`](overrides/local-dev.yaml) - Local dev stack (minus services)
-* [`services.yaml`](overrides/services.yaml) - Services Stack (Postgres, ElasticSearch, Kibana)
 * [`local-prod.yaml`](overrides/local-prod.yaml) - Local Prod stack (minus services)
+* [`dev-vars.yaml`](overrides/dev-vars.yaml) - Dev Environment Variables
+* [`services.yaml`](overrides/services.yaml) - Services Stack (Postgres, ElasticSearch, Kibana)
 * [`cfgov-lb.yaml`](overrides/cfgov-lb.yaml) - Sets CFGOV Service to LoadBalancer with Port 8000
 * [`load-balancer.yaml`](overrides/load-balancer.yaml) - Sets all service types to `LoadBalancer` (includes services, if enabled)
 * [`init-sleep.yaml`](overrides/init-sleep.yaml) - Sleep cfgov initContainer to infinity (debug use)
@@ -124,10 +126,10 @@ run the following command in the correct namespace
 ### Debug Examples
 
     # Sleep initContainer (use for makemigrations, migrations, etc)
-    ./helm-install.sh helm/overrides/local-dev.yaml helm/overrides/services.yaml helm/overrides/init-sleep.yaml
+    ./helm-install.sh helm/overrides/local-dev.yaml helm/overrides/dev-vars.yaml helm/overrides/services.yaml helm/overrides/init-sleep.yaml
 
     # Prod and Services Stack with CFGOV LoadBalancer bound to port 8000 (Local Prod Testing)
-    ./helm-install.sh helm/overrides/local-prod.yaml helm/overrides/services.yaml helm/overrides/cfgov-lb.yaml helm/overrides/sleep.yaml
+    ./helm-install.sh helm/overrides/local-prod.yaml helm/overrides/dev-vars.yaml helm/overrides/services.yaml helm/overrides/cfgov-lb.yaml helm/overrides/sleep.yaml
 
 
 # Chart Override Values
