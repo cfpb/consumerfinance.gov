@@ -233,7 +233,7 @@ class FilterableListForm(forms.Form):
             # Cache the topics for this filterable list form to avoid
             # repeated database lookups of the same data.
             topics = cache.get(f"{self.cache_key_prefix}-topics")
-            if topics is None:
+            if topics is None or topics == []:
                 topics = self.wagtail_block.block.get_filterable_topics(
                     page_ids, self.wagtail_block.value
                 )
