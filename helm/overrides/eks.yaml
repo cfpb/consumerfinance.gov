@@ -1,10 +1,2 @@
-initContainer:
-  args:
-    - "bash"
-    - "-c"
-    - >-
-      django-admin opensearch index --force rebuild &&
-      django-admin opensearch document --force --refresh index
-
 mapping:
   enabled: true

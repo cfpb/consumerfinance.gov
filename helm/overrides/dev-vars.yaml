@@ -1,3 +1,5 @@
+importDbPath: "${CFGOV_PROD_DB_LOCATION}"
+
 extraEnvs:
   - name: ALLOW_ADMIN_URL
     value: "True"
@@ -21,6 +23,8 @@ extraEnvs:
     value: /var/run/secrets/.aws/credentials
   - name: AWS_PROFILE
     value: ${AWS_PROFILE}
+  - name: DB_DUMP_FILE
+    value: ${DB_DUMP_FILE}
 # add in desired S3 Bucket for PG_Dump
 # - name: S3_BUCKET
 #   value: <enter_bucket>

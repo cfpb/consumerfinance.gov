@@ -48,8 +48,6 @@ volumes:
         type: Directory
     mountPath: /var/run/secrets/.aws
 
-importDbPath: "${CFGOV_PROD_DB_LOCATION}"
-
 cronJobs:
   - name: "publish-scheduled-pages"
     schedule: '@hourly'

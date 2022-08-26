@@ -1,13 +1,18 @@
 image:
   tag: prod
 
-initContainer:
-  args:
-    - "bash"
-    - "-c"
-    - >-
-      django-admin opensearch index --force rebuild &&
-      django-admin opensearch document --force --refresh index
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: cfgov.localhost
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+#    - secretName: cfgov-tls
+#      hosts:
+#        - cfgov.localhost
 
 volumes:
   - name: entrypoint
