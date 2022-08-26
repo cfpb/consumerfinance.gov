@@ -99,8 +99,6 @@ spec:
           env:
             - name: APACHE_PORT
               value: "8000"
-            - name: RUN_MIGRATIONS
-              value: "false"
             {{- include "cfgov.postgresEnv" . | nindent 12 }}
             {{- include "cfgov.searchEnv" . | nindent 12 }}
             {{- range .Values.extraEnvs }}

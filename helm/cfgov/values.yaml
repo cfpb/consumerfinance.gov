@@ -22,12 +22,7 @@ fullnameOverride: ""
 initContainer:
   command:
     - "./docker-entrypoint.sh"
-#  args:
-#    - "bash"
-#    - "-c"
-#    - >-
-#      django-admin opensearch index --force rebuild &&
-#      django-admin opensearch document --force --refresh index
+  args: []
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -235,19 +230,29 @@ cronJobs:
 
 postgresql:
   enabled: false
+  service:
+    type: ClusterIP
 
 opensearch:
   enabled: false
+  service:
+    type: ClusterIP
 
 opensearch-dashboards:
   enabled: false
+  service:
+    type: ClusterIP
 
 elasticsearch:
   enabled: false
   externalHostname: ""  # AWS OpenSearch
+  service:
+    type: ClusterIP
 
 kibana:
   enabled: false
+  service:
+    type: ClusterIP
 
 # search is used when not deploying ES/OS via chart. Ergo, external to k8s
 search:
