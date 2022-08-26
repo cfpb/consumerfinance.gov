@@ -23,7 +23,11 @@ initContainer:
   command:
     - "./docker-entrypoint.sh"
 #  args:
-#    - "./cfgov/manage.py opensearch index --force rebuild"
+#    - "bash"
+#    - "-c"
+#    - >-
+#      django-admin opensearch index --force rebuild &&
+#      django-admin opensearch document --force --refresh index
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -211,12 +215,12 @@ cronJobs:
   - name: "elasticsearch-Rebuild-Index"
     schedule: "@daily"
     command:
-      - "django-admin"
+      - "bash"
     args:
-      - "search_index"
-      - "--rebuild"
-      - "--parallel"
-      - "-f"
+      - "-c"
+      - >-
+        django-admin opensearch index --force rebuild &&
+        django-admin opensearch document --force --refresh index
     suspend: true
   - name: "dump-Postgres-DB"
     schedule: "@daily"
