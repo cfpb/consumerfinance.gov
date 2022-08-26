@@ -71,8 +71,11 @@ Environment Variables **need** a valid value to be set.
 ## Usage
 In all cases, make sure you have built images via `build-images.sh`.
 Arguments passed in to `helm-install.sh`, should be a spaced separated list
-of override YAMLs. If no arguments are provided, it includes
-[`local-dev.yaml`](overrides/local-dev.yaml) and
+of paths to override YAMLs or `--set` overrides.
+
+If no arguments are provided, it includes
+[`local-dev.yaml`](overrides/local-dev.yaml),
+[`dev-vars.yaml`](overrides/dev-vars.yaml), and
 [`services.yaml`](overrides/services.yaml).
 
 ### Default Execution
@@ -86,6 +89,9 @@ If you provide any arguments, it will only include those provided.
 ### Local (no services)
 
     ./helm-install.sh helm/overrides/local-dev.yaml helm/overrides/dev-vars.yaml
+
+    # Using --set with override files
+    ./helm-install.sh helm/overrides/local-dev.yaml helm/overrides/dev-vars.yaml helm/overrides/services.yaml --set image.tag=my-image-tag
 
     # With LoadBalancer for cfgov service
     ./helm-install.sh helm/overrides/local-dev.yaml helm/overrides/dev-vars.yaml helm/overrides/cfgov-lb.yaml
