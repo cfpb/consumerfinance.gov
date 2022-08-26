@@ -4,8 +4,9 @@ from unittest import mock
 
 from django.test import TestCase
 
-from elasticsearch.exceptions import RequestError
+from opensearchpy.exceptions import RequestError
 
+from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.forms import AutocompleteForm
 from ask_cfpb.models.answer_page import AnswerPage
 from ask_cfpb.models.search import (
@@ -57,7 +58,9 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             live=True,
         )
         self.ROOT_PAGE.add_child(instance=test_answer_page)
-        self.rebuild_elasticsearch_index("ask_cfpb", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            AnswerPageDocument.Index.name, stdout=StringIO()
+        )
         search_term = "mone"
         test_answer_page_search = AnswerPageSearch(search_term=search_term)
         self.assertEqual(
@@ -82,7 +85,9 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             live=True,
         )
         self.ROOT_PAGE.add_child(instance=test_answer_page)
-        self.rebuild_elasticsearch_index("ask_cfpb", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            AnswerPageDocument.Index.name, stdout=StringIO()
+        )
         search_term = "What is money?"
         test_answer_page_search = AnswerPageSearch(search_term=search_term)
         test_answer_page_search_results = test_answer_page_search.search()[
@@ -99,7 +104,9 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
             live=True,
         )
         self.ROOT_PAGE.add_child(instance=test_answer_page)
-        self.rebuild_elasticsearch_index("ask_cfpb", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            AnswerPageDocument.Index.name, stdout=StringIO()
+        )
         search_term = "monye"
         test_answer_page_search = AnswerPageSearch(search_term=search_term)
         test_answer_page_search_results = test_answer_page_search.suggest()

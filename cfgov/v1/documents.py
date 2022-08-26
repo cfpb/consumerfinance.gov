@@ -3,10 +3,10 @@ from html import unescape
 from django.core.exceptions import FieldDoesNotExist
 from django.utils.html import strip_tags
 
-from django_elasticsearch_dsl import Document, fields
-from django_elasticsearch_dsl.registries import registry
-from elasticsearch_dsl import A
-from elasticsearch_dsl.query import MultiMatch
+from django_opensearch_dsl import Document, fields
+from django_opensearch_dsl.registries import registry
+from opensearch_dsl import A
+from opensearch_dsl.query import MultiMatch
 
 from search.elasticsearch_helpers import environment_specific_index
 from v1.models.blog_page import BlogPage, LegacyBlogPage
@@ -43,7 +43,7 @@ class FilterablePagesDocument(Document):
     path = fields.KeywordField()
     depth = fields.IntegerField()
 
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         return AbstractFilterPage.objects.live().public().specific()
 
     def prepare_url(self, instance):
@@ -111,6 +111,7 @@ class FilterablePagesDocument(Document):
     class Index:
         name = environment_specific_index("filterable-pages")
         settings = {"index.max_ngram_diff": 23}
+        auto_refresh = False
 
 
 class FilterablePagesDocumentSearch:
@@ -201,7 +202,7 @@ class FilterablePagesDocumentSearch:
         """Perform a search for the given title"""
         self.search_title(title=title)
         self.order(order_by=order_by)
-        return self.search_obj[0 : self.count()].to_queryset()
+        return self.search_obj[0 : self.count()].to_queryset(keep_order=True)
 
     def count(self):
         """Return the search object's current result count"""

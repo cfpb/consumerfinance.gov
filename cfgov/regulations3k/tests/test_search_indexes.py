@@ -35,4 +35,8 @@ class RegulationIndexTestCase(TestCase):
     )
     def test_run_elasticsearch_rebuild(self, mock_call):
         update_regulation_index._run_elasticsearch_rebuild()
-        self.assertEqual(mock_call.call_count, 1)
+        # django-opensearch-dsl splits the command to create indices and index
+        # documents into 2 separate commands. For this reason, we expect
+        # call_command to be invoked twice. This was done in a single command
+        # with django-elasticsearch-dsl.
+        self.assertEqual(mock_call.call_count, 2)

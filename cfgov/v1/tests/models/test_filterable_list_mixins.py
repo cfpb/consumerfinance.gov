@@ -7,6 +7,7 @@ from django.test import RequestFactory, TestCase
 from wagtail.core.models import Page, Site
 
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
+from v1.documents import FilterablePagesDocument
 from v1.models import BlogPage, BrowseFilterablePage
 from v1.models.filterable_list_mixins import FilterableListMixin
 
@@ -88,7 +89,9 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
         )
         self.filterable_page.add_child(instance=self.page)
 
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def test_index_route(self):
         response = self.client.get("/test/")

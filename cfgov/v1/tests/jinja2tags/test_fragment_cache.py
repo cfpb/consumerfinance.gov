@@ -8,6 +8,7 @@ from django.test import TestCase, override_settings
 
 from scripts import _atomic_helpers as atomic
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
+from v1.documents import FilterablePagesDocument
 from v1.models.blog_page import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.tests.wagtail_pages.helpers import publish_page
@@ -28,7 +29,9 @@ class TestFragmentCacheExtension(ElasticsearchTestsMixin, TestCase):
         child_page = BlogPage(title="test blog page", slug="test-blog-page")
         page.add_child(instance=child_page)
 
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
         cache = caches["post_preview"]
         with patch.object(cache, "add") as add_to_cache:

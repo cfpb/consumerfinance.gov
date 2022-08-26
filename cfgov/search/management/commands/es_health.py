@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from elasticsearch_dsl import connections
+from opensearch_dsl import connections
 
 
 class Command(BaseCommand):

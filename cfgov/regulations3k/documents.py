@@ -1,5 +1,5 @@
-from django_elasticsearch_dsl import Document, fields
-from django_elasticsearch_dsl.registries import registry
+from django_opensearch_dsl import Document, fields
+from django_opensearch_dsl.registries import registry
 
 from regulations3k.models import SectionParagraph
 from search.elasticsearch_helpers import environment_specific_index

@@ -23,7 +23,11 @@ initContainer:
   command:
     - "./docker-entrypoint.sh"
 #  args:
-#    - "./cfgov/manage.py search_index --rebuild -f --parallel"
+#    - "bash"
+#    - "-c"
+#    - >-
+#      django-admin opensearch index --force rebuild &&
+#      django-admin opensearch document --force --refresh index
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -211,12 +215,12 @@ cronJobs:
   - name: "elasticsearch-Rebuild-Index"
     schedule: "@daily"
     command:
-      - "django-admin"
+      - "bash"
     args:
-      - "search_index"
-      - "--rebuild"
-      - "--parallel"
-      - "-f"
+      - "-c"
+      - >-
+        django-admin opensearch index --force rebuild &&
+        django-admin opensearch document --force --refresh index
     suspend: true
   - name: "dump-Postgres-DB"
     schedule: "@daily"
@@ -232,9 +236,21 @@ cronJobs:
 postgresql:
   enabled: false
 
+opensearch:
+  enabled: false
+
+opensearch-dashboards:
+  enabled: false
+
 elasticsearch:
   enabled: false
   externalHostname: ""  # AWS OpenSearch
 
 kibana:
   enabled: false
+
+# search is used when not deploying ES/OS via chart. Ergo, external to k8s
+search:
+  # schema: http
+  host: ""
+  # port: 9200
