@@ -3,13 +3,13 @@ from unittest.mock import patch
 
 from django.apps import apps
 from django.db import models
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from wagtail.core.models import Site
 
-from django_elasticsearch_dsl import fields
-from django_elasticsearch_dsl.documents import DocType
-from django_elasticsearch_dsl.exceptions import ModelFieldNotMappedError
+from django_opensearch_dsl import fields
+from django_opensearch_dsl.documents import Document
+from django_opensearch_dsl.exceptions import ModelFieldNotMappedError
 from model_bakery import baker
 
 from ask_cfpb.documents import AnswerPageDocument
@@ -100,7 +100,7 @@ class AnswerPageDocumentTest(TestCase):
         self.assertFalse(AnswerPageDocument.django.ignore_signals)
 
     def test_auto_refresh_default(self):
-        self.assertFalse(AnswerPageDocument.django.auto_refresh)
+        self.assertFalse(AnswerPageDocument.Index.auto_refresh)
 
     def test_fields_populated(self):
         mapping = AnswerPageDocument._doc_type.mapping
@@ -121,7 +121,7 @@ class AnswerPageDocumentTest(TestCase):
         )
 
     def test_to_field(self):
-        doc = DocType()
+        doc = Document()
         for f in ["question", "statement"]:
             nameField = doc.to_field(f, AnswerPage._meta.get_field(f))
             self.assertIsInstance(nameField, fields.TextField)
@@ -142,7 +142,7 @@ class AnswerPageDocumentTest(TestCase):
         self.assertEqual(intField._path, ["featured_rank"])
 
     def test_to_field_with_unknown_field(self):
-        doc = DocType()
+        doc = Document()
         with self.assertRaises(ModelFieldNotMappedError):
             doc.to_field(
                 "answer_base", AnswerPage._meta.get_field("answer_base")
@@ -213,10 +213,11 @@ class AnswerPageDocumentTest(TestCase):
             },
         )
 
+    @override_settings(OPENSEARCH_DSL_AUTO_REFRESH=True)
     def test_model_instance_update_no_refresh(self):
         self.es_parent_page.add_child(instance=self.es_page)
         self.es_page.save_revision().publish()
-        self.doc.django.auto_refresh = False
-        with patch("django_elasticsearch_dsl.documents.bulk") as mock:
-            self.doc.update(self.es_page)
-            self.assertNotIn("refresh", mock.call_args_list[0][1])
+        self.doc.Index.auto_refresh = False
+        with patch("django_opensearch_dsl.documents.bulk") as mock:
+            self.doc.update(self.es_page, "update")
+            self.assertFalse(mock.call_args_list[0][1]["refresh"])

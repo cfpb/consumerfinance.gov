@@ -1,5 +1,6 @@
 from datetime import date, datetime
 from io import StringIO
+from time import sleep
 
 from django.test import TestCase, override_settings
 
@@ -11,6 +12,7 @@ from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
     EventFilterablePagesDocumentSearch,
+    FilterablePagesDocument,
     FilterablePagesDocumentSearch,
 )
 from v1.forms import (
@@ -60,7 +62,9 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         publish_page(self.cool_event)
         publish_page(self.awesome_event)
         publish_page(self.category_blog)
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def setUpFilterableForm(self, data=None, filterable_categories=None):
         site_root = Site.objects.get(is_default_site=True).root_page
@@ -183,11 +187,13 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(form.first_page_date(), date(2010, 1, 1))
 
 
-@override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
+@override_settings(OPENSEARCH_DSL_AUTOSYNC=True)
 class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
         event = EventPage(
             title="test page 2", start_dt=datetime.now(timezone("UTC"))
@@ -205,6 +211,8 @@ class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
         )
         form.is_bound = True
         form.cleaned_data = {"categories": []}
+        # wait for cleaned_data to be updated before we query it
+        sleep(1)
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.event)
@@ -217,7 +225,9 @@ class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
         publish_page(enforcement)
         cls.enforcement = enforcement
 
-        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def test_enforcement_action_elasticsearch(self):
         site_root = Site.objects.get(is_default_site=True).root_page

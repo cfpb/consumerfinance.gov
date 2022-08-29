@@ -1,5 +1,5 @@
-from django_elasticsearch_dsl import Document, fields
-from django_elasticsearch_dsl.registries import registry
+from django_opensearch_dsl import Document, fields
+from django_opensearch_dsl.registries import registry
 
 from ask_cfpb.models.answer_page import AnswerPage
 from search.elasticsearch_helpers import (
@@ -19,8 +19,8 @@ class AnswerPageDocument(Document):
     url = fields.TextField()
     preview = fields.TextField(attr="answer_content_preview")
 
-    def get_queryset(self):
-        query_set = super().get_queryset()
+    def get_queryset(self, *args, **kwargs):
+        query_set = super().get_queryset(*args, **kwargs)
         return query_set.filter(live=True, redirect_to_page=None)
 
     def prepare_autocomplete(self, instance):
@@ -41,6 +41,7 @@ class AnswerPageDocument(Document):
     class Index:
         name = environment_specific_index("ask-cfpb")
         settings = {"number_of_shards": 1, "number_of_replicas": 0}
+        auto_refresh = False
 
     class Django:
         model = AnswerPage

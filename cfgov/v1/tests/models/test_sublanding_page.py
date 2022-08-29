@@ -6,6 +6,7 @@ from django.test import TestCase
 
 from scripts import _atomic_helpers as atomic
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
+from v1.documents import FilterablePagesDocument
 from v1.models import AbstractFilterPage, BrowseFilterablePage, SublandingPage
 from v1.tests.wagtail_pages import helpers
 
@@ -54,7 +55,9 @@ class SublandingPageTestCase(ElasticsearchTestsMixin, TestCase):
         helpers.save_new_page(self.child2_of_post1, self.post1)
         helpers.save_new_page(self.child1_of_post2, self.post2)
 
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def test_get_appropriate_descendants(self):
         """

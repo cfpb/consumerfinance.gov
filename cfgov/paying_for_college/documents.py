@@ -1,7 +1,7 @@
 from django.urls import reverse
 
-from django_elasticsearch_dsl import Document, fields
-from django_elasticsearch_dsl.registries import registry
+from django_opensearch_dsl import Document, fields
+from django_opensearch_dsl.registries import registry
 
 from paying_for_college.models import School
 from search.elasticsearch_helpers import (
@@ -18,9 +18,9 @@ class SchoolDocument(Document):
     url = fields.TextField()
     nicknames = fields.TextField()
 
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         """Prevent schools that have closed from being indexed."""
-        query_set = super().get_queryset()
+        query_set = super().get_queryset(*args, **kwargs)
         return query_set.filter(operating=True)
 
     def prepare_autocomplete(self, instance):

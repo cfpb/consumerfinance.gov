@@ -3,6 +3,7 @@ import logging
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
+from regulations3k.documents import SectionParagraphDocument
 from regulations3k.models import Part, Section
 
 
@@ -12,7 +13,19 @@ logger = logging.getLogger(__name__)
 def _run_elasticsearch_rebuild():
     """Rebuild the Elasticsearch index after prepping section paragraphs."""
     call_command(
-        "search_index", "--rebuild", "-f", "--models", "regulations3k"
+        "opensearch",
+        "index",
+        "--force",
+        "rebuild",
+        SectionParagraphDocument.Index.name,
+    )
+    call_command(
+        "opensearch",
+        "document",
+        "--force",
+        "--refresh",
+        "-i",
+        SectionParagraphDocument.Index.name,
     )
 
 
