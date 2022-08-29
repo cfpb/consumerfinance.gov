@@ -205,7 +205,7 @@ class RegulationLandingPage(CFGOVPage):
 And in [`regulations3k/landing-page.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/regulations3k/jinja2/regulations3k/landing-page.html):
 
 ```jinja2
-{% extends 'layout-2-1-bleedbar.html' %}
+{% extends 'layout-2-1.html' %}
 
 {% import 'recent-notices.html' as recent_notices with context %}
 

@@ -1,4 +1,4 @@
-from elasticsearch.exceptions import RequestError
+from opensearchpy.exceptions import RequestError
 
 from ask_cfpb.documents import AnswerPageDocument
 from search.models import AUTOCOMPLETE_MAX_CHARS

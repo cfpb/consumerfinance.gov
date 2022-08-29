@@ -1,5 +1,6 @@
 import json
 from io import StringIO
+from time import sleep
 from unittest.mock import patch
 
 from django.test import TestCase
@@ -40,7 +41,7 @@ class FilterablePagesDocumentTest(TestCase):
         self.assertFalse(FilterablePagesDocument.django.ignore_signals)
 
     def test_auto_refresh_default(self):
-        self.assertFalse(FilterablePagesDocument.django.auto_refresh)
+        self.assertFalse(FilterablePagesDocument.Index.auto_refresh)
 
     def test_fields_populated(self):
         mapping = FilterablePagesDocument._doc_type.mapping
@@ -139,7 +140,9 @@ class ElasticsearchWagtailPageTreeTestCase(
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
 
 class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
@@ -196,10 +199,10 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
         self.assertEqual(len(results.hits), 2)
 
     # Mocking is necessary here because unfortunately it's not currently
-    # possible to use override_settings with DED autosync. See
+    # possible to use override_settings with DOD autosync. See
     # https://github.com/django-es/django-elasticsearch-dsl/issues/322.
     @patch(
-        "django_elasticsearch_dsl.apps.DEDConfig.autosync_enabled",
+        "django_opensearch_dsl.apps.DODConfig.autosync_enabled",
         return_value=True,
     )
     def test_index_updates_automatically(self, _):
@@ -208,6 +211,8 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
         indexed_page = Page.objects.get(slug="child1")
         indexed_page.title = "child1 foo"
         indexed_page.save_revision().publish()
+        # wait for the index to update
+        sleep(1)
         self.assertEqual(search.search(title="foo").count(), 1)
 
 
@@ -252,7 +257,9 @@ class FilterableSearchFilteringTests(
         add_tag_and_category_to_page("en", "foo")
         add_tag_and_category_to_page("es", "bar")
 
-        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def test_no_filters(self):
         search = FilterablePagesDocumentSearch(self.page_tree[0])
@@ -324,7 +331,9 @@ class EnforcementActionFilterableSearchFilteringTests(
         page.products.add(product)
         page.save()
 
-        cls.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        cls.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
 
     def test_no_filters(self):
         search = EnforcementActionFilterablePagesDocumentSearch(
@@ -441,24 +450,27 @@ class TestThatWagtailPageSignalsUpdateIndex(ElasticsearchTestsMixin, TestCase):
         blog3 = BlogPage(title="foo 3", live=True)
         parent.add_child(instance=blog3)
 
-        self.rebuild_elasticsearch_index("v1", stdout=StringIO())
+        self.rebuild_elasticsearch_index(
+            FilterablePagesDocument.Index.name, stdout=StringIO()
+        )
         search = FilterablePagesDocumentSearch(parent)
 
         # Initially a search at the root should return 3 results.
         results = search.search(title="foo")
         self.assertEqual(results.count(), 3)
 
-        # By default we set ELASTICSEARCH_DSL_AUTOSYNC to False in
+        # By default we set OPENSEARCH_DSL_AUTOSYNC to False in
         # settings.test, and there's unfortunately no better way to override
         # that here than by patching; see
         # https://github.com/django-es/django-elasticsearch-dsl/issues/322.
         with patch(
-            "django_elasticsearch_dsl.registries.DEDConfig.autosync_enabled",
+            "django_opensearch_dsl.apps.DODConfig.autosync_enabled",
             return_value=True,
         ):
             # Moving a page out of the parent should update the index so that
             # a search there now returns only 2 results.
             blog2.move(root)
+            sleep(1)
             results = search.search(title="foo")
             self.assertEqual(results.count(), 2)
 
@@ -466,6 +478,7 @@ class TestThatWagtailPageSignalsUpdateIndex(ElasticsearchTestsMixin, TestCase):
             # now returns only 1 result.
             blog3.title = "bar"
             blog3.save_revision().publish()
+            sleep(1)
             results = search.search(title="foo")
             self.assertEqual(results.count(), 1)
 

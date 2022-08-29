@@ -1,13 +1,12 @@
 import json
 import os
-import secrets
 from pathlib import Path
 
 from django.conf import global_settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
-from elasticsearch import RequestsHttpConnection
+from opensearchpy import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
 from cfgov.util import admin_emails
@@ -99,7 +98,7 @@ INSTALLED_APPS = (
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
     "wagtailmedia",
-    "django_elasticsearch_dsl",
+    "django_opensearch_dsl",
     "corsheaders",
     "login",
     "filing_instruction_guide",
@@ -231,7 +230,7 @@ WSGI_APPLICATION = "cfgov.wsgi.application"
 ALLOW_ADMIN_URL = os.environ.get("ALLOW_ADMIN_URL", False)
 
 if ALLOW_ADMIN_URL:
-    DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000  # For heavy Wagtail pages
+    DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000  # For heavy Wagtail pages
 
 # Default database is PostgreSQL running on localhost.
 # Database name cfgov, username cfpb, password cfpb.
@@ -327,10 +326,12 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 )
 
 # ElasticSearch 7 Configuration
+TESTING = False
+ES_SCHEMA = os.getenv("ES_SCHEMA", "http")
 ES_HOST = os.getenv("ES_HOST", "localhost")
 ES_PORT = os.getenv("ES_PORT", "9200")
-ELASTICSEARCH_BIGINT = 50000
-ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
+OPENSEARCH_BIGINT = 50000
+OPENSEARCH_DEFAULT_ANALYZER = "snowball"
 
 if os.environ.get("USE_AWS_ES", False):
     awsauth = AWS4Auth(
@@ -339,7 +340,7 @@ if os.environ.get("USE_AWS_ES", False):
         "us-east-1",
         "es",
     )
-    ELASTICSEARCH_DSL = {
+    OPENSEARCH_DSL = {
         "default": {
             "hosts": [{"host": ES_HOST, "port": 443}],
             "http_auth": awsauth,
@@ -349,9 +350,18 @@ if os.environ.get("USE_AWS_ES", False):
         },
     }
 else:
-    ELASTICSEARCH_DSL = {"default": {"hosts": f"http://{ES_HOST}:{ES_PORT}"}}
+    OPENSEARCH_DSL = {
+        "default": {
+            "hosts": f"{ES_SCHEMA}://{ES_HOST}:{ES_PORT}",
+            "http_auth": (
+                os.getenv("ES_USER", "admin"),
+                os.getenv("ES_PASS", "admin"),
+            ),
+            "verify_certs": False,
+        }
+    }
 
-ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = (
+OPENSEARCH_DSL_SIGNAL_PROCESSOR = (
     "search.elasticsearch_helpers.WagtailSignalProcessor"
 )
 

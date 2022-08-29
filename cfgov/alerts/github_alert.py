@@ -1,6 +1,8 @@
 import os
 
 import github3
+from github3.issues.issue import ShortIssue
+from github3.repos.repo import Repository
 
 
 class GithubAlert:
@@ -12,18 +14,18 @@ class GithubAlert:
             "repo_name", os.environ.get("GITHUB_REPO")
         )
 
-    def repo(self):
-        gh = github3.login(
+    def repo(self) -> Repository:
+        gh = github3.enterprise_login(  # pragma: no cover
             token=self.token,
             url=self.url,
         )
         return gh.repository(self.user, self.repo_name)
 
-    def matching_issue(self, title):
-        issues = self.repo().iter_issues(state="all")
+    def matching_issue(self, title) -> ShortIssue:
+        issues = self.repo().issues(state="all")  # pragma: no cover
         return next((issue for issue in issues if issue.title == title), None)
 
-    def post(self, title, body, labels=None):
+    def post(self, title, body, labels=None) -> ShortIssue:
         if not labels:
             labels = ["alert"]
         # Truncate the title if needed, max is 256 chars

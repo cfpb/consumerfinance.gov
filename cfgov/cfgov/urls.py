@@ -96,12 +96,6 @@ urlpatterns = [
         ),
     ),
     re_path(
-        r"^owning-a-home/resources/(?P<path>.*)$",
-        RedirectView.as_view(
-            url="/static/owning-a-home/resources/%(path)s", permanent=True
-        ),
-    ),
-    re_path(
         r"^owning-a-home/closing-disclosure/$",
         TemplateView.as_view(
             template_name="owning-a-home/closing-disclosure/index.html"

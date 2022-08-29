@@ -1,23 +1,27 @@
 # -*- coding: utf-8 -*-
+import json
+import os
 from unittest.mock import patch
 
 from django.test import TestCase
 
-import github3
+from github3.issues.issue import ShortIssue
+from github3.session import GitHubSession
 
 from alerts.github_alert import GithubAlert
 from alerts.mattermost_alert import MattermostAlert
 from alerts.post_sqs_messages import process_sqs_message
 
 
-class TestPostSQSMessages(TestCase):
+JSON_DIR = f"{os.path.dirname(os.path.realpath(__file__))}/json"
 
-    issue = github3.issues.issue.Issue(
-        {
-            "html_url": "https://github.com/foo/bar/issues/42",
-            "labels": [],
-            "user": {},
-        }
+
+class TestPostSQSMessages(TestCase):
+    session = GitHubSession()
+    session.basic_auth("test", "test")
+
+    issue = ShortIssue(
+        json.load(open(f"{JSON_DIR}/github_open_issue.json")), session
     )
 
     @patch("alerts.mattermost_alert.MattermostAlert.post")
@@ -38,7 +42,7 @@ class TestPostSQSMessages(TestCase):
         mattermost_post.assert_called_once_with(
             text=(
                 "Alert: Test Job # 1234. "
-                "Github issue at https://github.com/foo/bar/issues/42"
+                f"Github issue at {self.issue.html_url}"
             )
         )
 
