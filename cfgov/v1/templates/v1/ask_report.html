@@ -15,10 +15,16 @@
                         Question
                     </th>
                     <th>
+                        Title
+                    </th>
+                    <th>
                         Short answer
                     </th>
                     <th>
                         Answer
+                    </th>
+                    <th>
+                        Meta description
                     </th>
                     <th>
                         URL
@@ -62,10 +68,16 @@
                             {{ page.question | striptags }}
                         </td>
                         <td>
+                            {{ page.title }}
+                        </td>
+                        <td>
                             {{ page.short_answer | striptags }}
                         </td>
                         <td style="color: #919395;">
                             See CSV
+                        </td>
+                        <td>
+                            {{ page.search_description }}
                         </td>
                         <td>
                             {{ page.url }}
