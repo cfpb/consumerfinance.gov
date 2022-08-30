@@ -336,5 +336,7 @@ class AskReportView(ReportView):
 
     def get_queryset(self):
         return AnswerPage.objects.prefetch_related(
-            "portal_topic", "related_questions"
+            "portal_topic",
+            "portal_category",
+            "related_questions",
         ).order_by("language", "-answer_base__id")
