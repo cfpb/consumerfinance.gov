@@ -19,6 +19,8 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
 
       - name: Build Root Docker Image
         run: docker build . --file Dockerfile --tag $(echo "${{ github.repository }}" | sed -e 's,.*/\(.*\),\1,') --label "runnumber=${GITHUB_RUN_ID}" --build-arg "FRONTEND_TARGET=production"
@@ -44,9 +46,11 @@ jobs:
           echo VERSION=$VERSION
           SHA=${{ github.sha }}
           if [ ! -z $GITHUB_HEAD_REF ]; then
-            SHA=$(git --no-pager log -n 3 --pretty="format:%H" | sed -n '3 p')
+            echo "PR Build, pop commit SHA..."
+            SHA=$(git --no-pager log -n 2 --pretty="%H" | sed -n '2 p')
           fi
-          docker tag $IMAGE_NAME $IMAGE_ID:${{ github.sha }}
+          echo "GitSHA: ${SHA}"
+          docker tag $IMAGE_NAME $IMAGE_ID:${SHA}
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:${{ github.sha }}
+          docker push $IMAGE_ID:${SHA}
           docker push $IMAGE_ID:$VERSION
