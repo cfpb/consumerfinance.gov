@@ -63,7 +63,8 @@ refresh_data() {
 
 update_index() {
     echo 'Updating search indexes'
-    ./cfgov/manage.py search_index --rebuild -f
+    ./cfgov/manage.py opensearch index --force rebuild
+    ./cfgov/manage.py opensearch document --force --refresh --parallel index
 }
 
 get_data() {

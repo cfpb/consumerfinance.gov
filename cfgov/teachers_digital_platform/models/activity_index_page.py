@@ -11,7 +11,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.fields import StreamField
 
-from elasticsearch_dsl import Q
+from opensearch_dsl import Q
 
 from teachers_digital_platform.documents import ActivityPageDocument
 from teachers_digital_platform.models.django import (
