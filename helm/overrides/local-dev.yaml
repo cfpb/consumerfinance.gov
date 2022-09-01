@@ -57,6 +57,14 @@ cronJobs:
       - "publish_scheduled_pages"
     suspend: true
 
+  - name: "archive-wagtail-events"
+    schedule: '23 * * * *'
+    command:
+      - "django-admin"
+    args:
+      - "archive_events"
+    suspend: true
+
   - name: "clearSessions"
     schedule: "@daily"
     command:
