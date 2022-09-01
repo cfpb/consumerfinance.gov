@@ -121,7 +121,9 @@ class ServeViewTestCase(TestCase):
     def test_process_related_items(self):
         all_pages = self.root_page.get_children()
         page_titles_string = process_related_items(all_pages, "title")
+        document_title_string = process_related_items(self.document, "title")
         self.assertEqual(page_titles_string, "Blogojevich | Great Test Page")
+        self.assertEqual(document_title_string, "Test document 1")
 
     def test_strip_html(self):
         stripped_content = strip_html(self.html_content)

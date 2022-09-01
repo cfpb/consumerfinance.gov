@@ -31,7 +31,7 @@ def process_related_items(related_items, attribute):
         # iterated through
         try:
             related_items.all()
-        except TypeError:
+        except (TypeError, AttributeError):
             attribute_list.append(str(getattr(related_items, attribute)))
         else:
             for item in related_items.all():
