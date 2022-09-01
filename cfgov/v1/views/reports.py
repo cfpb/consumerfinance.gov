@@ -24,6 +24,22 @@ def process_tags(queryset):
     return ", ".join([tag for tag in queryset])
 
 
+def process_related_items(related_items, attribute):
+    attribute_list = []
+    if related_items:
+        # Many-to-many related items return a Django queryset that needs to be
+        # iterated through
+        try:
+            related_items.all()
+        except TypeError:
+            attribute_list.append(str(getattr(related_items, attribute)))
+        else:
+            for item in related_items.all():
+                attribute_list.append(str(getattr(item, attribute)))
+    joined_attributtes = " | ".join(attribute_list)
+    return joined_attributtes
+
+
 def strip_html(content):
     unescaped = html.unescape(content)
     return html_util.strip_tags(unescaped).strip()
@@ -265,11 +281,17 @@ class AskReportView(ReportView):
         "language": "Language",
     }
 
-    def process_related_page_id(related_page):
-        if related_page:
-            return related_page.id
-        else:
-            return ""
+    def process_related_page(related_page):
+        return process_related_items(related_page, "id")
+
+    def process_portal_topics_and_catetgories(portal_items):
+        return process_related_items(portal_items, "heading")
+
+    def process_related_questions(related_questions):
+        return process_related_items(related_questions, "id")
+
+    def process_related_resource(related_resource):
+        return process_related_items(related_resource, "title")
 
     def process_answer_content(answer_content):
         answer_streamfield = answer_content.raw_data
@@ -296,35 +318,13 @@ class AskReportView(ReportView):
                 answer = ""
         return strip_html(answer)
 
-    def process_portal_topics(portal_data):
-        portal_topics = []
-        if portal_data:
-            for topic in portal_data.all():
-                portal_topics.append(topic.heading)
-        joined_topics = " | ".join(portal_topics)
-        return joined_topics
-
-    def process_related_questions(questions):
-        related_questions = []
-        if questions:
-            for question in questions.all():
-                related_questions.append(str(question.id))
-        joined_question_ids = " | ".join(related_questions)
-        return joined_question_ids
-
-    def process_related_resource(related_resource):
-        if related_resource:
-            return related_resource.title
-        else:
-            return ""
-
     custom_field_preprocess = {
-        "answer_base": {"csv": process_related_page_id},
+        "answer_base": {"csv": process_related_page},
         "short_answer": {"csv": strip_html},
         "answer_content": {"csv": process_answer_content},
-        "redirect_to_page": {"csv": process_related_page_id},
-        "portal_topic": {"csv": process_portal_topics},
-        "portal_category": {"csv": process_portal_topics},
+        "redirect_to_page": {"csv": process_related_page},
+        "portal_topic": {"csv": process_portal_topics_and_catetgories},
+        "portal_category": {"csv": process_portal_topics_and_catetgories},
         "related_questions": {"csv": process_related_questions},
         "related_resource": {"csv": process_related_resource},
     }
