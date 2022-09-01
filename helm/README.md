@@ -286,7 +286,7 @@ spec:
     ignoreDelayed: false
 ```
 
-More can be found on helm testing [here](https://helm.sh/docs/topics/chart_tests/) or by running `helm test --man`. 
+More can be found on helm testing [here](https://helm.sh/docs/topics/chart_tests/) or by running `helm test --help`. 
 
 
 ## TODO
