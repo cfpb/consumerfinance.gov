@@ -277,14 +277,7 @@ metadata:
     "helm.sh/hook": test
 ``` 
 
-To exclude certain tests from running use `helm test --filter strings name=<test_name>`.  Additionally you can disable tests from running in the `values.yaml` but **only** for tests that the charts have added (i.e. the ElasticSearch Chart and Postgres Chart) using the following syntax: 
-```
-spec:
-  test_name:
-    enable: true
-    ignore: true
-    ignoreDelayed: false
-```
+To exclude certain tests from running use `helm test --filter strings name=<test_name>`.  Additionally you can disable tests from within in the `values.yaml` but **only** for tests that the charts have added (i.e. the ElasticSearch Chart and Postgres Chart). You will need to look up that chart's respective documentation for how to do that.  
 
 More can be found on helm testing [here](https://helm.sh/docs/topics/chart_tests/) or by running `helm test --help`. 
 
