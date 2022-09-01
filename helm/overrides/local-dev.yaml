@@ -9,6 +9,19 @@ image:
 service:
   port: 8000
 
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: cfgov.localhost
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+#    - secretName: cfgov-tls
+#      hosts:
+#        - cfgov.localhost
+
 volumes:
   - name: code
     volume:
@@ -35,24 +48,6 @@ volumes:
         type: Directory
     mountPath: /var/run/secrets/.aws
 
-importDbPath: "${CFGOV_PROD_DB_LOCATION}"
-
-extraEnvs:
-  - name: DJANGO_ADMIN_USERNAME
-    value: "${DJANGO_ADMIN_USERNAME}"
-  - name: DJANGO_ADMIN_PASSWORD
-    value: "${DJANGO_ADMIN_PASSWORD}"
-  - name: AWS_CONFIG_FILE
-    value: /var/run/secrets/.aws/config
-  - name: AWS_SHARED_CREDENTIALS_FILE
-    value: /var/run/secrets/.aws/credentials
-  - name: AWS_PROFILE
-    value: ${AWS_PROFILE}
-  # add in desired S3 Bucket for PG_Dump
-  # - name: S3_BUCKET
-  #   value: <enter_bucket>
-
-
 cronJobs:
   - name: "publish-scheduled-pages"
     schedule: '@hourly'
@@ -72,12 +67,12 @@ cronJobs:
   - name: "elasticsearch-Rebuild-Index"
     schedule: "@daily"
     command:
-      - "django-admin"
+      - "bash"
     args:
-      - "search_index"
-      - "--rebuild"
-      - "--parallel"
-      - "-f"
+      - "-c"
+      - >-
+        django-admin opensearch index --force rebuild &&
+        django-admin opensearch document --force --refresh index
 
   - name: "dump-Postgres-DB"
     schedule: "@daily"

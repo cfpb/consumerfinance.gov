@@ -106,6 +106,8 @@ Postgres Environment Vars
 Elasticsearch Environment Vars
 */}}
 {{- define "cfgov.elasticsearchEnv" -}}
+- name: ES_SCHEMA
+  value: "{{ default "http" .Values.elasticsearch.protocol }}"
 - name: ES_HOST
 {{- if .Values.elasticsearch.enabled }}
 {{- if eq .Values.elasticsearch.nodeGroup "master" }}
@@ -113,13 +115,44 @@ Elasticsearch Environment Vars
 {{- else }}
   value: "{{ include "elasticsearch.uname" .Subcharts.elasticsearch | trunc 63 | trimSuffix "-" }}"
 {{- end }}
-- name: ES_PORT
-  value: "{{ default "9200" .Values.elasticsearch.httpPort }}"
 {{- else }}
-- name: ES_HOST
   value: "{{ default "elasticsearch-master" .Values.elasticsearch.externalHostname }}"
+{{- end }}
 - name: ES_PORT
   value: "{{ default "9200" .Values.elasticsearch.httpPort }}"
+{{- end }}
+
+
+{{/*
+Opensearch Environment Vars
+*/}}
+{{- define "cfgov.opensearchEnv" -}}
+- name: ES_SCHEMA
+  value: "{{ default "https" .Values.opensearch.protocol }}"
+- name: ES_HOST
+{{- if .Values.opensearch.nameOverride }}
+  value: "{{ .Values.opensearch.nameOverride }}-master"
+{{- else if .Values.opensearch.fullnameOverride }}
+  value: {{ .Values.opensearch.fullnameOverride | quote }}
+{{- else }}
+  value: opensearch-cluster-master
+{{- end }}
+- name: ES_PORT
+  value: {{ .Values.opensearch.httpPort }}
+{{- end }}
+
+{{- define "cfgov.searchEnv" -}}
+{{- if .Values.elasticsearch.enabled }}
+{{- include "cfgov.elasticsearchEnv" . }}
+{{- else if .Values.opensearch.enabled }}
+{{- include "cfgov.opensearchEnv" . }}
+{{- else }}
+- name: ES_SCHEMA
+  value: "{{ default "http" .Values.search.schema }}"
+- name: ES_HOST
+  value: "{{ .Values.search.host }}"
+- name: ES_PORT
+  value: "{{ default "9200" .Values.search.port }}"
 {{- end }}
 {{- end }}
 

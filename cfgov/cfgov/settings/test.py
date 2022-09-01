@@ -92,8 +92,8 @@ FLAG_SOURCES = ("flags.sources.SettingsFlagsSource",)
 # test runner cleans up this directory after the tests run.
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, "cfgov", "tests", "test-media")
 
-ELASTICSEARCH_DSL_AUTO_REFRESH = False
-ELASTICSEARCH_DSL_AUTOSYNC = False
+OPENSEARCH_DSL_AUTO_REFRESH = False
+OPENSEARCH_DSL_AUTOSYNC = False
 
 if os.getenv("SKIP_DJANGO_MIGRATIONS"):
 
