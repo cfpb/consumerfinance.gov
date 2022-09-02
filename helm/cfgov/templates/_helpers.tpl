@@ -99,6 +99,35 @@ Postgres Environment Vars
   value: "{{ include "postgresql.database" .Subcharts.postgresql | default "postgres" }}"
 - name: PGPORT
   value: "{{ include "postgresql.service.port" .Subcharts.postgresql }}"
+{{- else }}
+{{- if .Values.postgresql.auth.createSecret -}}
+- name: PGUSER
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "cfgov.fullname" . }}-postgres
+      key: username
+- name: PGPASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "cfgov.fullname" . }}-postgres
+      key: password
+- name: PGDATABASE
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "cfgov.fullname" . }}-postgres
+      key: database
+{{- else }}
+- name: PGUSER
+  value: "{{ .Values.postgresql.auth.username | default "postgres" }}"
+- name: PGPASSWORD
+  value: {{ .Values.postgresql.auth.password | quote }}
+- name: PGDATABASE
+  value: "{{ .Values.postgresql.auth.database | default "postgres" }}"
+{{- end }}
+- name: PGHOST
+  value: {{ .Values.postgresql.external.host | quote }}
+- name: PGPORT
+  value: "{{ .Values.postgresql.external.port | default "5432" }}"
 {{- end }}
 {{- end }}
 
