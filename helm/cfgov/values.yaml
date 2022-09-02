@@ -227,9 +227,17 @@ cronJobs:
     suspend: true
 
 
-
+# Postgres Values
 postgresql:
-  enabled: false
+  enabled: false  # Deploy child chart, if false, uses external host and port
+  auth:
+    # username: ""  # Used for both chart and external db's
+    # password: ""  # Used for both chart and external db's
+    # database: ""  # Used for both chart and external db's
+    createSecret: true  # Only valid when using external database
+  external:
+    host: ""
+    port: ""
   service:
     type: ClusterIP
 
