@@ -24,19 +24,28 @@ def process_tags(queryset):
     return ", ".join([tag for tag in queryset])
 
 
-def process_related_items(related_items, attribute):
-    attribute_list = []
-    if related_items:
-        # Many-to-many related items return a Django queryset that needs to be
-        # iterated through
-        try:
-            related_items.all()
-        except (TypeError, AttributeError):
-            attribute_list.append(str(getattr(related_items, attribute)))
-        else:
-            for item in related_items.all():
-                attribute_list.append(str(getattr(item, attribute)))
-    joined_attributtes = " | ".join(attribute_list)
+def process_related_page_id(related_page):
+    try:
+        related_page.id
+    except AttributeError:
+        id = ""
+    else:
+        id = related_page.id
+    return str(id)
+
+
+def process_related_resource(related_resource):
+    related_resource_title = ""
+    if related_resource:
+        related_resource_title = related_resource.title
+    return related_resource_title
+
+
+def join_values_with_pipe(queryset, key):
+    value_list = []
+    for item in queryset:
+        value_list.append(str(getattr(item, key)))
+    joined_attributtes = " | ".join(value_list)
     return joined_attributtes
 
 
@@ -256,9 +265,9 @@ class AskReportView(ReportView):
         "live",
         "last_edited",
         "redirect_to_page",
-        "portal_topic",
-        "portal_category",
-        "related_questions",
+        "portal_topic.all",
+        "portal_category.all",
+        "related_questions.all",
         "related_resource",
         "language",
     ]
@@ -274,24 +283,18 @@ class AskReportView(ReportView):
         "live": "Live",
         "last_edited": "Last edited",
         "redirect_to_page": "Redirect",
-        "portal_topic": "Portal topics",
-        "portal_category": "Portal categories",
-        "related_questions": "Related questions",
+        "portal_topic.all": "Portal topics",
+        "portal_category.all": "Portal categories",
+        "related_questions.all": "Related questions",
         "related_resource": "Related resource",
         "language": "Language",
     }
 
-    def process_related_page(related_page):
-        return process_related_items(related_page, "id")
-
-    def process_portal_topics_and_catetgories(portal_items):
-        return process_related_items(portal_items, "heading")
+    def process_portal_topics_and_catetgories(portal_topics_and_catetgories):
+        return join_values_with_pipe(portal_topics_and_catetgories, "heading")
 
     def process_related_questions(related_questions):
-        return process_related_items(related_questions, "id")
-
-    def process_related_resource(related_resource):
-        return process_related_items(related_resource, "title")
+        return join_values_with_pipe(related_questions, "id")
 
     def process_answer_content(answer_content):
         answer_streamfield = answer_content.raw_data
@@ -319,13 +322,13 @@ class AskReportView(ReportView):
         return strip_html(answer)
 
     custom_field_preprocess = {
-        "answer_base": {"csv": process_related_page},
+        "answer_base": {"csv": process_related_page_id},
         "short_answer": {"csv": strip_html},
         "answer_content": {"csv": process_answer_content},
-        "redirect_to_page": {"csv": process_related_page},
-        "portal_topic": {"csv": process_portal_topics_and_catetgories},
-        "portal_category": {"csv": process_portal_topics_and_catetgories},
-        "related_questions": {"csv": process_related_questions},
+        "redirect_to_page": {"csv": process_related_page_id},
+        "portal_topic.all": {"csv": process_portal_topics_and_catetgories},
+        "portal_category.all": {"csv": process_portal_topics_and_catetgories},
+        "related_questions.all": {"csv": process_related_questions},
         "related_resource": {"csv": process_related_resource},
     }
 

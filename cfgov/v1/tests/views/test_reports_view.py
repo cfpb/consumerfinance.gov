@@ -17,6 +17,7 @@ from v1.models import (
     EnforcementActionProduct,
     EnforcementActionStatus,
 )
+from v1.models.snippets import RelatedResource
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.ref import categories
 from v1.views.reports import (
@@ -25,9 +26,11 @@ from v1.views.reports import (
     EnforcementActionsReportView,
     PageMetadataReportView,
     construct_absolute_url,
+    join_values_with_pipe,
     process_categories,
     process_enforcement_action_page_content,
-    process_related_items,
+    process_related_page_id,
+    process_related_resource,
     process_tags,
     strip_html,
 )
@@ -51,6 +54,7 @@ class ServeViewTestCase(TestCase):
         self.document = Document(title="Test document 1")
         self.document.save()
         self.document.tags.add(self.tag1, self.tag2)
+        self.related_resource = baker.make(RelatedResource, title="Resource")
 
         self.enforcement = EnforcementActionPage(
             title="Great Test Page",
@@ -118,12 +122,24 @@ class ServeViewTestCase(TestCase):
         tag_string = process_tags(tag_name_queryset)
         self.assertEqual(tag_string, "tag1, tag2")
 
-    def test_process_related_items(self):
+    def test_process_related_page_id(self):
+        related_page = self.blog_page
+        related_page_id = process_related_page_id(related_page)
+        missing_page = None
+        missing_page_id = process_related_page_id(missing_page)
+        self.assertTrue(len(related_page_id) > 0)
+        self.assertEqual(missing_page_id, "")
+
+    def test_process_related_resource(self):
+        related_resource_title = process_related_resource(
+            self.related_resource
+        )
+        self.assertEqual(related_resource_title, "Resource")
+
+    def test_join_values_with_pipe(self):
         all_pages = self.root_page.get_children()
-        page_titles_string = process_related_items(all_pages, "title")
-        document_title_string = process_related_items(self.document, "title")
+        page_titles_string = join_values_with_pipe(all_pages, "title")
         self.assertEqual(page_titles_string, "Blogojevich | Great Test Page")
-        self.assertEqual(document_title_string, "Test document 1")
 
     def test_strip_html(self):
         stripped_content = strip_html(self.html_content)
