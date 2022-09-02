@@ -1,5 +1,6 @@
 import html
 from datetime import date
+from functools import partial
 
 from django.utils import html as html_util
 
@@ -24,21 +25,12 @@ def process_tags(queryset):
     return ", ".join([tag for tag in queryset])
 
 
-def process_related_page_id(related_page):
-    try:
-        related_page.id
-    except AttributeError:
-        id = ""
+def process_related_item(related_item, key):
+    if related_item:
+        value = getattr(related_item, key)
     else:
-        id = related_page.id
-    return str(id)
-
-
-def process_related_resource(related_resource):
-    related_resource_title = ""
-    if related_resource:
-        related_resource_title = related_resource.title
-    return related_resource_title
+        value = ""
+    return str(value)
 
 
 def join_values_with_pipe(queryset, key):
@@ -290,12 +282,6 @@ class AskReportView(ReportView):
         "language": "Language",
     }
 
-    def process_portal_topics_and_catetgories(portal_topics_and_catetgories):
-        return join_values_with_pipe(portal_topics_and_catetgories, "heading")
-
-    def process_related_questions(related_questions):
-        return join_values_with_pipe(related_questions, "id")
-
     def process_answer_content(answer_content):
         answer_streamfield = answer_content.raw_data
         answer_text = list(
@@ -322,14 +308,22 @@ class AskReportView(ReportView):
         return strip_html(answer)
 
     custom_field_preprocess = {
-        "answer_base": {"csv": process_related_page_id},
+        "answer_base": {"csv": partial(process_related_item, key="id")},
         "short_answer": {"csv": strip_html},
         "answer_content": {"csv": process_answer_content},
-        "redirect_to_page": {"csv": process_related_page_id},
-        "portal_topic.all": {"csv": process_portal_topics_and_catetgories},
-        "portal_category.all": {"csv": process_portal_topics_and_catetgories},
-        "related_questions.all": {"csv": process_related_questions},
-        "related_resource": {"csv": process_related_resource},
+        "redirect_to_page": {"csv": partial(process_related_item, key="id")},
+        "portal_topic.all": {
+            "csv": partial(join_values_with_pipe, key="heading")
+        },
+        "portal_category.all": {
+            "csv": partial(join_values_with_pipe, key="heading")
+        },
+        "related_questions.all": {
+            "csv": partial(join_values_with_pipe, key="id")
+        },
+        "related_resource": {
+            "csv": partial(process_related_item, key="title")
+        },
     }
 
     template_name = "v1/ask_report.html"

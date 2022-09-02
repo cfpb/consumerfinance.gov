@@ -29,8 +29,7 @@ from v1.views.reports import (
     join_values_with_pipe,
     process_categories,
     process_enforcement_action_page_content,
-    process_related_page_id,
-    process_related_resource,
+    process_related_item,
     process_tags,
     strip_html,
 )
@@ -122,19 +121,13 @@ class ServeViewTestCase(TestCase):
         tag_string = process_tags(tag_name_queryset)
         self.assertEqual(tag_string, "tag1, tag2")
 
-    def test_process_related_page_id(self):
+    def test_process_related_item(self):
         related_page = self.blog_page
-        related_page_id = process_related_page_id(related_page)
+        related_page_id = process_related_item(related_page, "id")
         missing_page = None
-        missing_page_id = process_related_page_id(missing_page)
+        missing_page_id = process_related_item(missing_page, "id")
         self.assertTrue(len(related_page_id) > 0)
         self.assertEqual(missing_page_id, "")
-
-    def test_process_related_resource(self):
-        related_resource_title = process_related_resource(
-            self.related_resource
-        )
-        self.assertEqual(related_resource_title, "Resource")
 
     def test_join_values_with_pipe(self):
         all_pages = self.root_page.get_children()
