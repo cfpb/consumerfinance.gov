@@ -56,6 +56,7 @@ refresh_data() {
     echo 'Importing refresh db'
     gunzip < "$refresh_dump_name" | cfgov/manage.py dbshell > /dev/null
     SCHEMA="$(gunzip -c $refresh_dump_name | grep -m 1 'CREATE SCHEMA' | sed 's/CREATE SCHEMA \(.*\);$/\1/')"
+    PGUSER="${PGUSER:-cfpb}"
     if [ "${PGUSER}" != "${SCHEMA}" ]; then
       echo "Adjusting schema name to match username..."
       echo "DROP SCHEMA IF EXISTS \"${PGUSER}\" CASCADE; \
