@@ -744,7 +744,7 @@ rules:
   # Enforce whether double or single quotes should be used in JSX attributes.
   jsx-quotes:
     - 2
-    - prefer-single
+    - prefer-double
 
   # Enforce spacing between keys and values in object literal properties.
   key-spacing:

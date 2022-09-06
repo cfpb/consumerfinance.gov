@@ -67,6 +67,7 @@ if [ ! -d ./helm/cfgov/charts ]; then
   echo "Building dependency charts..."
   helm repo add bitnami https://charts.bitnami.com/bitnami
   helm repo add elastic https://helm.elastic.co/
+  helm repo add opensearch https://opensearch-project.github.io/helm-charts/
   helm repo update
   helm dependency build ./helm/cfgov
 else

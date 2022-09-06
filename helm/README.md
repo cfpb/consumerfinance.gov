@@ -264,6 +264,23 @@ directory. To make use of AWS CLI in the containers locally, you will need
 to run your `gimme-aws-creds` in your local terminal to get valid credentials
 locally. AWS CLI will then work within the containers.
 
+## Testing
+
+To run tests in helm use `helm test <deployment_name>`. 
+
+To create a test from a `pod.yaml`, add
+```
+metadata:
+  name: <test_name>
+  label: <test_label>
+  annotations:    
+    "helm.sh/hook": test
+``` 
+
+To exclude certain tests from running use `helm test --filter strings name=<test_name>`.  Additionally you can disable tests from within in the `values.yaml` but **only** for tests that the charts have added (i.e. the ElasticSearch Chart and Postgres Chart). You will need to look up that chart's respective documentation for how to do that.  
+
+More can be found on helm testing [here](https://helm.sh/docs/topics/chart_tests/) or by running `helm test --help`. 
+
 
 ## TODO
 In production, an AWS Service Account is used, and its credentials are
