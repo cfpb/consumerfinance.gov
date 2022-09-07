@@ -171,6 +171,8 @@ for a cronJob object.
   image:  # ONLY define if different from cfgov_python
     repository: cfogv_python  # default is the chart image repository
     tag: ""  # default is the chart image tag
+  successfulJobsHistoryLimit: 1  # default
+  failedJobsHistoryLimit: 1  # default
   schedule: "@daily"  # default
   suspend: false  # default
   restartPolicy: OnFailure  # default

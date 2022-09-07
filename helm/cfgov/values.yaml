@@ -183,6 +183,8 @@ cronJobs:
 #      repository: "busybox"
 #      tag: "latest"
 #    schedule: "@daily"  # default
+#    successfulJobsHistoryLimit: 1
+#    failedJobsHistoryLimit: 1
 #    suspend: false  # default
 #    restartPolicy: OnFailure  # default
 #    command:

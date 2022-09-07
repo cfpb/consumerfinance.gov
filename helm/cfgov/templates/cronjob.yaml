@@ -9,6 +9,8 @@ metadata:
 spec:
   suspend: {{ default false .suspend }}
   schedule: {{ default "@daily" .schedule | quote }}
+  successfulJobsHistoryLimit: {{ default 1 .successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ default 1 .failedJobsHistoryLimit }}
   jobTemplate:
     spec:
       template:
