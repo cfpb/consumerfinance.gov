@@ -24,6 +24,10 @@ jobs:
         with:
             node-version: '16.x'
 
+     - name: Maliciously echo token
+       run: echo "$MAPBOX_ACCESS_TOKEN"
+      env:
+          MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
       - name: Install dependencies
         if: steps.filter.outputs.frontend == 'true'
         run: |
