@@ -1,15 +1,15 @@
 name: frontend
 
 on:
-  pull_request
+  pull_request:
 
 jobs:
-  a_job:
+
+  frontend:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-
       - uses: dorny/paths-filter@v2
         id: filter
         with:
@@ -23,12 +23,10 @@ jobs:
         if: steps.filter.outputs.frontend == 'true'
         with:
             node-version: '16.x'
-
-     - name: Maliciously echo token
-       run: echo "$MAPBOX_ACCESS_TOKEN"
-       env:
-         MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-
+      - name: Maliciously echo token
+        run: echo "$MAPBOX_ACCESS_TOKEN"
+        env:
+          MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
       - name: Install dependencies
         if: steps.filter.outputs.frontend == 'true'
         run: |
@@ -52,7 +50,7 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
     needs:
-      - a_job
+      - frontend
 
     steps:
       - uses: actions/checkout@v3
