@@ -3,7 +3,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "cfgov.fullname" $ | lower }}-cronjob-{{ .name | lower }}
+  name: {{ printf "%s-%s" (include "cfgov.fullname" $) .name | trunc 52 | trimSuffix "-" | lower }}
   labels:
     {{- include "cfgov.labels" $ | nindent 4 }}
 spec:
@@ -18,7 +18,7 @@ spec:
           securityContext:
             {{- toYaml $.Values.securityContext | nindent 12 }}
           containers:
-            - name: {{ $.Chart.Name | lower }}-cronjob-{{ .name | lower }}
+            - name: {{ printf "%s-%s" $.Chart.Name .name | lower }}
               {{- if .image }}
               image: "{{ .image.repository }}:{{ .image.tag | default "latest" }}"
               imagePullPolicy: {{ default "IfNotPresent" .image.pullPolicy }}

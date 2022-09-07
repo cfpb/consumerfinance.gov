@@ -1,4 +1,8 @@
+import html
 from datetime import date
+from functools import partial
+
+from django.utils import html as html_util
 
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
@@ -6,6 +10,7 @@ from wagtail.images import get_image_model
 
 from bs4 import BeautifulSoup
 
+from ask_cfpb.models.answer_page import AnswerPage
 from v1.models import CFGOVPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 
@@ -18,6 +23,27 @@ def process_categories(queryset):
 def process_tags(queryset):
     """Prep the set of tags assocaited with a document or page."""
     return ", ".join([tag for tag in queryset])
+
+
+def process_related_item(related_item, key):
+    if related_item:
+        value = getattr(related_item, key)
+    else:
+        value = ""
+    return str(value)
+
+
+def join_values_with_pipe(queryset, key):
+    value_list = []
+    for item in queryset:
+        value_list.append(str(getattr(item, key)))
+    joined_attributtes = " | ".join(value_list)
+    return joined_attributtes
+
+
+def strip_html(content):
+    unescaped = html.unescape(content)
+    return html_util.strip_tags(unescaped).strip()
 
 
 def process_enforcement_action_page_content(page_content):
@@ -213,3 +239,101 @@ class EnforcementActionsReportView(ReportView):
         return EnforcementActionPage.objects.all().prefetch_related(
             "categories", "statutes"
         )
+
+
+class AskReportView(ReportView):
+    header_icon = "help"
+    title = "Ask CFPB report"
+
+    list_export = [
+        "answer_base",
+        "id",
+        "question",
+        "title",
+        "short_answer",
+        "answer_content",
+        "search_description",
+        "url",
+        "live",
+        "last_edited",
+        "redirect_to_page",
+        "portal_topic.all",
+        "portal_category.all",
+        "related_questions.all",
+        "related_resource",
+        "language",
+    ]
+    export_headings = {
+        "answer_base": "Ask ID",
+        "id": "Page ID",
+        "question": "Question",
+        "title": "Title",
+        "short_answer": "Short answer",
+        "answer_content": "Answer",
+        "search_description": "Meta description",
+        "url": "URL",
+        "live": "Live",
+        "last_edited": "Last edited",
+        "redirect_to_page": "Redirect",
+        "portal_topic.all": "Portal topics",
+        "portal_category.all": "Portal categories",
+        "related_questions.all": "Related questions",
+        "related_resource": "Related resource",
+        "language": "Language",
+    }
+
+    def process_answer_content(answer_content):
+        answer_streamfield = answer_content.raw_data
+        answer_text = list(
+            filter(lambda item: item["type"] == "text", answer_streamfield)
+        )
+        if answer_text:
+            answer = answer_text[0].get("value").get("content")
+        else:
+            # If no text block is found,
+            # there is either a HowTo or FAQ schema block.
+            # Both define a description field, so we'll use that here.
+            answer_schema = list(
+                filter(
+                    lambda item: item["type"] == "how_to_schema"
+                    or item["type"] == "faq_schema",
+                    answer_streamfield,
+                )
+            )
+            if answer_schema:
+                answer = answer_schema[0].get("value").get("description")
+            else:
+                # This is a question with no answer, possibly a new draft.
+                answer = ""
+        return strip_html(answer)
+
+    custom_field_preprocess = {
+        "answer_base": {"csv": partial(process_related_item, key="id")},
+        "short_answer": {"csv": strip_html},
+        "answer_content": {"csv": process_answer_content},
+        "redirect_to_page": {"csv": partial(process_related_item, key="id")},
+        "portal_topic.all": {
+            "csv": partial(join_values_with_pipe, key="heading")
+        },
+        "portal_category.all": {
+            "csv": partial(join_values_with_pipe, key="heading")
+        },
+        "related_questions.all": {
+            "csv": partial(join_values_with_pipe, key="id")
+        },
+        "related_resource": {
+            "csv": partial(process_related_item, key="title")
+        },
+    }
+
+    template_name = "v1/ask_report.html"
+
+    def get_filename(self):
+        return generate_filename("ask-cfpb")
+
+    def get_queryset(self):
+        return AnswerPage.objects.prefetch_related(
+            "portal_topic",
+            "portal_category",
+            "related_questions",
+        ).order_by("language", "-answer_base__id")
