@@ -80,6 +80,14 @@ class FIGContentPage(CFGOVPage):
         ),
         MultiFieldPanel(
             [
+                FieldPanel("eyebrow"),
+                FieldPanel("page_header"),
+                FieldPanel("subheader"),
+            ],
+            heading="Hey Here is a new header that I want test out!",
+        ),
+        MultiFieldPanel(
+            [
                 FieldPanel("version_status"),
                 FieldPanel("effective_start_date"),
                 FieldPanel("effective_end_date"),
