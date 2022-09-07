@@ -22,8 +22,7 @@ fullnameOverride: ""
 initContainer:
   command:
     - "./docker-entrypoint.sh"
-#  args:
-#    - "./cfgov/manage.py search_index --rebuild -f --parallel"
+  args: []
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -58,14 +57,14 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: chart-example.local
+    - host: cfgov.localhost
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+#    - secretName: cfgov-tls
+#      hosts:
+#        - cfgov.localhost
 
 mapping:
   enabled: false
@@ -184,6 +183,8 @@ cronJobs:
 #      repository: "busybox"
 #      tag: "latest"
 #    schedule: "@daily"  # default
+#    successfulJobsHistoryLimit: 1
+#    failedJobsHistoryLimit: 1
 #    suspend: false  # default
 #    restartPolicy: OnFailure  # default
 #    command:
@@ -203,20 +204,26 @@ cronJobs:
     args:
       - "clearsessions"
   - name: "publish-scheduled-pages"
-    schedule: '* * * * *' # every minute
+    schedule: '* * * * *'  # every minute
     command:
       - "django-admin"
     args:
       - "publish_scheduled_pages"
-  - name: "elasticsearch-Rebuild-Index"
-    schedule: "@daily"
+  - name: "archive-wagtail-events"  # archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
+    schedule: '23 * * * *'
     command:
       - "django-admin"
     args:
-      - "search_index"
-      - "--rebuild"
-      - "--parallel"
-      - "-f"
+      - "archive_events"  # function found in cfgov/v1/management/commands/archive_events.py
+  - name: "elasticsearch-Rebuild-Index"
+    schedule: "@daily"
+    command:
+      - "bash"
+    args:
+      - "-c"
+      - >-
+        django-admin opensearch index --force rebuild &&
+        django-admin opensearch document --force --refresh index
     suspend: true
   - name: "dump-Postgres-DB"
     schedule: "@daily"
@@ -228,13 +235,43 @@ cronJobs:
     suspend: true
 
 
-
+# Postgres Values
 postgresql:
+  enabled: false  # Deploy child chart, if false, uses external host and port
+  auth:
+    # username: ""  # Used for both chart and external db's
+    # password: ""  # Used for both chart and external db's
+    # database: ""  # Used for both chart and external db's
+    createSecret: true  # Only valid when using external database
+  external:
+    host: ""
+    port: ""
+  service:
+    type: ClusterIP
+
+opensearch:
   enabled: false
+  service:
+    type: ClusterIP
+
+opensearch-dashboards:
+  enabled: false
+  service:
+    type: ClusterIP
 
 elasticsearch:
   enabled: false
   externalHostname: ""  # AWS OpenSearch
+  service:
+    type: ClusterIP
 
 kibana:
   enabled: false
+  service:
+    type: ClusterIP
+
+# search is used when not deploying ES/OS via chart. Ergo, external to k8s
+search:
+  # schema: http
+  host: ""
+  # port: 9200

@@ -1,5 +1,5 @@
-from django_elasticsearch_dsl import Document, fields
-from django_elasticsearch_dsl.registries import registry
+from django_opensearch_dsl import Document, fields
+from django_opensearch_dsl.registries import registry
 
 from search.elasticsearch_helpers import environment_specific_index, strip_html
 from teachers_digital_platform.models.pages import ActivityPage
@@ -55,10 +55,12 @@ class ActivityPageDocument(Document):
         model = ActivityPage
         fields = ["id"]
 
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         """Prevent non-live pages from being indexed."""
         return (
-            super(ActivityPageDocument, self).get_queryset().filter(live=True)
+            super(ActivityPageDocument, self)
+            .get_queryset(*args, **kwargs)
+            .filter(live=True)
         )
 
     def prepare_activity_duration(self, instance):

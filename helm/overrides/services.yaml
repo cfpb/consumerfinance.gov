@@ -13,6 +13,46 @@ postgresql:
     service:
       type: ClusterIP
 
+### OPENSEARCH OVERRIDES ###
+opensearch:
+  enabled: false
+
+  persistence:
+    enabled: false  # Disable persistence for local by default
+#    # Request smaller persistent volumes, if enabled.
+#    accessModes: [ "ReadWriteOnce" ]
+#    storageClass: "hostpath"
+#    size: 100M
+
+  replicas: 2
+
+  # antiAffinity: "soft"
+
+  # Shrink default JVM heap.
+  # opensearchJavaOpts: "-Xmx512m -Xms512m"
+#
+#  # Allocate smaller chunks of memory per pod.
+#  resources:
+#    requests:
+#      cpu: "25m"
+#      memory: "100M"
+#    limits:
+#      cpu: "500m"
+#      memory: "2048M"
+
+  service:
+    type: ClusterIP
+
+### OPENSEARCH DASHBOARDS OVERRIDES ###
+opensearch-dashboards:
+  enabled: false
+
+  persistence:
+    enabled: false
+
+  service:
+    type: ClusterIP
+
 ### ELASTICSEARCH OVERRIDES ###
 elasticsearch:
   enabled: true

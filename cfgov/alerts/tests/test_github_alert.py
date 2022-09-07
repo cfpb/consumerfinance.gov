@@ -1,37 +1,40 @@
 # -*- coding: utf-8 -*-
+import json
+import os
 from unittest.mock import patch
 
 from django.test import TestCase
 
-import github3
+from github3.issues.issue import ShortIssue
+from github3.repos.repo import ShortRepository
+from github3.session import GitHubSession
 
 from alerts.github_alert import GithubAlert
 
 
-class TestGithubAlert(TestCase):
+JSON_DIR = f"{os.path.dirname(os.path.realpath(__file__))}/json"
 
-    closed_issue = github3.issues.issue.Issue(
-        {
-            "html_url": "https://github.com/foo/bar/issues/1",
-            "labels": [],
-            "user": {},
-            "closed_at": "2017-02-12T13:22:01Z",
-        }
+
+class TestGithubAlert(TestCase):
+    session = GitHubSession()
+    session.basic_auth("test", "test")
+
+    repository = ShortRepository(
+        json.load(open(f"{JSON_DIR}/github_repository.json")), session
     )
 
-    open_issue = github3.issues.issue.Issue(
-        {
-            "html_url": "https://github.com/foo/bar/issues/2",
-            "labels": [],
-            "user": {},
-            "closed_at": None,
-        }
+    closed_issue = ShortIssue(
+        json.load(open(f"{JSON_DIR}/github_closed_issue.json")), session
+    )
+
+    open_issue = ShortIssue(
+        json.load(open(f"{JSON_DIR}/github_open_issue.json")), session
     )
 
     def setUp(self):
         self.text = "foö"
 
-    @patch("github3.issues.issue.Issue.create_comment")
+    @patch("github3.issues.issue._Issue.create_comment")
     @patch(
         "alerts.github_alert.GithubAlert.matching_issue",
         return_value=open_issue,
@@ -41,8 +44,8 @@ class TestGithubAlert(TestCase):
         GithubAlert({}).post(title=self.text, body=self.text)
         create_comment.assert_called_once_with(body=self.text)
 
-    @patch("github3.issues.issue.Issue.create_comment")
-    @patch("github3.issues.issue.Issue.reopen")
+    @patch("github3.issues.issue._Issue.create_comment")
+    @patch("github3.issues.issue._Issue.reopen")
     @patch(
         "alerts.github_alert.GithubAlert.matching_issue",
         return_value=closed_issue,
@@ -52,10 +55,10 @@ class TestGithubAlert(TestCase):
         GithubAlert({}).post(title=self.text, body=self.text)
         reopen.assert_called_once_with()
 
-    @patch("github3.repos.repo.Repository.create_issue")
+    @patch("github3.repos.repo._Repository.create_issue")
     @patch(
         "alerts.github_alert.GithubAlert.repo",
-        return_value=github3.repos.repo.Repository({}),
+        return_value=repository,
     )
     @patch(
         "alerts.github_alert.GithubAlert.matching_issue",
