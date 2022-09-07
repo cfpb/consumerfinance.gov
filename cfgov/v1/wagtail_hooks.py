@@ -40,6 +40,7 @@ from v1.template_debug import (
     video_player_test_cases,
 )
 from v1.views.reports import (
+    AskReportView,
     DocumentsReportView,
     EnforcementActionsReportView,
     ImagesReportView,
@@ -266,6 +267,27 @@ def register_images_report_url():
             r"^reports/images/$",
             ImagesReportView.as_view(),
             name="images_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_ask_report_menu_item():
+    return MenuItem(
+        "Ask CFPB",
+        reverse("ask_report"),
+        classnames="icon icon-" + AskReportView.header_icon,
+        order=700,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_ask_report_url():
+    return [
+        re_path(
+            r"^reports/ask-cfpb/$",
+            AskReportView.as_view(),
+            name="ask_report",
         ),
     ]
 
