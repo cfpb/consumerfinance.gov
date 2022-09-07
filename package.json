@@ -50,14 +50,14 @@
     "xdr": "0.5.3"
   },
   "devDependencies": {
-    "cypress": "10.4.0",
-    "eslint": "8.22.0",
+    "cypress": "10.7.0",
+    "eslint": "8.23.0",
     "jest": "28.1.2",
     "jest-cli": "28.1.2",
     "jest-environment-jsdom": "28.1.0",
     "postcss-less": "6.0.0",
-    "snyk": "1.963.0",
-    "stylelint": "14.10.0",
+    "snyk": "1.997.0",
+    "stylelint": "14.11.0",
     "stylelint-config-recommended-less": "1.0.4"
   },
   "scripts": {

@@ -1,0 +1,125 @@
+{% extends 'v1/report_no-xlsx_base.html' %}
+
+{% block results %}
+    {% if object_list %}
+        <table class="listing">
+            <thead>
+                <tr>
+                    <th>
+                        Ask ID
+                    </th>
+                    <th>
+                        Page ID
+                    </th>
+                    <th>
+                        Question
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Short answer
+                    </th>
+                    <th>
+                        Answer
+                    </th>
+                    <th>
+                        Meta description
+                    </th>
+                    <th>
+                        URL
+                    </th>
+                    <th>
+                        Live
+                    </th>
+                    <th>
+                        Last edited
+                    </th>
+                    <th>
+                        Redirect
+                    </th>
+                    <th>
+                        Portal topics
+                    </th>
+                    <th>
+                        Portal categories
+                    </th>
+                    <th>
+                        Related questions
+                    </th>
+                    <th>
+                        Related resource
+                    </th>
+                    <th>
+                        Language
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for page in object_list %}
+                    <tr>
+                        <td>
+                            {{ page.answer_base.id }}
+                        </td>
+                        <td>
+                            {{ page.id }}
+                        </td>
+                        <td>
+                            {{ page.question | striptags }}
+                        </td>
+                        <td>
+                            {{ page.title }}
+                        </td>
+                        <td>
+                            {{ page.short_answer | striptags }}
+                        </td>
+                        <td style="color: #919395;">
+                            See CSV
+                        </td>
+                        <td>
+                            {{ page.search_description }}
+                        </td>
+                        <td>
+                            {{ page.url }}
+                        </td>
+                        <td>
+                            {{ page.live }}
+                        </td>
+                        <td>
+                            {{ page.last_edited }}
+                        </td>
+                        <td>
+                            {{ page.redirect_to_page.id }}
+                        </td>
+                        <td>
+                            {% for portal_topic in page.portal_topic.all %}
+                                {{ portal_topic.heading }}
+                                <br>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for portal_category in page.portal_category.all %}
+                                {{ portal_category.heading }}
+                                <br>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for question in page.related_questions.all %}
+                                {{ question.id }}
+                                <br>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {{ page.related_resource.title }}
+                        </td>
+                        <td>
+                            {{ page.language }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no Ask pages to report.</p>
+    {% endif %}
+{% endblock %}
