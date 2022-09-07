@@ -183,6 +183,8 @@ cronJobs:
 #      repository: "busybox"
 #      tag: "latest"
 #    schedule: "@daily"  # default
+#    successfulJobsHistoryLimit: 1
+#    failedJobsHistoryLimit: 1
 #    suspend: false  # default
 #    restartPolicy: OnFailure  # default
 #    command:
@@ -202,17 +204,17 @@ cronJobs:
     args:
       - "clearsessions"
   - name: "publish-scheduled-pages"
-    schedule: '* * * * *' # every minute
+    schedule: '* * * * *'  # every minute
     command:
       - "django-admin"
     args:
       - "publish_scheduled_pages"
-  - name: "archive-wagtail-events" #archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
-    schedule: '23 * * * *' 
+  - name: "archive-wagtail-events"  # archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
+    schedule: '23 * * * *'
     command:
       - "django-admin"
     args:
-      - "archive_events" #function found in cfgov/v1/management/commands/archive_events.py
+      - "archive_events"  # function found in cfgov/v1/management/commands/archive_events.py
   - name: "elasticsearch-Rebuild-Index"
     schedule: "@daily"
     command:
