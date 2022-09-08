@@ -1,0 +1,21 @@
+name: Check commit on PR behavior
+
+on:
+  pull_request:
+
+jobs:
+
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Commit
+        run: |
+          git config --global user.name "CFPBot"
+          git config --global user.email "CFPBot@users.noreply.github.com"
+          echo 'commited on PR' > commited_file
+          git add .
+          git commit -m "Update on PR"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
