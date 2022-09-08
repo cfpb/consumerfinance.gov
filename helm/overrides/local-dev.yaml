@@ -49,47 +49,17 @@ volumes:
     mountPath: /var/run/secrets/.aws
 
 cronJobs:
-  - name: "publish-scheduled-pages"
-    schedule: '@hourly'
-    command:
-      - "django-admin"
-    args:
-      - "publish_scheduled_pages"
+  archive-wagtail-events:
     suspend: true
 
-  - name: "archive-wagtail-events"
-    schedule: '23 * * * *'
-    command:
-      - "django-admin"
-    args:
-      - "archive_events"
+  clear-sessions:
     suspend: true
 
-  - name: "clearSessions"
-    schedule: "@daily"
-    command:
-      - "django-admin"
-    args:
-      - "clearsessions"
-
-  - name: "elasticsearch-Rebuild-Index"
-    schedule: "@daily"
-    command:
-      - "bash"
-    args:
-      - "-c"
-      - >-
-        django-admin opensearch index --force rebuild &&
-        django-admin opensearch document --force --refresh index
-
-  - name: "dump-Postgres-DB"
-    schedule: "@daily"
-    command:
-      - "bash"
-    args:
-      - "-c"
-      # supply the desired s3 bucket you wish to test with
-      - "pg_dump --no-owner --no-privileges | gzip > test.gz | aws s3 cp test.gz s3://$S3_BUCKET/"
-    restartPolicy: OnFailure
+  dump-db:
     suspend: true
 
+  publish-scheduled-pages:
+    suspend: true
+
+  rebuild-search-index:
+    suspend: true
