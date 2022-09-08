@@ -193,7 +193,6 @@ def register_page_metadata_report_menu_item():
         "Page Metadata",
         reverse("page_metadata_report"),
         classnames="icon icon-" + PageMetadataReportView.header_icon,
-        order=700,
     )
 
 
@@ -214,7 +213,6 @@ def register_documents_report_menu_item():
         "Documents",
         reverse("documents_report"),
         classnames="icon icon-" + DocumentsReportView.header_icon,
-        order=700,
     )
 
 
@@ -235,7 +233,6 @@ def register_enforcements_actions_report_menu_item():
         "Enforcement Actions",
         reverse("enforcement_report"),
         classnames="icon icon-" + EnforcementActionsReportView.header_icon,
-        order=700,
     )
 
 
@@ -256,7 +253,6 @@ def register_images_report_menu_item():
         "Images",
         reverse("images_report"),
         classnames="icon icon-" + ImagesReportView.header_icon,
-        order=700,
     )
 
 
@@ -277,7 +273,6 @@ def register_ask_report_menu_item():
         "Ask CFPB",
         reverse("ask_report"),
         classnames="icon icon-" + AskReportView.header_icon,
-        order=700,
     )
 
 
@@ -290,6 +285,23 @@ def register_ask_report_url():
             name="ask_report",
         ),
     ]
+
+
+@hooks.register("construct_reports_menu")
+def clean_up_report_menu_items(request, report_menu_items):
+    item_labels = []
+    for item in report_menu_items:
+        if item.label == "Site history":
+            item.label = "Site History"
+        if item.label == "Workflow tasks":
+            item.label = "Workflow Tasks"
+        item_labels.append(item.label)
+    item_labels.sort()
+    for index, label in enumerate(item_labels):
+        menu_item = next(
+            (item for item in report_menu_items if item.label == label), None
+        )
+        menu_item.order = index
 
 
 def get_resource_tags():
