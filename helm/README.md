@@ -188,6 +188,22 @@ example-job-name:  # There is no default for name, this is required
       value: "MY_CRONJOB_ENV_VALUE"
 ```
 
+# OpenLens
+We like to use OpenLens to manage the Kubernetes stack.
+There is a more commonly known Lens app, but Lens requires an account to use.
+Lens is the commercialized version built on top of the OpenLens source.
+
+To install OpenLens, create an alias in your shell profile. For example,
+if using `zsh`, add it to `.zshrc`. This alias is used to install and to
+update OpenLens.
+
+    alias install_openlens="curl -o- https://gist.githubusercontent.com/jslay88/bf654c23eaaaed443bb8e8b41d02b2a9/raw/install_openlens.sh | bash"
+
+Source your shell profile or restart your terminal. Then run the alias.
+
+    install_openlens
+
+
 # Manually Loading Data
 To manually load data (such as `test.sql.gz`), deploy the Helm chart as normal.
 You can wait for it to finish deploying, or not. Scale the main deployment to 0.
