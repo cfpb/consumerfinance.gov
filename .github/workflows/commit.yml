@@ -16,6 +16,7 @@ jobs:
           echo 'commited on PR' > commited_file
           git add .
           git commit -m "Update on PR"
+          git remote set-url origin "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
