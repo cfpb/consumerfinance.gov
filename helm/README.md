@@ -147,14 +147,14 @@ TODO: Add Table with commonly overridden values.
 To make a new
 [Kubernetes CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)
 based on our [CronJob template](cfgov/templates/cronjob.yaml),
-add a new item to the cronJobs array in
+add a new item to the cronJobs mapping in
 [`cfgov/values.yaml`](cfgov/values.yaml).
 
 For example, our Django
 `clearsessions` management command runs in a cron job defined like this:
 
 ```yaml
-- name: "clearSessions"
+clear-sessions:
   schedule: "@daily"
   command:
     - "django-admin"
@@ -166,7 +166,8 @@ The following shows the all the available values and default values
 for a cronJob object.
 
 ```yaml
-- name: ""  # There is no default for name, this is required
+example-job-name:  # There is no default for name, this is required
+  enabled: true  # default is true. If false, will not create the CronJob resource
   includeEnv: true  # includes the same volumes and environment variables as the main application container
   image:  # ONLY define if different from cfgov_python
     repository: cfogv_python  # default is the chart image repository
