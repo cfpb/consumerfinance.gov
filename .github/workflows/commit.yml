@@ -13,6 +13,7 @@ jobs:
         run: |
           git config --global user.name "CFPBot"
           git config --global user.email "CFPBot@users.noreply.github.com"
+          git fetch origin main
           echo 'commited on PR' > commited_file
           git add .
           git commit -m "Update on PR"
