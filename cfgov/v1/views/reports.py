@@ -72,7 +72,7 @@ def generate_filename(type):
 
 class PageMetadataReportView(PageReportView):
     header_icon = "doc-empty-inverse"
-    title = "Metadata for live pages"
+    title = "Page Metadata (for Live Pages)"
 
     list_export = PageReportView.list_export + [
         "url",
@@ -118,7 +118,7 @@ class PageMetadataReportView(PageReportView):
 
 class DocumentsReportView(ReportView):
     header_icon = "doc-full"
-    title = "All documents"
+    title = "Documents"
 
     list_export = [
         "id",
@@ -157,7 +157,7 @@ class DocumentsReportView(ReportView):
 
 class ImagesReportView(ReportView):
     header_icon = "image"
-    title = "All images"
+    title = "Images"
 
     list_export = [
         "title",
@@ -197,8 +197,8 @@ class ImagesReportView(ReportView):
 
 
 class EnforcementActionsReportView(ReportView):
-    header_icon = "doc-full"
-    title = "Enforcement actions report"
+    header_icon = "form"
+    title = "Enforcement Actions"
 
     list_export = [
         "title",
@@ -243,7 +243,7 @@ class EnforcementActionsReportView(ReportView):
 
 class AskReportView(ReportView):
     header_icon = "help"
-    title = "Ask CFPB report"
+    title = "Ask CFPB"
 
     list_export = [
         "answer_base",
