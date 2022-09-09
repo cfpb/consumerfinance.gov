@@ -1,4 +1,5 @@
 import logging
+import re
 
 from django.conf import settings
 from django.contrib import admin
@@ -288,20 +289,15 @@ def register_ask_report_url():
 
 
 @hooks.register("construct_reports_menu")
+# Alphabetizie and title case report menu items
 def clean_up_report_menu_items(request, report_menu_items):
-    item_labels = []
-    for item in report_menu_items:
-        if item.label == "Site history":
-            item.label = "Site History"
-        if item.label == "Workflow tasks":
-            item.label = "Workflow Tasks"
-        item_labels.append(item.label)
-    item_labels.sort()
-    for index, label in enumerate(item_labels):
-        menu_item = next(
-            (item for item in report_menu_items if item.label == label), None
-        )
-        menu_item.order = index
+    cfpb_re = r"CFPB"
+    report_menu_items.sort(key=lambda item: item.label)
+    for index, item in enumerate(report_menu_items):
+        item.label = item.label.title()
+        if re.search(cfpb_re, item.label, re.IGNORECASE):
+            item.label = re.sub(cfpb_re, "CFPB", item.label, 0, re.IGNORECASE)
+        item.order = index
 
 
 def get_resource_tags():
