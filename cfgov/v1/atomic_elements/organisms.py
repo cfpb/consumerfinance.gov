@@ -109,7 +109,7 @@ class InfoUnitGroup(blocks.StructBlock):
     border_radius_image = blocks.ChoiceBlock(
         choices=[
             ("none", "None"),
-            ("round", "Rounded corners"),
+            ("rounded", "Rounded corners"),
             ("circle", "Circle"),
         ],
         default=0,

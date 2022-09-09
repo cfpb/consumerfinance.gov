@@ -85,8 +85,8 @@
 
         <img class="m-info-unit_image
                     {{- ' m-info-unit_image__square' if img.is_square }}
-                    {{- ' image_border_circle' if border_radius_image == 'circle' }}
-                    {{- ' image_border_round' if border_radius_image == 'round' }}"
+                    {{- ' u-image_border-circle' if border_radius_image == 'circle' }}
+                    {{- ' u-image_border-rounded' if border_radius_image == 'rounded' }}"
             src="{{ img.url }}"
             alt="{{ img_alt_text }}">
     {%- endif %}
