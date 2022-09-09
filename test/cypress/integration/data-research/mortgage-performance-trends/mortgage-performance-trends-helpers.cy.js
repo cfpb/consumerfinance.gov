@@ -13,6 +13,10 @@ export class MortgagePerformanceTrends {
     cy.get( id ).click( { force: true } );
   }
 
+  highchartsLegendTitle( ) {
+    cy.get( '.highcharts-legend' );
+  }
+
   selectStateForDelinquencyTrends( state ) {
     cy.get( '#mp-line-chart-state' ).select( state );
   }
