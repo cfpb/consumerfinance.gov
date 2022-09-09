@@ -22,11 +22,6 @@ describe( 'Filter Blog Posts based on content', () => {
       blog.resultsContent().should(
         'contain', title.get( 0 ).innerText
       );
-      // And the page url should contain "title=" followed by the title
-      const plusTitle = title.get( 0 ).innerText.split( ' ' ).join( '+' );
-      cy.url().should(
-        'include', 'title=' + plusTitle
-      );
     } );
   } );
   it( 'Select a single category', () => {
