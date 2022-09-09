@@ -106,6 +106,21 @@ class InfoUnitGroup(blocks.StructBlock):
         ),
     )
 
+    border_radius_image = blocks.ChoiceBlock(
+        choices=[
+            ("none", "None"),
+            ("round", "Rounded corners"),
+            ("circle", "Circle"),
+        ],
+        default=0,
+        required=False,
+        label="Border radius for images?",
+        help_text=(
+            "Adds a <em>border-radius</em> class to images in this "
+            "group, allowing for a rounded or circular border."
+        ),
+    )
+
     info_units = blocks.ListBlock(molecules.InfoUnit(), default=list())
 
     sharing = blocks.StructBlock(
