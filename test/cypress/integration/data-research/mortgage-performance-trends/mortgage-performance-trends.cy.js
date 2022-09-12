@@ -12,6 +12,7 @@ describe( 'Mortgage Performance Trends', () => {
     trends.selectLocationType( 'State' );
     trends.selectStateForDelinquencyTrends( 'Virginia' );
     trends.highchartsLegendTitle().should( 'contain', 'Virginia');
+    trends.clearStorage();
   } );
 
   it( 'should display delinquency rates by month for a given state', () => {
