@@ -197,7 +197,8 @@ export class AdminPage {
   }
 
   openExternalLinks() {
-    this.openNavigationTab( 'External links' );
+    this.openNavigationTab( 'Reports' );
+    this.selectSubMenu( 'External Links' );
   }
 
   searchExternalLink( link ) {
