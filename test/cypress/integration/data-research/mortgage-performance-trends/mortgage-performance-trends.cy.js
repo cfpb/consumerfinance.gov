@@ -12,6 +12,7 @@ describe( 'Mortgage Performance Trends', () => {
     trends.selectLocationType( 'State' );
     trends.selectStateForDelinquencyTrends( 'Virginia' );
     trends.highchartsLegendTitle().should( 'contain', 'Virginia');
+    // prevents proper reload if local files are kept.
     trends.clearStorage();
   } );
 
