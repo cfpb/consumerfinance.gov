@@ -1,4 +1,5 @@
 import logging
+import re
 
 from django.conf import settings
 from django.contrib import admin
@@ -193,7 +194,6 @@ def register_page_metadata_report_menu_item():
         "Page Metadata",
         reverse("page_metadata_report"),
         classnames="icon icon-" + PageMetadataReportView.header_icon,
-        order=700,
     )
 
 
@@ -214,7 +214,6 @@ def register_documents_report_menu_item():
         "Documents",
         reverse("documents_report"),
         classnames="icon icon-" + DocumentsReportView.header_icon,
-        order=700,
     )
 
 
@@ -235,7 +234,6 @@ def register_enforcements_actions_report_menu_item():
         "Enforcement Actions",
         reverse("enforcement_report"),
         classnames="icon icon-" + EnforcementActionsReportView.header_icon,
-        order=700,
     )
 
 
@@ -256,7 +254,6 @@ def register_images_report_menu_item():
         "Images",
         reverse("images_report"),
         classnames="icon icon-" + ImagesReportView.header_icon,
-        order=700,
     )
 
 
@@ -277,7 +274,6 @@ def register_ask_report_menu_item():
         "Ask CFPB",
         reverse("ask_report"),
         classnames="icon icon-" + AskReportView.header_icon,
-        order=700,
     )
 
 
@@ -290,6 +286,18 @@ def register_ask_report_url():
             name="ask_report",
         ),
     ]
+
+
+@hooks.register("construct_reports_menu")
+# Alphabetizie and title case report menu items
+def clean_up_report_menu_items(request, report_menu_items):
+    cfpb_re = r"CFPB"
+    report_menu_items.sort(key=lambda item: item.label)
+    for index, item in enumerate(report_menu_items):
+        item.label = item.label.title()
+        if re.search(cfpb_re, item.label, re.IGNORECASE):
+            item.label = re.sub(cfpb_re, "CFPB", item.label, 0, re.IGNORECASE)
+        item.order = index
 
 
 def get_resource_tags():
