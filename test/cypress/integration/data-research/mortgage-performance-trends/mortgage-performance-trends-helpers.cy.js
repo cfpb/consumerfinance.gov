@@ -17,10 +17,6 @@ export class MortgagePerformanceTrends {
     return cy.get( '.highcharts-legend' );
   }
 
-  clearStorage() {
-    cy.clearLocalStorage();
-  }
-
   selectStateForDelinquencyTrends( state ) {
     cy.get( '#mp-line-chart-state' ).select( state );
   }

@@ -5,15 +5,17 @@ const trends = new MortgagePerformanceTrends();
 describe( 'Mortgage Performance Trends', () => {
 
   beforeEach( () => {
-    trends.open();
+    // preserve the cache. Deleting the cache but keeping the local files
+    // between tests causes subsequent tests to fail.
+    cy.session( 'sessionid', () => {
+      trends.open();
+    } );
   } );
 
   it( 'should display delinquency trends chart for a given state', () => {
     trends.selectLocationType( 'State' );
     trends.selectStateForDelinquencyTrends( 'Virginia' );
     trends.highchartsLegendTitle().should( 'contain', 'Virginia');
-    // prevents proper reload if local files are kept.
-    trends.clearStorage();
   } );
 
   it( 'should display delinquency rates by month for a given state', () => {
