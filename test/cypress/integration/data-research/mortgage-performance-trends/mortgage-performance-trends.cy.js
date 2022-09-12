@@ -5,11 +5,10 @@ const trends = new MortgagePerformanceTrends();
 describe( 'Mortgage Performance Trends', () => {
 
   beforeEach( () => {
+    trends.open();
     // preserve the cache. Deleting the cache but keeping the local files
     // between tests causes subsequent tests to fail.
-    cy.session( 'sessionid', () => {
-      trends.open();
-    } );
+    Cypress.Cookies.preserveOnce( 'sessionid' );
   } );
 
   it( 'should display delinquency trends chart for a given state', () => {
