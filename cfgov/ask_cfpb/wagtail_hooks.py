@@ -1,20 +1,10 @@
 from django.conf import settings
-from django.shortcuts import render
-from django.urls import re_path, reverse
 from django.utils.html import format_html
 
-from wagtail.admin.menu import MenuItem
 from wagtail.core import hooks
 from wagtail.core.models import Page
 
 from ask_cfpb.models import Answer, AnswerPage
-from ask_cfpb.scripts import export_ask_data
-
-
-def export_data(request):
-    if request.method == "POST":
-        return export_ask_data.export_questions(http_response=True)
-    return render(request, "admin/export.html")
 
 
 @hooks.register("insert_editor_css")
@@ -24,21 +14,6 @@ def editor_css():
         + settings.STATIC_URL
         + 'css/question-tips.css">\n'
     )
-
-
-@hooks.register("register_admin_menu_item")
-def register_export_menu_item():
-    return MenuItem(
-        "Export Ask data",
-        reverse("export-ask"),
-        classnames="icon icon-download",
-        order=99999,
-    )
-
-
-@hooks.register("register_admin_urls")
-def register_export_url():
-    return [re_path("^export-ask", export_data, name="export-ask")]
 
 
 @hooks.register("after_create_page")
