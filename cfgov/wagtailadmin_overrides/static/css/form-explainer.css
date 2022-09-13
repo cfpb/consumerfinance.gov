@@ -1,22 +1,20 @@
 @media screen and (min-width: 50em) {
-    .explainer_notes .fields li:first-child label {
-        width: 100%;
-    }
-
-    .coordinates li {
-        width: 25%;
+    .explainer_notes .coordinates > .field {
         float: left;
+        width: 23%;
+        padding-right: 2%;
+        padding-top: 0 !important;
     }
-}
 
-.object.stream-field .coordinates .object-help {
-    font-size: 1em;
-    opacity: 1;
-    padding-left: 0;
-    margin-top: 0;
-    margin-bottom: 1em;
-}
+    .explainer_notes .coordinates .help {
+        font-size: 1em;
+	    opacity: 1;
+	    padding-left: 0;
+	    margin-top: 0;
+	    margin-bottom: 2em;
+    }
 
-.object.stream-field .coordinates .object-help:before {
-    display: none;
+    .explainer_notes .coordinates .help svg {
+    	display: none;
+    }
 }
