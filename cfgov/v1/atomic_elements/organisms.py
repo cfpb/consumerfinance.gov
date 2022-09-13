@@ -112,7 +112,7 @@ class InfoUnitGroup(blocks.StructBlock):
             ("rounded", "Rounded corners"),
             ("circle", "Circle"),
         ],
-        default=0,
+        default="none",
         required=False,
         label="Border radius for images?",
         help_text=(
