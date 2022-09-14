@@ -4,6 +4,7 @@ from django.utils.safestring import mark_safe
 
 from wagtail.core import blocks
 from wagtail.images import blocks as images_blocks
+
 from v1.blocks import HeadingBlock
 
 
@@ -12,22 +13,26 @@ class ImageMapCoordinates(blocks.StructBlock):
         required=True,
         min_value=0,
         max_value=100,
-        label="X value (in percentage)")
+        label="X value (in percentage)",
+    )
     top = blocks.FloatBlock(
         required=True,
         min_value=0,
         max_value=100,
-        label="Y value (in percentage)")
+        label="Y value (in percentage)",
+    )
     width = blocks.FloatBlock(
         required=True,
         min_value=0,
         max_value=100,
-        label="Width (in percentage)")
+        label="Width (in percentage)",
+    )
     height = blocks.FloatBlock(
         required=True,
         min_value=0,
         max_value=100,
-        label="Height (in percentage)")
+        label="Height (in percentage)",
+    )
 
     def clean(self, value):
         cleaned = super().clean(value)
@@ -57,11 +62,13 @@ class ExplainerNote(blocks.StructBlock):
     coordinates = ImageMapCoordinates(
         form_classname="coordinates",
         label="Image coordinates",
-        help_text=mark_safe("Enter percentage values for the highlighted "
+        help_text=mark_safe(
+            "Enter percentage values for the highlighted "
             "area of the image associated with this expandable. See "
             '<a href="https://github.cfpb.gov/CFPB/hubcap/wiki/Form-'
             'explainer-page#add-image-coordinates">Hubcap documentation</a> '
-            "for more information on identifying coordinates."),
+            "for more information on identifying coordinates."
+        ),
     )
 
 
@@ -84,10 +91,7 @@ class ExplainerPage(blocks.StructBlock):
 
 
 class Explainer(blocks.StructBlock):
-    heading = HeadingBlock(
-        required=False, 
-        label="Heading (optional)"
-    )
+    heading = HeadingBlock(required=False, label="Heading (optional)")
 
     pages = blocks.ListBlock(ExplainerPage(required=False))
 
