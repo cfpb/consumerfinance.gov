@@ -1,4 +1,3 @@
-import datetime
 import tempfile
 from unittest import mock
 
@@ -11,9 +10,7 @@ from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
 
-from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
-from wagtail.tests.utils import WagtailTestUtils
 
 from model_bakery import baker
 
@@ -36,11 +33,6 @@ from ask_cfpb.models.pages import (
     validate_page_number,
 )
 from ask_cfpb.models.snippets import GlossaryTerm
-from ask_cfpb.scripts.export_ask_data import (
-    assemble_output,
-    clean_and_strip,
-    export_questions,
-)
 from v1.models import (
     CFGOVImage,
     HomePage,
@@ -48,7 +40,6 @@ from v1.models import (
     PortalTopic,
     SublandingPage,
 )
-from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import (
     get_free_path,
     get_or_create_page,
@@ -80,78 +71,6 @@ class AnswerStringTest(TestCase):
         test_answer = Answer(question="Test question?")
         test_answer.save()
         self.assertEqual(test_answer.__str__(), test_answer.question)
-
-
-class ExportAskDataTests(TestCase, WagtailTestUtils):
-    def setUp(self):
-        self.mock_assemble_output_value = [
-            {
-                "ASK_ID": 123456,
-                "PAGE_ID": 56789,
-                "Question": "Question",
-                "ShortAnswer": "Short answer.",
-                "Answer": "Long answer.",
-                "URL": "fakeurl.com",
-                "PortalTopics": "Category 5 Hurricane",
-                "RelatedQuestions": "1 | 2 | 3",
-                "RelatedResources": "Owning a Home",
-            }
-        ]
-
-    def test_export_script_assemble_output(self):
-        answer = Answer(id=1234)
-        answer.save()
-        page = AnswerPage(
-            slug="mock-question1-en-1234", title="Mock question1"
-        )
-        page.answer_base = answer
-        page.question = "Mock question1"
-        page.answer_content = StreamValue(
-            page.answer_content.stream_block,
-            [{"type": "text", "value": {"content": "Mock answer"}}],
-            True,
-        )
-        helpers.publish_page(page)
-
-        output = assemble_output()[0]
-        self.assertEqual(output.get("ASK_ID"), 1234)
-        self.assertEqual(output.get("URL"), "/mock-question1-en-1234/")
-        self.assertEqual(output.get("Question"), "Mock question1")
-
-    def test_clean_and_strip(self):
-        html_data = "<p>If you have been scammed, file a complaint.</p>"
-        clean_data = "If you have been scammed, file a complaint."
-        self.assertEqual(clean_and_strip(html_data), clean_data)
-
-    @mock.patch("ask_cfpb.scripts.export_ask_data.assemble_output")
-    def test_export_questions(self, mock_output):
-        mock_output.return_value = self.mock_assemble_output_value
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
-        slug = "ask-cfpb-{}.csv".format(timestamp)
-        m = mock.mock_open()
-        with mock.patch("builtins.open", m, create=True):
-            export_questions()
-        self.assertEqual(mock_output.call_count, 1)
-        m.assert_called_once_with(
-            f"{TEMPDIR}/{slug}", "w", encoding="windows-1252"
-        )
-
-    @mock.patch("ask_cfpb.scripts.export_ask_data.assemble_output")
-    def test_export_from_admin_post(self, mock_output):
-        self.login()
-        mock_output.return_value = self.mock_assemble_output_value
-        response = self.client.post("/admin/export-ask/")
-        self.assertEqual(response.status_code, 200)
-        # Check that fields from the mock value are included
-        self.assertContains(response, "Category 5 Hurricane")
-        self.assertContains(response, "56789")
-        self.assertContains(response, "fakeurl.com")
-
-    def test_export_from_admin_get(self):
-        self.login()
-        response = self.client.get("/admin/export-ask/")
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Download a spreadsheet")
 
 
 class ArticlePageTest(TestCase):
