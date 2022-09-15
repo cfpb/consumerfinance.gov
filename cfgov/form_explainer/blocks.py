@@ -1,15 +1,38 @@
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
+from django.utils.safestring import mark_safe
 
 from wagtail.core import blocks
 from wagtail.images import blocks as images_blocks
 
+from v1.blocks import HeadingBlock
+
 
 class ImageMapCoordinates(blocks.StructBlock):
-    left = blocks.FloatBlock(required=True, min_value=0, max_value=100)
-    top = blocks.FloatBlock(required=True, min_value=0, max_value=100)
-    width = blocks.FloatBlock(required=True, min_value=0, max_value=100)
-    height = blocks.FloatBlock(required=True, min_value=0, max_value=100)
+    left = blocks.FloatBlock(
+        required=True,
+        min_value=0,
+        max_value=100,
+        label="X value (in percentage)",
+    )
+    top = blocks.FloatBlock(
+        required=True,
+        min_value=0,
+        max_value=100,
+        label="Y value (in percentage)",
+    )
+    width = blocks.FloatBlock(
+        required=True,
+        min_value=0,
+        max_value=100,
+        label="Width (in percentage)",
+    )
+    height = blocks.FloatBlock(
+        required=True,
+        min_value=0,
+        max_value=100,
+        label="Height (in percentage)",
+    )
 
     def clean(self, value):
         cleaned = super().clean(value)
@@ -30,17 +53,22 @@ class ImageMapCoordinates(blocks.StructBlock):
 
 
 class ExplainerNote(blocks.StructBlock):
-    coordinates = ImageMapCoordinates(
-        form_classname="coordinates",
-        label="Note image map coordinates",
-        help_text="Enter percentage values to define the area "
-        "that will be highlighted on the image for this note.",
-    )
-    heading = blocks.CharBlock(required=True, label="Note heading")
+    heading = blocks.CharBlock(required=True, label="Expandable header")
     body = blocks.RichTextBlock(
         required=True,
         features=["bold", "italic", "link", "document-link"],
-        label="Note text",
+        label="Expandable text",
+    )
+    coordinates = ImageMapCoordinates(
+        form_classname="coordinates",
+        label="Image coordinates",
+        help_text=mark_safe(
+            "Enter percentage values for the highlighted "
+            "area of the image associated with this expandable. See "
+            '<a href="https://github.cfpb.gov/CFPB/hubcap/wiki/Form-'
+            'explainer-page#add-image-coordinates">Hubcap documentation</a> '
+            "for more information on identifying coordinates."
+        ),
     )
 
 
@@ -63,6 +91,8 @@ class ExplainerPage(blocks.StructBlock):
 
 
 class Explainer(blocks.StructBlock):
+    heading = HeadingBlock(required=False, label="Heading (optional)")
+
     pages = blocks.ListBlock(ExplainerPage(required=False))
 
     class Meta:

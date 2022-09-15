@@ -147,6 +147,7 @@
 
 
 <div id="form-explainer" class="form-explainer">
+    {{ value.heading | safe if value.heading else '' }}
     <div class="explain" aria-controls="form-explainer">
 
         {% set page_count = value.pages | length %}
