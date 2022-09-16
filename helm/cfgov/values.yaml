@@ -1,23 +1,23 @@
- # Default values for cfgov.
- # This is a YAML-formatted file.
- # Declare variables to be passed into your templates.
+# Default values for cfgov.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
   repository: cfgov_python
   pullPolicy: IfNotPresent
-   # Overrides the image tag whose default is the chart appVersion.
+  # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
- # commad:
- #  - "./docker-entrypoint.sh"
- # args:
- #  - "some arg"
+# commad:
+#  - "./docker-entrypoint.sh"
+# args:
+#  - "some arg"
 
 initContainer:
   command:
@@ -25,26 +25,26 @@ initContainer:
   args: []
 
 serviceAccount:
-   # Specifies whether a service account should be created
+  # Specifies whether a service account should be created
   create: true
-   # Annotations to add to the service account
+  # Annotations to add to the service account
   annotations: {}
-   # The name of the service account to use.
-   # If not set and create is true, a name is generated using the fullname template
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
   name: ""
 
 podAnnotations: {}
 
 podSecurityContext: {}
-   # fsGroup: 2000
+  # fsGroup: 2000
 
 securityContext: {}
-   # capabilities:
-   #   drop:
-   #   - ALL
-   # readOnlyRootFilesystem: true
-   # runAsNonRoot: true
-   # runAsUser: 1000
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -54,17 +54,17 @@ ingress:
   enabled: false
   className: ""
   annotations: {}
-     # kubernetes.io/ingress.class: nginx
-     # kubernetes.io/tls-acme: "true"
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
   hosts:
     - host: cfgov.localhost
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls: []
- #    - secretName: cfgov-tls
- #      hosts:
- #        - cfgov.localhost
+#    - secretName: cfgov-tls
+#      hosts:
+#        - cfgov.localhost
 
 mapping:
   enabled: false
@@ -74,23 +74,23 @@ environmentName: dev-internal
 fqdnOverride: ""
 
 resources: {}
-   # We usually recommend not to specify default resources and to leave this as a conscious
-   # choice for the user. This also increases chances charts run on environments with little
-   # resources, such as Minikube. If you do want to specify resources, uncomment the following
-   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-   # limits:
-   #   cpu: 100m
-   #   memory: 128Mi
-   # requests:
-   #   cpu: 100m
-   #   memory: 128Mi
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
 
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-   # targetMemoryUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 
@@ -109,21 +109,21 @@ docs:
   image:
     repository: cfgov_docs
     pullPolicy: IfNotPresent
-     # Overrides the image tag whose default is the chart appVersion.
+    # Overrides the image tag whose default is the chart appVersion.
     tag: ""
 
   podAnnotations: {}
 
   podSecurityContext: {}
-   # fsGroup: 2000
+  # fsGroup: 2000
 
   securityContext: {}
-     # capabilities:
-     #   drop:
-     #   - ALL
-     # readOnlyRootFilesystem: true
-   # runAsNonRoot: true
-   # runAsUser: 1000
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
 
   service:
     type: ClusterIP
@@ -133,36 +133,36 @@ docs:
     enabled: false
     className: ""
     annotations: {}
-     # kubernetes.io/ingress.class: nginx
-     # kubernetes.io/tls-acme: "true"
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
     hosts:
       - host: chart-example.local
         paths:
           - path: /
             pathType: ImplementationSpecific
     tls: []
-     #  - secretName: chart-example-tls
-     #    hosts:
-     #      - chart-example.local
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
 
   resources: {}
-     # We usually recommend not to specify default resources and to leave this as a conscious
-     # choice for the user. This also increases chances charts run on environments with little
-     # resources, such as Minikube. If you do want to specify resources, uncomment the following
-     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-     # limits:
-     #   cpu: 100m
-     #   memory: 128Mi
-     # requests:
-   #   cpu: 100m
-   #   memory: 128Mi
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
 
   autoscaling:
     enabled: false
     minReplicas: 1
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
-     # targetMemoryUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
 
   nodeSelector: {}
 
@@ -177,33 +177,33 @@ docs:
 importDbPath: ""
 
 cronJobs:
- #  example-job:
- #    enabled: true   # default is true. If false, will not create the CronJob resource
- #    includeEnv: true   # includes the same volumes and environment variables as the main application container
- #    image:   # ONLY if different from chart image, default is chart image
- #      repository: "busybox"
- #      tag: "latest"
- #    schedule: "@daily"   # default
- #    successfulJobsHistoryLimit: 1   # default
- #    failedJobsHistoryLimit: 1   # default
- #    suspend: false   # default
- #    restartPolicy: OnFailure   # default
- #    command:
- #      - "some-exec"
- #    args:
- #      - "space"
- #      - "separated"
- #      - "arguments"
- #    env:   # environment variables for this cronjob (does not affect includeEnv), default is not defined
- #      - name: A_CRONJOB_ENV
- #        value: "A_CRONJOB_ENV_VALUE"
+#  example-job:
+#    enabled: true  # default is true. If false, will not create the CronJob resource
+#    includeEnv: true  # includes the same volumes and environment variables as the main application container
+#    image:  # ONLY if different from chart image, default is chart image
+#      repository: "busybox"
+#      tag: "latest"
+#    schedule: "@daily"  # default
+#    successfulJobsHistoryLimit: 1  # default
+#    failedJobsHistoryLimit: 1  # default
+#    suspend: false  # default
+#    restartPolicy: OnFailure  # default
+#    command:
+#      - "some-exec"
+#    args:
+#      - "space"
+#      - "separated"
+#      - "arguments"
+#    env:  # environment variables for this cronjob (does not affect includeEnv), default is not defined
+#      - name: A_CRONJOB_ENV
+#        value: "A_CRONJOB_ENV_VALUE"
 
-  archive-wagtail-events:  # archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
+  archive-wagtail-events: # archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
     schedule: '23 * * * *'
     command:
       - "django-admin"
     args:
-      - "archive_events"   # function found in cfgov/v1/management/commands/archive_events.py
+      - "archive_events"  # function found in cfgov/v1/management/commands/archive_events.py
 
   clear-sessions:
     schedule: "@weekly"
@@ -224,7 +224,7 @@ cronJobs:
     suspend: true
 
   publish-scheduled-pages:
-    schedule: '* * * * *'   # every minute
+    schedule: '* * * * *'  # every minute
     command:
       - "django-admin"
     args:
@@ -241,14 +241,14 @@ cronJobs:
     suspend: true
 
 
- # Postgres Values
+# Postgres Values
 postgresql:
-  enabled: false   # Deploy child chart, if false, uses external host and port
+  enabled: false  # Deploy child chart, if false, uses external host and port
   auth:
-     # username: ""   # Used for both chart and external db's
-     # password: ""   # Used for both chart and external db's
-     # database: ""   # Used for both chart and external db's
-    createSecret: true   # Only valid when using external database
+    # username: ""  # Used for both chart and external db's
+    # password: ""  # Used for both chart and external db's
+    # database: ""  # Used for both chart and external db's
+    createSecret: true  # Only valid when using external database
   external:
     host: ""
     port: ""
@@ -267,7 +267,7 @@ opensearch-dashboards:
 
 elasticsearch:
   enabled: false
-  externalHostname: "just a test"   # AWS OpenSearch
+  externalHostname: "just a test"  # AWS OpenSearch
   service:
     type: ClusterIP
 
@@ -276,8 +276,8 @@ kibana:
   service:
     type: ClusterIP
 
- # search is used when not deploying ES/OS via chart. Ergo, external to k8s
+# search is used when not deploying ES/OS via chart. Ergo, external to k8s
 search:
-   # schema: http
+  # schema: http
   host: ""
-   # port: 9200
+  # port: 9200
