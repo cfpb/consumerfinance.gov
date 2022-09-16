@@ -1,9 +1,11 @@
 import { FilingInstructionGuide } from './filing-instruction-guide-helpers.cy.js';
-import { skipOn } from '@cypress/skip-test';
+import { onlyOn } from '@cypress/skip-test';
 
 const fig = new FilingInstructionGuide();
 
-skipOn( 'staging', () => {
+/* TODO: enable tests on github when test FIG page has been created
+   and enable tests on staging when FIG page is published */
+onlyOn( 'local-machine', () => {
 
   describe( '1071 Filing Instruction Guide (FIG)', () => {
 

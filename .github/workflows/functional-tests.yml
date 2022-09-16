@@ -62,41 +62,6 @@ jobs:
           MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           CYPRESS_ENVIRONMENT: github
       with:
-        spec: |
-          test/cypress/integration/admin/admin.cy.js
-          test/cypress/integration/paying-for-college/repay-student-debt/repay-student-debt.cy.js
-          test/cypress/integration/data-research/consumer-complaints/consumer-complaints.cy.js
-          test/cypress/integration/consumer-tools/ask-cfpb/ask-cfpb.cy.js
-          test/cypress/integration/consumer-tools/find-a-housing-counselor/find-a-housing-counselor.cy.js
-          test/cypress/integration/consumer-tools/obtener-respuestas/obtener-respuestas.cy.js
-          test/cypress/integration/consumer-tools//rural-or-underserved-tool/rural-or-underserved-tool.cy.js
-          test/cypress/integration/consumer-tools/tdp-activity-search/tdp-activity-search.cy.js
-          test/cypress/integration/consumer-tools/youth-financial-education/survey.cy.js
-          test/cypress/integration/consumer-tools/youth-financial-education/survey-progress.cy.js
-          test/cypress/integration/consumer-tools/youth-financial-education/survey-errors.cy.js
-          test/cypress/integration/consumer-tools/youth-financial-education/modal.cy.js
-          test/cypress/integration/consumer-tools/youth-financial-education/grade-levels.cy.js
-          test/cypress/integration/consumer-tools/owning-a-home/owning-a-home.cy.js
-          test/cypress/integration/consumer-tools/financial-well-being/financial-well-being.cy.js
-          test/cypress/integration/consumer-tools/before-you-claim/before-you-claim.cy.js
-          test/cypress/integration/components/global-search/global-search.cy.js
-          test/cypress/integration/components/footer/footer.cy.js
-          test/cypress/integration/components/cct-charts/cct-charts.cy.js
-          test/cypress/integration/components/email-signup/email-signup.cy.js
-          test/cypress/integration/components/filterable-lists/filterable-lists.cy.js
-          test/cypress/integration/components/filterable-lists/filter-blog-posts.cy.js
-          test/cypress/integration/components/header/header.cy.js
-          test/cypress/integration/components/header/mega-menu.cy.js
-          test/cypress/integration/components/multiselect/multiselect.cy.js
-          test/cypress/integration/components/pagination/pagination.cy.js
-          test/cypress/integration/data-research/prepaid-agreements-search/prepaid-agreements-search.cy.js
-          test/cypress/integration/data-research/credit-card-agreements-search/credit-card-agreements-search.cy.js
-          test/cypress/integration/rules-policy/regulations-search.cy.js
-          test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-helpers.cy.js
-          test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-navigation.cy.js
-          test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-program-tests.cy.js
-          test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path-url-params.cy.js
-          test/cypress/integration/paying-for-college/your-financial-path-to-graduation/financial-path.cy.js
         build: yarn build
         start: python cfgov/manage.py runserver 0.0.0.0:8000
         wait-on: 'http://localhost:8000'

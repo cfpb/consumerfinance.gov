@@ -1,9 +1,11 @@
 import { MortgagePerformanceTrends } from './mortgage-performance-trends-helpers.cy.js';
-import { skipOn } from '@cypress/skip-test';
+import { onlyOn } from '@cypress/skip-test';
 
 const trends = new MortgagePerformanceTrends();
 
-skipOn( 'staging', () => {
+/* TODO: enable tests on github when test data has been created
+   and enable tests on staging when CI/CD issues have been resolved */
+onlyOn( 'local-machine', () => {
 
   describe( 'Mortgage Performance Trends', () => {
 
