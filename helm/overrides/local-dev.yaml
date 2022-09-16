@@ -1,6 +1,6 @@
 ---
-#  Overrides for running in a local development cluster (Ex: Docker Desktop)
-###  CFGOV OVERRIDES ###
+# Overrides for running in a local development cluster (Ex: Docker Desktop)
+### CFGOV OVERRIDES ###
 image:
   repository: cfgov_python
   pullPolicy: Never
@@ -18,9 +18,9 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls: []
-#     - secretName: cfgov-tls
-#       hosts:
-#         - cfgov.localhost
+#    - secretName: cfgov-tls
+#      hosts:
+#        - cfgov.localhost
 
 volumes:
   - name: code
