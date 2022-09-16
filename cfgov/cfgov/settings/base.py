@@ -600,6 +600,9 @@ FLAGS = {
     "ASK_SURVEY_INTERCEPT": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
+    # When enabled, show Wagtail versions of Closing Disclosure and
+    # Loan Estimate form explainers instead of hardcoded cf.gov pages
+    "WAGTAIL_FORM_EXPLAINERS": [],
 }
 
 # We want the ability to serve the latest drafts of some pages on beta
