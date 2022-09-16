@@ -42,4 +42,4 @@ jobs:
         run: git fetch --all
 
       - name: Run chart-testing (install)
-        run: ct install --all
+        run: ct install
