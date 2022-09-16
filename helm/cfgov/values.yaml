@@ -268,7 +268,7 @@ opensearch-dashboards:
 
 elasticsearch:
   enabled: false
-  externalHostname: "just a test"  # AWS OpenSearch
+  externalHostname: ""  # AWS OpenSearch
   service:
     type: ClusterIP
 
