@@ -49,5 +49,4 @@ jobs:
       - name: Fetch history
         run: git fetch --all
 
-      - name: Run chart-testing (install)
-        run: ct install ct install --config ct.yaml
+      
