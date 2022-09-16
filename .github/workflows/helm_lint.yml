@@ -20,6 +20,9 @@ jobs:
         with:
           python-version: 3.7
 
+      - name: Fetch history
+      run: git fetch --prune --unshallow
+
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.2.1
 
