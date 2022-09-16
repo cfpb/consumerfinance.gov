@@ -29,6 +29,6 @@ extraEnvs:
     value: ${DB_DUMP_URL}
   - name: FORCE_DB_REBUILD
     value: ${FORCE_DB_REBUILD}
-# add in desired S3 Bucket for PG_Dump
-# - name: S3_BUCKET
-#   value: <enter_bucket>
+#  add in desired S3 Bucket for PG_Dump
+#  - name: S3_BUCKET
+#    value: <enter_bucket>

@@ -37,13 +37,13 @@ spec:
                 {{- end }}
               volumeMounts:
                 {{- if or $values.includeEnv (not (hasKey $values "includeEnv")) }}
-                # Add in main container volumes
+                #  Add in main container volumes
                 {{- range $.Values.volumes }}
                 - mountPath: {{ .mountPath }}
                   name: {{ .name }}
                 {{- end }}
                 {{- end }}
-                # Add in the cronjob volumes
+                #  Add in the cronjob volumes
                 {{- range $values.volumes }}
                 - mountPath: {{ .mountPath }}
                   name: {{ .name }}
@@ -64,13 +64,13 @@ spec:
           restartPolicy: {{ default "OnFailure" $values.restartPolicy }}
           volumes:
             {{- if or $values.includeEnv (not (hasKey $values "includeEnv")) }}
-            # Add in main container volumes
+            #  Add in main container volumes
             {{- range $.Values.volumes }}
             - name: {{ .name }}
               {{- toYaml .volume | nindent 14 }}
             {{- end }}
             {{- end }}
-            # Add in cronjob volumes
+            #  Add in cronjob volumes
             {{- range $values.volumes }}
             - name: {{ .name }}
               {{- toYaml .volume | nindent 14 }}
