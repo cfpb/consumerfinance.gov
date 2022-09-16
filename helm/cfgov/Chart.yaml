@@ -27,9 +27,9 @@ version: 0.1.1
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
 
-# Dependency Charts
+#Dependency Charts
 dependencies:
-  - name: postgresql
+  - name:postgresql
     version: "11.6.19"
     repository: "https://charts.bitnami.com/bitnami"
     condition: postgresql.enabled
