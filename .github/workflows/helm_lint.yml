@@ -53,4 +53,8 @@ jobs:
       - name: Fetch history
         run: git fetch --all
 
+      - name: Helm dry run
+        run: |
+          helm install --debug --dry-run testdeploy helm/cfgov
+
 
