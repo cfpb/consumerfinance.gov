@@ -55,6 +55,6 @@ jobs:
 
       - name: Helm dry run
         run: |
-          helm install --debug --dry-run testdeploy helm/cfgov
+          helm template testtemplate helm/cfgov
 
 
