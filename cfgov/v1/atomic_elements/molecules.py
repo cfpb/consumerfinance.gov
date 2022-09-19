@@ -6,6 +6,8 @@ from wagtail.core import blocks
 from wagtail.core.blocks.struct_block import StructBlockValidationError
 from wagtail.images.blocks import ImageChooserBlock
 
+from wagtail_editable_help.models import HelpText
+
 from v1.atomic_elements import atoms
 from v1.blocks import AnchorLink, HeadingBlock
 from v1.feeds import get_appropriate_rss_feed_url_for_page
@@ -29,9 +31,13 @@ class InfoUnit(blocks.StructBlock):
 class TextIntroduction(blocks.StructBlock):
     eyebrow = blocks.CharBlock(
         required=False,
-        help_text=(
-            "Optional: Adds an H5 eyebrow above H1 heading text. "
-            "Only use in conjunction with heading."
+        help_text=HelpText(
+            "TextIntroduction",
+            "eyebrow",
+            default=(
+                "Optional: Adds an H5 eyebrow above H1 heading text. "
+                "Only use in conjunction with heading."
+            ),
         ),
         label="Pre-heading",
     )

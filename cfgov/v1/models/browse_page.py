@@ -10,6 +10,8 @@ from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.search import index
 
+from wagtail_editable_help.models import HelpText
+
 from data_research.blocks import MortgageDataDownloads
 from jobmanager.blocks import JobListingTable
 from v1 import blocks as v1_blocks
@@ -62,7 +64,11 @@ class BrowsePage(CFGOVPage):
 
     share_and_print = models.BooleanField(
         default=False,
-        help_text="Include share and print buttons above page content.",
+        help_text=HelpText(
+            "BrowsePage",
+            "share_and_print",
+            default="Include share and print buttons above page content.",
+        ),
     )
 
     # General content tab

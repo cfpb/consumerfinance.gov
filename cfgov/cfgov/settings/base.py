@@ -111,6 +111,7 @@ INSTALLED_APPS = (
     "mptt",
     "ratechecker",
     "rest_framework",
+    "wagtail_editable_help",
 )
 
 WAGTAILSEARCH_BACKENDS = {
@@ -155,6 +156,7 @@ MIDDLEWARE = (
     "core.middleware.DeactivateTranslationsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "wagtail_editable_help.middleware.EditableHelpMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
