@@ -1,4 +1,4 @@
-name: Helm Lint and Test Charts
+name: helmlint
 
 on: pull_request
 
@@ -7,9 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+            fetch-depth: 0
+
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            helmlint:
+              - 'helm/**.yaml'
+              - 'helm/**.tpl'
 
       - name: Set up Helm
         uses: azure/setup-helm@v1
@@ -23,14 +31,6 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.2.1
 
-      - name: Set up Helm chart dependencies
-        id: helm-chart-dependencies
-        run: |
-          helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo add elastic https://helm.elastic.co/
-          helm repo add opensearch https://opensearch-project.github.io/helm-charts/
-          helm repo update
-
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
@@ -41,10 +41,6 @@ jobs:
 
       - name: Run chart-testing (lint)
         run: ct lint --config ct.yaml
-
-      - name: Create kind cluster
-        uses: helm/kind-action@v1.2.0
-        if: steps.list-changed.outputs.changed == 'true'
 
       - name: Fetch history
         run: git fetch --all
