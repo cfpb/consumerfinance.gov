@@ -14,9 +14,9 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-#commad:
+# commad:
 #  - "./docker-entrypoint.sh"
-#args:
+# args:
 #  - "some arg"
 
 initContainer:
@@ -198,7 +198,8 @@ cronJobs:
 #      - name: A_CRONJOB_ENV
 #        value: "A_CRONJOB_ENV_VALUE"
 
-  archive-wagtail-events: # archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
+# archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
+  archive-wagtail-events:
     schedule: '23 * * * *'
     command:
       - "django-admin"
