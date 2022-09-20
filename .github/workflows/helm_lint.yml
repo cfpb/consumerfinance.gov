@@ -39,21 +39,13 @@ jobs:
           helm repo add opensearch https://opensearch-project.github.io/helm-charts/
           helm repo update
 
-      - name: Run chart-testing (list-changed)
-        id: list-changed
-        run: |
-          changed=$(ct list-changed  --target-branch main)
-          if [[ -n "$changed" ]]; then
-            echo "::set-output name=changed::true"
-          fi
-
       - name: Run chart-testing (lint)
         run: ct lint --config ct.yaml
 
       - name: Fetch history
         run: git fetch --all
 
-      - name: Helm dry run
+      - name: Helm template
         run: |
           helm template testtemplate helm/cfgov
 
