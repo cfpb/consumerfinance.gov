@@ -48,7 +48,8 @@ const jsPaths = [
   `${ apps }/retirement/js/index.js`,
   `${ apps }/rural-or-underserved-tool/js/common.js`,
   `${ apps }/teachers-digital-platform/js/index.js`,
-  `${ apps }/filing-instruction-guide/js/fig-sidenav.js`
+  `${ apps }/filing-instruction-guide/js/fig-sidenav.js`,
+  `${ apps }/filing-instruction-guide/js/fig-search.js`
 ];
 
 module.exports = function( baseConfig ) {

@@ -51,6 +51,7 @@
                  o-secondary-navigation_list__parents">
             {%- for item in toc_headers %}
             <li class="m-list_item">
+                <div id="ctrl-f"></div>
                 {{ nav_link.render(item.id + ". " + item.header, item.anchor, true) }}
                 {% if item.children %}
                 <ul class="m-list
