@@ -1,4 +1,5 @@
 import { TdpSurveyHelpers } from './survey-helpers.cy.js';
+import { skipOn } from '@cypress/skip-test';
 
 const survey = new TdpSurveyHelpers();
 
@@ -50,7 +51,8 @@ describe( 'Youth Financial Education Survey: Progress', () => {
     } );
   }
 
-  if ( Cypress.browser.isHeaded ) {
+  // This tests fails in headless browsers, so skip it there
+  skipOn( 'headless', () => {
     it( 'updates section UI', () => {
       cy.window().then( win => win.sessionStorage.clear() );
       survey.open( '3-5/p1' );
@@ -74,7 +76,7 @@ describe( 'Youth Financial Education Survey: Progress', () => {
 
       verifySectionColors( [ 'green', 'green', 'blue' ] );
     } );
-  }
+  } );
 
   it( 'stores answers without submit', () => {
     cy.window().then( win => win.sessionStorage.clear() );

@@ -75,6 +75,10 @@ describe('Consumer Tools', () => {
 
 Overall it lets our tests show what is intended to be happening on a page without showing the more technical side of how we reference and interact with elements.
 
+### Skipping tests
+
+We use the [cypress-skip-test](https://github.com/cypress-io/cypress-skip-test/) plugin to define directly in the spec file under what conditions tests should run. The plugin lets you specify any tests that should not run or should only run in certain environments, on certain browsers, or at certain base URLs. While ideally we want all tests to run everywhere, skipping tests can be handy when you want to merge work-in-progress tests into `main` but skip them in CI/CD pipelines until they work is finished or when you want to temporarily skip a test that's failing while you debug it.
+
 ## Creating test data
 
 Wagtail pages can be created programmatically by adding function calls to cfgov/v1/tests/wagtail_pages/create_test_data.py
