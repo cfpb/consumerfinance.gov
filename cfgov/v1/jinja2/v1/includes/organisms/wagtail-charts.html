@@ -1,0 +1,19 @@
+{% load wagtailcore_tags wagtailcharts_tags %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <h1>{{self.title}}</h1>
+            <div class="excerpt">{{self.excerpt|richtext}}</div>
+        </div>
+    </div>
+    {% for block in self.body %}
+        {% include_block block %}
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% render_charts %}
+{% endblock %}
