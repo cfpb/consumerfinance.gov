@@ -136,12 +136,13 @@ class LearnPage(AbstractFilterPage):
             ("expandable", organisms.Expandable()),
             ("well", organisms.Well()),
             ("call_to_action", molecules.CallToAction()),
+            ("video_player", organisms.VideoPlayer()),
+            ("audio_player", organisms.AudioPlayer()),
             (
                 "email_signup",
                 v1_blocks.EmailSignUpChooserBlock(),
             ),
-            ("video_player", organisms.VideoPlayer()),
-            ("audio_player", organisms.AudioPlayer()),
+            ("simple_chart", organisms.SimpleChart()),
             (
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
@@ -170,6 +171,7 @@ class DocumentDetailPage(AbstractFilterPage):
             ("expandable", organisms.Expandable()),
             ("expandable_group", organisms.ExpandableGroup()),
             ("notification", molecules.Notification()),
+            ("simple_chart", organisms.SimpleChart()),
             (
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
