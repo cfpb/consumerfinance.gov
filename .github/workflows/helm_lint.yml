@@ -10,7 +10,8 @@ jobs:
         uses: actions/checkout@v3
         with:
             fetch-depth: 0
-
+      - name: Fetch history
+        run: git fetch --all
       - uses: dorny/paths-filter@v2
         id: filter
         with:
@@ -48,9 +49,6 @@ jobs:
       - name: Run chart-testing (lint)
         if: steps.filter.outputs.helmlint == 'true'
         run: ct lint --config ct.yaml
-
-      - name: Fetch history
-        run: git fetch --all
 
       - name: Helm template
         if: steps.filter.outputs.helmlint == 'true'
