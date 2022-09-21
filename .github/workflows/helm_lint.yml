@@ -20,19 +20,24 @@ jobs:
               - 'helm/**.tpl'
 
       - name: Set up Helm
+        if: steps.filter.outputs.helmlint == 'true'
         uses: azure/setup-helm@v1
         with:
           version: v3.9.2
 
-      - uses: actions/setup-python@v2
+      - name: Install Python3
+        if: steps.filter.outputs.helmlint == 'true'
+        uses: actions/setup-python@v2
         with:
           python-version: 3.7
 
       - name: Set up chart-testing
+        if: steps.filter.outputs.helmlint == 'true'
         uses: helm/chart-testing-action@v2.2.1
 
       - name: Set up Helm chart dependencies
         id: helm-chart-dependencies
+        if: steps.filter.outputs.helmlint == 'true'
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo add elastic https://helm.elastic.co/
@@ -41,11 +46,13 @@ jobs:
           helm dependency update ./helm/cfgov
 
       - name: Run chart-testing (lint)
+        if: steps.filter.outputs.helmlint == 'true'
         run: ct lint --config ct.yaml
 
       - name: Fetch history
         run: git fetch --all
 
       - name: Helm template
+        if: steps.filter.outputs.helmlint == 'true'
         run: |
           helm template testtemplate helm/cfgov

@@ -302,7 +302,15 @@ More can be found on Helm Chart Tests
 [here](https://helm.sh/docs/topics/chart_tests/) or by running
 `helm test --help`.
 
+## Linting
 
+To test out the yaml files used to create Helm resources you can run the Helm lint command:
+`helm lint <PATH to chart.yaml file>`
+if there are any formatting issues in the yaml files or helm patterns that are not being fallowed this command will notfiy you.
+
+There is also the Helm template command that will take in the chart and return a json of all the kubernetes values that will be creared once the chart is installed/updated.
+`helm template <template file name> <PATH to chart.yaml file>`
+This command is usefull for making sure your yaml files will be accepted for a deployment without having to create a whole local cluster.
 ## TODO
 In production, an AWS Service Account is used, and its credentials are
 mounted within the containers to `/var/run/secrets/.aws`, then
