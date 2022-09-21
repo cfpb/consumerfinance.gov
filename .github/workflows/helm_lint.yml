@@ -31,15 +31,6 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.2.1
 
-      - name: Set up Helm chart dependencies
-        id: helm-chart-dependencies
-        run: |
-          helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo add elastic https://helm.elastic.co/
-          helm repo add opensearch https://opensearch-project.github.io/helm-charts/
-          helm repo update
-          helm dependency update ./helm/cfgov
-
       - name: Run chart-testing (lint)
         run: ct lint --config ct.yaml
 

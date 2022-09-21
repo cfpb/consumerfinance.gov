@@ -2,6 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Release metadata
+release:
+  autoDelete: true  # Auto delete release based off branch
+  autoUpgrade: true  # Autoupgrade release based off branch
+  branch: ""  # Ref this is deployed from (ex "<branch-name>" to track a branch, "release" to track release)
+  owner: ""  # Recognizable owner name (user/service account/etc)
+  gitSHA: ""  # Git commit SHA
+
 replicaCount: 1
 
 image:
