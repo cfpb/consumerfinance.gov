@@ -211,4 +211,3 @@ Mapping/Ingress Hostname FQDN
 {{- include "cfgov.fullname" . }}-eks.{{ default "dev-internal" .Values.environmentName }}.aws.cfpb.gov
 {{- end }}
 {{- end }}
-
