@@ -226,10 +226,11 @@ cronJobs:
       - "bash"
     args:
       - "-c"
-      - >-
-        pg_dump --no-owner --no-privileges | \
-        gzip > test.sql.gz | \
-        aws s3 cp test.sql.gz s3://$S3_BUCKET/
+      - |
+        ./dump-data.sh "${DB_DUMP_FILE:-test.sql.gz}" && \
+        if [ ! -z $S3_BUCKET ]; then \
+        aws s3 cp "${DB_DUMP_FILE:-test.sql.gz}" \
+        s3://$S3_BUCKET/; fi
     suspend: true
 
   publish-scheduled-pages:
