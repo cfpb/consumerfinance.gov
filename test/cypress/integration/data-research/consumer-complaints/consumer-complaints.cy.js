@@ -16,7 +16,7 @@ describe( 'Consumer Complaint Database', () => {
     cy.url().should( 'include', 'dateRange=1y' );
     page.clickDateRange( '3y' );
     cy.url().should( 'include', 'dateRange=3y' );
-    page.clickDateRange( 'All' );
+    page.clickDateRange( 'all' );
     cy.url().should( 'include', 'dateRange=All' );
   } );
 

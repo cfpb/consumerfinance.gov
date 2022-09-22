@@ -28,13 +28,9 @@ spec:
               imagePullPolicy: {{ $.Values.image.pullPolicy }}
               {{- end }}
               command:
-                {{- range $values.command }}
-                - {{ . | quote }}
-                {{- end }}
+                {{- toYaml $values.command | nindent 16 }}
               args:
-                {{- range $values.args }}
-                - {{ . | quote }}
-                {{- end }}
+                {{- toYaml $values.args | nindent 16 }}
               volumeMounts:
                 {{- if or $values.includeEnv (not (hasKey $values "includeEnv")) }}
                 # Add in main container volumes
