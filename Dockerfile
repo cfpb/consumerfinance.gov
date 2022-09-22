@@ -135,7 +135,7 @@ RUN mkdir -p /var/www/.local && chown -R apache:apache ${APP_HOME} /var/www/.loc
 
 # Copy the cfgov directory form the build image
 COPY --from=cfgov-frontend-builder --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
-COPY --from=cfgov-frontend-builder --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/initial-data.sh ${CFGOV_PATH}/
+COPY --from=cfgov-frontend-builder --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/initial-data.sh ${CFGOV_PATH}/dump-data.sh ${CFGOV_PATH}/
 COPY --from=cfgov-frontend-builder --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PATH}/static.in
 
 RUN ln -s /usr/lib/apache2 cfgov/apache/modules
