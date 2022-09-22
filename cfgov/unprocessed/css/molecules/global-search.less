@@ -276,8 +276,19 @@
     }
 
     .o-form__input-w-btn_input-container {
+      display: flex;
       flex: 0 1 75%;
       width: initial;
+
+      // Characters in some languages, like Chinese, have a larger x-height,
+      // which will make the button taller than the input. Fix that by making
+      // the input elements flex and stretch to fit the full height of the
+      // container (i.e. match the button height)
+      .m-btn-inside-input {
+        display: flex;
+        align-items: stretch;
+        flex-basis: 100%;
+      }
     }
 
     .o-form__input-w-btn_btn-container {
@@ -288,10 +299,6 @@
       button {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
-        // Some languages, like Chinese and Korean, have slightly larger
-        // x-heights, so we need to constrain the height to make sure the
-        // button is never taller than the input
-        max-height: unit(35px / @base-font-size-px, em);
         padding-left: 1em;
         white-space: nowrap;
       }
