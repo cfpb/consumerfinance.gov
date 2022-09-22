@@ -288,17 +288,12 @@
       button {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
+        // Some languages, like Chinese and Korean, have slightly larger
+        // x-heights, so we need to constrain the height to make sure the
+        // button is never taller than the input
+        max-height: unit(35px / @base-font-size-px, em);
         padding-left: 1em;
         white-space: nowrap;
-
-        // Some languages have slightly larger characters in Avenir, so we need
-        // a slightly smaller line-height to keep the button the correct height
-        [lang="ko"] &,
-        [lang="ru"] &,
-        [lang="vi"] &,
-        [lang="zh-Hant"] & {
-          line-height: 1.2;
-        }
       }
     }
   }
