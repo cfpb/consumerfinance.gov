@@ -208,7 +208,7 @@ cronJobs:
 
 # archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
   archive-wagtail-events:
-    schedule: '23 * * * *'
+    schedule: '@daily'
     command:
       - "django-admin"
     args:
