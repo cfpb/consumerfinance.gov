@@ -16,7 +16,7 @@ jobs:
           filters: |
             helmlint:
               - 'helm/cfgov/**.yaml'
-              - 'helm/cfgov/**.tpl'
+              - 'helm/cfgov/templates/**.tpl'
               - 'helm/overrides/**'
 
       - name: Set up Helm
