@@ -15,8 +15,9 @@ jobs:
         with:
           filters: |
             helmlint:
-              - 'helm/**.yaml'
-              - 'helm/**.tpl'
+              - 'helm/cfgov/**.yaml'
+              - 'helm/cfgov/**.tpl'
+              - 'helm/overrides/**'
 
       - name: Set up Helm
         if: steps.filter.outputs.helmlint == 'true'
