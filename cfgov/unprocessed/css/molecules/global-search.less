@@ -288,6 +288,14 @@
         border-bottom-left-radius: 0;
         padding-left: 1em;
         white-space: nowrap;
+
+        // Chinese and Korean have slightly larger characters in Avenir,
+        // so we need a slightly smaller line-height to keep the button
+        // the correct height
+        [lang="zh-Hant"] &,
+        [lang="ko"] & {
+          line-height: 1.2;
+        }
       }
     }
   }
