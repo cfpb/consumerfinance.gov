@@ -277,8 +277,8 @@
 
     .o-form__input-w-btn_input-container {
       display: flex;
-      flex: 0 1 75%;
       width: initial;
+      flex: 0 1 75%;
 
       // Characters in some languages, like Chinese, have a larger x-height,
       // which will make the button taller than the input. Fix that by making
@@ -292,14 +292,14 @@
     }
 
     .o-form__input-w-btn_btn-container {
+      width: initial;
       border-left: 0;
       flex: 1 1 25%;
-      width: initial;
 
       button {
+        padding-left: 1em;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
-        padding-left: 1em;
         white-space: nowrap;
       }
     }
