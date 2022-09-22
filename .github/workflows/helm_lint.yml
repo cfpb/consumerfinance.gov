@@ -31,6 +31,11 @@ jobs:
         with:
           python-version: 3.7
 
+      - name: Update Dependencies
+        if: steps.filter.outputs.helmlint == 'true'
+        run: |
+          helm dependency update ./helm/cfgov
+
       - name: Set up chart-testing
         if: steps.filter.outputs.helmlint == 'true'
         uses: helm/chart-testing-action@v2.2.1
