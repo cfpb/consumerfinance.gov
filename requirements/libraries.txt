@@ -34,6 +34,7 @@ wagtail-inventory==1.5
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.6
 wagtail-treemodeladmin==1.5.0
+wagtailcharts==0.3
 wagtailmedia==0.9.0
 
 # These packages are installed from GitHub.

@@ -45,6 +45,7 @@ class BrowsePage(CFGOVPage):
             ),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
             ("chart_block", organisms.ChartBlock()),
+            ("wagtailchart_block", organisms.WagtailChartsChartBlock()),
             ("mortgage_chart_block", organisms.MortgageChartBlock()),
             ("mortgage_map_block", organisms.MortgageMapBlock()),
             ("mortgage_downloads_block", MortgageDataDownloads()),
