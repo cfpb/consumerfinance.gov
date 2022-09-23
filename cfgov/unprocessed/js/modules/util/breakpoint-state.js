@@ -8,7 +8,8 @@ import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
  * @returns {number} The base font size set on the body element.
  */
 function _getBodyBaseFontSize() {
-  let fontSize = getComputedStyle( document.body ).fontSize;
+  const docBody = document.body || document.querySelector('body');
+  let fontSize = window.getComputedStyle( docBody ).fontSize;
   fontSize = fontSize === '' ? -1 : fontSize;
   return parseFloat( fontSize );
 }
