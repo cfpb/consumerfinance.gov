@@ -39,11 +39,14 @@
    link_image_and_heading:       Boolean for whether the image and heading
                                  should be linked to the value.links[0].url.
 
+    border_radius_image:         Value determining whether an image should
+                                 have a rounded or circular mask.
+
    ========================================================================== #}
 
 {%- from 'blocks/heading.html' import heading without context %}
 
-{%- macro info_unit(value, format, link_image_and_heading) -%}
+{%- macro info_unit(value, format, link_image_and_heading, border_radius_image) -%}
 
 {# Confirm that not only is link_image_and_heading set, but that this
    particular info unit has a link in its list and there's either an
@@ -65,6 +68,7 @@
 
     {%- if has_image %}
         {%- set img = image( value.image.upload, 'original' ) %}
+        {%- set border_radius_image = border_radius_image %}
 
         {%- if not link_image_and_heading %}
             {# If the image isn't being linked, include its alt text. #}
@@ -80,7 +84,9 @@
         {% endif -%}
 
         <img class="m-info-unit_image
-                    {{- ' m-info-unit_image__square' if img.is_square else '' }}"
+                    {{- ' m-info-unit_image__square' if img.is_square }}
+                    {{- ' u-image_border-circle' if border_radius_image == 'circle' }}
+                    {{- ' u-image_border-rounded' if border_radius_image == 'rounded' }}"
             src="{{ img.url }}"
             alt="{{ img_alt_text }}">
     {%- endif %}

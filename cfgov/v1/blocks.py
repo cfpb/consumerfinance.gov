@@ -51,6 +51,7 @@ class HeadingLevelBlock(blocks.ChoiceBlock):
         ("h2", "H2"),
         ("h3", "H3"),
         ("h4", "H4"),
+        ("h5", "H5"),
     ]
     classname = "heading-level-block"
     form_classname = "heading-level-block"

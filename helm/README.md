@@ -147,14 +147,14 @@ TODO: Add Table with commonly overridden values.
 To make a new
 [Kubernetes CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)
 based on our [CronJob template](cfgov/templates/cronjob.yaml),
-add a new item to the cronJobs array in
+add a new item to the cronJobs mapping in
 [`cfgov/values.yaml`](cfgov/values.yaml).
 
 For example, our Django
 `clearsessions` management command runs in a cron job defined like this:
 
 ```yaml
-- name: "clearSessions"
+clear-sessions:
   schedule: "@daily"
   command:
     - "django-admin"
@@ -166,11 +166,14 @@ The following shows the all the available values and default values
 for a cronJob object.
 
 ```yaml
-- name: ""  # There is no default for name, this is required
+example-job-name:  # There is no default for name, this is required
+  enabled: true  # default is true. If false, will not create the CronJob resource
   includeEnv: true  # includes the same volumes and environment variables as the main application container
   image:  # ONLY define if different from cfgov_python
     repository: cfogv_python  # default is the chart image repository
     tag: ""  # default is the chart image tag
+  successfulJobsHistoryLimit: 1  # default
+  failedJobsHistoryLimit: 1  # default
   schedule: "@daily"  # default
   suspend: false  # default
   restartPolicy: OnFailure  # default
@@ -184,6 +187,22 @@ for a cronJob object.
     - name: MY_CRONJOB_ENV
       value: "MY_CRONJOB_ENV_VALUE"
 ```
+
+# OpenLens
+We like to use OpenLens to manage the Kubernetes stack.
+There is a more commonly known Lens app, but Lens requires an account to use.
+Lens is the commercialized version built on top of the OpenLens source.
+
+To install OpenLens, create an alias in your shell profile. For example,
+if using `zsh`, add it to `.zshrc`. This alias is used to install and to
+update OpenLens.
+
+    alias install_openlens="curl -o- https://gist.githubusercontent.com/jslay88/bf654c23eaaaed443bb8e8b41d02b2a9/raw/install_openlens.sh | bash"
+
+Source your shell profile or restart your terminal. Then run the alias.
+
+    install_openlens
+
 
 # Manually Loading Data
 To manually load data (such as `test.sql.gz`), deploy the Helm chart as normal.
@@ -266,20 +285,35 @@ locally. AWS CLI will then work within the containers.
 
 ## Testing
 
-To run tests in helm use `helm test <deployment_name>`. 
+To run tests in helm use `helm test <release_name>`.
 
-To create a test from a `pod.yaml`, add
-```
-metadata:
-  name: <test_name>
-  label: <test_label>
-  annotations:    
-    "helm.sh/hook": test
-``` 
+To add new tests, follow the template provided by Helm in the
+[Example Test Section](https://helm.sh/docs/topics/chart_tests/#example-test)
+of the [Helm Chart Tests](https://helm.sh/docs/topics/chart_tests/)
+documentation.
 
-To exclude certain tests from running use `helm test --filter strings name=<test_name>`.  Additionally you can disable tests from within in the `values.yaml` but **only** for tests that the charts have added (i.e. the ElasticSearch Chart and Postgres Chart). You will need to look up that chart's respective documentation for how to do that.  
+To exclude certain tests from running use
+`helm test --filter strings name=<test_name>`. However, you can disable tests
+from within in the `values.yaml` but **only** for tests that the charts have
+added (i.e. the ElasticSearch Chart and Postgres Chart). You will need to
+look up that chart's respective documentation for how to do that.
 
-More can be found on helm testing [here](https://helm.sh/docs/topics/chart_tests/) or by running `helm test --help`. 
+More can be found on Helm Chart Tests
+[here](https://helm.sh/docs/topics/chart_tests/) or by running
+`helm test --help`.
+
+## Linting
+
+To test out the yaml files used to create Helm resources you can run the Helm lint command:
+`helm lint <PATH to chart.yaml file>`
+if there are any formatting issues in the yaml files or helm patterns that are not being fallowed this command will notfiy you.
+
+There is also the Helm template command that will take in the chart and return a json of all the kubernetes values that will be creared once the chart is installed/updated.
+`helm template <template file name> <PATH to chart.yaml file>`
+This command is usefull for making sure your yaml files will be accepted for a deployment without having to create a whole local cluster.
+
+## Linting in Github Actions
+To double check that all yaml files are formatted to helm standard we employ the Helm cli tool [chart-testing](https://github.com/helm/chart-testing) specificly the lint [command](https://github.com/helm/chart-testing/blob/main/doc/ct_lint.md), and its related [Github Action](https://github.com/helm/chart-testing-action). Chart Testing or ct is meant to be used for linting and testing pull requests. It automatically detects charts changed against the target branch. It uses the `ct.yaml` file to know where the helm charts are located and which git branch to compare the changes. Aditionally we use the github filter action to make sure the ct github action is only ran when there are changes to the helm directory yaml and tpl files.
 
 
 ## TODO

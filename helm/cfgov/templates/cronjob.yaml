@@ -1,14 +1,17 @@
-{{- range .Values.cronJobs }}
+{{- range $jobName, $values := .Values.cronJobs }}
+{{- if or $values.enabled (not (hasKey $values "enabled")) }}
 ---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "cfgov.fullname" $ | lower }}-cronjob-{{ .name | lower }}
+  name: {{ printf "%s-%s" (include "cfgov.fullname" $) $jobName | trunc 52 | trimSuffix "-" | lower }}
   labels:
     {{- include "cfgov.labels" $ | nindent 4 }}
 spec:
-  suspend: {{ default false .suspend }}
-  schedule: {{ default "@daily" .schedule | quote }}
+  suspend: {{ default false $values.suspend }}
+  schedule: {{ default "@daily" $values.schedule | quote }}
+  successfulJobsHistoryLimit: {{ default 1 $values.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ default 1 $values.failedJobsHistoryLimit }}
   jobTemplate:
     spec:
       template:
@@ -16,24 +19,20 @@ spec:
           securityContext:
             {{- toYaml $.Values.securityContext | nindent 12 }}
           containers:
-            - name: {{ $.Chart.Name | lower }}-cronjob-{{ .name | lower }}
-              {{- if .image }}
-              image: "{{ .image.repository }}:{{ .image.tag | default "latest" }}"
-              imagePullPolicy: {{ default "IfNotPresent" .image.pullPolicy }}
+            - name: {{ printf "%s-%s" $.Chart.Name $jobName | lower }}
+              {{- if $values.image }}
+              image: "{{ $values.image.repository }}:{{ $values.image.tag | default $.Chart.AppVersion }}"
+              imagePullPolicy: {{ default "IfNotPresent" $values.image.pullPolicy }}
               {{- else }}
               image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
               imagePullPolicy: {{ $.Values.image.pullPolicy }}
               {{- end }}
               command:
-                {{- range .command }}
-                - {{ . | quote }}
-                {{- end }}
+                {{- toYaml $values.command | nindent 16 }}
               args:
-                {{- range .args }}
-                - {{ . | quote }}
-                {{- end }}
+                {{- toYaml $values.args | nindent 16 }}
               volumeMounts:
-                {{- if or .includeEnv (not (hasKey . "includeEnv")) }}
+                {{- if or $values.includeEnv (not (hasKey $values "includeEnv")) }}
                 # Add in main container volumes
                 {{- range $.Values.volumes }}
                 - mountPath: {{ .mountPath }}
@@ -41,12 +40,12 @@ spec:
                 {{- end }}
                 {{- end }}
                 # Add in the cronjob volumes
-                {{- range .volumes }}
+                {{- range $values.volumes }}
                 - mountPath: {{ .mountPath }}
                   name: {{ .name }}
                 {{- end }}
               env:
-                {{- if or .includeEnv (not (hasKey . "includeEnv")) }}
+                {{- if or $values.includeEnv (not (hasKey $values "includeEnv")) }}
                 {{- include "cfgov.postgresEnv" $ | nindent 16 }}
                 {{- include "cfgov.searchEnv" $ | nindent 16 }}
                 {{- range $.Values.extraEnvs }}
@@ -54,13 +53,13 @@ spec:
                   value: {{ .value | quote }}
                 {{- end }}
                 {{- end }}
-                {{- range .env }}
+                {{- range $values.env }}
                 - name: {{ .name }}
                   value: {{ .value | quote }}
                 {{- end }}
-          restartPolicy: {{ default "OnFailure" .restartPolicy }}
+          restartPolicy: {{ default "OnFailure" $values.restartPolicy }}
           volumes:
-            {{- if or .includeEnv (not (hasKey . "includeEnv")) }}
+            {{- if or $values.includeEnv (not (hasKey $values "includeEnv")) }}
             # Add in main container volumes
             {{- range $.Values.volumes }}
             - name: {{ .name }}
@@ -68,8 +67,9 @@ spec:
             {{- end }}
             {{- end }}
             # Add in cronjob volumes
-            {{- range .volumes }}
+            {{- range $values.volumes }}
             - name: {{ .name }}
               {{- toYaml .volume | nindent 14 }}
             {{- end }}
+{{- end }}
 {{- end }}

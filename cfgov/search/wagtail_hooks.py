@@ -21,11 +21,10 @@ def register_external_links_url():
     ]
 
 
-@hooks.register("register_admin_menu_item")
+@hooks.register("register_reports_menu_item")
 def register_external_links_menu():
     return MenuItem(
-        "External links",
+        "External Links",
         reverse("external-links"),
         classnames="icon icon-link",
-        order=10000,
     )

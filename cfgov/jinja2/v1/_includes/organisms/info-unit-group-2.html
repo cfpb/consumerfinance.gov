@@ -35,6 +35,9 @@
    value.sharing.shareable:       Boolean for whether or not to output share
                                   links at the bottom of this module.
 
+   value.border_radius_image:     Value determining whether an image should
+                                  have a rounded or circular mask.
+
    ========================================================================== #}
 
 {%- from 'blocks/heading.html' import heading without context %}
@@ -64,7 +67,7 @@
                     {{- ' content-l_col-1-2' if value.format == '50-50' else '' -}}
                     {{- ' content-l_col-1-3' if value.format == '33-33-33' else '' -}}
                     {{- ' content-l_col-1' if value.format == '25-75' else '' -}}">
-            {{- info_unit(unit, value.format, value.link_image_and_heading) }}
+            {{- info_unit(unit, value.format, value.link_image_and_heading, value.border_radius_image) }}
         </div>
 
     {% if ( loop.index == value.info_units | length ) or
