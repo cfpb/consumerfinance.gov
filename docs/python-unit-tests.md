@@ -61,7 +61,12 @@ you can run the tests there by
 docker-compose exec python sh
 ```
 
+If you are running the code in Helm then you can use OpenLens to attach to the Cfgov pod and run the command locally
+<img width="1429" alt="Screen Shot 2022-09-26 at 11 31 02 AM" src="https://user-images.githubusercontent.com/3359736/192318308-3b9ae304-7d5d-425d-8257-c6656f5e6b48.png">
+
+
 ## Running tests
+
 
 Our test suite can either be run in a local virtualenv or in Docker.
 Please note, the tests run quite slow in Docker.
