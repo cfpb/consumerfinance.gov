@@ -107,7 +107,6 @@ INSTALLED_APPS = (
     # Satellites
     "complaint_search",
     "countylimits",
-    "crtool",
     "mptt",
     "ratechecker",
     "rest_framework",
