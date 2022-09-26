@@ -417,10 +417,6 @@ urlpatterns = [
         include("teachers_digital_platform.urls"),
     ),
     re_path(
-        r"^consumer-tools/educator-tools/youth-financial-education/curriculum-review/",  # noqa: B950
-        include("crtool.urls"),
-    ),
-    re_path(
         r"^regulations3k-service-worker.js$",
         TemplateView.as_view(
             template_name="regulations3k/regulations3k-service-worker.js",
