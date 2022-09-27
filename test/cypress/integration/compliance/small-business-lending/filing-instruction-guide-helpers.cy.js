@@ -1,7 +1,11 @@
 export class FilingInstructionGuide {
 
+  url() {
+    return '/compliance/compliance-resources/small-business-lending/1071-filing-instruction-guide/';
+  }
+
   open() {
-    cy.visit( '/compliance/compliance-resources/small-business-lending/1071-filing-instruction-guide/' );
+    cy.visit( this.url() );
   }
 
   toc() {

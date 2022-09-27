@@ -39,7 +39,7 @@ else
 fi
 
 ## Set release name
-RELEASE=${RELEASE:-cfgov}
+export RELEASE=${RELEASE:-cfgov}
 
 # Setup
 ## Get absolute path to helm-install.sh
@@ -49,7 +49,7 @@ realpath() {
 ## Get Project Dir path containing helm-install.sh
 export PROJECT_DIR="$(dirname "$(realpath "$0")")"
 ## Set Default Args
-DEFAULT_ARGS="${PROJECT_DIR}/helm/overrides/local-dev.yaml ${PROJECT_DIR}/helm/overrides/dev-vars.yaml ${PROJECT_DIR}/helm/overrides/services.yaml"
+DEFAULT_ARGS="${PROJECT_DIR}/helm/overrides/local-dev.yaml ${PROJECT_DIR}/helm/overrides/dev-vars.yaml ${PROJECT_DIR}/helm/overrides/services.yaml ${PROJECT_DIR}/helm/overrides/required.yaml"
 ## Source .env, if it exists
 if [ -f .env ]; then
   source .env
@@ -81,7 +81,7 @@ fi
 if [ $# -eq 0 ]; then
   ARGS=${DEFAULT_ARGS}
 else
-  ARGS=$@
+  ARGS="$@ ${PROJECT_DIR}/helm/overrides/required.yaml"
 fi
 
 ## Separate --set from files, substitute Environment Variables in override files
@@ -106,9 +106,6 @@ done
 ## Install/Upgrade cfgov release
 helm upgrade --install ${WAIT_OPT} \
   "${RELEASE}" ${NAMESPACE_OPT} ${OVERRIDES} ${IMAGE} ${TAG} \
-  --set ingress.hosts[0].host="${RELEASE}.localhost" \
-  --set elasticsearch.clusterName="${RELEASE}-elasticsearch" ${ES_TEST_OVERRIDE} \
-  --set kibana.elasticsearchHosts="http://${RELEASE}-elasticsearch-master:9200" \
   ${PROJECT_DIR}/helm/cfgov
 
 # Add these in for local SSL.
