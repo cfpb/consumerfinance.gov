@@ -110,6 +110,8 @@ INSTALLED_APPS = (
     "mptt",
     "ratechecker",
     "rest_framework",
+
+    "portablepages",
 )
 
 WAGTAILSEARCH_BACKENDS = {
