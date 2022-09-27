@@ -533,6 +533,7 @@ CSP_FRAME_SRC = (
     "optimize.google.com",
     "www.youtube.com",
     "*.qualtrics.com",
+    "mailto:",
 )
 
 # These specify where we allow fonts to come from
