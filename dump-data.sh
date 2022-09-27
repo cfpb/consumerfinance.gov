@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # ==========================================================================
 # Dump the contents of the Database into a gzipped SQL file.
@@ -15,8 +15,16 @@ fi
 dump_data() {
     # This preamble will drop the existing 'cfpb' schema if it exists.
     DROP_PREAMBLE=$(cat << EOF
+--
+-- We add this DROP to ensure that a database dump can be loaded to generate
+-- a state that exactly matches the one that was dumped. Without this, objects
+-- in the schema before the dump happens may exist and conflict with the
+-- dumped data being loaded.
+--
 SET client_min_messages = WARNING;
-DROP SCHEMA IF EXISTS cfpb CASCADE;
+DROP SCHEMA IF EXISTS ${PGUSER:-cfpb} CASCADE;
+
+
 EOF
 )
 

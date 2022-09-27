@@ -71,6 +71,12 @@ class ActivityPage(CFGOVPage):
     what_students_will_do = RichTextField(
         "What students will do", blank=False
     )  # noqa: B950
+    search_tags = models.TextField(
+        "Activity search tags",
+        blank=True,
+        help_text="These words will match for the site's internal"
+        + " Activities search. This content will not be visible by users.",
+    )
     activity_file = models.ForeignKey(
         "wagtaildocs.Document",
         null=True,
@@ -177,6 +183,7 @@ class ActivityPage(CFGOVPage):
             ],
             heading="Download activity",
         ),
+        FieldPanel("search_tags"),
         FieldPanel("building_block", widget=forms.CheckboxSelectMultiple),
         FieldPanel("topic", widget=forms.CheckboxSelectMultiple),
         FieldPanel("school_subject", widget=forms.CheckboxSelectMultiple),

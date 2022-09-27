@@ -2,6 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Release metadata
+release:
+  autoDelete: true  # Auto delete release based off branch
+  autoUpgrade: true  # Autoupgrade release based off branch
+  branch: ""  # Ref this is deployed from (ex "<branch-name>" to track a branch, "release" to track release)
+  owner: ""  # Recognizable owner name (user/service account/etc)
+  gitSHA: ""  # Git commit SHA
+
 replicaCount: 1
 
 image:
@@ -14,9 +22,9 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-#commad:
+# commad:
 #  - "./docker-entrypoint.sh"
-#args:
+# args:
 #  - "some arg"
 
 initContainer:
@@ -198,8 +206,9 @@ cronJobs:
 #      - name: A_CRONJOB_ENV
 #        value: "A_CRONJOB_ENV_VALUE"
 
-  archive-wagtail-events: # archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
-    schedule: '23 * * * *'
+# archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
+  archive-wagtail-events:
+    schedule: '@daily'
     command:
       - "django-admin"
     args:
@@ -217,10 +226,11 @@ cronJobs:
       - "bash"
     args:
       - "-c"
-      - >-
-        pg_dump --no-owner --no-privileges | \
-        gzip > test.sql.gz | \
-        aws s3 cp test.sql.gz s3://$S3_BUCKET/
+      - |
+        ./dump-data.sh "${DB_DUMP_FILE:-test.sql.gz}" && \
+        if [ ! -z $S3_BUCKET ]; then \
+        aws s3 cp "${DB_DUMP_FILE:-test.sql.gz}" \
+        s3://$S3_BUCKET/; fi
     suspend: true
 
   publish-scheduled-pages:
