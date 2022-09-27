@@ -59,8 +59,10 @@ ALWAYS_EXPANDED = {"topic", "school_subject"}
 SEARCH_FIELDS = [
     "text",
     "related_text",
+    "file_titles",
     "title",
     "big_idea",
+    "search_tags",
     "essential_questions",
     "objectives",
     "what_students_will_do",
