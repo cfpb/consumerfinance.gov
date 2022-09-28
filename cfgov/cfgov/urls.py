@@ -97,8 +97,9 @@ urlpatterns = [
     ),
     re_path(
         r"^owning-a-home/closing-disclosure/$",
-        TemplateView.as_view(
-            template_name="owning-a-home/closing-disclosure/index.html"
+        flagged_wagtail_template_view(
+            flag_name="WAGTAIL_FORM_EXPLAINERS",
+            template_name="owning-a-home/closing-disclosure/index.html",
         ),
         name="closing-disclosure",
     ),
@@ -111,8 +112,9 @@ urlpatterns = [
     ),
     re_path(
         r"^owning-a-home/loan-estimate/$",
-        TemplateView.as_view(
-            template_name="owning-a-home/loan-estimate/index.html"
+        flagged_wagtail_template_view(
+            flag_name="WAGTAIL_FORM_EXPLAINERS",
+            template_name="owning-a-home/loan-estimate/index.html",
         ),
         name="loan-estimate",
     ),
