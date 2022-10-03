@@ -338,10 +338,6 @@ Once complete, our `runserver.sh` script will bring up the site at
 ./runserver.sh
 ```
 
-You can optionally
-[use our private fonts from a CDN](#use-our-private-fonts-from-a-cdn)
-as well.
-
 ## Additional setup
 
 ### Sync local image and document storage (optional)
