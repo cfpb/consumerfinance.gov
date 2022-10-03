@@ -107,7 +107,6 @@ INSTALLED_APPS = (
     # Satellites
     "complaint_search",
     "countylimits",
-    "crtool",
     "mptt",
     "ratechecker",
     "rest_framework",
@@ -534,6 +533,7 @@ CSP_FRAME_SRC = (
     "optimize.google.com",
     "www.youtube.com",
     "*.qualtrics.com",
+    "mailto:",
 )
 
 # These specify where we allow fonts to come from
@@ -595,11 +595,13 @@ FLAGS = {
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
     "BETA_EXTERNAL_TESTING": [],
-    # Controls whether or not to include Qualtrics Web Intercept code for the
-    # Q42020 Ask CFPB customer satisfaction survey.
-    "ASK_SURVEY_INTERCEPT": [],
+    # Controls whether or not to include Qualtrics Web Intercept code
+    "PATH_MATCHES_FOR_QUALTRICS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
+    # When enabled, show Wagtail versions of Closing Disclosure and
+    # Loan Estimate form explainers instead of hardcoded cf.gov pages
+    "WAGTAIL_FORM_EXPLAINERS": [],
 }
 
 # We want the ability to serve the latest drafts of some pages on beta
