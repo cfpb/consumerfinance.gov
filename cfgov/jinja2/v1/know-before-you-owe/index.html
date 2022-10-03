@@ -1,5 +1,7 @@
 {% extends 'content-base.html' %}
 
+{% import '_includes/organisms/video-player.html' as video_player with context %}
+
 {% block title -%}
     Know Before You Owe: Mortgages | Consumer Financial Protection Bureau
 {%- endblock %}
@@ -40,6 +42,11 @@
 <link rel="stylesheet" href="{{ static('apps/know-before-you-owe/css/main.css') }}">
 {% endblock %}
 
+{% block javascript scoped %}
+{{ super() }}
+<script src="{{ static( 'js/routes/on-demand/video-player.js' ) }}"></script>
+{% endblock %}
+
 {% block hero %}
 <section class="m-hero">
     <div class="m-hero_wrapper wrapper">
@@ -64,14 +71,12 @@
                     content-l_col-1-2">
             <div class="m-info-unit">
                 <div class="m-info-unit_content">
-                    <div class="u-flexible-container">
-                        <iframe class="u-flexible-container_inner"
-                            src="https://www.youtube.com/embed/AwZERLDHJf0?showinfo=0&amp;wmode=transparent&amp;enablejsapi=1&amp;origin=https:%2F%2Fwww.consumerfinance.gov"
-                            frameborder="0"
-                            allowfullscreen=""
-                            id="widget2">
-                        </iframe>
-                    </div>
+                    {{- video_player.render(
+                        "AwZERLDHJf0",
+                        "center",
+                        static('apps/know-before-you-owe/img/video-thumbnail_640x360.jpg'),
+                        false
+                    ) -}}
                 </div>
             </div>
         </div>
