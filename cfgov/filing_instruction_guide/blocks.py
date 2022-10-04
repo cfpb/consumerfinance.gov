@@ -9,6 +9,16 @@ from wagtail.core.telepath import register
 from v1.atomic_elements import organisms, schema
 
 
+class FigDataPointsBlock(blocks.StaticBlock):
+    class Meta:
+        icon = "user"
+        label = "FIG data points"
+        admin_text = """
+            The FIG data points are imported in the Data Points tab, and will be inserted in this place in the Wagtail page.
+            """
+        template = "filing_instruction_guide/data_points.html"
+
+
 class FigSection(blocks.StructBlock):
     header = blocks.TextBlock(label="Section header (h2)")
     section_id = blocks.TextBlock(
@@ -30,6 +40,7 @@ class FigSection(blocks.StructBlock):
             ("snippet_list", organisms.ResourceList()),
             ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
             ("faq_group", schema.FAQGroup()),
+            ("data_points_block", FigDataPointsBlock()),
         ],
         required=False,
     )

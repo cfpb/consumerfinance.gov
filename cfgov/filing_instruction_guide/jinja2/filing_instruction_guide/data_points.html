@@ -1,0 +1,84 @@
+{% macro data_points(parent_section_id) %}
+
+    {% for point in page.data_points.order_by('number') %}
+    <div class="block o-fig_section__sub">
+        <h3 class="report-header o-fig_heading">
+	    <a id="{{ point.anchor }}"
+	       href="#{{ point.anchor }}"
+               data-scrollspy>
+		    {{parent_section_id}}.{{point.number}} {{ point.title }}
+            </a>
+        </h3>
+        <p>Rule section: {{point.rule_section }}</p>
+        <p>{{point.intro_text }}</p>
+    </div>
+
+
+	{% for field in point.data_fields_json.order_by("pk") %}
+        <div class="block o-fig_section__sub-sub">
+            <h4 class="report-header o-fig_heading">
+		<a id="{{field.info.get('short_name', '')}}"
+	            href="#{{field.info.get('short_name', '')}}">
+			Field {{ field.info.get('field_number', '') }}: {{ field.info.get('title', '') }}
+                </a>
+            </h4>
+
+	    <h5>Short name</h5>
+	    {{field.info.get('short_name', '')}}
+
+	    <h5>Instructions</h5>
+	    {{field.info.get('instruction_text', '')}}
+	    <ul>
+		    <li>Field type: {{field.info.get('type', '')}} </li>
+		    <li>{{field.info.get('conditionality', '')}} </li>
+	    </ul>
+
+	    {%- set examples = field.info.get('examples') -%}
+	    {% if examples %}
+		    <h5>Examples</h5>
+		    <ul>
+		    {% for ex in examples %}
+		    <li>{{ex}}</li>
+		    {% endfor %}
+		    </ul>
+	    {% endif %}
+
+	    {%- set valid_values = field.info.get('valid_values') -%}
+	    {% if valid_values %}
+	        {%- set header_row = valid_values[0] -%}
+	        {%- set body_rows = valid_values[1:] -%}
+	            <table>
+			    <thead>
+				<tr>
+				   {% for column in header_row %}
+				   <th>{{ column }}</th>
+				   {% endfor %}
+				</tr>
+			    </thead>
+			    <tbody>
+			    {% for row in body_rows %}
+				<tr>
+				{% for cell in row %}
+					<td> {{cell}}</td>
+				{% endfor %}
+				</tr>
+			    {% endfor %}
+			    </tbody>
+			</table>
+	    {% endif %}
+
+	    {%- set validations = field.info.get('validations') -%}
+	    {% if validations %}
+		    <h5>Validations</h5>
+		    <ul>
+		    {% for val in validations %}
+		    <li>{{val}}</li>
+		    {% endfor %}
+		    </ul>
+	    {% endif %}
+	</div>
+	{% endfor %}
+
+    {% endfor %}
+
+{% endmacro %}
