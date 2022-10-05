@@ -166,7 +166,7 @@ class AnswerLandingPage(LandingPage):
             # If the portal page is live, link to it
             if portal_page.live:
                 url = portal_page.url
-            # Otherwise, link to the topic "see all" page if there is one
+            # Otherwise, skip this page
             else:
                 continue  # pragma: no cover
             portal_cards.append(
