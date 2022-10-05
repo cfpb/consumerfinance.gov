@@ -14,6 +14,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.fields import StreamField
 
+import requests
 from filing_instruction_guide import import_data_points
 from filing_instruction_guide.blocks import (
     FigLevel3Subsection,
@@ -32,10 +33,21 @@ class FIGPageForm(WagtailAdminPageForm):
         try:
             import_data_points.run(self.instance)
         except KeyError as err:
-            msg = f"The JSON file provided does not match the expected format. Missing key: {err}"
+            msg = f"""
+            The JSON file provided does not match the expected format.
+            Missing key: {err}
+            """
             self.add_error(field, forms.ValidationError(msg))
         except json.JSONDecodeError:
-            msg = "Unable to parse the input file as JSON. Please check the url and the format of the file."
+            msg = """
+            Unable to parse the input file as JSON.
+            Please check the url and the format of the file.
+            """
+            self.add_error(field, forms.ValidationError(msg))
+        except requests.exceptions.RequestException:
+            msg = """
+            The file could not be downloaded at the specified URL.
+            """
             self.add_error(field, forms.ValidationError(msg))
         return data
 
