@@ -27,10 +27,11 @@ const getSearchData = sections => {
   return sections.map( ( section, i ) => {
     const heading = section.querySelector( '.o-fig_heading' );
     const link = heading.querySelector( '[id]' ).getAttribute( 'id' );
+    const text = section.innerText || section.textContent;
     return {
       id: i,
       title: heading.textContent.replace( /^\s+|\s+$/g, '' ),
-      contents: section.textContent.split( '\n' ).join( ' ' ),
+      contents: text.split( '\n' ).map( t => t.trim() ).filter( t => t ).join( ' ' ),
       link: '#' + link
     };
   } );
