@@ -1,6 +1,8 @@
 {% macro data_points(parent_section_id) %}
 
     {% for point in page.data_points.order_by('number') %}
+    {%- set data_fields = point.data_fields_json.order_by("pk") -%}
+
     <div class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
 	    <a id="{{ point.anchor }}"
@@ -11,10 +13,24 @@
         </h3>
         <p>Rule section: {{point.rule_section }}</p>
         <p>{{point.intro_text }}</p>
+
+	{% if data_fields.count() > 3 %}
+	<ul class="m-list m-list__links">
+		{% for field in data_fields %}
+		    <li class="m-list_item">
+		        <a class="m-list_link"
+	                   href="#{{field.info.get('short_name', '')}}">
+			   Field {{ field.info.get('field_number', '') }}: {{ field.info.get('title', '') }}
+                        </a>
+		    </li>
+		{% endfor %}
+    </ul>
+	{% endif %}
+
     </div>
 
 
-	{% for field in point.data_fields_json.order_by("pk") %}
+	{% for field in data_fields %}
         <div class="block o-fig_section__sub-sub">
             <h4 class="report-header o-fig_heading">
 		<a id="{{field.info.get('short_name', '')}}"
