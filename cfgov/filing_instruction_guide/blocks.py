@@ -14,7 +14,8 @@ class FigDataPointsBlock(blocks.StaticBlock):
         icon = "user"
         label = "FIG data points"
         admin_text = """
-            The FIG data points are imported in the Data Points tab, and will be inserted in this place in the Wagtail page.
+            The FIG data points are imported in the Data Points tab,
+            and will be inserted in this place in the Wagtail page.
             """
         template = "filing_instruction_guide/data_points.html"
 
