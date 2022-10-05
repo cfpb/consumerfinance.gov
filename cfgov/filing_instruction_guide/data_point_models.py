@@ -7,7 +7,7 @@ from modelcluster.models import ClusterableModel
 
 
 class DataPoint(ClusterableModel):
-    number = models.CharField(max_length=50, blank=True)
+    number = models.IntegerField(blank=True)
     title = models.CharField(max_length=400, blank=True)
     anchor = models.CharField(max_length=400, blank=True)
     rule_section = models.CharField(max_length=100, blank=True)
