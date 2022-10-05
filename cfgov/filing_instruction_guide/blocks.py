@@ -9,6 +9,24 @@ from wagtail.core.telepath import register
 from v1.atomic_elements import organisms, schema
 
 
+content_block_options = [
+            ("content", blocks.RichTextBlock(icon="edit")),
+            ("info_unit_group", organisms.InfoUnitGroup()),
+            ("well", organisms.Well()),
+            (
+                "table_block",
+                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
+            ),
+            ("simple_chart", organisms.SimpleChart()),
+            ("expandable_group", organisms.ExpandableGroup()),
+            ("expandable", organisms.Expandable()),
+            ("video_player", organisms.VideoPlayer()),
+            ("snippet_list", organisms.ResourceList()),
+            ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
+            ("faq_group", schema.FAQGroup()),
+        ]
+
+
 class FigDataPointsBlock(blocks.StaticBlock):
     class Meta:
         icon = "user"
@@ -26,24 +44,8 @@ class FigSection(blocks.StructBlock):
         required=False, help_text="Will be filled in automatically upon save."
     )
     content = blocks.StreamBlock(
-        [
-            ("content", blocks.RichTextBlock(icon="edit")),
-            ("info_unit_group", organisms.InfoUnitGroup()),
-            ("well", organisms.Well()),
-            (
-                "table_block",
-                organisms.AtomicTableBlock(table_options={"renderer": "html"}),
-            ),
-            ("simple_chart", organisms.SimpleChart()),
-            ("expandable_group", organisms.ExpandableGroup()),
-            ("expandable", organisms.Expandable()),
-            ("video_player", organisms.VideoPlayer()),
-            ("snippet_list", organisms.ResourceList()),
-            ("raw_html_block", blocks.RawHTMLBlock(label="Raw HTML block")),
-            ("faq_group", schema.FAQGroup()),
-            ("data_points_block", FigDataPointsBlock()),
-        ],
-        required=False,
+            content_block_options + [("data_points_block", FigDataPointsBlock())],
+            required=False,
     )
 
     class Meta:
@@ -68,7 +70,15 @@ register(FigSectionAdapter(), FigSection)
 
 class FigSubsection(FigSection):
     header = blocks.TextBlock(label="Subsection header (h3)")
+    content = blocks.StreamBlock(
+            content_block_options,
+            required=False,
+    )
 
 
 class FigLevel3Subsection(FigSection):
     header = blocks.TextBlock(label="Level 3 subsection header (h4)")
+    content = blocks.StreamBlock(
+            content_block_options,
+            required=False,
+    )
