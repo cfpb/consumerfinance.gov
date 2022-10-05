@@ -31,7 +31,7 @@ class FIGPageForm(WagtailAdminPageForm):
         data = super().clean()
         field = "data_points_download_location"
         try:
-            import_data_points.run(self.instance)
+            import_data_points.run(data, self.instance)
         except KeyError as err:
             msg = f"""
             The JSON file provided does not match the expected format.

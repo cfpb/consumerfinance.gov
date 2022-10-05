@@ -2,8 +2,8 @@ import requests
 from filing_instruction_guide.data_point_models import DataFieldJson, DataPoint
 
 
-def run(page):
-    url = page.data_points_download_location
+def run(form_data, page):
+    url = form_data["data_points_download_location"]
     if url:
         response = requests.get(url)
         data = response.json()
