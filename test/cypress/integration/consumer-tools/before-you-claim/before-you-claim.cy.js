@@ -5,6 +5,7 @@ const claim = new BeforeYouClaim();
 describe( 'Planning your Social Security', () => {
   beforeEach( () => {
     claim.open();
+    claim.interceptRetirementAPIRequests();
   } );
 
   it( 'should display estimated benefits', () => {
