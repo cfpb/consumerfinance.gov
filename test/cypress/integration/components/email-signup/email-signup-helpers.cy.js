@@ -1,3 +1,5 @@
+import subscriptionSuccessResponse from '../../../fixtures/subscription.json';
+
 export default class EmailSignup {
 
   open() {
@@ -9,6 +11,14 @@ export default class EmailSignup {
       cy.get( 'input:first' ).type( email );
       cy.get( 'button:first' ).click();
     } );
+  }
+
+  interceptGovDeliveryAPIRequests() {
+    cy.intercept( {
+      url: '/subscriptions/new/'
+    },
+    request => { request.reply( subscriptionSuccessResponse ); } )
+      .as( 'subscriptionSuccess' );
   }
 
   successNotification() {
