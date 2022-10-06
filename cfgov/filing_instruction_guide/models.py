@@ -30,25 +30,7 @@ class FIGPageForm(WagtailAdminPageForm):
     def clean(self):
         data = super().clean()
         field = "data_points_download_location"
-        try:
-            import_data_points.run(data, self.instance)
-        except KeyError as err:
-            msg = f"""
-            The JSON file provided does not match the expected format.
-            Missing key: {err}
-            """
-            self.add_error(field, forms.ValidationError(msg))
-        except json.JSONDecodeError:
-            msg = """
-            Unable to parse the input file as JSON.
-            Please check the url and the format of the file.
-            """
-            self.add_error(field, forms.ValidationError(msg))
-        except requests.exceptions.RequestException:
-            msg = """
-            The file could not be downloaded at the specified URL.
-            """
-            self.add_error(field, forms.ValidationError(msg))
+        import_data_points.run(data, self.instance)
         return data
 
     # Upon saving or previewing the page, assign section IDs
