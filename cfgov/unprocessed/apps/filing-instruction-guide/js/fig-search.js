@@ -7,7 +7,6 @@ const searchOptions = {
   keys: [ 'contents' ],
   includeMatches: true,
   includeScore: true,
-  minMatchCharLength: 3,
   ignoreLocation: true,
   threshold: 0.4
 };
