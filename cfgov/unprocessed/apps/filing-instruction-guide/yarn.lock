@@ -3488,10 +3488,10 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.1.tgz#841b532c45c758ee546a11d5bd7b7b473c8c30b9"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
 
-ctrl-f@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/ctrl-f/-/ctrl-f-1.0.2.tgz#473a8fee49ecb1a136c53938a4d384fa4956d187"
-  integrity sha512-I1CwsnD1q7ooys+z2xmCWJSBOGr7EOvttdK1/kXyQOkNOmiJweqGIZgRrPPWLjnyJi86zRRG8H1UxjDf8h8Jqw==
+ctrl-f@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ctrl-f/-/ctrl-f-1.0.3.tgz#fa91ec92e47c70e4c0b948f45e7e1783ab38a913"
+  integrity sha512-OZ4G5YzKl/ECfEWJDfdiNBXFdexVpUM+o2p4GZdWhWWQrCrBDg1nQ7ZjEeHNpf23A28bXSaHqquXTio4mY4UQg==
   dependencies:
     "@babel/core" "^7.16.0"
     "@pmmmwh/react-refresh-webpack-plugin" "^0.5.3"
