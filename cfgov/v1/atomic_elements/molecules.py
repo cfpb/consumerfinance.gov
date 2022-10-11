@@ -18,7 +18,25 @@ class InfoUnit(blocks.StructBlock):
 
     heading = HeadingBlock(required=False, default={"level": "h3"})
 
-    body = blocks.RichTextBlock(blank=True, required=False)
+    body = blocks.RichTextBlock(
+        blank=True,
+        required=False,
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
+    )
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
     class Meta:
@@ -36,8 +54,42 @@ class TextIntroduction(blocks.StructBlock):
         label="Pre-heading",
     )
     heading = blocks.CharBlock(required=False)
-    intro = blocks.RichTextBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
+    intro = blocks.RichTextBlock(
+        required=False,
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
+    )
+    body = blocks.RichTextBlock(
+        required=False,
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
+    )
     links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
     has_rule = blocks.BooleanBlock(
         required=False,
@@ -93,6 +145,21 @@ class AbstractHero(blocks.StructBlock):
             "    <li>&bull; 108-124 characters (after a two-line heading)</li>"
             "</ul>"
         ),
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
     )
     image = ImageChooserBlock(
         label="Large image",
@@ -211,7 +278,24 @@ class Notification(blocks.StructBlock):
 
 class CallToAction(blocks.StructBlock):
     slug_text = blocks.CharBlock(required=False)
-    paragraph_text = blocks.RichTextBlock(required=False)
+    paragraph_text = blocks.RichTextBlock(
+        required=False,
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
+    )
     button = atoms.Button()
 
     class Meta:
@@ -354,7 +438,25 @@ class ContentImage(blocks.StructBlock):
         default="right",
         help_text="Does not apply if the image is full-width",
     )
-    text = blocks.RichTextBlock(required=False, label="Caption")
+    text = blocks.RichTextBlock(
+        required=False,
+        label="Caption",
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
+    )
     is_bottom_rule = blocks.BooleanBlock(
         required=False,
         default=True,
@@ -370,7 +472,24 @@ class ContentImage(blocks.StructBlock):
 
 class RelatedLinks(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
-    paragraph = blocks.RichTextBlock(required=False)
+    paragraph = blocks.RichTextBlock(
+        required=False,
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
+    )
     links = blocks.ListBlock(atoms.Hyperlink())
 
     class Meta:
@@ -398,7 +517,26 @@ class RelatedMetadata(blocks.StructBlock):
                 blocks.StructBlock(
                     [
                         ("heading", blocks.CharBlock(max_length=100)),
-                        ("blob", blocks.RichTextBlock()),
+                        (
+                            "blob",
+                            blocks.RichTextBlock(
+                                features=[
+                                    "bold",
+                                    "italic",
+                                    "h2",
+                                    "h3",
+                                    "h4",
+                                    "h5",
+                                    "ol",
+                                    "ul",
+                                    "superscript",
+                                    "hr",
+                                    "link",
+                                    "document-link",
+                                    "image",
+                                ]
+                            ),
+                        ),
                     ],
                     icon="pilcrow",
                 ),
@@ -546,7 +684,23 @@ class SocialMedia(blocks.StructBlock):
 
 
 class ContentWithAnchor(blocks.StructBlock):
-    content_block = blocks.RichTextBlock()
+    content_block = blocks.RichTextBlock(
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ]
+    )
     anchor_link = AnchorLink()
 
     class Meta:

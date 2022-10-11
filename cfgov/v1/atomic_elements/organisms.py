@@ -568,7 +568,24 @@ class SimpleChart(blocks.StructBlock):
 
 
 class FullWidthText(blocks.StreamBlock):
-    content = blocks.RichTextBlock(icon="edit")
+    content = blocks.RichTextBlock(
+        icon="edit",
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
+    )
     content_with_anchor = molecules.ContentWithAnchor()
     heading = v1_blocks.HeadingBlock(required=False)
     image = molecules.ContentImage()
@@ -603,7 +620,27 @@ class BaseExpandable(blocks.StructBlock):
 class Expandable(BaseExpandable):
     content = blocks.StreamBlock(
         [
-            ("paragraph", blocks.RichTextBlock(required=False)),
+            (
+                "paragraph",
+                blocks.RichTextBlock(
+                    required=False,
+                    features=[
+                        "bold",
+                        "italic",
+                        "h2",
+                        "h3",
+                        "h4",
+                        "h5",
+                        "ol",
+                        "ul",
+                        "superscript",
+                        "hr",
+                        "link",
+                        "document-link",
+                        "image",
+                    ],
+                ),
+            ),
             ("well", Well()),
             ("links", atoms.Hyperlink()),
             ("email", molecules.ContactEmail()),
@@ -636,7 +673,24 @@ class BaseExpandableGroup(blocks.StructBlock):
 
 
 class ExpandableGroup(BaseExpandableGroup):
-    body = blocks.RichTextBlock(required=False)
+    body = blocks.RichTextBlock(
+        required=False,
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
+    )
     is_accordion = blocks.BooleanBlock(required=False)
     has_top_rule_line = blocks.BooleanBlock(
         default=False,
@@ -711,7 +765,24 @@ class ItemIntroduction(blocks.StructBlock):
     )
 
     heading = blocks.CharBlock(required=False)
-    paragraph = blocks.RichTextBlock(required=False)
+    paragraph = blocks.RichTextBlock(
+        required=False,
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
+    )
 
     date = blocks.DateBlock(required=False)
     has_social = blocks.BooleanBlock(
@@ -989,7 +1060,24 @@ class VideoPlayer(blocks.StructBlock):
 
 class AudioPlayer(blocks.StructBlock):
     heading = v1_blocks.HeadingBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
+    body = blocks.RichTextBlock(
+        required=False,
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
+    )
     audio_file = AbstractMediaChooserBlock(
         help_text=mark_safe(
             "Spoken word audio files should be in MP3 format with a 44.1 kHz "
@@ -1006,6 +1094,21 @@ class AudioPlayer(blocks.StructBlock):
             "If you have anything you want to appear below the audio player, "
             "such as a download link, put it in this field."
         ),
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
     )
 
     class Meta:
@@ -1164,7 +1267,23 @@ class ChartBlock(blocks.StructBlock):
 
 
 class MortgageChartBlock(blocks.StructBlock):
-    content_block = blocks.RichTextBlock()
+    content_block = blocks.RichTextBlock(
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ]
+    )
     title = blocks.CharBlock(required=True, classname="title")
     description = blocks.CharBlock(
         required=False, help_text="Chart summary for visually impaired users."
@@ -1204,7 +1323,24 @@ class MortgageMapBlock(MortgageChartBlock):
 
 class ResourceList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
+    body = blocks.RichTextBlock(
+        required=False,
+        features=[
+            "bold",
+            "italic",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "ol",
+            "ul",
+            "superscript",
+            "hr",
+            "link",
+            "document-link",
+            "image",
+        ],
+    )
     has_top_rule_line = blocks.BooleanBlock(
         default=False,
         required=False,
