@@ -14,7 +14,7 @@ import v1.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('filing_instruction_guide', '0007_heading_block_h5s'),
+        ('filing_instruction_guide', '0008_import_data_points'),
     ]
 
     operations = [
