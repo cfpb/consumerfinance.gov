@@ -89,7 +89,7 @@
                 border-bottom: 0 !important;
             {% endif -%}
         }
-    {% if img %}
+    {% if img and img.width %}
         .m-hero_image {
             background-image: url('{{ sm_img.url }}');
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
