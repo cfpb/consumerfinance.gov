@@ -11,6 +11,7 @@ describe( 'Find a housing counselor', () => {
     it( 'should return nearby counselors', () => {
       page.open();
       page.searchZipCode( '22204' );
+      cy.wait( [ '@mapboxStreets', '@mapboxText' ] );
       page.resultsSection().should( 'be.visible' );
     } );
   } );
