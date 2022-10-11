@@ -12,6 +12,7 @@ describe( 'Planning your Social Security', () => {
     claim.setBirthDate( '1', '1', '1980' );
     claim.setHighestAnnualSalary( '115000' );
     claim.getEstimate();
+    cy.wait( '@retirementAPIResponse' );
     claim.claimGraph().should( 'be.visible' );
   } );
 
