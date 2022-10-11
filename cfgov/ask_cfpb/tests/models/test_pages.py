@@ -529,14 +529,15 @@ class PortalSearchPageTest(TestCase):
 
     def test_landing_page_draft_portal(self):
         self.english_portal.unpublish()
+        self.english_portal.save()
         self.assertFalse(self.english_portal.live)
-        self.english_ask_parent.refresh_from_db()
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 2)
+        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 1)
 
     def test_landing_page_draft_portals(self):
         for sl_page in SublandingPage.objects.all():
             sl_page.unpublish()
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 2)
+            sl_page.save()
+        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 0)
 
     def test_landing_page_draft_portals_draft_search(self):
         for sl_page in SublandingPage.objects.all():
