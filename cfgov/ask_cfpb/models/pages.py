@@ -156,25 +156,15 @@ class AnswerLandingPage(LandingPage):
         portal_pages = SublandingPage.objects.filter(
             portal_topic_id__isnull=False,
             language=self.language,
+            live=True,
         ).order_by("portal_topic__heading")
         for portal_page in portal_pages:
             topic = portal_page.portal_topic
+            url = portal_page.url
             # Only include a portal if it has featured answers
             featured_answers = topic.featured_answers(self.language)
             if not featured_answers:
                 continue
-            # If the portal page is live, link to it
-            if portal_page.live:
-                url = portal_page.url
-            # Otherwise, link to the topic "see all" page if there is one
-            else:
-                topic_page = topic.portal_search_pages.filter(
-                    language=self.language, live=True
-                ).first()
-                if topic_page:
-                    url = topic_page.url
-                else:
-                    continue  # pragma: no cover
             portal_cards.append(
                 {
                     "topic": topic,
