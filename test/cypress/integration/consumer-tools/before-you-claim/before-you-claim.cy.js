@@ -5,6 +5,9 @@ const claim = new BeforeYouClaim();
 describe( 'Planning your Social Security', () => {
   beforeEach( () => {
     claim.open();
+
+    /* Return a fixture for the retirement API for a birthdate of 1/1/1980
+    and a highest annual salary of $115,000 */
     claim.interceptRetirementAPIRequests();
   } );
 
