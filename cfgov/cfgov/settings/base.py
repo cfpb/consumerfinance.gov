@@ -680,6 +680,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
                 "bold",
                 "italic",
                 "superscript",
+                "blockquote",
                 "link",
                 "document-link",
                 "image",
