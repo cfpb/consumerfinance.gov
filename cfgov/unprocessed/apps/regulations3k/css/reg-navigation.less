@@ -24,7 +24,6 @@
 
   .o-expandable_target {
     .respond-to-min( @bp-med-min, {
-      display: block;
       padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
     } );
     border: 0;
@@ -71,7 +70,12 @@
   } );
 
   .o-regs3k-navigation_header {
-    .u-show-on-stacked();
+    display: none;
+
+    .respond-to-max( @bp-sm-max, {
+      display: flex;
+    } );
+
     padding: unit( 10px / @base-font-size-px, em )
                  0
                  unit( 5px / @base-font-size-px, em );
@@ -114,15 +118,6 @@
 
   .respond-to-max( @bp-sm-max, {
     display: none;
-  } );
-
-}
-
-.u-show-on-stacked {
-
-  display: none;
-  .respond-to-max( @bp-sm-max, {
-    display: block;
   } );
 
 }
