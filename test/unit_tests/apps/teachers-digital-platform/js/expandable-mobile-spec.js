@@ -10,10 +10,10 @@ const HTML_SNIPPET = `
             o-expandable__background
             ">
     <button class="o-expandable_header o-expandable_target" type="button">
-        <span class="h4 o-expandable_header-left o-expandable_label">
+        <span class="h4 o-expandable_label">
             Building block
         </span>
-        <span class="o-expandable_header-right o-expandable_link">
+        <span class="o-expandable_link">
             <span class="o-expandable_cue o-expandable_cue-open">
                 <span class="u-visually-hidden-on-mobile
                             u-visually-hidden">

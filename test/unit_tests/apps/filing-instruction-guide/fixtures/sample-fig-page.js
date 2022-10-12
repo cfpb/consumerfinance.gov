@@ -43,10 +43,10 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
             class="o-expandable_header o-expandable_target o-expandable_target__collapsed"
             type="button"
           >
-            <span class="h4 o-expandable_header-left o-expandable_label">
+            <span class="h4 o-expandable_label">
               Table of contents
             </span>
-            <span class="o-expandable_header-right o-expandable_link">
+            <span class="o-expandable_link">
               <span class="o-expandable_cue o-expandable_cue-open">
                 <span class="u-visually-hidden-on-mobile"> Show </span>
                 <svg

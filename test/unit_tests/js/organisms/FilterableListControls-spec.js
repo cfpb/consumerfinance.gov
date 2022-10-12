@@ -10,10 +10,10 @@ const HTML_SNIPPET = `
             o-expandable__border">
 
     <button class="o-expandable_header o-expandable_target o-expandable_target__collapsed" type="button">
-        <span class="h4 o-expandable_header-left o-expandable_label">
+        <span class="h4 o-expandable_label">
             Filter posts
         </span>
-        <span class="o-expandable_header-right o-expandable_link">
+        <span class="o-expandable_link">
             <span class="o-expandable_cue o-expandable_cue-open">
                 <span class="u-visually-hidden-on-mobile">
                     Show

@@ -1255,10 +1255,10 @@
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-expandables@0.17.9":
-  version "0.17.9"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.17.9.tgz#fdcab4a906542798f67839eccde935229a80f0ae"
-  integrity sha512-ulJ3brTHqcpjTlrxk+mSSW8TVklBC8lMCA82AtYoL3hQTMYeiQU6qHvEUdRYfl9Y8tZ4ui86wYxqmpxgQ4S2dQ==
+"@cfpb/cfpb-expandables@0.17.10":
+  version "0.17.10"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.17.10.tgz#7a326cef572ac51bd9f74af505863f96b88b62a9"
+  integrity sha512-3ShFOTxi/+AnFIZgLjOfrShErp/NHlsctB9f2xODPAlbQlRpPtZmiY/lDUUaYae8KOIqx7eySLsWFgtG2nhhMA==
   dependencies:
     "@cfpb/cfpb-atomic-component" "^0.17.9"
     "@cfpb/cfpb-core" "^0.17.9"
