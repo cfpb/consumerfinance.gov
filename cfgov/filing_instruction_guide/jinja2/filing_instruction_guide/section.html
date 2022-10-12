@@ -33,11 +33,6 @@
         </a>
     </{{ block_heading_level }}>
     {% for block in value.content %}
-        {% if block.block_type == 'data_points_block' %}
-            {% from 'filing_instruction_guide/data_points.html' import data_points as data_points with context %}
-            {{ data_points(value.section_id) }}
-        {% else %}
-            {{ block | safe }}
-        {% endif %}
+        {{ block | safe }}
     {% endfor %}
 </div>
