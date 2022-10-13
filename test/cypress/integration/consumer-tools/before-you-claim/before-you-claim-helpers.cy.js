@@ -1,3 +1,5 @@
+import retirementAPIResponse from '../../../fixtures/retirement-api.json';
+
 export class BeforeYouClaim {
 
   open() {
@@ -12,6 +14,14 @@ export class BeforeYouClaim {
 
   setHighestAnnualSalary( salary ) {
     cy.get( '#salary-input' ).type( salary );
+  }
+
+  interceptRetirementAPIRequests() {
+    cy.intercept( {
+      url: '/consumer-tools/retirement/retirement-api/estimator/**'
+    },
+    request => { request.reply( retirementAPIResponse ); } )
+      .as( 'retirementAPIResponse' );
   }
 
   getEstimate() {

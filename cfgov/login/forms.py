@@ -84,8 +84,8 @@ class LoginForm(AuthenticationForm):
                 now = time.time()
                 fa.failed(now)
                 # Defaults to a 2 hour lockout for a user
-                time_period = now - int(settings.LOGIN_FAIL_TIME_PERIOD)
-                attempts_allowed = int(settings.LOGIN_FAILS_ALLOWED)
+                time_period = now - settings.LOGIN_FAIL_TIME_PERIOD
+                attempts_allowed = settings.LOGIN_FAILS_ALLOWED
                 attempts_used = len(fa.failed_attempts.split(","))
 
                 if fa.too_many_attempts(attempts_allowed, time_period):
