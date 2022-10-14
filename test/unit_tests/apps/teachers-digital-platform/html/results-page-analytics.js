@@ -1,7 +1,7 @@
 const HTML_SNIPPET = `
 <main class="content content__2-1" id="main">
    <div class="content_wrapper tdp-survey" data-tdp_grade_level="9-12">
-      <div data-tdp-page="results" 
+      <div data-tdp-page="results"
            data-grade-select-url="/consumer-tools/educator-tools/youth-financial-education/assess/survey/"
            data-score="90"
            data-subtotals="[25,35,45]"
@@ -173,10 +173,10 @@ const HTML_SNIPPET = `
          <div class="o-expandable-group">
             <div class="o-expandable o-expandable__padded" data-js-hook="state_atomic_init">
                <button class="o-expandable_header o-expandable_target o-expandable_target__collapsed" title="Expand content">
-                  <h3 class="o-expandable_header-left o-expandable_label">
+                  <h3 class="o-expandable_label">
                      <img src="/static/apps/teachers-digital-platform/img/planning.svg" alt="planning icon"> Planning and self-control
                   </h3>
-                  <span class="o-expandable_header-right o-expandable_link">
+                  <span class="o-expandable_link">
                      <span class="o-expandable_cue o-expandable_cue-open">
                         <span class="u-visually-hidden-on-mobile">Show</span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg">
@@ -244,10 +244,10 @@ const HTML_SNIPPET = `
             </div>
             <div class="o-expandable o-expandable__padded" data-js-hook="state_atomic_init">
                <button class="o-expandable_header o-expandable_target o-expandable_target__collapsed" title="Expand content">
-                  <h3 class="o-expandable_header-left o-expandable_label">
+                  <h3 class="o-expandable_label">
                      <img src="/static/apps/teachers-digital-platform/img/habits.svg" alt="habits icon"> Money habits and values
                   </h3>
-                  <span class="o-expandable_header-right o-expandable_link">
+                  <span class="o-expandable_link">
                      <span class="o-expandable_cue o-expandable_cue-open">
                         <span class="u-visually-hidden-on-mobile">Show</span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg">
@@ -316,10 +316,10 @@ const HTML_SNIPPET = `
             </div>
             <div class="o-expandable o-expandable__padded" data-js-hook="state_atomic_init">
                <button class="o-expandable_header o-expandable_target o-expandable_target__collapsed" title="Expand content">
-                  <h3 class="o-expandable_header-left o-expandable_label">
+                  <h3 class="o-expandable_label">
                      <img src="/static/apps/teachers-digital-platform/img/knowledge.svg" alt="knowledge icon"> Money knowledge and choices
                   </h3>
-                  <span class="o-expandable_header-right o-expandable_link">
+                  <span class="o-expandable_link">
                      <span class="o-expandable_cue o-expandable_cue-open">
                         <span class="u-visually-hidden-on-mobile">Show</span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg">

@@ -46,11 +46,11 @@
      {{ 'itemscope="" itemprop="mainEntity" itemtype="http://schema.org/Question"'
         if value.is_faq else '' }} >
     <button class="o-expandable_header o-expandable_target" type="button">
-        <span class="h4 o-expandable_header-left o-expandable_label"
+        <span class="h4 o-expandable_label"
               {{'itemprop="name"' if value.is_faq else ''}}>
             {{ value.label }}
         </span>
-        <span class="o-expandable_header-right o-expandable_link">
+        <span class="o-expandable_link">
             <span class="o-expandable_cue o-expandable_cue-open">
                 <span class="u-visually-hidden-on-mobile
                             {{ 'u-visually-hidden' if value.hide_cue_label else '' }}">

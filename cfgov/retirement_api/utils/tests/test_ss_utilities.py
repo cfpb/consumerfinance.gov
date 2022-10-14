@@ -49,10 +49,12 @@ class UtilitiesTests(unittest.TestCase):
     if today.day == 29 and today.month == 2:  # pragma: no cover
         today = today.replace(day=today.day - 1)
 
+    sample_year = today.year - 61
+
     sample_params = {
         "dobmon": 1,
         "dobday": 5,
-        "yob": 1970,
+        "yob": sample_year,
         "earnings": 70000,
         "lastYearEarn": "",
         "lastEarn": "",
@@ -79,7 +81,7 @@ class UtilitiesTests(unittest.TestCase):
             "params": {
                 "dobmon": 1,
                 "dobday": 5,
-                "yob": 1970,
+                "yob": sample_year,
                 "earnings": 40000,
                 "lastYearEarn": "",
                 "lastEarn": "",
@@ -131,7 +133,7 @@ class UtilitiesTests(unittest.TestCase):
         results["current_age"] = 59
         base_benefit = 1306
         fra_tuple = (66, 6)
-        dob = datetime.date(1957, 1, 3)
+        dob = datetime.date(self.sample_year - 13, 1, 3)
         past_fra = False
         test_results = calculate_lifetime_benefits(
             results, base_benefit, fra_tuple, dob, past_fra
@@ -163,7 +165,9 @@ class UtilitiesTests(unittest.TestCase):
             test_past_fra,
             test_results,
         ) = set_up_runvars(mock_params)
-        self.assertTrue(test_results["data"]["params"]["yob"] == 1970)
+        self.assertTrue(
+            test_results["data"]["params"]["yob"] == self.sample_year
+        )
         mock_params["dobday"] = 1
         (
             test_dob,
@@ -173,7 +177,9 @@ class UtilitiesTests(unittest.TestCase):
             test_past_fra,
             test_results2,
         ) = set_up_runvars(mock_params)
-        self.assertTrue(test_results2["data"]["params"]["yob"] == 1969)
+        self.assertTrue(
+            test_results2["data"]["params"]["yob"] == self.sample_year - 1
+        )
 
     def test_months_past_birthday(self):
         dob = self.today - timedelta(days=(365 * 20) + 6)
@@ -528,7 +534,7 @@ class UtilitiesTests(unittest.TestCase):
             "age 70",
         ]
         data = get_retire_data(params, language="en")["data"]
-        self.assertEqual(data["params"]["yob"], 1970)
+        self.assertEqual(data["params"]["yob"], self.sample_year)
         for each in data.keys():
             self.assertTrue(each in data_keys)
         for each in data["benefits"].keys():
@@ -536,7 +542,7 @@ class UtilitiesTests(unittest.TestCase):
         params["dobday"] = 1
         params["dobmon"] = 6
         data = get_retire_data(params, language="en")["data"]
-        self.assertEqual(data["params"]["yob"], 1970)
+        self.assertEqual(data["params"]["yob"], self.sample_year)
         params["yob"] = self.today.year - 62
         params["dobmon"] = self.today.month
         params["dobday"] = self.today.day

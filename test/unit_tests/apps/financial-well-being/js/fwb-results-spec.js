@@ -22,9 +22,9 @@ const HTML_SNIPPET = `
   <div class="o-expandable">
     <button class="o-expandable_target">
       <div class="o-expandable_header">
-        <span class="o-expandable_header-left o-expandable_label">
+        <span class="o-expandable_label">
         </span>
-        <span class="o-expandable_header-right o-expandable_link">
+        <span class="o-expandable_link">
           <span class="o-expandable_cue o-expandable_cue-open"></span>
           <span class="o-expandable_cue o-expandable_cue-close"></span>
         </span>
