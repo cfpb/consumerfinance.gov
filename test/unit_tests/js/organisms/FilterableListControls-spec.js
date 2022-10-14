@@ -78,8 +78,8 @@ const HTML_SNIPPET = `
                         </li>
 
                         <li class="m-form-field m-form-field__checkbox">
-                            <input class="a-checkbox" type="checkbox" value="policy_compliance" id="filter_categories_policy_compliance" name="categories">
-                            <label class="a-label" for="filter_categories_policy_compliance">
+                            <input class="a-checkbox" type="checkbox" value="policy-compliance" id="filter_categories_policy-compliance" name="categories">
+                            <label class="a-label" for="filter_categories_policy-compliance">
                                 Policy and compliance
                             </label>
                         </li>
