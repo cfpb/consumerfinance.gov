@@ -70,7 +70,7 @@ class RelatedPostsTestCase(TestCase):
         )
         self.blog_child2.tags.add("tag 2")
         self.blog_child2.categories.add(
-            CFGOVPageCategory(name="policy_compliance")
+            CFGOVPageCategory(name="policy-compliance")
         )
 
         self.blog_child3 = BlogPage(
@@ -78,7 +78,7 @@ class RelatedPostsTestCase(TestCase):
         )
         self.blog_child3.tags.add("tag 3")
         self.blog_child3.categories.add(
-            CFGOVPageCategory(name="policy_compliance")
+            CFGOVPageCategory(name="policy-compliance")
         )
 
         self.newsroom_child1 = NewsroomPage(
