@@ -23,7 +23,7 @@
     "@cfpb/cfpb-atomic-component": "0.17.9",
     "@cfpb/cfpb-buttons": "0.17.9",
     "@cfpb/cfpb-core": "0.17.9",
-    "@cfpb/cfpb-expandables": "0.17.11",
+    "@cfpb/cfpb-expandables": "0.17.12",
     "@cfpb/cfpb-forms": "0.17.9",
     "@cfpb/cfpb-grid": "0.17.9",
     "@cfpb/cfpb-icons": "0.17.9",
@@ -57,7 +57,7 @@
     "jest-environment-jsdom": "28.1.0",
     "postcss-less": "6.0.0",
     "snyk": "1.1032.0",
-    "stylelint": "14.13.0",
+    "stylelint": "14.14.0",
     "stylelint-config-recommended-less": "1.0.4"
   },
   "scripts": {
