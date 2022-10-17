@@ -205,67 +205,67 @@
   }
 });
 
-// Tablet size only.
-.respond-to-range(@bp-sm-min, @bp-sm-max, {
+  // Tablet size only.
+  .respond-to-range(@bp-sm-min, @bp-sm-max, {
 
-  &_trigger {
-    // Min-width sets open/close states to same size.
-    min-width: 110px;
+    &_trigger {
+      // Min-width sets open/close states to same size.
+      min-width: 110px;
 
-    padding-left: unit(@grid_gutter-width / 2 / 18px, em);
-    padding-right: unit(@grid_gutter-width / 2 / 18px, em);
-  }
-
-});
-
-// Tablet and above
-.respond-to-min(@bp-sm-min, {
-
-  // Override for the .m-btn-inside-input class from the design system.
-  // This is needed because we do not have an icon inside the input
-  // at the desktop size (there is an icon at the mobile size).
-  .m-btn-inside-input .a-text-input {
-    padding-right: unit(14px / @base-font-size-px, em);
-  }
-
-});
-
-// Desktop and above
-.respond-to-min(@bp-med-min, {
-
-  // Center on the call to action (CTA) divider to right of search.
-  padding-top: 6px;
-  padding-bottom: 5px;
-  // Match CTA offset from divider.
-  padding-right: @margin_half__em;
-  position: relative;
-  overflow: hidden;
-
-  &_trigger {
-    // Match height of input with button.
-    padding: 8px 0;
-
-    &[aria-expanded="true"] {
-      .u-invisible();
+      padding-left: unit(@grid_gutter-width / 2 / 18px, em);
+      padding-right: unit(@grid_gutter-width / 2 / 18px, em);
     }
-  }
 
-  &_trigger {
-    float: right;
-  }
+  });
 
-  &_content {
-    right: @margin_half__em;
-    width: auto;
-    // Add margin so that the focus rectangle is not cropped by
-    // the hidden overflow of the search container element.
-    margin-left: 3px;
-  }
-});
+  // Tablet and above
+  .respond-to-min(@bp-sm-min, {
 
-// Mobile size.
-.respond-to-min(480px, {
-  &_content-form {
+    // Override for the .m-btn-inside-input class from the design system.
+    // This is needed because we do not have an icon inside the input
+    // at the desktop size (there is an icon at the mobile size).
+    .m-btn-inside-input .a-text-input {
+      padding-right: unit(14px / @base-font-size-px, em);
+    }
+
+  });
+
+  // Desktop and above
+  .respond-to-min(@bp-med-min, {
+
+    // Center on the call to action (CTA) divider to right of search.
+    padding-top: 6px;
+    padding-bottom: 5px;
+    // Match CTA offset from divider.
+    padding-right: @margin_half__em;
+    position: relative;
+    overflow: hidden;
+
+    &_trigger {
+      // Match height of input with button.
+      padding: 8px 0;
+
+      &[aria-expanded="true"] {
+        .u-invisible();
+      }
+    }
+
+    &_trigger {
+      float: right;
+    }
+
+    &_content {
+      right: @margin_half__em;
+      width: auto;
+      // Add margin so that the focus rectangle is not cropped by
+      // the hidden overflow of the search container element.
+      margin-left: 3px;
+    }
+  });
+
+  // Mobile size.
+  .respond-to-min(480px, {
+    &_content-form {
 
       // The "search" button needs to be more flexible than in our usual
       // input-w-btn element to accommodate longer translations of "search",
