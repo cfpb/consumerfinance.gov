@@ -221,47 +221,47 @@
 // Tablet and above
 .respond-to-min(@bp-sm-min, {
 
-    // Override for the .m-btn-inside-input class from the design system.
-    // This is needed because we do not have an icon inside the input
-    // at the desktop size (there is an icon at the mobile size).
-    .m-btn-inside-input .a-text-input {
-        padding-right: unit(14px / @base-font-size-px, em);
-    }
+  // Override for the .m-btn-inside-input class from the design system.
+  // This is needed because we do not have an icon inside the input
+  // at the desktop size (there is an icon at the mobile size).
+  .m-btn-inside-input .a-text-input {
+    padding-right: unit(14px / @base-font-size-px, em);
+  }
 
-  });
+});
 
 // Desktop and above
 .respond-to-min(@bp-med-min, {
 
-    // Center on the call to action (CTA) divider to right of search.
-    padding-top: 6px;
-    padding-bottom: 5px;
-    // Match CTA offset from divider.
-    padding-right: @margin_half__em;
-    position: relative;
-    overflow: hidden;
+  // Center on the call to action (CTA) divider to right of search.
+  padding-top: 6px;
+  padding-bottom: 5px;
+  // Match CTA offset from divider.
+  padding-right: @margin_half__em;
+  position: relative;
+  overflow: hidden;
 
-    &_trigger {
-      // Match height of input with button.
-      padding: 8px 0;
+  &_trigger {
+    // Match height of input with button.
+    padding: 8px 0;
 
-      &[aria-expanded="true"] {
-        .u-invisible();
-      }
+    &[aria-expanded="true"] {
+      .u-invisible();
     }
+  }
 
-    &_trigger {
-      float: right;
-    }
+  &_trigger {
+    float: right;
+  }
 
-    &_content {
-      right: @margin_half__em;
-      width: auto;
-      // Add margin so that the focus rectangle is not cropped by
-      // the hidden overflow of the search container element.
-      margin-left: 3px;
-    }
-  });
+  &_content {
+    right: @margin_half__em;
+    width: auto;
+    // Add margin so that the focus rectangle is not cropped by
+    // the hidden overflow of the search container element.
+    margin-left: 3px;
+  }
+});
 
 // Mobile size.
 .respond-to-min(480px, {
