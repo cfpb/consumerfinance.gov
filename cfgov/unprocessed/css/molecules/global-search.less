@@ -205,126 +205,126 @@
   }
 });
 
-  // Tablet size only.
-  .respond-to-range(@bp-sm-min, @bp-sm-max, {
+// Tablet size only.
+.respond-to-range(@bp-sm-min, @bp-sm-max, {
+  &_trigger {
+    // Min-width sets open/close states to same size.
+    min-width: 110px;
 
-    &_trigger {
-      // Min-width sets open/close states to same size.
-      min-width: 110px;
+    padding-left: unit(@grid_gutter-width / 2 / 18px, em);
+    padding-right: unit(@grid_gutter-width / 2 / 18px, em);
+  }
 
-      padding-left: unit(@grid_gutter-width / 2 / 18px, em);
-      padding-right: unit(@grid_gutter-width / 2 / 18px, em);
-    }
+});
 
-  });
+// Tablet and above
+.respond-to-min(@bp-sm-min, {
 
-  // Tablet and above
-  .respond-to-min(@bp-sm-min, {
+  // Override for the .m-btn-inside-input class from the design system.
+  // This is needed because we do not have an icon inside the input
+  // at the desktop size (there is an icon at the mobile size).
+  .m-btn-inside-input .a-text-input {
+    padding-right: unit(14px / @base-font-size-px, em);
+  }
 
-    // Override for the .m-btn-inside-input class from the design system.
-    // This is needed because we do not have an icon inside the input
-    // at the desktop size (there is an icon at the mobile size).
-    .m-btn-inside-input .a-text-input {
-      padding-right: unit(14px / @base-font-size-px, em);
-    }
+});
 
-  });
+// Desktop and above
+.respond-to-min(@bp-med-min, {
 
-  // Desktop and above
-  .respond-to-min(@bp-med-min, {
+  // Center on the call to action (CTA) divider to right of search.
+  padding-top: 6px;
+  padding-bottom: 5px;
+  // Match CTA offset from divider.
+  padding-right: @margin_half__em;
+  position: relative;
 
-    // Center on the call to action (CTA) divider to right of search.
-    padding-top: 6px;
-    padding-bottom: 5px;
-    // Match CTA offset from divider.
-    padding-right: @margin_half__em;
-    position: relative;
-    overflow: hidden;
+  overflow: hidden;
 
-    &_trigger {
-      // Match height of input with button.
-      padding: 8px 0;
+  &_trigger {
+    // Match height of input with button.
+    padding: 8px 0;
 
-      &[aria-expanded="true"] {
-        .u-invisible();
-      }
-    }
-
-    &_trigger {
-      float: right;
-    }
-
-    &_content {
-      right: @margin_half__em;
-      width: auto;
-      // Add margin so that the focus rectangle is not cropped by
-      // the hidden overflow of the search container element.
-      margin-left: 3px;
-    }
-  });
-
-  // Mobile size.
-  .respond-to-min(480px, {
-    &_content-form {
-
-      // The "search" button needs to be more flexible than in our usual
-      // input-w-btn element to accommodate longer translations of "search",
-      // so we will make it flexbox
-      .o-form__input-w-btn {
-        display: flex;
-        padding-right: 0.25em;
-      }
-
-      .o-form__input-w-btn_input-container {
-        display: flex;
-        width: initial;
-        flex: 0 1 75%;
-
-        // Characters in some languages, like Chinese, have a larger x-height,
-        // which will make the button taller than the input. Fix that by making
-        // the input elements flex and stretch to fit the full height of the
-        // container (i.e. match the button height)
-        .m-btn-inside-input {
-          display: flex;
-          align-items: stretch;
-          flex-basis: 100%;
-        }
-      }
-
-      .o-form__input-w-btn_btn-container {
-        width: initial;
-        border-left: 0;
-        flex: 1 1 25%;
-
-        button {
-          padding-left: 1em;
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-          white-space: nowrap;
-        }
-      }
-    }
-  });
-
-  // Hide on print.
-  .respond-to-print({
-    & {
-      // Important needed to override JS display settings.
-      display: none !important;
-    }
-  });
-
-  // Hide fallback by default.
-  &_fallback {
-    display: none;
-    padding: 8px;
-    padding-right: 0;
-
-    // Only show fallback if JavaScript (JS) is not enabled.
-    .no-js & {
-      display: block;
+    &[aria-expanded="true"] {
+      .u-invisible();
     }
   }
+
+  &_trigger {
+    float: right;
+  }
+
+  &_content {
+    right: @margin_half__em;
+    width: auto;
+    // Add margin so that the focus rectangle is not cropped by
+    // the hidden overflow of the search container element.
+    margin-left: 3px;
+  }
+});
+
+// Mobile size.
+.respond-to-min(480px, {
+  &_content-form {
+
+    // The "search" button needs to be more flexible than in our usual
+    // input-w-btn element to accommodate longer translations of "search",
+    // so we will make it flexbox
+    .o-form__input-w-btn {
+      display: flex;
+      padding-right: 0.25em;
+    }
+
+    .o-form__input-w-btn_input-container {
+      display: flex;
+      width: initial;
+      flex: 0 1 75%;
+
+      // Characters in some languages, like Chinese, have a larger x-height,
+      // which will make the button taller than the input. Fix that by making
+      // the input elements flex and stretch to fit the full height of the
+      // container (i.e. match the button height)
+      .m-btn-inside-input {
+        display: flex;
+        align-items: stretch;
+        flex-basis: 100%;
+      }
+    }
+
+    .o-form__input-w-btn_btn-container {
+      width: initial;
+      border-left: 0;
+      flex: 1 1 25%;
+
+      button {
+        padding-left: 1em;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        white-space: nowrap;
+      }
+    }
+  }
+});
+
+// Hide on print.
+.respond-to-print({
+  & {
+    // Important needed to override JS display settings.
+    display: none !important;
+  }
+});
+
+// Hide fallback by default.
+&_fallback {
+  display: none;
+  padding: 8px;
+  padding-right: 0;
+
+  // Only show fallback if JavaScript (JS) is not enabled.
+  .no-js & {
+    display: block;
+  }
+}
 }
 
 /* topdoc
