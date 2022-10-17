@@ -152,7 +152,7 @@
   .respond-to-max(@bp-sm-max, {
 
     &_fallback {
-    margin: @margin_half__em;
+      margin: @margin_half__em;
   }
 
   &_trigger {
@@ -208,7 +208,7 @@
   // Tablet size only.
   .respond-to-range(@bp-sm-min, @bp-sm-max, {
     &_trigger {
-    // Min-width sets open/close states to same size.
+      // Min-width sets open/close states to same size.
     min-width: 110px;
 
     padding-left: unit(@grid_gutter-width / 2 / 18px, em);
@@ -224,7 +224,7 @@
   // This is needed because we do not have an icon inside the input
   // at the desktop size (there is an icon at the mobile size).
   .m-btn-inside-input .a-text-input {
-    padding-right: unit(14px / @base-font-size-px, em);
+      padding-right: unit(14px / @base-font-size-px, em);
   }
 
 });
@@ -234,7 +234,7 @@
 
     // Center on the call to action (CTA) divider to right of search.
   padding-top: 6px;
-  padding-bottom: 5px;
+    padding-bottom: 5px;
   // Match CTA offset from divider.
   padding-right: @margin_half__em;
   position: relative;
@@ -267,7 +267,7 @@
   .respond-to-min(480px, {
     &_content-form {
 
-    // The "search" button needs to be more flexible than in our usual
+      // The "search" button needs to be more flexible than in our usual
     // input-w-btn element to accommodate longer translations of "search",
     // so we will make it flexbox
     .o-form__input-w-btn {
@@ -309,7 +309,7 @@
   // Hide on print.
   .respond-to-print({
     & {
-    // Important needed to override JS display settings.
+      // Important needed to override JS display settings.
     display: none !important;
   }
 });
