@@ -310,7 +310,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </a>
       </div>
 
-      <div class="block o-fig_section">
+      <div data-search-section class="block o-fig_section">
         <h2 class="report-header o-fig_heading">
           <a id="1" href="#1" data-scrollspy=""> 1. What is the FIG? </a>
         </h2>
@@ -330,7 +330,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <h5>Why do we use it?</h5>
       </div>
 
-      <div class="block o-fig_section">
+      <div data-search-section class="block o-fig_section">
         <h2 class="report-header o-fig_heading">
           <a id="3" href="#3" data-scrollspy="">
             3. Creating a 1071 submission file
@@ -343,7 +343,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </p>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="3.1" href="#3.1" data-scrollspy="">
             3.1. Online data submission
@@ -392,7 +392,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </p>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="3.2" href="#3.2" data-scrollspy=""> 3.2. File format </a>
         </h3>
@@ -440,7 +440,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section">
+      <div data-search-section class="block o-fig_section">
         <h2 class="report-header o-fig_heading">
           <a id="4" href="#4" data-scrollspy=""> 4. Data points </a>
         </h2>
@@ -451,7 +451,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </p>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.1" href="#4.1" data-scrollspy="">
             4.1. Unique Loan Identifier
@@ -479,7 +479,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </div>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.1.1" href="#4.1.1" data-="">
             Field 1: Unique Loan Identifier
@@ -527,7 +527,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.2" href="#4.2" data-scrollspy=""> 4.2. Application Date </a>
         </h3>
@@ -551,7 +551,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </div>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.2.1" href="#4.2.1" data-=""> Field 2: Application Date </a>
         </h4>
@@ -577,7 +577,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.3" href="#4.3" data-scrollspy="">
             4.3. Application Method
@@ -605,7 +605,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </div>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.3.1" href="#4.3.1" data-=""> Field 3: Application Method </a>
         </h4>
@@ -681,7 +681,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.4" href="#4.4" data-scrollspy="">
             4.4. Application Recipient
@@ -709,7 +709,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </div>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.4.1" href="#4.4.1" data-="">
             Field 4: Application Recipient
@@ -773,7 +773,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.5" href="#4.5" data-scrollspy=""> 4.5. Credit Type </a>
         </h3>
@@ -823,7 +823,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </div>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.5.1" href="#4.5.1" data-=""> Field 5: Credit Product </a>
         </h4>
@@ -981,7 +981,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.5.2" href="#4.5.2" data-="">
             Field 6: Free Form Text Field for Other Credit Products
@@ -1004,7 +1004,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.5.3" href="#4.5.3" data-=""> Field 7: Type of Guarantee </a>
         </h4>
@@ -1173,7 +1173,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.5.4" href="#4.5.4" data-="">
             Field 8: Free Form Text Field for Other Guarantee
@@ -1197,7 +1197,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.5.5" href="#4.5.5" data-="">
             Field 9: Loan Term: N/A Flag
@@ -1255,7 +1255,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.5.6" href="#4.5.6" data-=""> Field 10: Loan Term </a>
         </h4>
@@ -1280,7 +1280,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.6" href="#4.6" data-scrollspy=""> 4.6. Credit Purpose </a>
         </h3>
@@ -1314,7 +1314,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </div>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.6.1" href="#4.6.1" data-=""> Field 11: Credit Purpose </a>
         </h4>
@@ -1587,7 +1587,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p></p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.6.2" href="#4.6.2" data-="">
             Field 12: Free Form Text Field for Other Credit Purpose
@@ -1611,7 +1611,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.7" href="#4.7" data-scrollspy="">
             4.7. Amount Applied For
@@ -1621,7 +1621,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(7)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.7.1" href="#4.7.1" data-="">
             Field 13: Amount Applied For: N/A or NP Flag
@@ -1705,7 +1705,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </table>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.7.2" href="#4.7.2" data-="">
             Field 14: Amount Applied For
@@ -1751,7 +1751,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.8" href="#4.8" data-scrollspy="">
             4.8. Amount Approved or Originated
@@ -1761,7 +1761,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(8)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.8.1" href="#4.8.1" data-="">
             Field 15: Amount Approved or Originated
@@ -1799,7 +1799,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.9" href="#4.9" data-scrollspy=""> 4.9. Action Taken </a>
         </h3>
@@ -1807,7 +1807,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(9)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.9.1" href="#4.9.1" data-=""> Field 16: Action Taken </a>
         </h4>
@@ -1893,7 +1893,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.10" href="#4.10" data-scrollspy="">
             4.10. Action Taken Date
@@ -1903,7 +1903,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(10)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.10.1" href="#4.10.1" data-="">
             Field 17: Action Taken Date
@@ -1930,7 +1930,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.11" href="#4.11" data-scrollspy=""> 4.11. Denial Reasons </a>
         </h3>
@@ -1962,7 +1962,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </div>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.11.1" href="#4.11.1" data-="">
             Field 18: Denial Reason(s)
@@ -2160,7 +2160,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.11.2" href="#4.11.2" data-="">
             Field 19: Other Free Form Text Field for Denial Reason(s)
@@ -2191,7 +2191,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.12" href="#4.12" data-scrollspy="">
             4.12. Pricing information
@@ -2298,7 +2298,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </div>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.1" href="#4.12.1" data-="">
             Field 20: Fixed rate: Interest rate: N/A flag
@@ -2377,7 +2377,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.2" href="#4.12.2" data-="">
             Field 21: Fixed rate: Interest rate
@@ -2411,7 +2411,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.3" href="#4.12.3" data-="">
             Field 22: Variable rate transaction: Margin: N/A flag
@@ -2492,7 +2492,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.4" href="#4.12.4" data-="">
             Field 23: Variable rate transaction: Margin
@@ -2526,7 +2526,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.5" href="#4.12.5" data-="">
             Field 24: Variable rate transaction: Index name
@@ -2702,7 +2702,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.6" href="#4.12.6" data-="">
             Field 25: Variable rate transaction: Index name: Other
@@ -2726,7 +2726,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.7" href="#4.12.7" data-="">
             Field 26: Variable Rate Transaction: Index Value
@@ -2759,7 +2759,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.8" href="#4.12.8" data-="">
             Field 27: Total Origination Charges
@@ -2787,7 +2787,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.9" href="#4.12.9" data-="">
             Field 28: Amount of Total Broker Fees
@@ -2815,7 +2815,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.10" href="#4.12.10" data-="">
             Field 29: Amount of Total Non-Interest Charges to be Imposed Over
@@ -2846,7 +2846,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.11" href="#4.12.11" data-="">
             Field 30: MCA: Difference Between Amount Advanced and Amount to be
@@ -2929,7 +2929,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.12" href="#4.12.12" data-="">
             Field 31: MCA: Difference Between Amount Advanced and Amount to be
@@ -2963,7 +2963,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.13" href="#4.12.13" data-="">
             Field 32: Prepayment Penalty Could be Imposed
@@ -3048,7 +3048,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.12.14" href="#4.12.14" data-="">
             Field 33: Prepayment Penalty Exists
@@ -3132,7 +3132,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.13" href="#4.13" data-scrollspy=""> 4.13. Census Tract </a>
         </h3>
@@ -3140,7 +3140,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(13)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.13.1" href="#4.13.1" data-=""> Field 34: Type of Address </a>
         </h4>
@@ -3228,7 +3228,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.13.2" href="#4.13.2" data-=""> Field 35: Tract Number </a>
         </h4>
@@ -3270,7 +3270,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.14" href="#4.14" data-scrollspy="">
             4.14. Gross Annual Revenue
@@ -3280,7 +3280,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(14)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.14.1" href="#4.14.1" data-="">
             Field 36: Gross Annual Revenue: NP Flag
@@ -3351,7 +3351,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.14.2" href="#4.14.2" data-="">
             Field 37: Gross Annual Revenue
@@ -3381,7 +3381,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.15" href="#4.15" data-scrollspy="">
             4.15. North American Industry Classification System (NAICS) Code
@@ -3391,7 +3391,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(15)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.15.1" href="#4.15.1" data-="">
             Field 38: North American Industry Classification System (NAICS)
@@ -3463,7 +3463,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.15.2" href="#4.15.2" data-="">
             Field 39: North American Industry Classification System (NAICS) Code
@@ -3493,7 +3493,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.16" href="#4.16" data-scrollspy="">
             4.16. Number of Workers
@@ -3503,7 +3503,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(16)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.16.1" href="#4.16.1" data-="">
             Field 40: Number of Workers: NP Flag
@@ -3568,7 +3568,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </table>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.16.2" href="#4.16.2" data-="">
             Field 41: Number of Workers
@@ -3597,7 +3597,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.17" href="#4.17" data-scrollspy="">
             4.17. Time in Business
@@ -3607,7 +3607,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(17)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.17.1" href="#4.17.1" data-="">
             Field 42: Time in Business: Type of Response
@@ -3690,7 +3690,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.17.2" href="#4.17.2" data-="">
             Field 43: Time in Business
@@ -3725,7 +3725,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p></p>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.18" href="#4.18" data-scrollspy="">
             4.18. Minority-Owned Business Status
@@ -3735,7 +3735,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(18)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.18.1" href="#4.18.1" data-="">
             Field 44: Minority-Owned Business Status: Status
@@ -3816,7 +3816,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.18.2" href="#4.18.2" data-="">
             Field 45: Minority-owned Business Status: Previously Collected Data
@@ -3875,7 +3875,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.19" href="#4.19" data-scrollspy="">
             4.19. Women-Owned Business Status
@@ -3885,7 +3885,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(19)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.19.1" href="#4.19.1" data-="">
             Field 46: Women-Owned Business Status: Status
@@ -3966,7 +3966,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.19.2" href="#4.19.2" data-="">
             Field 47: Women-Owned Business Status: Previously Collected Data
@@ -4025,7 +4025,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.20" href="#4.20" data-scrollspy="">
             4.20. Number of Principal Owners
@@ -4035,7 +4035,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(21)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.20.1" href="#4.20.1" data-="">
             Field 48: Number of Principal Owners: NP Flag
@@ -4106,7 +4106,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.20.2" href="#4.20.2" data-="">
             Field 49: Number of Principal Owners
@@ -4136,7 +4136,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.21" href="#4.21" data-scrollspy="">
             4.21. Visual Observation and/or Surname
@@ -4146,7 +4146,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(20)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.21.1" href="#4.21.1" data-="">
             Field 50: Visual Observation and/or Surname
@@ -4221,7 +4221,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.22" href="#4.22" data-scrollspy="">
             4.22. Previously Collected Data
@@ -4231,7 +4231,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(20)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.22.1" href="#4.22.1" data-="">
             Field 51: Previously Collected Data for Ethnicity, Race, or Sex, of
@@ -4301,7 +4301,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.23" href="#4.23" data-scrollspy="">
             4.23. Ethnicity of Principal Owner(s)
@@ -4311,7 +4311,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(20)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.23.1" href="#4.23.1" data-="">
             Field 52: Ethnicity of Principal Owner 1
@@ -4468,7 +4468,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.23.2" href="#4.23.2" data-="">
             Field 53: Ethnicity of Principal Owner 1: Free Form Text Field for
@@ -4499,7 +4499,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.24" href="#4.24" data-scrollspy="">
             4.24. Race of Principal Owner(s)
@@ -4509,7 +4509,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(20)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.24.1" href="#4.24.1" data-="">
             Field 54: Race of Principal Owner: 1
@@ -4877,7 +4877,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.24.2" href="#4.24.2" data-="">
             Field 55: Race of Principal Owner 1: Free Form Text Field for
@@ -4909,7 +4909,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.24.3" href="#4.24.3" data-="">
             Field 56: Race of Principal Owner 1: Free Form Text Field for Other
@@ -4940,7 +4940,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.24.4" href="#4.24.4" data-="">
             Field 57: Race of Principal Owner 1: Free Form Text Field for Other
@@ -4972,7 +4972,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.24.5" href="#4.24.5" data-="">
             Field 58: Race of Principal Owner 1: Free Form Text Field for Other
@@ -5004,7 +5004,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.25" href="#4.25" data-scrollspy="">
             4.25. Sex of Principal Owner(s)
@@ -5014,7 +5014,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule Section: 107(a)(20)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.25.1" href="#4.25.1" data-="">
             Field 59: Sex of Principal Owner: 1
@@ -5130,7 +5130,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.25.2" href="#4.25.2" data-="">
             Field 60: Sex of Principal Owner 1: Free Form Text Field for I
@@ -5160,7 +5160,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="4.26" href="#4.26" data-scrollspy="">
             4.26. Principal Owner 2
@@ -5173,7 +5173,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         <p>Rule section 107(a)(20)</p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.26.1" href="#4.26.1" data-="">
             Field 61: Ethnicity of Principal Owner: 2
@@ -5192,7 +5192,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.26.2" href="#4.26.2" data-="">
             Field 62: Ethnicity of Principal Owner 2: Free Form Text Field for
@@ -5213,7 +5213,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.26.3" href="#4.26.3" data-="">
             Field 63: Race of Principal Owner: 2
@@ -5232,7 +5232,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </p>
       </div>
 
-      <div class="block o-fig_section__sub-sub">
+      <div data-search-section class="block o-fig_section__sub-sub">
         <h4 class="report-header o-fig_heading">
           <a id="4.26.4" href="#4.26.4" data-="">
             Field 64: Sex of Principal Owner: 2
@@ -5251,7 +5251,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </p>
       </div>
 
-      <div class="block o-fig_section">
+      <div data-search-section class="block o-fig_section">
         <h2 class="report-header o-fig_heading">
           <a id="5" href="#5" data-scrollspy=""> 5. Data validation </a>
         </h2>
@@ -5262,7 +5262,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </p>
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="5.1" href="#5.1" data-scrollspy="">
             5.1. Validations overview
@@ -5271,7 +5271,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
 
       </div>
 
-      <div class="block o-fig_section__sub">
+      <div data-search-section class="block o-fig_section__sub">
         <h3 class="report-header o-fig_heading">
           <a id="5.2" href="#5.2" data-scrollspy="">
             5.2. List of validations
@@ -5286,7 +5286,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </p>
       </div>
 
-      <div class="block o-fig_section">
+      <div data-search-section class="block o-fig_section">
         <h2 class="report-header o-fig_heading">
           <a id="6" href="#6" data-scrollspy=""> 6. Where to get help </a>
         </h2>
@@ -5314,7 +5314,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
         </ul>
       </div>
 
-      <div class="block o-fig_section">
+      <div data-search-section class="block o-fig_section">
         <h2 class="report-header o-fig_heading">
           <a id="7" href="#7" data-scrollspy=""> 7. Paperwork Reduction Act </a>
         </h2>
