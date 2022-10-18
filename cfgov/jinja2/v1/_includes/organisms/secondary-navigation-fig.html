@@ -20,7 +20,8 @@
 <nav class="o-fig_sidebar o-secondary-navigation"
     aria-label="{{ _('Table of contents') }}">
     {% set sec_nav_settings_label = _("Table of contents") %}
-    {% set sec_nav_settings_label = sec_nav_settings_label + " (" + _(version_status) + ")" %}
+    {% set version_label = " (" + _(version_status) + ")" if version_status else '' %}
+    {% set sec_nav_settings_label = sec_nav_settings_label + version_label %}
     {% set sec_nav_settings = {
         'label': sec_nav_settings_label,
         'is_midtone': true,

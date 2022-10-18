@@ -1,3 +1,6 @@
+/* istanbul ignore file */
+/* Cypress tests cover all the UI interactions on this page. */
+
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
 
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
@@ -29,7 +32,6 @@ const handleMobileNav = event => {
  */
 const init = () => {
   /* Only proceed if IntersectionObserver is supported (everything except IE)
-     and we're on a larger screen
      See https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API */
   if ( 'IntersectionObserver' in window ) {
     fig.appRoot.querySelectorAll( '.o-secondary-navigation_list__children' ).forEach( ul => {
