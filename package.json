@@ -56,6 +56,7 @@
     "jest-cli": "28.1.2",
     "jest-environment-jsdom": "28.1.0",
     "postcss-less": "6.0.0",
+    "prettier": "2.7.1",
     "snyk": "1.1032.0",
     "stylelint": "14.14.0",
     "stylelint-config-recommended-less": "1.0.4"
@@ -64,7 +65,7 @@
     "enforce": "enforce-node-version",
     "preinstall": "node scripts/preinstall.js",
     "postinstall": "yarn enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
-    "lint": "eslint --ignore-pattern node_modules './{cfgov/unprocessed,config,esbuild,scripts,test}/**/*.js' --fix && stylelint './cfgov/unprocessed/**/*.{css,less}' --fix",
+    "lint": "./scripts/lint.sh",
     "jest": "jest",
     "test": "yarn lint && yarn jest",
     "snyk": "snyk test",
