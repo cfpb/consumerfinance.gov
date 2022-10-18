@@ -16,15 +16,39 @@ function queryHandler( queryString ) {
   };
   const parameters = {};
   const numericKeys = [
-    'iped', 'tuit', 'hous', 'book', 'leng', 'tran', 'othr',
-    'pelg', 'schg', 'stag', 'othg', 'mta', 'gib', 'fam', 'wkst', 'parl',
-    'perl', 'subl', 'unsl', 'ppl', 'gpl', 'prvl', 'prvi', 'prvf', 'insl',
-    'insi', 'sav', 'totl'
+    'iped',
+    'tuit',
+    'hous',
+    'book',
+    'leng',
+    'tran',
+    'othr',
+    'pelg',
+    'schg',
+    'stag',
+    'othg',
+    'mta',
+    'gib',
+    'fam',
+    'wkst',
+    'parl',
+    'perl',
+    'subl',
+    'unsl',
+    'ppl',
+    'gpl',
+    'prvl',
+    'prvi',
+    'prvf',
+    'insl',
+    'insi',
+    'sav',
+    'totl'
   ];
   const keyMaps = {
     iped: 'collegeID',
-    pid:  'programID',
-    oid:  'offerID',
+    pid: 'programID',
+    oid: 'offerID',
     leng: 'urlProgramLength',
     tuit: 'tuitionFees',
     hous: 'roomBoard',
@@ -35,16 +59,16 @@ function queryHandler( queryString ) {
     schg: 'schoolGrants',
     stag: 'stateGrants',
     othg: 'otherScholarships',
-    mta:  'militaryTuitionAssistance',
-    gib:  'GIBill',
-    fam:  'family',
+    mta: 'militaryTuitionAssistance',
+    gib: 'GIBill',
+    fam: 'family',
     wkst: 'workstudy',
     parl: 'parentLoan',
     perl: 'perkins',
     subl: 'directSubsidized',
     unsl: 'directUnsubsidized',
-    ppl:  'parentPlus',
-    gpl:  'gradPlus',
+    ppl: 'parentPlus',
+    gpl: 'gradPlus',
     prvl: 'privateLoan',
     prvi: 'privateLoanRate',
     prvf: 'privateLoanFee',
@@ -82,7 +106,8 @@ function queryHandler( queryString ) {
 
     queryString.split( '+' ).join( ' ' );
 
-    while ( pair = regex.exec( queryString ) ) { // eslint-disable-line no-cond-assign
+    while ( ( pair = regex.exec( queryString ) ) ) {
+      // eslint-disable-line no-cond-assign
       const key = decodeURIComponent( pair[1] );
       let value = decodeURIComponent( pair[2] );
 
@@ -110,7 +135,6 @@ function queryHandler( queryString ) {
    * so 14 months would round up to 18, which is displayed as 1 ½ years.
    */
   function adjustProgramLength() {
-
     const lengthValue = valuePairs.urlProgramLength;
     if ( lengthValue % 6 !== 0 ) {
       valuePairs.urlProgramLength = lengthValue + ( 6 - ( lengthValue % 6 ) );
@@ -123,10 +147,12 @@ function queryHandler( queryString ) {
 
   // move private loan properties to privateLoanMulti
   valuePairs.privateLoanMulti = [
-    { amount: valuePairs.privateLoan || 0,
-      rate:   valuePairs.privateLoanRate / 100 || 0.079,
-      fees:   valuePairs.privateLoanFee / 100 || 0,
-      deferPeriod: 6 }
+    {
+      amount: valuePairs.privateLoan || 0,
+      rate: valuePairs.privateLoanRate / 100 || 0.079,
+      fees: valuePairs.privateLoanFee / 100 || 0,
+      deferPeriod: 6
+    }
   ];
   delete valuePairs.privateLoan;
   delete valuePairs.privateLoanRate;

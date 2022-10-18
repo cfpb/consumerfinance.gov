@@ -49,10 +49,14 @@ describe( 'Activity Search', () => {
   } );
   it( 'should place Building blocks and standards in Activity characteristics', () => {
     search.open();
-    cy.get( '.filter-section__third' ).contains( 'Building block' )
-      .should( 'be.visible' ).should( 'have.class', 'o-expandable_target__collapsed' );
-    cy.get( '.filter-section__third' ).contains( 'National standards' )
-      .should( 'be.visible' ).should( 'have.class', 'o-expandable_target__collapsed' );
+    cy.get( '.filter-section__third' )
+      .contains( 'Building block' )
+      .should( 'be.visible' )
+      .should( 'have.class', 'o-expandable_target__collapsed' );
+    cy.get( '.filter-section__third' )
+      .contains( 'National standards' )
+      .should( 'be.visible' )
+      .should( 'have.class', 'o-expandable_target__collapsed' );
   } );
   it( 'should have ordered Activity characteristics', () => {
     search.open();

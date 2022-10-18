@@ -2,7 +2,6 @@ import * as treeTraversal from '../../../../../cfgov/unprocessed/js/modules/util
 import Tree from '../../../../../cfgov/unprocessed/js/modules/Tree.js';
 
 describe( 'Tree traversal', () => {
-
   let tree;
   let nodeR;
   let nodeA;
@@ -83,5 +82,4 @@ describe( 'Tree traversal', () => {
       expect( nodes[5] ).toStrictEqual( nodeB );
     } );
   } );
-
 } );

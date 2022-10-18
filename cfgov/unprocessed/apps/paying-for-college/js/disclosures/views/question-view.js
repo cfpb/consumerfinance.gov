@@ -26,8 +26,7 @@ const questionView = {
    * Initiates the object
    */
   init: function() {
-    const settlementStatus =
-      getSchool.values().settlementSchool || false;
+    const settlementStatus = getSchool.values().settlementSchool || false;
 
     this.displayOptions( settlementStatus );
     this.bigQuestionListener( settlementStatus );
@@ -43,9 +42,11 @@ const questionView = {
       questionView.$nonsettlementBigQuestion.hide();
       $( '#question_answer-no' ).hide();
       questionView.$optionsWrapper.addClass(
-        'get-options__settlement content_main' );
+        'get-options__settlement content_main'
+      );
       questionView.$optionsWrapper.addClass(
-        'get-options__settlement content_main' );
+        'get-options__settlement content_main'
+      );
       questionView.$transferCredits.remove();
       questionView.$exploreSchools.remove();
       questionView.$takeAction.remove();
@@ -87,18 +88,24 @@ const questionView = {
       // Show the rest of the page
       questionView.$getOptions.show();
       questionView.$nextSteps.show();
-      $( 'html, body' ).stop().animate( {
-        scrollTop: questionView.$getOptions.offset().top - 120
-      }, 900, 'swing', function() {
-        // Noop function.
-      } );
+      $( 'html, body' )
+        .stop()
+        .animate(
+          {
+            scrollTop: questionView.$getOptions.offset().top - 120
+          },
+          900,
+          'swing',
+          function() {
+            // Noop function.
+          }
+        );
 
-      Analytics.sendEvent( getDataLayerOptions( 'Step Completed',
-        $( this ).text().trim() )
+      Analytics.sendEvent(
+        getDataLayerOptions( 'Step Completed', $( this ).text().trim() )
       );
     } );
   }
-
 };
 
 module.exports = questionView;

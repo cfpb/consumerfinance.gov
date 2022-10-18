@@ -8,7 +8,6 @@ const EXPORT_TYPE_JPEG = 'JPEG';
 const EXPORT_TYPE_PRINT = 'Print chart';
 
 class RateCheckerChartMenu {
-
   /**
    * Set the initial state value and call
    * the appropriate instantiation methods.
@@ -81,12 +80,8 @@ class RateCheckerChartMenu {
   render( oldState, newState ) {
     const STATE_PREFIX = 'chart-menu__';
 
-    this.element.classList.remove(
-      STATE_PREFIX + oldState
-    );
-    this.element.classList.add(
-      STATE_PREFIX + newState
-    );
+    this.element.classList.remove( STATE_PREFIX + oldState );
+    this.element.classList.add( STATE_PREFIX + newState );
   }
 
   /**

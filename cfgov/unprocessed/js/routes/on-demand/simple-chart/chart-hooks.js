@@ -25,9 +25,12 @@ const hooks = {
   },
 
   getDateString( x ) {
-    return new Date( x ).toLocaleDateString(
-      'en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }
-    );
+    return new Date( x ).toLocaleDateString( 'en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      timeZone: 'UTC'
+    } );
   },
 
   cci_quarterLabels() {
@@ -35,7 +38,9 @@ const hooks = {
     const titleObj = series.yAxis.axisTitle;
     const title = titleObj ? titleObj.textStr + ': ' : '';
     const [ quarter, year ] = hooks.cci_dateToQuarter( x );
-    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>${ title }${ Math.round( y * 10 ) / 10 }`;
+    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>${ title }${
+      Math.round( y * 10 ) / 10
+    }`;
   },
 
   cci_dateToQuarter( x ) {
@@ -75,7 +80,9 @@ const hooks = {
   },
 
   enforcement_reliefBarTooltipFormatter() {
-    return `<b>${ this.x }</b><br/>Total relief: <b>$${ this.y.toLocaleString() }</b>`;
+    return `<b>${
+      this.x
+    }</b><br/>Total relief: <b>$${ this.y.toLocaleString() }</b>`;
   },
 
   cct_credit( data ) {
@@ -88,7 +95,10 @@ const hooks = {
         currAdj = adjusted[v.date];
       } else {
         currRaw = raw[v.date] = { date: v.date, adjusted: 'Unadjusted' };
-        currAdj = adjusted[v.date] = { date: v.date, adjusted: 'Seasonally adjusted' };
+        currAdj = adjusted[v.date] = {
+          date: v.date,
+          adjusted: 'Seasonally adjusted'
+        };
       }
       currRaw[v.credit_score_group] = v.vol_unadj;
       currAdj[v.credit_score_group] = v.vol;
@@ -116,7 +126,10 @@ const hooks = {
         currAdj = adjusted[v.date];
       } else {
         currRaw = raw[v.date] = { date: v.date, adjusted: 'Unadjusted' };
-        currAdj = adjusted[v.date] = { date: v.date, adjusted: 'Seasonally adjusted' };
+        currAdj = adjusted[v.date] = {
+          date: v.date,
+          adjusted: 'Seasonally adjusted'
+        };
       }
       currRaw[v.income_level_group] = v.vol_unadj;
       currAdj[v.income_level_group] = v.vol;
@@ -142,7 +155,10 @@ const hooks = {
         currAdj = adjusted[v.date];
       } else {
         currRaw = raw[v.date] = { date: v.date, adjusted: 'Unadjusted' };
-        currAdj = adjusted[v.date] = { date: v.date, adjusted: 'Seasonally adjusted' };
+        currAdj = adjusted[v.date] = {
+          date: v.date,
+          adjusted: 'Seasonally adjusted'
+        };
       }
       currRaw[v.age_group] = v.vol_unadj;
       currAdj[v.age_group] = v.vol;
@@ -172,7 +188,6 @@ const hooks = {
 
     return data.sort( ( a, b ) => new Date( a.date ) - new Date( b.date ) );
   }
-
 };
 
 export default hooks;

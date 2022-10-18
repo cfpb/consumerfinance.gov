@@ -110,7 +110,6 @@ const metricView = {
     $ele.text( value );
   },
 
-
   /**
    * Fixes overlapping points on a bar graph
    * @param {object} $graph jQuery object of the graph containing the points
@@ -134,7 +133,9 @@ const metricView = {
       $higherPoint = $school;
       $lowerPoint = $national;
     }
-    const $higherLabels = $higherPoint.find( '.bar-graph_label, .bar-graph_value' );
+    const $higherLabels = $higherPoint.find(
+      '.bar-graph_label, .bar-graph_value'
+    );
 
     // If the values are equal, handle the display with CSS only
     if ( metrics.school === metrics.national ) {
@@ -142,8 +143,10 @@ const metricView = {
       return;
     }
     // If the points partially overlap, move the higher point's labels up
-    if ( nationalTop <= schoolTop + schoolHeight &&
-      nationalTop + nationalHeight >= schoolTop ) {
+    if (
+      nationalTop <= schoolTop + schoolHeight &&
+      nationalTop + nationalHeight >= schoolTop
+    ) {
       $higherLabels.css( {
         'padding-bottom': offset,
         'top': -offset
@@ -195,10 +198,12 @@ const metricView = {
     const bottoms = {};
     const bottomOffset = 20;
 
-    bottoms.school = ( graphHeight - bottomOffset ) / ( max - min ) *
-      ( schoolValue - min ) + bottomOffset;
-    bottoms.national = ( graphHeight - bottomOffset ) /
-      ( max - min ) * ( nationalValue - min ) + bottomOffset;
+    bottoms.school =
+      ( ( graphHeight - bottomOffset ) / ( max - min ) ) * ( schoolValue - min ) +
+      bottomOffset;
+    bottoms.national =
+      ( ( graphHeight - bottomOffset ) / ( max - min ) ) * ( nationalValue - min ) +
+      bottomOffset;
 
     /* A few outlier schools have very high average salaries, so we need to
        prevent those values from falling off the top of the graph */
@@ -220,8 +225,9 @@ const metricView = {
     const standingClasses = {
       same: 'metric_notification__same',
       better: 'metric_notification__better',
-      worse: 'cf-notification metric_notification__worse ' +
-             'cf-notification__error'
+      worse:
+        'cf-notification metric_notification__worse ' +
+        'cf-notification__error'
     };
     const metrics = metricView.metrics[metricKey];
     const low = metrics.low;
@@ -277,9 +283,7 @@ const metricView = {
    * @param {object} $notification jQuery object of the notification box
    */
   hideNotificationClasses: function( $notification ) {
-    $notification
-      .attr( 'class', 'metric_notification' )
-      .hide();
+    $notification.attr( 'class', 'metric_notification' ).hide();
   },
 
   /**
@@ -374,7 +378,8 @@ const metricView = {
    */
   updateSalaryWarning: function() {
     const $salaryDebt = $( '#salary-and-debt-metric' );
-    const notificationClasses = 'cf-notification metric_notification__no-you cf-notification__warning';
+    const notificationClasses =
+      'cf-notification metric_notification__no-you cf-notification__warning';
     const $notification = $salaryDebt.siblings( '.metric_notification' );
 
     metricView.setNotificationClasses( $notification, notificationClasses );
@@ -405,8 +410,8 @@ const metricView = {
    */
   updateForSettlement: function( $graph ) {
     const $notification = $graph.siblings( '.metric_notification' );
-    const selector = '.metric_notification__no-you,' +
-                     '.metric_notification__no-data';
+    const selector =
+      '.metric_notification__no-you,.metric_notification__no-data';
     $notification.not( selector ).hide();
     $graph.find( '.bar-graph_point__average' ).hide();
   }

@@ -19,51 +19,55 @@ require( './utils/print-page' );
 
 const app = {
   init: function() {
-  // jquery promise to delay full model creation until ajax resolves
-    $.when( fetch.initialData() )
-      .done( function( constants, expenses ) {
-        financialModel.init( constants[0] );
-        financialView.init();
-        if ( location.href.indexOf( 'about-this-tool' ) === -1 ) {
-          expensesModel.init( expenses[0] );
-          expensesView.init();
-        }
-        if ( getUrlValues.urlOfferExists() ) {
-          // Check for URL offer data
-          const urlValues = getUrlValues.urlValues();
-          $.when( fetch.schoolData( urlValues.collegeID, urlValues.programID ) )
-            .done( function( schoolData, programData, nationalData ) {
-              const data = {};
-              $.extend( data, schoolData[0], programData[0], nationalData[0] );
-              const schoolValues = schoolModel.init( nationalData[0], schoolData[0], programData[0] );
+    // jquery promise to delay full model creation until ajax resolves
+    $.when( fetch.initialData() ).done( function( constants, expenses ) {
+      financialModel.init( constants[0] );
+      financialView.init();
+      if ( location.href.indexOf( 'about-this-tool' ) === -1 ) {
+        expensesModel.init( expenses[0] );
+        expensesView.init();
+      }
+      if ( getUrlValues.urlOfferExists() ) {
+        // Check for URL offer data
+        const urlValues = getUrlValues.urlValues();
+        $.when(
+          fetch.schoolData( urlValues.collegeID, urlValues.programID )
+        ).done( function( schoolData, programData, nationalData ) {
+          const data = {};
+          $.extend( data, schoolData[0], programData[0], nationalData[0] );
+          const schoolValues = schoolModel.init(
+            nationalData[0],
+            schoolData[0],
+            programData[0]
+          );
 
-              /* If PID exists, update the financial model and view based
+          /* If PID exists, update the financial model and view based
                  on program data */
-              if ( !data.hasOwnProperty( 'pidNotFound' ) ) {
-                financialModel.updateModelWithProgram( schoolValues );
-                financialView.updateViewWithProgram( schoolValues, urlValues );
-              }
+          if ( !data.hasOwnProperty( 'pidNotFound' ) ) {
+            financialModel.updateModelWithProgram( schoolValues );
+            financialView.updateViewWithProgram( schoolValues, urlValues );
+          }
 
-              // Add url values to the financial model
-              publish.extendFinancialData( urlValues );
-              if ( typeof urlValues.totalCost === 'undefined' ) {
-                publish.financialData( 'totalCost', null );
-              }
-              financialView.updateViewWithURL( schoolValues, urlValues );
-              // initialize metric view
-              metricView.init();
-              financialView.updateView( getFinancial.values() );
-              questionView.init();
+          // Add url values to the financial model
+          publish.extendFinancialData( urlValues );
+          if ( typeof urlValues.totalCost === 'undefined' ) {
+            publish.financialData( 'totalCost', null );
+          }
+          financialView.updateViewWithURL( schoolValues, urlValues );
+          // initialize metric view
+          metricView.init();
+          financialView.updateView( getFinancial.values() );
+          questionView.init();
 
-              // Update expenses model bases on region and salary
-              const region = schoolValues.BLSAverage.substr( 0, 2 );
-              $( '#bls-region-select' ).val( region ).change();
-            } );
-        }
-        // set financial caps based on data
-        financialView.setCaps( getFinancial.values() );
-        financialView.updateView( getFinancial.values() );
-      } );
+          // Update expenses model bases on region and salary
+          const region = schoolValues.BLSAverage.substr( 0, 2 );
+          $( '#bls-region-select' ).val( region ).change();
+        } );
+      }
+      // set financial caps based on data
+      financialView.setCaps( getFinancial.values() );
+      financialView.updateView( getFinancial.values() );
+    } );
     verifyOffer.init();
   }
 };

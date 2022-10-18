@@ -1,9 +1,6 @@
-import {
-  toArray
-} from '../../../../../../../cfgov/unprocessed/js/routes/on-demand/youth-employment-programs/buying-a-car/util.js';
+import { toArray } from '../../../../../../../cfgov/unprocessed/js/routes/on-demand/youth-employment-programs/buying-a-car/util.js';
 
 describe( 'YEP utility functions', () => {
-
   describe( '.toArray', () => {
     it( 'turns array-like values into arrays', () => {
       const number = toArray( 1 );

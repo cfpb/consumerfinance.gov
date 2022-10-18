@@ -11,6 +11,5 @@ import isFocusable from './isFocusable';
  */
 export default function isTabbable( $element ) {
   const tabIndex = $element.attr( 'tabindex' );
-  return ( !tabIndex || parseInt( tabIndex, 10 ) >= 0 ) &&
-    isFocusable( $element );
+  return ( !tabIndex || parseInt( tabIndex, 10 ) >= 0 ) && isFocusable( $element );
 }

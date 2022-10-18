@@ -13,9 +13,11 @@ before you start requesting properties that don't exist in _updateMap()
 function checkHudData( data ) {
   if ( data === null || data === 0 || data === UNDEFINED ) {
     return false;
-  } else if ( data.hasOwnProperty( 'error' ) ||
-              !data.hasOwnProperty( 'counseling_agencies' ) ||
-              !data.hasOwnProperty( 'zip' ) ) {
+  } else if (
+    data.hasOwnProperty( 'error' ) ||
+    !data.hasOwnProperty( 'counseling_agencies' ) ||
+    !data.hasOwnProperty( 'zip' )
+  ) {
     return false;
   }
 

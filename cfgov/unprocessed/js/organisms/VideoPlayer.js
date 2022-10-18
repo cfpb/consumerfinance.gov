@@ -70,7 +70,10 @@ function VideoPlayer( element ) {
   function _videoAPIReady() {
     _player = youTubeAPI.instantiatePlayer( _iframeDom, _videoId );
     _player.addEventListener( 'onReady', _videoPlayerReadyHandler.bind( this ) );
-    _player.addEventListener( 'onStateChange', _videoStateChangeHandler.bind( this ) );
+    _player.addEventListener(
+      'onStateChange',
+      _videoStateChangeHandler.bind( this )
+    );
   }
 
   /**

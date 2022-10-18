@@ -4,20 +4,24 @@ import * as defaultActionCreators from '../../../../../../cfgov/unprocessed/js/o
 const actions = defaultActionCreators.default();
 
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
-jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils', () => ( {
-  getNonMetroData: cb => {
-    const nonMetros = [ {
-      valid: true,
-      fips: '12345',
-      name: 'Acme metro',
-      abbr: 'AL'
-    } ];
-    cb( nonMetros );
-  }
-} ) );
+jest.mock(
+  '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils',
+  () => ( {
+    getNonMetroData: cb => {
+      const nonMetros = [
+        {
+          valid: true,
+          fips: '12345',
+          name: 'Acme metro',
+          abbr: 'AL'
+        }
+      ];
+      cb( nonMetros );
+    }
+  } )
+);
 
 describe( 'Mortgage Performance default action creators', () => {
-
   it( 'should create an action to set a geo', () => {
     const action = actions.setGeo( 12345, 'Alabama', 'state' );
     expect( action ).toStrictEqual( {
@@ -150,5 +154,4 @@ describe( 'Mortgage Performance default action creators', () => {
       isLoading: false
     } );
   } );
-
 } );

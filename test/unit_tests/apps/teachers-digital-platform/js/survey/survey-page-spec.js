@@ -6,7 +6,11 @@ import {
   surveyPage,
   progressBar
 } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/survey-page';
-import { ANSWERS_SESS_KEY, RESULT_COOKIE, SCORES_UNSET_KEY } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
+import {
+  ANSWERS_SESS_KEY,
+  RESULT_COOKIE,
+  SCORES_UNSET_KEY
+} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
 import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
 import HTML_SNIPPET from '../../html/survey-page';
 
@@ -99,9 +103,10 @@ describe( 'The TDP survey page', () => {
   it( 'should set buttons from storage', () => {
     ChoiceField.cache = Object.create( null );
     sessionStorage.clear();
-    sessionStorage.setItem( ANSWERS_SESS_KEY, JSON.stringify(
-      { 'p1-q1': '0', 'p1-q6': '3' }
-    ) );
+    sessionStorage.setItem(
+      ANSWERS_SESS_KEY,
+      JSON.stringify( { 'p1-q1': '0', 'p1-q6': '3' } )
+    );
 
     surveyPage();
 
@@ -163,8 +168,7 @@ describe( 'The TDP survey page', () => {
 
     expect( scrollToEl( el ) ).toBe( true );
 
-    expect( el.scrollIntoView.mock.calls[0][0] )
-      .toEqual( { behavior: 'smooth' } );
+    expect( el.scrollIntoView.mock.calls[0][0] ).toEqual( { behavior: 'smooth' } );
 
     el.scrollIntoView.mockImplementation( arg => {
       if ( typeof arg === 'object' ) {
@@ -174,8 +178,7 @@ describe( 'The TDP survey page', () => {
 
     expect( scrollToEl( el ) ).toBe( true );
 
-    expect( el.scrollIntoView.mock.calls[1][0] )
-      .toEqual( { behavior: 'smooth' } );
+    expect( el.scrollIntoView.mock.calls[1][0] ).toEqual( { behavior: 'smooth' } );
     expect( el.scrollIntoView.mock.calls[2] ).toEqual( [] );
 
     el.scrollIntoView.mockImplementation( () => {

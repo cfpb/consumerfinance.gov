@@ -17,14 +17,12 @@ function init( ageRightNow = 0, fullRetirementAge = 0 ) {
  * @param {number} fullAge   The user's full retirement age
  */
 function chooseClaimingAge( fullAge ) {
-
-  if ( $( '#retirement-age-selector' ).find(
-    'option:selected'
-  ).val() === '' ) {
+  if ( $( '#retirement-age-selector' ).find( 'option:selected' ).val() === '' ) {
     $( '#age-selector-response' ).hide();
   } else {
     const age = parseInt(
-      $( '#retirement-age-selector' ).find( 'option:selected' ).val(), 10
+      $( '#retirement-age-selector' ).find( 'option:selected' ).val(),
+      10
     );
 
     $( '.next-step-description' ).hide();
@@ -44,12 +42,14 @@ function chooseClaimingAge( fullAge ) {
 
     // Scroll response into view if it's not visible
     if ( isElementInView( '#age-selector-response' ) === false ) {
-      $( 'html, body' ).animate( {
-        scrollTop: $( '#retirement-age-selector' ).offset().top - 20
-      }, 300 );
+      $( 'html, body' ).animate(
+        {
+          scrollTop: $( '#retirement-age-selector' ).offset().top - 20
+        },
+        300
+      );
     }
   }
-
 }
 
 /* This function limits the age selector in Step 3 to

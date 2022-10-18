@@ -6,7 +6,6 @@ import $ from 'jquery';
  * @returns {Object} Methods to manipulate the requested elements.
  */
 const utils = function( id ) {
-
   let $el;
 
   if ( !id ) {
@@ -14,9 +13,7 @@ const utils = function( id ) {
   }
 
   // If they provided an array, select 'em all. Otherwise, just the one.
-  $el = id instanceof Array ?
-    $( '#' + id.join( ', #' ) ) :
-    $el = $( '#' + id );
+  $el = id instanceof Array ? $( '#' + id.join( ', #' ) ) : $el = $( '#' + id );
 
   /**
    * If optionVal is provided as an array, turn it into a string
@@ -51,7 +48,8 @@ const utils = function( id ) {
     if ( !optionVal ) {
       $el.attr( 'disabled', 'disabled' );
     }
-    $el.find( 'option' )
+    $el
+      .find( 'option' )
       .filter( parseVals( optionVal ) )
       .attr( 'disabled', 'disabled' );
 
@@ -69,13 +67,10 @@ const utils = function( id ) {
     if ( !optionVal ) {
       $el.removeAttr( 'disabled' );
     }
-    $el.find( 'option' )
-      .filter( parseVals( optionVal ) )
-      .removeAttr( 'disabled' );
+    $el.find( 'option' ).filter( parseVals( optionVal ) ).removeAttr( 'disabled' );
 
     return this;
   }
-
 
   function addOption( values ) {
     const opts = values || {};
@@ -110,19 +105,20 @@ const utils = function( id ) {
    */
   function removeOption( optionVal ) {
     if ( !optionVal ) {
-      throw new Error( "You must provide the value of the option you'd like to remove." );
+      throw new Error(
+        "You must provide the value of the option you'd like to remove."
+      );
     }
-    $el.find( 'option' )
-      .filter( parseVals( optionVal ) )
-      .remove();
+    $el.find( 'option' ).filter( parseVals( optionVal ) ).remove();
 
     return this;
   }
 
-
   function hasOption( value ) {
     if ( !value ) {
-      throw new Error( "You must provide the value of the option you'd like to check for." );
+      throw new Error(
+        "You must provide the value of the option you'd like to check for."
+      );
     }
 
     return $el.children( 'option[value=' + value + ']' ).length > 0;
@@ -217,20 +213,19 @@ const utils = function( id ) {
   }
 
   return {
-    disable:              disable,
-    enable:               enable,
-    show:                 show,
-    hide:                 hide,
-    addOption:            addOption,
-    removeOption:         removeOption,
-    hasOption:            hasOption,
+    disable: disable,
+    enable: enable,
+    show: show,
+    hide: hide,
+    addOption: addOption,
+    removeOption: removeOption,
+    hasOption: hasOption,
     showLoadingAnimation: showLoading,
     hideLoadingAnimation: hideLoading,
-    showHighlight:        showHighlight,
-    hideHighlight:        hideHighlight,
-    reset:                reset
+    showHighlight: showHighlight,
+    hideHighlight: hideHighlight,
+    reset: reset
   };
-
 };
 
 export default utils;

@@ -1,5 +1,4 @@
 export class PfcFinancialPathToGraduation {
-
   clickGetStarted() {
     cy.get( '.btn__get-started' ).click();
   }
@@ -22,7 +21,6 @@ export class PfcFinancialPathToGraduation {
   }
 
   clickSearchResult( name ) {
-
     cy.contains( '#search-results button', name ).click();
     cy.get( '#search-results' ).should( 'not.be.visible' );
   }

@@ -40,7 +40,6 @@ function handleStringInput( numberString ) {
 
   // Get number value of string, then multiply by signMaker and return
   return Number( numberString ) * signMaker;
-
 }
 
 export default handleStringInput;

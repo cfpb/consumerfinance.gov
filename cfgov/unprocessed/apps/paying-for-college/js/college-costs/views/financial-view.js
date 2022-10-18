@@ -30,12 +30,18 @@ const financialView = {
    */
   _handleSeeStepsClick: function( event ) {
     // TODO - This could all be written better.
-    const selected = document.querySelector( '.action-plan_choices .highlighted input[checked="true"]' );
+    const selected = document.querySelector(
+      '.action-plan_choices .highlighted input[checked="true"]'
+    );
     document.querySelectorAll( '[data-action-plan]' ).forEach( elem => {
       elem.classList.remove( 'active' );
     } );
-    document.querySelector( '[data-action-plan="' + selected.value + '"]' ).classList.add( 'active' );
-    document.querySelector( '.action-plan .action-plan_feeling-gauge' ).classList.add( 'active' );
+    document
+      .querySelector( '[data-action-plan="' + selected.value + '"]' )
+      .classList.add( 'active' );
+    document
+      .querySelector( '.action-plan .action-plan_feeling-gauge' )
+      .classList.add( 'active' );
   },
 
   updateFinancialItems: function() {
@@ -57,7 +63,7 @@ const financialView = {
         } else if ( isNumber ) {
           val = Math.round( val * 100 ) / 100;
         } else if ( isHours ) {
-          val = ( Math.round( val * 10 ) / 10 ) + ' hours';
+          val = Math.round( val * 10 ) / 10 + ' hours';
         } else {
           val = numberToMoney( { amount: val, decimalPlaces: 0 } );
         }
@@ -74,9 +80,15 @@ const financialView = {
   /* init - Initialize the financialView object */
   init: function() {
     this._financialItems = document.querySelectorAll( '[data-financial-item]' );
-    this._financialInputs = document.querySelectorAll( 'input[data-financial-item]' );
-    this._financialSpans = document.querySelectorAll( 'span[data-financial-item]' );
-    this._costsOfferButton = document.querySelector( '.costs_button-section button' );
+    this._financialInputs = document.querySelectorAll(
+      'input[data-financial-item]'
+    );
+    this._financialSpans = document.querySelectorAll(
+      'span[data-financial-item]'
+    );
+    this._costsOfferButton = document.querySelector(
+      '.costs_button-section button'
+    );
     _addInputListeners();
     _addButtonListeners();
   }
@@ -97,7 +109,10 @@ function _addInputListeners() {
  * Listeners for INPUT fields and radio buttons.
  */
 function _addButtonListeners() {
-  financialView._costsOfferButton.addEventListener( 'click', _handleCostsButtonClick );
+  financialView._costsOfferButton.addEventListener(
+    'click',
+    _handleCostsButtonClick
+  );
 }
 
 /**
@@ -119,11 +134,10 @@ function _handleInputChange( event ) {
   }
 
   if ( selectorMatches( elem, ':focus' ) ) {
-    financialView._inputChangeTimeout = setTimeout(
-      function() {
-        updateFinancial( name, value );
-        updateUrlQueryString();
-      }, 500 );
+    financialView._inputChangeTimeout = setTimeout( function() {
+      updateFinancial( name, value );
+      updateUrlQueryString();
+    }, 500 );
   } else {
     updateFinancial( name, value );
     updateUrlQueryString();
@@ -141,13 +155,14 @@ function _handleInputClick( event ) {
   }
 }
 
-
 /**
  * Event handling for button choice - "Does your offer include costs?".
  * @param {MouseEvent} event - Triggering event.
  */
 function _handleCostsButtonClick( event ) {
-  const checkedButton = document.querySelector( 'input[name="costs-offer-radio"]:checked' );
+  const checkedButton = document.querySelector(
+    'input[name="costs-offer-radio"]:checked'
+  );
   const target = event.target;
   let answer = '';
 
@@ -169,6 +184,4 @@ function _handleCostsButtonClick( event ) {
   }
 }
 
-export {
-  financialView
-};
+export { financialView };

@@ -1,5 +1,4 @@
 export class RegulationsSearch {
-
   open() {
     cy.visit( '/rules-policy/regulations/search-regulations/results/' );
   }
@@ -33,5 +32,4 @@ export class RegulationsSearch {
   filters() {
     return cy.get( '.filters_applied' );
   }
-
 }

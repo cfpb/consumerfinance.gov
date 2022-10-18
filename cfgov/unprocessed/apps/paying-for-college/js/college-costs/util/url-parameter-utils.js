@@ -144,8 +144,13 @@ function buildUrlQueryString() {
     const model = models[variable.split( '.' )[0]].values;
     const value = model[variable.split( '.' )[1]];
 
-    if ( typeof value !== 'undefined' && value !== 0 && value !== null &&
-          value !== false && value !== 'not-selected' ) {
+    if (
+      typeof value !== 'undefined' &&
+      value !== 0 &&
+      value !== null &&
+      value !== false &&
+      value !== 'not-selected'
+    ) {
       if ( query.length > 1 ) query += '&';
       query += key + '=' + value;
     }
@@ -154,11 +159,6 @@ function buildUrlQueryString() {
   if ( query === '?' ) query = '';
 
   return query;
-
 }
 
-export {
-  buildUrlQueryString,
-  getQueryVariables,
-  urlParameters
-};
+export { buildUrlQueryString, getQueryVariables, urlParameters };

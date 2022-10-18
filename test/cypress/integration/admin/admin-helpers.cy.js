@@ -54,25 +54,27 @@ export class AdminPage {
   }
 
   searchContact( contact_heading ) {
-    cy.get( '#changelist-search' ).type( contact_heading ).type(
-      '{enter}'
-    ).then( () => {
-      // we need to wait for results to be populated
-      cy.wait( 1000 );
-    } );
+    cy.get( '#changelist-search' )
+      .type( contact_heading )
+      .type( '{enter}' )
+      .then( () => {
+        // we need to wait for results to be populated
+        cy.wait( 1000 );
+      } );
   }
 
   removeContact() {
-    cy.get(
-      'a[href^="/admin/v1/contact/delete/"]:first'
-    ).click( { force: true } ).then( () => {
-      cy.get( '[value="Yes, delete"]' ).click();
-    } );
+    cy.get( 'a[href^="/admin/v1/contact/delete/"]:first' )
+      .click( { force: true } )
+      .then( () => {
+        cy.get( '[value="Yes, delete"]' ).click();
+      } );
   }
 
   addMortgageData( name ) {
-    cy.get( `a[href="/admin/data_research/mortgage${ name }/create/"]:first` )
-      .click();
+    cy.get(
+      `a[href="/admin/data_research/mortgage${ name }/create/"]:first`
+    ).click();
     cy.get( '#id_name' ).type( 'test' );
     this.submitForm();
   }
@@ -96,8 +98,9 @@ export class AdminPage {
 
   editRegulation() {
     this.getFirstTableRow().trigger( 'mouseover' );
-    cy.get( 'a[href^="/admin/regulations3k/part/edit/"]:first' )
-      .click( { force: true } );
+    cy.get( 'a[href^="/admin/regulations3k/part/edit/"]:first' ).click( {
+      force: true
+    } );
     this.submitForm();
   }
 
@@ -128,8 +131,7 @@ export class AdminPage {
 
   openPage( name ) {
     this.openNavigationTab( 'Pages' );
-    cy.get( '.c-explorer__item__link' ).contains( name )
-      .click( { force: true } );
+    cy.get( '.c-explorer__item__link' ).contains( name ).click( { force: true } );
   }
 
   addBlogChildPage() {
@@ -138,7 +140,8 @@ export class AdminPage {
   }
 
   clickBlock( name ) {
-    return cy.get( `.action-add-block-${ name }`, { timeout: 60000 } )
+    return cy
+      .get( `.action-add-block-${ name }`, { timeout: 60000 } )
       .should( 'be.visible' )
       .click();
   }
@@ -226,10 +229,10 @@ export class AdminPage {
 
   addTable() {
     this.clickBlock( 'table_block' );
-    cy.get( '.c-sf-container__block-container', { timeout: 60000 } )
-      .should( 'be.visible' );
-    cy.get( '.c-sf-add-panel__grid', { timeout: 60000 } )
-      .should( 'be.visible' );
+    cy.get( '.c-sf-container__block-container', { timeout: 60000 } ).should(
+      'be.visible'
+    );
+    cy.get( '.c-sf-add-panel__grid', { timeout: 60000 } ).should( 'be.visible' );
   }
 
   getFirstTableCell() {
@@ -238,7 +241,7 @@ export class AdminPage {
 
   getTableEditor() {
     cy.get( '.handsontableInputHolder', { timeout: 60000 } )
-    // Make sure the editor isn't hidden
+      // Make sure the editor isn't hidden
       .should( 'not.have.css', 'z-index', '-1' )
       .as( 'tableEditor' );
   }
@@ -253,8 +256,7 @@ export class AdminPage {
   }
 
   selectTableEditorButton( name ) {
-    cy.get( '@tableEditor' ).find( `[name="${ name }"]` )
-      .click();
+    cy.get( '@tableEditor' ).find( `[name="${ name }"]` ).click();
   }
 
   searchFirstTableCell( name ) {
@@ -264,17 +266,19 @@ export class AdminPage {
   closeTableEditor() {
     /* Clicking anywhere outside the editor closes it, so we'll just click
        on the very bottom right of the content container */
-    cy.get( '.content' )
-      .click( 'bottomRight', { force: true } );
+    cy.get( '.content' ).click( 'bottomRight', { force: true } );
   }
 
   typeTableEditorTextbox( text ) {
-    return cy.get( '@tableEditor' )
-      .find( '.public-DraftEditor-content' )
-      .focus()
-      .type( text )
-      // We need to wait for a bit or the typed text won't be captured
-      .wait( 500 );
+    return (
+      cy
+        .get( '@tableEditor' )
+        .find( '.public-DraftEditor-content' )
+        .focus()
+        .type( text )
+        // We need to wait for a bit or the typed text won't be captured
+        .wait( 500 )
+    );
   }
 
   selectInternalLink( text ) {

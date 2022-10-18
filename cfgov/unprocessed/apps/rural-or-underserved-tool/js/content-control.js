@@ -2,9 +2,18 @@ import DT from './dom-tools';
 import count from './count';
 
 const monthNames = [
-  'January', 'February', 'March', 'April',
-  'May', 'June', 'July', 'August', 'September',
-  'October', 'November', 'December'
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
 ];
 
 /**
@@ -16,7 +25,6 @@ function _hideData() {
   DT.addClass( '#duplicate', 'u-hidden' );
   DT.addClass( '#notFound', 'u-hidden' );
 }
-
 
 /**
  * Setup the main UI.
@@ -35,7 +43,8 @@ function setup() {
   const monthIndex = date.getMonth();
   const year = date.getFullYear();
 
-  DT.changeElText( '.report-date',
+  DT.changeElText(
+    '.report-date',
     'Report generated ' + monthNames[monthIndex] + ' ' + day + ', ' + year
   );
 

@@ -1,5 +1,4 @@
 export class FilterableListControl {
-
   filterableListControl() {
     return cy.get( '.o-filterable-list-controls' );
   }
@@ -29,23 +28,17 @@ export class FilterableListControl {
   }
 
   getResultCategoryHasTags() {
-    return cy.get(
-      '.o-filterable-list_results .tags_tag'
-    ).closest(
-      '.o-post-preview'
-    ).find(
-      '.m-meta-header_category:first'
-    );
+    return cy
+      .get( '.o-filterable-list_results .tags_tag' )
+      .closest( '.o-post-preview' )
+      .find( '.m-meta-header_category:first' );
   }
 
   getResultTagHasCategories() {
-    return cy.get(
-      '.o-filterable-list_results .m-meta-header_category'
-    ).closest(
-      '.o-post-preview'
-    ).find(
-      '.tags_tag:first'
-    );
+    return cy
+      .get( '.o-filterable-list_results .m-meta-header_category' )
+      .closest( '.o-post-preview' )
+      .find( '.tags_tag:first' );
   }
 
   getResultTag() {
@@ -53,13 +46,10 @@ export class FilterableListControl {
   }
 
   getResultTitleHasTag() {
-    return cy.get(
-      '.o-filterable-list_results .tags_tag:first'
-    ).closest(
-      '.o-post-preview'
-    ).find(
-      '.o-post-preview_title:first'
-    );
+    return cy
+      .get( '.o-filterable-list_results .tags_tag:first' )
+      .closest( '.o-post-preview' )
+      .find( '.o-post-preview_title:first' );
   }
 
   getResultCategory() {
@@ -67,13 +57,10 @@ export class FilterableListControl {
   }
 
   getResultTitleHasCategory() {
-    return cy.get(
-      '.o-filterable-list_results .m-meta-header_category:first'
-    ).closest(
-      '.o-post-preview'
-    ).find(
-      '.o-post-preview_title:first'
-    );
+    return cy
+      .get( '.o-filterable-list_results .m-meta-header_category:first' )
+      .closest( '.o-post-preview' )
+      .find( '.o-post-preview_title:first' );
   }
 
   resultsHeaderContent() {
@@ -139,5 +126,4 @@ export class FilterableListControl {
   hideFilters() {
     return cy.get( '.o-expandable_cue-close' ).click();
   }
-
 }

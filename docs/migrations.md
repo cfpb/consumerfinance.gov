@@ -6,7 +6,6 @@ will always require a new [Django schema migration](#schema-migrations);
 additionally, changing field names or types on an existing block will require a
 [Django data migration](#data-migrations).
 
-
 ## Table of contents
 
 1. [Reference material](#reference-material)
@@ -17,7 +16,6 @@ additionally, changing field names or types on an existing block will require a
    1. [Utility functions](#utility-functions)
 1. [Recreating migrations](#recreating-migrations)
 
-
 ## Reference material
 
 The following links may be useful for setting context or diving deeper
@@ -26,7 +24,6 @@ into the concepts presented throughout this page:
 - [Django migrations documentation](https://docs.djangoproject.com/en/1.11/topics/migrations/)
 - [Django data migrations documentation](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations)
 - [Wagtail Streamfield migrations documentation](https://docs.wagtail.io/en/stable/topics/streamfield.html#migrations)
-
 
 ## Do I need to create a migration?
 
@@ -39,9 +36,9 @@ Example model changes that require a migration:
 
 - Adding, removing, or renaming a model field
 - Changing a model field definition in a way that impacts the database schema
-(for example, changing the size of a `CharField`)
+  (for example, changing the size of a `CharField`)
 - Changing a model field definition in a way that does not impact the database schema
-(for example, changing the field's `help_text`)
+  (for example, changing the field's `help_text`)
 
 Example model changes that do not require a migration:
 
@@ -73,7 +70,6 @@ Running with the `--dry-run` flag won't actually create any migration files on d
 See below for more information on how to do this, including how to give your
 migrations a more descriptive name.
 
-
 ## Schema migrations
 
 Any time you add or change a field on a Django model, Wagtail page model
@@ -93,9 +89,9 @@ For examples of good migration names, look through some of
 [our existing migration files](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/v1/migrations).
 
 !!! note
-    Some changes will generate multiple migration files.
-    If you change a block that is used in pages defined in different sub-apps,
-    you will see a migration file for each of those sub-apps.
+Some changes will generate multiple migration files.
+If you change a block that is used in pages defined in different sub-apps,
+you will see a migration file for each of those sub-apps.
 
 ### Migration numbering and conflicts
 
@@ -112,7 +108,6 @@ Also note that our
 [back-end tests that run in GitHub Actions](../github-actions/)
 will fail if a required schema migration is missing or if
 migrations are in conflict with one another.
-
 
 ## Data migrations
 
@@ -173,9 +168,9 @@ The `forwards()` and `backwards()` functions are where any changes
 that need to happen to a model's data are made.
 
 !!! note
-    While backwards migrations are necessary in external libraries that we create,
-    we do not require them in consumerfinance.gov
-    because we prefer not to rollback migrations that have already been applied.
+While backwards migrations are necessary in external libraries that we create,
+we do not require them in consumerfinance.gov
+because we prefer not to rollback migrations that have already been applied.
 
 ### Wagtail-specific considerations
 
@@ -351,7 +346,7 @@ Django provides an automated
 process for migrations, but this is often not optimal when migrations contain manual `RunPython` blocks are present.
 Before running `squashmigrations`, search existing migrations for `RunPython` blocks without `elidable=True`, and
 correct them to have `elidable=True`. This will tell `squashmigrations` to drop that `RunPython` block.
-In almost *all* cases, we do not want to keep any `RunPython` blocks.
+In almost _all_ cases, we do not want to keep any `RunPython` blocks.
 It is highly recommended to get a postgres database setup with the current migrations before
 attempting to squash.
 
@@ -376,9 +371,9 @@ cfgov/manage.py migrate
 ```
 
 4. Correct errors, if any, until there are no migrations to apply or create.
-Repeat steps 3 and 4 until no errors.
-It may be possible that an additional migration will be generated
-if there was an error that needed to be corrected.
+   Repeat steps 3 and 4 until no errors.
+   It may be possible that an additional migration will be generated
+   if there was an error that needed to be corrected.
 
 5. Unittest with squashed migrations in place
 6. Recreate fresh database, and load `test.sql.gz`, and apply the migrations.
@@ -396,7 +391,9 @@ if there was an error that needed to be corrected.
 9. Delete non-squashed migration files that were squashed.
 
 ### Squash Notes
+
 #### 2022
+
 `teachers_digital_platform` had an over-optimization or circular dependency
 issue, resulting in the following error.
 

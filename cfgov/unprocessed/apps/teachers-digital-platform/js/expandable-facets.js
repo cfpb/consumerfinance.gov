@@ -7,29 +7,29 @@ import ExpandableFacetTransition from './ExpandableFacetTransition';
 
 const ExpandableFacets = AtomicComponent.extend( {
   ui: {
-    base:           '.o-expandable-facets',
-    target:         '.o-expandable-facets_target',
-    content:        '.o-expandable-facets_content',
-    header:         '.o-expandable_header',
-    facetCheckbox:  '.o-expandable-facets_checkbox',
-    facetLabel:     '.o-expandable-facets_checkbox ~ .a-label'
+    base: '.o-expandable-facets',
+    target: '.o-expandable-facets_target',
+    content: '.o-expandable-facets_content',
+    header: '.o-expandable_header',
+    facetCheckbox: '.o-expandable-facets_checkbox',
+    facetLabel: '.o-expandable-facets_checkbox ~ .a-label'
   },
 
   classes: {
-    targetExpanded:  'is-open',
+    targetExpanded: 'is-open',
     targetCollapsed: 'is-closed',
-    group:           'o-expandable-group'
+    group: 'o-expandable-group'
   },
 
   events: {
     'click .o-expandable-facets_target': 'expandableClickHandler'
   },
 
-  transition:       null,
+  transition: null,
 
-  initialize:             initialize,
+  initialize: initialize,
   expandableClickHandler: expandableClickHandler,
-  toggleTargetState:      toggleTargetState
+  toggleTargetState: toggleTargetState
 } );
 
 /**
@@ -37,14 +37,15 @@ const ExpandableFacets = AtomicComponent.extend( {
  */
 function initialize() {
   const customClasses = {
-    BASE_CLASS:   'o-expandable-facets_content__transition',
-    EXPANDED:     'o-expandable-facets_content__expanded',
-    COLLAPSED:    'o-expandable-facets_content__collapsed',
+    BASE_CLASS: 'o-expandable-facets_content__transition',
+    EXPANDED: 'o-expandable-facets_content__expanded',
+    COLLAPSED: 'o-expandable-facets_content__collapsed',
     OPEN_DEFAULT: 'o-expandable-facets_content__onload-open'
   };
 
   const transition = new ExpandableFacetTransition(
-    this.ui.content, customClasses
+    this.ui.content,
+    customClasses
   );
   this.transition = transition.init();
 
@@ -54,8 +55,10 @@ function initialize() {
     this.ui.target.classList.add( this.classes.targetCollapsed );
   }
 
-  if ( this.ui.facetCheckbox.hasAttribute( 'checked' ) ||
-    this.ui.facetLabel.classList.contains( 'indeterminate' ) ) {
+  if (
+    this.ui.facetCheckbox.hasAttribute( 'checked' ) ||
+    this.ui.facetLabel.classList.contains( 'indeterminate' )
+  ) {
     this.transition.toggleExpandable();
     this.toggleTargetState( this.ui.target );
   }

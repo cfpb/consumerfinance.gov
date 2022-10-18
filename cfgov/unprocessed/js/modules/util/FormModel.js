@@ -18,17 +18,8 @@ import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.
 function FormModel( form ) {
   const _form = form;
   const _defaults = {
-    ignoreFieldTypes: [
-      'hidden',
-      'button',
-      'submit',
-      'reset',
-      'fieldset'
-    ],
-    groupFieldTypes: [
-      'radio',
-      'checkbox'
-    ]
+    ignoreFieldTypes: [ 'hidden', 'button', 'submit', 'reset', 'fieldset' ],
+    groupFieldTypes: [ 'radio', 'checkbox' ]
   };
 
   const _fieldCache = new Map();
@@ -76,21 +67,19 @@ function FormModel( form ) {
       }
 
       if ( isInGroup ) {
-        groupName = element.getAttribute( 'data-group' ) ||
-                    element.getAttribute( 'name' );
+        groupName =
+          element.getAttribute( 'data-group' ) || element.getAttribute( 'name' );
       }
 
-      isRequired = element.getAttribute( 'data-required' ) !== null ||
-                   element.getAttribute( 'required' ) !== null;
+      isRequired =
+        element.getAttribute( 'data-required' ) !== null ||
+        element.getAttribute( 'required' ) !== null;
 
-      _fieldCache.set(
-        element,
-        {
-          type: type,
-          label: _getLabelText( element, false || isInGroup ),
-          isInGroup: isInGroup
-        }
-      );
+      _fieldCache.set( element, {
+        type: type,
+        label: _getLabelText( element, false || isInGroup ),
+        isInGroup: isInGroup
+      } );
     }
 
     _fieldCache.set( 'elements', rawElements );
@@ -135,9 +124,11 @@ function FormModel( form ) {
    * @returns {string} A type string for the element.
    */
   function _getElementType( elem ) {
-    return elem.getAttribute( 'data-type' ) ||
-           elem.getAttribute( 'type' ) ||
-           elem.tagName.toLowerCase();
+    return (
+      elem.getAttribute( 'data-type' ) ||
+      elem.getAttribute( 'type' ) ||
+      elem.tagName.toLowerCase()
+    );
   }
 
   this.init = init;

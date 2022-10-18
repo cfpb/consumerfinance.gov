@@ -28,8 +28,10 @@ const update = {
     }
 
     for ( const benKey in resp.data.benefits ) {
-      if ( {}.hasOwnProperty.call( resp.data.benefits, benKey ) &&
-           benKey.substr( 0, 3 ) === 'age' ) {
+      if (
+        {}.hasOwnProperty.call( resp.data.benefits, benKey ) &&
+        benKey.substr( 0, 3 ) === 'age'
+      ) {
         const prop = benKey.replace( ' ', '' );
         update.benefits( prop, resp.data.benefits[benKey] );
       }
@@ -49,12 +51,8 @@ const update = {
       'earlyAge',
       Number( data['early retirement age'].substr( 0, 2 ) )
     );
-    update.benefits(
-      'monthsPastBirthday',
-      Number( data.months_past_birthday )
-    );
+    update.benefits( 'monthsPastBirthday', Number( data.months_past_birthday ) );
   }
-
 };
 
 export default update;

@@ -1,10 +1,10 @@
 import fastDom from 'fastdom';
 
-const NO_OP = function NO_OP( ) {
+const NO_OP = function NO_OP() {
   // Placeholder function meant to be overridden.
 };
 
-const _matches = ( function _getMatches( ) {
+const _matches = ( function _getMatches() {
   const el = document.body;
   return (
     el.matches ||
@@ -12,7 +12,7 @@ const _matches = ( function _getMatches( ) {
     el.mozMatchesSelector ||
     el.msMatchesSelector
   );
-} )( );
+} )();
 
 function _mutate( selector, callback ) {
   applyAll( selector, function( element ) {
@@ -26,12 +26,12 @@ function _mutate( selector, callback ) {
    this by omitting <tbody> or other required elements. */
 const firstTag = /<([a-z][^\/\0>\x20\t\r\n\f]+)/;
 const wrapMap = {
-  'col':     [ 2, '<table><colgroup>', '</colgroup></table>' ],
+  'col': [ 2, '<table><colgroup>', '</colgroup></table>' ],
   'default': [ 0, '', '' ],
-  'option':  [ 1, '<select multiple=\'multiple\'>', '</select>' ],
-  'td':      [ 3, '<table><tbody><tr>', '</tr></tbody></table>' ],
-  'thead':   [ 1, '<table>', '</table>' ],
-  'tr':      [ 2, '<table><tbody>', '</tbody></table>' ]
+  'option': [ 1, "<select multiple='multiple'>", '</select>' ],
+  'td': [ 3, '<table><tbody><tr>', '</tr></tbody></table>' ],
+  'thead': [ 1, '<table>', '</table>' ],
+  'tr': [ 2, '<table><tbody>', '</tbody></table>' ]
 };
 
 function applyAll( elements, applyFn ) {
@@ -57,15 +57,14 @@ function bindEvents( elements, events, callback ) {
 }
 
 function addEl( parent, child ) {
-  return fastDom.mutate( function( ) {
+  return fastDom.mutate( function() {
     const el = createEl( child );
     return getEl( parent ).appendChild( el );
   } );
 }
 
 function getElData( selector, attributeName ) {
-  return getEl( selector )
-    .getAttribute( 'data-' + attributeName );
+  return getEl( selector ).getAttribute( 'data-' + attributeName );
 }
 
 function changeElText( selector, text ) {
@@ -263,13 +262,13 @@ function fadeIn( selector, time, callback ) {
   element.style.opacity = 0.05;
   element.style.display = 'block';
 
-  window.setTimeout( function( ) {
+  window.setTimeout( function() {
     return ( element.style.opacity = 1 );
   }, 100 );
 
-  window.setTimeout( function( ) {
+  window.setTimeout( function() {
     element.style.display = 'block';
-    return ( callback || NO_OP )( );
+    return ( callback || NO_OP )();
   }, time );
 }
 
@@ -283,13 +282,13 @@ function fadeOut( selector, time, callback ) {
   element.style.transition = 'opacity ' + time + 'ms ease-in-out';
   element.style.opacity = 1;
 
-  window.setTimeout( function( ) {
+  window.setTimeout( function() {
     return ( element.style.opacity = 0.05 );
   }, 100 );
 
-  window.setTimeout( function( ) {
+  window.setTimeout( function() {
     element.style.display = 'none';
-    return ( callback || NO_OP )( );
+    return ( callback || NO_OP )();
   }, time );
 }
 

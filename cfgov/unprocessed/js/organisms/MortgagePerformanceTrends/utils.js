@@ -1,6 +1,7 @@
 import ajax from 'xdr';
 
-const COUNTIES_URL = '/data-research/mortgages/api/v1/metadata/state_county_meta';
+const COUNTIES_URL =
+  '/data-research/mortgages/api/v1/metadata/state_county_meta';
 const METROS_URL = '/data-research/mortgages/api/v1/metadata/state_msa_meta';
 const NON_METROS_URL = '/data-research/mortgages/api/v1/metadata/non_msa_fips';
 const STATES_URL = '/data-research/mortgages/api/v1/metadata/state_meta';
@@ -425,7 +426,7 @@ const utils = {
     console.groupCollapsed( 'previous state:' );
     console.log( JSON.stringify( store.getState(), '', '\t' ) );
     console.groupEnd();
-    var result = next( action ); // eslint-disable-line
+    var result = next(action); // eslint-disable-line
     console.groupCollapsed( 'state:' );
     console.log( JSON.stringify( store.getState(), '', '\t' ) );
     console.groupEnd();

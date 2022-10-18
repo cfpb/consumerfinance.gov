@@ -15,7 +15,10 @@ function populateTableRows( contents ) {
   const fragment = document.createDocumentFragment();
   const body = buildTableBody();
 
-  const rows = contents.reduce( ( rows, rowContent ) => `${ rows }${ tableRow( rowContent ) }`, '' );
+  const rows = contents.reduce(
+    ( rows, rowContent ) => `${ rows }${ tableRow( rowContent ) }`,
+    ''
+  );
 
   body.innerHTML = rows;
 

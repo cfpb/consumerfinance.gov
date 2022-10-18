@@ -7,11 +7,11 @@ describe( 'Your Financial Path to Graduation (navigation)', () => {
     cy.visit( '/paying-for-college/your-financial-path-to-graduation/' );
   } );
   it( 'should not navigate when program radios are not selected', () => {
-    page.clickGetStarted( );
+    page.clickGetStarted();
     page.enter( 'Harvard University' );
     page.searchResults().should( 'be.visible' );
     page.clickSearchResult( 'Harvard University' );
-    page.clickNextStep( );
+    page.clickNextStep();
     cy.get( '#college-costs_school-search' ).should( 'be.visible' );
     page.clickLeftNav( 'costs' );
     cy.get( '#college-costs_school-search' ).should( 'be.visible' );

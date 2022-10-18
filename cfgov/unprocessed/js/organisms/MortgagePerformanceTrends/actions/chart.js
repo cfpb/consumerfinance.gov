@@ -65,9 +65,7 @@ chartActionCreators.fetchNonMetroStates = nonMetroState => dispatch => utils.get
     }
   } );
   // Alphabetical order
-  nonMetroStates = nonMetroStates.sort(
-    ( a, b ) => ( a.name < b.name ? -1 : 1 )
-  );
+  nonMetroStates = nonMetroStates.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
   dispatch( chartActionCreators.setStates( nonMetroStates ) );
   dispatch( chartActionCreators.fetchNonMetros( nonMetroState ) );
   return nonMetroStates;
@@ -100,9 +98,7 @@ chartActionCreators.fetchCountyStates = countyState => dispatch => utils.getCoun
     }
   } );
   // Alphabetical order
-  countyStates = countyStates.sort(
-    ( a, b ) => ( a.name < b.name ? -1 : 1 )
-  );
+  countyStates = countyStates.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
 
   /* If the provided state isn't valid for this location type,
        use the first state in the list. */
@@ -122,31 +118,41 @@ chartActionCreators.fetchCountyStates = countyState => dispatch => utils.getCoun
  *
  * @returns {Function} Thunk called with valid states.
  */
-chartActionCreators.fetchStates = ( selectedState, includeComparison ) => dispatch => utils.getStateData( states => {
-  states = Object.keys( states ).map( fips => {
-    const state = {
-      abbr: states[fips].abbr,
-      fips: fips,
-      name: states[fips].name,
-      text: states[fips].name
-    };
-    if ( selectedState === states[fips].abbr ) {
-      selectedState = state;
-      state.selected = true;
-    }
-    return state;
+chartActionCreators.fetchStates =
+  ( selectedState, includeComparison ) => dispatch => utils.getStateData( states => {
+    states = Object.keys( states ).map( fips => {
+      const state = {
+        abbr: states[fips].abbr,
+        fips: fips,
+        name: states[fips].name,
+        text: states[fips].name
+      };
+      if ( selectedState === states[fips].abbr ) {
+        selectedState = state;
+        state.selected = true;
+      }
+      return state;
+    } );
+    // Alphabetical order
+    states = states.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
+    dispatch( chartActionCreators.setStates( states ) );
+    dispatch(
+      chartActionCreators.setGeo(
+        selectedState.fips,
+        selectedState.name,
+        'state'
+      )
+    );
+    dispatch(
+      chartActionCreators.updateChart(
+        selectedState.fips,
+        selectedState.name,
+        'state',
+        includeComparison
+      )
+    );
+    return states;
   } );
-  // Alphabetical order
-  states = states.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
-  dispatch( chartActionCreators.setStates( states ) );
-  dispatch( chartActionCreators.setGeo(
-    selectedState.fips, selectedState.name, 'state'
-  ) );
-  dispatch( chartActionCreators.updateChart(
-    selectedState.fips, selectedState.name, 'state', includeComparison
-  ) );
-  return states;
-} );
 
 /**
  * setStates - New U.S. states.
@@ -167,30 +173,41 @@ chartActionCreators.setStates = states => ( {
  *
  * @returns {Function} Thunk called with new metros
  */
-chartActionCreators.fetchMetros = ( metroState, includeComparison ) => dispatch => {
-  dispatch( chartActionCreators.requestMetros( metroState ) );
-  return utils.getMetroData( data => {
-    // Alphabetical order
-    let newMetros = data[metroState].metros.sort(
-      ( a, b ) => ( a.name < b.name ? -1 : 1 )
-    );
-    newMetros = newMetros.filter( metro => metro.valid );
-    if ( !newMetros.length ) {
-      newMetros = [ {
-        fips: null,
-        name: 'No metros have sufficient data'
-      } ];
-    }
-    dispatch( chartActionCreators.setMetros( newMetros ) );
-    dispatch( chartActionCreators.setGeo(
-      newMetros[0].fips, newMetros[0].name, 'metro'
-    ) );
-    dispatch( chartActionCreators.updateChart(
-      newMetros[0].fips, newMetros[0].name, 'metro', includeComparison
-    ) );
-    return newMetros;
-  } );
-};
+chartActionCreators.fetchMetros =
+  ( metroState, includeComparison ) => dispatch => {
+    dispatch( chartActionCreators.requestMetros( metroState ) );
+    return utils.getMetroData( data => {
+      // Alphabetical order
+      let newMetros = data[metroState].metros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 )
+      );
+      newMetros = newMetros.filter( metro => metro.valid );
+      if ( !newMetros.length ) {
+        newMetros = [
+          {
+            fips: null,
+            name: 'No metros have sufficient data'
+          }
+        ];
+      }
+      dispatch( chartActionCreators.setMetros( newMetros ) );
+      dispatch(
+        chartActionCreators.setGeo(
+          newMetros[0].fips,
+          newMetros[0].name,
+          'metro'
+        )
+      );
+      dispatch(
+        chartActionCreators.updateChart(
+          newMetros[0].fips,
+          newMetros[0].name,
+          'metro',
+          includeComparison
+        )
+      );
+      return newMetros;
+    } );
+  };
 
 /**
  * fetchCounties - Creates async action to fetch list of counties
@@ -200,23 +217,32 @@ chartActionCreators.fetchMetros = ( metroState, includeComparison ) => dispatch 
  *
  * @returns {Function} Thunk called with new metros
  */
-chartActionCreators.fetchCounties = ( countyState, includeComparison ) => dispatch => {
-  dispatch( chartActionCreators.requestCounties( countyState ) );
-  return utils.getCountyData( data => {
-    // Alphabetical order
-    let newCounties = data[countyState].counties.sort(
-      ( a, b ) => ( a.name < b.name ? -1 : 1 )
-    );
-    newCounties = newCounties.filter( county => county.valid );
-    dispatch( chartActionCreators.setCounties( newCounties ) );
-    dispatch( chartActionCreators.setGeo(
-      newCounties[0].fips, newCounties[0].name, 'county' )
-    );
-    dispatch( chartActionCreators.updateChart(
-      newCounties[0].fips, newCounties[0].name, 'county', includeComparison )
-    );
-    return newCounties;
-  } );
-};
+chartActionCreators.fetchCounties =
+  ( countyState, includeComparison ) => dispatch => {
+    dispatch( chartActionCreators.requestCounties( countyState ) );
+    return utils.getCountyData( data => {
+      // Alphabetical order
+      let newCounties = data[countyState].counties.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 )
+      );
+      newCounties = newCounties.filter( county => county.valid );
+      dispatch( chartActionCreators.setCounties( newCounties ) );
+      dispatch(
+        chartActionCreators.setGeo(
+          newCounties[0].fips,
+          newCounties[0].name,
+          'county'
+        )
+      );
+      dispatch(
+        chartActionCreators.updateChart(
+          newCounties[0].fips,
+          newCounties[0].name,
+          'county',
+          includeComparison
+        )
+      );
+      return newCounties;
+    } );
+  };
 
 export default chartActionCreators;

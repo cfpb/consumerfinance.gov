@@ -1,5 +1,4 @@
 export class FilingInstructionGuide {
-
   url() {
     return '/compliance/compliance-resources/small-business-lending/1071-filing-instruction-guide/';
   }
@@ -47,5 +46,4 @@ export class FilingInstructionGuide {
   scrollToBottom() {
     return cy.get( 'footer' ).scrollIntoView( { duration: 1000 } );
   }
-
 }

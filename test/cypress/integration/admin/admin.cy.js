@@ -3,7 +3,6 @@ import { AdminPage } from './admin-helpers.cy.js';
 const admin = new AdminPage();
 
 describe( 'Admin', () => {
-
   before( () => {
     /* We can be reasonably sure that the Wagtail admin is being used on a
       laptop screen or larger, and the table editor is wider than Cypress's

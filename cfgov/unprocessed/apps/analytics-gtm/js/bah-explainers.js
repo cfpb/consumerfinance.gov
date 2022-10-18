@@ -1,7 +1,4 @@
-import {
-  addEventListenerToSelector,
-  track
-} from './util/analytics-util';
+import { addEventListenerToSelector, track } from './util/analytics-util';
 
 /*
 Buying a House /owning-a-home/loan-estimate/
@@ -9,7 +6,6 @@ Buying a House /owning-a-home/closing-disclosure/
 */
 
 export default function( label ) {
-
   const trackingLabel = `${ label } Interaction`;
 
   const expandableStates = {};
@@ -36,8 +32,10 @@ export default function( label ) {
   function isAnimatingExpandable( expandable ) {
     let isAnimating = false;
 
-    if ( expandable.classList.contains( 'o-expandable__expanding' ) ||
-         expandable.classList.contains( 'o-expandable__collapsing' ) ) {
+    if (
+      expandable.classList.contains( 'o-expandable__expanding' ) ||
+      expandable.classList.contains( 'o-expandable__collapsing' )
+    ) {
       isAnimating = true;
     }
 
@@ -67,8 +65,9 @@ export default function( label ) {
    */
   function trackFormExplainerPageButtonClick( event ) {
     const target = event.currentTarget;
-    const currentPageDom =
-      document.querySelector( '.form-explainer_page-link.current-page' );
+    const currentPageDom = document.querySelector(
+      '.form-explainer_page-link.current-page'
+    );
     const currentPage = 'Page ' + currentPageDom.getAttribute( 'data-page' );
     let action = 'Next Page button clicked';
     if ( target.classList.contains( 'prev' ) ) {
@@ -84,7 +83,9 @@ export default function( label ) {
     const elem = event.currentTarget;
     const expandable = elem.parentNode;
     const expandableID = expandable.id;
-    if ( isAnimatingExpandable( expandable ) ) { return; }
+    if ( isAnimatingExpandable( expandable ) ) {
+      return;
+    }
     recordExpandableState( expandableID );
 
     const tab = document.querySelector( '.active-tab' );
@@ -109,7 +110,9 @@ export default function( label ) {
     let action = 'Image Overlay click - expandable collapsed';
     const expandable = document.querySelector( href );
     const expandableID = expandable.id;
-    if ( isAnimatingExpandable( expandable ) ) { return; }
+    if ( isAnimatingExpandable( expandable ) ) {
+      return;
+    }
     recordExpandableState( expandableID );
     if ( expandableStates[expandableID] === true ) {
       action = 'Image Overlay click - expandable expanded';
@@ -117,20 +120,25 @@ export default function( label ) {
     track( trackingLabel, action, text );
   }
 
+  addEventListenerToSelector( '.tab-link', 'click', trackTabLinkClick );
   addEventListenerToSelector(
-    '.tab-link', 'click', trackTabLinkClick
+    '.form-explainer_page-link',
+    'click',
+    trackFormExplainerPageLinkClick
   );
   addEventListenerToSelector(
-    '.form-explainer_page-link', 'click', trackFormExplainerPageLinkClick
-  );
-  addEventListenerToSelector(
-    '.form-explainer_page-buttons button', 'click',
+    '.form-explainer_page-buttons button',
+    'click',
     trackFormExplainerPageButtonClick
   );
   addEventListenerToSelector(
-    '.o-expandable_target', 'mouseup', trackExpandableTargetsClick
+    '.o-expandable_target',
+    'mouseup',
+    trackExpandableTargetsClick
   );
   addEventListenerToSelector(
-    '.image-map_overlay', 'click', trackImageMapOverlayClick
+    '.image-map_overlay',
+    'click',
+    trackImageMapOverlayClick
   );
 }

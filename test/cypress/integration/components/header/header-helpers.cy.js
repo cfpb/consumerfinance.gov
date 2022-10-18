@@ -1,5 +1,4 @@
 export class Header {
-
   headerContent() {
     return cy.get( '.o-header_content' );
   }

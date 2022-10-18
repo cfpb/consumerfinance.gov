@@ -60,7 +60,8 @@ describe( 'add-email-popup', () => {
     // eslint-disable-next-line no-unused-vars
     const addEmailPopup = require( BASE_JS_PATH + '/add-email-popup' );
     const emailPopupDom = document.querySelector( '.o-email-popup' );
-    expect( emailPopupDom.classList.contains( 'o-email-popup__visible' ) )
-      .toBe( false );
+    expect( emailPopupDom.classList.contains( 'o-email-popup__visible' ) ).toBe(
+      false
+    );
   } );
 } );

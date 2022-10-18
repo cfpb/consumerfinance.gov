@@ -22,5 +22,4 @@ describe( 'numToMoney...', function() {
   it( '...should turn OBJECT into $0', function() {
     expect( numToMoney( { testObject: true } ) ).toEqual( '$0' );
   } );
-
 } );

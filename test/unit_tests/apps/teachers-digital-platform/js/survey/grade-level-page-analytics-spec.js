@@ -1,8 +1,7 @@
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/';
-const tdpAnalytics = require(
-  BASE_JS_PATH + 'teachers-digital-platform/js/tdp-analytics.js'
-);
+const tdpAnalytics = require( BASE_JS_PATH +
+  'teachers-digital-platform/js/tdp-analytics.js' );
 import HTML_SNIPPET from '../../html/grade-level-page-analytics';
 
 const xhr = global.XMLHttpRequest;
@@ -64,5 +63,4 @@ describe( 'Custom analytics for the TDP survey grade-level page', () => {
     expect( spy.mock.calls[0][0] ).toEqual( "Let's do this" );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5' );
   } );
-
 } );

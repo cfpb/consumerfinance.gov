@@ -1,9 +1,8 @@
 import { handleFetchSearchResults } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
-const tdpAnalytics = require(
-  BASE_JS_PATH + 'teachers-digital-platform/js/tdp-analytics.js'
-);
+const tdpAnalytics = require( BASE_JS_PATH +
+  'teachers-digital-platform/js/tdp-analytics.js' );
 
 const EMPTY_SEARCH_HTML = `
   <div id="tdp-search-facets-and-results">
@@ -194,7 +193,6 @@ const HTML_SNIPPET = `
 const xhr = global.XMLHttpRequest;
 
 describe( 'The TDP custom analytics', () => {
-
   beforeEach( () => {
     // Reset global XHR
     global.XMLHttpRequest = xhr;
@@ -219,7 +217,6 @@ describe( 'The TDP custom analytics', () => {
   it( 'should not throw any errors on bind', () => {
     expect( () => tdpAnalytics.bindAnalytics() ).not.toThrow();
   } );
-
 
   it( 'should send an analytics event when a filter clear icon is clicked', () => {
     const clearIcon = document.querySelector( '.results_filters svg' );
@@ -276,5 +273,4 @@ describe( 'The TDP custom analytics', () => {
     expect( spy.mock.calls[0][0] ).toEqual( 'noSearchResults' );
     expect( spy.mock.calls[0][1] ).toEqual( 'not found:0' );
   } );
-
 } );

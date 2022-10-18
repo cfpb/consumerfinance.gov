@@ -13,24 +13,14 @@ before( () => {
 } );
 
 it( 'skips tests if page does not exist', function() {
-
   skipOn( this.figPage.status === 404, () => {
-
     describe( '1071 Filing Instruction Guide (FIG)', () => {
-
       describe( 'FIG table of contents', () => {
-
         context( 'Desktop experience', () => {
-
-          const desktops = [
-            'macbook-13',
-            'macbook-15'
-          ];
+          const desktops = [ 'macbook-13', 'macbook-15' ];
 
           desktops.forEach( desktop => {
-
             context( desktop, () => {
-
               beforeEach( () => {
                 cy.viewport( desktop );
               } );
@@ -42,9 +32,15 @@ it( 'skips tests if page does not exist', function() {
 
               it( 'should highlight the first section by default', () => {
                 fig.getNavItem( 1 ).should( 'have.class', 'm-nav-link__current' );
-                fig.getNavItem( 2 ).should( 'not.have.class', 'm-nav-link__current' );
-                fig.getNavItem( 3 ).should( 'not.have.class', 'm-nav-link__current' );
-                fig.getNavItem( 4 ).should( 'not.have.class', 'm-nav-link__current' );
+                fig
+                  .getNavItem( 2 )
+                  .should( 'not.have.class', 'm-nav-link__current' );
+                fig
+                  .getNavItem( 3 )
+                  .should( 'not.have.class', 'm-nav-link__current' );
+                fig
+                  .getNavItem( 4 )
+                  .should( 'not.have.class', 'm-nav-link__current' );
               } );
 
               it( 'should be sticky', () => {
@@ -64,9 +60,15 @@ it( 'skips tests if page does not exist', function() {
               it( 'should highlight the current section', () => {
                 fig.goToSection( 2 );
                 fig.getNavItem( 2 ).should( 'have.class', 'm-nav-link__current' );
-                fig.getNavItem( 1 ).should( 'not.have.class', 'm-nav-link__current' );
-                fig.getNavItem( 3 ).should( 'not.have.class', 'm-nav-link__current' );
-                fig.getNavItem( 4 ).should( 'not.have.class', 'm-nav-link__current' );
+                fig
+                  .getNavItem( 1 )
+                  .should( 'not.have.class', 'm-nav-link__current' );
+                fig
+                  .getNavItem( 3 )
+                  .should( 'not.have.class', 'm-nav-link__current' );
+                fig
+                  .getNavItem( 4 )
+                  .should( 'not.have.class', 'm-nav-link__current' );
               } );
 
               it( 'should auto-expand subsections', () => {
@@ -108,24 +110,15 @@ it( 'skips tests if page does not exist', function() {
                 fig.getNavItem( 4 ).should( 'have.class', 'm-nav-link__current' );
                 fig.getNavItem( 4.1 ).should( 'be.visible' );
               } );
-
             } );
-
           } );
-
         } );
 
         context( 'Tablet experience', () => {
-
-          const tablets = [
-            'ipad-2',
-            'ipad-mini'
-          ];
+          const tablets = [ 'ipad-2', 'ipad-mini' ];
 
           tablets.forEach( tablet => {
-
             context( tablet, () => {
-
               beforeEach( () => {
                 cy.viewport( tablet );
               } );
@@ -162,25 +155,15 @@ it( 'skips tests if page does not exist', function() {
                 fig.getSection( 1 ).should( 'be.inViewport' );
                 fig.getSection( 4 ).should( 'not.be.inViewport' );
               } );
-
             } );
-
           } );
-
         } );
 
         context( 'Mobile experience', () => {
-
-          const mobiles = [
-            'iphone-6',
-            'iphone-xr',
-            'samsung-note9'
-          ];
+          const mobiles = [ 'iphone-6', 'iphone-xr', 'samsung-note9' ];
 
           mobiles.forEach( mobile => {
-
             context( mobile, () => {
-
               beforeEach( () => {
                 cy.viewport( mobile );
               } );
@@ -217,17 +200,10 @@ it( 'skips tests if page does not exist', function() {
                 fig.getSection( 1 ).should( 'be.inViewport' );
                 fig.getSection( 4 ).should( 'not.be.inViewport' );
               } );
-
             } );
-
           } );
-
         } );
-
       } );
-
     } );
-
   } );
-
 } );

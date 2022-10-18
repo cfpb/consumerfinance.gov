@@ -1,5 +1,4 @@
 export class Multiselect {
-
   /**
    * @param {string} label - The text within the `<label>` tag of the
    * multiselect you'd like to select. e.g. "Category" or "Topic"
@@ -14,7 +13,8 @@ export class Multiselect {
   }
 
   multiSelect( name ) {
-    return cy.contains( 'label[for^=o-filterable-list-controls]', this.label )
+    return cy
+      .contains( 'label[for^=o-filterable-list-controls]', this.label )
       .next( '.o-multiselect' )
       .find( `.o-multiselect_${ name }` );
   }
@@ -87,10 +87,13 @@ export class Multiselect {
   }
 
   firstChoicesElement() {
-    this.dropDownLabel().first().invoke( 'text' ).then( $el => {
-      const firstLabel = $el.toString();
-      this.choicesElement().first().should( 'have.text', firstLabel );
-    } );
+    this.dropDownLabel()
+      .first()
+      .invoke( 'text' )
+      .then( $el => {
+        const firstLabel = $el.toString();
+        this.choicesElement().first().should( 'have.text', firstLabel );
+      } );
   }
 
   dropDownLabelClick() {

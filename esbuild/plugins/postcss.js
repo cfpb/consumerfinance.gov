@@ -3,10 +3,7 @@ const { dirname } = require( 'path' );
 const postcss = require( 'postcss' );
 const less = require( 'less' );
 
-const postCSSPlugin = ( {
-  plugins = [],
-  lessOptions = {}
-} ) => ( {
+const postCSSPlugin = ( { plugins = [], lessOptions = {}} ) => ( {
   name: 'less-and-postcss',
   setup( build ) {
     build.onLoad( { filter: /.\.less$/ }, async args => {

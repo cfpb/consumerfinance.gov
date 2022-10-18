@@ -55,7 +55,6 @@ function isCSV( fileName ) {
   return fileName.substr( fileName.lastIndexOf( '.' ) + 1 ) === 'csv';
 }
 
-
 export default {
   resetFileName,
   setFileName,

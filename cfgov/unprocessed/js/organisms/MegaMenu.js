@@ -1,5 +1,8 @@
 // Required modules.
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import FlyoutMenu from '../modules/behavior/FlyoutMenu.js';
 import MegaMenuDesktop from '../organisms/MegaMenuDesktop.js';
@@ -48,7 +51,9 @@ function MegaMenu( element ) {
 
     // DOM selectors.
     const rootMenuDom = _dom;
-    const rootContentDom = rootMenuDom.querySelector( '.' + BASE_CLASS + '_content' );
+    const rootContentDom = rootMenuDom.querySelector(
+      '.' + BASE_CLASS + '_content'
+    );
 
     // Create model.
     _menus = new Tree();

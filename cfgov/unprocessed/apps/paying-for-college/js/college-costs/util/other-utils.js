@@ -72,10 +72,12 @@ function getStateByCode( code ) {
  * @returns {Function} The appropriate matches() method of elem.
  */
 function _getMatchesMethod( el ) {
-  return el.matches ||
-         el.webkitMatchesSelector ||
-         el.mozMatchesSelector ||
-         el.msMatchesSelector;
+  return (
+    el.matches ||
+    el.webkitMatchesSelector ||
+    el.mozMatchesSelector ||
+    el.msMatchesSelector
+  );
 }
 
 /**
@@ -90,7 +92,4 @@ function selectorMatches( el, selector ) {
   return matchesMethod.call( el, selector );
 }
 
-export {
-  getStateByCode,
-  selectorMatches
-};
+export { getStateByCode, selectorMatches };

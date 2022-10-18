@@ -1,5 +1,8 @@
 // Required modules.
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import AlphaTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/AlphaTransition';
 import BaseTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/BaseTransition';
 import ERROR_MESSAGES from '../config/error-messages-config';
@@ -179,7 +182,11 @@ function FormSubmit( element, baseClass, opts ) {
     const fields = ( _formElement || {} ).elements;
     for ( let f = 0; f < fields.length; f++ ) {
       const field = fields[f];
-      if ( field.name && !field.disabled && nonInputTypes.indexOf( field.type ) === -1 ) {
+      if (
+        field.name &&
+        !field.disabled &&
+        nonInputTypes.indexOf( field.type ) === -1
+      ) {
         if ( field.type === 'radio' || field.type === 'checkbox' ) {
           cachedFields[field.name] = cachedFields[field.name] || [];
           cachedFields[field.name].push( field );
@@ -198,8 +205,9 @@ function FormSubmit( element, baseClass, opts ) {
    * Example: param1=value1
    */
   function _serializeField( fieldName, fieldValue ) {
-    return encodeURIComponent( fieldName ) + '=' +
-           encodeURIComponent( fieldValue );
+    return (
+      encodeURIComponent( fieldName ) + '=' + encodeURIComponent( fieldValue )
+    );
   }
 
   /**

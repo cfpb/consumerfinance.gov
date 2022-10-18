@@ -7,11 +7,19 @@ const fetch = {
   apiData: function( birthdate, salary, dataLang ) {
     let url;
     if ( dataLang === 'es' ) {
-      url = '../../retirement-api/estimator/' +
-            birthdate + '/' + Number( salary ) + '/es/';
+      url =
+        '../../retirement-api/estimator/' +
+        birthdate +
+        '/' +
+        Number( salary ) +
+        '/es/';
     } else {
-      url = '../retirement-api/estimator/' +
-            birthdate + '/' + Number( salary ) + '/';
+      url =
+        '../retirement-api/estimator/' +
+        birthdate +
+        '/' +
+        Number( salary ) +
+        '/';
     }
 
     const apiDataRequest = $.ajax( {

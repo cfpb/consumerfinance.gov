@@ -31,7 +31,6 @@ const delay = ( function() {
  * @returns {string} Date in the format of MM/dd/yyyy.
  */
 function formatTimestampMMddyyyy( timestamp ) {
-
   /* Should you want to format the the date for older versions of IE
      the following can be used:
      timestamp = then.slice(0, 10).replace('-', '/');
@@ -74,7 +73,10 @@ function isVisible( elem ) {
  */
 function removeDollarAddCommas( value ) {
   let parseValue = unFormatUSD( value );
-  parseValue = formatUSD( { amount: parseValue, decimalPlaces: 0 } ).replace( '$', '' );
+  parseValue = formatUSD( { amount: parseValue, decimalPlaces: 0 } ).replace(
+    '$',
+    ''
+  );
   return parseValue;
 }
 
@@ -142,7 +144,6 @@ function renderLoanAmount( elem, loanAmount ) {
   elem.textContent = formatUSD( { amount: loanAmount, decimalPlaces: 0 } );
 }
 
-
 /**
  * Set value(s) of all HTML elements in the control panel.
  * @param {string} fields - TODO: Add description.
@@ -167,7 +168,6 @@ function setSelections( fields ) {
  * @param  {string} val Value to set inside the HTML element.
  */
 function setSelection( el, val ) {
-
   const placeHolders = document.querySelectorAll( '[placeholder]' );
   let isInPlaceholders = false;
   for ( let i = 0, len = placeHolders.length; i < len; i++ ) {

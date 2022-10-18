@@ -64,10 +64,13 @@ describe( 'explore-rates/util', () => {
   } );
 
   describe( 'calcLoanAmount()', () => {
-    it( 'should calculate a loan amount in USD ' +
-        'given a house price and down payment amount.', () => {
-      expect( util.calcLoanAmount( 200000, 20000 ) ).toBe( 180000 );
-    } );
+    it(
+      'should calculate a loan amount in USD ' +
+        'given a house price and down payment amount.',
+      () => {
+        expect( util.calcLoanAmount( 200000, 20000 ) ).toBe( 180000 );
+      }
+    );
 
     it( 'should return 0 if loan amount is negative.', () => {
       expect( util.calcLoanAmount( 200000, 2000000 ) ).toBe( 0 );
@@ -98,8 +101,9 @@ describe( 'explore-rates/util', () => {
 
   describe( 'formatTimestampMMddyyyy()', () => {
     it( 'should format a timestamp as a date.', () => {
-      expect( util.formatTimestampMMddyyyy( '2018-03-14T12:00:00Z' ) )
-        .toBe( '03/14/2018' );
+      expect( util.formatTimestampMMddyyyy( '2018-03-14T12:00:00Z' ) ).toBe(
+        '03/14/2018'
+      );
     } );
   } );
 
@@ -118,12 +122,10 @@ describe( 'explore-rates/util', () => {
       expect( util.isVisible( timeStampDom ) ).toBe( true );
     } );
 
-    it( 'should return false if HTML element does NOT have u-hidden class.',
-      () => {
-        timeStampDom.classList.add( 'u-hidden' );
-        expect( util.isVisible( timeStampDom ) ).toBe( false );
-      }
-    );
+    it( 'should return false if HTML element does NOT have u-hidden class.', () => {
+      timeStampDom.classList.add( 'u-hidden' );
+      expect( util.isVisible( timeStampDom ) ).toBe( false );
+    } );
   } );
 
   describe( 'renderAccessibleData()', () => {
@@ -135,8 +137,10 @@ describe( 'explore-rates/util', () => {
       const tableBodyHtml = '<td>3</td><td>6</td>';
 
       util.renderAccessibleData(
-        accessibleDataTableHeadDom, accessibleDataTableBodyDom,
-        mockLabels, mockVals
+        accessibleDataTableHeadDom,
+        accessibleDataTableBodyDom,
+        mockLabels,
+        mockVals
       );
       expect( accessibleDataTableHeadDom.innerHTML ).toBe( tableHeadHtml );
       expect( accessibleDataTableBodyDom.innerHTML ).toBe( tableBodyHtml );
@@ -168,7 +172,7 @@ describe( 'explore-rates/util', () => {
       housePriceDom = document.querySelector( '#house-price' );
       const mockParams = {
         'down-payment': '20,000',
-        'house-price':  '200,000'
+        'house-price': '200,000'
       };
       expect( downPaymentDom.value ).toBe( '0' );
       expect( housePriceDom.getAttribute( 'placeholder' ) ).toBe( '0' );

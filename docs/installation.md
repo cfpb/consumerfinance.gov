@@ -6,16 +6,16 @@ This quickstart requires a working Docker Desktop installation and git:
 
 - [Clone the repository](#clone-the-repository):
 
-    ```sh
-    git clone https://github.com/cfpb/consumerfinance.gov.git
-    cd consumerfinance.gov
-    ```
+  ```sh
+  git clone https://github.com/cfpb/consumerfinance.gov.git
+  cd consumerfinance.gov
+  ```
 
 - [Set up and run the Docker containers via docker-compose](#set-up-and-run-the-docker-containers):
 
-    ```sh
-    docker-compose up
-    ```
+  ```sh
+  docker-compose up
+  ```
 
 This may take some time, as it will also
 [load initial data](#load-initial-data)
@@ -75,10 +75,10 @@ For running our
 outside of the Docker container, we rely on a local Python environment.
 
 !!! note
-    Our local Python environment requires [pyenv](https://github.com/pyenv/pyenv)
-    with
-    [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv).
-    They can be installed from Homebrew on macOS:
+Our local Python environment requires [pyenv](https://github.com/pyenv/pyenv)
+with
+[pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv).
+They can be installed from Homebrew on macOS:
 
     ```sh
     brew install pyenv pyenv-virtualenv
@@ -110,6 +110,7 @@ pip install -r requirements/ci.txt
 ```
 
 ### Install pre-commit
+
 We use `pre-commit` to automatically run our linting tools before a commit
 takes place. These tools consist of `black`, `flake8`, `isort`, and `bandit`.
 To install `pre-commit`, running the following commands from within the
@@ -126,17 +127,16 @@ all checks pass, a commit will take place as expected, allowing you to then
 push to GitHub. This is to reduce the number of commits with failed lints, and
 to assist developers with linting without thinking.
 
-
 ### Build the frontend
 
 !!! note
-    Our frontend requires [Node.js 16](https://nodejs.org/en/)
-    with
-    [Yarn](https://yarnpkg.com/).
-    We prefer
-    [nvm](https://github.com/nvm-sh/nvm)
-    for Node.js version management.
-    nvm can be installed using:
+Our frontend requires [Node.js 16](https://nodejs.org/en/)
+with
+[Yarn](https://yarnpkg.com/).
+We prefer
+[nvm](https://github.com/nvm-sh/nvm)
+for Node.js version management.
+nvm can be installed using:
 
     ```sh
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | sh
@@ -175,7 +175,7 @@ yarn build
 ```
 
 !!! note
-    If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to [manage service workers in Firefox and Chrome](https://love2dev.com/blog/how-to-uninstall-a-service-worker/).
+If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to [manage service workers in Firefox and Chrome](https://love2dev.com/blog/how-to-uninstall-a-service-worker/).
 
 ### Set up and run the Docker containers
 
@@ -188,11 +188,13 @@ to run these services along side the consumerfinance.gov Django site.
 To build and run our Docker containers for the first time, run:
 
 #### docker-compose:
+
 ```sh
 docker-compose up
 ```
 
 #### Kubernetes via Helm:
+
 ```shell
 ./build-images.sh && ./helm-install.sh
 ```
@@ -215,14 +217,14 @@ and then does the following:
 
 - Creates an `admin` superuser with password `admin`.
 - If it doesn't already exist, creates a new Wagtail home page named `CFGOV`,
-with a slug of `cfgov`.
+  with a slug of `cfgov`.
 - Updates the default Wagtail site to use the port defined by the
-`DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is
-set to 80.
+  `DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is
+  set to 80.
 - If it doesn't already exist, creates a new
-[wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with
-a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
-`DJANGO_HTTP_PORT` environment variables.
+  [wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with
+  a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
+  `DJANGO_HTTP_PORT` environment variables.
 
 This script must be run inside the Docker `python` container:
 
@@ -255,7 +257,6 @@ CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 
 This automatically [(re)builds the Elasticsearch index](/search/#building-the-index),
 unless you run the `refresh-data.sh` script with the `--noindex` flag.
-
 
 ## Alternative setups
 

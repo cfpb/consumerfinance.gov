@@ -8,21 +8,21 @@ let undefinedVar;
 describe( 'Assign', () => {
   beforeEach( () => {
     testObjectA = {
-      str:  'test',
+      str: 'test',
       func: () => 'testStr',
-      num:  1
+      num: 1
     };
 
     testObjectB = {
-      obj:   { test: 2 },
-      arr:   [ 3 ],
+      obj: { test: 2 },
+      arr: [ 3 ],
       _null: null
     };
 
     testObjectC = {
-      bool:  Boolean( false ),
+      bool: Boolean( false ),
       undef: undefinedVar,
-      num:   4
+      num: 4
     };
   } );
 
@@ -67,5 +67,4 @@ describe( 'Assign', () => {
     expect( testObjectA.func() === 'testStr' ).toBe( true );
     expect( testObjectA.num === 4 ).toBe( true );
   } );
-
 } );

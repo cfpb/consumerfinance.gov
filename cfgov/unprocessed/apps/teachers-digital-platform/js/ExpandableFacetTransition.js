@@ -5,9 +5,9 @@ import BaseTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition
 // Exported constants.
 const CLASSES = {
   CSS_PROPERTY: 'max-height',
-  BASE_CLASS:   'o-expandable-facets_content__transition',
-  EXPANDED:     'o-expandable-facets_content__expanded',
-  COLLAPSED:    'o-expandable-facets_content__collapsed',
+  BASE_CLASS: 'o-expandable-facets_content__transition',
+  EXPANDED: 'o-expandable-facets_content__expanded',
+  COLLAPSED: 'o-expandable-facets_content__collapsed',
   OPEN_DEFAULT: 'o-expandable-facets_content__onload-open'
 };
 

@@ -49,7 +49,7 @@ function trackSpecificLocation( bottomPos, percent ) {
 
   if ( !yPos ) {
     const percentAsDecimal = percent / 100;
-    yPos = ( totalHiddenHeight * percentAsDecimal ) + viewableHeight;
+    yPos = totalHiddenHeight * percentAsDecimal + viewableHeight;
     yPosCache[percent] = yPos;
   }
 
@@ -65,7 +65,7 @@ function trackSpecificLocation( bottomPos, percent ) {
     } );
     analyticsLog(
       `Scrolled ${ percent }% of hidden height ` +
-      `${ timeToContentEnd }s after page load.`
+        `${ timeToContentEnd }s after page load.`
     );
 
     hasFired[hasFiredID] = true;

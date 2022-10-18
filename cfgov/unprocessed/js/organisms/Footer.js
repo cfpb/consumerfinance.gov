@@ -1,6 +1,9 @@
 // Required modules.
 import * as footerButton from '../modules/footer-button';
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 
 /**
  * Footer
@@ -13,7 +16,6 @@ import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities
  * @returns {Footer} An instance.
  */
 function Footer( element ) {
-
   const BASE_CLASS = 'o-footer';
 
   const _dom = checkDom( element, BASE_CLASS );

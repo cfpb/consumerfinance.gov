@@ -1,7 +1,6 @@
 import retirementAPIResponse from '../../../fixtures/retirement-api.json';
 
 export class BeforeYouClaim {
-
   open() {
     cy.visit( '/consumer-tools/retirement/before-you-claim/' );
   }
@@ -17,11 +16,14 @@ export class BeforeYouClaim {
   }
 
   interceptRetirementAPIRequests() {
-    cy.intercept( {
-      url: '/consumer-tools/retirement/retirement-api/estimator/**'
-    },
-    request => { request.reply( retirementAPIResponse ); } )
-      .as( 'retirementAPIResponse' );
+    cy.intercept(
+      {
+        url: '/consumer-tools/retirement/retirement-api/estimator/**'
+      },
+      request => {
+        request.reply( retirementAPIResponse );
+      }
+    ).as( 'retirementAPIResponse' );
   }
 
   getEstimate() {
@@ -37,5 +39,4 @@ export class BeforeYouClaim {
       cy.get( 'a' ).first().click();
     } );
   }
-
 }

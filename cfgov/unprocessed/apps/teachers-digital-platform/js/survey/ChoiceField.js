@@ -1,4 +1,6 @@
-const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
+const {
+  closest
+} = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
 const objectValues = require( 'object.values' );
 const objectEntries = require( 'object.entries' );
 
@@ -66,8 +68,7 @@ ChoiceField.get = name => {
 /**
  * @returns {ChoiceField[]} unset choice fields
  */
-ChoiceField.findUnsets = () => objectValues( ChoiceField.cache )
-  .filter( cf => cf.value === null );
+ChoiceField.findUnsets = () => objectValues( ChoiceField.cache ).filter( cf => cf.value === null );
 
 /**
  * Remove all the error indicators
@@ -121,7 +122,11 @@ ChoiceField.watchAndStore = ( key, store, onStoreUpdate ) => {
 
   document.addEventListener( 'change', event => {
     const t = event.target;
-    if ( t instanceof HTMLInputElement && t.classList.contains( 'ChoiceField' ) && t.checked ) {
+    if (
+      t instanceof HTMLInputElement &&
+      t.classList.contains( 'ChoiceField' ) &&
+      t.checked
+    ) {
       storeValue( t );
     }
   } );

@@ -34,9 +34,7 @@ const financialModel = {
     const model = financialModel.values;
     // model.scholarships as a sum of UI inputs
     model.scholarships =
-      model.schoolGrants +
-      model.stateGrants +
-      model.otherScholarships;
+      model.schoolGrants + model.stateGrants + model.otherScholarships;
   },
 
   /**
@@ -63,7 +61,8 @@ const financialModel = {
     }
 
     // Modify values using tuition repayment plan values
-    model.tuitionRepayYearly = model.tuitionRepay / Math.max( model.programLength, 1 );
+    model.tuitionRepayYearly =
+      model.tuitionRepay / Math.max( model.programLength, 1 );
     model.summaryLoanTotal = model.borrowingTotal + model.tuitionRepayYearly;
     model.gap -= model.tuitionRepayYearly;
     model.totalDebt += model.tuitionRepayDebt;
@@ -74,10 +73,10 @@ const financialModel = {
 
     // Calculate totals
     model.costAfterGrants = model.costOfAttendance - model.grantsTotal;
-    model.totalProgramDebt = ( model.borrowingTotal - model.tuitionRepayYearly ) *
+    model.totalProgramDebt =
+      ( model.borrowingTotal - model.tuitionRepayYearly ) *
       Math.max( model.programLength, 1 );
     model.totalProgramDebt += model.tuitionRepay;
-
   },
 
   /**
@@ -103,7 +102,10 @@ const financialModel = {
    */
   updateModelWithProgram: function( schoolValues ) {
     schoolValues.undergrad = true;
-    if ( schoolValues.level.indexOf( 'Graduate' ) !== -1 || schoolValues.level === '4' ) {
+    if (
+      schoolValues.level.indexOf( 'Graduate' ) !== -1 ||
+      schoolValues.level === '4'
+    ) {
       schoolValues.undergrad = false;
     }
     $.extend( this.values, schoolValues );
@@ -116,11 +118,14 @@ const financialModel = {
   recalcOverborrowing: function() {
     const model = this.values;
     let overBorrow = 0;
-    if ( model.costOfAttendance <
-         model.grantsSavingsTotal + model.borrowingTotal ) {
-      overBorrow = model.borrowingTotal +
-                   model.grantsSavingsTotal -
-                   model.costOfAttendance;
+    if (
+      model.costOfAttendance <
+      model.grantsSavingsTotal + model.borrowingTotal
+    ) {
+      overBorrow =
+        model.borrowingTotal +
+        model.grantsSavingsTotal -
+        model.costOfAttendance;
       if ( overBorrow > 0 && model.borrowingTotal > 0 ) {
         overBorrow = Math.min( overBorrow, model.borrowingTotal );
       } else {
@@ -129,7 +134,6 @@ const financialModel = {
     }
     return overBorrow;
   }
-
 };
 
 module.exports = financialModel;

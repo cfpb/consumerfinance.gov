@@ -2,7 +2,6 @@ import Store from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerf
 let store;
 
 describe( 'Mortgage Performance map store', () => {
-
   beforeEach( () => {
     store = new Store( {} );
   } );
@@ -138,8 +137,9 @@ describe( 'Mortgage Performance map store', () => {
       counties: { 67890: 'Some other county' }
     };
     store.dispatch( action );
-    expect( store.getState().counties )
-      .toStrictEqual( { 67890: 'Some other county' } );
+    expect( store.getState().counties ).toStrictEqual( {
+      67890: 'Some other county'
+    } );
   } );
 
   it( 'should properly chart zooming', () => {
@@ -150,5 +150,4 @@ describe( 'Mortgage Performance map store', () => {
     store.dispatch( action );
     expect( store.getState().zoomTarget ).toBe( 'MA' );
   } );
-
 } );

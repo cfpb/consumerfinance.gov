@@ -1,30 +1,25 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
-const utils = require(
-  BASE_JS_PATH + 'teachers-digital-platform/js/search-utils.js'
-);
+const utils = require( BASE_JS_PATH +
+  'teachers-digital-platform/js/search-utils.js' );
 
 describe( 'The TDP search utils', () => {
-
   it( 'should get values from search form fields', () => {
     const searchEl = {
       name: 'foo',
       value: 'bar'
     };
-    const filterEls = [ {
-      name: 'fizz',
-      value: 'buzz'
-    } ];
+    const filterEls = [
+      {
+        name: 'fizz',
+        value: 'buzz'
+      }
+    ];
     const values = utils.getSearchValues( searchEl, filterEls );
-    expect( values ).toEqual( [
-      { foo: 'bar' },
-      { fizz: 'buzz' }
-    ] );
+    expect( values ).toEqual( [ { foo: 'bar' }, { fizz: 'buzz' } ] );
   } );
 
   it( 'should serialize form fields', () => {
-    const serialized = utils.serializeFormFields( [
-      { foo: 'bar' }
-    ] );
+    const serialized = utils.serializeFormFields( [ { foo: 'bar' } ] );
     expect( serialized ).toEqual( 'foo=bar' );
   } );
 
@@ -58,7 +53,9 @@ describe( 'The TDP search utils', () => {
     const cancelError = utils.handleError( 0 );
     expect( cancelError.msg ).toEqual( 'Search request was cancelled.' );
     const unknownError = utils.handleError();
-    expect( unknownError.msg ).toEqual( 'Sorry, our search engine is temporarily down.' );
+    expect( unknownError.msg ).toEqual(
+      'Sorry, our search engine is temporarily down.'
+    );
   } );
 
   it( 'should replace the browser history', () => {
@@ -69,9 +66,15 @@ describe( 'The TDP search utils', () => {
     expect( rs.mock.calls.length ).toEqual( 1 );
     expect( rs.mock.calls[0] ).toEqual( [ null, null, 'foo?bar' ] );
 
-    utils.updateUrl( '/teach/activities/', 'building_block=1&topic=3&q=executive' );
+    utils.updateUrl(
+      '/teach/activities/',
+      'building_block=1&topic=3&q=executive'
+    );
     expect( rs.mock.calls.length ).toEqual( 2 );
-    expect( rs.mock.calls[1] ).toEqual( [ null, null, '/teach/activities/?building_block=1&topic=3&q=executive' ] );
+    expect( rs.mock.calls[1] ).toEqual( [
+      null,
+      null,
+      '/teach/activities/?building_block=1&topic=3&q=executive'
+    ] );
   } );
-
 } );

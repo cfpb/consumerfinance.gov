@@ -43,6 +43,4 @@ function ajaxRequest( type, url, opts ) {
   return xhr;
 }
 
-export {
-  ajaxRequest
-};
+export { ajaxRequest };

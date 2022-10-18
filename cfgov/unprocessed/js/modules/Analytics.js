@@ -3,7 +3,6 @@ import typeCheckers from '@cfpb/cfpb-atomic-component/src/utilities/type-checker
 
 const eventObserver = new EventObserver();
 const Analytics = {
-
   tagManagerIsLoaded: false,
   addEventListener: eventObserver.addEventListener,
   removeEventListener: eventObserver.removeEventListener,
@@ -22,11 +21,11 @@ const Analytics = {
    */
   getDataLayerOptions: function( action, label, category, callback, timeout ) {
     return {
-      event:         category || Analytics.EVENT_CATEGORY,
-      action:        action,
-      label:         label || '',
+      event: category || Analytics.EVENT_CATEGORY,
+      action: action,
+      label: label || '',
       eventCallback: callback,
-      eventTimeout:  timeout || 500
+      eventTimeout: timeout || 500
     };
   },
 
@@ -90,7 +89,6 @@ const Analytics = {
       }
     }
   }
-
 };
 
 Analytics.init();

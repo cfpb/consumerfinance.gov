@@ -1,6 +1,9 @@
 import * as behavior from '../../../js/modules/util/behavior';
 import * as utils from './search-utils';
-import { closest, queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+import {
+  closest,
+  queryOne as find
+} from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { fetch } from './regs3k-utils';
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
@@ -110,16 +113,16 @@ function handleFilter( event ) {
   /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
   try {
     searchRequest.abort();
-  } catch ( err ) { }
+  } catch ( err ) {}
   const searchContainer = find( '#regs3k-results' );
   const filters = document.querySelectorAll( 'input:checked' );
   const searchField = find( 'input[name=q]' );
   const searchTerms = utils.getSearchValues( searchField, filters );
   const baseUrl = window.location.href.split( '?' )[0];
   const searchParams = utils.serializeFormFields( searchTerms );
-  const searchUrl = utils.buildSearchResultsURL(
-    baseUrl, searchParams, { partial: true }
-  );
+  const searchUrl = utils.buildSearchResultsURL( baseUrl, searchParams, {
+    partial: true
+  } );
   // Update the filter query params in the URL
   utils.updateUrl( baseUrl, searchParams );
   utils.showLoading( searchContainer );

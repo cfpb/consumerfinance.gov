@@ -11,7 +11,8 @@ describe( 'Email Sign Up', () => {
     page.signUp( 'testing@cfpb.gov' );
     cy.wait( '@subscriptionSuccess' );
     // Assert
-    page.successNotification()
+    page
+      .successNotification()
       .should( 'exist' )
       .and( 'include.text', 'Your submission was successfully received.' );
   } );

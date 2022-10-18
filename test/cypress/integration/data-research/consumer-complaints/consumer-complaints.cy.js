@@ -36,5 +36,4 @@ describe( 'Consumer Complaint Database', () => {
     page.searchSummary().should( 'be.visible' );
     cy.url().should( 'include', 'searchText=loan' );
   } );
-
 } );

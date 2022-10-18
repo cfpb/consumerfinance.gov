@@ -2,7 +2,8 @@ import { fetch } from './regs3k-utils';
 import { queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 const NOTICES_URL = './recent-notices-json';
-const CFPB_NOTICES = 'https://www.federalregister.gov/agencies/consumer-financial-protection-bureau';
+const CFPB_NOTICES =
+  'https://www.federalregister.gov/agencies/consumer-financial-protection-bureau';
 
 const processNotice = notice => {
   const a = document.createElement( 'a' );
@@ -43,7 +44,4 @@ const init = () => {
 
 window.addEventListener( 'load', init );
 
-export {
-  processNotice,
-  processNotices
-};
+export { processNotice, processNotices };

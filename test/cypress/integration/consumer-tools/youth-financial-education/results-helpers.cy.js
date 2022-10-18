@@ -5,19 +5,17 @@ export class TdpResultsHelpers {
 
   checkStudentCookies( resultUrlPattern ) {
     cy.getCookie( 'wizard_survey_wizard' ).should( 'not.exist' );
-    cy.getCookie( 'resultUrl' )
-      .then( cookie => {
-        expect( cookie.value ).to.match( resultUrlPattern );
-      } );
+    cy.getCookie( 'resultUrl' ).then( cookie => {
+      expect( cookie.value ).to.match( resultUrlPattern );
+    } );
   }
 
   checkCarPositions( xValues ) {
-    cy.get( 'svg image' )
-      .then( images => {
-        xValues.forEach( ( val, idx ) => {
-          expect( images[idx].getAttribute( 'x' ) ).to.equal( String( val ) );
-        } );
+    cy.get( 'svg image' ).then( images => {
+      xValues.forEach( ( val, idx ) => {
+        expect( images[idx].getAttribute( 'x' ) ).to.equal( String( val ) );
       } );
+    } );
   }
 
   print() {

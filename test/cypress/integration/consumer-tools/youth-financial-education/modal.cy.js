@@ -1,4 +1,5 @@
-const URL = '/consumer-tools/educator-tools/youth-financial-education/survey/3-5/';
+const URL =
+  '/consumer-tools/educator-tools/youth-financial-education/survey/3-5/';
 
 function open() {
   cy.get( '[data-open-modal="modal-privacy"]' ).click();
@@ -32,15 +33,11 @@ describe( 'Youth Financial Education Survey: modal', () => {
     cy.visit( URL );
     cy.get( '[data-open-modal="modal-privacy"]' ).click();
 
-    cy.get( '#modal-privacy [data-trap="1"]' )
-      .should( 'be.hidden' )
-      .focus();
+    cy.get( '#modal-privacy [data-trap="1"]' ).should( 'be.hidden' ).focus();
 
     cy.get( 'button.o-modal_close' ).should( 'have.focus' );
 
-    cy.get( '#modal-privacy [data-trap="0"]' )
-      .should( 'be.hidden' )
-      .focus();
+    cy.get( '#modal-privacy [data-trap="0"]' ).should( 'be.hidden' ).focus();
 
     cy.get( '.o-modal_footer button' ).should( 'have.focus' );
   } );
@@ -61,7 +58,10 @@ describe( 'Youth Financial Education Survey: modal', () => {
     checkClosed();
 
     open();
-    cy.get( '.o-modal_container' ).trigger( 'keydown', { keyCode: 27, key: 'Escape' } );
+    cy.get( '.o-modal_container' ).trigger( 'keydown', {
+      keyCode: 27,
+      key: 'Escape'
+    } );
     checkClosed();
   } );
 

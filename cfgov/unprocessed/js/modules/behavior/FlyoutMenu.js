@@ -34,7 +34,8 @@ const SEL_PREFIX = '[' + JS_HOOK + '=' + BASE_CLASS;
  * @param {HTMLNode} element - The DOM element to attach FlyoutMenu behavior.
  * @returns {FlyoutMenu} An instance.
  */
-function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
+function FlyoutMenu( element ) {
+  // eslint-disable-line max-statements, no-inline-comments, max-len
   // Verify that the expected dom attributes are present.
   const _dom = checkBehaviorDom( element, BASE_CLASS );
   const _triggerDoms = _findTriggers( element );
@@ -96,9 +97,13 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       trigger = triggers[i];
       triggerParent = trigger.parentElement;
       while ( triggerParent !== element ) {
-        if ( triggerParent.getAttribute( JS_HOOK ) &&
-             triggerParent.getAttribute( JS_HOOK ).split( ' ' )
-               .indexOf( BASE_CLASS ) !== -1 ) {
+        if (
+          triggerParent.getAttribute( JS_HOOK ) &&
+          triggerParent
+            .getAttribute( JS_HOOK )
+            .split( ' ' )
+            .indexOf( BASE_CLASS ) !== -1
+        ) {
           isSubTrigger = true;
           triggerParent = element;
         } else {
@@ -138,7 +143,9 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       }
 
       triggerDom.addEventListener( 'click', handleTriggerClickedBinded );
-      triggerDom.addEventListener( 'touchstart', _handleTouchStart, { passive: true } );
+      triggerDom.addEventListener( 'touchstart', _handleTouchStart, {
+        passive: true
+      } );
       triggerDom.addEventListener( 'mouseover', handleTriggerOverBinded );
       triggerDom.addEventListener( 'mouseout', handleTriggerOutBinded );
     }
@@ -176,14 +183,11 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    */
   function _handleTriggerOver( event ) {
     if ( !_touchTriggered && !_suspended ) {
-      this.dispatchEvent(
-        'triggerOver',
-        {
-          target: this,
-          trigger: event.target,
-          type: 'triggerOver'
-        }
-      );
+      this.dispatchEvent( 'triggerOver', {
+        target: this,
+        trigger: event.target,
+        type: 'triggerOver'
+      } );
     }
     _touchTriggered = false;
   }
@@ -194,14 +198,11 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    */
   function _handleTriggerOut( event ) {
     if ( !_suspended ) {
-      this.dispatchEvent(
-        'triggerOut',
-        {
-          target: this,
-          trigger: event.target,
-          type: 'triggerOut'
-        }
-      );
+      this.dispatchEvent( 'triggerOut', {
+        target: this,
+        trigger: event.target,
+        type: 'triggerOut'
+      } );
     }
   }
 
@@ -212,14 +213,11 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    */
   function _handleTriggerClicked( event ) {
     if ( !_suspended ) {
-      this.dispatchEvent(
-        'triggerClick',
-        {
-          target: this,
-          trigger: event.target,
-          type: 'triggerClick'
-        }
-      );
+      this.dispatchEvent( 'triggerClick', {
+        target: this,
+        trigger: event.target,
+        type: 'triggerClick'
+      } );
       event.preventDefault();
       if ( _isExpanded ) {
         this.collapse();
@@ -237,14 +235,11 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     if ( !_isExpanded && !_isAnimating ) {
       _isAnimating = true;
       _deferFunct = noopFunct;
-      this.dispatchEvent(
-        'expandBegin',
-        { target: this, type: 'expandBegin' }
-      );
+      this.dispatchEvent( 'expandBegin', { target: this, type: 'expandBegin' } );
 
       if ( _expandTransitionMethod ) {
-        const hasTransition = _expandTransition &&
-                              _expandTransition.isAnimated();
+        const hasTransition =
+          _expandTransition && _expandTransition.isAnimated();
         if ( hasTransition ) {
           _expandTransition.addEventListener(
             BaseTransition.END_EVENT,
@@ -278,13 +273,13 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _deferFunct = noopFunct;
       _isAnimating = true;
       _isExpanded = false;
-      this.dispatchEvent(
-        'collapseBegin',
-        { target: this, type: 'collapseBegin' }
-      );
+      this.dispatchEvent( 'collapseBegin', {
+        target: this,
+        type: 'collapseBegin'
+      } );
       if ( _collapseTransitionMethod ) {
-        const hasTransition = _collapseTransition &&
-                              _collapseTransition.isAnimated();
+        const hasTransition =
+          _collapseTransition && _collapseTransition.isAnimated();
         if ( hasTransition ) {
           _collapseTransition.addEventListener(
             BaseTransition.END_EVENT,
@@ -386,9 +381,13 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    */
   function clearTransitions() {
     let transition = getTransition( FlyoutMenu.EXPAND_TYPE );
-    if ( transition ) { transition.remove(); }
+    if ( transition ) {
+      transition.remove();
+    }
     transition = getTransition( FlyoutMenu.COLLAPSE_TYPE );
-    if ( transition ) { transition.remove(); }
+    if ( transition ) {
+      transition.remove();
+    }
 
     let UNDEFINED;
 
@@ -425,9 +424,9 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    */
   function getDom() {
     return {
-      container:  _dom,
-      content:    _contentDom,
-      trigger:    _triggerDoms
+      container: _dom,
+      content: _contentDom,
+      trigger: _triggerDoms
     };
   }
 

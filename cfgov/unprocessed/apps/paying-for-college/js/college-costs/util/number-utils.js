@@ -16,8 +16,10 @@ function stringToNum( numberString ) {
   const digitPosition = numberString.indexOf( numberString.match( /\d/ ) );
 
   // If a '-' appears before the first digit, we assume numberString is negative
-  if ( numberString.indexOf( numberString.match( '-' ) ) !== -1 &&
-    minusPosition < digitPosition ) {
+  if (
+    numberString.indexOf( numberString.match( '-' ) ) !== -1 &&
+    minusPosition < digitPosition
+  ) {
     signMaker = -1;
   }
 
@@ -35,7 +37,6 @@ function stringToNum( numberString ) {
 
   // Get number value of string, then multiply by signMaker and return
   return Number( numberString ) * signMaker;
-
 }
 
 /**
@@ -46,10 +47,10 @@ function stringToNum( numberString ) {
  */
 function decimalToPercentString( number, decimalPlaces ) {
   if ( typeof decimalPlaces === 'undefined' ) decimalPlaces = 2;
-  return Number( number )
-    .toLocaleString( 'en-US',
-      { style: 'percent',
-        minimumFractionDigits: decimalPlaces } );
+  return Number( number ).toLocaleString( 'en-US', {
+    style: 'percent',
+    minimumFractionDigits: decimalPlaces
+  } );
 }
 
 /**
@@ -94,9 +95,4 @@ function isNumeric( value ) {
   return ( /^[\d.]+$/ ).test( value );
 }
 
-export {
-  enforceRange,
-  stringToNum,
-  decimalToPercentString,
-  isNumeric
-};
+export { enforceRange, stringToNum, decimalToPercentString, isNumeric };

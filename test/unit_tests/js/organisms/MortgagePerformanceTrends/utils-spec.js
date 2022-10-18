@@ -6,7 +6,6 @@ import utils from '../../../../../cfgov/unprocessed/js/organisms/MortgagePerform
 let el;
 
 describe( 'Mortgage Performance utilities', () => {
-
   beforeEach( () => {
     el = {
       style: {},
@@ -14,12 +13,12 @@ describe( 'Mortgage Performance utilities', () => {
     };
   } );
 
-  it( 'should clear an element\'s diplay property', () => {
+  it( "should clear an element's diplay property", () => {
     utils.showEl( el );
     expect( el.style.display ).toBe( '' );
   } );
 
-  it( 'should set an element\'s diplay property', () => {
+  it( "should set an element's diplay property", () => {
     utils.hideEl( el );
     expect( el.style.display ).toBe( 'none' );
   } );
@@ -118,7 +117,7 @@ describe( 'Mortgage Performance utilities', () => {
     expect( date ).toBe( 'cheeseburger' );
   } );
 
-  it( 'should parse counties\' states', () => {
+  it( "should parse counties' states", () => {
     let state = utils.getCountyState( '01234' );
     expect( state ).toBe( 'AL' );
     state = utils.getCountyState( '23502' );
@@ -141,5 +140,4 @@ describe( 'Mortgage Performance utilities', () => {
     location = utils.isNonMetro( 'non-06' );
     expect( location ).toBe( false );
   } );
-
 } );

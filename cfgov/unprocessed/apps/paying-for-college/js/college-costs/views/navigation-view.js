@@ -48,7 +48,9 @@ const navigationView = {
       elem.setAttribute( 'aria-selected', false );
     } );
 
-    const navItem = document.querySelector( '[data-nav_item="' + activeName + '"]' );
+    const navItem = document.querySelector(
+      '[data-nav_item="' + activeName + '"]'
+    );
     const activeElem = closest( navItem, 'li' );
     const activeParent = closest( activeElem, '.m-list_item__parent' );
 
@@ -74,7 +76,8 @@ const navigationView = {
    * @param {String} activeName - Name of the active section
    */
   _showAndHideSections: function( activeName ) {
-    const query = '.college-costs_tool-section[data-tool-section="' + activeName + '"]';
+    const query =
+      '.college-costs_tool-section[data-tool-section="' + activeName + '"]';
     const activeSection = document.querySelector( query );
 
     this._sections.forEach( elem => {
@@ -107,7 +110,10 @@ const navigationView = {
     if ( value === false || value === null ) {
       navigationView._stateDomElem.removeAttribute( 'data-state_' + property );
     } else {
-      navigationView._stateDomElem.setAttribute( 'data-state_' + property, value );
+      navigationView._stateDomElem.setAttribute(
+        'data-state_' + property,
+        value
+      );
     }
   },
 
@@ -121,14 +127,20 @@ const navigationView = {
     this._navButtons = body.querySelectorAll( '.o-secondary-navigation a' );
     this._navListItems = body.querySelectorAll( '.o-secondary-navigation li' );
     this._navItems = body.querySelectorAll( '[data-nav_item]' );
-    this._nextButton = body.querySelector( '.college-costs_tool-section_buttons .btn__next-step' );
+    this._nextButton = body.querySelector(
+      '.college-costs_tool-section_buttons .btn__next-step'
+    );
     this._contentSidebar = body.querySelector( '.content_sidebar' );
     this._introduction = body.querySelector( '.college-costs_intro-segment' );
-    this._getStartedBtn = body.querySelector( '.college-costs_intro-segment .btn__get-started' );
+    this._getStartedBtn = body.querySelector(
+      '.college-costs_intro-segment .btn__get-started'
+    );
     this._appSegment = body.querySelector( '.college-costs_app-segment' );
     this._sections = body.querySelectorAll( '.college-costs_tool-section' );
     this._stateDomElem = document.querySelector( 'main.college-costs' );
-    this._affordingChoices = document.querySelectorAll( '.affording-loans-choices .m-form-field' );
+    this._affordingChoices = document.querySelectorAll(
+      '.affording-loans-choices .m-form-field'
+    );
 
     _addButtonListeners( iped );
     this.updateView();
@@ -155,7 +167,10 @@ function _addButtonListeners( iped ) {
   if ( iped ) {
     _handleGetStartedBtnClick();
   } else {
-    navigationView._getStartedBtn.addEventListener( 'click', _handleGetStartedBtnClick );
+    navigationView._getStartedBtn.addEventListener(
+      'click',
+      _handleGetStartedBtnClick
+    );
   }
 }
 
@@ -197,7 +212,10 @@ function _handleNavButtonClick( event ) {
     if ( typeof target.dataset.nav_item !== 'undefined' ) {
       updateState.activeSection( target.dataset.nav_item );
     } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
-      closest( target, '[data-nav-is-open]' ).setAttribute( 'data-nav-is-open', 'True' );
+      closest( target, '[data-nav-is-open]' ).setAttribute(
+        'data-nav-is-open',
+        'True'
+      );
     }
   }
 }
@@ -211,13 +229,14 @@ function _handleNextButtonClick( event ) {
   if ( getStateValue( 'schoolErrors' ) === 'yes' ) {
     updateState.byProperty( 'showSchoolErrors', 'yes' );
   } else {
-    sendAnalyticsEvent( 'next step - ' + getStateValue( 'activeSection' ), 'time-to-click' );
+    sendAnalyticsEvent(
+      'next step - ' + getStateValue( 'activeSection' ),
+      'time-to-click'
+    );
     updateState.nextSection();
     window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
     document.querySelector( '.college-costs_tool-section.active h2' ).focus();
   }
 }
 
-export {
-  navigationView
-};
+export { navigationView };

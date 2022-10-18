@@ -1,5 +1,4 @@
 export class PrepaidAgreementsSearch {
-
   open() {
     cy.visit( '/data-research/prepaid-accounts/search-agreements/' );
   }
@@ -39,7 +38,9 @@ export class PrepaidAgreementsSearch {
   }
 
   selectProductType( product ) {
-    this.filtersForm().find( `input[value="${ product }"]` ).check( { force: true } );
+    this.filtersForm()
+      .find( `input[value="${ product }"]` )
+      .check( { force: true } );
   }
 
   expandCurrentStatusFilters() {
@@ -49,5 +50,4 @@ export class PrepaidAgreementsSearch {
   selectStatus( status ) {
     this.filtersForm().find( `input[value="${ status }"]` ).check( { force: true } );
   }
-
 }

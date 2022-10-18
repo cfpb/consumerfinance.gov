@@ -28,36 +28,29 @@ describe( 'Notification', () => {
       expect( notification.init() ).toBeInstanceOf( Notification );
     } );
 
-    it( 'should return the Notification instance if it has a success class',
-      () => {
-        notificationElem.classList.add( 'm-notification__success' );
+    it( 'should return the Notification instance if it has a success class', () => {
+      notificationElem.classList.add( 'm-notification__success' );
 
-        expect( notification.init().constructor ).toBe( Notification );
-        expect( notificationElem.dataset.jsHook ).toBe( 'state_atomic_init' );
-      }
-    );
+      expect( notification.init().constructor ).toBe( Notification );
+      expect( notificationElem.dataset.jsHook ).toBe( 'state_atomic_init' );
+    } );
 
-    it( 'should return the Notification instance if it has a warning class',
-      () => {
-        notificationElem.classList.add( 'm-notification__warning' );
+    it( 'should return the Notification instance if it has a warning class', () => {
+      notificationElem.classList.add( 'm-notification__warning' );
 
-        expect( notification.init().constructor ).toBe( Notification );
-        expect( notificationElem.dataset.jsHook ).toBe( 'state_atomic_init' );
-      }
-    );
+      expect( notification.init().constructor ).toBe( Notification );
+      expect( notificationElem.dataset.jsHook ).toBe( 'state_atomic_init' );
+    } );
 
-    it( 'should return the Notification instance if it has a error class',
-      () => {
-        notificationElem.classList.add( 'm-notification__error' );
+    it( 'should return the Notification instance if it has a error class', () => {
+      notificationElem.classList.add( 'm-notification__error' );
 
-        expect( notification.init().constructor ).toBe( Notification );
-        expect( notificationElem.dataset.jsHook ).toBe( 'state_atomic_init' );
-      }
-    );
+      expect( notification.init().constructor ).toBe( Notification );
+      expect( notificationElem.dataset.jsHook ).toBe( 'state_atomic_init' );
+    } );
   } );
 
   describe( 'update()', () => {
-
     beforeEach( () => {
       notification.init();
     } );
@@ -67,21 +60,20 @@ describe( 'Notification', () => {
         // TODO: The Notification should probably support setting the default.
         notification.update( 'default', '' );
       } catch ( error ) {
-        expect( error.message )
-          .toBe( 'default is not a supported notification type!' );
+        expect( error.message ).toBe(
+          'default is not a supported notification type!'
+        );
       }
     } );
 
     it( 'should update the notification type for the success state', () => {
       notification.update( Notification.SUCCESS, '' );
-      expect( notificationElem.className )
-        .toContain( 'm-notification__success' );
+      expect( notificationElem.className ).toContain( 'm-notification__success' );
     } );
 
     it( 'should update the notification type for the warning state', () => {
       notification.update( Notification.WARNING, '' );
-      expect( notificationElem.className )
-        .toContain( 'm-notification__warning' );
+      expect( notificationElem.className ).toContain( 'm-notification__warning' );
     } );
 
     it( 'should update the notification type for the error state', () => {
@@ -100,8 +92,7 @@ describe( 'Notification', () => {
         '.m-notification_explanation'
       );
 
-      expect( notificationElem.className )
-        .toContain( 'm-notification__success' );
+      expect( notificationElem.className ).toContain( 'm-notification__success' );
       expect( message.textContent ).toContain( testMsg );
       expect( explanation ).toBeUndefined;
     } );
@@ -118,8 +109,7 @@ describe( 'Notification', () => {
         '.m-notification_explanation'
       );
 
-      expect( notificationElem.className )
-        .toContain( 'm-notification__success' );
+      expect( notificationElem.className ).toContain( 'm-notification__success' );
       expect( message.textContent ).toContain( testMsg );
       expect( explanation.textContent ).toContain( testExplanation );
     } );

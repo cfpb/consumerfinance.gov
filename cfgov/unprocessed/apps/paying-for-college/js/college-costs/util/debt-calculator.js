@@ -3,7 +3,10 @@
  */
 
 import { calcInterestAtGrad, calcMonthlyPayment } from './debt-utils.js';
-import { getConstantsValue, getStateValue } from '../dispatchers/get-model-values.js';
+import {
+  getConstantsValue,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
 import { financialModel } from '../models/financial-model.js';
 import { stringToNum } from '../util/number-utils.js';
 
@@ -19,7 +22,12 @@ import { stringToNum } from '../util/number-utils.js';
  * @param {number} programLength - Length of the program in years
  * @returns {object} An object containing the calculated debt values
  */
-function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLength ) {
+function calculateDirectLoanDebt(
+  directSub,
+  directUnsub,
+  rateUnsub,
+  programLength
+) {
   const level = getStateValue( 'programLevel' );
   const dependency = getStateValue( 'programDependency' );
   const progressMap = {
@@ -130,7 +138,8 @@ function debtCalculator() {
   );
 
   debts.directSub = fedLoanTotals.subPrincipal;
-  debts.directUnsub = fedLoanTotals.unsubPrincipal + fedLoanTotals.unsubInterest;
+  debts.directUnsub =
+    fedLoanTotals.unsubPrincipal + fedLoanTotals.unsubInterest;
   interest.directSub = 0;
   interest.directUnsub = fedLoanTotals.unsubInterest;
   totalBorrowing += fedLoanTotals.subPrincipal + fedLoanTotals.unsubPrincipal;
@@ -141,7 +150,8 @@ function debtCalculator() {
     let int = calcInterestAtGrad(
       fin['plusLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength );
+      fin.other_programLength
+    );
 
     if ( isNaN( int ) ) {
       int = 0;
@@ -165,7 +175,8 @@ function debtCalculator() {
     let int = calcInterestAtGrad(
       fin['publicLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength );
+      fin.other_programLength
+    );
 
     if ( isNaN( int ) ) {
       int = 0;
@@ -181,7 +192,8 @@ function debtCalculator() {
     let int = calcInterestAtGrad(
       fin['privLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength );
+      fin.other_programLength
+    );
 
     if ( isNaN( int ) ) {
       int = 0;
@@ -229,7 +241,6 @@ function debtCalculator() {
        debts[ key + '_twentyFiveYearInterest' ] = ( twentyFiveYearMonthly * 300 ) - debts[key]; */
     debts.twentyFiveYearMonthly += twentyFiveYearMonthly;
     debts.twentyFiveYearTotal += twentyFiveYearMonthly * 300;
-
   } );
 
   // set the program-level debts before current debt is added
@@ -238,15 +249,20 @@ function debtCalculator() {
 
   // calculate existing loan debt interest during program
 
-  let existingDebtInterest = fin.existingDebt_amount * fin.rate_existingDebt * fin.other_programLength;
+  let existingDebtInterest =
+    fin.existingDebt_amount * fin.rate_existingDebt * fin.other_programLength;
 
   if ( isNaN( existingDebtInterest ) ) {
     existingDebtInterest = 0;
   }
 
-  const existingDebtTotalAtGrad = fin.existingDebt_amount + existingDebtInterest;
+  const existingDebtTotalAtGrad =
+    fin.existingDebt_amount + existingDebtInterest;
   const existingDebtMonthly = calcMonthlyPayment(
-    existingDebtTotalAtGrad, fin.rate_existingDebt, 10 );
+    existingDebtTotalAtGrad,
+    fin.rate_existingDebt,
+    10
+  );
 
   debts.existingDebtInterestAtGrad = existingDebtInterest;
 
@@ -259,7 +275,8 @@ function debtCalculator() {
 
   // Calculate totals
   debts.totalInterestAtGrad = interest.totalAtGrad;
-  debts.tenYearInterest = debts.tenYearTotal - debts.totalAtGrad - existingDebtInterest;
+  debts.tenYearInterest =
+    debts.tenYearTotal - debts.totalAtGrad - existingDebtInterest;
 
   debts.twentyFiveYearInterest = debts.twentyFiveYearTotal - debts.totalAtGrad;
   debts.repayHours = debts.tenYearMonthly / 15;
@@ -271,7 +288,4 @@ function debtCalculator() {
   }
 }
 
-
-export {
-  debtCalculator
-};
+export { debtCalculator };

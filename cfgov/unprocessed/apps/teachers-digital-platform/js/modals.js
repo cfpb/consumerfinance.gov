@@ -1,4 +1,6 @@
-const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
+const {
+  closest
+} = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
 const CustomEvt = require( 'customevent' );
 const analytics = require( './tdp-analytics' );
 

@@ -10,8 +10,10 @@ describe( 'Analytics', () => {
 
   beforeEach( () => {
     function push( object ) {
-      if ( object.hasOwnProperty( 'eventCallback' ) &&
-           typeof object.eventCallback === 'function' ) {
+      if (
+        object.hasOwnProperty( 'eventCallback' ) &&
+        typeof object.eventCallback === 'function'
+      ) {
         return object.eventCallback();
       }
       return [].push.call( this, object );
@@ -22,13 +24,12 @@ describe( 'Analytics', () => {
     Analytics.tagManagerIsLoaded = false;
 
     dataLayerOptions = {
-      event:        'Page Interaction',
+      event: 'Page Interaction',
       eventCallback: UNDEFINED,
-      action:       '',
-      label:        '',
+      action: '',
+      label: '',
       eventTimeout: 500
     };
-
   } );
 
   describe( '.init()', () => {
@@ -53,10 +54,7 @@ describe( 'Analytics', () => {
     it( 'should properly add objects to the dataLayer Array', () => {
       const action = 'inbox:clicked';
       const label = 'text:null';
-      const options = { ...dataLayerOptions,
-        action: action,
-        label:  label
-      };
+      const options = { ...dataLayerOptions, action: action, label: label };
       window['google_tag_manager'] = {};
       Analytics.init();
       Analytics.sendEvent( getDataLayerOptions( action, label ) );
@@ -64,16 +62,14 @@ describe( 'Analytics', () => {
       expect( window.dataLayer[0] ).toStrictEqual( options );
     } );
 
-    it( 'shouldn\'t add objects to the dataLayer Array if GTM is undefined',
-      () => {
-        const action = 'inbox:clicked';
-        const label = 'text:null';
-        delete window['google_tag_manager'];
-        Analytics.init();
-        Analytics.sendEvent( getDataLayerOptions( action, label ) );
-        expect( window.dataLayer.length === 0 ).toBe( true );
-      }
-    );
+    it( "shouldn't add objects to the dataLayer Array if GTM is undefined", () => {
+      const action = 'inbox:clicked';
+      const label = 'text:null';
+      delete window['google_tag_manager'];
+      Analytics.init();
+      Analytics.sendEvent( getDataLayerOptions( action, label ) );
+      expect( window.dataLayer.length === 0 ).toBe( true );
+    } );
 
     it( 'should invoke the callback if provided', () => {
       Analytics.init();
@@ -100,44 +96,37 @@ describe( 'Analytics', () => {
 
   describe( '.sendEvents()', () => {
     it( 'should properly add objects to the dataLayer Array', () => {
-      const options1 = getDataLayerOptions(
-        { ...dataLayerOptions,
-          action: 'inbox:clicked',
-          label:  'text:label_1'
-        }
-      );
-      const options2 = getDataLayerOptions(
-        { ...dataLayerOptions,
-          action: 'checbox:clicked',
-          label:  'text:label_2'
-        }
-      );
+      const options1 = getDataLayerOptions( {
+        ...dataLayerOptions,
+        action: 'inbox:clicked',
+        label: 'text:label_1'
+      } );
+      const options2 = getDataLayerOptions( {
+        ...dataLayerOptions,
+        action: 'checbox:clicked',
+        label: 'text:label_2'
+      } );
       window['google_tag_manager'] = {};
       Analytics.init();
       Analytics.sendEvents( [ options1, options2 ] );
       expect( window.dataLayer.length === 2 ).toBe( true );
     } );
 
-    it( 'shouldn\'t add objects to the dataLayer Array if an array isn\'t passed',
-      () => {
-        const options1 = getDataLayerOptions(
-          { ...dataLayerOptions,
-            action: 'inbox:clicked',
-            label:  'text:label_1'
-          }
-        );
-        const options2 = getDataLayerOptions(
-          { ...dataLayerOptions,
-            action: 'checbox:clicked',
-            label:  'text:label_2'
-          }
-        );
-        window['google_tag_manager'] = {};
-        Analytics.init();
-        Analytics.sendEvents( options1, options2 );
-        expect( window.dataLayer.length === 0 ).toBe( true );
-      }
-    );
+    it( "shouldn't add objects to the dataLayer Array if an array isn't passed", () => {
+      const options1 = getDataLayerOptions( {
+        ...dataLayerOptions,
+        action: 'inbox:clicked',
+        label: 'text:label_1'
+      } );
+      const options2 = getDataLayerOptions( {
+        ...dataLayerOptions,
+        action: 'checbox:clicked',
+        label: 'text:label_2'
+      } );
+      window['google_tag_manager'] = {};
+      Analytics.init();
+      Analytics.sendEvents( options1, options2 );
+      expect( window.dataLayer.length === 0 ).toBe( true );
+    } );
   } );
-
 } );

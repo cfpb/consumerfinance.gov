@@ -2,11 +2,11 @@ const HIGHCHARTS_SETTINGS = {
   colors: [ '#ADDC91' ],
   style: {
     fontFamily: '"Avenir Next", Arial, sans-serif',
-    fontSize:   '13px'
+    fontSize: '13px'
   },
   chart: {
     backgroundColor: '#FFFFFF',
-    marginRight:     25
+    marginRight: 25
   },
   yAxis: {
     labels: {
@@ -15,22 +15,24 @@ const HIGHCHARTS_SETTINGS = {
       }
     },
     minorTickInterval: null,
-    gridLineColor:     '#E3E4E5',
-    tickWidth:         0,
+    gridLineColor: '#E3E4E5',
+    tickWidth: 0,
     title: {
       style: {
-        color:      '#101820',
-        fontSize:   '16px',
+        color: '#101820',
+        fontSize: '16px',
         fontWeight: 'normal',
         fontFamily: '"Avenir Next", Arial, sans-serif'
       }
     },
-    plotLines: [ {
-      color:  '#919395',
-      width:  1,
-      value:  0,
-      zIndex: 100
-    } ]
+    plotLines: [
+      {
+        color: '#919395',
+        width: 1,
+        value: 0,
+        zIndex: 100
+      }
+    ]
   },
   xAxis: {
     labels: {
@@ -40,8 +42,8 @@ const HIGHCHARTS_SETTINGS = {
     tickWidth: 0,
     title: {
       style: {
-        color:      '#BABBBD',
-        fontSize:   '12px',
+        color: '#BABBBD',
+        fontSize: '12px',
         fontWeight: 'normal',
         fontFamily: '"Avenir Next", Arial, sans-serif'
       }
@@ -49,8 +51,8 @@ const HIGHCHARTS_SETTINGS = {
   },
   tooltip: {
     backgroundColor: 'transparent',
-    borderColor:     'none',
-    shadow:          false
+    borderColor: 'none',
+    shadow: false
   },
   plotOptions: {
     series: {

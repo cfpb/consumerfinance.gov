@@ -1,4 +1,6 @@
-const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
+const {
+  closest
+} = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
 const Cookie = require( 'js-cookie' );
 import clipboardCopy from 'copy-to-clipboard';
 const {
@@ -14,7 +16,6 @@ const initials = require( './initials' );
 const $ = document.querySelector.bind( document );
 
 const localClipboardCopy = clipboardCopy;
-
 
 /**
  * Initialize the results page
@@ -84,7 +85,9 @@ function handleShareModal() {
   // Re-hide UI changes when opening share modal
   document.addEventListener( 'modal:open:before', event => {
     if ( event.detail.modal.id === 'modal-share-url' ) {
-      $( '.tdp-survey__initials-error' ).classList.remove( 'm-notification__visible' );
+      $( '.tdp-survey__initials-error' ).classList.remove(
+        'm-notification__visible'
+      );
       $( '.share-output' ).hidden = true;
       $( '.share-output__copied' ).hidden = true;
     }
@@ -92,14 +95,11 @@ function handleShareModal() {
 
   withValidInitials( desc, value => {
     initials.update( value );
-    a.href = '../view/?r=' + encodeURIComponent(
-      shareOutput.dataset.signedCode
-    );
+    a.href =
+      '../view/?r=' + encodeURIComponent( shareOutput.dataset.signedCode );
     // href property read gives you full URL
     const shareUrl = a.href;
-    a.href = obfuscation.encodeNameInUrl(
-      shareUrl, initials.get()
-    );
+    a.href = obfuscation.encodeNameInUrl( shareUrl, initials.get() );
     copiedMsg.hidden = true;
     shareOutput.hidden = false;
   } );

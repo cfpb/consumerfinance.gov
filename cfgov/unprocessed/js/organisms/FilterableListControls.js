@@ -55,13 +55,18 @@ function FilterableListControls( element ) {
     _expandable = _expandables[0];
 
     // This is used for checking if the content is expanded.
-    _expandableContent = _expandable.element.querySelector( '.o-expandable_content' );
+    _expandableContent = _expandable.element.querySelector(
+      '.o-expandable_content'
+    );
 
     // If multiselects exist on the form, iterate over them.
     multiSelects.forEach( multiSelect => {
       multiSelect.addEventListener( 'expandBegin', _refreshExpandableHeight );
       multiSelect.addEventListener( 'expandEnd', _refreshExpandableHeight );
-      multiSelect.addEventListener( 'selectionsUpdated', _refreshExpandableHeight );
+      multiSelect.addEventListener(
+        'selectionsUpdated',
+        _refreshExpandableHeight
+      );
     } );
     window.addEventListener( 'resize', _refreshExpandableHeight );
 
@@ -79,7 +84,9 @@ function FilterableListControls( element ) {
   function _refreshExpandableHeight() {
     window.clearTimeout( timeout );
     // TODO: Expandable itself should have an API to query if it is open or not.
-    if ( _expandableContent.classList.contains( 'o-expandable_content__expanded' ) ) {
+    if (
+      _expandableContent.classList.contains( 'o-expandable_content__expanded' )
+    ) {
       timeout = window.setTimeout(
         _expandable.transition.expand.bind( _expandable.transition ),
         250
@@ -98,12 +105,16 @@ function FilterableListControls( element ) {
 
     _expandable.transition.addEventListener(
       'expandBegin',
-      function sendEvent() { Analytics.sendEvent( 'Filter:open', label ); }
+      function sendEvent() {
+        Analytics.sendEvent( 'Filter:open', label );
+      }
     );
 
     _expandable.transition.addEventListener(
       'collapseBegin',
-      function sendEvent() { Analytics.sendEvent( 'Filter:close', label ); }
+      function sendEvent() {
+        Analytics.sendEvent( 'Filter:close', label );
+      }
     );
 
     _form.addEventListener( 'change', function sendEvent( event ) {
@@ -123,12 +134,7 @@ function FilterableListControls( element ) {
         dataLayerArray.push( cachedFields[key] );
       } );
       dataLayerArray.push(
-        getDataLayerOptions(
-          'Filter:submit',
-          label,
-          '',
-          formSubmittedBinded
-        )
+        getDataLayerOptions( 'Filter:submit', label, '', formSubmittedBinded )
       );
       Analytics.sendEvents( dataLayerArray );
       dataLayerArray = [];
@@ -199,7 +205,7 @@ function FilterableListControls( element ) {
   function _validateFields( fields ) {
     const validatedFields = {
       invalid: [],
-      valid:   []
+      valid: []
     };
     let validatedField;
 
@@ -237,24 +243,31 @@ function FilterableListControls( element ) {
     let fieldset;
     const fieldModel = _formModel.getModel().get( field );
     const validation = {
-      field:  field,
+      field: field,
       // TODO: Change layout of field groups to use fieldset.
-      label:  fieldModel.label,
-      msg:    '',
+      label: fieldModel.label,
+      msg: '',
       status: null
     };
 
     if ( fieldModel.isInGroup ) {
-      const groupName = field.getAttribute( 'data-group' ) ||
-                        field.getAttribute( 'name' );
-      const groupSelector = '[name=' + groupName + ']:checked,' +
-                            '[data-group=' + groupName + ']:checked';
+      const groupName =
+        field.getAttribute( 'data-group' ) || field.getAttribute( 'name' );
+      const groupSelector =
+        '[name=' +
+        groupName +
+        ']:checked,' +
+        '[data-group=' +
+        groupName +
+        ']:checked';
       fieldset = _form.querySelectorAll( groupSelector ) || [];
     }
 
     if ( validators[fieldModel.type] ) {
       validation.status = validators[fieldModel.type](
-        field, validation, fieldset
+        field,
+        validation,
+        fieldset
       );
     }
 

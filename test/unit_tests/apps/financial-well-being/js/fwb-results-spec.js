@@ -110,9 +110,7 @@ describe( 'fwb-results', () => {
     toggleButtons = document.querySelectorAll(
       '.comparison-chart_toggle-button'
     );
-    dataPoint = document.querySelectorAll(
-      '.comparison_data-point'
-    );
+    dataPoint = document.querySelectorAll( '.comparison_data-point' );
     expandableContent = document.querySelector( '.o-expandable_content' );
     expandableTarget = document.querySelector( '.o-expandable_target' );
     initFwbResults();
@@ -124,42 +122,38 @@ describe( 'fwb-results', () => {
     expect( expandableContent.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
   } );
 
-  it( 'should submit the correct analytics when a toggle button is clicked',
-    () => {
-      simulateEvent( 'click', toggleButtons[0] );
+  it( 'should submit the correct analytics when a toggle button is clicked', () => {
+    simulateEvent( 'click', toggleButtons[0] );
 
-      expect( window.dataLayer[0] ).toStrictEqual( dataLayerEvent );
-    }
-  );
+    expect( window.dataLayer[0] ).toStrictEqual( dataLayerEvent );
+  } );
 
   it( 'should show the initial category on page load', () => {
-    expect( toggleButtons[0].classList.contains( SELECTED_CLASS ) )
-      .toBe( true );
+    expect( toggleButtons[0].classList.contains( SELECTED_CLASS ) ).toBe( true );
     expect( dataPoint[0].classList.contains( HIDDEN_CLASS ) ).toBe( false );
     expect( dataPoint[1].classList.contains( HIDDEN_CLASS ) ).toBe( false );
   } );
 
   it( 'should hide the other categories on page load', () => {
-    expect( toggleButtons[1].classList.contains( SELECTED_CLASS ) )
-      .toBe( false );
+    expect( toggleButtons[1].classList.contains( SELECTED_CLASS ) ).toBe( false );
     expect( dataPoint[4].classList.contains( HIDDEN_CLASS ) ).toBe( true );
     expect( dataPoint[5].classList.contains( HIDDEN_CLASS ) ).toBe( true );
   } );
 
-  it( 'should hide the initial category content ' +
-       'when a differnt toggle is clicked', () => {
-    simulateEvent( 'click', toggleButtons[1] );
-    expect( toggleButtons[0].classList.contains( SELECTED_CLASS ) )
-      .toBe( false );
-    expect( dataPoint[0].classList.contains( HIDDEN_CLASS ) ).toBe( true );
-    expect( dataPoint[1].classList.contains( HIDDEN_CLASS ) ).toBe( true );
-  } );
+  it(
+    'should hide the initial category content ' +
+      'when a differnt toggle is clicked',
+    () => {
+      simulateEvent( 'click', toggleButtons[1] );
+      expect( toggleButtons[0].classList.contains( SELECTED_CLASS ) ).toBe( false );
+      expect( dataPoint[0].classList.contains( HIDDEN_CLASS ) ).toBe( true );
+      expect( dataPoint[1].classList.contains( HIDDEN_CLASS ) ).toBe( true );
+    }
+  );
 
-  it( 'should show the correct category content ' +
-       'when the toggle is clicked', () => {
+  it( 'should show the correct category content when the toggle is clicked', () => {
     simulateEvent( 'click', toggleButtons[1] );
-    expect( toggleButtons[1].classList.contains( SELECTED_CLASS ) )
-      .toBe( true );
+    expect( toggleButtons[1].classList.contains( SELECTED_CLASS ) ).toBe( true );
     expect( dataPoint[4].classList.contains( HIDDEN_CLASS ) ).toBe( false );
     expect( dataPoint[5].classList.contains( HIDDEN_CLASS ) ).toBe( false );
   } );

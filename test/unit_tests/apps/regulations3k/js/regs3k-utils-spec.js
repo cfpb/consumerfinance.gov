@@ -3,9 +3,7 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
 const utils = require( `${ BASE_JS_PATH }/js/regs3k-utils.js` );
 
 describe( 'The Regs3K search utils', () => {
-
   describe( 'AJAX utils', () => {
-
     it( 'should fetch a resource', done => {
       const mockXHR = {
         open: jest.fn(),
@@ -21,9 +19,10 @@ describe( 'The Regs3K search utils', () => {
       global.XMLHttpRequest = jest.fn( () => mockXHR );
       utils.fetch( 'api/search', ( err, data ) => {
         expect( err ).toEqual( null );
-        expect( data ).toEqual(
-          [ { searchResult: 'one' }, { anotherSearchResult: 'two' } ]
-        );
+        expect( data ).toEqual( [
+          { searchResult: 'one' },
+          { anotherSearchResult: 'two' }
+        ] );
         done();
       } );
       mockXHR.onreadystatechange();
@@ -45,11 +44,9 @@ describe( 'The Regs3K search utils', () => {
       } );
       mockXHR.onreadystatechange();
     } );
-
   } );
 
   describe( 'Hash utils', () => {
-
     it( 'should convert a hash', () => {
       expect( utils.getNewHash( '1010-Interp-1' ) ).toEqual( 'Interp-1' );
       expect( utils.getNewHash( '#1010-Interp-1' ) ).toEqual( 'Interp-1' );
@@ -83,7 +80,5 @@ describe( 'The Regs3K search utils', () => {
       expect( utils.isOldHash( 'asdf-2-f-Interp-3' ) ).toBeFalse;
       expect( utils.isOldHash( '#asdf-2-f-Interp-3' ) ).toBeFalse;
     } );
-
   } );
-
 } );

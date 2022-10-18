@@ -32,4 +32,3 @@ const arg = process.argv.slice( 2 )[0];
   // Run app-specific scripts
   require( '../cfgov/unprocessed/apps/regulations3k/worker_and_manifest.js' );
 } )();
-

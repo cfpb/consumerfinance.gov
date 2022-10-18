@@ -29,7 +29,6 @@ const getNewHash = hash => {
   return hash.replace( /^#?\d\d\d\d-\w+-/, '' );
 };
 
-
 /**
  * isOldHash - Check if provided hash is from the old eRegs site
  * All the former eRegs paragraph markers start with their four-digit reg.
@@ -40,8 +39,4 @@ const getNewHash = hash => {
  */
 const isOldHash = hash => ( /^#?\d\d\d\d/ ).test( hash );
 
-export {
-  fetch,
-  getNewHash,
-  isOldHash
-};
+export { fetch, getNewHash, isOldHash };

@@ -46,7 +46,6 @@ function windowResizeTo( width, height ) {
 }
 
 describe( 'Summary', () => {
-
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     summaryDom = document.querySelector( '.o-summary__mobile' );
@@ -60,16 +59,20 @@ describe( 'Summary', () => {
 
   describe( 'initialized state', () => {
     it( 'should be initialized', () => {
-      expect( summaryDom.getAttribute( 'data-js-hook' ) ).toBe( 'behavior_flyout-menu' );
+      expect( summaryDom.getAttribute( 'data-js-hook' ) ).toBe(
+        'behavior_flyout-menu'
+      );
       summary.init();
-      expect( summaryDom.getAttribute( 'data-js-hook' ) ).toBe( 'behavior_flyout-menu state_atomic_init' );
+      expect( summaryDom.getAttribute( 'data-js-hook' ) ).toBe(
+        'behavior_flyout-menu state_atomic_init'
+      );
     } );
   } );
 
   describe( 'interactions', () => {
-
     it( 'should be absent when content is too brief', () => {
-      jest.spyOn( contentDom, 'offsetHeight', 'get' )
+      jest
+        .spyOn( contentDom, 'offsetHeight', 'get' )
         .mockImplementation( () => 50 );
       summary.init();
       windowResizeTo( 300 );
@@ -78,7 +81,8 @@ describe( 'Summary', () => {
     } );
 
     it( 'should expand on click', () => {
-      jest.spyOn( contentDom, 'offsetHeight', 'get' )
+      jest
+        .spyOn( contentDom, 'offsetHeight', 'get' )
         .mockImplementation( () => 200 );
       summary.init();
       windowResizeTo( 300 );
@@ -104,7 +108,8 @@ describe( 'Summary', () => {
     } );
 
     it( 'should refresh height when non-link content is clicked', () => {
-      jest.spyOn( contentDom, 'offsetHeight', 'get' )
+      jest
+        .spyOn( contentDom, 'offsetHeight', 'get' )
         .mockImplementation( () => 200 );
       summary.init();
       windowResizeTo( 300 );
@@ -119,6 +124,5 @@ describe( 'Summary', () => {
       simulateEvent( 'click', expandableContentDom );
       expect( spy ).toHaveBeenCalled();
     } );
-
   } );
 } );

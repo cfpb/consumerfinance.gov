@@ -9,7 +9,6 @@ global.fetch = jest.fn( () => Promise.resolve( {
 );
 
 describe( 'explore-rates/data-loader', () => {
-
   describe( 'getData()', () => {
     it( 'should call data API with correct query', () => {
       domLoader.getData( { a: 'b', c: 'd' } );
@@ -22,9 +21,7 @@ describe( 'explore-rates/data-loader', () => {
   describe( 'getCounties()', () => {
     it( 'should call county API with correct state query', () => {
       domLoader.getCounties( 'AL' );
-      return expect( fetch ).toHaveBeenCalledWith(
-        '/oah-api/county/?state=AL'
-      );
+      return expect( fetch ).toHaveBeenCalledWith( '/oah-api/county/?state=AL' );
     } );
   } );
 } );

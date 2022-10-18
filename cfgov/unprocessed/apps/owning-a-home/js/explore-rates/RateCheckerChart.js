@@ -1,6 +1,4 @@
-import {
-  chartTooltip
-} from './template-loader';
+import { chartTooltip } from './template-loader';
 import Highcharts from 'highcharts';
 import RateCheckerChartMenu from './RateCheckerChartMenu';
 import { applyThemeTo } from './highcharts-theme';
@@ -62,49 +60,58 @@ function RateCheckerChart() {
       xAxis: {
         categories: [ 1, 2, 3, 4, 5 ]
       },
-      yAxis: [ {
-        title: {
-          text: ''
+      yAxis: [
+        {
+          title: {
+            text: ''
+          },
+          labels: {
+            formatter: function() {
+              return this.value > 9 ? this.value + '+' : this.value;
+            }
+          },
+          max: 10,
+          min: 0
         },
-        labels: {
-          formatter: function() {
-            return this.value > 9 ? this.value + '+' : this.value;
-          }
-        },
-        max: 10,
-        min: 0
-      }, {
-        title: {
-          text: 'Number of lenders offering rate'
-        }
-      } ],
-      series: [ {
-        name: 'Number of Lenders',
-        data: [ 1, 1, 1, 1, 1 ],
-        showInLegend: false,
-        dataLabels: {
-          enabled:   true,
-          useHTML:   true,
-          crop:      false,
-          overflow:  'none',
-          defer:     true,
-          color:     '#919395',
-          x:         2,
-          y:         2,
-          formatter: function() {
-            const point = this.point;
-            window.setTimeout( function() {
-              if ( point.y > 9 ) {
-                point.dataLabel.attr( {
-                  y: -32,
-                  x: point.plotX - 24
-                } );
-              }
-            } );
-            return '<div class="data-label"><span class="data-label_number">' + this.x + '</span><br>|</div>';
+        {
+          title: {
+            text: 'Number of lenders offering rate'
           }
         }
-      } ],
+      ],
+      series: [
+        {
+          name: 'Number of Lenders',
+          data: [ 1, 1, 1, 1, 1 ],
+          showInLegend: false,
+          dataLabels: {
+            enabled: true,
+            useHTML: true,
+            crop: false,
+            overflow: 'none',
+            defer: true,
+            color: '#919395',
+            x: 2,
+            y: 2,
+            formatter: function() {
+              const point = this.point;
+              window.setTimeout( function() {
+                if ( point.y > 9 ) {
+                  point.dataLabel.attr( {
+                    y: -32,
+                    x: point.plotX - 24
+                  } );
+                }
+              } );
+              return (
+                '<div class="data-label"><span class="data-label_number">' +
+                this.x +
+                '</span><br>|</div>'
+              );
+            }
+          }
+        }
+      ],
       credits: {
         text: ''
       },

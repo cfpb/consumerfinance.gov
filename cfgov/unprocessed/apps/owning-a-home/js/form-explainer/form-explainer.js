@@ -1,7 +1,4 @@
-import {
-  scrollIntoView,
-  scrollTo
-} from '../../../../js/modules/util/scroll';
+import { scrollIntoView, scrollTo } from '../../../../js/modules/util/scroll';
 import DT from './dom-tools';
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 import { assign } from '../../../../js/modules/util/assign';
@@ -9,15 +6,15 @@ import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.
 import throttle from 'lodash.throttle';
 
 const EXPLAIN_TYPES = {
-  CHECKLIST:   'checklist',
+  CHECKLIST: 'checklist',
   DEFINITIONS: 'definitions'
 };
 
 const CSS = {
-  EXPLAIN_PAGE_FIXED:    'explain_page__fixed',
+  EXPLAIN_PAGE_FIXED: 'explain_page__fixed',
   EXPLAIN_PAGE_ABSOLUTE: 'explain_page__absolute',
-  HAS_ATTENTION:         'has-attention',
-  HOVER_HAS_ATTENTION:   'hover-has-attention'
+  HAS_ATTENTION: 'has-attention',
+  HOVER_HAS_ATTENTION: 'hover-has-attention'
 };
 
 const NO_OP = () => {
@@ -71,14 +68,11 @@ class FormExplainer {
       DT.hide( '.form-explainer_page-buttons' );
     }
 
-    DT.applyAll(
-      elements.pages,
-      ( value, index ) => {
-        const _index = index + 1;
-        this.updateImageUI( _index, true );
-        this.setExplainerPlaceholders( _index );
-      }
-    );
+    DT.applyAll( elements.pages, ( value, index ) => {
+      const _index = index + 1;
+      this.updateImageUI( _index, true );
+      this.setExplainerPlaceholders( _index );
+    } );
 
     // eslint-disable-next-line global-require
     Expandable.init();
@@ -93,14 +87,12 @@ class FormExplainer {
     const elements = this.getPageElements( pageNum );
 
     if ( window.innerWidth > 600 ) {
-
       /* update widths & position on larger screens
          we only pass in the pageNum on pageLoad, when
          pages after the first will be hidden once they're
          fully loaded & we've calculated their widths */
       this.fitAndStickToWindow( elements, isPageLoad ? pageNum : null );
     } else if ( !isPageLoad ) {
-
       /* if this is called on screen resize instead of page load,
          remove width values & call unstick on the imageWrapper */
       elements.imageMapWrapper.style.width = '';
@@ -110,7 +102,6 @@ class FormExplainer {
       DT.applyAll( elements.terms, element => ( element.style.width = '' ) );
       DT.removeClass( elements.imageMapWrapper, CSS.EXPLAIN_PAGE_FIXED );
     } else if ( pageNum > 1 ) {
-
       // on page load, hide pages except first
       DT.hide( elements.page );
     }
@@ -119,10 +110,9 @@ class FormExplainer {
   /**
    * Update the pagination UI.
    */
-  updatePaginationUI( ) {
+  updatePaginationUI() {
     const BTN_DISABLED = 'a-btn__disabled';
     const PAGE_BTN_CTR = '.form-explainer_page-buttons';
-
 
     if ( this.pageCount > 1 ) {
       DT.removeClass( PAGE_BTN_CTR + ' button', BTN_DISABLED );
@@ -153,7 +143,6 @@ class FormExplainer {
    * @param {string} currentTab - Name of current tab.
    */
   updateTabsUI( currentTab ) {
-
     // Update the tab state
     DT.removeClass( '.explain_tabs .tab-list', 'active-tab' );
     DT.addClass( currentTab, 'active-tab' );
@@ -216,10 +205,10 @@ class FormExplainer {
     );
 
     window.setTimeout( () => {
-      scrollIntoView(
-        targetExpandableTarget,
-        { duration: 500, callback: () => targetExpandableTarget.focus() }
-      );
+      scrollIntoView( targetExpandableTarget, {
+        duration: 500,
+        callback: () => targetExpandableTarget.focus()
+      } );
     }, 150 );
     window.setTimeout( () => targetExpandableTarget.click(), 0 );
   }
@@ -262,18 +251,17 @@ class FormExplainer {
       '.form-explainer_page-link'
     );
 
-    return assign( this.elements,
-      { explain,
-        explainPageBtns,
-        explainPagination,
-        explainTabs,
-        formExplainerLinks,
-        initialTab,
-        pages,
-        tabLink,
-        tabList
-      }
-    );
+    return assign( this.elements, {
+      explain,
+      explainPageBtns,
+      explainPagination,
+      explainTabs,
+      formExplainerLinks,
+      initialTab,
+      pages,
+      tabLink,
+      tabList
+    } );
   }
 
   /**
@@ -295,7 +283,7 @@ class FormExplainer {
   calculateNewImageWidth( imageWidth, imageHeight, windowHeight ) {
     const imageMapImageRatio = ( imageWidth + 2 ) / ( imageHeight + 2 );
 
-    return ( ( windowHeight - 60 ) * imageMapImageRatio ) + 30;
+    return ( windowHeight - 60 ) * imageMapImageRatio + 30;
   }
 
   /**
@@ -319,11 +307,15 @@ class FormExplainer {
        then update the adjacent terms column width to fit.
        On window resize, also check if image is now too small & resize,
        but only if we've stored the actual image dimensions for comparison. */
-    if ( ( currentHeight > windowHeight ) ||
-         ( windowResize && actualWidth && actualHeight ) ) {
+    if (
+      currentHeight > windowHeight ||
+      ( windowResize && actualWidth && actualHeight )
+    ) {
       // determine new width
       newWidth = this.calculateNewImageWidth(
-        currentWidth, currentHeight, window.innerHeight
+        currentWidth,
+        currentHeight,
+        window.innerHeight
       );
 
       if ( actualWidth && newWidth > actualWidth ) {
@@ -331,12 +323,11 @@ class FormExplainer {
       }
 
       // update element widths
-      newWidthPercentage = newWidth / pageWidth * 100;
+      newWidthPercentage = ( newWidth / pageWidth ) * 100;
 
       /* on screen less than 800px wide, the terms need a minimum 33%
          width or they become too narrow to read */
       if ( window.innerWidth <= 800 && newWidthPercentage > 67 ) {
-
         newWidthPercentage = 67;
       }
 
@@ -354,7 +345,6 @@ class FormExplainer {
    * @param {HTMLNodes} elements - Current page DOM elements.
    */
   setImageElementWidths( elements ) {
-
     /* When the image position is set to `fixed`,
        it no longer constrained to its parent.
        To fix this we will give it its own width that is equal to the parent.
@@ -378,7 +368,7 @@ class FormExplainer {
    * columns to match.
    * @param {HTMLNodes} elements - Current page DOM elements.
    * @param {number} pageNum - Current page number.
-  */
+   */
   fitAndStickToWindow( elements, pageNum ) {
     if ( pageNum ) {
       this.storeImageDimensions( elements.imageMapImage );
@@ -402,12 +392,13 @@ class FormExplainer {
    * current page, so that the sticky element does not overlap
    * content that comes after current page.
    */
-  updateStickiness( ) {
+  updateStickiness() {
     const imageMapWrapper = this.elements.imageMapWrapper;
     const page = this.elements.currentPage;
-    const pageBottom = window.pageYOffset +
-                       page.getBoundingClientRect().bottom -
-                       imageMapWrapper.offsetHeight;
+    const pageBottom =
+      window.pageYOffset +
+      page.getBoundingClientRect().bottom -
+      imageMapWrapper.offsetHeight;
     const yPos = imageMapWrapper.parentNode.getBoundingClientRect().top;
 
     if ( yPos < 30 ) {
@@ -434,8 +425,10 @@ class FormExplainer {
     const newPage = currentPage + increment;
 
     // Move to the next or previous page if it's not the first or last page.
-    if ( ( direction === 'next' && newPage <= this.pageCount ) ||
-         ( direction === 'prev' && newPage >= 1 ) ) {
+    if (
+      ( direction === 'next' && newPage <= this.pageCount ) ||
+      ( direction === 'prev' && newPage >= 1 )
+    ) {
       this.switchPage( currentPage, newPage );
     }
   }
@@ -462,12 +455,10 @@ class FormExplainer {
     this.updatePaginationUI();
 
     if ( shouldScrollIntoView ) {
-      scrollIntoView(
-        DT.getEl( PAGINATION ),
-        { duration: 200,
-          callback: callback || NO_OP
-        }
-      );
+      scrollIntoView( DT.getEl( PAGINATION ), {
+        duration: 200,
+        callback: callback || NO_OP
+      } );
     }
   }
 
@@ -489,11 +480,10 @@ class FormExplainer {
   switchPage( currentPage, newPage ) {
     this.setCurrentPage( newPage, () => {
       // After scrolling the window, fade out the current page.
-      DT.fadeOut( this.getPageEl( currentPage ), 600,
-        () => {
-          DT.fadeIn( this.getPageEl( newPage ), 700 );
-          this.updateImageUI( newPage );
-        } );
+      DT.fadeOut( this.getPageEl( currentPage ), 600, () => {
+        DT.fadeIn( this.getPageEl( newPage ), 700 );
+        this.updateImageUI( newPage );
+      } );
     } );
   }
 
@@ -548,12 +538,15 @@ class FormExplainer {
     const HTML =
       '<div class="o-expandable o-expandable__padded' +
       ' o-expandable__form-explainer ' +
-      'o-expandable__form-explainer-' + explainerType + ' ' +
+      'o-expandable__form-explainer-' +
+      explainerType +
+      ' ' +
       'o-expandable__form-explainer-placeholder">' +
       '<span class="o-expandable_header">' +
       'Click on ' +
       '"Get Definitions" above or page ahead to continue checking your ' +
-      pageName + '.</span></div>';
+      pageName +
+      '.</span></div>';
 
     return DT.createElement( HTML );
   }
@@ -565,9 +558,10 @@ class FormExplainer {
    * @returns {boolean} Whether the explainer has content.
    */
   explainerHasContent( page, explainerType ) {
-    return page.querySelector(
-      '.o-expandable__form-explainer-' + explainerType
-    ) !== null;
+    return (
+      page.querySelector( '.o-expandable__form-explainer-' + explainerType ) !==
+      null
+    );
   }
 
   /**
@@ -578,10 +572,7 @@ class FormExplainer {
       '.o-expandable__form-explainer .o-expandable_content a'
     );
 
-    DT.applyAll(
-      elements,
-      element => element.setAttribute( 'tabindex', 0 )
-    );
+    DT.applyAll( elements, element => element.setAttribute( 'tabindex', 0 ) );
   }
 
   /* Initialize the DOM events for the entire explainer UI. */
@@ -619,8 +610,7 @@ class FormExplainer {
       const pageNum = target.getAttribute( 'data-page' );
       const currentPage = this.currentPage;
 
-      if ( !DT.hasClass( target, 'disabled' ) &&
-           pageNum !== currentPage ) {
+      if ( !DT.hasClass( target, 'disabled' ) && pageNum !== currentPage ) {
         this.switchPage( currentPage, pageNum );
       }
     } );
@@ -630,13 +620,13 @@ class FormExplainer {
      */
     DT.bindEvents( uiElements.tabList, 'click', event => {
       const selectedTab = event.currentTarget;
-      const explainerType = selectedTab.querySelector( '[data-target]' )
+      const explainerType = selectedTab
+        .querySelector( '[data-target]' )
         .getAttribute( 'data-target' );
       this.updatePageUI( selectedTab, explainerType );
 
       scrollTo(
-        uiElements.tabList[0].getBoundingClientRect().top +
-        window.pageYOffset,
+        uiElements.tabList[0].getBoundingClientRect().top + window.pageYOffset,
         {
           duration: 300,
           offset: -30
@@ -659,34 +649,26 @@ class FormExplainer {
     /* When a form explainer expandable target has the focus,
      * update the image overlay.
      */
-    DT.bindEvents(
-      '.o-expandable_target',
-      'focus',
-      event => {
-        const expandable = closest(
-          event.target,
-          '.o-expandable__form-explainer'
-        );
-        this.updateAttention( expandable, CSS.HOVER_HAS_ATTENTION );
-      }
-    );
+    DT.bindEvents( '.o-expandable_target', 'focus', event => {
+      const expandable = closest(
+        event.target,
+        '.o-expandable__form-explainer'
+      );
+      this.updateAttention( expandable, CSS.HOVER_HAS_ATTENTION );
+    } );
 
     /* When an overlay is clicked, toggle the corresponding expandable
      * and scroll the page until it is in view.
      */
-    DT.bindEvents(
-      '.image-map_overlay',
-      'click',
-      event => {
-        event.preventDefault();
-        event.stopPropagation();
-        const imageOverlay = event.target;
-        const itemID = imageOverlay.getAttribute( 'href' );
-        const targetExpandable = DT.getEl( itemID );
+    DT.bindEvents( '.image-map_overlay', 'click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      const imageOverlay = event.target;
+      const itemID = imageOverlay.getAttribute( 'href' );
+      const targetExpandable = DT.getEl( itemID );
 
-        this.openAndScrollToExpandable( imageOverlay, targetExpandable );
-      }
-    );
+      this.openAndScrollToExpandable( imageOverlay, targetExpandable );
+    } );
 
     /* When a form explainer expandable is clicked / pressed,
      * update the image overlay position and hover styles.
@@ -698,7 +680,8 @@ class FormExplainer {
         if ( event.which === 13 || event.type === 'click' ) {
           const target = event.target;
           const closestFormExplainer = closest(
-            target, '.o-expandable__form-explainer'
+            target,
+            '.o-expandable__form-explainer'
           );
 
           this.updateAttention( closestFormExplainer, CSS.HAS_ATTENTION );

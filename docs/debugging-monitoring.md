@@ -51,7 +51,6 @@ $ ENABLE_ES_LOGGING=1 ./runserver.sh
 $ ENABLE_ES_LOGGING=1 cfgov/manage.py some_management_command
 ```
 
-
 ### Monitoring using New Relic
 
 This project can be configured for real-time monitoring with

@@ -5,10 +5,14 @@ import { updateState } from '../dispatchers/update-state.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
 
 const schoolModel = {
-  values: {
-  },
+  values: {},
 
-  textPercents: [ 'defaultRate', 'rateGraduation', 'rateRepay3yr', 'rateAssociateTransfer' ],
+  textPercents: [
+    'defaultRate',
+    'rateGraduation',
+    'rateRepay3yr',
+    'rateAssociateTransfer'
+  ],
 
   setValue: function( name, value, updateURL ) {
     schoolModel.values[name] = value;
@@ -36,8 +40,10 @@ const schoolModel = {
    */
   createProgramLists: function() {
     schoolModel.values.programList = {};
-    if ( schoolModel.values.hasOwnProperty( 'programCodes' ) &&
-            schoolModel.values.programCodes !== null ) {
+    if (
+      schoolModel.values.hasOwnProperty( 'programCodes' ) &&
+      schoolModel.values.programCodes !== null
+    ) {
       const programCodes = schoolModel.values.programCodes;
       for ( const key in programCodes ) {
         schoolModel.values.programList[key] = {};
@@ -66,7 +72,11 @@ const schoolModel = {
     if ( !schoolModel.values.programCodes.hasOwnProperty( level ) ) return list;
 
     list = schoolModel.values.programCodes[level].sort( ( a, b ) => {
-      if ( a.name < b.name ) { return -1; } else if ( a.name > b.name ) { return 1; } else if ( b.name === a.name ) {
+      if ( a.name < b.name ) {
+        return -1;
+      } else if ( a.name > b.name ) {
+        return 1;
+      } else if ( b.name === a.name ) {
         if ( a.level < b.level ) return -1;
         else if ( a.level > b.level ) return 1;
       }
@@ -88,16 +98,15 @@ const schoolModel = {
 
     if ( !hasProgram || !hasLevel ) {
       return false;
-    } else if ( !schoolModel.values.hasOwnProperty( 'programList' ) ||
-        !schoolModel.values.programList[level].hasOwnProperty( pid ) ) {
+    } else if (
+      !schoolModel.values.hasOwnProperty( 'programList' ) ||
+      !schoolModel.values.programList[level].hasOwnProperty( pid )
+    ) {
       return false;
     }
 
     return schoolModel.values.programList[level][pid];
   }
-
 };
 
-export {
-  schoolModel
-};
+export { schoolModel };

@@ -86,11 +86,7 @@ function recordEmailPopupClosure( popupLabel ) {
 function recordEmailRegistration( popupLabel ) {
   const nextShowKey = _getNextShowKey( popupLabel );
 
-  webStorageProxy.setItem(
-    nextShowKey,
-    _getFutureDate( FOREVER ),
-    _localStorage
-  );
+  webStorageProxy.setItem( nextShowKey, _getFutureDate( FOREVER ), _localStorage );
 }
 
 /**
@@ -102,9 +98,8 @@ function recordEmailRegistration( popupLabel ) {
 function showEmailPopup( popupLabel ) {
   const nextShowKey = _getNextShowKey( popupLabel );
   const today = new Date().getTime();
-  const nextDisplayDate = Number(
-    webStorageProxy.getItem( nextShowKey, _localStorage )
-  ) || 0;
+  const nextDisplayDate =
+    Number( webStorageProxy.getItem( nextShowKey, _localStorage ) ) || 0;
   return today > nextDisplayDate;
 }
 
@@ -135,8 +130,8 @@ function showOnScroll( elToShow, opts ) {
       const top = opts.targetElement.offset().top;
       return top + elHeight;
     }
-    const percentageTarget = document.body.offsetHeight *
-                             ( opts.scrollPercent / 100 );
+    const percentageTarget =
+      document.body.offsetHeight * ( opts.scrollPercent / 100 );
     return percentageTarget + elHeight;
   }
 

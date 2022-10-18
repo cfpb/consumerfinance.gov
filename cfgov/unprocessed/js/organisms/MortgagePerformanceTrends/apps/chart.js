@@ -3,9 +3,10 @@ import LineChartStore from '../stores/chart';
 import actions from '../actions/chart';
 import utils from '../utils';
 
-const store = new LineChartStore(
-  [ utils.thunkMiddleware, utils.loggerMiddleware ]
-);
+const store = new LineChartStore( [
+  utils.thunkMiddleware,
+  utils.loggerMiddleware
+] );
 
 class MortgagePerformanceLineChart {
   constructor( { container } ) {
@@ -16,12 +17,18 @@ class MortgagePerformanceLineChart {
     this.$state = this.$container.querySelector( '#mp-line-chart-state' );
     this.$metro = this.$container.querySelector( '#mp-line-chart-metro' );
     this.$county = this.$container.querySelector( '#mp-line-chart-county' );
-    this.$compareContainer = this.$container.querySelector( '#mp-line-chart-compare-container' );
+    this.$compareContainer = this.$container.querySelector(
+      '#mp-line-chart-compare-container'
+    );
     this.$compare = this.$container.querySelector( '#mp-line-chart-compare' );
     this.$chart = this.$container.querySelector( '#mp-line-chart' );
     this.$chartTitle = document.querySelector( '#mp-line-chart-title-status' );
-    this.$chartTitleGeo = document.querySelector( '#mp-line-chart-title-status-geo' );
-    this.$chartTitleComparison = document.querySelector( '#mp-line-chart-title-status-comparison' );
+    this.$chartTitleGeo = document.querySelector(
+      '#mp-line-chart-title-status-geo'
+    );
+    this.$chartTitleComparison = document.querySelector(
+      '#mp-line-chart-title-status-comparison'
+    );
     this.$loadingSpinner = document.querySelector( '#mp-chart-loading' );
     this.timespan = this.$container.getAttribute( 'data-chart-time-span' );
     this.chart = ccb.createChart( {
@@ -48,19 +55,21 @@ MortgagePerformanceLineChart.prototype.eventListeners = function() {
 
 MortgagePerformanceLineChart.prototype.onClick = function( event ) {
   const change = new Event( 'change' );
-  this.$container.querySelector( 'input[name="mp-line-chart_geo"]:checked' ).checked = false;
+  this.$container.querySelector(
+    'input[name="mp-line-chart_geo"]:checked'
+  ).checked = false;
   this.$form.dispatchEvent( change );
   event.preventDefault();
 };
 
 MortgagePerformanceLineChart.prototype.onChange = function( event ) {
-
   let action;
   let geoType;
   let geoId;
   let geoName;
   const includeComparison = this.$compare.checked;
-  const abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
+  const abbr =
+    this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
 
   switch ( event.target.id ) {
     case 'mp-line-chart_geo-state':
@@ -81,12 +90,19 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
       action = actions.fetchCountyStates( abbr );
       break;
     case 'mp-line-chart-state':
-      geoType = this.$container.querySelector( 'input[name="mp-line-chart_geo"]:checked' ).id.replace( 'mp-line-chart_geo-', '' );
+      geoType = this.$container
+        .querySelector( 'input[name="mp-line-chart_geo"]:checked' )
+        .id.replace( 'mp-line-chart_geo-', '' );
       // TODO: Waaaaay too much code repetition here.
       if ( geoType === 'state' ) {
         geoId = this.$state.value;
         geoName = this.$state.options[this.$state.selectedIndex].text;
-        action = actions.updateChart( geoId, geoName, 'state', includeComparison );
+        action = actions.updateChart(
+          geoId,
+          geoName,
+          'state',
+          includeComparison
+        );
       }
       if ( geoType === 'metro' ) {
         geoId = this.$metro.value;
@@ -97,7 +113,12 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
         geoId = this.$state.value;
         geoName = this.$state.options[this.$state.selectedIndex].text;
         action = actions.fetchNonMetros( abbr, includeComparison );
-        action = actions.updateChart( geoId, geoName, 'non-metro', includeComparison );
+        action = actions.updateChart(
+          geoId,
+          geoName,
+          'non-metro',
+          includeComparison
+        );
       }
       if ( geoType === 'county' ) {
         geoId = this.$county.value;
@@ -113,12 +134,22 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
     case 'mp-line-chart-non-metro':
       geoId = this.$state.value;
       geoName = this.$state.options[this.$state.selectedIndex].text;
-      action = actions.updateChart( geoId, geoName, 'non-metro', includeComparison );
+      action = actions.updateChart(
+        geoId,
+        geoName,
+        'non-metro',
+        includeComparison
+      );
       break;
     case 'mp-line-chart-county':
       geoId = this.$county.value;
       geoName = this.$county.options[this.$county.selectedIndex].text;
-      action = actions.updateChart( geoId, geoName, 'county', includeComparison );
+      action = actions.updateChart(
+        geoId,
+        geoName,
+        'county',
+        includeComparison
+      );
       break;
     case 'mp-line-chart-compare':
       utils.hideEl( this.$chartTitleComparison );
@@ -129,25 +160,31 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
   }
 
   store.dispatch( action );
-
 };
 
-MortgagePerformanceLineChart.prototype.renderChart = function( prevState, state ) {
+MortgagePerformanceLineChart.prototype.renderChart = function(
+  prevState,
+  state
+) {
   let source;
   const baseSource = `time-series/${ this.timespan }/national`;
   // If the geo hasn't changed, don't re-render the chart.
-  if ( prevState.geo.id === state.geo.id &&
-       prevState.includeComparison === state.includeComparison ) {
+  if (
+    prevState.geo.id === state.geo.id &&
+    prevState.includeComparison === state.includeComparison
+  ) {
     return;
   }
 
   // If no geo is provided, default to national data
   if ( !state.geo.id || !state.geo.type ) {
-    this.chart.update( {
-      source: baseSource
-    } ).then( () => {
-      store.dispatch( actions.stopLoading() );
-    } );
+    this.chart
+      .update( {
+        source: baseSource
+      } )
+      .then( () => {
+        store.dispatch( actions.stopLoading() );
+      } );
     return;
   }
 
@@ -156,35 +193,56 @@ MortgagePerformanceLineChart.prototype.renderChart = function( prevState, state 
   if ( state.includeComparison ) {
     source = `${ source };${ baseSource }`;
   }
-  this.chart.update( {
-    source: source
-  } ).then( () => {
-    store.dispatch( actions.stopLoading() );
-  } );
+  this.chart
+    .update( {
+      source: source
+    } )
+    .then( () => {
+      store.dispatch( actions.stopLoading() );
+    } );
 };
 
-MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, state ) {
+MortgagePerformanceLineChart.prototype.renderChartForm = function(
+  prevState,
+  state
+) {
   const geoType = state.geo.type;
   const title = this.$container.querySelector( '#mp-state-dropdown-title' );
-  const geo = this.$container.querySelector( `#mp-line-chart-${ geoType }-container` );
-  const containers = this.$container.querySelectorAll( '.mp-line-chart-select-container' );
+  const geo = this.$container.querySelector(
+    `#mp-line-chart-${ geoType }-container`
+  );
+  const containers = this.$container.querySelectorAll(
+    '.mp-line-chart-select-container'
+  );
   for ( let i = 0; i < containers.length; ++i ) {
     utils.hideEl( containers[i] );
   }
   utils.hideEl( this.$container.querySelector( '#mp-state-county-helper-text' ) );
   utils.hideEl( this.$container.querySelector( '#mp-state-metro-helper-text' ) );
-  utils.hideEl( this.$container.querySelector( '#mp-state-non-metro-helper-text' ) );
+  utils.hideEl(
+    this.$container.querySelector( '#mp-state-non-metro-helper-text' )
+  );
   if ( geoType === 'county' ) {
-    utils.showEl( this.$container.querySelector( '#mp-state-county-helper-text' ) );
-    utils.showEl( this.$container.querySelector( '#mp-line-chart-state-container' ) );
+    utils.showEl(
+      this.$container.querySelector( '#mp-state-county-helper-text' )
+    );
+    utils.showEl(
+      this.$container.querySelector( '#mp-line-chart-state-container' )
+    );
   }
   if ( geoType === 'metro' ) {
     utils.showEl( this.$container.querySelector( '#mp-state-metro-helper-text' ) );
-    utils.showEl( this.$container.querySelector( '#mp-line-chart-state-container' ) );
+    utils.showEl(
+      this.$container.querySelector( '#mp-line-chart-state-container' )
+    );
   }
   if ( geoType === 'non-metro' ) {
-    utils.showEl( this.$container.querySelector( '#mp-state-non-metro-helper-text' ) );
-    utils.showEl( this.$container.querySelector( '#mp-line-chart-state-container' ) );
+    utils.showEl(
+      this.$container.querySelector( '#mp-state-non-metro-helper-text' )
+    );
+    utils.showEl(
+      this.$container.querySelector( '#mp-line-chart-state-container' )
+    );
   }
   if ( geoType ) {
     utils.showEl( this.$compareContainer );
@@ -201,7 +259,10 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, st
   }
 };
 
-MortgagePerformanceLineChart.prototype.renderChartTitle = function( prevState, state ) {
+MortgagePerformanceLineChart.prototype.renderChartTitle = function(
+  prevState,
+  state
+) {
   let geoName = state.geo.name;
   // Append the U.S. state if it's a county
   if ( state.geo.type === 'county' ) {
@@ -222,7 +283,10 @@ MortgagePerformanceLineChart.prototype.renderChartTitle = function( prevState, s
   }
 };
 
-MortgagePerformanceLineChart.prototype.renderCounties = function( prevState, state ) {
+MortgagePerformanceLineChart.prototype.renderCounties = function(
+  prevState,
+  state
+) {
   this.$county.disabled = state.isLoadingCounties;
   if ( JSON.stringify( prevState.counties ) === JSON.stringify( state.counties ) ) {
     return;
@@ -239,7 +303,10 @@ MortgagePerformanceLineChart.prototype.renderCounties = function( prevState, sta
   this.$county.appendChild( fragment );
 };
 
-MortgagePerformanceLineChart.prototype.renderMetros = function( prevState, state ) {
+MortgagePerformanceLineChart.prototype.renderMetros = function(
+  prevState,
+  state
+) {
   this.$metro.disabled = state.isLoadingMetros;
   if ( JSON.stringify( prevState.metros ) === JSON.stringify( state.metros ) ) {
     return;
@@ -260,7 +327,10 @@ MortgagePerformanceLineChart.prototype.renderMetros = function( prevState, state
   this.$metro.appendChild( fragment );
 };
 
-MortgagePerformanceLineChart.prototype.renderStates = function( prevState, state ) {
+MortgagePerformanceLineChart.prototype.renderStates = function(
+  prevState,
+  state
+) {
   this.$state.disabled = state.isLoadingStates;
   if ( JSON.stringify( prevState.states ) === JSON.stringify( state.states ) ) {
     return;

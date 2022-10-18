@@ -22,18 +22,24 @@ const datetime = {
         if ( evt.trigger === 'navigator' ) {
           trackChartEvent( evt, 'Slider Moved' );
         } else if ( evt.trigger === 'rangeSelectorButton' ) {
-          trackChartEvent( evt, 'Time Range Selected', evt.rangeSelectorButton.text );
+          trackChartEvent(
+            evt,
+            'Time Range Selected',
+            evt.rangeSelectorButton.text
+          );
         }
       }
     }
   },
   yAxis: {
     ...styles.yAxis,
-    plotLines: [ {
-      className: 'zeroLine',
-      value: 0,
-      width: 2
-    } ]
+    plotLines: [
+      {
+        className: 'zeroLine',
+        value: 0,
+        width: 2
+      }
+    ]
   },
   rangeSelector: {
     inputEnabled: false,
@@ -44,7 +50,6 @@ const datetime = {
     buttonPosition: {
       x: -60,
       y: -70
-
     },
     buttonSpacing: 10,
     buttonTheme: {
@@ -52,29 +57,31 @@ const datetime = {
       width: 45,
       r: 5
     },
-    buttons: [ {
-      type: 'millisecond',
-      count: msYear,
-      text: '1y',
-      title: 'View 1 year'
-    },
-    {
-      type: 'millisecond',
-      count: 3 * msYear,
-      text: '3y',
-      title: 'View 3 year'
-    },
-    {
-      type: 'millisecond',
-      count: ( 5 * msYear ) + 86400000,
-      text: '5y',
-      title: 'View 5 years'
-    },
-    {
-      type: 'all',
-      text: 'All',
-      title: 'View all'
-    } ]
+    buttons: [
+      {
+        type: 'millisecond',
+        count: msYear,
+        text: '1y',
+        title: 'View 1 year'
+      },
+      {
+        type: 'millisecond',
+        count: 3 * msYear,
+        text: '3y',
+        title: 'View 3 year'
+      },
+      {
+        type: 'millisecond',
+        count: 5 * msYear + 86400000,
+        text: '5y',
+        title: 'View 5 years'
+      },
+      {
+        type: 'all',
+        text: 'All',
+        title: 'View all'
+      }
+    ]
   },
   navigator: {
     enabled: true,

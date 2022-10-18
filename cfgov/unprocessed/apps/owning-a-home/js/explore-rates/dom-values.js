@@ -7,7 +7,6 @@ const unFormatUSD = require( 'unformat-usd' );
  * @returns {Object} Hash of element id and its value(s).
  */
 function getSelection( param ) {
-
   const elm = document.querySelector( '#' + param );
   let val;
 
@@ -24,15 +23,10 @@ function getSelection( param ) {
       val = elm.value;
       break;
     default:
-      val = unFormatUSD(
-        elm.value ||
-        elm.getAttribute( 'placeholder' )
-      );
+      val = unFormatUSD( elm.value || elm.getAttribute( 'placeholder' ) );
   }
 
   return val;
 }
 
-export {
-  getSelection
-};
+export { getSelection };

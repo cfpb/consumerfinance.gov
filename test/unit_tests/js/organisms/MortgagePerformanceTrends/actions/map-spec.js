@@ -3,39 +3,41 @@
 import actions from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/map.js';
 
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
-jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils', () => ( {
-  getMetroData: cb => {
-    const metros = {
-      AL: {
-        metros: [
-          {
-            valid: true,
-            fips: '12345',
-            name: 'Acme metro'
-          }
-        ]
-      }
-    };
-    cb( metros );
-  },
-  getCountyData: cb => {
-    const counties = {
-      AL: {
-        counties: [
-          {
-            valid: true,
-            fips: '12345',
-            name: 'Acme county'
-          }
-        ]
-      }
-    };
-    cb( counties );
-  }
-} ) );
+jest.mock(
+  '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils',
+  () => ( {
+    getMetroData: cb => {
+      const metros = {
+        AL: {
+          metros: [
+            {
+              valid: true,
+              fips: '12345',
+              name: 'Acme metro'
+            }
+          ]
+        }
+      };
+      cb( metros );
+    },
+    getCountyData: cb => {
+      const counties = {
+        AL: {
+          counties: [
+            {
+              valid: true,
+              fips: '12345',
+              name: 'Acme county'
+            }
+          ]
+        }
+      };
+      cb( counties );
+    }
+  } )
+);
 
 describe( 'Mortgage Performance map action creators', () => {
-
   it( 'should create an action to update the chart', () => {
     const action = actions.updateChart( 123, 'Alabama', 'state' );
     expect( action ).toStrictEqual( {
@@ -103,5 +105,4 @@ describe( 'Mortgage Performance map action creators', () => {
   it( 'should fail on bad county state abbr', () => {
     expect( actions.fetchCounties( 'bloop', true ) ).toThrow();
   } );
-
 } );

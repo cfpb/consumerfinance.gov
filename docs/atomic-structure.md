@@ -15,7 +15,6 @@ require some Python programming—see the
 
 We compose our atomic components as follows:
 
-
 ## Atoms
 
 The smallest kind of component.
@@ -25,9 +24,7 @@ Prefixed with `a-` in class names.
 ### HTML
 
 ```html
-<div class="a-tag">
-    Tag label {{ svg_icon('error') }}
-</div>
+<div class="a-tag">Tag label {{ svg_icon('error') }}</div>
 ```
 
 ### Less
@@ -45,7 +42,6 @@ Prefixed with `a-` in class names.
 
 None of our atoms require any JavaScript at this time.
 
-
 ## Molecules
 
 The medium-sized component.
@@ -55,14 +51,16 @@ Prefixed with `m-` in class names.
 ### HTML
 
 ```html
-<div class="m-notification
-            m-notification__visible
-            m-notification__error"
-     data-js-hook="state_atomic_init">
-    {{ svg_icon('error') }}
-    <div class="m-notification_content" role="alert">
-        <div class="h4 m-notification_message">Page not found.</div>
-    </div>
+<div
+  class="m-notification
+         m-notification__visible
+         m-notification__error"
+  data-js-hook="state_atomic_init"
+>
+  {{ svg_icon('error') }}
+  <div class="m-notification_content" role="alert">
+    <div class="h4 m-notification_message">Page not found.</div>
+  </div>
 </div>
 ```
 
@@ -100,10 +98,9 @@ The Notification molecule can be instantiated
 by adding the following to your project's JavaScript code:
 
 ```js
-const notification = new Notification( _dom );
+const notification = new Notification(_dom);
 notification.init();
 ```
-
 
 ## Organisms
 
@@ -115,14 +112,17 @@ Prefixed with `o-` in class names.
 ### HTML
 
 ```html
-<div class="o-expandable
+<div
+  class="o-expandable
             o-expandable__borders
             o-expandable__midtone
             o-expandable__expanded"
-     data-js-hook="state_atomic_init">
-    <button class="o-expandable_target" aria-pressed="true">
-        <div class="o-expandable_header">
-        …
+  data-js-hook="state_atomic_init"
+>
+  <button class="o-expandable_target" aria-pressed="true">
+    <div class="o-expandable_header">…</div>
+  </button>
+</div>
 ```
 
 ### Less
@@ -165,18 +165,17 @@ The Expandable organism can be instantiated
 by adding the following to your project's JavaScript code:
 
 ```js
-const expandable = new Expandable( _dom.querySelector( '.o-expandable' ) );
-expandable.init( _expandable.EXPANDED );
+const expandable = new Expandable(_dom.querySelector('.o-expandable'));
+expandable.init(_expandable.EXPANDED);
 ```
 
 or
 
 ```js
-const atomicHelpers = require( '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js' );
-const Expandable = require( '../../organisms/Expandable' );
-atomicHelpers.instantiateAll( '.o-expandable', Expandable );
+const atomicHelpers = require('@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js');
+const Expandable = require('../../organisms/Expandable');
+atomicHelpers.instantiateAll('.o-expandable', Expandable);
 ```
-
 
 ## Folder structure
 
@@ -192,10 +191,10 @@ consumerfinance.gov/cfgov/jinja2/v1/_includes/organisms/
 ```
 
 !!! note
-    Some of our foundational components get their Less and JavaScript
-    from the [Design System](https://cfpb.github.io/design-system/),
-    but the HTML for their Wagtail block templates
-    is stored in the above folders.
+Some of our foundational components get their Less and JavaScript
+from the [Design System](https://cfpb.github.io/design-system/),
+but the HTML for their Wagtail block templates
+is stored in the above folders.
 
 ### CSS
 
@@ -219,7 +218,6 @@ consumerfinance.gov/test/unit_tests/js/molecules/
 consumerfinance.gov/test/unit_tests/js/organisms/
 ```
 
-
 ## JavaScript architecture
 
 JavaScript components are built to be rendered on the server
@@ -227,18 +225,18 @@ and then enhanced via JavaScript on the client.
 The basic interface for the components is as follows:
 
 ```js
-function AtomicComponent( domElement ) {
-    // Ensure the passed in Element is in the DOM.
-    // Query and store references to sub-elements.
-    // Instantiate child atomic components.
-    // Bind necessary events for referenced DOM elements.
-    // Perform other initialization related tasks.
-    this.init = function init(){}
+function AtomicComponent(domElement) {
+  // Ensure the passed in Element is in the DOM.
+  // Query and store references to sub-elements.
+  // Instantiate child atomic components.
+  // Bind necessary events for referenced DOM elements.
+  // Perform other initialization related tasks.
+  this.init = function init() {};
 
-    // General teardown function
-    // We don't remove the element from the DOM so
-    // we need to unbind the events.
-    this.destroy = function destroy(){}
+  // General teardown function
+  // We don't remove the element from the DOM so
+  // we need to unbind the events.
+  this.destroy = function destroy() {};
 }
 ```
 
@@ -247,7 +245,6 @@ You can get more information by reading the following:
 
 - [A Simple Challenge to Classical Inheritance Fans](https://medium.com/javascript-scene/a-simple-challenge-to-classical-inheritance-fans-e78c2cf5eead#.mtrvhcjiw)
 - [Composition over Inheritance (YouTube)](https://www.youtube.com/watch?v=wfMtDGfHWpA)
-
 
 ## Component build pipeline
 

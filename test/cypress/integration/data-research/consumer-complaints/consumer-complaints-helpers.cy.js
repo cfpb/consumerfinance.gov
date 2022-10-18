@@ -1,5 +1,4 @@
 export class ConsumerComplaints {
-
   clickTab( name ) {
     cy.get( `button.${ name }` ).click();
   }
@@ -23,5 +22,4 @@ export class ConsumerComplaints {
   searchSummary() {
     return cy.get( '#search-summary' );
   }
-
 }

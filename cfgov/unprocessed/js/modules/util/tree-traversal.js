@@ -76,8 +76,4 @@ function dfs( node, callback ) {
   }
 }
 
-export {
-  backtrack,
-  bfs,
-  dfs
-};
+export { backtrack, bfs, dfs };

@@ -1,5 +1,6 @@
 import beforeExpandableTransitionInit, {
-  setInnerWidth, MOBILE_COLLAPSED_CLASS
+  setInnerWidth,
+  MOBILE_COLLAPSED_CLASS
 } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-mobile.js';
 
 // Markup created with settings: is_expanded=true, is_collapsed_for_mobile=true
@@ -57,7 +58,6 @@ let expandableDiv;
 const OPEN_DEFAULT_CLASS = 'o-expandable_content__onload-open';
 
 describe( 'expandable-mobile', () => {
-
   beforeEach( () => {
     setInnerWidth( 1000 );
     // Load HTML fixture
@@ -80,41 +80,36 @@ describe( 'expandable-mobile', () => {
   it( 'should remove the OPEN_DEFAULT class on narrow innerWidth', () => {
     setInnerWidth( 900 );
 
-    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) )
-      .toEqual( true );
+    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) ).toEqual( true );
     beforeExpandableTransitionInit();
-    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) )
-      .toEqual( false );
-
+    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) ).toEqual(
+      false
+    );
   } );
 
   it( 'should leave the OPEN_DEFAULT class for tablet innerWidth', () => {
     setInnerWidth( 901 );
 
-    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) )
-      .toEqual( true );
+    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) ).toEqual( true );
     beforeExpandableTransitionInit();
-    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) )
-      .toEqual( true );
-
+    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) ).toEqual( true );
   } );
 
   it( 'should always remove its MOBILE_COLLAPSED_CLASS (narrow)', () => {
     setInnerWidth( 900 );
 
     beforeExpandableTransitionInit();
-    expect( expandableDiv.classList.contains( MOBILE_COLLAPSED_CLASS ) )
-      .toEqual( false );
-
+    expect( expandableDiv.classList.contains( MOBILE_COLLAPSED_CLASS ) ).toEqual(
+      false
+    );
   } );
 
   it( 'should always remove its MOBILE_COLLAPSED_CLASS (wide)', () => {
     setInnerWidth( 901 );
 
     beforeExpandableTransitionInit();
-    expect( expandableDiv.classList.contains( MOBILE_COLLAPSED_CLASS ) )
-      .toEqual( false );
-
+    expect( expandableDiv.classList.contains( MOBILE_COLLAPSED_CLASS ) ).toEqual(
+      false
+    );
   } );
-
 } );

@@ -14,7 +14,6 @@ const HTML_SNIPPET = `
 `;
 
 describe( 'FlyoutMenu', () => {
-
   let flyoutMenu;
 
   // Mock-related settings.
@@ -55,9 +54,7 @@ describe( 'FlyoutMenu', () => {
     it( 'should have correct state before initializing', () => {
       expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-      expect(
-        altTriggerDom.getAttribute( 'aria-expanded' )
-      ).toBe( 'false' );
+      expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
 
       expect( flyoutMenu.isAnimating() ).toBe( false );
       expect( flyoutMenu.isExpanded() ).toBe( false );
@@ -90,7 +87,6 @@ describe( 'FlyoutMenu', () => {
     } );
 
     it( 'should dispatch events when called by trigger click', () => {
-
       /* TODO: Ideally this would use `new MouseEvent`,
          but how do we import MouseEvent (or Event) into Jest.
          Please investigate. */
@@ -101,13 +97,11 @@ describe( 'FlyoutMenu', () => {
 
       // Check expected event broadcasts.
       expect( triggerOverSpy ).toHaveBeenCalledTimes( 1 );
-      expect( triggerOverSpy ).toHaveBeenCalledWith(
-        {
-          target: flyoutMenu,
-          trigger: triggerDom,
-          type: 'triggerOver'
-        }
-      );
+      expect( triggerOverSpy ).toHaveBeenCalledWith( {
+        target: flyoutMenu,
+        trigger: triggerDom,
+        type: 'triggerOver'
+      } );
     } );
 
     it( 'should dispatch events when called by alt trigger click', () => {
@@ -118,13 +112,11 @@ describe( 'FlyoutMenu', () => {
 
       // Check expected event broadcasts.
       expect( triggerClickSpy ).toHaveBeenCalledTimes( 1 );
-      expect( triggerClickSpy ).toHaveBeenCalledWith(
-        {
-          target: flyoutMenu,
-          trigger: altTriggerDom,
-          type: 'triggerClick'
-        }
-      );
+      expect( triggerClickSpy ).toHaveBeenCalledWith( {
+        target: flyoutMenu,
+        trigger: altTriggerDom,
+        type: 'triggerClick'
+      } );
     } );
   } );
 
@@ -142,14 +134,16 @@ describe( 'FlyoutMenu', () => {
     afterEach( () => {
       // Check expected event broadcasts.
       expect( expandBeginSpy ).toHaveBeenCalledTimes( 1 );
-      expect( expandBeginSpy ).toHaveBeenCalledWith(
-        { target: flyoutMenu, type: 'expandBegin' }
-      );
+      expect( expandBeginSpy ).toHaveBeenCalledWith( {
+        target: flyoutMenu,
+        type: 'expandBegin'
+      } );
 
       expect( expandEndSpy ).toHaveBeenCalledTimes( 1 );
-      expect( expandEndSpy ).toHaveBeenCalledWith(
-        { target: flyoutMenu, type: 'expandEnd' }
-      );
+      expect( expandEndSpy ).toHaveBeenCalledWith( {
+        target: flyoutMenu,
+        type: 'expandEnd'
+      } );
 
       // Check expected aria attributes state.
       expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
@@ -157,20 +151,29 @@ describe( 'FlyoutMenu', () => {
       expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
     } );
 
-    it( 'should dispatch events and set aria attributes, ' +
-        'when called by trigger click', () => {
-      triggerDom.click();
-    } );
+    it(
+      'should dispatch events and set aria attributes, ' +
+        'when called by trigger click',
+      () => {
+        triggerDom.click();
+      }
+    );
 
-    it( 'should dispatch events and set aria attributes, ' +
-        'when called by alt trigger click', () => {
-      altTriggerDom.click();
-    } );
+    it(
+      'should dispatch events and set aria attributes, ' +
+        'when called by alt trigger click',
+      () => {
+        altTriggerDom.click();
+      }
+    );
 
-    it( 'should dispatch events and set aria attributes, ' +
-        'when called directly', () => {
-      flyoutMenu.expand();
-    } );
+    it(
+      'should dispatch events and set aria attributes, ' +
+        'when called directly',
+      () => {
+        flyoutMenu.expand();
+      }
+    );
   } );
 
   describe( '.collapse()', () => {
@@ -188,14 +191,16 @@ describe( 'FlyoutMenu', () => {
     afterEach( () => {
       // Check expected event broadcasts.
       expect( collapseBeginSpy ).toHaveBeenCalledTimes( 1 );
-      expect( collapseBeginSpy ).toHaveBeenCalledWith(
-        { target: flyoutMenu, type: 'collapseBegin' }
-      );
+      expect( collapseBeginSpy ).toHaveBeenCalledWith( {
+        target: flyoutMenu,
+        type: 'collapseBegin'
+      } );
 
       expect( collapseEndSpy ).toHaveBeenCalledTimes( 1 );
-      expect( collapseEndSpy ).toHaveBeenCalledWith(
-        { target: flyoutMenu, type: 'collapseEnd' }
-      );
+      expect( collapseEndSpy ).toHaveBeenCalledWith( {
+        target: flyoutMenu,
+        type: 'collapseEnd'
+      } );
 
       // Check expected aria attribute states.
       expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
@@ -203,20 +208,29 @@ describe( 'FlyoutMenu', () => {
       expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
     } );
 
-    it( 'should dispatch events and set aria attributes, ' +
-        'when called by trigger click', () => {
-      triggerDom.click();
-    } );
+    it(
+      'should dispatch events and set aria attributes, ' +
+        'when called by trigger click',
+      () => {
+        triggerDom.click();
+      }
+    );
 
-    it( 'should dispatch events and set aria attributes, ' +
-        'when called by alt trigger click', () => {
-      altTriggerDom.click();
-    } );
+    it(
+      'should dispatch events and set aria attributes, ' +
+        'when called by alt trigger click',
+      () => {
+        altTriggerDom.click();
+      }
+    );
 
-    it( 'should dispatch events and set aria attributes, ' +
-        'when called directly', () => {
-      flyoutMenu.collapse();
-    } );
+    it(
+      'should dispatch events and set aria attributes, ' +
+        'when called directly',
+      () => {
+        flyoutMenu.collapse();
+      }
+    );
   } );
 
   describe( '.setExpandTransition()', () => {
@@ -282,8 +296,9 @@ describe( 'FlyoutMenu', () => {
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
       expect( flyoutMenu.getTransition() ).toStrictEqual( transition );
-      expect( flyoutMenu.getTransition( FlyoutMenu.COLLAPSE_TYPE ) )
-        .toStrictEqual( transition );
+      expect( flyoutMenu.getTransition( FlyoutMenu.COLLAPSE_TYPE ) ).toStrictEqual(
+        transition
+      );
     } );
   } );
 
@@ -354,7 +369,6 @@ describe( 'FlyoutMenu', () => {
         expect( collapseEndSpy ).toHaveBeenCalledTimes( 1 );
       } );
     } );
-
   } );
 
   describe( '.setData()', () => {

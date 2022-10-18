@@ -60,10 +60,10 @@ const SERVICE_WORKER_CONFIG = {
   inlineWorkboxRuntime: true
 };
 
-
 const ensureDirectoryExistence = filePath => {
   const dirname = path.dirname( filePath );
-  if ( fs.existsSync( dirname ) ) { // eslint-disable-line no-sync
+  // eslint-disable-next-line no-sync
+  if ( fs.existsSync( dirname ) ) {
     return true;
   }
   ensureDirectoryExistence( dirname );
@@ -72,13 +72,18 @@ const ensureDirectoryExistence = filePath => {
 
 fancyLog( 'Started generating service worker file...' );
 ensureDirectoryExistence( SERVICE_WORKER_DEST );
-workboxBuild.generateSW( SERVICE_WORKER_CONFIG ).then( ( { count, size } ) => {
-  fancyLog( `Generated ${ SERVICE_WORKER_DEST }, which will precache ${ count } files, totaling ${ size } bytes.` );
-} ).catch( err => {
-  fancyLog( `Error generating service worker file: ${ err }` );
-} );
+workboxBuild
+  .generateSW( SERVICE_WORKER_CONFIG )
+  .then( ( { count, size } ) => {
+    fancyLog(
+      `Generated ${ SERVICE_WORKER_DEST }, which will precache ${ count } files, totaling ${ size } bytes.`
+    );
+  } )
+  .catch( err => {
+    fancyLog( `Error generating service worker file: ${ err }` );
+  } );
 
-fancyLog( 'Copying eRegs\' manifest...' );
+fancyLog( "Copying eRegs' manifest..." );
 ensureDirectoryExistence( MANIFEST_DEST );
 fs.copyFile( MANIFEST_SRC, MANIFEST_DEST, err => {
   if ( err ) {
@@ -86,4 +91,3 @@ fs.copyFile( MANIFEST_SRC, MANIFEST_DEST, err => {
   }
   return fancyLog( `Successfully copied eRegs' manifest to ${ MANIFEST_DEST }` );
 } );
-

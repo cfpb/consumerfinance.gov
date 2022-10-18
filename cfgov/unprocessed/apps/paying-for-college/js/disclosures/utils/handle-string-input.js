@@ -14,8 +14,10 @@ function handleStringInput( numberString ) {
   const digitPosition = numberString.indexOf( numberString.match( /\d/ ) );
 
   // If a '-' appears before the first digit, we assume numberString is negative
-  if ( numberString.indexOf( numberString.match( '-' ) ) !== -1 &&
-    minusPosition < digitPosition ) {
+  if (
+    numberString.indexOf( numberString.match( '-' ) ) !== -1 &&
+    minusPosition < digitPosition
+  ) {
     signMaker = -1;
   }
 
@@ -33,7 +35,6 @@ function handleStringInput( numberString ) {
 
   // Get number value of string, then multiply by signMaker and return
   return Number( numberString ) * signMaker;
-
 }
 
 module.exports = handleStringInput;

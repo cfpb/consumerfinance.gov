@@ -1,8 +1,7 @@
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/';
-const tdpAnalytics = require(
-  BASE_JS_PATH + 'teachers-digital-platform/js/tdp-analytics.js'
-);
+const tdpAnalytics = require( BASE_JS_PATH +
+  'teachers-digital-platform/js/tdp-analytics.js' );
 import HTML_SNIPPET from '../../html/survey-page-analytics';
 
 const xhr = global.XMLHttpRequest;
@@ -38,7 +37,9 @@ describe( 'Custom analytics for the TDP survey form page', () => {
     simulateEvent( 'click', target );
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Radio Button Clicked' );
-    expect( spy.mock.calls[0][1] ).toEqual( '3-5: 10. Try not to spend all my money right away. (Very important)' );
+    expect( spy.mock.calls[0][1] ).toEqual(
+      '3-5: 10. Try not to spend all my money right away. (Very important)'
+    );
 
     simulateEvent( 'click', target );
 
@@ -73,7 +74,9 @@ describe( 'Custom analytics for the TDP survey form page', () => {
     simulateEvent( 'click', target );
 
     expect( spy.mock.calls[0][0] ).toEqual( 'Anchor: Missed Question' );
-    expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 3 | 10. Try not to spend all my money right away.' );
+    expect( spy.mock.calls[0][1] ).toEqual(
+      '3-5: Section 3 | 10. Try not to spend all my money right away.'
+    );
   } );
 
   it( 'should send analytics event when restart survey link is clicked', () => {
@@ -89,7 +92,9 @@ describe( 'Custom analytics for the TDP survey form page', () => {
   } );
 
   it( 'should send analytics event when sidebar expandable link is clicked', () => {
-    const target = document.querySelector( '.tdp-survey-sidebar__mobile-control .o-expandable_header' );
+    const target = document.querySelector(
+      '.tdp-survey-sidebar__mobile-control .o-expandable_header'
+    );
     const spy = jest.fn();
 
     tdpAnalytics.bindAnalytics( spy );
@@ -138,5 +143,4 @@ describe( 'Custom analytics for the TDP survey form page', () => {
     expect( spy.mock.calls[0][0] ).toEqual( 'Get my results' );
     expect( spy.mock.calls[0][1] ).toEqual( '3-5: Section 5' );
   } );
-
 } );

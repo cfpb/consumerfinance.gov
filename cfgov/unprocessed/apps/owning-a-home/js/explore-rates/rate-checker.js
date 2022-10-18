@@ -13,10 +13,7 @@ import {
   renderLoanAmount,
   setSelections
 } from './util';
-import {
-  getCounties,
-  getData
-} from './data-loader';
+import { getCounties, getData } from './data-loader';
 import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import amortize from 'amortize';
@@ -77,14 +74,14 @@ function updateView() {
   checkARM();
 
   const data = {
-    labels:       [],
-    intLabels:    [],
+    labels: [],
+    intLabels: [],
     uniqueLabels: [],
-    vals:         [],
-    totalVals:    [],
-    largest:      {
+    vals: [],
+    totalVals: [],
+    largest: {
       label: 4,
-      val:   0
+      val: 0
     }
   };
 
@@ -100,18 +97,17 @@ function updateView() {
     resultWarning();
     downPaymentWarning();
   } else {
-
     params.update();
     const fieldsToFetch = {
-      price:          params.getVal( 'house-price' ),
-      loan_amount:    params.getVal( 'loan-amount' ),
-      minfico:        slider.valMin(),
-      maxfico:        slider.valMax(),
-      state:          params.getVal( 'location' ),
+      price: params.getVal( 'house-price' ),
+      loan_amount: params.getVal( 'loan-amount' ),
+      minfico: slider.valMin(),
+      maxfico: slider.valMax(),
+      state: params.getVal( 'location' ),
       rate_structure: params.getVal( 'rate-structure' ),
-      loan_term:      params.getVal( 'loan-term' ),
-      loan_type:      params.getVal( 'loan-type' ),
-      arm_type:       params.getVal( 'arm-type' )
+      loan_term: params.getVal( 'loan-term' ),
+      loan_type: params.getVal( 'loan-type' ),
+      arm_type: params.getVal( 'arm-type' )
     };
 
     request = getData( fieldsToFetch );
@@ -124,84 +120,90 @@ function updateView() {
     } );
 
     // If it succeeds, update the DOM.
-    request.promise.then( res => res.json() ).then( respData => {
-      const results = respData.data;
+    request.promise
+      .then( res => res.json() )
+      .then( respData => {
+        const results = respData.data;
 
-      // sort results by interest rate, ascending
-      const sortedKeys = [];
-      const sortedResults = {};
-      let key;
-      for ( key in results ) {
-        if ( results.hasOwnProperty( key ) ) {
-          sortedKeys.push( key );
-        }
-      }
-
-      sortedKeys.sort();
-
-      const len = sortedKeys.length;
-      for ( let x = 0; x < len; x++ ) {
-        sortedResults[sortedKeys[x]] = results[sortedKeys[x]];
-      }
-
-      $.each( sortedResults, function( key, val ) {
-        data.intLabels.push( Number( key ) );
-        data.labels.push( key + '%' );
-
-        data.vals.push( val );
-        if ( val > data.largest.val ) {
-          data.largest.val = val;
-          data.largest.label = key + '%';
+        // sort results by interest rate, ascending
+        const sortedKeys = [];
+        const sortedResults = {};
+        let key;
+        for ( key in results ) {
+          if ( results.hasOwnProperty( key ) ) {
+            sortedKeys.push( key );
+          }
         }
 
-        for ( let i = 0; i < val; i++ ) {
-          data.totalVals.push( Number( key ) );
-        }
-      } );
+        sortedKeys.sort();
 
-      // fade out chart and highlight county if no county is selected
-      if ( $( '#county' ).is( ':visible' ) && $( '#county' ).val() === null ) {
+        const len = sortedKeys.length;
+        for ( let x = 0; x < len; x++ ) {
+          sortedResults[sortedKeys[x]] = results[sortedKeys[x]];
+        }
+
+        $.each( sortedResults, function( key, val ) {
+          data.intLabels.push( Number( key ) );
+          data.labels.push( key + '%' );
+
+          data.vals.push( val );
+          if ( val > data.largest.val ) {
+            data.largest.val = val;
+            data.largest.label = key + '%';
+          }
+
+          for ( let i = 0; i < val; i++ ) {
+            data.totalVals.push( Number( key ) );
+          }
+        } );
+
+        // fade out chart and highlight county if no county is selected
+        if ( $( '#county' ).is( ':visible' ) && $( '#county' ).val() === null ) {
+          removeAlerts();
+          startLoading();
+          dropdown( 'county' ).showHighlight();
+          document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
+          return;
+        }
+
+        // display an error message if less than 2 results are returned
+        if ( data.vals.length < 2 ) {
+          resultWarning();
+          return;
+        }
+
+        // display an error message if the downpayment is greater than the house price
+        if (
+          +Number( params.getVal( 'house-price' ) ) <
+          +Number( params.getVal( 'down-payment' ) )
+        ) {
+          resultWarning();
+          downPaymentWarning();
+          return;
+        }
+
+        data.uniqueLabels = uniquePrimitives( data.labels.slice( 0 ) );
+
+        finishLoading();
+        hideSummary();
         removeAlerts();
-        startLoading();
-        dropdown( 'county' ).showHighlight();
-        document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
-        return;
-      }
+        updateLanguage( data.totalVals );
+        renderAccessibleData(
+          accessibleDataTableHeadDom,
+          accessibleDataTableBodyDom,
+          data.labels,
+          data.vals
+        );
+        chart.render( data );
 
-      // display an error message if less than 2 results are returned
-      if ( data.vals.length < 2 ) {
-        resultWarning();
-        return;
-      }
+        // Update timestamp
+        const _timestamp = respData.timestamp;
 
-      // display an error message if the downpayment is greater than the house price
-      if ( +Number( params.getVal( 'house-price' ) ) <
-           +Number( params.getVal( 'down-payment' ) ) ) {
-        resultWarning();
-        downPaymentWarning();
-        return;
-      }
+        renderDatestamp( timeStampDom, _timestamp );
 
-      data.uniqueLabels = uniquePrimitives( data.labels.slice( 0 ) );
-
-      finishLoading();
-      hideSummary();
-      removeAlerts();
-      updateLanguage( data.totalVals );
-      renderAccessibleData(
-        accessibleDataTableHeadDom, accessibleDataTableBodyDom,
-        data.labels, data.vals
-      );
-      chart.render( data );
-
-      // Update timestamp
-      const _timestamp = respData.timestamp;
-
-      renderDatestamp( timeStampDom, _timestamp );
-
-      updateComparisons( data );
-      renderInterestAmounts();
-    } );
+        updateComparisons( data );
+        renderInterestAmounts();
+      } );
   }
 }
 
@@ -210,14 +212,14 @@ function updateView() {
  * @param {Array} totalVals - List of interest rates.
  */
 function updateLanguage( totalVals ) {
-
   /**
    * Set the state text in the sentence above the chart to be the same as
    * the state drop-down selected.
    */
   function renderLocation() {
     const stateDropDown = document.querySelector( '#location' );
-    const selectedDropDown = stateDropDown.options[stateDropDown.selectedIndex];
+    const selectedDropDown =
+      stateDropDown.options[stateDropDown.selectedIndex];
     const state = selectedDropDown.textContent;
     const locations = document.querySelectorAll( '.location' );
     // forEach could be used here, but it's not supported in IE11.
@@ -236,7 +238,9 @@ function updateLanguage( totalVals ) {
     if ( getSelection( 'rate-structure' ) === 'arm' ) {
       const armVal = getSelection( 'arm-type' );
       const term = armVal.match( /[^-]*/i )[0];
-      $( '.rc-comparison-short .loan-years, .arm-comparison-term' ).text( term ).fadeIn();
+      $( '.rc-comparison-short .loan-years, .arm-comparison-term' )
+        .text( term )
+        .fadeIn();
     } else {
       $( '.rc-comparison-short .loan-years' ).text( 5 ).fadeIn();
     }
@@ -261,9 +265,7 @@ function renderMedian( totalVals ) {
  * Request a list of counties and bring them into the DOM.
  */
 function loadCounties() {
-
   getCounties( params.getVal( 'location' ) ).then( respData => {
-
     if ( params.getVal( 'location' ) ) {
       /* Empty the current counties and cache the current state so we
          can monitor if it changes. */
@@ -314,13 +316,13 @@ function checkForJumbo() {
   const norms = [ 'conf', 'fha', 'va' ];
   const warnings = {
     conf: template.countyConfWarning,
-    fha:  template.countyFHAWarning,
-    va:   template.countyVAWarning
+    fha: template.countyFHAWarning,
+    va: template.countyVAWarning
   };
   const bounces = { 'fha-hb': 'fha', 'va-hb': 'va' };
 
   const loan = jumbo( {
-    loanType:   params.getVal( 'loan-type' ),
+    loanType: params.getVal( 'loan-type' ),
     loanAmount: params.getVal( 'loan-amount' )
   } );
   dropdown( 'loan-type' ).enable( norms );
@@ -362,9 +364,15 @@ function checkForJumbo() {
   // Hide any existing message, then show a message if appropriate.
   document.querySelector( '#county-warning' ).classList.add( 'u-hidden' );
   if ( warnings.hasOwnProperty( params.getVal( 'loan-type' ) ) ) {
-    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'span' ).text( warnings[params.getVal( 'loan-type' )] );
+    $( '#county-warning' )
+      .removeClass( 'u-hidden' )
+      .find( 'span' )
+      .text( warnings[params.getVal( 'loan-type' )] );
   } else {
-    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'span' ).text( template.countyGenWarning );
+    $( '#county-warning' )
+      .removeClass( 'u-hidden' )
+      .find( 'span' )
+      .text( template.countyGenWarning );
   }
 
   // If the state hasn't changed, we also cool. No need to load new counties.
@@ -375,7 +383,6 @@ function checkForJumbo() {
 
   // Let's load us some counties.
   loadCounties();
-
 }
 
 /**
@@ -389,9 +396,9 @@ function processCounty() {
   const jumbos = [ 'jumbo', 'agency', 'fha-hb', 'va-hb' ];
   const loanTypes = {
     'agency': 'Conforming jumbo',
-    'jumbo':  'Jumbo (non-conforming)',
+    'jumbo': 'Jumbo (non-conforming)',
     'fha-hb': 'FHA high-balance',
-    'va-hb':  'VA high-balance'
+    'va-hb': 'VA high-balance'
   };
 
   // If the county field is u-hidden or they haven't selected a county, abort.
@@ -400,11 +407,11 @@ function processCounty() {
   }
 
   const loan = jumbo( {
-    loanType:       params.getVal( 'loan-type' ),
-    loanAmount:     params.getVal( 'loan-amount' ),
+    loanType: params.getVal( 'loan-type' ),
+    loanAmount: params.getVal( 'loan-amount' ),
     gseCountyLimit: parseInt( $county.data( 'gse' ), 10 ),
     fhaCountyLimit: parseInt( $county.data( 'fha' ), 10 ),
-    vaCountyLimit:  parseInt( $county.data( 'va' ), 10 )
+    vaCountyLimit: parseInt( $county.data( 'va' ), 10 )
   } );
 
   if ( loan.success && loan.isJumbo ) {
@@ -412,8 +419,8 @@ function processCounty() {
     dropdown( 'loan-type' ).removeOption( jumbos );
     dropdown( 'loan-type' ).enable( norms );
     $loan.addOption( {
-      label:  loanTypes[loan.type],
-      value:  loan.type,
+      label: loanTypes[loan.type],
+      value: loan.type,
       select: true
     } );
 
@@ -424,17 +431,24 @@ function processCounty() {
     } else {
       params.setVal( 'prevLoanType', params.getVal( 'loan-type' ) );
       params.setVal( 'loan-type', loan.type );
-      dropdown( 'loan-type' ).disable( params.getVal( 'prevLoanType' ) ).showHighlight();
+      dropdown( 'loan-type' )
+        .disable( params.getVal( 'prevLoanType' ) )
+        .showHighlight();
     }
     // When the loan-type is agency or jumbo, disable conventional.
     if ( $.inArray( params.getVal( 'loan-type' ), [ 'agency', 'jumbo' ] ) >= 0 ) {
       dropdown( 'loan-type' ).disable( 'conf' );
     }
     // Add links to loan messages.
-    loan.msg = loan.msg.replace( 'jumbo (non-conforming)', '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">jumbo (non-conforming)</a>' );
-    loan.msg = loan.msg.replace( 'conforming jumbo', '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">conforming jumbo</a>' );
+    loan.msg = loan.msg.replace(
+      'jumbo (non-conforming)',
+      '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">jumbo (non-conforming)</a>'
+    );
+    loan.msg = loan.msg.replace(
+      'conforming jumbo',
+      '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">conforming jumbo</a>'
+    );
     $( '#hb-warning' ).removeClass( 'u-hidden' ).find( 'span' ).html( loan.msg );
-
   } else {
     params.setVal( 'isJumbo', false );
     dropdown( 'loan-type' ).removeOption( jumbos );
@@ -487,7 +501,6 @@ function processLoanAmount( element ) {
  * depending on the input they've changed.
  */
 function renderDownPayment() {
-
   const $el = $( this );
   const price = document.querySelector( '#house-price' );
   const percent = document.querySelector( '#percent-down' );
@@ -506,9 +519,13 @@ function renderDownPayment() {
   }
 
   if ( price.value !== 0 ) {
-    if ( $el.attr( 'id' ) === 'down-payment' ||
-         params.getVal( 'dp-constant' ) === 'down-payment' ) {
-      val = ( getSelection( 'down-payment' ) / getSelection( 'house-price' ) * 100 ) || '';
+    if (
+      $el.attr( 'id' ) === 'down-payment' ||
+      params.getVal( 'dp-constant' ) === 'down-payment'
+    ) {
+      val =
+        ( getSelection( 'down-payment' ) / getSelection( 'house-price' ) ) * 100 ||
+        '';
       percent.value = Math.round( val );
     } else {
       val = getSelection( 'house-price' ) * ( getSelection( 'percent-down' ) / 100 );
@@ -523,8 +540,10 @@ function renderDownPayment() {
  * Hides the rate checker summary above the chart.
  */
 function hideSummary() {
-  if ( rcSummaryDom.classList.contains( 'clear' ) &&
-       chart.currentState !== RateCheckerChart.STATUS_ERROR ) {
+  if (
+    rcSummaryDom.classList.contains( 'clear' ) &&
+    chart.currentState !== RateCheckerChart.STATUS_ERROR
+  ) {
     rcSummaryDom.classList.remove( 'clear' );
     rcDisclaimerDom.classList.remove( 'clear' );
   }
@@ -559,14 +578,17 @@ function renderInterestAmounts() {
   const interestCostList = Array.prototype.slice.call( interestCostDoms );
 
   interestCostList.forEach( item => {
-
     if ( item.classList.contains( 'interest-cost-primary' ) ) {
       rate = rateCompare1Dom.value.replace( '%', '' );
     } else {
       rate = rateCompare2Dom.value.replace( '%', '' );
     }
 
-    const length = parseInt( $( item ).parents( '.rc-comparison-section' ).find( '.loan-years' ).text(), 10 ) * 12;
+    const length =
+      parseInt(
+        $( item ).parents( '.rc-comparison-section' ).find( '.loan-years' ).text(),
+        10
+      ) * 12;
     const amortizedVal = amortize( {
       amount: params.getVal( 'loan-amount' ),
       rate: rate,
@@ -580,16 +602,16 @@ function renderInterestAmounts() {
     // Add short term rates, interest, and term to the shortTermVal array.
     if ( length < 180 ) {
       shortTermVal.push( {
-        rate:     parseFloat( rate ),
+        rate: parseFloat( rate ),
         interest: parseFloat( totalInterest ),
-        term:     length / 12
+        term: length / 12
       } );
       renderInterestSummary( shortTermVal, 'short' );
     } else {
       longTermVal.push( {
-        rate:     parseFloat( rate ),
+        rate: parseFloat( rate ),
         interest: parseFloat( totalInterest ),
-        term:     length / 12
+        term: length / 12
       } );
       renderInterestSummary( longTermVal, 'long' );
     }
@@ -608,8 +630,8 @@ function renderInterestSummary( intVals, term ) {
     return a.rate - b.rate;
   } );
 
-  const rawDiff = sortedRates[sortedRates.length - 1].interest -
-                  sortedRates[0].interest;
+  const rawDiff =
+    sortedRates[sortedRates.length - 1].interest - sortedRates[0].interest;
   const diff = formatUSD( { amount: rawDiff, decimalPlaces: 0 } );
   $( id + ' .comparison-term' ).text( sortedRates[0].term );
   $( id + ' .rate-diff' ).text( diff );
@@ -745,15 +767,13 @@ function init() {
   const sliderDom = document.querySelector( '#credit-score-range' );
   const creditScore = params.getVal( 'credit-score' );
   slider = new Slider( sliderDom );
-  slider.init(
-    {
-      min: 600,
-      max: 850,
-      value: creditScore,
-      // callbacks
-      onSlideEnd: onSlideEndHandler
-    }
-  );
+  slider.init( {
+    min: 600,
+    max: 850,
+    value: creditScore,
+    // callbacks
+    onSlideEnd: onSlideEndHandler
+  } );
 
   chart = new RateCheckerChart();
   chart.init();
@@ -836,32 +856,34 @@ function registerEvents() {
   } );
 
   // Recalculate everything when drop-down menus are changed.
-  $( '.demographics, .calc-loan-details, .county' ).on( 'change', '.recalc', function() {
-    /* If the loan-type is conf, and there's a county visible,
+  $( '.demographics, .calc-loan-details, .county' ).on(
+    'change',
+    '.recalc',
+    function() {
+      /* If the loan-type is conf, and there's a county visible,
        then we just exited a HB situation.
        Clear the county before proceeding. */
-    document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
-    // If the state field changed, wipe out county.
-    if ( $( this ).attr( 'id' ) === 'location' ) {
-      $( '#county' ).html( '' );
-      // dropdown('county').hide();
+      document.querySelector( '#hb-warning' ).classList.add( 'u-hidden' );
+      // If the state field changed, wipe out county.
+      if ( $( this ).attr( 'id' ) === 'location' ) {
+        $( '#county' ).html( '' );
+        // dropdown('county').hide();
+      }
+      processLoanAmount( this );
     }
-    processLoanAmount( this );
-  } );
+  );
 
   // Prevent non-numeric characters from being entered.
   $( '.calc-loan-amt .recalc' ).on( 'keydown', function( event ) {
     const key = event.which;
     const allowedKeys = [
-      8, 9, 37, 38, 39, 40, 48, 49,
-      50, 51, 52, 53, 54, 55, 56, 57,
-      96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 188, 190
+      8, 9, 37, 38, 39, 40, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98,
+      99, 100, 101, 102, 103, 104, 105, 188, 190
     ];
 
     /* If it's not an allowed key OR the shift key is held down
        (and they're not tabbing) stop everything. */
-    if ( allowedKeys.indexOf( key ) === -1 ||
-         ( event.shiftKey && key !== 9 ) ) {
+    if ( allowedKeys.indexOf( key ) === -1 || ( event.shiftKey && key !== 9 ) ) {
       event.preventDefault();
     }
   } );
@@ -875,7 +897,6 @@ function registerEvents() {
       removeAlerts();
       startLoading();
     }
-
   } );
 
   // Delayed function for processing and updating
@@ -911,16 +932,18 @@ function registerEvents() {
     event.target.value = removeDollarAddCommas( event.target.value );
   }
 
-
   // Once the user has edited fields, put the kibosh on the placeholders
   $( '#house-price, #percent-down, #down-payment' ).on( 'keyup', function() {
     if ( params.getVal( 'edited' ) === false ) {
       // Set the other two fields to their placeholder values.
-      $( '#house-price, #percent-down, #down-payment' ).not( $( this ) )
+      $( '#house-price, #percent-down, #down-payment' )
+        .not( $( this ) )
         .each( function( i, val ) {
           $( this ).val( $( this ).attr( 'placeholder' ) );
         } );
-      $( '#house-price, #percent-down, #down-payment' ).removeAttr( 'placeholder' );
+      $( '#house-price, #percent-down, #down-payment' ).removeAttr(
+        'placeholder'
+      );
       params.setVal( 'edited', true );
     }
   } );

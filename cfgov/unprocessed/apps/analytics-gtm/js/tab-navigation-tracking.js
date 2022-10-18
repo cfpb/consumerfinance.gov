@@ -20,7 +20,6 @@ try {
 
 // eslint-disable-next-line max-lines-per-function, complexity, max-statements
 const TabNavigationTracking = ( () => {
-
   // Bail out if localStorage is not supported or is blocked.
   if ( !window.Storage || _localStorage === null || _sessionStorage === null ) {
     return;
@@ -51,7 +50,6 @@ const TabNavigationTracking = ( () => {
    * @returns {string} The navigation type.
    */
   function getBackForwardNavigation() {
-
     if ( detailedBackForward === false ) {
       return 'BACK/FORWARD';
     }
@@ -73,13 +71,10 @@ const TabNavigationTracking = ( () => {
    * Remove the tracked tab.
    */
   function removeTabOnUnload() {
-
     let index;
 
     // Get the most recent values from storage
-    openTabs = JSON.parse(
-      webStorageProxy.getItem( '_tab_ids', _localStorage )
-    );
+    openTabs = JSON.parse( webStorageProxy.getItem( '_tab_ids', _localStorage ) );
     tabId = webStorageProxy.getItem( '_tab_id', _sessionStorage );
 
     if ( openTabs !== null && tabId !== null ) {
@@ -93,27 +88,26 @@ const TabNavigationTracking = ( () => {
         _localStorage
       );
     }
-
   }
 
   /**
    * @returns {string} A unique ID for the tab.
    */
   function generateTabId() {
-
     // From https://stackoverflow.com/a/8809472/2367037
     let d = new Date().getTime();
-    if ( typeof performance !== 'undefined' &&
-         typeof performance.now === 'function' ) {
+    if (
+      typeof performance !== 'undefined' &&
+      typeof performance.now === 'function'
+    ) {
       // Use high-precision timer if available.
       d += performance.now();
     }
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, c => {
       const r = ( d + Math.random() * 16 ) % 16 | 0;
       d = Math.floor( d / 16 );
-      return ( c === 'x' ? r : r & 0x3 | 0x8 ).toString( 16 );
+      return ( c === 'x' ? r : ( r & 0x3 ) | 0x8 ).toString( 16 );
     } );
-
   }
 
   /**
@@ -124,7 +118,7 @@ const TabNavigationTracking = ( () => {
    *   NAVIGATE or OTHER. Otherwise return true.
    */
   function validNavigation( type, isNewTab ) {
-    return !( isNewTab === true && ( type !== 0 && type !== 255 ) );
+    return !( isNewTab === true && type !== 0 && type !== 255 );
   }
 
   if ( tabId === null ) {
@@ -159,8 +153,10 @@ const TabNavigationTracking = ( () => {
           break;
         case 1:
           navigationType = 'RELOAD';
-          if ( navPath.length === 0 ||
-               navPath[navPath.length - 1] !== curPage ) {
+          if (
+            navPath.length === 0 ||
+            navPath[navPath.length - 1] !== curPage
+          ) {
             navPath.push( curPage );
           }
           break;
@@ -219,5 +215,4 @@ const TabNavigationTracking = ( () => {
     event: 'custom.navigation',
     browsingBehavior: payload
   } );
-
 } )();

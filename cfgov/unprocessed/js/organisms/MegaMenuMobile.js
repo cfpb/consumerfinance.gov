@@ -13,7 +13,6 @@ import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition
  * @returns {MegaMenuMobile} An instance.
  */
 function MegaMenuMobile( menus ) {
-
   // DOM references.
   const _bodyDom = document.body;
 
@@ -44,7 +43,6 @@ function MegaMenuMobile( menus ) {
    * @returns {MegaMenuMobile} An instance.
    */
   function init() {
-
     const rootNode = _menus.getRoot();
     _rootMenu = rootNode.data;
     _rootMenuContentDom = _rootMenu.getDom().content;
@@ -52,7 +50,9 @@ function MegaMenuMobile( menus ) {
     _activeMenuDom = _rootMenuContentDom;
 
     // Make root level links disabled to tab and voiceover navigation on init.
-    _rootLinksDom = _rootMenuContentDom.querySelectorAll( 'a.o-mega-menu_content-1-link,.m-global-eyebrow a' );
+    _rootLinksDom = _rootMenuContentDom.querySelectorAll(
+      'a.o-mega-menu_content-1-link,.m-global-eyebrow a'
+    );
 
     return this;
   }
@@ -78,17 +78,21 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function handleEvent( event ) {
-    if ( _suspended ) { return; }
+    if ( _suspended ) {
+      return;
+    }
     const eventMap = {
-      triggerClick:  _handleTriggerClickBinded,
-      expandBegin:   _handleExpandBeginBinded,
-      expandEnd:     _handleExpandEndBinded,
+      triggerClick: _handleTriggerClickBinded,
+      expandBegin: _handleExpandBeginBinded,
+      expandEnd: _handleExpandEndBinded,
       collapseBegin: _handleCollapseBeginBinded,
-      collapseEnd:   _handleCollapseEndBinded
+      collapseEnd: _handleCollapseEndBinded
     };
 
     const currHandler = eventMap[event.type];
-    if ( currHandler ) { currHandler( event ); }
+    if ( currHandler ) {
+      currHandler( event );
+    }
   }
 
   /**
@@ -118,23 +122,21 @@ function MegaMenuMobile( menus ) {
       // Root menu is closing.
       if ( menu.isExpanded() ) {
         level = _activeMenu.getData().level;
-        menu.setCollapseTransition(
-          transition,
-          transition.moveLeft,
-          [ level + 1 ]
-        );
+        menu.setCollapseTransition( transition, transition.moveLeft, [
+          level + 1
+        ] );
         _disableRootMenuContent();
       }
     } else {
       // Submenu clicked.
-      menuNode.data.setExpandTransition(
-        transition,
-        transition.moveLeft,
-        [ level ]
-      );
+      menuNode.data.setExpandTransition( transition, transition.moveLeft, [
+        level
+      ] );
 
       // Back button on the 2nd level menu clicked.
-      if ( event.trigger.classList.contains( 'o-mega-menu_content-2-alt-trigger' ) ) {
+      if (
+        event.trigger.classList.contains( 'o-mega-menu_content-2-alt-trigger' )
+      ) {
         _enableRootMenuContent();
       } else {
         _disableRootMenuContent();
@@ -147,16 +149,14 @@ function MegaMenuMobile( menus ) {
         );
       } else {
         // This is only used if we re-add a 3rd level menu.
-        menuNode.data.setCollapseTransition(
-          transition,
-          transition.moveLeft
-        );
+        menuNode.data.setCollapseTransition( transition, transition.moveLeft );
       }
 
       /* TODO: Investigate helper functions to mask these crazy long lookups!
          Do we really want to remove the overflow here? We're also adding it
          in the collapse end. */
-      menuNode.parent.data.getDom()
+      menuNode.parent.data
+        .getDom()
         .content.classList.remove( 'u-hidden-overflow' );
     }
     _activeMenu = menu;
@@ -168,8 +168,7 @@ function MegaMenuMobile( menus ) {
    * @param {FlyoutMenu} target - menu that is expanding or collapsing.
    */
   function _handleToggle( target ) {
-    if ( target === _rootMenu &&
-         _activeMenu !== target ) {
+    if ( target === _rootMenu && _activeMenu !== target ) {
       _activeMenu.collapse();
     }
     _activeMenu = target;
@@ -245,7 +244,6 @@ function MegaMenuMobile( menus ) {
       _suspendBinded();
       resume();
     } else {
-
       /* When clicking the back button and sliding to the right,
          hide the overflow after animation has completed. */
       const parentNode = menu.getData().parent;

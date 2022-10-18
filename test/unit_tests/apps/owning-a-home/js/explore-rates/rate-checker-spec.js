@@ -161,7 +161,7 @@ describe( 'explore-rates/rate-checker', () => {
       document.body.innerHTML = HTML_SNIPPET;
     } );
 
-    it( 'should not initialize when rate-checker class isn\'t found', () => {
+    it( "should not initialize when rate-checker class isn't found", () => {
       document.body.innerHTML = '';
       expect( rateChecker.init() ).toBe( false );
     } );
@@ -169,7 +169,6 @@ describe( 'explore-rates/rate-checker', () => {
     it( 'should initialize when rate-checker class is found', () => {
       expect( rateChecker.init() ).toBe( true );
     } );
-
   } );
 
   describe( 'interactions', () => {

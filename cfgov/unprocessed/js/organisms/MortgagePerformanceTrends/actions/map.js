@@ -57,15 +57,16 @@ mapActionCreators.fetchMetros = ( metroState, shouldZoom ) => dispatch => {
   dispatch( mapActionCreators.requestMetros( metroState ) );
   return utils.getMetroData( data => {
     // Alphabetical order
-    let newMetros = data[metroState].metros.sort(
-      ( a, b ) => ( a.name < b.name ? -1 : 1 )
+    let newMetros = data[metroState].metros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 )
     );
     newMetros = newMetros.filter( metro => metro.valid );
     if ( !newMetros.length ) {
-      newMetros = [ {
-        fips: null,
-        name: 'No metros have sufficient data'
-      } ];
+      newMetros = [
+        {
+          fips: null,
+          name: 'No metros have sufficient data'
+        }
+      ];
     }
     dispatch( mapActionCreators.setMetros( newMetros ) );
     if ( newMetros.length && shouldZoom ) {
@@ -87,8 +88,7 @@ mapActionCreators.fetchCounties = ( countyState, shouldZoom ) => dispatch => {
   dispatch( mapActionCreators.requestCounties( countyState ) );
   return utils.getCountyData( data => {
     // Alphabetical order
-    let newCounties = data[countyState].counties.sort(
-      ( a, b ) => ( a.name < b.name ? -1 : 1 )
+    let newCounties = data[countyState].counties.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 )
     );
     newCounties = newCounties.filter( county => county.valid );
     dispatch( mapActionCreators.setCounties( newCounties ) );

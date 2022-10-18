@@ -10,16 +10,10 @@ const emailSignup = document.body.querySelector( '.' + BASE_CLASS );
 
 if ( emailSignup ) {
   const language = document.body.querySelector( '.content' ).lang;
-  const formSubmit = new FormSubmit(
-    emailSignup,
-    BASE_CLASS,
-    {
-      validator: fields => validators.email(
-        fields.email, '', { language: language }
-      ).msg,
-      language: language
-    }
-  );
+  const formSubmit = new FormSubmit( emailSignup, BASE_CLASS, {
+    validator: fields => validators.email( fields.email, '', { language: language } ).msg,
+    language: language
+  } );
 
   formSubmit.init();
 }

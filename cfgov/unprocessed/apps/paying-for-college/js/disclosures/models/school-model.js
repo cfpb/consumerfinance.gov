@@ -5,7 +5,6 @@ const schoolModel = {
   values: {},
 
   init: function( nationalData, schoolData, programData ) {
-
     $.extend( this.values, schoolData, programData, nationalData );
 
     // Initialize default rate
@@ -47,10 +46,12 @@ const schoolModel = {
       values.salarySource = 'program';
     }
     values.monthlySalary = Math.round( Number( values.medianSalary ) / 12 );
-    values.medianSchoolDebt = values.medianStudentLoanCompleters ||
-      values.medianTotalDebt;
-    if ( values.hasOwnProperty( 'completionRate' ) &&
-      values.completionRate !== 'None' ) {
+    values.medianSchoolDebt =
+      values.medianStudentLoanCompleters || values.medianTotalDebt;
+    if (
+      values.hasOwnProperty( 'completionRate' ) &&
+      values.completionRate !== 'None'
+    ) {
       values.gradRate = values.completionRate;
       values.gradRateSource = 'program';
     } else {
@@ -68,26 +69,24 @@ const schoolModel = {
       values.BLSAverage = 'national';
       values.monthlyRent = Math.round( values.nationalHousing / 12 );
       values.monthlyFood = Math.round( values.nationalFood / 12 );
-      values.monthlyTransportation =
-        Math.round( values.nationalTransportation / 12 );
+      values.monthlyTransportation = Math.round(
+        values.nationalTransportation / 12
+      );
       values.monthlyInsurance = Math.round( values.nationalHealthcare / 12 );
       values.monthlySavings = Math.round( values.nationalRetirement / 12 );
-      values.monthlyOther =
-        Math.round( values.nationalEntertainment / 12 );
+      values.monthlyOther = Math.round( values.nationalEntertainment / 12 );
     } else {
       values.BLSAverage = values.region + ' regional';
       values.monthlyRent = Math.round( values.regionalHousing / 12 );
       values.monthlyFood = Math.round( values.regionalFood / 12 );
-      values.monthlyTransportation =
-        Math.round( values.regionalTransportation / 12 );
+      values.monthlyTransportation = Math.round(
+        values.regionalTransportation / 12
+      );
       values.monthlyInsurance = Math.round( values.regionalHealthcare / 12 );
       values.monthlySavings = Math.round( values.regionalRetirement / 12 );
-      values.monthlyOther =
-        Math.round( values.regionalEntertainment / 12 );
+      values.monthlyOther = Math.round( values.regionalEntertainment / 12 );
     }
     return values;
   }
-
-
 };
 module.exports = schoolModel;

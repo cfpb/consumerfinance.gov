@@ -116,7 +116,9 @@ const updateCounties = ( counties, action ) => {
 const includeComparison = ( include, action ) => {
   switch ( action.type ) {
     case 'UPDATE_CHART':
-      return typeof action.includeComparison === 'undefined' ? include : action.includeComparison;
+      return typeof action.includeComparison === 'undefined' ?
+        include :
+        action.includeComparison;
     default:
       return include;
   }

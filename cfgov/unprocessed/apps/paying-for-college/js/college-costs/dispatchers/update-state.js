@@ -71,9 +71,6 @@ const updateState = {
   replaceStateInHistory: queryString => {
     stateModel.replaceStateInHistory( queryString );
   }
-
 };
 
-export {
-  updateState
-};
+export { updateState };

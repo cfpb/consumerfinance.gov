@@ -1,7 +1,14 @@
-const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
+const {
+  closest
+} = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
 const objectEntries = require( 'object.entries' );
 const Cookie = require( 'js-cookie' );
-const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE, SCORES_UNSET_KEY } = require( './config' );
+const {
+  ANSWERS_SESS_KEY,
+  RESULT_COOKIE,
+  SURVEY_COOKIE,
+  SCORES_UNSET_KEY
+} = require( './config' );
 const modals = require( '../modals' );
 const ChoiceField = require( './ChoiceField' );
 const ProgressBar = require( './ProgressBar' );
@@ -182,7 +189,7 @@ function initProgressListener() {
     texts[0].textContent = perc;
     texts[1].textContent = `${ pb.numDone }/${ pb.totalNum } questions`;
 
-    const dashOffset = 1 - ( pb.numDone / pb.totalNum );
+    const dashOffset = 1 - pb.numDone / pb.totalNum;
     circle.setAttribute( 'stroke-dashoffset', dashOffset );
 
     svg.setAttribute( 'aria-label', `${ perc } complete` );
@@ -291,8 +298,7 @@ function breakSeparatedAnswers() {
       return ul.innerHTML;
     } );
 
-    ul.innerHTML = '<li>' +
-      htmlItems.join( '</li><li>' ) + '</li>';
+    ul.innerHTML = '<li>' + htmlItems.join( '</li><li>' ) + '</li>';
 
     wrap.appendChild( ul );
     return wrap;
@@ -318,8 +324,7 @@ function breakSeparatedAnswers() {
 
     for ( let i = 0; i < label.childNodes.length; i++ ) {
       const node = label.childNodes[i];
-      if ( node.nodeType === Node.TEXT_NODE &&
-        isSeparated( node.textContent ) ) {
+      if ( node.nodeType === Node.TEXT_NODE && isSeparated( node.textContent ) ) {
         node.parentNode.insertBefore(
           convertToDivs( node.textContent, charCode ),
           node

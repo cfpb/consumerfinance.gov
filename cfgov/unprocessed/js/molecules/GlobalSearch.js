@@ -1,6 +1,9 @@
 // Required modules.
 import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state.js';
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import ClearableInput from '../modules/ClearableInput.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import FlyoutMenu from '../modules/behavior/FlyoutMenu.js';
@@ -17,18 +20,19 @@ import TabTrigger from '../modules/TabTrigger.js';
  *   The DOM element within which to search for the molecule.
  * @returns {GlobalSearch} An instance.
  */
-function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
+function GlobalSearch( element ) {
+  // eslint-disable-line max-statements, no-inline-comments, max-len
 
   const BASE_CLASS = 'm-global-search';
   const _dom = checkDom( element, BASE_CLASS );
   const _contentDom = _dom.querySelector( `.${ BASE_CLASS }_content` );
   const _triggerDom = _dom.querySelector( `.${ BASE_CLASS }_trigger` );
-  const _triggerCloseLabelText = _triggerDom.querySelector(
-    `.${ BASE_CLASS }_trigger-close-label`
-  ).innerText.trim();
-  const _triggerOpenLabelText = _triggerDom.querySelector(
-    `.${ BASE_CLASS }_trigger-open-label`
-  ).innerText.trim();
+  const _triggerCloseLabelText = _triggerDom
+    .querySelector( `.${ BASE_CLASS }_trigger-close-label` )
+    .innerText.trim();
+  const _triggerOpenLabelText = _triggerDom
+    .querySelector( `.${ BASE_CLASS }_trigger-open-label` )
+    .innerText.trim();
   const _flyoutMenu = new FlyoutMenu( _dom );
   let _searchInputDom;
   let _searchBtnDom;
@@ -63,8 +67,9 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
       '.' + BASE_CLASS + ' .o-form__input-w-btn_btn-container button';
 
     _clearBtnDom = _contentDom.querySelector( clearBtnSel );
-    const inputContainsLabel =
-      _contentDom.querySelector( inputContainsLabelSel );
+    const inputContainsLabel = _contentDom.querySelector(
+      inputContainsLabelSel
+    );
     _searchInputDom = inputContainsLabel.querySelector( 'input' );
     _searchBtnDom = _contentDom.querySelector( searchBtnSel );
 
@@ -96,8 +101,10 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     const target = event.target;
 
     const isInDesktop = viewportIsIn( DESKTOP );
-    if ( isInDesktop && !_isDesktopTarget( target ) ||
-         !isInDesktop && !_isMobileTarget( target ) ) {
+    if (
+      ( isInDesktop && !_isDesktopTarget( target ) ) ||
+      ( !isInDesktop && !_isMobileTarget( target ) )
+    ) {
       collapse();
     }
   }
@@ -108,9 +115,11 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    * @returns {boolean} True if the passed target is in the desktop view.
    */
   function _isDesktopTarget( target ) {
-    return target === _searchInputDom ||
-           target === _searchBtnDom ||
-           target === _clearBtnDom;
+    return (
+      target === _searchInputDom ||
+      target === _searchBtnDom ||
+      target === _clearBtnDom
+    );
   }
 
   /**

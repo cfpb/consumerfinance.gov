@@ -156,45 +156,53 @@ describe( 'fwb-questions', () => {
     fwbQuestions.init();
     expect( submitBtnDom.disabled ).toBe( true );
 
-    expect( submitBtnDom.title )
-      .toBe( 'Please answer all questions to get your score' );
+    expect( submitBtnDom.title ).toBe(
+      'Please answer all questions to get your score'
+    );
   } );
 
-  it( 'submit button shouldn’t submit the form ' +
-      'unless all the questions are completed.', () => {
-    fwbQuestions.init();
-    const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
-    expect( submitBtnDom.disabled ).toBe( true );
-    expect( formSubmissionStatus ).toBe( false );
-  } );
+  it(
+    'submit button shouldn’t submit the form ' +
+      'unless all the questions are completed.',
+    () => {
+      fwbQuestions.init();
+      const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
+      expect( submitBtnDom.disabled ).toBe( true );
+      expect( formSubmissionStatus ).toBe( false );
+    }
+  );
 
-  it( 'submit button should submit the form ' +
-      'if all the questions are completed before page load.', () => {
-    fillOutForm();
-    fwbQuestions.init();
-    const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
-    expect( submitBtnDom.disabled ).toBe( false );
-    expect( formSubmissionStatus ).toBe( true );
-  } );
+  it(
+    'submit button should submit the form ' +
+      'if all the questions are completed before page load.',
+    () => {
+      fillOutForm();
+      fwbQuestions.init();
+      const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
+      expect( submitBtnDom.disabled ).toBe( false );
+      expect( formSubmissionStatus ).toBe( true );
+    }
+  );
 
-  it( 'submit button should submit the form ' +
-      'if all the questions are completed after page load.', () => {
-    fwbQuestions.init();
-    fillOutForm();
-    const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
-    expect( submitBtnDom.disabled ).toBe( false );
-    expect( formSubmissionStatus ).toBe( true );
-  } );
+  it(
+    'submit button should submit the form ' +
+      'if all the questions are completed after page load.',
+    () => {
+      fwbQuestions.init();
+      fillOutForm();
+      const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
+      expect( submitBtnDom.disabled ).toBe( false );
+      expect( formSubmissionStatus ).toBe( true );
+    }
+  );
 
-  it( 'should send the correct analytics ' +
-      'when a radio button is clicked', () => {
+  it( 'should send the correct analytics when a radio button is clicked', () => {
     fwbQuestions.init();
     simulateEvent( 'click', radioButtonsDom[0] );
     expect( window.dataLayer[0] ).toStrictEqual( dataLayerEventRadio );
   } );
 
-  it( 'should send the correct analytics ' +
-      'when the submit button is clicked', () => {
+  it( 'should send the correct analytics when the submit button is clicked', () => {
     fillOutForm();
     fwbQuestions.init();
     simulateEvent( 'click', submitBtnDom );

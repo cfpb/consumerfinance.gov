@@ -1,6 +1,12 @@
 import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys';
-import { Cookie, resultsPage } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page';
-import { ANSWERS_SESS_KEY, SURVEY_COOKIE } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
+import {
+  Cookie,
+  resultsPage
+} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page';
+import {
+  ANSWERS_SESS_KEY,
+  SURVEY_COOKIE
+} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
 import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
 import * as initials from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/initials';
 import * as obfuscation from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation';
@@ -33,7 +39,8 @@ describe( 'The TDP survey results page', () => {
   } );
 
   it( 'should read initials', () => {
-    const spy = jest.spyOn( obfuscation, 'decodeNameFromUrl' )
+    const spy = jest
+      .spyOn( obfuscation, 'decodeNameFromUrl' )
       .mockImplementation( () => 'ACBDE' );
 
     resultsPage();
@@ -97,9 +104,11 @@ describe( 'The TDP survey results page', () => {
     expect( obfuscation.decodeNameFromUrl( shared.href ) ).toEqual( 'DEFG' );
 
     input.value = 'EFGH';
-    input.dispatchEvent( new KeyboardEvent( 'keyup', {
-      key: 'Enter'
-    } ) );
+    input.dispatchEvent(
+      new KeyboardEvent( 'keyup', {
+        key: 'Enter'
+      } )
+    );
 
     expect( initials.get() ).toEqual( 'EFGH' );
 
@@ -118,8 +127,11 @@ describe( 'The TDP survey results page', () => {
 
     $( '[data-open-modal="modal-share-url"]' ).click();
 
-    expect( $( '.tdp-survey__initials-error' ).classList.contains( 'm-notification__visible' ) )
-      .toBeFalsy();
+    expect(
+      $( '.tdp-survey__initials-error' ).classList.contains(
+        'm-notification__visible'
+      )
+    ).toBeFalsy();
     expect( $( '.share-output' ).hidden ).toBeTruthy();
     expect( $( '.share-output__copied' ).hidden ).toBeTruthy();
   } );

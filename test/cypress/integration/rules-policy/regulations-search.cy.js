@@ -3,9 +3,7 @@ import { RegulationsSearch } from './regulations-search-helpers.cy.js';
 const regulationsSearch = new RegulationsSearch();
 
 describe( 'Policy Compliance', () => {
-
   describe( 'Regulations Search', () => {
-
     it( 'should return results based on search term', () => {
       regulationsSearch.open();
       regulationsSearch.searchTerm( 'mortgage' );
@@ -22,7 +20,5 @@ describe( 'Policy Compliance', () => {
       regulationsSearch.filters().should( 'be.visible' );
       regulationsSearch.filters().should( 'contain', 1008 );
     } );
-
   } );
-
 } );

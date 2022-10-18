@@ -2,14 +2,8 @@
  * Obfuscate a string with simple Base64URL encoding
  */
 
-const base64UrlEncode = val => window.btoa( val )
-  .replace( /\+/g, '-' )
-  .replace( /\//g, '_' );
-const base64UrlDecode = val => window.atob(
-  val
-    .replace( /-/g, '+' )
-    .replace( /_/g, '/' )
-);
+const base64UrlEncode = val => window.btoa( val ).replace( /\+/g, '-' ).replace( /\//g, '_' );
+const base64UrlDecode = val => window.atob( val.replace( /-/g, '+' ).replace( /_/g, '/' ) );
 
 /**
  * Encode string
@@ -84,7 +78,7 @@ function legacyDecode( encoded ) {
     let hash = 0;
     for ( let i = 0; i < str.length; i++ ) {
       const chr = str.charCodeAt( i );
-      hash = ( ( hash << 5 ) - hash ) + chr;
+      hash = ( hash << 5 ) - hash + chr;
       // Convert to 32bit integer
       hash |= 0;
     }
@@ -104,7 +98,8 @@ function legacyDecode( encoded ) {
    * @returns {string} Output
    */
   function xor( str, key ) {
-    return str.split( '' )
+    return str
+      .split( '' )
       .map( letter => String.fromCharCode( key ^ letter.charCodeAt( 0 ) ) )
       .join( '' );
   }
@@ -130,7 +125,4 @@ function legacyDecode( encoded ) {
   return hashCode( plain ) === hashExpected ? plain : null;
 }
 
-export {
-  encodeNameInUrl,
-  decodeNameFromUrl
-};
+export { encodeNameInUrl, decodeNameFromUrl };

@@ -1,5 +1,8 @@
 // Required modules.
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import SUCCESS_ICON from '@cfpb/cfpb-icons/src/icons/check-round.svg';
 import WARNING_ICON from '@cfpb/cfpb-icons/src/icons/warning-round.svg';
 import ERROR_ICON from '@cfpb/cfpb-icons/src/icons/error-round.svg';

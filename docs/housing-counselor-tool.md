@@ -11,7 +11,6 @@ The files are publicly accessible, so the tool can run on localhost or in a cont
 
 This page documents the process we use to generate the JSON and PDF files the Find a Housing Counselor tool relies on.
 
-
 ## Housing Counselor Data Processing
 
 The tool gets its data from the U.S. Department of Housing and Urban Development (HUD).
@@ -21,12 +20,11 @@ queries HUD data and produces the JSON and PDF files we use for the Find a Housi
 It performs the following steps, each of which is optional
 and configured using parameters before starting the job.
 
-  1. [Geocode ZIP codes](#geocode-zip-codes) (`GEOCODE_ZIPCODES`)
-  2. [Generate JSON files](#generate-json-files) (`MAKE_JSON`)
-  3. [Generate HTML files](#generate-html-files) (`MAKE_HTML`)
-  4. [Generate PDFs](#generate-pdfs) (`MAKE_PDF`)
-  5. [Upload to S3](#upload-to-s3) (`UPLOAD_TO_S3`)
-
+1. [Geocode ZIP codes](#geocode-zip-codes) (`GEOCODE_ZIPCODES`)
+2. [Generate JSON files](#generate-json-files) (`MAKE_JSON`)
+3. [Generate HTML files](#generate-html-files) (`MAKE_HTML`)
+4. [Generate PDFs](#generate-pdfs) (`MAKE_PDF`)
+5. [Upload to S3](#upload-to-s3) (`UPLOAD_TO_S3`)
 
 ### Geocode ZIP codes
 
@@ -51,7 +49,6 @@ The generated file looks like this:
 12345,42.80856,-74.02737
 ```
 
-
 ### Generate JSON files
 
 When enabled, the `MAKE_JSON` step generates a JSON file of housing counselor data for each ZIP code in the U.S.
@@ -61,12 +58,11 @@ This step is enabled by default.
 This step calls the [`hud_generate_json`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/management/commands/hud_generate_json.py) management command,
 which performs the following steps:
 
-  1. fetch agency listings from HUD
-  2. save a copy of the full results, for our records
-  3. clean the results
-  4. fill in any missing latitude and longitude values
-  5. create files of the 10 nearest results for each U.S. ZIP code
-
+1. fetch agency listings from HUD
+2. save a copy of the full results, for our records
+3. clean the results
+4. fill in any missing latitude and longitude values
+5. create files of the 10 nearest results for each U.S. ZIP code
 
 #### Fetch agency listings
 
@@ -157,50 +153,57 @@ Put the information in a JSON structure like this (but with ten results instead 
 
 ```json
 {
-    "zip": {
-        "lat": 42.80856,
-        "lng": -74.02737,
-        "zipcode": "12345"
-    },
-    "counseling_agencies": [{
-        "adr1": "1234 N. Example St.",
-        "state_FIPS_CODE": null,
-        "adr2": " ",
-        "zipcd": "48219-8888",
-        "mailingcity": "Springfield",
-        "weburl": "http://www.example.org",
-        "agc_STATUS": "A",
-        "city": "Springfield",
-        "languages": ["English", "Spanish"],
-        "faithbased": "N",
-        "mailingstatecd": "MI",
-        "email": "counselor@example.org",
-        "fax": "999-888-7777",
-        "phone1": "111-222-3333",
-        "distance": 5.430720023569205,
-        "phone2": " ",
-        "agc_ADDR_LATITUDE": 42.442658,
-        "agcid": "80790",
-        "agc_SRC_CD": "HUD",
-        "nme": "Example Community Housing Services",
-        "migrantwkrs_IND": "N",
-        "parentid": "82772",
-        "services": ["Mortgage Delinquency and Default Resolution Counse", "Home Improvement and Rehabilitation Counseling", "Pre-purchase Counseling", "Pre-purchase Homebuyer Education Workshops", "Rental Housing Counseling"],
-        "counslg_METHOD": "Face to Face Counseling,Group Counseling,Phone Counseling",
-        "county_NME": "",
-        "mailingadr1": "1234 N. Example St.",
-        "statecd": "MI",
-        "mailingadr2": " ",
-        "mailingzipcd": "48219-8888",
-        "state_NME": "Michigan",
-        "agc_ADDR_LONGITUDE": -83.28329,
-        "colonias_IND": "Y"
-    }]
+  "zip": {
+    "lat": 42.80856,
+    "lng": -74.02737,
+    "zipcode": "12345"
+  },
+  "counseling_agencies": [
+    {
+      "adr1": "1234 N. Example St.",
+      "state_FIPS_CODE": null,
+      "adr2": " ",
+      "zipcd": "48219-8888",
+      "mailingcity": "Springfield",
+      "weburl": "http://www.example.org",
+      "agc_STATUS": "A",
+      "city": "Springfield",
+      "languages": ["English", "Spanish"],
+      "faithbased": "N",
+      "mailingstatecd": "MI",
+      "email": "counselor@example.org",
+      "fax": "999-888-7777",
+      "phone1": "111-222-3333",
+      "distance": 5.430720023569205,
+      "phone2": " ",
+      "agc_ADDR_LATITUDE": 42.442658,
+      "agcid": "80790",
+      "agc_SRC_CD": "HUD",
+      "nme": "Example Community Housing Services",
+      "migrantwkrs_IND": "N",
+      "parentid": "82772",
+      "services": [
+        "Mortgage Delinquency and Default Resolution Counse",
+        "Home Improvement and Rehabilitation Counseling",
+        "Pre-purchase Counseling",
+        "Pre-purchase Homebuyer Education Workshops",
+        "Rental Housing Counseling"
+      ],
+      "counslg_METHOD": "Face to Face Counseling,Group Counseling,Phone Counseling",
+      "county_NME": "",
+      "mailingadr1": "1234 N. Example St.",
+      "statecd": "MI",
+      "mailingadr2": " ",
+      "mailingzipcd": "48219-8888",
+      "state_NME": "Michigan",
+      "agc_ADDR_LONGITUDE": -83.28329,
+      "colonias_IND": "Y"
+    }
+  ]
 }
 ```
 
 Save the resulting JSON files on the Jenkins job workspace, in a `jsons` directory, e.g. `jsons/12345.json`.
-
 
 ### Generate HTML files
 
@@ -214,7 +217,6 @@ which calls HTML generation code in [`generator.py`](https://github.com/cfpb/con
 Django renders the [`housing_counselor/pdf_selfcontained.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/templates/housing_counselor/pdf_selfcontained.html) template with the housing counselor data from each JSON file.
 We save the resulting HTML files on the Jenkins job workspace, in a `htmls` directory, e.g. `htmls/12345.html`.
 
-
 ### Generate PDFs
 
 When enabled, the `MAKE_PDF` step generates a PDF of each file created in the previous step.
@@ -224,7 +226,6 @@ This step is enabled by default.
 This step uses a HTML to PDF conversion command line tool.
 We run the conversion on each file in the `htmls` directory, generating a PDF version of each, e.g. `pdfs/12345.pdf`.
 
-
 ### Upload to S3
 
 When enabled, the `UPLOAD_TO_S3` step uploads the contents of the `jsons` and `pdfs` directories to an Amazon S3 bucket where it can be accessed by consumerfinance.gov.
@@ -232,5 +233,5 @@ This step is enabled by default.
 
 The files are publicly accessible, e.g.:
 
- - https://files.consumerfinance.gov/a/assets/hud/jsons/12345.json
- - https://files.consumerfinance.gov/a/assets/hud/pdfs/12345.pdf
+- https://files.consumerfinance.gov/a/assets/hud/jsons/12345.json
+- https://files.consumerfinance.gov/a/assets/hud/pdfs/12345.pdf

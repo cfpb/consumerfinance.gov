@@ -20,8 +20,9 @@ describe( 'Planning your Social Security', () => {
   } );
 
   it( 'should have a spanish view', () => {
-    cy.intercept( '/consumer-tools/retirement/before-you-claim/es' )
-      .as( 'getSpanish' );
+    cy.intercept( '/consumer-tools/retirement/before-you-claim/es' ).as(
+      'getSpanish'
+    );
     claim.setLanguageToSpanish();
     cy.wait( '@getSpanish' );
     cy.url().should( 'contain', '/es' );

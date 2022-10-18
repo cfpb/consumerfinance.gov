@@ -29,7 +29,9 @@ import nextTabbable from './nextTabbable';
 /**
  * Emulates Tab key navigation
  */
-Cypress.Commands.add( 'tab', { prevSubject: 'optional' },
+Cypress.Commands.add(
+  'tab',
+  { prevSubject: 'optional' },
   ( $subject, direction = 'forward', options = {} ) => {
     const thenable = $subject ?
       cy.wrap( $subject, { log: false } ) :
@@ -46,4 +48,5 @@ Cypress.Commands.add( 'tab', { prevSubject: 'optional' },
         }
       } )
       .focus( { log: false } );
-  } );
+  }
+);

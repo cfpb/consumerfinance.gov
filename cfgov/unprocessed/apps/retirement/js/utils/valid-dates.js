@@ -27,11 +27,7 @@ function validDates( month, day, year ) {
   if ( new Date( year, 1, 29 ).getMonth() === 1 ) {
     monthMaxes['2'] = 29;
   }
-  month = enforceRange(
-    Number( month.toString().replace( /\D/g, '' ) ),
-    1,
-    12
-  );
+  month = enforceRange( Number( month.toString().replace( /\D/g, '' ) ), 1, 12 );
   day = enforceRange(
     Number( day.toString().replace( /\D/g, '' ) ),
     1,

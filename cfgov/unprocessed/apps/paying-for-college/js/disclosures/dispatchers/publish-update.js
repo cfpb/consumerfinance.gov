@@ -55,11 +55,7 @@ const publishUpdate = {
    * financial model
    */
   addPrivateLoan: function() {
-    const newLoanObject = { amount: 0,
-      fees: 0,
-      rate: 0.079,
-      deferPeriod: 0
-    };
+    const newLoanObject = { amount: 0, fees: 0, rate: 0.079, deferPeriod: 0 };
     financialModel.values.privateLoanMulti.push( newLoanObject );
     financialModel.calc( financialModel.values );
     expensesModel.calc();
@@ -85,7 +81,6 @@ const publishUpdate = {
     expensesModel.resetCurrentValues( region, salary );
     expensesModel.calc();
   }
-
 };
 
 module.exports = publishUpdate;

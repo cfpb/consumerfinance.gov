@@ -36,7 +36,4 @@ function uniquePrimitives( array ) {
   return array.filter( ( val, i, self ) => self.indexOf( val ) === i );
 }
 
-export {
-  indexOfObject,
-  uniquePrimitives
-};
+export { indexOfObject, uniquePrimitives };

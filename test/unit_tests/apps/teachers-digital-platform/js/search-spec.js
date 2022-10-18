@@ -1,8 +1,6 @@
 import { simulateEvent } from '../../../../util/simulate-event.js';
 
-const search = require(
-  '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js'
-);
+const search = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js' );
 
 const HTML_SNIPPET = `
 
@@ -152,7 +150,6 @@ const xhr = global.XMLHttpRequest;
 global.console = { error: jest.fn(), log: jest.fn() };
 
 describe( 'The TDP search page', () => {
-
   beforeEach( () => {
     // Reset global XHR
     global.XMLHttpRequest = xhr;
@@ -259,9 +256,7 @@ describe( 'The TDP search page', () => {
       '.o-expandable-facets .a-checkbox:checked'
     ).length;
     expect( numChecked ).toEqual( 3 );
-    expect(
-      window.location.href
-    ).toEqual(
+    expect( window.location.href ).toEqual(
       'http://localhost/?q=executive&building_block=1&topic=1&topic=4&topic=2'
     );
 
@@ -272,12 +267,9 @@ describe( 'The TDP search page', () => {
       '.o-expandable-facets .a-checkbox:checked'
     ).length;
     expect( numChecked ).toEqual( 1 );
-    expect(
-      window.location.href
-    ).toEqual(
+    expect( window.location.href ).toEqual(
       'http://localhost/?q=executive&building_block=1&topic=2'
     );
-
   } );
 
   it( 'should handle errors when the server is down', done => {
@@ -301,5 +293,4 @@ describe( 'The TDP search page', () => {
 
     mockXHR.onreadystatechange();
   } );
-
 } );

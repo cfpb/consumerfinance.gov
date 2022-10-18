@@ -4,26 +4,26 @@ describe( 'Dom Manipulators create', () => {
   beforeAll( () => {
     const heading = domManipulators.create( 'h1', {
       'textContent': 'Create Heading Text',
-      'id':          'create-heading-id',
-      'className':   'create-heading-class',
-      'data-name':   'create-heading-data'
+      'id': 'create-heading-id',
+      'className': 'create-heading-class',
+      'data-name': 'create-heading-data'
     } );
 
     domManipulators.create( 'span', {
       'textContent': 'Heading Span',
-      'id':          'create-span-id',
-      'className':   'create-span-class',
-      'data-name':   'create-span-data',
-      'inside':      heading
+      'id': 'create-span-id',
+      'className': 'create-span-class',
+      'data-name': 'create-span-data',
+      'inside': heading
     } );
 
     document.body.appendChild( heading );
 
     domManipulators.create( 'div', {
-      'id':        'create-div-id',
+      'id': 'create-div-id',
       'className': 'create-div-class',
       'data-name': 'create-div-data',
-      'around':    heading
+      'around': heading
     } );
   } );
 

@@ -30,7 +30,11 @@ const getSearchData = sections => {
     return {
       id: i,
       title: heading.textContent.replace( /^\s+|\s+$/g, '' ),
-      contents: text.split( '\n' ).map( t => t.trim() ).filter( t => t ).join( ' ' ),
+      contents: text
+        .split( '\n' )
+        .map( t => t.trim() )
+        .filter( t => t )
+        .join( ' ' ),
       link: '#' + link
     };
   } );

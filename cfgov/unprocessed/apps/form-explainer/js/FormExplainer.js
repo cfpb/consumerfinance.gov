@@ -4,10 +4,9 @@ import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 import { assign } from '../../../js/modules/util/assign';
 import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
-
 const CSS = {
-  HAS_ATTENTION:         'has-attention',
-  HOVER_HAS_ATTENTION:   'hover-has-attention'
+  HAS_ATTENTION: 'has-attention',
+  HOVER_HAS_ATTENTION: 'hover-has-attention'
 };
 
 const NO_OP = () => {
@@ -55,30 +54,25 @@ class FormExplainer {
       DT.hide( '.form-explainer_page-buttons' );
     }
 
-    DT.applyAll(
-      elements.pages,
-      ( value, index ) => {
-        const _index = index + 1;
-        if ( _index > 1 ) {
-          // Hide all but the first parge
-          const _page = this.getPageEl( _index );
-          DT.hide( _page );
-        }
+    DT.applyAll( elements.pages, ( value, index ) => {
+      const _index = index + 1;
+      if ( _index > 1 ) {
+        // Hide all but the first parge
+        const _page = this.getPageEl( _index );
+        DT.hide( _page );
       }
-    );
+    } );
 
     // eslint-disable-next-line global-require
     Expandable.init();
   }
 
-
   /**
    * Update the pagination UI.
    */
-  updatePaginationUI( ) {
+  updatePaginationUI() {
     const BTN_DISABLED = 'a-btn__disabled';
     const PAGE_BTN_CTR = '.form-explainer_page-buttons';
-
 
     if ( this.pageCount > 1 ) {
       DT.removeClass( PAGE_BTN_CTR + ' button', BTN_DISABLED );
@@ -135,10 +129,10 @@ class FormExplainer {
     );
 
     window.setTimeout( () => {
-      scrollIntoView(
-        targetExpandableTarget,
-        { duration: 500, callback: () => targetExpandableTarget.focus() }
-      );
+      scrollIntoView( targetExpandableTarget, {
+        duration: 500,
+        callback: () => targetExpandableTarget.focus()
+      } );
     }, 150 );
     window.setTimeout( () => targetExpandableTarget.click(), 0 );
   }
@@ -158,14 +152,13 @@ class FormExplainer {
       '.form-explainer_page-link'
     );
 
-    return assign( this.elements,
-      { explain,
-        explainPageBtns,
-        explainPagination,
-        formExplainerLinks,
-        pages
-      }
-    );
+    return assign( this.elements, {
+      explain,
+      explainPageBtns,
+      explainPagination,
+      formExplainerLinks,
+      pages
+    } );
   }
 
   /**
@@ -187,8 +180,10 @@ class FormExplainer {
     const newPage = currentPage + increment;
 
     // Move to the next or previous page if it's not the first or last page.
-    if ( ( direction === 'next' && newPage <= this.pageCount ) ||
-         ( direction === 'prev' && newPage >= 1 ) ) {
+    if (
+      ( direction === 'next' && newPage <= this.pageCount ) ||
+      ( direction === 'prev' && newPage >= 1 )
+    ) {
       this.switchPage( currentPage, newPage );
     }
   }
@@ -213,12 +208,10 @@ class FormExplainer {
     this.updatePaginationUI();
 
     if ( shouldScrollIntoView ) {
-      scrollIntoView(
-        DT.getEl( PAGINATION ),
-        { duration: 200,
-          callback: callback || NO_OP
-        }
-      );
+      scrollIntoView( DT.getEl( PAGINATION ), {
+        duration: 200,
+        callback: callback || NO_OP
+      } );
     }
   }
 
@@ -240,10 +233,9 @@ class FormExplainer {
   switchPage( currentPage, newPage ) {
     this.setCurrentPage( newPage, () => {
       // After scrolling the window, fade out the current page.
-      DT.fadeOut( this.getPageEl( currentPage ), 600,
-        () => {
-          DT.fadeIn( this.getPageEl( newPage ), 700 );
-        } );
+      DT.fadeOut( this.getPageEl( currentPage ), 600, () => {
+        DT.fadeIn( this.getPageEl( newPage ), 700 );
+      } );
     } );
   }
 
@@ -253,7 +245,6 @@ class FormExplainer {
     const delay = 700;
 
     if ( this.pageCount > 1 ) {
-
       /* When a paginantion link is clicked,
        * switch to the next / previous page.
        */
@@ -274,13 +265,11 @@ class FormExplainer {
         const pageNum = target.getAttribute( 'data-page' );
         const currentPage = this.currentPage;
 
-        if ( !DT.hasClass( target, 'disabled' ) &&
-             pageNum !== currentPage ) {
+        if ( !DT.hasClass( target, 'disabled' ) && pageNum !== currentPage ) {
           this.switchPage( currentPage, pageNum );
         }
       } );
     }
-
 
     /* When the mouse is over the image overlay or form explainer,
      * update the hover styles.
@@ -297,34 +286,26 @@ class FormExplainer {
     /* When a form explainer expandable target has the focus,
      * update the image overlay.
      */
-    DT.bindEvents(
-      '.o-expandable_target',
-      'focus',
-      event => {
-        const expandable = closest(
-          event.target,
-          '.o-expandable__form-explainer'
-        );
-        this.updateAttention( expandable, CSS.HOVER_HAS_ATTENTION );
-      }
-    );
+    DT.bindEvents( '.o-expandable_target', 'focus', event => {
+      const expandable = closest(
+        event.target,
+        '.o-expandable__form-explainer'
+      );
+      this.updateAttention( expandable, CSS.HOVER_HAS_ATTENTION );
+    } );
 
     /* When an overlay is clicked, toggle the corresponding expandable
      * and scroll the page until it is in view.
      */
-    DT.bindEvents(
-      '.image-map_overlay',
-      'click',
-      event => {
-        event.preventDefault();
-        event.stopPropagation();
-        const imageOverlay = event.target;
-        const itemID = imageOverlay.getAttribute( 'href' );
-        const targetExpandable = DT.getEl( itemID );
+    DT.bindEvents( '.image-map_overlay', 'click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      const imageOverlay = event.target;
+      const itemID = imageOverlay.getAttribute( 'href' );
+      const targetExpandable = DT.getEl( itemID );
 
-        this.openAndScrollToExpandable( imageOverlay, targetExpandable );
-      }
-    );
+      this.openAndScrollToExpandable( imageOverlay, targetExpandable );
+    } );
 
     /* When a form explainer expandable is clicked / pressed,
      * update the image overlay position and hover styles.
@@ -336,7 +317,8 @@ class FormExplainer {
         if ( event.which === 13 || event.type === 'click' ) {
           const target = event.target;
           const closestFormExplainer = closest(
-            target, '.o-expandable__form-explainer'
+            target,
+            '.o-expandable__form-explainer'
           );
 
           this.updateAttention( closestFormExplainer, CSS.HAS_ATTENTION );

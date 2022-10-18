@@ -1,5 +1,4 @@
 export class GlobalSearch {
-
   globalSearch( name ) {
     return cy.get( `.m-global-search ${ name }` );
   }
@@ -25,6 +24,8 @@ export class GlobalSearch {
   }
 
   button() {
-    return this.globalSearch( '[data-js-hook="behavior_flyout-menu_content"] .a-btn' );
+    return this.globalSearch(
+      '[data-js-hook="behavior_flyout-menu_content"] .a-btn'
+    );
   }
 }

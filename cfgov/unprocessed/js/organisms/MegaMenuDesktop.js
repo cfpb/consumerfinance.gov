@@ -14,7 +14,6 @@ import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition
  * @returns {MegaMenuDesktop} An instance.
  */
 function MegaMenuDesktop( baseClass, menus ) {
-
   // DOM references.
   const _bodyDom = document.body;
   let _firstLevelDom;
@@ -37,7 +36,6 @@ function MegaMenuDesktop( baseClass, menus ) {
    * @returns {MegaMenuDesktop} An instance.
    */
   function init() {
-
     /* Get the immediate parent of the 1st level menu links.
        We'll use this later to check if we're still over the links,
        when clicking to close the menu. */
@@ -54,11 +52,13 @@ function MegaMenuDesktop( baseClass, menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function handleEvent( event ) {
-    if ( _suspended ) { return; }
+    if ( _suspended ) {
+      return;
+    }
     const eventMap = {
       triggerClick: _handleTriggerClickBinded,
-      expandBegin:  _handleExpandBeginBinded,
-      collapseEnd:  _handleCollapseEndBinded
+      expandBegin: _handleExpandBeginBinded,
+      collapseEnd: _handleCollapseEndBinded
     };
 
     const currHandler = eventMap[event.type];
@@ -74,7 +74,9 @@ function MegaMenuDesktop( baseClass, menus ) {
   function _handleTriggerClick( event ) {
     this.dispatchEvent( 'triggerClick', { target: this } );
     const menu = event.target;
-    if ( menu.isAnimating() ) { return; }
+    if ( menu.isAnimating() ) {
+      return;
+    }
     _updateMenuState( menu );
   }
 

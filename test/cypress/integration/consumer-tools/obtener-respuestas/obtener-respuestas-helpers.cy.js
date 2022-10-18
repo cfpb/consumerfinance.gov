@@ -1,5 +1,4 @@
 export class ObtenerRespuestasBuscar {
-
   open() {
     cy.visit( '/es/obtener-respuestas/' );
   }

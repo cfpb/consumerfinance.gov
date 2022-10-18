@@ -6,9 +6,7 @@ const trends = new MortgagePerformanceTrends();
 /* TODO: enable tests on github when test data has been created
    and enable tests on staging when CI/CD issues have been resolved */
 onlyOn( 'local-machine', () => {
-
   describe( 'Mortgage Performance Trends', () => {
-
     it( 'should display delinquency trends chart for a given state', () => {
       trends.open();
       trends.selectLocationType( 'State' );
@@ -24,7 +22,5 @@ onlyOn( 'local-machine', () => {
       trends.mapTitle().should( 'contain', 'January' );
       trends.mapTitle().should( 'contain', '2017' );
     } );
-
   } );
-
 } );

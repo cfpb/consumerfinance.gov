@@ -12,7 +12,9 @@ const URLS = {
 
 const autocompleteContainer = document.querySelector( '.m-autocomplete' );
 const errorMessage = document.querySelector( '#o-search-bar_error-message' );
-const submitButton = document.querySelector( '.o-search-bar button[type="submit"]' );
+const submitButton = document.querySelector(
+  '.o-search-bar button[type="submit"]'
+);
 
 /**
  * Disable the submit button if the query character limit is reached
@@ -21,7 +23,11 @@ const submitButton = document.querySelector( '.o-search-bar button[type="submit"
  */
 function handleMaxCharacters( event ) {
   if ( event.maxLengthExceeded ) {
-    const eventData = Analytics.getDataLayerOptions( 'maxLimitReached', event.searchTerm, 'Ask Search' );
+    const eventData = Analytics.getDataLayerOptions(
+      'maxLimitReached',
+      event.searchTerm,
+      'Ask Search'
+    );
     submitButton.setAttribute( 'disabled', 'true' );
     errorMessage.classList.remove( 'u-hidden' );
     Analytics.sendEvent( eventData );

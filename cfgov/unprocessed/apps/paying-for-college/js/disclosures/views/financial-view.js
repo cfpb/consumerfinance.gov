@@ -50,7 +50,6 @@ const financialView = {
   keyupDelay: null,
   currentInput: null,
 
-
   /**
    * Initiates the object
    */
@@ -290,12 +289,13 @@ const financialView = {
     }
     this.setGraduationCohortVisibility(
       typeof values.completionCohort !== 'undefined' &&
-      values.completionCohort !== null
+        values.completionCohort !== null
     );
     this.perkinsVisible( values.offersPerkins );
     this.jobPlacementVisible(
-      typeof values.jobRate !== 'undefined' && values.jobRate !== 'None' &&
-      values.jobRate !== ''
+      typeof values.jobRate !== 'undefined' &&
+        values.jobRate !== 'None' &&
+        values.jobRate !== ''
     );
 
     // Update text for overCap errors
@@ -321,10 +321,11 @@ const financialView = {
    */
   updateViewWithURL: function( values, urlvalues ) {
     this.totalDirectCostVisible(
-      typeof urlvalues.totalCost !== 'undefined' && urlvalues.totalCost !== 0 );
+      typeof urlvalues.totalCost !== 'undefined' && urlvalues.totalCost !== 0
+    );
     this.tuitionPaymentPlanVisible(
       typeof urlvalues.tuitionRepay !== 'undefined' &&
-      urlvalues.tuitionRepay !== 0
+        urlvalues.tuitionRepay !== 0
     );
     // Update availability of Pell grants, subsidized loans, and gradPLUS loans
     if ( values.undergrad === false ) {
@@ -382,8 +383,10 @@ const financialView = {
    */
   checkOverBorrowingErrors: function( errors ) {
     const overBorrowingErrors = [
-      'perkinsOverCost', 'subsidizedOverCost',
-      'unsubsidizedOverCost', 'gradPlusOverCost'
+      'perkinsOverCost',
+      'subsidizedOverCost',
+      'unsubsidizedOverCost',
+      'gradPlusOverCost'
     ];
     const errorMap = {
       subsidizedOverCost: 'contrib__subsidized',
@@ -420,7 +423,9 @@ const financialView = {
       $container.find( '[data-private-loan]:last .aid-form_input' ).val( '0' );
       publish.addPrivateLoan();
       financialView.updateView( getFinancial.values() );
-      Analytics.sendEvent( getDataLayerOptions( 'Private Loan Changed', 'Added' ) );
+      Analytics.sendEvent(
+        getDataLayerOptions( 'Private Loan Changed', 'Added' )
+      );
     } );
   },
 
@@ -436,7 +441,9 @@ const financialView = {
       financialView.enumeratePrivateLoanIDs();
       publish.dropPrivateLoan( index );
       financialView.updateView( getFinancial.values() );
-      Analytics.sendEvent( getDataLayerOptions( 'Private Loan Changed', 'Removed' ) );
+      Analytics.sendEvent(
+        getDataLayerOptions( 'Private Loan Changed', 'Removed' )
+      );
     } );
   },
 
@@ -499,23 +506,26 @@ const financialView = {
    * Listener function for input change in financial model INPUT fields
    */
   inputChangeListener: function() {
-    this.$reviewAndEvaluate.on( 'keyup focusout', '[data-financial]', function() {
-
-      clearTimeout( financialView.keyupDelay );
-      financialView.currentInput = $( this ).attr( 'id' );
-      if ( $( this ).is( ':focus' ) ) {
-        financialView.keyupDelay = setTimeout( function() {
+    this.$reviewAndEvaluate.on(
+      'keyup focusout',
+      '[data-financial]',
+      function() {
+        clearTimeout( financialView.keyupDelay );
+        financialView.currentInput = $( this ).attr( 'id' );
+        if ( $( this ).is( ':focus' ) ) {
+          financialView.keyupDelay = setTimeout( function() {
+            financialView.inputHandler( financialView.currentInput );
+            financialView.updateView( getFinancial.values() );
+            expensesView.updateView( getExpenses.values() );
+          }, 500 );
+        } else {
           financialView.inputHandler( financialView.currentInput );
+          financialView.currentInput = 'none';
           financialView.updateView( getFinancial.values() );
           expensesView.updateView( getExpenses.values() );
-        }, 500 );
-      } else {
-        financialView.inputHandler( financialView.currentInput );
-        financialView.currentInput = 'none';
-        financialView.updateView( getFinancial.values() );
-        expensesView.updateView( getExpenses.values() );
+        }
       }
-    } );
+    );
   },
 
   /**
@@ -555,27 +565,45 @@ const financialView = {
       if ( $( this ).attr( 'href' ) === '#info-right' ) {
         evt.preventDefault();
         financialView.$infoVerified.show();
-        $( 'html, body' ).stop().animate( {
-          scrollTop: financialView.$infoVerified.offset().top - 120
-        }, 900, 'swing', function() {
-          metricView.updateGraphs( values );
-          window.location.hash = '#info-right';
-          financialView.$aboutThisTool.focus();
-        } );
+        $( 'html, body' )
+          .stop()
+          .animate(
+            {
+              scrollTop: financialView.$infoVerified.offset().top - 120
+            },
+            900,
+            'swing',
+            function() {
+              metricView.updateGraphs( values );
+              window.location.hash = '#info-right';
+              financialView.$aboutThisTool.focus();
+            }
+          );
 
-        Analytics.sendEvent( getDataLayerOptions( 'Years to Complete Program',
-          $programLengthElement.val() ) );
+        Analytics.sendEvent(
+          getDataLayerOptions(
+            'Years to Complete Program',
+            $programLengthElement.val()
+          )
+        );
         Analytics.sendEvent( getDataLayerOptions( 'Step Completed', hrefText ) );
       } else {
         evt.preventDefault();
         financialView.$infoIncorrect.show();
         postVerification.verify( values.offerID, values.schoolID, true );
-        $( 'html, body' ).stop().animate( {
-          scrollTop: financialView.$infoIncorrect.offset().top - 120
-        }, 900, 'swing', function() {
-          window.location.hash = '#info-wrong';
-          financialView.$programLength.focus();
-        } );
+        $( 'html, body' )
+          .stop()
+          .animate(
+            {
+              scrollTop: financialView.$infoIncorrect.offset().top - 120
+            },
+            900,
+            'swing',
+            function() {
+              window.location.hash = '#info-wrong';
+              financialView.$programLength.focus();
+            }
+          );
         Analytics.sendEvent( getDataLayerOptions( 'Step Completed', hrefText ) );
       }
       financialView.stickySummariesListener();
@@ -740,14 +768,18 @@ const financialView = {
    */
   updateSalaryContent: function( source ) {
     if ( source === 'school' ) {
-      this.$medianSalaryContent.text( 'The typical salary for students who started attending this school 10 years ago is' );
+      this.$medianSalaryContent.text(
+        'The typical salary for students who started attending this school 10 years ago is'
+      );
       this.$salaryMetricContent.text( 'Typical salary for this school' );
     } else if ( source === 'national' ) {
       this.$salaryContent.hide();
       this.$salaryMetric.hide();
       metricView.updateSalaryWarning();
       this.$budgetSalaryContent.show();
-      this.$debtBurdenSalaryContent.text( 'national salary for all students who attended college' );
+      this.$debtBurdenSalaryContent.text(
+        'national salary for all students who attended college'
+      );
     }
   },
 
@@ -758,8 +790,10 @@ const financialView = {
   unsubsidizedErrorText: function( isUndergrad ) {
     const $error = $( '[data-calc-error_content="directUnsubsidized"]' );
     if ( isUndergrad ) {
-      $error.text( 'The maximum subsidized and unsubsidized loans that can be ' +
-        'borrowed per year is' );
+      $error.text(
+        'The maximum subsidized and unsubsidized loans that can be ' +
+          'borrowed per year is'
+      );
     } else {
       $error.text( 'The maximum that can be borrowed per year is' );
     }
@@ -793,13 +827,21 @@ const financialView = {
       // Show Step 2
       financialView.$evaluateSection.show();
       financialView.$bigQuestion.show();
-      $( 'html, body' ).stop().animate( {
-        scrollTop: financialView.$evaluateSection.offset().top - 120
-      }, 900, 'swing', function() {
-        // Noop function.
-      } );
-      Analytics.sendEvent( getDataLayerOptions( 'Step Completed',
-        'Continue to Step 2' ) );
+      $( 'html, body' )
+        .stop()
+        .animate(
+          {
+            scrollTop: financialView.$evaluateSection.offset().top - 120
+          },
+          900,
+          'swing',
+          function() {
+            // Noop function.
+          }
+        );
+      Analytics.sendEvent(
+        getDataLayerOptions( 'Step Completed', 'Continue to Step 2' )
+      );
     } );
   },
 
@@ -814,7 +856,8 @@ const financialView = {
     if ( $win.width() >= 600 && $stickyOffers.data( 'sticky_kit' ) !== true ) {
       // Attach event handler
       $stickyOffers.trigger( 'sticky_kit:detach' );
-      $stickyOffers.stick_in_parent()
+      $stickyOffers
+        .stick_in_parent()
         .on( 'sticky_kit:bottom', function( evt ) {
           $( evt.target ).addClass( 'is_bottomed' );
         } )
@@ -847,8 +890,12 @@ const financialView = {
       $toggles.filter( '[value="' + term + '"]' ).prop( 'checked', true );
       financialView.updateView( getFinancial.values() );
       expensesView.updateView( getExpenses.values() );
-      Analytics.sendEvent( getDataLayerOptions( 'See how loan length affects your payments',
-        term + ' years' ) );
+      Analytics.sendEvent(
+        getDataLayerOptions(
+          'See how loan length affects your payments',
+          term + ' years'
+        )
+      );
     } );
   },
 
@@ -870,7 +917,9 @@ const financialView = {
     $( '[data-financial]' ).one( 'change', function() {
       const dataFinancial = $( this ).data( 'financial' );
       if ( dataFinancial ) {
-        Analytics.sendEvent( getDataLayerOptions( 'Value Edited', dataFinancial ) );
+        Analytics.sendEvent(
+          getDataLayerOptions( 'Value Edited', dataFinancial )
+        );
       }
     } );
   }

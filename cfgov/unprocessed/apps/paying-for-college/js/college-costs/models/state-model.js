@@ -2,7 +2,7 @@
  * This file contains the model for the application state - that is, an Object
  * which tracks the current app state and allows the views to update based on
  * state.
-*/
+ */
 import { getSchoolValue } from '../dispatchers/get-model-values.js';
 import {
   recalculateFinancials,
@@ -17,9 +17,20 @@ import {
 } from '../dispatchers/update-view.js';
 
 const urlVals = [
-  'pid', 'programHousing', 'programType', 'programProgress', 'programLength',
-  'programRate', 'programDependency', 'costsQuestion', 'expensesRegion',
-  'impactOffer', 'impactLoans', 'utmSource', 'utm_medium', 'utm_campaign'
+  'pid',
+  'programHousing',
+  'programType',
+  'programProgress',
+  'programLength',
+  'programRate',
+  'programDependency',
+  'costsQuestion',
+  'expensesRegion',
+  'impactOffer',
+  'impactLoans',
+  'utmSource',
+  'utm_medium',
+  'utm_campaign'
 ];
 
 const stateModel = {
@@ -49,9 +60,9 @@ const stateModel = {
   textVersions: {
     programType: {
       certificate: 'certificate',
-      associates: 'Associates\'s Degree',
-      bachelors: 'Bachelor\'s Degree',
-      graduate: 'Graduate\'s Degree'
+      associates: "Associates's Degree",
+      bachelors: "Bachelor's Degree",
+      graduate: "Graduate's Degree"
     },
     programLength: {
       1: '1 year',
@@ -92,9 +103,9 @@ const stateModel = {
   ],
 
   /**
-  * Check whether required fields are selected
-  * @returns {Boolean} false if the school form is incomplete, true otherwise
-  */
+   * Check whether required fields are selected
+   * @returns {Boolean} false if the school form is incomplete, true otherwise
+   */
   _checkRequiredFields: function() {
     // Don't check required fields until the
     if ( stateModel.showSchoolErrors === false ) {
@@ -112,8 +123,12 @@ const stateModel = {
       programLengthSelected: smv.programLength === 'not-selected',
       programProgressSelected: smv.programProgress === 'not-selected',
       rateSelected: smv.programRate === 'not-selected' && control === 'Public',
-      housingSelected: smv.programLevel === 'undergrad' && smv.programHousing === 'not-selected',
-      dependencySelected:  smv.programLevel === 'undergrad' && smv.programDependency === 'not-selected'
+      housingSelected:
+        smv.programLevel === 'undergrad' &&
+        smv.programHousing === 'not-selected',
+      dependencySelected:
+        smv.programLevel === 'undergrad' &&
+        smv.programDependency === 'not-selected'
     };
 
     // Change values to "required" which triggers error notification CSS rules
@@ -169,13 +184,30 @@ const stateModel = {
    * @param {string} property  What property to update based on
    */
   _updateApplicationState: property => {
-    const urlParams = [ 'pid', 'programHousing', 'programType', 'programProgress',
-      'programLength', 'programRate', 'programDependency', 'costsQuestion',
-      'expensesRegion', 'impactOffer', 'impactLoans', 'utmSource', 'utm_medium',
-      'utm_campaign' ];
+    const urlParams = [
+      'pid',
+      'programHousing',
+      'programType',
+      'programProgress',
+      'programLength',
+      'programRate',
+      'programDependency',
+      'costsQuestion',
+      'expensesRegion',
+      'impactOffer',
+      'impactLoans',
+      'utmSource',
+      'utm_medium',
+      'utm_campaign'
+    ];
 
-    const finUpdate = [ 'programType', 'programRate', 'programDependency',
-      'programLength', 'programHousing' ];
+    const finUpdate = [
+      'programType',
+      'programRate',
+      'programDependency',
+      'programLength',
+      'programHousing'
+    ];
 
     // Properties which require a URL querystring update:
     if ( urlParams.indexOf( property ) > 0 ) {
@@ -261,9 +293,6 @@ const stateModel = {
     }
     updateNavigationView();
   }
-
 };
 
-export {
-  stateModel
-};
+export { stateModel };

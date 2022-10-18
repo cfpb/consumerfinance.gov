@@ -42,44 +42,44 @@ function initializeFinancialValues() {
 }
 
 /**
-  * updateFinancial - Update a property of the financial model
-  * @param {String} name - The name of the property to update
-  * @param {*} value - The new value of the property
-  * @param {Boolean} updateView - (defaults true) should view be updated?
-  */
+ * updateFinancial - Update a property of the financial model
+ * @param {String} name - The name of the property to update
+ * @param {*} value - The new value of the property
+ * @param {Boolean} updateView - (defaults true) should view be updated?
+ */
 function updateFinancial( name, value, updateView ) {
   financialModel.setValue( name, value, updateView );
 }
 
 /**
-  * createFinancial - Create a new financial property
-  * @param {String} name - The name of the property to update
-  * @param {*} value - The new value of the property
-  */
+ * createFinancial - Create a new financial property
+ * @param {String} name - The name of the property to update
+ * @param {*} value - The new value of the property
+ */
 function createFinancial( name, value ) {
   financialModel.createFinancialProperty( name, value );
 }
 
 /**
-  * recalculateFinancials - Run the financialModel's internal calculations
-  */
+ * recalculateFinancials - Run the financialModel's internal calculations
+ */
 function recalculateFinancials() {
   financialModel.recalculate();
 }
 
 /**
-  * updateExpense - Update a property of the expense model
-  * @param {String} name - The name of the property to update
-  * @param {*} value - The new value of the property
-  * @param {Boolean} updateView - (defaults true) should view be updated?
-  */
+ * updateExpense - Update a property of the expense model
+ * @param {String} name - The name of the property to update
+ * @param {*} value - The new value of the property
+ * @param {Boolean} updateView - (defaults true) should view be updated?
+ */
 function updateExpense( name, value, updateView ) {
   expensesModel.setValue( name, value );
 }
 
 /**
-  * recalculateExpenses - Run the expenseModel's internal calculations
-  */
+ * recalculateExpenses - Run the expenseModel's internal calculations
+ */
 function recalculateExpenses() {
   expensesModel.calculateTotals();
 }
@@ -121,25 +121,28 @@ function getTopThreePrograms( programs ) {
 }
 
 /**
-  * @param {Object} data - Data from school API
-  */
+ * @param {Object} data - Data from school API
+ */
 function setSchoolValues( data ) {
   for ( const key in data ) {
     const val = data[key];
     schoolModel.setValue( key, val, false );
 
     // Update state to reflect any missing rate values
-    if ( [ 'repay3yr', 'gradRate', 'defaultRate' ].indexOf( key ) > -1 && !isNumeric( val ) ) {
+    if (
+      [ 'repay3yr', 'gradRate', 'defaultRate' ].indexOf( key ) > -1 &&
+      !isNumeric( val )
+    ) {
       stateModel.setValue( key + 'missing', true );
     }
   }
 }
 
 /**
-  * updateSchoolData - Fetch API data for school and update the model
-  * @param {String} iped - The id of the school
-  * @returns {Object} Promise of the XHR request
-  */
+ * updateSchoolData - Fetch API data for school and update the model
+ * @param {String} iped - The id of the school
+ * @returns {Object} Promise of the XHR request
+ */
 function updateSchoolData( iped ) {
   stateModel.setValue( 'schoolID', iped );
   return new Promise( ( resolve, reject ) => {
@@ -159,36 +162,47 @@ function updateSchoolData( iped ) {
         }
 
         // Take only the top 3 programs
-        schoolModel.values.programsTopThree =
-          getTopThreePrograms( schoolModel.values.programsPopular );
+        schoolModel.values.programsTopThree = getTopThreePrograms(
+          schoolModel.values.programsPopular
+        );
 
         // add the full state name to the schoolModel
-        schoolModel.values.stateName =
-          getStateByCode( schoolModel.values.state );
+        schoolModel.values.stateName = getStateByCode(
+          schoolModel.values.state
+        );
 
         // Some values must migrate to the financial model
         if ( programInfo ) {
-          financialModel.setValue( 'salary_annual', stringToNum( programInfo.salary ) );
+          financialModel.setValue(
+            'salary_annual',
+            stringToNum( programInfo.salary )
+          );
           stateModel.setValue( 'programName', programInfo.name );
         } else {
-          financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
+          financialModel.setValue(
+            'salary_annual',
+            stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) )
+          );
         }
 
         // Update expenses by region
         if ( schoolModel.values.hasOwnProperty( 'region' ) ) {
-          document.querySelector( '#expenses__region' ).value = schoolModel.values.region;
+          document.querySelector( '#expenses__region' ).value =
+            schoolModel.values.region;
           updateRegion( schoolModel.values.region );
         }
 
         updateSchoolView();
 
         resolve( true );
-
       } )
       .catch( function( error ) {
         reject( error );
         iped = iped.replace( /\D/g, '' );
-        console.log( 'An error occurred when accessing school data for ' + iped, error );
+        console.log(
+          'An error occurred when accessing school data for ' + iped,
+          error
+        );
       } );
   } );
 }
@@ -220,13 +234,21 @@ function parseQueryParameters( queryObj ) {
 
       // plus can mean either type of loan (they are mutually exclusive)
       if ( key === 'plus' ) {
-        financialModel.setValue( 'plusLoan_gradPlus', stringToNum( queryObj[key] ), false );
+        financialModel.setValue(
+          'plusLoan_gradPlus',
+          stringToNum( queryObj[key] ),
+          false
+        );
       }
     }
   }
 
   // Copy programLength into the financial model
-  financialModel.setValue( 'other_programLength', stringToNum( queryObj.lenp ), false );
+  financialModel.setValue(
+    'other_programLength',
+    stringToNum( queryObj.lenp ),
+    false
+  );
 }
 
 /**
@@ -263,10 +285,9 @@ function updateModelsFromQueryString( queryObj ) {
 
   parseQueryParameters( queryObj );
   if ( queryObj.hasOwnProperty( 'iped' ) ) {
-    updateSchoolData( queryObj.iped )
-      .then( () => {
-        updateExpensesFromQueryObj( queryObj );
-      } );
+    updateSchoolData( queryObj.iped ).then( () => {
+      updateExpensesFromQueryObj( queryObj );
+    } );
   }
 }
 
@@ -275,8 +296,18 @@ function updateModelsFromQueryString( queryObj ) {
  * @param {Object} queryObj - An object representing the url query string.
  */
 function updateExpensesFromQueryObj( queryObj ) {
-  const params = [ 'houx', 'fdx', 'clhx', 'trnx', 'hltx', 'entx', 'retx',
-    'taxx', 'chcx', 'othx' ];
+  const params = [
+    'houx',
+    'fdx',
+    'clhx',
+    'trnx',
+    'hltx',
+    'entx',
+    'retx',
+    'taxx',
+    'chcx',
+    'othx'
+  ];
   params.forEach( key => {
     if ( urlParameters.hasOwnProperty( key ) ) {
       const prop = urlParameters[key].split( '.' )[1];

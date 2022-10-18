@@ -1,6 +1,9 @@
 // Required modules.
 import { assign } from '../modules/util/assign';
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import { ajaxRequest } from '../modules/util/ajax-request';
 import throttle from 'lodash.throttle';
@@ -20,7 +23,6 @@ import throttle from 'lodash.throttle';
  * @returns {Autocomplete} An instance.
  */
 function Autocomplete( element, opts ) {
-
   // Class constants
   const BASE_CLASS = 'm-autocomplete';
   const HIDDEN_CLASS = 'u-hidden';
@@ -51,8 +53,7 @@ function Autocomplete( element, opts ) {
   const _settings = {
     minChars: 2,
     maxChars: _input.getAttribute( 'maxlength' ) ?
-      _input.getAttribute( 'maxlength' ) :
-      // 1024 is our upper limit for Elasticsearch queries
+      _input.getAttribute( 'maxlength' ) : // 1024 is our upper limit for Elasticsearch queries
       1024,
     delay: 300,
     url: '',
@@ -122,12 +123,12 @@ function Autocomplete( element, opts ) {
    */
   function _positionContainer() {
     const inputCoords = _input.getBoundingClientRect();
-    _autocomplete.style.left = Math.round( inputCoords.left +
-      window.pageXOffset ) + 'px';
-    _autocomplete.style.top = Math.round( inputCoords.bottom +
-      window.pageYOffset ) + 'px';
-    _autocomplete.style.width = Math.round( inputCoords.right -
-      inputCoords.left ) + 'px';
+    _autocomplete.style.left =
+      Math.round( inputCoords.left + window.pageXOffset ) + 'px';
+    _autocomplete.style.top =
+      Math.round( inputCoords.bottom + window.pageYOffset ) + 'px';
+    _autocomplete.style.width =
+      Math.round( inputCoords.right - inputCoords.left ) + 'px';
   }
 
   /**
@@ -135,8 +136,8 @@ function Autocomplete( element, opts ) {
    * max search term length is hit
    */
   function _toggleMaxLengthError() {
-    _maxLengthExceeded = _searchTerm.length >= _settings.maxChars ? true :
-      false;
+    _maxLengthExceeded =
+      _searchTerm.length >= _settings.maxChars ? true : false;
     if ( _maxLengthExceeded ) {
       _input.classList.add( ERROR_CLASS );
 
@@ -163,8 +164,10 @@ function Autocomplete( element, opts ) {
       _toggleMaxLengthError();
     }
 
-    if ( _searchTerm.length >= _settings.minChars &&
-         _searchTerm.length < _settings.maxChars ) {
+    if (
+      _searchTerm.length >= _settings.minChars &&
+      _searchTerm.length < _settings.maxChars
+    ) {
       if ( _settings.url ) {
         _throttleFetch();
       } else {
@@ -279,8 +282,8 @@ function Autocomplete( element, opts ) {
    */
   function _scrollSelectionIntoView() {
     const _target = _suggestions[_selection];
-    _autocomplete.scrollTop = _target.offsetTop -
-      _autocomplete.clientHeight + _target.clientHeight;
+    _autocomplete.scrollTop =
+      _target.offsetTop - _autocomplete.clientHeight + _target.clientHeight;
   }
 
   /**
