@@ -25,6 +25,10 @@
       </a>
     </div>
 
+    {% for block in page.top_content %}
+      {% include_block block %}
+    {% endfor %}
+
     {% for block in page.content %}
       {% include_block block %}
     {% endfor %}
