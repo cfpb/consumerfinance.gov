@@ -12,6 +12,7 @@ from wagtail.admin.edit_handlers import (
     TabbedInterface,
 )
 from wagtail.admin.forms import WagtailAdminPageForm
+from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
 
 import requests
@@ -20,6 +21,7 @@ from filing_instruction_guide.blocks import (
     FigLevel3Subsection,
     FigSection,
     FigSubsection,
+    content_block_options,
 )
 from modelcluster.models import ClusterableModel
 
@@ -82,6 +84,20 @@ class FIGContentPage(CFGOVPage, ClusterableModel):
     )
     effective_end_date = models.DateField(blank=True, null=True)
 
+    top_content = StreamField(
+        [
+            (
+                "top_content",
+                StreamBlock(
+                    content_block_options,
+                    required=False,
+                    help_text="Content that will appear above the first FIG section",
+                ),
+            )
+        ],
+        blank=True,
+    )
+
     content = StreamField(
         [
             ("Fig_Section", FigSection()),
@@ -114,6 +130,7 @@ class FIGContentPage(CFGOVPage, ClusterableModel):
             ],
             heading="FIG Version Information",
         ),
+        StreamFieldPanel("top_content"),
         StreamFieldPanel("content"),
     ]
 
