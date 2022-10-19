@@ -1,6 +1,6 @@
 export class FilingInstructionGuide {
   url() {
-    return '/compliance/compliance-resources/small-business-lending/1071-filing-instruction-guide/';
+    return Cypress.env( 'FIG_URL' );
   }
 
   open() {
