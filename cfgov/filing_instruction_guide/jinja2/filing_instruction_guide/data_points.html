@@ -12,7 +12,7 @@
                 </a>
             </h3>
             <p>Rule section: {{point.rule_section }}</p>
-            <p>{{point.intro_text }}</p>
+            <p>{{point.intro_text | safe }}</p>
 
             {{ data_fields_directory(data_fields) }}
 
@@ -54,7 +54,7 @@
         {{field.info.get('short_name', '')}}
 
         <h5>Instructions</h5>
-        {{field.info.get('instruction_text', '')}}
+        {{field.info.get('instruction_text', '') | safe }}
         <ul>
             <li>Field type: {{field.info.get('type', '')}} </li>
             <li>{{field.info.get('conditionality', '')}} </li>
