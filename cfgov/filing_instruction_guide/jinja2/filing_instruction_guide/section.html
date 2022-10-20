@@ -16,6 +16,7 @@
 {% set block_heading_level = block_types[block_type].heading | default('h4') %}
 {% set block_class = block_types[block_type].class | default('o-fig_section') %}
 
+{% set data_attr = '' %}
 {% if block_type in ['Fig_Section', 'Fig_Subsection'] %}
     {% set header = value.section_id + ". " + value.header %}
     {% set data_attr = 'data-scrollspy' %}
