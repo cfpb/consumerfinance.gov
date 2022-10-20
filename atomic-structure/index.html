@@ -187,9 +187,7 @@ require some Python programming—see the
 May not contain any other components.
 Prefixed with <code>a-</code> in class names.</p>
 <h3 id="html">HTML<a class="headerlink" href="#html" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-html">&lt;div class="a-tag"&gt;
-    Tag label {{ svg_icon('error') }}
-&lt;/div&gt;</code></pre>
+<pre class="highlight"><code class="language-html">&lt;div class="a-tag"&gt;Tag label {{ svg_icon('error') }}&lt;/div&gt;</code></pre>
 <h3 id="less">Less<a class="headerlink" href="#less" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code class="language-css">.a-tag {
     cursor: default;
@@ -204,14 +202,16 @@ Prefixed with <code>a-</code> in class names.</p>
 May contain atoms.
 Prefixed with <code>m-</code> in class names.</p>
 <h3 id="html_1">HTML<a class="headerlink" href="#html_1" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-html">&lt;div class="m-notification
-            m-notification__visible
-            m-notification__error"
-     data-js-hook="state_atomic_init"&gt;
-    {{ svg_icon('error') }}
-    &lt;div class="m-notification_content" role="alert"&gt;
-        &lt;div class="h4 m-notification_message"&gt;Page not found.&lt;/div&gt;
-    &lt;/div&gt;
+<pre class="highlight"><code class="language-html">&lt;div
+  class="m-notification
+         m-notification__visible
+         m-notification__error"
+  data-js-hook="state_atomic_init"
+&gt;
+  {{ svg_icon('error') }}
+  &lt;div class="m-notification_content" role="alert"&gt;
+    &lt;div class="h4 m-notification_message"&gt;Page not found.&lt;/div&gt;
+  &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 <h3 id="less_1">Less<a class="headerlink" href="#less_1" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code class="language-css">.m-notification {
@@ -237,7 +237,7 @@ Prefixed with <code>m-</code> in class names.</p>
 }</code></pre>
 <p>The Notification molecule can be instantiated
 by adding the following to your project's JavaScript code:</p>
-<pre class="highlight"><code class="language-js">const notification = new Notification( _dom );
+<pre class="highlight"><code class="language-js">const notification = new Notification(_dom);
 notification.init();</code></pre>
 <h2 id="organisms">Organisms<a class="headerlink" href="#organisms" title="Permanent link">¶</a></h2>
 <p>The largest component.
@@ -245,14 +245,17 @@ May contain atoms, molecules, or
 (if no other solution is viable) other organisms.
 Prefixed with <code>o-</code> in class names.</p>
 <h3 id="html_2">HTML<a class="headerlink" href="#html_2" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-html">&lt;div class="o-expandable
+<pre class="highlight"><code class="language-html">&lt;div
+  class="o-expandable
             o-expandable__borders
             o-expandable__midtone
             o-expandable__expanded"
-     data-js-hook="state_atomic_init"&gt;
-    &lt;button class="o-expandable_target" aria-pressed="true"&gt;
-        &lt;div class="o-expandable_header"&gt;
-        …</code></pre>
+  data-js-hook="state_atomic_init"
+&gt;
+  &lt;button class="o-expandable_target" aria-pressed="true"&gt;
+    &lt;div class="o-expandable_header"&gt;…&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
 <h3 id="less_2">Less<a class="headerlink" href="#less_2" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code class="language-css">.o-expandable {
     position: relative;
@@ -283,12 +286,12 @@ Prefixed with <code>o-</code> in class names.</p>
 }</code></pre>
 <p>The Expandable organism can be instantiated
 by adding the following to your project's JavaScript code:</p>
-<pre class="highlight"><code class="language-js">const expandable = new Expandable( _dom.querySelector( '.o-expandable' ) );
-expandable.init( _expandable.EXPANDED );</code></pre>
+<pre class="highlight"><code class="language-js">const expandable = new Expandable(_dom.querySelector('.o-expandable'));
+expandable.init(_expandable.EXPANDED);</code></pre>
 <p>or</p>
-<pre class="highlight"><code class="language-js">const atomicHelpers = require( '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js' );
-const Expandable = require( '../../organisms/Expandable' );
-atomicHelpers.instantiateAll( '.o-expandable', Expandable );</code></pre>
+<pre class="highlight"><code class="language-js">const atomicHelpers = require('@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js');
+const Expandable = require('../../organisms/Expandable');
+atomicHelpers.instantiateAll('.o-expandable', Expandable);</code></pre>
 <h2 id="folder-structure">Folder structure<a class="headerlink" href="#folder-structure" title="Permanent link">¶</a></h2>
 <p>Our atomic components are separated and named based on asset type.
 HTML, Less, and JavaScript for each component are in separate directories.</p>
@@ -298,11 +301,11 @@ consumerfinance.gov/cfgov/jinja2/v1/_includes/molecules/
 consumerfinance.gov/cfgov/jinja2/v1/_includes/organisms/</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+</div>
 <p>Some of our foundational components get their Less and JavaScript
 from the <a href="https://cfpb.github.io/design-system/">Design System</a>,
 but the HTML for their Wagtail block templates
 is stored in the above folders.</p>
-</div>
 <h3 id="css">CSS<a class="headerlink" href="#css" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code>consumerfinance.gov/cfgov/unprocessed/css/atoms/
 consumerfinance.gov/cfgov/unprocessed/css/molecules/
@@ -317,18 +320,18 @@ consumerfinance.gov/test/unit_tests/js/organisms/</code></pre>
 <p>JavaScript components are built to be rendered on the server
 and then enhanced via JavaScript on the client.
 The basic interface for the components is as follows:</p>
-<pre class="highlight"><code class="language-js">function AtomicComponent( domElement ) {
-    // Ensure the passed in Element is in the DOM.
-    // Query and store references to sub-elements.
-    // Instantiate child atomic components.
-    // Bind necessary events for referenced DOM elements.
-    // Perform other initialization related tasks.
-    this.init = function init(){}
+<pre class="highlight"><code class="language-js">function AtomicComponent(domElement) {
+  // Ensure the passed in Element is in the DOM.
+  // Query and store references to sub-elements.
+  // Instantiate child atomic components.
+  // Bind necessary events for referenced DOM elements.
+  // Perform other initialization related tasks.
+  this.init = function init() {};
 
-    // General teardown function
-    // We don't remove the element from the DOM so
-    // we need to unbind the events.
-    this.destroy = function destroy(){}
+  // General teardown function
+  // We don't remove the element from the DOM so
+  // we need to unbind the events.
+  this.destroy = function destroy() {};
 }</code></pre>
 <p>We generally favor composition over inheritance.
 You can get more information by reading the following:</p>

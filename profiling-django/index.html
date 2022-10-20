@@ -164,28 +164,28 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="profiling-django">Profiling Django<a class="headerlink" href="#profiling-django" title="Permanent link">¶</a></h1>
-<p>One tool we have when optimizing our code in Django is profiling. 
-Profiling helps us understand where our time is spent, and doing what. 
-It also helps us identify duplication of effort, 
+<p>One tool we have when optimizing our code in Django is profiling.
+Profiling helps us understand where our time is spent, and doing what.
+It also helps us identify duplication of effort,
 as well as targets for caching and optimization.</p>
-<p>Because our primary goal is 
-to ensure that page loads are as quick as possible for the public, 
-this document focuses on profiling the Django request/response cycle: 
+<p>Because our primary goal is
+to ensure that page loads are as quick as possible for the public,
+this document focuses on profiling the Django request/response cycle:
 view code, Wagtail page rendering, etc.</p>
-<p>This document covers the tools we use to 
+<p>This document covers the tools we use to
 both generate and understand a profile.</p>
 <h2 id="generating-a-profile-from-a-url">Generating a profile from a URL<a class="headerlink" href="#generating-a-profile-from-a-url" title="Permanent link">¶</a></h2>
-<p>To enable profile generation, 
-we use a middleware that wraps 
-<a href="https://docs.python.org/3/library/profile.html">Python's builtin <code>cprofile</code> module</a>, 
-<a href="https://github.com/omarish/django-cprofile-middleware">django-cprofile-middleware</a>. 
-This middleware is enabled by default for local development 
+<p>To enable profile generation,
+we use a middleware that wraps
+<a href="https://docs.python.org/3/library/profile.html">Python's builtin <code>cprofile</code> module</a>,
+<a href="https://github.com/omarish/django-cprofile-middleware">django-cprofile-middleware</a>.
+This middleware is enabled by default for local development
 when <code>DEBUG</code> is <code>True</code>.</p>
-<p>For any URL served by Django, 
-you can add the <code>?prof</code> querystring 
+<p>For any URL served by Django,
+you can add the <code>?prof</code> querystring
 (or <code>&amp;prof</code> to an existing query string)
-in order to see a profile of the request/response cycle for that view. </p>
-<p>For example, <code>http://localhost:8000/about-us/newsroom/?prof</code>, 
+in order to see a profile of the request/response cycle for that view.</p>
+<p>For example, <code>http://localhost:8000/about-us/newsroom/?prof</code>,
 might return something like:</p>
 <pre class="highlight"><code>         1579654 function calls (1575009 primitive calls) in 28.273 seconds
 
@@ -199,46 +199,46 @@ might return something like:</p>
     77732    1.900    0.000    5.027    0.000 utils.py:157(__getattr__)
      2776    1.821    0.001   21.265    0.008 documents.py:89(init_prepare)
      …</code></pre>
-<p>You can also sort this output using a <code>sort</code> field. 
-For example, to sort by call count instead of the default time sort: <code>http://localhost:8000/about-us/newsroom/?prof&amp;sort=ncalls</code>. 
-The can be any supported by 
+<p>You can also sort this output using a <code>sort</code> field.
+For example, to sort by call count instead of the default time sort: <code>http://localhost:8000/about-us/newsroom/?prof&amp;sort=ncalls</code>.
+The can be any supported by
 <a href="https://docs.python.org/3/library/profile.html#pstats.Stats.sort_stats">pstats.Stats.sort_stats</a>.</p>
-<p>Most usefully, howevever, 
-you can download the <code>.prof</code> file that contains the profile data, 
+<p>Most usefully, howevever,
+you can download the <code>.prof</code> file that contains the profile data,
 using a <code>download</code> field.
-For example <code>http://localhost:8000/about-us/newsroom/?prof&amp;download</code>. 
+For example <code>http://localhost:8000/about-us/newsroom/?prof&amp;download</code>.
 This will download <code>view.prof</code>, which you can then open in a tool like
-<a href="https://jiffyclub.github.io/snakeviz/"><code>SnakeViz</code></a> 
+<a href="https://jiffyclub.github.io/snakeviz/"><code>SnakeViz</code></a>
 (see below).</p>
 <h2 id="understanding-a-generated-profile">Understanding a generated profile<a class="headerlink" href="#understanding-a-generated-profile" title="Permanent link">¶</a></h2>
-<p>There are a number of tools available 
-to visualize and understand a <code>.prof</code> profile data file. 
-The tool we recommend is 
+<p>There are a number of tools available
+to visualize and understand a <code>.prof</code> profile data file.
+The tool we recommend is
 <a href="https://jiffyclub.github.io/snakeviz/"><code>SnakeViz</code></a>,
 a browser-based graphical viewer of cProfile data.</p>
-<p>To install SnakeViz locally 
+<p>To install SnakeViz locally
 <a href="https://github.com/cfpb/development/blob/main/guides/pipx.md">with pipx</a>:</p>
 <pre class="highlight"><code class="language-shell">pipx install snakeviz</code></pre>
-<p>After downloading the profile data for a Django view, 
+<p>After downloading the profile data for a Django view,
 the data can be viewed with SnakeViz with:</p>
 <pre class="highlight"><code class="language-shell">snakeviz view.prof</code></pre>
-<p>SnakeViz has two visualization styles, 
-Icicle and Sunburst. 
-Both visualizations represent function calls by 
-the time spent inside the function 
-as a portion of total time of its calling function. 
-The root function will represent 
+<p>SnakeViz has two visualization styles,
+Icicle and Sunburst.
+Both visualizations represent function calls by
+the time spent inside the function
+as a portion of total time of its calling function.
+The root function will represent
 the total time for the Django request/response cycle.</p>
 <p>For example:</p>
 <p><img alt="Example SnakeViz Icicle view showing a class-based view call stack" src="../img/profiling-django-snakeviz.png" /></p>
-<p>This visualization shows the request/response cycle 
-took 27.2s in the root view. 
+<p>This visualization shows the request/response cycle
+took 27.2s in the root view.
 We can identify the Wagtail <code>serve()</code> view from <code>models.py</code>.</p>
 <p>When hovering over a function in the visualization,
-you see the function's file, directory, 
-and line number in additional context to the left. </p>
-<p>If that function is called multiple times, 
-other calls will also highlight in the visualization. 
+you see the function's file, directory,
+and line number in additional context to the left.</p>
+<p>If that function is called multiple times,
+other calls will also highlight in the visualization.
 This is a good way to identify duplication that one may wish to refactor.</p>
 <h2 id="basic-workflow">Basic workflow<a class="headerlink" href="#basic-workflow" title="Permanent link">¶</a></h2>
 <p>Install SnakeViz, if you haven't already:</p>

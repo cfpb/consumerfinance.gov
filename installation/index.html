@@ -168,16 +168,14 @@
 <h2 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">¶</a></h2>
 <p>This quickstart requires a working Docker Desktop installation and git:</p>
 <ul>
-<li>
-<p><a href="#clone-the-repository">Clone the repository</a>:</p>
+<li><a href="#clone-the-repository">Clone the repository</a>:</li>
+</ul>
 <pre class="highlight"><code class="language-sh">git clone https://github.com/cfpb/consumerfinance.gov.git
 cd consumerfinance.gov</code></pre>
-</li>
-<li>
-<p><a href="#set-up-and-run-the-docker-containers">Set up and run the Docker containers via docker-compose</a>:</p>
-<pre class="highlight"><code class="language-sh">docker-compose up</code></pre>
-</li>
+<ul>
+<li><a href="#set-up-and-run-the-docker-containers">Set up and run the Docker containers via docker-compose</a>:</li>
 </ul>
+<pre class="highlight"><code class="language-sh">docker-compose up</code></pre>
 <p>This may take some time, as it will also
 <a href="#load-initial-data">load initial data</a>
 and
@@ -213,14 +211,21 @@ copy <code>.env_SAMPLE</code> to <code>.env</code>:</p>
 outside of the Docker container, we rely on a local Python environment.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+</div>
 <p>Our local Python environment requires <a href="https://github.com/pyenv/pyenv">pyenv</a>
 with
 <a href="https://github.com/pyenv/pyenv-virtualenv">pyenv-virtualenv</a>.
 They can be installed from Homebrew on macOS:</p>
-<pre class="highlight"><code class="language-sh">brew install pyenv pyenv-virtualenv</code></pre>
-<p>Python 3.8 must then be installed once pyenv is installed:</p>
-<pre class="highlight"><code class="language-sh">pyenv install 3.8.12</code></pre>
-</div>
+<pre class="highlight"><code>```sh
+brew install pyenv pyenv-virtualenv
+```
+
+Python 3.8 must then be installed once pyenv is installed:
+
+```sh
+pyenv install 3.8.12
+```
+</code></pre>
 <p>First we need to create a Python virtualenv for consumerfinance.gov:</p>
 <pre class="highlight"><code class="language-sh">pyenv virtualenv 3.8.12 consumerfinance.gov</code></pre>
 <p>Then we'll need to activate it.
@@ -243,6 +248,7 @@ to assist developers with linting without thinking.</p>
 <h3 id="build-the-frontend">Build the frontend<a class="headerlink" href="#build-the-frontend" title="Permanent link">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+</div>
 <p>Our frontend requires <a href="https://nodejs.org/en/">Node.js 16</a>
 with
 <a href="https://yarnpkg.com/">Yarn</a>.
@@ -250,14 +256,28 @@ We prefer
 <a href="https://github.com/nvm-sh/nvm">nvm</a>
 for Node.js version management.
 nvm can be installed using:</p>
-<pre class="highlight"><code class="language-sh">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | sh</code></pre>
-<p>Node 16 must then be installed once nvm is installed:</p>
-<pre class="highlight"><code class="language-sh">nvm install 16</code></pre>
-<p>Node.js 16 can then be used in any sh using:</p>
-<pre class="highlight"><code class="language-sh">nvm use 16</code></pre>
-<p>Yarn must then be installed:</p>
-<pre class="highlight"><code class="language-sh">curl -o- -L https://yarnpkg.com/install.sh | sh</code></pre>
-</div>
+<pre class="highlight"><code>```sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | sh
+```
+
+Node 16 must then be installed once nvm is installed:
+
+```sh
+nvm install 16
+```
+
+Node.js 16 can then be used in any sh using:
+
+```sh
+nvm use 16
+```
+
+Yarn must then be installed:
+
+```sh
+curl -o- -L https://yarnpkg.com/install.sh | sh
+```
+</code></pre>
 <p>We have a single script that will install our frontend dependencies for both
 building and
 <a href="/javascript-unit-tests/">unit testing/linting/etc</a>:</p>
@@ -266,8 +286,8 @@ building and
 <pre class="highlight"><code class="language-sh">yarn build</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to <a href="https://love2dev.com/blog/how-to-uninstall-a-service-worker/">manage service workers in Firefox and Chrome</a>.</p>
 </div>
+<p>If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to <a href="https://love2dev.com/blog/how-to-uninstall-a-service-worker/">manage service workers in Firefox and Chrome</a>.</p>
 <h3 id="set-up-and-run-the-docker-containers">Set up and run the Docker containers<a class="headerlink" href="#set-up-and-run-the-docker-containers" title="Permanent link">¶</a></h3>
 <p>consumerfinance.gov depends on PostgreSQL database and Elasticsearch.
 You can use either
@@ -294,14 +314,14 @@ and then does the following:</p>
 <ul>
 <li>Creates an <code>admin</code> superuser with password <code>admin</code>.</li>
 <li>If it doesn't already exist, creates a new Wagtail home page named <code>CFGOV</code>,
-with a slug of <code>cfgov</code>.</li>
+  with a slug of <code>cfgov</code>.</li>
 <li>Updates the default Wagtail site to use the port defined by the
-<code>DJANGO_HTTP_PORT</code> environment variable, if defined; otherwise this port is
-set to 80.</li>
+  <code>DJANGO_HTTP_PORT</code> environment variable, if defined; otherwise this port is
+  set to 80.</li>
 <li>If it doesn't already exist, creates a new
-<a href="https://github.com/cfpb/wagtail-sharing">wagtail-sharing</a> <code>SharingSite</code> with
-a hostname and port defined by the <code>WAGTAIL_SHARING_HOSTNAME</code> and
-<code>DJANGO_HTTP_PORT</code> environment variables.</li>
+  <a href="https://github.com/cfpb/wagtail-sharing">wagtail-sharing</a> <code>SharingSite</code> with
+  a hostname and port defined by the <code>WAGTAIL_SHARING_HOSTNAME</code> and
+  <code>DJANGO_HTTP_PORT</code> environment variables.</li>
 </ul>
 <p>This script must be run inside the Docker <code>python</code> container:</p>
 <pre class="highlight"><code class="language-sh">docker-compose exec python sh

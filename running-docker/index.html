@@ -244,28 +244,28 @@ you can run <a href="https://docs.docker.com/engine/reference/commandline/attach
 <p>When you're done, you can detach with <code>Ctrl+P Ctrl+Q</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+</div>
 <p><code>docker attach</code> takes the specific container name or ID.
 Yours may or may not be <code>consumerfinancegov_python_1</code>.
 To verify, use <code>docker container ls</code>
 to get the Python container's full name or ID.</p>
-</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code>docker attach</code> will ONLY work with the dev image, not prod (apache).</p>
 </div>
+<p><code>docker attach</code> will ONLY work with the dev image, not prod (apache).</p>
 <h2 id="useful-docker-commands">Useful Docker commands<a class="headerlink" href="#useful-docker-commands" title="Permanent link">¶</a></h2>
 <p>For <code>docker-compose</code> commands,
 <code>[SERVICE]</code> is the service name that is defined in <code>docker-compose.yml</code>.</p>
 <p>For <code>docker</code> commands, <code>[CONTAINER]</code> is the container name displayed with <code>docker ps</code>.</p>
 <ul>
 <li><a href="https://docs.docker.com/engine/reference/commandline/ps/"><code>docker ps</code></a>
-    will list all containers.</li>
+  will list all containers.</li>
 <li><a href="https://docs.docker.com/engine/reference/commandline/logs/"><code>docker logs [CONTAINER]</code></a>
-    will print the logs of a container.</li>
+  will print the logs of a container.</li>
 <li><a href="https://docs.docker.com/engine/reference/commandline/top/"><code>docker top [CONTAINER]</code></a>
-    will display the running processes in a container.</li>
+  will display the running processes in a container.</li>
 <li><a href="https://docs.docker.com/compose/reference/build/"><code>docker-compose build [SERVICE]</code></a>
-    will build any of our configured containers.</li>
+  will build any of our configured containers.</li>
 </ul>
 <h2 id="production-like-docker-image">Production-like Docker Image<a class="headerlink" href="#production-like-docker-image" title="Permanent link">¶</a></h2>
 <p>This repository includes a "production-like" Docker image, created for
@@ -288,39 +288,37 @@ a nice way to test out new Apache config changes. It includes volumes that mount
 local checkout <code>cfgov/apache</code> config directories into the container, allowing you to
 change configs locally without having to rebuild the image each time.</p>
 <ol>
-<li>
-<p>Launch the stack.</p>
+<li>Launch the stack.</li>
+</ol>
 <pre class="highlight"><code class="language-bash">docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build</code></pre>
 <p>This creates a container running cf.gov on Python, as well as
-Postgres and Elasticsearch containers, much like the development environment.</p>
-</li>
-<li>
-<p>Load the <code>cfgov</code> database (optional).  If you do not already have a running
-    <code>cfgov</code> database, you will need to download and load it from within the container.</p>
+   Postgres and Elasticsearch containers, much like the development environment.</p>
+<ol>
+<li>Load the <code>cfgov</code> database (optional). If you do not already have a running
+   <code>cfgov</code> database, you will need to download and load it from within the container.</li>
+</ol>
 <pre class="highlight"><code class="language-bash">docker-compose exec python sh
 
 # Once in the container...
 export CFGOV_PROD_DB_LOCATION=&lt;database-dump-url&gt;
 ./refresh-data.sh</code></pre>
-</li>
-<li>
-<p>Browse to your new local cf.gov site.</p>
+<ol>
+<li>Browse to your new local cf.gov site.</li>
+</ol>
 <p><a href="http://localhost:8000">http://localhost:8000</a></p>
-</li>
-<li>
-<p>Adjust an Apache <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache"><code>cfgov/apache</code></a>
-   config and reload Apache (optional).</p>
+<ol>
+<li>Adjust an Apache <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache"><code>cfgov/apache</code></a>
+   config and reload Apache (optional).</li>
+</ol>
 <pre class="highlight"><code class="language-bash">docker-compose exec python sh
 
 # Once in the container...
 httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -k restart</code></pre>
-</li>
-<li>
-<p>Switch back to the development Compose setup.</p>
+<ol>
+<li>Switch back to the development Compose setup.</li>
+</ol>
 <pre class="highlight"><code class="language-bash">docker-compose rm -sf python
 docker-compose up --build python</code></pre>
-</li>
-</ol>
 <h4 id="jenkins-ci-docker-swarm">Jenkins CI + Docker Swarm<a class="headerlink" href="#jenkins-ci-docker-swarm" title="Permanent link">¶</a></h4>
 <p>This repo also includes a Docker Swarm-compatible Compose file
 (<code>docker-stack.yml</code>).
@@ -331,17 +329,19 @@ optionally deploying to our Docker Swarm cluster.</p>
 <h3 id="how-does-it-work">How does it work?<a class="headerlink" href="#how-does-it-work" title="Permanent link">¶</a></h3>
 <p>This project heavily utilizes
 "<a href="https://docs.docker.com/develop/develop-images/multistage-build/">multi-stage builds</a>".</p>
-<p>There are a few layers at work here, with the hierarchy represented by the list structure:
-* <code>base</code> - This is the bare minimum base Python layer for building up any further layers.
-  * <code>cfgov-python-builder</code> - Installs deployment Python dependencies to <code>/build</code> for use
-in <code>cfgov-dev</code> and <code>cfgov-prod</code>.
-    * <code>cfgov-dev</code> - Dev layer used for local development. Contains no code
-(requires code volume mount), and installs additional dependencies only needed for local development.
-    * <code>cfgov-frontend-builder</code> - Frontend builder layer, builds static files for Django
-  * <code>cfgov-mod-wsgi</code> - mod_wsgi compile layer for Apache2
-(helps to guarantee mod_wsgi compatability with Python, Alpine, and Apache)
-  * <code>cfgov-prod</code> - Final layer for Production. Installs and uses Apache2,
-swaps to <code>apache</code> user, copies in all files from previous layers to maintain a lightweight image.</p>
+<p>There are a few layers at work here, with the hierarchy represented by the list structure:</p>
+<ul>
+<li><code>base</code> - This is the bare minimum base Python layer for building up any further layers.</li>
+<li><code>cfgov-python-builder</code> - Installs deployment Python dependencies to <code>/build</code> for use
+    in <code>cfgov-dev</code> and <code>cfgov-prod</code>.
+    _ <code>cfgov-dev</code> - Dev layer used for local development. Contains no code
+    (requires code volume mount), and installs additional dependencies only needed for local development.
+    _ <code>cfgov-frontend-builder</code> - Frontend builder layer, builds static files for Django</li>
+<li><code>cfgov-mod-wsgi</code> - mod_wsgi compile layer for Apache2
+    (helps to guarantee mod_wsgi compatability with Python, Alpine, and Apache)</li>
+<li><code>cfgov-prod</code> - Final layer for Production. Installs and uses Apache2,
+    swaps to <code>apache</code> user, copies in all files from previous layers to maintain a lightweight image.</li>
+</ul>
 <p>The production image extends <strong>ONLY</strong> the base layer to maintain a lightweight final image.
 Everything from previous layers is copied in from those layers using <code>COPY --from=&lt;layer-name&gt;</code>.
 This dramatically improves the overall final image size.</p>

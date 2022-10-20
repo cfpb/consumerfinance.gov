@@ -178,29 +178,23 @@ If you’re not familiar with it,
 it would be a good idea to peruse their docs before diving in here.</p>
 <h2 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">¶</a></h2>
 <ol>
-<li><a href="#running-unit-tests">Running unit tests</a><ol>
+<li><a href="#running-unit-tests">Running unit tests</a></li>
 <li><a href="#running-a-single-test-file">Running a single test file</a></li>
 <li><a href="#run-a-directory-of-unit-tests">Run a directory of unit tests</a></li>
 <li><a href="#run-all-unit-tests">Run all unit tests</a></li>
-</ol>
-</li>
 <li><a href="#where-to-find-tests">Where to find tests</a></li>
 <li><a href="#test-driven-development">Test-driven development</a></li>
-<li><a href="#setting-up-tests">Setting up tests</a><ol>
+<li><a href="#setting-up-tests">Setting up tests</a></li>
 <li><a href="#new-test-file-from-sample">New test file from sample</a></li>
 <li><a href="#folder-structure-where-to-put-your-javascript-and-tests">Folder structure (where to put your JavaScript and tests)</a></li>
 <li><a href="#first-test-run">First test run</a></li>
 <li><a href="#file-structure-basic-layout-of-a-test-file">File structure (basic layout of a test file)</a></li>
 <li><a href="#providing-test-data">Providing test data</a></li>
-</ol>
-</li>
-<li><a href="#common-test-patterns">Common test patterns</a><ol>
+<li><a href="#common-test-patterns">Common test patterns</a></li>
 <li><a href="#testing-a-basic-function">Testing a basic function</a></li>
 <li><a href="#testing-dom-manipulation">Testing DOM manipulation</a></li>
 <li><a href="#testing-browser-state">Testing browser state</a></li>
 <li><a href="#testing-user-interaction">Testing user interaction</a></li>
-</ol>
-</li>
 </ol>
 <h2 id="running-unit-tests">Running unit tests<a class="headerlink" href="#running-unit-tests" title="Permanent link">¶</a></h2>
 <h3 id="run-a-single-test-file">Run a single test file<a class="headerlink" href="#run-a-single-test-file" title="Permanent link">¶</a></h3>
@@ -262,16 +256,14 @@ For links to existing tests,
 <p>Now, let’s begin! Let’s make a new unit test fail,
 then we will make it pass, following the principles of TDD.</p>
 <ol>
-<li>
-<p>Copy the sample test file to a new location by
-   running this command from the root of consumerfinance.gov:</p>
-<pre class="highlight"><code class="language-bash">cp docs/samples/sample-spec.js test/unit_tests/js/modules/</code></pre>
-</li>
-<li>
-<p>Copy the sample module file to a new location by running this command:</p>
-<pre class="highlight"><code class="language-bash">cp docs/samples/sample.js cfgov/unprocessed/js/modules/</code></pre>
-</li>
+<li>Copy the sample test file to a new location by
+   running this command from the root of consumerfinance.gov:</li>
 </ol>
+<pre class="highlight"><code class="language-bash">cp docs/samples/sample-spec.js test/unit_tests/js/modules/</code></pre>
+<ol>
+<li>Copy the sample module file to a new location by running this command:</li>
+</ol>
+<pre class="highlight"><code class="language-bash">cp docs/samples/sample.js cfgov/unprocessed/js/modules/</code></pre>
 <p>Test file names should always match what they are testing,
 with the addition of a <code>-spec</code> suffix.</p>
 <h3 id="folder-structure-where-to-put-your-javascript-and-tests">Folder structure (where to put your JavaScript and tests)<a class="headerlink" href="#folder-structure-where-to-put-your-javascript-and-tests" title="Permanent link">¶</a></h3>
@@ -291,12 +283,12 @@ so they can be placed into the uncategorized <code>modules</code> subfolders:
 <code>cfgov/unprocessed/js/modules</code> and <code>test/unit_tests/modules</code>, respectively.</p>
 <div class="admonition note">
 <p class="admonition-title">Child apps</p>
+</div>
 <p>If you’re working on something in a child app,
 put it in <code>test/unit_test/appname/js/</code>.
 Otherwise, if you’re working on something that
 belongs to consumerfinance.gov generally,
 it should go in the corresponding folder under <code>test/unit_test/js/</code>.</p>
-</div>
 <h3 id="first-test-run">First test run<a class="headerlink" href="#first-test-run" title="Permanent link">¶</a></h3>
 <p>Now that you have your sample JS and test files in the right places,
 let’s try running them and see what happens!
@@ -304,36 +296,34 @@ I’ll refer to <code>sample-spec.js</code> and <code>sample.js</code> in the in
 but you should work in your own new test file and JavaScript file
 to save and commit your changes.</p>
 <ol>
-<li>
-<p>Edit line 6 of your spec file and remove the call to the <code>.skip</code> method.
-   The line should now read:</p>
+<li>Edit line 6 of your spec file and remove the call to the <code>.skip</code> method.
+   The line should now read:</li>
+</ol>
 <pre class="highlight"><code class="language-js">it( 'should return a string with expected value', () =&gt; {
   …
 } );</code></pre>
-</li>
-<li>
-<p>Run your sample test using</p>
+<ol>
+<li>Run your sample test using</li>
+</ol>
 <pre class="highlight"><code class="language-bash">yarn jest sample-spec.js</code></pre>
 <p>(substituting your own filename).</p>
 <p>You should see output like this:</p>
 <p><img alt="Console output for failing unit test: &quot;sample should return a string with expected value&quot;" src="../img/js-unit-test-output-fail.png" /></p>
 <p>The test should fail – this is expected.
-Remember, when doing TDD, we want to write our test to fail first,
-then write the corresponding JavaScript that will make the test pass.</p>
-</li>
-<li>
-<p>Make the test pass by changing your script’s line 7
+   Remember, when doing TDD, we want to write our test to fail first,
+   then write the corresponding JavaScript that will make the test pass.</p>
+<ol>
+<li>Make the test pass by changing your script’s line 7
    (<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/sample.js">see <code>sample.js</code></a>)
-   to the following:</p>
+   to the following:</li>
+</ol>
 <pre class="highlight"><code class="language-js">return 'Shredder';</code></pre>
-</li>
-<li>
-<p>Run the test again to confirm the test now passes.
-   You should see output like this:</p>
+<ol>
+<li>Run the test again to confirm the test now passes.
+   You should see output like this:</li>
+</ol>
 <p><img alt="Console output for passing unit test: &quot;PASS test/unit_tests/js/modules/sample-spec.js&quot;" src="../img/js-unit-test-output-pass.png" /></p>
 <p>Doesn’t it feel good?</p>
-</li>
-</ol>
 <p><a href="#running-unit-tests">Refer back to the “Running unit tests” section</a>
 for additional commands to run tests.</p>
 <h3 id="file-structure-basic-layout-of-a-test-file">File structure (basic layout of a test file)<a class="headerlink" href="#file-structure-basic-layout-of-a-test-file" title="Permanent link">¶</a></h3>
@@ -391,30 +381,25 @@ children of the root <code>describe</code> block –
 that should correspond to a particular method in the module.
 For example, if we want to add more functionality to our sample JS,
 we could start by writing these tests in <code>sample-spec.js</code>:</p>
-<pre class="highlight"><code class="language-js">describe( 'sample', () =&gt; {
-
-  describe( 'gimmeString()', () =&gt; {
-
-    it( 'should return a string with expected value', () =&gt; {
+<pre class="highlight"><code class="language-js">describe('sample', () =&gt; {
+  describe('gimmeString()', () =&gt; {
+    it('should return a string with expected value', () =&gt; {
       const sampleString = 'Shredder';
-      expect( sample.gimmeString() ).toBe( sampleString );
-    } );
+      expect(sample.gimmeString()).toBe(sampleString);
+    });
+  });
 
-  } );
-
-  describe( 'gimmeObject()', () =&gt; {
-
-    it( 'should return an object with expected value', () =&gt; {
+  describe('gimmeObject()', () =&gt; {
+    it('should return an object with expected value', () =&gt; {
       const sampleObject = {
-        image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
-        caption: 'Krang portrait'
+        image:
+          'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
+        caption: 'Krang portrait',
       };
-      expect( sample.gimmeObject() ).toBe( sampleObject );
-    } );
-
-  } );
-
-} );</code></pre>
+      expect(sample.gimmeObject()).toBe(sampleObject);
+    });
+  });
+});</code></pre>
 <p>(We’ll talk more about writing the individual tests in the next section.)</p>
 <p>And then we would create the <code>gimmeString</code> and <code>gimmeObject</code> methods
 in our <code>sample.js</code> file.</p>
@@ -432,32 +417,27 @@ which is an alias of
 that confirm that the result of executing some code is what you expected.
 These are called <a href="https://jestjs.io/docs/en/using-matchers">“matchers”</a>
 in Jest parlance, and they all follow this format:</p>
-<pre class="highlight"><code class="language-js">expect( someValue ).someKindOfComparisonWith( someOtherValue );</code></pre>
+<pre class="highlight"><code class="language-js">expect(someValue).someKindOfComparisonWith(someOtherValue);</code></pre>
 <p>For example, let’s take another look at the sample tests we wrote above:</p>
-<pre class="highlight"><code class="language-js">describe( 'sample', () =&gt; {
-
-  describe( 'gimmeString()', () =&gt; {
-
-    it( 'should return a string with expected value', () =&gt; {
+<pre class="highlight"><code class="language-js">describe('sample', () =&gt; {
+  describe('gimmeString()', () =&gt; {
+    it('should return a string with expected value', () =&gt; {
       const sampleString = 'Shredder';
-      expect( sample.gimmeString() ).toBe( sampleString );
-    } );
+      expect(sample.gimmeString()).toBe(sampleString);
+    });
+  });
 
-  } );
-
-  describe( 'gimmeObject()', () =&gt; {
-
-    it( 'should return an object with expected value', () =&gt; {
+  describe('gimmeObject()', () =&gt; {
+    it('should return an object with expected value', () =&gt; {
       const sampleObject = {
-        image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
-        caption: 'Krang portrait'
+        image:
+          'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
+        caption: 'Krang portrait',
       };
-      expect( sample.gimmeObject() ).toBe( sampleObject );
-    } );
-
-  } );
-
-} );</code></pre>
+      expect(sample.gimmeObject()).toBe(sampleObject);
+    });
+  });
+});</code></pre>
 <p>In these tests, we check <em>(<code>expect</code>)</em> that
 the string returned by <code>sample.gimmeString()</code>
 and the object returned by <code>sample.gimmeObject()</code>
@@ -517,52 +497,45 @@ and use <code>expect</code> to check that you receive the desired result.</p>
 <p>Here is a simple example from our
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/util/array-helpers.js">array helpers module</a>
 (<code>cfgov/unprocessed/js/modules/util/array-helpers.js</code>):</p>
-<pre class="highlight"><code class="language-js">function indexOfObject( array, key, val ) {
+<pre class="highlight"><code class="language-js">function indexOfObject(array, key, val) {
   let match = -1;
 
-  if ( !array.length &gt; 0 ) {
+  if (!array.length &gt; 0) {
     return match;
   }
 
-  array.forEach( function( item, index ) {
-    if ( item[key] === val ) {
+  array.forEach(function (item, index) {
+    if (item[key] === val) {
       match = index;
     }
-  } );
+  });
 
   return match;
 }</code></pre>
 <p>Tests for that function, from
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/array-helpers-spec.js">test/unit_tests/js/modules/util/array-helpers-spec.js</a>:</p>
-<pre class="highlight"><code class="language-js">describe( 'indexOfObject()', () =&gt; {
-  it( 'should return -1 if the array is empty', () =&gt; {
+<pre class="highlight"><code class="language-js">describe('indexOfObject()', () =&gt; {
+  it('should return -1 if the array is empty', () =&gt; {
     array = [];
-    index = arrayHelpers.indexOfObject( array, 'foo' );
+    index = arrayHelpers.indexOfObject(array, 'foo');
 
-    expect( index ).toBe( -1 );
-  } );
+    expect(index).toBe(-1);
+  });
 
-  it( 'should return -1 if there is no match', () =&gt; {
-    array = [
-      { value: 'bar' },
-      { value: 'baz' }
-    ];
-    index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
+  it('should return -1 if there is no match', () =&gt; {
+    array = [{ value: 'bar' }, { value: 'baz' }];
+    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
 
-    expect( index ).toBe( -1 );
-  } );
+    expect(index).toBe(-1);
+  });
 
-  it( 'should return the matched index', () =&gt; {
-    array = [
-      { value: 'foo' },
-      { value: 'bar' },
-      { value: 'baz' }
-    ];
-    index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
+  it('should return the matched index', () =&gt; {
+    array = [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }];
+    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
 
-    expect( index ).toBe( 0 );
-  } );
-} );</code></pre>
+    expect(index).toBe(0);
+  });
+});</code></pre>
 <h3 id="testing-dom-manipulation">Testing DOM manipulation<a class="headerlink" href="#testing-dom-manipulation" title="Permanent link">¶</a></h3>
 <p><a href="https://jestjs.io/en/">Jest</a>, the JavaScript testing framework we use,
 <a href="https://jestjs.io/docs/en/configuration#testenvironment-string">includes jsdom</a>,
@@ -577,32 +550,29 @@ with different classes and SVG icon code to style it
 as a particular kind of notification (success, warning, etc.). In
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/molecules/Notification.js">the component JS</a>,
 we have this function that sets the type of a notification before displaying it:</p>
-<pre class="highlight"><code class="language-js">function _setType( type ) {
+<pre class="highlight"><code class="language-js">function _setType(type) {
   // If type hasn't changed, return.
-  if ( _currentType === type ) {
+  if (_currentType === type) {
     return this;
   }
 
   // Remove existing type class
   const classList = _dom.classList;
-  classList.remove(  `${ BASE_CLASS }__${ _currentType }` );
+  classList.remove(`${BASE_CLASS}__${_currentType}`);
 
-
-  if ( type === SUCCESS ||
-       type === WARNING ||
-       type === ERROR ) {
+  if (type === SUCCESS || type === WARNING || type === ERROR) {
     // Add new type class and update the value of _currentType
-    classList.add(  `${ BASE_CLASS }__${ type }` );
+    classList.add(`${BASE_CLASS}__${type}`);
     _currentType = type;
 
     // Replace &lt;svg&gt; element with contents of type_ICON
-    const currentIcon = _dom.querySelector( '.cf-icon-svg' );
-    const newIconSetup = document.createElement( 'div' );
+    const currentIcon = _dom.querySelector('.cf-icon-svg');
+    const newIconSetup = document.createElement('div');
     newIconSetup.innerHTML = ICON[type];
     const newIcon = newIconSetup.firstChild;
-    _dom.replaceChild( newIcon, currentIcon );
+    _dom.replaceChild(newIcon, currentIcon);
   } else {
-    throw new Error( `${ type } is not a supported notification type!` );
+    throw new Error(`${type} is not a supported notification type!`);
   }
   return this;
 }</code></pre>
@@ -648,6 +618,7 @@ and assigns the component node to the <code>notificationElem</code> variable, an
 (2) creates a new instance of the Notification class.</p>
 <div class="admonition note">
 <p class="admonition-title">A word about <code>HTML_SNIPPET</code>s</p>
+</div>
 <p>Right now it’s possible to update a component’s Jinja template,
 forget to update the corresponding JavaScript,
 and the unit tests would still pass,
@@ -660,7 +631,6 @@ the tests would have to reconcile
 into a complete, finished chunk of markup.
 For now, just be aware of this when
 <a href="../editing-components/">editing a Wagtail component that includes JavaScript</a>.</p>
-</div>
 <p>Further down, here are some of the tests that cover the <code>_setType</code> function
 (by way of the <code>setTypeAndContent</code> function that
 wraps both <code>_setType</code> and <code>_setContent</code>):</p>
@@ -710,7 +680,7 @@ if an event listener detects a click anywhere on
 one of these special table rows,
 it invokes <code>window.location</code> to send the browser
 to the <code>href</code> of the first link in that row:</p>
-<pre class="highlight"><code class="language-js">window.location.assign( target.querySelector( 'a' ).getAttribute( 'href' ) );</code></pre>
+<pre class="highlight"><code class="language-js">window.location.assign(target.querySelector('a').getAttribute('href'));</code></pre>
 <p>To test this, in the aforementioned <code>o-table-row-links-spec.js</code> file, we first
 <a href="https://jestjs.io/docs/en/mock-functions">set up a standard Jest mock</a>
 for <code>window.location.assign</code>, and then
@@ -731,22 +701,20 @@ we have three tests that simulate clicks
 and then assert things that the spy can answer for us:
 whether it was called with a particular location parameter,
 and that it was called a specific number of times (zero).</p>
-<pre class="highlight"><code class="language-js">it( 'should navigate to new location when link row cell clicked', () =&gt; {
-  simulateEvent( 'click', linkRowCellDom );
-  expect( locationSpy ).toBeCalledWith( 'https://www.example.com' );
-} );
+<pre class="highlight"><code class="language-js">it('should navigate to new location when link row cell clicked', () =&gt; {
+  simulateEvent('click', linkRowCellDom);
+  expect(locationSpy).toBeCalledWith('https://www.example.com');
+});
 
-it( 'should not set window location when link is clicked', () =&gt; {
-  simulateEvent( 'click', linkDom );
-  expect( locationSpy ).toHaveBeenCalledTimes( 0 );
-} );
+it('should not set window location when link is clicked', () =&gt; {
+  simulateEvent('click', linkDom);
+  expect(locationSpy).toHaveBeenCalledTimes(0);
+});
 
-it( 'should not navigate to new location when non link row cell clicked',
-  () =&gt; {
-    simulateEvent( 'click', nonLinkRowCellDom );
-    expect( locationSpy ).toHaveBeenCalledTimes( 0 );
-  }
-);</code></pre>
+it('should not navigate to new location when non link row cell clicked', () =&gt; {
+  simulateEvent('click', nonLinkRowCellDom);
+  expect(locationSpy).toHaveBeenCalledTimes(0);
+});</code></pre>
 <h3 id="testing-user-interaction">Testing user interaction<a class="headerlink" href="#testing-user-interaction" title="Permanent link">¶</a></h3>
 <p>Testing user interaction with simulated pointer events, keystrokes,
 or form submissions is best handled via browser tests, not unit tests.

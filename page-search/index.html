@@ -166,19 +166,15 @@
                 <h1 id="page-search">Page Search<a class="headerlink" href="#page-search" title="Permanent link">¶</a></h1>
 <p>For page searches on consumerfinance.gov, we use Elasticsearch and the <a href="https://django-opensearch-dsl.readthedocs.io/en/latest/">django-opensearch-dsl</a> library, which is a lightweight wrapper around <a href="https://opensearch.org/docs/latest/">opensearch-dsl-py</a>.</p>
 <ul>
-<li><a href="#indexing">Indexing</a><ul>
+<li><a href="#indexing">Indexing</a></li>
 <li><a href="#elasticsearch-index-configuration">Elasticsearch index configuration</a></li>
 <li><a href="#django-model-information">Django model information</a></li>
 <li><a href="#custom-fields">Custom fields</a></li>
 <li><a href="#helpers">Helpers</a></li>
 <li><a href="#building-the-index">Building the index</a></li>
-</ul>
-</li>
-<li><a href="#searching">Searching</a><ul>
+<li><a href="#searching">Searching</a></li>
 <li><a href="#autocomplete">Autocomplete</a></li>
 <li><a href="#suggestions">Suggestions</a></li>
-</ul>
-</li>
 <li><a href="#references">References</a></li>
 </ul>
 <h2 id="indexing">Indexing<a class="headerlink" href="#indexing" title="Permanent link">¶</a></h2>
@@ -224,10 +220,10 @@ class AnswerPageDocument(Document):
             'search_tags',
             'language',
         ]</code></pre>
-<p>The fields in <code>fields</code> will be indexed without any preparation/manipulation, directly as are stored on the model. </p>
+<p>The fields in <code>fields</code> will be indexed without any preparation/manipulation, directly as are stored on the model.</p>
 <h3 id="custom-fields">Custom fields<a class="headerlink" href="#custom-fields" title="Permanent link">¶</a></h3>
-<p>Sometimes it might be desirable to index a field as an alternative type — say, the string that matches an integer for a Django field that species <code>choices</code>. </p>
-<p>It might also be desirable to construct a field to index from multiple fields on the model, particularly for Wagtail pages with stream fields. </p>
+<p>Sometimes it might be desirable to index a field as an alternative type — say, the string that matches an integer for a Django field that species <code>choices</code>.</p>
+<p>It might also be desirable to construct a field to index from multiple fields on the model, particularly for Wagtail pages with stream fields.</p>
 <p>We may also want to specify Elasticsearch-specific <a href="https://django-opensearch-dsl.readthedocs.io/en/latest/fields/#field-classes">field properties</a>, like a custom analyzer.</p>
 <p>To do so, we specify <a href="https://django-opensearch-dsl.readthedocs.io/en/latest/fields/#using-attr-argument">custom fields</a> as attributes on the document class, with an <code>attr</code> argument that specifies the field on the model to reference.</p>
 <pre class="highlight"><code class="language-python">from django_opensearch_dsl import fields

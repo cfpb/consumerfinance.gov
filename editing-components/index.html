@@ -178,10 +178,10 @@ This page will use the terms somewhat interchangeably.
 One other important thing to note before we begin:
 blocks can be nested within other blocks.</p>
 <p><em>* If you're going to be doing anything more than making minor updates to
-   existing components, this is highly recommended reading.</em></p>
+existing components, this is highly recommended reading.</em></p>
 <h2 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">¶</a></h2>
 <ol>
-<li><a href="#the-parts-of-a-wagtail-block">The parts of a Wagtail block</a><ol>
+<li><a href="#the-parts-of-a-wagtail-block">The parts of a Wagtail block</a></li>
 <li><a href="#the-back-end">The back end</a><ol>
 <li><a href="#the-python-class">The Python class</a></li>
 <li><a href="#adding-it-to-a-streamfield">Adding it to a StreamField</a></li>
@@ -193,16 +193,12 @@ blocks can be nested within other blocks.</p>
 <li><a href="#adding-javascript">Adding JavaScript</a></li>
 </ol>
 </li>
-</ol>
-</li>
-<li><a href="#how-to-guides">How-to guides</a><ol>
+<li><a href="#how-to-guides">How-to guides</a></li>
 <li><a href="#creating-a-new-component">Creating a new component</a></li>
 <li><a href="#adding-a-field-to-an-existing-component">Adding a field to an existing component</a></li>
 <li><a href="#editing-a-field-on-an-existing-component">Editing a field on an existing component</a></li>
 <li><a href="#removing-a-field-from-an-existing-component">Removing a field from an existing component</a></li>
 <li><a href="#creating-migrations-for-streamfield-blocks">Creating migrations for StreamField blocks</a></li>
-</ol>
-</li>
 </ol>
 <h2 id="the-parts-of-a-wagtail-block">The parts of a Wagtail block<a class="headerlink" href="#the-parts-of-a-wagtail-block" title="Permanent link">¶</a></h2>
 <p>Blocks are implemented via several different bits of code:</p>
@@ -285,7 +281,7 @@ that comprise the sub-blocks that are our fields.</p>
 <li><a href="http://docs.wagtail.io/en/stable/topics/streamfield.html#streamfield-get-context">Overriding the default <code>get_context</code> method</a>
    to pass additional data to the template</li>
 <li><a href="#adding-javascript">Adding component-specific JavaScript</a>
-    via the <code>Media</code> class</li>
+   via the <code>Media</code> class</li>
 </ol>
 <h4 id="adding-it-to-a-streamfield">Adding it to a StreamField<a class="headerlink" href="#adding-it-to-a-streamfield" title="Permanent link">¶</a></h4>
 <p>Components are made available in the page editing interface
@@ -315,6 +311,7 @@ but in the footer on others) on the sidebar tab.</p>
 <hr />
 <div class="admonition note">
 <p class="admonition-title">Don't forget the migrations!</p>
+</div>
 <p>Adding or changing fields on either Python class will always require a new
 <a href="https://docs.djangoproject.com/en/1.11/topics/migrations/">Django schema migration</a>;
 additionally, changing field names or types
@@ -323,7 +320,6 @@ on an existing block will require a
 See the guide on
 <a href="#creating-migrations-for-streamfield-blocks">creating migrations for StreamField blocks</a>
 for more details.</p>
-</div>
 <h3 id="the-front-end">The front end<a class="headerlink" href="#the-front-end" title="Permanent link">¶</a></h3>
 <p>Before diving into the front-end code, a reminder to
 visit the <a href="../atomic-structure/">Notes on Atomic Design</a> page
@@ -358,25 +354,19 @@ for more details on the search algorithm used to locate a template.</p>
 <p>Returning to the <code>RelatedContent</code> example,
 this is what its Jinja2 template looks like (comments excluded):</p>
 <pre class="highlight"><code class="language-html">&lt;div class="m-related-content"&gt;
-    {% if value.heading %}
-        &lt;header class="m-slug-header"&gt;
-            &lt;h2 class="a-heading"&gt;
-                {{ value.heading }}
-            &lt;/h2&gt;
-        &lt;/header&gt;
-    {% endif %}
-
-    {{ value.paragraph | safe }}
-
-    {% if value.links %}
-        &lt;ul class="m-list m-list__links"&gt;
-        {% for link in value.links %}
-            &lt;li class="m-list_item"&gt;
-                &lt;a href="{{ link.url }}" class="m-list_link"&gt;{{ link.text }}&lt;/a&gt;
-            &lt;/li&gt;
-        {% endfor %}
-        &lt;/ul&gt;
-    {% endif %}
+  {% if value.heading %}
+  &lt;header class="m-slug-header"&gt;
+    &lt;h2 class="a-heading"&gt;{{ value.heading }}&lt;/h2&gt;
+  &lt;/header&gt;
+  {% endif %} {{ value.paragraph | safe }} {% if value.links %}
+  &lt;ul class="m-list m-list__links"&gt;
+    {% for link in value.links %}
+    &lt;li class="m-list_item"&gt;
+      &lt;a href="{{ link.url }}" class="m-list_link"&gt;{{ link.text }}&lt;/a&gt;
+    &lt;/li&gt;
+    {% endfor %}
+  &lt;/ul&gt;
+  {% endif %}
 &lt;/div&gt;</code></pre>
 <p>When Wagtail renders a block,
 it includes the values of its fields in an object named <code>value</code>.
@@ -398,6 +388,7 @@ you can add it by creating a new
 <a href="http://lesscss.org/">Less</a> file for the component.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+</div>
 <p>Please be sure that you actually need new Less before creating it.
 We have a wide array of styles already available in the
 <a href="https://cfpb.github.io/design-system/components/">Design System components</a> and
@@ -405,7 +396,6 @@ We have a wide array of styles already available in the
 some of which could perhaps be combined to achieve your desired result.
 Also be sure that new component designs have gone through
 our internal approval process before adding them to the project.</p>
-</div>
 <p>If you're working on a general-purpose <a href="../atomic-structure/">atomic component</a>
 for site-wide use, this file should live in
 <code>cfgov/unprocessed/css/&lt;atoms|molecules|organisms&gt;/</code>.
@@ -422,9 +412,9 @@ to tell the Python model anything about a component-specific stylesheet
 That is <em>not</em> the case with JavaScript, as we will see in the next section.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+</div>
 <p>If you're working on a component that belongs to a particular sub-app,
 its Less file should live in <code>cfgov/unprocessed/&lt;app-name&gt;/css/</code>.</p>
-</div>
 <h4 id="adding-javascript">Adding JavaScript<a class="headerlink" href="#adding-javascript" title="Permanent link">¶</a></h4>
 <p>Each atomic component may optionally be given a <code>Media</code> class that can
 list one or more JavaScript files that should be loaded when using it.
@@ -447,66 +437,58 @@ that includes the <code>RelatedContent</code> molecule in one of its StreamField
 <h3 id="creating-a-new-component">Creating a new component<a class="headerlink" href="#creating-a-new-component" title="Permanent link">¶</a></h3>
 <ol>
 <li>Review the <a href="../atomic-structure/">Notes on Atomic Design</a> page.</li>
-<li>Add each of the parts mentioned above:<ol>
+<li>Add each of the parts mentioned above:</li>
 <li><a href="#the-python-class">Create the Python class</a></li>
 <li><a href="#adding-it-to-a-streamfield">Add the class to a StreamField</a></li>
 <li><a href="#the-html-template">Create an HTML template for the component</a></li>
 <li><a href="#adding-css">(Optionally) add some CSS</a></li>
 <li><a href="#adding-javascript">(Optionally) add some JavaScript</a></li>
 </ol>
-</li>
-</ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+</div>
 <p>Before creating a new component,
 please consider whether one of our existing components can meet your needs.
 Talk to the consumerfinance.gov product owners if
 your content has specific display requirements that aren't served
 by an existing component, or if
 a specific maintenance efficiency will be gained from a new component.</p>
-</div>
 <h3 id="adding-a-field-to-an-existing-component">Adding a field to an existing component<a class="headerlink" href="#adding-a-field-to-an-existing-component" title="Permanent link">¶</a></h3>
 <ol>
 <li>Locate the Python class of the component you want to add a field to.</li>
 <li>Add the field by inserting a snippet like this in the list of fields,
    in the order in which you want it to appear in the editor:
-   <code>field_name = blocks.BlockName()</code>.<ul>
+   <code>field_name = blocks.BlockName()</code>.</li>
 <li>Replace <code>field_name</code> with a succinct name for what data the field contains</li>
 <li>Replace <code>BlockName</code> with one of the
-  <a href="https://docs.wagtail.io/en/stable/topics/streamfield.html#basic-block-types">basic Wagtail block types</a>.
-  Sometimes we create our own custom blocks that can be used, as well.
-  See, for example, the
-  <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/blocks.py#L147-L165"><code>HeadingBlock</code></a>,
-  <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/atomic_elements/organisms.py#L54">used in <code>InfoUnitGroup</code></a>,
-  among other places.</li>
-</ul>
-</li>
-<li>Add any desired parameters:<ul>
+     <a href="https://docs.wagtail.io/en/stable/topics/streamfield.html#basic-block-types">basic Wagtail block types</a>.
+     Sometimes we create our own custom blocks that can be used, as well.
+     See, for example, the
+     <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/blocks.py#L147-L165"><code>HeadingBlock</code></a>,
+     <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/atomic_elements/organisms.py#L54">used in <code>InfoUnitGroup</code></a>,
+     among other places.</li>
+<li>Add any desired parameters:</li>
 <li><code>required=False</code> if you do <em>not</em> want the field to be required
-  (it usually is, by default)</li>
+     (it usually is, by default)</li>
 <li><code>label='Some label'</code> if you would like the editor to show a label more
-  meaningful than the sentence-case transformation of the field name</li>
+     meaningful than the sentence-case transformation of the field name</li>
 <li><code>help_text='Some text'</code> if the field needs a more verbose explanation to
-  be shown in the editor to make it clear to users how it should work</li>
+     be shown in the editor to make it clear to users how it should work</li>
 <li><code>default=&lt;some appropriate value&gt;</code> if you want the field to have a
-  specific default value, e.g., <code>True</code> to have a <code>BooleanBlock</code> checkbox
-  default to checked.</li>
+     specific default value, e.g., <code>True</code> to have a <code>BooleanBlock</code> checkbox
+     default to checked.</li>
 <li>Certain blocks may take other arguments, as described in the
-  <a href="https://docs.wagtail.io/en/stable/topics/streamfield.html#basic-block-types">basic Wagtail blocks documentation</a>.</li>
-</ul>
-</li>
+     <a href="https://docs.wagtail.io/en/stable/topics/streamfield.html#basic-block-types">basic Wagtail blocks documentation</a>.</li>
 <li><a href="#the-html-template">Edit the component template</a> to do something with the
    field's data – output it, use it to trigger a CSS class, etc.</li>
 <li><a href="#creating-migrations-for-streamfield-blocks">Create a schema migration.</a></li>
 </ol>
 <h3 id="editing-a-field-on-an-existing-component">Editing a field on an existing component<a class="headerlink" href="#editing-a-field-on-an-existing-component" title="Permanent link">¶</a></h3>
 <ol>
-<li><a href="#you-may-also-need-a-data-migration">Determine if the change you want to make will need a data migration.</a><ul>
+<li><a href="#you-may-also-need-a-data-migration">Determine if the change you want to make will need a data migration.</a></li>
 <li>If the answer is <strong>no</strong>: make your changes,
-  <a href="#creating-migrations-for-streamfield-blocks">create a schema migration</a>, and be on your merry way.</li>
+     <a href="#creating-migrations-for-streamfield-blocks">create a schema migration</a>, and be on your merry way.</li>
 <li>If the answer is <strong>yes</strong>: continue on.</li>
-</ul>
-</li>
 <li><a href="#adding-a-field-to-an-existing-component">Add the new version of the field.</a></li>
 <li><a href="#creating-migrations-for-streamfield-blocks">Create a schema migration</a> for adding the new field.</li>
 <li><a href="#you-may-also-need-a-data-migration">Create a data migration</a>
@@ -561,11 +543,9 @@ for the presence of a component. Here's how:</p>
    <strong>Settings</strong> &gt; <strong>Block Inventory</strong>.)</li>
 <li>Using the three pairs of dropdown menus at the top of the page,
    choose to look for pages that either
-   <em>include</em> or <em>exclude</em> particular components.<ul>
+   <em>include</em> or <em>exclude</em> particular components.</li>
 <li>If multiple components are selected, resulting pages must
-  match <em>all</em> of the conditions.</li>
-</ul>
-</li>
+     match <em>all</em> of the conditions.</li>
 <li>Click <strong>Find matching pages</strong> to execute the search.</li>
 <li>If no results are found, lucky you!
    You're in the clear to make whatever changes you desire to that component

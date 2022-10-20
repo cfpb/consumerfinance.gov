@@ -162,24 +162,18 @@
                 <h1 id="filterable-lists">Filterable Lists<a class="headerlink" href="#filterable-lists" title="Permanent link">¶</a></h1>
 <p>In order to provide a broad, configurable search and filtering interface across areas of our site, we have implemented a custom StreamField block, <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/atomic_elements/organisms.py#L802">FilterableList</a>, that allows a user to specify what filters are available, how to order results, and which pages should be included in the search.</p>
 <ul>
-<li><a href="#how-it-works">How It Works</a><ul>
+<li><a href="#how-it-works">How It Works</a></li>
 <li><a href="#filterablelistmixin">FilterableListMixin</a></li>
 <li><a href="#categoryfilterablemixin">CategoryFilterableMixin</a></li>
-</ul>
-</li>
-<li><a href="#forms">Forms</a><ul>
+<li><a href="#forms">Forms</a></li>
 <li><a href="#filterablelistform">FilterableListForm</a></li>
 <li><a href="#enforcementactionsfilterform">EnforcementActionsFilterForm</a></li>
 <li><a href="#eventarchivefilterform">EventArchiveFilterForm</a></li>
-</ul>
-</li>
 <li><a href="#documents">Documents</a></li>
-<li><a href="#search">Search</a><ul>
+<li><a href="#search">Search</a></li>
 <li><a href="#filterablepagesdocumentsearch">FilterablePagesDocumentSearch</a></li>
 <li><a href="#eventfilterablepagesdocumentsearch">EventFilterablePagesDocumentSearch</a></li>
 <li><a href="#enforcementactionfilterablepagesdocumentsearch">EnforcementActionFilterablePagesDocumentSearch</a></li>
-</ul>
-</li>
 </ul>
 <h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">¶</a></h2>
 <p>The journey on how a page gets a filterable form is not necessarily a straight or simple path, but it is something that is important to know. To start, the page must support the <code>FilterableList</code> block within a StreamField as we mentioned earlier, but from there we start to see some divergence. In order to utilize the <code>FilterableList</code> the page must support one of the following two classes: <code>FilterableListMixin</code> or <code>CategoryFilterableMixin</code>.</p>
@@ -199,7 +193,7 @@
 <p>There is currently only one type of document defined, <code>FilterablePagesDocument</code>, which is based off the <code>AbstractFilterPage</code> class. This document is responsible for housing data related to any of the filterable page types that extend <code>AbstractFilterPage</code>, including <code>EnforcementActionPage</code>, <code>BlogPage</code>, <code>EventPage</code>, and <code>NewsroomPage</code>, to name a few. In order to get fields that are specific to a page type, such as the status list for an Enforcement Action, you use the <code>prepare_field</code> function syntax. The use of <code>get_instances_from_related</code> is to enforce the auto-updating of our index when changes occur to a specific page we have indexed, rather than just the relation to <code>AbstractFilterPage</code> that is reflected in the database.</p>
 <h3 id="search">Search<a class="headerlink" href="#search" title="Permanent link">¶</a></h3>
 <p>Search is the final piece of the puzzle, where we actually leverage Elasticsearch to filter and match documents and return them in an ordered <code>QuerySet</code>. Before breaking down the search classes, it's important to discuss the current implementation from an Elasticsearch perspective to understand how we're gathering results.</p>
-<p>The expanded search for filterable lists is using a <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html">multi-match query</a> across the title, topic name, preview description, and content fields of all <code>FilterablePagesDocument</code>s. We are leveraging a <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html#type-phrase">phrase_prefix</a> matching style with a currently configured slop of 2, to allow for some looser matching restrictions. We also provide a boost score for matching to the title and topic name fields, indicated by <code>^10</code> within the code base. This boost score is to enable better ordering by relevance when desired. Search currently supports two different methods of ordering results: relevance and date published. Relevance is calculated by the Elasticsearch engine when returning results, and the date published is calculated based on page publication date. Enforcement Actions define their own ordering logic based on initial filing date. </p>
+<p>The expanded search for filterable lists is using a <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html">multi-match query</a> across the title, topic name, preview description, and content fields of all <code>FilterablePagesDocument</code>s. We are leveraging a <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html#type-phrase">phrase_prefix</a> matching style with a currently configured slop of 2, to allow for some looser matching restrictions. We also provide a boost score for matching to the title and topic name fields, indicated by <code>^10</code> within the code base. This boost score is to enable better ordering by relevance when desired. Search currently supports two different methods of ordering results: relevance and date published. Relevance is calculated by the Elasticsearch engine when returning results, and the date published is calculated based on page publication date. Enforcement Actions define their own ordering logic based on initial filing date.</p>
 <h4 id="filterablepagesdocumentsearch">FilterablePagesDocumentSearch<a class="headerlink" href="#filterablepagesdocumentsearch" title="Permanent link">¶</a></h4>
 <p><code>FilterablePagesDocumentSearch</code> is the core search class that is used across the majority of our searching. It is invoked from <code>FilterableListForm</code>. This search class defines the common structure for our search function, as well as the base logic for filtering against all common fields and logic behind our multi-match and ordering steps. The core function called from outside the class is the <code>search</code> function, which properly chains all of our filter/match/sorting logic and returns the resulting list as a Django <code>QuerySet</code>.</p>
 <h4 id="eventfilterablepagesdocumentsearch">EventFilterablePagesDocumentSearch<a class="headerlink" href="#eventfilterablepagesdocumentsearch" title="Permanent link">¶</a></h4>

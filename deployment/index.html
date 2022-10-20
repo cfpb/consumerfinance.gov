@@ -203,7 +203,7 @@ If we ignore some specifics and quirks of our environment, the basic steps look 
    will unpack the files, create a new virtualenv, and install all of the wheels in <code>wheels/</code> into that
    virtualenv. <strong>Important Note:</strong> This should be done with the same Python interpreter that will run the
    application. For example, on our servers this means using <a href="https://linux.die.net/man/1/scl"><code>scl enable</code></a>
-   to specify a particular Python version from 
+   to specify a particular Python version from
    <a href="https://www.softwarecollections.org/en/scls/?search=python">Software Collections</a>.</li>
 <li>put an <code>environment.json</code> file in place, in your <code>destination-dir</code></li>
 <li>run Django utilities like 'collectstatic' and 'migrate'</li>

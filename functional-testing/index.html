@@ -187,22 +187,21 @@
 <p>When adding a test it is often helpful to separate the arrange/act code from the actual assertions in order to improve the readability of our testing code. To do this we have adopted the page model of testing, where we define a page within the application and the methods of interacting with the page separate from the test file itself where we define the assertions. We call these files "helpers" and label them as such (example: <code>megamenu-helpers.js</code>), and we include them alongside the test files themselves in the <code>test/cypress/integration/</code> directory. (They are ignored when running tests thanks to the configuration of <code>cypress.json</code>.)</p>
 <p>For example consider the <code>ConsumerTools</code> page "helper":</p>
 <pre class="highlight"><code class="language-javascript">export default class ConsumerTools {
+  constructor() {}
 
-    constructor() {}
+  open() {
+    cy.visit('/consumer-tools/');
+  }
 
-    open() {
-        cy.visit('/consumer-tools/');
-    }
-
-    signUp(email) {
-        cy.get('.o-form__email-signup').within(() =&gt; {
-            cy.get('input:first').type(email);
-            cy.get('button:first').click();
-        });
-    }
-    successNotification() {
-        return cy.get('.m-notification_message');
-    }
+  signUp(email) {
+    cy.get('.o-form__email-signup').within(() =&gt; {
+      cy.get('input:first').type(email);
+      cy.get('button:first').click();
+    });
+  }
+  successNotification() {
+    return cy.get('.m-notification_message');
+  }
 }</code></pre>
 <p>Notice how this class defines functions to retrieve and modify elements on the page but in a more human readable manner. This allows our test file for consumer tools to look like:</p>
 <pre class="highlight"><code class="language-javascript">import ConsumerTools from './consumer-tools-helpers';
@@ -210,15 +209,17 @@
 let page = new ConsumerTools();
 
 describe('Consumer Tools', () =&gt; {
-    it('Should have an email sign up', () =&gt; {
-        // Arrange
-        page.open();
-        // Act
-        page.signUp('testing@cfpb.gov');
-        // Assert
-        page.successNotification().should('exist');
-        page.successNotification().contains('Your submission was successfully received.')
-    });
+  it('Should have an email sign up', () =&gt; {
+    // Arrange
+    page.open();
+    // Act
+    page.signUp('testing@cfpb.gov');
+    // Assert
+    page.successNotification().should('exist');
+    page
+      .successNotification()
+      .contains('Your submission was successfully received.');
+  });
 });</code></pre>
 <p>Overall it lets our tests show what is intended to be happening on a page without showing the more technical side of how we reference and interact with elements.</p>
 <h3 id="skipping-tests">Skipping tests<a class="headerlink" href="#skipping-tests" title="Permanent link">¶</a></h3>
@@ -229,16 +230,20 @@ To run this file locally, run the following commands on a bash shell within
 the python container from the root folder:</p>
 <p><code>./cfgov/manage.py shell</code>
 <code>from v1.tests.wagtail_pages import create_test_data</code></p>
-<p>Currently supported page types:
-- blog_page
-- browse_filterable_page
-- browse_page
-- landing_page
-- learn_page
-- sublanding_filterable_page
-- sublanding_page</p>
-<p>To import "create a page" functions, import from:
-- v1.tests.wagtail_pages.helpers</p>
+<p>Currently supported page types:</p>
+<ul>
+<li>blog_page</li>
+<li>browse_filterable_page</li>
+<li>browse_page</li>
+<li>landing_page</li>
+<li>learn_page</li>
+<li>sublanding_filterable_page</li>
+<li>sublanding_page</li>
+</ul>
+<p>To import "create a page" functions, import from:</p>
+<ul>
+<li>v1.tests.wagtail_pages.helpers</li>
+</ul>
 <p>"Create a page" functions return a path to the created page or None if no page was created</p>
 <p>When adding tags or categories, they should be passed as a set:
 <code>MY_TAGS = {"a tag", "another tag"}</code></p>
