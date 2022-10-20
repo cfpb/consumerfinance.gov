@@ -58,9 +58,15 @@ const expensesView = {
       }
       if ( values.monthlyLeftover > 0 ) {
         expensesHigherThanSalary.hide();
-        Analytics.sendEvent( getDataLayerOptions( 'Total left at the end of the month',
-          'Zero left to pay' ) );
-      } else { expensesHigherThanSalary.show(); }
+        Analytics.sendEvent(
+          getDataLayerOptions(
+            'Total left at the end of the month',
+            'Zero left to pay'
+          )
+        );
+      } else {
+        expensesHigherThanSalary.show();
+      }
     } );
   },
 
@@ -109,20 +115,24 @@ const expensesView = {
    * Listener function for keyup in expenses INPUT fields
    */
   keyupListener: function() {
-    this.$reviewAndEvaluate.on( 'keyup focusout', '[data-expenses]', function() {
-      clearTimeout( expensesView.keyupDelay );
-      expensesView.currentInput = $( this ).attr( 'id' );
-      if ( $( this ).is( ':focus' ) ) {
-        expensesView.keyupDelay = setTimeout( function() {
+    this.$reviewAndEvaluate.on(
+      'keyup focusout',
+      '[data-expenses]',
+      function() {
+        clearTimeout( expensesView.keyupDelay );
+        expensesView.currentInput = $( this ).attr( 'id' );
+        if ( $( this ).is( ':focus' ) ) {
+          expensesView.keyupDelay = setTimeout( function() {
+            expensesView.inputHandler( expensesView.currentInput );
+            expensesView.updateView( getExpenses.values() );
+          }, 500 );
+        } else {
           expensesView.inputHandler( expensesView.currentInput );
+          expensesView.currentInput = 'none';
           expensesView.updateView( getExpenses.values() );
-        }, 500 );
-      } else {
-        expensesView.inputHandler( expensesView.currentInput );
-        expensesView.currentInput = 'none';
-        expensesView.updateView( getExpenses.values() );
+        }
       }
-    } );
+    );
   },
 
   /**

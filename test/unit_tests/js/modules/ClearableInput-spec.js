@@ -81,5 +81,4 @@ describe( 'ClearableInput', () => {
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( true );
     } );
   } );
-
 } );

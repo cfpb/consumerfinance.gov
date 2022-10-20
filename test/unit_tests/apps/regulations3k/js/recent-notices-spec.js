@@ -35,7 +35,6 @@ global.console = { error: jest.fn(), log: jest.fn() };
 let app;
 
 describe( 'The Regs3K search page', () => {
-
   beforeEach( () => {
     app = require( `${ BASE_JS_PATH }/js/recent-notices.js` );
 
@@ -57,8 +56,9 @@ describe( 'The Regs3K search page', () => {
     const processedNotice = app.processNotice( notice );
     expect( processedNotice.constructor.name ).toEqual( 'HTMLLIElement' );
     expect( processedNotice.className ).toEqual( 'm-list_link' );
-    expect( processedNotice.querySelector( 'a' ).href )
-      .toEqual( 'https://federalregister.gov/' );
+    expect( processedNotice.querySelector( 'a' ).href ).toEqual(
+      'https://federalregister.gov/'
+    );
   } );
 
   it( 'should process notices', () => {
@@ -76,8 +76,9 @@ describe( 'The Regs3K search page', () => {
     /* eslint-enable camelcase */
     const processedNotices = app.processNotices( notices );
     expect( processedNotices.querySelectorAll( 'li' ).length ).toEqual( 3 );
-    expect( processedNotices.querySelectorAll( 'a' )[2].textContent )
-      .toContain( 'More' );
+    expect( processedNotices.querySelectorAll( 'a' )[2].textContent ).toContain(
+      'More'
+    );
   } );
 
   it( 'should load recent notices', () => {
@@ -125,5 +126,4 @@ describe( 'The Regs3K search page', () => {
       done();
     }, 100 );
   } );
-
 } );

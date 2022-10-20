@@ -23,7 +23,9 @@ const styles = {
     },
     events: {
       render: function() {
-        const zoomText = this.container.querySelector( '.highcharts-range-selector-buttons > text' );
+        const zoomText = this.container.querySelector(
+          '.highcharts-range-selector-buttons > text'
+        );
         if ( zoomText && zoomText.textContent !== 'Select time range' ) zoomText.textContent = 'Select time range';
       }
     }

@@ -11,7 +11,6 @@ let testDom;
 let testDomList;
 
 describe( 'dom-tools', () => {
-
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     testDom = document.querySelector( '#test' );

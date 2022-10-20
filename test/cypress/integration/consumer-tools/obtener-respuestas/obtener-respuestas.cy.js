@@ -22,12 +22,18 @@ describe( 'Obtener Respuestas', () => {
       buscar.enter( 'vehíclo' );
       buscar.search();
       buscar.resultsHeader().should( 'contain', 'resultados para “vehículo”' );
-      buscar.resultsHeader().siblings( 'p' ).first().should( 'contain', 'Busca de vehíclo' );
+      buscar
+        .resultsHeader()
+        .siblings( 'p' )
+        .first()
+        .should( 'contain', 'Busca de vehíclo' );
     } );
 
     it( 'should limit queries to a maximum length', () => {
       buscar.enter( buscar.longTerm() );
-      buscar.input().should( 'contain.class', 'a-text-input__error' )
+      buscar
+        .input()
+        .should( 'contain.class', 'a-text-input__error' )
         .and( 'have.attr', 'maxlength' );
       buscar.maxLengthErrorMessage().should( 'be.visible' );
       buscar.submitButton().should( 'be.disabled' );

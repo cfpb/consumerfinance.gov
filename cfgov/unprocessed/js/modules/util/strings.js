@@ -4,8 +4,8 @@
  */
 function formatTimestamp( totalSeconds ) {
   let hours = Math.floor( totalSeconds / 3600 );
-  let minutes = Math.floor( ( totalSeconds - ( hours * 3600 ) ) / 60 );
-  let seconds = totalSeconds - ( hours * 3600 ) - ( minutes * 60 );
+  let minutes = Math.floor( ( totalSeconds - hours * 3600 ) / 60 );
+  let seconds = totalSeconds - hours * 3600 - minutes * 60;
 
   let timestamp = '';
   if ( hours < 10 ) {
@@ -47,8 +47,4 @@ function stringMatch( x, y ) {
   return RegExp( stringEscape( y.trim() ), 'i' ).test( x );
 }
 
-export {
-  formatTimestamp,
-  stringEscape,
-  stringMatch
-};
+export { formatTimestamp, stringEscape, stringMatch };

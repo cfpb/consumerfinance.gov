@@ -59,8 +59,9 @@ describe( 'explore-rates/RateCheckerChart', () => {
     it( 'should add loaded class', () => {
       chart.render();
       chart.startLoading();
-      const dataLoadedDom =
-        document.querySelector( '#chart-section .data-enabled' );
+      const dataLoadedDom = document.querySelector(
+        '#chart-section .data-enabled'
+      );
       expect( dataLoadedDom.classList.contains( 'loading' ) ).toBe( true );
       expect( dataLoadedDom.classList.contains( 'loaded' ) ).toBe( false );
     } );
@@ -70,8 +71,9 @@ describe( 'explore-rates/RateCheckerChart', () => {
     it( 'should add loaded class', () => {
       chart.render();
       chart.finishLoading();
-      const dataLoadedDom =
-        document.querySelector( '#chart-section .data-enabled' );
+      const dataLoadedDom = document.querySelector(
+        '#chart-section .data-enabled'
+      );
       expect( dataLoadedDom.classList.contains( 'loading' ) ).toBe( false );
       expect( dataLoadedDom.classList.contains( 'loaded' ) ).toBe( true );
     } );
@@ -83,7 +85,9 @@ describe( 'explore-rates/RateCheckerChart', () => {
       const chartDom = document.querySelector( '#chart' );
       const resultAlertDom = document.querySelector( '#chart-result-alert' );
       expect( chartDom.classList.contains( 'warning' ) ).toBe( true );
-      expect( resultAlertDom.classList.contains( 'm-notification__visible' ) ).toBe( true );
+      expect(
+        resultAlertDom.classList.contains( 'm-notification__visible' )
+      ).toBe( true );
     } );
 
     it( 'should throw error with incorrect status', () => {
@@ -93,5 +97,4 @@ describe( 'explore-rates/RateCheckerChart', () => {
       expect( incorrectStatus ).toThrow();
     } );
   } );
-
 } );

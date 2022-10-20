@@ -1,4 +1,7 @@
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import { toArray } from '../util';
 
 const CLASSES = {
@@ -23,7 +26,10 @@ const CLASSES = {
  * _print method as an argument.
  * @returns {Object} The view's public methods
  */
-function printButton( element, { btnClass = CLASSES.BUTTON, onBeforePrint, onClick } = {} ) {
+function printButton(
+  element,
+  { btnClass = CLASSES.BUTTON, onBeforePrint, onClick } = {}
+) {
   const _dom = checkDom( element, btnClass );
 
   /**
@@ -32,8 +38,7 @@ function printButton( element, { btnClass = CLASSES.BUTTON, onBeforePrint, onCli
   function _onAfterPrint() {
     toArray(
       document.querySelectorAll( `.${ CLASSES.NO_PRINT }.${ CLASSES.HIDE }` )
-    )
-      .forEach( el => el.classList.remove( `${ CLASSES.HIDE }` ) );
+    ).forEach( el => el.classList.remove( `${ CLASSES.HIDE }` ) );
 
     window.removeEventListener( 'focus', _onAfterPrint );
   }
@@ -48,10 +53,8 @@ function printButton( element, { btnClass = CLASSES.BUTTON, onBeforePrint, onCli
 
     /* I believe we need to query each time as elements may have been
        added to the DOM during the tool's lifecycle on the page */
-    toArray(
-      document.querySelectorAll( `.${ CLASSES.NO_PRINT }` )
-    )
-      .forEach( el => el.classList.add( `${ CLASSES.HIDE }` ) );
+    toArray( document.querySelectorAll( `.${ CLASSES.NO_PRINT }` ) ).forEach( el => el.classList.add( `${ CLASSES.HIDE }` )
+    );
 
     window.addEventListener( 'focus', _onAfterPrint );
 
@@ -78,4 +81,3 @@ function printButton( element, { btnClass = CLASSES.BUTTON, onBeforePrint, onCli
 printButton.CLASSES = CLASSES;
 
 export default printButton;
-

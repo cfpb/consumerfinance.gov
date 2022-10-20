@@ -30,17 +30,13 @@ apps.forEach( app => {
     const pkgJSON = JSON.parse( fs.readFileSync( pkgPath ) );
     if (
       ( pkgJSON.dependencies &&
-        Object.keys( pkgJSON.dependencies ).length !== 0
-      ) || (
-        pkgJSON.devDependencies &&
-        Object.keys( pkgJSON.devDependencies ).length !== 0
-      )
+        Object.keys( pkgJSON.dependencies ).length !== 0 ) ||
+      ( pkgJSON.devDependencies &&
+        Object.keys( pkgJSON.devDependencies ).length !== 0 )
     ) {
       try {
         // eslint-disable-next-line no-sync
-        const stdOut = execSync(
-          `yarn --cwd ${ appsPath } install`
-        );
+        const stdOut = execSync( `yarn --cwd ${ appsPath } install` );
         // eslint-disable-next-line no-console
         console.log( `${ appsPath }'s yarn output: ${ stdOut.toString() }` );
       } catch ( error ) {

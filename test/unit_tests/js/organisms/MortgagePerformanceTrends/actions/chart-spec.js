@@ -3,72 +3,74 @@
 import actions from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/chart.js';
 
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
-jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils', () => ( {
-  getMetroData: cb => {
-    const metros = {
-      AL: {
-        metros: [
-          {
-            valid: true,
-            fips: '12345',
-            name: 'Acme metro'
-          },
-          {
-            valid: true,
-            fips: '12-non',
-            name: 'Acme non-metro'
-          }
-        ]
-      }
-    };
-    cb( metros );
-  },
-  getNonMetroData: cb => {
-    const nonMetros = [
-      {
-        valid: true,
-        fips: '12345',
-        name: 'Acme metro',
-        abbr: 'AL'
-      }
-    ];
-    cb( nonMetros );
-  },
-  getCountyData: cb => {
-    const counties = {
-      AL: {
-        counties: [
-          {
-            valid: true,
-            fips: '12345',
-            name: 'Acme county'
-          }
-        ]
-      }
-    };
-    cb( counties );
-  },
-  getStateData: cb => {
-    const counties = {
-      10: {
-        AP: 'Del.',
-        fips: '10',
-        name: 'Delaware',
-        abbr: 'DE'
-      },
-      11: {
-        AP: 'D.C.',
-        fips: '11',
-        name: 'District of Columbia',
-        abbr: 'DC'
-      }
-    };
-    cb( counties );
-  }
-} ) );
+jest.mock(
+  '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils',
+  () => ( {
+    getMetroData: cb => {
+      const metros = {
+        AL: {
+          metros: [
+            {
+              valid: true,
+              fips: '12345',
+              name: 'Acme metro'
+            },
+            {
+              valid: true,
+              fips: '12-non',
+              name: 'Acme non-metro'
+            }
+          ]
+        }
+      };
+      cb( metros );
+    },
+    getNonMetroData: cb => {
+      const nonMetros = [
+        {
+          valid: true,
+          fips: '12345',
+          name: 'Acme metro',
+          abbr: 'AL'
+        }
+      ];
+      cb( nonMetros );
+    },
+    getCountyData: cb => {
+      const counties = {
+        AL: {
+          counties: [
+            {
+              valid: true,
+              fips: '12345',
+              name: 'Acme county'
+            }
+          ]
+        }
+      };
+      cb( counties );
+    },
+    getStateData: cb => {
+      const counties = {
+        10: {
+          AP: 'Del.',
+          fips: '10',
+          name: 'Delaware',
+          abbr: 'DE'
+        },
+        11: {
+          AP: 'D.C.',
+          fips: '11',
+          name: 'District of Columbia',
+          abbr: 'DC'
+        }
+      };
+      cb( counties );
+    }
+  } )
+);
 
 describe( 'Mortgage Performance chart action creators', () => {
-
   it( 'should dispatch actions to fetch metro states', () => {
     let dispatch = jest.fn();
     actions.fetchMetroStates( 'AL', true )( dispatch );
@@ -128,5 +130,4 @@ describe( 'Mortgage Performance chart action creators', () => {
   it( 'should fail on bad county state abbr', () => {
     expect( actions.fetchCounties( 'bloop', true ) ).toThrow();
   } );
-
 } );

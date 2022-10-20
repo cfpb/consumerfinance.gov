@@ -9,16 +9,16 @@ import count from './count';
  * @param {function} cb - Callback to call.
  */
 function callCensus( address, ruralCounties, cb ) {
-  let url = 'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?';
+  let url =
+    'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?';
   url += 'address=' + address;
   url += '&benchmark=4';
   url += '&format=jsonp';
 
-  jsonP( url ).promise
-    .then( function( data ) {
+  jsonP( url )
+    .promise.then( function( data ) {
       cb( data, ruralCounties );
-    }
-    )
+    } )
     .catch( function( error ) {
       if ( error ) {
         const addressElement = DT.createEl( '<li>' + address + '</li>' );

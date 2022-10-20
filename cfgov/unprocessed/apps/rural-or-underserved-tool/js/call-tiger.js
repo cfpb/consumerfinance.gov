@@ -10,19 +10,24 @@ const jsonP = require( 'jsonp-p' ).default;
 function callTiger( x, y, layer ) {
   // See versions at https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb
   const apiVersion = 'tigerWMS_ACS2019';
-  const url = 'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/' +
-              apiVersion + '/MapServer/' +
-              layer +
-              '/query' +
-              '?geometryType=esriGeometryPoint' +
-              '&geometry=' + x + ',' + y +
-              '&inSR=4326' +
-              '&spatialRel=esriSpatialRelIntersects' +
-              '&returnCountOnly=false' +
-              '&returnIdsOnly=false' +
-              '&returnGeometry=false' +
-              '&outFields=*' +
-              '&f=json';
+  const url =
+    'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/' +
+    apiVersion +
+    '/MapServer/' +
+    layer +
+    '/query' +
+    '?geometryType=esriGeometryPoint' +
+    '&geometry=' +
+    x +
+    ',' +
+    y +
+    '&inSR=4326' +
+    '&spatialRel=esriSpatialRelIntersects' +
+    '&returnCountOnly=false' +
+    '&returnIdsOnly=false' +
+    '&returnGeometry=false' +
+    '&outFields=*' +
+    '&f=json';
 
   return jsonP( url ).promise;
 }

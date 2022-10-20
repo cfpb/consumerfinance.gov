@@ -36,14 +36,13 @@ function getDivClassList( divDom ) {
 }
 
 describe( 'Dropdown utils', () => {
-
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     containerDom = document.querySelector( '.foo' );
     dropDownDom = containerDom.querySelector( '#foo' );
   } );
 
-  it( 'should complain if you don\'t specify a target', () => {
+  it( "should complain if you don't specify a target", () => {
     expect( dropDownUtils ).toThrow();
   } );
 
@@ -72,9 +71,7 @@ describe( 'Dropdown utils', () => {
   } );
 
   it( 'should select the option when values.select is true', () => {
-    dropDownUtils( 'foo' ).addOption(
-      { label: 'Foo', value: 'BAR', select: 1 }
-    );
+    dropDownUtils( 'foo' ).addOption( { label: 'Foo', value: 'BAR', select: 1 } );
     expect( dropDownDom.selectedIndex ).toBe( 1 );
   } );
 
@@ -93,8 +90,10 @@ describe( 'Dropdown utils', () => {
   } );
 
   it( 'should select several select elements', () => {
-    document.body.innerHTML += '<select id="foo1"><option value="baz1"></option></select>';
-    document.body.innerHTML += '<select id="foo2"><option value="baz1"></option></select>';
+    document.body.innerHTML +=
+      '<select id="foo1"><option value="baz1"></option></select>';
+    document.body.innerHTML +=
+      '<select id="foo2"><option value="baz1"></option></select>';
     dropDownUtils( [ 'foo', 'foo2' ] ).disable();
     expect( document.querySelectorAll( 'select :disabled' ).length ).toBe( 2 );
     dropDownUtils( [ 'foo', 'foo1', 'foo2' ] ).enable();
@@ -103,13 +102,10 @@ describe( 'Dropdown utils', () => {
   } );
 
   it( 'should let methods be chainable', () => {
-    dropDownUtils( 'foo' ).addOption(
-      { label: 'foo', value: 'bar' }
-    ).addOption(
-      { label: 'foo1', value: 'bar1' }
-    ).addOption(
-      { label: 'foo2', value: 'bar2' }
-    );
+    dropDownUtils( 'foo' )
+      .addOption( { label: 'foo', value: 'bar' } )
+      .addOption( { label: 'foo1', value: 'bar1' } )
+      .addOption( { label: 'foo2', value: 'bar2' } );
     expect( getOptions( dropDownDom ).length ).toBe( 4 );
   } );
 
@@ -164,12 +160,16 @@ describe( 'Dropdown utils', () => {
 
   it( 'should highlight the dropdown', () => {
     dropDownUtils( 'foo' ).showHighlight();
-    expect( getDivClassList( containerDom ).contains( 'highlight-dropdown' ) ).toBe( true );
+    expect( getDivClassList( containerDom ).contains( 'highlight-dropdown' ) ).toBe(
+      true
+    );
   } );
 
   it( 'should unhighlight the dropdown', () => {
     dropDownUtils( 'foo' ).showHighlight();
     dropDownUtils( 'foo' ).hideHighlight();
-    expect( getDivClassList( containerDom ).contains( 'highlight-dropdown' ) ).toBe( false );
+    expect( getDivClassList( containerDom ).contains( 'highlight-dropdown' ) ).toBe(
+      false
+    );
   } );
 } );

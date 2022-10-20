@@ -98,8 +98,7 @@ function richTextTable( Handsontable ) {
               'data-id': data.id,
               'type': 'DOCUMENT'
             },
-            style: {
-            }
+            style: {}
           };
         }
         return null;
@@ -119,9 +118,14 @@ function richTextTable( Handsontable ) {
   RichTextEditor.prototype.setValue = function( value ) {
     let contentState;
 
-    const blocksFromHTML = value ? window.DraftJS.convertFromHTML( value ) : null;
+    const blocksFromHTML = value ?
+      window.DraftJS.convertFromHTML( value ) :
+      null;
     if ( blocksFromHTML && blocksFromHTML.contentBlocks ) {
-      contentState = window.DraftJS.ContentState.createFromBlockArray( blocksFromHTML.contentBlocks, blocksFromHTML.entityMap );
+      contentState = window.DraftJS.ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap
+      );
     } else {
       contentState = window.DraftJS.ContentState.createFromText( '' );
     }
@@ -130,7 +134,8 @@ function richTextTable( Handsontable ) {
     if ( cellValue.entityMap ) {
       for ( const entity in cellValue.entityMap ) {
         if ( cellValue.entityMap[entity] && cellValue.entityMap[entity].data ) {
-          cellValue.entityMap[entity].data.url = cellValue.entityMap[entity].data.href;
+          cellValue.entityMap[entity].data.url =
+            cellValue.entityMap[entity].data.href;
           if ( cellValue.entityMap[entity].data.url.startsWith( '/documents/' ) ) {
             cellValue.entityMap[entity].type = 'DOCUMENT';
           }
@@ -156,7 +161,9 @@ function richTextTable( Handsontable ) {
     Handsontable.editors.TextEditor.prototype.open.call( this );
 
     // Style the Draftail editor with the TextEditor's TEXTAREA's style
-    const draftailWrapper = this.TEXTAREA_PARENT.querySelector( '.Draftail-Editor__wrapper' );
+    const draftailWrapper = this.TEXTAREA_PARENT.querySelector(
+      '.Draftail-Editor__wrapper'
+    );
     draftailWrapper.style.cssText = this.TEXTAREA.style.cssText;
     draftailWrapper.style.display = 'block';
 
@@ -184,7 +191,6 @@ function richTextTable( Handsontable ) {
   Handsontable.editors.registerEditor( 'RichTextEditor', RichTextEditor );
 }
 
-
 /* Based on Wagtail's initTable. We have to override Wagtail's to add more
    fields to the table block, and Wagtail's implementation does not provide
    hooks with which to do that.
@@ -196,7 +202,9 @@ function initAtomicTable( id, tableOptions ) {
 
   // Wagtail's built-in field elements
   const tableHeaderCheckbox = window.jQuery( '#' + id + '-handsontable-header' );
-  const colHeaderCheckbox = window.jQuery( '#' + id + '-handsontable-col-header' );
+  const colHeaderCheckbox = window.jQuery(
+    '#' + id + '-handsontable-col-header'
+  );
   const tableCaption = window.jQuery( '#' + id + '-handsontable-col-caption' );
 
   // Out custom field elements
@@ -204,7 +212,9 @@ function initAtomicTable( id, tableOptions ) {
   const headingLevel = window.jQuery( '#' + id + '-handsontable-heading-level' );
   const headingIcon = window.jQuery( '#' + id + '-handsontable-heading-icon' );
   const stripedRows = window.jQuery( '#' + id + '-handsontable-striped-rows' );
-  const stackOnMobile = window.jQuery( '#' + id + '-handsontable-stack-on-mobile' );
+  const stackOnMobile = window.jQuery(
+    '#' + id + '-handsontable-stack-on-mobile'
+  );
   const tableFullWidth = window.jQuery( '#' + id + '-handsontable-full-width' );
   const tableColFixed = window.jQuery( '#' + id + '-handsontable-col-fixed' );
   const tableIsSortable = window.jQuery( '#' + id + '-handsontable-sortable' );
@@ -256,7 +266,10 @@ function initAtomicTable( id, tableOptions ) {
   if ( dataForForm !== null ) {
     // Wagtail's built-in fields
     if ( dataForForm.hasOwnProperty( 'first_row_is_table_header' ) ) {
-      tableHeaderCheckbox.prop( 'checked', dataForForm.first_row_is_table_header );
+      tableHeaderCheckbox.prop(
+        'checked',
+        dataForForm.first_row_is_table_header
+      );
     }
     if ( dataForForm.hasOwnProperty( 'first_col_is_header' ) ) {
       colHeaderCheckbox.prop( 'checked', dataForForm.first_col_is_header );
@@ -330,30 +343,34 @@ function initAtomicTable( id, tableOptions ) {
      field's JSON. This function is then called by event handling functions
      defined below. */
   const persist = function() {
-    hiddenStreamInput.val( JSON.stringify( {
-      // Wagtail's built-in fields
-      data: hot.getData(),
-      cell: getCellsClassnames(),
-      first_row_is_table_header: tableHeaderCheckbox.prop( 'checked' ),
-      first_col_is_header: colHeaderCheckbox.prop( 'checked' ),
-      table_caption: tableCaption.val(),
+    hiddenStreamInput.val(
+      JSON.stringify( {
+        // Wagtail's built-in fields
+        data: hot.getData(),
+        cell: getCellsClassnames(),
+        first_row_is_table_header: tableHeaderCheckbox.prop( 'checked' ),
+        first_col_is_header: colHeaderCheckbox.prop( 'checked' ),
+        table_caption: tableCaption.val(),
 
-      // Custom fields
-      heading_text: headingText.val(),
-      heading_level: headingLevel.val(),
-      heading_icon: headingIcon.val(),
-      is_striped: stripedRows.prop( 'checked' ),
-      is_stacked: stackOnMobile.prop( 'checked' ),
-      is_full_width: tableFullWidth.prop( 'checked' ),
-      fixed_col_widths: tableColFixed.prop( 'checked' ),
-      is_sortable: tableIsSortable.prop( 'checked' ),
-      column_widths: getColAttributes( colWidthInput ),
-      sortable_types: getColAttributes( colSortTypeInput )
-
-    } ) );
+        // Custom fields
+        heading_text: headingText.val(),
+        heading_level: headingLevel.val(),
+        heading_icon: headingIcon.val(),
+        is_striped: stripedRows.prop( 'checked' ),
+        is_stacked: stackOnMobile.prop( 'checked' ),
+        is_full_width: tableFullWidth.prop( 'checked' ),
+        fixed_col_widths: tableColFixed.prop( 'checked' ),
+        is_sortable: tableIsSortable.prop( 'checked' ),
+        column_widths: getColAttributes( colWidthInput ),
+        sortable_types: getColAttributes( colSortTypeInput )
+      } )
+    );
   };
 
-  const toggleAttributeInputTable = function( attributeInputTable, isAttributeEnabled ) {
+  const toggleAttributeInputTable = function(
+    attributeInputTable,
+    isAttributeEnabled
+  ) {
     if ( isAttributeEnabled ) {
       attributeInputTable.show();
     } else {
@@ -367,26 +384,22 @@ function initAtomicTable( id, tableOptions ) {
     for ( let index = 0; index < colCount; index++ ) {
       const colWidthValue = columnWidths ? columnWidths[index] : '';
       const colSortType = colSortTypes ? colSortTypes[index] : '';
-      const colWidthSelectorClone =
-        colWidthSelector
-          .clone()
-          .on( 'change', () => { persist(); } );
-      const colSortSelectorClone =
-        colSortSelector
-          .clone()
-          .on( 'change', () => { persist(); } );
+      const colWidthSelectorClone = colWidthSelector
+        .clone()
+        .on( 'change', () => {
+          persist();
+        } );
+      const colSortSelectorClone = colSortSelector.clone().on( 'change', () => {
+        persist();
+      } );
       colWidthSelectorClone
         .find( 'select option[value="' + colWidthValue + '"]' )
         .prop( 'selected', true );
       colSortSelectorClone
         .find( 'select option[value="' + colSortType + '"]' )
         .prop( 'selected', true );
-      colWidthInput
-        .find( 'tr' )
-        .append( colWidthSelectorClone );
-      colSortTypeInput
-        .find( 'tr' )
-        .append( colSortSelectorClone );
+      colWidthInput.find( 'tr' ).append( colWidthSelectorClone );
+      colSortTypeInput.find( 'tr' ).append( colSortSelectorClone );
     }
   };
 
@@ -405,18 +418,40 @@ function initAtomicTable( id, tableOptions ) {
 
   /* Ensure each form field persists when changed.
      Wagtail's built-in fields */
-  tableHeaderCheckbox.on( 'change', () => { persist(); } );
-  colHeaderCheckbox.on( 'change', () => { persist(); } );
-  tableCaption.on( 'change', () => { persist(); } );
+  tableHeaderCheckbox.on( 'change', () => {
+    persist();
+  } );
+  colHeaderCheckbox.on( 'change', () => {
+    persist();
+  } );
+  tableCaption.on( 'change', () => {
+    persist();
+  } );
   // Custom fields
-  headingText.on( 'change', () => { persist(); } );
-  headingLevel.on( 'change', () => { persist(); } );
-  headingIcon.on( 'change', () => { persist(); } );
-  stripedRows.on( 'change', () => { persist(); } );
-  stackOnMobile.on( 'change', () => { persist(); } );
-  tableFullWidth.on( 'change', () => { persist(); } );
-  tableColFixed.on( 'change', () => { handleColumnAttributeChange( event ); } );
-  tableIsSortable.on( 'change', () => { handleColumnAttributeChange( event ); } );
+  headingText.on( 'change', () => {
+    persist();
+  } );
+  headingLevel.on( 'change', () => {
+    persist();
+  } );
+  headingIcon.on( 'change', () => {
+    persist();
+  } );
+  stripedRows.on( 'change', () => {
+    persist();
+  } );
+  stackOnMobile.on( 'change', () => {
+    persist();
+  } );
+  tableFullWidth.on( 'change', () => {
+    persist();
+  } );
+  tableColFixed.on( 'change', () => {
+    handleColumnAttributeChange( event );
+  } );
+  tableIsSortable.on( 'change', () => {
+    handleColumnAttributeChange( event );
+  } );
   // Change handlers for column widths and sort types are in populateColumnAttributeInputs
 
   /* The rest of this function is duplicated from Wagtail's initTable
@@ -426,11 +461,17 @@ function initAtomicTable( id, tableOptions ) {
      available in the inner scope of the initTable function, so we have to
      redefine it here. */
   const getWidth = function() {
-    return window.jQuery( '.widget-table_input' ).closest( '.sequence-member-inner' ).width();
+    return window
+      .jQuery( '.widget-table_input' )
+      .closest( '.sequence-member-inner' )
+      .width();
   };
   const getHeight = function() {
     const tableParent = window.jQuery( '#' + id ).parent();
-    return tableParent.find( '.htCore' ).height() + ( tableParent.find( '.input' ).height() * 2 );
+    return (
+      tableParent.find( '.htCore' ).height() +
+      tableParent.find( '.input' ).height() * 2
+    );
   };
   const resizeTargets = [ '.input > .handsontable', '.wtHider', '.wtHolder' ];
   const resizeHeight = function( height ) {
@@ -468,15 +509,15 @@ function initAtomicTable( id, tableOptions ) {
     // A newly inserted first column will have an index of 0
     const newColIndex = index - 1 < 0 ? 0 : index - 1;
     const colWidthInputCell = colWidthInput.find( 'td:eq(' + newColIndex + ')' );
-    const colSortTypeCell = colSortTypeInput.find( 'td:eq(' + newColIndex + ')' );
-    const colWidthSelectorClone =
-      colWidthSelector
-        .clone()
-        .on( 'change', () => { persist(); } );
-    const colSortSelectorClone =
-      colSortSelector
-        .clone()
-        .on( 'change', () => { persist(); } );
+    const colSortTypeCell = colSortTypeInput.find(
+      'td:eq(' + newColIndex + ')'
+    );
+    const colWidthSelectorClone = colWidthSelector.clone().on( 'change', () => {
+      persist();
+    } );
+    const colSortSelectorClone = colSortSelector.clone().on( 'change', () => {
+      persist();
+    } );
     if ( newColIndex === 0 ) {
       colWidthInputCell.before( colWidthSelectorClone );
       colSortTypeCell.before( colSortSelectorClone );
@@ -532,7 +573,6 @@ function initAtomicTable( id, tableOptions ) {
     toggleAttributeInputTable( colSortTypeInput, true );
   }
 
-
   if ( 'resize' in window.jQuery( window ) ) {
     resizeHeight( getHeight() );
     window.jQuery( window ).on( 'load', () => {
@@ -541,7 +581,6 @@ function initAtomicTable( id, tableOptions ) {
   }
 }
 window.initAtomicTable = initAtomicTable;
-
 
 /* AtomicTableBlock's Telepath widget.
    This handles the rendering of the entire table block form in the Wagtail
@@ -699,7 +738,12 @@ class RichTextTableInput {
   }
 }
 
-if ( window.telepath ) window.telepath.register( 'v1.widgets.RichTextTableInput', RichTextTableInput );
+if ( window.telepath ) {
+  window.telepath.register(
+    'v1.widgets.RichTextTableInput',
+    RichTextTableInput
+  );
+}
 
 if ( window.Handsontable ) richTextTable( window.Handsontable );
 

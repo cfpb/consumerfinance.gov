@@ -57,23 +57,29 @@ describe( 'explore-rates/Slider', () => {
   } );
 
   describe( 'valMax()', () => {
-    it( 'should return 19 units above the minimum ' +
-        'value of the range slider label', () => {
-      expect( slider.valMax() ).toBe( 79 );
-    } );
+    it(
+      'should return 19 units above the minimum ' +
+        'value of the range slider label',
+      () => {
+        expect( slider.valMax() ).toBe( 79 );
+      }
+    );
 
-    it( 'should return the maximum value when minimum ' +
-        'value of the range slider is less than 20 units from maximum', () => {
-      document.body.innerHTML = HTML_SNIPPET;
-      sliderDom = document.querySelector( '.a-range' );
-      slider = new Slider( sliderDom );
-      slider.init( {
-        min: 0,
-        max: 100,
-        value: 90
-      } );
-      expect( slider.valMax() ).toBe( 100 );
-    } );
+    it(
+      'should return the maximum value when minimum ' +
+        'value of the range slider is less than 20 units from maximum',
+      () => {
+        document.body.innerHTML = HTML_SNIPPET;
+        sliderDom = document.querySelector( '.a-range' );
+        slider = new Slider( sliderDom );
+        slider.init( {
+          min: 0,
+          max: 100,
+          value: 90
+        } );
+        expect( slider.valMax() ).toBe( 100 );
+      }
+    );
   } );
 
   describe( 'currentState()', () => {
@@ -98,8 +104,9 @@ describe( 'explore-rates/Slider', () => {
       function incorrectState() {
         slider.setState();
       }
-      expect( incorrectState )
-        .toThrowError( 'State set in range slider is not supported!' );
+      expect( incorrectState ).toThrowError(
+        'State set in range slider is not supported!'
+      );
     } );
   } );
 } );

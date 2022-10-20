@@ -3,7 +3,6 @@ import { PrepaidAgreementsSearch } from './prepaid-agreements-search-helpers.cy.
 const prepaidAgreementsSearch = new PrepaidAgreementsSearch();
 
 describe( 'Prepaid Agreements', () => {
-
   it( 'should search based on term', () => {
     prepaidAgreementsSearch.open();
     prepaidAgreementsSearch.searchByTerm( 'metro' );
@@ -39,5 +38,4 @@ describe( 'Prepaid Agreements', () => {
     prepaidAgreementsSearch.applyFilters();
     prepaidAgreementsSearch.filters().should( 'contain', 'Active' );
   } );
-
 } );

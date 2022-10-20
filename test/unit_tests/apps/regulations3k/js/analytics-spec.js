@@ -2,7 +2,6 @@ import * as analytics from '../../../../../cfgov/unprocessed/apps/regulations3k/
 
 /* eslint-disable max-lines-per-function, no-undefined */
 describe( 'The Regs3K analytics', () => {
-
   it( 'should send events', () => {
     const mockEvent = analytics.sendEvent( 'click', 'sidebar' );
 
@@ -62,9 +61,11 @@ describe( 'The Regs3K analytics', () => {
   } );
 
   it( 'should handle navigation clicks on regs links', () => {
-    let event = { target: {
-      href: '/policy-compliance/rulemaking/regulations/1002/11/'
-    }};
+    let event = {
+      target: {
+        href: '/policy-compliance/rulemaking/regulations/1002/11/'
+      }
+    };
     event = analytics.handleNavClick( event );
 
     expect( event ).toEqual( {
@@ -77,9 +78,11 @@ describe( 'The Regs3K analytics', () => {
   } );
 
   it( 'should handle navigation clicks on interp links', () => {
-    let mockEvent = { target: {
-      href: '/policy-compliance/rulemaking/regulations/1002/Interp-2/'
-    }};
+    let mockEvent = {
+      target: {
+        href: '/policy-compliance/rulemaking/regulations/1002/Interp-2/'
+      }
+    };
     mockEvent = analytics.handleNavClick( mockEvent );
 
     expect( mockEvent ).toEqual( {
@@ -92,9 +95,11 @@ describe( 'The Regs3K analytics', () => {
   } );
 
   it( 'should handle navigation clicks on non-regs links', () => {
-    let mockEvent = { target: {
-      href: 'https://example.com'
-    }};
+    let mockEvent = {
+      target: {
+        href: 'https://example.com'
+      }
+    };
     mockEvent = analytics.handleNavClick( mockEvent );
 
     expect( mockEvent ).toBeUndefined();
@@ -146,5 +151,4 @@ describe( 'The Regs3K analytics', () => {
 
     expect( mockEvent ).toBeUndefined();
   } );
-
 } );

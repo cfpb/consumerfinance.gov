@@ -20,14 +20,12 @@
    <div data-js-hook="behavior_flyout-menu_content">
    ========================================================================== */
 
-
 // Required modules.
 import * as dataHook from '@cfpb/cfpb-atomic-component/src/utilities/data-hook.js';
 import {
   BEHAVIOR_PREFIX,
   JS_HOOK
 } from '@cfpb/cfpb-atomic-component/src/utilities/standard-type';
-
 
 /**
  * @param {string} behaviorSelector
@@ -47,14 +45,15 @@ function _findElements( behaviorSelector, baseElement ) {
     throw new Error( msg );
   }
 
-  if ( behaviorElements.length === 0 &&
-       behaviorSelector.indexOf( BEHAVIOR_PREFIX ) === -1 ) {
+  if (
+    behaviorElements.length === 0 &&
+    behaviorSelector.indexOf( BEHAVIOR_PREFIX ) === -1
+  ) {
     behaviorElements = find( behaviorSelector, baseElement );
   }
 
   return behaviorElements;
 }
-
 
 /**
  * @param {( string|HTMLNode|HTMLNodeList )} behaviorElement
@@ -139,9 +138,4 @@ function remove( behaviorElement, event, eventHandler ) {
 }
 
 // Expose public methods.
-export {
-  attach,
-  checkBehaviorDom,
-  find,
-  remove
-};
+export { attach, checkBehaviorDom, find, remove };

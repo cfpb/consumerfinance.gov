@@ -8,7 +8,7 @@ describe( 'Your Financial Path to Graduation (program-level functionality)', () 
   } );
 
   it( 'should enforce Direct federal loan limits based on the constants API values', () => {
-    page.clickGetStarted( );
+    page.clickGetStarted();
     page.enter( 'Harvard University' );
     page.searchResults().should( 'be.visible' );
     page.clickSearchResult( 'Harvard University' );
@@ -52,16 +52,24 @@ describe( 'Your Financial Path to Graduation (program-level functionality)', () 
     cy.get( '[data-nav_section="worth-investment"]' ).click();
     page.clickLeftNav( 'action-plan' );
     page.actionPlan( 'put-into-action' );
-    cy.get( '[data-state-based-visibility="put-into-action"] .associates-content' ).should( 'be.visible' );
-    cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'not.be.visible' );
+    cy.get(
+      '[data-state-based-visibility="put-into-action"] .associates-content'
+    ).should( 'be.visible' );
+    cy.get(
+      '[data-state-based-visibility="put-into-action"] .graduate-content'
+    ).should( 'not.be.visible' );
   } );
 
   it( 'should display undergrad content for undergrad students', () => {
     cy.get( '[data-nav_section="worth-investment"]' ).click();
     page.clickLeftNav( 'action-plan' );
     page.actionPlan( 'put-into-action' );
-    cy.get( '[data-state-based-visibility="put-into-action"] .undergrad-content' ).should( 'be.visible' );
-    cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'not.be.visible' );
+    cy.get(
+      '[data-state-based-visibility="put-into-action"] .undergrad-content'
+    ).should( 'be.visible' );
+    cy.get(
+      '[data-state-based-visibility="put-into-action"] .graduate-content'
+    ).should( 'not.be.visible' );
 
     cy.get( '[data-nav_section="offer-letter"]' ).click();
     page.clickLeftNav( 'school-info' );
@@ -69,8 +77,12 @@ describe( 'Your Financial Path to Graduation (program-level functionality)', () 
     cy.get( '[data-nav_section="worth-investment"]' ).click();
     page.clickLeftNav( 'action-plan' );
     page.actionPlan( 'put-into-action' );
-    cy.get( '[data-state-based-visibility="put-into-action"] .undergrad-content' ).should( 'be.visible' );
-    cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'not.be.visible' );
+    cy.get(
+      '[data-state-based-visibility="put-into-action"] .undergrad-content'
+    ).should( 'be.visible' );
+    cy.get(
+      '[data-state-based-visibility="put-into-action"] .graduate-content'
+    ).should( 'not.be.visible' );
 
     cy.get( '[data-nav_section="offer-letter"]' ).click();
     page.clickLeftNav( 'school-info' );
@@ -78,8 +90,12 @@ describe( 'Your Financial Path to Graduation (program-level functionality)', () 
     cy.get( '[data-nav_section="worth-investment"]' ).click();
     page.clickLeftNav( 'action-plan' );
     page.actionPlan( 'put-into-action' );
-    cy.get( '[data-state-based-visibility="put-into-action"] .undergrad-content' ).should( 'be.visible' );
-    cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'not.be.visible' );
+    cy.get(
+      '[data-state-based-visibility="put-into-action"] .undergrad-content'
+    ).should( 'be.visible' );
+    cy.get(
+      '[data-state-based-visibility="put-into-action"] .graduate-content'
+    ).should( 'not.be.visible' );
   } );
 
   it( 'should display graduate content for graduate students', () => {
@@ -89,7 +105,11 @@ describe( 'Your Financial Path to Graduation (program-level functionality)', () 
     cy.get( '[data-nav_section="worth-investment"]' ).click();
     page.clickLeftNav( 'action-plan' );
     page.actionPlan( 'put-into-action' );
-    cy.get( '[data-state-based-visibility="put-into-action"] .graduate-content' ).should( 'be.visible' );
-    cy.get( '[data-state-based-visibility="put-into-action"] .undergrad-content' ).should( 'not.be.visible' );
+    cy.get(
+      '[data-state-based-visibility="put-into-action"] .graduate-content'
+    ).should( 'be.visible' );
+    cy.get(
+      '[data-state-based-visibility="put-into-action"] .undergrad-content'
+    ).should( 'not.be.visible' );
   } );
 } );

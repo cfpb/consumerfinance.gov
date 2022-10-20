@@ -1,5 +1,4 @@
 export class MegaMenu {
-
   megaMenu( name ) {
     return cy.get( `.o-mega-menu_${ name }` );
   }
@@ -33,7 +32,9 @@ export class MegaMenu {
   }
 
   clickLink( value ) {
-    return this.megaMenuContent( `${ value }-link` ).first().click( { force: true } );
+    return this.megaMenuContent( `${ value }-link` )
+      .first()
+      .click( { force: true } );
   }
 
   clickTriggerBtn() {
@@ -109,7 +110,9 @@ export class MegaMenu {
   }
 
   clickLanguage( name ) {
-    return this.globalEyebrowLanguages.type( `/language/${ name }/` ).click( { force: true } );
+    return this.globalEyebrowLanguages
+      .type( `/language/${ name }/` )
+      .click( { force: true } );
   }
 
   tabbing() {

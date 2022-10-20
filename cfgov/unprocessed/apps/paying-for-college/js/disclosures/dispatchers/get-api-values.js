@@ -4,13 +4,12 @@ const $ = require( 'jquery' );
 const financialView = require( '../views/financial-view' );
 
 const getApiValues = {
-
   values: {},
 
   constants: function() {
     const urlBase = $( 'main' ).attr( 'data-context' );
-    const url = '/' + urlBase +
-              '/understanding-your-financial-aid-offer/api/constants/';
+    const url =
+      '/' + urlBase + '/understanding-your-financial-aid-offer/api/constants/';
     const constantsRequest = $.ajax( {
       url: url,
       dataType: 'json',
@@ -27,8 +26,8 @@ const getApiValues = {
 
   expenses: function() {
     const urlBase = $( 'main' ).attr( 'data-context' );
-    const url = '/' + urlBase +
-              '/understanding-your-financial-aid-offer/api/expenses/';
+    const url =
+      '/' + urlBase + '/understanding-your-financial-aid-offer/api/expenses/';
     const expensesRequest = $.ajax( {
       url: url,
       dataType: 'json',
@@ -45,9 +44,12 @@ const getApiValues = {
 
   fetchSchoolData: function( iped ) {
     const urlBase = $( 'main' ).attr( 'data-context' );
-    const url = '/' + urlBase +
-              '/understanding-your-financial-aid-offer/api/school/' +
-              iped + '/';
+    const url =
+      '/' +
+      urlBase +
+      '/understanding-your-financial-aid-offer/api/school/' +
+      iped +
+      '/';
     const schoolDataRequest = $.ajax( {
       url: url,
       dataType: 'json',
@@ -64,16 +66,24 @@ const getApiValues = {
 
   fetchProgramData: function( iped, pid ) {
     if ( !pid ) {
-      return [ {
-        pidNotFound: 'An invalid program ID was passed to the ' +
-        'fetchProgramData request.'
-      } ];
+      return [
+        {
+          pidNotFound:
+            'An invalid program ID was passed to the ' +
+            'fetchProgramData request.'
+        }
+      ];
     }
 
     const urlBase = $( 'main' ).attr( 'data-context' );
-    const url = '/' + urlBase +
-              '/understanding-your-financial-aid-offer/api/program/' +
-              iped + '_' + pid + '/';
+    const url =
+      '/' +
+      urlBase +
+      '/understanding-your-financial-aid-offer/api/program/' +
+      iped +
+      '_' +
+      pid +
+      '/';
     const programDataRequest = $.ajax( {
       url: url,
       dataType: 'json',
@@ -90,9 +100,11 @@ const getApiValues = {
 
   fetchNationalData: function( iped, pid ) {
     const urlBase = $( 'main' ).attr( 'data-context' );
-    let url = '/' + urlBase +
-              '/understanding-your-financial-aid-offer/api/national-stats/' +
-              iped;
+    let url =
+      '/' +
+      urlBase +
+      '/understanding-your-financial-aid-offer/api/national-stats/' +
+      iped;
 
     if ( typeof pid === 'undefined' ) {
       url += '/';
@@ -132,7 +144,6 @@ const getApiValues = {
     }
     return $.when( this.constants(), this.expenses() );
   }
-
 };
 
 module.exports = getApiValues;

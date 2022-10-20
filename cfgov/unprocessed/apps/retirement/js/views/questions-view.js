@@ -8,18 +8,18 @@ function init() {
     const $container = $( this ).closest( '.question' );
     const respTo = $( this ).val();
 
-    $container.find( '.lifestyle-btn' )
-      .removeClass( 'lifestyle-btn__active' );
+    $container.find( '.lifestyle-btn' ).removeClass( 'lifestyle-btn__active' );
     $( this ).addClass( 'lifestyle-btn__active' );
 
     $container.find( '.lifestyle-img' ).slideUp();
-    $container.find( '.lifestyle-response' )
-      .not( '[data-responds-to="' + respTo + '"]' ).slideUp();
+    $container
+      .find( '.lifestyle-response' )
+      .not( '[data-responds-to="' + respTo + '"]' )
+      .slideUp();
     const selector = '.lifestyle-response[data-responds-to="' + respTo + '"]';
     $container.find( selector ).slideDown();
 
     $container.attr( 'data-answered', 'yes' );
-
   } );
 }
 
@@ -30,15 +30,11 @@ function update( currentAge ) {
   const $ageSplits = $( '.lifestyle-btn.age-split' );
   if ( currentAge < 50 ) {
     $ageSplits.each( function() {
-      $( this ).val(
-        $( this ).attr( 'data-base-value' ) + '-under50'
-      );
+      $( this ).val( $( this ).attr( 'data-base-value' ) + '-under50' );
     } );
   } else {
     $ageSplits.each( function() {
-      $( this ).val(
-        $( this ).attr( 'data-base-value' ) + '-over50'
-      );
+      $( this ).val( $( this ).attr( 'data-base-value' ) + '-over50' );
     } );
   }
 }

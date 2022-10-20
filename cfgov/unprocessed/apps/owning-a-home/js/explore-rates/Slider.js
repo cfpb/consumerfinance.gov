@@ -76,10 +76,10 @@ function Slider( element ) {
    */
   function _updateValues() {
     const currentVal = Number( _inputDom.value );
-    const numerator = ( currentVal - _min ) + _lastValue;
+    const numerator = currentVal - _min + _lastValue;
     const currentStep = Math.round( numerator / _options.step );
 
-    _valMin = _min + ( currentStep * UNITS_PER_STEP );
+    _valMin = _min + currentStep * UNITS_PER_STEP;
     _valMax = _valMin + UNITS_PER_STEP - 1;
     if ( _valMax > _max ) {
       _valMax = _max;
@@ -92,9 +92,7 @@ function Slider( element ) {
   function _update() {
     const handle = _dom.querySelector( '.rangeslider__handle' );
     const matchPx = /translate\((\d*.*\d*)px,.+\)$/;
-    const leftVal = Number(
-      handle.style.transform.match( matchPx )[1]
-    );
+    const leftVal = Number( handle.style.transform.match( matchPx )[1] );
 
     _updateValues();
 

@@ -48,9 +48,11 @@ Store.prototype.subscribe = function( fn ) {
 };
 
 Store.prototype.notifySubscribers = function() {
-  this.subscribers.forEach( function( subscriber ) {
-    subscriber( this.prevState, this.state );
-  }.bind( this ) );
+  this.subscribers.forEach(
+    function( subscriber ) {
+      subscriber( this.prevState, this.state );
+    }.bind( this )
+  );
 };
 
 export default Store;

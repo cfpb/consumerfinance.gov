@@ -1,5 +1,4 @@
 export class Footer {
-
   footer() {
     return cy.get( '.o-footer' );
   }
@@ -17,8 +16,9 @@ export class Footer {
   }
 
   links() {
-    return cy.get( '.o-footer_nav-list a, .o-footer-middle-left a,' +
-      ' .o-footer-middle-right a, .m-social-media_icons a'
+    return cy.get(
+      '.o-footer_nav-list a, .o-footer-middle-left a,' +
+        ' .o-footer-middle-right a, .m-social-media_icons a'
     );
   }
 

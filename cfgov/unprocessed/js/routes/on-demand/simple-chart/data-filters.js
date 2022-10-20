@@ -36,7 +36,6 @@ function processDate( option ) {
   return `${ quarter } ${ year }`;
 }
 
-
 /**
  * @param {array} options List of options to build for the select component
  * @param {object} chartNode The DOM node of the current chart
@@ -45,7 +44,9 @@ function processDate( option ) {
  */
 function makeSelectFilterDOM( options, chartNode, filter ) {
   const id = Math.random() + filter.key;
-  const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_filters' )[0];
+  const attachPoint = chartNode.getElementsByClassName(
+    'o-simple-chart_filters'
+  )[0];
 
   const wrapper = document.createElement( 'div' );
   wrapper.className = 'filter-wrapper m-form-field m-form-field__select';
@@ -100,7 +101,6 @@ function makeSelectFilterDOM( options, chartNode, filter ) {
   return selector;
 }
 
-
 /**
  * @param {array} buckets List of buckets to build radio inputs from
  * @param {object} chartNode The DOM node of the current chart
@@ -108,7 +108,9 @@ function makeSelectFilterDOM( options, chartNode, filter ) {
  * @returns {object} the built select DOM node
  */
 function makeRadioFilterDOM( buckets, chartNode, filter ) {
-  const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_filters' )[0];
+  const attachPoint = chartNode.getElementsByClassName(
+    'o-simple-chart_filters'
+  )[0];
   const radios = [];
 
   const wrapper = document.createElement( 'div' );
@@ -135,7 +137,6 @@ function makeRadioFilterDOM( buckets, chartNode, filter ) {
     input.value = bucket;
     input.name = filter.key;
     if ( i === 0 ) input.checked = true;
-
 
     const label = document.createElement( 'label' );
     label.className = 'a-label';
@@ -177,12 +178,12 @@ function makeRadioFilterDOM( buckets, chartNode, filter ) {
 }
 
 /** Filters raw or transformed data by a select prop
-  * @param {array} data Transformed or raw chart data
-  * @param {object} filterProp Key on which to filter
-  * @param {object} filterVal Value of the selectNode against which we're filtering
-  * @returns {array} Filtered chart data
-  *
-  * */
+ * @param {array} data Transformed or raw chart data
+ * @param {object} filterProp Key on which to filter
+ * @param {object} filterVal Value of the selectNode against which we're filtering
+ * @returns {array} Filtered chart data
+ *
+ * */
 function filterData( data, filterProp, filterVal ) {
   if ( filterVal === 'View all' ) return data;
 
@@ -194,11 +195,11 @@ function filterData( data, filterProp, filterVal ) {
 }
 
 /** Wires up filter elements when provided filters
-  * @param {object} dataAttributes Data passed via data-* tags
-  * @param {object} chartNode The DOM node of the current chart
-  * @param {object} chart The initialized chart
-  * @param {object} data The chart data object, {raw, series, transformed}
-  * */
+ * @param {object} dataAttributes Data passed via data-* tags
+ * @param {object} chartNode The DOM node of the current chart
+ * @param {object} chart The initialized chart
+ * @param {object} data The chart data object, {raw, series, transformed}
+ * */
 function initFilters( dataAttributes, chartNode, chart, data ) {
   let filters = dataAttributes.filters;
   if ( !filters ) return;
@@ -229,10 +230,9 @@ function initFilters( dataAttributes, chartNode, chart, data ) {
     }
   } catch ( err ) {
     /* eslint-disable-next-line */
-    console.error( err, 'Bad JSON in chart filters ', filters );
+    console.error(err, 'Bad JSON in chart filters ', filters);
   }
 }
-
 
 /**
  * @param {object} selectors List of selectors that need to be run
@@ -265,7 +265,6 @@ function attachFilters( selectors, chart, dataAttributes, data ) {
       } );
     } );
 
-
     const obj = {};
 
     if ( styleOverrides && styleOverrides.match( 'hook__' ) ) {
@@ -278,10 +277,6 @@ function attachFilters( selectors, chart, dataAttributes, data ) {
   selectors.forEach( selector => {
     selector.attach( filterOnSelect );
   } );
-
 }
 
-export {
-  initFilters,
-  makeSelectFilterDOM
-};
+export { initFilters, makeSelectFilterDOM };

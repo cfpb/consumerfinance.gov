@@ -4,26 +4,17 @@ import { onlyOn } from '@cypress/skip-test';
 const fig = new FilingInstructionGuide();
 
 describe( '1071 Filing Instruction Guide (FIG)', () => {
-
   describe( 'FIG table of contents', () => {
-
     /* Our FIG sample page only exists in certain environments so continue
        this test suite only if the user explicitly provides a URL via
        CYPRESS_FIG_URL=https://blah.cfpb.gov/xxxxxx/yyyyyy/zzzzzz/.
        Once the FIG reaches production we can disable this check. */
     onlyOn( Boolean( fig.url() ), () => {
-
       context( 'Desktop experience', () => {
-
-        const desktops = [
-          'macbook-13',
-          'macbook-15'
-        ];
+        const desktops = [ 'macbook-13', 'macbook-15' ];
 
         desktops.forEach( desktop => {
-
           context( desktop, () => {
-
             beforeEach( () => {
               cy.viewport( desktop );
             } );
@@ -35,9 +26,15 @@ describe( '1071 Filing Instruction Guide (FIG)', () => {
 
             it( 'should highlight the first section by default', () => {
               fig.getNavItem( 1 ).should( 'have.class', 'm-nav-link__current' );
-              fig.getNavItem( 2 ).should( 'not.have.class', 'm-nav-link__current' );
-              fig.getNavItem( 3 ).should( 'not.have.class', 'm-nav-link__current' );
-              fig.getNavItem( 4 ).should( 'not.have.class', 'm-nav-link__current' );
+              fig
+                .getNavItem( 2 )
+                .should( 'not.have.class', 'm-nav-link__current' );
+              fig
+                .getNavItem( 3 )
+                .should( 'not.have.class', 'm-nav-link__current' );
+              fig
+                .getNavItem( 4 )
+                .should( 'not.have.class', 'm-nav-link__current' );
             } );
 
             it( 'should be sticky', () => {
@@ -57,9 +54,15 @@ describe( '1071 Filing Instruction Guide (FIG)', () => {
             it( 'should highlight the current section', () => {
               fig.goToSection( 2 );
               fig.getNavItem( 2 ).should( 'have.class', 'm-nav-link__current' );
-              fig.getNavItem( 1 ).should( 'not.have.class', 'm-nav-link__current' );
-              fig.getNavItem( 3 ).should( 'not.have.class', 'm-nav-link__current' );
-              fig.getNavItem( 4 ).should( 'not.have.class', 'm-nav-link__current' );
+              fig
+                .getNavItem( 1 )
+                .should( 'not.have.class', 'm-nav-link__current' );
+              fig
+                .getNavItem( 3 )
+                .should( 'not.have.class', 'm-nav-link__current' );
+              fig
+                .getNavItem( 4 )
+                .should( 'not.have.class', 'm-nav-link__current' );
             } );
 
             it( 'should auto-expand subsections', () => {
@@ -101,24 +104,15 @@ describe( '1071 Filing Instruction Guide (FIG)', () => {
               fig.getNavItem( 3 ).should( 'have.class', 'm-nav-link__current' );
               fig.getNavItem( 'uli' ).should( 'be.visible' );
             } );
-
           } );
-
         } );
-
       } );
 
       context( 'Tablet experience', () => {
-
-        const tablets = [
-          'ipad-2',
-          'ipad-mini'
-        ];
+        const tablets = [ 'ipad-2', 'ipad-mini' ];
 
         tablets.forEach( tablet => {
-
           context( tablet, () => {
-
             beforeEach( () => {
               cy.viewport( tablet );
             } );
@@ -155,25 +149,15 @@ describe( '1071 Filing Instruction Guide (FIG)', () => {
               fig.getSection( 1 ).should( 'be.inViewport' );
               fig.getSection( 4 ).should( 'not.be.inViewport' );
             } );
-
           } );
-
         } );
-
       } );
 
       context( 'Mobile experience', () => {
-
-        const mobiles = [
-          'iphone-6',
-          'iphone-xr',
-          'samsung-note9'
-        ];
+        const mobiles = [ 'iphone-6', 'iphone-xr', 'samsung-note9' ];
 
         mobiles.forEach( mobile => {
-
           context( mobile, () => {
-
             beforeEach( () => {
               cy.viewport( mobile );
             } );
@@ -210,15 +194,9 @@ describe( '1071 Filing Instruction Guide (FIG)', () => {
               fig.getSection( 1 ).should( 'be.inViewport' );
               fig.getSection( 4 ).should( 'not.be.inViewport' );
             } );
-
           } );
-
         } );
-
       } );
-
     } );
-
   } );
-
 } );

@@ -32,20 +32,19 @@ function censusAPI( data, ruralCounties ) {
     64 = 2010 Census Urban Clusters
     62 = 2010 Census Urbanized Areas
     */
-    Promise.all(
-      [
-        tiger( result.x, result.y, '84' ),
-        tiger( result.x, result.y, '64' ),
-        tiger( result.x, result.y, '62' )
-      ]
-    )
+    Promise.all( [
+      tiger( result.x, result.y, '84' ),
+      tiger( result.x, result.y, '64' ),
+      tiger( result.x, result.y, '62' )
+    ] )
       .then( function( [ censusCounty, censusUC, censusUA ] ) {
         result.input = data.result.input.address.address;
         result.address = data.result.addressMatches[0].matchedAddress;
         result.countyName = censusCounty.features[0].attributes.BASENAME;
 
-        const fips = censusCounty.features[0].attributes.STATE +
-                 censusCounty.features[0].attributes.COUNTY;
+        const fips =
+          censusCounty.features[0].attributes.STATE +
+          censusCounty.features[0].attributes.COUNTY;
 
         if ( addressUtils.isRural( fips, ruralCounties ) ) {
           result.type = 'rural';
@@ -81,27 +80,25 @@ function censusAPI( data, ruralCounties ) {
 function processAddresses( addresses ) {
   const processed = [];
 
-  getRuralCounties( DT.getEl( '#year' ).value )
-    .then( function( ruralCounties ) {
-      addresses.forEach( function( address ) {
-
-        if ( addressUtils.isDup( address, processed ) ) {
-          // setup the result to render
-          const result = {};
-          result.input = address;
-          result.address = 'Duplicate';
-          result.countyName = '-';
-          result.block = '-';
-          result.type = 'duplicate';
-          addressUtils.render( result );
-          count.updateCount( result.type );
-        } else {
-          // if its not dup
-          callCensus( address, ruralCounties, censusAPI );
-          processed.push( address );
-        }
-      } );
+  getRuralCounties( DT.getEl( '#year' ).value ).then( function( ruralCounties ) {
+    addresses.forEach( function( address ) {
+      if ( addressUtils.isDup( address, processed ) ) {
+        // setup the result to render
+        const result = {};
+        result.input = address;
+        result.address = 'Duplicate';
+        result.countyName = '-';
+        result.block = '-';
+        result.type = 'duplicate';
+        addressUtils.render( result );
+        count.updateCount( result.type );
+      } else {
+        // if its not dup
+        callCensus( address, ruralCounties, censusAPI );
+        processed.push( address );
+      }
     } );
+  } );
 }
 
 // On submit of address entered manually.
@@ -114,13 +111,11 @@ addressFormDom.addEventListener( 'submit', function( evt ) {
 
   contentControl.setup();
 
-  [].slice.call( DT.getEls( '.input-address' ) ).forEach(
-    function( element ) {
-      if ( element.value !== '' ) {
-        addresses.push( element.value );
-      }
+  [].slice.call( DT.getEls( '.input-address' ) ).forEach( function( element ) {
+    if ( element.value !== '' ) {
+      addresses.push( element.value );
     }
-  );
+  } );
 
   if ( addresses.length > 1 ) {
     DT.removeClass( '#results-total', 'u-hidden' );
@@ -143,7 +138,6 @@ fileChangeDom.addEventListener( 'change', function( evt ) {
   fileInput.resetError();
 
   if ( fileInput.isCSV( fileValue ) ) {
-
     // parse the csv to get the count
     Papaparse.parse( fileElement.files[0], {
       header: true,
@@ -152,16 +146,15 @@ fileChangeDom.addEventListener( 'change', function( evt ) {
           parser.abort();
           fileInput.setError(
             'The header row of your CSV file does not match' +
-            ' our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
-            ' title="Download CSV template">CSV template</a>.' +
-            ' Please adjust your CSV file and try again.'
+              ' our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
+              ' title="Download CSV template">CSV template</a>.' +
+              ' Please adjust your CSV file and try again.'
           );
           return;
         }
         if ( results.data['Street Address'] !== '' ) {
           rowCount++;
         }
-
       },
       error: function() {
         console.log( arguments );
@@ -176,12 +169,16 @@ fileChangeDom.addEventListener( 'change', function( evt ) {
           const leftOver = rowCount - MAX_CSV_ROWS;
           fileInput.setError(
             'You entered ' +
-            rowCount +
-            ' addresses for ' +
-            DT.getEl( '#year' ).value +
-            ' safe harbor designation. We have a limit of ' + MAX_CSV_ROWS +
-            ' addresses. You can run the first ' + MAX_CSV_ROWS +
-            ' now, but please recheck the remaining ' + leftOver + '.'
+              rowCount +
+              ' addresses for ' +
+              DT.getEl( '#year' ).value +
+              ' safe harbor designation. We have a limit of ' +
+              MAX_CSV_ROWS +
+              ' addresses. You can run the first ' +
+              MAX_CSV_ROWS +
+              ' now, but please recheck the remaining ' +
+              leftOver +
+              '.'
           );
         }
       }
@@ -189,11 +186,11 @@ fileChangeDom.addEventListener( 'change', function( evt ) {
   } else {
     fileInput.setError(
       'The file uploaded is not a CSV file. ' +
-      'Please try again with a CSV file that uses ' +
-      'our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
-      'title="Download CSV template">CSV template</a>.' +
-      ' For more information about CSV files, view our' +
-      ' Frequently Asked Questions below.'
+        'Please try again with a CSV file that uses ' +
+        'our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
+        'title="Download CSV template">CSV template</a>.' +
+        ' For more information about CSV files, view our' +
+        ' Frequently Asked Questions below.'
     );
   }
 } );
@@ -206,13 +203,15 @@ geocodeCSVDom.addEventListener( 'submit', function( evt ) {
   window.location.hash = 'rural-or-underserved';
   let fileElement = DT.getEl( '#file-name' );
   const fileValue = fileElement.value;
-  if ( fileValue === '' || fileValue === 'No file chosen' ||
-       fileValue === null ) {
+  if (
+    fileValue === '' ||
+    fileValue === 'No file chosen' ||
+    fileValue === null
+  ) {
     fileInput.setError(
       'You have not selected a file. ' +
-      'Use the "Select file" button to select the file with your addresses.'
+        'Use the "Select file" button to select the file with your addresses.'
     );
-
   } else if ( fileInput.isCSV( fileValue ) ) {
     let pass = true;
     let rowCount = 0;
@@ -225,7 +224,10 @@ geocodeCSVDom.addEventListener( 'submit', function( evt ) {
       header: true,
       step: function( results, parser ) {
         if ( addressUtils.isValid( results ) ) {
-          if ( rowCount < MAX_CSV_ROWS && results.data['Street Address'] !== '' ) {
+          if (
+            rowCount < MAX_CSV_ROWS &&
+            results.data['Street Address'] !== ''
+          ) {
             addresses = addressUtils.pushAddress( results, addresses );
           }
           rowCount++;
@@ -234,9 +236,9 @@ geocodeCSVDom.addEventListener( 'submit', function( evt ) {
           pass = false;
           fileInput.setError(
             'The header row of your CSV file does not match' +
-            ' our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
-            ' title="Download CSV template">CSV template</a>.' +
-            ' Please adjust your CSV file and try again.'
+              ' our <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
+              ' title="Download CSV template">CSV template</a>.' +
+              ' Please adjust your CSV file and try again.'
           );
         }
       },
@@ -250,11 +252,17 @@ geocodeCSVDom.addEventListener( 'submit', function( evt ) {
         if ( rowCount >= MAX_CSV_ROWS ) {
           const leftOver = rowCount - MAX_CSV_ROWS;
           fileInput.setError(
-            'You entered ' + rowCount + ' addresses for ' +
-            DT.getEl( '#year' ).value +
-            ' safe harbor designation. We have a limit of ' + MAX_CSV_ROWS +
-            ' addresses. You can run the first ' + MAX_CSV_ROWS +
-            ' now, but please recheck the remaining ' + leftOver + '.'
+            'You entered ' +
+              rowCount +
+              ' addresses for ' +
+              DT.getEl( '#year' ).value +
+              ' safe harbor designation. We have a limit of ' +
+              MAX_CSV_ROWS +
+              ' addresses. You can run the first ' +
+              MAX_CSV_ROWS +
+              ' now, but please recheck the remaining ' +
+              leftOver +
+              '.'
           );
         }
         if ( addresses.length > 1 ) {
@@ -270,11 +278,11 @@ geocodeCSVDom.addEventListener( 'submit', function( evt ) {
   } else {
     fileInput.setError(
       'The file uploaded is not a CSV file.' +
-      ' Please try again with a CSV file that uses our' +
-      ' <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
-      ' title="Download CSV template">CSV template</a>.' +
-      ' For more information about CSV files,' +
-      ' view our Frequently Asked Questions below.'
+        ' Please try again with a CSV file that uses our' +
+        ' <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"' +
+        ' title="Download CSV template">CSV template</a>.' +
+        ' For more information about CSV files,' +
+        ' view our Frequently Asked Questions below.'
     );
   }
 
@@ -301,11 +309,9 @@ DT.bindEvents( '.button-more', 'click', function( evt ) {
   const tableID = DT.getElData( moreButton, 'table' );
   const tableRows = DT.getEls( '#' + tableID + ' tbody tr.data' );
   const tableRowsLength = tableRows.length;
-  const lengthShown = Array.prototype.filter.call(
-    tableRows, function( item ) {
-      return !item.classList.contains( 'u-hidden' );
-    }
-  ).length;
+  const lengthShown = Array.prototype.filter.call( tableRows, function( item ) {
+    return !item.classList.contains( 'u-hidden' );
+  } ).length;
   for ( let i = lengthShown; i < lengthShown + 10; i++ ) {
     DT.removeClass( tableRows[i], 'u-hidden' );
   }
@@ -333,26 +339,19 @@ function detectIE() {
 
   const msie = ua.indexOf( 'MSIE ' );
   if ( msie > 0 ) {
-
     // IE 10 or older => return version number
-    return parseInt(
-      ua.substring( msie + 5, ua.indexOf( '.', msie ) ), 10
-    );
+    return parseInt( ua.substring( msie + 5, ua.indexOf( '.', msie ) ), 10 );
   }
 
   const trident = ua.indexOf( 'Trident/' );
   if ( trident > 0 ) {
-
     // IE 11 => return version number
     const rv = ua.indexOf( 'rv:' );
-    return parseInt(
-      ua.substring( rv + 3, ua.indexOf( '.', rv ) ), 10
-    );
+    return parseInt( ua.substring( rv + 3, ua.indexOf( '.', rv ) ), 10 );
   }
 
   const edge = ua.indexOf( 'Edge/' );
   if ( edge > 0 ) {
-
     // IE 12 => return version number
     return parseInt( ua.substring( edge + 5, ua.indexOf( '.', edge ) ), 10 );
   }
@@ -365,9 +364,7 @@ DT.bindEvents( '#download', 'click', function( evt ) {
   evt.preventDefault();
   const theCSV = generateCSV();
   if ( detectIE() === false ) {
-    window.open(
-      ' data:text/csv;charset=utf-8,' + encodeURIComponent( theCSV )
-    );
+    window.open( ' data:text/csv;charset=utf-8,' + encodeURIComponent( theCSV ) );
   } else {
     const blob = new Blob( [ theCSV ], { type: 'text/csv;charset=utf-8,' } );
     navigator.msSaveOrOpenBlob( blob, 'rural-or-underserved.csv' );
@@ -405,7 +402,8 @@ function generateCSV() {
   }
 
   // loop through each row
-  [].slice.call( DT.getEls( '.rout-results-table tbody tr td' ) )
+  [].slice
+    .call( DT.getEls( '.rout-results-table tbody tr td' ) )
     .forEach( _loopHandler );
 
   return theCSV;

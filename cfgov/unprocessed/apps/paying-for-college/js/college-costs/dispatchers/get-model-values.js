@@ -8,7 +8,6 @@ import { financialModel } from '../models/financial-model.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 
-
 /**
  * getAllStateValues - retrieves the entire values property (object) of the stateModel
  * @returns {Object} The values stored in the stateModel Object
@@ -27,7 +26,6 @@ function getConstantsValue( name ) {
     return constantsModel.values[name];
   }
   return false;
-
 }
 
 /** 3
@@ -49,7 +47,6 @@ function getFinancialValue( name ) {
     return financialModel.values[name];
   }
   return false;
-
 }
 
 /**
@@ -108,7 +105,6 @@ function getStateValue( prop ) {
     return stateModel.values[prop];
   }
   return false;
-
 }
 
 export {

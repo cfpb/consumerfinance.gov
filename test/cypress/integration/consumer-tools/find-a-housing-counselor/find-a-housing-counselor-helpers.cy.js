@@ -7,16 +7,22 @@ export class FindAHousingCounselor {
 
   // Stub Mapbox API responses
   interceptMapboxAPIRequests() {
-    cy.intercept( {
-      url: /api\.mapbox\.com\/styles\/v1\/mapbox\/streets-v\d+\?access_token/
-    },
-    request => { request.reply( mapboxAPIResponses.streets ); } )
-      .as( 'mapboxStreets' );
-    cy.intercept( {
-      url: /api\.mapbox\.com\/v\d+/
-    },
-    request => { request.reply( mapboxAPIResponses.text ); } )
-      .as( 'mapboxText' );
+    cy.intercept(
+      {
+        url: /api\.mapbox\.com\/styles\/v1\/mapbox\/streets-v\d+\?access_token/
+      },
+      request => {
+        request.reply( mapboxAPIResponses.streets );
+      }
+    ).as( 'mapboxStreets' );
+    cy.intercept(
+      {
+        url: /api\.mapbox\.com\/v\d+/
+      },
+      request => {
+        request.reply( mapboxAPIResponses.text );
+      }
+    ).as( 'mapboxText' );
   }
 
   searchZipCode( zipCode ) {

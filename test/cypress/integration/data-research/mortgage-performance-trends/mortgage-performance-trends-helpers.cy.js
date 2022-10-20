@@ -1,11 +1,15 @@
 export class MortgagePerformanceTrends {
-
   open() {
-    cy.visit( '/data-research/mortgage-performance-trends/mortgages-30-89-days-delinquent/' );
+    cy.visit(
+      '/data-research/mortgage-performance-trends/mortgages-30-89-days-delinquent/'
+    );
   }
 
   selectLocationType( location ) {
-    const id = `#mp-line-chart_geo-${ location.split( ' ' ).slice( 0, 1 ).join( '' ) }`.toLowerCase();
+    const id = `#mp-line-chart_geo-${ location
+      .split( ' ' )
+      .slice( 0, 1 )
+      .join( '' ) }`.toLowerCase();
     cy.get( id ).click( { force: true } );
   }
 
@@ -28,5 +32,4 @@ export class MortgagePerformanceTrends {
   mapTitle() {
     return cy.get( '#mp-map-title' );
   }
-
 }

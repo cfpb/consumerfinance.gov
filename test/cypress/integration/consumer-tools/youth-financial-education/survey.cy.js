@@ -65,8 +65,9 @@ describe( 'Youth Financial Education Survey', () => {
         expect( cookie.value ).include( 'survey_wizard-current_step' );
       } );
       cy.window().then( win => {
-        expect( win.sessionStorage.getItem( 'tdp-survey-choices' ) )
-          .include( '"p1-q1":"0"' );
+        expect( win.sessionStorage.getItem( 'tdp-survey-choices' ) ).include(
+          '"p1-q1":"0"'
+        );
       } );
 
       // close button
@@ -77,8 +78,9 @@ describe( 'Youth Financial Education Survey', () => {
         expect( cookie.value ).include( 'survey_wizard-current_step' );
       } );
       cy.window().then( win => {
-        expect( win.sessionStorage.getItem( 'tdp-survey-choices' ) )
-          .include( '"p1-q1":"0"' );
+        expect( win.sessionStorage.getItem( 'tdp-survey-choices' ) ).include(
+          '"p1-q1":"0"'
+        );
       } );
     } );
 
@@ -152,7 +154,9 @@ describe( 'Youth Financial Education Survey', () => {
         const prodBetaPattern = /\/\/(beta|www)\.consumerfinance\.gov\b/;
         const wagtailPageExists = prodBetaPattern.test( url );
         if ( wagtailPageExists ) {
-          cy.visit( '/consumer-tools/educator-tools/youth-financial-education/survey/3-5/results/' );
+          cy.visit(
+            '/consumer-tools/educator-tools/youth-financial-education/survey/3-5/results/'
+          );
           cy.get( '#choose-your-grade-level-to-begin h2' ).should( 'exist' );
         } else {
           // Must capture where we get redirected to.
@@ -171,7 +175,9 @@ describe( 'Youth Financial Education Survey', () => {
         win.sessionStorage.clear();
       } );
 
-      cy.visit( '/consumer-tools/educator-tools/youth-financial-education/survey/3-5/p2/' );
+      cy.visit(
+        '/consumer-tools/educator-tools/youth-financial-education/survey/3-5/p2/'
+      );
       cy.url().should( 'include', '/3-5/p1/' );
     } );
   } );

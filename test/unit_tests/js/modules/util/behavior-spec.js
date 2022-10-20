@@ -55,15 +55,13 @@ describe( 'behavior', () => {
       expect( spy ).toHaveBeenCalledTimes( 1 );
     } );
 
-    it( 'should register an event callback when passed a behavior selector',
-      () => {
-        const spy = jest.fn();
-        const behaviorDom = behavior.find( 'flyout-menu_trigger' );
-        behavior.attach( 'flyout-menu_trigger', 'mouseover', spy );
-        triggerEvent( behaviorDom[0], 'mouseover' );
-        expect( spy ).toHaveBeenCalledTimes( 1 );
-      }
-    );
+    it( 'should register an event callback when passed a behavior selector', () => {
+      const spy = jest.fn();
+      const behaviorDom = behavior.find( 'flyout-menu_trigger' );
+      behavior.attach( 'flyout-menu_trigger', 'mouseover', spy );
+      triggerEvent( behaviorDom[0], 'mouseover' );
+      expect( spy ).toHaveBeenCalledTimes( 1 );
+    } );
 
     it( 'should register an event callback when passed a dom selector', () => {
       const spy = jest.fn();
@@ -76,8 +74,8 @@ describe( 'behavior', () => {
 
   describe( 'checkBehaviorDom function ', () => {
     it( 'should throw an error if element DOM not found', () => {
-      const errMsg = 'behavior_flyout-menu ' +
-                     'behavior not found on passed DOM node!';
+      const errMsg =
+        'behavior_flyout-menu behavior not found on passed DOM node!';
       function errFunc() {
         behavior.checkBehaviorDom( null, 'behavior_flyout-menu' );
       }
@@ -92,19 +90,29 @@ describe( 'behavior', () => {
       expect( errFunc ).toThrow( Error, errMsg );
     } );
 
-    it( 'should return the correct HTMLElement ' +
-        'when direct element is searched', () => {
-      const dom = behavior.checkBehaviorDom( containerDom,
-        'behavior_flyout-menu' );
-      expect( dom ).toStrictEqual( containerDom );
-    } );
+    it(
+      'should return the correct HTMLElement ' +
+        'when direct element is searched',
+      () => {
+        const dom = behavior.checkBehaviorDom(
+          containerDom,
+          'behavior_flyout-menu'
+        );
+        expect( dom ).toStrictEqual( containerDom );
+      }
+    );
 
-    it( 'should return the correct HTMLElement ' +
-        'when child element is searched', () => {
-      const dom = behavior.checkBehaviorDom( behaviorElmDom,
-        'behavior_flyout-menu_content' );
-      expect( dom ).toStrictEqual( behaviorElmDom );
-    } );
+    it(
+      'should return the correct HTMLElement ' +
+        'when child element is searched',
+      () => {
+        const dom = behavior.checkBehaviorDom(
+          behaviorElmDom,
+          'behavior_flyout-menu_content'
+        );
+        expect( dom ).toStrictEqual( behaviorElmDom );
+      }
+    );
   } );
 
   describe( 'find function', () => {
@@ -117,8 +125,8 @@ describe( 'behavior', () => {
 
     it( 'should throw an error when passed an invalid behavior selector', () => {
       const behaviorSelector = 'a[href^="#"]';
-      const errorMsg = '[data-js-hook*=behavior_' +
-                     behaviorSelector + '] not found in DOM!';
+      const errorMsg =
+        '[data-js-hook*=behavior_' + behaviorSelector + '] not found in DOM!';
       const findFunction = behavior.find.bind( this, behaviorSelector );
       expect( findFunction ).toThrow( Error, errorMsg );
     } );

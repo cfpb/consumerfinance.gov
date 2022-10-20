@@ -18,7 +18,13 @@ const tilemap = {
       },
       dataLabels: {
         enabled: true,
-        formatter: function() { return `<span style="font-weight:500">${ this.point.state }</span><br/><span style="font-weight:300">${ Math.round( this.point.value ) }</span>`; },
+        formatter: function() {
+          return `<span style="font-weight:500">${
+            this.point.state
+          }</span><br/><span style="font-weight:300">${ Math.round(
+            this.point.value
+          ) }</span>`;
+        },
         style: {
           textOutline: false,
           fontSize: 14

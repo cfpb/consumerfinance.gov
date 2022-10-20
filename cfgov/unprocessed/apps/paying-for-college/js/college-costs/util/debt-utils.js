@@ -33,14 +33,11 @@ function calcMonthlyPayment( debt, rate, term ) {
   if ( rate === 0 ) {
     monthly = debt / ( term * 12 );
   } else {
-    monthly = debt * ( rate / 12 ) /
-              ( 1 - Math.pow( 1 + rate / 12, -1 * term * 12 ) );
+    monthly =
+      ( debt * ( rate / 12 ) ) / ( 1 - Math.pow( 1 + rate / 12, -1 * term * 12 ) );
   }
 
   return monthly;
 }
 
-export {
-  calcInterestAtGrad,
-  calcMonthlyPayment
-};
+export { calcInterestAtGrad, calcMonthlyPayment };

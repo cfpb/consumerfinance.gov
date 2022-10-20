@@ -63,7 +63,5 @@ describe( 'FormModel', () => {
       expect( model.get( 'elements' ).length ).toBe( 15 );
       expect( model.get( 'validateableElements' ).length ).toBe( 13 );
     } );
-
   } );
-
 } );

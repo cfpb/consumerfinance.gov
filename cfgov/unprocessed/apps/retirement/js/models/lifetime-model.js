@@ -16,5 +16,4 @@ const lifetimeModel = {
   }
 };
 
-
 export default lifetimeModel;

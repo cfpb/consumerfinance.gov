@@ -4,27 +4,23 @@ const utils = require( `${ BASE_JS_PATH }/js/search-utils.js` );
 
 /* eslint-disable no-empty-function */
 describe( 'The Regs3K search utils', () => {
-
   it( 'should get values from search form fields', () => {
     const searchEl = {
       name: 'foo',
       value: 'bar'
     };
-    const filterEls = [ {
-      name: 'fizz',
-      value: 'buzz'
-    } ];
+    const filterEls = [
+      {
+        name: 'fizz',
+        value: 'buzz'
+      }
+    ];
     const values = utils.getSearchValues( searchEl, filterEls );
-    expect( values ).toEqual( [
-      { foo: 'bar' },
-      { fizz: 'buzz' }
-    ] );
+    expect( values ).toEqual( [ { foo: 'bar' }, { fizz: 'buzz' } ] );
   } );
 
   it( 'should serialize form fields', () => {
-    const serialized = utils.serializeFormFields( [
-      { foo: 'bar' }
-    ] );
+    const serialized = utils.serializeFormFields( [ { foo: 'bar' } ] );
     expect( serialized ).toEqual( 'foo=bar' );
   } );
 
@@ -64,7 +60,9 @@ describe( 'The Regs3K search utils', () => {
     const cancelError = utils.handleError( 0 );
     expect( cancelError.msg ).toEqual( 'Search request was cancelled.' );
     const unknownError = utils.handleError();
-    expect( unknownError.msg ).toEqual( 'Sorry, our search engine is temporarily down.' );
+    expect( unknownError.msg ).toEqual(
+      'Sorry, our search engine is temporarily down.'
+    );
   } );
 
   it( 'should replace the browser history', () => {
@@ -77,7 +75,10 @@ describe( 'The Regs3K search utils', () => {
 
     utils.updateUrl( '/regulations/search/', 'regs=1002&regs=1010&q=funding' );
     expect( rs.mock.calls.length ).toEqual( 2 );
-    expect( rs.mock.calls[1] ).toEqual( [ null, null, '/regulations/search/?regs=1002&regs=1010&q=funding' ] );
+    expect( rs.mock.calls[1] ).toEqual( [
+      null,
+      null,
+      '/regulations/search/?regs=1002&regs=1010&q=funding'
+    ] );
   } );
-
 } );

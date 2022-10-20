@@ -1,11 +1,7 @@
-const utils = require(
-  '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/utils.js'
-);
+const utils = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/utils.js' );
 
 describe( 'The TDP search utils', () => {
-
   describe( 'AJAX utils', () => {
-
     it( 'should fetch a resource', done => {
       const mockXHR = {
         open: jest.fn(),
@@ -21,9 +17,10 @@ describe( 'The TDP search utils', () => {
       global.XMLHttpRequest = jest.fn( () => mockXHR );
       utils.fetch( 'activities', ( err, data ) => {
         expect( err ).toEqual( null );
-        expect( data ).toEqual(
-          [ { searchResult: 'one' }, { anotherSearchResult: 'two' } ]
-        );
+        expect( data ).toEqual( [
+          { searchResult: 'one' },
+          { anotherSearchResult: 'two' }
+        ] );
         done();
       } );
       mockXHR.onreadystatechange();
@@ -45,7 +42,5 @@ describe( 'The TDP search utils', () => {
       } );
       mockXHR.onreadystatechange();
     } );
-
   } );
-
 } );

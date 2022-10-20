@@ -1,9 +1,6 @@
 export class AskCfpbAnswerPage {
-
   open() {
-    cy.visit( '/ask-cfpb/' ).get(
-      '.ask-categories article li a'
-    ).first().click();
+    cy.visit( '/ask-cfpb/' ).get( '.ask-categories article li a' ).first().click();
   }
 
   clickSummary() {

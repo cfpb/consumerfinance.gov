@@ -1,11 +1,8 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const RateCheckerChartMenu = require(
-  BASE_JS_PATH + 'js/explore-rates/RateCheckerChartMenu'
-).default;
+const RateCheckerChartMenu = require( BASE_JS_PATH +
+  'js/explore-rates/RateCheckerChartMenu' ).default;
 
-const Highcharts = require(
-  BASE_JS_PATH + 'node_modules/highcharts'
-);
+const Highcharts = require( BASE_JS_PATH + 'node_modules/highcharts' );
 
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 
@@ -50,9 +47,11 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
       xAxis: {
         categories: [ 'Jan', 'Feb' ]
       },
-      series: [ {
-        data: [ 29.9, 71.5 ]
-      } ]
+      series: [
+        {
+          data: [ 29.9, 71.5 ]
+        }
+      ]
     } );
 
     highCharts.exportChart = jest.fn();
@@ -105,19 +104,22 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
     it( 'should set proper classes on the menu DOM', () => {
       chartMenu.open();
       expect( chartMenu.state ).toStrictEqual( STATE_OPEN );
-      expect( chartMenuDOM.classList.contains( 'chart-menu__open' ) )
-        .toStrictEqual( true );
+      expect(
+        chartMenuDOM.classList.contains( 'chart-menu__open' )
+      ).toStrictEqual( true );
     } );
   } );
 
   describe( 'onClick()', () => {
     it( 'should set proper classes when the menu button is clicked', () => {
       simulateEvent( 'click', chartMenuBtnDOM );
-      expect( chartMenuDOM.classList.contains( 'chart-menu__open' ) )
-        .toStrictEqual( true );
+      expect(
+        chartMenuDOM.classList.contains( 'chart-menu__open' )
+      ).toStrictEqual( true );
       simulateEvent( 'click', chartMenuBtnDOM );
-      expect( chartMenuDOM.classList.contains( 'chart-menu__open' ) )
-        .toStrictEqual( false );
+      expect(
+        chartMenuDOM.classList.contains( 'chart-menu__open' )
+      ).toStrictEqual( false );
     } );
 
     it( 'should set proper state when the menu button is clicked', () => {
@@ -140,14 +142,11 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
   describe( 'exportChart()', () => {
     it( 'should call the appropriate highCharts.export method', () => {
       chartMenu.exportChart( 'PNG' );
-      expect( highCharts.exportChart )
-        .toBeCalledWith( { type: 'image/png' } );
+      expect( highCharts.exportChart ).toBeCalledWith( { type: 'image/png' } );
       chartMenu.exportChart( 'SVG' );
-      expect( highCharts.exportChart )
-        .toBeCalledWith( { type: 'image/svg+xml' } );
+      expect( highCharts.exportChart ).toBeCalledWith( { type: 'image/svg+xml' } );
       chartMenu.exportChart( 'JPEG' );
-      expect( highCharts.exportChart )
-        .toBeCalledWith( { type: 'image/jpeg' } );
+      expect( highCharts.exportChart ).toBeCalledWith( { type: 'image/jpeg' } );
       chartMenu.exportChart( 'Print chart' );
       expect( highCharts.print ).toHaveBeenCalled();
     } );

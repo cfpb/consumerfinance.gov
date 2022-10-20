@@ -35,7 +35,6 @@ const HTML_SNIPPET = `
 `;
 
 describe( 'ExternalSite', () => {
-
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
   } );
@@ -44,12 +43,14 @@ describe( 'ExternalSite', () => {
     const dom = document.querySelector( '.external-site' );
     const externalSite = new ExternalSite( dom );
     externalSite.init();
-    expect( dom.querySelectorAll( '.external-site_reload-duration' ).length )
-      .toBe( 0 );
+    expect( dom.querySelectorAll( '.external-site_reload-duration' ).length ).toBe(
+      0
+    );
 
     setTimeout( () => {
-      expect( dom.querySelectorAll( '.external-site_reload-duration' ).length )
-        .toBe( 1 );
+      expect(
+        dom.querySelectorAll( '.external-site_reload-duration' ).length
+      ).toBe( 1 );
     }, 1500 );
   } );
 } );

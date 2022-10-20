@@ -91,7 +91,7 @@ SectionLink.init = function( { numAnswered, pageIdx, questionsByPage } ) {
   [].forEach.call( roots, ( root, idx ) => {
     const questionsHere = questionsByPage[idx];
     const visited = numAnswered >= questionsFound;
-    const done = numAnswered >= ( questionsFound + questionsHere );
+    const done = numAnswered >= questionsFound + questionsHere;
 
     const sl = new SectionLink( root );
     sl.setRange( questionsFound + 1, questionsFound + questionsHere );

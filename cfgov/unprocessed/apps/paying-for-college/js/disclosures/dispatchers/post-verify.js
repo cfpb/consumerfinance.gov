@@ -22,20 +22,21 @@ const postVerify = {
   verify: function( offerID, collegeID, error ) {
     const postdata = {
       csrfmiddlewaretoken: this.csrfToken,
-      oid:                 offerID,
-      iped:                collegeID,
-      errors:              'none',
-      URL:                 window.location.href
+      oid: offerID,
+      iped: collegeID,
+      errors: 'none',
+      URL: window.location.href
     };
-    const urlPath = '/' + $( 'main' ).attr( 'data-context' ) +
-                    '/understanding-your-financial-aid-offer/api/verify/';
+    const urlPath =
+      '/' +
+      $( 'main' ).attr( 'data-context' ) +
+      '/understanding-your-financial-aid-offer/api/verify/';
     if ( error === true ) {
       postdata.errors =
         'INVALID: student indicated the offer information is wrong';
     }
     $.post( urlPath, postdata );
   }
-
 };
 
 module.exports = postVerify;

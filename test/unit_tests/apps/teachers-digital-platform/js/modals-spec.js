@@ -71,16 +71,16 @@ describe( 'TDP modals', () => {
     const lastButtonFocusSpy = jest.spyOn( lastButton, 'focus' );
 
     let evt = new FocusEvent( 'focusin' );
-    jest.spyOn( evt, 'target', 'get' ).mockImplementation(
-      () => modal.querySelector( '[data-trap="0"]' )
-    );
+    jest
+      .spyOn( evt, 'target', 'get' )
+      .mockImplementation( () => modal.querySelector( '[data-trap="0"]' ) );
     document.dispatchEvent( evt );
     expect( lastButtonFocusSpy ).toHaveBeenCalled();
 
     evt = new FocusEvent( 'focusin' );
-    jest.spyOn( evt, 'target', 'get' ).mockImplementation(
-      () => modal.querySelector( '[data-trap="1"]' )
-    );
+    jest
+      .spyOn( evt, 'target', 'get' )
+      .mockImplementation( () => modal.querySelector( '[data-trap="1"]' ) );
     document.dispatchEvent( evt );
     expect( closeFocusSpy ).toHaveBeenCalled();
 

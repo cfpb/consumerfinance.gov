@@ -16,23 +16,17 @@ let formSubmit;
  * @returns {string} The validator's message.
  */
 function emailValidation( fields ) {
-  return validators.email(
-    fields.email,
-    '',
-    { language: language }
-  ).msg;
+  return validators.email( fields.email, '', { language: language } ).msg;
 }
-
 
 for ( let i = 0; i < emailSignUpsLength; i++ ) {
   const signup = emailSignUps[i];
   const form = signup.querySelector( 'form' );
   if ( form ) {
-    formSubmit = new FormSubmit(
-      signup,
-      BASE_CLASS,
-      { validator: emailValidation, language: language }
-    );
+    formSubmit = new FormSubmit( signup, BASE_CLASS, {
+      validator: emailValidation,
+      language: language
+    } );
 
     formSubmit.init();
   }

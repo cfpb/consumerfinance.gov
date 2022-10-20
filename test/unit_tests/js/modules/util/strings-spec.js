@@ -39,8 +39,7 @@ describe( 'Strings stringEscape()', () => {
   it( 'should escape a comma', () => {
     string = 'Students, Parents, and Teachers';
 
-    expect( stringEscape( string ) )
-      .toBe( 'Students, Parents, and Teachers' );
+    expect( stringEscape( string ) ).toBe( 'Students, Parents, and Teachers' );
   } );
 } );
 
@@ -52,14 +51,12 @@ describe( 'Strings stringMatch()', () => {
     expect( stringMatch( control, string ) ).toBe( true );
   } );
 
-  it( 'should return true when testing matching strings with differing casing',
-    () => {
-      string = 'test string';
-      control = 'Test String';
+  it( 'should return true when testing matching strings with differing casing', () => {
+    string = 'test string';
+    control = 'Test String';
 
-      expect( stringMatch( control, string ) ).toBe( true );
-    }
-  );
+    expect( stringMatch( control, string ) ).toBe( true );
+  } );
 
   it( 'should return false when testing differing strings', () => {
     string = 'Test String';

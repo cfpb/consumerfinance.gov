@@ -9,21 +9,21 @@ let UNDEFINED;
    request: Keep the AJAX request accessible so we can terminate it if needed.
 */
 const _params = {
-  'credit-score':   700,
-  'down-payment':   '20,000',
-  'dp-constant':    '',
-  'house-price':    '200,000',
-  'location':       'AL',
-  'loan-amount':    UNDEFINED,
+  'credit-score': 700,
+  'down-payment': '20,000',
+  'dp-constant': '',
+  'house-price': '200,000',
+  'location': 'AL',
+  'loan-amount': UNDEFINED,
   'rate-structure': 'fixed',
-  'loan-term':      30,
-  'loan-type':      'conf',
-  'arm-type':       '5-1',
-  'edited':         false,
-  'isJumbo':        false,
-  'prevLoanType':   '',
-  'prevLocation':   '',
-  'request':        UNDEFINED
+  'loan-term': 30,
+  'loan-type': 'conf',
+  'arm-type': '5-1',
+  'edited': false,
+  'isJumbo': false,
+  'prevLoanType': '',
+  'prevLocation': '',
+  'request': UNDEFINED
 };
 
 /**
@@ -63,19 +63,16 @@ function update() {
   for ( param in _params ) {
     if ( Object.prototype.hasOwnProperty.call( _params, param ) ) {
       val = domValues.getSelection( param );
-      if ( param !== 'prevLoanType' &&
-           param !== 'prevLocation' &&
-           val !== UNDEFINED &&
-           val !== null ) {
+      if (
+        param !== 'prevLoanType' &&
+        param !== 'prevLocation' &&
+        val !== UNDEFINED &&
+        val !== null
+      ) {
         _params[param] = domValues.getSelection( param );
       }
     }
   }
 }
 
-export {
-  getAllParams,
-  getVal,
-  setVal,
-  update
-};
+export { getAllParams, getVal, setVal, update };

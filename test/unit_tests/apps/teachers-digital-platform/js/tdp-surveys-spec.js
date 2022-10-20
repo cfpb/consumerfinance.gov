@@ -8,9 +8,10 @@ let rp;
 let sp;
 
 describe( 'The TDP survey router', () => {
-
   beforeEach( () => {
-    glp = jest.spyOn( gradeLevelModule, 'gradeLevelPage' ).mockImplementation( () => 1 );
+    glp = jest
+      .spyOn( gradeLevelModule, 'gradeLevelPage' )
+      .mockImplementation( () => 1 );
     rp = jest.spyOn( resultsModule, 'resultsPage' ).mockImplementation( () => 1 );
     sp = jest.spyOn( surveyModule, 'surveyPage' ).mockImplementation( () => 1 );
   } );

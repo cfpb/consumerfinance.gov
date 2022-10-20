@@ -21,5 +21,4 @@ const benefitsModel = {
   }
 };
 
-
 export default benefitsModel;

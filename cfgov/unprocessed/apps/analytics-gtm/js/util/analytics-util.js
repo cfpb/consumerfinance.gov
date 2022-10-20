@@ -71,7 +71,6 @@ function track( event, action, label ) {
  * @returns {boolean} True if the hosts are equal, false otherwise.
  */
 function hostsAreEqual( host1, host2 ) {
-
   /**
    * Pick the host out of a URL.
    * @param {string} srcHost - A URL

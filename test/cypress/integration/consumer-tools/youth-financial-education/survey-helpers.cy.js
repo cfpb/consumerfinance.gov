@@ -11,10 +11,11 @@ export class TdpSurveyHelpers {
   selectAnswers( answers ) {
     answers.forEach( ( val, idx ) => {
       if ( val !== null ) {
-        cy.get( `.tdp-form > li:nth-child(${ idx + 1 }) .a-label` )
-          .then( labels => {
+        cy.get( `.tdp-form > li:nth-child(${ idx + 1 }) .a-label` ).then(
+          labels => {
             labels[val].click();
-          } );
+          }
+        );
       }
     } );
   }

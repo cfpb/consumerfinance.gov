@@ -1,5 +1,4 @@
 export class Filter {
-
   apply() {
     return cy.get( 'form[action="."]' ).submit();
   }
@@ -18,16 +17,22 @@ export class Filter {
   }
 
   formatOptionFromString( str ) {
-    return str.split( '\n' ).pop().trim().replace(
-      /(?:and|[,'])+/g, ''
-    ).split( / +/ ).join( '-' ).toLowerCase();
+    return str
+      .split( '\n' )
+      .pop()
+      .trim()
+      .replace( /(?:and|[,'])+/g, '' )
+      .split( / +/ )
+      .join( '-' )
+      .toLowerCase();
   }
 
   getCategory() {
     // return the list of categories
-    return cy.get( '[data-cy=categories-heading]' ).siblings().find(
-      '[data-cy=multiselect-option]'
-    );
+    return cy
+      .get( '[data-cy=categories-heading]' )
+      .siblings()
+      .find( '[data-cy=multiselect-option]' );
   }
 
   getCategoryLabel( name ) {
@@ -89,5 +94,4 @@ export class Filter {
   hide() {
     return this.expandableTarget().last().click();
   }
-
 }

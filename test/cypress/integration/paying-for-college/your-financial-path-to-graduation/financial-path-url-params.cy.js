@@ -4,28 +4,45 @@ const page = new PfcFinancialPathToGraduation();
 
 describe( 'Your Financial Path to Graduation (url parameter functionality)', () => {
   before( () => {
-    cy.visit( '/paying-for-college/your-financial-path-to-graduation/?iped=163286&pid=4502-3&houp=onCampus&typp=bachelors&prop=0&lenp=3&ratp=inState&depp=dependent&cobs=n&tuit=10595&hous=12809&diro=13&book=1250&indo=55&tran=44&pelg=11&seog=12&fedg=13&stag=14&schg=15&tuig=16&othg=17&mta=18&gi=19&othm=20&stas=21&schs=22&oths=23&wkst=33&subl=299&unsl=399&insl=599&insr=0.06&insf=0.02&stal=499&star=0.05&staf=0.01&npol=699&npor=0.07&npof=0.03&pers=81&fams=82&529p=83&offj=84&onj=85&eta=86&othf=87&houx=31&fdx=32&clhx=33&trnx=34&hltx=35&entx=36&retx=37&taxx=38&chcx=39&dbtx=40&othx=41' );
+    cy.visit(
+      '/paying-for-college/your-financial-path-to-graduation/?iped=163286&pid=4502-3&houp=onCampus&typp=bachelors&prop=0&lenp=3&ratp=inState&depp=dependent&cobs=n&tuit=10595&hous=12809&diro=13&book=1250&indo=55&tran=44&pelg=11&seog=12&fedg=13&stag=14&schg=15&tuig=16&othg=17&mta=18&gi=19&othm=20&stas=21&schs=22&oths=23&wkst=33&subl=299&unsl=399&insl=599&insr=0.06&insf=0.02&stal=499&star=0.05&staf=0.01&npol=699&npor=0.07&npof=0.03&pers=81&fams=82&529p=83&offj=84&onj=85&eta=86&othf=87&houx=31&fdx=32&clhx=33&trnx=34&hltx=35&entx=36&retx=37&taxx=38&chcx=39&dbtx=40&othx=41'
+    );
   } );
 
   it( 'should choose the correct school', () => {
-    cy.get( '#search__school-input' ).should( 'have.value', 'University of Maryland-College Park' );
+    cy.get( '#search__school-input' ).should(
+      'have.value',
+      'University of Maryland-College Park'
+    );
   } );
 
   it( 'should choose the correct program options', () => {
-    cy.get( 'input[name="programType"]:checked' ).should( 'have.value', 'bachelors' );
+    cy.get( 'input[name="programType"]:checked' ).should(
+      'have.value',
+      'bachelors'
+    );
     cy.get( 'input[name="programProgress"]:checked' ).should( 'have.value', '0' );
     cy.get( 'input[name="programLength"]:checked' ).should( 'have.value', '3' );
-    cy.get( 'input[name="programHousing"]:checked' ).should( 'have.value', 'onCampus' );
-    cy.get( 'input[name="programDependency"]:checked' ).should( 'have.value', 'dependent' );
+    cy.get( 'input[name="programHousing"]:checked' ).should(
+      'have.value',
+      'onCampus'
+    );
+    cy.get( 'input[name="programDependency"]:checked' ).should(
+      'have.value',
+      'dependent'
+    );
   } );
 
   it( 'should choose the correct program', () => {
     cy.get( '#program-select option:checked' ).should( 'have.value', '4502-3' );
-    cy.get( '#program-select option:checked' ).should( 'contain', 'Bachelor\'s degree - Anthropology' );
+    cy.get( '#program-select option:checked' ).should(
+      'contain',
+      "Bachelor's degree - Anthropology"
+    );
   } );
 
   it( 'should have the correct direct costs values', () => {
-    page.clickNextStep( );
+    page.clickNextStep();
     cy.get( '#costs__tuition-fees' ).should( 'have.value', '$10,595' );
     cy.get( '#costs__room-board' ).should( 'have.value', '$12,809' );
     cy.get( '#costs__other-direct' ).should( 'have.value', '$13' );
@@ -38,7 +55,7 @@ describe( 'Your Financial Path to Graduation (url parameter functionality)', () 
   } );
 
   it( 'should have the correct grants & scholarships values', () => {
-    page.clickNextStep( );
+    page.clickNextStep();
     cy.get( '#grants__pell' ).should( 'have.value', '$11' );
     cy.get( '#grants__seog' ).should( 'have.value', '$12' );
     cy.get( '#grants__otherFederal' ).should( 'have.value', '$13' );
@@ -55,18 +72,18 @@ describe( 'Your Financial Path to Graduation (url parameter functionality)', () 
   } );
 
   it( 'should have the correct work study values', () => {
-    page.clickNextStep( );
+    page.clickNextStep();
     cy.get( '#workStudy__workStudy' ).should( 'have.value', '$33' );
   } );
 
   it( 'should have the correct federal loan values', () => {
-    page.clickNextStep( );
+    page.clickNextStep();
     cy.get( '#loans__directSub' ).should( 'have.value', '$299' );
     cy.get( '#loans__directUnsub' ).should( 'have.value', '$399' );
   } );
 
   it( 'should have the correct school/other loan values', () => {
-    page.clickNextStep( );
+    page.clickNextStep();
     cy.get( '#loans__stateLoan' ).should( 'have.value', '$499' );
     cy.get( '#loans__stateLoanRate' ).should( 'have.value', '5.00%' );
     cy.get( '#loans__stateLoanFee' ).should( 'have.value', '1.000%' );
@@ -79,7 +96,7 @@ describe( 'Your Financial Path to Graduation (url parameter functionality)', () 
   } );
 
   it( 'should have the correct other sources values', () => {
-    page.clickNextStep( );
+    page.clickNextStep();
     cy.get( '#savings__personal' ).should( 'have.value', '$81' );
     cy.get( '#savings__family' ).should( 'have.value', '$82' );
     cy.get( '#savings__collegeSavings' ).should( 'have.value', '$83' );
@@ -102,5 +119,4 @@ describe( 'Your Financial Path to Graduation (url parameter functionality)', () 
     cy.get( '#expenses__currentDebts' ).should( 'have.value', '$40' );
     cy.get( '#expenses__other' ).should( 'have.value', '$41' );
   } );
-
 } );

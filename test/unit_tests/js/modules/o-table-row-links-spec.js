@@ -1,6 +1,4 @@
-const simpleTableRowLinks = require(
-  '../../../../cfgov/unprocessed/js/modules/o-table-row-links'
-);
+const simpleTableRowLinks = require( '../../../../cfgov/unprocessed/js/modules/o-table-row-links' );
 
 import { simulateEvent } from '../../../util/simulate-event.js';
 
@@ -68,10 +66,8 @@ describe( 'o-table-row-links', () => {
     expect( locationSpy ).toHaveBeenCalledTimes( 0 );
   } );
 
-  it( 'should not navigate to new location when non link row cell clicked',
-    () => {
-      simulateEvent( 'click', nonLinkRowCellDom );
-      expect( locationSpy ).toHaveBeenCalledTimes( 0 );
-    }
-  );
+  it( 'should not navigate to new location when non link row cell clicked', () => {
+    simulateEvent( 'click', nonLinkRowCellDom );
+    expect( locationSpy ).toHaveBeenCalledTimes( 0 );
+  } );
 } );

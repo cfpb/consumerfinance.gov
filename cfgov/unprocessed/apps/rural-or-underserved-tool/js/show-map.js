@@ -51,7 +51,6 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
   }
 
   if ( DT.hasClass( toggleMapLink, 'jsLoadMap' ) ) {
-
     evt.preventDefault();
 
     // setup vars (data attributes)
@@ -67,7 +66,6 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
 
     // if the map row is hidden
     if ( hasHideClass ) {
-
       // show it
       DT.removeClass( mapRow, 'u-hidden' );
 
@@ -79,13 +77,13 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
 
       // only show initiate the map the first time
       if ( isMapShown === false ) {
-
         // set the map to true (won't try to initate again)
         toggleMapLink.setAttribute( 'data-map', true );
 
         DT.nextFrame( function() {
           const latlng = window.L.latLng( lon, lat );
-          const map = window.L.mapbox.map( id )
+          const map = window.L.mapbox
+            .map( id )
             .setView( latlng, 12 )
             .addLayer( window.L.mapbox.styleLayer( mapIdString ) );
           map.dragging.disable();
@@ -101,7 +99,8 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
           const marker = window.L.marker( latlng ).addTo( map );
         } );
       }
-    } else { // map is being displayed
+    } else {
+      // map is being displayed
 
       // hide it
       DT.addClass( mapRow, 'u-hidden' );

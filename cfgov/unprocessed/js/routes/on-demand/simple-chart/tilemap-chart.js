@@ -18,8 +18,8 @@ tilemap( Highmaps );
  * @returns {object} The configured style object
  */
 function makeTilemapOptions( data, dataAttributes ) {
-  const { chartType, styleOverrides, description,
-    yAxisLabel } = dataAttributes;
+  const { chartType, styleOverrides, description, yAxisLabel } =
+    dataAttributes;
 
   let defaultObj = cloneDeep( defaultTilemap );
 
@@ -31,7 +31,7 @@ function makeTilemapOptions( data, dataAttributes ) {
 
   if ( formattedSeries.length !== 1 ) {
     /* eslint-disable-next-line */
-    return console.error( 'Tilemap only supports a single data series.' );
+    return console.error('Tilemap only supports a single data series.');
   }
 
   defaultObj = {
@@ -39,10 +39,13 @@ function makeTilemapOptions( data, dataAttributes ) {
     ...getMapConfig( formattedSeries )
   };
 
-
   defaultObj.tooltip.formatter = function() {
     const label = yAxisLabel ? yAxisLabel + ': ' : '';
-    return `<span style="font-weight:600">${ this.point.name }</span><br/>${ label }<span style="font-weight:600">${ Math.round( this.point.value * 10 ) / 10 }</span>`;
+    return `<span style="font-weight:600">${
+      this.point.name
+    }</span><br/>${ label }<span style="font-weight:600">${
+      Math.round( this.point.value * 10 ) / 10
+    }</span>`;
   };
 
   /* eslint-disable-next-line */
@@ -63,14 +66,15 @@ function makeTilemapOptions( data, dataAttributes ) {
  * @param {object} transform Whether data has been transformed
  */
 function makeTilemapSelect( chartNode, chart, data, transform ) {
-
   let d;
   if ( transform ) d = data.transformed;
   else d = data.raw;
 
   const options = getTilemapDates( d );
-  const selectNode = makeSelectFilterDOM( options, chartNode, { key: 'tilemap', label: 'Select date' }
-  ).nodes[0];
+  const selectNode = makeSelectFilterDOM( options, chartNode, {
+    key: 'tilemap',
+    label: 'Select date'
+  } ).nodes[0];
 
   attachTilemapFilter( selectNode, chart, data );
 }
@@ -98,7 +102,11 @@ function attachTilemapFilter( select, chart, data ) {
     const updated = getMapConfig( formatted, evt.target.value );
     chart.update( updated );
     const updatedTitleObj = chart.options.yAxis[0].title;
-    updateTilemapLegend( chart.renderTo, updated, updatedTitleObj ? updatedTitleObj.text : '' );
+    updateTilemapLegend(
+      chart.renderTo,
+      updated,
+      updatedTitleObj ? updatedTitleObj.text : ''
+    );
   } );
 }
 
@@ -107,10 +115,12 @@ function attachTilemapFilter( select, chart, data ) {
  * @param {object} node The chart node
  * @param {object} data The data object
  * @param {string } legendTitle The legend title
-*/
+ */
 function updateTilemapLegend( node, data, legendTitle ) {
   const classes = data.colorAxis.dataClasses;
-  const legend = node.parentNode.getElementsByClassName( 'o-simple-chart_tilemap_legend' )[0];
+  const legend = node.parentNode.getElementsByClassName(
+    'o-simple-chart_tilemap_legend'
+  )[0];
   legend.innerHTML = '';
   const colors = [];
   const labels = [];
@@ -145,7 +155,9 @@ function getShortCode( data ) {
     if ( usLayout[data[keys[i]]] ) return keys[i];
   }
   /* eslint-disable-next-line */
-  return console.error( 'Unable to determine state shortcode. Data is misformatted for simple-chart.' );
+  return console.error(
+    'Unable to determine state shortcode. Data is misformatted for simple-chart.'
+  );
 }
 
 /**
@@ -177,17 +189,37 @@ function getMapConfig( series, date ) {
   const step2 = step1 + step;
   const step3 = step2 + step;
   const step4 = step3 + step;
-  const trimTenth = v => Math.round( ( v - 0.1 ) * 10
-  ) / 10;
+  const trimTenth = v => Math.round( ( v - 0.1 ) * 10 ) / 10;
   return {
     colorAxis: {
       dataClasses: [
-        { from: min, to: step1, color: '#addc91', name: `${ min } - ${ trimTenth( step1 ) }` },
-        { from: step1, to: step2, color: '#e2efd8', name: `${ step1 } - ${ trimTenth( step2 ) }` },
-        { from: step2, to: step3, color: '#ffffff', name: `${ step2 } - ${ trimTenth( step3 ) }` },
-        { from: step3, to: step4, color: '#d6e8fa', name: `${ step3 } - ${ trimTenth( step4 ) }` },
+        {
+          from: min,
+          to: step1,
+          color: '#addc91',
+          name: `${ min } - ${ trimTenth( step1 ) }`
+        },
+        {
+          from: step1,
+          to: step2,
+          color: '#e2efd8',
+          name: `${ step1 } - ${ trimTenth( step2 ) }`
+        },
+        {
+          from: step2,
+          to: step3,
+          color: '#ffffff',
+          name: `${ step2 } - ${ trimTenth( step3 ) }`
+        },
+        {
+          from: step3,
+          to: step4,
+          color: '#d6e8fa',
+          name: `${ step3 } - ${ trimTenth( step4 ) }`
+        },
         { from: step4, color: '#7eb7e8', name: `${ step4 } - ${ max }` }
-      ]},
+      ]
+    },
     series: [ { clip: false, data: added } ]
   };
 }
@@ -205,12 +237,18 @@ function init( chartNode, target, data, dataAttributes ) {
   const tilemapOptions = makeTilemapOptions( data, dataAttributes );
   const chart = Highmaps.mapChart( target, tilemapOptions );
 
-  const legend = target.parentNode.getElementsByClassName( 'o-simple-chart_tilemap_legend' )[0];
+  const legend = target.parentNode.getElementsByClassName(
+    'o-simple-chart_tilemap_legend'
+  )[0];
   legend.style.display = 'block';
   updateTilemapLegend( target, tilemapOptions, yAxisLabel );
 
-  makeTilemapSelect( chartNode, chart, data,
-    transform && chartHooks[transform] );
+  makeTilemapSelect(
+    chartNode,
+    chart,
+    data,
+    transform && chartHooks[transform]
+  );
 
   /**
    * Fixes tilemap clipping

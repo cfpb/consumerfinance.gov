@@ -1,11 +1,10 @@
-const module = require(
-  '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation'
-);
+const module = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation' );
 
 const testName = 'Iñtërnâtiô Nàlizætiøn';
 
 // Regular expression to check formal correctness of new encoding
-const encodingRe = /^==(?:[A-Za-z\d-_]{4})*?(?:[A-Za-z\d-_]{2}(?:==)?|[A-Za-z\d-_]{3}=?)?$/;
+const encodingRe =
+  /^==(?:[A-Za-z\d-_]{4})*?(?:[A-Za-z\d-_]{2}(?:==)?|[A-Za-z\d-_]{3}=?)?$/;
 
 describe( 'obfuscation module', () => {
   it( 'can encode in URL, replacing hash', () => {
@@ -72,5 +71,4 @@ describe( 'obfuscation module', () => {
       expect( module.decodeNameFromUrl( url ) ).toEqual( 'ABCD' );
     }
   } );
-
 } );

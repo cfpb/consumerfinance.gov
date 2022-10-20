@@ -10,7 +10,6 @@ const _plurals = {
 };
 
 class MortgagePerformanceMap {
-
   constructor( { container } ) {
     this.$container = document.getElementById( container );
     this.$form = this.$container.querySelector( '#mp-map-controls' );
@@ -47,7 +46,6 @@ class MortgagePerformanceMap {
     this.renderYears();
     this.setDate();
   }
-
 }
 
 MortgagePerformanceMap.prototype.eventListeners = function() {
@@ -61,7 +59,9 @@ MortgagePerformanceMap.prototype.eventListeners = function() {
 
 MortgagePerformanceMap.prototype.onClick = function( event ) {
   const change = new Event( 'change' );
-  this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).checked = false;
+  this.$container.querySelector(
+    'input[name="mp-map_geo"]:checked'
+  ).checked = false;
   this.$form.dispatchEvent( change );
   event.preventDefault();
 };
@@ -72,8 +72,11 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
   let geoName;
   let date;
 
-  const abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
-  const geoType = this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).id.replace( 'mp-map_geo-', '' );
+  const abbr =
+    this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
+  const geoType = this.$container
+    .querySelector( 'input[name="mp-map_geo"]:checked' )
+    .id.replace( 'mp-map_geo-', '' );
 
   switch ( event.target.id ) {
     case 'mp-map_geo-state':
@@ -139,7 +142,6 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
   }
 
   return this.store.dispatch( action );
-
 };
 
 MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
@@ -157,7 +159,6 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
     this.chart.highchart.chart.get( prevId ).select( false );
   }
   if ( prevState.date === state.date && prevType === currType && currId ) {
-
     /* Highcharts zooming is unreliable and difficult to customize :(
        https://api.highcharts.com/class-reference/Highcharts.Chart.html#mapZoom
        If it's a state or non-metro, zoom in more than other location types */
@@ -183,20 +184,25 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
   if ( prevState.date !== state.date || prevType !== currType ) {
     // this.store.dispatch( actions.startLoading() );
     this.chart.highchart.chart.showLoading();
-    this.chart.update( {
-      source: `map-data/${ this.timespan }/${ _plurals[currType] }/${ state.date }`,
-      metadata: _plurals[currType],
-      tooltipFormatter: this.renderTooltip()
-    } ).then( () => {
-      // this.store.dispatch( actions.stopLoading() );
-      if ( prevState.date !== state.date && currId ) {
-        this.chart.highchart.chart.get( currId ).select( true );
-      }
-    } );
+    this.chart
+      .update( {
+        source: `map-data/${ this.timespan }/${ _plurals[currType] }/${ state.date }`,
+        metadata: _plurals[currType],
+        tooltipFormatter: this.renderTooltip()
+      } )
+      .then( () => {
+        // this.store.dispatch( actions.stopLoading() );
+        if ( prevState.date !== state.date && currId ) {
+          this.chart.highchart.chart.get( currId ).select( true );
+        }
+      } );
   }
 };
 
-MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) {
+MortgagePerformanceMap.prototype.renderChartForm = function(
+  prevState,
+  state
+) {
   let geoType = state.geo.type;
   if ( state.isLoadingCounties ) {
     geoType = 'county';
@@ -205,7 +211,9 @@ MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) 
     geoType = 'metro';
   }
   const geo = this.$container.querySelector( `#mp-map-${ geoType }-container` );
-  const containers = this.$container.querySelectorAll( '.mp-map-select-container' );
+  const containers = this.$container.querySelectorAll(
+    '.mp-map-select-container'
+  );
   for ( let i = 0; i < containers.length; ++i ) {
     utils.hideEl( containers[i] );
   }
@@ -218,7 +226,10 @@ MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) 
   return geoType;
 };
 
-MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state ) {
+MortgagePerformanceMap.prototype.renderChartTitle = function(
+  prevState,
+  state
+) {
   let loc = state.geo.name;
   if ( !utils.isDateValid( state.date, this.endDate ) ) {
     return;

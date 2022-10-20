@@ -33,6 +33,4 @@ function create( tag, options ) {
   return elem;
 }
 
-export {
-  create
-};
+export { create };

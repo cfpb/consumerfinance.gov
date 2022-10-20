@@ -12,7 +12,6 @@ function getChartTitle( evt ) {
   );
   if ( titleNodes.length ) return titleNodes[0].textContent;
   return 'Unknown chart title';
-
 }
 
 /**
@@ -21,17 +20,16 @@ function getChartTitle( evt ) {
  * @returns {string} The formatted time label
  **/
 function getTimeRange( evt ) {
-  return `${
-    new Date( evt.min ).toLocaleDateString( 'en-US' )
-  } - ${ new Date( evt.max ).toLocaleDateString( 'en-US' )
-  }`;
+  return `${ new Date( evt.min ).toLocaleDateString( 'en-US' ) } - ${ new Date(
+    evt.max
+  ).toLocaleDateString( 'en-US' ) }`;
 }
 
 /**
  * Sends chart event data to Google Analytics
  * @param {object} evt  The chart event
-* @param {string} name The action name
-* @param {string} label The event label. If absent a time range label will be computed.
+ * @param {string} name The action name
+ * @param {string} label The event label. If absent a time range label will be computed.
  **/
 function trackChartEvent( evt, name, label ) {
   if ( !label ) label = getTimeRange( evt );
@@ -40,7 +38,6 @@ function trackChartEvent( evt, name, label ) {
     action: `${ name }: ${ getChartTitle( evt ) }`,
     label
   } );
-
 }
 
 export default trackChartEvent;

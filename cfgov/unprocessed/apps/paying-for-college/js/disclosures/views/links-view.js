@@ -33,16 +33,15 @@ const linksView = {
    * @param {object} values Financial model values
    */
   setCollegeScorecardLink: function( values ) {
-    const scorecardURL = 'https://collegescorecard.ed.gov/school/?' +
-      values.schoolID;
+    const scorecardURL =
+      'https://collegescorecard.ed.gov/school/?' + values.schoolID;
     if ( scorecardURL ) {
       const $scorecardSchool = $( '<a>', {
         'href': scorecardURL,
         'target': '_blank',
         'rel': 'noopener noreferrer',
         'class': this.$scorecardSchoolLink.attr( 'class' )
-      } )
-        .text( this.$scorecardSchoolLink.text() );
+      } ).text( this.$scorecardSchoolLink.text() );
       this.$scorecardSchoolLink.replaceWith( $scorecardSchool );
     }
   },
@@ -53,16 +52,17 @@ const linksView = {
    * @param {object} values Financial model values
    */
   setGraduationLink: function( values ) {
-    const gradURL = 'https://collegescorecard.ed.gov/school/?' + values.schoolID +
-    '#graduation';
+    const gradURL =
+      'https://collegescorecard.ed.gov/school/?' +
+      values.schoolID +
+      '#graduation';
     if ( gradURL ) {
       const $gradLink = $( '<a>', {
         'href': gradURL,
         'target': '_blank',
         'rel': 'noopener noreferrer',
         'class': this.$gradLinkText.attr( 'class' )
-      } )
-        .text( this.$gradLinkText.text() );
+      } ).text( this.$gradLinkText.text() );
       this.$gradLinkText.replaceWith( $gradLink );
     }
   },
@@ -72,16 +72,17 @@ const linksView = {
    * @param {object} values Financial model values
    */
   setLoanDefaultLink: function( values ) {
-    const defaultURL = 'http://nces.ed.gov/collegenavigator/?id=' +
-      values.schoolID + '#fedloans';
+    const defaultURL =
+      'http://nces.ed.gov/collegenavigator/?id=' +
+      values.schoolID +
+      '#fedloans';
     if ( defaultURL ) {
       const $defaultLink = $( '<a>', {
         'href': defaultURL,
         'target': '_blank',
         'rel': 'noopener noreferrer',
         'class': this.$defaultLinkText.attr( 'class' )
-      } )
-        .text( this.$defaultLinkText.text() );
+      } ).text( this.$defaultLinkText.text() );
       this.$defaultLinkText.replaceWith( $defaultLink );
     }
   },
@@ -99,8 +100,7 @@ const linksView = {
         'target': '_blank',
         'rel': 'noopener noreferrer',
         'class': this.$schoolLinkText.attr( 'class' )
-      } )
-        .text( this.$schoolLinkText.text() );
+      } ).text( this.$schoolLinkText.text() );
       this.$schoolLinkText.replaceWith( $schoolLink );
     }
   },
@@ -126,7 +126,6 @@ const linksView = {
     const scorecardQuery = constructScorecardSearch( pcip, zip, radius );
     this.$scorecardLink.attr( 'href', scorecardURL + scorecardQuery );
   }
-
 };
 
 module.exports = linksView;

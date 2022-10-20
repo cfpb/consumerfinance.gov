@@ -1,11 +1,6 @@
-import {
-  Delay,
-  addEventListenerToElem,
-  track
-} from './util/analytics-util';
+import { Delay, addEventListenerToElem, track } from './util/analytics-util';
 
 const OAHRCAnalytics = ( function() {
-
   // credit score slider
   const rangeSliders = document.querySelectorAll( '.rangeslider' );
   let rangeSliderEl;
@@ -13,7 +8,9 @@ const OAHRCAnalytics = ( function() {
     rangeSliderEl = rangeSliders[i];
     addEventListenerToElem( rangeSliderEl, 'click', _rangeSliderEventHandler );
     addEventListenerToElem(
-      rangeSliderEl, 'touchend', _rangeSliderEventHandler
+      rangeSliderEl,
+      'touchend',
+      _rangeSliderEventHandler
     );
   }
 
@@ -118,7 +115,11 @@ const OAHRCAnalytics = ( function() {
   // page reload link
   const reloadLinkEl = document.querySelector( '#reload-link' );
   addEventListenerToElem( reloadLinkEl, 'click', function() {
-    track( 'OAH Rate Tool Interactions', 'Revert', '/owning-a-home/rate-checker' );
+    track(
+      'OAH Rate Tool Interactions',
+      'Revert',
+      '/owning-a-home/rate-checker'
+    );
   } );
 
   // next steps: I plan to buy in the next couple of months

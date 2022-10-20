@@ -11,7 +11,13 @@ import defaultBar from './bar-styles.js';
 import defaultDatetime from './datetime-styles.js';
 import defaultLine from './line-styles.js';
 import tilemapChart from './tilemap-chart.js';
-import { alignMargin, extractSeries, formatSeries, makeFormatter, overrideStyles } from './utils.js';
+import {
+  alignMargin,
+  extractSeries,
+  formatSeries,
+  makeFormatter,
+  overrideStyles
+} from './utils.js';
 import { initFilters } from './data-filters.js';
 import { convertEpochToDateString } from './utils';
 
@@ -47,7 +53,9 @@ function fetchData( url, isCSV ) {
            This strips those quotes */
         d = d.replace( /^"(#|\/\/)|(\n)"(#|\/\/)/g, '$1$2$3' );
         d = Papa.parse( d, {
-          header: true, comments: true, skipEmptyLines: true
+          header: true,
+          comments: true,
+          skipEmptyLines: true
         } ).data;
       }
       return Promise.resolve( d );
@@ -82,9 +90,18 @@ function getDefaultChartObject( type ) {
  * @param {object} dataAttributes Data attributes passed to the chart target node
  * @returns {object} The configured style object
  */
+// eslint-disable-next-line max-lines-per-function
 function makeChartOptions( data, dataAttributes ) {
-  const { chartType, styleOverrides, description, xAxisSource, xAxisLabel,
-    yAxisLabel, projectedMonths, defaultSeries } = dataAttributes;
+  const {
+    chartType,
+    styleOverrides,
+    description,
+    xAxisSource,
+    xAxisLabel,
+    yAxisLabel,
+    projectedMonths,
+    defaultSeries
+  } = dataAttributes;
   let defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
 
   if ( styleOverrides ) {
@@ -93,7 +110,8 @@ function makeChartOptions( data, dataAttributes ) {
 
   if ( xAxisSource && chartType !== 'datetime' ) {
     defaultObj.xAxis.categories = getCategoriesFromXAxisSource(
-      data.raw, xAxisSource
+      data.raw,
+      xAxisSource
     );
   }
 
@@ -139,7 +157,6 @@ function makeChartOptions( data, dataAttributes ) {
     defaultObj = addProjectedMonths( defaultObj, projectedMonths );
     defaultObj.legend.y = -10;
     defaultObj.chart.marginTop = 180;
-
   }
 
   if ( defaultSeries === 'False' ) {
@@ -164,12 +181,11 @@ function makeChartOptions( data, dataAttributes ) {
  * @returns {object} The config object with projected months
  */
 function addProjectedMonths( chartObject, numMonths ) {
-
   // Convert the number of projected months into a timestamp
   const lastChartDate = chartObject.series[0].data.at( -1 ).x;
 
   // Convert lastChartDate from months to milliseconds for Epoch format
-  const convertedProjectedDate = lastChartDate - ( numMonths * 30 * msInDay );
+  const convertedProjectedDate = lastChartDate - numMonths * 30 * msInDay;
   const projectedDate = {
     humanFriendly: convertEpochToDateString( convertedProjectedDate ),
     timestamp: convertedProjectedDate
@@ -177,9 +193,11 @@ function addProjectedMonths( chartObject, numMonths ) {
 
   /* Add a vertical line and some explanatory text at the starting
      point of the projected data */
-  chartObject.xAxis.plotLines = [ {
-    value: projectedDate.timestamp
-  } ];
+  chartObject.xAxis.plotLines = [
+    {
+      value: projectedDate.timestamp
+    }
+  ];
 
   // Save a reference to the common styles render event
   const commonRenderCallback = chartObject.chart.events.render;
@@ -191,7 +209,11 @@ function addProjectedMonths( chartObject, numMonths ) {
     if ( this.projectedMonthsLabel ) this.projectedMonthsLabel.destroy();
 
     this.projectedMonthsLabel = this.renderer
-      .text( `Values after ${ projectedDate.humanFriendly } are projected`, this.plotWidth - 218, 165 )
+      .text(
+        `Values after ${ projectedDate.humanFriendly } are projected`,
+        this.plotWidth - 218,
+        165
+      )
       .css( {
         fontSize: '15px'
       } )
@@ -202,11 +224,14 @@ function addProjectedMonths( chartObject, numMonths ) {
      at the projected data starting point */
   chartObject.series = chartObject.series.map( singluarSeries => {
     singluarSeries.zoneAxis = 'x';
-    singluarSeries.zones = [ {
-      value: projectedDate.timestamp
-    }, {
-      dashStyle: 'dot'
-    } ];
+    singluarSeries.zones = [
+      {
+        value: projectedDate.timestamp
+      },
+      {
+        dashStyle: 'dot'
+      }
+    ];
     return singluarSeries;
   } );
   return chartObject;
@@ -259,9 +284,8 @@ function buildChart( chartNode ) {
   const { source, transform, chartType } = dataAttributes;
 
   resolveData( source.trim() ).then( raw => {
-    const transformed = transform && chartHooks[transform] ?
-      chartHooks[transform]( raw ) :
-      null;
+    const transformed =
+      transform && chartHooks[transform] ? chartHooks[transform]( raw ) : null;
 
     const series = extractSeries( transformed || raw, dataAttributes );
 
@@ -276,21 +300,15 @@ function buildChart( chartNode ) {
     if ( chartType === 'tilemap' ) {
       chart = tilemapChart.init( chartNode, target, data, dataAttributes );
     } else {
-      chart = Highcharts.chart(
-        target,
-        makeChartOptions( data, dataAttributes )
-      );
+      chart = Highcharts.chart( target, makeChartOptions( data, dataAttributes ) );
 
-      initFilters(
-        dataAttributes, chartNode, chart, data
-      );
+      initFilters( dataAttributes, chartNode, chart, data );
     }
 
     // Make sure chart is displayed properly on print
     window.matchMedia( 'print' ).addListener( function() {
       chart.reflow();
     } );
-
   } );
 }
 

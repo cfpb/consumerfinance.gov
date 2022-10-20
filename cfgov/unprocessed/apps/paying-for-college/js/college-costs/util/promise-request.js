@@ -10,7 +10,6 @@ function promiseRequest( method, url ) {
   const xhr = new XMLHttpRequest();
 
   return new Promise( function( resolve, reject ) {
-
     // Completed xhr
     xhr.onreadystatechange = function() {
       // Do not run unless xhr is complete
@@ -25,10 +24,7 @@ function promiseRequest( method, url ) {
     xhr.open( method, url, true );
 
     xhr.send();
-
   } );
 }
 
-export {
-  promiseRequest
-};
+export { promiseRequest };

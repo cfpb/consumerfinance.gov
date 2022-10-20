@@ -6,10 +6,12 @@ import Analytics from '../../../../../js/modules/Analytics';
  * @param {string} label - A value or label for the action
  */
 function sendAnalyticsEvent( action, label ) {
-  const eventData = Analytics.getDataLayerOptions( action, label, 'P4C Financial Path Interaction' );
+  const eventData = Analytics.getDataLayerOptions(
+    action,
+    label,
+    'P4C Financial Path Interaction'
+  );
   Analytics.sendEvent( eventData );
 }
 
-export {
-  sendAnalyticsEvent
-};
+export { sendAnalyticsEvent };

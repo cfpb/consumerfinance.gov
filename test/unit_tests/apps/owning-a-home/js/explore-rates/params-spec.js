@@ -63,21 +63,21 @@ describe( 'explore-rates/params', () => {
   it( 'should be able to return all stored values', () => {
     let UNDEFINED;
     const mockData = {
-      'credit-score':   800,
-      'down-payment':   '20,000',
-      'dp-constant':    '',
-      'house-price':    '200,000',
-      'location':       'AL',
-      'loan-amount':    UNDEFINED,
+      'credit-score': 800,
+      'down-payment': '20,000',
+      'dp-constant': '',
+      'house-price': '200,000',
+      'location': 'AL',
+      'loan-amount': UNDEFINED,
       'rate-structure': 'fixed',
-      'loan-term':      30,
-      'loan-type':      'conf',
-      'arm-type':       '5-1',
-      'edited':         false,
-      'isJumbo':        false,
-      'prevLoanType':   '',
-      'prevLocation':   '',
-      'request':        UNDEFINED
+      'loan-term': 30,
+      'loan-type': 'conf',
+      'arm-type': '5-1',
+      'edited': false,
+      'isJumbo': false,
+      'prevLoanType': '',
+      'prevLocation': '',
+      'request': UNDEFINED
     };
     const storedValues = params.getAllParams();
     expect( storedValues ).toStrictEqual( mockData );

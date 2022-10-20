@@ -26,7 +26,9 @@ function date( field, currentStatus ) {
            This converts numbers from any other format to MM/DD/YYYY */
   if ( !isNaN( field.valueAsNumber ) ) {
     const date = new Date( field.valueAsNumber );
-    valueToEval = `${ date.getUTCMonth() + 1 }/${ date.getUTCDate() }/${ date.getUTCFullYear() }`;
+    valueToEval = `${
+      date.getUTCMonth() + 1
+    }/${ date.getUTCDate() }/${ date.getUTCFullYear() }`;
   }
 
   /* Date regexes match the date patterns that are
@@ -40,9 +42,10 @@ function date( field, currentStatus ) {
   const dayMonthYearRegex =
     /^(?:\d{1}|\d{2})(?:\-|\/)(?:\d{1}|\d{2})(?:\-|\/)(?:\d{4}|\d{2})$/;
 
-  const inputIsValid = yearRegex.test( valueToEval ) ||
-                       monthYearRegex.test( valueToEval ) ||
-                       dayMonthYearRegex.test( valueToEval );
+  const inputIsValid =
+    yearRegex.test( valueToEval ) ||
+    monthYearRegex.test( valueToEval ) ||
+    dayMonthYearRegex.test( valueToEval );
 
   if ( valueToEval && !inputIsValid ) {
     status.msg = status.msg || '';
@@ -66,13 +69,15 @@ function email( field, currentStatus, options ) {
   const status = currentStatus || {};
   const opts = options || {};
   const regex =
-    '^[a-z0-9\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+(?:\\.[a-z0-9' +
-    '\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9]' +
+    "^[a-z0-9\u007F-\uffff!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9" +
+    "\u007F-\uffff!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9]" +
     '(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z]{2,}$';
   const emailRegex = new RegExp( regex, 'i' );
   const emptyValidation = empty( field );
-  const isFilled = typeof emptyValidation.required === 'undefined' ?
-    true : emptyValidation.required;
+  const isFilled =
+    typeof emptyValidation.required === 'undefined' ?
+      true :
+      emptyValidation.required;
   let state;
   let key;
 
@@ -170,10 +175,4 @@ function _checkableInput( field, currentStatus, fieldset, type ) {
   return currentStatus;
 }
 
-export {
-  date,
-  email,
-  empty,
-  checkbox,
-  radio
-};
+export { date, email, empty, checkbox, radio };

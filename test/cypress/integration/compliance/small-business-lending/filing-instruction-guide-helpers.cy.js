@@ -1,5 +1,4 @@
 export class FilingInstructionGuide {
-
   url() {
     return Cypress.env( 'FIG_URL' );
   }
@@ -47,5 +46,4 @@ export class FilingInstructionGuide {
   scrollToBottom() {
     return cy.get( 'footer' ).scrollIntoView( { duration: 1000 } );
   }
-
 }

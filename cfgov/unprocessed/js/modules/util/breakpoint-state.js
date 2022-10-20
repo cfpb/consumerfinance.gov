@@ -24,8 +24,8 @@ function _inBreakpointRange( breakpointRange, width ) {
   let breakpointRangeMax = breakpointRange.max;
 
   // Whether the user has set a custom size for the font in their browser.
-  const useEmsConversation = _getBodyBaseFontSize() > 0 &&
-                             _getBodyBaseFontSize() !== 16;
+  const useEmsConversation =
+    _getBodyBaseFontSize() > 0 && _getBodyBaseFontSize() !== 16;
   if ( useEmsConversation ) {
     /* 16 = base font size without adjustments.
        The CSS converts breakpoints to ems, which then change the width of the
@@ -84,9 +84,7 @@ function viewportIsIn( breakpointGroup ) {
     ( breakpointGroup === DESKTOP &&
       ( currentBreakpoint.bpMED ||
         currentBreakpoint.bpLG ||
-        currentBreakpoint.bpXL
-      )
-    )
+        currentBreakpoint.bpXL ) )
   ) {
     response = true;
   }
@@ -95,10 +93,4 @@ function viewportIsIn( breakpointGroup ) {
 }
 
 // Expose public methods.
-export {
-  MOBILE,
-  TABLET,
-  DESKTOP,
-  getBreakpointState,
-  viewportIsIn
-};
+export { MOBILE, TABLET, DESKTOP, getBreakpointState, viewportIsIn };

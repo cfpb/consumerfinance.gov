@@ -13,7 +13,10 @@ function getApi( url ) {
         resolve( resp );
       } )
       .catch( function( error ) {
-        console.log( 'An error occurred accessing ' + url.replace( /[^a-z0-9]/gi, '' ), error );
+        console.log(
+          'An error occurred accessing ' + url.replace( /[^a-z0-9]/gi, '' ),
+          error
+        );
         reject( new Error( error ) );
       } );
   } );
@@ -27,8 +30,10 @@ function getApi( url ) {
 function schoolSearch( searchTerm ) {
   searchTerm = searchTerm.trim().replace( /\W+/g, ' ' );
   if ( searchTerm.length > 2 ) {
-    const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
-      '/api/search-schools.json?q=' + searchTerm;
+    const url =
+      '/paying-for-college2/understanding-your-financial-aid-offer' +
+      '/api/search-schools.json?q=' +
+      searchTerm;
     return getApi( url );
   }
   return Promise.reject( new Error( 'Failure - search term too short' ) );
@@ -39,7 +44,8 @@ function schoolSearch( searchTerm ) {
  * @returns {Object} Promise
  */
 function getConstants() {
-  const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
+  const url =
+    '/paying-for-college2/understanding-your-financial-aid-offer' +
     '/api/constants/';
   return getApi( url );
 }
@@ -49,7 +55,8 @@ function getConstants() {
  * @returns {Object} Promise
  */
 function getExpenses() {
-  const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
+  const url =
+    '/paying-for-college2/understanding-your-financial-aid-offer' +
     '/api/expenses/';
   return getApi( url );
 }
@@ -60,15 +67,12 @@ function getExpenses() {
  * @returns {Object} Promise
  */
 function getSchoolData( iped ) {
-  const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
-    '/api/school/' + iped;
+  const url =
+    '/paying-for-college2/understanding-your-financial-aid-offer' +
+    '/api/school/' +
+    iped;
 
   return getApi( url );
 }
 
-export {
-  getConstants,
-  getExpenses,
-  getSchoolData,
-  schoolSearch
-};
+export { getConstants, getExpenses, getSchoolData, schoolSearch };

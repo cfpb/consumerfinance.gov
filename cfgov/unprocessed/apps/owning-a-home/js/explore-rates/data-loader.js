@@ -12,7 +12,8 @@ function getData( fieldToFetch ) {
   return {
     promise: fetch(
       `${ config.rateCheckerAPI }?${ new URLSearchParams( fieldToFetch ) }`,
-      { signal } ),
+      { signal }
+    ),
     controller
   };
 }
@@ -23,11 +24,9 @@ function getData( fieldToFetch ) {
  * @returns {Promise} A promise for the request.
  */
 function getCounties( state ) {
-  return fetch( `${ config.countyAPI }?${ new URLSearchParams( { state } ) }` )
-    .then( res => res.json() );
+  return fetch( `${ config.countyAPI }?${ new URLSearchParams( { state } ) }` ).then(
+    res => res.json()
+  );
 }
 
-export {
-  getData,
-  getCounties
-};
+export { getData, getCounties };

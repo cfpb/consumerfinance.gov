@@ -1,8 +1,10 @@
 // Required modules.
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import GlobalSearch from '../molecules/GlobalSearch';
 import MegaMenu from '../organisms/MegaMenu';
-
 
 /**
  * Header
@@ -15,7 +17,6 @@ import MegaMenu from '../organisms/MegaMenu';
  * @returns {Object} An Header instance.
  */
 function Header( element ) {
-
   const BASE_CLASS = 'o-header';
 
   const _dom = checkDom( element, BASE_CLASS );
@@ -103,7 +104,6 @@ function Header( element ) {
     _hideOverlay();
   }
 
-
   /**
    * Shows the overlay.
    */
@@ -121,7 +121,6 @@ function Header( element ) {
       _overlay.classList.add( 'u-hidden' );
     }
   }
-
 
   this.init = init;
 

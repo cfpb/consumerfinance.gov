@@ -9,7 +9,6 @@ function reset() {
   count = 1;
 
   DT.applyAll( '.input-address', function( element, index ) {
-
     if ( element.getAttribute( 'name' ) === 'address1' ) {
       element.value = '';
       DT.removeClass( element, 'error' );
@@ -59,7 +58,6 @@ function toggleError( evt ) {
     DT.removeClass( target, 'error' );
   }
 }
-
 
 export default {
   reset,

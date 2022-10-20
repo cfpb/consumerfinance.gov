@@ -67,9 +67,12 @@ function initializeMap() {
     const fcm = document.getElementById( 'hud_search_container' );
     fcm.classList.remove( 'no-js' );
     window.L.mapbox.accessToken = mapboxAccessToken;
-    map = window.L.mapbox.map( 'hud_hca_api_map_container' )
+    map = window.L.mapbox
+      .map( 'hud_hca_api_map_container' )
       .setView( [ 40, -80 ], 2 )
-      .addLayer( window.L.mapbox.styleLayer( 'mapbox://styles/mapbox/streets-v11' ) );
+      .addLayer(
+        window.L.mapbox.styleLayer( 'mapbox://styles/mapbox/streets-v11' )
+      );
 
     if ( hudData.counseling_agencies ) {
       updateMap( hudData );
@@ -146,15 +149,15 @@ function updateMap( data ) {
       }
 
       const icon = window.L.icon( {
-        iconUrl: '/static/apps/find-a-housing-counselor/img/hud_gmap/agc_' + number + '.png',
+        iconUrl:
+          '/static/apps/find-a-housing-counselor/img/hud_gmap/agc_' +
+          number +
+          '.png',
         iconAnchor: [ 14, 32 ],
         iconSize: [ 27, 32 ]
       } );
 
-      const marker = new window.L.Marker(
-        position,
-        { icon: icon }
-      ).addTo( map );
+      const marker = new window.L.Marker( position, { icon: icon } ).addTo( map );
       markerArray[i] = marker;
 
       marker.on( 'click', function() {
@@ -170,7 +173,10 @@ function updateMap( data ) {
     const xd = ( xmax - xmin ) / 10;
     const yd = ( ymax - ymin ) / 10;
 
-    map.fitBounds( [ [ ymin - yd, xmin - xd ], [ ymax + yd, xmax + xd ] ] );
+    map.fitBounds( [
+      [ ymin - yd, xmin - xd ],
+      [ ymax + yd, xmax + xd ]
+    ] );
   }
 }
 

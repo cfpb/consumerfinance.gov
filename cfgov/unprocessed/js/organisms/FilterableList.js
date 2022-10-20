@@ -1,5 +1,8 @@
 // Required modules.
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import FilterableListControls from './FilterableListControls';
 import Notification from '../molecules/Notification';
 
@@ -42,9 +45,7 @@ function FilterableList( element ) {
       _fieldInvalidHandler
     );
 
-    _notificationContainer = _dom.querySelector(
-      `.${ BASE_CLASS }_notification`
-    );
+    _notificationContainer = _dom.querySelector( `.${ BASE_CLASS }_notification` );
     const notificationDom = _notificationContainer.querySelector(
       `.${ Notification.BASE_CLASS }`
     );
@@ -63,10 +64,7 @@ function FilterableList( element ) {
    * @param {Object} event - Faux event object from EventObserver.
    */
   function _fieldInvalidHandler( event ) {
-    _notification.update(
-      Notification.ERROR,
-      event.message
-    );
+    _notification.update( Notification.ERROR, event.message );
 
     _notification.show();
     _notificationContainer.classList.remove( 'u-hidden' );

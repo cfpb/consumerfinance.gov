@@ -50,7 +50,6 @@ function handleDisabledSubmit( event ) {
   event.preventDefault();
 }
 
-
 /**
  * Sets the disabled state of the submit button
  */
@@ -68,7 +67,6 @@ function enableSubmit() {
   submitDom.removeEventListener( 'click', handleDisabledSubmit );
   submitDom.addEventListener( 'click', evt => handleAnalytics( evt.target ) );
 }
-
 
 /**
  * Updates the status of the fieldset in the data store
@@ -137,9 +135,7 @@ function setUpData() {
 
   for ( let i = 0; i < questionsLength; i++ ) {
     const questionID = questionsDom[i].id;
-    const childRadios = document.querySelectorAll(
-      '#' + questionID + ' input'
-    );
+    const childRadios = document.querySelectorAll( '#' + questionID + ' input' );
 
     questionStates[questionID] = checkQuestionState( childRadios );
   }

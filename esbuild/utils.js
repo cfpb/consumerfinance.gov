@@ -15,20 +15,28 @@ function getAll( path, regex = /.js$/ ) {
 
 // Files that should not be copied and directories that should not be walked
 const blocklist = [
-  'node_modules', 'npm-packages-offline-cache', '.yarnrc', 'yarn.lock',
-  'package.json', 'config.json', '.gitkeep', 'root'
+  'node_modules',
+  'npm-packages-offline-cache',
+  '.yarnrc',
+  'yarn.lock',
+  'package.json',
+  'config.json',
+  '.gitkeep',
+  'root'
 ];
 
 /**
  * @param {string} dir Current directory to walk
-**/
+ **/
 async function getFiles( dir ) {
   const dirents = await readdir( dir, { withFileTypes: true } );
-  const files = await Promise.all( dirents.map( dirent => {
-    if ( blocklist.indexOf( dirent.name ) > -1 ) return '';
-    const res = resolve( dir, dirent.name );
-    return dirent.isDirectory() ? getFiles( res ) : res;
-  } ) );
+  const files = await Promise.all(
+    dirents.map( dirent => {
+      if ( blocklist.indexOf( dirent.name ) > -1 ) return '';
+      const res = resolve( dir, dirent.name );
+      return dirent.isDirectory() ? getFiles( res ) : res;
+    } )
+  );
   return files.flat().filter( v => v );
 }
 
@@ -41,10 +49,7 @@ async function copyAll( from, to ) {
   const rFrom = resolve( from );
   const rTo = resolve( to );
   const files = await getFiles( rFrom );
-  return files.map( f => copyFile(
-    f, f.replace( rFrom, rTo )
-  ) );
+  return files.map( f => copyFile( f, f.replace( rFrom, rTo ) ) );
 }
-
 
 module.exports = { getAll, getFiles, copyAll };

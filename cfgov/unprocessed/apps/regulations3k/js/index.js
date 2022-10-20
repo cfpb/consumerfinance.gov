@@ -7,7 +7,6 @@ const navHeader = find( '.o-regs3k-navigation_header' );
 const navItems = find( '.o-regs3k-sections' );
 const regContent = find( '.content_main.regulations3k' );
 
-
 /**
  * toggleSecondaryNav - Show/hide the secondary nav on smaller screens
  */
@@ -37,9 +36,11 @@ const bindAnalytics = () => {
  */
 const init = () => {
   if ( 'serviceWorker' in navigator ) {
-    navigator.serviceWorker.register( '/regulations3k-service-worker.js' ).catch( err => {
-      console.error( 'Error during service worker registration:', err );
-    } );
+    navigator.serviceWorker
+      .register( '/regulations3k-service-worker.js' )
+      .catch( err => {
+        console.error( 'Error during service worker registration:', err );
+      } );
   }
   if ( navHeader ) {
     navHeader.classList.add( 'o-expandable_target__collapsed' );

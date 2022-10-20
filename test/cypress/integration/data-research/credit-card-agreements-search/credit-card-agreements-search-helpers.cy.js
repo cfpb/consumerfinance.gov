@@ -1,5 +1,4 @@
 export class CreditCardAgreementSearch {
-
   open() {
     cy.visit( '/credit-cards/agreements/' );
   }
@@ -15,5 +14,4 @@ export class CreditCardAgreementSearch {
   agreementsList() {
     return cy.get( '#ccagrsearch' );
   }
-
 }

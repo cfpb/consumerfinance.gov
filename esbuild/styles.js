@@ -34,17 +34,20 @@ module.exports = function( baseConfig ) {
   esbuild.build( {
     ...baseConfig,
     entryPoints: cssPaths,
-    plugins: [ postCSSPlugin( {
-      plugins: [ autoprefixer ],
-      lessOptions: {
-        math: 'always',
-        paths: [
-          ...readdirSync( `${ modules }/@cfpb` ).map( v => `${ modules }/@cfpb/${ v }/src` ),
-          `${ modules }/cfpb-chart-builder/src/css`,
-          `${ modules }`
-        ]
-      }
-    } ) ]
+    plugins: [
+      postCSSPlugin( {
+        plugins: [ autoprefixer ],
+        lessOptions: {
+          math: 'always',
+          paths: [
+            ...readdirSync( `${ modules }/@cfpb` ).map(
+              v => `${ modules }/@cfpb/${ v }/src`
+            ),
+            `${ modules }/cfpb-chart-builder/src/css`,
+            `${ modules }`
+          ]
+        }
+      } )
+    ]
   } );
 };
-

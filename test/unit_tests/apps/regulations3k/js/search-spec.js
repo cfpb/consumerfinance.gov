@@ -1,6 +1,4 @@
-const simulateEvent = require(
-  '../../../../util/simulate-event'
-).simulateEvent;
+const simulateEvent = require( '../../../../util/simulate-event' ).simulateEvent;
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
 
 const app = require( `${ BASE_JS_PATH }/js/search.js` );
@@ -50,7 +48,6 @@ function mockWindowLocation() {
 }
 
 describe( 'The Regs3K search page', () => {
-
   beforeEach( () => {
     // Reset global XHR
     global.XMLHttpRequest = xhr;
@@ -72,8 +69,9 @@ describe( 'The Regs3K search page', () => {
 
     simulateEvent( 'submit', form );
 
-    expect( global.location.assign )
-      .toBeCalledWith( 'http://localhost/?q=money&regs=1002' );
+    expect( global.location.assign ).toBeCalledWith(
+      'http://localhost/?q=money&regs=1002'
+    );
   } );
 
   it( 'should clear a filter when its X icon is clicked', () => {
@@ -152,5 +150,4 @@ describe( 'The Regs3K search page', () => {
 
     mockXHR.onreadystatechange();
   } );
-
 } );

@@ -4,7 +4,9 @@ export class FinancialWellBeing {
   }
 
   selectQuestion( questionNumber, answer ) {
-    const id = `#question_${ questionNumber }-${ answer.split( ' ' ).join( '-' ) }`.toLowerCase();
+    const id = `#question_${ questionNumber }-${ answer
+      .split( ' ' )
+      .join( '-' ) }`.toLowerCase();
     cy.get( id ).check( { force: true } );
   }
 
@@ -23,5 +25,4 @@ export class FinancialWellBeing {
   score() {
     return cy.get( 'figure' );
   }
-
 }

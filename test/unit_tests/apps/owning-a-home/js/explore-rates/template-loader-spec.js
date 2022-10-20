@@ -1,10 +1,8 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const templateLoader = require(
-  BASE_JS_PATH + 'js/explore-rates/template-loader'
-);
+const templateLoader = require( BASE_JS_PATH +
+  'js/explore-rates/template-loader' );
 
 describe( 'explore-rates/template-loader', () => {
-
   it( 'should be able to render county template', () => {
     /* eslint-disable camelcase */
     const mockData = {
@@ -52,10 +50,10 @@ describe( 'explore-rates/template-loader', () => {
       '<div class="chart-tooltip">' +
         '<strong class="lenders">1</strong>' +
         '<span class="text">' +
-          'lender is offering <br> ' +
-          'rates at <strong>50%</strong>.' +
+        'lender is offering <br> ' +
+        'rates at <strong>50%</strong>.' +
         '</span>' +
-      '</div>'
+        '</div>'
     );
   } );
 
@@ -69,10 +67,10 @@ describe( 'explore-rates/template-loader', () => {
       '<div class="chart-tooltip">' +
         '<strong class="lenders">3</strong>' +
         '<span class="text">' +
-          'lenders are offering <br> ' +
-          'rates at <strong>60%</strong>.' +
+        'lenders are offering <br> ' +
+        'rates at <strong>60%</strong>.' +
         '</span>' +
-      '</div>'
+        '</div>'
     );
   } );
 } );

@@ -2,7 +2,6 @@ import Store from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerf
 let store;
 
 describe( 'Mortgage Performance line chart store', () => {
-
   beforeEach( () => {
     store = new Store();
   } );
@@ -198,5 +197,4 @@ describe( 'Mortgage Performance line chart store', () => {
     store.dispatch( action );
     expect( store.getState().includeComparison ).toBe( false );
   } );
-
 } );

@@ -45,10 +45,7 @@ const columnChartOpts = {
   title: false,
   tooltip: false,
   xAxis: {
-    categories: [
-      '10 year period',
-      '25 year period'
-    ]
+    categories: [ '10 year period', '25 year period' ]
   },
   yAxis: {
     min: 0,
@@ -59,15 +56,18 @@ const columnChartOpts = {
       format: '${total:,.0f}'
     }
   },
-  series: [ {
-    name: 'Interest',
-    data: [ 0, 0 ],
-    color: '#ffe1b9'
-  }, {
-    name: 'Principal',
-    data: [ 0, 0 ],
-    color: '#ff9e1b'
-  } ],
+  series: [
+    {
+      name: 'Interest',
+      data: [ 0, 0 ],
+      color: '#ffe1b9'
+    },
+    {
+      name: 'Principal',
+      data: [ 0, 0 ],
+      color: '#ff9e1b'
+    }
+  ],
   plotOptions: {
     series: {
       pointPadding: 0.1,
@@ -95,13 +95,15 @@ const meterOpts = {
     text: ''
   },
 
-  pane: [ {
-    startAngle: -90,
-    endAngle: 90,
-    background: null,
-    center: [ '50%', '90%' ],
-    size: 275
-  } ],
+  pane: [
+    {
+      startAngle: -90,
+      endAngle: 90,
+      background: null,
+      center: [ '50%', '90%' ],
+      size: 275
+    }
+  ],
 
   exporting: {
     enabled: false
@@ -109,57 +111,63 @@ const meterOpts = {
 
   tooltip: false,
 
-  yAxis: [ {
-    min: 0,
-    max: 180,
-    lineWidth: 0,
-    minorTickInterval: null,
-    tickPosition: 'inside',
-    tickPositions: [],
-    labels: 'none',
-    plotBands: [ {
-      from: 0,
-      to: 60,
-      color: '#d14124',
-      innerRadius: '90%',
-      outerRadius: '110%',
-      label: {
-        text: '<strong>MIN</strong>',
-        align: 'left',
-        x: 80,
-        y: 75
+  yAxis: [
+    {
+      min: 0,
+      max: 180,
+      lineWidth: 0,
+      minorTickInterval: null,
+      tickPosition: 'inside',
+      tickPositions: [],
+      labels: 'none',
+      plotBands: [
+        {
+          from: 0,
+          to: 60,
+          color: '#d14124',
+          innerRadius: '90%',
+          outerRadius: '110%',
+          label: {
+            text: '<strong>MIN</strong>',
+            align: 'left',
+            x: 80,
+            y: 75
+          }
+        },
+        {
+          from: 60,
+          to: 120,
+          color: '#ff9e1b',
+          innerRadius: '90%',
+          outerRadius: '110%',
+          label: {
+            text: '<strong>MEDIAN</strong>',
+            align: 'center',
+            x: 135,
+            y: -15
+          }
+        },
+        {
+          from: 120,
+          to: 180,
+          color: '#257675',
+          innerRadius: '90%',
+          outerRadius: '110%',
+          label: {
+            text: '<strong>MAX</strong>',
+            align: 'right',
+            x: -60,
+            y: 75
+          }
+        }
+      ],
+      pane: 0,
+      title: {
+        text: '',
+        y: -40
       }
-    }, {
-      from: 60,
-      to: 120,
-      color: '#ff9e1b',
-      innerRadius: '90%',
-      outerRadius: '110%',
-      label: {
-        text: '<strong>MEDIAN</strong>',
-        align: 'center',
-        x: 135,
-        y: -15
-      }
-    }, {
-      from: 120,
-      to: 180,
-      color: '#257675',
-      innerRadius: '90%',
-      outerRadius: '110%',
-      label: {
-        text: '<strong>MAX</strong>',
-        align: 'right',
-        x: -60,
-        y: 75
-      }
-    } ],
-    pane: 0,
-    title: {
-      text: '',
-      y: -40
     }
-  } ],
+  ],
 
   plotOptions: {
     gauge: {
@@ -172,12 +180,13 @@ const meterOpts = {
     }
   },
 
-  series: [ {
-    name: '',
-    data: [ 50 ],
-    yAxis: 0
-  } ]
-
+  series: [
+    {
+      name: '',
+      data: [ 50 ],
+      yAxis: 0
+    }
+  ]
 };
 
 const horizontalBarOpts = {
@@ -202,19 +211,21 @@ const horizontalBarOpts = {
       format: 'Your funding<br>${total:,.0f}',
       align: 'right'
     },
-    plotLines: [ {
-      color: 'red',
-      width: 2,
-      value: 25896,
-      zIndex: 4,
-      label: {
-        align: 'center',
-        text: 'Cost of Attendance<br>$25,896',
-        rotation: 0,
-        x: 0,
-        y: -25
+    plotLines: [
+      {
+        color: 'red',
+        width: 2,
+        value: 25896,
+        zIndex: 4,
+        label: {
+          align: 'center',
+          text: 'Cost of Attendance<br>$25,896',
+          rotation: 0,
+          x: 0,
+          y: -25
+        }
       }
-    } ],
+    ],
     title: false,
     labels: {
       overflow: 'justify'
@@ -246,24 +257,29 @@ const horizontalBarOpts = {
   credits: {
     enabled: false
   },
-  series: [ {
-    data: [ 10000 ]
-  } ]
+  series: [
+    {
+      data: [ 10000 ]
+    }
+  ]
 };
 
 const compareCostOfBorrowingOpts = {
   yAxis: {
     max: 60000
   },
-  series: [ {
-    name: 'Interest',
-    data: [ 6448, 17506 ],
-    color: '#ffe1b9'
-  }, {
-    name: 'Principal',
-    data: [ 30000, 30000 ],
-    color: '#ff9e1b'
-  } ]
+  series: [
+    {
+      name: 'Interest',
+      data: [ 6448, 17506 ],
+      color: '#ffe1b9'
+    },
+    {
+      name: 'Principal',
+      data: [ 30000, 30000 ],
+      color: '#ff9e1b'
+    }
+  ]
 };
 
 const costOfBorrowingOpts = {
@@ -306,23 +322,28 @@ const costOfBorrowingOpts = {
       stacking: 'normal'
     }
   },
-  series: [ {
-    name: 'Estimated total interest: <strong>$5,000</strong>',
-    pointWidth: 60,
-    data: [ 10000 ],
-    color: '#ff9e1b'
-  }, {
-    name: 'Estimated total borrowed: <strong>$55,000</strong>',
-    pointWidth: 60,
-    data: [ 40000 ],
-    color: '#ffe1b9'
-  } ]
+  series: [
+    {
+      name: 'Estimated total interest: <strong>$5,000</strong>',
+      pointWidth: 60,
+      data: [ 10000 ],
+      color: '#ff9e1b'
+    },
+    {
+      name: 'Estimated total borrowed: <strong>$55,000</strong>',
+      pointWidth: 60,
+      data: [ 40000 ],
+      color: '#ffe1b9'
+    }
+  ]
 };
 
 const makePlanOpts = {
-  series: [ {
-    color: '#addc91'
-  } ]
+  series: [
+    {
+      color: '#addc91'
+    }
+  ]
 };
 
 const maxDebtOpts = {
@@ -365,27 +386,30 @@ const maxDebtOpts = {
   credits: {
     enabled: false
   },
-  series: [ {
-    data: [ 43000 ],
-    pointWidth: 60,
-    pointPlacement: -0.09,
-    color: '#ff9e1b'
-  }, {
-    data: [ 35000 ],
-    pointWidth: 60,
-    color: {
-      pattern: {
-        path: 'M -1,11 l11,-11 M -2 2 l3,-3 M 8, 12 l3, -3',
-        width: 10,
-        height: 10,
-        stroke: 1,
-        color: '#fff',
-        backgroundColor: '#20aa3f',
-        opacity: 0.9,
-        patternTransform: 'scale(.75)'
+  series: [
+    {
+      data: [ 43000 ],
+      pointWidth: 60,
+      pointPlacement: -0.09,
+      color: '#ff9e1b'
+    },
+    {
+      data: [ 35000 ],
+      pointWidth: 60,
+      color: {
+        pattern: {
+          path: 'M -1,11 l11,-11 M -2 2 l3,-3 M 8, 12 l3, -3',
+          width: 10,
+          height: 10,
+          stroke: 1,
+          color: '#fff',
+          backgroundColor: '#20aa3f',
+          opacity: 0.9,
+          patternTransform: 'scale(.75)'
+        }
       }
     }
-  } ]
+  ]
 };
 
 const affordingOpts = {
@@ -427,39 +451,43 @@ const affordingOpts = {
       stacking: 'normal'
     }
   },
-  series: [ {
-    name: 'Estimated monthly loan payment: <strong>$524</strong>',
-    pointWidth: 60,
-    pointPlacement: 0.05,
-    data: [ 524 ],
-    color: '#ffe1b9',
-    stack: 'costs'
-  }, {
-    name: 'Average monthly expenses: <strong>$2,246</strong>',
-    pointWidth: 60,
-    pointPlacement: 0.05,
-    data: [ 2246 ],
-    color: '#ff9e1b',
-    stack: 'costs'
-  }, {
-    name: 'Monthly median salary: <strong>$4,357</strong>',
-    pointWidth: 60,
-    pointPlacement: -0.05,
-    data: [ 4357 ],
-    color: {
-      pattern: {
-        path: 'M -1,11 l11,-11 M -2 2 l3,-3 M 8, 12 l3, -3',
-        width: 10,
-        height: 10,
-        stroke: 1,
-        color: '#fff',
-        backgroundColor: '#20aa3f',
-        opacity: 0.9,
-        patternTransform: 'scale(.75)'
-      }
+  series: [
+    {
+      name: 'Estimated monthly loan payment: <strong>$524</strong>',
+      pointWidth: 60,
+      pointPlacement: 0.05,
+      data: [ 524 ],
+      color: '#ffe1b9',
+      stack: 'costs'
     },
-    stack: 'salary'
-  } ]
+    {
+      name: 'Average monthly expenses: <strong>$2,246</strong>',
+      pointWidth: 60,
+      pointPlacement: 0.05,
+      data: [ 2246 ],
+      color: '#ff9e1b',
+      stack: 'costs'
+    },
+    {
+      name: 'Monthly median salary: <strong>$4,357</strong>',
+      pointWidth: 60,
+      pointPlacement: -0.05,
+      data: [ 4357 ],
+      color: {
+        pattern: {
+          path: 'M -1,11 l11,-11 M -2 2 l3,-3 M 8, 12 l3, -3',
+          width: 10,
+          height: 10,
+          stroke: 1,
+          color: '#fff',
+          backgroundColor: '#20aa3f',
+          opacity: 0.9,
+          patternTransform: 'scale(.75)'
+        }
+      },
+      stack: 'salary'
+    }
+  ]
 };
 
 const gradMeterOpts = {};
@@ -484,14 +512,24 @@ const chartView = {
   repaymentMeterChart: null,
 
   init: body => {
-    chartView._meterChartBtns = body.querySelectorAll( '.school-results_cohort-buttons input.a-radio' );
-    chartView.costOfBorrowingElem = body.querySelector( '#cost-of-borrowing_chart' );
-    chartView.compareCostElem = body.querySelector( '#compare-cost-of-borrowing_chart' );
+    chartView._meterChartBtns = body.querySelectorAll(
+      '.school-results_cohort-buttons input.a-radio'
+    );
+    chartView.costOfBorrowingElem = body.querySelector(
+      '#cost-of-borrowing_chart'
+    );
+    chartView.compareCostElem = body.querySelector(
+      '#compare-cost-of-borrowing_chart'
+    );
     chartView.makePlanElem = body.querySelector( '#make-a-plan_chart' );
     chartView.maxDebtElem = body.querySelector( '#max-debt-guideline_chart' );
-    chartView.affordingElem = body.querySelector( '#affording-your-loans_chart' );
+    chartView.affordingElem = body.querySelector(
+      '#affording-your-loans_chart'
+    );
     chartView.gradMeterElem = body.querySelector( '#school-results_grad-meter' );
-    chartView.repaymentMeterElem = body.querySelector( '#school-results_repayment-meter' );
+    chartView.repaymentMeterElem = body.querySelector(
+      '#school-results_repayment-meter'
+    );
 
     _addRadioListeners();
 
@@ -518,52 +556,47 @@ const chartView = {
       { ...columnChartOpts, ...compareCostOfBorrowingOpts }
     );
 
-    chartView.makePlanChart = Highcharts.chart(
-      chartView.makePlanElem,
-      { ...horizontalBarOpts, ...makePlanOpts }
-    );
+    chartView.makePlanChart = Highcharts.chart( chartView.makePlanElem, {
+      ...horizontalBarOpts,
+      ...makePlanOpts
+    } );
 
-    chartView.maxDebtChart = Highcharts.chart(
-      chartView.maxDebtElem,
-      { ...maxDebtOpts }
-    );
+    chartView.maxDebtChart = Highcharts.chart( chartView.maxDebtElem, {
+      ...maxDebtOpts
+    } );
 
-    chartView.maxDebtChart.debtText = chartView.maxDebtChart.renderer.text(
-      'Estimated total debt at graduation: ',
-      60,
-      90 )
+    chartView.maxDebtChart.debtText = chartView.maxDebtChart.renderer
+      .text( 'Estimated total debt at graduation: ', 60, 90 )
       .attr( {
         zIndex: 5
-      } ).css( {
+      } )
+      .css( {
         fontSize: '14px'
       } )
       .add();
-    chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer.text(
-      'Estimated total debt at graduation: ',
-      60,
-      90 )
+    chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer
+      .text( 'Estimated total debt at graduation: ', 60, 90 )
       .attr( {
         zIndex: 5
-      } ).css( {
+      } )
+      .css( {
         fontSize: '14px'
       } )
       .add();
 
-    chartView.affordingChart = Highcharts.chart(
-      chartView.affordingElem,
-      { ...affordingOpts }
-    );
+    chartView.affordingChart = Highcharts.chart( chartView.affordingElem, {
+      ...affordingOpts
+    } );
 
-    chartView.gradMeterChart = Highcharts.chart(
-      chartView.gradMeterElem,
-      { ...meterOpts, ...gradMeterOpts }
-    );
+    chartView.gradMeterChart = Highcharts.chart( chartView.gradMeterElem, {
+      ...meterOpts,
+      ...gradMeterOpts
+    } );
 
     chartView.repaymentMeterChart = Highcharts.chart(
       chartView.repaymentMeterElem,
       { ...meterOpts, ...repaymentMeterOpts }
     );
-
   },
 
   updateCostOfBorrowingChart: () => {
@@ -579,15 +612,17 @@ const chartView = {
     } );
 
     chartView.costOfBorrowingChart.yAxis[0].update( {
-      max: Math.floor( getFinancialValue( 'debt_tenYearTotal' ) * 1.10 )
+      max: Math.floor( getFinancialValue( 'debt_tenYearTotal' ) * 1.1 )
     } );
     chartView.costOfBorrowingChart.series[0].update( {
       data: [ interest10years ],
-      name: 'Estimated total interest: <strong>' + interestString + '</strong>'
+      name:
+        'Estimated total interest: <strong>' + interestString + '</strong>'
     } );
     chartView.costOfBorrowingChart.series[1].update( {
       data: [ totalBorrowingAtGrad ],
-      name: 'Estimated total borrowed: <strong>' + borrowedString + '</strong>'
+      name:
+        'Estimated total borrowed: <strong>' + borrowedString + '</strong>'
     } );
   },
 
@@ -595,26 +630,30 @@ const chartView = {
     const totalCosts = getFinancialValue( 'total_costs' );
     const totalFunding = getFinancialValue( 'total_funding' );
     const max = Math.max( totalCosts * 1.1, totalFunding * 1.1 );
-    const text = 'Your costs<br>' + numberToMoney( {
-      amount: totalCosts,
-      decimalPlaces: 0
-    } );
+    const text =
+      'Your costs<br>' +
+      numberToMoney( {
+        amount: totalCosts,
+        decimalPlaces: 0
+      } );
 
     chartView.makePlanChart.yAxis[0].update( {
       max: max,
-      plotLines: [ {
-        color: 'red',
-        width: 2,
-        value: totalCosts,
-        zIndex: 4,
-        label: {
-          align: 'center',
-          text: text,
-          rotation: 0,
-          x: 0,
-          y: -25
+      plotLines: [
+        {
+          color: 'red',
+          width: 2,
+          value: totalCosts,
+          zIndex: 4,
+          label: {
+            align: 'center',
+            text: text,
+            rotation: 0,
+            x: 0,
+            y: -25
+          }
         }
-      } ]
+      ]
     } );
     chartView.makePlanChart.series[0].setData( [ totalFunding ] );
   },
@@ -638,24 +677,34 @@ const chartView = {
     chartView.maxDebtChart.salaryText.destroy();
     chartView.maxDebtChart.debtText.destroy();
 
-    chartView.maxDebtChart.debtText = chartView.maxDebtChart.renderer.text(
-      'Estimated total debt at graduation: <strong>' + debtString + '</strong>',
-      13,
-      50 )
+    chartView.maxDebtChart.debtText = chartView.maxDebtChart.renderer
+      .text(
+        'Estimated total debt at graduation: <strong>' +
+          debtString +
+          '</strong>',
+        13,
+        50
+      )
       .attr( {
         zIndex: 5
-      } ).css( {
+      } )
+      .css( {
         fontSize: '14px'
       } )
       .add();
 
-    chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer.text(
-      'Estimated salary at graduation: <strong>' + salaryString + '</strong>',
-      13,
-      160 )
+    chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer
+      .text(
+        'Estimated salary at graduation: <strong>' +
+          salaryString +
+          '</strong>',
+        13,
+        160
+      )
       .attr( {
         zIndex: 5
-      } ).css( {
+      } )
+      .css( {
         fontSize: '14px'
       } )
       .add();
@@ -681,7 +730,9 @@ const chartView = {
     const totalMonthlySalary = monthlySalary * 1.1;
     const totalMonthlyExpenses = ( monthlyExpenses + monthlyPayment ) * 1.1;
     const max = Math.max( totalMonthlySalary, totalMonthlyExpenses );
-    const text = 'Monthly Salary<br>' + numberToMoney( { amount: monthlySalary, decimalPlaces: 0 } );
+    const text =
+      'Monthly Salary<br>' +
+      numberToMoney( { amount: monthlySalary, decimalPlaces: 0 } );
 
     chartView.affordingChart.yAxis[0].update( {
       min: 0,
@@ -690,11 +741,15 @@ const chartView = {
 
     chartView.affordingChart.series[0].update( {
       data: [ monthlyPayment ],
-      name: 'Estimated monthly loan payment: <strong>' + paymentString + '</strong>'
+      name:
+        'Estimated monthly loan payment: <strong>' +
+        paymentString +
+        '</strong>'
     } );
     chartView.affordingChart.series[1].update( {
       data: [ monthlyExpenses ],
-      name: 'Average monthly expenses: <strong>' + expensesString + '</strong>'
+      name:
+        'Average monthly expenses: <strong>' + expensesString + '</strong>'
     } );
     chartView.affordingChart.series[2].update( {
       data: [ monthlySalary ],
@@ -723,7 +778,7 @@ const chartView = {
       }
 
       // Percentile works along a 180-degree axis:
-      percentile = percentile / 100 * 180;
+      percentile = ( percentile / 100 ) * 180;
       chartView.gradMeterChart.series[0].setData( [ percentile ] );
     } else {
       updateState.byProperty( 'gradMeterThird', '' );
@@ -751,7 +806,7 @@ const chartView = {
       }
 
       // Percentile works along a 180-degree axis:
-      const arc = percentile / 100 * 180;
+      const arc = ( percentile / 100 ) * 180;
       chartView.repaymentMeterChart.series[0].setData( [ arc ] );
     }
   }
@@ -796,6 +851,4 @@ function _handleRadioClicks( event ) {
   handlers[graph].function();
 }
 
-export {
-  chartView
-};
+export { chartView };

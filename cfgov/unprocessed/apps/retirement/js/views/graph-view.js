@@ -40,8 +40,10 @@ const currentLanguage = document.querySelector( 'html' ).getAttribute( 'lang' );
 
 // TODO: merge textlets and catalog hashes.
 const catalog = {
-  'is your full benefit claiming age.': 'de edad es su plena edad de jubilación.',
-  'is past your full benefit claiming age.': 'años de edad es después de haber cumplido su plena edad de jubilación.',
+  'is your full benefit claiming age.':
+    'de edad es su plena edad de jubilación.',
+  'is past your full benefit claiming age.':
+    'años de edad es después de haber cumplido su plena edad de jubilación.',
   'is your maximum benefit claiming age.': 'es la edad máxima para solicitar.',
   '62': '62 años',
   '63': '63 años',
@@ -58,13 +60,18 @@ const catalog = {
   '69': '69 años',
   '70': '70 años',
   'Age': '',
-  '<strong>reduces</strong> your monthly benefit by&nbsp;<strong>': 'años de edad, su beneficio se <strong>reducirá</strong> un&nbsp;<strong>',
-  'Compared to claiming at your full benefit claiming age.': 'en comparación con su plena edad de jubilación.',
+  '<strong>reduces</strong> your monthly benefit by&nbsp;<strong>':
+    'años de edad, su beneficio se <strong>reducirá</strong> un&nbsp;<strong>',
+  'Compared to claiming at your full benefit claiming age.':
+    'en comparación con su plena edad de jubilación.',
   'Compared to claiming at': 'en comparación con su beneficio a los XXX años.',
-  "(in today's dollars) (sin ajustes por inflación)": '(sin ajustes por inflación)',
+  "(in today's dollars) (sin ajustes por inflación)":
+    '(sin ajustes por inflación)',
   'Claiming at age': 'A los',
-  '<strong>increases</strong> your benefit by&nbsp;<strong>': 'años de edad, su beneficio <strong>aumentará</strong> un&nbsp;<strong>',
-  'Age 70 is your maximum benefit claiming age.': '70 años es la edad máxima para solicitar.'
+  '<strong>increases</strong> your benefit by&nbsp;<strong>':
+    'años de edad, su beneficio <strong>aumentará</strong> un&nbsp;<strong>',
+  'Age 70 is your maximum benefit claiming age.':
+    '70 años es la edad máxima para solicitar.'
 };
 
 /**
@@ -230,24 +237,22 @@ function getYourEstimates() {
   highlightAgeFields( false );
   const loadIndDom = document.querySelector( '#api-data-loading-indicator' );
   loadIndDom.style.display = 'inline-block';
-  $.when(
-    fetch.apiData( dates.concat, salary, dataLang )
-  ).done( function( resp ) {
+  $.when( fetch.apiData( dates.concat, salary, dataLang ) ).done( function( resp ) {
     if ( resp.error === '' ) {
       SSData = getModelValues.benefits();
       lifetimeData = getModelValues.lifetime();
       $( '.step-two .question' ).css( 'display', 'inline-block' );
-      $( '.step-one-hidden,' +
-         '.before-step-two,' +
-         '.step-two,' +
-         '.before-step-three,' +
-         '.step-three,' +
-         '.step-three .hidden-content' ).show();
+      $(
+        '.step-one-hidden,' +
+          '.before-step-two,' +
+          '.step-two,' +
+          '.before-step-three,' +
+          '.step-three,' +
+          '.step-three .hidden-content'
+      ).show();
 
       textlets.currentAge = gettext( SSData.currentAge );
-      textlets.fullRetirementAge = gettext(
-        SSData.fullRetirementAge
-      );
+      textlets.fullRetirementAge = gettext( SSData.fullRetirementAge );
       questionsView.update( SSData.currentAge );
       nextStepsView.init( SSData.currentAge, SSData.fullAge );
       redrawGraph();
@@ -255,11 +260,13 @@ function getYourEstimates() {
 
       // Scroll graph into view if it's not visible
       if ( isElementInView( '#claim-canvas' ) === false ) {
-        $( 'html, body' ).animate( {
-          scrollTop: $( '#estimated-benefits-description' ).offset().top - 20
-        }, 300 );
+        $( 'html, body' ).animate(
+          {
+            scrollTop: $( '#estimated-benefits-description' ).offset().top - 20
+          },
+          300
+        );
       }
-
     } else {
       $( '.m-notification' ).slideDown();
       $( '.m-notification .m-notification_content' ).html( resp.note );
@@ -296,8 +303,7 @@ function placeBenefitsText() {
   benefitsTop = parseInt( $selectedBar.css( 'top' ), 10 );
   benefitsTop -= $( '#benefits-text' ).height() + 10;
   benefitsLeft = parseInt( $selectedBar.css( 'left' ), 10 );
-  benefitsLeft -= ( $( '#benefits-text' ).width() / 2 ) -
-                  ( graphSettings.barWidth / 2 );
+  benefitsLeft -= $( '#benefits-text' ).width() / 2 - graphSettings.barWidth / 2;
   $( '#benefits-text' ).css( 'top', benefitsTop );
   $( '#benefits-text' ).css( 'left', benefitsLeft );
 
@@ -307,11 +313,9 @@ function placeBenefitsText() {
   fullAgeTop = parseInt( $fullAgeBar.css( 'top' ), 10 );
   fullAgeTop -= $fullAgeBenefits.height() + 10;
   fullAgeLeft = parseInt( $fullAgeBar.css( 'left' ), 10 );
-  fullAgeLeft -= ( $fullAgeBenefits.width() / 2 ) -
-                 ( graphSettings.barWidth / 2 );
+  fullAgeLeft -= $fullAgeBenefits.width() / 2 - graphSettings.barWidth / 2;
   $fullAgeBenefits.css( 'top', fullAgeTop );
   $fullAgeBenefits.css( 'left', fullAgeLeft );
-
 }
 
 /* This function changes the text of benefits elements based on selectedAge */
@@ -343,8 +347,7 @@ function setTextByAge() {
 
   // Set selected-age class on correct age
   $( '#claim-canvas .age-text' ).removeClass( 'selected-age' );
-  $( '[data-age-value="' + selectedAge + '"]' )
-    .addClass( 'selected-age' );
+  $( '[data-age-value="' + selectedAge + '"]' ).addClass( 'selected-age' );
 
   // Set lifetime benefits text
   $( '#lifetime-benefits-value' ).text( lifetimeBenefits );
@@ -463,9 +466,9 @@ function moveIndicatorToAge( age ) {
 }
 
 /**
-  * This function updates the  graphSettings object based on window size
-  * and the position of various elements
-  */
+ * This function updates the  graphSettings object based on window size
+ * and the position of various elements
+ */
 function setGraphDimensions() {
   let canvasLeft;
   let graphWidth;
@@ -474,9 +477,7 @@ function setGraphDimensions() {
   const SSData = getModelValues.benefits();
 
   // Update width settings
-  canvasLeft = Number(
-    $( '#claim-canvas' ).css( 'left' ).replace( /\D/g, '' )
-  );
+  canvasLeft = Number( $( '#claim-canvas' ).css( 'left' ).replace( /\D/g, '' ) );
   canvasLeft += Number(
     $( '#claim-canvas' ).css( 'padding-left' ).replace( /\D/g, '' )
   );
@@ -541,7 +542,8 @@ function drawBars() {
 /* This helper function draws the background lines for the chart */
 function drawGraphBackground() {
   const barInterval = graphSettings.graphHeight / 4;
-  const totalWidth = graphSettings.barWidth * 9 + graphSettings.gutterWidth * 8;
+  const totalWidth =
+    graphSettings.barWidth * 9 + graphSettings.gutterWidth * 8;
   let yCoord = graphSettings.graphHeight - barInterval;
   const $backgroundBars = $( '[data-bg-bar-number]' );
 
@@ -559,17 +561,16 @@ function drawGraphBackground() {
 }
 
 /**
-  * This helper functions draws the age text boxes on the graph
-  */
+ * This helper functions draws the age text boxes on the graph
+ */
 function drawAgeBoxes() {
   let leftOffset = 0;
   // remove existing boxes
   $( '#claim-canvas .age-text' ).remove();
   $.each( ages, function( i, val ) {
-    $( '#claim-canvas' )
-      .append(
-        '<div class="age-text"><p class="h3">' + val + '</p></div>'
-      );
+    $( '#claim-canvas' ).append(
+      '<div class="age-text"><p class="h3">' + val + '</p></div>'
+    );
     const ageDiv = $( '#claim-canvas .age-text:last' );
     ageDiv.attr( 'data-age-value', val );
 
@@ -591,8 +592,8 @@ function drawAgeBoxes() {
 }
 
 /**
-  * This function iterates through each drawing helper function
-  */
+ * This function iterates through each drawing helper function
+ */
 function redrawGraph() {
   setGraphDimensions();
   drawGraphBackground();

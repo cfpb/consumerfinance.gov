@@ -1,7 +1,6 @@
 import jsLoader from '../../../../../cfgov/unprocessed/js/modules/util/js-loader.js';
 
 describe( 'loadScript method', () => {
-
   /* TODO: Jest doesn't currently expose runscripts: 'dangerously'
      Find a way to do this. See
      https://www.npmjs.com/package/@mediaeventservices/jest-environment-jsdom-external-scripts */

@@ -1,5 +1,4 @@
 const Analytics = {
-
   tagManagerIsLoaded: false,
 
   EVENT_CATEGORY: 'PFC Dynamic Disclosure Tool Interaction',
@@ -15,11 +14,11 @@ const Analytics = {
    */
   getDataLayerOptions: function( action, label, category, callback, timeout ) {
     return {
-      event:         category || Analytics.EVENT_CATEGORY,
-      action:        action,
-      label:         label || '',
+      event: category || Analytics.EVENT_CATEGORY,
+      action: action,
+      label: label || '',
       eventCallback: callback,
-      eventTimeout:  timeout || 500
+      eventTimeout: timeout || 500
     };
   },
 
@@ -79,7 +78,6 @@ const Analytics = {
       }
     }
   }
-
 };
 
 Analytics.init();

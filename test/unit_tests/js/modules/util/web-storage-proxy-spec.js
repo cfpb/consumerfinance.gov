@@ -38,26 +38,21 @@ describe( 'web-storage-proxy', () => {
     } );
   } );
 
-
   describe( '.getItem()', () => {
     beforeEach( () => {
       window.sessionStorage.setItem( 'foo', 'bar' );
       window.localStorage.setItem( 'foo', 'baz' );
     } );
 
-    it( 'should return an item of "bar" for the key "foo" in sessionStorage',
-      () => {
-        const item = webStorageProxy.getItem( 'foo', window.sessionStorage );
-        expect( item ).toBe( 'bar' );
-      }
-    );
+    it( 'should return an item of "bar" for the key "foo" in sessionStorage', () => {
+      const item = webStorageProxy.getItem( 'foo', window.sessionStorage );
+      expect( item ).toBe( 'bar' );
+    } );
 
-    it( 'should return an item of "baz" for the key "foo" in localStorage',
-      () => {
-        const item = webStorageProxy.getItem( 'foo', window.localStorage );
-        expect( item ).toBe( 'baz' );
-      }
-    );
+    it( 'should return an item of "baz" for the key "foo" in localStorage', () => {
+      const item = webStorageProxy.getItem( 'foo', window.localStorage );
+      expect( item ).toBe( 'baz' );
+    } );
 
     it( 'should default to sessionStorage if storage arg is omitted', () => {
       const item = webStorageProxy.getItem( 'foo' );
@@ -118,33 +113,42 @@ describe( 'web-storage-proxy', () => {
       webStorageProxy.setStorage( window.localStorage );
     } );
 
-    it( 'should default to storage set in setStorage ' +
-        'if storage arg is omitted in setItem', () => {
-      webStorageProxy.setItem( 'foo', 'bar' );
-      expect( window.localStorage.getItem( 'foo' ) ).toBe( 'bar' );
-      expect( window.sessionStorage.getItem( 'foo' ) ).toBeNull();
-    } );
+    it(
+      'should default to storage set in setStorage ' +
+        'if storage arg is omitted in setItem',
+      () => {
+        webStorageProxy.setItem( 'foo', 'bar' );
+        expect( window.localStorage.getItem( 'foo' ) ).toBe( 'bar' );
+        expect( window.sessionStorage.getItem( 'foo' ) ).toBeNull();
+      }
+    );
 
-    it( 'should default to storage set in setStorage ' +
-        'if storage arg is omitted in getItem', () => {
-      window.localStorage.setItem( 'foo', 'bar' );
-      window.sessionStorage.setItem( 'foo', 'baz' );
+    it(
+      'should default to storage set in setStorage ' +
+        'if storage arg is omitted in getItem',
+      () => {
+        window.localStorage.setItem( 'foo', 'bar' );
+        window.sessionStorage.setItem( 'foo', 'baz' );
 
-      const item = webStorageProxy.getItem( 'foo' );
+        const item = webStorageProxy.getItem( 'foo' );
 
-      expect( item ).toBe( 'bar' );
-      expect( item ).not.toBe( 'baz' );
-    } );
+        expect( item ).toBe( 'bar' );
+        expect( item ).not.toBe( 'baz' );
+      }
+    );
 
-    it( 'should default to storage set in setStorage ' +
-        'if storage arg is omitted in removeItem', () => {
-      window.localStorage.setItem( 'foo', 'bar' );
-      window.sessionStorage.setItem( 'foo', 'baz' );
+    it(
+      'should default to storage set in setStorage ' +
+        'if storage arg is omitted in removeItem',
+      () => {
+        window.localStorage.setItem( 'foo', 'bar' );
+        window.sessionStorage.setItem( 'foo', 'baz' );
 
-      webStorageProxy.removeItem( 'foo', window.localStorage );
-      expect( window.localStorage.getItem( 'foo' ) ).toBeNull();
-      expect( window.sessionStorage.getItem( 'foo' ) ).toBe( 'baz' );
-    } );
+        webStorageProxy.removeItem( 'foo', window.localStorage );
+        expect( window.localStorage.getItem( 'foo' ) ).toBeNull();
+        expect( window.sessionStorage.getItem( 'foo' ) ).toBe( 'baz' );
+      }
+    );
 
     it( 'should throw an error if passed arg is empty', () => {
       function storageError() {
@@ -167,8 +171,7 @@ describe( 'web-storage-proxy', () => {
       expect( storageError ).toThrow( Error );
     } );
 
-    it( 'should set storage to an object if ' +
-        'sessionStorage is undefined', () => {
+    it( 'should set storage to an object if sessionStorage is undefined', () => {
       let UNDEFINED;
       webStorageProxy.setItem( 'foo', 'bar', UNDEFINED );
       expect( webStorageProxy.getItem( 'foo' ) ).toEqual( 'bar' );
@@ -179,13 +182,10 @@ describe( 'web-storage-proxy', () => {
       expect( webStorageProxy.getItem( 'foo' ) ).toEqual( 'bar' );
     } );
 
-    xit( 'should set storage to an object if sessionStorage throws an error',
-      () => {
-
-        /* TODO: If cookies are disabled, window.sessionStorage
+    xit( 'should set storage to an object if sessionStorage throws an error', () => {
+      /* TODO: If cookies are disabled, window.sessionStorage
            will throw a SecurityError and the internal storage will be
            an object literal. */
-      }
-    );
+    } );
   } );
 } );

@@ -1,6 +1,9 @@
 const behavior = require( '../../../js/modules/util/behavior' );
 const utils = require( './search-utils' );
-import { closest, queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+import {
+  closest,
+  queryOne as find
+} from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import expandableFacets from './expandable-facets';
 import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable';
 const analytics = require( './tdp-analytics' );
@@ -34,7 +37,9 @@ function attachHandlers() {
   behavior.attach( 'clear-search', 'clear', clearSearch );
   cfExpandables.init();
   expandableFacets.init();
-  const inputContainsLabel = document.querySelector( '.tdp-activity-search .input-contains-label' );
+  const inputContainsLabel = document.querySelector(
+    '.tdp-activity-search .input-contains-label'
+  );
   if ( inputContainsLabel ) {
     const clearableInput = new ClearableInput( inputContainsLabel );
     clearableInput.init();
@@ -45,10 +50,7 @@ function attachHandlers() {
  * Ignore analytics for previous and next pagination buttons
  */
 function addDataGtmIgnore() {
-  const ignoreBtns = [
-    'a.m-pagination_btn-next',
-    'a.m-pagination_btn-prev'
-  ];
+  const ignoreBtns = [ 'a.m-pagination_btn-next', 'a.m-pagination_btn-prev' ];
 
   for ( let i = 0; i < ignoreBtns.length; i++ ) {
     const btn = document.querySelector( ignoreBtns[i] );
@@ -91,7 +93,6 @@ function removeTag( tag ) {
     tag.parentNode.removeChild( tag );
   }
 }
-
 
 /**
  * Remove all filters from the search results page.
@@ -155,9 +156,9 @@ function fetchSearchResults( filters = [] ) {
   const searchTerms = utils.getSearchValues( searchField, filters );
   const searchParams = utils.serializeFormFields( searchTerms );
 
-  const searchUrl = utils.buildSearchResultsURL(
-    baseUrl, searchParams, { partial: true }
-  );
+  const searchUrl = utils.buildSearchResultsURL( baseUrl, searchParams, {
+    partial: true
+  } );
   utils.updateUrl( baseUrl, searchParams );
   utils.showLoading( searchContainer );
   searchRequest = fetch( searchUrl, ( err, data ) => {
@@ -194,17 +195,19 @@ function handleFilter( event, target = null ) {
   /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
   try {
     searchRequest.abort();
-  } catch ( err ) { }
+  } catch ( err ) {}
   target = target ? target : event.target;
   const wrapperLI = target.parentElement.parentElement;
   if ( wrapperLI && wrapperLI.tagName.toLowerCase() === 'li' ) {
-
     // Check all children if parent is checked.
     const checkboxes = wrapperLI.querySelectorAll(
       'ul>li input[type=checkbox]'
     );
     for ( let i = 0; i < checkboxes.length; i++ ) {
-      if ( wrapperLI.contains( checkboxes[i] ) === true && checkboxes[i] !== target ) {
+      if (
+        wrapperLI.contains( checkboxes[i] ) === true &&
+        checkboxes[i] !== target
+      ) {
         checkboxes[i].checked = target.checked;
       }
     }
@@ -215,7 +218,10 @@ function handleFilter( event, target = null ) {
       const parentCheckbox = parentLI.querySelector(
         'div>input[type=checkbox]'
       );
-      if ( parentCheckbox && parentCheckbox.parentElement.parentElement === parentLI ) {
+      if (
+        parentCheckbox &&
+        parentCheckbox.parentElement.parentElement === parentLI
+      ) {
         _updateParentFilter( parentCheckbox );
       }
     }
@@ -233,9 +239,7 @@ function handleFilter( event, target = null ) {
  */
 function _updateParentFilter( element ) {
   const wrapper = element.parentElement.parentElement;
-  const checkboxes = wrapper.querySelectorAll(
-    'ul>li input[type=checkbox]'
-  );
+  const checkboxes = wrapper.querySelectorAll( 'ul>li input[type=checkbox]' );
 
   const children = [];
   const checkedChildren = [];

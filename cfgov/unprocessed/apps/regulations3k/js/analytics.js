@@ -32,7 +32,6 @@ const getExpandable = event => {
   return null;
 };
 
-
 /**
  * getExpandableState - Description
  *

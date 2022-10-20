@@ -1,6 +1,9 @@
 import * as emailHelpers from '../modules/util/email-popup-helpers';
 import * as validators from '../modules/util/validators';
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import FormSubmit from './FormSubmit.js';
 
 /**
@@ -14,7 +17,6 @@ import FormSubmit from './FormSubmit.js';
  * @returns {EmailSignup} An instance.
  */
 function EmailPopup( element ) {
-
   const VISIBLE_CLASS = 'o-email-popup__visible';
 
   const _dom = checkDom( element, EmailPopup.BASE_CLASS );
@@ -61,12 +63,7 @@ function EmailPopup( element ) {
    * @returns {Object} Validation status.
    */
   function emailValidation( fields ) {
-
-    return validators.email(
-      fields.email,
-      '',
-      { language: _language }
-    ).msg;
+    return validators.email( fields.email, '', { language: _language } ).msg;
   }
 
   /**
@@ -93,11 +90,10 @@ function EmailPopup( element ) {
     const _closeElement = _dom.querySelector( '.close' );
     _language = _dom.getAttribute( 'lang' );
 
-    const formSubmit = new FormSubmit(
-      _dom,
-      EmailPopup.BASE_CLASS,
-      { validator: emailValidation, language: _language }
-    );
+    const formSubmit = new FormSubmit( _dom, EmailPopup.BASE_CLASS, {
+      validator: emailValidation,
+      language: _language
+    } );
 
     formSubmit.init();
 

@@ -54,7 +54,6 @@ const HTML_SNIPPET = `
 `;
 
 describe( 'EmailPopup', () => {
-
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     emailPopup = new EmailPopup( document.querySelector( '.o-email-popup' ) );
@@ -86,30 +85,36 @@ describe( 'EmailPopup', () => {
   } );
 
   describe( 'showPopup()', () => {
-    it( 'should not add CSS class that sets organism as visible ' +
-        'if date is not set in local storage', () => {
-      const isShown = emailPopup.showPopup();
-      const baseElement = emailPopup.getDom();
-      const containsClass = baseElement.classList.contains(
-        'o-email-popup__visible'
-      );
-      expect( containsClass ).toBe( false );
-      expect( isShown ).toBe( false );
-    } );
+    it(
+      'should not add CSS class that sets organism as visible ' +
+        'if date is not set in local storage',
+      () => {
+        const isShown = emailPopup.showPopup();
+        const baseElement = emailPopup.getDom();
+        const containsClass = baseElement.classList.contains(
+          'o-email-popup__visible'
+        );
+        expect( containsClass ).toBe( false );
+        expect( isShown ).toBe( false );
+      }
+    );
 
-    it( 'should add CSS class that sets organism as visible ' +
-        'if date is set in local storage', () => {
-      const days = 1;
-      const date = new Date();
-      const last = new Date( date.getTime() - ( days * 24 * 60 * 60 * 1000 ) );
-      localStorage.setItem( 'testPopupPopupShowNext', last );
-      const isShown = emailPopup.showPopup();
-      const baseElement = emailPopup.getDom();
-      const containsClass = baseElement.classList.contains(
-        'o-email-popup__visible'
-      );
-      expect( containsClass ).toBe( true );
-      expect( isShown ).toBe( true );
-    } );
+    it(
+      'should add CSS class that sets organism as visible ' +
+        'if date is set in local storage',
+      () => {
+        const days = 1;
+        const date = new Date();
+        const last = new Date( date.getTime() - days * 24 * 60 * 60 * 1000 );
+        localStorage.setItem( 'testPopupPopupShowNext', last );
+        const isShown = emailPopup.showPopup();
+        const baseElement = emailPopup.getDom();
+        const containsClass = baseElement.classList.contains(
+          'o-email-popup__visible'
+        );
+        expect( containsClass ).toBe( true );
+        expect( isShown ).toBe( true );
+      }
+    );
   } );
 } );

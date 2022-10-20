@@ -67,12 +67,9 @@ function createElement( HTML ) {
 function removeClass( selector, className ) {
   className = className.split( ', ' );
 
-  applyAll(
-    getEls( selector ),
-    element => {
-      fastDom.mutate( () => element.classList.remove( ...className )
-      );
-    } );
+  applyAll( getEls( selector ), element => {
+    fastDom.mutate( () => element.classList.remove( ...className ) );
+  } );
 }
 
 /**
@@ -82,10 +79,7 @@ function removeClass( selector, className ) {
 function addClass( selector, className ) {
   className = className.split( ', ' );
 
-  applyAll(
-    getEls( selector ),
-    element => fastDom.mutate( () => element.classList.add( ...className )
-    )
+  applyAll( getEls( selector ), element => fastDom.mutate( () => element.classList.add( ...className ) )
   );
 }
 
@@ -139,10 +133,12 @@ function getPreviousEls( element, filter = '*' ) {
    * @returns {Function} The browser's Element.matches() method.
    */
   function _getMatches( el ) {
-    return el.matches ||
-           el.webkitMatchesSelector ||
-           el.mozMatchesSelector ||
-           el.msMatchesSelector;
+    return (
+      el.matches ||
+      el.webkitMatchesSelector ||
+      el.mozMatchesSelector ||
+      el.msMatchesSelector
+    );
   }
   const _matchesMethod = _getMatches( element );
 
@@ -161,9 +157,11 @@ function getPreviousEls( element, filter = '*' ) {
  * @returns {boolean} True if `element` meets the criteria, false otherwise.
  */
 function _isEl( element ) {
-  return element instanceof NodeList ||
-         element instanceof HTMLElement ||
-         element instanceof Window;
+  return (
+    element instanceof NodeList ||
+    element instanceof HTMLElement ||
+    element instanceof Window
+  );
 }
 
 /**
@@ -171,11 +169,7 @@ function _isEl( element ) {
  * @param {*} selector Something, possibly a list, element or window instance.
  */
 function hide( selector ) {
-  applyAll(
-    getEls( selector ),
-    element => fastDom.mutate(
-      () => ( element.style.display = 'none' )
-    )
+  applyAll( getEls( selector ), element => fastDom.mutate( () => ( element.style.display = 'none' ) )
   );
 }
 
@@ -184,11 +178,7 @@ function hide( selector ) {
  * @param {*} selector Something, possibly a list, element or window instance.
  */
 function show( selector ) {
-  applyAll(
-    getEls( selector ),
-    element => fastDom.mutate(
-      () => ( element.style.display = 'block' )
-    )
+  applyAll( getEls( selector ), element => fastDom.mutate( () => ( element.style.display = 'block' ) )
   );
 }
 
@@ -214,13 +204,10 @@ function fadeOut( element, time, callback = NO_OP ) {
   element.style.transition = 'opacity ' + time + 'ms ease-in-out';
   element.style.opacity = 1;
   window.setTimeout( () => ( element.style.opacity = 0.05 ), 100 );
-  window.setTimeout(
-    () => {
-      element.style.display = 'none';
-      return callback();
-    },
-    time
-  );
+  window.setTimeout( () => {
+    element.style.display = 'none';
+    return callback();
+  }, time );
 }
 
 export default {

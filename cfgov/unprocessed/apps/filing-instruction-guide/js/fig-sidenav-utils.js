@@ -1,12 +1,20 @@
 const appRoot = document.querySelector( 'main.o-fig' );
 
 let navItems = appRoot.querySelectorAll( '.m-nav-link[href]' );
-navItems = Array.from( navItems ).reduce( ( map, navItem ) => map.set( navItem.getAttribute( 'href' ), navItem ), new Map() );
+navItems = Array.from( navItems ).reduce(
+  ( map, navItem ) => map.set( navItem.getAttribute( 'href' ), navItem ),
+  new Map()
+);
 
-const navItemContainers = Array.from( navItems ).reduce( ( map, [ key, navItem ] ) => {
-  const container = navItem.closest( '.o-secondary-navigation_list__children' ) || navItem.nextElementSibling;
-  return map.set( key, container );
-}, new Map() );
+const navItemContainers = Array.from( navItems ).reduce(
+  ( map, [ key, navItem ] ) => {
+    const container =
+      navItem.closest( '.o-secondary-navigation_list__children' ) ||
+      navItem.nextElementSibling;
+    return map.set( key, container );
+  },
+  new Map()
+);
 
 const highlightNavItem = target => navItems.get( target ).classList.add( 'm-nav-link__current' );
 const unHighlightNavItem = target => navItems.get( target ).classList.remove( 'm-nav-link__current' );
@@ -31,7 +39,10 @@ let prevTarget;
  */
 const scrollIntoViewWithOffset = ( el, offset ) => {
   window.scrollTo( {
-    top: el.getBoundingClientRect().top - document.body.getBoundingClientRect().top - offset,
+    top:
+      el.getBoundingClientRect().top -
+      document.body.getBoundingClientRect().top -
+      offset,
     behavior: 'smooth'
   } );
 };
@@ -74,7 +85,6 @@ const handleIntersect = entries => {
     }
   } );
 };
-
 
 export {
   appRoot,

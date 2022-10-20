@@ -1,7 +1,6 @@
 import utils from '../utils';
 
 const defaultActionCreators = () => {
-
   const actions = {
 
     /**
@@ -132,8 +131,21 @@ const defaultActionCreators = () => {
         // Alphabetical order
         nonMetros = nonMetros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
         dispatch( actions.setNonMetros( nonMetros ) );
-        dispatch( actions.setGeo( nonMetros[currStateIndex].fips, nonMetros[currStateIndex].name, 'non-metro' ) );
-        dispatch( actions.updateChart( nonMetros[currStateIndex].fips, nonMetros[currStateIndex].name, 'non-metro', includeComparison ) );
+        dispatch(
+          actions.setGeo(
+            nonMetros[currStateIndex].fips,
+            nonMetros[currStateIndex].name,
+            'non-metro'
+          )
+        );
+        dispatch(
+          actions.updateChart(
+            nonMetros[currStateIndex].fips,
+            nonMetros[currStateIndex].name,
+            'non-metro',
+            includeComparison
+          )
+        );
         return nonMetros;
       } );
     },
@@ -193,7 +205,6 @@ const defaultActionCreators = () => {
   };
 
   return actions;
-
 };
 
 export default defaultActionCreators;

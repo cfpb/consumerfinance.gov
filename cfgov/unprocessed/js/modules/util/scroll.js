@@ -1,13 +1,14 @@
 import { assign } from './assign';
 
-const _requestAnimationFrame = window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    function( callback ) {
-      return setTimeout( function() {
-        callback( Number( new Date() ) );
-      }, 1000 / 60 );
-    };
+const _requestAnimationFrame =
+  window.requestAnimationFrame ||
+  window.webkitRequestAnimationFrame ||
+  window.mozRequestAnimationFrame ||
+  function( callback ) {
+    return setTimeout( function() {
+      callback( Number( new Date() ) );
+    }, 1000 / 60 );
+  };
 
 /**
  * Easing
@@ -24,12 +25,11 @@ function _easeInOutQuad( currentTime, startPosition, distance, duration ) {
   let updatedTime = currentTime / halfDuration;
 
   if ( updatedTime < 1 ) {
-    distanceDelta = distance / 2 * updatedTime * updatedTime;
+    distanceDelta = ( distance / 2 ) * updatedTime * updatedTime;
   } else {
     updatedTime--;
     // eslint-disable-next-line no-mixed-operators
-    distanceDelta =
-      -distance / 2 * ( updatedTime * ( updatedTime - 2 ) - 1 );
+    distanceDelta = ( -distance / 2 ) * ( updatedTime * ( updatedTime - 2 ) - 1 );
   }
   return distanceDelta + startPosition;
 }
@@ -69,8 +69,7 @@ function scrollTo( to, opts ) {
   function scroll( timestamp ) {
     startTime = startTime || timestamp;
     const elapsed = timestamp - startTime;
-    const next =
-      _easeInOutQuad( elapsed, startPosition, distance, duration );
+    const next = _easeInOutQuad( elapsed, startPosition, distance, duration );
     window.scroll( 0, next );
 
     if ( elapsed < duration ) {
@@ -101,9 +100,7 @@ function scrollIntoView( elem, opts ) {
   opts = assign( defaults, opts );
   if ( !elementInView( elem, true ) ) {
     const elementTop = elem.getBoundingClientRect().top;
-    const to = Math.max(
-      window.pageYOffset + elementTop - opts.offset, 0
-    );
+    const to = Math.max( window.pageYOffset + elementTop - opts.offset, 0 );
     scrollTo( to, opts );
   } else if ( opts.callback && typeof opts.callback === 'function' ) {
     opts.callback();
@@ -132,8 +129,4 @@ function elementInView( elem, strict ) {
 
 window.scrollToElement = scrollTo;
 
-export {
-  elementInView,
-  scrollIntoView,
-  scrollTo
-};
+export { elementInView, scrollIntoView, scrollTo };

@@ -35,26 +35,32 @@ describe( 'footer-button', () => {
     footerBtnDom = document.querySelector( '.o-footer_top-button' );
   } );
 
-  it( 'button should scroll when clicked ' +
-      'and requestAnimationFrame is supported', done => {
-    window.scrollY = 10;
-    FooterButton.init();
-    simulateEvent( 'click', footerBtnDom );
+  it(
+    'button should scroll when clicked ' +
+      'and requestAnimationFrame is supported',
+    done => {
+      window.scrollY = 10;
+      FooterButton.init();
+      simulateEvent( 'click', footerBtnDom );
 
-    window.setTimeout( () => {
-      expect( window.scrollY ).toBe( 0 );
-      done();
-    }, 2000 );
-  } );
+      window.setTimeout( () => {
+        expect( window.scrollY ).toBe( 0 );
+        done();
+      }, 2000 );
+    }
+  );
 
-  it( 'button should scroll when clicked ' +
-      'and requestAnimationFrame is not supported', () => {
-    jest.spyOn( window, 'scrollTo' );
-    delete window.requestAnimationFrame;
-    window.scrollY = 10;
-    FooterButton.init();
-    simulateEvent( 'click', footerBtnDom );
+  it(
+    'button should scroll when clicked ' +
+      'and requestAnimationFrame is not supported',
+    () => {
+      jest.spyOn( window, 'scrollTo' );
+      delete window.requestAnimationFrame;
+      window.scrollY = 10;
+      FooterButton.init();
+      simulateEvent( 'click', footerBtnDom );
 
-    expect( window.scrollTo ).toHaveBeenCalledWith( 0, 0 );
-  } );
+      expect( window.scrollTo ).toHaveBeenCalledWith( 0, 0 );
+    }
+  );
 } );

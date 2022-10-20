@@ -9,7 +9,7 @@ import chartHooks from './chart-hooks.js';
  */
 function alignMargin( defaultObj, chartType ) {
   const len = defaultObj.series.length;
-  let marg = ( len * 23 ) + 35;
+  let marg = len * 23 + 35;
   let y = 0;
   if ( chartType === 'tilemap' ) {
     marg = 100;
@@ -20,7 +20,7 @@ function alignMargin( defaultObj, chartType ) {
       y = 40 / len;
     }
     if ( window.innerWidth <= 660 ) {
-      marg = ( len * 23 ) + 60;
+      marg = len * 23 + 60;
       y = 0;
     }
   }
@@ -146,7 +146,7 @@ function extractSeries( rawData, { series, xAxisSource, chartType } ) {
         let d = Number( obj[key] );
         if ( chartType === 'datetime' ) {
           d = {
-            x:  Number( new Date( obj[xAxisSource] ) ),
+            x: Number( new Date( obj[xAxisSource] ) ),
             y: d
           };
         }
@@ -169,10 +169,26 @@ function convertEpochToDateString( date ) {
   let humanFriendly = null;
   let month = null;
   let year = null;
-  const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
 
-  if ( typeof date === 'number' && date.toString().length >= 12 && date.toString().length <= 13 ) {
-
+  if (
+    typeof date === 'number' &&
+    date.toString().length >= 12 &&
+    date.toString().length <= 13
+  ) {
     month = new Date( date ).getUTCMonth();
     month = months[month];
     year = new Date( date ).getUTCFullYear();
@@ -182,7 +198,6 @@ function convertEpochToDateString( date ) {
 
   return humanFriendly;
 }
-
 
 export {
   alignMargin,

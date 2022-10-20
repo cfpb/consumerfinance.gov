@@ -11,7 +11,6 @@ import { navigationView } from './college-costs/views/navigation-view.js';
 import { schoolView } from './college-costs/views/school-view.js';
 import { updateModelsFromQueryString } from './college-costs/dispatchers/update-models.js';
 
-
 /**
  * Initialize the app
  */

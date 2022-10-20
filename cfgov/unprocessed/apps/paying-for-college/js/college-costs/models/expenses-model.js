@@ -3,7 +3,8 @@ import {
   updateAffordingChart,
   updateCostOfBorrowingChart,
   updateExpensesView,
-  updateUrlQueryString } from '../dispatchers/update-view.js';
+  updateUrlQueryString
+} from '../dispatchers/update-view.js';
 import { getExpenses } from '../dispatchers/get-api-values.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
 import { stringToNum } from '../util/number-utils.js';
@@ -45,7 +46,9 @@ const expensesModel = {
     }
 
     expensesModel.values.total_expenses = totalExpenses;
-    expensesModel.values.total_remainder = getFinancialValue( 'salary_monthly' ) - totalExpenses -
+    expensesModel.values.total_remainder =
+      getFinancialValue( 'salary_monthly' ) -
+      totalExpenses -
       getFinancialValue( 'debt_tenYearMonthly' );
     if ( expensesModel.values.total_remainder > 0 ) {
       updateState.byProperty( 'expensesRemainder', 'surplus' );
@@ -54,7 +57,6 @@ const expensesModel = {
     }
 
     updateExpensesView();
-
   },
 
   /**
@@ -80,14 +82,14 @@ const expensesModel = {
   _getSalaryRange: function( salary ) {
     const rangeFinder = {
       'less_than_5000': [ 0, 4999 ],
-      '5000_to_9999':   [ 5000, 9999 ],
+      '5000_to_9999': [ 5000, 9999 ],
       '10000_to_14999': [ 10000, 14999 ],
       '15000_to_19999': [ 15000, 19999 ],
       '20000_to_29999': [ 20000, 29999 ],
       '30000_to_39999': [ 30000, 39999 ],
       '40000_to_49999': [ 40000, 49999 ],
       '50000_to_69999': [ 50000, 69999 ],
-      '70000_or_more':  [ 70000, Infinity ]
+      '70000_or_more': [ 70000, Infinity ]
     };
 
     let arr;
@@ -154,12 +156,13 @@ const expensesModel = {
         } )
         .catch( function( error ) {
           reject( error );
-          console.log( 'An error occurred when accessing the expenses API', error );
+          console.log(
+            'An error occurred when accessing the expenses API',
+            error
+          );
         } );
     } );
   }
 };
 
-export {
-  expensesModel
-};
+export { expensesModel };

@@ -15,7 +15,6 @@
  * @returns {Tree} An instance.
  */
 function Tree() {
-
   let _root = null;
   const _levelCache = {};
 

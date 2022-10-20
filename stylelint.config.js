@@ -20,33 +20,32 @@ less/no-duplicate-variables
 */
 module.exports = {
   extends: 'stylelint-config-recommended-less',
-  ignoreFiles: [ 'packages/**/node_modules/**/*.less' ],
+  ignoreFiles: ['packages/**/node_modules/**/*.less'],
   customSyntax: 'postcss-less',
   rules: {
-    'at-rule-no-unknown': [ true, { ignoreAtRules: 'plugin' } ],
+    'at-rule-no-unknown': [true, { ignoreAtRules: 'plugin' }],
     'declaration-colon-newline-after': null,
     'declaration-empty-line-before': null,
-    'function-name-case': [ 'lower', { ignoreFunctions: [ 'filter' ]} ],
+    'function-name-case': ['lower', { ignoreFunctions: ['filter'] }],
     'function-parentheses-space-inside': 'always',
     'rule-empty-line-before': [
       'always-multi-line',
       {
         except: 'first-nested',
-        ignore: [ 'after-comment', 'inside-block' ]
-      }
+        ignore: ['after-comment', 'inside-block'],
+      },
     ],
-    'indentation': [
+    indentation: [
       2,
       {
-        ignore: 'value'
-      }
+        ignore: 'value',
+      },
     ],
     'max-empty-lines': 2,
     'media-feature-parentheses-space-inside': 'always',
     'no-descending-specificity': null,
     'selector-pseudo-class-parentheses-space-inside': 'always',
     'less/color-no-invalid-hex': null,
-    'less/no-duplicate-variables': null
-  }
+    'less/no-duplicate-variables': null,
+  },
 };
-

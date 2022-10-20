@@ -27,7 +27,6 @@ docker network create cfgov
 docker-compose up
 ```
 
-
 ## Environment variables
 
 Environment variables from your `.env` file are sourced
@@ -39,7 +38,6 @@ To add new environment variables, simply add them to the `.env` file,
 stop docker-compose with Ctrl+C,
 and start it again with `docker-compose up`.
 
-
 ## Commands that must be run from within the Python container
 
 Django `manage.py` commands can only be run after you've
@@ -49,13 +47,11 @@ From there, commands like `cfgov/manage.py migrate` should run as expected.
 The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` —
 they will work as expected once you’re inside the Python container.
 
-
 ## Access a container’s shell
 
 - Python: `docker-compose exec python sh`
 - Elasticsearch: `docker-compose exec elasticsearch bash`
 - PostgreSQL: `docker-compose exec postgres bash`
-
 
 ## Update/Change Python MAJOR.MINOR Version
 
@@ -86,11 +82,9 @@ and rebuild the Python container using:
 docker-compose up --build python
 ```
 
-
 ## Work on satellite apps
 
 See [“Using Docker” on the Related Projects page](../related-projects/#using-docker).
-
 
 ## Attach for debugging
 
@@ -105,14 +99,13 @@ docker attach consumerfinancegov_python_1
 When you're done, you can detach with `Ctrl+P Ctrl+Q`.
 
 !!! note
-    `docker attach` takes the specific container name or ID.
-    Yours may or may not be `consumerfinancegov_python_1`.
-    To verify, use `docker container ls`
-    to get the Python container's full name or ID.
+`docker attach` takes the specific container name or ID.
+Yours may or may not be `consumerfinancegov_python_1`.
+To verify, use `docker container ls`
+to get the Python container's full name or ID.
 
 !!! note
-    `docker attach` will ONLY work with the dev image, not prod (apache).
-
+`docker attach` will ONLY work with the dev image, not prod (apache).
 
 ## Useful Docker commands
 
@@ -122,14 +115,13 @@ For `docker-compose` commands,
 For `docker` commands, `[CONTAINER]` is the container name displayed with `docker ps`.
 
 - [`docker ps`](https://docs.docker.com/engine/reference/commandline/ps/)
-    will list all containers.
+  will list all containers.
 - [`docker logs [CONTAINER]`](https://docs.docker.com/engine/reference/commandline/logs/)
-    will print the logs of a container.
+  will print the logs of a container.
 - [`docker top [CONTAINER]`](https://docs.docker.com/engine/reference/commandline/top/)
-    will display the running processes in a container.
+  will display the running processes in a container.
 - [`docker-compose build [SERVICE]`](https://docs.docker.com/compose/reference/build/)
-    will build any of our configured containers.
-
+  will build any of our configured containers.
 
 ## Production-like Docker Image
 
@@ -163,45 +155,44 @@ change configs locally without having to rebuild the image each time.
 
 1. Launch the stack.
 
-    ```bash
-    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build
-    ```
+   ```bash
+   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build
+   ```
 
-    This creates a container running cf.gov on Python, as well as
-    Postgres and Elasticsearch containers, much like the development environment.
+   This creates a container running cf.gov on Python, as well as
+   Postgres and Elasticsearch containers, much like the development environment.
 
-1. Load the `cfgov` database (optional).  If you do not already have a running
-    `cfgov` database, you will need to download and load it from within the container.
+1. Load the `cfgov` database (optional). If you do not already have a running
+   `cfgov` database, you will need to download and load it from within the container.
 
-    ```bash
-    docker-compose exec python sh
+   ```bash
+   docker-compose exec python sh
 
-    # Once in the container...
-    export CFGOV_PROD_DB_LOCATION=<database-dump-url>
-    ./refresh-data.sh
-    ```
+   # Once in the container...
+   export CFGOV_PROD_DB_LOCATION=<database-dump-url>
+   ./refresh-data.sh
+   ```
 
 1. Browse to your new local cf.gov site.
 
-    http://localhost:8000
-
+   http://localhost:8000
 
 1. Adjust an Apache [`cfgov/apache`](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache)
    config and reload Apache (optional).
 
-    ```bash
-    docker-compose exec python sh
+   ```bash
+   docker-compose exec python sh
 
-    # Once in the container...
-    httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -k restart
-    ```
+   # Once in the container...
+   httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -k restart
+   ```
 
 1. Switch back to the development Compose setup.
 
-    ```bash
-    docker-compose rm -sf python
-    docker-compose up --build python
-    ```
+   ```bash
+   docker-compose rm -sf python
+   docker-compose up --build python
+   ```
 
 #### Jenkins CI + Docker Swarm
 
@@ -213,20 +204,22 @@ It follows a standard Docker build/scan/push workflow,
 optionally deploying to our Docker Swarm cluster.
 
 ### How does it work?
+
 This project heavily utilizes
 "[multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/)".
 
 There are a few layers at work here, with the hierarchy represented by the list structure:
-* `base` - This is the bare minimum base Python layer for building up any further layers.
-  * `cfgov-python-builder` - Installs deployment Python dependencies to `/build` for use
-in `cfgov-dev` and `cfgov-prod`.
-    * `cfgov-dev` - Dev layer used for local development. Contains no code
-(requires code volume mount), and installs additional dependencies only needed for local development.
-    * `cfgov-frontend-builder` - Frontend builder layer, builds static files for Django
-  * `cfgov-mod-wsgi` - mod_wsgi compile layer for Apache2
-(helps to guarantee mod_wsgi compatability with Python, Alpine, and Apache)
-  * `cfgov-prod` - Final layer for Production. Installs and uses Apache2,
-swaps to `apache` user, copies in all files from previous layers to maintain a lightweight image.
+
+- `base` - This is the bare minimum base Python layer for building up any further layers.
+  - `cfgov-python-builder` - Installs deployment Python dependencies to `/build` for use
+    in `cfgov-dev` and `cfgov-prod`.
+    _ `cfgov-dev` - Dev layer used for local development. Contains no code
+    (requires code volume mount), and installs additional dependencies only needed for local development.
+    _ `cfgov-frontend-builder` - Frontend builder layer, builds static files for Django
+  - `cfgov-mod-wsgi` - mod_wsgi compile layer for Apache2
+    (helps to guarantee mod_wsgi compatability with Python, Alpine, and Apache)
+  - `cfgov-prod` - Final layer for Production. Installs and uses Apache2,
+    swaps to `apache` user, copies in all files from previous layers to maintain a lightweight image.
 
 The production image extends **ONLY** the base layer to maintain a lightweight final image.
 Everything from previous layers is copied in from those layers using `COPY --from=<layer-name>`.

@@ -4,7 +4,11 @@ import { getExpensesValue } from '../dispatchers/get-model-values.js';
 import numberToMoney from 'format-usd';
 import { selectorMatches } from '../util/other-utils';
 import { stringToNum } from '../util/number-utils.js';
-import { updateAffordingChart, updateCostOfBorrowingChart, updateUrlQueryString } from '../dispatchers/update-view.js';
+import {
+  updateAffordingChart,
+  updateCostOfBorrowingChart,
+  updateUrlQueryString
+} from '../dispatchers/update-view.js';
 
 const expensesView = {
   _currentInput: null,
@@ -17,8 +21,12 @@ const expensesView = {
    * Initialize the Expenses View
    */
   init: () => {
-    expensesView._expensesItems = document.querySelectorAll( '[data-expenses-item]' );
-    expensesView._expensesInputs = document.querySelectorAll( 'input[data-expenses-item]' );
+    expensesView._expensesItems = document.querySelectorAll(
+      '[data-expenses-item]'
+    );
+    expensesView._expensesInputs = document.querySelectorAll(
+      'input[data-expenses-item]'
+    );
     expensesView._regionSelect = document.querySelector( '#expenses__region' );
 
     _addInputListeners();
@@ -79,10 +87,9 @@ function _handleInputChange( event ) {
   expensesView._currentInput = elem;
 
   if ( selectorMatches( elem, ':focus' ) ) {
-    expensesView._inputChangeTimeout = setTimeout(
-      function() {
-        updateExpense( name, value );
-      }, 500 );
+    expensesView._inputChangeTimeout = setTimeout( function() {
+      updateExpense( name, value );
+    }, 500 );
   } else {
     updateExpense( name, value );
   }
@@ -99,6 +106,4 @@ function _handleRegionChange() {
   updateUrlQueryString();
 }
 
-export {
-  expensesView
-};
+export { expensesView };

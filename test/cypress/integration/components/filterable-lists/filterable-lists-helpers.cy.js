@@ -1,5 +1,4 @@
 export class FilterableList {
-
   showFilters() {
     cy.get( '#o-filterable-list-controls' ).find( 'button' ).first().click();
   }
@@ -40,5 +39,4 @@ export class FilterableList {
   selectedTopics() {
     return cy.get( '.o-multiselect_choices > li' );
   }
-
 }

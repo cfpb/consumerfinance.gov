@@ -1,7 +1,9 @@
 describe( 'Youth Financial Education Survey: Grade Selection', () => {
   for ( const grades of [ '3-5', '6-8', '9-12' ] ) {
     it( `Can load ${ grades } page`, () => {
-      cy.visit( `/consumer-tools/educator-tools/youth-financial-education/survey/${ grades }/` );
+      cy.visit(
+        `/consumer-tools/educator-tools/youth-financial-education/survey/${ grades }/`
+      );
     } );
 
     it( `${ grades } page has heading`, () => {

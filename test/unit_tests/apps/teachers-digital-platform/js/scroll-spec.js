@@ -1,7 +1,6 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
-const scroll = require(
-  BASE_JS_PATH + 'teachers-digital-platform/js/scroll.js'
-);
+const scroll = require( BASE_JS_PATH +
+  'teachers-digital-platform/js/scroll.js' );
 
 const HTML_SNIPPET = `
   <a class="one" href="#one" data-scroll>one</a>
@@ -24,7 +23,6 @@ function simulateEvent( eventType, target, eventOption ) {
 
 /* eslint-disable max-lines-per-function, no-undefined */
 describe( 'Scroll', () => {
-
   beforeEach( () => {
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
@@ -46,5 +44,4 @@ describe( 'Scroll', () => {
 
     expect( spy ).toHaveBeenCalledWith( null, null, '#one' );
   } );
-
 } );

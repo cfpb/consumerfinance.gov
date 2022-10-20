@@ -53,8 +53,11 @@ function ExternalSite( element ) {
    */
   function _updateContent() {
     const plurality = _duration === 1 ? '' : 's';
-    const content = '<span class=\'external-site_reload-duration\'>' +
-                    _duration + '</span> second' + plurality;
+    const content =
+      "<span class='external-site_reload-duration'>" +
+      _duration +
+      '</span> second' +
+      plurality;
     _durationEl.innerHTML = content;
   }
 
