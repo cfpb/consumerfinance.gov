@@ -16,6 +16,8 @@ import {
   updateUrlQueryString
 } from '../dispatchers/update-view.js';
 
+/*
+// These are currently unused.
 const urlVals = [
   'pid',
   'programHousing',
@@ -32,6 +34,7 @@ const urlVals = [
   'utm_medium',
   'utm_campaign'
 ];
+*/
 
 const stateModel = {
   stateDomElem: null,
@@ -220,7 +223,7 @@ const stateModel = {
       updateFinancialViewAndFinancialCharts();
     }
 
-    if ( stateModel.textVersions.hasOwnProperty( property ) ) {
+    if ( {}.hasOwnProperty(stateModel.textVersions, property ) ) {
       const value = stateModel.values[property];
       const key = property + 'Text';
       stateModel.values[key] = stateModel.textVersions[property][value];
@@ -264,9 +267,8 @@ const stateModel = {
    * setValue - Public method to update model values
    * @param {String} name - the name of the property to update
    * @param {*} value - the value to be assigned
-   * @param {Boolean} updateURL - whether or not to update the URL
    */
-  setValue: function( name, value, updateURL ) {
+  setValue: function( name, value ) {
     // In case this method gets used to update activeSection...
     if ( name === 'activeSection' ) {
       stateModel.setActiveSection( value );

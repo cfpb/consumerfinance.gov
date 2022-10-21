@@ -369,7 +369,7 @@ const financialView = {
 
     // check errors for overCap errors
     for ( const error in errors ) {
-      if ( errors.hasOwnProperty( error ) ) {
+      if ( {}.hasOwnProperty(errors, error ) ) {
         const key = errorMap[error];
         const selector = '[data-calc-error="' + key + '"]';
         $( selector ).show();
@@ -400,7 +400,7 @@ const financialView = {
 
     // check for over-borrowing
     for ( let i = 0; i < overBorrowingErrors.length; i++ ) {
-      if ( errors.hasOwnProperty( overBorrowingErrors[i] ) ) {
+      if ( {}.hasOwnProperty(errors, overBorrowingErrors[i] ) ) {
         showOverBorrowing = true;
         errorInput = errorMap[overBorrowingErrors[i]];
       }
@@ -869,7 +869,7 @@ const financialView = {
     }
 
     // On resize, check if event handler should be attached
-    $win.on( 'resize', function( evt ) {
+    $win.on( 'resize', function() {
       clearTimeout( financialView.resizeTimer );
       financialView.resizeTimer = setTimeout( function() {
         financialView.stickySummariesListener();

@@ -1,7 +1,5 @@
 // This file contains the model for after-college expenses
 import {
-  updateAffordingChart,
-  updateCostOfBorrowingChart,
   updateExpensesView,
   updateUrlQueryString
 } from '../dispatchers/update-view.js';
@@ -37,7 +35,6 @@ const expensesModel = {
    */
   calculateTotals: () => {
     let totalExpenses = 0;
-    const remaining = 0;
 
     for ( const prop in expensesModel.values ) {
       if ( prop.substring( 0, 5 ) === 'item_' ) {
@@ -94,7 +91,7 @@ const expensesModel = {
 
     let arr;
     for ( const key in rangeFinder ) {
-      if ( rangeFinder.hasOwnProperty( key ) ) {
+      if ( {}.hasOwnProperty(rangeFinder, key ) ) {
         arr = rangeFinder[key];
         if ( salary >= arr[0] && salary <= arr[1] ) {
           return key;
@@ -126,7 +123,7 @@ const expensesModel = {
     const salaryRange = expensesModel._getSalaryRange( salary );
 
     for ( const key in propertyTranslator ) {
-      if ( propertyTranslator.hasOwnProperty( key ) ) {
+      if ( {}.hasOwnProperty(propertyTranslator, key ) ) {
         const data = expensesModel.rawData[key];
         if ( data ) {
           let value = stringToNum(

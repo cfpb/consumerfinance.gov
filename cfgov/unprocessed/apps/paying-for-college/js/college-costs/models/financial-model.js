@@ -31,7 +31,7 @@ const financialModel = {
   values: {},
 
   createFinancialProperty: function( name ) {
-    if ( !financialModel.values.hasOwnProperty( name ) ) {
+    if ( !{}.hasOwnProperty(financialModel.values, name ) ) {
       financialModel.values[name] = 0;
     }
   },
@@ -42,7 +42,7 @@ const financialModel = {
    */
   extendValues: data => {
     for ( const key in data ) {
-      if ( financialModel.values.hasOwnProperty( key ) ) {
+      if ( {}.hasOwnProperty(financialModel.values, key ) ) {
         financialModel.values[key] = stringToNum( data[key] );
       }
     }
@@ -64,11 +64,13 @@ const financialModel = {
       financialModel.values.salary_annual / 12;
 
     // set text of "hours to cover payment"
+    /*
     const hours =
       Math.floor( financialModel.values.debt_repayHours * 100 ) / 100;
     const weeks =
       Math.floor( financialModel.values.debt_repayWorkWeeks * 100 ) / 100;
     const coverString = hours + 'hours, or ' + weeks + 'forty-hour work weeks';
+    */
     updateState.byProperty( 'hoursToCoverPaymentText' );
 
     recalculateExpenses();
@@ -89,7 +91,7 @@ const financialModel = {
    * @param {Boolean} updateView - (defaults true) should view be updated?
    */
   setValue: ( name, value, updateView ) => {
-    if ( financialModel.values.hasOwnProperty( name ) ) {
+    if ( {}.hasOwnProperty(financialModel.values, name ) ) {
       financialModel.values[name] = stringToNum( value );
       financialModel.recalculate();
 
@@ -127,13 +129,13 @@ const financialModel = {
 
     // Enforce the limits if constants are loaded
     if ( getStateValue( 'constantsLoaded' ) === true ) {
-      const errors = financialModel._enforceLimits();
+      financialModel._enforceLimits();
     }
 
     // Calculate totals
     for ( const prop in vals ) {
       const prefix = prop.split( '_' )[0];
-      if ( totals.hasOwnProperty( prefix ) ) {
+      if ( {}.hasOwnProperty(totals, prefix ) ) {
         // For loans, get net amount after fees
         let val = vals[prop];
         if ( prop.indexOf( 'Loan' ) > 0 ) {
@@ -276,7 +278,7 @@ const financialModel = {
     const vals = financialModel.values;
     const loanName = prop.split( '_' )[1];
     let fee = 0;
-    if ( vals.hasOwnProperty( 'fee_' + loanName ) ) {
+    if ( {}.hasOwnProperty(vals, 'fee_' + loanName ) ) {
       fee = vals['fee_' + loanName];
     }
     const net = vals[prop] - vals[prop] * fee;
@@ -358,7 +360,7 @@ const financialModel = {
     }
 
     // If no rate, assume in-state
-    if ( rateProperties.hasOwnProperty( rate ) ) {
+    if ( {}.hasOwnProperty(rateProperties, rate ) ) {
       tuitionProp += rateProperties[rate];
     } else {
       tuitionProp += 'InS';

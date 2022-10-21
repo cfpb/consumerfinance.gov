@@ -72,7 +72,7 @@ const expensesModel = {
 
     let arr;
     for ( const key in rangeFinder ) {
-      if ( rangeFinder.hasOwnProperty( key ) ) {
+      if ( {}.hasOwnProperty(rangeFinder, key ) ) {
         arr = rangeFinder[key];
         if ( salary >= arr[0] && salary <= arr[1] ) {
           return key;

@@ -73,7 +73,7 @@ function calculateDirectLoanDebt(
      so when progress = 'a' (for Associates), then progress is set to '2' */
 
   // Translate progress value to number where necessary
-  if ( progressMap.hasOwnProperty( progress ) ) {
+  if ( {}.hasOwnProperty(progressMap, progress ) ) {
     progress = progressMap[progress];
   }
 

@@ -44,7 +44,7 @@ const constantsModel = {
           const data = JSON.parse( resp.responseText );
 
           for ( const key in data ) {
-            if ( data.hasOwnProperty( key ) ) {
+            if ( {}.hasOwnProperty(data, key ) ) {
               let value = data[key];
               if ( constantsModel.nonNumeric.indexOf( key ) === -1 ) {
                 value = Number( value );
@@ -54,7 +54,7 @@ const constantsModel = {
           }
 
           for ( const key in constantsModel.financialValues ) {
-            if ( constantsModel.financialValues.hasOwnProperty( key ) ) {
+            if ( {}.hasOwnProperty(constantsModel.financialValues, key ) ) {
               const rosetta = constantsModel.financialValues[key];
               updateFinancial( key, constantsModel.values[rosetta], false );
             }

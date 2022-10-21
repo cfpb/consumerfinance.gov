@@ -117,10 +117,10 @@ const linksView = {
     const radius = '50';
     const scorecardURL = this.$scorecardLink.attr( 'href' );
 
-    if ( values.hasOwnProperty( 'cipCode' ) ) {
+    if ( {}.hasOwnProperty(values, 'cipCode' ) ) {
       pcip = values.cipCode.slice( 0, 2 );
     }
-    if ( values.hasOwnProperty( 'zip5' ) ) {
+    if ( {}.hasOwnProperty(values, 'zip5' ) ) {
       zip = values.zip5;
     }
     const scorecardQuery = constructScorecardSearch( pcip, zip, radius );

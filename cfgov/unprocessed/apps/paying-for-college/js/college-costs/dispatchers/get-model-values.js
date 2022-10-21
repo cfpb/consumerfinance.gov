@@ -22,7 +22,7 @@ function getAllStateValues() {
  * @returns {(number|string|boolean)} value of the property, false if undefined
  */
 function getConstantsValue( name ) {
-  if ( constantsModel.values.hasOwnProperty( name ) ) {
+  if ( {}.hasOwnProperty(constantsModel.values, name ) ) {
     return constantsModel.values[name];
   }
   return false;
@@ -40,10 +40,10 @@ function getExpensesValue( name ) {
 /**
  * getFinancialValue - get the value of 'name' from the financialModel
  * @param {string} name - Name of the property to retrieve
- * @returns {number|booleab} value of the property, or false if undefined
+ * @returns {number|boolean} value of the property, or false if undefined
  */
 function getFinancialValue( name ) {
-  if ( financialModel.values.hasOwnProperty( name ) ) {
+  if ( {}.hasOwnProperty(financialModel.values, name ) ) {
     return financialModel.values[name];
   }
   return false;
@@ -76,7 +76,7 @@ function getProgramInfo( pid ) {
  */
 function getSchoolCohortValue( cohort, property ) {
   const smv = schoolModel.values;
-  if ( smv.hasOwnProperty( cohort ) && smv[cohort].hasOwnProperty( property ) ) {
+  if ( {}.hasOwnProperty(smv, cohort ) && {}.hasOwnProperty(smv[cohort], property ) ) {
     return smv[cohort][property];
   }
   return { percentile_rank: 0, error: 'no property found' };
@@ -88,7 +88,7 @@ function getSchoolCohortValue( cohort, property ) {
  * @returns {(number|string|boolean)} value of the property, or false if undefined
  */
 function getSchoolValue( name ) {
-  if ( schoolModel.values.hasOwnProperty( name ) ) {
+  if ( {}.hasOwnProperty(schoolModel.values, name ) ) {
     return schoolModel.values[name];
   }
   return false;
@@ -97,11 +97,11 @@ function getSchoolValue( name ) {
 /**
  * getStateValue - gets the property from the application state model
  * @param {string} prop - The property name
- * @returns {stringboolean} The value of the property in the stateModel Object, or
+ * @returns {string|boolean} The value of the property in the stateModel Object, or
  *    false if undefined
  */
 function getStateValue( prop ) {
-  if ( stateModel.values.hasOwnProperty( prop ) ) {
+  if ( {}.hasOwnProperty(stateModel.values, prop ) ) {
     return stateModel.values[prop];
   }
   return false;

@@ -41,7 +41,7 @@ const schoolModel = {
   createProgramLists: function() {
     schoolModel.values.programList = {};
     if (
-      schoolModel.values.hasOwnProperty( 'programCodes' ) &&
+      {}.hasOwnProperty(schoolModel.values, 'programCodes' ) &&
       schoolModel.values.programCodes !== null
     ) {
       const programCodes = schoolModel.values.programCodes;
@@ -68,8 +68,8 @@ const schoolModel = {
    */
   getAlphabeticalProgramList: function( level ) {
     let list = [];
-    if ( !schoolModel.values.hasOwnProperty( 'programCodes' ) ) return list;
-    if ( !schoolModel.values.programCodes.hasOwnProperty( level ) ) return list;
+    if ( !{}.hasOwnProperty(schoolModel.values, 'programCodes' ) ) return list;
+    if ( !{}.hasOwnProperty(schoolModel.values.programCodes, level ) ) return list;
 
     list = schoolModel.values.programCodes[level].sort( ( a, b ) => {
       if ( a.name < b.name ) {
@@ -99,8 +99,8 @@ const schoolModel = {
     if ( !hasProgram || !hasLevel ) {
       return false;
     } else if (
-      !schoolModel.values.hasOwnProperty( 'programList' ) ||
-      !schoolModel.values.programList[level].hasOwnProperty( pid )
+      !{}.hasOwnProperty(schoolModel.values, 'programList' ) ||
+      !{}.hasOwnProperty(schoolModel.values.programList[level], pid )
     ) {
       return false;
     }
