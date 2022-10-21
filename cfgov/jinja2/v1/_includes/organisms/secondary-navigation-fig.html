@@ -46,13 +46,13 @@
         <p class="u-hide-on-desktop">
             Effective {{ effective_start_date }} to {{ effective_end_date }}
         </p>
+        <div id="ctrl-f"></div>
         <ul class="m-list
                  m-list__unstyled
                  o-secondary-navigation_list
                  o-secondary-navigation_list__parents">
             {%- for item in toc_headers %}
             <li class="m-list_item">
-                <div id="ctrl-f"></div>
                 {{ nav_link.render(item.id + ". " + item.header, item.anchor, true) }}
                 {% if item.children %}
                 <ul class="m-list
