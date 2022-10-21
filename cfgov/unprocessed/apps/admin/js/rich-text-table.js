@@ -265,48 +265,48 @@ function initAtomicTable( id, tableOptions ) {
   }
   if ( dataForForm !== null ) {
     // Wagtail's built-in fields
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'first_row_is_table_header' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'first_row_is_table_header' ) ) {
       tableHeaderCheckbox.prop(
         'checked',
         dataForForm.first_row_is_table_header
       );
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'first_col_is_header' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'first_col_is_header' ) ) {
       colHeaderCheckbox.prop( 'checked', dataForForm.first_col_is_header );
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'table_caption' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'table_caption' ) ) {
       tableCaption.prop( 'value', dataForForm.table_caption );
     }
 
     // Custom fields
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'heading_text' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'heading_text' ) ) {
       headingText.prop( 'value', dataForForm.heading_text );
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'heading_level' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'heading_level' ) ) {
       headingLevel.prop( 'value', dataForForm.heading_level );
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'heading_icon' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'heading_icon' ) ) {
       headingIcon.prop( 'value', dataForForm.heading_icon );
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'is_striped' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'is_striped' ) ) {
       stripedRows.prop( 'checked', dataForForm.is_striped );
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'is_stacked' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'is_stacked' ) ) {
       stackOnMobile.prop( 'checked', dataForForm.is_stacked );
     }
     if ( {}.hasOwnProperty.call( dataForForm, ( 'is_full_width' ) ) {
       tableFullWidth.prop( 'checked', dataForForm.is_full_width );
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'fixed_col_widths' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'fixed_col_widths' ) ) {
       tableColFixed.prop( 'checked', dataForForm.fixed_col_widths );
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'is_sortable' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'is_sortable' ) ) {
       tableIsSortable.prop( 'checked', dataForForm.is_sortable );
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'column_widths' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'column_widths' ) ) {
       columnWidths = dataForForm.column_widths;
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'sortable_types' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'sortable_types' ) ) {
       colSortTypes = dataForForm.sortable_types;
     }
   }
@@ -544,10 +544,10 @@ function initAtomicTable( id, tableOptions ) {
     afterInit: initEvent
   };
   if ( dataForForm !== null ) {
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'data' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'data' ) ) {
       defaultOptions.data = dataForForm.data;
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'cell' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'cell' ) ) {
       defaultOptions.cell = dataForForm.cell;
     }
   }
