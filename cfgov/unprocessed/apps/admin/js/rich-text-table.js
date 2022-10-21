@@ -265,48 +265,48 @@ function initAtomicTable( id, tableOptions ) {
   }
   if ( dataForForm !== null ) {
     // Wagtail's built-in fields
-    if ( dataForForm.hasOwnProperty( 'first_row_is_table_header' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'first_row_is_table_header' ) ) {
       tableHeaderCheckbox.prop(
         'checked',
         dataForForm.first_row_is_table_header
       );
     }
-    if ( dataForForm.hasOwnProperty( 'first_col_is_header' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'first_col_is_header' ) ) {
       colHeaderCheckbox.prop( 'checked', dataForForm.first_col_is_header );
     }
-    if ( dataForForm.hasOwnProperty( 'table_caption' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'table_caption' ) ) {
       tableCaption.prop( 'value', dataForForm.table_caption );
     }
 
     // Custom fields
-    if ( dataForForm.hasOwnProperty( 'heading_text' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'heading_text' ) ) {
       headingText.prop( 'value', dataForForm.heading_text );
     }
-    if ( dataForForm.hasOwnProperty( 'heading_level' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'heading_level' ) ) {
       headingLevel.prop( 'value', dataForForm.heading_level );
     }
-    if ( dataForForm.hasOwnProperty( 'heading_icon' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'heading_icon' ) ) {
       headingIcon.prop( 'value', dataForForm.heading_icon );
     }
-    if ( dataForForm.hasOwnProperty( 'is_striped' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'is_striped' ) ) {
       stripedRows.prop( 'checked', dataForForm.is_striped );
     }
-    if ( dataForForm.hasOwnProperty( 'is_stacked' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'is_stacked' ) ) {
       stackOnMobile.prop( 'checked', dataForForm.is_stacked );
     }
-    if ( dataForForm.hasOwnProperty( 'is_full_width' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'is_full_width' ) ) {
       tableFullWidth.prop( 'checked', dataForForm.is_full_width );
     }
-    if ( dataForForm.hasOwnProperty( 'fixed_col_widths' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'fixed_col_widths' ) ) {
       tableColFixed.prop( 'checked', dataForForm.fixed_col_widths );
     }
-    if ( dataForForm.hasOwnProperty( 'is_sortable' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'is_sortable' ) ) {
       tableIsSortable.prop( 'checked', dataForForm.is_sortable );
     }
-    if ( dataForForm.hasOwnProperty( 'column_widths' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'column_widths' ) ) {
       columnWidths = dataForForm.column_widths;
     }
-    if ( dataForForm.hasOwnProperty( 'sortable_types' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'sortable_types' ) ) {
       colSortTypes = dataForForm.sortable_types;
     }
   }
@@ -317,7 +317,7 @@ function initAtomicTable( id, tableOptions ) {
     const meta = hot.getCellsMeta();
     const cellsClassnames = [];
     for ( let i = 0; i < meta.length; i++ ) {
-      if ( meta[i].hasOwnProperty( 'className' ) ) {
+      if ( {}.hasOwnProperty.call( meta[i], 'className' ) ) {
         cellsClassnames.push( {
           row: meta[i].row,
           col: meta[i].col,
@@ -544,10 +544,10 @@ function initAtomicTable( id, tableOptions ) {
     afterInit: initEvent
   };
   if ( dataForForm !== null ) {
-    if ( dataForForm.hasOwnProperty( 'data' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'data' ) ) {
       defaultOptions.data = dataForForm.data;
     }
-    if ( dataForForm.hasOwnProperty( 'cell' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, ( 'cell' ) ) {
       defaultOptions.cell = dataForForm.cell;
     }
   }
