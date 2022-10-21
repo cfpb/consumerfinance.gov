@@ -3,7 +3,7 @@ on:
   pull_request:
     paths-ignore:
       - '**.js'
-      - '**package.json'
+      - '**/package.json'
 jobs:
   frontend:
     runs-on: ubuntu-latest
