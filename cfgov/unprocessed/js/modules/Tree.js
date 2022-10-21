@@ -1,5 +1,4 @@
 /**
- * test
  * Tree
  * @class
  *

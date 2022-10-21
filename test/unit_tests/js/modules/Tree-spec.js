@@ -9,7 +9,7 @@ describe( 'Tree', () => {
 
   describe( '.init()', () => {
     it( 'should have a proper state before initialization', () => {
-      expect( tree instanceof Tree ).toBe( true );
+      expect( tree instanceof Tree ).toBe( false );
       expect( tree.getRoot() ).toBeNull();
       expect( tree.getAllAtLevel( 0 ) instanceof Array ).toBe( true );
       expect( tree.getAllAtLevel( 0 ).length ).toStrictEqual( 0 );
