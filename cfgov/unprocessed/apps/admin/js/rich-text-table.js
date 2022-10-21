@@ -294,7 +294,7 @@ function initAtomicTable( id, tableOptions ) {
     if ( {}.hasOwnProperty.call( dataForForm, 'is_stacked' ) ) {
       stackOnMobile.prop( 'checked', dataForForm.is_stacked );
     }
-    if ( {}.hasOwnProperty.call( dataForForm, ( 'is_full_width' ) ) {
+    if ( {}.hasOwnProperty.call( dataForForm, 'is_full_width' ) ) {
       tableFullWidth.prop( 'checked', dataForForm.is_full_width );
     }
     if ( {}.hasOwnProperty.call( dataForForm, 'fixed_col_widths' ) ) {
