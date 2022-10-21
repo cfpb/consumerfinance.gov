@@ -369,7 +369,7 @@ const financialView = {
 
     // check errors for overCap errors
     for ( const error in errors ) {
-      if ( {}.hasOwnProperty(errors, error ) ) {
+      if ( {}.hasOwnProperty.call(errors, error ) ) {
         const key = errorMap[error];
         const selector = '[data-calc-error="' + key + '"]';
         $( selector ).show();
@@ -400,7 +400,7 @@ const financialView = {
 
     // check for over-borrowing
     for ( let i = 0; i < overBorrowingErrors.length; i++ ) {
-      if ( {}.hasOwnProperty(errors, overBorrowingErrors[i] ) ) {
+      if ( {}.hasOwnProperty.call(errors, overBorrowingErrors[i] ) ) {
         showOverBorrowing = true;
         errorInput = errorMap[overBorrowingErrors[i]];
       }

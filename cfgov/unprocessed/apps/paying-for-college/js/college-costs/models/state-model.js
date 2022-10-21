@@ -223,7 +223,7 @@ const stateModel = {
       updateFinancialViewAndFinancialCharts();
     }
 
-    if ( {}.hasOwnProperty(stateModel.textVersions, property ) ) {
+    if ( {}.hasOwnProperty.call(stateModel.textVersions, property ) ) {
       const value = stateModel.values[property];
       const key = property + 'Text';
       stateModel.values[key] = stateModel.textVersions[property][value];

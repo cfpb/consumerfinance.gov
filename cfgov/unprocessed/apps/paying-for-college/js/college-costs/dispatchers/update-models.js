@@ -185,7 +185,7 @@ function updateSchoolData( iped ) {
         }
 
         // Update expenses by region
-        if ( {}.hasOwnProperty(schoolModel.values, 'region' ) ) {
+        if ( {}.hasOwnProperty.call(schoolModel.values, 'region' ) ) {
           document.querySelector( '#expenses__region' ).value =
             schoolModel.values.region;
           updateRegion( schoolModel.values.region );
@@ -227,7 +227,7 @@ function parseQueryParameters( queryObj ) {
   };
 
   for ( const key in queryObj ) {
-    if ( {}.hasOwnProperty(urlParameters, key ) ) {
+    if ( {}.hasOwnProperty.call(urlParameters, key ) ) {
       const match = urlParameters[key].split( '.' );
       modelMatch[match[0]]( match[1], queryObj[key], false );
 
@@ -255,24 +255,17 @@ function parseQueryParameters( queryObj ) {
  * @param {Object} queryObj - An object representing the url query string.
  */
 function updateModelsFromQueryString( queryObj ) {
-  const modelMatch = {
-    expensesModel: expensesModel.setValue,
-    financialModel: financialModel.setValue,
-    schoolModel: schoolModel.setValue,
-    stateModel: stateModel.setValue
-  };
-
   // If there's an offerID, set cobs to 'o' (offer)
-  if ( {}.hasOwnProperty(queryObj, 'oid' ) ) {
+  if ( {}.hasOwnProperty.call(queryObj, 'oid' ) ) {
     queryObj.cobs = 'o';
   }
 
   // If we have no cobs, check if there are costs values
-  if ( !{}.hasOwnProperty(queryObj, 'cobs' ) ) {
+  if ( !{}.hasOwnProperty.call(queryObj, 'cobs' ) ) {
     const costKeys = [ 'tuit', 'hous', 'diro', 'book', 'indo', 'nda', 'tran' ];
     let costsFound = false;
     costKeys.forEach( key => {
-      if ( {}.hasOwnProperty(queryObj, key ) ) {
+      if ( {}.hasOwnProperty.call(queryObj, key ) ) {
         costsFound = true;
       }
     } );
@@ -283,7 +276,7 @@ function updateModelsFromQueryString( queryObj ) {
   }
 
   parseQueryParameters( queryObj );
-  if ( {}.hasOwnProperty(queryObj, 'iped' ) ) {
+  if ( {}.hasOwnProperty.call(queryObj, 'iped' ) ) {
     updateSchoolData( queryObj.iped ).then( () => {
       updateExpensesFromQueryObj( queryObj );
     } );
@@ -308,7 +301,7 @@ function updateExpensesFromQueryObj( queryObj ) {
     'othx'
   ];
   params.forEach( key => {
-    if ( {}.hasOwnProperty(urlParameters, key ) ) {
+    if ( {}.hasOwnProperty.call(urlParameters, key ) ) {
       const prop = urlParameters[key].split( '.' )[1];
       expensesModel.setValue( prop, queryObj[key], false );
     }
