@@ -7,7 +7,7 @@ function numToMoney( num ) {
   let money;
   // When num is a string, we should, ironically, strip its numbers first.
   if ( typeof num === 'string' ) {
-    num = Number( num.replace( /[^0-9\.]+/g, '' ) );
+    num = Number( num.replace( /[^0-9.]+/g, '' ) );
   }
   if ( typeof num === 'object' ) {
     num = 0;
