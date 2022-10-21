@@ -88,7 +88,6 @@ function gettext( msgid ) {
 }
 
 function init() {
-  console.log( 'init graph view' );
   getTranslations();
 
   $( 'input[name="benefits-display"]' ).click( function() {
