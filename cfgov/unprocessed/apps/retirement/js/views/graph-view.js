@@ -4,7 +4,7 @@ import isElementInView from '../utils/is-element-in-view';
 import nextStepsView from './next-steps-view';
 import numToMoney from '../utils/num-to-money';
 import questionsView from './questions-view';
-import strToNum from '../utils/handle-string-input';
+import handleStringInput from '../utils/handle-string-input';
 import validDates from '../utils/valid-dates';
 
 // TODO: remove jquery.
@@ -88,6 +88,7 @@ function gettext( msgid ) {
 }
 
 function init() {
+  console.log( 'init graph view' );
   getTranslations();
 
   $( 'input[name="benefits-display"]' ).click( function() {
@@ -129,7 +130,7 @@ function init() {
 
   // reformat salary
   $( '#salary-input' ).blur( function() {
-    const salaryNumber = strToNum( $( '#salary-input' ).val() ),
+    const salaryNumber = handleStringInput( $( '#salary-input' ).val() ),
           salary = numToMoney( salaryNumber );
     $( '#salary-input' ).val( salary );
   } );
@@ -227,7 +228,7 @@ function validateBirthdayFields() {
 function getYourEstimates() {
   const dataLang = document.querySelector( 'html' ).getAttribute( 'lang' );
   const dates = validateBirthdayFields();
-  const salary = strToNum( $( '#salary-input' ).val() );
+  const salary = handleStringInput( $( '#salary-input' ).val() );
   let SSData;
 
   // Hide warnings, show loading indicator
