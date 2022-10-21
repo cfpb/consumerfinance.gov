@@ -15,8 +15,6 @@ const initials = require( './initials' );
 
 const $ = document.querySelector.bind( document );
 
-const localClipboardCopy = clipboardCopy;
-
 /**
  * Initialize the results page
  */

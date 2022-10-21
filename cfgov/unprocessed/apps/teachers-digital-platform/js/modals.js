@@ -66,7 +66,7 @@ class Modal {
     }
 
     // Send close event to GA.
-    analytics.handleSurveyResultsModalClose( el, this.opener );
+    analytics.handleSurveyResultsModalClose( el );
   }
 
   _addFocusTraps() {
