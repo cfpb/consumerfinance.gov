@@ -53,7 +53,6 @@ const HTML_SNIPPET = `
 
 global.console = { error: jest.fn(), log: jest.fn() };
 
-let testDiv;
 let expandableDiv;
 const OPEN_DEFAULT_CLASS = 'o-expandable_content__onload-open';
 
@@ -62,7 +61,6 @@ describe( 'expandable-mobile', () => {
     setInnerWidth( 1000 );
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
-    testDiv = document.querySelector( '#test-div' );
     expandableDiv = document.querySelector( '#test-div .o-expandable_content' );
   } );
 

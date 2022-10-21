@@ -536,10 +536,9 @@ const handleSurveyResultsModalClick = event => {
  * handleSurveyResultsModalClose - Listen for Results page Modal click and report to GA.
  *
  * @param {element} modal element
- * @param {element} opener element
  * @returns {object} Event data
  */
-const handleSurveyResultsModalClose = ( modal, opener ) => {
+const handleSurveyResultsModalClose = ( modal ) => {
   const modalId = modal.getAttribute( 'id' );
   const wrapper = closest( modal, 'div.content_wrapper.tdp-survey' );
   const valid_ids = [ 'modal-print', 'modal-share-url' ];
