@@ -1,4 +1,9 @@
+/* istanbul ignore file */
+/* Cypress tests cover all the UI interactions on this page. */
+
 import search from 'ctrl-f';
+import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
+import * as fig from './fig-sidenav-utils';
 
 const buttonText = 'Search this guide';
 
@@ -40,9 +45,28 @@ const getSearchData = sections => {
   } );
 };
 
+/**
+ * Event listener that's fired after a user follows a search result.
+ * On smaller screens we need to close the TOC before jumping the user
+ * to the search result.
+ * @param {object} event - Search result follow event
+ */
+const onFollow = event => {
+  // Only proceed if the browser window is no greater than 900px
+  if ( window.matchMedia( `(max-width: ${ varsBreakpoints.bpSM.max }px)` ).matches ) {
+    event.preventDefault();
+    const target = event.target.closest( 'a' ).getAttribute( 'href' ).replace( '#', '' );
+    document.querySelector( '.o-fig_sidebar .o-expandable_header' ).click();
+    // Scrolling before the expandable closes causes jitters on some devices
+    setTimeout( () => {
+      fig.scrollIntoViewWithOffset( document.getElementById( target ), 60 );
+    }, 300 );
+  }
+};
+
 const searchContainer = document.getElementById( 'ctrl-f' );
 const searchData = getSearchData( sections );
 
-search( searchContainer, { buttonText, searchOptions, searchData } );
+search( searchContainer, { buttonText, searchOptions, searchData, onFollow } );
 
 export { getSearchData };
