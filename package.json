@@ -71,6 +71,7 @@
     "lint": "./scripts/lint.sh",
     "jest": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "test": "yarn lint && yarn jest",
+    "sauce": "saucectl run",
     "snyk": "snyk test",
     "copy": "yarn build copy",
     "styles": "yarn build styles",

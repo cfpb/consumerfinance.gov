@@ -1,0 +1,25 @@
+# This file instructs saucectl to not package any files mentioned here.
+/examples/
+/artifacts/
+cypress/videos/
+cypress/results/
+cypress/screenshots/
+node_modules/
+cfgov/unprocessed/apps/*/node_modules/
+.git/
+.github/
+.DS_Store
+.hg/
+.vscode/
+.idea/
+.gitignore
+.hgignore
+.gitlab-ci.yml
+.npmrc
+*.gif
+.tox/
+cfgov/f/
+npm-packages-offline-cache/
+*.gz
+*.zip
+*.sql

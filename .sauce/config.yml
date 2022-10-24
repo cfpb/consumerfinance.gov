@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: cypress
+defaults:
+  mode: sauce
+showConsoleLog: false
+sauce:
+  region: us-west-1
+  concurrency: 15
+  sauceignore: .sauceignore
+cypress:
+  configFile: cypress.config.js
+  version: 10.10.0
+  record: false
+suites:
+- name: cypress - windows 11 - chrome
+  browser: chrome
+  platformName: windows 11
+  config:
+    specPattern: ['**/*ask-cfpb.cy.js']
+  mode: sauce
+rootDir: .
+artifacts:
+  download:
+    match:
+    - '*'
+    when: never
+    directory: ./artifacts
+npm:
+  registry: https://registry.npmjs.org
+  packages:
+    "@cypress/skip-test": "2.6.1"
+env:
+  CYPRESS_BASE_URL: https://consumerfinance.gov
