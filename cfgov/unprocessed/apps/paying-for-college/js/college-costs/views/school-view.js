@@ -218,9 +218,8 @@ let _keyupDelay;
 
 /**
  * Text has been entered in the school search input.
- * @param {KeyboardEvent} event - keyup event object.
  */
-function _handleInputChange( event ) {
+function _handleInputChange() {
   clearTimeout( _keyupDelay );
   _keyupDelay = setTimeout( function() {
     const searchTerm = schoolView._searchBox.value.trim();

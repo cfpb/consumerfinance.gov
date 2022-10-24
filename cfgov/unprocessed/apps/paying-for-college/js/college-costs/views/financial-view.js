@@ -26,9 +26,8 @@ const financialView = {
 
   /**
    * Event handling for "see steps" action plan button.
-   * @param {MouseEvent} event - Triggering event.
    */
-  _handleSeeStepsClick: function( event ) {
+  _handleSeeStepsClick: function() {
     // TODO - This could all be written better.
     const selected = document.querySelector(
       '.action-plan_choices .highlighted input[checked="true"]'
@@ -157,13 +156,11 @@ function _handleInputClick( event ) {
 
 /**
  * Event handling for button choice - "Does your offer include costs?".
- * @param {MouseEvent} event - Triggering event.
  */
-function _handleCostsButtonClick( event ) {
+function _handleCostsButtonClick() {
   const checkedButton = document.querySelector(
     'input[name="costs-offer-radio"]:checked'
   );
-  const target = event.target;
   let answer = '';
 
   if ( checkedButton !== null ) {
