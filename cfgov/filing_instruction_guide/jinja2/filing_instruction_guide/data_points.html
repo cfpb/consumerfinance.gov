@@ -62,32 +62,35 @@
 
         {{ list_if_present(field.info.get('examples'), "Examples") }}
 
-        {%- set valid_values = field.info.get('valid_values') -%}
-        {% if valid_values %}
-            {%- set header_row = valid_values[0] -%}
-            {%- set body_rows = valid_values[1:] -%}
-                <table>
-                    <thead>
-                        <tr>
-                           {% for column in header_row %}
-                           <th>{{ column }}</th>
-                           {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for row in body_rows %}
-                        <tr>
-                        {% for cell in row %}
-                            <td> {{cell}}</td>
-                        {% endfor %}
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-        {% endif %}
+        {{ values_table(field.info.get('valid_values')) }}
 
         {{ list_if_present(field.info.get('validations'), 'Validations') }}
     </div>
+{% endmacro %}
+
+{% macro values_table(valid_values) %}
+    {% if valid_values %}
+        {%- set header_row = valid_values[0] -%}
+        {%- set body_rows = valid_values[1:] -%}
+            <table>
+                <thead>
+                    <tr>
+                       {% for column in header_row %}
+                       <th>{{ column }}</th>
+                       {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for row in body_rows %}
+                    <tr>
+                    {% for cell in row %}
+                        <td> {{cell | safe }}</td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+    {% endif %}
 {% endmacro %}
 
 {% macro list_if_present(items, header) %}
