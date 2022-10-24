@@ -54,7 +54,7 @@
         {{field.info.get('short_name', '')}}
 
         <h5>Instructions</h5>
-        {{field.info.get('instruction_text', '') | safe }}
+        <p>{{field.info.get('instruction_text', '') | safe }}<p>
         <ul>
             <li>Field type: {{field.info.get('type', '')}} </li>
             <li>{{field.info.get('conditionality', '')}} </li>
