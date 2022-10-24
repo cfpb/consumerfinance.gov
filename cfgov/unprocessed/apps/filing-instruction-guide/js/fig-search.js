@@ -56,7 +56,7 @@ const onFollow = event => {
   if ( window.matchMedia( `(max-width: ${ varsBreakpoints.bpSM.max }px)` ).matches ) {
     event.preventDefault();
     const target = event.target.closest( 'a' ).getAttribute( 'href' ).replace( '#', '' );
-    document.querySelector( '.o-fig_sidebar .o-expandable_header' ).click();
+    document.querySelector( '.o-fig_sidebar button.o-expandable_header' ).click();
     // Scrolling before the expandable closes causes jitters on some devices
     setTimeout( () => {
       fig.scrollIntoViewWithOffset( document.getElementById( target ), 60 );
