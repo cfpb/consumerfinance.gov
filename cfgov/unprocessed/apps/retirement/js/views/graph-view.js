@@ -4,7 +4,7 @@ import isElementInView from '../utils/is-element-in-view';
 import nextStepsView from './next-steps-view';
 import numToMoney from '../utils/num-to-money';
 import questionsView from './questions-view';
-import strToNum from '../utils/handle-string-input';
+import handleStringInput from '../utils/handle-string-input';
 import validDates from '../utils/valid-dates';
 
 // TODO: remove jquery.
@@ -88,7 +88,6 @@ function gettext( msgid ) {
 }
 
 function init() {
-  const SSData = getModelValues.benefits();
   getTranslations();
 
   $( 'input[name="benefits-display"]' ).click( function() {
@@ -130,7 +129,7 @@ function init() {
 
   // reformat salary
   $( '#salary-input' ).blur( function() {
-    const salaryNumber = strToNum( $( '#salary-input' ).val() ),
+    const salaryNumber = handleStringInput( $( '#salary-input' ).val() ),
           salary = numToMoney( salaryNumber );
     $( '#salary-input' ).val( salary );
   } );
@@ -228,8 +227,7 @@ function validateBirthdayFields() {
 function getYourEstimates() {
   const dataLang = document.querySelector( 'html' ).getAttribute( 'lang' );
   const dates = validateBirthdayFields();
-  const salary = strToNum( $( '#salary-input' ).val() );
-  let lifetimeData;
+  const salary = handleStringInput( $( '#salary-input' ).val() );
   let SSData;
 
   // Hide warnings, show loading indicator
@@ -240,7 +238,6 @@ function getYourEstimates() {
   $.when( fetch.apiData( dates.concat, salary, dataLang ) ).done( function( resp ) {
     if ( resp.error === '' ) {
       SSData = getModelValues.benefits();
-      lifetimeData = getModelValues.lifetime();
       $( '.step-two .question' ).css( 'display', 'inline-block' );
       $(
         '.step-one-hidden,' +
@@ -332,8 +329,8 @@ function setTextByAge() {
   const selectedFRA = selectedAge === SSData.fullAge;
   const selectedAboveFRA = selectedAge > SSData.fullAge;
   const selectedCurrent = selectedAge === SSData.currentAge;
-  const isFRA = SSData.currentAge === SSData.fullAge;
-  const isYoungerThanFRA = SSData.currentAge < SSData.fullAge;
+  // const isFRA = SSData.currentAge === SSData.fullAge;
+  // const isYoungerThanFRA = SSData.currentAge < SSData.fullAge;
   const $benefitsMod = $( '.benefit-modification-text' );
   const $selectedAgeText = $( '#selected-retirement-age-value' );
   const $fullAgeBenefits = $( '#full-age-benefits-text' );
