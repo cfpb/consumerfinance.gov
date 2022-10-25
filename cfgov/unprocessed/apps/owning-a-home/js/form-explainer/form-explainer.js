@@ -578,7 +578,7 @@ class FormExplainer {
   /* Initialize the DOM events for the entire explainer UI. */
   initializeEvents() {
     const uiElements = this.elements;
-    const delay = 700;
+    const delay = 600;
 
     this.stickImage();
 
@@ -685,7 +685,7 @@ class FormExplainer {
           );
 
           this.updateAttention( closestFormExplainer, CSS.HAS_ATTENTION );
-          this.updateImagePositionAfterAnimation( 600 );
+          this.updateImagePositionAfterAnimation( delay );
         }
       }
     );
