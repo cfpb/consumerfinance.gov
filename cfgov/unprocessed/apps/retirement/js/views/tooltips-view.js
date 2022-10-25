@@ -1,8 +1,6 @@
 // TODO: remove jquery.
 import $ from 'jquery';
 
-let currentTooltip;
-
 function init() {
   // Tooltip handler
   const tooltipHandlers = document.querySelectorAll( '[data-tooltip-target]' );
@@ -18,6 +16,8 @@ function init() {
 }
 
 function toolTipper( elem ) {
+  let currentTooltip;
+
   // position tooltip-container based on the element clicked.
   const $elem = $( elem );
   const $ttc = $( '#tooltip-container' );
