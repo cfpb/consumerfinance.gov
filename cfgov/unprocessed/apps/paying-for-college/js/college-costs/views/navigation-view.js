@@ -186,9 +186,8 @@ function _handleAffordingChoicesClick( event ) {
 
 /**
  * _handleGetStartedBtnClick - Handle the click of the "Get Started" button.
- * @param {MouseEvent} event - the click event object.
  */
-function _handleGetStartedBtnClick( event ) {
+function _handleGetStartedBtnClick() {
   updateState.getStarted( true );
   updateState.activeSection( 'school-info' );
   navigationView.updateView();
@@ -222,9 +221,8 @@ function _handleNavButtonClick( event ) {
 
 /**
  * _handleNextButtonClick - handle the click event for the "Next" button.
- * @param {MouseEvent} event - click event object.
  */
-function _handleNextButtonClick( event ) {
+function _handleNextButtonClick() {
   // Check if there are missing form fields
   if ( getStateValue( 'schoolErrors' ) === 'yes' ) {
     updateState.byProperty( 'showSchoolErrors', 'yes' );

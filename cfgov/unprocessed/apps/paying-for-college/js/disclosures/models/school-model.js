@@ -49,7 +49,7 @@ const schoolModel = {
     values.medianSchoolDebt =
       values.medianStudentLoanCompleters || values.medianTotalDebt;
     if (
-      values.hasOwnProperty( 'completionRate' ) &&
+      {}.hasOwnProperty.call(values, 'completionRate' ) &&
       values.completionRate !== 'None'
     ) {
       values.gradRate = values.completionRate;

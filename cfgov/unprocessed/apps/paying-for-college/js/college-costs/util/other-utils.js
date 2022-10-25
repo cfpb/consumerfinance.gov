@@ -57,7 +57,7 @@ const statesByCode = {
  * @returns {string} A full state name, spelled out.
  */
 function getStateByCode( code ) {
-  if ( statesByCode.hasOwnProperty( code ) ) {
+  if ( {}.hasOwnProperty.call(statesByCode, code ) ) {
     return statesByCode[code];
   }
 
