@@ -14,9 +14,9 @@ function checkHudData( data ) {
   if ( data === null || data === 0 || data === UNDEFINED ) {
     return false;
   } else if (
-    data.hasOwnProperty( 'error' ) ||
-    !data.hasOwnProperty( 'counseling_agencies' ) ||
-    !data.hasOwnProperty( 'zip' )
+    {}.hasOwnProperty.call( data, 'error' ) ||
+    !{}.hasOwnProperty.call( data, 'counseling_agencies' ) ||
+    !{}.hasOwnProperty.call( data, 'zip' )
   ) {
     return false;
   }
