@@ -60,7 +60,7 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
     const isMapShown = DT.getElData( toggleMapLink, 'map' ) === 'true';
 
     const parentMapRow = DT.getParentEls( toggleMapLink, 'tr' )[0];
-    const mapTDs = DT.getChildEls( parentMapRow, 'td' );
+    // const mapTDs = DT.getChildEls( parentMapRow, 'td' );
     const mapRow = DT.getNextEls( parentMapRow, 'tr' )[0];
     const hasHideClass = DT.hasClass( mapRow, 'u-hidden' );
 
@@ -96,7 +96,7 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
           }
 
           // add marker
-          const marker = window.L.marker( latlng ).addTo( map );
+          window.L.marker( latlng ).addTo( map );
         } );
       }
     } else {
