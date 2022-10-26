@@ -15,6 +15,34 @@ export class FilingInstructionGuide {
     return cy.get( `a[id="${ section }"]` );
   }
 
+  getSearchModal() {
+    return cy.get( '#ctrl-f-modal' );
+  }
+
+  getSearchButton() {
+    return cy.get( '#ctrl-f button' );
+  }
+
+  getSearchInput() {
+    return cy.get( '#ctrl-f-search-input' );
+  }
+
+  getSearchResults() {
+    return cy.get( '#ctrl-f-search-results' );
+  }
+
+  getFirstSearchResult() {
+    return cy.get( '.ctrl-f-search-result a' ).first();
+  }
+
+  getMobileTOCHeader() {
+    return cy.get( '.o-fig_sidebar .o-expandable_header' );
+  }
+
+  getMobileTOCBody() {
+    return cy.get( '.o-fig_sidebar .o-expandable_content' );
+  }
+
   goToSection( section ) {
     return this.getSection( section ).scrollIntoView( { duration: 1000 } );
   }
