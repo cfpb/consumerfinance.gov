@@ -16,7 +16,6 @@ function init() {
 }
 
 function toolTipper( elem ) {
-  let currentTooltip;
 
   // position tooltip-container based on the element clicked.
   const $elem = $( elem );
@@ -35,7 +34,6 @@ function toolTipper( elem ) {
   $ttc.width( $( '#claiming-social-security' ).width() / 3 );
 
   $ttc.find( '.content' ).html( content );
-  currentTooltip = $elem;
 
   $ttc.show();
   const newTop = $elem.offset().top + $elem.outerHeight() + 10;
@@ -90,7 +88,6 @@ function toolTipper( elem ) {
     };
     $ttc.hide();
     $ttc.find( '.content' ).html( '' );
-    currentTooltip = null;
   } );
 
   window.addEventListener( 'resize', function() {
