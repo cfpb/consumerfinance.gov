@@ -50,6 +50,11 @@
             </a>
         </h4>
 
+        {%- set citation = field.info.get('citation', '') -%}
+        {% if citation %}
+            <p>Rule section: {{ citation }}</p>
+        {% endif %}
+
         <h5>Short name</h5>
         {{field.info.get('short_name', '')}}
 
