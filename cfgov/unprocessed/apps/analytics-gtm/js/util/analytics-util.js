@@ -64,34 +64,6 @@ function track( event, action, label ) {
 }
 
 /**
- * Check if two hosts are the same.
- * This only works with a www subdomain.
- * @param {string} host1 - A URL.
- * @param {string} host2 - Another URL.
- * @returns {boolean} True if the hosts are equal, false otherwise.
- */
-function hostsAreEqual( host1, host2 ) {
-  /**
-   * Pick the host out of a URL.
-   * @param {string} srcHost - A URL
-   * @returns {string} A hostname without subdomain.
-   */
-  function createTestHost( srcHost ) {
-    let testHost = document.createElement( 'a' );
-    testHost.href = srcHost;
-
-    testHost = testHost.host;
-    if ( testHost.substring( 0, 4 ) === 'www.' ) {
-      testHost = testHost.substring( 4 );
-    }
-
-    return testHost;
-  }
-
-  return createTestHost( host1 ) === createTestHost( host2 );
-}
-
-/**
  * Retrieve a URL query string parameter by parameter name.
  * @param  {string} key - The name of the parameter in the URL.
  * @returns {string|null} The value of the parameter.
@@ -115,6 +87,5 @@ module.exports = {
   analyticsLog,
   Delay,
   getQueryParameter,
-  hostsAreEqual,
   track
 };
