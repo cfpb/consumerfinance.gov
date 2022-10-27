@@ -121,7 +121,7 @@ function queryHandler( queryString ) {
    */
   function remapKeys() {
     for ( const key in parameters ) {
-      if ( {}.hasOwnProperty.call(keyMaps, key ) ) {
+      if ( {}.hasOwnProperty.call( keyMaps, key ) ) {
         const newKey = keyMaps[key];
         valuePairs[newKey] = parameters[key];
       }

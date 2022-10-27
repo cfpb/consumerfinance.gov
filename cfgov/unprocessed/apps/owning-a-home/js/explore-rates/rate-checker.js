@@ -938,7 +938,7 @@ function registerEvents() {
       // Set the other two fields to their placeholder values.
       $( '#house-price, #percent-down, #down-payment' )
         .not( $( this ) )
-        .each( function( /*i, val*/ ) {
+        .each( function( /* i, val */ ) {
           $( this ).val( $( this ).attr( 'placeholder' ) );
         } );
       $( '#house-price, #percent-down, #down-payment' ).removeAttr(

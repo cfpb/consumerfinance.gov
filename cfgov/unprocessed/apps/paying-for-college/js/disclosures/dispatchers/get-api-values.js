@@ -56,7 +56,7 @@ const getApiValues = {
       success: function( resp ) {
         return resp;
       },
-      error: function(/* req, status, err */) {
+      error: function( /* req, status, err */ ) {
         financialView.missingData( 'school' );
       }
     } );
@@ -90,7 +90,7 @@ const getApiValues = {
       success: function( resp ) {
         return resp;
       },
-      error: function( /*req, status, err*/ ) {
+      error: function( /* req, status, err */ ) {
         financialView.missingData( 'program' );
       }
     } );

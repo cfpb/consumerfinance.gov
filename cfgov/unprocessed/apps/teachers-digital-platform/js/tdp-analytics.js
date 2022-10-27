@@ -538,7 +538,7 @@ const handleSurveyResultsModalClick = event => {
  * @param {element} modal element
  * @returns {object} Event data
  */
-const handleSurveyResultsModalClose = ( modal ) => {
+const handleSurveyResultsModalClose = modal => {
   const modalId = modal.getAttribute( 'id' );
   const wrapper = closest( modal, 'div.content_wrapper.tdp-survey' );
   const valid_ids = [ 'modal-print', 'modal-share-url' ];

@@ -159,7 +159,7 @@ fileChangeDom.addEventListener( 'change', function() {
       error: function() {
         console.log( arguments );
       },
-      complete: function( /*results, file*/ ) {
+      complete: function( /* results, file */ ) {
         if ( rowCount === 0 ) {
           fileInput.setError(
             'There are no rows in this csv. Please update and try again.'

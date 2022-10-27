@@ -16,7 +16,6 @@ function init() {
 }
 
 function toolTipper( elem ) {
-
   // position tooltip-container based on the element clicked.
   const $elem = $( elem );
   const $ttc = $( '#tooltip-container' );

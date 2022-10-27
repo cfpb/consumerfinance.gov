@@ -91,7 +91,7 @@ const expensesModel = {
 
     let arr;
     for ( const key in rangeFinder ) {
-      if ( {}.hasOwnProperty.call(rangeFinder, key ) ) {
+      if ( {}.hasOwnProperty.call( rangeFinder, key ) ) {
         arr = rangeFinder[key];
         if ( salary >= arr[0] && salary <= arr[1] ) {
           return key;
@@ -123,7 +123,7 @@ const expensesModel = {
     const salaryRange = expensesModel._getSalaryRange( salary );
 
     for ( const key in propertyTranslator ) {
-      if ( {}.hasOwnProperty.call(propertyTranslator, key ) ) {
+      if ( {}.hasOwnProperty.call( propertyTranslator, key ) ) {
         const data = expensesModel.rawData[key];
         if ( data ) {
           let value = stringToNum(

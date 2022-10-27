@@ -43,7 +43,7 @@ const app = {
 
           /* If PID exists, update the financial model and view based
                  on program data */
-          if ( !{}.hasOwnProperty.call(data, 'pidNotFound' ) ) {
+          if ( !{}.hasOwnProperty.call( data, 'pidNotFound' ) ) {
             financialModel.updateModelWithProgram( schoolValues );
             financialView.updateViewWithProgram( schoolValues, urlValues );
           }
