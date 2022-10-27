@@ -4,12 +4,12 @@
  *
  * @param {string} type - request type (GET, POST)
  * @param {string} url - request url
- * @param {Object} opts - object containing optional
+ * @param {object} opts - object containing optional
  *   request parameters, including data, headers,
  *   and success, fail, and done callbacks
- * @returns {Object} xhr
+ * @returns {object} xhr
  */
-function ajaxRequest( type, url, opts ) {
+function ajaxRequest(type, url, opts) {
   const DONE_CODE = 4;
   const SUCCESS_CODES = {
     200: 'ok',
@@ -18,25 +18,25 @@ function ajaxRequest( type, url, opts ) {
     203: 'non-authoritative info',
     204: 'no content',
     205: 'reset content',
-    206: 'partial content'
+    206: 'partial content',
   };
   const xhr = new XMLHttpRequest();
-  xhr.open( type, url );
-  if ( opts.headers ) {
-    opts.headers.forEach( function( header ) {
-      xhr.setRequestHeader( header[0], header[1] );
-    } );
+  xhr.open(type, url);
+  if (opts.headers) {
+    opts.headers.forEach(function (header) {
+      xhr.setRequestHeader(header[0], header[1]);
+    });
   }
-  xhr.onreadystatechange = function() {
-    if ( xhr.readyState === DONE_CODE ) {
-      if ( xhr.status in SUCCESS_CODES ) {
-        if ( typeof opts.success === 'function' ) {
-          opts.success( xhr.responseText );
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === DONE_CODE) {
+      if (xhr.status in SUCCESS_CODES) {
+        if (typeof opts.success === 'function') {
+          opts.success(xhr.responseText);
         }
-      } else if ( typeof opts.fail === 'function' ) {
-        opts.fail( xhr.status );
+      } else if (typeof opts.fail === 'function') {
+        opts.fail(xhr.status);
       }
-      if ( typeof opts.done === 'function' ) opts.done();
+      if (typeof opts.done === 'function') opts.done();
     }
   };
   xhr.send();

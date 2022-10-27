@@ -1,30 +1,30 @@
 import Store from './store';
 
-const updateGeo = ( geo, action ) => {
-  switch ( action.type ) {
+const updateGeo = (geo, action) => {
+  switch (action.type) {
     case 'CLEAR_GEO':
       return {
         type: null,
         id: null,
-        name: null
+        name: null,
       };
     case 'SET_GEO':
     case 'UPDATE_CHART':
-      if ( !action.geo ) {
+      if (!action.geo) {
         return geo;
       }
       return {
         type: action.geo.type || geo.type,
         id: action.geo.id,
-        name: action.geo.name
+        name: action.geo.name,
       };
     default:
       return geo;
   }
 };
 
-const isLoadingMetros = action => {
-  switch ( action.type ) {
+const isLoadingMetros = (action) => {
+  switch (action.type) {
     case 'REQUEST_METROS':
       return true;
     default:
@@ -32,8 +32,8 @@ const isLoadingMetros = action => {
   }
 };
 
-const isLoadingNonMetros = action => {
-  switch ( action.type ) {
+const isLoadingNonMetros = (action) => {
+  switch (action.type) {
     case 'REQUEST_NON_METROS':
       return true;
     default:
@@ -41,8 +41,8 @@ const isLoadingNonMetros = action => {
   }
 };
 
-const isLoadingCounties = action => {
-  switch ( action.type ) {
+const isLoadingCounties = (action) => {
+  switch (action.type) {
     case 'REQUEST_COUNTIES':
       return true;
     default:
@@ -50,8 +50,8 @@ const isLoadingCounties = action => {
   }
 };
 
-const isLoadingStates = action => {
-  switch ( action.type ) {
+const isLoadingStates = (action) => {
+  switch (action.type) {
     case 'REQUEST_STATES':
       return true;
     default:
@@ -59,8 +59,8 @@ const isLoadingStates = action => {
   }
 };
 
-const isLoading = action => {
-  switch ( action.type ) {
+const isLoading = (action) => {
+  switch (action.type) {
     case 'UPDATE_CHART':
     case 'SET_GEO':
       return true;
@@ -69,8 +69,8 @@ const isLoading = action => {
   }
 };
 
-const updateStates = ( states, action ) => {
-  switch ( action.type ) {
+const updateStates = (states, action) => {
+  switch (action.type) {
     case 'SET_STATES':
       return action.states;
     case 'FETCH_STATES':
@@ -80,8 +80,8 @@ const updateStates = ( states, action ) => {
   }
 };
 
-const updateMetros = ( metros, action ) => {
-  switch ( action.type ) {
+const updateMetros = (metros, action) => {
+  switch (action.type) {
     case 'SET_METROS':
       return action.metros;
     case 'FETCH_METROS':
@@ -91,8 +91,8 @@ const updateMetros = ( metros, action ) => {
   }
 };
 
-const updateNonMetros = ( nonMetros, action ) => {
-  switch ( action.type ) {
+const updateNonMetros = (nonMetros, action) => {
+  switch (action.type) {
     case 'SET_NON_METROS':
       return action.nonMetros;
     case 'FETCH_NON__METROS':
@@ -102,8 +102,8 @@ const updateNonMetros = ( nonMetros, action ) => {
   }
 };
 
-const updateCounties = ( counties, action ) => {
-  switch ( action.type ) {
+const updateCounties = (counties, action) => {
+  switch (action.type) {
     case 'SET_COUNTIES':
       return action.counties;
     case 'FETCH_COUNTIES':
@@ -113,12 +113,12 @@ const updateCounties = ( counties, action ) => {
   }
 };
 
-const includeComparison = ( include, action ) => {
-  switch ( action.type ) {
+const includeComparison = (include, action) => {
+  switch (action.type) {
     case 'UPDATE_CHART':
-      return typeof action.includeComparison === 'undefined' ?
-        include :
-        action.includeComparison;
+      return typeof action.includeComparison === 'undefined'
+        ? include
+        : action.includeComparison;
     default:
       return include;
   }
@@ -131,7 +131,7 @@ const initialState = {
     // FIPS code of the geo, e.g. '04194'
     id: null,
     // Geo name, e.g. 'Ohio'
-    name: null
+    name: null,
   },
   counties: {},
   metros: {},
@@ -144,30 +144,30 @@ const initialState = {
   // Is the chart being re-rendered?
   isLoadingChart: false,
   // Should the national trend be shown alongside the geo's?
-  includeComparison: true
+  includeComparison: true,
 };
 
 class LineChartStore extends Store {
-  constructor( middleware ) {
-    super( middleware );
+  constructor(middleware) {
+    super(middleware);
     this.prevState = {};
     this.state = initialState;
-    this.state = this.reduce( this.state, {} );
+    this.state = this.reduce(this.state, {});
   }
 
-  reduce( state, action ) {
+  reduce(state, action) {
     const newState = {
-      geo: updateGeo( state.geo, action ),
-      isLoading: isLoading( action ),
-      isLoadingMetros: isLoadingMetros( action ),
-      isLoadingNonMetros: isLoadingNonMetros( action ),
-      isLoadingCounties: isLoadingCounties( action ),
-      isLoadingStates: isLoadingStates( action ),
-      includeComparison: includeComparison( state.includeComparison, action ),
-      counties: updateCounties( state.counties, action ),
-      metros: updateMetros( state.metros, action ),
-      nonMetros: updateNonMetros( state.nonMetros, action ),
-      states: updateStates( state.states, action )
+      geo: updateGeo(state.geo, action),
+      isLoading: isLoading(action),
+      isLoadingMetros: isLoadingMetros(action),
+      isLoadingNonMetros: isLoadingNonMetros(action),
+      isLoadingCounties: isLoadingCounties(action),
+      isLoadingStates: isLoadingStates(action),
+      includeComparison: includeComparison(state.includeComparison, action),
+      counties: updateCounties(state.counties, action),
+      metros: updateMetros(state.metros, action),
+      nonMetros: updateNonMetros(state.nonMetros, action),
+      states: updateStates(state.states, action),
     };
     return newState;
   }

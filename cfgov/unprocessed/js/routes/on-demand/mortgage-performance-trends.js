@@ -13,5 +13,5 @@ window.CFPB_CHART_DATA_SOURCE_BASE = '/data-research/mortgages/api/v1/';
 
 import { Chart, Map } from '../../organisms/MortgagePerformanceTrends';
 
-new Chart( { container: 'mp-line-chart-container' } );
-new Map( { container: 'mp-map-container' } );
+new Chart({ container: 'mp-line-chart-container' });
+new Map({ container: 'mp-map-container' });

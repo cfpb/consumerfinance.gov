@@ -5,7 +5,7 @@ export class CCTCharts {
     );
   }
 
-  getFirstButton( range ) {
-    return cy.get( `g[aria-label="Select range ${ range }"]` ).first();
+  getFirstButton(range) {
+    return cy.get(`g[aria-label="Select range ${range}"]`).first();
   }
 }

@@ -1,24 +1,39 @@
-function checklistMap( data ) {
+/**
+ *
+ * @param data
+ */
+function checklistMap(data) {
   const lookup = data;
 
+  /**
+   *
+   */
   function checklist() {
     return { ...lookup };
   }
 
-  function filterKeysBy( predicate ) {
-    const keys = Object.keys( lookup );
+  /**
+   *
+   * @param predicate
+   */
+  function filterKeysBy(predicate) {
+    const keys = Object.keys(lookup);
 
-    return keys.filter( predicate );
+    return keys.filter(predicate);
   }
 
-  function get( key ) {
+  /**
+   *
+   * @param key
+   */
+  function get(key) {
     return lookup[key];
   }
 
   return {
     checklist,
     get,
-    filterKeysBy
+    filterKeysBy,
   };
 }
 

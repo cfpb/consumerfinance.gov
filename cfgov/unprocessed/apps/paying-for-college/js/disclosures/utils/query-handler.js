@@ -1,18 +1,19 @@
-const stringToNum = require( './handle-string-input.js' );
+const stringToNum = require('./handle-string-input.js');
 
 /**
  * Handles URL questy string to turn key-value pairs into an object.
+ *
  * @param {string} queryString - The query string of a url (location.search)
  * @returns {object} - An object containing key-value pairs from the query
  */
-function queryHandler( queryString ) {
+function queryHandler(queryString) {
   const valuePairs = {
     tuitionFees: 0,
     roomBoard: 0,
     books: 0,
     transportation: 0,
     otherExpenses: 0,
-    urlProgramLength: 0
+    urlProgramLength: 0,
   };
   const parameters = {};
   const numericKeys = [
@@ -43,7 +44,7 @@ function queryHandler( queryString ) {
     'insl',
     'insi',
     'sav',
-    'totl'
+    'totl',
   ];
   const keyMaps = {
     iped: 'collegeID',
@@ -75,21 +76,22 @@ function queryHandler( queryString ) {
     insl: 'tuitionRepay',
     insi: 'tuitionRepayRate',
     inst: 'tuitionRepayTerm',
-    totl: 'totalCost'
+    totl: 'totalCost',
   };
 
   /**
    * Helper function for checking that expected numeric values are indeed
    * numeric
+   *
    * @param {string} key - The key to be checked
    * @param {string|number} value - The value of the key
    * @returns {string|number} newValue - The corrected value of the key
    */
-  function checkValue( key, value ) {
+  function checkValue(key, value) {
     let newValue = value;
 
-    if ( numericKeys.indexOf( key ) !== -1 ) {
-      newValue = stringToNum( value );
+    if (numericKeys.indexOf(key) !== -1) {
+      newValue = stringToNum(value);
     }
 
     return newValue;
@@ -104,14 +106,14 @@ function queryHandler( queryString ) {
     let pair;
     const regex = /[?&]?([^=]+)=([^&]*)/g;
 
-    queryString.split( '+' ).join( ' ' );
+    queryString.split('+').join(' ');
 
-    while ( ( pair = regex.exec( queryString ) ) ) {
+    while ((pair = regex.exec(queryString))) {
       // eslint-disable-line no-cond-assign
-      const key = decodeURIComponent( pair[1] );
-      let value = decodeURIComponent( pair[2] );
+      const key = decodeURIComponent(pair[1]);
+      let value = decodeURIComponent(pair[2]);
 
-      value = checkValue( key, value );
+      value = checkValue(key, value);
       parameters[key] = value || 0;
     }
   }
@@ -120,8 +122,8 @@ function queryHandler( queryString ) {
    * Helper function which maps the parameters object using the keyMaps
    */
   function remapKeys() {
-    for ( const key in parameters ) {
-      if ( {}.hasOwnProperty.call( keyMaps, key ) ) {
+    for (const key in parameters) {
+      if ({}.hasOwnProperty.call(keyMaps, key)) {
         const newKey = keyMaps[key];
         valuePairs[newKey] = parameters[key];
       }
@@ -136,8 +138,8 @@ function queryHandler( queryString ) {
    */
   function adjustProgramLength() {
     const lengthValue = valuePairs.urlProgramLength;
-    if ( lengthValue % 6 !== 0 ) {
-      valuePairs.urlProgramLength = lengthValue + ( 6 - ( lengthValue % 6 ) );
+    if (lengthValue % 6 !== 0) {
+      valuePairs.urlProgramLength = lengthValue + (6 - (lengthValue % 6));
     }
   }
 
@@ -151,8 +153,8 @@ function queryHandler( queryString ) {
       amount: valuePairs.privateLoan || 0,
       rate: valuePairs.privateLoanRate / 100 || 0.079,
       fees: valuePairs.privateLoanFee / 100 || 0,
-      deferPeriod: 6
-    }
+      deferPeriod: 6,
+    },
   ];
   delete valuePairs.privateLoan;
   delete valuePairs.privateLoanRate;
