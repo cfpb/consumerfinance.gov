@@ -18,13 +18,13 @@ const CLASSES = {
  * user wants to print their final plan. Toggles visibility of elements
  * that should not be printed.
  *
- * @param {HTMLNode} element The root DOM element for this view
- * @param {Object} props Props to configure this view
- * @param {String} props.btnClass Optional container class for this element
- * @param {Function} props.onBeforePrint Optional hook before page is printed
- * @param {Function} props.onClick Optional handler to run on click. Provides underlying
- * _print method as an argument.
- * @returns {Object} The view's public methods
+ * @param {HTMLElement} element - The root DOM element for this view.
+ * @param {Object} props - Props to configure this view.
+ * @param {String} props.btnClass - Optional container class for this element.
+ * @param {Function} props.onBeforePrint - Optional hook before page is printed.
+ * @param {Function} props.onClick - Optional handler to run on click.
+ *   Provides underlying _print method as an argument.
+ * @returns {Object} The view's public methods.
  */
 function printButton(
   element,

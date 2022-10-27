@@ -50,7 +50,7 @@ function sendEvent( action, label, category ) {
  * Grabs analytics event data from the passed element's data attributes.
  * Determines the state of the Analytics module and either passes the data
  * or waits for Analytics to report readiness, then passes the data.
- * @param {HTMLNode} el - A dom element
+ * @param {HTMLElement} el - A dom element
  */
 function handleAnalytics( el ) {
   const action = el.getAttribute( 'data-gtm-action' );

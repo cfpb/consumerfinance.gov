@@ -31,7 +31,7 @@ const SEL_PREFIX = '[' + JS_HOOK + '=' + BASE_CLASS;
  * which may obscure the first trigger.
  * The flyout can be triggered through a click of either trigger.
  *
- * @param {HTMLNode} element - The DOM element to attach FlyoutMenu behavior.
+ * @param {HTMLElement} element - The DOM element to attach FlyoutMenu behavior.
  * @returns {FlyoutMenu} An instance.
  */
 function FlyoutMenu( element ) {
@@ -81,7 +81,7 @@ function FlyoutMenu( element ) {
    * Iterate over dom tree and find FlyoutMenu triggers.
    * We need to exclude the ones that are nested FlyoutMenus, since those
    * will be managed by their own instance of this class.
-   * @param {HTMLNode} element - The DOM element to search for triggers within.
+   * @param {HTMLElement} element - The DOM element to search for triggers within.
    * @returns {Array} List of trigger DOM references within this FlyoutMenu.
    */
   function _findTriggers( element ) {
@@ -159,7 +159,7 @@ function FlyoutMenu( element ) {
    * Set an aria attribute on an HTML element.
    * @param {string} type - The aria attribute to set
    *   (without the aria- prefix).
-   * @param {HTMLNode} elem - The element to set.
+   * @param {HTMLElement} elem - The element to set.
    * @param {boolean} value - The value to set on `aria-expanded`,
    *   casts to a string.
    * @returns {string} The cast value.
@@ -349,12 +349,10 @@ function FlyoutMenu( element ) {
   }
 
   /**
-   * @param {MoveTransition|AlphaTransition} transition
-   *   A transition instance to watch for events on.
-   * @param {Function} method
-   *   The transition method to call on expand.
-   * @param {Array} [args]
-   *   List of arguments to apply to expand method.
+   * @param {MoveTransition|AlphaTransition} transition - A transition instance
+   *   to watch for events on.
+   * @param {Function} method - The transition method to call on expand.
+   * @param {Array} [args] - List of arguments to apply to expand method.
    */
   function setExpandTransition( transition, method, args ) {
     _expandTransition = transition;
@@ -363,12 +361,10 @@ function FlyoutMenu( element ) {
   }
 
   /**
-   * @param {MoveTransition|AlphaTransition} transition
-   *   A transition instance to watch for events on.
-   * @param {Function} method
-   *   The transition method to call on collapse.
-   * @param {Array} [args]
-   *   List of arguments to apply to collapse method.
+   * @param {MoveTransition|AlphaTransition} transition - A transition instance
+   *   to watch for events on.
+   * @param {Function} method - The transition method to call on collapse.
+   * @param {Array} [args] - List of arguments to apply to collapse method.
    */
   function setCollapseTransition( transition, method, args ) {
     _collapseTransition = transition;
@@ -401,14 +397,13 @@ function FlyoutMenu( element ) {
   }
 
   /**
-   * @param {string} [type]
-   *   The type of transition to return.
+   * @param {string} [type] - The type of transition to return.
    *   Accepts 'expand' or 'collapse'.
    *   `FlyoutMenu.EXPAND_TYPE` and `FlyoutMenu.COLLAPSE_TYPE` can be used
    *   as type-safe constants passed into this method.
    *   If neither or something else is supplied, expand type is returned.
-   * @returns {MoveTransition|AlphaTransition|undefined}
-   *   A transition instance set on this instance, or undefined if none is set.
+   * @returns {MoveTransition|AlphaTransition|undefined} A transition instance
+   *   set on this instance, or undefined if none is set.
    */
   function getTransition( type ) {
     if ( type === FlyoutMenu.COLLAPSE_TYPE ) {
@@ -466,8 +461,8 @@ function FlyoutMenu( element ) {
   }
 
   /**
-   * @param {number|string|Object} data
-   *   A data identifier such as an Array index, Hash key, or Tree node.
+   * @param {number|string|Object} data - A data identifier such
+   *   as an Array index, Hash key, or Tree node.
    * @returns {FlyoutMenu} An instance.
    */
   function setData( data ) {

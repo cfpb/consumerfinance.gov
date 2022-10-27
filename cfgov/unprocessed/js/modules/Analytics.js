@@ -12,11 +12,11 @@ const Analytics = {
 
   /**
    * Get data layer object.
-   * @param {string} action Name of event.
-   * @param {string} label DOM element label.
-   * @param {string} category Type of event.
-   * @param {Function} [callback=undefined] Function to call on GTM submission.
-   * @param {number} [timeout=500] Callback invocation fallback time.
+   * @param {string} action - Name of event.
+   * @param {string} label - DOM element label.
+   * @param {string} category - Type of event.
+   * @param {Function} [callback=undefined] - Function to call on GTM submission.
+   * @param {number} [timeout=500] - Callback invocation fallback time.
    * @returns {object} Data layer object.
    */
   getDataLayerOptions: function( action, label, category, callback, timeout ) {
@@ -61,7 +61,7 @@ const Analytics = {
    *
    * @description
    * Pushes an event to the GTM dataLayer.
-   * @param {object} dataLayerOptions Type of event.
+   * @param {object} dataLayerOptions - Type of event.
    */
   sendEvent: function( dataLayerOptions ) {
     const callback = dataLayerOptions.eventCallback;
@@ -80,7 +80,7 @@ const Analytics = {
    * @description
    * Pushes multiple events to the GTM dataLayer.
    *
-   * @param {array} eventsArray Array of event objects.
+   * @param {array} eventsArray - Array of event objects.
    */
   sendEvents: function( eventsArray ) {
     if ( typeCheckers.isArray( eventsArray ) ) {

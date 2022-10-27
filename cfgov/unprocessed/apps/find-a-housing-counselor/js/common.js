@@ -48,7 +48,7 @@ function injectMapboxJS() {
 
 /**
  * Event handler for successful load of mapbox JavaScript file.
- * @param  {Event} evt - The event object from the load event.
+ * @param {Event} evt - The event object from the load event.
  */
 function scriptLoaded( evt ) {
   evt.target.removeEventListener( 'load', scriptLoaded );
@@ -84,8 +84,8 @@ function initializeMap() {
  * Cache the map marker result item DOM references so that a DOM lookup doesn't
  * happen every time a map marker is clicked. The lookup happens on the first
  * click and then is stored in the markerDomCache object.
- * @param  {number} num - The index of the result item.
- * @returns {HTMLNode} The DOM node of the result item.
+ * @param {number} num - The index of the result item.
+ * @returns {HTMLElement} The DOM node of the result item.
  */
 function queryMarkerDom( num ) {
   const id = 'hud-result-' + Number.parseInt( num, 10 );

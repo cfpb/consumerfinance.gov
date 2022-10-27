@@ -4,8 +4,8 @@ import chartHooks from './chart-hooks.js';
 
 /**
  * Adjusts legend alignment based on series length
- * @param {object} defaultObj default object to be decorated
- * @param {string} chartType current chart type
+ * @param {object} defaultObj - default object to be decorated
+ * @param {string} chartType - current chart type
  */
 function alignMargin( defaultObj, chartType ) {
   const len = defaultObj.series.length;
@@ -30,8 +30,8 @@ function alignMargin( defaultObj, chartType ) {
 
 /**
  * Mechanism for passing functions or applied functions to the chart style object
- * @param {string} override Prefixed refered to a function in chart-hooks.js
- * @param {object} data Data provided to chart
+ * @param {string} override - Prefixed refered to a function in chart-hooks.js
+ * @param {object} data - Data provided to chart
  * @returns {function|string} Result of the override or the provided unmatched style
  */
 function resolveOverride( override, data ) {
@@ -47,9 +47,9 @@ function resolveOverride( override, data ) {
 
 /**
  * Mutates a style object with entries from the style overrides field
- * @param {string} styleOverrides Stringified JSON style overrides
- * @param {object} obj The object to mutate
- * @param {object} data The data to provide to the chart
+ * @param {string} styleOverrides - Stringified JSON style overrides
+ * @param {object} obj - The object to mutate
+ * @param {object} data - The data to provide to the chart
  */
 function overrideStyles( styleOverrides, obj, data ) {
   const styles = JSON.parse( styleOverrides );
@@ -65,7 +65,7 @@ function overrideStyles( styleOverrides, obj, data ) {
 
 /**
  * Formats processed series data as expected by Highcharts
- * @param {object} data Series data in various acceptable formats
+ * @param {object} data - Series data in various acceptable formats
  * @returns {object} Correctly formatted series object
  */
 function formatSeries( data ) {
@@ -87,7 +87,7 @@ function formatSeries( data ) {
 
 /**
  * Makes a tooltip formatter function
- * @param {string} yAxisLabel Label for the yAxis
+ * @param {string} yAxisLabel - Label for the yAxis
  * @returns {function} The formatter function
  */
 function makeFormatter( yAxisLabel ) {
@@ -109,9 +109,9 @@ function makeFormatter( yAxisLabel ) {
 
 /**
  * Pulls specified keys from the resolved data object
- * @param {array} rawData Array of data from JSON, CSV or directly entered
- * @param {string} series The keys for data to render into the chart
- * @param {string} x_axis_data Key or array of categories
+ * @param {array} rawData - Array of data from JSON, CSV or directly entered
+ * @param {string} series - The keys for data to render into the chart
+ * @param {string} x_axis_data - Key or array of categories
  * @returns {array} Series data
  */
 function extractSeries( rawData, { series, xAxisSource, chartType } ) {

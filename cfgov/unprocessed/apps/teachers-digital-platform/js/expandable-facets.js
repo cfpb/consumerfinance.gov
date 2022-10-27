@@ -74,7 +74,7 @@ function expandableClickHandler() {
 
 /**
  * Toggle an expandable to open or closed.
- * @param {HTMLNode} element - The expandable target HTML DOM element.
+ * @param {HTMLElement} element - The expandable target HTML DOM element.
  */
 function toggleTargetState( element ) {
   if ( element.classList.contains( this.classes.targetExpanded ) ) {

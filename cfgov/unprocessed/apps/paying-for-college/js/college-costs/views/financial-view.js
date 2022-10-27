@@ -145,7 +145,7 @@ function _handleInputChange( event ) {
 
 /**
  * Event handling for input clicks.
- * @param {MouseEvent} event - the triggering click event object.
+ * @param {MouseEvent} event - The triggering click event object.
  */
 function _handleInputClick( event ) {
   const target = event.target;

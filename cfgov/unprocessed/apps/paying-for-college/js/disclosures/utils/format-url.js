@@ -1,8 +1,8 @@
 /**
  * Formats a raw URL to be used in an href attribute.
- * The raw URL may or may not start with "http://" or "https://"
- * @param  {string} url The raw URL
- * @returns {string} The formated URL
+ * The raw URL may or may not start with "http://" or "https://".
+ * @param {string} url - The raw URL.
+ * @returns {string} The formated URL.
  */
 function formatSchoolURL( url ) {
   let formattedURL;

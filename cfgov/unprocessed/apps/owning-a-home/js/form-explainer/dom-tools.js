@@ -51,7 +51,7 @@ function bindEvents( elements, events, callback = NO_OP ) {
 /**
  * Creates and returns a div HTML element containing arbitrary HTML.
  * @param {string} HTML - Arbitrary HTML to include in created div.
- * @returns {HTMLNode} First HTMLNode in the created div.
+ * @returns {HTMLElement} First HTMLElement in the created div.
  */
 function createElement( HTML ) {
   const div = document.createElement( 'div' );
@@ -107,7 +107,7 @@ function getEls( selector ) {
 
 /**
  * @param {string} selector - A DOM selector.
- * @returns {HTMLNode} The retrieved element.
+ * @returns {HTMLElement} The retrieved element.
  * TODO: This should have a conistent return type if possible.
  */
 function getEl( selector ) {
@@ -129,7 +129,7 @@ function getPreviousEls( element, filter = '*' ) {
   let prevEl = element.previousElementSibling;
 
   /**
-   * @param {HTMLNode} el - An HTML element.
+   * @param {HTMLElement} el - An HTML element.
    * @returns {Function} The browser's Element.matches() method.
    */
   function _getMatches( el ) {
@@ -153,7 +153,7 @@ function getPreviousEls( element, filter = '*' ) {
 
 /**
  * Check whether something is a NodeList, HTML element, or window.
- * @param  {*} element Something, possibly a list, element or window instance.
+ * @param {*} element - Something, possibly a list, element or window instance.
  * @returns {boolean} True if `element` meets the criteria, false otherwise.
  */
 function _isEl( element ) {
@@ -166,7 +166,7 @@ function _isEl( element ) {
 
 /**
  * Check whether something is a NodeList, HTML element, or window.
- * @param {*} selector Something, possibly a list, element or window instance.
+ * @param {*} selector - Something, possibly a list, element or window instance.
  */
 function hide( selector ) {
   applyAll( getEls( selector ), element => fastDom.mutate( () => ( element.style.display = 'none' ) )
@@ -175,7 +175,7 @@ function hide( selector ) {
 
 /**
  * Check whether something is a NodeList, HTML element, or window.
- * @param {*} selector Something, possibly a list, element or window instance.
+ * @param {*} selector - Something, possibly a list, element or window instance.
  */
 function show( selector ) {
   applyAll( getEls( selector ), element => fastDom.mutate( () => ( element.style.display = 'block' ) )
@@ -183,7 +183,7 @@ function show( selector ) {
 }
 
 /**
- * @param {HTMLNode} element - HTML element to adjust.
+ * @param {HTMLElement} element - HTML element to adjust.
  * @param {number} time - When to call the callback.
  * @param {[Function]} callback - Function to call after delay.
  */
@@ -196,7 +196,7 @@ function fadeIn( element, time, callback = NO_OP ) {
 }
 
 /**
- * @param {HTMLNode} element - HTML element to adjust.
+ * @param {HTMLElement} element - HTML element to adjust.
  * @param {number} time - When to call the callback.
  * @param {[Function]} callback - Function to call after delay.
  */

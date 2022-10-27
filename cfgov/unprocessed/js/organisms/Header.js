@@ -12,8 +12,8 @@ import MegaMenu from '../organisms/MegaMenu';
  *
  * @classdesc Initializes a new Header organism.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
  * @returns {Object} An Header instance.
  */
 function Header( element ) {
@@ -28,8 +28,8 @@ function Header( element ) {
   let _searchOpen = false;
 
   /**
-   * @param {HTMLNode} overlay
-   *   Overlay to show/hide when mobile mega menu is shown.
+   * @param {HTMLElement} overlay - Overlay to show/hide when mobile mega menu
+   *   is shown.
    * @returns {Header} An instance.
    */
   function init( overlay ) {

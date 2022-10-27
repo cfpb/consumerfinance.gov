@@ -2,8 +2,8 @@ const unFormatUSD = require( 'unformat-usd' );
 
 /**
  * Get value(s) of an individual HTML element in the control panel.
- * @param   {string} param Name of parameter to get.
- *                         Usually the HTML element's id attribute.
+ * @param {string} param - Name of parameter to get.
+ *   Usually the HTML element's id attribute.
  * @returns {Object} Hash of element id and its value(s).
  */
 function getSelection( param ) {

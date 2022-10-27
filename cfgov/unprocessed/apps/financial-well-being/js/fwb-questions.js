@@ -8,7 +8,7 @@ let questionStates;
 /**
  * Checks the selection status of a group of radio inputs,
  * belonging to a parent fieldset
- * @param {HTMLNode} childRadios - An array of DOM elements.
+ * @param {HTMLElement} childRadios - An array of DOM elements.
  * @returns {boolean} The status of the group of inputs
  */
 function checkQuestionState( childRadios ) {
@@ -71,7 +71,7 @@ function enableSubmit() {
 /**
  * Updates the status of the fieldset in the data store
  * and checks if the form has been completed
- * @param {HTMLNode} input - A DOM element
+ * @param {HTMLElement} input - A DOM element
  */
 function handleRadio( input ) {
   if ( input.name && input.checked ) {
@@ -98,7 +98,7 @@ function sendEvent( action, label, category ) {
  * Grabs analytics event data from the passed element's data attributes.
  * Determines the state of the Analytics module and either passes the data
  * or waits for Analytics to report readiness, then passes the data.
- * @param {HTMLNode} el - A DOM element
+ * @param {HTMLElement} el - A DOM element
  */
 function handleAnalytics( el ) {
   const action = el.getAttribute( 'data-gtm-action' );

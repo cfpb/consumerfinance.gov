@@ -6,7 +6,7 @@ const mapActionCreators = defaultActionCreators();
 /**
  * zoomChart - Creates action to zoom chart
  *
- * @param {String} stateAbbr Two-letter U.S. state abbreviation.
+ * @param {String} stateAbbr - Two-letter U.S. state abbreviation.
  *
  * @returns {Object} zoom chart action
  */
@@ -21,9 +21,9 @@ mapActionCreators.zoomChart = stateAbbr => {
 /**
  * updateChart - Creates action to re-render chart
  *
- * @param {String} geoId   ID of location
- * @param {String} geoName Name of location
- * @param {String} geoType Type of location (state, metro, county)
+ * @param {String} geoId - ID of location
+ * @param {String} geoName - Name of location
+ * @param {String} geoType - Type of location (state, metro, county)
  *
  * @returns {Object} update chart action
  */
@@ -48,8 +48,8 @@ mapActionCreators.updateChart = ( geoId, geoName, geoType ) => {
 /**
  * fetchMetros - Creates async action to fetch list of metros
  *
- * @param {String} metroState Two-letter U.S. state abbreviation.
- * @param {Boolean} shouldZoom Zoom to U.S. state after fetching?
+ * @param {String} metroState - Two-letter U.S. state abbreviation.
+ * @param {Boolean} shouldZoom - Zoom to U.S. state after fetching?
  *
  * @returns {Function} Thunk called with new metros
  */
@@ -79,8 +79,8 @@ mapActionCreators.fetchMetros = ( metroState, shouldZoom ) => dispatch => {
 /**
  * fetchCounties - Creates async action to fetch list of counties
  *
- * @param {String} countyState Two-letter U.S. state abbreviation.
- * @param {Boolean} shouldZoom Zoom to U.S. state after fetching?
+ * @param {String} countyState - Two-letter U.S. state abbreviation.
+ * @param {Boolean} shouldZoom - Zoom to U.S. state after fetching?
  *
  * @returns {Function} Thunk called with new metros
  */

@@ -8,7 +8,7 @@ const base64UrlDecode = val => window.atob( val.replace( /-/g, '+' ).replace( /_
 /**
  * Encode string
  *
- * @param {string} input Input
+ * @param {string} input - Input
  * @returns {string} Encoded string
  */
 function encode( input ) {
@@ -19,7 +19,7 @@ function encode( input ) {
 /**
  * Decode a string
  *
- * @param {string} encoded Encoded string
+ * @param {string} encoded - Encoded string
  * @returns {string | null} Decoded string (or null)
  */
 function decode( encoded ) {
@@ -41,8 +41,8 @@ function decode( encoded ) {
 /**
  * Encode name as a URL hash
  *
- * @param {string} url URL
- * @param {string} name Name
+ * @param {string} url - URL
+ * @param {string} name - Name
  * @returns {string} Output URL
  */
 function encodeNameInUrl( url, name ) {
@@ -52,7 +52,7 @@ function encodeNameInUrl( url, name ) {
 /**
  * Decode name from a URL
  *
- * @param {string} url URL
+ * @param {string} url - URL
  * @returns {string | null} Name, if set and valid
  */
 function decodeNameFromUrl( url ) {
@@ -62,7 +62,7 @@ function decodeNameFromUrl( url ) {
 /**
  * Decode a string with legacy strategy
  *
- * @param {string} encoded Encoded string
+ * @param {string} encoded - Encoded string
  * @returns {string | null} Decoded string (or null)
  */
 function legacyDecode( encoded ) {
@@ -71,7 +71,7 @@ function legacyDecode( encoded ) {
    *
    * Adapted from https://stackoverflow.com/a/7616484/3779
    *
-   * @param {string} str String to hash
+   * @param {string} str - String to hash
    * @returns {string} Hash code
    */
   function hashCode( str ) {
@@ -93,8 +93,8 @@ function legacyDecode( encoded ) {
    * @license MIT
    *   http://opensource.org/licenses/MIT
    *
-   * @param {string} str Input
-   * @param {number} key Number to apply
+   * @param {string} str - Input
+   * @param {number} key - Number to apply
    * @returns {string} Output
    */
   function xor( str, key ) {
