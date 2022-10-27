@@ -36,6 +36,7 @@
     "@cypress/skip-test": "2.6.1",
     "autoprefixer": "10.4.12",
     "cfpb-chart-builder": "6.4.2",
+    "copy-to-clipboard": "3.3.2",
     "enforce-node-version": "0.1.0",
     "esbuild": "0.15.11",
     "fancy-log": "2.0.0",
