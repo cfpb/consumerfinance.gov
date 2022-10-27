@@ -4,7 +4,7 @@ import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.
 
 // Retirement - Before You Claim custom analytics file
 
-const BYCAnalytics = ( function() {
+( function() {
   const questionsAnswered = [];
   let sliderClicks = 0;
   let sliderIsActive = false;

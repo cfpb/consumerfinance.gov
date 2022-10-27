@@ -19,7 +19,7 @@ try {
  */
 
 // eslint-disable-next-line max-lines-per-function, complexity, max-statements
-const TabNavigationTracking = ( () => {
+( () => {
   // Bail out if localStorage is not supported or is blocked.
   if ( !window.Storage || _localStorage === null || _sessionStorage === null ) {
     return;

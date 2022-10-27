@@ -460,12 +460,12 @@ function initAtomicTable( id, tableOptions ) {
      but the defaults for those call the resizeHeight function. It's only
      available in the inner scope of the initTable function, so we have to
      redefine it here. */
-  const getWidth = function() {
+  /*const getWidth = function() {
     return window
       .jQuery( '.widget-table_input' )
       .closest( '.sequence-member-inner' )
       .width();
-  };
+  };*/
   const getHeight = function() {
     const tableParent = window.jQuery( '#' + id ).parent();
     return (
@@ -498,7 +498,7 @@ function initAtomicTable( id, tableOptions ) {
   const initEvent = function() {
     isInitialized = true;
   };
-  const structureEvent = function( index, amount ) {
+  const structureEvent = function( /*index, amount*/ ) {
     resizeHeight( getHeight() );
     persist();
   };

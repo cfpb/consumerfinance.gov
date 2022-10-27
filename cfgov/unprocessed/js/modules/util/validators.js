@@ -37,10 +37,10 @@ function date( field, currentStatus ) {
   // https://regex101.com/r/M0ipdX/1
   const yearRegex = /^\d{4}$/;
   // https://regex101.com/r/PEa2se/1
-  const monthYearRegex = /^(?:\d{1}|\d{2})(?:\-|\/)(?:\d{4}|\d{2})$/;
+  const monthYearRegex = /^(?:\d{1}|\d{2})(?:-|\/)(?:\d{4}|\d{2})$/;
   // https://regex101.com/r/1SGTLF/1
   const dayMonthYearRegex =
-    /^(?:\d{1}|\d{2})(?:\-|\/)(?:\d{1}|\d{2})(?:\-|\/)(?:\d{4}|\d{2})$/;
+    /^(?:\d{1}|\d{2})(?:-|\/)(?:\d{1}|\d{2})(?:-|\/)(?:\d{4}|\d{2})$/;
 
   const inputIsValid =
     yearRegex.test( valueToEval ) ||

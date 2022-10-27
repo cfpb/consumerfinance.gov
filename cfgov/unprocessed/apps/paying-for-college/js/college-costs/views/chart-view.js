@@ -730,9 +730,6 @@ const chartView = {
     const totalMonthlySalary = monthlySalary * 1.1;
     const totalMonthlyExpenses = ( monthlyExpenses + monthlyPayment ) * 1.1;
     const max = Math.max( totalMonthlySalary, totalMonthlyExpenses );
-    const text =
-      'Monthly Salary<br>' +
-      numberToMoney( { amount: monthlySalary, decimalPlaces: 0 } );
 
     chartView.affordingChart.yAxis[0].update( {
       min: 0,

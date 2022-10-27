@@ -12,7 +12,7 @@ if ( regs3kWayfinder !== null ) {
 const wayfinderRegex = {
   appendixTitle: /Appendix [^\s]+/,
   title: /§ 10[0-9].\.[0-9]*/g,
-  marker: /\-/g
+  marker: /-/g
 };
 
 /**

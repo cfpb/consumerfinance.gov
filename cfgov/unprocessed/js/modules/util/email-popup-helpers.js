@@ -147,7 +147,7 @@ function showOnScroll( elToShow, opts ) {
     return windowBottom > scrollTargetPosition;
   }
 
-  const handler = throttle( function( event ) {
+  const handler = throttle( function() {
     if ( _scrollTargetPositionReached() ) {
       window.removeEventListener( 'scroll', handler );
       if ( typeof opts.cb === 'function' ) {

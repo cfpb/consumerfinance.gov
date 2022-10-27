@@ -1,6 +1,6 @@
 import { track } from './util/analytics-util';
 
-const HashURLListener = ( function() {
+( function() {
   let action =
     window.location.pathname + window.location.search + window.location.hash;
   action = action.replace( '#', 'GA_HASHTAG' );

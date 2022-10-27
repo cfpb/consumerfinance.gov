@@ -98,7 +98,7 @@ function hostsAreEqual( host1, host2 ) {
  */
 function getQueryParameter( key ) {
   const url = window.location.href;
-  const param = key.replace( /[\[\]]/g, '\\$&' );
+  const param = key.replace( /[[\]]/g, '\\$&' );
   const regex = new RegExp( '[?&]' + param + '(=([^&#]*)|&|#|$)' );
   const results = regex.exec( url );
   if ( !results ) return null;

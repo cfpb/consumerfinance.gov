@@ -1,4 +1,5 @@
 // Required modules.
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as validators from '../modules/util/validators';
 import {
   checkDom,
