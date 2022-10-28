@@ -20,7 +20,7 @@ function handleStringInput( numberString ) {
   }
 
   // Strip non-numeric values, maintaining periods
-  numberString = numberString.replace( /[^0-9\.]+/g, '' );
+  numberString = numberString.replace( /[^0-9.]+/g, '' );
 
   /**
    * This helper function places commas in the string. It's set up to

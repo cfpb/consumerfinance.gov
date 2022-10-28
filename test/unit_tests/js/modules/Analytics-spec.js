@@ -11,7 +11,7 @@ describe( 'Analytics', () => {
   beforeEach( () => {
     function push( object ) {
       if (
-        object.hasOwnProperty( 'eventCallback' ) &&
+        {}.hasOwnProperty.call( object, 'eventCallback' ) &&
         typeof object.eventCallback === 'function'
       ) {
         return object.eventCallback();

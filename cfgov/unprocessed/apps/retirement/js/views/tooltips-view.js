@@ -1,8 +1,6 @@
 // TODO: remove jquery.
 import $ from 'jquery';
 
-let currentTooltip;
-
 function init() {
   // Tooltip handler
   const tooltipHandlers = document.querySelectorAll( '[data-tooltip-target]' );
@@ -18,6 +16,7 @@ function init() {
 }
 
 function toolTipper( elem ) {
+
   // position tooltip-container based on the element clicked.
   const $elem = $( elem );
   const $ttc = $( '#tooltip-container' );
@@ -35,7 +34,6 @@ function toolTipper( elem ) {
   $ttc.width( $( '#claiming-social-security' ).width() / 3 );
 
   $ttc.find( '.content' ).html( content );
-  currentTooltip = $elem;
 
   $ttc.show();
   const newTop = $elem.offset().top + $elem.outerHeight() + 10;
@@ -90,7 +88,6 @@ function toolTipper( elem ) {
     };
     $ttc.hide();
     $ttc.find( '.content' ).html( '' );
-    currentTooltip = null;
   } );
 
   window.addEventListener( 'resize', function() {
