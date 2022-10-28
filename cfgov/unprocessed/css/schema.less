@@ -2,8 +2,29 @@
   margin-top: unit( @grid_gutter-width / @size-ii, em );
 }
 
-.schema-block__how-to li {
-  margin-top: unit( @grid_gutter-width / 2 / @size-iv, em );
+.schema-block__how-to li,
+.schema-block__how-to > div p:first-child {
+  margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+}
+
+.schema-block__how-to {
+    h2,
+    h3,
+    h4 {
+      max-width: 41.875rem;
+    }
+
+    h2 {
+      margin-top: unit( @grid_gutter-width / @size-ii, em );
+    }
+
+    h3 {
+      margin-top: unit( @grid_gutter-width / @size-iii, em );
+    }
+
+    h4 {
+      margin-top: unit( @grid_gutter-width / @size-iv, em );
+    }
 }
 
 .respond-to-min( @bp-lg-min, {
@@ -12,6 +33,3 @@
   }
 } );
 
-.schema-block > .schema-block_item:first-child > h2:first-child {
-  margin-top: 0;
-}
