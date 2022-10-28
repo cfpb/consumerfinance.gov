@@ -15,11 +15,22 @@
    value.title:                   Main title for the HowTo. Marked up as the
                                   HowTo's `name` field.
 
+   value.title_tag:               Tag for HowTo's title.
+
+   value.show_title:              Boolean. Whether to make the name value for
+                                  the HowTo visible on page.
+
    value.description:             Text overview of the HowTo. Marked up as the
                                   HowTo's `description` field.
 
+   value.step_title_tag           Text. Tag for the titles of the steps.
+
+   value.has_numbers              Boolean. Whether to show numbers before steps.
+
    value.steps:                   List of steps in the HowTo. Marked up as
                                   HowToStep objects.
+
+   value.steps.step.anchor_tag    Value to use as id for step container.
 
    value.steps.step.title:        Title of an individual step. Marked up as the
                                   HowToStep's `name` field.
@@ -33,29 +44,64 @@
 <div itemscope
      itemtype="http://schema.org/HowTo"
      class="schema-block schema-block__how-to">
-{%- if value.title %}
-    <h2 itemprop="name" class="schema-block_title">
-        {{ value.title }}
-    </h2>
-{% endif -%}
+    {%- if value.title %}
+        <{{ value.title_tag }} itemprop="name" 
+                               class="schema-block_title
+                               {% if not value.show_title %}
+                               u-visually-hidden
+                               {% endif %}">
+            {{ value.title }}
+        </{{ value.title_tag }}>
+    {% endif -%}
 
-{%- if value.description %}
-    <div itemprop="description" class="schema-block_description">
-        {{ value.description | richtext }}
-    </div>
-{% endif -%}
+    {%- if value.description %}
+        <div itemprop="description" class="schema-block_description">
+            {{ value.description | richtext }}
+        </div>
+    {% endif -%}
 
-    <ol>
-    {% for step in value.steps %}
-        <li itemprop="step"
-            itemscope
-            itemtype="http://schema.org/HowToStep"
-            class="schema-block_item">
-            <h3 itemprop="name" class="h4">{{ step.title }}</h3>
-            <div itemprop="text">
-                {% include_block step.step_content %}
+    {% if ( value.step_title_tag == 'b' or value.step_title_tag == 'p' ) and value.has_numbers %}
+        <ol>
+            {% for step in value.steps %}
+                <li class="schema-block_item"
+                    {% if step.anchor_tag %} 
+                    id="{{ step.anchor_tag }}"
+                    {% endif %}>
+                    <div itemprop="step"
+                         itemscope
+                         itemtype="http://schema.org/HowToStep">
+                        <p itemprop="name">
+                            {{'<b>'|safe if value.step_title_tag == 'b' else '' }}
+                                {{ step.title }}
+                            {{'</b>'|safe if value.step_title_tag == 'b' else '' }}
+                        </p>
+                        <div itemprop="text">
+                            {% include_block step.step_content %}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        {% for step in value.steps %}
+            <div class="schema-block_item"
+                 {% if step.anchor_tag %} 
+                 id="{{ step.anchor_tag }}"
+                 {% endif %}>
+                <div itemprop="step"
+                     itemscope
+                     itemtype="http://schema.org/HowToStep">
+                    <{{ value.step_title_tag if value.step_title_tag != 'b' else 'p' }}>
+                        {{'<b>'|safe if value.step_title_tag == 'b' else '' }}
+                            {{ loop.index | string + '. ' if value.has_numbers else '' }}
+                            <span itemprop="name">{{ step.title }}</span> 
+                        {{'</b>'|safe if value.step_title_tag == 'b' else '' }}
+                    </{{ value.step_title_tag if value.step_title_tag != 'b' else 'p' }}>
+                    <div itemprop="text">
+                        {% include_block step.step_content %}
+                    </div>
+                </div>
             </div>
-        </li>
-    {% endfor %}
-    </ol>
+        {% endfor %}
+    {% endif %}  
 </div>
