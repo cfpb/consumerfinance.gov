@@ -13,9 +13,9 @@ function addEventListenerToSelector( selector, event, callback ) {
 
 /**
  * Check if an element exists on the page, and if it does, add listeners.
- * @param {[type]}   elem     [description]
- * @param {[type]}   event    [description]
- * @param {Function} callback [description]
+ * @param {[type]} elem - [description] TODO
+ * @param {[type]} event - [description] TODO
+ * @param {Function} callback [description] TODO
  */
 function addEventListenerToElem( elem, event, callback ) {
   if ( elem ) {

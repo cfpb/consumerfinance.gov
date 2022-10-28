@@ -29,7 +29,7 @@ let UNDEFINED;
  *
  * @classdesc Initializes a new Form Explainer.
  *
- * @param {HTMLNode} element - Base DOM element.
+ * @param {HTMLElement} element - Base DOM element.
  * @param {Object} options - Configuration options.
  * @returns {Object} An Form Explainer instance.
  */
@@ -59,7 +59,7 @@ class FormExplainer {
 
   /**
    * Initialize the UI after instatiation.
-   * @param {HTMLNodes} elements - Current page DOM elements.
+   * @param {Object} elements - Current page DOM elements.
    */
   initializeUI( elements ) {
     this.updatePageUI( elements.initialTab, EXPLAIN_TYPES.CHECKLIST );
@@ -165,7 +165,7 @@ class FormExplainer {
    Remove the attention class from all the expandables/overlays,
    and then apply it to the target & its associated overlay
    or expandable.
-   * @param {HTMLNode} target - Overlay or expandable DOM node.
+   * @param {HTMLElement} target - Overlay or expandable DOM node.
    * @param {string} className - Hover class name.
    */
   updateAttention( target, className ) {
@@ -195,8 +195,8 @@ class FormExplainer {
 
   /**
    * Open the expandable and scroll into the viewport.
-   * @param {HTMLNode} imageOverlay - Image overlay, which was clicked.
-   * @param {HTMLNode} targetExpandable - Target expandable.
+   * @param {HTMLElement} imageOverlay - Image overlay, which was clicked.
+   * @param {HTMLElement} targetExpandable - Target expandable.
    * current focus.
    */
   openAndScrollToExpandable( imageOverlay, targetExpandable ) {
@@ -288,7 +288,7 @@ class FormExplainer {
 
   /**
    * Resize the image map and corresponding images, based on window size.
-   * @param {HTMLNodes} elements - Current page DOM elements.
+   * @param {Object} elements - Current page DOM elements.
    * @param {boolean} windowResize - Whether the images are being resized
    * based on a window resize event.
    */
@@ -342,7 +342,7 @@ class FormExplainer {
 
   /**
    * Set the image map and image map widths, in pixels.
-   * @param {HTMLNodes} elements - Current page DOM elements.
+   * @param {Object} elements - Current page DOM elements.
    */
   setImageElementWidths( elements ) {
     /* When the image position is set to `fixed`,
@@ -366,7 +366,7 @@ class FormExplainer {
   /**
    * Limit .image-map_image to the height of the window and then adjust the two
    * columns to match.
-   * @param {HTMLNodes} elements - Current page DOM elements.
+   * @param {Object} elements - Current page DOM elements.
    * @param {number} pageNum - Current page number.
    */
   fitAndStickToWindow( elements, pageNum ) {
@@ -532,7 +532,7 @@ class FormExplainer {
    * Generate explainer placeholder HTML.
    * @param {string} explainerType - Type of form explainer.
    * @param {string} pageName - Name of the page.
-   * @returns {HTMLNode} Placeholder DOM node.
+   * @returns {HTMLElement} Placeholder DOM node.
    */
   generatePlaceholderHtml( explainerType, pageName ) {
     const HTML =
@@ -553,7 +553,7 @@ class FormExplainer {
 
   /**
    * Determine if the explainer has content.
-   * @param {HTMLNode} page - Current page element.
+   * @param {HTMLElement} page - Current page element.
    * @param {string} explainerType - Type form explainer.
    * @returns {boolean} Whether the explainer has content.
    */

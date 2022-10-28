@@ -13,8 +13,8 @@ tilemap( Highmaps );
 
 /**
  * Overrides default chart options using provided Wagtail configurations
- * @param {object} data The data to provide to the chart
- * @param {object} dataAttributes Data attributes passed to the chart target node
+ * @param {object} data - The data to provide to the chart
+ * @param {object} dataAttributes - Data attributes passed to the chart target node
  * @returns {object} The configured style object
  */
 function makeTilemapOptions( data, dataAttributes ) {
@@ -60,10 +60,10 @@ function makeTilemapOptions( data, dataAttributes ) {
 
 /**
  * Builds the tilemap filter DOM
- * @param {object} chartNode The node where the chart lives
- * @param {object} chart The chart object
- * @param {object} data The data object
- * @param {object} transform Whether data has been transformed
+ * @param {object} chartNode - The node where the chart lives
+ * @param {object} chart - The chart object
+ * @param {object} data - The data object
+ * @param {object} transform - Whether data has been transformed
  */
 function makeTilemapSelect( chartNode, chart, data, transform ) {
   let d;
@@ -92,9 +92,9 @@ function getTilemapDates( data ) {
 
 /**
  * Wires up the tilemap filter
- * @param {object} select The select node
- * @param {object} chart The chart object
- * @param {object} data The data object
+ * @param {object} select - The select node
+ * @param {object} chart - The chart object
+ * @param {object} data - The data object
  */
 function attachTilemapFilter( select, chart, data ) {
   select.addEventListener( 'change', evt => {
@@ -112,9 +112,9 @@ function attachTilemapFilter( select, chart, data ) {
 
 /**
  * Makes a legend for the tilemap
- * @param {object} node The chart node
- * @param {object} data The data object
- * @param {string } legendTitle The legend title
+ * @param {object} node - The chart node
+ * @param {object} data - The data object
+ * @param {string } legendTitle - The legend title
  */
 function updateTilemapLegend( node, data, legendTitle ) {
   const classes = data.colorAxis.dataClasses;
@@ -146,7 +146,7 @@ function updateTilemapLegend( node, data, legendTitle ) {
 
 /**
  * Intuits the correct object key for state short codes
- * @param {object} data A row of data as an object with headers as keys
+ * @param {object} data - A row of data as an object with headers as keys
  * @returns {string} The intuited shortcode
  * */
 function getShortCode( data ) {
@@ -162,8 +162,8 @@ function getShortCode( data ) {
 
 /**
  * Adds generates a config object to be added to the chart config
- * @param {array} series The formatted series data
- * @param {string} date The date to use
+ * @param {array} series - The formatted series data
+ * @param {string} date - The date to use
  * @returns {array} series data with a geographic component added
  * */
 function getMapConfig( series, date ) {
@@ -226,10 +226,10 @@ function getMapConfig( series, date ) {
 
 /**
  * Initializes a tilemap chart
- * @param {object} chartNode The DOM node of the current chart
- * @param {object} target The node to initialize the chart in
- * @param {object} data The data to provide to the chart
- * @param {object} dataAttributes Data attributes passed to the chart target node
+ * @param {object} chartNode - The DOM node of the current chart
+ * @param {object} target - The node to initialize the chart in
+ * @param {object} data - The data to provide to the chart
+ * @param {object} dataAttributes - Data attributes passed to the chart target node
  * @returns {object} The initialized chart object
  */
 function init( chartNode, target, data, dataAttributes ) {
@@ -252,8 +252,8 @@ function init( chartNode, target, data, dataAttributes ) {
 
   /**
    * Fixes tilemap clipping
-   * @param {object} evt Optional event
-   * @param {number} height Height value for the SVG element.
+   * @param {object} evt - Optional event
+   * @param {number} height - Height value for the SVG element.
    **/
   function fixViewbox() {
     const chartSVG = target.getElementsByClassName( 'highcharts-root' )[0];

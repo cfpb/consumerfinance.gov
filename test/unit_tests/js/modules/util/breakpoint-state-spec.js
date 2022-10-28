@@ -9,8 +9,8 @@ import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
 
 /**
  * Change the viewport to width x height. Mocks window.resizeTo( w, h ).
- * @param  {number} width - width in pixels.
- * @param  {number} height - height in pixels.
+ * @param {number} width - width in pixels.
+ * @param {number} height - height in pixels.
  */
 function windowResizeTo( width, height ) {
   // Change the viewport to width x height. Mocks window.resizeTo( w, h ).
@@ -22,7 +22,7 @@ function windowResizeTo( width, height ) {
 }
 
 /**
- * @param  {number} size - Font size to set for the base body font size.
+ * @param {number} size - Font size to set for the base body font size.
  */
 function setBaseFontSize( size ) {
   global.document.body.outerHTML = `

@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 /**
  * Some dropdown utility methods.
- * @param  {string|Array} id - ID(s) of the HTML select elements.
+ * @param {string|Array} id - ID(s) of the HTML select elements.
  * @returns {Object} Methods to manipulate the requested elements.
  */
 const utils = function( id ) {
@@ -20,8 +20,8 @@ const utils = function( id ) {
    *  of attribute selectors. Otherwise, just create a single attribute
    *  selector. If no val is provided, return an asterisk to select
    *  all elements.
-   * @param  {string|Array} optionVal Option(s) in the dropdown to modify.
-   * @returns {string}      Selector string of values.
+   * @param {string|Array} optionVal - Option(s) in the dropdown to modify.
+   * @returns {string} Selector string of values.
    */
   function parseVals( optionVal ) {
     let returnVal;
@@ -39,7 +39,7 @@ const utils = function( id ) {
 
   /**
    * Disable a select element's option(s).
-   * @param  {string | array} optionVal The value(s) of the options
+   * @param {string|Array} optionVal - The value(s) of the options
    *  that you'd like to disable. Can be a string or an array. If no
    *  option(s) are specified, the entire dropdown is disabled.
    * @returns {Object} An instance.
@@ -58,7 +58,7 @@ const utils = function( id ) {
 
   /**
    * Enable a select element's option(s).
-   * @param  {string | array} optionVal The value(s) of the options
+   * @param {string|Array} optionVal - The value(s) of the options
    * that you'd like to enable. Can be a string or an array. If no
    * option(s) are specified, the entire dropdown is enabled.
    * @returns {Object} An instance.
@@ -98,7 +98,7 @@ const utils = function( id ) {
 
   /**
    * Remove an option from a dropdown.
-   * @param  {string|Array} optionVal The value(s) of the options
+   * @param {string|Array} optionVal - The value(s) of the options
    *  that you'd like to remove. Can be a string or an array. If no
    *  option(s) are specified, all options are removed.
    * @returns {Object} An instance.

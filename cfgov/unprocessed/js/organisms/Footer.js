@@ -11,8 +11,8 @@ import {
  *
  * @classdesc Initializes the organism.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
  * @returns {Footer} An instance.
  */
 function Footer( element ) {

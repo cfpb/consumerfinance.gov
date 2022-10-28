@@ -14,8 +14,8 @@ const checkDom =
  *
  * @classdesc Initializes a new ClearableInput molecule.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the molecule.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the molecule.
  * @returns {Object} A ClearableInput instance.
  */
 function ClearableInput( element ) {

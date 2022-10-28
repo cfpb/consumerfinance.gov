@@ -28,10 +28,10 @@ import {
 } from '@cfpb/cfpb-atomic-component/src/utilities/standard-type';
 
 /**
- * @param {string} behaviorSelector
- *  Behavior type used to find the element within the dom.
- * @param {HTMLNode} baseElement Containing element for the behavior element.
- * @returns {HTMLNodeList} behaviorElements if it exists in the dom,
+ * @param {string} behaviorSelector - Behavior type used to find the element
+ *   within the dom.
+ * @param {HTMLElement} baseElement - Containing element for the behavior element.
+ * @returns {HTMLElementList} behaviorElements if it exists in the dom,
  *                         null otherwise.
  */
 function _findElements( behaviorSelector, baseElement ) {
@@ -56,12 +56,13 @@ function _findElements( behaviorSelector, baseElement ) {
 }
 
 /**
- * @param {( string|HTMLNode|HTMLNodeList )} behaviorElement
- *  Used to query dom for elements.
- * @param {string} event Event type to add to element.
- * @param {Function} eventHandler Callback for event.
- * @param {HTMLNode} baseElement Containing element for the behavior element.
- * @returns {HTMLNodeList} if it exists in the dom, null otherwise.
+ * @param {( string|HTMLElement|HTMLElementList )} behaviorElement - Used to
+ *   query dom for elements.
+ * @param {string} event - Event type to add to element.
+ * @param {Function} eventHandler - Callback for event.
+ * @param {HTMLElement} baseElement - Containing element
+ *   for the behavior element.
+ * @returns {HTMLElementList} if it exists in the dom, null otherwise.
  */
 function attach( behaviorElement, event, eventHandler, baseElement ) {
   let behaviorElements = [];
@@ -82,13 +83,12 @@ function attach( behaviorElement, event, eventHandler, baseElement ) {
 }
 
 /**
- * @param {HTMLNode} element
- *   The DOM element within which to search for the behavior
- *   in the data-js-hook attribute.
- * @param {string} behaviorDataAttr
- *   The value in the data-js-hook. This is the name of the behavior.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the behavior in the data-js-hook attribute.
+ * @param {string} behaviorDataAttr - The value in the data-js-hook.
+ *   This is the name of the behavior.
  *   E.g. `behavior_flyout-menu`, `behavior_flyout-menu_content`.
- * @returns {HTMLNode} The DOM element that has an attached behavior.
+ * @returns {HTMLElement} The DOM element that has an attached behavior.
  * @throws {Error} If data-js-hook attribute value was not found on DOM element.
  */
 function checkBehaviorDom( element, behaviorDataAttr ) {
@@ -116,10 +116,11 @@ function checkBehaviorDom( element, behaviorDataAttr ) {
 }
 
 /**
- * @param {string} behaviorSelector
- *  Behavior type used to find the element within the dom.
- * @param {HTMLNode} baseElement Containing element for the behavior element.
- * @returns {HTMLNodeList} if it exists in the dom, null otherwise.
+ * @param {string} behaviorSelector - Behavior type used to find
+ *   the element within the dom.
+ * @param {HTMLElement} baseElement - Containing element
+ *   for the behavior element.
+ * @returns {HTMLElementList} if it exists in the dom, null otherwise.
  */
 function find( behaviorSelector, baseElement ) {
   behaviorSelector = JS_HOOK + '*=' + BEHAVIOR_PREFIX + behaviorSelector;
@@ -129,9 +130,9 @@ function find( behaviorSelector, baseElement ) {
 }
 
 /**
- * @param {HTMLNode} behaviorElement Element in which to remove the event.
- * @param {string} event Event type to remove from the element.
- * @param {Function} eventHandler Callback for event.
+ * @param {HTMLElement} behaviorElement - Element in which to remove the event.
+ * @param {string} event - Event type to remove from the element.
+ * @param {Function} eventHandler - Callback for event.
  */
 function remove( behaviorElement, event, eventHandler ) {
   behaviorElement.removeEventListener( event, eventHandler );

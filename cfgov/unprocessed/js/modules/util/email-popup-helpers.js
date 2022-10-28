@@ -105,8 +105,8 @@ function showEmailPopup( popupLabel ) {
 
 /**
  * Show the popup when scrolling.
- * @param  {HTMLNode} elToShow - Element to check the height of.
- * @param  {Object} opts - Object with callback and target HTML element.
+ * @param {HTMLElement} elToShow - Element to check the height of.
+ * @param {Object} opts - Object with callback and target HTML element.
  */
 function showOnScroll( elToShow, opts ) {
   let UNDEFINED;

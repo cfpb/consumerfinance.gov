@@ -21,7 +21,7 @@ let UNDEFINED;
  *
  * @classdesc Initializes a new Form Explainer.
  *
- * @param {HTMLNode} element - Base DOM element.
+ * @param {HTMLElement} element - Base DOM element.
  * @param {Object} options - Configuration options.
  * @returns {Object} An Form Explainer instance.
  */
@@ -47,7 +47,7 @@ class FormExplainer {
 
   /**
    * Initialize the UI after instatiation.
-   * @param {HTMLNodes} elements - Current page DOM elements.
+   * @param {Object} elements - Current page DOM elements.
    */
   initializeUI( elements ) {
     if ( this.pageCount === 1 ) {
@@ -89,7 +89,7 @@ class FormExplainer {
    Remove the attention class from all the expandables/overlays,
    and then apply it to the target & its associated overlay
    or expandable.
-   * @param {HTMLNode} target - Overlay or expandable DOM node.
+   * @param {HTMLElement} target - Overlay or expandable DOM node.
    * @param {string} className - Hover class name.
    */
   updateAttention( target, className ) {
@@ -119,8 +119,8 @@ class FormExplainer {
 
   /**
    * Open the expandable and scroll into the viewport.
-   * @param {HTMLNode} imageOverlay - Image overlay, which was clicked.
-   * @param {HTMLNode} targetExpandable - Target expandable.
+   * @param {HTMLElement} imageOverlay - Image overlay, which was clicked.
+   * @param {HTMLElement} targetExpandable - Target expandable.
    * current focus.
    */
   openAndScrollToExpandable( imageOverlay, targetExpandable ) {

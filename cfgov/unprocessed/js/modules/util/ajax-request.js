@@ -2,11 +2,11 @@
  * Initiates an ajax request when passed a type, url,
  * and an optional opts object.
  *
- * @param {string} type request type (GET, POST)
- * @param {string} url request url
- * @param {Object} opts object containing optional
- * request parameters, including data, headers,
- * and success, fail, and done callbacks
+ * @param {string} type - request type (GET, POST)
+ * @param {string} url - request url
+ * @param {Object} opts - object containing optional
+ *   request parameters, including data, headers,
+ *   and success, fail, and done callbacks
  * @returns {Object} xhr
  */
 function ajaxRequest( type, url, opts ) {

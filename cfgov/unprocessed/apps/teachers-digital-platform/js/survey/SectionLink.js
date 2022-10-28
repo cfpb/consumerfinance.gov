@@ -1,6 +1,6 @@
 class SectionLink {
   /**
-   * @param {HTMLButtonElement} root Section link button
+   * @param {HTMLButtonElement} root - Section link button
    */
   constructor( root ) {
     this.root = root;
@@ -13,7 +13,7 @@ class SectionLink {
   }
 
   /**
-   * @param {boolean} done Is this section done?
+   * @param {boolean} done - Is this section done?
    */
   markCurrentPage( done ) {
     this.root.setAttribute( 'data-color', 'blue' );
@@ -26,8 +26,8 @@ class SectionLink {
   }
 
   /**
-   * @param {boolean} done Is this section done?
-   * @param {boolean} visited Has this section begun?
+   * @param {boolean} done - Is this section done?
+   * @param {boolean} visited - Has this section begun?
    */
   markUpcomingPage( done, visited ) {
     if ( done ) {
@@ -50,7 +50,7 @@ class SectionLink {
   }
 
   /**
-   * @param {string} status Section status
+   * @param {string} status - Section status.
    */
   setStatus( status ) {
     const el = this.root.querySelector( '.tdp-survey-section__status' );
@@ -60,8 +60,8 @@ class SectionLink {
   }
 
   /**
-   * @param {number} from First question number
-   * @param {number} to Last question number
+   * @param {number} from - First question number.
+   * @param {number} to - Last question number.
    */
   setRange( from, to ) {
     const el = this.root.querySelector( '.tdp-survey-section__range' );
@@ -82,7 +82,7 @@ let checkThreshold = 0;
 let current = null;
 
 /**
- * @param {SurveyData} data Survey data
+ * @param {SurveyData} data - Survey data.
  */
 SectionLink.init = function( { numAnswered, pageIdx, questionsByPage } ) {
   let questionsFound = 0;
@@ -122,7 +122,7 @@ SectionLink.init = function( { numAnswered, pageIdx, questionsByPage } ) {
 /**
  * Update the current SectionLink
  *
- * @param {number} numAnswered Num answered questions
+ * @param {number} numAnswered - Num answered questions.
  */
 SectionLink.update = function( numAnswered ) {
   if ( current && numAnswered >= checkThreshold ) {

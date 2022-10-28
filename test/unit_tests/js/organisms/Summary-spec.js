@@ -33,8 +33,8 @@ let expandableContentDom;
 
 /**
  * Change the viewport to width x height. Mocks window.resizeTo( w, h ).
- * @param  {number} width - width in pixels.
- * @param  {number} height - height in pixels.
+ * @param {number} width - width in pixels.
+ * @param {number} height - height in pixels.
  */
 function windowResizeTo( width, height ) {
   // Change the viewport to width x height. Mocks window.resizeTo( w, h ).

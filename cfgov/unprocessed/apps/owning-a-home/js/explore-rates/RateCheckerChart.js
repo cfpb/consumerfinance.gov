@@ -142,7 +142,7 @@ function RateCheckerChart() {
 
   /**
    * Render (or update) the _highCharts chart.
-   * @param  {Object} data Data processed from the API.
+   * @param {Object} data - Data processed from the API.
    */
   function render( data ) {
     if ( isInitialized ) {
@@ -164,7 +164,7 @@ function RateCheckerChart() {
 
   /**
    * Set the state of the slider.
-   * @param {number} state 0 = okay, 1 = warning state.
+   * @param {number} state - 0 = okay, 1 = warning state.
    */
   function setStatus( state ) {
     if ( state === RateCheckerChart.STATUS_OKAY ) {
@@ -194,8 +194,8 @@ function RateCheckerChart() {
 
   /**
    * Show an error alert.
-   * @param {[number]} state
-   *   Pass RateCheckerChart.STATUS_WARNING or RateCheckerChart.STATUS_ERROR.
+   * @param {[number]} state -  Pass RateCheckerChart.STATUS_WARNING
+   *   or RateCheckerChart.STATUS_ERROR.
    */
   function finishLoading( state ) {
     _containerDom.classList.remove( 'geolocating' );

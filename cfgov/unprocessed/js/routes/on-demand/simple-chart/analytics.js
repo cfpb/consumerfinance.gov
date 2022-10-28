@@ -2,7 +2,7 @@ import Analytics from '../../../modules/Analytics.js';
 
 /**
  * Prints an aesthetic time range from a time-aware chart event
- * @param {object} evt  The chart event
+ * @param {object} evt - The chart event
  * @returns {string} The formatted time label
  **/
 function getChartTitle( evt ) {
@@ -16,7 +16,7 @@ function getChartTitle( evt ) {
 
 /**
  * Prints an aesthetic time range from a time-aware chart event
- * @param {object} evt  The chart event
+ * @param {object} evt - The chart event
  * @returns {string} The formatted time label
  **/
 function getTimeRange( evt ) {
@@ -27,9 +27,9 @@ function getTimeRange( evt ) {
 
 /**
  * Sends chart event data to Google Analytics
- * @param {object} evt  The chart event
- * @param {string} name The action name
- * @param {string} label The event label. If absent a time range label will be computed.
+ * @param {object} evt - The chart event
+ * @param {string} name - The action name
+ * @param {string} label - The event label. If absent a time range label will be computed.
  **/
 function trackChartEvent( evt, name, label ) {
   if ( !label ) label = getTimeRange( evt );

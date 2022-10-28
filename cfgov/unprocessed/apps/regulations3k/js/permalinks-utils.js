@@ -41,9 +41,9 @@ const getFirstMatch = ( haystack, needle ) => {
 /**
  * getYLocation - Get Y location of provided element on the page.
  *
- * @param {node} el HTML element
+ * @param {node} el - HTML element.
  *
- * @returns {type} Description
+ * @returns {type} TODO add description.
  */
 const getYLocation = el => {
   const elOffset = el.getBoundingClientRect().top;
@@ -54,7 +54,7 @@ const getYLocation = el => {
  * getParagraphPositions - Get an array of all paragraphs with their IDs
  * mapped to their Y position (number of pixels from top of page).
  *
- * @param {nodelist} paragraphs Nodelist of HTML elements with IDs
+ * @param {nodelist} paragraphs - Nodelist of HTML elements with IDs.
  *
  * @returns {array} Array of objects w/ paragraph IDs and y positions.
  */
@@ -78,8 +78,8 @@ const getParagraphPositions = paragraphs => {
 /**
  * getCurrentParagraph - Get paragraph closest to viewport's current position.
  *
- * @param {int} currentPosition Current viewport Y coordinate
- * @param {array} paragraphs List of paragraphs on the page
+ * @param {number} currentPosition - Current viewport Y coordinate.
+ * @param {array} paragraphs - List of paragraphs on the page.
  *
  * @returns {str} HTML ID of closest paragraph
  */
@@ -96,11 +96,11 @@ const getCurrentParagraph = ( currentPosition, paragraphs ) => {
 };
 
 /**
- * updateUrlHash - Update the page's URL hash w/ the closest paragraph
+ * updateUrlHash - Update the page's URL hash w/ the closest paragraph.
  *
- * @param {arr} paragraphs List of possible paragraphs on the page
+ * @param {arr} paragraphs - List of possible paragraphs on the page.
  *
- * @returns {object} window object
+ * @returns {object} window object.
  */
 const updateUrlHash = () => {
   const currentParagraph = getCurrentParagraph(
@@ -113,11 +113,11 @@ const updateUrlHash = () => {
 };
 
 /**
- * getCommentMarker - Does the legwork for the more complex comment markers
+ * getCommentMarker - Does the legwork for the more complex comment markers.
  *
- * @param {string} label - data-label of the current paragraph
+ * @param {string} label - data-label of the current paragraph.
  *
- * @returns {string} formatted comment marker
+ * @returns {string} formatted comment marker.
  */
 const getCommentMarker = label => {
   let commentedSection;
@@ -156,11 +156,11 @@ const getCommentMarker = label => {
 };
 
 /**
- * getWayfinderInfo - process paragraph to create wayfinder
- * @param {string} label - label of current paragraph
- * @param {string} sectionTitle - title of current section
+ * getWayfinderInfo - process paragraph to create wayfinder.
+ * @param {string} label - label of current paragraph.
+ * @param {string} sectionTitle - title of current section.
  *
- * @returns {object} object of the values for wayfinder
+ * @returns {object} object of the values for wayfinder.
  */
 const getWayfinderInfo = ( label, sectionTitle ) => {
   let sectionFormattedTitle;
@@ -196,10 +196,11 @@ const getWayfinderInfo = ( label, sectionTitle ) => {
 };
 
 /**
- * updateWayfinder - Update the Wayfinder element with current paragraph info
- * @param {Boolean} scroll - if true, the function will scroll the current paragraph into view
- * @param {object} wayfinder - wayfinder HTML element
- * @param {object} mainContent - regs main section HTML element
+ * updateWayfinder - Update the Wayfinder element with current paragraph info.
+ * @param {Boolean} scroll - if true, the function will scroll the current
+ *   paragraph into view.
+ * @param {object} wayfinder - wayfinder HTML element.
+ * @param {object} mainContent - regs main section HTML element.
  */
 const updateWayfinder = function( scroll, wayfinder, mainContent ) {
   // We can usually rely on the constants declared above, but just in case...
@@ -251,9 +252,9 @@ const updateWayfinder = function( scroll, wayfinder, mainContent ) {
 };
 
 /**
- * updateParagraphPositions - Update the array that tracks paragraph positions
+ * updateParagraphPositions - Update the array that tracks paragraph positions.
  *
- * @returns {type} Array of paragraph positions
+ * @returns {type} Array of paragraph positions.
  */
 const updateParagraphPositions = () => {
   const paragraphs = document.querySelectorAll( '.regdown-block' );
@@ -270,11 +271,11 @@ const updateParagraphPositions = () => {
 };
 
 /**
- * debounce - Ensure our callbacks fire only after the action has stopped
+ * debounce - Ensure our callbacks fire only after the action has stopped.
  *
- * @param {string} event Event name
- * @param {int} delay Time to wait in milliseconds
- * @param {function} cb Function to be called after action has stopped
+ * @param {string} event - Event name.
+ * @param {number} delay - Time to wait in milliseconds.
+ * @param {function} cb - Function to be called after action has stopped.
  *
  * @returns {object} Timer
  */

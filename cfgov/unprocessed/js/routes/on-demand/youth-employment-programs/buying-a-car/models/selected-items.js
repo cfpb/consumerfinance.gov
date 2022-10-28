@@ -5,9 +5,9 @@ const defaultProps = {
 
 /**
  * Data structure to manipulate a list of `maxElements` elements
- * @param {Object} props The properties that configure this data structure
- * @param {Number} maxElements The maximum number of elements the data structure can hold
- * @param {Number} minElements The minimum number of elements the data structure should have
+ * @param {Object} props - The properties that configure this data structure
+ * @param {Number} maxElements - The maximum number of elements the data structure can hold
+ * @param {Number} minElements - The minimum number of elements the data structure should have
  * @returns {Object} The public methods of this data structure
  */
 function selectedItems( props ) {

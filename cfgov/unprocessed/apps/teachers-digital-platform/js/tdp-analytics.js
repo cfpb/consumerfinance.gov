@@ -37,9 +37,9 @@ let sendSurveyEvent = ( action, label ) => {
 /**
  * getExpandable - Find the expandable the user clicked.
  *
- * @param {event} event Click event
+ * @param {event} event - Click event
  *
- * @returns {DOMNode|null} The expandable or null if it's not an expandable
+ * @returns {HTMLElement|null} The expandable or null if it's not an expandable
  */
 const getExpandable = event => {
   let el = closest( event.target, '.o-expandable_header' );
@@ -58,7 +58,7 @@ const getExpandable = event => {
 /**
  * getExpandableState - Description
  *
- * @param {DOMNode} expandable Expandable's HTML element
+ * @param {HTMLElement} expandable - Expandable's HTML element
  *
  * @returns {string} Expandable's state, either `open` or `close`
  */
@@ -77,8 +77,8 @@ const getExpandableState = expandable => {
  * handleExpandableClick - Listen for clicks within a search page's content
  * and report to GA if they opened or closed an expandable.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleExpandableClick = event => {
   const expandable = getExpandable( event );
@@ -99,8 +99,8 @@ const handleExpandableClick = event => {
 /**
  * handleFilterClick - Listen for filter clicks and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleFilterClick = event => {
   const checkbox = event.target;
@@ -116,8 +116,8 @@ const handleFilterClick = event => {
 /**
  * handleClearFilterClick - Listen for clear filter clicks and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleClearFilterClick = event => {
   // Continue only if the X icon was clicked and not the parent button
@@ -139,9 +139,9 @@ const handleClearFilterClick = event => {
 /**
  * getPaginator - Find the paginator the user clicked.
  *
- * @param {event} event Click event
+ * @param {event} event - Click event
  *
- * @returns {DOMNode|null} The checkbox div or null if it's not a checkbox
+ * @returns {HTMLElement|null} The checkbox div or null if it's not a checkbox
  */
 const getPaginator = event => {
   const el = closest( event.target, '.a-btn' ) || event.target;
@@ -154,8 +154,8 @@ const getPaginator = event => {
 /**
  * handlePaginationClick - Listen for pagination clicks and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handlePaginationClick = event => {
   const paginator = getPaginator( event );
@@ -185,9 +185,9 @@ const handlePaginationClick = event => {
 /**
  * getClearBtn - Find the clear all filters button.
  *
- * @param {event} event Click event
+ * @param {event} event - Click event
  *
- * @returns {DOMNode|null} The checkbox div or null if it's not a checkbox
+ * @returns {HTMLElement|null} The checkbox div or null if it's not a checkbox
  */
 const getClearBtn = event => {
   const el = closest( event.target, '.results_filters-clear' ) || event.target;
@@ -200,8 +200,8 @@ const getClearBtn = event => {
 /**
  * handleClearAllClick - Listen for clear all filters clicks and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleClearAllClick = event => {
   const clearBtn = getClearBtn( event );
@@ -228,9 +228,10 @@ const handleClearAllClick = event => {
 };
 
 /**
- * handleFetchSearchResults - Listen for AJAX fetchSearchResults and report to GA.
+ * handleFetchSearchResults - Listen for AJAX fetchSearchResults
+ * and report to GA.
  *
- * @param {string} searchTerm string
+ * @param {string} searchTerm - string.
  */
 const handleFetchSearchResults = searchTerm => {
   if ( searchTerm.length === 0 ) {
@@ -262,8 +263,8 @@ const handleFetchSearchResults = searchTerm => {
 /**
  * handleSurveySwitchGradeClick - Listen for Switch grades click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveySwitchGradeClick = event => {
   const link = closest( event.target, '.a-link__jump' ) || event.target;
@@ -279,8 +280,8 @@ const handleSurveySwitchGradeClick = event => {
 /**
  * handleSurveyPrivacyModalClick - Listen for Privacy statement click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyPrivacyModalClick = event => {
   const link =
@@ -297,8 +298,8 @@ const handleSurveyPrivacyModalClick = event => {
 /**
  * handleSurveyLetsDoThisClick - Listen for Let's do this click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyLetsDoThisClick = event => {
   const link = closest( event.target, 'a.survey-entry-link' ) || event.target;
@@ -314,8 +315,8 @@ const handleSurveyLetsDoThisClick = event => {
 /**
  * handleSurveyChoiceChange - Listen for radio button value change and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyChoiceChange = event => {
   const radio = closest( event.target, 'input.tdp-survey__choice-question' );
@@ -341,8 +342,8 @@ const handleSurveyChoiceChange = event => {
 /**
  * handleSurveyErrorNoticeClick - Listen for error notification click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyErrorNoticeClick = event => {
   const link =
@@ -365,8 +366,8 @@ const handleSurveyErrorNoticeClick = event => {
 /**
  * handleSurveyRestartModalClick - Listen for Restart survey click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyRestartModalClick = event => {
   const selector =
@@ -396,8 +397,8 @@ const handleSurveyRestartModalClick = event => {
 /**
  * handleSurveyExpandableClick - Listen for opening or closing of an expandable and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyExpandableClick = event => {
   const selector = '.tdp-survey-sidebar__mobile-control .o-expandable_header';
@@ -421,8 +422,8 @@ const handleSurveyExpandableClick = event => {
 /**
  * handleSurveySectionClick - Listen for Edit Section click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveySectionClick = event => {
   const link = closest( event.target, '[data-editable="1"]' ) || event.target;
@@ -445,8 +446,8 @@ const handleSurveySectionClick = event => {
 /**
  * handleSurveySubmitClick - Listen for Submit click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveySubmitClick = event => {
   const link =
@@ -472,8 +473,8 @@ const handleSurveySubmitClick = event => {
 /**
  * handleSurveyResultsExpandableClick - Listen for opening or closing of an expandable and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyResultsExpandableClick = event => {
   const selector = '.tdp-survey-results .o-expandable_target';
@@ -498,8 +499,8 @@ const handleSurveyResultsExpandableClick = event => {
 /**
  * handleSurveyDownloadClick - Listen for Download link click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyDownloadClick = event => {
   const link = closest( event.target, '.a-link__icon' ) || event.target;
@@ -514,8 +515,8 @@ const handleSurveyDownloadClick = event => {
 /**
  * handleSurveyResultsModalClick - Listen for Results page Modal click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyResultsModalClick = event => {
   const selector =
@@ -556,8 +557,8 @@ const handleSurveyResultsModalClose = modal => {
 /**
  * handleSurveyResultsSavePdfClick - Listen for save as PDF click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyResultsSavePdfClick = event => {
   const selector = 'a.a-btn[href="/consumer-tools/save-as-pdf-instructions/"]';
@@ -578,8 +579,8 @@ const handleSurveyResultsSavePdfClick = event => {
 /**
  * handleSurveyResultsGetLinkClick - Listen for Results page Modal Get link click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyResultsGetLinkClick = event => {
   const link = closest(
@@ -604,8 +605,8 @@ const handleSurveyResultsGetLinkClick = event => {
 /**
  * handleSurveyResultsGetLinkClick - Listen for Results page Modal Copy link click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyResultsCopyLinkClick = event => {
   const link = closest(
@@ -626,8 +627,8 @@ const handleSurveyResultsCopyLinkClick = event => {
 /**
  * handleSurveyResultsPrintClick - Listen for Results page Modal Print click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyResultsPrintClick = event => {
   const link = closest( event.target, '#modal-print .tdp-survey__initials-set' );
@@ -673,8 +674,8 @@ const surveyResultsPageLoad = () => {
 /**
  * handleSurveyViewPrintClick - Listen for Results page Modal Print click and report to GA.
  *
- * @param {event} event Click event
- * @returns {object} Event data
+ * @param {event} event - Click event.
+ * @returns {object} Event data.
  */
 const handleSurveyViewPrintClick = event => {
   const link = closest(
@@ -696,7 +697,7 @@ const handleSurveyViewPrintClick = event => {
 /**
  * bindAnalytics - Set up analytics reporting.
  *
- * @param {method} spyMethod optional spy method
+ * @param {method} spyMethod - optional spy method.
  */
 const bindAnalytics = spyMethod => {
   if ( spyMethod ) {

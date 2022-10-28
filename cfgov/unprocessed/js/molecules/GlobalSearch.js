@@ -16,8 +16,8 @@ import TabTrigger from '../modules/TabTrigger.js';
  *
  * @classdesc Initializes a new GlobalSearch molecule.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the molecule.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the molecule.
  * @returns {GlobalSearch} An instance.
  */
 function GlobalSearch( element ) {
@@ -95,7 +95,7 @@ function GlobalSearch( element ) {
   /**
    * Event handler for when there's a click on the page's body.
    * Used to close the global search, if needed.
-   * @param {MouseEvent} event The event object for the mousedown event.
+   * @param {MouseEvent} event - The event object for the mousedown event.
    */
   function _handleBodyClick( event ) {
     const target = event.target;
@@ -111,7 +111,7 @@ function GlobalSearch( element ) {
 
   /**
    * Whether a target is one of the ones that appear in the desktop view.
-   * @param {HTMLNode} target - The target of a mouse event (most likely).
+   * @param {HTMLElement} target - The target of a mouse event (most likely).
    * @returns {boolean} True if the passed target is in the desktop view.
    */
   function _isDesktopTarget( target ) {
@@ -124,7 +124,7 @@ function GlobalSearch( element ) {
 
   /**
    * Whether a target is one of the ones that appear in the mobile view.
-   * @param {HTMLNode} target - The target of a mouse event (most likely).
+   * @param {HTMLElement} target - The target of a mouse event (most likely).
    * @returns {boolean} True if the passed target is in the mobile view.
    */
   function _isMobileTarget( target ) {

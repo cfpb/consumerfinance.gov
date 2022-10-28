@@ -7,8 +7,8 @@ import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.
  *
  * @classdesc Initializes a new TabTrigger module.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the module's root node.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the module's root node.
  * @returns {TabTrigger} An instance.
  */
 function TabTrigger( element ) {

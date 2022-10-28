@@ -13,8 +13,8 @@ import ERROR_MESSAGES from '../../config/error-messages-config';
 /**
  * date Determines if a field contains a valid date.
  *
- * @param {Object} field         Field to test.
- * @param {Object} currentStatus A previous tested status for the field.
+ * @param {Object} field - Field to test.
+ * @param {Object} currentStatus - A previous tested status for the field.
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
@@ -59,9 +59,9 @@ function date( field, currentStatus ) {
 /**
  * email Determines if a field contains a email date.
  *
- * @param {Object} field         Field to test.
- * @param {Object} currentStatus A previous tested status for the field.
- * @param {Object} options       Options object.
+ * @param {Object} field - Field to test.
+ * @param {Object} currentStatus - A previous tested status for the field.
+ * @param {Object} options - Options object.
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
@@ -104,8 +104,8 @@ function email( field, currentStatus, options ) {
 /**
  * empty Determines if a required field contains a value.
  *
- * @param {Object} field         Field to test.
- * @param {Object} currentStatus A previous tested status for the field.
+ * @param {Object} field - Field to test.
+ * @param {Object} currentStatus - A previous tested status for the field.
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
@@ -124,9 +124,9 @@ function empty( field, currentStatus ) {
  * checkbox
  * Determines if a field contains a required number of picked checkbox options.
  *
- * @param {Object} field         Field to test.
- * @param {Object} currentStatus A previous tested status for the field.
- * @param {Array}  fieldset      A list of fields related to the parent field.
+ * @param {Object} field - Field to test.
+ * @param {Object} currentStatus - A previous tested status for the field.
+ * @param {Array} fieldset - A list of fields related to the parent field.
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
@@ -138,9 +138,9 @@ function checkbox( field, currentStatus, fieldset ) {
 /**
  * radio Determines if a field contains a picked radio option.
  *
- * @param {Object} field         Field to test.
- * @param {Object} currentStatus A previous tested status for the field.
- * @param {Array}  fieldset      A list of fields related to the parent field.
+ * @param {Object} field - Field to test.
+ * @param {Object} currentStatus - A previous tested status for the field.
+ * @param {Array} fieldset - A list of fields related to the parent field.
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
@@ -154,10 +154,10 @@ function radio( field, currentStatus, fieldset ) {
  * Determines if a field contains a required number of
  * picked checkbox or radio button options.
  *
- * @param {Object} field         Field to test.
- * @param {Object} currentStatus A previous tested status for the field.
- * @param {Array}  fieldset      A list of fields related to the parent field.
- * @param {string} type          Should be "radio" or "checkbox".
+ * @param {Object} field - Field to test.
+ * @param {Object} currentStatus - A previous tested status for the field.
+ * @param {Array} fieldset - A list of fields related to the parent field.
+ * @param {string} type - Should be "radio" or "checkbox".
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */

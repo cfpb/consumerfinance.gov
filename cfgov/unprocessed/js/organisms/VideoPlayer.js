@@ -19,8 +19,8 @@ const BASE_CLASS = 'o-video-player';
  *
  * @classdesc Initializes a new VideoPlayer organism.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
  * @returns {VideoPlayer} An instance.
  */
 function VideoPlayer( element ) {
@@ -78,8 +78,8 @@ function VideoPlayer( element ) {
 
   /**
    * Event handler for when the video is ready.
-   * @param {Object} event -
-   *   Event object containing target to video player instance.
+   * @param {Object} event - Event object containing target
+   *   to video player instance.
    */
   function _videoPlayerReadyHandler( event ) {
     // Add duration timestamp to video.

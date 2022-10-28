@@ -81,7 +81,7 @@ function changeElHTML( selector, HTML ) {
 
 /**
  * Code copied from jQuery with minimal modifications.
- * @param {HTMLNode} HTML - An HTML DOM node.
+ * @param {HTMLElement} HTML - An HTML DOM node.
  * @returns {DocumentFragment} The created document fragment node.
  */
 function createEl( HTML ) {
@@ -179,7 +179,7 @@ function filter( element, propName, filter ) {
 
 /**
  * @param {string} selector - A CSS selector.
- * @returns {HTMLNode} An HTML node returned by the passed selector,
+ * @returns {HTMLElement} An HTML node returned by the passed selector,
  *  or the selector passed into this method.
  */
 function getEl( selector ) {
@@ -233,7 +233,7 @@ function isEl( element ) {
 
 /**
  * Check whether something is a NodeList, HTML element, or window.
- * @param {*} selector Something, possibly a list, element or window instance.
+ * @param {*} selector - Something, possibly a list, element or window instance.
  */
 function hide( selector ) {
   _mutate( selector, function( element ) {
@@ -243,7 +243,7 @@ function hide( selector ) {
 
 /**
  * Check whether something is a NodeList, HTML element, or window.
- * @param {*} selector Something, possibly a list, element or window instance.
+ * @param {*} selector - Something, possibly a list, element or window instance.
  */
 function show( selector ) {
   _mutate( selector, function( element ) {
