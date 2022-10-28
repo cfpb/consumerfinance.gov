@@ -57,7 +57,11 @@ class SchemaBlocksTestCase(TestCase):
         block = HowTo()
         data = {
             "title": "test title",
+            "show_title": True,
+            "title_tag": "h2",
             "description": "test description",
+            "step_title_tag": "p",
+            "has_numbers": True,
             "steps": [{"title": "Step one", "step_content": "Step content"}],
         }
         expected_html = (
@@ -69,12 +73,13 @@ class SchemaBlocksTestCase(TestCase):
             "test description"
             "</div>"
             "<ol>"
-            '<li itemprop="step"'
+            '<li class="schema-block_item">'
+            '<div itemprop="step"'
             "     itemscope"
-            '     itemtype="http://schema.org/HowToStep"'
-            '     class="schema-block_item">'
-            '<h3 itemprop="name" class="h4">Step one</h3>'
+            '     itemtype="http://schema.org/HowToStep">'
+            '<p itemprop="name">Step one</p>'
             '<div itemprop="text">Step content</div>'
+            "</div>"
             "</li>"
             "</ol>"
             "</div>"

@@ -8,6 +8,17 @@ class AskAnswerContent(blocks.StreamBlock):
     text = blocks.StructBlock(
         [
             (
+                "anchor_tag",
+                blocks.CharBlock(
+                    required=False,
+                    label="Anchor tag",
+                    help_text="Add an optional anchor link tag to allow "
+                    "linking directly to this block. Tag should "
+                    "be unique and use dashes or underscores for "
+                    "separation instead of spaces (ie, 'block-one-tag')",
+                ),
+            ),
+            (
                 "content",
                 blocks.RichTextBlock(
                     features=[
@@ -24,7 +35,7 @@ class AskAnswerContent(blocks.StreamBlock):
                     ],
                     label="Text",
                 ),
-            )
+            ),
         ]
     )
     table_block = organisms.AtomicTableBlock(

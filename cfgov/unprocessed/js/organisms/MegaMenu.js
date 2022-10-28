@@ -19,8 +19,8 @@ import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state.js';
  *
  * @classdesc Initializes a new MegaMenu organism.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
  * @returns {MegaMenu} An instance.
  */
 function MegaMenu( element ) {
@@ -106,9 +106,9 @@ function MegaMenu( element ) {
   /**
    * Perform a recursive depth-first search of the DOM
    * and call a function for each node.
-   * @param {HTMLNode} dom - A DOM element to search from.
-   * @param {TreeNode} parentNode
-   *   Node in a tree from which to attach new nodes.
+   * @param {HTMLElement} dom - A DOM element to search from.
+   * @param {TreeNode} parentNode - Node in a tree from which
+   *   to attach new nodes.
    * @param {Function} callback - Function to call on each node.
    *   Must return a TreeNode.
    */
@@ -128,10 +128,10 @@ function MegaMenu( element ) {
 
   /**
    * Create a new FlyoutMenu and attach it to a new tree node.
-   * @param {HTMLNode} dom
-   *   A DOM element to check for a js data-* attribute hook.
-   * @param {TreeNode} parentNode
-   *   The parent node in a tree on which to attach a new menu.
+   * @param {HTMLElement} dom - A DOM element to check for a js
+   *   data-* attribute hook.
+   * @param {TreeNode} parentNode - The parent node in a tree on which
+   *   to attach a new menu.
    * @returns {TreeNode} Return the processed tree node.
    */
   function _addMenu( dom, parentNode ) {

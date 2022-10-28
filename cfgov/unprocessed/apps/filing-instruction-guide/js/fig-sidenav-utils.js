@@ -34,7 +34,7 @@ let prevTarget;
  * The native scrollIntoView() function is great but when there's a sticky header,
  * the target element gets hidden underneath. This lets us specify an offset for
  * the target element to scroll to.
- * @param {DOMNode} el - HTML element to scroll to
+ * @param {HTMLElement} el - HTML element to scroll to
  * @param {integer} offset - number of pixels away from element
  */
 const scrollIntoViewWithOffset = ( el, offset ) => {

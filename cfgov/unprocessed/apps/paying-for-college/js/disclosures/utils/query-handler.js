@@ -2,7 +2,7 @@ const stringToNum = require( './handle-string-input.js' );
 
 /**
  * Handles URL questy string to turn key-value pairs into an object.
- * @param  {string} queryString - The query string of a url (location.search)
+ * @param {string} queryString - The query string of a url (location.search)
  * @returns {object} - An object containing key-value pairs from the query
  */
 function queryHandler( queryString ) {
@@ -121,7 +121,7 @@ function queryHandler( queryString ) {
    */
   function remapKeys() {
     for ( const key in parameters ) {
-      if ( keyMaps.hasOwnProperty( key ) ) {
+      if ( {}.hasOwnProperty.call(keyMaps, key ) ) {
         const newKey = keyMaps[key];
         valuePairs[newKey] = parameters[key];
       }

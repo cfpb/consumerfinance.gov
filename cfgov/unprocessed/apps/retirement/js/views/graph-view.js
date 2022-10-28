@@ -4,7 +4,7 @@ import isElementInView from '../utils/is-element-in-view';
 import nextStepsView from './next-steps-view';
 import numToMoney from '../utils/num-to-money';
 import questionsView from './questions-view';
-import strToNum from '../utils/handle-string-input';
+import handleStringInput from '../utils/handle-string-input';
 import validDates from '../utils/valid-dates';
 
 // TODO: remove jquery.
@@ -88,7 +88,6 @@ function gettext( msgid ) {
 }
 
 function init() {
-  const SSData = getModelValues.benefits();
   getTranslations();
 
   $( 'input[name="benefits-display"]' ).click( function() {
@@ -130,7 +129,7 @@ function init() {
 
   // reformat salary
   $( '#salary-input' ).blur( function() {
-    const salaryNumber = strToNum( $( '#salary-input' ).val() ),
+    const salaryNumber = handleStringInput( $( '#salary-input' ).val() ),
           salary = numToMoney( salaryNumber );
     $( '#salary-input' ).val( salary );
   } );
@@ -159,9 +158,11 @@ function init() {
   } );
 }
 
-/* This method is the preferred way of changing the graphSettings property
-    @param {string} setting - The property name of the setting to be changed
-    @param {string|number} value - The new value of the setting */
+/**
+ * This method is the preferred way of changing the graphSettings property.
+ * @param {string} setting - The property name of the setting to be changed.
+ * @param {string|number} value - The new value of the setting.
+ * */
 function changeGraphSetting( setting, value ) {
   graphSettings[setting] = value;
 }
@@ -194,8 +195,10 @@ function initIndicator() {
   } );
 }
 
-/* This function toggles the highlighting of the date of birth fields
-    @param {boolean}   Whether the fields should be highlighted (true|false) */
+/**
+ * This function toggles the highlighting of the date of birth fields.
+ * @param {boolean} bool - Whether the fields should be highlighted (true|false)
+ */
 function highlightAgeFields( bool ) {
   const $ageFields = $( '#bd-day, #bd-month, #bd-year' );
   if ( bool ) {
@@ -228,8 +231,7 @@ function validateBirthdayFields() {
 function getYourEstimates() {
   const dataLang = document.querySelector( 'html' ).getAttribute( 'lang' );
   const dates = validateBirthdayFields();
-  const salary = strToNum( $( '#salary-input' ).val() );
-  let lifetimeData;
+  const salary = handleStringInput( $( '#salary-input' ).val() );
   let SSData;
 
   // Hide warnings, show loading indicator
@@ -240,7 +242,6 @@ function getYourEstimates() {
   $.when( fetch.apiData( dates.concat, salary, dataLang ) ).done( function( resp ) {
     if ( resp.error === '' ) {
       SSData = getModelValues.benefits();
-      lifetimeData = getModelValues.lifetime();
       $( '.step-two .question' ).css( 'display', 'inline-block' );
       $(
         '.step-one-hidden,' +
@@ -332,8 +333,8 @@ function setTextByAge() {
   const selectedFRA = selectedAge === SSData.fullAge;
   const selectedAboveFRA = selectedAge > SSData.fullAge;
   const selectedCurrent = selectedAge === SSData.currentAge;
-  const isFRA = SSData.currentAge === SSData.fullAge;
-  const isYoungerThanFRA = SSData.currentAge < SSData.fullAge;
+  // const isFRA = SSData.currentAge === SSData.fullAge;
+  // const isYoungerThanFRA = SSData.currentAge < SSData.fullAge;
   const $benefitsMod = $( '.benefit-modification-text' );
   const $selectedAgeText = $( '#selected-retirement-age-value' );
   const $fullAgeBenefits = $( '#full-age-benefits-text' );
@@ -434,8 +435,10 @@ function setTextByAge() {
   }
 }
 
-/* Sets an age on the graph when the indicator is moved
-    @param {number} indicatorValue Value of the range slider */
+/**
+ * Sets an age on the graph when the indicator is moved.
+ * @param {number} indicatorValue - Value of the range slider.
+ */
 function setAgeWithIndicator( indicatorValue ) {
   const SSData = getModelValues.benefits();
   const $indicator = $( '#graph_slider-input' );
@@ -450,10 +453,12 @@ function setAgeWithIndicator( indicatorValue ) {
   setTextByAge();
 }
 
-/* Uses setAgeWithIndicator to move the indicator to age
-    NOTE: This function is all that's require to change the chart to a
-    different age
-    @param {number} age  The age for the indicator to be set to */
+/**
+ * Uses setAgeWithIndicator to move the indicator to age
+ * NOTE: This function is all that's require to change the chart to a
+ * different age.
+ * @param {number} age - The age for the indicator to be set to.
+ */
 function moveIndicatorToAge( age ) {
   const SSData = getModelValues.benefits();
   const indicatorDom = document.querySelector( '#graph_slider-input' );

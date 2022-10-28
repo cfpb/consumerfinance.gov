@@ -88,7 +88,7 @@ function readSurveyData() {
 /**
  * If the user has skipped ahead, redirect and return true.
  *
- * @param {SurveyData} data Survey data
+ * @param {SurveyData} data - Survey data.
  * @returns {boolean} True if execution should halt.
  */
 function userSkippedAhead( data ) {
@@ -114,8 +114,8 @@ function userSkippedAhead( data ) {
  * Make sure new selections are recorded in sessionStorage and that the
  * numAnswered data is updated for progress updates.
  *
- * @param {SurveyData} data Survey data
- * @param {Record<string, any>} store Store of selected answers
+ * @param {SurveyData} data - Survey data.
+ * @param {Record<string, any>} store - Store of selected answers.
  */
 function handleNewSelections( data, store ) {
   const onStoreUpdate = () => {
@@ -244,7 +244,7 @@ function initErrorHandling() {
 }
 
 /**
- * @param {Element} el Element
+ * @param {Element} el - Element.
  * @returns {boolean} Success?
  */
 function scrollToEl( el ) {

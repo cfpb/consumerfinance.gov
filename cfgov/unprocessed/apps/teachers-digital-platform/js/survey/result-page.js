@@ -30,10 +30,10 @@ function resultsPage() {
 }
 
 /**
- * Handle initials validation and callback on valid entry
+ * Handle initials validation and callback on valid entry.
  *
- * @param {HTMLDivElement} desc Modal description DIV
- * @param {function} cb Callback with valid initials
+ * @param {HTMLDivElement} desc - Modal description DIV.
+ * @param {function} cb - Callback with valid initials.
  */
 function withValidInitials( desc, cb ) {
   const set = desc.querySelector( '.tdp-survey__initials-set' );

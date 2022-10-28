@@ -29,8 +29,8 @@ const MODIFIER_VISIBLE = `${ BASE_CLASS }__visible`;
  *
  * @classdesc Initializes a new Notification molecule.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the molecule.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the molecule.
  * @returns {Notification} An instance.
  */
 function Notification( element ) {
@@ -63,8 +63,8 @@ function Notification( element ) {
   /**
    * @param {number} type - The notification type.
    * @param {string} messageText - The content of the notification message.
-   * @param {string} [explanationText] -
-   *   The content of the notification explanation.
+   * @param {string} [explanationText] - The content of the notification
+   *   explanation.
    * @returns {Notification} An instance.
    */
   function update( type, messageText, explanationText ) {
@@ -76,8 +76,8 @@ function Notification( element ) {
 
   /**
    * @param {string} messageText - The content of the notification message.
-   * @param {string} [explanationText] -
-   *   The content of the notification explanation.
+   * @param {string} [explanationText] - The content of the notification
+   *   explanation.
    * @returns {Notification} An instance.
    */
   function _setContent( messageText, explanationText ) {
@@ -97,7 +97,7 @@ function Notification( element ) {
   }
 
   /**
-   * @param {number} type The notification type.
+   * @param {number} type - The notification type.
    * @returns {Notification} An instance.
    */
   function _setType( type ) {

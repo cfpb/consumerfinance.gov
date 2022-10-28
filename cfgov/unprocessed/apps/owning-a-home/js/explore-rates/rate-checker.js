@@ -130,7 +130,7 @@ function updateView() {
         const sortedResults = {};
         let key;
         for ( key in results ) {
-          if ( results.hasOwnProperty( key ) ) {
+          if ( {}.hasOwnProperty.call( results, key ) ) {
             sortedKeys.push( key );
           }
         }
@@ -338,7 +338,7 @@ function checkForJumbo() {
   // If county is not needed and loan-type is a HB loan, bounce it to a regular loan
   if ( !loan.needCounty && $.inArray( params.getVal( 'loan-type' ), jumbos ) >= 0 ) {
     // Change loan-type according to the bounces object
-    if ( bounces.hasOwnProperty( params.getVal( 'prevLoanType' ) ) ) {
+    if ( {}.hasOwnProperty.call( bounces, params.getVal( 'prevLoanType' ) ) ) {
       params.setVal( 'loan-type', bounces[params.getVal( 'prevLoanType' )] );
       $( '#loan-type' ).val( params.getVal( 'loan-type' ) );
     } else {
@@ -363,7 +363,7 @@ function checkForJumbo() {
 
   // Hide any existing message, then show a message if appropriate.
   document.querySelector( '#county-warning' ).classList.add( 'u-hidden' );
-  if ( warnings.hasOwnProperty( params.getVal( 'loan-type' ) ) ) {
+  if ( {}.hasOwnProperty.call( warnings, params.getVal( 'loan-type' ) ) ) {
     $( '#county-warning' )
       .removeClass( 'u-hidden' )
       .find( 'span' )
@@ -475,7 +475,7 @@ function processCounty() {
 /**
  * Store the loan amount and down payment, process the county data,
  * check if it's a jumbo loan.
- * @param {HTMLNode} element - TODO: Add description.
+ * @param {HTMLElement} element - TODO: Add description.
  */
 function processLoanAmount( element ) {
   const name = element.getAttribute( 'name' );
@@ -907,7 +907,7 @@ function registerEvents() {
   creditScoreDom.addEventListener( 'keyup', NoCalcOnForbiddenKeys );
 
   /**
-   * @param  {KeyboardEvent} event Event object.
+   * @param {KeyboardEvent} event - Event object.
    */
   function NoCalcOnForbiddenKeys( event ) {
     const element = event.target;
@@ -926,7 +926,7 @@ function registerEvents() {
   downPaymentDom.addEventListener( 'focusout', priceFocusOutHandler );
 
   /**
-   * @param  {FocusEvent} event Event object.
+   * @param {FocusEvent} event - Event object.
    */
   function priceFocusOutHandler( event ) {
     event.target.value = removeDollarAddCommas( event.target.value );

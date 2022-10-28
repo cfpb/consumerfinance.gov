@@ -17,8 +17,8 @@ const BASE_CLASS = 'o-filterable-list';
  * set of results, any notifications for the filtered results, and a block
  * of filtered results.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
  * @returns {FilterableList} An instance.
  */
 function FilterableList( element ) {

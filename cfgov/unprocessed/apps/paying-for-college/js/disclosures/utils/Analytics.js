@@ -5,11 +5,11 @@ const Analytics = {
 
   /**
    * Get data layer object.
-   * @param {string} action Name of event.
-   * @param {string} label DOM element label.
-   * @param {string} category Type of event.
-   * @param {Function} callback Function to call on GTM submission.
-   * @param {number} timeout Callback invocation fallback time.
+   * @param {string} action - Name of event.
+   * @param {string} label - DOM element label.
+   * @param {string} category - Type of event.
+   * @param {Function} callback - Function to call on GTM submission.
+   * @param {number} timeout - Callback invocation fallback time.
    * @returns {object} Data layer object.
    */
   getDataLayerOptions: function( action, label, category, callback, timeout ) {
@@ -27,7 +27,7 @@ const Analytics = {
    */
   init: function() {
     // detect if Google tag manager is loaded
-    if ( window.hasOwnProperty( 'google_tag_manager' ) ) {
+    if ( {}.hasOwnProperty.call(window, 'google_tag_manager' ) ) {
       Analytics.tagManagerIsLoaded = true;
     } else {
       let _tagManager;
@@ -51,7 +51,7 @@ const Analytics = {
    *
    * @description
    * Pushes an event to the GTM dataLayer.
-   * @param {object} dataLayerOptions Type of event.
+   * @param {object} dataLayerOptions - Type of event.
    */
   sendEvent: function( dataLayerOptions ) {
     const callback = dataLayerOptions.eventCallback;
@@ -69,7 +69,7 @@ const Analytics = {
    * @description
    * Pushes multiple events to the GTM dataLayer.
    *
-   * @param {array} eventsArray Array of event objects.
+   * @param {array} eventsArray - Array of event objects.
    */
   sendEvents: function( eventsArray ) {
     if ( Array.isArray( eventsArray ) ) {

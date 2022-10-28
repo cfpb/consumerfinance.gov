@@ -20,8 +20,8 @@ const BASE_CLASS = 'o-summary';
  *
  * @classdesc Initializes a new Summary organism.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
  * @returns {Summary} An instance.
  */
 function Summary( element ) {

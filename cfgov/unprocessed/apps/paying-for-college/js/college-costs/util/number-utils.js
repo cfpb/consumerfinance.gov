@@ -1,9 +1,9 @@
 /**
  * Turns a string into a number.
- * Assumes each number in the string should be preserved (unlike parseInt)
- * Assumes the first instance of a decimal point is the intended one
- * @param  {string} numberString  A string representing a number
- * @returns {number} The assumed numeric value of numberString
+ * Assumes each number in the string should be preserved (unlike parseInt).
+ * Assumes the first instance of a decimal point is the intended one.
+ * @param {string} numberString - A string representing a number.
+ * @returns {number} The assumed numeric value of numberString.
  */
 function stringToNum( numberString ) {
   if ( typeof numberString === 'number' ) {
@@ -24,7 +24,7 @@ function stringToNum( numberString ) {
   }
 
   // Strip non-numeric values, maintaining periods
-  numberString = numberString.replace( /[^0-9\.]+/g, '' );
+  numberString = numberString.replace( /[^0-9.]+/g, '' );
 
   // Strip any periods after the first
   function replaceCommas( match, offset, full ) {
@@ -40,10 +40,11 @@ function stringToNum( numberString ) {
 }
 
 /**
- * decimalToPercentString - Format decimal into a percentage string
- * @param {Number} number - Number to be formatted
- * @param {Number} decimalPlaces - Number of decimal places to display, default 2
- * @returns {String} Formatted percentage version of decimal
+ * decimalToPercentString - Format decimal into a percentage string.
+ * @param {Number} number - Number to be formatted.
+ * @param {Number} decimalPlaces - Number of decimal places to display,
+ *   default 2.
+ * @returns {String} Formatted percentage version of decimal.
  */
 function decimalToPercentString( number, decimalPlaces ) {
   if ( typeof decimalPlaces === 'undefined' ) decimalPlaces = 2;
@@ -54,11 +55,11 @@ function decimalToPercentString( number, decimalPlaces ) {
 }
 
 /**
- * enforceRange - Force a number between a range
- * @param {Number} n - Number to be checked
- * @param {Number} min - Minimum value of n
- * @param {Number} max - Maximum value of n
- * @returns {Object} Error data on whether the min or max was enforced
+ * enforceRange - Force a number between a range.
+ * @param {Number} n - Number to be checked.
+ * @param {Number} min - Minimum value of n.
+ * @param {Number} max - Maximum value of n.
+ * @returns {Object} Error data on whether the min or max was enforced.
  */
 function enforceRange( n, min, max ) {
   let error = false;
@@ -87,9 +88,10 @@ function enforceRange( n, min, max ) {
 }
 
 /**
- * isNumeric - Verify that a value contains only number or decimal characters
- * @param {*} value Value to be checked
- * @returns {Boolean} True if value only contains numeric characters, false otherwise
+ * isNumeric - Verify that a value contains only number or decimal characters.
+ * @param {*} value - Value to be checked.
+ * @returns {Boolean} True if value only contains numeric characters,
+ *   false otherwise.
  */
 function isNumeric( value ) {
   return ( /^[\d.]+$/ ).test( value );

@@ -13,7 +13,7 @@ const linksView = {
   /**
    * Initializes (and updates) links in Step 3 to the school's website and to
    * a College Scorecard search of related schools
-   * @param {object} values Financial model values
+   * @param {object} values - Financial model values
    */
   updateLinks: function( values ) {
     this.$gradLinkText = $( '.graduation-link' );
@@ -30,7 +30,7 @@ const linksView = {
 
   /**
    * Creates a link in Step 2 to the school on the College Scorecard website
-   * @param {object} values Financial model values
+   * @param {object} values - Financial model values
    */
   setCollegeScorecardLink: function( values ) {
     const scorecardURL =
@@ -49,7 +49,7 @@ const linksView = {
   /**
    * Creates a link in Step 2 to the school's graduation metrics
    * on the College Scorecard website
-   * @param {object} values Financial model values
+   * @param {object} values - Financial model values
    */
   setGraduationLink: function( values ) {
     const gradURL =
@@ -69,7 +69,7 @@ const linksView = {
 
   /**
    * Creates a link in Step 2 to the school's loan default metrics
-   * @param {object} values Financial model values
+   * @param {object} values - Financial model values
    */
   setLoanDefaultLink: function( values ) {
     const defaultURL =
@@ -90,7 +90,7 @@ const linksView = {
   /**
    * Creates a link in Step 3 to the school's website if the school has provided
    * a URL in the College Scorecard data
-   * @param {object} values Financial model values
+   * @param {object} values - Financial model values
    */
   setSchoolLink: function( values ) {
     const schoolURL = formatURL( values.url );
@@ -108,7 +108,7 @@ const linksView = {
   /**
    * Modifies the College Scorecard link in step 3 to search for schools that
    * offer a given program near a given ZIP if program and ZIP are specified
-   * @param {object} values Financial model values
+   * @param {object} values - Financial model values
    */
   setScorecardSearch: function( values ) {
     let pcip = '';
@@ -117,10 +117,10 @@ const linksView = {
     const radius = '50';
     const scorecardURL = this.$scorecardLink.attr( 'href' );
 
-    if ( values.hasOwnProperty( 'cipCode' ) ) {
+    if ( {}.hasOwnProperty.call(values, 'cipCode' ) ) {
       pcip = values.cipCode.slice( 0, 2 );
     }
-    if ( values.hasOwnProperty( 'zip5' ) ) {
+    if ( {}.hasOwnProperty.call(values, 'zip5' ) ) {
       zip = values.zip5;
     }
     const scorecardQuery = constructScorecardSearch( pcip, zip, radius );

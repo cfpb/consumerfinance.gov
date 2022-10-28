@@ -13,8 +13,8 @@ function init( ageRightNow = 0, fullRetirementAge = 0 ) {
 
 /**
  * This function updates the text in Step 3
- * based on the user's chosen retirement age
- * @param {number} fullAge   The user's full retirement age
+ * based on the user's chosen retirement age.
+ * @param {number} fullAge - The user's full retirement age.
  */
 function chooseClaimingAge( fullAge ) {
   if ( $( '#retirement-age-selector' ).find( 'option:selected' ).val() === '' ) {
@@ -52,9 +52,11 @@ function chooseClaimingAge( fullAge ) {
   }
 }
 
-/* This function limits the age selector in Step 3 to
-    the user's current age or higher
-    @param {number} currentAge   The user's current age */
+/**
+ * This function limits the age selector in Step 3 to
+ * the user's current age or higher.
+ * @param {number} currentAge - The user's current age.
+ */
 function limitAgeSelector( currentAge ) {
   const $select = $( '#retirement-age-selector' );
   const firstOption = $select.find( 'option' )[0];

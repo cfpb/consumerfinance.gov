@@ -12,7 +12,7 @@ let dropDownDom;
 let containerDom;
 
 /**
- * @param {HTMLNode} dropDown - The select HTML element to search for options.
+ * @param {HTMLElement} dropDown - The select HTML element to search for options.
  * @returns {NodeList} All the options inside the drop-down select menu.
  */
 function getOptions( dropDown ) {
@@ -20,7 +20,7 @@ function getOptions( dropDown ) {
 }
 
 /**
- * @param {HTMLNode} dropDown - The select HTML element to search for options.
+ * @param {HTMLElement} dropDown - The select HTML element to search for options.
  * @returns {NodeList} All the disabled options inside the drop-down select menu.
  */
 function getOptionsDisabled( dropDown ) {
@@ -28,7 +28,7 @@ function getOptionsDisabled( dropDown ) {
 }
 
 /**
- * @param {HTMLNode} divDom - The HTML element to query.
+ * @param {HTMLElement} divDom - The HTML element to query.
  * @returns {Array} List of classes on 'foo' div.
  */
 function getDivClassList( divDom ) {

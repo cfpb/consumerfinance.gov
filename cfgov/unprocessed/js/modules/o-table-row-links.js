@@ -13,7 +13,7 @@ function init() {
 /**
  * Handle a click of the table.
  *
- * @param {Object} event Mouse event for click on the table.
+ * @param {Object} event - Mouse event for click on the table.
  */
 function _tableClicked( event ) {
   let target = event.target;

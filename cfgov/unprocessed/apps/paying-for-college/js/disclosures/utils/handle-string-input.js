@@ -1,9 +1,9 @@
 /**
  * Turns a string into a number.
- * Assumes each number in the string should be preserved (unlike parseInt)
- * Assumes the first instance of a decimal point is the intended one
- * @param  {string} numberString  A string representing a number
- * @returns {number} The assumed numeric value of numberString
+ * Assumes each number in the string should be preserved (unlike parseInt).
+ * Assumes the first instance of a decimal point is the intended one.
+ * @param {string} numberString - A string representing a number.
+ * @returns {number} The assumed numeric value of numberString.
  */
 function handleStringInput( numberString ) {
   if ( typeof numberString === 'number' ) {
@@ -22,7 +22,7 @@ function handleStringInput( numberString ) {
   }
 
   // Strip non-numeric values, maintaining periods
-  numberString = numberString.replace( /[^0-9\.]+/g, '' );
+  numberString = numberString.replace( /[^0-9.]+/g, '' );
 
   // Strip any periods after the first
   function replaceCommas( match, offset, full ) {
