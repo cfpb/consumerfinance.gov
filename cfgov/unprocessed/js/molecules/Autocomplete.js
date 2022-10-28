@@ -14,9 +14,9 @@ import throttle from 'lodash.throttle';
  *
  * @classdesc Initializes the molecule.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the molecule.
- * @param {Object} opts optional params, including
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the molecule.
+ * @param {Object} opts - optional params, including
  * url for suggestions endpoint or list of suggestions,
  * minChars, maxChars, an error message onSubmit, renderItem,
  * and cleanQuery functions.
@@ -108,7 +108,7 @@ function Autocomplete( element, opts ) {
 
   /**
    * Creates and injects markup for autocomplete.
-   * @returns {HTMLNode} <ul> element for autocomplete suggestions.
+   * @returns {HTMLElement} <ul> element for autocomplete suggestions.
    */
   function _addContainer() {
     const ul = document.createElement( 'ul' );
@@ -154,8 +154,8 @@ function Autocomplete( element, opts ) {
   }
 
   /**
-   * Event handler for input into the _input element
-   * @param {InputEvent} event The input event object
+   * Event handler for input into the _input element.
+   * @param {InputEvent} event - The input event object.
    */
   function _handleInput( event ) {
     _searchTerm = event.target.value;
@@ -262,7 +262,7 @@ function Autocomplete( element, opts ) {
    * Updates selected item in suggestions list and scrolls
    * it into view. Sets _input value to new selection.
    *
-   * @param  {number} index Index of new selection
+   * @param {number} index - Index of new selection.
    */
   function _updateSelection( index ) {
     if ( _selection > -1 ) {

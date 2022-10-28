@@ -40,8 +40,8 @@ function incrementTotal() {
 
 /**
  * Update the address count by type.
- * @param {string} type -
- *   The address type (duplicate, notFound, notRural, rural).
+ * @param {string} type - The address type
+ *   (duplicate, notFound, notRural, rural).
  */
 function updateCount( type ) {
   let noun = 'addresses';

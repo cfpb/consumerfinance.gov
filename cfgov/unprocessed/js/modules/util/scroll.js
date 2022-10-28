@@ -11,12 +11,12 @@ const _requestAnimationFrame =
   };
 
 /**
- * Easing
- * @param {Number} currentTime current time
- * @param {Number} startPosition start position
- * @param {Number} distance difference between start and end position
- * @param {Number} duration duration
- * @returns {Number} next position
+ * Easing.
+ * @param {Number} currentTime - current time.
+ * @param {Number} startPosition - start position.
+ * @param {Number} distance - difference between start and end position.
+ * @param {Number} duration - duration.
+ * @returns {Number} next position.
  *
  */
 function _easeInOutQuad( currentTime, startPosition, distance, duration ) {
@@ -47,8 +47,8 @@ function _calculateDuration( distance ) {
 
 /**
  * Animated scroll to a location in page.
- * @param {Number} to The y-coordinate to scroll to
- * @param {Object} opts Optional parameters, including:
+ * @param {Number} to - The y-coordinate to scroll to
+ * @param {Object} opts - Optional parameters, including:
  *    duration: Duration of the scroll animation
  *    callback: To be called when scroll is complete
  *
@@ -89,8 +89,8 @@ function scrollTo( to, opts ) {
 /**
  * Checks whether element in viewport and if not,
  * scrolls it into view.
- * @param {HTMLNode} elem The DOM element to check for
- * @param {Object} opts Optional parameters, including:
+ * @param {HTMLElement} elem - The DOM element to check for.
+ * @param {Object} opts - Optional parameters, including:
  *  offset: Distance from top of screen of element when scroll is complete.
  *  callback: function called when scroll is complete.
  *
@@ -108,9 +108,9 @@ function scrollIntoView( elem, opts ) {
 }
 
 /**
- * @param {HTMLNode} elem The DOM element to check for
- * @param {Boolean} strict Tests whether whole element is
- * onscreen rather than just a part.
+ * @param {HTMLElement} elem - The DOM element to check for.
+ * @param {Boolean} strict - Tests whether whole element is
+ *   onscreen rather than just a part.
  * @returns {Boolean} Whether the element is in the viewport.
  */
 function elementInView( elem, strict ) {

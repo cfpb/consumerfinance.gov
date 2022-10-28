@@ -60,7 +60,7 @@ function MegaMenuMobile( menus ) {
   /**
    * Event handler for when there's a click on the page's body.
    * Used to close the global search, if needed.
-   * @param {MouseEvent} event The event object for the click event.
+   * @param {MouseEvent} event - The event object for the click event.
    */
   function _handleBodyClick( event ) {
     const target = event.target;

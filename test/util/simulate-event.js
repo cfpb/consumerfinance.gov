@@ -1,8 +1,8 @@
 /**
  * @param {string} eventType - The type of event.
- * @param {HTMLNode} target - Target of the event.
+ * @param {HTMLElement} target - Target of the event.
  * @param {Object} eventOption - Options to add to the event.
- * @returns {HTMLNode} The target of the event.
+ * @returns {HTMLElement} The target of the event.
  */
 function simulateEvent( eventType, target, eventOption = {} ) {
   let event;

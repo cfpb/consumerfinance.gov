@@ -3,8 +3,8 @@ const { readdirSync } = require( 'fs' );
 const { resolve } = require( 'path' );
 
 /**
- * @param {string} path The directory with the needed js
- * @param {regex} regex The regex to match against
+ * @param {string} path - The directory with the needed js
+ * @param {regex} regex - The regex to match against
  * @returns {array} An array of matched files
  */
 function getAll( path, regex = /.js$/ ) {
@@ -26,7 +26,7 @@ const blocklist = [
 ];
 
 /**
- * @param {string} dir Current directory to walk
+ * @param {string} dir - Current directory to walk
  **/
 async function getFiles( dir ) {
   const dirents = await readdir( dir, { withFileTypes: true } );
@@ -41,8 +41,8 @@ async function getFiles( dir ) {
 }
 
 /**
- * @param {string} from Directory to copy files from
- * @param {string} to Directory to copy files to
+ * @param {string} from - Directory to copy files from
+ * @param {string} to - Directory to copy files to
  * @returns {array} Array of promises for each copied file
  **/
 async function copyAll( from, to ) {

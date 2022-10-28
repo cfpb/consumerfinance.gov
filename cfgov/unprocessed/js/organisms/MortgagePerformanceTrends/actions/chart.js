@@ -6,7 +6,7 @@ const chartActionCreators = defaultActionCreators();
 /**
  * fetchMetroStates - Creates async action to fetch list of valid metro states.
  *
- * @param {String} metroState Two-letter U.S. state abbreviation.
+ * @param {String} metroState - Two-letter U.S. state abbreviation.
  *
  * @returns {Function} Thunk called with metro states.
  */
@@ -47,7 +47,7 @@ chartActionCreators.fetchMetroStates = metroState => dispatch => utils.getMetroD
  * fetchNonMetroStates -
  * Creates async action to fetch list of valid non-metro states.
  *
- * @param {String} nonMetroState Two-letter U.S. state abbreviation.
+ * @param {String} nonMetroState - Two-letter U.S. state abbreviation.
  *
  * @returns {Function} Thunk called with metro states.
  */
@@ -75,7 +75,7 @@ chartActionCreators.fetchNonMetroStates = nonMetroState => dispatch => utils.get
  * fetchCountyStates -
  * Creates async action to fetch list of valid counties in states.
  *
- * @param {String} countyState Two-letter U.S. state abbreviation.
+ * @param {String} countyState - Two-letter U.S. state abbreviation.
  *
  * @returns {Function} Thunk called with county states.
  */
@@ -113,8 +113,8 @@ chartActionCreators.fetchCountyStates = countyState => dispatch => utils.getCoun
 /**
  * fetchStates - Creates async action to fetch list of valid states.
  *
- * @param {String} selectedState Two-letter U.S. state abbreviation.
- * @param {Boolean} includeComparison Include national comparison?
+ * @param {String} selectedState - Two-letter U.S. state abbreviation.
+ * @param {Boolean} includeComparison - Include national comparison?
  *
  * @returns {Function} Thunk called with valid states.
  */
@@ -157,7 +157,7 @@ chartActionCreators.fetchStates =
 /**
  * setStates - New U.S. states.
  *
- * @param {Array} states List of U.S. states.
+ * @param {Array} states - List of U.S. states.
  * @returns {Object} Action with new U.S. states.
  */
 chartActionCreators.setStates = states => ( {
@@ -168,8 +168,8 @@ chartActionCreators.setStates = states => ( {
 /**
  * fetchMetros - Creates async action to fetch list of metros
  *
- * @param {String} metroState Two-letter U.S. state abbreviation.
- * @param {Boolean} includeComparison Include national comparison?
+ * @param {String} metroState - Two-letter U.S. state abbreviation.
+ * @param {Boolean} includeComparison - Include national comparison?
  *
  * @returns {Function} Thunk called with new metros
  */
@@ -212,8 +212,8 @@ chartActionCreators.fetchMetros =
 /**
  * fetchCounties - Creates async action to fetch list of counties
  *
- * @param {String} countyState Two-letter U.S. state abbreviation.
- * @param {Boolean} includeComparison Include national comparison?
+ * @param {String} countyState - Two-letter U.S. state abbreviation.
+ * @param {Boolean} includeComparison - Include national comparison?
  *
  * @returns {Function} Thunk called with new metros
  */

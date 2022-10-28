@@ -184,7 +184,7 @@ const stateModel = {
 
   /**
    * update the application state based on the 'property' parameter.
-   * @param {string} property  What property to update based on
+   * @param {string} property - What property to update based on
    */
   _updateApplicationState: property => {
     const urlParams = [

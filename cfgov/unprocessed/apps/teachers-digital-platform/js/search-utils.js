@@ -1,8 +1,8 @@
 /**
  * Get the search form field's values.
  *
- * @param {HTMLNode} searchEl HTML input of the search field.
- * @param {HTMLNode} filterEls HTML inputs of the search filters.
+ * @param {HTMLElement} searchEl - HTML input of the search field.
+ * @param {HTMLElement} filterEls - HTML inputs of the search filters.
  * @returns {Array} Array of objects of form field names and values.
  */
 function getSearchValues( searchEl, filterEls ) {
@@ -23,7 +23,7 @@ function getSearchValues( searchEl, filterEls ) {
 /**
  * Serializes form fields into GET-friendly string.
  *
- * @param {Array} fields Array of objects of form field key-value pairs.
+ * @param {Array} fields - Array of objects of form field key-value pairs.
  * @returns {String} Serialized form fields.
  */
 function serializeFormFields( fields ) {
@@ -39,9 +39,9 @@ function serializeFormFields( fields ) {
 /**
  * Creates search results URL to be fetched.
  *
- * @param {String} base URL's base.
- * @param {String} params URL's GET parameters.
- * @param {Object} opts Object of additional options for the URL.
+ * @param {String} base - URL's base.
+ * @param {String} params - URL's GET parameters.
+ * @param {Object} opts - Object of additional options for the URL.
  * @returns {String} Encoded URL.
  */
 function buildSearchResultsURL( base, params, opts ) {
@@ -53,8 +53,8 @@ function buildSearchResultsURL( base, params, opts ) {
 /**
  * Modifies element to indicate it's loading.
  *
- * @param {HTMLNode} el Element to show loading.
- * @returns {HTMLNode} Above element.
+ * @param {HTMLElement} el - Element to show loading.
+ * @returns {HTMLElement} Above element.
  */
 function showLoading( el ) {
   el.style.opacity = 0.5;
@@ -64,8 +64,8 @@ function showLoading( el ) {
 /**
  * Modifies element to indicate it's not loading.
  *
- * @param {HTMLNode} el Element to stop loading.
- * @returns {HTMLNode} Above element.
+ * @param {HTMLElement} el - Element to stop loading.
+ * @returns {HTMLElement} Above element.
  */
 function hideLoading( el ) {
   el.style.opacity = 1;
@@ -75,8 +75,8 @@ function hideLoading( el ) {
 /**
  * Uncheck checkbox.
  *
- * @param {HTMLNode} el Input element to uncheck.
- * @returns {HTMLNode} Input element.
+ * @param {HTMLElement} el - Input element to uncheck.
+ * @returns {HTMLElement} Input element.
  */
 function clearCheckbox( el ) {
   el.checked = false;
@@ -86,8 +86,8 @@ function clearCheckbox( el ) {
 /**
  * Update the page's URL via replaceState
  *
- * @param {String} base URL's base.
- * @param {String} params URL's GET parameters.
+ * @param {String} base - URL's base.
+ * @param {String} params - URL's GET parameters.
  * @returns {String} New URL.
  */
 function updateUrl( base, params ) {
@@ -99,7 +99,7 @@ function updateUrl( base, params ) {
 /**
  * Check error and do something with it
  *
- * @param {String} code Error code
+ * @param {String} code - Error code
  * @returns {Object} Error object to be handled by DOM.
  */
 function handleError( code ) {
