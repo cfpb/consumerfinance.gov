@@ -1,10 +1,10 @@
 import { ajaxRequest as xhr } from '../../../js/modules/util/ajax-request';
 
 /**
- * fetch - Wrapper for our ajax request method with callback support
+ * fetch - Wrapper for our ajax request method with callback support.
  *
- * @param {string} url URL to request
- * @param {function} cb  Success/failure callback
+ * @param {string} url - URL to request.
+ * @param {function} cb - Success/failure callback.
  *
  * @returns {object} XMLHttpRequest object
  */
@@ -16,9 +16,9 @@ const fetch = ( url, cb ) => xhr( 'GET', url, {
 /**
  * getNewHash - Convert an old eRegs hash into a Regs3K hash.
  *
- * @param {string} hash Old eRegs URL hash
+ * @param {string} hash - Old eRegs URL hash.
  *
- * @returns {string} New Regs3K hash
+ * @returns {string} New Regs3K hash.
  */
 const getNewHash = hash => {
   if ( ( /(\w+-)+Interp-/ ).test( hash ) ) {
@@ -33,9 +33,9 @@ const getNewHash = hash => {
  * isOldHash - Check if provided hash is from the old eRegs site
  * All the former eRegs paragraph markers start with their four-digit reg.
  *
- * @param {string} hash URL hash
+ * @param {string} hash - URL hash.
  *
- * @returns {boolean} true/false
+ * @returns {boolean} true/false.
  */
 const isOldHash = hash => ( /^#?\d\d\d\d/ ).test( hash );
 

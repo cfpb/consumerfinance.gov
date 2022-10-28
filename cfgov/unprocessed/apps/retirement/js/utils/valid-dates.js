@@ -1,11 +1,11 @@
 import enforceRange from './enforce-range';
 
 /**
- * Checks if the given date is valid
- * @param {number} month Month (1-12)
- * @param {number} day Day (1-31)
- * @param {number} year Year
- * @returns {object} An object with valid date components
+ * Checks if the given date is valid.
+ * @param {number} month - Month (1-12).
+ * @param {number} day - Day (1-31).
+ * @param {number} year - Year.
+ * @returns {object} An object with valid date components.
  */
 function validDates( month, day, year ) {
   // get parts of birthday and salary, strip non-numeric strings

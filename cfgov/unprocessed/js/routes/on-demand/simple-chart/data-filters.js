@@ -6,9 +6,9 @@ import { extractSeries, overrideStyles } from './utils.js';
 
 /**
  * Generates an array of filters, bucketed based on key if present
- * @param {object} filter Object with a filter key and possible label
- * @param {object} data The raw chart data
- * @param {boolean} isDate Whether the data should be stored as JS dates
+ * @param {object} filter - Object with a filter key and possible label
+ * @param {object} data - The raw chart data
+ * @param {boolean} isDate - Whether the data should be stored as JS dates
  * @returns {array} All the buckets of data
  */
 function getDataBuckets( filter, data, isDate ) {
@@ -28,7 +28,7 @@ function getDataBuckets( filter, data, isDate ) {
 }
 
 /**
- * @param {number} option The JS-date formatted option
+ * @param {number} option - The JS-date formatted option
  * @returns {string} Specially formatted date
  */
 function processDate( option ) {
@@ -37,9 +37,9 @@ function processDate( option ) {
 }
 
 /**
- * @param {array} options List of options to build for the select component
- * @param {object} chartNode The DOM node of the current chart
- * @param {object} filter key and possible label to filter on
+ * @param {array} options - List of options to build for the select component
+ * @param {object} chartNode - The DOM node of the current chart
+ * @param {object} filter - key and possible label to filter on
  * @returns {object} the built select DOM node
  */
 function makeSelectFilterDOM( options, chartNode, filter ) {
@@ -102,9 +102,9 @@ function makeSelectFilterDOM( options, chartNode, filter ) {
 }
 
 /**
- * @param {array} buckets List of buckets to build radio inputs from
- * @param {object} chartNode The DOM node of the current chart
- * @param {object} filter key and possible label to filter on
+ * @param {array} buckets - List of buckets to build radio inputs from
+ * @param {object} chartNode - The DOM node of the current chart
+ * @param {object} filter - key and possible label to filter on
  * @returns {object} the built select DOM node
  */
 function makeRadioFilterDOM( buckets, chartNode, filter ) {
@@ -122,8 +122,8 @@ function makeRadioFilterDOM( buckets, chartNode, filter ) {
   wrapper.appendChild( bucketLabel );
 
   /**
-   * @param {string} bucket The bucket on which to filter data
-   * @param {number} i Calling order
+   * @param {string} bucket - The bucket on which to filter data
+   * @param {number} i - Calling order
    */
   function makeRadioGroup( bucket, i ) {
     const id = Math.random() + bucket;
@@ -178,9 +178,9 @@ function makeRadioFilterDOM( buckets, chartNode, filter ) {
 }
 
 /** Filters raw or transformed data by a select prop
- * @param {array} data Transformed or raw chart data
- * @param {object} filterProp Key on which to filter
- * @param {object} filterVal Value of the selectNode against which we're filtering
+ * @param {array} data - Transformed or raw chart data
+ * @param {object} filterProp - Key on which to filter
+ * @param {object} filterVal - Value of the selectNode against which we're filtering
  * @returns {array} Filtered chart data
  *
  * */
@@ -195,10 +195,10 @@ function filterData( data, filterProp, filterVal ) {
 }
 
 /** Wires up filter elements when provided filters
- * @param {object} dataAttributes Data passed via data-* tags
- * @param {object} chartNode The DOM node of the current chart
- * @param {object} chart The initialized chart
- * @param {object} data The chart data object, {raw, series, transformed}
+ * @param {object} dataAttributes - Data passed via data-* tags
+ * @param {object} chartNode - The DOM node of the current chart
+ * @param {object} chart - The initialized chart
+ * @param {object} data - The chart data object, {raw, series, transformed}
  * */
 function initFilters( dataAttributes, chartNode, chart, data ) {
   let filters = dataAttributes.filters;
@@ -235,10 +235,10 @@ function initFilters( dataAttributes, chartNode, chart, data ) {
 }
 
 /**
- * @param {object} selectors List of selectors that need to be run
- * @param {object} chart The Highcharts chart object
- * @param {object} dataAttributes Data passed via data-* tags
- * @param {object} data Chart data, either raw or transformed
+ * @param {object} selectors - List of selectors that need to be run
+ * @param {object} chart - The Highcharts chart object
+ * @param {object} dataAttributes - Data passed via data-* tags
+ * @param {object} data - Chart data, either raw or transformed
  */
 function attachFilters( selectors, chart, dataAttributes, data ) {
   const { styleOverrides } = dataAttributes;

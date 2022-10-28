@@ -12,7 +12,7 @@ import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.
  *  - all the field elements
  *  - an array of field elements that should be subject to validation
  *
- * @param {HTMLNode} form - The HTML form to model.
+ * @param {HTMLElement} form - The HTML form to model.
  * @returns {FormModel} An instance.
  */
 function FormModel( form ) {
@@ -88,8 +88,8 @@ function FormModel( form ) {
 
   /**
    * Get the text associated with a form field's label.
-   * @param {HTMLNode} field A form field.
-   * @param {boolean} isInGroup Flag used determine if field is in group.
+   * @param {HTMLElement} field - A form field.
+   * @param {boolean} isInGroup - Flag used determine if field is in group.
    * @returns {string} The label of the field.
    */
   function _getLabelText( field, isInGroup ) {
@@ -120,7 +120,7 @@ function FormModel( form ) {
    * Retrieve a string representing the type of an element.
    * May be a custom data-type attribute, the type attribute (of INPUT elements)
    * or the lowercased HTML tag name.
-   * @param {HTMLNode} elem - The HTML element to check. An input usually.
+   * @param {HTMLElement} elem - The HTML element to check. An input usually.
    * @returns {string} A type string for the element.
    */
   function _getElementType( elem ) {

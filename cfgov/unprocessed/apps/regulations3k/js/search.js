@@ -30,7 +30,7 @@ function attachHandlers() {
 /**
  * Remove a filter from the search results page.
  *
- * @param {Event} event Click event
+ * @param {Event} event - Click event.
  */
 function clearFilter( event ) {
   // Continue only if the X icon was clicked and not the parent button
@@ -53,7 +53,7 @@ function clearFilter( event ) {
  * Remove a filter tag from the search results page.
  * node.remove() isn't supported by IE so we have to removeChild();
  *
- * @param {Node} tag Filter tag HTML element
+ * @param {Node} tag - Filter tag HTML element.
  */
 function removeTag( tag ) {
   if ( tag.parentNode !== null ) {
@@ -64,7 +64,7 @@ function removeTag( tag ) {
 /**
  * Remove all filters from the search results page.
  *
- * @param {Event} event Click event
+ * @param {Event} event - Click event.
  */
 function clearFilters( event ) {
   let filterIcons = document.querySelectorAll( '.filters_tags svg' );
@@ -83,7 +83,7 @@ function clearFilters( event ) {
 /**
  * Handle keyword search form submission.
  *
- * @param {Event} event Click event
+ * @param {Event} event - Click event.
  * @returns {String} New page URL with search terms.
  */
 function handleSubmit( event ) {
@@ -103,7 +103,7 @@ function handleSubmit( event ) {
 /**
  * Handle filter change events.
  *
- * @param {Event} event Click event
+ * @param {Event} event - Click event.
  */
 function handleFilter( event ) {
   if ( event instanceof Event ) {

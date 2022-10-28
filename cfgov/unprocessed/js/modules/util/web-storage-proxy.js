@@ -13,9 +13,9 @@ let _storage;
 
 /**
  * Set an item value specified by the key in web storage.
- * @param {string} key The key for the value.
- * @param {string} value The value to store.
- * @param {Object} storage (Optional)
+ * @param {string} key - The key for the value.
+ * @param {string} value - The value to store.
+ * @param {Object} [storage] - (Optional)
  *   Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  * @returns {string} The value set in web storage.
@@ -33,8 +33,8 @@ function setItem( key, value, storage ) {
 
 /**
  * Get an item value specified by the key in web storage.
- * @param {string} key The key for the value.
- * @param {Object} storage (Optional)
+ * @param {string} key - The key for the value.
+ * @param {Object} [storage] - (Optional)
  *   Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  * @returns {string} The value set in web storage.
@@ -47,8 +47,8 @@ function getItem( key, storage ) {
 
 /**
  * Remove an item specified by the key.
- * @param {string} key The key for the value.
- * @param {Object} storage (Optional)
+ * @param {string} key - The key for the value.
+ * @param {Object} [storage] - (Optional)
  *   Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  * @returns {boolean} Returns true if the item existed and it was
@@ -75,8 +75,7 @@ function removeItem( key, storage ) {
 
 /**
  * Set the default session type.
- * @param {Object} storage
- *   Use non-persistent storage (sessionStorage)
+ * @param {Object} storage -  Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  * @throws {Error} If parameter isn't a object.
  */
@@ -90,8 +89,7 @@ function setStorage( storage ) {
 
 /**
  * Internal function for whether to use local or session storage.
- * @param {Object} storage
- *   Use non-persistent storage (sessionStorage)
+ * @param {Object} storage - Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  *   Default is sessionStorage.
  * @returns {Object} A local storage or session storage instance.

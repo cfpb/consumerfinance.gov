@@ -12,8 +12,7 @@ import FormSubmit from './FormSubmit.js';
  *
  * @classdesc Initializes the organism.
  *
- * @param {string} element
- *   The selector for the organism.
+ * @param {string} element - The selector for the organism.
  * @returns {EmailSignup} An instance.
  */
 function EmailPopup( element ) {
@@ -26,7 +25,7 @@ function EmailPopup( element ) {
   let _language = 'en';
 
   /**
-   * @returns {HTMLNode} The base element of the email popup.
+   * @returns {HTMLElement} The base element of the email popup.
    */
   function getDom() {
     return _dom;
@@ -59,7 +58,7 @@ function EmailPopup( element ) {
 
   /**
    * Function used to validate email address.
-   * @param {Object} fields An object containing form fields.
+   * @param {Object} fields - An object containing form fields.
    * @returns {Object} Validation status.
    */
   function emailValidation( fields ) {
@@ -68,7 +67,7 @@ function EmailPopup( element ) {
 
   /**
    * Callback function invoked after successful email submission.
-   * @param {Event} event Click event.
+   * @param {Event} event - Click event.
    *
    */
   function _onEmailSignupSuccess() {

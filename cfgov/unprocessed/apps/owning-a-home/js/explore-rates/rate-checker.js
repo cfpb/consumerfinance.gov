@@ -475,7 +475,7 @@ function processCounty() {
 /**
  * Store the loan amount and down payment, process the county data,
  * check if it's a jumbo loan.
- * @param {HTMLNode} element - TODO: Add description.
+ * @param {HTMLElement} element - TODO: Add description.
  */
 function processLoanAmount( element ) {
   const name = element.getAttribute( 'name' );
@@ -907,7 +907,7 @@ function registerEvents() {
   creditScoreDom.addEventListener( 'keyup', NoCalcOnForbiddenKeys );
 
   /**
-   * @param  {KeyboardEvent} event Event object.
+   * @param {KeyboardEvent} event - Event object.
    */
   function NoCalcOnForbiddenKeys( event ) {
     const element = event.target;
@@ -926,7 +926,7 @@ function registerEvents() {
   downPaymentDom.addEventListener( 'focusout', priceFocusOutHandler );
 
   /**
-   * @param  {FocusEvent} event Event object.
+   * @param {FocusEvent} event - Event object.
    */
   function priceFocusOutHandler( event ) {
     event.target.value = removeDollarAddCommas( event.target.value );

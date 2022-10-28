@@ -4,8 +4,8 @@
 
 /**
  * Dynamically attach and load a script tag in the head of the page.
- * @param {string} url The URL of the script to load.
- * @param {Function} callback (Optional) a function to call when done.
+ * @param {string} url - The URL of the script to load.
+ * @param {Function} [callback] - (Optional) a function to call when done.
  */
 function loadScript( url, callback ) {
   const script = document.createElement( 'script' );
