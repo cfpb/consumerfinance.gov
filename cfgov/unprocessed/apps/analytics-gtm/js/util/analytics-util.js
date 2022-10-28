@@ -30,7 +30,13 @@ function addEventListenerToElem( elem, event, callback ) {
  * @param {string} msg - Message to load to the console.
  */
 function analyticsLog( ...msg ) {
-  if ( getQueryParameter( 'debug-gtm' ) === true ) {
+
+  // Get query params.
+  const queryParams = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  });
+
+  if ( queryParams['debug-gtm'] === 'true' ) {
     console.log( `ANALYTICS DEBUG MODE: ${ msg }` );
   }
 }
@@ -63,29 +69,10 @@ function track( event, action, label ) {
   analyticsLog( event, action, label );
 }
 
-/**
- * Retrieve a URL query string parameter by parameter name.
- * @param {string} key - The name of the parameter in the URL.
- * @returns {string|null} The value of the parameter.
- */
-function getQueryParameter( key ) {
-  const url = window.location.href;
-  const param = key.replace( /[\[\]]/g, '\\$&' );
-  const regex = new RegExp( '[?&]' + param + '(=([^&#]*)|&|#|$)' );
-  const results = regex.exec( url );
-  if ( !results ) return null;
-  if ( !results[2] ) return '';
-  const decoded = decodeURIComponent( results[2].replace( /\+/g, ' ' ) );
-  if ( decoded === 'true' ) return true;
-  if ( decoded === 'false' ) return false;
-  return decoded;
-}
-
 module.exports = {
   addEventListenerToSelector,
   addEventListenerToElem,
   analyticsLog,
   Delay,
-  getQueryParameter,
   track
 };

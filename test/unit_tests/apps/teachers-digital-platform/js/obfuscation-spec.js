@@ -1,4 +1,4 @@
-const module = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation' );
+import { encodeNameInUrl, decodeNameFromUrl } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation';
 
 const testName = 'Iñtërnâtiô Nàlizætiøn';
 
@@ -8,7 +8,7 @@ const encodingRe =
 
 describe( 'obfuscation module', () => {
   it( 'can encode in URL, replacing hash', () => {
-    const url = module.encodeNameInUrl( 'http://google.com/#foo', testName );
+    const url = encodeNameInUrl( 'http://google.com/#foo', testName );
     expect( ( /#foo/ ).test( url ) ).toEqual( false );
     const encoded = url.match( /#(.*)/ )[1];
     expect( encodingRe.test( encoded ) ).toEqual( true );
@@ -23,7 +23,7 @@ describe( 'obfuscation module', () => {
     ];
     sets.forEach( ( [ initials, encoded ] ) => {
       const url = `http://google.com/#${ encoded }`;
-      const decoded = module.decodeNameFromUrl( url );
+      const decoded = decodeNameFromUrl( url );
       expect( decoded ).toEqual( initials );
     } );
   } );
@@ -31,22 +31,22 @@ describe( 'obfuscation module', () => {
   it( 'can reject invalid legacy values inside bas64', () => {
     const value = window.btoa( 'invalid-contents' );
     const url = 'http://google.com/#' + value;
-    expect( module.decodeNameFromUrl( url ) ).toBeNull();
+    expect( decodeNameFromUrl( url ) ).toBeNull();
   } );
 
   it( 'can decode the encoded URL', () => {
-    const url = module.encodeNameInUrl( 'http://google.com/#foo', testName );
-    const decoded = module.decodeNameFromUrl( url );
+    const url = encodeNameInUrl( 'http://google.com/#foo', testName );
+    const decoded = decodeNameFromUrl( url );
     expect( decoded ).toEqual( testName );
   } );
 
   it( 'obfuscates the name!', () => {
-    const url = module.encodeNameInUrl( 'http://google.com/#foo', testName );
+    const url = encodeNameInUrl( 'http://google.com/#foo', testName );
     expect( url.indexOf( testName ) ).toEqual( -1 );
   } );
 
   it( 'rejects simple modification of the encoding', () => {
-    const url = module.encodeNameInUrl( 'http://google.com/#foo', testName );
+    const url = encodeNameInUrl( 'http://google.com/#foo', testName );
     const m = url.match( /#(.*)+/ );
     const unaltered = `#${ m[1] }`;
 
@@ -59,16 +59,16 @@ describe( 'obfuscation module', () => {
     // Valid Base64 but not repeated
     const altered3 = '#' + m[1].substr( 0, 4 ) + 'z' + m[1].substr( 6 );
 
-    expect( module.decodeNameFromUrl( unaltered ) ).toEqual( testName );
-    expect( module.decodeNameFromUrl( altered1 ) ).toBeNull();
-    expect( module.decodeNameFromUrl( altered2 ) ).toBeNull();
-    expect( module.decodeNameFromUrl( altered3 ) ).toBeNull();
+    expect( decodeNameFromUrl( unaltered ) ).toEqual( testName );
+    expect( decodeNameFromUrl( altered1 ) ).toBeNull();
+    expect( decodeNameFromUrl( altered2 ) ).toBeNull();
+    expect( decodeNameFromUrl( altered3 ) ).toBeNull();
   } );
 
   it( 'does not occasionally fail', () => {
     for ( let i = 0; i < 200; i++ ) {
-      const url = module.encodeNameInUrl( 'http://google.com/', 'ABCD' );
-      expect( module.decodeNameFromUrl( url ) ).toEqual( 'ABCD' );
+      const url = encodeNameInUrl( 'http://google.com/', 'ABCD' );
+      expect( decodeNameFromUrl( url ) ).toEqual( 'ABCD' );
     }
   } );
 } );
