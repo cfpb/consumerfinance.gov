@@ -117,8 +117,10 @@ function getQueryVariables() {
     const pair = elem.split( '=' );
     const key = decodeURIComponent( pair[0] ).replace(/[^a-z0-9]/gi, '' );
     const value = decodeURIComponent( pair[1] ).replace(/[^a-z0-9.-]/gi, '' );
-    queryVariables[key] = value;
-  });
+    if ( urlParameters.hasOwnProperty( key ) ) {
+      queryVariables[key] = value;
+    }
+  } );
 
   return queryVariables;
 }
