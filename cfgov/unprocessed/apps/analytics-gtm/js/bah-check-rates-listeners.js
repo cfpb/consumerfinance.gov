@@ -1,6 +1,6 @@
 import { Delay, addEventListenerToElem, track } from './util/analytics-util';
 
-const OAHRCAnalytics = ( function() {
+( function() {
   // credit score slider
   const rangeSliders = document.querySelectorAll( '.rangeslider' );
   let rangeSliderEl;

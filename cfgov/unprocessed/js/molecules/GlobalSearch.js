@@ -133,9 +133,8 @@ function GlobalSearch( element ) {
 
   /**
    * Event handler for when the tab key is pressed.
-   * @param {KeyboardEvent} event - The event object for the keyboard key press.
    */
-  function _handleTabPress( event ) {
+  function _handleTabPress() {
     collapse();
   }
 

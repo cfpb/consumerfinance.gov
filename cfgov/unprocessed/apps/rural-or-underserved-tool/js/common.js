@@ -127,7 +127,7 @@ addressFormDom.addEventListener( 'submit', function( evt ) {
 
 // when file upload is used
 const fileChangeDom = document.querySelector( '#file' );
-fileChangeDom.addEventListener( 'change', function( evt ) {
+fileChangeDom.addEventListener( 'change', function() {
   let rowCount = 0;
   const fileElement = DT.getEl( '#file' );
   const fileValue = fileElement.value;
@@ -159,7 +159,7 @@ fileChangeDom.addEventListener( 'change', function( evt ) {
       error: function() {
         console.log( arguments );
       },
-      complete: function( results, file ) {
+      complete: function( /* results, file */ ) {
         if ( rowCount === 0 ) {
           fileInput.setError(
             'There are no rows in this csv. Please update and try again.'

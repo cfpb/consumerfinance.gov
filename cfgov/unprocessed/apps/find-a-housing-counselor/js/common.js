@@ -124,7 +124,6 @@ function updateMap( data ) {
     map.setZoom( zoom );
     map.setView( ziplatlng );
 
-    const bounds = map.getBounds();
     let xmax = -Infinity;
     let xmin = Infinity;
     let ymax = -Infinity;

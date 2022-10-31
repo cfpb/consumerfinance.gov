@@ -49,16 +49,17 @@ function FormModel( form ) {
     let element;
     let type;
     let isIgnored;
-    let isDisabled;
+    // let isDisabled;
     let isInGroup;
-    let groupName;
-    let isRequired;
+
+    /* let groupName;
+       let isRequired; */
 
     // Build validateable array from HTMLFormControlsCollection.
     for ( let i = 0, len = rawElements.length; i < len; i++ ) {
       element = rawElements[i];
       type = _getElementType( element );
-      isDisabled = element.getAttribute( 'disabled' ) !== null;
+      // isDisabled = element.getAttribute( 'disabled' ) !== null;
       isIgnored = _defaults.ignoreFieldTypes.indexOf( type ) > -1;
       isInGroup = _defaults.groupFieldTypes.indexOf( type ) > -1;
 
@@ -66,6 +67,12 @@ function FormModel( form ) {
         validateableElements.push( element );
       }
 
+      /*
+      The variables isDisabled, groupName, and isRequired are unused and
+      commented out, but left in place for reference of the complete
+      state, if needed in the future.
+       */
+      /*
       if ( isInGroup ) {
         groupName =
           element.getAttribute( 'data-group' ) || element.getAttribute( 'name' );
@@ -74,6 +81,7 @@ function FormModel( form ) {
       isRequired =
         element.getAttribute( 'data-required' ) !== null ||
         element.getAttribute( 'required' ) !== null;
+      */
 
       _fieldCache.set( element, {
         type: type,

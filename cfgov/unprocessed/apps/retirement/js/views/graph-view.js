@@ -333,8 +333,9 @@ function setTextByAge() {
   const selectedFRA = selectedAge === SSData.fullAge;
   const selectedAboveFRA = selectedAge > SSData.fullAge;
   const selectedCurrent = selectedAge === SSData.currentAge;
-  // const isFRA = SSData.currentAge === SSData.fullAge;
-  // const isYoungerThanFRA = SSData.currentAge < SSData.fullAge;
+
+  /* const isFRA = SSData.currentAge === SSData.fullAge;
+     const isYoungerThanFRA = SSData.currentAge < SSData.fullAge; */
   const $benefitsMod = $( '.benefit-modification-text' );
   const $selectedAgeText = $( '#selected-retirement-age-value' );
   const $fullAgeBenefits = $( '#full-age-benefits-text' );

@@ -1,5 +1,5 @@
-import { Filter } from 'filter-helpers.cy.js';
-import { FilterableListControl } from 'filterable-list-control-helpers.cy.js';
+import { Filter } from './filter-helpers.cy.js';
+import { FilterableListControl } from './filterable-list-control-helpers.cy.js';
 
 const filterableList = new FilterableListControl();
 const filter = new Filter();

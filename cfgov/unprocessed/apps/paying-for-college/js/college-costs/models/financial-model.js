@@ -31,7 +31,7 @@ const financialModel = {
   values: {},
 
   createFinancialProperty: function( name ) {
-    if ( !{}.hasOwnProperty.call(financialModel.values, name ) ) {
+    if ( !{}.hasOwnProperty.call( financialModel.values, name ) ) {
       financialModel.values[name] = 0;
     }
   },
@@ -42,7 +42,7 @@ const financialModel = {
    */
   extendValues: data => {
     for ( const key in data ) {
-      if ( {}.hasOwnProperty.call(financialModel.values, key ) ) {
+      if ( {}.hasOwnProperty.call( financialModel.values, key ) ) {
         financialModel.values[key] = stringToNum( data[key] );
       }
     }
@@ -89,7 +89,7 @@ const financialModel = {
    * @param {Boolean} updateView - (defaults true) should view be updated?
    */
   setValue: ( name, value, updateView ) => {
-    if ( {}.hasOwnProperty.call(financialModel.values, name ) ) {
+    if ( {}.hasOwnProperty.call( financialModel.values, name ) ) {
       financialModel.values[name] = stringToNum( value );
       financialModel.recalculate();
 
@@ -133,7 +133,7 @@ const financialModel = {
     // Calculate totals
     for ( const prop in vals ) {
       const prefix = prop.split( '_' )[0];
-      if ( {}.hasOwnProperty.call(totals, prefix ) ) {
+      if ( {}.hasOwnProperty.call( totals, prefix ) ) {
         // For loans, get net amount after fees
         let val = vals[prop];
         if ( prop.indexOf( 'Loan' ) > 0 ) {
@@ -276,7 +276,7 @@ const financialModel = {
     const vals = financialModel.values;
     const loanName = prop.split( '_' )[1];
     let fee = 0;
-    if ( {}.hasOwnProperty.call(vals, 'fee_' + loanName ) ) {
+    if ( {}.hasOwnProperty.call( vals, 'fee_' + loanName ) ) {
       fee = vals['fee_' + loanName];
     }
     const net = vals[prop] - vals[prop] * fee;
@@ -358,7 +358,7 @@ const financialModel = {
     }
 
     // If no rate, assume in-state
-    if ( {}.hasOwnProperty.call(rateProperties, rate ) ) {
+    if ( {}.hasOwnProperty.call( rateProperties, rate ) ) {
       tuitionProp += rateProperties[rate];
     } else {
       tuitionProp += 'InS';

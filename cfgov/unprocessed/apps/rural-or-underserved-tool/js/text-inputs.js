@@ -8,7 +8,7 @@ let count = 1;
 function reset() {
   count = 1;
 
-  DT.applyAll( '.input-address', function( element, index ) {
+  DT.applyAll( '.input-address', function( element ) {
     if ( element.getAttribute( 'name' ) === 'address1' ) {
       element.value = '';
       DT.removeClass( element, 'error' );

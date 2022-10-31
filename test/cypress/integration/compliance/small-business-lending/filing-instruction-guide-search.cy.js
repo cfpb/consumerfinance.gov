@@ -68,7 +68,6 @@ describe( '1071 Filing Instruction Guide (FIG)', () => {
               fig.getSearchButton().trigger( 'click' );
               fig.getSearchModal().should( 'be.visible' );
             } );
-
           } );
         } );
       } );
@@ -120,7 +119,6 @@ describe( '1071 Filing Instruction Guide (FIG)', () => {
           } );
         } );
       } );
-
     } );
   } );
 } );

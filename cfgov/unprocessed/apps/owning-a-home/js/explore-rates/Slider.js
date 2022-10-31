@@ -65,7 +65,7 @@ function Slider( element ) {
     // This could use Object.assign, but it's not supported in IE11.
     const options = _options;
     options.onInit = () => _update();
-    options.onSlide = ( position, value ) => _update();
+    options.onSlide = ( /* position, value */ ) => _update();
 
     rangesliderJs.create( _inputDom, options );
     _rangeSliderHandleDom = _dom.querySelector( '.rangeslider__handle' );

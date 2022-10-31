@@ -24,7 +24,7 @@ function _mutate( selector, callback ) {
    XHTML parsers do not magically insert elements in the
    same way that tag soup parsers do. So we cannot shorten
    this by omitting <tbody> or other required elements. */
-const firstTag = /<([a-z][^\/\0>\x20\t\r\n\f]+)/;
+const firstTag = /<([a-z][^/\0>\x20\t\r\n\f]+)/;
 const wrapMap = {
   'col': [ 2, '<table><colgroup>', '</colgroup></table>' ],
   'default': [ 0, '', '' ],
@@ -166,13 +166,13 @@ function filter( element, propName, filter ) {
   const _filter = filter || '*';
 
   const nodes = [];
-  let node = element[propName];
+  let node = element[_propName];
 
   while ( node && node !== document ) {
     if ( _matches.call( node, _filter ) ) {
       nodes.push( node );
     }
-    node = node[propName];
+    node = node[_propName];
   }
   return nodes;
 }

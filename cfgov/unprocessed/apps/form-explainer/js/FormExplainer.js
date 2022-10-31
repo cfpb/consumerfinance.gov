@@ -242,7 +242,6 @@ class FormExplainer {
   /* Initialize the DOM events for the entire explainer UI. */
   initializeEvents() {
     const uiElements = this.elements;
-    const delay = 700;
 
     if ( this.pageCount > 1 ) {
       /* When a paginantion link is clicked,

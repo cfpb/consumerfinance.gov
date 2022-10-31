@@ -22,7 +22,7 @@ function getAllStateValues() {
  * @returns {(number|string|boolean)} value of the property, false if undefined
  */
 function getConstantsValue( name ) {
-  if ( {}.hasOwnProperty.call(constantsModel.values, name ) ) {
+  if ( {}.hasOwnProperty.call( constantsModel.values, name ) ) {
     return constantsModel.values[name];
   }
   return false;
@@ -43,7 +43,7 @@ function getExpensesValue( name ) {
  * @returns {number|boolean} value of the property, or false if undefined
  */
 function getFinancialValue( name ) {
-  if ( {}.hasOwnProperty.call(financialModel.values, name ) ) {
+  if ( {}.hasOwnProperty.call( financialModel.values, name ) ) {
     return financialModel.values[name];
   }
   return false;
@@ -76,7 +76,10 @@ function getProgramInfo( pid ) {
  */
 function getSchoolCohortValue( cohort, property ) {
   const smv = schoolModel.values;
-  if ( {}.hasOwnProperty.call(smv, cohort ) && {}.hasOwnProperty.call(smv[cohort], property ) ) {
+  if (
+    {}.hasOwnProperty.call( smv, cohort ) &&
+    {}.hasOwnProperty.call( smv[cohort], property )
+  ) {
     return smv[cohort][property];
   }
   return { percentile_rank: 0, error: 'no property found' };
@@ -88,7 +91,7 @@ function getSchoolCohortValue( cohort, property ) {
  * @returns {(number|string|boolean)} value of the property, or false if undefined
  */
 function getSchoolValue( name ) {
-  if ( {}.hasOwnProperty.call(schoolModel.values, name ) ) {
+  if ( {}.hasOwnProperty.call( schoolModel.values, name ) ) {
     return schoolModel.values[name];
   }
   return false;
@@ -101,7 +104,7 @@ function getSchoolValue( name ) {
  *    false if undefined
  */
 function getStateValue( prop ) {
-  if ( {}.hasOwnProperty.call(stateModel.values, prop ) ) {
+  if ( {}.hasOwnProperty.call( stateModel.values, prop ) ) {
     return stateModel.values[prop];
   }
   return false;
