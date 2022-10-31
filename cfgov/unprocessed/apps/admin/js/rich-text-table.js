@@ -1,4 +1,4 @@
-/* eslint-disable max-lines-per-function, complexity, max-statements, require-jsdoc, func-style, no-empty-function */
+/* eslint-disable camelcase, max-lines-per-function, complexity, max-statements, require-jsdoc, func-style, no-empty-function */
 
 import { stateToHTML } from 'draft-js-export-html';
 
@@ -460,12 +460,6 @@ function initAtomicTable( id, tableOptions ) {
      but the defaults for those call the resizeHeight function. It's only
      available in the inner scope of the initTable function, so we have to
      redefine it here. */
-  /* const getWidth = function() {
-    return window
-      .jQuery( '.widget-table_input' )
-      .closest( '.sequence-member-inner' )
-      .width();
-  }; */
   const getHeight = function() {
     const tableParent = window.jQuery( '#' + id ).parent();
     return (
@@ -486,11 +480,11 @@ function initAtomicTable( id, tableOptions ) {
   let isInitialized = false;
   const cellEvent = function( change, source ) {
     if ( source === 'loadData' ) {
-      return; // don't save this change
+      return;
     }
     persist();
   };
-  const metaEvent = function( row, column, key, value ) {
+  const metaEvent = function( row, column, key ) {
     if ( isInitialized && key === 'className' ) {
       persist();
     }
@@ -498,7 +492,7 @@ function initAtomicTable( id, tableOptions ) {
   const initEvent = function() {
     isInitialized = true;
   };
-  const structureEvent = function( /* index, amount */ ) {
+  const structureEvent = function() {
     resizeHeight( getHeight() );
     persist();
   };
