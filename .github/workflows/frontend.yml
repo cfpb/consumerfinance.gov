@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-node@v3
         if: steps.filter.outputs.frontend == 'true'
         with:
-            node-version: '16.x'
+            node-version: 18
 
       - name: Install dependencies
         if: steps.filter.outputs.frontend == 'true'
