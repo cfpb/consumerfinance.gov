@@ -16,7 +16,7 @@ const utils = {
   /**
    * showEl - Un-hides a page element.
    *
-   * @param {object} el DOM node to un-hide.
+   * @param {object} el - DOM node to un-hide.
    *
    * @returns {object} The un-hidden DOM node.
    */
@@ -28,7 +28,7 @@ const utils = {
   /**
    * hideEl - Hides a page element.
    *
-   * @param {object} el DOM node to hide.
+   * @param {object} el - DOM node to hide.
    *
    * @returns {object} The hidden DOM node.
    */
@@ -40,7 +40,7 @@ const utils = {
   /**
    * disableEl - Disables a page element. Used for form inputs.
    *
-   * @param {object} el DOM node to disable.
+   * @param {object} el - DOM node to disable.
    *
    * @returns {object} The disabled DOM node.
    */
@@ -52,7 +52,7 @@ const utils = {
   /**
    * enableEl - Enables a page element. Used for form inputs.
    *
-   * @param {object} el DOM node to enable.
+   * @param {object} el - DOM node to enable.
    *
    * @returns {object} The enabled DOM node.
    */
@@ -64,10 +64,10 @@ const utils = {
   /**
    * addOption - Create select option to be injected into HTML select element.
    *
-   * @param {object} params Param object
-   * @param {type} params.document window.document
-   * @param {string} params.value <option value="VALUE">text</option>
-   * @param {string} params.text <option value="value">TEXT</option>
+   * @param {object} params - Param object
+   * @param {type} params.document - window.document
+   * @param {string} params.value - <option value="VALUE">text</option>
+   * @param {string} params.text - <option value="value">TEXT</option>
    *
    * @returns {type} Description
    */
@@ -81,7 +81,7 @@ const utils = {
   /**
    * getStateData - XHR state metadata
    *
-   * @param {function} cb Function called with state data.
+   * @param {function} cb - Function called with state data.
    *
    * @returns {function} Function called with state data.
    */
@@ -98,7 +98,7 @@ const utils = {
   /**
    * getCountyData - XHR county metadata
    *
-   * @param {function} cb Function called with county data.
+   * @param {function} cb - Function called with county data.
    *
    * @returns {function} Function called with county data.
    */
@@ -115,7 +115,7 @@ const utils = {
   /**
    * getMetroData - XHR metro metadata
    *
-   * @param {function} cb Function called with metro data.
+   * @param {function} cb - Function called with metro data.
    *
    * @returns {function} Function called with metro data.
    */
@@ -132,7 +132,7 @@ const utils = {
   /**
    * getNonMetroData - XHR non-metro metadata
    *
-   * @param {function} cb Function called with non-metro data.
+   * @param {function} cb - Function called with non-metro data.
    *
    * @returns {function} Function called with non-metro data.
    */
@@ -149,7 +149,7 @@ const utils = {
   /**
    * getDate - Convert a date from YYYY-MM-DD to Month YYYY.
    *
-   * @param {string} dateString Date in the format YYYY-MM-DD
+   * @param {string} dateString - Date in the format YYYY-MM-DD
    *
    * @returns {string} Date in the format Month YYYY.
    */
@@ -178,7 +178,7 @@ const utils = {
   /**
    * getCountyState - Get the U.S. state belonging to a county.
    *
-   * @param {string} fips FIPS county code.
+   * @param {string} fips - FIPS county code.
    *
    * @returns {string} Two character state abbreviation.
    */
@@ -250,7 +250,7 @@ const utils = {
   /**
    * isNonMetro - Check if a location's FIPS code is for a non-metro area.
    *
-   * @param {string} fips FIPS code, e.g. 52435 or 06-non.
+   * @param {string} fips - FIPS code, e.g. 52435 or 06-non.
    *
    * @returns {boolean} True if it's a non-metro
    */
@@ -266,7 +266,7 @@ const utils = {
    * This function normalizes the map's zooming by keeping track of the current
    * zoom level and calculating a new one based on the requested amount of zoom.
    *
-   * @param {number} zoomLevel Requested zoom level from 1 to 10, with 10 being
+   * @param {number} zoomLevel - Requested zoom level from 1 to 10, with 10 being
    * zoomed all the way out.
    *
    * @returns {number} Highcharts-compatible zoom level.
@@ -280,7 +280,7 @@ const utils = {
   /**
    * setZoomLevel - Set global normalized zoom level. See above.
    *
-   * @param {number} zoomLevel Global zoom level to store.
+   * @param {number} zoomLevel - Global zoom level to store.
    *
    * @returns {number} Global zoom level.
    */
@@ -292,7 +292,7 @@ const utils = {
   /**
    * getYear - Returns the year form a date in the format YYYY-MM-DD.
    *
-   * @param {string} date Date in format YYYY-MM-DD.
+   * @param {string} date - Date in format YYYY-MM-DD.
    *
    * @returns {string} Year as YYYY.
    */
@@ -301,7 +301,7 @@ const utils = {
   /**
    * getMonth - Returns the month form a date in the format YYYY-MM-DD.
    *
-   * @param {string} date Date in format YYYY-MM-DD.
+   * @param {string} date - Date in format YYYY-MM-DD.
    *
    * @returns {string} Month as MM.
    */
@@ -310,8 +310,8 @@ const utils = {
   /**
    * isDateValid - Check if date is less than or equal to the provided end date.
    *
-   * @param {string} currDate Date in format YYYY-MM-DD.
-   * @param {string} endDate  Date in format YYYY-MM-DD.
+   * @param {string} currDate - Date in format YYYY-MM-DD.
+   * @param {string} endDate - Date in format YYYY-MM-DD.
    *
    * @returns {boolean} True if date is less than or equal to the provided
    * end date.
@@ -396,7 +396,7 @@ const utils = {
    * thunkMiddleware - Vanilla JS implementation of redux-thunk.
    * See: https://github.com/gaearon/redux-thunk
    *
-   * @param {object} store The app's store.
+   * @param {object} store - The app's store.
    *
    * @returns {function} Dispatch function with the action provided.
    */
@@ -411,7 +411,7 @@ const utils = {
    * loggerMiddleware - Vanilla JS implementation redux-devtools.
    * See: https://github.com/gaearon/redux-devtools
    *
-   * @param {object} store The app's store.
+   * @param {object} store - The app's store.
    *
    * @returns {function} Dispatch function with the action provided.
    */

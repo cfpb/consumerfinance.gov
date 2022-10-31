@@ -259,7 +259,7 @@ function MegaMenuDesktop( baseClass, menus ) {
 
   /**
    * Set an element on an existing transition or create a new transition.
-   * @param {HTMLNode} element - Target of a transition.
+   * @param {HTMLElement} element - Target of a transition.
    * @param {MoveTransition} [setTransition] - The transition to apply.
    * @returns {MoveTransition}
    *   The passed in transition or a new transition if none was supplied.

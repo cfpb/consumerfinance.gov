@@ -18,7 +18,7 @@ const CLASSES = {
  *
  * @classdesc Initializes new ExpandableFacetTransition behavior.
  *
- * @param {HTMLNode} element - DOM element to apply move transition to.
+ * @param {HTMLElement} element - DOM element to apply move transition to.
  * @returns {ExpandableFacetTransition} An instance.
  */
 function ExpandableFacetTransition( element ) {

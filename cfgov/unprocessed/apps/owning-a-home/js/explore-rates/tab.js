@@ -22,8 +22,8 @@ function init() {
 }
 
 /**
- * @param {HTMLNode} tabGroup - HTML element parent of tabs and tabs-content.
- * @param {HTMLNode} tabContents - HTML element for content in tabs.
+ * @param {HTMLElement} tabGroup - HTML element parent of tabs and tabs-content.
+ * @param {HTMLElement} tabContents - HTML element for content in tabs.
  */
 function _bindTabLink( tabGroup, tabContents ) {
   tabGroup.addEventListener( 'click', _tabLinkClicked );

@@ -1,10 +1,10 @@
 const xhr = require( '../../../js/modules/util/ajax-request' ).ajaxRequest;
 
 /**
- * fetch - Wrapper for our ajax request method with callback support
+ * fetch - Wrapper for our ajax request method with callback support.
  *
- * @param {string} url URL to request
- * @param {function} cb  Success/failure callback
+ * @param {string} url - URL to request.
+ * @param {function} cb - Success/failure callback.
  */
 function fetch( url, cb ) {
   xhr( 'GET', url, {

@@ -69,8 +69,8 @@ function fetchImageURL( videoId ) {
  * from the YouTube embed API, which should have been set on the
  * global window object.
  *
- * @param {HTMLNode} iframeContainerDom -
- *   A reference to <iframe> to embed the video.
+ * @param {HTMLElement} iframeContainerDom - A reference to <iframe>
+ *   to embed the video.
  * @param {string} videoId - A YouTube video ID.
  * @returns {YT.Player} A YouTube Player instance.
  * @throws {Error} If the IFrame API has not loaded.

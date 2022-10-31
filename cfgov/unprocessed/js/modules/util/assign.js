@@ -18,7 +18,7 @@ function _isPlainObject( object ) {
  * existing properties. When assigning from multiple sources, fields of every
  * next source will override same named fields of previous sources.
  *
- * @param {Object} destination object.
+ * @param {Object} destination - The destination object.
  * @returns {Object} assigned destination object.
  */
 function assign( destination ) {

@@ -6,9 +6,9 @@ const $ = document.querySelector.bind( document );
 let value = '';
 
 /**
- * Update the initials in the page
+ * Update the initials in the page.
  *
- * @param {string } newValue the new initials
+ * @param {string } newValue - The new initials.
  */
 function update( newValue ) {
   const displayValue = $( '.initials-value' );

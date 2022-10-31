@@ -27,7 +27,7 @@ const delay = ( function() {
 } )();
 
 /**
- * @param  {string} timestamp - A timestamp.
+ * @param {string} timestamp - A timestamp.
  * @returns {string} Date in the format of MM/dd/yyyy.
  */
 function formatTimestampMMddyyyy( timestamp ) {
@@ -41,7 +41,7 @@ function formatTimestampMMddyyyy( timestamp ) {
 }
 
 /**
- * @param  {number} keyCode - A key code.
+ * @param {number} keyCode - A key code.
  * @returns {boolean} True if key is forbidden, false otherwise.
  */
 function isKeyAllowed( keyCode ) {
@@ -59,7 +59,7 @@ function isKeyAllowed( keyCode ) {
 }
 
 /**
- * @param  {HTMLNode} elem - An HTML element to check for u-hidden class.
+ * @param {HTMLElement} elem - An HTML element to check for u-hidden class.
  * @returns {boolean} True is the element is visible, false otherwise.
  */
 function isVisible( elem ) {
@@ -82,8 +82,8 @@ function removeDollarAddCommas( value ) {
 
 /**
  * Render chart data in an accessible format.
- * @param {HTMLNode} tableHead - A <thead> element.
- * @param {HTMLNode} tableBody - A <tbody> element.
+ * @param {HTMLElement} tableHead - A <thead> element.
+ * @param {HTMLElement} tableBody - A <tbody> element.
  * @param {Array} labels - Data labels from the API.
  * @param {Array} vals - Data values from the API.
  */
@@ -107,7 +107,7 @@ function renderAccessibleData( tableHead, tableBody, labels, vals ) {
 
 /**
  * Updates the sentence data date sentence below the chart.
- * @param {HTMLNode} elem - An HTML element holding the timestamp.
+ * @param {HTMLElement} elem - An HTML element holding the timestamp.
  * @param {string} time - Timestamp from API.
  */
 function renderDatestamp( elem, time ) {
@@ -137,7 +137,7 @@ function calcLoanAmount( housePrice, downPayment ) {
 
 /**
  * Calculate and render the loan amount in the format $100,000.
- * @param {HTMLNode} elem - HTML element to fill in with loan amount.
+ * @param {HTMLElement} elem - HTML element to fill in with loan amount.
  * @param {number} loanAmount - A loan amount as a number.
  */
 function renderLoanAmount( elem, loanAmount ) {
@@ -164,8 +164,8 @@ function setSelections( fields ) {
 
 /**
  * Set value(s) of an individual HTML element in the control panel.
- * @param  {HTMLNode} el An HTML input element on the page.
- * @param  {string} val Value to set inside the HTML element.
+ * @param {HTMLElement} el - An HTML input element on the page.
+ * @param {string} val - Value to set inside the HTML element.
  */
 function setSelection( el, val ) {
   const placeHolders = document.querySelectorAll( '[placeholder]' );

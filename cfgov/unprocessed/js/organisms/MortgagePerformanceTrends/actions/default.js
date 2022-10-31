@@ -6,9 +6,9 @@ const defaultActionCreators = () => {
     /**
      * setGeo - Sets geographic location's info
      *
-     * @param {String} geoId   ID of location
-     * @param {String} geoName Name of location
-     * @param {String} geoType Type of location (state, metro, county)
+     * @param {String} geoId - ID of location
+     * @param {String} geoName - Name of location
+     * @param {String} geoType - Type of location (state, metro, county)
      *
      * @returns {Object} Action to set geo
      */
@@ -33,10 +33,10 @@ const defaultActionCreators = () => {
     /**
      * updateChart - Action dispatched to redraw the chart/map
      *
-     * @param {String} geoId   ID of location
-     * @param {String} geoName Name of location
-     * @param {String} geoType Type of location (state, metro, county)
-     * @param {Boolean} includeComparison Include national comparison?
+     * @param {String} geoId - ID of location
+     * @param {String} geoName - Name of location
+     * @param {String} geoType - Type of location (state, metro, county)
+     * @param {Boolean} includeComparison - Include national comparison?
      *
      * @returns {Object} Action to update chart
      */
@@ -57,7 +57,7 @@ const defaultActionCreators = () => {
 
     /**
      * updateNational - Action dispatched when the national comparison is toggled
-     * @param {Boolean} includeComparison Include national comparison?
+     * @param {Boolean} includeComparison - Include national comparison?
      * @returns {Object} Action to include the national data in chart
      */
     updateNational: includeComparison => {
@@ -71,7 +71,7 @@ const defaultActionCreators = () => {
     /**
      * updateDate - Action dispatched when the month/year is changed
      *
-     * @param {String} date Date in format 2010-01
+     * @param {String} date - Date in format 2010-01
      *
      * @returns {Object} Action to update the data viz's date
      */
@@ -113,8 +113,8 @@ const defaultActionCreators = () => {
     /**
      * fetchNonMetros - Creates async action to fetch list of non-metros.
      *
-     * @param {String} nonMetroState Two-letter U.S. state abbreviation.
-     * @param {Boolean} includeComparison Include national comparison?
+     * @param {String} nonMetroState - Two-letter U.S. state abbreviation.
+     * @param {Boolean} includeComparison - Include national comparison?
      *
      * @returns {Function} Thunk called with non metros
      */
@@ -153,7 +153,7 @@ const defaultActionCreators = () => {
     /**
      * setMetros - New metros to store in state.
      *
-     * @param {Array} metros List of metros.
+     * @param {Array} metros - List of metros.
      * @returns {Object} Action with new metros.
      */
     setMetros: metros => ( {
@@ -164,7 +164,7 @@ const defaultActionCreators = () => {
     /**
      * setNonMetros - New non-metros to store in state.
      *
-     * @param {Array} nonMetros List of non-metros.
+     * @param {Array} nonMetros - List of non-metros.
      * @returns {Object} Action with new non-metros.
      */
     setNonMetros: nonMetros => ( {
@@ -175,7 +175,7 @@ const defaultActionCreators = () => {
     /**
      * setCounties - New counties to store in state.
      *
-     * @param {Array} counties List of counties.
+     * @param {Array} counties - List of counties.
      * @returns {Object} Action with new counties.
      */
     setCounties: counties => ( {

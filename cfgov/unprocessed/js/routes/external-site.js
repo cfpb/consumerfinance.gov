@@ -14,7 +14,7 @@ const INTERVAL = 1000;
  *
  * @classdesc Initializes a new ExternalSite instance.
  *
- * @param {HTMLElement} element DOM Element.
+ * @param {HTMLElement} element - DOM Element.
  */
 function ExternalSite( element ) {
   const _dom = checkDom( element, BASE_CLASS );

@@ -112,7 +112,7 @@ const metricView = {
 
   /**
    * Fixes overlapping points on a bar graph
-   * @param {object} $graph jQuery object of the graph containing the points
+   * @param {object} $graph - jQuery object of the graph containing the points
    */
   fixOverlap: function( $graph ) {
     const $school = $graph.find( '[data-bar-graph_number="you"]' );
@@ -162,7 +162,7 @@ const metricView = {
 
   /**
    * Sets text of each point on a bar graph (or a class if a point is missing)
-   * @param {object} $graph jQuery object of the graph containing the points
+   * @param {object} $graph - jQuery object of the graph containing the points
    */
   setGraphValues: function( $graph ) {
     const $school = $graph.find( '[data-bar-graph_number="you"]' );
@@ -183,7 +183,7 @@ const metricView = {
 
   /**
    * Sets the position of each point on a bar graph
-   * @param {object} $graph jQuery object of the graph containing the points
+   * @param {object} $graph - jQuery object of the graph containing the points
    */
   setGraphPositions: function( $graph ) {
     // schoolValue, nationalValue, $school, $national
@@ -268,9 +268,9 @@ const metricView = {
   },
 
   /**
-   * Adds the correct classes to metric notification boxes
-   * @param {object} $notification jQuery object of the notification box
-   * @param {string} notificationClasses Classes to add to the notification
+   * Adds the correct classes to metric notification boxes.
+   * @param {object} $notification - jQuery object of the notification box.
+   * @param {string} notificationClasses - Classes to add to the notification.
    */
   setNotificationClasses: function( $notification, notificationClasses ) {
     $notification
@@ -279,17 +279,17 @@ const metricView = {
   },
 
   /**
-   * Hides the metric notification boxes for settlement schools
-   * @param {object} $notification jQuery object of the notification box
+   * Hides the metric notification boxes for settlement schools.
+   * @param {object} $notification - jQuery object of the notification box.
    */
   hideNotificationClasses: function( $notification ) {
     $notification.attr( 'class', 'metric_notification' ).hide();
   },
 
   /**
-   * Initializes all metrics with bar graphs
-   * @param {object} values Financial model values
-   * @param {boolean} settlementStatus Flag if this is a settlement school
+   * Initializes all metrics with bar graphs.
+   * @param {object} values - Financial model values.
+   * @param {boolean} settlementStatus - Flag if this is a settlement school.
    */
   updateGraphs: function() {
     const $graphs = $( '.bar-graph' );
@@ -311,12 +311,12 @@ const metricView = {
   },
 
   /**
-   * Calculates the student's debt burden
-   * @param {number} monthlyLoanPayment Student's monthly loan payment after
-   * graduation
-   * @param {monthlySalary} monthlySalary Student's estimated monthly salary
-   * after graduation
-   * @returns {number} Student's debt burden
+   * Calculates the student's debt burden.
+   * @param {number} monthlyLoanPayment - Student's monthly loan payment after
+   *   graduation.
+   * @param {monthlySalary} monthlySalary - Student's estimated monthly salary
+   *   after graduation.
+   * @returns {number} Student's debt burden.
    */
   calculateDebtBurden: function( monthlyLoanPayment, monthlySalary ) {
     const debtBurden = monthlyLoanPayment / monthlySalary;
@@ -324,9 +324,9 @@ const metricView = {
   },
 
   /**
-   * Calculates a monthly salary from an annual salary
-   * @param {number} annualSalary Annual salary
-   * @returns {number} Monthly salary
+   * Calculates a monthly salary from an annual salary.
+   * @param {number} annualSalary - Annual salary.
+   * @returns {number} Monthly salary.
    */
   calculateMonthlySalary: function( annualSalary ) {
     const monthlySalary = annualSalary / 12;
@@ -335,9 +335,9 @@ const metricView = {
 
   /**
    * Populates the debt burden numbers and shows the corresponding notification
-   * on the page
-   * @param {object} values Financial model values
-   * @param {boolean} settlementStatus Flag if this is a settlement school
+   * on the page.
+   * @param {object} values - Financial model values.
+   * @param {boolean} settlementStatus - Flag if this is a settlement school.
    */
   updateDebtBurden: function() {
     const $section = $( '[data-repayment-section="debt-burden"]' );
@@ -374,7 +374,7 @@ const metricView = {
 
   /**
    * Updates salary metric with warning about no program or school data for
-   * settlement schools
+   * settlement schools.
    */
   updateSalaryWarning: function() {
     const $salaryDebt = $( '#salary-and-debt-metric' );
@@ -386,8 +386,8 @@ const metricView = {
   },
 
   /**
-   * Updates graph content with source - Program or School
-   * @param {object} $graph jQuery object of the graph containing the points
+   * Updates graph content with source - Program or School.
+   * @param {object} $graph - jQuery object of the graph containing the points.
    */
   setGraphSources: function( $graph ) {
     const metricKey = $graph.attr( 'data-metric' );
@@ -405,8 +405,8 @@ const metricView = {
   },
 
   /**
-   * Updates view for settlement schools
-   * @param {object} $graph jQuery object of the graph
+   * Updates view for settlement schools.
+   * @param {object} $graph - jQuery object of the graph.
    */
   updateForSettlement: function( $graph ) {
     const $notification = $graph.siblings( '.metric_notification' );

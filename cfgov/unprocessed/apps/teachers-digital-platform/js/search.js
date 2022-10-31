@@ -63,7 +63,7 @@ function addDataGtmIgnore() {
 /**
  * Remove a filter from the search results page.
  *
- * @param {Event} event Click event
+ * @param {Event} event - Click event
  */
 function clearFilter( event ) {
   // Continue only if the X icon was clicked and not the parent button
@@ -86,7 +86,7 @@ function clearFilter( event ) {
  * Remove a filter tag from the search results page.
  * node.remove() isn't supported by IE so we have to removeChild();
  *
- * @param {Node} tag Filter tag HTML element
+ * @param {Node} tag - Filter tag HTML element
  */
 function removeTag( tag ) {
   if ( tag.parentNode !== null ) {
@@ -97,7 +97,7 @@ function removeTag( tag ) {
 /**
  * Remove all filters from the search results page.
  *
- * @param {Event} event Click event
+ * @param {Event} event - Click event
  */
 function clearFilters( event ) {
   // Handle Analytics here before tags vanish.
@@ -119,7 +119,7 @@ function clearFilters( event ) {
 /**
  * Trigger a form submit after Clear Search is clicked.
  *
- * @param {Event} event Click event
+ * @param {Event} event - Click event
  */
 function clearSearch( event ) {
   if ( event instanceof Event ) {
@@ -131,7 +131,7 @@ function clearSearch( event ) {
 /**
  * Handle keyword search form submission.
  *
- * @param {Event} event Click event
+ * @param {Event} event - Click event
  * @returns {String} New page URL with search terms
  */
 function handleSubmit( event ) {
@@ -146,7 +146,7 @@ function handleSubmit( event ) {
 /**
  * fetch search results based on filters and keywords.
  *
- * @param {NodeList} filters List of filter checkboxes
+ * @param {NodeList} filters - List of filter checkboxes
  * @returns {String} New page URL with search terms
  */
 function fetchSearchResults( filters = [] ) {
@@ -183,8 +183,8 @@ function fetchSearchResults( filters = [] ) {
 /**
  * Handle filter change events.
  *
- * @param {Event} event Click event
- * @param {DOMElement} target DOM element
+ * @param {Event} event - Click event
+ * @param {DOMElement} target - DOM element
  * @returns {String} New page URL with search terms
  */
 function handleFilter( event, target = null ) {
@@ -235,7 +235,7 @@ function handleFilter( event, target = null ) {
 /**
  * Traverse parents and update their checkbox values.
  *
- * @param {DOMElement} element DOM element
+ * @param {DOMElement} element - DOM element
  */
 function _updateParentFilter( element ) {
   const wrapper = element.parentElement.parentElement;

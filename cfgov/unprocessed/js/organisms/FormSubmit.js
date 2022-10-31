@@ -18,10 +18,10 @@ const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
  *
  * @classdesc Initializes the organism.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
- * @param {string} baseClass class of organism
- * @param {Object} opts optional params, including
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
+ * @param {string} baseClass - class of organism
+ * @param {Object} opts - optional params, including
  *   validator: validation function, and
  *   replaceForm: Boolean, determines if form is replaced with message
  * @returns {FormSubmit} An instance.
@@ -57,7 +57,7 @@ function FormSubmit( element, baseClass, opts ) {
   }
 
   /**
-   * @param {event} event DOM event
+   * @param {event} event - DOM event
    * @returns {event} DOM event.
    */
   function _onSubmit( event ) {
@@ -88,8 +88,8 @@ function FormSubmit( element, baseClass, opts ) {
 
   /**
    * Displays notification and scrolls it into view if offscreen
-   * @param {type} type of notification
-   * @param {content} content for notification.
+   * @param {type} type - of notification
+   * @param {content} content - for notification.
    */
   function _displayNotification( type, content ) {
     _notification.update( type, content );
@@ -99,7 +99,7 @@ function FormSubmit( element, baseClass, opts ) {
 
   /**
    * Sends form data and displays notification on success / failure.
-   * @param {formData} form data object with field name/value pairs
+   * @param {formData} form - data object with field name/value pairs
    */
   function _submitForm() {
     const DONE_CODE = 4;
@@ -151,7 +151,7 @@ function FormSubmit( element, baseClass, opts ) {
   }
 
   /**
-   * @param {string} message Success message to display
+   * @param {string} message - Success message to display
    *  Replaces form with notification on success.
    */
   function _replaceFormWithNotification( message ) {
@@ -173,7 +173,7 @@ function FormSubmit( element, baseClass, opts ) {
   }
 
   /**
-   * @returns {obj} form fields, keyed by name.
+   * @returns {object} form fields, keyed by name.
    *   Checkboxes and radio fields are stored in array.
    */
   function _cacheFields() {
@@ -199,8 +199,8 @@ function FormSubmit( element, baseClass, opts ) {
   }
 
   /**
-   * @param {string} fieldName name of field
-   * @param {string} fieldValue value of field
+   * @param {string} fieldName - name of field
+   * @param {string} fieldValue - value of field
    * @returns {string} representing field data.
    * Example: param1=value1
    */

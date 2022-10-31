@@ -22,8 +22,8 @@ let INVALID_FIELDS = [];
  *
  * @classdesc Initializes a new FilterableListControls organism.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
  * @returns {FilterableListControls} An instance.
  */
 function FilterableListControls( element ) {
@@ -234,9 +234,9 @@ function FilterableListControls( element ) {
   // TODO: Reduce complexity
   /**
    * Validate the specific field types.
-   * @param {HTMLNode} field A form field.
-   * @param {string} type The type of field.
-   * @param {boolean} isInGroup A boolean that determines if field in a group.
+   * @param {HTMLElement} field - A form field.
+   * @param {string} type - The type of field.
+   * @param {boolean} isInGroup - A boolean that determines if field in a group.
    * @returns {Object} An object with a status and message properties.
    */
   function _validateField( field ) {

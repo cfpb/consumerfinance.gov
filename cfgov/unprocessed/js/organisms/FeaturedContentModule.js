@@ -17,8 +17,8 @@ const BASE_CLASS = 'o-featured-content-module';
  *
  * @classdesc Initializes a new FeaturedContentModule organism.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
  * @returns {FeaturedContentModule} An instance.
  */
 function FeaturedContentModule( element ) {

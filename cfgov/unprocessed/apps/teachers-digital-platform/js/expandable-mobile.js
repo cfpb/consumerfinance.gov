@@ -15,9 +15,9 @@ function getInnerWidth() {
 }
 
 /**
- * Fix the output of getInnerWidth() for test purposes
+ * Fix the output of getInnerWidth() for test purposes.
  *
- * @param {number} width Width
+ * @param {number} width - Width.
  */
 function setInnerWidth( width ) {
   innerWidth = width;

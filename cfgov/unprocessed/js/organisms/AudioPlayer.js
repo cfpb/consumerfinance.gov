@@ -15,8 +15,8 @@ const EVENT_CATEGORY = 'Audio Player Events';
  * @classdesc Initializes a new AudioPlayer organism for the purpose of sending
  * analytics events for the native HTML `audio` element.
  *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
  * @returns {AudioPlayer} An instance.
  */
 function AudioPlayer( element ) {
