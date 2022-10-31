@@ -45,15 +45,6 @@ export default function( label ) {
   /**
    * @param {MouseEvent} event - Mouse event from the click.
    */
-  function trackTabLinkClick( event ) {
-    const target = event.target;
-    const text = target.textContent.trim();
-    track( trackingLabel, 'Tab click', text );
-  }
-
-  /**
-   * @param {MouseEvent} event - Mouse event from the click.
-   */
   function trackFormExplainerPageLinkClick( event ) {
     const target = event.target;
     const pageNumber = 'Page ' + target.getAttribute( 'data-page' );
@@ -88,13 +79,11 @@ export default function( label ) {
     }
     recordExpandableState( expandableID );
 
-    const tab = document.querySelector( '.active-tab' );
-    const tabText = tab.querySelector( '.tab-label' ).textContent.trim();
-    let action = 'Expandable collapsed - ' + tabText;
+    let action = 'Expandable collapsed';
     const label = elem.querySelector( '.o-expandable_label' );
     const text = label.textContent.trim();
     if ( expandableStates[expandableID] === true ) {
-      action = 'Expandable expanded - ' + tabText;
+      action = 'Expandable expanded';
     }
     track( trackingLabel, action, text );
   }
@@ -120,7 +109,6 @@ export default function( label ) {
     track( trackingLabel, action, text );
   }
 
-  addEventListenerToSelector( '.tab-link', 'click', trackTabLinkClick );
   addEventListenerToSelector(
     '.form-explainer_page-link',
     'click',
