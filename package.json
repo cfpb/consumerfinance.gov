@@ -34,7 +34,7 @@
     "@cfpb/cfpb-typography": "0.17.9",
     "@cfpb/rental-assistance-finder": "0.4.0",
     "@cypress/skip-test": "2.6.1",
-    "autoprefixer": "10.4.12",
+    "autoprefixer": "10.4.13",
     "cfpb-chart-builder": "6.4.2",
     "enforce-node-version": "0.1.0",
     "esbuild": "0.15.12",
@@ -57,7 +57,7 @@
     "jest-environment-jsdom": "28.1.0",
     "postcss-less": "6.0.0",
     "prettier": "2.7.1",
-    "snyk": "1.1041.0",
+    "snyk": "1.1044.0",
     "stylelint": "14.14.0",
     "stylelint-config-recommended-less": "1.0.4"
   },
