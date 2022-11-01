@@ -1,9 +1,4 @@
-FROM centos:8
-
-# CentOS 8 is EOL on Dec 31st, 2021. Point mirrors to the archives.
-RUN cd /etc/yum.repos.d/
-RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+FROM centos:7
 
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
@@ -28,6 +23,7 @@ RUN mkdir -p ${HOME} && chmod 777 ${HOME}
 # versions of the Python packages pip, setuptools, and wheel. Configure
 # Python 3 to be enabled at login.
 RUN yum -y update && \
+    yum install -y centos-release-scl && \
     curl -sL https://rpm.nodesource.com/setup_18.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     yum install -y rh-python38 gcc git nodejs yarn && \
