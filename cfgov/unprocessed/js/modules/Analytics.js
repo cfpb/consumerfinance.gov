@@ -12,6 +12,7 @@ const Analytics = {
 
   /**
    * Get data layer object.
+   *
    * @param {string} action - Name of event.
    * @param {string} label - DOM element label.
    * @param {string} category - Type of event.
@@ -19,55 +20,54 @@ const Analytics = {
    * @param {number} [timeout=500] - Callback invocation fallback time.
    * @returns {object} Data layer object.
    */
-  getDataLayerOptions: function( action, label, category, callback, timeout ) {
+  getDataLayerOptions: function (action, label, category, callback, timeout) {
     return {
       event: category || Analytics.EVENT_CATEGORY,
       action: action,
       label: label || '',
       eventCallback: callback,
-      eventTimeout: timeout || 500
+      eventTimeout: timeout || 500,
     };
   },
 
   /**
    * Initialize the Analytics module.
    */
-  init: function() {
+  init: function () {
     // detect if Google tag manager is loaded
-    if ( {}.hasOwnProperty.call( window, 'google_tag_manager' ) ) {
+    if ({}.hasOwnProperty.call(window, 'google_tag_manager')) {
       Analytics.tagManagerIsLoaded = true;
     } else {
       let _tagManager;
-      Object.defineProperty( window, 'google_tag_manager', {
+      Object.defineProperty(window, 'google_tag_manager', {
         enumerable: true,
         configurable: true,
-        get: function() {
+        get: function () {
           return _tagManager;
         },
-        set: function( value ) {
+        set: function (value) {
           _tagManager = value;
-          if ( !Analytics.tagManagerIsLoaded ) {
+          if (!Analytics.tagManagerIsLoaded) {
             Analytics.tagManagerIsLoaded = true;
-            Analytics.dispatchEvent( 'gtmLoaded' );
+            Analytics.dispatchEvent('gtmLoaded');
           }
-        }
-      } );
+        },
+      });
     }
   },
 
   /**
    * @name sendEvent
    * @kind function
-   *
    * @description
    * Pushes an event to the GTM dataLayer.
    * @param {object} dataLayerOptions - Type of event.
    */
-  sendEvent: function( dataLayerOptions ) {
+  sendEvent: function (dataLayerOptions) {
     const callback = dataLayerOptions.eventCallback;
-    if ( Analytics.tagManagerIsLoaded ) {
-      window.dataLayer.push( dataLayerOptions );
-    } else if ( callback && typeof callback === 'function' ) {
+    if (Analytics.tagManagerIsLoaded) {
+      window.dataLayer.push(dataLayerOptions);
+    } else if (callback && typeof callback === 'function') {
       // eslint-disable-next-line callback-return
       callback();
     }
@@ -76,19 +76,17 @@ const Analytics = {
   /**
    * @name sendEvents
    * @kind function
-   *
    * @description
    * Pushes multiple events to the GTM dataLayer.
-   *
-   * @param {array} eventsArray - Array of event objects.
+   * @param {Array} eventsArray - Array of event objects.
    */
-  sendEvents: function( eventsArray ) {
-    if ( typeCheckers.isArray( eventsArray ) ) {
-      for ( let i = 0, len = eventsArray.length; i < len; i++ ) {
-        Analytics.sendEvent( eventsArray[i] );
+  sendEvents: function (eventsArray) {
+    if (typeCheckers.isArray(eventsArray)) {
+      for (let i = 0, len = eventsArray.length; i < len; i++) {
+        Analytics.sendEvent(eventsArray[i]);
       }
     }
-  }
+  },
 };
 
 Analytics.init();

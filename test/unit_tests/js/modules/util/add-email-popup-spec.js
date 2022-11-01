@@ -51,17 +51,17 @@ const HTML_SNIPPET = `
 </div>
 `;
 
-describe( 'add-email-popup', () => {
-  beforeEach( () => {
+describe('add-email-popup', () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-  } );
+  });
 
-  it( 'should hide the email popup initially', () => {
+  it('should hide the email popup initially', () => {
     // eslint-disable-next-line no-unused-vars
-    const addEmailPopup = require( BASE_JS_PATH + '/add-email-popup' );
-    const emailPopupDom = document.querySelector( '.o-email-popup' );
-    expect( emailPopupDom.classList.contains( 'o-email-popup__visible' ) ).toBe(
+    const addEmailPopup = require(BASE_JS_PATH + '/add-email-popup');
+    const emailPopupDom = document.querySelector('.o-email-popup');
+    expect(emailPopupDom.classList.contains('o-email-popup__visible')).toBe(
       false
     );
-  } );
-} );
+  });
+});

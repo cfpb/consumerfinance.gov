@@ -1,6 +1,6 @@
 import { simulateEvent } from '../../../../util/simulate-event.js';
 
-const search = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js' );
+const search = require('../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js');
 
 const HTML_SNIPPET = `
 
@@ -149,148 +149,148 @@ const HTML_SNIPPET = `
 const xhr = global.XMLHttpRequest;
 global.console = { error: jest.fn(), log: jest.fn() };
 
-describe( 'The TDP search page', () => {
-  beforeEach( () => {
+describe('The TDP search page', () => {
+  beforeEach(() => {
     // Reset global XHR
     global.XMLHttpRequest = xhr;
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
     // Fire init
     search.init();
-  } );
+  });
 
-  it( 'should not throw any errors on init', () => {
-    expect( () => search.init() ).not.toThrow();
-  } );
+  it('should not throw any errors on init', () => {
+    expect(() => search.init()).not.toThrow();
+  });
 
-  it( 'should handle search form submissions', () => {
+  it('should handle search form submissions', () => {
     const mockXHR = {
       open: jest.fn(),
       send: jest.fn(),
       readyState: 4,
       status: 200,
       onreadystatechange: jest.fn(),
-      responseText: []
+      responseText: [],
     };
-    global.XMLHttpRequest = jest.fn( () => mockXHR );
-    const form = document.querySelector( 'form#search-form' );
-    simulateEvent( 'submit', form );
-    expect( window.location.href ).toEqual( 'http://localhost/?q=executive' );
-  } );
+    global.XMLHttpRequest = jest.fn(() => mockXHR);
+    const form = document.querySelector('form#search-form');
+    simulateEvent('submit', form);
+    expect(window.location.href).toEqual('http://localhost/?q=executive');
+  });
 
-  it( 'should clear a filter when its X icon is clicked', () => {
+  it('should clear a filter when its X icon is clicked', () => {
     const mockXHR = {
       open: jest.fn(),
       send: jest.fn(),
       readyState: 4,
       status: 200,
       onreadystatechange: jest.fn(),
-      responseText: []
+      responseText: [],
     };
-    global.XMLHttpRequest = jest.fn( () => mockXHR );
-    const clearIcon = document.querySelector( '.results_filters svg' );
+    global.XMLHttpRequest = jest.fn(() => mockXHR);
+    const clearIcon = document.querySelector('.results_filters svg');
 
-    let numFilters = document.querySelectorAll( 'div.a-tag' ).length;
-    expect( numFilters ).toEqual( 2 );
+    let numFilters = document.querySelectorAll('div.a-tag').length;
+    expect(numFilters).toEqual(2);
 
-    simulateEvent( 'click', clearIcon );
-    numFilters = document.querySelectorAll( 'div.a-tag' ).length;
-    expect( numFilters ).toEqual( 1 );
+    simulateEvent('click', clearIcon);
+    numFilters = document.querySelectorAll('div.a-tag').length;
+    expect(numFilters).toEqual(1);
 
     mockXHR.onreadystatechange();
-  } );
+  });
 
-  it( 'should not clear a filter when its tag is clicked', () => {
-    const div = document.querySelector( 'div.a-tag' );
+  it('should not clear a filter when its tag is clicked', () => {
+    const div = document.querySelector('div.a-tag');
 
-    let numFilters = document.querySelectorAll( 'div.a-tag' ).length;
-    expect( numFilters ).toEqual( 2 );
+    let numFilters = document.querySelectorAll('div.a-tag').length;
+    expect(numFilters).toEqual(2);
 
-    simulateEvent( 'click', div );
-    numFilters = document.querySelectorAll( 'div.a-tag' ).length;
-    expect( numFilters ).toEqual( 2 );
-  } );
+    simulateEvent('click', div);
+    numFilters = document.querySelectorAll('div.a-tag').length;
+    expect(numFilters).toEqual(2);
+  });
 
-  it( 'should clear all filters when the `clear all` link is clicked', () => {
+  it('should clear all filters when the `clear all` link is clicked', () => {
     const mockXHR = {
       open: jest.fn(),
       send: jest.fn(),
       readyState: 4,
       status: 200,
       onreadystatechange: jest.fn(),
-      responseText: []
+      responseText: [],
     };
-    global.XMLHttpRequest = jest.fn( () => mockXHR );
-    const clearAllLink = document.querySelector( '.results_filters-clear' );
+    global.XMLHttpRequest = jest.fn(() => mockXHR);
+    const clearAllLink = document.querySelector('.results_filters-clear');
 
-    let numFilters = document.querySelectorAll( 'div.a-tag' ).length;
-    expect( numFilters ).toEqual( 2 );
+    let numFilters = document.querySelectorAll('div.a-tag').length;
+    expect(numFilters).toEqual(2);
 
-    simulateEvent( 'click', clearAllLink );
-    numFilters = document.querySelectorAll( 'div.a-tag' ).length;
-    expect( numFilters ).toEqual( 0 );
+    simulateEvent('click', clearAllLink);
+    numFilters = document.querySelectorAll('div.a-tag').length;
+    expect(numFilters).toEqual(0);
 
     mockXHR.onreadystatechange();
-  } );
+  });
 
-  it( 'should check nested filter when parent filter is clicked', () => {
+  it('should check nested filter when parent filter is clicked', () => {
     const mockXHR = {
       open: jest.fn(),
       send: jest.fn(),
       readyState: 4,
       status: 200,
       onreadystatechange: jest.fn(),
-      responseText: []
+      responseText: [],
     };
-    global.XMLHttpRequest = jest.fn( () => mockXHR );
-    const parentCheckbox = document.querySelector( '#topic--earn' );
+    global.XMLHttpRequest = jest.fn(() => mockXHR);
+    const parentCheckbox = document.querySelector('#topic--earn');
 
     let numChecked = document.querySelectorAll(
       '.o-expandable-facets .a-checkbox:checked'
     ).length;
-    expect( numChecked ).toEqual( 1 );
+    expect(numChecked).toEqual(1);
 
     parentCheckbox.checked = true;
-    simulateEvent( 'change', parentCheckbox );
+    simulateEvent('change', parentCheckbox);
     numChecked = document.querySelectorAll(
       '.o-expandable-facets .a-checkbox:checked'
     ).length;
-    expect( numChecked ).toEqual( 3 );
-    expect( window.location.href ).toEqual(
+    expect(numChecked).toEqual(3);
+    expect(window.location.href).toEqual(
       'http://localhost/?q=executive&building_block=1&topic=1&topic=4&topic=2'
     );
 
-    const childCheckbox = document.querySelector( '#topic--getting-paid' );
+    const childCheckbox = document.querySelector('#topic--getting-paid');
     childCheckbox.checked = false;
-    simulateEvent( 'change', childCheckbox );
+    simulateEvent('change', childCheckbox);
     numChecked = document.querySelectorAll(
       '.o-expandable-facets .a-checkbox:checked'
     ).length;
-    expect( numChecked ).toEqual( 1 );
-    expect( window.location.href ).toEqual(
+    expect(numChecked).toEqual(1);
+    expect(window.location.href).toEqual(
       'http://localhost/?q=executive&building_block=1&topic=2'
     );
-  } );
+  });
 
-  it( 'should handle errors when the server is down', done => {
+  it('should handle errors when the server is down', (done) => {
     const mockXHR = {
       open: jest.fn(),
       send: jest.fn(),
       readyState: 4,
       status: 404,
       onreadystatechange: jest.fn(),
-      responseText: 'Server error!'
+      responseText: 'Server error!',
     };
-    global.XMLHttpRequest = jest.fn( () => mockXHR );
-    const clearIcon = document.querySelector( '.results_filters svg' );
+    global.XMLHttpRequest = jest.fn(() => mockXHR);
+    const clearIcon = document.querySelector('.results_filters svg');
 
-    simulateEvent( 'click', clearIcon );
-    setTimeout( () => {
+    simulateEvent('click', clearIcon);
+    setTimeout(() => {
       // eslint-disable-next-line no-console
-      expect( console.error ).toBeCalled();
+      expect(console.error).toBeCalled();
       done();
-    }, 100 );
+    }, 100);
 
     mockXHR.onreadystatechange();
-  } );
-} );
+  });
+});

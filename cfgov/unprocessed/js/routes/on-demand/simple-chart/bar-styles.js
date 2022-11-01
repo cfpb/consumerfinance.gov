@@ -4,39 +4,39 @@ const bar = {
   ...styles,
   chart: {
     ...styles.chart,
-    type: 'column'
+    type: 'column',
   },
   legend: {
-    enabled: false
+    enabled: false,
   },
   plotOptions: {
     series: {
       states: {
         hover: {
-          color: '#addc91'
-        }
+          color: '#addc91',
+        },
       },
-      color: '#20aa3f'
-    }
+      color: '#20aa3f',
+    },
   },
   xAxis: {
     title: {
       margin: 10,
       y: 12,
       style: {
-        color: '#5a5d61'
-      }
+        color: '#5a5d61',
+      },
     },
     crosshair: false,
     labels: {
       y: 30,
       style: {
         color: '#5a5d61',
-        fontSize: '16px'
-      }
+        fontSize: '16px',
+      },
     },
-    lineColor: '#d2d3d5'
-  }
+    lineColor: '#d2d3d5',
+  },
 };
 
 export default bar;

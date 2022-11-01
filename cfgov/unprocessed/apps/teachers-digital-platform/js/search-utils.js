@@ -5,18 +5,18 @@
  * @param {HTMLElement} filterEls - HTML inputs of the search filters.
  * @returns {Array} Array of objects of form field names and values.
  */
-function getSearchValues( searchEl, filterEls ) {
+function getSearchValues(searchEl, filterEls) {
   const fields = [];
   let field = {};
   field[searchEl.name] = searchEl.value;
-  fields.push( field );
+  fields.push(field);
   // IE doesn't support forEach w/ node lists so convert it to an array.
-  filterEls = Array.prototype.slice.call( filterEls );
-  filterEls.forEach( input => {
+  filterEls = Array.prototype.slice.call(filterEls);
+  filterEls.forEach((input) => {
     field = {};
     field[input.name] = input.value;
-    fields.push( field );
-  } );
+    fields.push(field);
+  });
   return fields;
 }
 
@@ -24,30 +24,30 @@ function getSearchValues( searchEl, filterEls ) {
  * Serializes form fields into GET-friendly string.
  *
  * @param {Array} fields - Array of objects of form field key-value pairs.
- * @returns {String} Serialized form fields.
+ * @returns {string} Serialized form fields.
  */
-function serializeFormFields( fields ) {
-  fields = fields.map( field => {
-    for ( const key in field ) {
-      field = `${ key }=${ field[key] }`;
+function serializeFormFields(fields) {
+  fields = fields.map((field) => {
+    for (const key in field) {
+      field = `${key}=${field[key]}`;
     }
     return field;
-  } );
-  return fields.join( '&' );
+  });
+  return fields.join('&');
 }
 
 /**
  * Creates search results URL to be fetched.
  *
- * @param {String} base - URL's base.
- * @param {String} params - URL's GET parameters.
- * @param {Object} opts - Object of additional options for the URL.
- * @returns {String} Encoded URL.
+ * @param {string} base - URL's base.
+ * @param {string} params - URL's GET parameters.
+ * @param {object} opts - Object of additional options for the URL.
+ * @returns {string} Encoded URL.
  */
-function buildSearchResultsURL( base, params, opts ) {
+function buildSearchResultsURL(base, params, opts) {
   // Currently the only option is for a partial search results template
   opts = opts && opts.partial ? '&partial' : '';
-  return `${ base }?${ params }${ opts }`;
+  return `${base}?${params}${opts}`;
 }
 
 /**
@@ -56,7 +56,7 @@ function buildSearchResultsURL( base, params, opts ) {
  * @param {HTMLElement} el - Element to show loading.
  * @returns {HTMLElement} Above element.
  */
-function showLoading( el ) {
+function showLoading(el) {
   el.style.opacity = 0.5;
   return el;
 }
@@ -67,7 +67,7 @@ function showLoading( el ) {
  * @param {HTMLElement} el - Element to stop loading.
  * @returns {HTMLElement} Above element.
  */
-function hideLoading( el ) {
+function hideLoading(el) {
   el.style.opacity = 1;
   return el;
 }
@@ -78,7 +78,7 @@ function hideLoading( el ) {
  * @param {HTMLElement} el - Input element to uncheck.
  * @returns {HTMLElement} Input element.
  */
-function clearCheckbox( el ) {
+function clearCheckbox(el) {
   el.checked = false;
   return el;
 }
@@ -86,28 +86,28 @@ function clearCheckbox( el ) {
 /**
  * Update the page's URL via replaceState
  *
- * @param {String} base - URL's base.
- * @param {String} params - URL's GET parameters.
- * @returns {String} New URL.
+ * @param {string} base - URL's base.
+ * @param {string} params - URL's GET parameters.
+ * @returns {string} New URL.
  */
-function updateUrl( base, params ) {
-  const url = `${ base }?${ params }`;
-  window.history.replaceState( null, null, url );
+function updateUrl(base, params) {
+  const url = `${base}?${params}`;
+  window.history.replaceState(null, null, url);
   return url;
 }
 
 /**
  * Check error and do something with it
  *
- * @param {String} code - Error code
- * @returns {Object} Error object to be handled by DOM.
+ * @param {string} code - Error code
+ * @returns {object} Error object to be handled by DOM.
  */
-function handleError( code ) {
+function handleError(code) {
   const error = {
     message: null,
-    code: code || 0
+    code: code || 0,
   };
-  switch ( code ) {
+  switch (code) {
     case 'no-results':
       error.msg = 'Your query returned zero results.';
       break;
@@ -129,5 +129,5 @@ module.exports = {
   hideLoading: hideLoading,
   clearCheckbox: clearCheckbox,
   handleError: handleError,
-  updateUrl: updateUrl
+  updateUrl: updateUrl,
 };

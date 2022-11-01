@@ -49,6 +49,6 @@ const usLayout = {
   WA: { name: 'Washington', x: 0, y: 2 },
   WV: { name: 'West Virginia', x: 6, y: 4 },
   WI: { name: 'Wisconsin', x: 5, y: 1 },
-  WY: { name: 'Wyoming', x: 2, y: 3 }
+  WY: { name: 'Wyoming', x: 2, y: 3 },
 };
 export default usLayout;

@@ -50,8 +50,14 @@
     "xdr": "0.5.3"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "7.19.1",
     "cypress": "10.11.0",
     "eslint": "8.26.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jsdoc": "39.3.25",
+    "eslint-plugin-jsx-a11y": "6.6.1",
+    "eslint-plugin-react": "7.31.10",
     "jest": "28.1.2",
     "jest-cli": "28.1.2",
     "jest-environment-jsdom": "28.1.0",
