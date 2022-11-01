@@ -28,7 +28,7 @@ RUN mkdir -p ${HOME} && chmod 777 ${HOME}
 # versions of the Python packages pip, setuptools, and wheel. Configure
 # Python 3 to be enabled at login.
 RUN yum -y update && \
-    yum install -y centos-release-scl && \
+    dnf -y install gcc-c++ gcc make && \
     curl -sL https://rpm.nodesource.com/setup_18.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     yum install -y rh-python38 gcc git nodejs yarn && \
