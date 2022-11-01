@@ -3,29 +3,29 @@
  * for the entire table row.
  */
 function init() {
-  const tables = document.querySelectorAll( '.o-table__row-links' );
+  const tables = document.querySelectorAll('.o-table__row-links');
 
-  for ( let i = tables.length - 1; i >= 0; i-- ) {
-    tables[i].addEventListener( 'click', _tableClicked, false );
+  for (let i = tables.length - 1; i >= 0; i--) {
+    tables[i].addEventListener('click', _tableClicked, false);
   }
 }
 
 /**
  * Handle a click of the table.
  *
- * @param {Object} event - Mouse event for click on the table.
+ * @param {object} event - Mouse event for click on the table.
  */
-function _tableClicked( event ) {
+function _tableClicked(event) {
   let target = event.target;
   let tagName;
-  while ( target.tagName !== 'TR' ) {
+  while (target.tagName !== 'TR') {
     tagName = target.tagName;
-    if ( tagName === 'TH' || tagName === 'A' ) {
+    if (tagName === 'TH' || tagName === 'A') {
       return;
     }
     target = target.parentNode;
   }
-  window.location.assign( target.querySelector( 'a' ).getAttribute( 'href' ) );
+  window.location.assign(target.querySelector('a').getAttribute('href'));
 }
 
 export { init };

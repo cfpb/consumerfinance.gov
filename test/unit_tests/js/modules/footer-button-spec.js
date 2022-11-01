@@ -1,5 +1,5 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
+const FooterButton = require(BASE_JS_PATH + 'modules/footer-button.js');
 
 import { simulateEvent } from '../../../util/simulate-event.js';
 
@@ -20,33 +20,34 @@ const HTML_SNIPPET = `
 
 /**
  * Mock window.scrollTo() method.
+ *
  * @param {number} xCoord - An x coordinate.
  * @param {number} yCoord - A y coordinate.
  */
-function scrollTo( xCoord, yCoord ) {
+function scrollTo(xCoord, yCoord) {
   window.scrollX = xCoord;
   window.scrollY = yCoord;
 }
 
-describe( 'footer-button', () => {
-  beforeAll( () => {
+describe('footer-button', () => {
+  beforeAll(() => {
     window.scrollTo = scrollTo;
     document.body.innerHTML = HTML_SNIPPET;
-    footerBtnDom = document.querySelector( '.o-footer_top-button' );
-  } );
+    footerBtnDom = document.querySelector('.o-footer_top-button');
+  });
 
   it(
     'button should scroll when clicked ' +
       'and requestAnimationFrame is supported',
-    done => {
+    (done) => {
       window.scrollY = 10;
       FooterButton.init();
-      simulateEvent( 'click', footerBtnDom );
+      simulateEvent('click', footerBtnDom);
 
-      window.setTimeout( () => {
-        expect( window.scrollY ).toBe( 0 );
+      window.setTimeout(() => {
+        expect(window.scrollY).toBe(0);
         done();
-      }, 2000 );
+      }, 2000);
     }
   );
 
@@ -54,13 +55,13 @@ describe( 'footer-button', () => {
     'button should scroll when clicked ' +
       'and requestAnimationFrame is not supported',
     () => {
-      jest.spyOn( window, 'scrollTo' );
+      jest.spyOn(window, 'scrollTo');
       delete window.requestAnimationFrame;
       window.scrollY = 10;
       FooterButton.init();
-      simulateEvent( 'click', footerBtnDom );
+      simulateEvent('click', footerBtnDom);
 
-      expect( window.scrollTo ).toHaveBeenCalledWith( 0, 0 );
+      expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
     }
   );
-} );
+});

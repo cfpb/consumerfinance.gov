@@ -10,12 +10,12 @@ const props = [
   'attr',
   'rect',
   'addClass',
-  'text'
+  'text',
 ];
 
-for ( let i = 0; i < props.length; i++ ) {
+for (let i = 0; i < props.length; i++) {
   const propName = props[i];
-  chartMock[propName] = jest.fn( () => chartMock );
+  chartMock[propName] = jest.fn(() => chartMock);
 }
 
 export default chartMock;

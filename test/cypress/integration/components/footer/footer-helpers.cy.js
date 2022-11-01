@@ -1,18 +1,18 @@
 export class Footer {
   footer() {
-    return cy.get( '.o-footer' );
+    return cy.get('.o-footer');
   }
 
   topButton() {
-    return this.footer().get( '.o-footer_top-button' );
+    return this.footer().get('.o-footer_top-button');
   }
 
   navList() {
-    return this.footer().get( '.o-footer_nav-list' );
+    return this.footer().get('.o-footer_nav-list');
   }
 
-  middle( position ) {
-    return this.footer().get( `.o-footer-middle-${ position }` );
+  middle(position) {
+    return this.footer().get(`.o-footer-middle-${position}`);
   }
 
   links() {
@@ -23,10 +23,10 @@ export class Footer {
   }
 
   socialMediaIcons() {
-    return this.footer().get( '.m-social-media_icons' );
+    return this.footer().get('.m-social-media_icons');
   }
 
   officialWebsite() {
-    return this.footer().get( '.o-footer-post' );
+    return this.footer().get('.o-footer-post');
   }
 }
