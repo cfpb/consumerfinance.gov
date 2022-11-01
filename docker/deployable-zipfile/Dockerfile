@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:8
 
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
