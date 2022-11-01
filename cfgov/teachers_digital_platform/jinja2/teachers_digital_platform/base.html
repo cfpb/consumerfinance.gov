@@ -46,19 +46,5 @@
 {% endblock content_sidebar %}
 
 {% block javascript scoped -%}
-{# Conditional comment used to block IE8 and under from receiving JS #}
-<!--[if gt IE 8]><!-->
     <script src="{{ static('apps/teachers-digital-platform/js/index.js') }}"></script>
-<!--<![endif]-->
-
-    <script>
-    //<![CDATA[
-        var usasearch_config = { siteHandle: 'cfpb' };
-
-        var script = document.createElement( 'script' );
-        script.type = 'text/javascript';
-        script.src = 'https://search.usa.gov/javascripts/remote.loader.js';
-        document.getElementsByTagName( 'head' )[0].appendChild( script );
-    //]]>
-    </script>
 {%- endblock javascript %}
