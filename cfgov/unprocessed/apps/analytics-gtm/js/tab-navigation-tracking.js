@@ -7,7 +7,7 @@ let _sessionStorage;
 try {
   _localStorage = window.localStorage;
   _sessionStorage = window.sessionStorage;
-} catch ( err ) {
+} catch (err) {
   _localStorage = null;
   _sessionStorage = null;
 }
@@ -19,9 +19,9 @@ try {
  */
 
 // eslint-disable-next-line max-lines-per-function, complexity, max-statements
-( () => {
+(() => {
   // Bail out if localStorage is not supported or is blocked.
-  if ( !window.Storage || _localStorage === null || _sessionStorage === null ) {
+  if (!window.Storage || _localStorage === null || _sessionStorage === null) {
     return;
   }
 
@@ -30,11 +30,11 @@ try {
   const detailedBackForward = true;
 
   let openTabs = JSON.parse(
-    webStorageProxy.getItem( '_tab_ids', _localStorage )
+    webStorageProxy.getItem('_tab_ids', _localStorage)
   );
-  let tabId = webStorageProxy.getItem( '_tab_id', _sessionStorage );
+  let tabId = webStorageProxy.getItem('_tab_id', _sessionStorage);
   let navPath = JSON.parse(
-    webStorageProxy.getItem( '_nav_path', _sessionStorage )
+    webStorageProxy.getItem('_nav_path', _sessionStorage)
   );
   const curPage = document.location.href;
   let newTab = false;
@@ -47,21 +47,22 @@ try {
 
   /**
    * Get the navigation path to a tab.
+   *
    * @returns {string} The navigation type.
    */
   function getBackForwardNavigation() {
-    if ( detailedBackForward === false ) {
+    if (detailedBackForward === false) {
       return 'BACK/FORWARD';
     }
 
-    if ( navPath.length < 2 ) {
+    if (navPath.length < 2) {
       return 'FORWARD';
     }
 
     prevInStack = navPath[navPath.length - 2];
     lastInStack = navPath[navPath.length - 1];
 
-    if ( prevInStack === curPage || lastInStack === curPage ) {
+    if (prevInStack === curPage || lastInStack === curPage) {
       return 'BACK';
     }
     return 'FORWARD';
@@ -74,17 +75,17 @@ try {
     let index;
 
     // Get the most recent values from storage
-    openTabs = JSON.parse( webStorageProxy.getItem( '_tab_ids', _localStorage ) );
-    tabId = webStorageProxy.getItem( '_tab_id', _sessionStorage );
+    openTabs = JSON.parse(webStorageProxy.getItem('_tab_ids', _localStorage));
+    tabId = webStorageProxy.getItem('_tab_id', _sessionStorage);
 
-    if ( openTabs !== null && tabId !== null ) {
-      index = openTabs.indexOf( tabId );
-      if ( index > -1 ) {
-        openTabs.splice( index, 1 );
+    if (openTabs !== null && tabId !== null) {
+      index = openTabs.indexOf(tabId);
+      if (index > -1) {
+        openTabs.splice(index, 1);
       }
       webStorageProxy.setItem(
         '_tab_ids',
-        JSON.stringify( openTabs ),
+        JSON.stringify(openTabs),
         _localStorage
       );
     }
@@ -103,11 +104,11 @@ try {
       // Use high-precision timer if available.
       d += performance.now();
     }
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, c => {
-      const r = ( d + Math.random() * 16 ) % 16 | 0;
-      d = Math.floor( d / 16 );
-      return ( c === 'x' ? r : ( r & 0x3 ) | 0x8 ).toString( 16 );
-    } );
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = (d + Math.random() * 16) % 16 | 0;
+      d = Math.floor(d / 16);
+      return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+    });
   }
 
   /**
@@ -117,39 +118,39 @@ try {
    * @returns {boolean} Return false if new tab and any other navigation type than
    *   NAVIGATE or OTHER. Otherwise return true.
    */
-  function validNavigation( type, isNewTab ) {
-    return !( isNewTab === true && type !== 0 && type !== 255 );
+  function validNavigation(type, isNewTab) {
+    return !(isNewTab === true && type !== 0 && type !== 255);
   }
 
-  if ( tabId === null ) {
+  if (tabId === null) {
     tabId = generateTabId();
     newTab = true;
-    webStorageProxy.setItem( '_tab_id', tabId, _sessionStorage );
+    webStorageProxy.setItem('_tab_id', tabId, _sessionStorage);
   }
 
   openTabs = openTabs || [];
 
-  if ( openTabs.indexOf( tabId ) === -1 ) {
-    openTabs.push( tabId );
+  if (openTabs.indexOf(tabId) === -1) {
+    openTabs.push(tabId);
     webStorageProxy.setItem(
       '_tab_ids',
-      JSON.stringify( openTabs ),
+      JSON.stringify(openTabs),
       _localStorage
     );
   }
 
   const tabCount = openTabs.length;
 
-  if ( window.PerformanceNavigation ) {
+  if (window.PerformanceNavigation) {
     navPath = navPath || [];
     redirectCount = window.performance.navigation.redirectCount;
     // Only track new tabs if type is NAVIGATE or OTHER
     const navigationTypeID = window.performance.navigation.type;
-    if ( validNavigation( navigationTypeID, newTab ) ) {
-      switch ( navigationTypeID ) {
+    if (validNavigation(navigationTypeID, newTab)) {
+      switch (navigationTypeID) {
         case 0:
           navigationType = 'NAVIGATE';
-          navPath.push( curPage );
+          navPath.push(curPage);
           break;
         case 1:
           navigationType = 'RELOAD';
@@ -157,51 +158,51 @@ try {
             navPath.length === 0 ||
             navPath[navPath.length - 1] !== curPage
           ) {
-            navPath.push( curPage );
+            navPath.push(curPage);
           }
           break;
         case 2:
           navigationType = getBackForwardNavigation();
-          if ( navigationType === 'FORWARD' ) {
+          if (navigationType === 'FORWARD') {
             // Only push if not coming from external domain
-            if ( document.referrer.indexOf( origin ) > -1 ) {
-              navPath.push( curPage );
+            if (document.referrer.indexOf(origin) > -1) {
+              navPath.push(curPage);
             }
-          } else if ( navigationType === 'BACK' ) {
+          } else if (navigationType === 'BACK') {
             // Only remove last if not coming from external domain
-            if ( lastInStack !== curPage ) {
+            if (lastInStack !== curPage) {
               navPath.pop();
             }
           } else {
-            navPath.push( curPage );
+            navPath.push(curPage);
           }
           break;
         default:
           navigationType = 'OTHER';
-          navPath.push( curPage );
+          navPath.push(curPage);
       }
     } else {
-      navPath.push( curPage );
+      navPath.push(curPage);
     }
     try {
       webStorageProxy.setItem(
         '_nav_path',
-        JSON.stringify( navPath ),
+        JSON.stringify(navPath),
         sessionStorage
       );
-    } catch ( exception ) {
-      console.log( exception );
+    } catch (exception) {
+      console.log(exception);
     }
   }
 
-  window.addEventListener( 'beforeunload', removeTabOnUnload );
+  window.addEventListener('beforeunload', removeTabOnUnload);
 
   const payload = {
     tabCount: tabCount,
     redirectCount: redirectCount,
     navigationType: navigationType,
     newTab: newTab === true ? 'New' : 'Existing',
-    tabId: tabId
+    tabId: tabId,
   };
 
   // Set the data model keys directly so they can be used in the Page View tag
@@ -211,8 +212,8 @@ try {
   );
 
   // Also push to dataLayer
-  window.dataLayer.push( {
+  window.dataLayer.push({
     event: 'custom.navigation',
-    browsingBehavior: payload
-  } );
-} )();
+    browsingBehavior: payload,
+  });
+})();

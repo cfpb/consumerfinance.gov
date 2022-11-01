@@ -1,1 +1,1 @@
-require( '../../../modules/util/add-email-popup' );
+require('../../../modules/util/add-email-popup');

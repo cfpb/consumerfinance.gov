@@ -16,11 +16,11 @@ import {
   debounce,
   updateParagraphPositions,
   updateUrlHash,
-  updateWayfinder
+  updateWayfinder,
 } from './permalinks-utils';
 import { queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
-const wayfinderLink = find( '.o-regulations-wayfinder_link' );
+const wayfinderLink = find('.o-regulations-wayfinder_link');
 
 /**
  * init - Initialize the permalink functionality by cataloging all paragraph
@@ -28,21 +28,21 @@ const wayfinderLink = find( '.o-regulations-wayfinder_link' );
  */
 const init = () => {
   updateParagraphPositions();
-  updateWayfinder( true );
-  if ( wayfinderLink !== null ) {
-    wayfinderLink.addEventListener( 'click', event => {
+  updateWayfinder(true);
+  if (wayfinderLink !== null) {
+    wayfinderLink.addEventListener('click', (event) => {
       event.preventDefault();
-      updateWayfinder( true );
-    } );
+      updateWayfinder(true);
+    });
   }
 
-  debounce( 'resize', 300, updateParagraphPositions );
-  debounce( 'click', 300, updateParagraphPositions );
-  debounce( 'scroll', 100, updateUrlHash );
-  debounce( 'scroll', 100, updateWayfinder );
+  debounce('resize', 300, updateParagraphPositions);
+  debounce('click', 300, updateParagraphPositions);
+  debounce('scroll', 100, updateUrlHash);
+  debounce('scroll', 100, updateWayfinder);
 };
 
 // Provide the no-JS experience to browsers without `replaceState`
-if ( 'replaceState' in window.history ) {
-  window.addEventListener( 'load', init );
+if ('replaceState' in window.history) {
+  window.addEventListener('load', init);
 }

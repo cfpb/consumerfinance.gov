@@ -4,12 +4,12 @@ import questionsView from './views/questions-view';
 import tooltipsView from './views/tooltips-view';
 
 const app = {
-  init: function() {
+  init: function () {
     graphView.init();
     questionsView.init();
     nextStepsView.init();
     tooltipsView.init();
-  }
+  },
 };
 
 app.init();

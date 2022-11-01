@@ -5,4 +5,4 @@
 import VideoPlayer from '../../organisms/VideoPlayer';
 import { instantiateAll } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 
-instantiateAll( `.${ VideoPlayer.BASE_CLASS }`, VideoPlayer );
+instantiateAll(`.${VideoPlayer.BASE_CLASS}`, VideoPlayer);

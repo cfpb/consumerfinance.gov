@@ -1,25 +1,25 @@
 export class ConsumerComplaints {
-  clickTab( name ) {
-    cy.get( `button.${ name }` ).click();
+  clickTab(name) {
+    cy.get(`button.${name}`).click();
   }
 
-  clickDateRange( name ) {
-    cy.get( `.range-${ name }` ).click();
+  clickDateRange(name) {
+    cy.get(`.range-${name}`).click();
   }
 
-  clickButton( name ) {
-    cy.get( '.a-btn' ).contains( name ).click();
+  clickButton(name) {
+    cy.get('.a-btn').contains(name).click();
   }
 
-  enter( term ) {
-    cy.get( '#searchText.a-text-input' ).type( term );
+  enter(term) {
+    cy.get('#searchText.a-text-input').type(term);
   }
 
   search() {
-    cy.get( '.a-btn.flex-fixed' ).click();
+    cy.get('.a-btn.flex-fixed').click();
   }
 
   searchSummary() {
-    return cy.get( '#search-summary' );
+    return cy.get('#search-summary');
   }
 }

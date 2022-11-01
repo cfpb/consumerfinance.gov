@@ -61,12 +61,13 @@ const updateSchoolItems = () => {
 /**
  * updateStateInDom - manages dataset for the MAIN element, which helps display UI elements
  * properly
- * @param {String} prop - The state property to modify
- * @param {String} value - The new value of the property
+ *
+ * @param {string} prop - The state property to modify
+ * @param {string} value - The new value of the property
  * NOTE: if the value is null or the Boolean 'false', the data attribute will be removed
  */
-const updateStateInDom = ( prop, value ) => {
-  navigationView.updateStateInDom( prop, value );
+const updateStateInDom = (prop, value) => {
+  navigationView.updateStateInDom(prop, value);
 };
 
 const updateCostOfBorrowingChart = () => {
@@ -116,5 +117,5 @@ export {
   updateAffordingChart,
   updateGradMeterChart,
   updateRepaymentMeterChart,
-  updateUrlQueryString
+  updateUrlQueryString,
 };

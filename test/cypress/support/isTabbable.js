@@ -9,7 +9,7 @@ import isFocusable from './isFocusable';
  * @param {string} $element - tab element
  * @returns {number} tab index
  */
-export default function isTabbable( $element ) {
-  const tabIndex = $element.attr( 'tabindex' );
-  return ( !tabIndex || parseInt( tabIndex, 10 ) >= 0 ) && isFocusable( $element );
+export default function isTabbable($element) {
+  const tabIndex = $element.attr('tabindex');
+  return (!tabIndex || parseInt(tabIndex, 10) >= 0) && isFocusable($element);
 }

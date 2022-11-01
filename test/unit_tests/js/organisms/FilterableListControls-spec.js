@@ -181,47 +181,47 @@ const HTML_SNIPPET = `
 </div>
 `;
 
-describe( 'FilterableListControls', () => {
+describe('FilterableListControls', () => {
   let filterableListControlsDom;
   let filterableListControls;
 
-  beforeEach( () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-    filterableListControlsDom = document.querySelector( `.${ BASE_CLASS }` );
+    filterableListControlsDom = document.querySelector(`.${BASE_CLASS}`);
     filterableListControls = new FilterableListControls(
       filterableListControlsDom
     );
-  } );
+  });
 
-  describe( 'init()', () => {
-    it( 'should return the FormSubmit instance when initialized', () => {
+  describe('init()', () => {
+    it('should return the FormSubmit instance when initialized', () => {
       expect(
-        filterableListControlsDom.getAttribute( 'data-js-hook' )
+        filterableListControlsDom.getAttribute('data-js-hook')
       ).toBeNull();
       filterableListControls.init();
       expect(
-        filterableListControlsDom.getAttribute( 'data-js-hook' )
-      ).toStrictEqual( 'state_atomic_init' );
-    } );
-  } );
+        filterableListControlsDom.getAttribute('data-js-hook')
+      ).toStrictEqual('state_atomic_init');
+    });
+  });
 
-  describe( 'error handling', () => {
-    it( 'should highlight text input fields with errors', done => {
+  describe('error handling', () => {
+    it('should highlight text input fields with errors', (done) => {
       const FIELD_ERROR_CLASS = 'a-text-input__error';
-      const form = document.querySelector( 'form' );
-      const field = document.querySelector( '#from_date' );
+      const form = document.querySelector('form');
+      const field = document.querySelector('#from_date');
 
       filterableListControls.init();
 
-      expect( field.classList.contains( FIELD_ERROR_CLASS ) ).toBeFalsy();
+      expect(field.classList.contains(FIELD_ERROR_CLASS)).toBeFalsy();
 
-      filterableListControls.addEventListener( 'fieldInvalid', () => {
-        expect( field.classList.contains( FIELD_ERROR_CLASS ) ).toBeTruthy();
+      filterableListControls.addEventListener('fieldInvalid', () => {
+        expect(field.classList.contains(FIELD_ERROR_CLASS)).toBeTruthy();
         done();
-      } );
+      });
 
       field.value = 'text that is not a valid date';
-      form.dispatchEvent( new Event( 'submit' ) );
-    } );
-  } );
-} );
+      form.dispatchEvent(new Event('submit'));
+    });
+  });
+});

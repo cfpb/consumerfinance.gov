@@ -10,43 +10,43 @@ const HTML_SNIPPET = `
 let testDom;
 let testDomList;
 
-describe( 'dom-tools', () => {
-  beforeEach( () => {
+describe('dom-tools', () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-    testDom = document.querySelector( '#test' );
-    testDomList = document.querySelectorAll( '.test' );
-  } );
+    testDom = document.querySelector('#test');
+    testDomList = document.querySelectorAll('.test');
+  });
 
-  describe( 'applyAll()', () => {
-    it( 'should apply a function to an element or list of elements', () => {
+  describe('applyAll()', () => {
+    it('should apply a function to an element or list of elements', () => {
       const testFunc = () => {
         // Empty function for testing.
       };
-      expect( domTools.applyAll( 'wrong', testFunc ) ).toBe( false );
-      expect( domTools.applyAll( testDom, testFunc ) ).toBe( true );
-      expect( domTools.applyAll( testDomList, testFunc ) ).toBe( true );
-    } );
+      expect(domTools.applyAll('wrong', testFunc)).toBe(false);
+      expect(domTools.applyAll(testDom, testFunc)).toBe(true);
+      expect(domTools.applyAll(testDomList, testFunc)).toBe(true);
+    });
 
-    it( 'should create a div containing arbitrary HTML', () => {
-      expect( domTools.createElement( HTML_SNIPPET ).outerHTML ).toBe(
+    it('should create a div containing arbitrary HTML', () => {
+      expect(domTools.createElement(HTML_SNIPPET).outerHTML).toBe(
         '<div id="test"></div>'
       );
-    } );
-  } );
+    });
+  });
 
-  describe( 'hasClass()', () => {
-    it( 'should return true when element has provided class', () => {
-      const dom = document.querySelector( '.test' );
-      expect( domTools.hasClass( dom, 'test' ) ).toBe( true );
+  describe('hasClass()', () => {
+    it('should return true when element has provided class', () => {
+      const dom = document.querySelector('.test');
+      expect(domTools.hasClass(dom, 'test')).toBe(true);
       // hasClass takes both a selector and a dom node.
-      expect( domTools.hasClass( '#test2', 'test' ) ).toBe( true );
-    } );
+      expect(domTools.hasClass('#test2', 'test')).toBe(true);
+    });
 
-    it( 'should return false when element does not have provided class', () => {
-      const dom = document.querySelector( '.test' );
-      expect( domTools.hasClass( dom, 'example' ) ).toBe( false );
+    it('should return false when element does not have provided class', () => {
+      const dom = document.querySelector('.test');
+      expect(domTools.hasClass(dom, 'example')).toBe(false);
       // hasClass takes both a selector and a dom node.
-      expect( domTools.hasClass( '#test2', 'example' ) ).toBe( false );
-    } );
-  } );
-} );
+      expect(domTools.hasClass('#test2', 'example')).toBe(false);
+    });
+  });
+});
