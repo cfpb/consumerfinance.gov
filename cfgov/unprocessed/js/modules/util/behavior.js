@@ -120,7 +120,7 @@ function checkBehaviorDom(element, behaviorDataAttr) {
  *   the element within the dom.
  * @param {HTMLElement} baseElement - Containing element
  *   for the behavior element.
- * @returns {HTMLElementList} if it exists in the dom, null otherwise.
+ * @returns {NodeList} if it exists in the dom, null otherwise.
  */
 function find(behaviorSelector, baseElement) {
   behaviorSelector = JS_HOOK + '*=' + BEHAVIOR_PREFIX + behaviorSelector;

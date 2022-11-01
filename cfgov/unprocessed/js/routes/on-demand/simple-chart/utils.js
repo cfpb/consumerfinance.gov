@@ -3,10 +3,10 @@
 import chartHooks from './chart-hooks.js';
 
 /**
- * Adjusts legend alignment based on series length
+ * Adjusts legend alignment based on series length.
  *
- * @param {object} defaultObj - default object to be decorated
- * @param {string} chartType - current chart type
+ * @param {object} defaultObj - A default object to be decorated.
+ * @param {string} chartType - The current chart type.
  */
 function alignMargin(defaultObj, chartType) {
   const len = defaultObj.series.length;
@@ -116,9 +116,11 @@ function makeFormatter(yAxisLabel) {
  * Pulls specified keys from the resolved data object
  *
  * @param {Array} rawData - Array of data from JSON, CSV or directly entered
- * @param {string} series - The keys for data to render into the chart
- * @param {string} x_axis_data - Key or array of categories
- * @returns {Array} Series data
+ * @param {object} meta - The employee who is responsible for the project.
+ * @param {string} meta.series - The keys for data to render into the chart.
+ * @param {string} meta.xAxisSource - Key or array of categories.
+ * @param {string} meta.chartType - The current chart type.
+ * @returns {Array} Series data.
  */
 function extractSeries(rawData, { series, xAxisSource, chartType }) {
   if (series) {

@@ -199,7 +199,7 @@ function RateCheckerChart() {
   /**
    * Show an error alert.
    *
-   * @param {[number]} state -  Pass RateCheckerChart.STATUS_WARNING
+   * @param {number} [state] - Pass RateCheckerChart.STATUS_WARNING
    *   or RateCheckerChart.STATUS_ERROR.
    */
   function finishLoading(state) {

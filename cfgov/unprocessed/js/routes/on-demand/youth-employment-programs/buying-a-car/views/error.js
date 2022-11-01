@@ -3,8 +3,7 @@ import { checkDom } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpe
 const CONTAINER = 'cbg-checklist-error';
 
 /**
- *
- * @param element
+ * @param {HTMLNode} element - The error DOM element.
  */
 function errorView(element) {
   const _dom = checkDom(element, CONTAINER);
