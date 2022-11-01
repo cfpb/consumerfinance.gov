@@ -1,5 +1,10 @@
 FROM centos:8
 
+# CentOS 8 is EOL on Dec 31st, 2021. Point mirrors to the archives.
+RUN cd /etc/yum.repos.d/
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+
 # Ensure that the environment uses UTF-8 encoding by default
 ENV LANG en_US.UTF-8
 
