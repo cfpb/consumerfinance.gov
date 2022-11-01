@@ -56,7 +56,7 @@ The string in the call to the translation function will be the `msgid` in the po
 
 #### 2. Run the `makemessages` management command to add the string to the portable object file
 
-The `makemessages` management command will look through all Python, Django, and Jinja2 template files to find strings that are wrapped in a translation function call and add them to the portable object file for a particular language. The language is specified with `-l`. The command also must be called from the root of the Django app tree, *not* the project root.
+The `makemessages` management command will look through all Python, Django, and Jinja2 template files to find strings that are wrapped in a translation function call and add them to the portable object file for a particular language. The language is specified with `-l`. The command also must be called from the root of the Django app tree, _not_ the project root.
 
 To generate or update the portable object file for Spanish:
 
@@ -68,7 +68,6 @@ django-admin.py makemessages -l es
 #### 3. Edit the portable object file to add a translation for the string
 
 The portable object files are stored in `cfgov/locale/[LANGUAGE]/LC_MESSAGES/`. For the Spanish portable object file, edit `cfgov/locale/es/LC_MESSAGES/django.po` and add the Spanish translation as the `msgstr` for your new `msgid`
-
 
 ```po
 msgid "Hello World!"
@@ -92,9 +91,9 @@ The selected language will force translation of all translatable strings in temp
 
 ## Troubleshooting
 
-To ensure that strings in templates are picked up in message extraction (`django-admin.py makemessages`), it also helps to know that the way `makemessages` works. 
+To ensure that strings in templates are picked up in message extraction (`django-admin.py makemessages`), it also helps to know that the way `makemessages` works.
 
-`makemessages` converts all Django `{% translate %}`, `{% blocktranslate %}`, and Jinja2 `{% trans %}` tags into `_(…)` gettext calls and then to have [`xgettext`](https://www.gnu.org/software/gettext/manual/gettext.html) process the files as if they were Python. This process *does not* work the same as general template parsing, and it means that it's best to make the translatable strings as discoverable as possible. 
+`makemessages` converts all Django `{% translate %}`, `{% blocktranslate %}`, and Jinja2 `{% trans %}` tags into `_(…)` gettext calls and then to have [`xgettext`](https://www.gnu.org/software/gettext/manual/gettext.html) process the files as if they were Python. This process _does not_ work the same as general template parsing, and it means that it's best to make the translatable strings as discoverable as possible.
 
 There are a few things to avoid to make sure the strings are picked up by `makemessages`:
 

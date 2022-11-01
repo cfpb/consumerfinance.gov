@@ -1,4 +1,5 @@
 @import (reference) '../../../css/main.less';
+@import '../node_modules/ctrl-f/dist/css/index.css';
 
 .o-fig {
 
@@ -106,7 +107,7 @@
 
 .o-fig_sidebar {
 
-  .o-expandable_header-left {
+  .o-expandable_label {
     width: 95%;
   }
 
@@ -206,4 +207,8 @@
   .respond-to-max( @bp-sm-max, {
     display: none;
   } );
+}
+
+#ctrl-f-modal h3 {
+  font-size: unit( 16px / @base-font-size-px, em );
 }

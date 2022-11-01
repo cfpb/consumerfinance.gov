@@ -1,28 +1,28 @@
-const { INITIALS_LIMIT } = require( './config' );
-const obfuscation = require( '../obfuscation' );
+const { INITIALS_LIMIT } = require('./config');
+const obfuscation = require('../obfuscation');
 
-const $ = document.querySelector.bind( document );
+const $ = document.querySelector.bind(document);
 
 let value = '';
 
 /**
- * Update the initials in the page
+ * Update the initials in the page.
  *
- * @param {string } newValue the new initials
+ * @param {string } newValue - The new initials.
  */
-function update( newValue ) {
-  const displayValue = $( '.initials-value' );
-  const display = $( '.initials-display' );
+function update(newValue) {
+  const displayValue = $('.initials-value');
+  const display = $('.initials-display');
 
   value = newValue;
-  if ( displayValue && display ) {
-    if ( newValue ) {
+  if (displayValue && display) {
+    if (newValue) {
       displayValue.textContent = newValue;
       display.style.display = '';
-      display.setAttribute( 'aria-hidden', 'false' );
+      display.setAttribute('aria-hidden', 'false');
     } else {
       display.style.display = 'none';
-      display.setAttribute( 'aria-hidden', 'true' );
+      display.setAttribute('aria-hidden', 'true');
     }
   }
 }
@@ -41,13 +41,13 @@ function get() {
  */
 function init() {
   // Show initials encoded in URL hash
-  let fromUrl = obfuscation.decodeNameFromUrl( location.href ) || '';
-  if ( fromUrl.length > INITIALS_LIMIT ) {
+  let fromUrl = obfuscation.decodeNameFromUrl(location.href) || '';
+  if (fromUrl.length > INITIALS_LIMIT) {
     // Definitely invalid, reject.
     fromUrl = '';
   }
 
-  update( fromUrl );
+  update(fromUrl);
 }
 
 export { init, get, update };

@@ -14,7 +14,7 @@ be compiled for the same environment they will be run in.
 
 # What's in an artifact?
 
-Here's a (very abbreviated) peek into what's *in* the zip file:
+Here's a (very abbreviated) peek into what's _in_ the zip file:
 
 ```
 __main__.py
@@ -58,7 +58,7 @@ If we ignore some specifics and quirks of our environment, the basic steps look 
    will unpack the files, create a new virtualenv, and install all of the wheels in `wheels/` into that
    virtualenv. **Important Note:** This should be done with the same Python interpreter that will run the
    application. For example, on our servers this means using [`scl enable`](https://linux.die.net/man/1/scl)
-   to specify a particular Python version from 
+   to specify a particular Python version from
    [Software Collections](https://www.softwarecollections.org/en/scls/?search=python).
 3. put an `environment.json` file in place, in your `destination-dir`
 4. run Django utilities like 'collectstatic' and 'migrate'

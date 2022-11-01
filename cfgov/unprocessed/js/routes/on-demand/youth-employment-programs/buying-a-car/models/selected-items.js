@@ -1,53 +1,80 @@
 const defaultProps = {
   maxElements: 3,
-  minElements: 1
+  minElements: 1,
 };
 
 /**
  * Data structure to manipulate a list of `maxElements` elements
- * @param {Object} props The properties that configure this data structure
- * @param {Number} maxElements The maximum number of elements the data structure can hold
- * @param {Number} minElements The minimum number of elements the data structure should have
- * @returns {Object} The public methods of this data structure
+ *
+ * @param {object} props - The properties that configure this data structure
+ * @param {number} maxElements - The maximum number of elements the data structure can hold
+ * @param {number} minElements - The minimum number of elements the data structure should have
+ * @returns {object} The public methods of this data structure
  */
-function selectedItems( props ) {
+function selectedItems(props) {
   const finalProps = { ...defaultProps, ...props };
   let items = [];
 
+  /**
+   *
+   */
   function isMaxItemsSelected() {
     return items.length === finalProps.maxElements;
   }
 
+  /**
+   *
+   */
   function isMinItemsSelected() {
     return items.length >= finalProps.minElements;
   }
 
-  function add( item ) {
-    if ( !isMaxItemsSelected() ) {
-      items.push( item );
+  /**
+   *
+   * @param item
+   */
+  function add(item) {
+    if (!isMaxItemsSelected()) {
+      items.push(item);
     }
   }
 
-  function remove( item ) {
+  /**
+   *
+   * @param item
+   */
+  function remove(item) {
     const copy = items.slice();
 
-    copy.splice( items.indexOf( item ), 1 );
+    copy.splice(items.indexOf(item), 1);
 
     items = copy;
   }
 
+  /**
+   *
+   */
   function length() {
     return items.length;
   }
 
+  /**
+   *
+   */
   function elements() {
     return items;
   }
 
+  /**
+   *
+   */
   function getHead() {
     return items[0];
   }
 
+  /**
+   *
+   */
   function getLast() {
     return items[items.length - 1];
   }
@@ -60,7 +87,7 @@ function selectedItems( props ) {
     isMaxItemsSelected,
     isMinItemsSelected,
     length,
-    remove
+    remove,
   };
 }
 

@@ -1,124 +1,127 @@
 export class MegaMenu {
-
-  megaMenu( name ) {
-    return cy.get( `.o-mega-menu_${ name }` );
+  megaMenu(name) {
+    return cy.get(`.o-mega-menu_${name}`);
   }
 
-  megaMenuContent( name ) {
-    return this.megaMenu( `content-${ name }` );
+  megaMenuContent(name) {
+    return this.megaMenu(`content-${name}`);
   }
 
   content() {
-    return this.megaMenu( 'content' ).first();
+    return this.megaMenu('content').first();
   }
 
   trigger() {
-    return this.megaMenuContent( '2-alt-trigger' );
+    return this.megaMenuContent('2-alt-trigger');
   }
 
   triggerOpen() {
-    return this.megaMenu( 'trigger-open' );
+    return this.megaMenu('trigger-open');
   }
 
   triggerClose() {
-    return this.megaMenu( 'trigger-close' );
+    return this.megaMenu('trigger-close');
   }
 
-  focusFirstLink( value ) {
-    return this.megaMenuContent( `${ value }-link` ).first().focus();
+  focusFirstLink(value) {
+    return this.megaMenuContent(`${value}-link`).first().focus();
   }
 
-  focusLastLink( value ) {
-    return this.megaMenuContent( `${ value }-link` ).last().focus();
+  focusLastLink(value) {
+    return this.megaMenuContent(`${value}-link`).last().focus();
   }
 
-  clickLink( value ) {
-    return this.megaMenuContent( `${ value }-link` ).first().click( { force: true } );
+  clickLink(value) {
+    return this.megaMenuContent(`${value}-link`)
+      .first()
+      .click({ force: true });
   }
 
   clickTriggerBtn() {
-    return this.megaMenu( 'trigger' ).click( { force: true } );
+    return this.megaMenu('trigger').click({ force: true });
   }
 
   focusTriggerBtn() {
-    return this.megaMenu( 'trigger' ).focus();
+    return this.megaMenu('trigger').focus();
   }
 
   contentElementItem() {
-    return this.megaMenuContent( 'item' );
+    return this.megaMenuContent('item');
   }
 
   contentElementLink() {
-    return this.megaMenuContent( 'link' );
+    return this.megaMenuContent('link');
   }
 
   contentElementLists() {
-    return this.megaMenuContent( 'lists' );
+    return this.megaMenuContent('lists');
   }
 
-  contentLink( value ) {
-    return this.megaMenuContent( `${ value }-link` );
+  contentLink(value) {
+    return this.megaMenuContent(`${value}-link`);
   }
 
-  contentItem( value ) {
-    return this.megaMenuContent( `${ value }-item` );
+  contentItem(value) {
+    return this.megaMenuContent(`${value}-item`);
   }
 
-  contentLists( value ) {
-    return this.megaMenuContent( `${ value }-lists` );
+  contentLists(value) {
+    return this.megaMenuContent(`${value}-lists`);
   }
 
-  contentValueListGroup( value ) {
-    return this.megaMenuContent( `${ value }-list-group` );
+  contentValueListGroup(value) {
+    return this.megaMenuContent(`${value}-list-group`);
   }
 
-  contentOverview( value ) {
-    return this.megaMenuContent( `${ value }-overview` );
+  contentOverview(value) {
+    return this.megaMenuContent(`${value}-overview`);
   }
 
-  contentOverviewLink( value ) {
-    return this.megaMenuContent( `${ value }-overview-link` );
+  contentOverviewLink(value) {
+    return this.megaMenuContent(`${value}-overview-link`);
   }
 
-  contentWrapper( value ) {
-    return this.megaMenuContent( `${ value }-wrapper` );
+  contentWrapper(value) {
+    return this.megaMenuContent(`${value}-wrapper`);
   }
 
   tagLine() {
-    return cy.get( 'a-tagline' );
+    return cy.get('a-tagline');
   }
 
   globalEyebrowElement() {
-    return cy.get( '.m-global-eyebrow' );
+    return cy.get('.m-global-eyebrow');
   }
 
-  globalEyebrow( name ) {
-    return cy.get( `.m-global-eyebrow_${ name }` );
+  globalEyebrow(name) {
+    return cy.get(`.m-global-eyebrow_${name}`);
   }
 
   globalEyebrowHorizontal() {
-    return this.globalEyebrow( '_horizontal' );
+    return this.globalEyebrow('_horizontal');
   }
 
   globalEyebrowList() {
-    return this.globalEyebrow( '_list' );
+    return this.globalEyebrow('_list');
   }
 
   globalEyebrowLanguages() {
-    return this.globalEyebrow( 'languages' );
+    return this.globalEyebrow('languages');
   }
 
-  clickLanguage( name ) {
-    return this.globalEyebrowLanguages.type( `/language/${ name }/` ).click( { force: true } );
+  clickLanguage(name) {
+    return this.globalEyebrowLanguages
+      .type(`/language/${name}/`)
+      .click({ force: true });
   }
 
   tabbing() {
     /* changing focus from one link to another
        is similar to tabbing between elements */
     this.clickTriggerBtn();
-    this.focusFirstLink( '1' );
-    this.focusLastLink( '1' );
-    this.focusFirstLink( '2' );
-    this.focusLastLink( '2' );
+    this.focusFirstLink('1');
+    this.focusLastLink('1');
+    this.focusFirstLink('2');
+    this.focusLastLink('2');
   }
 }

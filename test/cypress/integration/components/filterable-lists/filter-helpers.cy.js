@@ -1,85 +1,90 @@
 export class Filter {
-
   apply() {
-    return cy.get( 'form[action="."]' ).submit();
+    return cy.get('form[action="."]').submit();
   }
 
   clear() {
-    cy.get( '.a-btn__warning' ).click( { force: true } );
+    cy.get('.a-btn__warning').click({ force: true });
   }
 
-  typeAheadLanguage( name ) {
-    return cy.get( '#o-filterable-list-controls_language' ).type( name );
+  typeAheadLanguage(name) {
+    return cy.get('#o-filterable-list-controls_language').type(name);
   }
 
-  clickLanguage( name ) {
-    cy.get( '#o-filterable-list-controls_language' ).click();
-    return cy.get( `label.o-multiselect_label[for="language-${ name }"]` ).click();
+  clickLanguage(name) {
+    cy.get('#o-filterable-list-controls_language').click();
+    return cy.get(`label.o-multiselect_label[for="language-${name}"]`).click();
   }
 
-  formatOptionFromString( str ) {
-    return str.split( '\n' ).pop().trim().replace(
-      /(?:and|[,'])+/g, ''
-    ).split( / +/ ).join( '-' ).toLowerCase();
+  formatOptionFromString(str) {
+    return str
+      .split('\n')
+      .pop()
+      .trim()
+      .replace(/(?:and|[,'])+/g, '')
+      .split(/ +/)
+      .join('-')
+      .toLowerCase();
   }
 
   getCategory() {
     // return the list of categories
-    return cy.get( '[data-cy=categories-heading]' ).siblings().find(
-      '[data-cy=multiselect-option]'
-    );
+    return cy
+      .get('[data-cy=categories-heading]')
+      .siblings()
+      .find('[data-cy=multiselect-option]');
   }
 
-  getCategoryLabel( name ) {
-    return cy.get( `[for="categories-${ name }"]` );
+  getCategoryLabel(name) {
+    return cy.get(`[for="categories-${name}"]`);
   }
 
-  clickCategory( option ) {
-    const sel = `[data-option=${ option }`;
-    cy.get( '[data-cy=categories-heading]' ).click();
-    return cy.get( sel ).click();
+  clickCategory(option) {
+    const sel = `[data-option=${option}`;
+    cy.get('[data-cy=categories-heading]').click();
+    return cy.get(sel).click();
   }
 
-  typeAheadTopic( name ) {
-    return cy.get( '#o-filterable-list-controls_topics' ).type( name );
+  typeAheadTopic(name) {
+    return cy.get('#o-filterable-list-controls_topics').type(name);
   }
 
   getTopic() {
-    return cy.get( '[id^="topics-"]' );
+    return cy.get('[id^="topics-"]');
   }
 
-  getTopicLabel( name ) {
-    return cy.get( `[for="topics-${ name }"]` );
+  getTopicLabel(name) {
+    return cy.get(`[for="topics-${name}"]`);
   }
 
-  clickTopic( name ) {
-    const topic = name.split( ' ' ).join( '-' ).toLowerCase();
-    cy.get( '#o-filterable-list-controls_topics' ).click();
-    return cy.get( `label.o-multiselect_label[for="topics-${ topic }"]` ).click();
+  clickTopic(name) {
+    const topic = name.split(' ').join('-').toLowerCase();
+    cy.get('#o-filterable-list-controls_topics').click();
+    return cy.get(`label.o-multiselect_label[for="topics-${topic}"]`).click();
   }
 
   expandable() {
-    return cy.get( '.o-expandable' );
+    return cy.get('.o-expandable');
   }
 
-  expandableCue( name ) {
-    return cy.get( `.o-expandable_cue .o-expandable_cue-${ name }` );
+  expandableCue(name) {
+    return cy.get(`.o-expandable_cue .o-expandable_cue-${name}`);
   }
 
   expandableTarget() {
-    return cy.get( '.o-expandable_target' );
+    return cy.get('.o-expandable_target');
   }
 
   search() {
-    return cy.get( '.o-expandable_header .o-expandable_target' );
+    return cy.get('.o-expandable_header .o-expandable_target');
   }
 
   open() {
-    return this.expandableCue( 'open' ).click();
+    return this.expandableCue('open').click();
   }
 
   close() {
-    return this.expandableCue( 'close' ).click();
+    return this.expandableCue('close').click();
   }
 
   show() {
@@ -89,5 +94,4 @@ export class Filter {
   hide() {
     return this.expandableTarget().last().click();
   }
-
 }

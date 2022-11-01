@@ -6,14 +6,14 @@ This document covers how to add and use feature flags with consumerfinance.gov a
 
 - [Adding a flag](#adding-a-flag)
 - [Checking a flag](#checking-a-flag)
-	- [In templates](#in-templates)
-		- [Jinja2](#jinja2)
-		- [Django](#django)
-	- [In code](#in-code)
-	- [In URLs](#in-urls)
+  - [In templates](#in-templates)
+    - [Jinja2](#jinja2)
+    - [Django](#django)
+  - [In code](#in-code)
+  - [In URLs](#in-urls)
 - [Enabling a flag](#enabling-a-flag)
-	- [Hard-coded conditions](#hard-coded-conditions)
-	- [Database conditions](#database-conditions)
+  - [Hard-coded conditions](#hard-coded-conditions)
+  - [Database conditions](#database-conditions)
 - [Satellite apps](#satellite-apps)
 - [Hygiene](#hygiene)
 
@@ -109,7 +109,7 @@ In Python code three functions are available for checking feature flags, `flag_s
 
 See the [Django-Flags flag state API documentation for more](https://cfpb.github.io/django-flags/api/state/).
 
-Additionally two decorators, `flag_check` and `flag_required`, are provided for wrapping views (and another functions) in a feature flag check.  See the [Django-Flags flag decorators API documentation for more](https://cfpb.github.io/django-flags/api/decorators/).
+Additionally two decorators, `flag_check` and `flag_required`, are provided for wrapping views (and another functions) in a feature flag check. See the [Django-Flags flag decorators API documentation for more](https://cfpb.github.io/django-flags/api/decorators/).
 
 ### In URLs
 
@@ -152,7 +152,7 @@ urlpatterns += ask_patterns
 ```
 
 !!! Warning
-    Do not attempt to use `flag_check` or any flag state-checking functions in `urls.py`. Because they will be evaluated on import of `urls.py` they will attempt to access the Django FlagState model before it is ready and will error.
+Do not attempt to use `flag_check` or any flag state-checking functions in `urls.py`. Because they will be evaluated on import of `urls.py` they will attempt to access the Django FlagState model before it is ready and will error.
 
 #### Flagging Wagtail URLs
 
@@ -169,7 +169,6 @@ This lambda takes the request and calls the [Wagtail-Sharing](https://github.com
 Feature flags are enabled based on a set of conditions that are given either in the Django settings files (in `cfgov/cfgov/settings/`) or in the Django or Wagtail admin. Multiple conditions can be given, both in settings and in the admin, and if any condition is satisfied a flag is enabled.
 
 [A list of available conditions and how to use them is available in the Django-Flags documentation](https://cfpb.github.io/django-flags/conditions/).
-
 
 ### Hard-coded conditions
 
@@ -227,4 +226,3 @@ Most feature flags are no longer needed once a feature is launched. Follow these
 
 - Create a pull request that deletes the flag from settings, if it was declared there, and removes any related code and tests that referenced the flag.
 - After the changes are merged and deployed to production, check `Settings ==> Flags` in Wagtail (`/admin/flags/`) to see if the removed flag is still listed. If so, the flag has been saved in our database. Select the flag, click the DELETE FLAG button at top right, and then choose YES, DELETE IT.
-

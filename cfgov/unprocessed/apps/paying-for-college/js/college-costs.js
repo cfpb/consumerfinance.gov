@@ -11,29 +11,28 @@ import { navigationView } from './college-costs/views/navigation-view.js';
 import { schoolView } from './college-costs/views/school-view.js';
 import { updateModelsFromQueryString } from './college-costs/dispatchers/update-models.js';
 
-
 /**
  * Initialize the app
  */
 function init() {
-  const body = document.querySelector( 'body' );
+  const body = document.querySelector('body');
   const query = getQueryVariables();
 
-  expensesModel.init( body );
+  expensesModel.init(body);
   constantsModel.init();
   expensesView.init();
   financialModel.init();
-  schoolView.init( body );
+  schoolView.init(body);
   financialView.init();
-  navigationView.init( body, query.iped );
-  chartView.init( body );
+  navigationView.init(body, query.iped);
+  chartView.init(body);
   appView.init();
   Expandable.init();
 
   financialView.updateFinancialItems();
   appView.updateUI();
 
-  updateModelsFromQueryString( query );
+  updateModelsFromQueryString(query);
 }
 
-window.addEventListener( 'load', init );
+window.addEventListener('load', init);

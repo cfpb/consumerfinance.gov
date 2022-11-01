@@ -13,23 +13,23 @@ is a useful reference. MkDocs also includes
 In addition to standard Markdown, our documentation supports the following extensions:
 
 - [Admonitions](https://python-markdown.github.io/extensions/admonition/)
-    adds specially called-out text anywhere within the document
-    as notes, warnings, and other types.
+  adds specially called-out text anywhere within the document
+  as notes, warnings, and other types.
 
 - [BetterEm](https://facelessuser.github.io/pymdown-extensions/extensions/betterem/)
-    improves the handling of bold and italics.
+  improves the handling of bold and italics.
 
 - [MagicLink](https://facelessuser.github.io/pymdown-extensions/extensions/magiclink/)
-    provides automatic linking for URLs in the Markdown text.
+  provides automatic linking for URLs in the Markdown text.
 
 - [SuperFences](https://facelessuser.github.io/pymdown-extensions/extensions/superfences/)
-    makes a number of improvements to standard Markdown code fences.
+  makes a number of improvements to standard Markdown code fences.
 
 - [Tilde](https://facelessuser.github.io/pymdown-extensions/extensions/tilde/)
-    adds support for creating `<del></del>` tags with `~~`.
+  adds support for creating `<del></del>` tags with `~~`.
 
 - [Tables](https://python-markdown.github.io/extensions/tables/)
-    adds support for tables to standard Markdown.
+  adds support for tables to standard Markdown.
 
 When creating new documents, they should be added to the
 [mkdocs.yml file](https://github.com/cfpb/consumerfinance.gov/blob/main/mkdocs.yml)

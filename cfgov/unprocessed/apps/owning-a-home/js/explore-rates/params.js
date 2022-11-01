@@ -1,4 +1,4 @@
-const domValues = require( './dom-values' );
+const domValues = require('./dom-values');
 
 let UNDEFINED;
 
@@ -9,25 +9,25 @@ let UNDEFINED;
    request: Keep the AJAX request accessible so we can terminate it if needed.
 */
 const _params = {
-  'credit-score':   700,
-  'down-payment':   '20,000',
-  'dp-constant':    '',
-  'house-price':    '200,000',
-  'location':       'AL',
-  'loan-amount':    UNDEFINED,
+  'credit-score': 700,
+  'down-payment': '20,000',
+  'dp-constant': '',
+  'house-price': '200,000',
+  location: 'AL',
+  'loan-amount': UNDEFINED,
   'rate-structure': 'fixed',
-  'loan-term':      30,
-  'loan-type':      'conf',
-  'arm-type':       '5-1',
-  'edited':         false,
-  'isJumbo':        false,
-  'prevLoanType':   '',
-  'prevLocation':   '',
-  'request':        UNDEFINED
+  'loan-term': 30,
+  'loan-type': 'conf',
+  'arm-type': '5-1',
+  edited: false,
+  isJumbo: false,
+  prevLoanType: '',
+  prevLocation: '',
+  request: UNDEFINED,
 };
 
 /**
- * @returns {Object} Underlying object of parameters.
+ * @returns {object} Underlying object of parameters.
  */
 function getAllParams() {
   return _params;
@@ -35,19 +35,21 @@ function getAllParams() {
 
 /**
  * Retrieve a value from inside the params object.
+ *
  * @param {string} key - The key for a property within the params object.
  * @returns {string|number|Array|undefined} The key on the params object to get.
  */
-function getVal( key ) {
+function getVal(key) {
   return _params[key];
 }
 
 /**
  * Set a value inside the params object.
+ *
  * @param {string} key - The key on the params object to set.
  * @param {string|number|Array|undefined} val - The value to set on `key`.
  */
-function setVal( key, val ) {
+function setVal(key, val) {
   _params[key] = val;
 }
 
@@ -60,22 +62,19 @@ function update() {
 
   let val;
   let param;
-  for ( param in _params ) {
-    if ( Object.prototype.hasOwnProperty.call( _params, param ) ) {
-      val = domValues.getSelection( param );
-      if ( param !== 'prevLoanType' &&
-           param !== 'prevLocation' &&
-           val !== UNDEFINED &&
-           val !== null ) {
-        _params[param] = domValues.getSelection( param );
+  for (param in _params) {
+    if (Object.prototype.hasOwnProperty.call(_params, param)) {
+      val = domValues.getSelection(param);
+      if (
+        param !== 'prevLoanType' &&
+        param !== 'prevLocation' &&
+        val !== UNDEFINED &&
+        val !== null
+      ) {
+        _params[param] = domValues.getSelection(param);
       }
     }
   }
 }
 
-export {
-  getAllParams,
-  getVal,
-  setVal,
-  update
-};
+export { getAllParams, getVal, setVal, update };

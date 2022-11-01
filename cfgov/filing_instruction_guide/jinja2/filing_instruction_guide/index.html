@@ -25,6 +25,10 @@
       </a>
     </div>
 
+    {% for block in page.top_content %}
+      {% include_block block %}
+    {% endfor %}
+
     {% for block in page.content %}
       {% include_block block %}
     {% endfor %}
@@ -38,6 +42,7 @@
           {# Include site-wide JavaScript. #}
           var s = [
             '{{ static('apps/filing-instruction-guide/js/fig-sidenav.js') }}',
+            '{{ static('apps/filing-instruction-guide/js/fig-search.js') }}'
           ];
           jsl(s);
         }()

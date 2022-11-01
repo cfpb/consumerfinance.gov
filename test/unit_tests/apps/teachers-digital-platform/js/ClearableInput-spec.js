@@ -1,7 +1,6 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
-const ClearableInput = require(
-  BASE_JS_PATH + 'teachers-digital-platform/js/ClearableInput'
-).ClearableInput;
+const ClearableInput = require(BASE_JS_PATH +
+  'teachers-digital-platform/js/ClearableInput').ClearableInput;
 import { simulateEvent } from '../../../../util/simulate-event.js';
 
 let baseDom;
@@ -27,62 +26,61 @@ const HTML_SNIPPET = `
 </div>
 `;
 
-describe( 'ClearableInput', () => {
-  beforeEach( () => {
+describe('ClearableInput', () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-    baseDom = document.querySelector( '.o-form__input-w-btn_input-container' );
-    inputDom = baseDom.querySelector( 'input' );
-    clearBtnDom = baseDom.querySelector( '.input-contains-label_after__clear' );
-  } );
+    baseDom = document.querySelector('.o-form__input-w-btn_input-container');
+    inputDom = baseDom.querySelector('input');
+    clearBtnDom = baseDom.querySelector('.input-contains-label_after__clear');
+  });
 
-  describe( 'init function', () => {
-    it( 'should hide the clear button when a value is empty', () => {
-      new ClearableInput( baseDom ).init();
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( true );
-    } );
+  describe('init function', () => {
+    it('should hide the clear button when a value is empty', () => {
+      new ClearableInput(baseDom).init();
+      expect(clearBtnDom.classList.contains('u-hidden')).toStrictEqual(true);
+    });
 
-    it( 'should display the clear button when a value is present', () => {
+    it('should display the clear button when a value is present', () => {
       inputDom.value = 'testing init function';
-      new ClearableInput( baseDom ).init();
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( false );
-    } );
-  } );
+      new ClearableInput(baseDom).init();
+      expect(clearBtnDom.classList.contains('u-hidden')).toStrictEqual(false);
+    });
+  });
 
-  describe( 'on clear button click', () => {
-    it( 'should hide itself', () => {
+  describe('on clear button click', () => {
+    it('should hide itself', () => {
       inputDom.value = 'testing clear button';
-      new ClearableInput( baseDom ).init();
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( false );
-      simulateEvent( 'mousedown', clearBtnDom );
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( true );
-    } );
+      new ClearableInput(baseDom).init();
+      expect(clearBtnDom.classList.contains('u-hidden')).toStrictEqual(false);
+      simulateEvent('mousedown', clearBtnDom);
+      expect(clearBtnDom.classList.contains('u-hidden')).toStrictEqual(true);
+    });
 
-    it( 'should clear the input value', () => {
+    it('should clear the input value', () => {
       inputDom.value = 'testing clear button';
-      new ClearableInput( baseDom ).init();
-      simulateEvent( 'mousedown', clearBtnDom );
-      expect( inputDom.value ).toStrictEqual( '' );
-    } );
-  } );
+      new ClearableInput(baseDom).init();
+      simulateEvent('mousedown', clearBtnDom);
+      expect(inputDom.value).toStrictEqual('');
+    });
+  });
 
-  describe( 'on input keystroke', () => {
-    it( 'should show the clear button, if value present', () => {
-      new ClearableInput( baseDom ).init();
+  describe('on input keystroke', () => {
+    it('should show the clear button, if value present', () => {
+      new ClearableInput(baseDom).init();
 
       // Event code 65 is the `a` character.
-      simulateEvent( 'keyup', inputDom, { keyCode: 65 } );
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( false );
-    } );
+      simulateEvent('keyup', inputDom, { keyCode: 65 });
+      expect(clearBtnDom.classList.contains('u-hidden')).toStrictEqual(false);
+    });
 
-    it( 'should hide the clear button, if value not present', () => {
-      new ClearableInput( baseDom ).init();
+    it('should hide the clear button, if value not present', () => {
+      new ClearableInput(baseDom).init();
 
       // Event code 8 is backspace.
-      simulateEvent( 'keyup', inputDom, { keyCode: 65 } );
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( false );
-      simulateEvent( 'keyup', inputDom, { keyCode: 8 } );
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( true );
-    } );
-  } );
-
-} );
+      simulateEvent('keyup', inputDom, { keyCode: 65 });
+      expect(clearBtnDom.classList.contains('u-hidden')).toStrictEqual(false);
+      simulateEvent('keyup', inputDom, { keyCode: 8 });
+      expect(clearBtnDom.classList.contains('u-hidden')).toStrictEqual(true);
+    });
+  });
+});

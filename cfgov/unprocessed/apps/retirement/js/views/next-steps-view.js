@@ -3,77 +3,86 @@ import isElementInView from '../utils/is-element-in-view';
 // TODO: remove jquery.
 import $ from 'jquery';
 
-function init( ageRightNow = 0, fullRetirementAge = 0 ) {
-  limitAgeSelector( ageRightNow );
+/**
+ *
+ * @param ageRightNow
+ * @param fullRetirementAge
+ */
+function init(ageRightNow = 0, fullRetirementAge = 0) {
+  limitAgeSelector(ageRightNow);
 
-  $( '#retirement-age-selector' ).change( function() {
-    chooseClaimingAge( fullRetirementAge );
-  } );
+  $('#retirement-age-selector').change(function () {
+    chooseClaimingAge(fullRetirementAge);
+  });
 }
 
 /**
  * This function updates the text in Step 3
- * based on the user's chosen retirement age
- * @param {number} fullAge   The user's full retirement age
+ * based on the user's chosen retirement age.
+ *
+ * @param {number} fullAge - The user's full retirement age.
  */
-function chooseClaimingAge( fullAge ) {
-
-  if ( $( '#retirement-age-selector' ).find(
-    'option:selected'
-  ).val() === '' ) {
-    $( '#age-selector-response' ).hide();
+function chooseClaimingAge(fullAge) {
+  if ($('#retirement-age-selector').find('option:selected').val() === '') {
+    $('#age-selector-response').hide();
   } else {
     const age = parseInt(
-      $( '#retirement-age-selector' ).find( 'option:selected' ).val(), 10
+      $('#retirement-age-selector').find('option:selected').val(),
+      10
     );
 
-    $( '.next-step-description' ).hide();
-    $( '.next-steps .step-two_option' ).hide();
-    $( '#age-selector-response' ).show();
-    $( '#age-selector-response .age-response-value' ).text( age );
+    $('.next-step-description').hide();
+    $('.next-steps .step-two_option').hide();
+    $('#age-selector-response').show();
+    $('#age-selector-response .age-response-value').text(age);
 
-    if ( age < fullAge ) {
-      $( '.next-steps_under' ).show();
-    } else if ( age === fullAge ) {
-      $( '.next-steps_equal' ).show();
-    } else if ( age === 70 ) {
-      $( '.next-steps_max' ).show();
+    if (age < fullAge) {
+      $('.next-steps_under').show();
+    } else if (age === fullAge) {
+      $('.next-steps_equal').show();
+    } else if (age === 70) {
+      $('.next-steps_max').show();
     } else {
-      $( '.next-steps_over' ).show();
+      $('.next-steps_over').show();
     }
 
     // Scroll response into view if it's not visible
-    if ( isElementInView( '#age-selector-response' ) === false ) {
-      $( 'html, body' ).animate( {
-        scrollTop: $( '#retirement-age-selector' ).offset().top - 20
-      }, 300 );
+    if (isElementInView('#age-selector-response') === false) {
+      $('html, body').animate(
+        {
+          scrollTop: $('#retirement-age-selector').offset().top - 20,
+        },
+        300
+      );
     }
   }
-
 }
 
-/* This function limits the age selector in Step 3 to
-    the user's current age or higher
-    @param {number} currentAge   The user's current age */
-function limitAgeSelector( currentAge ) {
-  const $select = $( '#retirement-age-selector' );
-  const firstOption = $select.find( 'option' )[0];
+/**
+ * This function limits the age selector in Step 3 to
+ * the user's current age or higher.
+ *
+ * @param {number} currentAge - The user's current age.
+ */
+function limitAgeSelector(currentAge) {
+  const $select = $('#retirement-age-selector');
+  const firstOption = $select.find('option')[0];
   let retirementAge = 62;
 
   $select.empty();
   // We save and append the first OPTION, "Choose age"
-  $select.append( firstOption );
-  if ( retirementAge < currentAge ) {
+  $select.append(firstOption);
+  if (retirementAge < currentAge) {
     retirementAge = currentAge;
   }
 
-  for ( let x = retirementAge; x <= 70; x++ ) {
+  for (let x = retirementAge; x <= 70; x++) {
     let elem = '<option value="' + x;
     elem += '">' + x + '</option>';
-    $select.append( elem );
+    $select.append(elem);
   }
 }
 
 export default {
-  init
+  init,
 };

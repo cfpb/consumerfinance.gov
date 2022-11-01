@@ -50,30 +50,25 @@ const HTML_SNIPPET = `
 const xhr = global.XMLHttpRequest;
 global.console = { error: jest.fn(), log: jest.fn() };
 
-describe( 'Expandable facets', () => {
-
-  beforeEach( () => {
+describe('Expandable facets', () => {
+  beforeEach(() => {
     // Reset global XHR
     global.XMLHttpRequest = xhr;
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
     // Fire `load` event
-    const event = document.createEvent( 'Event' );
-    event.initEvent( 'load', true, true );
-    window.dispatchEvent( event );
+    const event = document.createEvent('Event');
+    event.initEvent('load', true, true);
+    window.dispatchEvent(event);
 
-    ef = document.querySelector( '.o-expandable-facets' );
-    expandableFacet = new ExpandableFacets( ef );
+    ef = document.querySelector('.o-expandable-facets');
+    expandableFacet = new ExpandableFacets(ef);
     expandableFacet.init();
     efLabel = document.querySelector(
       '.o-expandable-facets_checkbox ~ .a-label'
     );
-    efTarget = document.querySelector(
-      '.o-expandable-facets_target'
-    );
-    efBody = document.querySelector(
-      '.o-expandable-facets_content'
-    );
+    efTarget = document.querySelector('.o-expandable-facets_target');
+    efBody = document.querySelector('.o-expandable-facets_content');
 
     const mockXHR = {
       open: jest.fn(),
@@ -81,62 +76,56 @@ describe( 'Expandable facets', () => {
       readyState: 4,
       status: 200,
       onreadystatechange: jest.fn(),
-      responseText: []
+      responseText: [],
     };
-    global.XMLHttpRequest = jest.fn( () => mockXHR );
-  } );
+    global.XMLHttpRequest = jest.fn(() => mockXHR);
+  });
 
-  it( 'should not throw any errors on init', () => {
-    expect( () => ExpandableFacets.init() ).not.toThrow();
-    expect( efLabel.classList.contains( 'u-visually-hidden' ) )
-      .toEqual( false );
-  } );
+  it('should not throw any errors on init', () => {
+    expect(() => ExpandableFacets.init()).not.toThrow();
+    expect(efLabel.classList.contains('u-visually-hidden')).toEqual(false);
+  });
 
-  it( 'should collapse an expanded facet when target is clicked', () => {
-
-    expect( efTarget.classList.contains( 'is-open' ) ).toEqual( false );
-    expect( efTarget.classList.contains( 'is-closed' ) ).toEqual( true );
+  it('should collapse an expanded facet when target is clicked', () => {
+    expect(efTarget.classList.contains('is-open')).toEqual(false);
+    expect(efTarget.classList.contains('is-closed')).toEqual(true);
     expect(
-      efBody.classList.contains( 'o-expandable-facets_content__expanded' )
-    ).toEqual( false );
+      efBody.classList.contains('o-expandable-facets_content__expanded')
+    ).toEqual(false);
     expect(
-      efBody.classList.contains( 'o-expandable-facets_content__collapsed' )
-    ).toEqual( true );
+      efBody.classList.contains('o-expandable-facets_content__collapsed')
+    ).toEqual(true);
 
-    simulateEvent( 'click', efTarget );
+    simulateEvent('click', efTarget);
 
-    expect( efTarget.classList.contains( 'is-closed' ) ).toEqual( false );
-    expect( efTarget.classList.contains( 'is-open' ) ).toEqual( true );
+    expect(efTarget.classList.contains('is-closed')).toEqual(false);
+    expect(efTarget.classList.contains('is-open')).toEqual(true);
     expect(
-      efBody.classList.contains( 'o-expandable-facets_content__expanded' )
-    ).toEqual( true );
+      efBody.classList.contains('o-expandable-facets_content__expanded')
+    ).toEqual(true);
     expect(
-      efBody.classList.contains( 'o-expandable-facets_content__collapsed' )
-    ).toEqual( false );
+      efBody.classList.contains('o-expandable-facets_content__collapsed')
+    ).toEqual(false);
+  });
 
-  } );
+  it('should expand a collapsed facet when target is clicked', () => {
+    expect(efTarget.classList.contains('is-open')).toEqual(false);
+    expect(efTarget.classList.contains('is-closed')).toEqual(true);
 
-  it( 'should expand a collapsed facet when target is clicked', () => {
+    simulateEvent('click', efTarget);
 
-    expect( efTarget.classList.contains( 'is-open' ) ).toEqual( false );
-    expect( efTarget.classList.contains( 'is-closed' ) ).toEqual( true );
+    expect(efTarget.classList.contains('is-closed')).toEqual(false);
+    expect(efTarget.classList.contains('is-open')).toEqual(true);
 
-    simulateEvent( 'click', efTarget );
+    simulateEvent('click', efTarget);
 
-    expect( efTarget.classList.contains( 'is-closed' ) ).toEqual( false );
-    expect( efTarget.classList.contains( 'is-open' ) ).toEqual( true );
-
-    simulateEvent( 'click', efTarget );
-
-    expect( efTarget.classList.contains( 'is-closed' ) ).toEqual( true );
-    expect( efTarget.classList.contains( 'is-open' ) ).toEqual( false );
+    expect(efTarget.classList.contains('is-closed')).toEqual(true);
+    expect(efTarget.classList.contains('is-open')).toEqual(false);
     expect(
-      efBody.classList.contains( 'o-expandable-facets_content__expanded' )
-    ).toEqual( false );
+      efBody.classList.contains('o-expandable-facets_content__expanded')
+    ).toEqual(false);
     expect(
-      efBody.classList.contains( 'o-expandable-facets_content__collapsed' )
-    ).toEqual( true );
-
-  } );
-
-} );
+      efBody.classList.contains('o-expandable-facets_content__collapsed')
+    ).toEqual(true);
+  });
+});

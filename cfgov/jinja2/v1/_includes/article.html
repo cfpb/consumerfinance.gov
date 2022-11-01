@@ -57,14 +57,10 @@
 
     <div class="post_body">
         {% for block in page.content %}
-            {% if block.block_type == 'content' %}
-                {{ block.value | safe }}
-            {% elif block.block_type == 'full_width_text' %}
+            {% if block.block_type == 'full_width_text' %}
                 {{ setCTAFlag( block ) }}
-                {{ render_block.render(block, loop.index) }}
-            {% else %}
-                {{ render_block.render(block, loop.index) }}
             {% endif %}
+            {{ render_block.render(block, loop.index) }}
         {% endfor %}
     </div>
     {% if page.tags.all() | length %}

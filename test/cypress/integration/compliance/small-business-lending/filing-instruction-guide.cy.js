@@ -1,233 +1,202 @@
 import { FilingInstructionGuide } from './filing-instruction-guide-helpers.cy.js';
-import { skipOn } from '@cypress/skip-test';
+import { onlyOn } from '@cypress/skip-test';
 
 const fig = new FilingInstructionGuide();
 
-/* TODO: Remove the before hook, it( 'skips tests if page does not exist')
-   test, and skipOn once the FIG page has been published */
-before( () => {
-  cy.request( {
-    url: fig.url(),
-    failOnStatusCode: false
-  } ).as( 'figPage' );
-} );
+describe('1071 Filing Instruction Guide (FIG)', () => {
+  describe('FIG table of contents', () => {
+    /* Our FIG sample page only exists in certain environments so continue
+       this test suite only if the user explicitly provides a URL via
+       CYPRESS_FIG_URL=https://blah.cfpb.gov/xxxxxx/yyyyyy/zzzzzz/.
+       Once the FIG reaches production we can disable this check. */
+    onlyOn(Boolean(fig.url()), () => {
+      context('Desktop experience', () => {
+        const desktops = ['macbook-13', 'macbook-15'];
 
-it( 'skips tests if page does not exist', function() {
+        desktops.forEach((desktop) => {
+          context(desktop, () => {
+            beforeEach(() => {
+              cy.viewport(desktop);
+            });
 
-  skipOn( this.figPage.status === 404, () => {
+            it('should be present', () => {
+              fig.open();
+              fig.toc().should('be.visible');
+            });
 
-    describe( '1071 Filing Instruction Guide (FIG)', () => {
+            it('should highlight the first section by default', () => {
+              fig.getNavItem(1).should('have.class', 'm-nav-link__current');
+              fig
+                .getNavItem(2)
+                .should('not.have.class', 'm-nav-link__current');
+              fig
+                .getNavItem(3)
+                .should('not.have.class', 'm-nav-link__current');
+              fig
+                .getNavItem(4)
+                .should('not.have.class', 'm-nav-link__current');
+            });
 
-      describe( 'FIG table of contents', () => {
+            it('should be sticky', () => {
+              fig.toc().should('be.visible');
+              cy.scrollTo(0, 1000);
+              // Verify it's still in the viewport after scrolling down the page
+              fig.toc().should('be.visible');
+              fig.getNavItem(1).should('be.visible');
+            });
 
-        context( 'Desktop experience', () => {
+            it('should be sticky when scrolled to bottom of page', () => {
+              fig.toc().should('be.visible');
+              fig.scrollToBottom();
+              fig.toc().should('be.visible');
+            });
 
-          const desktops = [
-            'macbook-13',
-            'macbook-15'
-          ];
+            it('should highlight the current section', () => {
+              fig.goToSection(2);
+              fig.getNavItem(2).should('have.class', 'm-nav-link__current');
+              fig
+                .getNavItem(1)
+                .should('not.have.class', 'm-nav-link__current');
+              fig
+                .getNavItem(3)
+                .should('not.have.class', 'm-nav-link__current');
+              fig
+                .getNavItem(4)
+                .should('not.have.class', 'm-nav-link__current');
+            });
 
-          desktops.forEach( desktop => {
+            it('should auto-expand subsections', () => {
+              fig.goToSection('uli');
+              fig.getNavItem(3).should('be.visible');
+              fig.getNavItem('uli').should('be.visible');
+              fig.getNavItem('application-date').should('be.visible');
 
-            context( desktop, () => {
+              fig.goToSection('application-date');
+              fig.getNavItem(3).should('be.visible');
+              fig.getNavItem('uli').should('be.visible');
+              fig.getNavItem('application-date').should('be.visible');
+            });
 
-              beforeEach( () => {
-                cy.viewport( desktop );
-              } );
+            it('should auto-close subsections', () => {
+              fig.goToSection(2);
+              fig.getNavItem(3).should('be.visible');
+              fig.getNavItem('uli').should('not.be.visible');
+            });
 
-              it( 'should be present', () => {
-                fig.open();
-                fig.toc().should( 'be.visible' );
-              } );
+            it('should jump to correct sections', () => {
+              fig.clickNavItem(4);
+              fig.getSection(4).should('be.inViewport');
+              fig.getSection(1).should('not.be.inViewport');
+              fig.getSection(2).should('not.be.inViewport');
+              fig.getSection(3).should('not.be.inViewport');
+            });
 
-              it( 'should highlight the first section by default', () => {
-                fig.getNavItem( 1 ).should( 'have.class', 'm-nav-link__current' );
-                fig.getNavItem( 2 ).should( 'not.have.class', 'm-nav-link__current' );
-                fig.getNavItem( 3 ).should( 'not.have.class', 'm-nav-link__current' );
-                fig.getNavItem( 4 ).should( 'not.have.class', 'm-nav-link__current' );
-              } );
+            it('should highlight correction section when clicking heading', () => {
+              fig.clickSectionHeading(1);
+              fig.getNavItem(1).should('have.class', 'm-nav-link__current');
+              fig.getNavItem('uli').should('not.be.visible');
 
-              it( 'should be sticky', () => {
-                fig.toc().should( 'be.visible' );
-                cy.scrollTo( 0, 1000 );
-                // Verify it's still in the viewport after scrolling down the page
-                fig.toc().should( 'be.visible' );
-                fig.getNavItem( 1 ).should( 'be.visible' );
-              } );
+              fig.clickSectionHeading(2);
+              fig.getNavItem(2).should('have.class', 'm-nav-link__current');
+              fig.getNavItem('uli').should('not.be.visible');
 
-              it( 'should be sticky when scrolled to bottom of page', () => {
-                fig.toc().should( 'be.visible' );
-                fig.scrollToBottom();
-                fig.toc().should( 'be.visible' );
-              } );
+              fig.clickSectionHeading(3);
+              fig.getNavItem(3).should('have.class', 'm-nav-link__current');
+              fig.getNavItem('uli').should('be.visible');
+            });
+          });
+        });
+      });
 
-              it( 'should highlight the current section', () => {
-                fig.goToSection( 2 );
-                fig.getNavItem( 2 ).should( 'have.class', 'm-nav-link__current' );
-                fig.getNavItem( 1 ).should( 'not.have.class', 'm-nav-link__current' );
-                fig.getNavItem( 3 ).should( 'not.have.class', 'm-nav-link__current' );
-                fig.getNavItem( 4 ).should( 'not.have.class', 'm-nav-link__current' );
-              } );
+      context('Tablet experience', () => {
+        const tablets = ['ipad-2', 'ipad-mini'];
 
-              it( 'should auto-expand subsections', () => {
-                fig.goToSection( 4.1 );
-                fig.getNavItem( 4 ).should( 'be.visible' );
-                fig.getNavItem( 4.1 ).should( 'be.visible' );
-                fig.getNavItem( 4.2 ).should( 'be.visible' );
+        tablets.forEach((tablet) => {
+          context(tablet, () => {
+            beforeEach(() => {
+              cy.viewport(tablet);
+            });
 
-                fig.goToSection( 4.2 );
-                fig.getNavItem( 4 ).should( 'be.visible' );
-                fig.getNavItem( 4.1 ).should( 'be.visible' );
-                fig.getNavItem( 4.2 ).should( 'be.visible' );
-              } );
+            it('should be present', () => {
+              fig.open();
+              fig.toc().should('be.visible');
+            });
 
-              it( 'should auto-close subsections', () => {
-                fig.goToSection( 2 );
-                fig.getNavItem( 4 ).should( 'be.visible' );
-                fig.getNavItem( 4.1 ).should( 'not.be.visible' );
-              } );
+            it('should expand', () => {
+              fig.toggleToc();
+              fig.getNavItem(1).should('be.visible');
+            });
 
-              it( 'should jump to correct sections', () => {
-                fig.clickNavItem( 4 );
-                fig.getSection( 4 ).should( 'be.inViewport' );
-                fig.getSection( 1 ).should( 'not.be.inViewport' );
-                fig.getSection( 2 ).should( 'not.be.inViewport' );
-                fig.getSection( 3 ).should( 'not.be.inViewport' );
-              } );
+            it('should collapse', () => {
+              fig.toggleToc();
+              fig.getNavItem(1).should('not.be.visible');
+            });
 
-              it( 'should highlight correction section when clicking heading', () => {
-                fig.clickSectionHeading( 1 );
-                fig.getNavItem( 1 ).should( 'have.class', 'm-nav-link__current' );
-                fig.getNavItem( 4.1 ).should( 'not.be.visible' );
+            it('should be sticky', () => {
+              fig.toc().should('be.visible');
+              cy.scrollTo(0, 1000);
+              fig.toc().should('be.visible');
+            });
 
-                fig.clickSectionHeading( 2 );
-                fig.getNavItem( 2 ).should( 'have.class', 'm-nav-link__current' );
-                fig.getNavItem( 4.1 ).should( 'not.be.visible' );
+            it('jump to correct sections', () => {
+              fig.toggleToc();
+              fig.clickNavItem(4);
+              fig.getSection(4).should('be.inViewport');
+              fig.getSection(2).should('not.be.inViewport');
 
-                fig.clickSectionHeading( 4 );
-                fig.getNavItem( 4 ).should( 'have.class', 'm-nav-link__current' );
-                fig.getNavItem( 4.1 ).should( 'be.visible' );
-              } );
+              fig.toggleToc();
+              fig.clickNavItem(1);
+              fig.getSection(1).should('be.inViewport');
+              fig.getSection(4).should('not.be.inViewport');
+            });
+          });
+        });
+      });
 
-            } );
+      context('Mobile experience', () => {
+        const mobiles = ['iphone-6', 'iphone-xr', 'samsung-note9'];
 
-          } );
+        mobiles.forEach((mobile) => {
+          context(mobile, () => {
+            beforeEach(() => {
+              cy.viewport(mobile);
+            });
 
-        } );
+            it('should be present', () => {
+              fig.open();
+              fig.toc().should('be.visible');
+            });
 
-        context( 'Tablet experience', () => {
+            it('should expand', () => {
+              fig.toggleToc();
+              fig.getNavItem(1).should('be.visible');
+            });
 
-          const tablets = [
-            'ipad-2',
-            'ipad-mini'
-          ];
+            it('should collapse', () => {
+              fig.toggleToc();
+              fig.getNavItem(1).should('not.be.visible');
+            });
 
-          tablets.forEach( tablet => {
+            it('should be sticky', () => {
+              fig.toc().should('be.visible');
+              cy.scrollTo(0, 1000);
+              fig.toc().should('be.visible');
+            });
 
-            context( tablet, () => {
+            it('jump to correct sections', () => {
+              fig.toggleToc();
+              fig.clickNavItem(4);
+              fig.getSection(4).should('be.inViewport');
+              fig.getSection(2).should('not.be.inViewport');
 
-              beforeEach( () => {
-                cy.viewport( tablet );
-              } );
-
-              it( 'should be present', () => {
-                fig.open();
-                fig.toc().should( 'be.visible' );
-              } );
-
-              it( 'should expand', () => {
-                fig.toggleToc();
-                fig.getNavItem( 1 ).should( 'be.visible' );
-              } );
-
-              it( 'should collapse', () => {
-                fig.toggleToc();
-                fig.getNavItem( 1 ).should( 'not.be.visible' );
-              } );
-
-              it( 'should be sticky', () => {
-                fig.toc().should( 'be.visible' );
-                cy.scrollTo( 0, 1000 );
-                fig.toc().should( 'be.visible' );
-              } );
-
-              it( 'jump to correct sections', () => {
-                fig.toggleToc();
-                fig.clickNavItem( 4 );
-                fig.getSection( 4 ).should( 'be.inViewport' );
-                fig.getSection( 2 ).should( 'not.be.inViewport' );
-
-                fig.toggleToc();
-                fig.clickNavItem( 1 );
-                fig.getSection( 1 ).should( 'be.inViewport' );
-                fig.getSection( 4 ).should( 'not.be.inViewport' );
-              } );
-
-            } );
-
-          } );
-
-        } );
-
-        context( 'Mobile experience', () => {
-
-          const mobiles = [
-            'iphone-6',
-            'iphone-xr',
-            'samsung-note9'
-          ];
-
-          mobiles.forEach( mobile => {
-
-            context( mobile, () => {
-
-              beforeEach( () => {
-                cy.viewport( mobile );
-              } );
-
-              it( 'should be present', () => {
-                fig.open();
-                fig.toc().should( 'be.visible' );
-              } );
-
-              it( 'should expand', () => {
-                fig.toggleToc();
-                fig.getNavItem( 1 ).should( 'be.visible' );
-              } );
-
-              it( 'should collapse', () => {
-                fig.toggleToc();
-                fig.getNavItem( 1 ).should( 'not.be.visible' );
-              } );
-
-              it( 'should be sticky', () => {
-                fig.toc().should( 'be.visible' );
-                cy.scrollTo( 0, 1000 );
-                fig.toc().should( 'be.visible' );
-              } );
-
-              it( 'jump to correct sections', () => {
-                fig.toggleToc();
-                fig.clickNavItem( 4 );
-                fig.getSection( 4 ).should( 'be.inViewport' );
-                fig.getSection( 2 ).should( 'not.be.inViewport' );
-
-                fig.toggleToc();
-                fig.clickNavItem( 1 );
-                fig.getSection( 1 ).should( 'be.inViewport' );
-                fig.getSection( 4 ).should( 'not.be.inViewport' );
-              } );
-
-            } );
-
-          } );
-
-        } );
-
-      } );
-
-    } );
-
-  } );
-
-} );
+              fig.toggleToc();
+              fig.clickNavItem(1);
+              fig.getSection(1).should('be.inViewport');
+              fig.getSection(4).should('not.be.inViewport');
+            });
+          });
+        });
+      });
+    });
+  });
+});

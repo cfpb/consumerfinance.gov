@@ -1,11 +1,8 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const RateCheckerChartMenu = require(
-  BASE_JS_PATH + 'js/explore-rates/RateCheckerChartMenu'
-).default;
+const RateCheckerChartMenu = require(BASE_JS_PATH +
+  'js/explore-rates/RateCheckerChartMenu').default;
 
-const Highcharts = require(
-  BASE_JS_PATH + 'node_modules/highcharts'
-);
+const Highcharts = require(BASE_JS_PATH + 'node_modules/highcharts');
 
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 
@@ -39,117 +36,119 @@ const HTML_SNIPPET = `
 </section>
 `;
 
-describe( 'explore-rates/RateCheckerChartMenu', () => {
-  beforeEach( () => {
+describe('explore-rates/RateCheckerChartMenu', () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
 
-    highCharts = new Highcharts.Chart( {
+    highCharts = new Highcharts.Chart({
       chart: {
-        renderTo: document.querySelector( '#chart' )
+        renderTo: document.querySelector('#chart'),
       },
       xAxis: {
-        categories: [ 'Jan', 'Feb' ]
+        categories: ['Jan', 'Feb'],
       },
-      series: [ {
-        data: [ 29.9, 71.5 ]
-      } ]
-    } );
+      series: [
+        {
+          data: [29.9, 71.5],
+        },
+      ],
+    });
 
     highCharts.exportChart = jest.fn();
     highCharts.print = jest.fn();
 
-    chartMenu = new RateCheckerChartMenu( highCharts );
-    chartMenuDOM = document.querySelector( '.chart-menu' );
-    chartMenuBtnDOM = document.querySelector( '.chart-menu_btn' );
-  } );
+    chartMenu = new RateCheckerChartMenu(highCharts);
+    chartMenuDOM = document.querySelector('.chart-menu');
+    chartMenuBtnDOM = document.querySelector('.chart-menu_btn');
+  });
 
-  describe( 'new RateCheckerChartMenu()', () => {
-    it( 'should set the state to closed', () => {
-      expect( chartMenu.state ).toStrictEqual( STATE_CLOSED );
-    } );
+  describe('new RateCheckerChartMenu()', () => {
+    it('should set the state to closed', () => {
+      expect(chartMenu.state).toStrictEqual(STATE_CLOSED);
+    });
 
-    it( 'should set a reference to the highcharts instance', () => {
-      expect( highCharts ).toStrictEqual( chartMenu.highCharts );
-    } );
+    it('should set a reference to the highcharts instance', () => {
+      expect(highCharts).toStrictEqual(chartMenu.highCharts);
+    });
 
-    it( 'should set a reference to the base element', () => {
-      expect( chartMenuDOM.isEqualNode( chartMenu.element ) ).toBe( true );
-    } );
+    it('should set a reference to the base element', () => {
+      expect(chartMenuDOM.isEqualNode(chartMenu.element)).toBe(true);
+    });
 
-    it( 'should initialize the click event on the menu element', () => {
+    it('should initialize the click event on the menu element', () => {
       const _initEvents = RateCheckerChartMenu.prototype._initEvents;
       const mockInitEvents = jest.fn();
       RateCheckerChartMenu.prototype._initEvents = mockInitEvents;
-      chartMenu = new RateCheckerChartMenu( highCharts );
+      chartMenu = new RateCheckerChartMenu(highCharts);
 
-      expect( mockInitEvents.mock.calls.length ).toBe( 1 );
+      expect(mockInitEvents.mock.calls.length).toBe(1);
       RateCheckerChartMenu.prototype._initEvents = _initEvents;
-    } );
-  } );
+    });
+  });
 
-  describe( 'open()', () => {
-    it( 'should set the open state', () => {
+  describe('open()', () => {
+    it('should set the open state', () => {
       chartMenu.open();
-      expect( chartMenu.state ).toStrictEqual( STATE_OPEN );
-    } );
-  } );
+      expect(chartMenu.state).toStrictEqual(STATE_OPEN);
+    });
+  });
 
-  describe( 'close()', () => {
-    it( 'should set the closed state', () => {
+  describe('close()', () => {
+    it('should set the closed state', () => {
       chartMenu.close();
-      expect( chartMenu.state ).toStrictEqual( STATE_CLOSED );
-    } );
-  } );
+      expect(chartMenu.state).toStrictEqual(STATE_CLOSED);
+    });
+  });
 
-  describe( 'render()', () => {
-    it( 'should set proper classes on the menu DOM', () => {
+  describe('render()', () => {
+    it('should set proper classes on the menu DOM', () => {
       chartMenu.open();
-      expect( chartMenu.state ).toStrictEqual( STATE_OPEN );
-      expect( chartMenuDOM.classList.contains( 'chart-menu__open' ) )
-        .toStrictEqual( true );
-    } );
-  } );
+      expect(chartMenu.state).toStrictEqual(STATE_OPEN);
+      expect(
+        chartMenuDOM.classList.contains('chart-menu__open')
+      ).toStrictEqual(true);
+    });
+  });
 
-  describe( 'onClick()', () => {
-    it( 'should set proper classes when the menu button is clicked', () => {
-      simulateEvent( 'click', chartMenuBtnDOM );
-      expect( chartMenuDOM.classList.contains( 'chart-menu__open' ) )
-        .toStrictEqual( true );
-      simulateEvent( 'click', chartMenuBtnDOM );
-      expect( chartMenuDOM.classList.contains( 'chart-menu__open' ) )
-        .toStrictEqual( false );
-    } );
+  describe('onClick()', () => {
+    it('should set proper classes when the menu button is clicked', () => {
+      simulateEvent('click', chartMenuBtnDOM);
+      expect(
+        chartMenuDOM.classList.contains('chart-menu__open')
+      ).toStrictEqual(true);
+      simulateEvent('click', chartMenuBtnDOM);
+      expect(
+        chartMenuDOM.classList.contains('chart-menu__open')
+      ).toStrictEqual(false);
+    });
 
-    it( 'should set proper state when the menu button is clicked', () => {
-      simulateEvent( 'click', chartMenuBtnDOM );
-      expect( chartMenu.state ).toStrictEqual( STATE_OPEN );
-      simulateEvent( 'click', chartMenuBtnDOM );
-      expect( chartMenu.state ).toStrictEqual( STATE_CLOSED );
-    } );
+    it('should set proper state when the menu button is clicked', () => {
+      simulateEvent('click', chartMenuBtnDOM);
+      expect(chartMenu.state).toStrictEqual(STATE_OPEN);
+      simulateEvent('click', chartMenuBtnDOM);
+      expect(chartMenu.state).toStrictEqual(STATE_CLOSED);
+    });
 
-    it( 'should call exportChart when a menu export option is clicked', () => {
-      const spy = jest.spyOn( chartMenu, 'exportChart' );
-      simulateEvent( 'click', chartMenuBtnDOM );
-      simulateEvent( 'click', chartMenuDOM.querySelector( 'li' ) );
-      expect( spy ).toHaveBeenCalled();
+    it('should call exportChart when a menu export option is clicked', () => {
+      const spy = jest.spyOn(chartMenu, 'exportChart');
+      simulateEvent('click', chartMenuBtnDOM);
+      simulateEvent('click', chartMenuDOM.querySelector('li'));
+      expect(spy).toHaveBeenCalled();
       spy.mockReset();
       spy.mockRestore();
-    } );
-  } );
+    });
+  });
 
-  describe( 'exportChart()', () => {
-    it( 'should call the appropriate highCharts.export method', () => {
-      chartMenu.exportChart( 'PNG' );
-      expect( highCharts.exportChart )
-        .toBeCalledWith( { type: 'image/png' } );
-      chartMenu.exportChart( 'SVG' );
-      expect( highCharts.exportChart )
-        .toBeCalledWith( { type: 'image/svg+xml' } );
-      chartMenu.exportChart( 'JPEG' );
-      expect( highCharts.exportChart )
-        .toBeCalledWith( { type: 'image/jpeg' } );
-      chartMenu.exportChart( 'Print chart' );
-      expect( highCharts.print ).toHaveBeenCalled();
-    } );
-  } );
-} );
+  describe('exportChart()', () => {
+    it('should call the appropriate highCharts.export method', () => {
+      chartMenu.exportChart('PNG');
+      expect(highCharts.exportChart).toBeCalledWith({ type: 'image/png' });
+      chartMenu.exportChart('SVG');
+      expect(highCharts.exportChart).toBeCalledWith({ type: 'image/svg+xml' });
+      chartMenu.exportChart('JPEG');
+      expect(highCharts.exportChart).toBeCalledWith({ type: 'image/jpeg' });
+      chartMenu.exportChart('Print chart');
+      expect(highCharts.print).toHaveBeenCalled();
+    });
+  });
+});

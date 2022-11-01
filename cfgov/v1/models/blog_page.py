@@ -9,23 +9,21 @@ from v1.feeds import get_appropriate_rss_feed_url_for_page
 from v1.models.learn_page import AbstractFilterPage
 
 
+class BlogContent(blocks.StreamBlock):
+    full_width_text = organisms.FullWidthText()
+    info_unit_group = organisms.InfoUnitGroup()
+    expandable = organisms.Expandable()
+    well = organisms.Well()
+    video_player = organisms.VideoPlayer()
+    email_signup = v1_blocks.EmailSignUpChooserBlock()
+    simple_chart = organisms.SimpleChart()
+    faq_schema = schema.FAQ(label="FAQ schema")
+    how_to_schema = schema.HowTo(label="HowTo schema", max_num=1)
+
+
 class BlogPage(AbstractFilterPage):
-    content = StreamField(
-        [
-            ("full_width_text", organisms.FullWidthText()),
-            ("info_unit_group", organisms.InfoUnitGroup()),
-            ("expandable", organisms.Expandable()),
-            ("well", organisms.Well()),
-            ("video_player", organisms.VideoPlayer()),
-            (
-                "email_signup",
-                v1_blocks.EmailSignUpChooserBlock(),
-            ),
-            ("simple_chart", organisms.SimpleChart()),
-            ("faq_schema", schema.FAQ(label="FAQ schema")),
-            ("how_to_schema", schema.HowTo(label="HowTo schema")),
-        ]
-    )
+    content = StreamField(BlogContent)
+
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel("content")
     )
@@ -45,21 +43,15 @@ class BlogPage(AbstractFilterPage):
         return context
 
 
-class LegacyBlogPage(AbstractFilterPage):
-    content = StreamField(
-        [
-            (
-                "content",
-                blocks.RawHTMLBlock(
-                    help_text="Content from WordPress unescaped."
-                ),
-            ),
-            (
-                "reusable_text",
-                v1_blocks.ReusableTextChooserBlock("v1.ReusableText"),
-            ),
-        ]
+class LegacyBlogContent(BlogContent):
+    content = blocks.RawHTMLBlock(
+        help_text="Content from WordPress unescaped."
     )
+    reusable_text = v1_blocks.ReusableTextChooserBlock("v1.ReusableText")
+
+
+class LegacyBlogPage(AbstractFilterPage):
+    content = StreamField(LegacyBlogContent)
 
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel("content")

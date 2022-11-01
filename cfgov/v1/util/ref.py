@@ -71,7 +71,7 @@ categories = [
         (
             ("at-the-cfpb", "At the CFPB"),
             ("directors-notebook", "Director's notebook"),
-            ("policy_compliance", "Policy and compliance"),
+            ("policy-compliance", "Policy and compliance"),
             ("data-research-reports", "Data, research, and reports"),
             ("info-for-consumers", "Info for consumers"),
         ),

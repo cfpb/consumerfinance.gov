@@ -20,128 +20,123 @@
    <div data-js-hook="behavior_flyout-menu_content">
    ========================================================================== */
 
-
 // Required modules.
 import * as dataHook from '@cfpb/cfpb-atomic-component/src/utilities/data-hook.js';
 import {
   BEHAVIOR_PREFIX,
-  JS_HOOK
+  JS_HOOK,
 } from '@cfpb/cfpb-atomic-component/src/utilities/standard-type';
 
-
 /**
- * @param {string} behaviorSelector
- *  Behavior type used to find the element within the dom.
- * @param {HTMLNode} baseElement Containing element for the behavior element.
- * @returns {HTMLNodeList} behaviorElements if it exists in the dom,
- *                         null otherwise.
+ * @param {string} behaviorSelector - Behavior type used to find the element
+ *   within the dom.
+ * @param {HTMLElement} baseElement - Containing element for the behavior element.
+ * @returns {Array|NodeList} behaviorElements if it exists in the dom,
+ *   null otherwise.
  */
-function _findElements( behaviorSelector, baseElement ) {
+function _findElements(behaviorSelector, baseElement) {
   baseElement = baseElement || document;
   let behaviorElements = [];
 
   try {
-    behaviorElements = baseElement.querySelectorAll( behaviorSelector );
-  } catch ( error ) {
-    const msg = `${ behaviorSelector } not found in DOM! ${ error }`;
-    throw new Error( msg );
+    behaviorElements = baseElement.querySelectorAll(behaviorSelector);
+  } catch (error) {
+    const msg = `${behaviorSelector} not found in DOM! ${error}`;
+    throw new Error(msg);
   }
 
-  if ( behaviorElements.length === 0 &&
-       behaviorSelector.indexOf( BEHAVIOR_PREFIX ) === -1 ) {
-    behaviorElements = find( behaviorSelector, baseElement );
+  if (
+    behaviorElements.length === 0 &&
+    behaviorSelector.indexOf(BEHAVIOR_PREFIX) === -1
+  ) {
+    behaviorElements = find(behaviorSelector, baseElement);
   }
 
   return behaviorElements;
 }
 
-
 /**
- * @param {( string|HTMLNode|HTMLNodeList )} behaviorElement
- *  Used to query dom for elements.
- * @param {string} event Event type to add to element.
- * @param {Function} eventHandler Callback for event.
- * @param {HTMLNode} baseElement Containing element for the behavior element.
- * @returns {HTMLNodeList} if it exists in the dom, null otherwise.
+ * @param {( string|HTMLElement|Array|NodeList )} behaviorElement - Used to
+ *   query dom for elements.
+ * @param {string} event - Event type to add to element.
+ * @param {Function} eventHandler - Callback for event.
+ * @param {HTMLElement} baseElement - Containing element
+ *   for the behavior element.
+ * @returns {Array|NodeList} if it exists in the dom, null otherwise.
  */
-function attach( behaviorElement, event, eventHandler, baseElement ) {
+function attach(behaviorElement, event, eventHandler, baseElement) {
   let behaviorElements = [];
 
-  if ( behaviorElement instanceof NodeList === true ) {
+  if (behaviorElement instanceof NodeList === true) {
     behaviorElements = behaviorElement;
-  } else if ( behaviorElement instanceof Node === true ) {
-    behaviorElements = [ behaviorElement ];
-  } else if ( typeof behaviorElement === 'string' ) {
-    behaviorElements = _findElements( behaviorElement, baseElement );
+  } else if (behaviorElement instanceof Node === true) {
+    behaviorElements = [behaviorElement];
+  } else if (typeof behaviorElement === 'string') {
+    behaviorElements = _findElements(behaviorElement, baseElement);
   }
 
-  for ( let i = 0, len = behaviorElements.length; i < len; i++ ) {
-    behaviorElements[i].addEventListener( event, eventHandler, false );
+  for (let i = 0, len = behaviorElements.length; i < len; i++) {
+    behaviorElements[i].addEventListener(event, eventHandler, false);
   }
 
   return behaviorElements;
 }
 
 /**
- * @param {HTMLNode} element
- *   The DOM element within which to search for the behavior
- *   in the data-js-hook attribute.
- * @param {string} behaviorDataAttr
- *   The value in the data-js-hook. This is the name of the behavior.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the behavior in the data-js-hook attribute.
+ * @param {string} behaviorDataAttr - The value in the data-js-hook.
+ *   This is the name of the behavior.
  *   E.g. `behavior_flyout-menu`, `behavior_flyout-menu_content`.
- * @returns {HTMLNode} The DOM element that has an attached behavior.
+ * @returns {HTMLElement} The DOM element that has an attached behavior.
  * @throws {Error} If data-js-hook attribute value was not found on DOM element.
  */
-function checkBehaviorDom( element, behaviorDataAttr ) {
+function checkBehaviorDom(element, behaviorDataAttr) {
   // Check that the behavior is found on the passed DOM node.
   let dom;
 
-  if ( dataHook.contains( element, behaviorDataAttr ) ) {
+  if (dataHook.contains(element, behaviorDataAttr)) {
     dom = element;
     return dom;
   }
 
   /* If the passed DOM node isn't null,
      query the node to see if it's in the children. */
-  if ( element ) {
+  if (element) {
     const selector = '[' + JS_HOOK + '=' + behaviorDataAttr + ']';
-    dom = element.querySelector( selector );
+    dom = element.querySelector(selector);
   }
 
-  if ( !dom ) {
+  if (!dom) {
     const msg = behaviorDataAttr + ' behavior not found on passed DOM node!';
-    throw new Error( msg );
+    throw new Error(msg);
   }
 
   return dom;
 }
 
 /**
- * @param {string} behaviorSelector
- *  Behavior type used to find the element within the dom.
- * @param {HTMLNode} baseElement Containing element for the behavior element.
- * @returns {HTMLNodeList} if it exists in the dom, null otherwise.
+ * @param {string} behaviorSelector - Behavior type used to find
+ *   the element within the dom.
+ * @param {HTMLElement} baseElement - Containing element
+ *   for the behavior element.
+ * @returns {HTMLElementList} if it exists in the dom, null otherwise.
  */
-function find( behaviorSelector, baseElement ) {
+function find(behaviorSelector, baseElement) {
   behaviorSelector = JS_HOOK + '*=' + BEHAVIOR_PREFIX + behaviorSelector;
   behaviorSelector = '[' + behaviorSelector + ']';
 
-  return _findElements( behaviorSelector, baseElement );
+  return _findElements(behaviorSelector, baseElement);
 }
 
 /**
- * @param {HTMLNode} behaviorElement Element in which to remove the event.
- * @param {string} event Event type to remove from the element.
- * @param {Function} eventHandler Callback for event.
+ * @param {HTMLElement} behaviorElement - Element in which to remove the event.
+ * @param {string} event - Event type to remove from the element.
+ * @param {Function} eventHandler - Callback for event.
  */
-function remove( behaviorElement, event, eventHandler ) {
-  behaviorElement.removeEventListener( event, eventHandler );
+function remove(behaviorElement, event, eventHandler) {
+  behaviorElement.removeEventListener(event, eventHandler);
 }
 
 // Expose public methods.
-export {
-  attach,
-  checkBehaviorDom,
-  find,
-  remove
-};
+export { attach, checkBehaviorDom, find, remove };

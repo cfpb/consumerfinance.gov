@@ -48,23 +48,23 @@ const HTML_SNIPPET = `
 </div>
 `;
 
-describe( 'FormSubmit', () => {
+describe('FormSubmit', () => {
   let signupForm;
   let formSubmit;
   let thisFormSubmit;
 
-  beforeEach( () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-    signupForm = document.querySelector( `.${ BASE_CLASS }` );
-    formSubmit = new FormSubmit( signupForm, BASE_CLASS, {} );
+    signupForm = document.querySelector(`.${BASE_CLASS}`);
+    formSubmit = new FormSubmit(signupForm, BASE_CLASS, {});
     thisFormSubmit = formSubmit.init();
-  } );
+  });
 
-  describe( 'init()', () => {
-    it( 'should return the FormSubmit instance when initialized', () => {
-      expect( typeof thisFormSubmit ).toStrictEqual( 'object' );
-      expect( signupForm.dataset.jsHook ).toStrictEqual( 'state_atomic_init' );
-      expect( formSubmit.init() ).toBeInstanceOf( FormSubmit );
-    } );
-  } );
-} );
+  describe('init()', () => {
+    it('should return the FormSubmit instance when initialized', () => {
+      expect(typeof thisFormSubmit).toStrictEqual('object');
+      expect(signupForm.dataset.jsHook).toStrictEqual('state_atomic_init');
+      expect(formSubmit.init()).toBeInstanceOf(FormSubmit);
+    });
+  });
+});

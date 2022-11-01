@@ -1,9 +1,8 @@
 import { handleFetchSearchResults } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
-const tdpAnalytics = require(
-  BASE_JS_PATH + 'teachers-digital-platform/js/tdp-analytics.js'
-);
+const tdpAnalytics = require(BASE_JS_PATH +
+  'teachers-digital-platform/js/tdp-analytics.js');
 
 const EMPTY_SEARCH_HTML = `
   <div id="tdp-search-facets-and-results">
@@ -27,10 +26,10 @@ const HTML_SNIPPET = `
       <input type="hidden" name="page" inputmode="numeric" value="1">
       <div data-qa-hook="expandable" class="o-expandable o-expandable__padded o-expandable__background" data-bound="true">
         <button class="o-expandable_header o-expandable_target o-expandable_target__expanded" type="button">
-          <span class="h4 o-expandable_header-left o-expandable_label">
+          <span class="h4 o-expandable_label">
             Building block
           </span>
-          <span class="o-expandable_header-right o-expandable_link">
+          <span class="o-expandable_link">
             <span class="o-expandable_cue o-expandable_cue-open">
               <span class="u-visually-hidden-on-mobile u-visually-hidden">Show</span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H549.6v213.6c0 27.6-22.4 50-50 50s-50-22.4-50-50V655.9H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h213.6V342.3c0-27.6 22.4-50 50-50s50 22.4 50 50v213.6h213.6c27.6 0 50 22.4 50 50s-22.5 50-50.1 50z"></path></svg>
@@ -71,8 +70,8 @@ const HTML_SNIPPET = `
 
       <div data-qa-hook="expandable" class="o-expandable o-expandable__padded o-expandable__background" data-bound="true">
         <button class="o-expandable_header o-expandable_target o-expandable_target__expanded" type="button">
-          <span class="h4 o-expandable_header-left o-expandable_label">Topic</span>
-          <span class="o-expandable_header-right o-expandable_link">
+          <span class="h4 o-expandable_label">Topic</span>
+          <span class="o-expandable_link">
             <span class="o-expandable_cue o-expandable_cue-open">Show</span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm263.1 550.7H549.6v213.6c0 27.6-22.4 50-50 50s-50-22.4-50-50V655.9H236c-27.6 0-50-22.4-50-50s22.4-50 50-50h213.6V342.3c0-27.6 22.4-50 50-50s50 22.4 50 50v213.6h213.6c27.6 0 50 22.4 50 50s-22.5 50-50.1 50z"></path></svg>
             </span>
@@ -193,17 +192,16 @@ const HTML_SNIPPET = `
 
 const xhr = global.XMLHttpRequest;
 
-describe( 'The TDP custom analytics', () => {
-
-  beforeEach( () => {
+describe('The TDP custom analytics', () => {
+  beforeEach(() => {
     // Reset global XHR
     global.XMLHttpRequest = xhr;
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
     // Fire `load` event
-    const event = document.createEvent( 'Event' );
-    event.initEvent( 'load', true, true );
-    window.dispatchEvent( event );
+    const event = document.createEvent('Event');
+    event.initEvent('load', true, true);
+    window.dispatchEvent(event);
 
     const mockXHR = {
       open: jest.fn(),
@@ -211,70 +209,68 @@ describe( 'The TDP custom analytics', () => {
       readyState: 4,
       status: 200,
       onreadystatechange: jest.fn(),
-      responseText: []
+      responseText: [],
     };
-    global.XMLHttpRequest = jest.fn( () => mockXHR );
-  } );
+    global.XMLHttpRequest = jest.fn(() => mockXHR);
+  });
 
-  it( 'should not throw any errors on bind', () => {
-    expect( () => tdpAnalytics.bindAnalytics() ).not.toThrow();
-  } );
+  it('should not throw any errors on bind', () => {
+    expect(() => tdpAnalytics.bindAnalytics()).not.toThrow();
+  });
 
-
-  it( 'should send an analytics event when a filter clear icon is clicked', () => {
-    const clearIcon = document.querySelector( '.results_filters svg' );
+  it('should send an analytics event when a filter clear icon is clicked', () => {
+    const clearIcon = document.querySelector('.results_filters svg');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics( spy );
+    tdpAnalytics.bindAnalytics(spy);
 
-    simulateEvent( 'click', clearIcon );
+    simulateEvent('click', clearIcon);
 
-    expect( spy ).toHaveBeenCalled();
-  } );
+    expect(spy).toHaveBeenCalled();
+  });
 
-  it( 'should NOT send an analytics event when a filter is clicked (but not its clear icon)', () => {
-    const filterTag = document.querySelector( '.results_filters .a-tag' );
+  it('should NOT send an analytics event when a filter is clicked (but not its clear icon)', () => {
+    const filterTag = document.querySelector('.results_filters .a-tag');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics( spy );
+    tdpAnalytics.bindAnalytics(spy);
 
-    simulateEvent( 'click', filterTag );
+    simulateEvent('click', filterTag);
 
-    expect( spy ).not.toHaveBeenCalled();
-  } );
+    expect(spy).not.toHaveBeenCalled();
+  });
 
-  it( 'should send an analytics event when a pagination button is clicked', () => {
-    const paginationButton = document.querySelector( '.m-pagination_btn-next' );
+  it('should send an analytics event when a pagination button is clicked', () => {
+    const paginationButton = document.querySelector('.m-pagination_btn-next');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics( spy );
+    tdpAnalytics.bindAnalytics(spy);
 
-    simulateEvent( 'click', paginationButton );
+    simulateEvent('click', paginationButton);
 
-    expect( spy ).toHaveBeenCalled();
-  } );
+    expect(spy).toHaveBeenCalled();
+  });
 
-  it( 'should send an analytics event when an expandable is clicked', () => {
-    const expandable = document.querySelector( '.o-expandable_header' );
+  it('should send an analytics event when an expandable is clicked', () => {
+    const expandable = document.querySelector('.o-expandable_header');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics( spy );
+    tdpAnalytics.bindAnalytics(spy);
 
-    simulateEvent( 'click', expandable );
+    simulateEvent('click', expandable);
 
-    expect( spy ).toHaveBeenCalled();
-  } );
+    expect(spy).toHaveBeenCalled();
+  });
 
-  it( '', () => {
+  it('', () => {
     document.body.innerHTML = EMPTY_SEARCH_HTML;
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics( spy );
+    tdpAnalytics.bindAnalytics(spy);
 
-    handleFetchSearchResults( 'Not Found' );
+    handleFetchSearchResults('Not Found');
 
-    expect( spy.mock.calls[0][0] ).toEqual( 'noSearchResults' );
-    expect( spy.mock.calls[0][1] ).toEqual( 'not found:0' );
-  } );
-
-} );
+    expect(spy.mock.calls[0][0]).toEqual('noSearchResults');
+    expect(spy.mock.calls[0][1]).toEqual('not found:0');
+  });
+});

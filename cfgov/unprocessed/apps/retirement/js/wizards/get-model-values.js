@@ -3,7 +3,7 @@ import lifetimeModel from '../models/lifetime-model';
 
 const getModel = {
   benefits: () => benefitsModel.values,
-  lifetime: () => lifetimeModel.values
+  lifetime: () => lifetimeModel.values,
 };
 
 export default getModel;

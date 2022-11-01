@@ -3,23 +3,25 @@
    ========================================================================== */
 
 // Required modules.
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag,
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import VideoPlayer from './VideoPlayer';
 
 const BASE_CLASS = 'o-featured-content-module';
 
 /**
  * FeaturedContentModule
+ *
  * @class
- *
  * @classdesc Initializes a new FeaturedContentModule organism.
- *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
  * @returns {FeaturedContentModule} An instance.
  */
-function FeaturedContentModule( element ) {
-  const _dom = checkDom( element, BASE_CLASS );
+function FeaturedContentModule(element) {
+  const _dom = checkDom(element, BASE_CLASS);
 
   let _videoPlayer = null;
 
@@ -28,21 +30,21 @@ function FeaturedContentModule( element ) {
    *   or undefined if it was already initialized.
    */
   function init() {
-    if ( !setInitFlag( _dom ) ) {
+    if (!setInitFlag(_dom)) {
       let UNDEFINED;
       return UNDEFINED;
     }
 
-    const videoPlayerDom = _dom.querySelector( `.${ VideoPlayer.BASE_CLASS }` );
+    const videoPlayerDom = _dom.querySelector(`.${VideoPlayer.BASE_CLASS}`);
 
     // If we don't have a video in this FCM, bail out.
-    if ( videoPlayerDom === null ) {
+    if (videoPlayerDom === null) {
       return this;
     }
 
-    _videoPlayer = new VideoPlayer( videoPlayerDom );
-    _videoPlayer.addEventListener( 'onPlay', _videoPlayHandler.bind( this ) );
-    _videoPlayer.addEventListener( 'onStop', _videoStopHandler.bind( this ) );
+    _videoPlayer = new VideoPlayer(videoPlayerDom);
+    _videoPlayer.addEventListener('onPlay', _videoPlayHandler.bind(this));
+    _videoPlayer.addEventListener('onStop', _videoStopHandler.bind(this));
     _videoPlayer.init();
 
     return this;
@@ -52,14 +54,14 @@ function FeaturedContentModule( element ) {
    * Event handler for when video has begun playing.
    */
   function _videoPlayHandler() {
-    _dom.classList.add( 'video-playing' );
+    _dom.classList.add('video-playing');
   }
 
   /**
    * Event handler for when video has stopped playing.
    */
   function _videoStopHandler() {
-    _dom.classList.remove( 'video-playing' );
+    _dom.classList.remove('video-playing');
   }
 
   this.init = init;

@@ -147,7 +147,7 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
                 "blog",
                 "at-the-cfpb",
                 "directors-notebook",
-                "policy_compliance",
+                "policy-compliance",
                 "data-research-reports",
                 "info-for-consumers",
             ],

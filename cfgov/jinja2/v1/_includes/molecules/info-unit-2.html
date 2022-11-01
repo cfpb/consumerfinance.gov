@@ -108,7 +108,7 @@
             <ul class="m-list m-list__links u-mt15">
             {%- for link in value.links %}
                 <li class="m-list_item">
-                {%- if link.text is defined and link.text.find('@') > -1 -%}
+                {%- if link.text is not none and link.text.find('@') > -1 -%}
                     {%- if not value.emails is defined -%}
                         {%- do value.update({'emails':[{'url':link.text}]}) -%}
                     {%- endif -%}

@@ -111,220 +111,220 @@
       font-size: 18px;
     });
 
-  &:focus {
-    outline: 1px dotted @black;
-  }
-
-  &-open-label {
-    vertical-align: text-top;
-  }
-
-  &-close-label {
-    display: none;
-  }
-
-  // Hover state for desktop.
-  &:hover {
-    color: @gray-90;
-  }
-}
-
-&_content {
-  position: absolute;
-  left: 0;
-
-  &-form {
-    position: absolute;
-    width: 100%;
-  }
-
-  &.u-invisible {
-    overflow-x: hidden;
-  }
-
-  &[aria-expanded="true"] &-form {
-    display: block;
-  }
-
-}
-
-// Up to desktops.
-.respond-to-max(@bp-sm-max, {
-
-  &_fallback {
-    margin: @margin_half__em;
-  }
-
-  &_trigger {
-    padding-top: 5px;
-    height: @mobile_trigger_ht__px;
-    min-width: @mobile_trigger_ht__px;
-
-    &[aria-expanded="true"] {
-      background: @gray-10;
-      border-left: 1px solid @gray-40;
-
-      .m-global-search_trigger-open-label {
-        display: none;
-      }
-
-      .m-global-search_trigger-close-label {
-        display: block;
-      }
+    &:focus {
+      outline: 1px dotted @black;
     }
 
-    // Hover state for (x) close button.
-    @media (hover: hover) {
-      &:hover {
-        color: @black;
-        border-left: 1px solid @gray-40;
+    &-open-label {
+      vertical-align: text-top;
+    }
 
-        // Important needed to override background color in expanded state.
-        background: @gray-20  !important;
-      }
+    &-close-label {
+      display: none;
+    }
+
+    // Hover state for desktop.
+    &:hover {
+      color: @gray-90;
     }
   }
 
   &_content {
-    width: 100%;
+    position: absolute;
+    left: 0;
 
     &-form {
-      .u-drop-shadow-after();
-
-      box-sizing: border-box;
+      position: absolute;
       width: 100%;
-      padding: @margin__em @margin_half__em @margin_half__em;
-
-      left: 0;
-      z-index: 10;
-
-      background-color: @gray-5;
-      border-top: 1px solid @gray-40;
-      border-bottom: 1px solid @gray-40;
-    }
-  }
-});
-
-// Tablet size only.
-.respond-to-range(@bp-sm-min, @bp-sm-max, {
-  &_trigger {
-    // Min-width sets open/close states to same size.
-    min-width: 110px;
-
-    padding-left: unit(@grid_gutter-width / 2 / 18px, em);
-    padding-right: unit(@grid_gutter-width / 2 / 18px, em);
-  }
-
-});
-
-// Tablet and above
-.respond-to-min(@bp-sm-min, {
-
-  // Override for the .m-btn-inside-input class from the design system.
-  // This is needed because we do not have an icon inside the input
-  // at the desktop size (there is an icon at the mobile size).
-  .m-btn-inside-input .a-text-input {
-    padding-right: unit(14px / @base-font-size-px, em);
-  }
-
-});
-
-// Desktop and above
-.respond-to-min(@bp-med-min, {
-
-  // Center on the call to action (CTA) divider to right of search.
-  padding-top: 6px;
-  padding-bottom: 5px;
-  // Match CTA offset from divider.
-  padding-right: @margin_half__em;
-  position: relative;
-
-  overflow: hidden;
-
-  &_trigger {
-    // Match height of input with button.
-    padding: 8px 0;
-
-    &[aria-expanded="true"] {
-      .u-invisible();
-    }
-  }
-
-  &_trigger {
-    float: right;
-  }
-
-  &_content {
-    right: @margin_half__em;
-    width: auto;
-    // Add margin so that the focus rectangle is not cropped by
-    // the hidden overflow of the search container element.
-    margin-left: 3px;
-  }
-});
-
-// Mobile size.
-.respond-to-min(480px, {
-  &_content-form {
-
-    // The "search" button needs to be more flexible than in our usual
-    // input-w-btn element to accommodate longer translations of "search",
-    // so we'll make it flexbox
-    .o-form__input-w-btn {
-      display: flex;
-      padding-right: 0.25em;
     }
 
-    .o-form__input-w-btn_input-container {
-      display: flex;
-      width: initial;
-      flex: 0 1 75%;
+    &.u-invisible {
+      overflow-x: hidden;
+    }
 
-      // Characters in some languages, like Chinese, have a larger x-height,
-      // which will make the button taller than the input. Fix that by making
-      // the input elements flex and stretch to fit the full height of the
-      // container (i.e. match the button height)
-      .m-btn-inside-input {
+    &[aria-expanded="true"] &-form {
+      display: block;
+    }
+
+  }
+
+  // Up to desktops.
+  .respond-to-max(@bp-sm-max, {
+
+    &_fallback {
+      margin: @margin_half__em;
+    }
+
+    &_trigger {
+      padding-top: 5px;
+      height: @mobile_trigger_ht__px;
+      min-width: @mobile_trigger_ht__px;
+
+      &[aria-expanded="true"] {
+        background: @gray-10;
+        border-left: 1px solid @gray-40;
+
+        .m-global-search_trigger-open-label {
+          display: none;
+        }
+
+        .m-global-search_trigger-close-label {
+          display: block;
+        }
+      }
+
+      // Hover state for (x) close button.
+      @media (hover: hover) {
+        &:hover {
+          color: @black;
+          border-left: 1px solid @gray-40;
+
+          // Important needed to override background color in expanded state.
+          background: @gray-20  !important;
+        }
+      }
+    }
+
+    &_content {
+      width: 100%;
+
+      &-form {
+        .u-drop-shadow-after();
+
+        box-sizing: border-box;
+        width: 100%;
+        padding: @margin__em @margin_half__em @margin_half__em;
+
+        left: 0;
+        z-index: 10;
+
+        background-color: @gray-5;
+        border-top: 1px solid @gray-40;
+        border-bottom: 1px solid @gray-40;
+      }
+    }
+  });
+
+  // Tablet size only.
+  .respond-to-range(@bp-sm-min, @bp-sm-max, {
+    &_trigger {
+      // Min-width sets open/close states to same size.
+      min-width: 110px;
+
+      padding-left: unit(@grid_gutter-width / 2 / 18px, em);
+      padding-right: unit(@grid_gutter-width / 2 / 18px, em);
+    }
+
+  });
+
+  // Tablet and above
+  .respond-to-min(@bp-sm-min, {
+
+    // Override for the .m-btn-inside-input class from the design system.
+    // This is needed because we do not have an icon inside the input
+    // at the desktop size (there is an icon at the mobile size).
+    .m-btn-inside-input .a-text-input {
+      padding-right: unit(14px / @base-font-size-px, em);
+    }
+
+  });
+
+  // Desktop and above
+  .respond-to-min(@bp-med-min, {
+
+    // Center on the call to action (CTA) divider to right of search.
+    padding-top: 6px;
+    padding-bottom: 5px;
+    // Match CTA offset from divider.
+    padding-right: @margin_half__em;
+    position: relative;
+
+    overflow: hidden;
+
+    &_trigger {
+      // Match height of input with button.
+      padding: 8px 0;
+
+      &[aria-expanded="true"] {
+        .u-invisible();
+      }
+    }
+
+    &_trigger {
+      float: right;
+    }
+
+    &_content {
+      right: @margin_half__em;
+      width: auto;
+      // Add margin so that the focus rectangle is not cropped by
+      // the hidden overflow of the search container element.
+      margin-left: 3px;
+    }
+  });
+
+  // Mobile size.
+  .respond-to-min(480px, {
+    &_content-form {
+
+      // The "search" button needs to be more flexible than in our usual
+      // input-w-btn element to accommodate longer translations of "search",
+      // so we will make it flexbox
+      .o-form__input-w-btn {
         display: flex;
-        align-items: stretch;
-        flex-basis: 100%;
+        padding-right: 0.25em;
+      }
+
+      .o-form__input-w-btn_input-container {
+        display: flex;
+        width: initial;
+        flex: 0 1 75%;
+
+        // Characters in some languages, like Chinese, have a larger x-height,
+        // which will make the button taller than the input. Fix that by making
+        // the input elements flex and stretch to fit the full height of the
+        // container (i.e. match the button height)
+        .m-btn-inside-input {
+          display: flex;
+          align-items: stretch;
+          flex-basis: 100%;
+        }
+      }
+
+      .o-form__input-w-btn_btn-container {
+        width: initial;
+        border-left: 0;
+        flex: 1 1 25%;
+
+        button {
+          padding-left: 1em;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          white-space: nowrap;
+        }
       }
     }
+  });
 
-    .o-form__input-w-btn_btn-container {
-      width: initial;
-      border-left: 0;
-      flex: 1 1 25%;
+  // Hide on print.
+  .respond-to-print({
+    & {
+      // Important needed to override JS display settings.
+      display: none !important;
+    }
+  });
 
-      button {
-        padding-left: 1em;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        white-space: nowrap;
-      }
+  // Hide fallback by default.
+  &_fallback {
+    display: none;
+    padding: 8px;
+    padding-right: 0;
+
+    // Only show fallback if JavaScript (JS) is not enabled.
+    .no-js & {
+      display: block;
     }
   }
-});
-
-// Hide on print.
-.respond-to-print({
-  & {
-    // Important needed to override JS display settings.
-    display: none !important;
-  }
-});
-
-// Hide fallback by default.
-&_fallback {
-  display: none;
-  padding: 8px;
-  padding-right: 0;
-
-  // Only show fallback if JavaScript (JS) is not enabled.
-  .no-js & {
-    display: block;
-  }
-}
 }
 
 /* topdoc

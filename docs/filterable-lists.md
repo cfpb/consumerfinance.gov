@@ -3,17 +3,17 @@
 In order to provide a broad, configurable search and filtering interface across areas of our site, we have implemented a custom StreamField block, [FilterableList](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/atomic_elements/organisms.py#L802), that allows a user to specify what filters are available, how to order results, and which pages should be included in the search.
 
 - [How It Works](#how-it-works)
-    - [FilterableListMixin](#filterablelistmixin)
-    - [CategoryFilterableMixin](#categoryfilterablemixin)
+  - [FilterableListMixin](#filterablelistmixin)
+  - [CategoryFilterableMixin](#categoryfilterablemixin)
 - [Forms](#forms)
-    - [FilterableListForm](#filterablelistform)
-    - [EnforcementActionsFilterForm](#enforcementactionsfilterform)
-    - [EventArchiveFilterForm](#eventarchivefilterform)
+  - [FilterableListForm](#filterablelistform)
+  - [EnforcementActionsFilterForm](#enforcementactionsfilterform)
+  - [EventArchiveFilterForm](#eventarchivefilterform)
 - [Documents](#documents)
 - [Search](#search)
-    - [FilterablePagesDocumentSearch](#filterablepagesdocumentsearch)
-    - [EventFilterablePagesDocumentSearch](#eventfilterablepagesdocumentsearch)
-    - [EnforcementActionFilterablePagesDocumentSearch](#enforcementactionfilterablepagesdocumentsearch)
+  - [FilterablePagesDocumentSearch](#filterablepagesdocumentsearch)
+  - [EventFilterablePagesDocumentSearch](#eventfilterablepagesdocumentsearch)
+  - [EnforcementActionFilterablePagesDocumentSearch](#enforcementactionfilterablepagesdocumentsearch)
 
 ## How It Works
 
@@ -51,7 +51,7 @@ There is currently only one type of document defined, `FilterablePagesDocument`,
 
 Search is the final piece of the puzzle, where we actually leverage Elasticsearch to filter and match documents and return them in an ordered `QuerySet`. Before breaking down the search classes, it's important to discuss the current implementation from an Elasticsearch perspective to understand how we're gathering results.
 
-The expanded search for filterable lists is using a [multi-match query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html) across the title, topic name, preview description, and content fields of all `FilterablePagesDocument`s. We are leveraging a [phrase_prefix](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html#type-phrase) matching style with a currently configured slop of 2, to allow for some looser matching restrictions. We also provide a boost score for matching to the title and topic name fields, indicated by `^10` within the code base. This boost score is to enable better ordering by relevance when desired. Search currently supports two different methods of ordering results: relevance and date published. Relevance is calculated by the Elasticsearch engine when returning results, and the date published is calculated based on page publication date. Enforcement Actions define their own ordering logic based on initial filing date. 
+The expanded search for filterable lists is using a [multi-match query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html) across the title, topic name, preview description, and content fields of all `FilterablePagesDocument`s. We are leveraging a [phrase_prefix](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html#type-phrase) matching style with a currently configured slop of 2, to allow for some looser matching restrictions. We also provide a boost score for matching to the title and topic name fields, indicated by `^10` within the code base. This boost score is to enable better ordering by relevance when desired. Search currently supports two different methods of ordering results: relevance and date published. Relevance is calculated by the Elasticsearch engine when returning results, and the date published is calculated based on page publication date. Enforcement Actions define their own ordering logic based on initial filing date.
 
 #### FilterablePagesDocumentSearch
 

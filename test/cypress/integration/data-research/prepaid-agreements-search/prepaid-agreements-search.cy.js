@@ -2,42 +2,40 @@ import { PrepaidAgreementsSearch } from './prepaid-agreements-search-helpers.cy.
 
 const prepaidAgreementsSearch = new PrepaidAgreementsSearch();
 
-describe( 'Prepaid Agreements', () => {
-
-  it( 'should search based on term', () => {
+describe('Prepaid Agreements', () => {
+  it('should search based on term', () => {
     prepaidAgreementsSearch.open();
-    prepaidAgreementsSearch.searchByTerm( 'metro' );
-    cy.url().should( 'include', 'q=metro' );
-  } );
+    prepaidAgreementsSearch.searchByTerm('metro');
+    cy.url().should('include', 'q=metro');
+  });
 
-  it( 'should limit results when a search field is selected', () => {
+  it('should limit results when a search field is selected', () => {
     prepaidAgreementsSearch.open();
-    prepaidAgreementsSearch.selectField( 'Product name' );
-    prepaidAgreementsSearch.searchByTerm( 'Visa' );
-    cy.url().should( 'include', '?search_field=name&q=Visa' );
-  } );
+    prepaidAgreementsSearch.selectField('Product name');
+    prepaidAgreementsSearch.searchByTerm('Visa');
+    cy.url().should('include', '?search_field=name&q=Visa');
+  });
 
-  it( 'should limit results by issuer name when selected', () => {
+  it('should limit results by issuer name when selected', () => {
     prepaidAgreementsSearch.open();
-    prepaidAgreementsSearch.selectIssuer( 'Regions Bank' );
+    prepaidAgreementsSearch.selectIssuer('Regions Bank');
     prepaidAgreementsSearch.applyFilters();
-    prepaidAgreementsSearch.filters().should( 'contain', 'Regions' );
-  } );
+    prepaidAgreementsSearch.filters().should('contain', 'Regions');
+  });
 
-  it( 'should filter by product type', () => {
+  it('should filter by product type', () => {
     prepaidAgreementsSearch.open();
     prepaidAgreementsSearch.expandProductFilters();
-    prepaidAgreementsSearch.selectProductType( 'Other' );
+    prepaidAgreementsSearch.selectProductType('Other');
     prepaidAgreementsSearch.applyFilters();
-    prepaidAgreementsSearch.filters().should( 'contain', 'Other' );
-  } );
+    prepaidAgreementsSearch.filters().should('contain', 'Other');
+  });
 
-  it( 'should filter by current status', () => {
+  it('should filter by current status', () => {
     prepaidAgreementsSearch.open();
     prepaidAgreementsSearch.expandCurrentStatusFilters();
-    prepaidAgreementsSearch.selectStatus( 'Active' );
+    prepaidAgreementsSearch.selectStatus('Active');
     prepaidAgreementsSearch.applyFilters();
-    prepaidAgreementsSearch.filters().should( 'contain', 'Active' );
-  } );
-
-} );
+    prepaidAgreementsSearch.filters().should('contain', 'Active');
+  });
+});
