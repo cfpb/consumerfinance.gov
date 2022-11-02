@@ -45,7 +45,6 @@ ENV ALLOWED_HOSTS '["*"]'
 
 # .backend-deps and .frontend-deps are required to run the application
 RUN apk add --no-cache --virtual .backend-deps bash curl postgresql
-RUN apk add --no-cache --virtual .frontend-deps jpeg-dev nodejs yarn zlib-dev
 
 # Install python requirements
 COPY requirements requirements
