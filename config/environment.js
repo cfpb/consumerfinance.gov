@@ -8,7 +8,7 @@
  */
 const envvars = {
   /* eslint-disable no-process-env */
-  NODE_ENV: process.env.NODE_ENV
+  NODE_ENV: process.env.NODE_ENV,
   /* eslint-enable no-process-env */
 };
 
@@ -19,10 +19,10 @@ const paths = {
   unprocessed: './cfgov/unprocessed',
   processed: './cfgov/static_built',
   modules: './node_modules',
-  test: './test'
+  test: './test',
 };
 
 module.exports = {
   envvars,
-  paths
+  paths,
 };

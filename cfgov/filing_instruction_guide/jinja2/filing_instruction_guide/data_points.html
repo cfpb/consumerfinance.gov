@@ -59,11 +59,11 @@
         {{field.info.get('short_name', '')}}
 
         <h5>Instructions</h5>
-        <p>{{field.info.get('instruction_text', '') | safe }}<p>
         <ul>
             <li>Field type: {{field.info.get('type', '')}} </li>
             <li>{{field.info.get('conditionality', '')}} </li>
         </ul>
+        <p>{{field.info.get('instruction_text', '') | safe }}<p>
 
         {{ list_if_present(field.info.get('examples'), "Examples") }}
 

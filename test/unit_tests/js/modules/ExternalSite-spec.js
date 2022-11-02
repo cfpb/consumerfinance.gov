@@ -34,23 +34,23 @@ const HTML_SNIPPET = `
 </main>
 `;
 
-describe( 'ExternalSite', () => {
-  beforeEach( () => {
+describe('ExternalSite', () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-  } );
+  });
 
-  it( 'should initialize and count down', () => {
-    const dom = document.querySelector( '.external-site' );
-    const externalSite = new ExternalSite( dom );
+  it('should initialize and count down', () => {
+    const dom = document.querySelector('.external-site');
+    const externalSite = new ExternalSite(dom);
     externalSite.init();
-    expect( dom.querySelectorAll( '.external-site_reload-duration' ).length ).toBe(
+    expect(dom.querySelectorAll('.external-site_reload-duration').length).toBe(
       0
     );
 
-    setTimeout( () => {
+    setTimeout(() => {
       expect(
-        dom.querySelectorAll( '.external-site_reload-duration' ).length
-      ).toBe( 1 );
-    }, 1500 );
-  } );
-} );
+        dom.querySelectorAll('.external-site_reload-duration').length
+      ).toBe(1);
+    }, 1500);
+  });
+});

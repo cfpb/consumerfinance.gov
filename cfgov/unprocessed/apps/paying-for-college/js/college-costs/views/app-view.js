@@ -23,11 +23,12 @@ const appView = {
 
   /**
    * Handle the click of the Include Parent Plus checkbox
-   * @param {Object} event - Click event object
+   *
+   * @param {object} event - Click event object
    */
-  _handleIncludeParentPlusBtn: event => {
+  _handleIncludeParentPlusBtn: (event) => {
     const target = event.target;
-    updateState.byProperty( 'includeParentPlus', target.checked );
+    updateState.byProperty('includeParentPlus', target.checked);
     recalculateFinancials();
     updateFinancialViewAndFinancialCharts();
     appView.setUrlQueryString();
@@ -35,11 +36,12 @@ const appView = {
 
   /**
    * Handle clicks of the restart button
-   * @param {Object} event - The event object
+   *
+   * @param {object} event - The event object
    */
-  _handleRestartBtn: event => {
+  _handleRestartBtn: (event) => {
     event.preventDefault();
-    sendAnalyticsEvent( 'button click', 'restart' );
+    sendAnalyticsEvent('button click', 'restart');
     window.location = '.';
   },
 
@@ -47,32 +49,32 @@ const appView = {
    * Handle clicks of the 'Save for Later' button
    */
   _handleSaveForLaterBtn: () => {
-    sendAnalyticsEvent( 'Save and finish later', window.location.search );
-    updateState.byProperty( 'save-for-later', 'active' );
+    sendAnalyticsEvent('Save and finish later', window.location.search);
+    updateState.byProperty('save-for-later', 'active');
   },
 
-  _handleCopyLinkBtn: event => {
-    if ( navigator.clipboard ) {
-      navigator.clipboard.writeText( window.location.href ).then( function() {
+  _handleCopyLinkBtn: (event) => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href).then(function () {
         const target = event.target;
-        const btn = closest( target, 'button' );
-        const copyBtnDefaultText = btn.querySelector( '#default-text' );
-        const copyBtnSuccessText = btn.querySelector( '#success-text' );
-        copyBtnDefaultText.classList.add( HIDDEN_CLASS );
-        copyBtnSuccessText.classList.remove( HIDDEN_CLASS );
-        setTimeout( function() {
-          copyBtnSuccessText.classList.add( HIDDEN_CLASS );
-          copyBtnDefaultText.classList.remove( HIDDEN_CLASS );
-        }, 3000 );
-      } );
-    } else if ( window.clipboardData && window.clipboardData.setData ) {
-      window.clipboardData.setData( 'Text', window.location.href );
+        const btn = closest(target, 'button');
+        const copyBtnDefaultText = btn.querySelector('#default-text');
+        const copyBtnSuccessText = btn.querySelector('#success-text');
+        copyBtnDefaultText.classList.add(HIDDEN_CLASS);
+        copyBtnSuccessText.classList.remove(HIDDEN_CLASS);
+        setTimeout(function () {
+          copyBtnSuccessText.classList.add(HIDDEN_CLASS);
+          copyBtnDefaultText.classList.remove(HIDDEN_CLASS);
+        }, 3000);
+      });
+    } else if (window.clipboardData && window.clipboardData.setData) {
+      window.clipboardData.setData('Text', window.location.href);
     }
   },
 
-  _handleCopyLinkBtnKeypress: event => {
-    if ( event.keyCode === 13 ) {
-      appView._handleCopyLinkBtn( event );
+  _handleCopyLinkBtnKeypress: (event) => {
+    if (event.keyCode === 13) {
+      appView._handleCopyLinkBtn(event);
     }
   },
 
@@ -80,9 +82,9 @@ const appView = {
    * Update the link on the save and finish page with the current url
    */
   _updateSaveLink: () => {
-    appView._saveLinks.forEach( elem => {
+    appView._saveLinks.forEach((elem) => {
       elem.innerText = window.location.href;
-    } );
+    });
   },
 
   /**
@@ -93,16 +95,16 @@ const appView = {
   },
 
   updateUI: () => {
-    appView._includeParentPlusBtn.checked = getStateValue( 'includeParentPlus' ) ?
-      true :
-      false;
+    appView._includeParentPlusBtn.checked = getStateValue('includeParentPlus')
+      ? true
+      : false;
   },
 
   /**
    * Replaces current state, adding the formatted querystring as the URL
    */
   setUrlQueryString: () => {
-    updateState.replaceStateInHistory( buildUrlQueryString() );
+    updateState.replaceStateInHistory(buildUrlQueryString());
     appView._updateSaveLink();
   },
 
@@ -122,39 +124,39 @@ const appView = {
     appView._saveForLaterBtn = document.querySelector(
       '[data-app-button="save-and-finish-later"]'
     );
-    appView._saveLinks = document.querySelectorAll( '[data-app-save-link]' );
-    appView._copyLinkBtn = document.querySelectorAll( '.copy-your-link' );
+    appView._saveLinks = document.querySelectorAll('[data-app-save-link]');
+    appView._copyLinkBtn = document.querySelectorAll('.copy-your-link');
     appView._includeParentPlusBtn = document.querySelector(
       '#plan__parentPlusFeeRepay'
     );
 
     _addButtonListeners();
-  }
+  },
 };
 
 /**
  * Listeners for buttons.
  */
 function _addButtonListeners() {
-  appView._didThisHelpChoices.forEach( elem => {
-    elem.addEventListener( 'click', _handleDidThisHelpClick );
-  } );
+  appView._didThisHelpChoices.forEach((elem) => {
+    elem.addEventListener('click', _handleDidThisHelpClick);
+  });
 
-  appView._actionPlanChoices.forEach( elem => {
-    elem.addEventListener( 'click', _handleActionPlanClick );
-  } );
+  appView._actionPlanChoices.forEach((elem) => {
+    elem.addEventListener('click', _handleActionPlanClick);
+  });
 
-  appView._restartBtn.addEventListener( 'click', appView._handleRestartBtn );
+  appView._restartBtn.addEventListener('click', appView._handleRestartBtn);
   appView._saveForLaterBtn.addEventListener(
     'click',
     appView._handleSaveForLaterBtn
   );
-  appView._copyLinkBtn.forEach( elem => {
-    elem.addEventListener( 'click', appView._handleCopyLinkBtn );
-  } );
-  appView._copyLinkBtn.forEach( elem => {
-    elem.addEventListener( 'keyup', appView._handleCopyLinkBtnKeypress );
-  } );
+  appView._copyLinkBtn.forEach((elem) => {
+    elem.addEventListener('click', appView._handleCopyLinkBtn);
+  });
+  appView._copyLinkBtn.forEach((elem) => {
+    elem.addEventListener('keyup', appView._handleCopyLinkBtnKeypress);
+  });
   appView._includeParentPlusBtn.addEventListener(
     'click',
     appView._handleIncludeParentPlusBtn
@@ -163,25 +165,27 @@ function _addButtonListeners() {
 
 /**
  * Handle the click of buttons on final page.
+ *
  * @param {MouseEvent} event - Click event object.
  */
-function _handleDidThisHelpClick( event ) {
+function _handleDidThisHelpClick(event) {
   const button = event.target;
-  const parent = closest( button, '.o-form_fieldset' );
+  const parent = closest(button, '.o-form_fieldset');
   sendAnalyticsEvent(
     'Impact question click: ' + parent.dataset.impact,
     event.target.value
   );
-  updateState.byProperty( parent.dataset.impact, event.target.value );
+  updateState.byProperty(parent.dataset.impact, event.target.value);
 }
 
 /**
  * Event handling for action-plan choice clicks.
+ *
  * @param {MouseEvent} event - Triggering event.
  */
-function _handleActionPlanClick( event ) {
+function _handleActionPlanClick(event) {
   const target = event.target;
-  updateState.byProperty( 'actionPlan', target.value );
+  updateState.byProperty('actionPlan', target.value);
 }
 
 export { appView };

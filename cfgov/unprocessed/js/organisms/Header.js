@@ -1,25 +1,24 @@
 // Required modules.
 import {
   checkDom,
-  setInitFlag
+  setInitFlag,
 } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import GlobalSearch from '../molecules/GlobalSearch';
 import MegaMenu from '../organisms/MegaMenu';
 
 /**
  * Header
+ *
  * @class
- *
  * @classdesc Initializes a new Header organism.
- *
  * @param {HTMLElement} element - The DOM element within which to search
  *   for the organism.
- * @returns {Object} An Header instance.
+ * @returns {object} An Header instance.
  */
-function Header( element ) {
+function Header(element) {
   const BASE_CLASS = 'o-header';
 
-  const _dom = checkDom( element, BASE_CLASS );
+  const _dom = checkDom(element, BASE_CLASS);
 
   let _globalSearch;
   let _megaMenu;
@@ -32,25 +31,25 @@ function Header( element ) {
    *   is shown.
    * @returns {Header} An instance.
    */
-  function init( overlay ) {
-    if ( !setInitFlag( _dom ) ) {
+  function init(overlay) {
+    if (!setInitFlag(_dom)) {
       return this;
     }
 
     // Semi-opaque overlay that shows over the content when the menu flies out.
     _overlay = overlay;
 
-    _globalSearch = new GlobalSearch( _dom );
+    _globalSearch = new GlobalSearch(_dom);
 
     // Don't initialize the mega menu if it isn't on the page.
-    if ( _dom.classList.contains( `${ BASE_CLASS }__mega-menu` ) ) {
-      _megaMenu = new MegaMenu( _dom );
-      _megaMenu.addEventListener( 'rootExpandBegin', _megaMenuExpandBegin );
-      _megaMenu.addEventListener( 'rootCollapseEnd', _megaMenuCollapseEnd );
+    if (_dom.classList.contains(`${BASE_CLASS}__mega-menu`)) {
+      _megaMenu = new MegaMenu(_dom);
+      _megaMenu.addEventListener('rootExpandBegin', _megaMenuExpandBegin);
+      _megaMenu.addEventListener('rootCollapseEnd', _megaMenuCollapseEnd);
 
       // If we have a mega menu, it needs to be collapsed when search is expanded.
-      _globalSearch.addEventListener( 'expandBegin', _globalSearchExpandBegin );
-      _globalSearch.addEventListener( 'collapseEnd', _globalSearchCollapseEnd );
+      _globalSearch.addEventListener('expandBegin', _globalSearchExpandBegin);
+      _globalSearch.addEventListener('collapseEnd', _globalSearchCollapseEnd);
 
       _megaMenu.init();
     }
@@ -108,8 +107,8 @@ function Header( element ) {
    * Shows the overlay.
    */
   function _showOverlay() {
-    if ( _menuOpen || _searchOpen ) {
-      _overlay.classList.remove( 'u-hidden' );
+    if (_menuOpen || _searchOpen) {
+      _overlay.classList.remove('u-hidden');
     }
   }
 
@@ -117,8 +116,8 @@ function Header( element ) {
    * Hides the overlay.
    */
   function _hideOverlay() {
-    if ( !_menuOpen && !_searchOpen ) {
-      _overlay.classList.add( 'u-hidden' );
+    if (!_menuOpen && !_searchOpen) {
+      _overlay.classList.add('u-hidden');
     }
   }
 

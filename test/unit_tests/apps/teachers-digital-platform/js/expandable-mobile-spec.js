@@ -1,6 +1,6 @@
 import beforeExpandableTransitionInit, {
   setInnerWidth,
-  MOBILE_COLLAPSED_CLASS
+  MOBILE_COLLAPSED_CLASS,
 } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-mobile.js';
 
 // Markup created with settings: is_expanded=true, is_collapsed_for_mobile=true
@@ -56,17 +56,17 @@ global.console = { error: jest.fn(), log: jest.fn() };
 let expandableDiv;
 const OPEN_DEFAULT_CLASS = 'o-expandable_content__onload-open';
 
-describe( 'expandable-mobile', () => {
-  beforeEach( () => {
-    setInnerWidth( 1000 );
+describe('expandable-mobile', () => {
+  beforeEach(() => {
+    setInnerWidth(1000);
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
-    expandableDiv = document.querySelector( '#test-div .o-expandable_content' );
-  } );
+    expandableDiv = document.querySelector('#test-div .o-expandable_content');
+  });
 
-  it( 'should not throw any errors on init', () => {
-    expect( () => beforeExpandableTransitionInit() ).not.toThrow();
-  } );
+  it('should not throw any errors on init', () => {
+    expect(() => beforeExpandableTransitionInit()).not.toThrow();
+  });
 
   /**
    * These tests just need to show that beforeExpandableTransitionInit()
@@ -75,39 +75,39 @@ describe( 'expandable-mobile', () => {
    * "expandable" template organism.
    */
 
-  it( 'should remove the OPEN_DEFAULT class on narrow innerWidth', () => {
-    setInnerWidth( 900 );
+  it('should remove the OPEN_DEFAULT class on narrow innerWidth', () => {
+    setInnerWidth(900);
 
-    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) ).toEqual( true );
+    expect(expandableDiv.classList.contains(OPEN_DEFAULT_CLASS)).toEqual(true);
     beforeExpandableTransitionInit();
-    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) ).toEqual(
+    expect(expandableDiv.classList.contains(OPEN_DEFAULT_CLASS)).toEqual(
       false
     );
-  } );
+  });
 
-  it( 'should leave the OPEN_DEFAULT class for tablet innerWidth', () => {
-    setInnerWidth( 901 );
+  it('should leave the OPEN_DEFAULT class for tablet innerWidth', () => {
+    setInnerWidth(901);
 
-    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) ).toEqual( true );
+    expect(expandableDiv.classList.contains(OPEN_DEFAULT_CLASS)).toEqual(true);
     beforeExpandableTransitionInit();
-    expect( expandableDiv.classList.contains( OPEN_DEFAULT_CLASS ) ).toEqual( true );
-  } );
+    expect(expandableDiv.classList.contains(OPEN_DEFAULT_CLASS)).toEqual(true);
+  });
 
-  it( 'should always remove its MOBILE_COLLAPSED_CLASS (narrow)', () => {
-    setInnerWidth( 900 );
+  it('should always remove its MOBILE_COLLAPSED_CLASS (narrow)', () => {
+    setInnerWidth(900);
 
     beforeExpandableTransitionInit();
-    expect( expandableDiv.classList.contains( MOBILE_COLLAPSED_CLASS ) ).toEqual(
+    expect(expandableDiv.classList.contains(MOBILE_COLLAPSED_CLASS)).toEqual(
       false
     );
-  } );
+  });
 
-  it( 'should always remove its MOBILE_COLLAPSED_CLASS (wide)', () => {
-    setInnerWidth( 901 );
+  it('should always remove its MOBILE_COLLAPSED_CLASS (wide)', () => {
+    setInnerWidth(901);
 
     beforeExpandableTransitionInit();
-    expect( expandableDiv.classList.contains( MOBILE_COLLAPSED_CLASS ) ).toEqual(
+    expect(expandableDiv.classList.contains(MOBILE_COLLAPSED_CLASS)).toEqual(
       false
     );
-  } );
-} );
+  });
+});

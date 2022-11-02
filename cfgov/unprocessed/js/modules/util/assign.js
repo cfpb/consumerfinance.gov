@@ -9,8 +9,8 @@
  * @param {object} object - JavaScript object.
  * @returns {boolean} True if object is plain Javascript object.
  */
-function _isPlainObject( object ) {
-  return Object.prototype.toString.call( object ) === '[object Object]';
+function _isPlainObject(object) {
+  return Object.prototype.toString.call(object) === '[object Object]';
 }
 
 /**
@@ -18,21 +18,21 @@ function _isPlainObject( object ) {
  * existing properties. When assigning from multiple sources, fields of every
  * next source will override same named fields of previous sources.
  *
- * @param {Object} destination - The destination object.
- * @returns {Object} assigned destination object.
+ * @param {object} destination - The destination object.
+ * @returns {object} assigned destination object.
  */
-function assign( destination ) {
+function assign(destination) {
   destination = destination || {};
   let hasOwnProp;
-  for ( let i = 1; i < arguments.length; i++ ) {
+  for (let i = 1; i < arguments.length; i++) {
     const source = arguments[i] || {};
-    hasOwnProp = Object.hasOwnProperty.bind( source );
+    hasOwnProp = Object.hasOwnProperty.bind(source);
     let key;
-    for ( key in source ) {
-      if ( hasOwnProp( key ) ) {
+    for (key in source) {
+      if (hasOwnProp(key)) {
         const value = source[key];
-        if ( _isPlainObject( value ) ) {
-          assign( destination[key] = {}, value );
+        if (_isPlainObject(value)) {
+          assign((destination[key] = {}), value);
         } else {
           destination[key] = source[key];
         }

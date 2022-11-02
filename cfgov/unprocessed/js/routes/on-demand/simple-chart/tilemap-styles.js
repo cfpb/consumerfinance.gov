@@ -4,7 +4,7 @@ const tilemap = {
   ...styles,
   accessibility: {},
   navigator: {
-    enabled: false
+    enabled: false,
   },
   plotOptions: {
     tilemap: {
@@ -13,43 +13,43 @@ const tilemap = {
       pointPadding: 3,
       states: {
         hover: {
-          enabled: false
-        }
+          enabled: false,
+        },
       },
       dataLabels: {
         enabled: true,
-        formatter: function() {
+        formatter: function () {
           return `<span style="font-weight:500">${
             this.point.state
-          }</span><br/><span style="font-weight:300">${ Math.round(
+          }</span><br/><span style="font-weight:300">${Math.round(
             this.point.value
-          ) }</span>`;
+          )}</span>`;
         },
         style: {
           textOutline: false,
-          fontSize: 14
-        }
-      }
-    }
+          fontSize: 14,
+        },
+      },
+    },
   },
   xAxis: {
     visible: false,
     tickAmount: 15,
-    title: {}
+    title: {},
   },
   yAxis: {
     visible: false,
     tickAmount: 15,
-    title: {}
+    title: {},
   },
   tooltip: {
     style: {
       fontFamily: 'Avenir Next',
-      fontSize: '16px'
-    }
+      fontSize: '16px',
+    },
   },
   legend: {
-    enabled: false
+    enabled: false,
   },
   chart: {
     animation: false,
@@ -59,31 +59,31 @@ const tilemap = {
     marginRight: 0,
     marginTop: -1,
     spacingBottom: -290,
-    type: 'tilemap'
+    type: 'tilemap',
   },
   responsive: {
     rules: [
       {
         condition: {
-          maxWidth: 660
+          maxWidth: 660,
         },
         chartOptions: {
           chart: {
             animation: false,
             height: 350,
             marginLeft: -19,
-            spacingBottom: -240
+            spacingBottom: -240,
           },
 
           plotOptions: {
             tilemap: {
-              pointRange: 0
-            }
-          }
-        }
-      }
-    ]
-  }
+              pointRange: 0,
+            },
+          },
+        },
+      },
+    ],
+  },
 };
 
 export default tilemap;

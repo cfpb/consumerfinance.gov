@@ -8,21 +8,20 @@ const CLASSES = {
   BASE_CLASS: 'o-expandable-facets_content__transition',
   EXPANDED: 'o-expandable-facets_content__expanded',
   COLLAPSED: 'o-expandable-facets_content__collapsed',
-  OPEN_DEFAULT: 'o-expandable-facets_content__onload-open'
+  OPEN_DEFAULT: 'o-expandable-facets_content__onload-open',
 };
 
 /* eslint-disable max-lines-per-function */
 /**
  * ExpandableFacetTransition
+ *
  * @class
- *
  * @classdesc Initializes new ExpandableFacetTransition behavior.
- *
  * @param {HTMLElement} element - DOM element to apply move transition to.
  * @returns {ExpandableFacetTransition} An instance.
  */
-function ExpandableFacetTransition( element ) {
-  const _baseTransition = new BaseTransition( element, CLASSES );
+function ExpandableFacetTransition(element) {
+  const _baseTransition = new BaseTransition(element, CLASSES);
   let previousHeight;
 
   /**
@@ -32,10 +31,10 @@ function ExpandableFacetTransition( element ) {
     _baseTransition.init();
     _baseTransition.addEventListener(
       BaseTransition.END_EVENT,
-      _transitionComplete.bind( this )
+      _transitionComplete.bind(this)
     );
 
-    if ( element.classList.contains( CLASSES.OPEN_DEFAULT ) ) {
+    if (element.classList.contains(CLASSES.OPEN_DEFAULT)) {
       this.expand();
     } else {
       this.collapse();
@@ -48,23 +47,24 @@ function ExpandableFacetTransition( element ) {
    * Handle the end of a transition.
    */
   function _transitionComplete() {
-    if ( element.classList.contains( CLASSES.EXPANDED ) ) {
-      this.dispatchEvent( 'expandEnd', { target: this } );
+    if (element.classList.contains(CLASSES.EXPANDED)) {
+      this.dispatchEvent('expandEnd', { target: this });
 
-      if ( element.scrollHeight > previousHeight ) {
+      if (element.scrollHeight > previousHeight) {
         element.style.maxHeight = element.scrollHeight + 'px';
       }
-    } else if ( element.classList.contains( CLASSES.COLLAPSED ) ) {
-      this.dispatchEvent( 'collapseEnd', { target: this } );
+    } else if (element.classList.contains(CLASSES.COLLAPSED)) {
+      this.dispatchEvent('collapseEnd', { target: this });
     }
   }
 
   /**
    * Toggle the expandable
+   *
    * @returns {ExpandableFacetTransition} An instance.
    */
   function toggleExpandable() {
-    if ( element.classList.contains( CLASSES.COLLAPSED ) ) {
+    if (element.classList.contains(CLASSES.COLLAPSED)) {
       this.expand();
     } else {
       this.collapse();
@@ -75,31 +75,33 @@ function ExpandableFacetTransition( element ) {
 
   /**
    * Collapses the expandable content
+   *
    * @returns {ExpandableFacetTransition} An instance.
    */
   function collapse() {
-    this.dispatchEvent( 'collapseBegin', { target: this } );
+    this.dispatchEvent('collapseBegin', { target: this });
 
     previousHeight = element.scrollHeight;
     element.style.maxHeight = '0';
-    _baseTransition.applyClass( CLASSES.COLLAPSED );
+    _baseTransition.applyClass(CLASSES.COLLAPSED);
 
     return this;
   }
 
   /**
    * Expands the expandable content
+   *
    * @returns {ExpandableFacetTransition} An instance.
    */
   function expand() {
-    this.dispatchEvent( 'expandBegin', { target: this } );
+    this.dispatchEvent('expandBegin', { target: this });
 
-    if ( !previousHeight || element.scrollHeight > previousHeight ) {
+    if (!previousHeight || element.scrollHeight > previousHeight) {
       previousHeight = element.scrollHeight;
     }
 
     element.style.maxHeight = previousHeight + 'px';
-    _baseTransition.applyClass( CLASSES.EXPANDED );
+    _baseTransition.applyClass(CLASSES.EXPANDED);
 
     return this;
   }

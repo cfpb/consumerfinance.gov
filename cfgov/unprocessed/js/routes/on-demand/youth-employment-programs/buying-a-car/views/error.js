@@ -2,17 +2,21 @@ import { checkDom } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpe
 
 const CONTAINER = 'cbg-checklist-error';
 
-function errorView( element ) {
-  const _dom = checkDom( element, CONTAINER );
+/**
+ *
+ * @param element
+ */
+function errorView(element) {
+  const _dom = checkDom(element, CONTAINER);
 
   return {
-    render( reveal ) {
-      if ( reveal ) {
-        _dom.classList.remove( 'u-hidden' );
+    render(reveal) {
+      if (reveal) {
+        _dom.classList.remove('u-hidden');
       } else {
-        _dom.classList.add( 'u-hidden' );
+        _dom.classList.add('u-hidden');
       }
-    }
+    },
   };
 }
 

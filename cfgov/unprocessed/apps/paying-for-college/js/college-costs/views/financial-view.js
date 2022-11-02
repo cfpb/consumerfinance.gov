@@ -3,12 +3,12 @@
 import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
 import {
   getFinancialValue,
-  getStateValue
+  getStateValue,
 } from '../dispatchers/get-model-values.js';
 import {
   recalculateFinancials,
   updateFinancial,
-  updateFinancialsFromSchool
+  updateFinancialsFromSchool,
 } from '../dispatchers/update-models.js';
 import numberToMoney from 'format-usd';
 import { selectorMatches } from '../util/other-utils';
@@ -27,58 +27,58 @@ const financialView = {
   /**
    * Event handling for "see steps" action plan button.
    */
-  _handleSeeStepsClick: function() {
+  _handleSeeStepsClick: function () {
     // TODO - This could all be written better.
     const selected = document.querySelector(
       '.action-plan_choices .highlighted input[checked="true"]'
     );
-    document.querySelectorAll( '[data-action-plan]' ).forEach( elem => {
-      elem.classList.remove( 'active' );
-    } );
+    document.querySelectorAll('[data-action-plan]').forEach((elem) => {
+      elem.classList.remove('active');
+    });
     document
-      .querySelector( '[data-action-plan="' + selected.value + '"]' )
-      .classList.add( 'active' );
+      .querySelector('[data-action-plan="' + selected.value + '"]')
+      .classList.add('active');
     document
-      .querySelector( '.action-plan .action-plan_feeling-gauge' )
-      .classList.add( 'active' );
+      .querySelector('.action-plan .action-plan_feeling-gauge')
+      .classList.add('active');
   },
 
-  updateFinancialItems: function() {
-    this._financialItems.forEach( elem => {
-      if ( !selectorMatches( elem, ':focus' ) ) {
+  updateFinancialItems: function () {
+    this._financialItems.forEach((elem) => {
+      if (!selectorMatches(elem, ':focus')) {
         const prop = elem.dataset.financialItem;
-        const isRate = prop.substr( 0, 5 ) === 'rate_';
-        const isFee = prop.substr( 0, 4 ) === 'fee_';
-        const isHours = prop.substr( -5, 5 ) === 'Hours';
+        const isRate = prop.substr(0, 5) === 'rate_';
+        const isFee = prop.substr(0, 4) === 'fee_';
+        const isHours = prop.substr(-5, 5) === 'Hours';
         const isNumber = elem.dataset.isNumber === 'true';
-        let val = getFinancialValue( prop );
+        let val = getFinancialValue(prop);
 
         // Prevent improper property values from presenting on the page
-        if ( val === false || val === null || isNaN( val ) ) val = 0;
-        if ( isFee ) {
-          val = decimalToPercentString( val, 3 );
-        } else if ( isRate ) {
-          val = decimalToPercentString( val, 2 );
-        } else if ( isNumber ) {
-          val = Math.round( val * 100 ) / 100;
-        } else if ( isHours ) {
-          val = Math.round( val * 10 ) / 10 + ' hours';
+        if (val === false || val === null || isNaN(val)) val = 0;
+        if (isFee) {
+          val = decimalToPercentString(val, 3);
+        } else if (isRate) {
+          val = decimalToPercentString(val, 2);
+        } else if (isNumber) {
+          val = Math.round(val * 100) / 100;
+        } else if (isHours) {
+          val = Math.round(val * 10) / 10 + ' hours';
         } else {
-          val = numberToMoney( { amount: val, decimalPlaces: 0 } );
+          val = numberToMoney({ amount: val, decimalPlaces: 0 });
         }
 
-        if ( elem.tagName === 'INPUT' ) {
+        if (elem.tagName === 'INPUT') {
           elem.value = val;
         } else {
           elem.innerText = val;
         }
       }
-    } );
+    });
   },
 
   /* init - Initialize the financialView object */
-  init: function() {
-    this._financialItems = document.querySelectorAll( '[data-financial-item]' );
+  init: function () {
+    this._financialItems = document.querySelectorAll('[data-financial-item]');
     this._financialInputs = document.querySelectorAll(
       'input[data-financial-item]'
     );
@@ -90,18 +90,18 @@ const financialView = {
     );
     _addInputListeners();
     _addButtonListeners();
-  }
+  },
 };
 
 /**
  * Listeners for INPUT fields and radio buttons.
  */
 function _addInputListeners() {
-  financialView._financialInputs.forEach( elem => {
-    elem.addEventListener( 'keyup', _handleInputChange );
-    elem.addEventListener( 'focusout', _handleInputChange );
-    elem.addEventListener( 'click', _handleInputClick );
-  } );
+  financialView._financialInputs.forEach((elem) => {
+    elem.addEventListener('keyup', _handleInputChange);
+    elem.addEventListener('focusout', _handleInputChange);
+    elem.addEventListener('click', _handleInputClick);
+  });
 }
 
 /**
@@ -116,40 +116,42 @@ function _addButtonListeners() {
 
 /**
  * Event handling for financial-item INPUT changes.
+ *
  * @param {KeyboardEvent} event - The triggering keyboard event.
  */
-function _handleInputChange( event ) {
-  clearTimeout( financialView._inputChangeTimeout );
+function _handleInputChange(event) {
+  clearTimeout(financialView._inputChangeTimeout);
   const elem = event.target;
   const name = elem.dataset.financialItem;
-  const isRate = name.substr( 0, 5 ) === 'rate_';
-  const isFee = name.substr( 0, 4 ) === 'fee_';
-  let value = stringToNum( elem.value );
+  const isRate = name.substr(0, 5) === 'rate_';
+  const isFee = name.substr(0, 4) === 'fee_';
+  let value = stringToNum(elem.value);
 
   financialView._currentInput = elem;
 
-  if ( isRate || isFee ) {
+  if (isRate || isFee) {
     value /= 100;
   }
 
-  if ( selectorMatches( elem, ':focus' ) ) {
-    financialView._inputChangeTimeout = setTimeout( function() {
-      updateFinancial( name, value );
+  if (selectorMatches(elem, ':focus')) {
+    financialView._inputChangeTimeout = setTimeout(function () {
+      updateFinancial(name, value);
       updateUrlQueryString();
-    }, 500 );
+    }, 500);
   } else {
-    updateFinancial( name, value );
+    updateFinancial(name, value);
     updateUrlQueryString();
   }
 }
 
 /**
  * Event handling for input clicks.
+ *
  * @param {MouseEvent} event - The triggering click event object.
  */
-function _handleInputClick( event ) {
+function _handleInputClick(event) {
   const target = event.target;
-  if ( target.value === '$0' ) {
+  if (target.value === '$0') {
     target.value = '';
   }
 }
@@ -163,14 +165,14 @@ function _handleCostsButtonClick() {
   );
   let answer = '';
 
-  if ( checkedButton !== null ) {
+  if (checkedButton !== null) {
     answer = checkedButton.value;
 
     // When the button is clicked, bring in school data if 'No'
-    if ( getStateValue( 'costsQuestion' ) === false ) {
-      updateState.byProperty( 'costsQuestion', answer );
+    if (getStateValue('costsQuestion') === false) {
+      updateState.byProperty('costsQuestion', answer);
       // If their offer does not have costs, use the Department of Ed data
-      if ( answer === 'n' ) {
+      if (answer === 'n') {
         updateFinancialsFromSchool();
       } else {
         recalculateFinancials();
