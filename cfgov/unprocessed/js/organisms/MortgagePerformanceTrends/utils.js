@@ -59,11 +59,11 @@ const utils = {
   /**
    * addOption - Create select option to be injected into HTML select element.
    *
-   * @param {object} params - Param object
-   * @param {type} params.document - window.document
-   * @param {string} params.value - <option value="VALUE">text</option>
-   * @param {string} params.text - <option value="value">TEXT</option>
-   * @returns {type} Description
+   * @param {object} params - A parameters object.
+   * @param {HTMLElement} params.document - window.document.
+   * @param {string} params.value - <option value="VALUE">text</option>.
+   * @param {string} params.text - <option value="value">TEXT</option>.
+   * @returns {HTMLElement} The option HTML element node.
    */
   addOption: ({ document, value, text }) => {
     const option = document.createElement('option');
@@ -73,7 +73,7 @@ const utils = {
   },
 
   /**
-   * getStateData - XHR state metadata
+   * getStateData - XHR state metadata.
    *
    * @param {Function} cb - Function called with state data.
    * @returns {Function} Function called with state data.

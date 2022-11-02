@@ -4,8 +4,8 @@
  * false, then that limit is not enforced.
  *
  * @param {number} n - The number to be forced into the range.
- * @param {number|bool} min - The minimum value, or false if not enforced.
- * @param {number|bool} max - The maximum value, or false if not enforced.
+ * @param {number|boolean} min - The minimum value, or false if not enforced.
+ * @param {number|boolean} max - The maximum value, or false if not enforced.
  * @returns {number} The number after range is enforced.
  */
 function enforceRange(n, min, max) {

@@ -178,11 +178,11 @@ function makeChartOptions(data, dataAttributes) {
 }
 
 /**
- * Adds projected months to config object for Highcharts
+ * Adds projected months to config object for Highcharts.
  *
- * @param {object} chartObject - The config object for Highcharts
- * @param {integer} numMonths - The number of months input into wagtail field
- * @returns {object} The config object with projected months
+ * @param {object} chartObject - The config object for Highcharts.
+ * @param {number} numMonths - The number of months input into wagtail field.
+ * @returns {object} The config object with projected months.
  */
 function addProjectedMonths(chartObject, numMonths) {
   // Convert the number of projected months into a timestamp
