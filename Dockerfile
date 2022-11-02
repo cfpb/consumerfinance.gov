@@ -20,6 +20,7 @@ RUN pip install --upgrade pip setuptools wheel awscli
 # Add `$HOME/.local/bin` to PATH
 RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> /etc/profile
 
+#######################################################################
 # Intermediate layer to build only prod deps
 FROM base as cfgov-python-builder
 
@@ -30,6 +31,7 @@ RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev
 COPY requirements requirements
 RUN mkdir /build && pip install --prefix=/build -r requirements/deployment.txt
 
+#######################################################################
 # cfgov-dev is used for local development, as well as a base for frontend.
 FROM cfgov-python-builder AS cfgov-dev
 
@@ -43,7 +45,6 @@ ENV ALLOWED_HOSTS '["*"]'
 
 # .backend-deps and .frontend-deps are required to run the application
 RUN apk add --no-cache --virtual .backend-deps bash curl postgresql
-RUN apk add --no-cache --virtual .frontend-deps jpeg-dev nodejs yarn zlib-dev
 
 # Install python requirements
 COPY requirements requirements
@@ -54,10 +55,32 @@ EXPOSE 8000
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
-# Build Frontend Assets using cfgov-dev as base
-FROM cfgov-python-builder as cfgov-frontend-builder
+#######################################################################
+# Build frontend assets using a Node base image
+FROM node:16-alpine as cfgov-node-builder
 
+ENV APP_HOME /src/consumerfinance.gov
+WORKDIR ${APP_HOME}
+
+# Install and update common OS packages and frontend dependencies
+RUN apk update --no-cache && \
+    apk upgrade --no-cache && \
+    apk add --no-cache --virtual .frontend-deps jpeg-dev yarn zlib-dev
+
+# Target a production frontend build
 ARG FRONTEND_TARGET=production
+
+# See .dockerignore for details on which files are included
+COPY . .
+
+# Build the front-end
+RUN ./frontend.sh  ${FRONTEND_TARGET} && \
+    yarn cache clean && \
+    rm -rf node_modules npm-packages-offline-cache cfgov/unprocessed
+
+#######################################################################
+# Intermediate layer to collect the frontend for the production-like image
+FROM cfgov-python-builder as cfgov-frontend-builder
 
 ENV STATIC_PATH ${APP_HOME}/cfgov/static/
 ENV PYTHONPATH ${APP_HOME}/cfgov
@@ -67,19 +90,16 @@ ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
 ENV ALLOWED_HOSTS '["*"]'
 
-# Install Python dependencies, install frontend dependencies
-RUN cp -Rfp /build/* /usr/local && rm -Rf /build && \
-    apk add --no-cache --virtual .frontend-deps jpeg-dev nodejs yarn zlib-dev
+# Install Python dependencie
+RUN cp -Rfp /build/* /usr/local && rm -Rf /build
 
 # See .dockerignore for details on which files are included
-COPY . .
+COPY --from=cfgov-node-builder ${APP_HOME} ${APP_HOME}
 
-# Build the front-end
-RUN ./frontend.sh  ${FRONTEND_TARGET} && \
-    cfgov/manage.py collectstatic && \
-    yarn cache clean && \
-    rm -rf node_modules npm-packages-offline-cache cfgov/unprocessed
+# Run Django's collectstatic to collect assets from the frontend build
+RUN cfgov/manage.py collectstatic
 
+#######################################################################
 # Build mod_wsgi against target Python version
 FROM base as cfgov-mod-wsgi
 WORKDIR /tmp
@@ -92,6 +112,7 @@ RUN ls /usr/lib/apache2/mod_wsgi.so  # Ensure it compiled and is where expected
 RUN apk del .build-deps
 RUN rm -Rf /tmp/mod_wsgi*
 
+#######################################################################
 # Production-like Apache-based image
 FROM base as cfgov-prod
 
