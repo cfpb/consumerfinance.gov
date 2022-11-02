@@ -25,10 +25,7 @@ admin console. The [Search.gov Help Manual](https://search.gov/manual/index.html
 documents the various configuration options used on our indexes, for example
 text-based "best bets" and our custom visual design.
 
-The website base page template includes
-[the necessary Search.gov code snippets](https://search.gov/manual/code.html)
-required for searching and indexing of site content. Search.gov also makes use of
-the website
+Search.gov also makes use of the website
 [robots.txt](https://www.consumerfinance.gov/robots.txt)
 and
 [sitemap.xml](https://www.consumerfinance.gov/sitemap.xml)
