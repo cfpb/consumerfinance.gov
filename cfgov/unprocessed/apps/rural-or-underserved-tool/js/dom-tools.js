@@ -361,7 +361,7 @@ function mutate(callback) {
 }
 
 /**
- * @param {Function} callback - Function to call on mutate.
+ * @param {Function} callback - Function to pass to the wrapped call to requestAnimationFrame.
  */
 function nextFrame(callback) {
   fastDom.raf(callback);
