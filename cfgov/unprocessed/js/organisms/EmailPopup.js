@@ -11,7 +11,7 @@ import FormSubmit from './FormSubmit.js';
  *
  * @class
  * @classdesc Initializes the organism.
- * @param {HTMLNode} element - The HTML DOM element.
+ * @param {HTMLElement} element - The HTML DOM element.
  * @returns {EmailSignup} An instance.
  */
 function EmailPopup(element) {

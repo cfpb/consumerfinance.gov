@@ -15,9 +15,8 @@ const _matches = (function _getMatches() {
 })();
 
 /**
- *
- * @param selector
- * @param callback
+ * @param {string} selector - A CSS selector.
+ * @param {Function} callback - Function to call on queried element.
  */
 function _mutate(selector, callback) {
   applyAll(selector, function (element) {
@@ -41,8 +40,8 @@ const wrapMap = {
 
 /**
  *
- * @param elements
- * @param applyFn
+ * @param {HTMLElement|string} elements - An HTML element or a selector.
+ * @param {Function} applyFn - Function to apply to each element.
  */
 function applyAll(elements, applyFn) {
   if (elements instanceof HTMLElement) {
@@ -85,18 +84,16 @@ function addEl(parent, child) {
 }
 
 /**
- *
- * @param selector
- * @param attributeName
+ * @param {string} selector - A CSS selector.
+ * @param {string} attributeName - A value to add to a data- attribute.
  */
 function getElData(selector, attributeName) {
   return getEl(selector).getAttribute('data-' + attributeName);
 }
 
 /**
- *
- * @param selector
- * @param text
+ * @param {string} selector - A CSS selector.
+ * @param {string} text - Some text content.
  */
 function changeElText(selector, text) {
   _mutate(selector, function (element) {
@@ -105,9 +102,8 @@ function changeElText(selector, text) {
 }
 
 /**
- *
- * @param selector
- * @param HTML
+ * @param {string} selector - A CSS selector.
+ * @param {string} HTML - An HTML snippet.
  */
 function changeElHTML(selector, HTML) {
   _mutate(selector, function (element) {
@@ -199,10 +195,9 @@ function toggleClass(selector, className) {
 }
 
 /**
- *
- * @param element
- * @param propName
- * @param filter
+ * @param {HTMLElement} element - An element.
+ * @param {string} propName - An HTML element property to select for.
+ * @param {string} filter - The string to filter by.
  */
 function filter(element, propName, filter) {
   const _propName = propName || '';
@@ -246,8 +241,8 @@ function getEls(selector) {
 
 /**
  *
- * @param element
- * @param filter
+ * @param {HTMLElement} element - An HTML element node.
+ * @param {string} filter - A string to filter by.
  */
 function getChildEls(element, filter) {
   const firstChild = element.childNodes[0];
@@ -259,27 +254,24 @@ function getChildEls(element, filter) {
 }
 
 /**
- *
- * @param element
- * @param filterNode
+ * @param {HTMLElement} element - An element.
+ * @param {string} filterNode - The string to filter by.
  */
 function getParentEls(element, filterNode) {
   return filter(element, 'parentNode', filterNode);
 }
 
 /**
- *
- * @param element
- * @param filterNode
+ * @param {HTMLElement} element - An element.
+ * @param {string} filterNode - The string to filter by.
  */
 function getPreviousEls(element, filterNode) {
   return filter(element, 'previousElementSibling', filterNode);
 }
 
 /**
- *
- * @param element
- * @param filterNode
+ * @param {HTMLElement} element - An element.
+ * @param {string} filterNode - The string to filter by.
  */
 function getNextEls(element, filterNode) {
   return filter(element, 'nextElementSibling', filterNode);
@@ -362,16 +354,14 @@ function fadeOut(selector, time, callback) {
 }
 
 /**
- *
- * @param callback
+ * @param {Function} callback - Function to call on mutate.
  */
 function mutate(callback) {
   _mutate(callback);
 }
 
 /**
- *
- * @param callback
+ * @param {Function} callback - Function to call on mutate.
  */
 function nextFrame(callback) {
   fastDom.raf(callback);
