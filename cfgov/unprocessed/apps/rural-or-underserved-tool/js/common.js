@@ -396,8 +396,9 @@ function generateCSV() {
     ' or underserved?, Date processed\n';
 
   /**
+   * Process each cell in a table row.
    *
-   * @param element
+   * @param {HTMLElement} element - A table data element to process.
    */
   function _loopHandler(element) {
     const isHidden = DT.hasClass(DT.getParentEls('.js-table'), 'u-hidden');

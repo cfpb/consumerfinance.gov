@@ -55,9 +55,9 @@ function applyAll(elements, applyFn) {
 
 /**
  *
- * @param elements
- * @param events
- * @param callback
+ * @param {Array} elements - A list of HTML DOM nodes.
+ * @param {Array|string} events - A list or single event type.
+ * @param {Function} callback - A function to call at the end.
  */
 function bindEvents(elements, events, callback) {
   if (Array.isArray(events) === false) {
@@ -72,9 +72,8 @@ function bindEvents(elements, events, callback) {
 }
 
 /**
- *
- * @param parent
- * @param child
+ * @param {HTMLElement|string} parent - An HTML element node or CSS selector.
+ * @param {HTMLElement|string} child - An HTML element node or snippet.
  */
 function addEl(parent, child) {
   return fastDom.mutate(function () {
@@ -114,7 +113,7 @@ function changeElHTML(selector, HTML) {
 /**
  * Code copied from jQuery with minimal modifications.
  *
- * @param {HTMLElement} HTML - An HTML DOM node.
+ * @param {HTMLElement|string} HTML - An HTML DOM node or snippet.
  * @returns {DocumentFragment} The created document fragment node.
  */
 function createEl(HTML) {
@@ -216,7 +215,7 @@ function filter(element, propName, filter) {
 }
 
 /**
- * @param {string} selector - A CSS selector.
+ * @param {HTMLElement|string} selector - An HTML element node or CSS selector.
  * @returns {HTMLElement} An HTML node returned by the passed selector,
  *  or the selector passed into this method.
  */
@@ -228,7 +227,7 @@ function getEl(selector) {
 }
 
 /**
- * @param {string} selector - A CSS selector.
+ * @param {HTMLElement|string} selector - An HTML element node or CSS selector.
  * @returns {NodeList} A list of HTML nodes returned by the passed selector,
  *  or the selector passed into this method.
  */
@@ -278,8 +277,9 @@ function getNextEls(element, filterNode) {
 }
 
 /**
+ * Check whether something is a NodeList, HTML element, or window.
  *
- * @param element
+ * @param {*} element - An object to check for element-ness.
  */
 function isEl(element) {
   return (
@@ -291,8 +291,6 @@ function isEl(element) {
 }
 
 /**
- * Check whether something is a NodeList, HTML element, or window.
- *
  * @param {*} selector - Something, possibly a list, element or window instance.
  */
 function hide(selector) {
@@ -302,8 +300,6 @@ function hide(selector) {
 }
 
 /**
- * Check whether something is a NodeList, HTML element, or window.
- *
  * @param {*} selector - Something, possibly a list, element or window instance.
  */
 function show(selector) {
@@ -315,7 +311,7 @@ function show(selector) {
 /**
  * @param {string} selector - A CSS selector for an element.
  * @param {number} time - When to call the callback.
- * @param {[Function]} callback - Function to call after delay.
+ * @param {Function} [callback] - Function to call after delay.
  */
 function fadeIn(selector, time, callback) {
   const element = getEl(selector);
@@ -336,7 +332,7 @@ function fadeIn(selector, time, callback) {
 /**
  * @param {string} selector - A CSS selector for an element.
  * @param {number} time - When to call the callback.
- * @param {[Function]} callback - Function to call after delay.
+ * @param {Function} [callback] - Function to call after delay.
  */
 function fadeOut(selector, time, callback) {
   const element = getEl(selector);
@@ -361,7 +357,8 @@ function mutate(callback) {
 }
 
 /**
- * @param {Function} callback - Function to pass to the wrapped call to requestAnimationFrame.
+ * @param {Function} callback - Function to pass to the wrapped call
+ *   to requestAnimationFrame.
  */
 function nextFrame(callback) {
   fastDom.raf(callback);

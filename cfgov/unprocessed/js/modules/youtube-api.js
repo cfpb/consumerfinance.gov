@@ -75,7 +75,7 @@ function fetchImageURL(videoId) {
  * @param {HTMLElement} iframeContainerDom - A reference to <iframe>
  *   to embed the video.
  * @param {string} videoId - A YouTube video ID.
- * @returns {YT.Player} A YouTube Player instance.
+ * @returns {object} A YouTube Player instance (YT.Player).
  * @throws {Error} If the IFrame API has not loaded.
  */
 function instantiatePlayer(iframeContainerDom, videoId) {
