@@ -4,9 +4,8 @@ import isElementInView from '../utils/is-element-in-view';
 import $ from 'jquery';
 
 /**
- *
- * @param ageRightNow
- * @param fullRetirementAge
+ * @param {number} ageRightNow - The current age.
+ * @param {number} fullRetirementAge - The age at retirement.
  */
 function init(ageRightNow = 0, fullRetirementAge = 0) {
   limitAgeSelector(ageRightNow);

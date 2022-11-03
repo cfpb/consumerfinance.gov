@@ -194,7 +194,7 @@ function show(selector) {
 /**
  * @param {HTMLElement} element - HTML element to adjust.
  * @param {number} time - When to call the callback.
- * @param {[Function]} callback - Function to call after delay.
+ * @param {Function} [callback] - Function to call after delay.
  */
 function fadeIn(element, time, callback = NO_OP) {
   element.style.transition = 'opacity ' + time + 'ms ease-in-out';
@@ -207,7 +207,7 @@ function fadeIn(element, time, callback = NO_OP) {
 /**
  * @param {HTMLElement} element - HTML element to adjust.
  * @param {number} time - When to call the callback.
- * @param {[Function]} callback - Function to call after delay.
+ * @param {Function} [callback] - Function to call after delay.
  */
 function fadeOut(element, time, callback = NO_OP) {
   element.style.transition = 'opacity ' + time + 'ms ease-in-out';

@@ -35,6 +35,7 @@ const metricView = {
     },
   },
 
+  // Flag if this is a settlement school.
   settlementStatus: false,
 
   /**
@@ -297,9 +298,6 @@ const metricView = {
 
   /**
    * Initializes all metrics with bar graphs.
-   *
-   * @param {object} values - Financial model values.
-   * @param {boolean} settlementStatus - Flag if this is a settlement school.
    */
   updateGraphs: function () {
     const $graphs = $('.bar-graph');
@@ -348,9 +346,6 @@ const metricView = {
   /**
    * Populates the debt burden numbers and shows the corresponding notification
    * on the page.
-   *
-   * @param {object} values - Financial model values.
-   * @param {boolean} settlementStatus - Flag if this is a settlement school.
    */
   updateDebtBurden: function () {
     const $section = $('[data-repayment-section="debt-burden"]');

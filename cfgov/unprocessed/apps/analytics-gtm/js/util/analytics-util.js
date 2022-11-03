@@ -15,9 +15,9 @@ function addEventListenerToSelector(selector, event, callback) {
 /**
  * Check if an element exists on the page, and if it does, add listeners.
  *
- * @param {[type]} elem - [description] TODO
- * @param {[type]} event - [description] TODO
- * @param {Function} callback - [description] TODO
+ * @param {HTMLElement} [elem] - The element to attach an event to.
+ * @param {string} [event] - The event type string.
+ * @param {Function} callback - Function to call when the event triggers.
  */
 function addEventListenerToElem(elem, event, callback) {
   if (elem) {

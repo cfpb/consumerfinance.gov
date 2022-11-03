@@ -260,9 +260,6 @@ function init(chartNode, target, data, dataAttributes) {
 
   /**
    * Fixes tilemap clipping
-   *
-   * @param {object} evt - Optional event
-   * @param {number} height - Height value for the SVG element.
    */
   function fixViewbox() {
     const chartSVG = target.getElementsByClassName('highcharts-root')[0];

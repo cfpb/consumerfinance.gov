@@ -204,8 +204,8 @@ function FilterableListControls(element) {
    * Validate the fields of our form.
    *
    * @param {Array} fields - A list of form fields.
-   * @returns {object}
-   *   The tested list of fields broken into valid and invalid blocks.
+   * @returns {object} The tested list of fields broken into valid
+   *   and invalid blocks.
    */
   function _validateFields(fields) {
     const validatedFields = {
@@ -241,8 +241,6 @@ function FilterableListControls(element) {
    * Validate the specific field types.
    *
    * @param {HTMLElement} field - A form field.
-   * @param {string} type - The type of field.
-   * @param {boolean} isInGroup - A boolean that determines if field in a group.
    * @returns {object} An object with a status and message properties.
    */
   function _validateField(field) {
