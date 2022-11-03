@@ -27,7 +27,7 @@ const scrollY = () => window.scrollY || window.pageYOffset;
  * getFirstMatch - Get the first match of a REGEX
  *
  * @param {string} haystack - String to search
- * @param {regex} needle - REGEX to search for
+ * @param {string} needle - REGEX to search for
  * @returns {string} Matched string or empty string
  */
 const getFirstMatch = (haystack, needle) => {
@@ -40,8 +40,8 @@ const getFirstMatch = (haystack, needle) => {
 /**
  * getYLocation - Get Y location of provided element on the page.
  *
- * @param {node} el - HTML element.
- * @returns {type} TODO add description.
+ * @param {HTMLElement} el - HTML element.
+ * @returns {number} Pixel value of vertical page location of element.
  */
 const getYLocation = (el) => {
   const elOffset = el.getBoundingClientRect().top;
@@ -52,7 +52,7 @@ const getYLocation = (el) => {
  * getParagraphPositions - Get an array of all paragraphs with their IDs
  * mapped to their Y position (number of pixels from top of page).
  *
- * @param {nodelist} paragraphs - Nodelist of HTML elements with IDs.
+ * @param {NodeList} paragraphs - Nodelist of HTML elements with IDs.
  * @returns {Array} Array of objects w/ paragraph IDs and y positions.
  */
 const getParagraphPositions = (paragraphs) => {
@@ -77,7 +77,7 @@ const getParagraphPositions = (paragraphs) => {
  *
  * @param {number} currentPosition - Current viewport Y coordinate.
  * @param {Array} paragraphs - List of paragraphs on the page.
- * @returns {str} HTML ID of closest paragraph
+ * @returns {string} HTML ID of closest paragraph
  */
 const getCurrentParagraph = (currentPosition, paragraphs) => {
   let currentId = null;
@@ -248,7 +248,7 @@ const updateWayfinder = function (scroll, wayfinder, mainContent) {
 /**
  * updateParagraphPositions - Update the array that tracks paragraph positions.
  *
- * @returns {type} Array of paragraph positions.
+ * @returns {Array} Array of paragraph positions.
  */
 const updateParagraphPositions = () => {
   const paragraphs = document.querySelectorAll('.regdown-block');
