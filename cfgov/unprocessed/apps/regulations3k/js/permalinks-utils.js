@@ -94,8 +94,7 @@ const getCurrentParagraph = (currentPosition, paragraphs) => {
 /**
  * updateUrlHash - Update the page's URL hash w/ the closest paragraph.
  *
- * @param {arr} paragraphs - List of possible paragraphs on the page.
- * @returns {object} window object.
+ * @returns {undefined} Returned value from window.history.replaceState.
  */
 const updateUrlHash = () => {
   const currentParagraph = getCurrentParagraph(
