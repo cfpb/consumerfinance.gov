@@ -23,10 +23,9 @@ const HTML_SNIPPET = `
 `;
 
 /**
- *
- * @param target
- * @param eventType
- * @param eventOption
+ * @param {HTMLElement} target - The target element of the event.
+ * @param {string} eventType - The event type description.
+ * @param {string} eventOption - A keyCode, if the event is a keyup event.
  */
 function triggerEvent(target, eventType, eventOption) {
   const event = document.createEvent('Event');
