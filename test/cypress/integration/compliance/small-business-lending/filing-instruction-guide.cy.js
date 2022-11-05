@@ -24,19 +24,6 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
               fig.toc().should('be.visible');
             });
 
-            it('should highlight the first section by default', () => {
-              fig.getNavItem(1).should('have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(2)
-                .should('not.have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(3)
-                .should('not.have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(4)
-                .should('not.have.class', 'm-nav-link__current');
-            });
-
             it('should be sticky', () => {
               fig.toc().should('be.visible');
               cy.scrollTo(0, 1000);
