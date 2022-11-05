@@ -1,0 +1,12 @@
+name: deploy
+
+on:
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: [self-hosted]
+
+    steps:
+      - name: Hello World
+        run: echo "Hello, World!"
