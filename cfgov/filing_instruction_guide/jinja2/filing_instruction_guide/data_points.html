@@ -88,8 +88,8 @@
                 <tbody>
                 {% for row in body_rows %}
                     <tr>
-                    {% for cell in row %}
-                        <td> {{cell | safe }}</td>
+                    {% for column in header_row %}
+                        <td>{{ row[loop.index0] or '' | safe }}</td>
                     {% endfor %}
                     </tr>
                 {% endfor %}
