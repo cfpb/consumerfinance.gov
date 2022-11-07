@@ -1,27 +1,27 @@
-const CustomEvt = require( 'customevent' );
+const CustomEvt = require('customevent');
 
 class ProgressBar {
-  constructor( totalNum, numDone ) {
+  constructor(totalNum, numDone) {
     this.totalNum = totalNum;
     this.numDone = numDone;
 
-    const event = new CustomEvt( ProgressBar.UPDATE_EVT, {
-      detail: { progressBar: this }
-    } );
-    document.dispatchEvent( event );
+    const event = new CustomEvt(ProgressBar.UPDATE_EVT, {
+      detail: { progressBar: this },
+    });
+    document.dispatchEvent(event);
   }
 
   getPercentage() {
-    return Math.round( ( 100 * this.numDone ) / this.totalNum );
+    return Math.round((100 * this.numDone) / this.totalNum);
   }
 
-  update( numDone ) {
+  update(numDone) {
     this.numDone = numDone;
 
-    const event = new CustomEvt( ProgressBar.UPDATE_EVT, {
-      detail: { progressBar: this }
-    } );
-    document.dispatchEvent( event );
+    const event = new CustomEvt(ProgressBar.UPDATE_EVT, {
+      detail: { progressBar: this },
+    });
+    document.dispatchEvent(event);
   }
 }
 

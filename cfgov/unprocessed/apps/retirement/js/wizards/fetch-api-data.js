@@ -4,37 +4,37 @@ import update from './update-model';
 import $ from 'jquery';
 
 const fetch = {
-  apiData: function( birthdate, salary, dataLang ) {
+  apiData: function (birthdate, salary, dataLang) {
     let url;
-    if ( dataLang === 'es' ) {
+    if (dataLang === 'es') {
       url =
         '../../retirement-api/estimator/' +
         birthdate +
         '/' +
-        Number( salary ) +
+        Number(salary) +
         '/es/';
     } else {
       url =
         '../retirement-api/estimator/' +
         birthdate +
         '/' +
-        Number( salary ) +
+        Number(salary) +
         '/';
     }
 
-    const apiDataRequest = $.ajax( {
+    const apiDataRequest = $.ajax({
       url: url,
       dataType: 'json',
-      success: function( resp ) {
-        if ( resp.error === '' ) {
-          update.processApiData( resp );
+      success: function (resp) {
+        if (resp.error === '') {
+          update.processApiData(resp);
         }
         return resp;
-      }
-    } );
+      },
+    });
 
     return apiDataRequest;
-  }
+  },
 };
 
 export default fetch;

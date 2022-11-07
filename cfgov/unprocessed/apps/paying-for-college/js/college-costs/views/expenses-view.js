@@ -7,7 +7,7 @@ import { stringToNum } from '../util/number-utils.js';
 import {
   updateAffordingChart,
   updateCostOfBorrowingChart,
-  updateUrlQueryString
+  updateUrlQueryString,
 } from '../dispatchers/update-view.js';
 
 const expensesView = {
@@ -27,7 +27,7 @@ const expensesView = {
     expensesView._expensesInputs = document.querySelectorAll(
       'input[data-expenses-item]'
     );
-    expensesView._regionSelect = document.querySelector( '#expenses__region' );
+    expensesView._regionSelect = document.querySelector('#expenses__region');
 
     _addInputListeners();
   },
@@ -36,19 +36,19 @@ const expensesView = {
    *  Update the elements of the expenses view based on expensesModel
    */
   _updateExpensesItems: () => {
-    expensesView._expensesItems.forEach( elem => {
-      if ( !selectorMatches( elem, ':focus' ) ) {
+    expensesView._expensesItems.forEach((elem) => {
+      if (!selectorMatches(elem, ':focus')) {
         const prop = elem.dataset.expensesItem;
-        let val = getExpensesValue( prop );
-        val = numberToMoney( { amount: val, decimalPlaces: 0 } );
+        let val = getExpensesValue(prop);
+        val = numberToMoney({ amount: val, decimalPlaces: 0 });
 
-        if ( elem.tagName === 'INPUT' ) {
+        if (elem.tagName === 'INPUT') {
           elem.value = val;
         } else {
           elem.innerText = val;
         }
       }
-    } );
+    });
   },
 
   /**
@@ -59,39 +59,40 @@ const expensesView = {
     updateCostOfBorrowingChart();
     updateAffordingChart();
     updateUrlQueryString();
-  }
+  },
 };
 
 /**
  * Add event listeners to inputs.
  */
 function _addInputListeners() {
-  expensesView._expensesInputs.forEach( elem => {
-    elem.addEventListener( 'keyup', _handleInputChange );
-    elem.addEventListener( 'focusout', _handleInputChange );
-  } );
+  expensesView._expensesInputs.forEach((elem) => {
+    elem.addEventListener('keyup', _handleInputChange);
+    elem.addEventListener('focusout', _handleInputChange);
+  });
 
-  expensesView._regionSelect.addEventListener( 'change', _handleRegionChange );
+  expensesView._regionSelect.addEventListener('change', _handleRegionChange);
 }
 
 /**
  * Event handling for expenses-item INPUT changes.
+ *
  * @param {KeyboardEvent} event - Triggering event.
  */
-function _handleInputChange( event ) {
-  clearTimeout( expensesView._inputChangeTimeout );
+function _handleInputChange(event) {
+  clearTimeout(expensesView._inputChangeTimeout);
   const elem = event.target;
   const name = elem.dataset.expensesItem;
-  const value = stringToNum( elem.value );
+  const value = stringToNum(elem.value);
 
   expensesView._currentInput = elem;
 
-  if ( selectorMatches( elem, ':focus' ) ) {
-    expensesView._inputChangeTimeout = setTimeout( function() {
-      updateExpense( name, value );
-    }, 500 );
+  if (selectorMatches(elem, ':focus')) {
+    expensesView._inputChangeTimeout = setTimeout(function () {
+      updateExpense(name, value);
+    }, 500);
   } else {
-    updateExpense( name, value );
+    updateExpense(name, value);
   }
 
   updateUrlQueryString();
@@ -101,7 +102,7 @@ function _handleInputChange( event ) {
  * Handle change of region selection.
  */
 function _handleRegionChange() {
-  updateRegion( expensesView._regionSelect.value );
+  updateRegion(expensesView._regionSelect.value);
   updateAffordingChart();
   updateUrlQueryString();
 }

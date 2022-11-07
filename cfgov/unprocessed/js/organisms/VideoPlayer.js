@@ -5,7 +5,7 @@
 // Required modules.
 import {
   checkDom,
-  setInitFlag
+  setInitFlag,
 } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import { formatTimestamp } from '../modules/util/strings.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
@@ -15,26 +15,25 @@ const BASE_CLASS = 'o-video-player';
 
 /**
  * VideoPlayer
+ *
  * @class
- *
  * @classdesc Initializes a new VideoPlayer organism.
- *
  * @param {HTMLElement} element - The DOM element within which to search
  *   for the organism.
  * @returns {VideoPlayer} An instance.
  */
-function VideoPlayer( element ) {
-  const _dom = checkDom( element, BASE_CLASS );
+function VideoPlayer(element) {
+  const _dom = checkDom(element, BASE_CLASS);
 
-  const _videoId = _dom.getAttribute( 'data-id' );
-  const _showCustomThumbnail = _dom.hasAttribute( 'data-custom-thumbnail' );
+  const _videoId = _dom.getAttribute('data-id');
+  const _showCustomThumbnail = _dom.hasAttribute('data-custom-thumbnail');
 
-  const _iframeDom = _dom.querySelector( `.${ BASE_CLASS }_iframe` );
-  const _imageDom = _dom.querySelector( `.${ BASE_CLASS }_image` );
-  const _closeBtnDom = _dom.querySelector( `button.${ BASE_CLASS }_close-btn` );
-  const _playBtnDom = _dom.querySelector( `button.${ BASE_CLASS }_play-btn` );
-  const _playLinkDom = _dom.querySelector( `a.${ BASE_CLASS }_play-btn` );
-  const _durationDom = _dom.querySelector( `.${ BASE_CLASS }_duration` );
+  const _iframeDom = _dom.querySelector(`.${BASE_CLASS}_iframe`);
+  const _imageDom = _dom.querySelector(`.${BASE_CLASS}_image`);
+  const _closeBtnDom = _dom.querySelector(`button.${BASE_CLASS}_close-btn`);
+  const _playBtnDom = _dom.querySelector(`button.${BASE_CLASS}_play-btn`);
+  const _playLinkDom = _dom.querySelector(`a.${BASE_CLASS}_play-btn`);
+  const _durationDom = _dom.querySelector(`.${BASE_CLASS}_duration`);
 
   const _defaultThumbnailURL = _imageDom.src;
 
@@ -46,18 +45,18 @@ function VideoPlayer( element ) {
    *   or undefined if it was already initialized.
    */
   function init() {
-    if ( !setInitFlag( _dom ) ) {
+    if (!setInitFlag(_dom)) {
       let UNDEFINED;
       return UNDEFINED;
     }
 
     // Load the thumbnail from YouTube if we haven't specified one in the DOM.
-    if ( _videoId && !_showCustomThumbnail ) {
-      _imageLoad( youTubeAPI.fetchImageURL( _videoId ) );
+    if (_videoId && !_showCustomThumbnail) {
+      _imageLoad(youTubeAPI.fetchImageURL(_videoId));
     }
 
     // Load the YouTube JS, triggering our callback.
-    youTubeAPI.attachAPIReadyCallback( _videoAPIReady.bind( this ) );
+    youTubeAPI.attachAPIReadyCallback(_videoAPIReady.bind(this));
     youTubeAPI.embedVideoScript();
 
     return this;
@@ -68,39 +67,40 @@ function VideoPlayer( element ) {
    * YouTube IFrame API is done loading.
    */
   function _videoAPIReady() {
-    _player = youTubeAPI.instantiatePlayer( _iframeDom, _videoId );
-    _player.addEventListener( 'onReady', _videoPlayerReadyHandler.bind( this ) );
+    _player = youTubeAPI.instantiatePlayer(_iframeDom, _videoId);
+    _player.addEventListener('onReady', _videoPlayerReadyHandler.bind(this));
     _player.addEventListener(
       'onStateChange',
-      _videoStateChangeHandler.bind( this )
+      _videoStateChangeHandler.bind(this)
     );
   }
 
   /**
    * Event handler for when the video is ready.
-   * @param {Object} event - Event object containing target
+   *
+   * @param {object} event - Event object containing target
    *   to video player instance.
    */
-  function _videoPlayerReadyHandler( event ) {
+  function _videoPlayerReadyHandler(event) {
     // Add duration timestamp to video.
     const player = event.target;
     const duration = player.getDuration();
-    _durationDom.setAttribute( 'datetime', duration + 'S' );
-    _durationDom.innerHTML = formatTimestamp( duration );
-    _durationDom.classList.remove( 'u-hidden' );
+    _durationDom.setAttribute('datetime', duration + 'S');
+    _durationDom.innerHTML = formatTimestamp(duration);
+    _durationDom.classList.remove('u-hidden');
 
     /* On page load we show a play link that links directly to the video, so
      * that the user can still access the video with no JavaScript. We need to
      * hide the link and show the play button for the embedded video. */
-    _playLinkDom.classList.add( 'u-hidden' );
-    _playBtnDom.classList.remove( 'u-hidden' );
+    _playLinkDom.classList.add('u-hidden');
+    _playBtnDom.classList.remove('u-hidden');
 
     // Add events.
-    _playBtnDom.addEventListener( 'click', _playBtnClickedHandler.bind( this ) );
-    _closeBtnDom.addEventListener( 'click', _closeBtnClickedHandler.bind( this ) );
+    _playBtnDom.addEventListener('click', _playBtnClickedHandler.bind(this));
+    _closeBtnDom.addEventListener('click', _closeBtnClickedHandler.bind(this));
 
     // The video has loaded.
-    _dom.classList.add( `${ BASE_CLASS }__loaded` );
+    _dom.classList.add(`${BASE_CLASS}__loaded`);
   }
 
   /**
@@ -119,11 +119,12 @@ function VideoPlayer( element ) {
 
   /**
    * Handler for when the video changes state.
+   *
    * @param {Event} event - Event object for the changed state,
    *   which contains a data property for the state.
    */
-  function _videoStateChangeHandler( event ) {
-    if ( event.data === window.YT.PlayerState.ENDED ) {
+  function _videoStateChangeHandler(event) {
+    if (event.data === window.YT.PlayerState.ENDED) {
       this.stopVideo();
     }
   }
@@ -135,9 +136,9 @@ function VideoPlayer( element ) {
    *
    * @param {string} imageURL - The URL to load in the image.
    */
-  function _imageLoad( imageURL ) {
-    _imageDom.addEventListener( 'load', _imageLoaded );
-    _imageDom.addEventListener( 'error', _imageLoadFailed );
+  function _imageLoad(imageURL) {
+    _imageDom.addEventListener('load', _imageLoaded);
+    _imageDom.addEventListener('error', _imageLoadFailed);
 
     _imageDom.src = imageURL;
   }
@@ -149,7 +150,7 @@ function VideoPlayer( element ) {
    * already tried and failed to do so once.
    */
   function _imageLoadFailed() {
-    if ( _imageDom.src !== _defaultThumbnailURL ) {
+    if (_imageDom.src !== _defaultThumbnailURL) {
       _imageLoadDefault();
     }
   }
@@ -160,7 +161,7 @@ function VideoPlayer( element ) {
   function _imageLoaded() {
     /* 120px is the natural width of the default YouTube image.
      * This condition will be true when there isn't a custom image set. */
-    if ( _imageDom.naturalWidth === 120 ) {
+    if (_imageDom.naturalWidth === 120) {
       _imageLoadDefault();
     }
 
@@ -171,7 +172,7 @@ function VideoPlayer( element ) {
    * Show the image by adding a class that changes its opacity.
    */
   function _imageShow() {
-    _imageDom.classList.add( `${ BASE_CLASS }_image-loaded` );
+    _imageDom.classList.add(`${BASE_CLASS}_image-loaded`);
   }
 
   /**
@@ -183,23 +184,24 @@ function VideoPlayer( element ) {
 
   /**
    * Play the video.
+   *
    * @returns {VideoPlayer} An instance.
    */
   function playVideo() {
-    if ( _player ) {
+    if (_player) {
       _player.playVideo();
-      _dom.classList.add( 'video-playing' );
+      _dom.classList.add('video-playing');
 
       /* Allow keyboard navigation of the close button and video iframe.
        * Disallow keyboard navigation of the play button. */
-      _closeBtnDom.removeAttribute( 'tabindex' );
-      _iframeDom.removeAttribute( 'tabindex' );
-      _playBtnDom.setAttribute( 'tabindex', '-1' );
+      _closeBtnDom.removeAttribute('tabindex');
+      _iframeDom.removeAttribute('tabindex');
+      _playBtnDom.setAttribute('tabindex', '-1');
 
       // Set the keyboard focus to the close button.
       _closeBtnDom.focus();
 
-      this.dispatchEvent( 'onPlay' );
+      this.dispatchEvent('onPlay');
     }
 
     return this;
@@ -207,23 +209,24 @@ function VideoPlayer( element ) {
 
   /**
    * Stop the video from playing.
+   *
    * @returns {VideoPlayer} An instance.
    */
   function stopVideo() {
-    if ( _player ) {
+    if (_player) {
       _player.stopVideo();
-      _dom.classList.remove( 'video-playing' );
+      _dom.classList.remove('video-playing');
 
       /* Allow keyboard navigation of the play button.
        * Disallow keyboard navigation of the close button and video iframe. */
-      _closeBtnDom.setAttribute( 'tabindex', '-1' );
-      _iframeDom.setAttribute( 'tabindex', '-1' );
-      _playBtnDom.removeAttribute( 'tabindex' );
+      _closeBtnDom.setAttribute('tabindex', '-1');
+      _iframeDom.setAttribute('tabindex', '-1');
+      _playBtnDom.removeAttribute('tabindex');
 
       // Set the keyboard focus to the play button.
       _playBtnDom.focus();
 
-      this.dispatchEvent( 'onStop' );
+      this.dispatchEvent('onStop');
     }
 
     return this;

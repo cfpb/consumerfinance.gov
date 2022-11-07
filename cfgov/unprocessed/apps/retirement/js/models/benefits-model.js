@@ -17,8 +17,8 @@ const benefitsModel = {
     earlyAge: 62,
     currentAge: 37,
     earlyRetirementAge: '62 and 1 month',
-    fullRetirementAge: 67
-  }
+    fullRetirementAge: 67,
+  },
 };
 
 export default benefitsModel;
