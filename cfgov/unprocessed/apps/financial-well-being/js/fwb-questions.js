@@ -114,6 +114,7 @@ function handleAnalytics(el) {
   if (Analytics.tagManagerIsLoaded) {
     sendEvent(action, label, category);
   } else {
+    Analytics.init();
     /* istanbul ignore next */
     Analytics.addEventListener('gtmLoaded', sendEvent);
   }
