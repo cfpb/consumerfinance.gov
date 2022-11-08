@@ -89,7 +89,8 @@
                 {% for row in body_rows %}
                     <tr>
                     {% for column in header_row %}
-                        <td>{{ row[loop.index0] or '' | safe }}</td>
+                        {%- set cell_value = row[loop.index0] if row[loop.index0] is defined else '' -%}
+                        <td>{{ cell_value | safe }}</td>
                     {% endfor %}
                     </tr>
                 {% endfor %}
