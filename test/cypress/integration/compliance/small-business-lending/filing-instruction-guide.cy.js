@@ -91,6 +91,12 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
               fig.getNavItem(3).should('have.class', 'm-nav-link__current');
               fig.getNavItem('credit-type').should('be.visible');
             });
+
+            it('should not have any unrendered HTML tags', () => {
+              fig.getUnrenderedListTags().should('not.exist');
+              fig.getUnrenderedBrTags().should('not.exist');
+              fig.getUnrenderedPTags().should('not.exist');
+            });
           });
         });
       });
