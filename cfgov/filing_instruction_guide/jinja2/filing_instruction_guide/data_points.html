@@ -3,7 +3,7 @@
     {% for point in page.data_points.order_by('number') %}
         {%- set data_fields = point.data_fields_json.order_by("pk") -%}
 
-        <div class="block o-fig_section__sub" data-search-section>
+        <div class="o-fig_section__sub" data-search-section>
             <h3 class="report-header o-fig_heading">
                 <a id="{{ point.anchor }}"
                    href="#{{ point.anchor }}"
@@ -42,7 +42,7 @@
 {% endmacro %}
 
 {% macro individual_data_field(field) %}
-    <div class="block o-fig_section__sub-sub" data-search-section>
+    <div class="o-fig_section__sub-sub" data-search-section>
         <h4 class="report-header o-fig_heading">
             <a id="{{field.info.get('short_name', '')}}"
                     href="#{{field.info.get('short_name', '')}}">
