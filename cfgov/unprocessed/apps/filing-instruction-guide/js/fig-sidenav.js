@@ -65,9 +65,6 @@ const init = () => {
 
     const sections = fig.appRoot.querySelectorAll('a[data-scrollspy]');
 
-    // Highlight the first section on page load
-    fig.updateNav(sections[0].getAttribute('href'));
-
     sections.forEach((section) => observer.observe(section));
   }
 
