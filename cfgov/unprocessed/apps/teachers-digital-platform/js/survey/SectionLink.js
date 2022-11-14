@@ -82,7 +82,10 @@ let checkThreshold = 0;
 let current = null;
 
 /**
- * @param {SurveyData} data - Survey data.
+ * @param {object} surveydata - The survey data.
+ * @param {number} surveydata.numAnswered - The number of survey items answered.
+ * @param {number} surveydata.pageIdx - The page ID.
+ * @param {object} surveydata.questionsByPage - Hash of the questions by page.
  */
 SectionLink.init = function ({ numAnswered, pageIdx, questionsByPage }) {
   let questionsFound = 0;

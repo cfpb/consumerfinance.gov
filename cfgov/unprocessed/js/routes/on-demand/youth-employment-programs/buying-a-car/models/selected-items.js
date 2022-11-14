@@ -4,32 +4,35 @@ const defaultProps = {
 };
 
 /**
- * Data structure to manipulate a list of `maxElements` elements
+ * Data structure to manipulate a list of `maxElements` elements.
  *
- * @param {object} props - The properties that configure this data structure
- * @param {number} maxElements - The maximum number of elements the data structure can hold
- * @param {number} minElements - The minimum number of elements the data structure should have
- * @returns {object} The public methods of this data structure
+ * @param {object} props - The properties that configure this data structure.
+ * @param {number} props.maxElements - The maximum number of elements
+ *   the data structure can hold.
+ * @param {number} props.minElements - The minimum number of elements
+ *   the data structure should have.
+ * @returns {object} The public methods of this data structure.
  */
 function selectedItems(props) {
   const finalProps = { ...defaultProps, ...props };
   let items = [];
 
   /**
-   *
+   * @returns {boolean} True if max items are selected, false otherwise.
    */
   function isMaxItemsSelected() {
     return items.length === finalProps.maxElements;
   }
 
   /**
-   *
+   * @returns {boolean} True if min items are selected, false otherwise.
    */
   function isMinItemsSelected() {
     return items.length >= finalProps.minElements;
   }
 
   /**
+   * TODO: Add jsdocs.
    *
    * @param item
    */
@@ -40,6 +43,7 @@ function selectedItems(props) {
   }
 
   /**
+   * TODO: Add jsdocs.
    *
    * @param item
    */
@@ -52,28 +56,28 @@ function selectedItems(props) {
   }
 
   /**
-   *
+   * @returns {number} The number of items.
    */
   function length() {
     return items.length;
   }
 
   /**
-   *
+   * @returns {Array} Get all items.
    */
   function elements() {
     return items;
   }
 
   /**
-   *
+   * TODO: Add jsdocs.
    */
   function getHead() {
     return items[0];
   }
 
   /**
-   *
+   * TODO: Add jsdocs.
    */
   function getLast() {
     return items[items.length - 1];

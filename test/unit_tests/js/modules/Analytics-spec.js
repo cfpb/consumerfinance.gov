@@ -10,8 +10,10 @@ describe('Analytics', () => {
 
   beforeEach(() => {
     /**
+     * Mock for window.dataLayer.push.
      *
-     * @param object
+     * @param {*} object - What to push onto the window.dataLayer.
+     * @returns {Array} New pushed array items.
      */
     function push(object) {
       if (
@@ -22,6 +24,7 @@ describe('Analytics', () => {
       }
       return [].push.call(this, object);
     }
+
     window.dataLayer = [];
     window.dataLayer.push = push;
     delete window['google_tag_manager'];
