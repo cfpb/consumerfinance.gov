@@ -17,6 +17,7 @@ jobs:
       contents: read
     env:
       DOCKER_BUILDKIT: 1
+      REF: ${{ github.ref }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -35,11 +36,11 @@ jobs:
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          VERSION=$(echo "$REF" | sed -e 's,.*/\(.*\),\1,')
           # Extract PR Number if PR
-          [[ "${{ github.ref }}" == "refs/pull/"* ]] && VERSION=$(echo "${{ github.ref }}" | sed -e 's,refs/pull/\(.*\)/merge,pr-\1,')
+          [[ "$REF" == "refs/pull/"* ]] && VERSION=$(echo "$REF" | sed -e 's,refs/pull/\(.*\)/merge,pr-\1,')
           # Strip "v" prefix from tag name if exists
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          [[ "$REF" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` convention
           [ "$VERSION" == "master" ] || [ "$VERSION" == "main" ] && VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
