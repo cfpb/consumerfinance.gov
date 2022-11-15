@@ -233,6 +233,16 @@ Activating the virtualenv is necessary before using it in the future as well:</p
 <pre class="highlight"><code class="language-sh">pyenv activate consumerfinance.gov</code></pre>
 <p>Once activated, our Python CI requirements can be installed in the virtualenv:</p>
 <pre class="highlight"><code class="language-sh">pip install -r requirements/ci.txt</code></pre>
+<h3 id="configure-vscode-formatters-optional">Configure VSCode formatters (optional)<a class="headerlink" href="#configure-vscode-formatters-optional" title="Permanent link">¶</a></h3>
+<p>For developers who use <a href="https://code.visualstudio.com/">Visual Studio Code</a>
+as their editor of choice, you may wish to install certain
+<a href="https://marketplace.visualstudio.com/VSCode">extensions</a>
+to support easier code formatting.</p>
+<p>This repository includes a <code>.vscode/settings.json</code> file that sets the
+<a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">Prettier extension</a>
+as the default code formatter. It also sets the
+<a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python extension</a>
+as the formatter for Python files.</p>
 <h3 id="install-pre-commit">Install pre-commit<a class="headerlink" href="#install-pre-commit" title="Permanent link">¶</a></h3>
 <p>We use <code>pre-commit</code> to automatically run our linting tools before a commit
 takes place. These tools consist of <code>black</code>, <code>flake8</code>, <code>isort</code>, and <code>bandit</code>.
