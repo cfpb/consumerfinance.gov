@@ -1,5 +1,6 @@
 from collections import Counter
 from datetime import date
+from operator import itemgetter
 
 from django import forms
 from django.core.cache import cache
@@ -244,30 +245,23 @@ class FilterableListForm(forms.Form):
 
     # Populate language choices
     def set_languages(self):
-        # Support case where self.all_filterable_results does not contain
-        # the language aggregation; this can happen due to the way that these
-        # results were cached before the language aggregation was added.
-        sentinel = object()
-        language_aggregation = getattr(
-            self.all_filterable_results.aggregations, "languages", None
+        # Get the list of codes in the full set of searchable pages.
+        language_aggregation = (
+            self.all_filterable_results.aggregations.languages
         )
+        language_codes = {b.key for b in language_aggregation.buckets}
 
-        if (
-            language_aggregation is not None
-            or language_aggregation is sentinel
-        ):
-            language_codes = {b.key for b in language_aggregation.buckets}
+        # Grab the language names from the reference list.
+        language_options = [
+            (code, name)
+            for code, name in ref.supported_languages
+            if code in language_codes
+        ]
 
-            language_options = [
-                (k, v)
-                for k, v in dict(ref.supported_languages).items()
-                if k in language_codes
-            ]
-        else:
-            # If no aggregation exists, fallback to showing all languages.
-            language_options = ref.supported_languages
-
-        self.fields["language"].choices = language_options
+        # Sort the list of languages by their names.
+        self.fields["language"].choices = sorted(
+            language_options, key=itemgetter(1)
+        )
 
     def clean(self):
         cleaned_data = super().clean()
