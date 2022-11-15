@@ -3,6 +3,7 @@ from datetime import date
 from operator import itemgetter
 
 from django import forms
+from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.forms import widgets
@@ -254,7 +255,7 @@ class FilterableListForm(forms.Form):
         # Grab the language names from the reference list.
         language_options = [
             (code, name)
-            for code, name in ref.supported_languages
+            for code, name in settings.LANGUAGES
             if code in language_codes
         ]
 
