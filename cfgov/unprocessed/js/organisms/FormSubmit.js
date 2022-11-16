@@ -99,8 +99,6 @@ function FormSubmit(element, baseClass, opts) {
 
   /**
    * Sends form data and displays notification on success / failure.
-   *
-   * @param {formData} form - data object with field name/value pairs
    */
   function _submitForm() {
     const DONE_CODE = 4;

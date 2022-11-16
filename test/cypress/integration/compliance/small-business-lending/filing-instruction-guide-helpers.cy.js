@@ -72,6 +72,18 @@ export class FilingInstructionGuide {
   }
 
   scrollToBottom() {
-    return cy.get('footer').scrollIntoView({ duration: 1000 });
+    return cy.get('footer').scrollIntoView();
+  }
+
+  getUnrenderedListTags() {
+    return cy.get('.o-fig').contains('<li>');
+  }
+
+  getUnrenderedBrTags() {
+    return cy.get('.o-fig').contains('<br>');
+  }
+
+  getUnrenderedPTags() {
+    return cy.get('.o-fig').contains('<p>');
   }
 }

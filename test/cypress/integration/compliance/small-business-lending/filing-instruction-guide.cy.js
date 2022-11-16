@@ -24,19 +24,6 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
               fig.toc().should('be.visible');
             });
 
-            it('should highlight the first section by default', () => {
-              fig.getNavItem(1).should('have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(2)
-                .should('not.have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(3)
-                .should('not.have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(4)
-                .should('not.have.class', 'm-nav-link__current');
-            });
-
             it('should be sticky', () => {
               fig.toc().should('be.visible');
               cy.scrollTo(0, 1000);
@@ -66,21 +53,21 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             });
 
             it('should auto-expand subsections', () => {
-              fig.goToSection('uli');
+              fig.goToSection('credit-type');
               fig.getNavItem(3).should('be.visible');
-              fig.getNavItem('uli').should('be.visible');
+              fig.getNavItem('credit-type').should('be.visible');
               fig.getNavItem('application-date').should('be.visible');
 
               fig.goToSection('application-date');
               fig.getNavItem(3).should('be.visible');
-              fig.getNavItem('uli').should('be.visible');
+              fig.getNavItem('credit-type').should('be.visible');
               fig.getNavItem('application-date').should('be.visible');
             });
 
             it('should auto-close subsections', () => {
               fig.goToSection(2);
               fig.getNavItem(3).should('be.visible');
-              fig.getNavItem('uli').should('not.be.visible');
+              fig.getNavItem('credit-type').should('not.be.visible');
             });
 
             it('should jump to correct sections', () => {
@@ -94,15 +81,21 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             it('should highlight correction section when clicking heading', () => {
               fig.clickSectionHeading(1);
               fig.getNavItem(1).should('have.class', 'm-nav-link__current');
-              fig.getNavItem('uli').should('not.be.visible');
+              fig.getNavItem('credit-type').should('not.be.visible');
 
               fig.clickSectionHeading(2);
               fig.getNavItem(2).should('have.class', 'm-nav-link__current');
-              fig.getNavItem('uli').should('not.be.visible');
+              fig.getNavItem('credit-type').should('not.be.visible');
 
               fig.clickSectionHeading(3);
               fig.getNavItem(3).should('have.class', 'm-nav-link__current');
-              fig.getNavItem('uli').should('be.visible');
+              fig.getNavItem('credit-type').should('be.visible');
+            });
+
+            it('should not have any unrendered HTML tags', () => {
+              fig.getUnrenderedListTags().should('not.exist');
+              fig.getUnrenderedBrTags().should('not.exist');
+              fig.getUnrenderedPTags().should('not.exist');
             });
           });
         });

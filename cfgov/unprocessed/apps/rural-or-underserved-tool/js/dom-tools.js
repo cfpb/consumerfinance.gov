@@ -15,9 +15,8 @@ const _matches = (function _getMatches() {
 })();
 
 /**
- *
- * @param selector
- * @param callback
+ * @param {string} selector - A CSS selector.
+ * @param {Function} callback - Function to call on queried element.
  */
 function _mutate(selector, callback) {
   applyAll(selector, function (element) {
@@ -41,8 +40,8 @@ const wrapMap = {
 
 /**
  *
- * @param elements
- * @param applyFn
+ * @param {HTMLElement|string} elements - An HTML element or a selector.
+ * @param {Function} applyFn - Function to apply to each element.
  */
 function applyAll(elements, applyFn) {
   if (elements instanceof HTMLElement) {
@@ -56,9 +55,9 @@ function applyAll(elements, applyFn) {
 
 /**
  *
- * @param elements
- * @param events
- * @param callback
+ * @param {Array} elements - A list of HTML DOM nodes.
+ * @param {Array|string} events - A list or single event type.
+ * @param {Function} callback - A function to call at the end.
  */
 function bindEvents(elements, events, callback) {
   if (Array.isArray(events) === false) {
@@ -73,9 +72,8 @@ function bindEvents(elements, events, callback) {
 }
 
 /**
- *
- * @param parent
- * @param child
+ * @param {HTMLElement|string} parent - An HTML element node or CSS selector.
+ * @param {HTMLElement|string} child - An HTML element node or snippet.
  */
 function addEl(parent, child) {
   return fastDom.mutate(function () {
@@ -85,18 +83,16 @@ function addEl(parent, child) {
 }
 
 /**
- *
- * @param selector
- * @param attributeName
+ * @param {string} selector - A CSS selector.
+ * @param {string} attributeName - A value to add to a data- attribute.
  */
 function getElData(selector, attributeName) {
   return getEl(selector).getAttribute('data-' + attributeName);
 }
 
 /**
- *
- * @param selector
- * @param text
+ * @param {string} selector - A CSS selector.
+ * @param {string} text - Some text content.
  */
 function changeElText(selector, text) {
   _mutate(selector, function (element) {
@@ -105,9 +101,8 @@ function changeElText(selector, text) {
 }
 
 /**
- *
- * @param selector
- * @param HTML
+ * @param {string} selector - A CSS selector.
+ * @param {string} HTML - An HTML snippet.
  */
 function changeElHTML(selector, HTML) {
   _mutate(selector, function (element) {
@@ -118,7 +113,7 @@ function changeElHTML(selector, HTML) {
 /**
  * Code copied from jQuery with minimal modifications.
  *
- * @param {HTMLElement} HTML - An HTML DOM node.
+ * @param {HTMLElement|string} HTML - An HTML DOM node or snippet.
  * @returns {DocumentFragment} The created document fragment node.
  */
 function createEl(HTML) {
@@ -199,10 +194,9 @@ function toggleClass(selector, className) {
 }
 
 /**
- *
- * @param element
- * @param propName
- * @param filter
+ * @param {HTMLElement} element - An element.
+ * @param {string} propName - An HTML element property to select for.
+ * @param {string} filter - The string to filter by.
  */
 function filter(element, propName, filter) {
   const _propName = propName || '';
@@ -221,7 +215,7 @@ function filter(element, propName, filter) {
 }
 
 /**
- * @param {string} selector - A CSS selector.
+ * @param {HTMLElement|string} selector - An HTML element node or CSS selector.
  * @returns {HTMLElement} An HTML node returned by the passed selector,
  *  or the selector passed into this method.
  */
@@ -233,7 +227,7 @@ function getEl(selector) {
 }
 
 /**
- * @param {string} selector - A CSS selector.
+ * @param {HTMLElement|string} selector - An HTML element node or CSS selector.
  * @returns {NodeList} A list of HTML nodes returned by the passed selector,
  *  or the selector passed into this method.
  */
@@ -246,8 +240,8 @@ function getEls(selector) {
 
 /**
  *
- * @param element
- * @param filter
+ * @param {HTMLElement} element - An HTML element node.
+ * @param {string} filter - A string to filter by.
  */
 function getChildEls(element, filter) {
   const firstChild = element.childNodes[0];
@@ -259,35 +253,33 @@ function getChildEls(element, filter) {
 }
 
 /**
- *
- * @param element
- * @param filterNode
+ * @param {HTMLElement} element - An element.
+ * @param {string} filterNode - The string to filter by.
  */
 function getParentEls(element, filterNode) {
   return filter(element, 'parentNode', filterNode);
 }
 
 /**
- *
- * @param element
- * @param filterNode
+ * @param {HTMLElement} element - An element.
+ * @param {string} filterNode - The string to filter by.
  */
 function getPreviousEls(element, filterNode) {
   return filter(element, 'previousElementSibling', filterNode);
 }
 
 /**
- *
- * @param element
- * @param filterNode
+ * @param {HTMLElement} element - An element.
+ * @param {string} filterNode - The string to filter by.
  */
 function getNextEls(element, filterNode) {
   return filter(element, 'nextElementSibling', filterNode);
 }
 
 /**
+ * Check whether something is a NodeList, HTML element, or window.
  *
- * @param element
+ * @param {*} element - An object to check for element-ness.
  */
 function isEl(element) {
   return (
@@ -299,8 +291,6 @@ function isEl(element) {
 }
 
 /**
- * Check whether something is a NodeList, HTML element, or window.
- *
  * @param {*} selector - Something, possibly a list, element or window instance.
  */
 function hide(selector) {
@@ -310,8 +300,6 @@ function hide(selector) {
 }
 
 /**
- * Check whether something is a NodeList, HTML element, or window.
- *
  * @param {*} selector - Something, possibly a list, element or window instance.
  */
 function show(selector) {
@@ -323,7 +311,7 @@ function show(selector) {
 /**
  * @param {string} selector - A CSS selector for an element.
  * @param {number} time - When to call the callback.
- * @param {[Function]} callback - Function to call after delay.
+ * @param {Function} [callback] - Function to call after delay.
  */
 function fadeIn(selector, time, callback) {
   const element = getEl(selector);
@@ -344,7 +332,7 @@ function fadeIn(selector, time, callback) {
 /**
  * @param {string} selector - A CSS selector for an element.
  * @param {number} time - When to call the callback.
- * @param {[Function]} callback - Function to call after delay.
+ * @param {Function} [callback] - Function to call after delay.
  */
 function fadeOut(selector, time, callback) {
   const element = getEl(selector);
@@ -362,16 +350,15 @@ function fadeOut(selector, time, callback) {
 }
 
 /**
- *
- * @param callback
+ * @param {Function} callback - Function to call on mutate.
  */
 function mutate(callback) {
   _mutate(callback);
 }
 
 /**
- *
- * @param callback
+ * @param {Function} callback - Function to pass to the wrapped call
+ *   to requestAnimationFrame.
  */
 function nextFrame(callback) {
   fastDom.raf(callback);

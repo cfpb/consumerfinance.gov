@@ -23,7 +23,7 @@ const jsPaths = [
   `${routes}/owning-a-home/mortgage-estimate/index.js`,
   `${routes}/owning-a-home/index.js`,
 
-  // on-demand: components included on a page via Wagtatil
+  // on-demand: components included on a page via Wagtail
   ...getAll(onDemand),
   `${onDemand}/simple-chart/simple-chart.js`,
   `${onDemand}/youth-employment-programs/buying-a-car/index.js`,

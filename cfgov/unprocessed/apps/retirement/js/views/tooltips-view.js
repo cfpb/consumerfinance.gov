@@ -20,7 +20,7 @@ function init() {
 
 /**
  *
- * @param elem
+ * @param {HTMLElement} elem - An HTML element node to work with.
  */
 function toolTipper(elem) {
   // position tooltip-container based on the element clicked.

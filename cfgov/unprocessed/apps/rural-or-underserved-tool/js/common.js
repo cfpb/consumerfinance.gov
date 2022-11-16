@@ -21,9 +21,8 @@ Expandable.init();
 const MAX_CSV_ROWS = 250;
 
 /**
- *
- * @param data
- * @param ruralCounties
+ * @param {object} data - Census API results object.
+ * @param {object} ruralCounties - Object from the census API.
  */
 function censusAPI(data, ruralCounties) {
   const result = {};
@@ -83,8 +82,7 @@ function censusAPI(data, ruralCounties) {
 }
 
 /**
- *
- * @param addresses
+ * @param {Array} addresses - A list of addresses.
  */
 function processAddresses(addresses) {
   const processed = [];
@@ -398,8 +396,9 @@ function generateCSV() {
     ' or underserved?, Date processed\n';
 
   /**
+   * Process each cell in a table row.
    *
-   * @param element
+   * @param {HTMLElement} element - A table data element to process.
    */
   function _loopHandler(element) {
     const isHidden = DT.hasClass(DT.getParentEls('.js-table'), 'u-hidden');

@@ -11,8 +11,8 @@ import FormSubmit from './FormSubmit.js';
  *
  * @class
  * @classdesc Initializes the organism.
- * @param {string} element - The selector for the organism.
- * @returns {EmailSignup} An instance.
+ * @param {HTMLElement} element - The HTML DOM element.
+ * @returns {EmailPopup} An instance.
  */
 function EmailPopup(element) {
   const VISIBLE_CLASS = 'o-email-popup__visible';
@@ -69,9 +69,6 @@ function EmailPopup(element) {
 
   /**
    * Callback function invoked after successful email submission.
-   *
-   * @param {Event} event - Click event.
-   * @param {Event} event - Click event.
    */
   function _onEmailSignupSuccess() {
     emailHelpers.recordEmailRegistration(_popupLabel);

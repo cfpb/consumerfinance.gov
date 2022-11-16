@@ -179,16 +179,13 @@ function makeRadioFilterDOM(buckets, chartNode, filter) {
 }
 
 /**
- * Filters raw or transformed data by a select prop
+ * Filters raw or transformed data by a select prop.
  *
- * @param {Array} data - Transformed or raw chart data
- * @param {object} filterProp - Key on which to filter
- * @param {object} filterVal - Value of the selectNode against which we're filtering
- * @returns {Array} Filtered chart data
- * @param {Array} data - Transformed or raw chart data
- * @param {object} filterProp - Key on which to filter
- * @param {object} filterVal - Value of the selectNode against which we're filtering
- * @returns {Array} Filtered chart data
+ * @param {Array} data - Transformed or raw chart data.
+ * @param {object} filterProp - Key on which to filter.
+ * @param {object} filterVal - Value of the selectNode against
+ *   which we're filtering.
+ * @returns {Array} Filtered chart data.
  */
 function filterData(data, filterProp, filterVal) {
   if (filterVal === 'View all') return data;

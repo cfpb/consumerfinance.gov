@@ -15,9 +15,9 @@ function addEventListenerToSelector(selector, event, callback) {
 /**
  * Check if an element exists on the page, and if it does, add listeners.
  *
- * @param {[type]} elem - [description] TODO
- * @param {[type]} event - [description] TODO
- * @param {Function} callback - [description] TODO
+ * @param {HTMLElement} [elem] - The element to attach an event to.
+ * @param {string} [event] - The event type string.
+ * @param {Function} callback - Function to call when the event triggers.
  */
 function addEventListenerToElem(elem, event, callback) {
   if (elem) {
@@ -33,13 +33,13 @@ function addEventListenerToElem(elem, event, callback) {
  * @param {string} msg - Message to load to the console.
  */
 function analyticsLog(...msg) {
-  // Get query params.
-  const queryParams = new Proxy(new URLSearchParams(window.location.search), {
-    get: (searchParams, prop) => searchParams.get(prop),
-  });
-
-  if (queryParams['debug-gtm'] === 'true') {
-    console.log(`ANALYTICS DEBUG MODE: ${msg}`);
+  // Check if URLSearchParams is supported (Chrome > 48; Edge > 16).
+  if (typeof window.URLSearchParams === 'function') {
+    // Get query params.
+    const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.get('debug-gtm') === 'true') {
+      console.log(`ANALYTICS DEBUG MODE: ${msg}`);
+    }
   }
 }
 
