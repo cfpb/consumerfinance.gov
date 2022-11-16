@@ -116,7 +116,7 @@ class RAFTBlockTestCase(TestCase):
 
     def test_county_threshold(self):
         raft = RAFTBlock()
-        html = raft.render(county_threshold=20)
+        html = raft.render({"county_threshold": 20})
         self.assertInHTML(
             '<div id="rental-assistance-finder" data-language="en"'
             " data-county-threshold=20></div>",
