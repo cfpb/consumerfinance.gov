@@ -29,10 +29,15 @@
 
    value.links[i].aria_label: (Optional) An aria-label for the link.
 
+   value.date:                (Optional) A date to be included on a byline.
+
    value.has_rule:            Whether or not to render a rule line
                               (border-bottom) at the bottom of the molecule.
 
    ========================================================================== #}
+{% set published_date = value.date %}
+{% set has_authors = page.authors.exists() %}
+
 {% if value.eyebrow %}
     <div class="eyebrow">{{ value.eyebrow }}</div>
 {% endif %}
@@ -40,11 +45,35 @@
     <h1>{{ value.heading }}</h1>
 {% endif %}
 
+{% if published_date or has_authors %}
+<div class="meta">
+{% endif %}
+{% if has_authors %}
+    <span class="byline">
+    {%- for author in page.get_authors() -%}
+        {% if loop.first %}By {% elif loop.last %}and {% endif %}
+        {{ author.name }}
+        {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
+    {% endfor %}
+        &ndash;
+    </span>
+{% endif %}
+{% if published_date %}
+    <span class="a-date">
+        {% import 'macros/time.html' as time %}
+        {{ time.render(published_date, {'date':true}) }}
+    </span>
+{% endif %}
+{% if published_date or has_authors %}
+</div>
+{% endif %}
+
 {% if value.intro.source %}
     <div class="lead-paragraph">
         {{ value.intro | safe }}
     </div>
 {% endif %}
+
 {% if value.body %}
     {{ value.body | safe }}
 {% endif %}

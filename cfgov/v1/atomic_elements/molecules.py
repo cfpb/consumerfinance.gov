@@ -47,6 +47,13 @@ class TextIntroduction(blocks.StructBlock):
             "text introduction."
         ),
     )
+    date = blocks.DateBlock(
+        required=False,
+        label="Published Date (BYLINE ONLY)",
+        help_text=(
+            "IMPORTANT: Only include if this page " + "should have a byline."
+        ),
+    )
 
     def clean(self, value):
         cleaned = super().clean(value)
