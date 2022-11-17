@@ -12,6 +12,27 @@ from requests_aws4auth import AWS4Auth
 from cfgov.util import admin_emails
 
 
+# File based secrets
+__SECRETS_DIR = os.getenv("SECRETS_DIR", "/var/run/secrets/cfgov")
+if os.path.isdir(__SECRETS_DIR):
+    # Walk all levels, "exporting" filenames as environment variables
+    # and their contents as the values, for the Python/Django runtime.
+    # Trailing newline is stripped.
+    for root, dirs, files in os.walk(__SECRETS_DIR):
+        for file in files:
+            # Ignore SECRETS_FOLLOW_SYMLINKS file (security).
+            # If SECRETS_FOLLOW_SYMLINKS is set as an actual var,
+            # and it is true, then "follow" (open) the symlink.
+            # This is not secure to use in production!!!
+            if file.upper() == "SECRETS_FOLLOW_SYMLINKS" or (
+                os.getenv("SECRETS_FOLLOW_SYMLINKS", "").lower() != "true"
+                and os.path.islink(os.path.join(root, file))
+            ):
+                continue
+            with open(os.path.join(root, file)) as f:
+                os.environ[file] = f.read().strip()
+
+
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
