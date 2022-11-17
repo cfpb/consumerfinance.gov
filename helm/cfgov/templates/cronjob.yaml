@@ -38,6 +38,7 @@ spec:
                 - mountPath: {{ .mountPath }}
                   name: {{ .name }}
                 {{- end }}
+                {{- include "cfgov.secretVolumeMounts" $ | nindent 16 }}
                 {{- end }}
                 # Add in the cronjob volumes
                 {{- range $values.volumes }}
@@ -48,15 +49,16 @@ spec:
                 {{- if or $values.includeEnv (not (hasKey $values "includeEnv")) }}
                 {{- include "cfgov.postgresEnv" $ | nindent 16 }}
                 {{- include "cfgov.searchEnv" $ | nindent 16 }}
-                {{- range $.Values.extraEnvs }}
-                - name: {{ .name }}
-                  value: {{ .value | quote }}
-                {{- end }}
                 {{- end }}
                 {{- range $values.env }}
                 - name: {{ .name }}
                   value: {{ .value | quote }}
                 {{- end }}
+              {{- if and $.Values.env (or $values.includeEnv (not (hasKey $values "includeEnv"))) }}
+              envFrom:
+                - configMapRef:
+                    name: {{ include "cfgov.fullname" $ }}
+              {{- end }}
           restartPolicy: {{ default "OnFailure" $values.restartPolicy }}
           volumes:
             {{- if or $values.includeEnv (not (hasKey $values "includeEnv")) }}
@@ -65,6 +67,7 @@ spec:
             - name: {{ .name }}
               {{- toYaml .volume | nindent 14 }}
             {{- end }}
+            {{- include "cfgov.secretVolumes" $ | nindent 12 }}
             {{- end }}
             # Add in cronjob volumes
             {{- range $values.volumes }}
