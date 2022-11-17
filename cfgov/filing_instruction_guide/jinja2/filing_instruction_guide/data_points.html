@@ -76,6 +76,7 @@
     {% if valid_values %}
         {%- set header_row = valid_values[0] -%}
         {%- set body_rows = valid_values[1:] -%}
+        <div class="o-table o-table-wrapper__scrolling">
             <table>
                 <thead>
                     <tr>
@@ -95,6 +96,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+        </div>
     {% endif %}
 {% endmacro %}
 
