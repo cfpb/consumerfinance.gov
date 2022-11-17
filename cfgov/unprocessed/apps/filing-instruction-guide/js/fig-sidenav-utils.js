@@ -87,7 +87,7 @@ const updateNav = (target) => {
 const handleIntersect = (entries) => {
   entries.forEach((entry) => {
     if (entry.intersectionRatio > 0) {
-      updateNav(entry.target.getAttribute('href'));
+      updateNav('#' + entry.target.getAttribute('data-scrollspy'));
     }
   });
 };
