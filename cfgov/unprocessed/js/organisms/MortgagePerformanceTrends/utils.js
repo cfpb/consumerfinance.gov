@@ -1,15 +1,19 @@
-import ajax from 'xdr';
+const BASE_URL = '/data-research/mortgages/api/v1/metadata/';
+const cache = {};
 
-const COUNTIES_URL =
-  '/data-research/mortgages/api/v1/metadata/state_county_meta';
-const METROS_URL = '/data-research/mortgages/api/v1/metadata/state_msa_meta';
-const NON_METROS_URL = '/data-research/mortgages/api/v1/metadata/non_msa_fips';
-const STATES_URL = '/data-research/mortgages/api/v1/metadata/state_meta';
-let counties;
-let metros;
-let nonMetros;
-let states;
 let globalZoomLevel = 10;
+
+/**
+ * @param {string} dataType - dataType to append to the BASE_URL
+ * @param {Function} cb - The callback to pass the data
+ * @returns {Promise} The result of calling the callback on the resolved data
+ */
+function fetcher(dataType, cb) {
+  if (cache[dataType]) return Promise.resolve(cb(cache[dataType]));
+  return fetch(BASE_URL + dataType)
+    .then((v) => v.json())
+    .then((v) => cb(v));
+}
 
 const utils = {
   /**
@@ -78,15 +82,7 @@ const utils = {
    * @param {Function} cb - Function called with state data.
    * @returns {Function} Function called with state data.
    */
-  getStateData: (cb) => {
-    if (states) {
-      return cb(states);
-    }
-    return ajax({ url: STATES_URL }, function (resp) {
-      const data = JSON.parse(resp.data);
-      cb(data);
-    });
-  },
+  getStateData: (cb) => fetcher('state_meta', cb),
 
   /**
    * getCountyData - XHR county metadata
@@ -94,15 +90,7 @@ const utils = {
    * @param {Function} cb - Function called with county data.
    * @returns {Function} Function called with county data.
    */
-  getCountyData: (cb) => {
-    if (counties) {
-      return cb(counties);
-    }
-    return ajax({ url: COUNTIES_URL }, function (resp) {
-      const data = JSON.parse(resp.data);
-      cb(data);
-    });
-  },
+  getCountyData: (cb) => fetcher('state_county_meta', cb),
 
   /**
    * getMetroData - XHR metro metadata
@@ -110,15 +98,7 @@ const utils = {
    * @param {Function} cb - Function called with metro data.
    * @returns {Function} Function called with metro data.
    */
-  getMetroData: (cb) => {
-    if (metros) {
-      return cb(metros);
-    }
-    return ajax({ url: METROS_URL }, function (resp) {
-      const data = JSON.parse(resp.data);
-      cb(data);
-    });
-  },
+  getMetroData: (cb) => fetcher('state_msa_meta', cb),
 
   /**
    * getNonMetroData - XHR non-metro metadata
@@ -126,15 +106,7 @@ const utils = {
    * @param {Function} cb - Function called with non-metro data.
    * @returns {Function} Function called with non-metro data.
    */
-  getNonMetroData: (cb) => {
-    if (nonMetros) {
-      return cb(nonMetros);
-    }
-    return ajax({ url: NON_METROS_URL }, function (resp) {
-      const data = JSON.parse(resp.data);
-      cb(data);
-    });
-  },
+  getNonMetroData: (cb) => fetcher('non_msa_fips', cb),
 
   /**
    * getDate - Convert a date from YYYY-MM-DD to Month YYYY.
