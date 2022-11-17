@@ -6,10 +6,10 @@ let globalZoomLevel = 10;
 /**
  * @param {string} dataType - dataType to append to the BASE_URL
  * @param {Function} cb - The callback to pass the data
- * @returns {undefined} The result of calling the callback on the resolved data
+ * @returns {Promise} The result of calling the callback on the resolved data
  */
 function fetcher(dataType, cb) {
-  if (cache[dataType]) return cb(cache[dataType]);
+  if (cache[dataType]) return Promise.resolve(cb(cache[dataType]));
   return fetch(BASE_URL + dataType)
     .then((v) => v.json())
     .then((v) => cb(v));
