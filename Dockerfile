@@ -1,4 +1,7 @@
-FROM python:3.8-alpine as base
+# syntax=docker/dockerfile:1.4
+ARG PYTHON_VERSION=3.8
+ARG NODE_VERSION=16
+FROM python:${PYTHON_VERSION}-alpine as base
 
 # Hard labels
 LABEL maintainer="tech@cfpb.gov"
@@ -57,7 +60,7 @@ CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
 #######################################################################
 # Build frontend assets using a Node base image
-FROM node:16-alpine as cfgov-node-builder
+FROM node:${NODE_VERSION}-alpine as cfgov-node-builder
 
 ENV APP_HOME /src/consumerfinance.gov
 WORKDIR ${APP_HOME}
@@ -94,7 +97,7 @@ ENV ALLOWED_HOSTS '["*"]'
 RUN cp -Rfp /build/* /usr/local && rm -Rf /build
 
 # See .dockerignore for details on which files are included
-COPY --from=cfgov-node-builder ${APP_HOME} ${APP_HOME}
+COPY --link --from=cfgov-node-builder ${APP_HOME} ${APP_HOME}
 
 # Run Django's collectstatic to collect assets from the frontend build
 RUN cfgov/manage.py collectstatic
@@ -138,8 +141,16 @@ ENV ALLOWED_HOSTS '["*"]'
 
 # Install Apache server and curl (container healthcheck),
 # and converts all Docker Secrets into environment variables.
-RUN apk add --no-cache apache2 curl && \
-    echo '[ -d /var/run/secrets ] && for s in $(find /var/run/secrets -type f -name "*" -maxdepth 1) ; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
+RUN apk add --no-cache apache2 curl
+
+# Convert sercrets to environment variables
+COPY <<EOF /etc/profile.d/secrets_env.sh
+if [ -d /var/run/secrets/cfgov ]; then
+    for s in $(find -L /var/run/secrets/cfgov -type f); do
+        export $(echo -n $(basename \$s) | tr '[a-z]' '[A-Z]')=$(cat \$s);
+    done
+fi
+EOF
 
 # Link mime.types for RHEL Compatability in apache config.
 # TODO: Remove this link once RHEL is replaced
