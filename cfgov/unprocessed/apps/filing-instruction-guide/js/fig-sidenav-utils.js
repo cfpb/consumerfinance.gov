@@ -84,10 +84,12 @@ const updateNav = (target) => {
  * @param {IntersectionObserverEntry} entries - array of observer entries
  * See https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry
  */
+/* Cypress tests cover IntersectionObserver behavior */
+/* istanbul ignore next */
 const handleIntersect = (entries) => {
   entries.forEach((entry) => {
     if (entry.intersectionRatio > 0) {
-      updateNav(entry.target.getAttribute('href'));
+      updateNav('#' + entry.target.getAttribute('data-scrollspy'));
     }
   });
 };

@@ -83,12 +83,28 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
               fig.getNavItem(1).should('have.class', 'm-nav-link__current');
               fig.getNavItem('credit-type').should('not.be.visible');
 
-              fig.clickSectionHeading(2);
-              fig.getNavItem(2).should('have.class', 'm-nav-link__current');
+              fig.clickSectionHeading(3);
+              fig.getNavItem(3).should('have.class', 'm-nav-link__current');
+              fig.getNavItem('credit-type').should('be.visible');
+
+              fig.clickSectionHeading('application-method');
+              fig
+                .getNavItem('application-method')
+                .should('have.class', 'm-nav-link__current');
+              fig.getNavItem('credit-type').should('be.visible');
+
+              fig.clickSectionHeading(5);
+              fig.getNavItem(5).should('have.class', 'm-nav-link__current');
               fig.getNavItem('credit-type').should('not.be.visible');
 
               fig.clickSectionHeading(3);
               fig.getNavItem(3).should('have.class', 'm-nav-link__current');
+              fig.getNavItem('credit-type').should('be.visible');
+
+              fig.clickSectionHeading('action-taken');
+              fig
+                .getNavItem('action-taken')
+                .should('have.class', 'm-nav-link__current');
               fig.getNavItem('credit-type').should('be.visible');
             });
 
