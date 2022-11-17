@@ -38,7 +38,6 @@ const jsPaths = [
   `${apps}/owning-a-home/js/common.js`,
   `${apps}/owning-a-home/js/explore-rates/index.js`,
   `${apps}/owning-a-home/js/mortgage-estimate/index.js`,
-  `${apps}/owning-a-home/js/form-explainer/index.js`,
   `${apps}/paying-for-college/js/disclosures/index.js`,
   `${apps}/paying-for-college/js/college-costs.js`,
   `${apps}/regulations3k/js/index.js`,
