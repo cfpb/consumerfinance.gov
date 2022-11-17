@@ -341,6 +341,48 @@ git branch to compare the changes. Additionally, we use the GitHub filter
 action to make sure the ct GitHub action is only ran when there are
 changes to the helm directory yaml and tpl files.
 
+# File Based Secrets
+The cfgov image and Django application are capable of using file based
+secrets. This is accomplished by two different strategies.
+
+First, anything that uses a login shell (`#!/bin/sh -l`) **should**
+automatically source `/etc/profile.d/secrets_env.sh`. This file will take
+the filename as the environment variable name and the contents of the file
+as the value.
+
+Secondly, [`cfgov/cfgov/settings/base.py`](../cfgov/cfgov/settings/base.py)
+will also do the same thing.
+
+By default, they will not follow symlinks. This is for security purposes.
+However, you can change this behavior by setting environment variable
+`SECRETS_FOLLOW_SYMLINKS=true`. **This should never be done in production!!!**
+
+You can also change the directory that they load secrets from.
+By default, this directory is `/var/run/secrets/cfgov`. To change
+this behavior, set environment variable `SECRETS_DIR` to the desired path.
+
+This is particularly important to keep in mind when creating cronJobs
+that don't use Django (`django-admin`, `cfgob/manage.py`, etc). You will
+need to source `/etc/profile.d/secrets_env.sh` or have a shell script that
+uses a login shell (`#!/bin/sh -l`).
+
+```yaml
+example-cronjob-with-secrets:
+  command:
+    - '/bin/sh'
+  args:
+    - '-l'
+    - '-c'
+    - 'echo $SOME_SECRET'
+another-example-cronjob-with-secrets:
+  command:
+    - '/bin/sh'
+  args:
+    - '-c'
+    - |
+      source /etc/profile.d/secrets_env.sh
+      echo $SOME_SECRET
+```
 
 
 ## TODO
