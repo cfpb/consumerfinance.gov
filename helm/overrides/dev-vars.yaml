@@ -4,7 +4,6 @@ env:
   ALLOW_ADMIN_URL: "True"
   APACHE_UPLOADS_F_ALIAS: "/src/consumerfinance.gov/cfgov/f/"
   MEDIA_ROOT: "/src/consumerfinance.gov/cfgov/f/"
-  WATCHMAN_TOKENS: "token"
   APACHE_STATUS_ALLOW_FROM: "127.0.0.1"
   AWS_CONFIG_FILE: /var/run/secrets/.aws/config
   AWS_SHARED_CREDENTIALS_FILE: /var/run/secrets/.aws/credentials
