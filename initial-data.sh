@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -l
 
 # ==========================================================================
 # Initialization script for a wagtail user and imported data.
