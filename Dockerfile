@@ -97,7 +97,7 @@ ENV ALLOWED_HOSTS '["*"]'
 RUN cp -Rfp /build/* /usr/local && rm -Rf /build
 
 # See .dockerignore for details on which files are included
-COPY --link --from=cfgov-node-builder ${APP_HOME} ${APP_HOME}
+COPY --from=cfgov-node-builder ${APP_HOME} ${APP_HOME}
 
 # Run Django's collectstatic to collect assets from the frontend build
 RUN cfgov/manage.py collectstatic
@@ -145,8 +145,16 @@ RUN apk add --no-cache apache2 curl
 
 # Convert sercrets to environment variables
 COPY <<EOF /etc/profile.d/secrets_env.sh
-if [ -d /var/run/secrets/cfgov ]; then
-    for s in $(find -L /var/run/secrets/cfgov -type f); do
+if [ -d \${SECRETS_DIR:-/var/run/secrets/cfgov} ]; then
+    FIND_CMD="find"
+    if [ ! -z \$SECRETS_FOLLOW_SYMLINKS ] && \
+        [ $(echo -n "\$SECRETS_FOLLOW_SYMLINKS" | tr '[A-Z]' '[a-z]') == "true" ]; then
+        FIND_CMD="find -L"
+    fi
+    for s in $(\$FIND_CMD \${SECRETS_DIR:-/var/run/secrets/cfgov} -type f); do
+        if [ $(echo -n "\$s" | tr '[a-z]' '[A-Z]') == "SECRETS_FOLLOW_SYMLINKS" ]; then
+            continue
+        fi
         export $(echo -n $(basename \$s) | tr '[a-z]' '[A-Z]')=$(cat \$s);
     done
 fi

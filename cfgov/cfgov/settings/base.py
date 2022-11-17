@@ -13,12 +13,12 @@ from cfgov.util import admin_emails
 
 
 # File based secrets
-__SECRETS_DIR = os.getenv("SECRETS_DIR", "/var/run/secrets/cfgov")
-if os.path.isdir(__SECRETS_DIR):
+_SECRETS_DIR = os.getenv("SECRETS_DIR", "/var/run/secrets/cfgov")
+if os.path.isdir(_SECRETS_DIR):
     # Walk all levels, "exporting" filenames as environment variables
     # and their contents as the values, for the Python/Django runtime.
     # Trailing newline is stripped.
-    for root, dirs, files in os.walk(__SECRETS_DIR):
+    for root, dirs, files in os.walk(_SECRETS_DIR):
         for file in files:
             # Ignore SECRETS_FOLLOW_SYMLINKS file (security).
             # If SECRETS_FOLLOW_SYMLINKS is set as an actual var,
