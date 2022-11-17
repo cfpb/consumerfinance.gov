@@ -106,7 +106,7 @@ tolerations: []
 
 affinity: {}
 
-extraEnvs: []
+env: {}
 
 volumes: []
 
@@ -250,6 +250,17 @@ cronJobs:
         django-admin opensearch document --force --refresh index
     suspend: true
 
+# Django Settings
+django:
+  # Secrets keys are mounted to /var/run/secrets/cfgov/django
+  # Ergo, SECRET_KEY would be mounted to /var/run/secrets/cfgov/SECRET_KEY
+  # with its contents being the value of the key. These are then passed
+  # as runtime variables.
+  existingSecretName: ""  # When this is set, django.secrets is ignored
+  secrets: {}
+    # DJANGO_ADMIN_USERNAME: "admin"
+    # DJANGO_ADMIN_PASSWORD: "admin"
+    # SECRET_KEY: "abcdefghijklmnopqrstuvwxyz"
 
 # Postgres Values
 postgresql:
@@ -259,6 +270,7 @@ postgresql:
     # password: ""  # Used for both chart and external db's
     # database: ""  # Used for both chart and external db's
     createSecret: true  # Only valid when using external database
+    existingSecret: ""
   external:
     host: ""
     port: ""

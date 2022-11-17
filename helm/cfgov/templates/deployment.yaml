@@ -46,6 +46,7 @@ spec:
             - mountPath: {{ .mountPath }}
               name: {{ .name }}
             {{- end }}
+            {{- include "cfgov.secretVolumeMounts" . | nindent 12 }}
           env:
             - name: RUN_MIGRATIONS
               value: "true"
@@ -55,10 +56,11 @@ spec:
             {{- end }}
             {{- include "cfgov.postgresEnv" . | nindent 12 }}
             {{- include "cfgov.searchEnv" . | nindent 12 }}
-            {{- range .Values.extraEnvs }}
-            - name: {{ .name }}
-              value: {{ .value | quote }}
-            {{- end }}
+          {{- if .Values.env }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "cfgov.fullname" . }}
+          {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -96,15 +98,17 @@ spec:
             - mountPath: {{ .mountPath }}
               name: {{ .name }}
             {{- end }}
+            {{- include "cfgov.secretVolumeMounts" . | nindent 12 }}
           env:
             - name: APACHE_PORT
               value: "8000"
             {{- include "cfgov.postgresEnv" . | nindent 12 }}
             {{- include "cfgov.searchEnv" . | nindent 12 }}
-            {{- range .Values.extraEnvs }}
-            - name: {{ .name }}
-              value: {{ .value | quote }}
-            {{- end }}
+          {{- if .Values.env }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "cfgov.fullname" . }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
@@ -112,6 +116,7 @@ spec:
         - name: {{ .name }}
           {{- toYaml .volume | nindent 10 }}
         {{- end }}
+        {{- include "cfgov.secretVolumes" . | nindent 8 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

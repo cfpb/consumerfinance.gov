@@ -104,11 +104,6 @@ Postgres Environment Vars
 {{- if .Values.postgresql.enabled -}}
 - name: PGUSER
   value: "{{ include "postgresql.username" .Subcharts.postgresql | default "postgres"  }}"
-- name: PGPASSWORD
-  valueFrom:
-    secretKeyRef:
-      name: {{ include "postgresql.secretName" .Subcharts.postgresql }}
-      key: {{ include "postgresql.userPasswordKey" .Subcharts.postgresql }}
 - name: PGHOST
   value: "{{ include "postgresql.primary.fullname" .Subcharts.postgresql | trunc 63 | trimSuffix "-" }}"
 - name: PGDATABASE
@@ -122,11 +117,6 @@ Postgres Environment Vars
     secretKeyRef:
       name: {{ include "cfgov.fullname" . }}-postgres
       key: username
-- name: PGPASSWORD
-  valueFrom:
-    secretKeyRef:
-      name: {{ include "cfgov.fullname" . }}-postgres
-      key: password
 - name: PGDATABASE
   valueFrom:
     secretKeyRef:
@@ -135,8 +125,6 @@ Postgres Environment Vars
 {{- else }}
 - name: PGUSER
   value: "{{ .Values.postgresql.auth.username | default "postgres" }}"
-- name: PGPASSWORD
-  value: {{ .Values.postgresql.auth.password | quote }}
 - name: PGDATABASE
   value: "{{ .Values.postgresql.auth.database | default "postgres" }}"
 {{- end }}
@@ -212,4 +200,56 @@ Mapping/Ingress Hostname FQDN
 {{- else }}
 {{- include "cfgov.fullname" . }}-eks.{{ default "dev-internal" .Values.environmentName }}.aws.cfpb.gov
 {{- end }}
+{{- end }}
+
+{{/*
+Application Secret Volumes
+*/}}
+{{- define "cfgov.secretVolumes" -}}
+- name: django-secret
+  secret:
+    {{- if .Values.django.existingSecretName }}
+    secretName: {{ .Values.django.existingSecretName }}
+    {{- else }}
+    secretName: {{ include "cfgov.fullname" . }}
+    {{- end }}
+    optional: false
+- name: postgres-secret
+  secret:
+    {{- if .Values.postgresql.enabled }}
+    secretName: {{ include "postgresql.secretName" .Subcharts.postgresql }}
+    {{- else }}
+    {{- if .Values.postgresql.auth.existingSecret }}
+    secretName: {{ .Values.postgresql.auth.existingSecret }}
+    {{- else }}
+    secretName: {{ .Values.postgresql.auth.existingSecret }}
+    {{- end }}
+    {{- end }}
+    optional: false
+    items:
+      {{- if .Values.postgresql.enabled }}
+      {{- if not (empty (include "postgresql.username" .Subcharts.postgresql)) }}
+      - key: {{ include "postgresql.userPasswordKey" .Subcharts.postgresql }}
+      {{- else }}
+      - key: {{ include "postgresql.adminPasswordKey" .Subcharts.postgresql }}
+      {{- end }}
+      {{- else if .Values.postgresql.auth.secretKeys.userPasswordKey }}
+      - key: {{ .Values.postgresql.auth.secretKeys.userPasswordKey }}
+      {{- else }}
+      - key: password
+      {{- end }}
+        path: "PGPASSWORD"
+{{- end }}
+
+
+{{/*
+Application Secret Volume Mounts
+*/}}
+{{- define "cfgov.secretVolumeMounts" -}}
+- name: django-secret
+  mountPath: "/var/run/secrets/cfgov/django"
+  readOnly: true
+- name: postgres-secret
+  mountPath: "/var/run/secrets/cfgov/postgres"
+  readOnly: true
 {{- end }}

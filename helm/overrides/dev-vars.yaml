@@ -1,34 +1,22 @@
 importDbPath: "${CFGOV_PROD_DB_LOCATION}"
 
-extraEnvs:
-  - name: ALLOW_ADMIN_URL
-    value: "True"
-  - name: APACHE_UPLOADS_F_ALIAS
-    value: "/src/consumerfinance.gov/cfgov/f/"
-  - name: DJANGO_ADMIN_USERNAME
-    value: "admin"
-  - name: DJANGO_ADMIN_PASSWORD
-    value: "admin"
-  - name: SECRET_KEY
-    value: "abcdefghijklmnopqrstuvwxyz"
-  - name: MEDIA_ROOT
-    value: "/src/consumerfinance.gov/cfgov/f/"
-  - name: WATCHMAN_TOKENS
-    value: "token"
-  - name: APACHE_STATUS_ALLOW_FROM
-    value: "127.0.0.1"
-  - name: AWS_CONFIG_FILE
-    value: /var/run/secrets/.aws/config
-  - name: AWS_SHARED_CREDENTIALS_FILE
-    value: /var/run/secrets/.aws/credentials
-  - name: AWS_PROFILE
-    value: ${AWS_PROFILE}
-  - name: DB_DUMP_FILE
-    value: ${DB_DUMP_FILE}
-  - name: DB_DUMP_URL
-    value: ${DB_DUMP_URL}
-  - name: FORCE_DB_REBUILD
-    value: ${FORCE_DB_REBUILD}
+env:
+  ALLOW_ADMIN_URL: "True"
+  APACHE_UPLOADS_F_ALIAS: "/src/consumerfinance.gov/cfgov/f/"
+  MEDIA_ROOT: "/src/consumerfinance.gov/cfgov/f/"
+  WATCHMAN_TOKENS: "token"
+  APACHE_STATUS_ALLOW_FROM: "127.0.0.1"
+  AWS_CONFIG_FILE: /var/run/secrets/.aws/config
+  AWS_SHARED_CREDENTIALS_FILE: /var/run/secrets/.aws/credentials
+  AWS_PROFILE: "${AWS_PROFILE}"
+  DB_DUMP_FILE: "${DB_DUMP_FILE}"
+  DB_DUMP_URL: "${DB_DUMP_URL}"
+  FORCE_DB_REBUILD: "${FORCE_DB_REBUILD}"
 # add in desired S3 Bucket for PG_Dump
-# - name: S3_BUCKET
-#   value: <enter_bucket>
+# S3_BUCKET: <enter_bucket>
+
+django:
+  secrets:
+    DJANGO_ADMIN_USERNAME: "admin"
+    DJANGO_ADMIN_PASSWORD: "admin"
+    SECRET_KEY: "abcdefghijklmnopqrstuvwxyz"
