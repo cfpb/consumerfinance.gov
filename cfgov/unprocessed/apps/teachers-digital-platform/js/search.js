@@ -6,7 +6,10 @@ import {
 } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import expandableFacets from './expandable-facets';
 import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable';
-const analytics = require('./tdp-analytics');
+import {
+  handleClearAllClick,
+  handleFetchSearchResults,
+} from './tdp-analytics.js';
 const fetch = require('./utils').fetch;
 const ClearableInput = require('./ClearableInput').ClearableInput;
 
@@ -101,7 +104,7 @@ function removeTag(tag) {
  */
 function clearFilters(event) {
   // Handle Analytics here before tags vanish.
-  analytics.handleClearAllClick(event);
+  handleClearAllClick(event);
 
   let filterIcons = document.querySelectorAll('.a-tag svg');
   // IE doesn't support forEach w/ node lists so convert it to an array.
@@ -173,8 +176,8 @@ function fetchSearchResults(filters = []) {
     utils.updateUrl(baseUrl, searchParams);
     // Reattach event handlers after tags are reloaded
     attachHandlers();
-    // Send search query to Analytics.
-    analytics.handleFetchSearchResults(searchField.value);
+    // Send search query to
+    handleFetchSearchResults(searchField.value);
     return data;
   });
   return searchUrl;
