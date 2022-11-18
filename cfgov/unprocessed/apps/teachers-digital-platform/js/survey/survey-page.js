@@ -337,4 +337,11 @@ function breakSeparatedAnswers() {
   });
 }
 
-export { surveyPage, scrollToEl, ChoiceField, progressBar, SectionLink };
+export {
+  Cookies,
+  surveyPage,
+  scrollToEl,
+  ChoiceField,
+  progressBar,
+  SectionLink,
+};
