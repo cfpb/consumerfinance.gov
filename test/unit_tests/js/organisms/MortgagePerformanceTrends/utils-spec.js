@@ -1,5 +1,10 @@
-// Disable the AJAX library used by the action creator.
-jest.mock('xdr', () => jest.fn(() => ({ mock: 'data' })));
+global.fetch = jest.fn( url =>
+  Promise.resolve({
+    json: jest.fn(() => Promise.resolve({ mock: url })),
+  })
+);
+
+const BASE_URL = '/data-research/mortgages/api/v1/metadata/';
 
 import utils from '../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils.js';
 
@@ -46,22 +51,30 @@ describe('Mortgage Performance utilities', () => {
 
   it('should get metro data', () => {
     const cb = jest.fn();
-    expect(utils.getMetroData(cb)).toStrictEqual({ mock: 'data' });
+    utils.getMetroData(cb).then(() =>{
+      expect(cb).toBeCalledWith({ mock: BASE_URL + 'state_msa_meta' });
+    })
   });
 
   it('should get non-metro data', () => {
     const cb = jest.fn();
-    expect(utils.getNonMetroData(cb)).toStrictEqual({ mock: 'data' });
-  });
+    utils.getNonMetroData(cb).then(() =>{
+      expect(cb).toBeCalledWith({ mock: BASE_URL + 'non_msa_fips' });
+    })
+   });
 
   it('should get county data', () => {
     const cb = jest.fn();
-    expect(utils.getCountyData(cb)).toStrictEqual({ mock: 'data' });
+    utils.getCountyData(cb).then(() =>{
+      expect(cb).toBeCalledWith({ mock: BASE_URL + 'state_county_meta' });
+    })
   });
 
   it('should get state data', () => {
     const cb = jest.fn();
-    expect(utils.getStateData(cb)).toStrictEqual({ mock: 'data' });
+    utils.getStateData(cb).then(() =>{
+      expect(cb).toBeCalledWith({ mock: BASE_URL + 'state_meta' });
+    })
   });
 
   it('should be able to calculate zoom levels', () => {
