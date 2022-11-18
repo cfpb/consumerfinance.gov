@@ -2,7 +2,7 @@ const {
   closest,
 } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
 const objectEntries = require('object.entries');
-const Cookie = require('js-cookie');
+import Cookies from 'js-cookie';
 const {
   ANSWERS_SESS_KEY,
   RESULT_COOKIE,
@@ -136,7 +136,7 @@ function handleNewSelections(data, store) {
  * @returns {boolean} True if execution should halt
  */
 function userTriedReentry() {
-  if (Cookie.get(RESULT_COOKIE)) {
+  if (Cookies.get(RESULT_COOKIE)) {
     // Has not cleared results.
     location.href = '../results/';
     return true;
@@ -157,7 +157,7 @@ function allowStartOver() {
         modals.close();
       } else {
         sessionStorage.removeItem(ANSWERS_SESS_KEY);
-        Cookie.remove(SURVEY_COOKIE);
+        Cookies.remove(SURVEY_COOKIE);
         location.href = $('[data-grade-select-url]').dataset.gradeSelectUrl;
       }
     }
@@ -337,11 +337,4 @@ function breakSeparatedAnswers() {
   });
 }
 
-export {
-  surveyPage,
-  scrollToEl,
-  ChoiceField,
-  progressBar,
-  Cookie,
-  SectionLink,
-};
+export { surveyPage, scrollToEl, ChoiceField, progressBar, SectionLink };
