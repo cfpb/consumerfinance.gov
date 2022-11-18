@@ -1,7 +1,7 @@
 const simulateEvent = require('../../../../util/simulate-event').simulateEvent;
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
 
-const app = require(`${BASE_JS_PATH}/js/search.js`);
+import(`${BASE_JS_PATH}/js/search.js`);
 
 const HTML_SNIPPET = `
   <form action="/search" data-js-hook="behavior_submit-search">
@@ -57,10 +57,6 @@ describe('The Regs3K search page', () => {
     const event = document.createEvent('Event');
     event.initEvent('load', true, true);
     window.dispatchEvent(event);
-  });
-
-  it('should not throw any errors on init', () => {
-    expect(() => app).not.toThrow();
   });
 
   it('should handle search form submissions', () => {
