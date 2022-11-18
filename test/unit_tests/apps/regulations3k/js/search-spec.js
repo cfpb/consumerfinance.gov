@@ -1,7 +1,6 @@
 const simulateEvent = require('../../../../util/simulate-event').simulateEvent;
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
 
-import(`${BASE_JS_PATH}/js/search.js`);
+import('../../../../../cfgov/unprocessed/apps/regulations3k/js/search.js');
 
 const HTML_SNIPPET = `
   <form action="/search" data-js-hook="behavior_submit-search">
