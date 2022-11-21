@@ -96,27 +96,11 @@ urlpatterns = [
         ),
     ),
     re_path(
-        r"^owning-a-home/closing-disclosure/$",
-        flagged_wagtail_template_view(
-            flag_name="WAGTAIL_FORM_EXPLAINERS",
-            template_name="owning-a-home/closing-disclosure/index.html",
-        ),
-        name="closing-disclosure",
-    ),
-    re_path(
         r"^owning-a-home/explore-rates/",
         TemplateView.as_view(
             template_name="owning-a-home/explore-rates/index.html"
         ),
         name="explore-rates",
-    ),
-    re_path(
-        r"^owning-a-home/loan-estimate/$",
-        flagged_wagtail_template_view(
-            flag_name="WAGTAIL_FORM_EXPLAINERS",
-            template_name="owning-a-home/loan-estimate/index.html",
-        ),
-        name="loan-estimate",
     ),
     re_path(
         r"^know-before-you-owe/$",
