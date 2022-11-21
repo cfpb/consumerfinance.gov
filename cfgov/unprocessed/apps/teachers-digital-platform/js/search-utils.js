@@ -73,17 +73,6 @@ function hideLoading(el) {
 }
 
 /**
- * Uncheck checkbox.
- *
- * @param {HTMLElement} el - Input element to uncheck.
- * @returns {HTMLElement} Input element.
- */
-function clearCheckbox(el) {
-  el.checked = false;
-  return el;
-}
-
-/**
  * Update the page's URL via replaceState
  *
  * @param {string} base - URL's base.
@@ -122,12 +111,11 @@ function handleError(code) {
 }
 
 module.exports = {
-  getSearchValues: getSearchValues,
-  serializeFormFields: serializeFormFields,
-  buildSearchResultsURL: buildSearchResultsURL,
-  showLoading: showLoading,
-  hideLoading: hideLoading,
-  clearCheckbox: clearCheckbox,
-  handleError: handleError,
-  updateUrl: updateUrl,
+  getSearchValues,
+  serializeFormFields,
+  buildSearchResultsURL,
+  showLoading,
+  hideLoading,
+  handleError,
+  updateUrl,
 };
