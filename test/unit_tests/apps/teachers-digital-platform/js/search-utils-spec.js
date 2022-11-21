@@ -42,11 +42,6 @@ describe('The TDP search utils', () => {
     expect(el.style.opacity).toEqual(1);
   });
 
-  it('should clear a checkbox', () => {
-    const checkbox = utils.clearCheckbox({ checked: true });
-    expect(checkbox.checked).toBeFalsy();
-  });
-
   it('should handle errors', () => {
     const searchError = utils.handleError('no-results');
     expect(searchError.msg).toEqual('Your query returned zero results.');
