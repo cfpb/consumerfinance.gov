@@ -1,5 +1,5 @@
 import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js';
-import { Cookies } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/grade-level-page.js';
+import Cookies from 'js-cookie';
 import {
   ANSWERS_SESS_KEY,
   RESULT_COOKIE,

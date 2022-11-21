@@ -338,7 +338,6 @@ function breakSeparatedAnswers() {
 }
 
 export {
-  Cookies,
   surveyPage,
   scrollToEl,
   ChoiceField,

@@ -1,7 +1,7 @@
+import Cookies from 'js-cookie';
 import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js';
 import {
-  Cookies,
-  resultsPage,
+  resultsPage
 } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page.js';
 import {
   ANSWERS_SESS_KEY,

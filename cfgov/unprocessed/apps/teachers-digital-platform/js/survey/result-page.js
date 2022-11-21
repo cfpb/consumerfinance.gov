@@ -143,4 +143,4 @@ function handleResetModal() {
   });
 }
 
-export { resultsPage, ANSWERS_SESS_KEY, Cookies };
+export { resultsPage, ANSWERS_SESS_KEY };

@@ -1,12 +1,6 @@
 module.exports = {
   parser: '@babel/eslint-parser',
   settings: {
-    'import/resolver': {
-      node: {
-        paths: ['src'],
-        extensions: ['.js', '.ts', '.d.ts', '.tsx'],
-      },
-    },
     react: {
       version: 'detect',
     },
@@ -42,6 +36,7 @@ module.exports = {
     'no-var': ['error'],
     'prefer-const': ['error'],
     radix: ['error'],
+    'import/no-unresolved': 0,
     // TODO: remove this and fix definition order.
     'no-use-before-define': 0,
   },
