@@ -22,7 +22,6 @@
     "js-cookie": "2.2.1",
     "object.entries": "1.1.4",
     "object.values": "1.1.4",
-    "smoothscroll-polyfill": "0.4.4",
     "stickyfilljs": "2.1.0"
   }
 }

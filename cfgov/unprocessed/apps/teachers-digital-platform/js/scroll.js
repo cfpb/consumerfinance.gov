@@ -1,12 +1,9 @@
-const smoothscroll = require('smoothscroll-polyfill');
 const scrollIntoView =
   require('../../../js/modules/util/scroll').scrollIntoView;
 
 const scroll = {
   init: () => {
     let jumplinks = document.querySelectorAll('[data-scroll]');
-
-    smoothscroll.polyfill();
 
     // IE doesn't support forEach w/ node lists so convert it to an array.
     jumplinks = Array.prototype.slice.call(jumplinks);
