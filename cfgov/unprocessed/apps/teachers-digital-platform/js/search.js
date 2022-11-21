@@ -7,11 +7,11 @@ import {
 import expandableFacets from './expandable-facets';
 import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable';
 const analytics = require('./tdp-analytics');
-const fetch = require('./utils').fetch;
 const ClearableInput = require('./ClearableInput').ClearableInput;
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
-let searchRequest = {};
+const searchRequest = new AbortController();
+const { signal } = searchRequest.signal;
 
 /**
  * Initialize search functionality.
@@ -159,24 +159,29 @@ function fetchSearchResults(filters = []) {
   const searchUrl = utils.buildSearchResultsURL(baseUrl, searchParams, {
     partial: true,
   });
+
   utils.updateUrl(baseUrl, searchParams);
   utils.showLoading(searchContainer);
-  searchRequest = fetch(searchUrl, (err, data) => {
-    utils.hideLoading(searchContainer);
-    if (err !== null) {
-      // TODO: Add message banner above search results
-      return console.error(utils.handleError(err).msg);
-    }
-    searchContainer.innerHTML = data;
 
-    // Update the query params in the URL
-    utils.updateUrl(baseUrl, searchParams);
-    // Reattach event handlers after tags are reloaded
-    attachHandlers();
-    // Send search query to Analytics.
-    analytics.handleFetchSearchResults(searchField.value);
-    return data;
-  });
+  fetch(searchUrl, { signal })
+    .then((response) => response.text())
+    .then((data) => {
+      utils.hideLoading(searchContainer);
+      searchContainer.innerHTML = data;
+
+      // Update the query params in the URL
+      utils.updateUrl(baseUrl, searchParams);
+
+      // Reattach event handlers after tags are reloaded
+      attachHandlers();
+
+      // Send search query to Analytics.
+      analytics.handleFetchSearchResults(searchField.value);
+    })
+    .catch((err) => {
+      // TODO: Add message banner above search results
+      console.error(utils.handleError(err).msg);
+    });
   return searchUrl;
 }
 
