@@ -6,10 +6,12 @@ This Django project includes the front-end assets and build tools,
 code to configure our CMS, [Wagtail](https://wagtail.io/),
 and several standalone Django apps for specific parts of the site.
 
-## Quickstart
+## Documentation
 
-Full installation and usage instructions are available in
-[our documentation](https://cfpb.github.io/consumerfinance.gov).
+Full documentation for this project is available in the [docs/](docs/) directory
+and [online](https://cfpb.github.io/consumerfinance.gov/).
+
+## Quickstart
 
 This quickstart requires a working Docker Desktop installation and git:
 
@@ -53,22 +55,6 @@ Our documentation will be available at <http://localhost:8888> (docker-compose o
 
 The Wagtail admin area will be available at <http://localhost:8000/admin/>,
 which you can log into with the credentials `admin`/`admin`.
-
-## Documentation
-
-Full documentation for this project is available in the [docs/](docs/) directory
-and [online](https://cfpb.github.io/consumerfinance.gov/).
-
-If you would like to browse the documentation locally, you can do so
-with [`mkdocs`](https://www.mkdocs.org/):
-
-```sh
-pip install -r requirements/docs.txt
-mkdocs serve
-```
-
-Documentation will be available locally at
-[http://localhost:8000/](http://localhost:8000/).
 
 ## Getting the package
 
