@@ -29,7 +29,7 @@ jobs:
         run: |
           yarn
 
-      - name: Lint and test Javascript
+      - name: Test Javascript
         if: steps.filter.outputs.frontend == 'true'
         run: yarn run test
 
