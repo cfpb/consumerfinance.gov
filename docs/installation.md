@@ -125,7 +125,8 @@ as the formatter for Python files.
 ### Install pre-commit
 
 We use `pre-commit` to automatically run our linting tools before a commit
-takes place. These tools consist of `black`, `flake8`, `isort`, and `bandit`.
+takes place. These tools consist of `black`, `flake8`, `isort`, `bandit`,
+prettier, eslint, and stylelint.
 To install `pre-commit`, running the following commands from within the
 `consumerfinance.gov` directory:
 

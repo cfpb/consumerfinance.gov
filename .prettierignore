@@ -5,3 +5,5 @@ cfgov/agreements/static/agreements/js/jquery-3.5.1.min.js
 cfgov/static_built/
 cfgov/legacy/static/nemo/_/js/
 collectstatic/
+*.less
+*.css
