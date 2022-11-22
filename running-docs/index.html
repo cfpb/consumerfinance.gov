@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Consumer Complaints - consumerfinance.gov</title>
+    <title>Running documentation site locally - consumerfinance.gov</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
@@ -13,8 +13,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Consumer Complaints";
-        var mkdocs_page_input_path = "consumer-complaint-database.md";
+        var mkdocs_page_name = "Running documentation site locally";
+        var mkdocs_page_input_path = "running-docs.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -50,12 +50,16 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Running this Project</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../running-virtualenv/">Running in a Virtual Environment</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../running-docker/">Running in Docker</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../running-docs/">Running documentation site locally</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Running documentation site locally</a>
+    <ul class="current">
+    
+
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../debugging-monitoring/">Debugging and Monitoring</a>
                   </li>
@@ -117,20 +121,10 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">APIs and Data</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../ask-cfpb/">Ask CFPB</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Consumer Complaints</a>
-    <ul class="current">
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#a-resource-for-searching-complaints-submitted-to-the-cfpb">A resource for searching complaints submitted to the CFPB</a></li>
-        
-        </ul>
-    
-
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../consumer-complaint-database/">Consumer Complaints</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../housing-counselor-tool/">Find a Housing Counselor Tool</a>
                   </li>
@@ -149,9 +143,9 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>APIs and Data &raquo;</li><li>Consumer Complaints</li>
+          <li>Running this Project &raquo;</li><li>Running documentation site locally</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/consumer-complaint-database.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/running-docs.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -161,19 +155,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="consumer-complaint-database-api">Consumer Complaint Database API<a class="headerlink" href="#consumer-complaint-database-api" title="Permanent link">¶</a></h1>
-<h3 id="a-resource-for-searching-complaints-submitted-to-the-cfpb">A resource for searching complaints submitted to the CFPB<a class="headerlink" href="#a-resource-for-searching-complaints-submitted-to-the-cfpb" title="Permanent link">¶</a></h3>
-<p>Each week the CFPB sends thousands of consumers’ complaints about financial products and services to companies for response. Those complaints are <a href="https://www.consumerfinance.gov/data-research/consumer-complaints/">published</a> on our website after the company responds or after 15 days, whichever comes first.</p>
-<p>The API allows automation of the same filtering and searching functions offered to website visitors.</p>
-<p>Detailed documentation for the search API can be found <a href="https://cfpb.github.io/ccdb5-api/documentation/index.html">here</a>.</p>
-<h4 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">¶</a></h4>
-<p>The database generally updates daily, and contains certain information for each complaint, including the source of the complaint, the date of submission, and the company the complaint was sent to for response. The database also includes information about the actions taken by the company in response to the complaint, such as, whether the company’s response was timely and how the company responded. If the consumer opts to share it and after we take steps to remove personal information, we publish the consumer’s description of what happened. Companies also have the option to select a public response. Company level information should be considered in context of company size and/or market share. Complaints referred to other regulators, such as complaints about depository institutions with less than $10 billion in assets, are not published in the Consumer Complaint Database.</p>
+                <h1 id="running-documentation-site-locally">Running documentation site locally<a class="headerlink" href="#running-documentation-site-locally" title="Permanent link">¶</a></h1>
+<p>If you would like to browse this documentation site locally, you can do so
+with <a href="https://www.mkdocs.org/"><code>mkdocs</code></a>:</p>
+<pre class="highlight"><code class="language-sh">pip install -r requirements/docs.txt
+mkdocs serve</code></pre>
+<p>Documentation will be available locally at
+<a href="http://localhost:8000/">http://localhost:8000/</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+</div>
+<p>If you are currently running the consumerfinance.gov site locally and
+would like to access the docs at a different port, run,
+for example <code>mkdocs serve -a localhost:8001</code> to serve the docs at port 8001.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../ask-cfpb/" class="btn btn-neutral float-left" title="Ask CFPB"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../housing-counselor-tool/" class="btn btn-neutral float-right" title="Find a Housing Counselor Tool">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../running-docker/" class="btn btn-neutral float-left" title="Running in Docker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../debugging-monitoring/" class="btn btn-neutral float-right" title="Debugging and Monitoring">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -200,10 +200,10 @@
         </span>
     
     
-      <span><a href="../ask-cfpb/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../running-docker/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../housing-counselor-tool/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../debugging-monitoring/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
