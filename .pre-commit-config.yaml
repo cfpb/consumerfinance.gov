@@ -43,3 +43,4 @@ repos:
         additional_dependencies:
           - stylelint@14.4.0
           - stylelint-config-recommended-less@1.0.4
+          - stylelint-prettier@2.0.0
