@@ -1,0 +1,37 @@
+{
+  "plugins": ["stylelint-prettier"],
+  "customSyntax": "postcss-less",
+  "extends": "stylelint-config-recommended-less",
+  "rules": {
+    "prettier/prettier": true,
+    "property-no-unknown": true,
+    "declaration-colon-newline-after": null,
+    "declaration-empty-line-before": null,
+    "function-name-case": [
+      "lower",
+      {
+        "ignoreFunctions": ["filter"]
+      }
+    ],
+    "function-parentheses-space-inside": "always",
+    "rule-empty-line-before": [
+      "always-multi-line",
+      {
+        "except": "first-nested",
+        "ignore": ["after-comment", "inside-block"]
+      }
+    ],
+    "indentation": [
+      2,
+      {
+        "ignore": "value"
+      }
+    ],
+    "max-empty-lines": 2,
+    "media-feature-parentheses-space-inside": "always",
+    "no-descending-specificity": null,
+    "selector-pseudo-class-parentheses-space-inside": "always",
+    "less/color-no-invalid-hex": true,
+    "less/no-duplicate-variables": null
+  }
+}
