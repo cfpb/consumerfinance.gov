@@ -36,3 +36,10 @@ repos:
           - eslint-plugin-jsdoc@39.6.2
           - eslint-plugin-jsx-a11y@6.6.1
           - eslint-plugin-react@7.31.10
+  - repo: https://github.com/thibaudcolas/pre-commit-stylelint
+    rev: v14.4.0
+    hooks:
+      - id: stylelint
+        additional_dependencies:
+          - stylelint@14.4.0
+          - stylelint-config-recommended-less@1.0.4
