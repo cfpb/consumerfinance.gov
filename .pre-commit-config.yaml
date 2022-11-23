@@ -1,3 +1,4 @@
+default_stages: [push]
 repos:
   - repo: https://github.com/psf/black
     rev: 22.3.0
@@ -26,6 +27,7 @@ repos:
     rev: v2.7.1
     hooks:
       - id: prettier
+        exclude_types: [css, less]
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v8.28.0
     hooks:

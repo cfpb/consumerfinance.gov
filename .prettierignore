@@ -6,9 +6,5 @@ cfgov/static_built/
 cfgov/legacy/static/nemo/_/js/
 collectstatic/
 
-# Handled by stylelint-prettier
-*.less
-*.css
-
 # Ignore all HTML files:
 *.html
