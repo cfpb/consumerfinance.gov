@@ -26,7 +26,6 @@ repos:
     rev: v2.7.1
     hooks:
       - id: prettier
-        exclude_types: [css, less]
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v8.28.0
     hooks:
@@ -41,6 +40,7 @@ repos:
     rev: v14.4.0
     hooks:
       - id: stylelint
+        types_or: [less, css]
         additional_dependencies:
           - stylelint@14.4.0
           - stylelint-config-recommended-less@1.0.4

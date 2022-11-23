@@ -16,7 +16,7 @@
     - cf-core
 */
 
-@margin_half__em: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+@margin_half__em: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
 @mobile_trigger_ht__px: 54px;
 @min_app_width__px: 320px;
 
@@ -134,7 +134,6 @@
   }
 
   &_logo {
-
     &-img {
       // Size is to fit 320px minimum width for older iPhones, etc.
       height: @mobile_trigger_ht__px - 20px;
@@ -154,17 +153,14 @@
   }
 
   &__mega-menu {
-
     // Setting the minimum height allocates room for the mega menu
     // so the header height doesn't change when it loads in.
     .respond-to-min( @bp-med-min, {
       min-height: 167px;
     } );
-
   }
 
-  &__mega-menu &_logo  {
-
+  &__mega-menu &_logo {
     // Tablet/mobile sizes.
     .respond-to-max( @bp-sm-max, {
       .js & {
@@ -177,7 +173,6 @@
     } );
   }
 }
-
 
 // Used on /external-site/ template, where the header has no nav and eyebrow.
 .o-header__no-nav {
