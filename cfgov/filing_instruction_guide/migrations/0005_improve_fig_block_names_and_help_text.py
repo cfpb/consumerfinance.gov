@@ -2,11 +2,13 @@
 
 import django.core.validators
 from django.db import migrations
-import v1.atomic_elements.tables
-import v1.blocks
+
 import wagtail.core.blocks
 import wagtail.core.fields
 import wagtail.images.blocks
+
+import v1.atomic_elements.tables
+import v1.blocks
 
 
 class Migration(migrations.Migration):

@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import django.db.models.deletion
-import modelcluster.fields
 from django.db import migrations, models
+
 from wagtail.core import fields as core_fields
+
+import modelcluster.fields
 
 
 class Migration(migrations.Migration):
