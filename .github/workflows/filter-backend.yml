@@ -19,4 +19,4 @@ jobs:
           - validate-translations
           - unittest
     steps:
-      - run: 'echo "Skipping backend ${matrix.toxenv}"'
+      - run: 'echo "Skipping backend ${{ matrix.toxenv }}"'
