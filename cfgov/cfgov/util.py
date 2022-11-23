@@ -1,5 +1,4 @@
 def admin_emails(delimited_list):
-    """Test"""
     emails = []
 
     if delimited_list:
