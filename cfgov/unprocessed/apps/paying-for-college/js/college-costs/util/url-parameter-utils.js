@@ -117,7 +117,7 @@ function getQueryVariables() {
 
   for ( const key in urlParameters ) {
     if ( queryStringValues[key] !== null ) {
-      queryVariables[key] = queryStringValues[key];      
+      queryVariables[key] = queryStringValues[key].replace(/[^a-z0-9.-]/gi, '');      
     }
   }
 
