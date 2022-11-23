@@ -1,6 +1,6 @@
 # Docker Swarm compatible Compose file.  Intended for use
 # with this repo's Jenkinsfile, not local development.
-version: "3.7"
+version: '3.7'
 
 services:
   elasticsearch:
@@ -58,7 +58,7 @@ services:
   python:
     image: ${CFGOV_PYTHON_IMAGE}
     environment:
-      ALLOW_ADMIN_URL: "True"
+      ALLOW_ADMIN_URL: 'True'
       APACHE_PORT: 8000
       APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
       PGDATABASE: cfgov
@@ -105,13 +105,13 @@ services:
         reservations:
           memory: 512M
     command: >
-                bash -c "
+      bash -c "
 
-                ./cfgov/manage.py opensearch index --force rebuild
+      ./cfgov/manage.py opensearch index --force rebuild
 
-                ./cfgov/manage.py opensearch document --force --refresh --parallel index
+      ./cfgov/manage.py opensearch document --force --refresh --parallel index
 
-                httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -D FOREGROUND"
+      httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -D FOREGROUND"
 
 networks:
   app:
