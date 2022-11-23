@@ -4,21 +4,28 @@
 
    ==========================================================================
 
-   Description:
+   Create an Item Introduction organism.
 
-   Create an Item Introduction molecule.
-   See [GHE]/flapjack/Modules-V1/wiki/Item-Introduction
+   https://cfpb.github.io/design-system/patterns/item-introductions
 
-   value:                   An object with the following options for value.
+   value.show_category:     (Optional) Whether to show category.
 
-   value.show_category:    Whether to show the category or not.
-   value.heading:          Heading text.
-   value.paragraph.source: Body introduction text.
-   value.authors:          Array of author names and associated URLs.
+   value.category:          (Optional) Category to show above heading.
 
-   value.date:             A datetime for the post.
-   value.has_social:       Whether to show the share icons or not.
-   value.social_options:   An object with options for the share icons
+   value.category_url:      (Optional) URL to link category to.
+
+   value.heading:           Heading text.
+
+   value.paragraph:         (Optional) Subheader paragraph.
+
+   value.authors:           (Optional) A list of author names to be included
+                            on a byline.
+
+   value.date:              (Optional) A date to be included on a byline.
+
+   value.has_social:        Whether to show the share icons or not.
+
+   value.social_options:    (Optional) Share icon options.
 
    ========================================================================== #}
 
@@ -26,50 +33,44 @@
 {% import 'molecules/social-media.html' as social_media with context %}
 {% import 'macros/category-slug.html' as category_slug %}
 
-{% macro render(value) %}
-
-{% set filter_page = page.get_filter_data() %}
-{% set filter_page_url = pageurl(filter_page) if filter_page else none %}
-{% set published_date = value.date %}
-{% set has_authors = page.authors.exists() %}
-{% set social_options = value.social_options or {} %}
-
+{%- macro render( value ) %}
 <div class="o-item-introduction">
-    {% if filter_page_url and page.categories.count() > 0 and value.show_category %}
-        {{ category_slug.render(category=page.categories.first().name, href=filter_page_url) }}
-    {% endif %}
+    {% if value.show_category and value.category -%}
+        {{ category_slug.render( value.category, href=value.category_url ) }}
+    {%- endif %}
+
     <h1>{{ value.heading | safe }}</h1>
 
-    {% if value.paragraph %}
+    {% if value.paragraph -%}
         <div class="lead-paragraph">{{ value.paragraph | safe }}</div>
-    {% endif %}
+    {%- endif %}
 
-    {% if published_date or has_authors %}
-        <div class="meta">
-    {% endif %}
-        {% if filter_page_url and has_authors %}
-            <span class="byline">
-            {%- for author in page.get_authors() -%}
-                {% if loop.first %}By {% elif loop.last %}and {% endif %}
-                {{ author.name }}
-                {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
-            {% endfor %}
-                &ndash;
-            </span>
-        {% endif %}
-        {% if published_date %}
-            <span class="a-date">
-                {% import 'macros/time.html' as time %}
-                {{ time.render(published_date, {'date':true}) }}
-            </span>
-        {% endif %}
-    {% if published_date or has_authors %}
-        </div>
-    {% endif %}
+    {% include 'atoms/byline.html' with context %}
 
-    {% if value.has_social %}
-        {{ social_media.render(social_options) }}
-    {% endif %}
+    {% if value.has_social -%}
+        {{ social_media.render( value.social_options or {} ) }}
+    {%- endif %}
 </div>
+{% endmacro -%}
 
-{% endmacro %}
+{%- if value %}
+
+{% if page %}
+    {% if not "category" in value %}
+        {% set category = page.categories.values_list("name", flat=True).first() %}
+        {% if category %}
+            {% do value.update( { "category": category } ) %}
+
+            {% set filter_page = page.get_filter_data() %}
+            {% if filter_page %}
+                {% do value.update(
+                    { "category_url": pageurl( filter_page ) }
+                ) %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+{{- render( value ) -}}
+
+{% endif -%}
