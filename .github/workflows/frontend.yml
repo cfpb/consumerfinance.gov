@@ -23,7 +23,7 @@ jobs:
         run: |
           yarn
 
-      - name: Lint and test Javascript
+      - name: Test Javascript
         run: yarn run test
 
       - name: Store test coverage

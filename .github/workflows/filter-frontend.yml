@@ -1,4 +1,4 @@
-name: filter
+name: filter-frontend
 on:
   pull_request:
     paths-ignore:

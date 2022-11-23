@@ -1,0 +1,14 @@
+name: filter-backend
+on:
+  pull_request:
+    paths-ignore:
+      - '**.py'
+      - 'requirements/**.txt'
+      - '**.html'
+      - '**.mo'
+      - '**.po'
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "Skipping backend build"'
