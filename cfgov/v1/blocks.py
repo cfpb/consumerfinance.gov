@@ -145,17 +145,6 @@ class ReusableTextChooserBlock(SnippetChooserBlock):
         template = "_includes/snippets/reusable_text.html"
 
 
-class RAFToolBlock(blocks.StaticBlock):
-    class Meta:
-        icon = "cog"
-        label = "Rental Assistance Finder Tool"
-        admin_text = "{label} has no options to configure".format(label=label)
-        template = "_includes/blocks/raf_tool.html"
-
-    class Media:
-        js = ["erap.js"]
-
-
 class RAFTBlock(blocks.StructBlock):
     county_threshold = blocks.IntegerBlock(
         required=False,

@@ -1,181 +1,182 @@
 /**
  * Constructs a search query to append to a link to College Scorecard that looks
  * for schools that offer a given program near a given ZIP.
- * @param {string} pcip The given program's two-digit PCIP code
- * @param {string} zip A five-digit ZIP code to search near
- * @param {string} radius Radius in miles to search around the given ZIP
- * @returns {string} The search query (or false if PCIP and ZIP are missing)
+ *
+ * @param {string} pcip - The given program's two-digit PCIP code.
+ * @param {string} zip - A five-digit ZIP code to search near.
+ * @param {string} radius - Radius in miles to search around the given ZIP.
+ * @returns {string} The search query (or false if PCIP and ZIP are missing).
  */
-function constructScorecardSearch( pcip, zip, radius ) {
+function constructScorecardSearch(pcip, zip, radius) {
   const searchParameters = [];
   // Use a 50-mile radius, the most common Scorecard search, as a default
   const searchRadius = radius || '50';
   const pcipData = {
     '01': {
       label: 'Agriculture, Agriculture Operations, and Related Sciences',
-      urlKey: 'agriculture'
+      urlKey: 'agriculture',
     },
     '03': {
       label: 'Natural Resources and Conservation',
-      urlKey: 'resources'
+      urlKey: 'resources',
     },
     '04': {
       label: 'Architecture and Related Services',
-      urlKey: 'architecture'
+      urlKey: 'architecture',
     },
     '05': {
       label: 'Area, Ethnic, Cultural, Gender, and Group Studies',
-      urlKey: 'ethnic_cultural_gender'
+      urlKey: 'ethnic_cultural_gender',
     },
     '09': {
       label: 'Communication, Journalism, and Related Programs',
-      urlKey: 'communication'
+      urlKey: 'communication',
     },
-    '10': {
+    10: {
       label: 'Communications Technologies/Technicians and Support Services',
-      urlKey: 'communications_technology'
+      urlKey: 'communications_technology',
     },
-    '11': {
+    11: {
       label: 'Computer and Information Sciences and Support Services',
-      urlKey: 'computer'
+      urlKey: 'computer',
     },
-    '12': {
+    12: {
       label: 'Personal and Culinary Services',
-      urlKey: 'personal_culinary'
+      urlKey: 'personal_culinary',
     },
-    '13': {
+    13: {
       label: 'Education',
-      urlKey: 'education'
+      urlKey: 'education',
     },
-    '14': {
+    14: {
       label: 'Engineering',
-      urlKey: 'engineering'
+      urlKey: 'engineering',
     },
-    '15': {
+    15: {
       label: 'Engineering Technologies and Engineering-Related Fields',
-      urlKey: 'engineering_technology'
+      urlKey: 'engineering_technology',
     },
-    '16': {
+    16: {
       label: 'Foreign Languages, Literatures, and Linguistics',
-      urlKey: 'language'
+      urlKey: 'language',
     },
-    '19': {
+    19: {
       label: 'Family and Consumer Sciences/Human Sciences',
-      urlKey: 'family_consumer_science'
+      urlKey: 'family_consumer_science',
     },
-    '22': {
+    22: {
       label: 'Legal Professions and Studies',
-      urlKey: 'legal'
+      urlKey: 'legal',
     },
-    '23': {
+    23: {
       label: 'English Language and Literature/Letters',
-      urlKey: 'english'
+      urlKey: 'english',
     },
-    '24': {
+    24: {
       label: 'Liberal Arts and Sciences, General Studies and Humanities',
-      urlKey: 'humanities'
+      urlKey: 'humanities',
     },
-    '25': {
+    25: {
       label: 'Library Science',
-      urlKey: 'library'
+      urlKey: 'library',
     },
-    '26': {
+    26: {
       label: 'Biological and Biomedical Sciences',
-      urlKey: 'biological'
+      urlKey: 'biological',
     },
-    '27': {
+    27: {
       label: 'Mathematics and Statistics',
-      urlKey: 'mathematics'
+      urlKey: 'mathematics',
     },
-    '29': {
+    29: {
       label: 'Military Technologies and Applied Sciences',
-      urlKey: 'military'
+      urlKey: 'military',
     },
-    '30': {
+    30: {
       label: 'Multi/Interdisciplinary Studies',
-      urlKey: 'multidiscipline'
+      urlKey: 'multidiscipline',
     },
-    '31': {
+    31: {
       label: 'Parks, Recreation, Leisure, and Fitness Studies',
-      urlKey: 'parks_recreation_fitness'
+      urlKey: 'parks_recreation_fitness',
     },
-    '38': {
+    38: {
       label: 'Philosophy and Religious Studies',
-      urlKey: 'philosophy_religious'
+      urlKey: 'philosophy_religious',
     },
-    '39': {
+    39: {
       label: 'Theology and Religious Vocations',
-      urlKey: 'theology_religious_vocation'
+      urlKey: 'theology_religious_vocation',
     },
-    '40': {
+    40: {
       label: 'Physical Sciences',
-      urlKey: 'physical_science'
+      urlKey: 'physical_science',
     },
-    '41': {
+    41: {
       label: 'Science Technologies/Technicians',
-      urlKey: 'science_technology'
+      urlKey: 'science_technology',
     },
-    '42': {
+    42: {
       label: 'Psychology',
-      urlKey: 'psychology'
+      urlKey: 'psychology',
     },
-    '43': {
+    43: {
       label:
         'Homeland Security, Law Enforcement, Firefighting and Related Protective Services',
-      urlKey: 'security_law_enforcement'
+      urlKey: 'security_law_enforcement',
     },
-    '44': {
+    44: {
       label: 'Public Administration and Social Service Professions',
-      urlKey: 'public_administration_social_service'
+      urlKey: 'public_administration_social_service',
     },
-    '45': {
+    45: {
       label: 'Social Sciences',
-      urlKey: 'social_science'
+      urlKey: 'social_science',
     },
-    '46': {
+    46: {
       label: 'Construction Trades',
-      urlKey: 'construction'
+      urlKey: 'construction',
     },
-    '47': {
+    47: {
       label: 'Mechanic and Repair Technologies/Technicians',
-      urlKey: 'mechanic_repair_technology'
+      urlKey: 'mechanic_repair_technology',
     },
-    '48': {
+    48: {
       label: 'Precision Production',
-      urlKey: 'precision_production'
+      urlKey: 'precision_production',
     },
-    '49': {
+    49: {
       label: 'Transportation and Materials Moving',
-      urlKey: 'transportation'
+      urlKey: 'transportation',
     },
-    '50': {
+    50: {
       label: 'Visual and Performing Arts',
-      urlKey: 'visual_performing'
+      urlKey: 'visual_performing',
     },
-    '51': {
+    51: {
       label: 'Health Professions and Related Programs',
-      urlKey: 'health'
+      urlKey: 'health',
     },
-    '52': {
+    52: {
       label: 'Business, Management, Marketing, and Related Support Services',
-      urlKey: 'business_marketing'
+      urlKey: 'business_marketing',
     },
-    '54': {
+    54: {
       label: 'History',
-      urlKey: 'history'
-    }
+      urlKey: 'history',
+    },
   };
-  if ( !pcip && !zip ) {
+  if (!pcip && !zip) {
     return false;
   }
-  if ( pcipData[pcip] ) {
-    searchParameters.push( 'major=' + pcipData[pcip].urlKey );
+  if (pcipData[pcip]) {
+    searchParameters.push('major=' + pcipData[pcip].urlKey);
   }
-  if ( zip ) {
-    searchParameters.push( 'zip=' + zip );
-    searchParameters.push( 'distance=' + searchRadius );
+  if (zip) {
+    searchParameters.push('zip=' + zip);
+    searchParameters.push('distance=' + searchRadius);
   }
-  return 'search/?' + searchParameters.join( '&' );
+  return 'search/?' + searchParameters.join('&');
 }
 
 module.exports = constructScorecardSearch;

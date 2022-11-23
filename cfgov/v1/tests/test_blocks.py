@@ -3,7 +3,7 @@ from unittest import mock
 from django.test import TestCase
 from django.utils.safestring import SafeText
 
-from v1.blocks import AnchorLink, PlaceholderCharBlock, RAFToolBlock
+from v1.blocks import AnchorLink, PlaceholderCharBlock, RAFTBlock
 
 
 class TestAnchorLink(TestCase):
@@ -105,11 +105,20 @@ class TestPlaceholderBlock(TestCase):
             PlaceholderCharBlock.replace_placeholder(html, "a")
 
 
-class RAFToolBlockTestCase(TestCase):
+class RAFTBlockTestCase(TestCase):
     def test_render_no_placeholder_provided(self):
-        erap_tool_block = RAFToolBlock()
-        html = erap_tool_block.render(None)
+        raft = RAFTBlock()
+        html = raft.render(None)
         self.assertInHTML(
             '<div id="rental-assistance-finder" data-language="en"></div>',
+            html,
+        )
+
+    def test_county_threshold(self):
+        raft = RAFTBlock()
+        html = raft.render({"county_threshold": 20})
+        self.assertInHTML(
+            '<div id="rental-assistance-finder" data-language="en"'
+            " data-county-threshold=20></div>",
             html,
         )

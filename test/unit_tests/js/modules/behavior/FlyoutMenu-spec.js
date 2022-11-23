@@ -13,7 +13,7 @@ const HTML_SNIPPET = `
 </div>
 `;
 
-describe( 'FlyoutMenu', () => {
+describe('FlyoutMenu', () => {
   let flyoutMenu;
 
   // Mock-related settings.
@@ -32,124 +32,124 @@ describe( 'FlyoutMenu', () => {
   let contentDom;
   let altTriggerDom;
 
-  beforeEach( () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-    containerDom = document.querySelector( SEL_PREFIX + ']' );
-    const triggersDom = document.querySelectorAll( SEL_PREFIX + '_trigger]' );
+    containerDom = document.querySelector(SEL_PREFIX + ']');
+    const triggersDom = document.querySelectorAll(SEL_PREFIX + '_trigger]');
     triggerDom = triggersDom[0];
-    contentDom = document.querySelector( SEL_PREFIX + '_content]' );
+    contentDom = document.querySelector(SEL_PREFIX + '_content]');
     // TODO: check for cases where alt trigger is absent.
     altTriggerDom = triggersDom[1];
 
-    flyoutMenu = new FlyoutMenu( containerDom );
-  } );
+    flyoutMenu = new FlyoutMenu(containerDom);
+  });
 
-  describe( '.init()', () => {
-    it( 'should have public static methods', () => {
-      expect( FlyoutMenu.EXPAND_TYPE ).toBe( 'expand' );
-      expect( FlyoutMenu.COLLAPSE_TYPE ).toBe( 'collapse' );
-      expect( FlyoutMenu.BASE_CLASS ).toBe( 'behavior_flyout-menu' );
-    } );
+  describe('.init()', () => {
+    it('should have public static methods', () => {
+      expect(FlyoutMenu.EXPAND_TYPE).toBe('expand');
+      expect(FlyoutMenu.COLLAPSE_TYPE).toBe('collapse');
+      expect(FlyoutMenu.BASE_CLASS).toBe('behavior_flyout-menu');
+    });
 
-    it( 'should have correct state before initializing', () => {
-      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-      expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+    it('should have correct state before initializing', () => {
+      expect(triggerDom.getAttribute('aria-expanded')).toBe('false');
+      expect(contentDom.getAttribute('aria-expanded')).toBe('false');
+      expect(altTriggerDom.getAttribute('aria-expanded')).toBe('false');
 
-      expect( flyoutMenu.isAnimating() ).toBe( false );
-      expect( flyoutMenu.isExpanded() ).toBe( false );
-      expect( flyoutMenu.getTransition() ).toBeUndefined();
-      expect( flyoutMenu.getData() ).toBeUndefined();
-    } );
+      expect(flyoutMenu.isAnimating()).toBe(false);
+      expect(flyoutMenu.isExpanded()).toBe(false);
+      expect(flyoutMenu.getTransition()).toBeUndefined();
+      expect(flyoutMenu.getData()).toBeUndefined();
+    });
 
-    it( 'should have correct state after initializing as collapsed', () => {
-      expect( flyoutMenu.init() ).toBeInstanceOf( FlyoutMenu );
-      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-    } );
+    it('should have correct state after initializing as collapsed', () => {
+      expect(flyoutMenu.init()).toBeInstanceOf(FlyoutMenu);
+      expect(triggerDom.getAttribute('aria-expanded')).toBe('false');
+      expect(contentDom.getAttribute('aria-expanded')).toBe('false');
+    });
 
-    it( 'should have correct state after initializing as expanded', () => {
-      expect( flyoutMenu.init( true ) ).toBeInstanceOf( FlyoutMenu );
-      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
-      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
-    } );
-  } );
+    it('should have correct state after initializing as expanded', () => {
+      expect(flyoutMenu.init(true)).toBeInstanceOf(FlyoutMenu);
+      expect(triggerDom.getAttribute('aria-expanded')).toBe('true');
+      expect(contentDom.getAttribute('aria-expanded')).toBe('true');
+    });
+  });
 
-  describe( 'mouseover/click', () => {
-    beforeEach( () => {
+  describe('mouseover/click', () => {
+    beforeEach(() => {
       // Set up expected event listeners.
       triggerOverSpy = jest.fn();
       triggerClickSpy = jest.fn();
 
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'triggerOver', triggerOverSpy );
-      flyoutMenu.addEventListener( 'triggerClick', triggerClickSpy );
-    } );
+      flyoutMenu.addEventListener('triggerOver', triggerOverSpy);
+      flyoutMenu.addEventListener('triggerClick', triggerClickSpy);
+    });
 
-    it( 'should dispatch events when called by trigger click', () => {
+    it('should dispatch events when called by trigger click', () => {
       /* TODO: Ideally this would use `new MouseEvent`,
          but how do we import MouseEvent (or Event) into Jest.
          Please investigate. */
-      const mouseEvent = document.createEvent( 'MouseEvents' );
-      mouseEvent.initEvent( 'mouseover', true, true );
-      triggerDom.dispatchEvent( mouseEvent );
+      const mouseEvent = document.createEvent('MouseEvents');
+      mouseEvent.initEvent('mouseover', true, true);
+      triggerDom.dispatchEvent(mouseEvent);
       triggerDom.click();
 
       // Check expected event broadcasts.
-      expect( triggerOverSpy ).toHaveBeenCalledTimes( 1 );
-      expect( triggerOverSpy ).toHaveBeenCalledWith( {
+      expect(triggerOverSpy).toHaveBeenCalledTimes(1);
+      expect(triggerOverSpy).toHaveBeenCalledWith({
         target: flyoutMenu,
         trigger: triggerDom,
-        type: 'triggerOver'
-      } );
-    } );
+        type: 'triggerOver',
+      });
+    });
 
-    it( 'should dispatch events when called by alt trigger click', () => {
-      const mouseEvent = document.createEvent( 'MouseEvents' );
-      mouseEvent.initEvent( 'mouseover', true, true );
-      altTriggerDom.dispatchEvent( mouseEvent );
+    it('should dispatch events when called by alt trigger click', () => {
+      const mouseEvent = document.createEvent('MouseEvents');
+      mouseEvent.initEvent('mouseover', true, true);
+      altTriggerDom.dispatchEvent(mouseEvent);
       altTriggerDom.click();
 
       // Check expected event broadcasts.
-      expect( triggerClickSpy ).toHaveBeenCalledTimes( 1 );
-      expect( triggerClickSpy ).toHaveBeenCalledWith( {
+      expect(triggerClickSpy).toHaveBeenCalledTimes(1);
+      expect(triggerClickSpy).toHaveBeenCalledWith({
         target: flyoutMenu,
         trigger: altTriggerDom,
-        type: 'triggerClick'
-      } );
-    } );
-  } );
+        type: 'triggerClick',
+      });
+    });
+  });
 
-  describe( '.expand()', () => {
-    beforeEach( () => {
+  describe('.expand()', () => {
+    beforeEach(() => {
       // Set up expected event listeners.
       expandBeginSpy = jest.fn();
       expandEndSpy = jest.fn();
 
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'expandBegin', expandBeginSpy );
-      flyoutMenu.addEventListener( 'expandEnd', expandEndSpy );
-    } );
+      flyoutMenu.addEventListener('expandBegin', expandBeginSpy);
+      flyoutMenu.addEventListener('expandEnd', expandEndSpy);
+    });
 
-    afterEach( () => {
+    afterEach(() => {
       // Check expected event broadcasts.
-      expect( expandBeginSpy ).toHaveBeenCalledTimes( 1 );
-      expect( expandBeginSpy ).toHaveBeenCalledWith( {
+      expect(expandBeginSpy).toHaveBeenCalledTimes(1);
+      expect(expandBeginSpy).toHaveBeenCalledWith({
         target: flyoutMenu,
-        type: 'expandBegin'
-      } );
+        type: 'expandBegin',
+      });
 
-      expect( expandEndSpy ).toHaveBeenCalledTimes( 1 );
-      expect( expandEndSpy ).toHaveBeenCalledWith( {
+      expect(expandEndSpy).toHaveBeenCalledTimes(1);
+      expect(expandEndSpy).toHaveBeenCalledWith({
         target: flyoutMenu,
-        type: 'expandEnd'
-      } );
+        type: 'expandEnd',
+      });
 
       // Check expected aria attributes state.
-      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
-      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
-      expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
-    } );
+      expect(triggerDom.getAttribute('aria-expanded')).toBe('true');
+      expect(contentDom.getAttribute('aria-expanded')).toBe('true');
+      expect(altTriggerDom.getAttribute('aria-expanded')).toBe('true');
+    });
 
     it(
       'should dispatch events and set aria attributes, ' +
@@ -174,39 +174,39 @@ describe( 'FlyoutMenu', () => {
         flyoutMenu.expand();
       }
     );
-  } );
+  });
 
-  describe( '.collapse()', () => {
-    beforeEach( () => {
+  describe('.collapse()', () => {
+    beforeEach(() => {
       // Set up expected event listeners.
       collapseBeginSpy = jest.fn();
       collapseEndSpy = jest.fn();
 
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'collapseBegin', collapseBeginSpy );
-      flyoutMenu.addEventListener( 'collapseEnd', collapseEndSpy );
+      flyoutMenu.addEventListener('collapseBegin', collapseBeginSpy);
+      flyoutMenu.addEventListener('collapseEnd', collapseEndSpy);
       triggerDom.click();
-    } );
+    });
 
-    afterEach( () => {
+    afterEach(() => {
       // Check expected event broadcasts.
-      expect( collapseBeginSpy ).toHaveBeenCalledTimes( 1 );
-      expect( collapseBeginSpy ).toHaveBeenCalledWith( {
+      expect(collapseBeginSpy).toHaveBeenCalledTimes(1);
+      expect(collapseBeginSpy).toHaveBeenCalledWith({
         target: flyoutMenu,
-        type: 'collapseBegin'
-      } );
+        type: 'collapseBegin',
+      });
 
-      expect( collapseEndSpy ).toHaveBeenCalledTimes( 1 );
-      expect( collapseEndSpy ).toHaveBeenCalledWith( {
+      expect(collapseEndSpy).toHaveBeenCalledTimes(1);
+      expect(collapseEndSpy).toHaveBeenCalledWith({
         target: flyoutMenu,
-        type: 'collapseEnd'
-      } );
+        type: 'collapseEnd',
+      });
 
       // Check expected aria attribute states.
-      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-      expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-    } );
+      expect(triggerDom.getAttribute('aria-expanded')).toBe('false');
+      expect(contentDom.getAttribute('aria-expanded')).toBe('false');
+      expect(altTriggerDom.getAttribute('aria-expanded')).toBe('false');
+    });
 
     it(
       'should dispatch events and set aria attributes, ' +
@@ -231,22 +231,22 @@ describe( 'FlyoutMenu', () => {
         flyoutMenu.collapse();
       }
     );
-  } );
+  });
 
-  describe( '.setExpandTransition()', () => {
-    it( 'should set a transition', done => {
+  describe('.setExpandTransition()', () => {
+    it('should set a transition', (done) => {
       flyoutMenu.init();
-      const transition = new MoveTransition( contentDom ).init();
-      flyoutMenu.setExpandTransition( transition, transition.moveLeft );
-      flyoutMenu.addEventListener( 'expandEnd', () => {
+      const transition = new MoveTransition(contentDom).init();
+      flyoutMenu.setExpandTransition(transition, transition.moveLeft);
+      flyoutMenu.addEventListener('expandEnd', () => {
         try {
-          const hasClass = contentDom.classList.contains( 'u-move-transition' );
-          expect( hasClass ).toBe( true );
+          const hasClass = contentDom.classList.contains('u-move-transition');
+          expect(hasClass).toBe(true);
           done();
-        } catch ( err ) {
-          done( err );
+        } catch (err) {
+          done(err);
         }
-      } );
+      });
       triggerDom.click();
 
       /* The transitionend event should fire on its own,
@@ -254,27 +254,27 @@ describe( 'FlyoutMenu', () => {
          In a future JSDom update this should be revisited.
          See https://github.com/jsdom/jsdom/issues/1781
       */
-      const event = new Event( 'transitionend' );
+      const event = new Event('transitionend');
       event.propertyName = 'transform';
-      contentDom.dispatchEvent( event );
-    } );
-  } );
+      contentDom.dispatchEvent(event);
+    });
+  });
 
-  describe( '.setCollapseTransition()', () => {
-    it( 'should set a transition', done => {
+  describe('.setCollapseTransition()', () => {
+    it('should set a transition', (done) => {
       flyoutMenu.init();
-      const transition = new MoveTransition( contentDom ).init();
+      const transition = new MoveTransition(contentDom).init();
       triggerDom.click();
-      flyoutMenu.setCollapseTransition( transition, transition.moveLeft );
-      flyoutMenu.addEventListener( 'collapseEnd', () => {
+      flyoutMenu.setCollapseTransition(transition, transition.moveLeft);
+      flyoutMenu.addEventListener('collapseEnd', () => {
         try {
-          const hasClass = contentDom.classList.contains( 'u-move-transition' );
-          expect( hasClass ).toBe( true );
+          const hasClass = contentDom.classList.contains('u-move-transition');
+          expect(hasClass).toBe(true);
           done();
-        } catch ( err ) {
-          done( err );
+        } catch (err) {
+          done(err);
         }
-      } );
+      });
       triggerDom.click();
 
       /* The transitionend event should fire on its own,
@@ -282,220 +282,220 @@ describe( 'FlyoutMenu', () => {
          In a future JSDom update this should be revisited.
          See https://github.com/jsdom/jsdom/issues/1781
       */
-      const event = new Event( 'transitionend' );
+      const event = new Event('transitionend');
       event.propertyName = 'transform';
-      contentDom.dispatchEvent( event );
-    } );
-  } );
+      contentDom.dispatchEvent(event);
+    });
+  });
 
-  describe( '.getTransition()', () => {
-    it( 'should return a transition instance', () => {
+  describe('.getTransition()', () => {
+    it('should return a transition instance', () => {
       flyoutMenu.init();
-      expect( flyoutMenu.getTransition() ).toBeUndefined();
-      const transition = new MoveTransition( contentDom ).init();
-      flyoutMenu.setExpandTransition( transition, transition.moveLeft );
-      flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
-      expect( flyoutMenu.getTransition() ).toStrictEqual( transition );
-      expect( flyoutMenu.getTransition( FlyoutMenu.COLLAPSE_TYPE ) ).toStrictEqual(
+      expect(flyoutMenu.getTransition()).toBeUndefined();
+      const transition = new MoveTransition(contentDom).init();
+      flyoutMenu.setExpandTransition(transition, transition.moveLeft);
+      flyoutMenu.setCollapseTransition(transition, transition.moveToOrigin);
+      expect(flyoutMenu.getTransition()).toStrictEqual(transition);
+      expect(flyoutMenu.getTransition(FlyoutMenu.COLLAPSE_TYPE)).toStrictEqual(
         transition
       );
-    } );
-  } );
+    });
+  });
 
-  describe( '.clearTransitions()', () => {
-    it( 'should remove all transitions', () => {
+  describe('.clearTransitions()', () => {
+    it('should remove all transitions', () => {
       flyoutMenu.init();
-      const transition = new MoveTransition( contentDom ).init();
-      flyoutMenu.setExpandTransition( transition, transition.moveLeft );
-      flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
-      let hasClass = contentDom.classList.contains( 'u-move-transition' );
-      expect( hasClass ).toBe( true );
+      const transition = new MoveTransition(contentDom).init();
+      flyoutMenu.setExpandTransition(transition, transition.moveLeft);
+      flyoutMenu.setCollapseTransition(transition, transition.moveToOrigin);
+      let hasClass = contentDom.classList.contains('u-move-transition');
+      expect(hasClass).toBe(true);
       flyoutMenu.clearTransitions();
-      expect( flyoutMenu.getTransition() ).toBeUndefined();
-      hasClass = contentDom.classList.contains( 'u-move-transition' );
-      expect( hasClass ).toBe( false );
-    } );
-  } );
+      expect(flyoutMenu.getTransition()).toBeUndefined();
+      hasClass = contentDom.classList.contains('u-move-transition');
+      expect(hasClass).toBe(false);
+    });
+  });
 
-  describe( '.getDom()', () => {
-    it( 'should return references to full dom', () => {
+  describe('.getDom()', () => {
+    it('should return references to full dom', () => {
       flyoutMenu.init();
       const dom = flyoutMenu.getDom();
-      expect( dom.container ).toStrictEqual( containerDom );
-      expect( dom.trigger[0] ).toStrictEqual( triggerDom );
-      expect( dom.content ).toStrictEqual( contentDom );
-      expect( dom.trigger[1] ).toStrictEqual( altTriggerDom );
-    } );
-  } );
+      expect(dom.container).toStrictEqual(containerDom);
+      expect(dom.trigger[0]).toStrictEqual(triggerDom);
+      expect(dom.content).toStrictEqual(contentDom);
+      expect(dom.trigger[1]).toStrictEqual(altTriggerDom);
+    });
+  });
 
-  describe( 'suspend/resume behavior', () => {
-    beforeEach( () => {
+  describe('suspend/resume behavior', () => {
+    beforeEach(() => {
       // Set up expected event listeners.
       expandBeginSpy = jest.fn();
       expandEndSpy = jest.fn();
       collapseBeginSpy = jest.fn();
       collapseEndSpy = jest.fn();
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'expandBegin', expandBeginSpy );
-      flyoutMenu.addEventListener( 'expandEnd', expandEndSpy );
-      flyoutMenu.addEventListener( 'collapseBegin', collapseBeginSpy );
-      flyoutMenu.addEventListener( 'collapseEnd', collapseEndSpy );
-    } );
+      flyoutMenu.addEventListener('expandBegin', expandBeginSpy);
+      flyoutMenu.addEventListener('expandEnd', expandEndSpy);
+      flyoutMenu.addEventListener('collapseBegin', collapseBeginSpy);
+      flyoutMenu.addEventListener('collapseEnd', collapseEndSpy);
+    });
 
-    describe( '.suspend()', () => {
-      it( 'should not broadcast events after being suspended', () => {
+    describe('.suspend()', () => {
+      it('should not broadcast events after being suspended', () => {
         // Set up expected event listeners.
         flyoutMenu.suspend();
         triggerDom.click();
 
-        expect( expandBeginSpy ).toHaveBeenCalledTimes( 0 );
-        expect( expandEndSpy ).toHaveBeenCalledTimes( 0 );
-        expect( collapseBeginSpy ).toHaveBeenCalledTimes( 0 );
-        expect( collapseEndSpy ).toHaveBeenCalledTimes( 0 );
-      } );
-    } );
+        expect(expandBeginSpy).toHaveBeenCalledTimes(0);
+        expect(expandEndSpy).toHaveBeenCalledTimes(0);
+        expect(collapseBeginSpy).toHaveBeenCalledTimes(0);
+        expect(collapseEndSpy).toHaveBeenCalledTimes(0);
+      });
+    });
 
-    describe( '.resume()', () => {
-      it( 'should broadcast events after resuming from suspended', () => {
+    describe('.resume()', () => {
+      it('should broadcast events after resuming from suspended', () => {
         // Set up expected event listeners.
         flyoutMenu.suspend();
         flyoutMenu.resume();
         triggerDom.click();
 
-        expect( expandBeginSpy ).toHaveBeenCalledTimes( 1 );
-        expect( expandEndSpy ).toHaveBeenCalledTimes( 1 );
+        expect(expandBeginSpy).toHaveBeenCalledTimes(1);
+        expect(expandEndSpy).toHaveBeenCalledTimes(1);
         triggerDom.click();
-        expect( collapseBeginSpy ).toHaveBeenCalledTimes( 1 );
-        expect( collapseEndSpy ).toHaveBeenCalledTimes( 1 );
-      } );
-    } );
-  } );
+        expect(collapseBeginSpy).toHaveBeenCalledTimes(1);
+        expect(collapseEndSpy).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
 
-  describe( '.setData()', () => {
-    it( 'should return the instance when set', () => {
+  describe('.setData()', () => {
+    it('should return the instance when set', () => {
       flyoutMenu.init();
-      const inst = flyoutMenu.setData( 'test-data' );
-      expect( inst ).toBeInstanceOf( FlyoutMenu );
-    } );
-  } );
+      const inst = flyoutMenu.setData('test-data');
+      expect(inst).toBeInstanceOf(FlyoutMenu);
+    });
+  });
 
-  describe( '.getData()', () => {
-    it( 'should return the set data', () => {
+  describe('.getData()', () => {
+    it('should return the set data', () => {
       flyoutMenu.init();
-      flyoutMenu.setData( 'test-data' );
-      expect( flyoutMenu.getData() ).toBe( 'test-data' );
-    } );
-  } );
+      flyoutMenu.setData('test-data');
+      expect(flyoutMenu.getData()).toBe('test-data');
+    });
+  });
 
-  describe( '.isAnimating()', () => {
-    it( 'should return true when expanding', done => {
+  describe('.isAnimating()', () => {
+    it('should return true when expanding', (done) => {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'expandBegin', () => {
+      flyoutMenu.addEventListener('expandBegin', () => {
         try {
-          expect( flyoutMenu.isAnimating() ).toBe( true );
+          expect(flyoutMenu.isAnimating()).toBe(true);
           done();
-        } catch ( err ) {
-          done( err );
+        } catch (err) {
+          done(err);
         }
-      } );
+      });
       triggerDom.click();
-    } );
+    });
 
-    it( 'should return false after expanding', done => {
+    it('should return false after expanding', (done) => {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'expandEnd', () => {
+      flyoutMenu.addEventListener('expandEnd', () => {
         try {
-          expect( flyoutMenu.isAnimating() ).toBe( false );
+          expect(flyoutMenu.isAnimating()).toBe(false);
           done();
-        } catch ( err ) {
-          done( err );
+        } catch (err) {
+          done(err);
         }
-      } );
+      });
       triggerDom.click();
-    } );
+    });
 
-    it( 'should return true while collapsing', done => {
+    it('should return true while collapsing', (done) => {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'collapseBegin', () => {
+      flyoutMenu.addEventListener('collapseBegin', () => {
         try {
-          expect( flyoutMenu.isAnimating() ).toBe( true );
+          expect(flyoutMenu.isAnimating()).toBe(true);
           done();
-        } catch ( err ) {
-          done( err );
+        } catch (err) {
+          done(err);
         }
-      } );
+      });
       triggerDom.click();
       triggerDom.click();
-    } );
+    });
 
-    it( 'should return false after collapsing', done => {
+    it('should return false after collapsing', (done) => {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'collapseEnd', () => {
+      flyoutMenu.addEventListener('collapseEnd', () => {
         try {
-          expect( flyoutMenu.isAnimating() ).toBe( false );
+          expect(flyoutMenu.isAnimating()).toBe(false);
           done();
-        } catch ( err ) {
-          done( err );
+        } catch (err) {
+          done(err);
         }
-      } );
+      });
       triggerDom.click();
       triggerDom.click();
-    } );
-  } );
+    });
+  });
 
-  describe( '.isExpanded()', () => {
-    it( 'should return false before expanding', done => {
+  describe('.isExpanded()', () => {
+    it('should return false before expanding', (done) => {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'expandBegin', () => {
+      flyoutMenu.addEventListener('expandBegin', () => {
         try {
-          expect( flyoutMenu.isExpanded() ).toBe( false );
+          expect(flyoutMenu.isExpanded()).toBe(false);
           done();
-        } catch ( err ) {
-          done( err );
+        } catch (err) {
+          done(err);
         }
-      } );
+      });
       triggerDom.click();
-    } );
+    });
 
-    it( 'should return true after expanding', done => {
+    it('should return true after expanding', (done) => {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'expandEnd', () => {
+      flyoutMenu.addEventListener('expandEnd', () => {
         try {
-          expect( flyoutMenu.isExpanded() ).toBe( true );
+          expect(flyoutMenu.isExpanded()).toBe(true);
           done();
-        } catch ( err ) {
-          done( err );
+        } catch (err) {
+          done(err);
         }
-      } );
+      });
       triggerDom.click();
-    } );
+    });
 
-    it( 'should return true before collapsing', done => {
+    it('should return true before collapsing', (done) => {
       flyoutMenu.init();
       triggerDom.click();
-      flyoutMenu.addEventListener( 'triggerClick', () => {
+      flyoutMenu.addEventListener('triggerClick', () => {
         try {
-          expect( flyoutMenu.isExpanded() ).toBe( true );
+          expect(flyoutMenu.isExpanded()).toBe(true);
           done();
-        } catch ( err ) {
-          done( err );
+        } catch (err) {
+          done(err);
         }
-      } );
+      });
       triggerDom.click();
-    } );
+    });
 
-    it( 'should return false after collapsing', done => {
+    it('should return false after collapsing', (done) => {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'collapseEnd', () => {
+      flyoutMenu.addEventListener('collapseEnd', () => {
         try {
-          expect( flyoutMenu.isExpanded() ).toBe( false );
+          expect(flyoutMenu.isExpanded()).toBe(false);
           done();
-        } catch ( err ) {
-          done( err );
+        } catch (err) {
+          done(err);
         }
-      } );
+      });
       triggerDom.click();
       triggerDom.click();
-    } );
-  } );
-} );
+    });
+  });
+});

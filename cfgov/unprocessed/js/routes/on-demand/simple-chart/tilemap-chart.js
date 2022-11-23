@@ -9,42 +9,43 @@ import usLayout from './us-layout.js';
 import { makeSelectFilterDOM } from './data-filters.js';
 import { alignMargin, formatSeries, overrideStyles } from './utils.js';
 
-tilemap( Highmaps );
+tilemap(Highmaps);
 
 /**
  * Overrides default chart options using provided Wagtail configurations
- * @param {object} data The data to provide to the chart
- * @param {object} dataAttributes Data attributes passed to the chart target node
+ *
+ * @param {object} data - The data to provide to the chart
+ * @param {object} dataAttributes - Data attributes passed to the chart target node
  * @returns {object} The configured style object
  */
-function makeTilemapOptions( data, dataAttributes ) {
+function makeTilemapOptions(data, dataAttributes) {
   const { chartType, styleOverrides, description, yAxisLabel } =
     dataAttributes;
 
-  let defaultObj = cloneDeep( defaultTilemap );
+  let defaultObj = cloneDeep(defaultTilemap);
 
-  if ( styleOverrides ) {
-    overrideStyles( styleOverrides, defaultObj, data );
+  if (styleOverrides) {
+    overrideStyles(styleOverrides, defaultObj, data);
   }
 
-  const formattedSeries = formatSeries( data );
+  const formattedSeries = formatSeries(data);
 
-  if ( formattedSeries.length !== 1 ) {
+  if (formattedSeries.length !== 1) {
     /* eslint-disable-next-line */
     return console.error('Tilemap only supports a single data series.');
   }
 
   defaultObj = {
     ...defaultObj,
-    ...getMapConfig( formattedSeries )
+    ...getMapConfig(formattedSeries),
   };
 
-  defaultObj.tooltip.formatter = function() {
+  defaultObj.tooltip.formatter = function () {
     const label = yAxisLabel ? yAxisLabel + ': ' : '';
     return `<span style="font-weight:600">${
       this.point.name
-    }</span><br/>${ label }<span style="font-weight:600">${
-      Math.round( this.point.value * 10 ) / 10
+    }</span><br/>${label}<span style="font-weight:600">${
+      Math.round(this.point.value * 10) / 10
     }</span>`;
   };
 
@@ -53,70 +54,74 @@ function makeTilemapOptions( data, dataAttributes ) {
   defaultObj.accessibility.description = description;
   defaultObj.yAxis.title.text = yAxisLabel;
 
-  alignMargin( defaultObj, chartType );
+  alignMargin(defaultObj, chartType);
 
   return defaultObj;
 }
 
 /**
  * Builds the tilemap filter DOM
- * @param {object} chartNode The node where the chart lives
- * @param {object} chart The chart object
- * @param {object} data The data object
- * @param {object} transform Whether data has been transformed
+ *
+ * @param {object} chartNode - The node where the chart lives
+ * @param {object} chart - The chart object
+ * @param {object} data - The data object
+ * @param {object} transform - Whether data has been transformed
  */
-function makeTilemapSelect( chartNode, chart, data, transform ) {
+function makeTilemapSelect(chartNode, chart, data, transform) {
   let d;
-  if ( transform ) d = data.transformed;
+  if (transform) d = data.transformed;
   else d = data.raw;
 
-  const options = getTilemapDates( d );
-  const selectNode = makeSelectFilterDOM( options, chartNode, {
+  const options = getTilemapDates(d);
+  const selectNode = makeSelectFilterDOM(options, chartNode, {
     key: 'tilemap',
-    label: 'Select date'
-  } ).nodes[0];
+    label: 'Select date',
+  }).nodes[0];
 
-  attachTilemapFilter( selectNode, chart, data );
+  attachTilemapFilter(selectNode, chart, data);
 }
 
 /**
  * Extracts all dates from an object/csv formatted for tilemap display
- * @param {object} data The data object
- * @returns {array} Extracted dates
- * */
-function getTilemapDates( data ) {
-  return Object.keys( data[0] )
-    .filter( k => !isNaN( new Date( k ) ) )
-    .sort( ( a, b ) => new Date( b ) - new Date( a ) );
+ *
+ * @param {object} data - The data object
+ * @returns {Array} Extracted dates
+ */
+function getTilemapDates(data) {
+  return Object.keys(data[0])
+    .filter((k) => !isNaN(new Date(k)))
+    .sort((a, b) => new Date(b) - new Date(a));
 }
 
 /**
  * Wires up the tilemap filter
- * @param {object} select The select node
- * @param {object} chart The chart object
- * @param {object} data The data object
+ *
+ * @param {object} select - The select node
+ * @param {object} chart - The chart object
+ * @param {object} data - The data object
  */
-function attachTilemapFilter( select, chart, data ) {
-  select.addEventListener( 'change', evt => {
-    const formatted = formatSeries( data );
-    const updated = getMapConfig( formatted, evt.target.value );
-    chart.update( updated );
+function attachTilemapFilter(select, chart, data) {
+  select.addEventListener('change', (evt) => {
+    const formatted = formatSeries(data);
+    const updated = getMapConfig(formatted, evt.target.value);
+    chart.update(updated);
     const updatedTitleObj = chart.options.yAxis[0].title;
     updateTilemapLegend(
       chart.renderTo,
       updated,
       updatedTitleObj ? updatedTitleObj.text : ''
     );
-  } );
+  });
 }
 
 /**
  * Makes a legend for the tilemap
- * @param {object} node The chart node
- * @param {object} data The data object
- * @param {string } legendTitle The legend title
+ *
+ * @param {object} node - The chart node
+ * @param {object} data - The data object
+ * @param {string } legendTitle - The legend title
  */
-function updateTilemapLegend( node, data, legendTitle ) {
+function updateTilemapLegend(node, data, legendTitle) {
   const classes = data.colorAxis.dataClasses;
   const legend = node.parentNode.getElementsByClassName(
     'o-simple-chart_tilemap_legend'
@@ -124,35 +129,36 @@ function updateTilemapLegend( node, data, legendTitle ) {
   legend.innerHTML = '';
   const colors = [];
   const labels = [];
-  classes.forEach( v => {
-    const color = document.createElement( 'div' );
-    const label = document.createElement( 'div' );
+  classes.forEach((v) => {
+    const color = document.createElement('div');
+    const label = document.createElement('div');
     color.className = 'legend-color';
     label.className = 'legend-label';
     color.style.backgroundColor = v.color;
     label.innerText = v.name;
-    colors.push( color );
-    labels.push( label );
-  } );
-  if ( legendTitle ) {
-    const title = document.createElement( 'p' );
+    colors.push(color);
+    labels.push(label);
+  });
+  if (legendTitle) {
+    const title = document.createElement('p');
     title.className = 'legend-title';
     title.innerText = legendTitle;
-    legend.appendChild( title );
+    legend.appendChild(title);
   }
-  colors.forEach( v => legend.appendChild( v ) );
-  labels.forEach( v => legend.appendChild( v ) );
+  colors.forEach((v) => legend.appendChild(v));
+  labels.forEach((v) => legend.appendChild(v));
 }
 
 /**
  * Intuits the correct object key for state short codes
- * @param {object} data A row of data as an object with headers as keys
+ *
+ * @param {object} data - A row of data as an object with headers as keys
  * @returns {string} The intuited shortcode
- * */
-function getShortCode( data ) {
-  const keys = Object.keys( data );
-  for ( let i = 0; i < keys.length; i++ ) {
-    if ( usLayout[data[keys[i]]] ) return keys[i];
+ */
+function getShortCode(data) {
+  const keys = Object.keys(data);
+  for (let i = 0; i < keys.length; i++) {
+    if (usLayout[data[keys[i]]]) return keys[i];
   }
   /* eslint-disable-next-line */
   return console.error(
@@ -162,34 +168,35 @@ function getShortCode( data ) {
 
 /**
  * Adds generates a config object to be added to the chart config
- * @param {array} series The formatted series data
- * @param {string} date The date to use
- * @returns {array} series data with a geographic component added
- * */
-function getMapConfig( series, date ) {
+ *
+ * @param {Array} series - The formatted series data
+ * @param {string} date - The date to use
+ * @returns {Array} series data with a geographic component added
+ */
+function getMapConfig(series, date) {
   let min = Infinity;
   let max = -Infinity;
   const data = series[0].data;
-  const shortCode = getShortCode( data[0] );
-  if ( !date ) date = getTilemapDates( data )[0];
-  const added = data.map( v => {
-    const val = Math.round( Number( v[date] ) * 100 ) / 100;
-    if ( val <= min ) min = val;
-    if ( val >= max ) max = val;
+  const shortCode = getShortCode(data[0]);
+  if (!date) date = getTilemapDates(data)[0];
+  const added = data.map((v) => {
+    const val = Math.round(Number(v[date]) * 100) / 100;
+    if (val <= min) min = val;
+    if (val >= max) max = val;
     return {
       ...usLayout[v[shortCode]],
       state: v[shortCode],
-      value: val
+      value: val,
     };
-  } );
-  min = Math.floor( min );
-  max = Math.ceil( max );
-  const step = Math.round( ( max - min ) / 5 );
+  });
+  min = Math.floor(min);
+  max = Math.ceil(max);
+  const step = Math.round((max - min) / 5);
   const step1 = min + step;
   const step2 = step1 + step;
   const step3 = step2 + step;
   const step4 = step3 + step;
-  const trimTenth = v => Math.round( ( v - 0.1 ) * 10 ) / 10;
+  const trimTenth = (v) => Math.round((v - 0.1) * 10) / 10;
   return {
     colorAxis: {
       dataClasses: [
@@ -197,51 +204,52 @@ function getMapConfig( series, date ) {
           from: min,
           to: step1,
           color: '#addc91',
-          name: `${ min } - ${ trimTenth( step1 ) }`
+          name: `${min} - ${trimTenth(step1)}`,
         },
         {
           from: step1,
           to: step2,
           color: '#e2efd8',
-          name: `${ step1 } - ${ trimTenth( step2 ) }`
+          name: `${step1} - ${trimTenth(step2)}`,
         },
         {
           from: step2,
           to: step3,
           color: '#ffffff',
-          name: `${ step2 } - ${ trimTenth( step3 ) }`
+          name: `${step2} - ${trimTenth(step3)}`,
         },
         {
           from: step3,
           to: step4,
           color: '#d6e8fa',
-          name: `${ step3 } - ${ trimTenth( step4 ) }`
+          name: `${step3} - ${trimTenth(step4)}`,
         },
-        { from: step4, color: '#7eb7e8', name: `${ step4 } - ${ max }` }
-      ]
+        { from: step4, color: '#7eb7e8', name: `${step4} - ${max}` },
+      ],
     },
-    series: [ { clip: false, data: added } ]
+    series: [{ clip: false, data: added }],
   };
 }
 
 /**
  * Initializes a tilemap chart
- * @param {object} chartNode The DOM node of the current chart
- * @param {object} target The node to initialize the chart in
- * @param {object} data The data to provide to the chart
- * @param {object} dataAttributes Data attributes passed to the chart target node
+ *
+ * @param {object} chartNode - The DOM node of the current chart
+ * @param {object} target - The node to initialize the chart in
+ * @param {object} data - The data to provide to the chart
+ * @param {object} dataAttributes - Data attributes passed to the chart target node
  * @returns {object} The initialized chart object
  */
-function init( chartNode, target, data, dataAttributes ) {
+function init(chartNode, target, data, dataAttributes) {
   const { transform, yAxisLabel } = dataAttributes;
-  const tilemapOptions = makeTilemapOptions( data, dataAttributes );
-  const chart = Highmaps.mapChart( target, tilemapOptions );
+  const tilemapOptions = makeTilemapOptions(data, dataAttributes);
+  const chart = Highmaps.mapChart(target, tilemapOptions);
 
   const legend = target.parentNode.getElementsByClassName(
     'o-simple-chart_tilemap_legend'
   )[0];
   legend.style.display = 'block';
-  updateTilemapLegend( target, tilemapOptions, yAxisLabel );
+  updateTilemapLegend(target, tilemapOptions, yAxisLabel);
 
   makeTilemapSelect(
     chartNode,
@@ -252,19 +260,17 @@ function init( chartNode, target, data, dataAttributes ) {
 
   /**
    * Fixes tilemap clipping
-   * @param {object} evt Optional event
-   * @param {number} height Height value for the SVG element.
-   **/
+   */
   function fixViewbox() {
-    const chartSVG = target.getElementsByClassName( 'highcharts-root' )[0];
+    const chartSVG = target.getElementsByClassName('highcharts-root')[0];
     const width = chartSVG.width.animVal.value;
     const height = chartSVG.height.animVal.value;
-    chartSVG.setAttribute( 'viewBox', `-4 0 ${ width + 8 } ${ height + 1 }` );
+    chartSVG.setAttribute('viewBox', `-4 0 ${width + 8} ${height + 1}`);
   }
 
-  window.addEventListener( 'resize', fixViewbox );
+  window.addEventListener('resize', fixViewbox);
   fixViewbox();
-  setTimeout( fixViewbox, 500 );
+  setTimeout(fixViewbox, 500);
 
   return chart;
 }

@@ -1,20 +1,21 @@
-const unFormatUSD = require( 'unformat-usd' );
+const unFormatUSD = require('unformat-usd');
 
 /**
  * Get value(s) of an individual HTML element in the control panel.
- * @param   {string} param Name of parameter to get.
- *                         Usually the HTML element's id attribute.
- * @returns {Object} Hash of element id and its value(s).
+ *
+ * @param {string} param - Name of parameter to get.
+ *   Usually the HTML element's id attribute.
+ * @returns {object} Hash of element id and its value(s).
  */
-function getSelection( param ) {
-  const elm = document.querySelector( '#' + param );
+function getSelection(param) {
+  const elm = document.querySelector('#' + param);
   let val;
 
-  if ( !elm ) {
+  if (!elm) {
     return val;
   }
 
-  switch ( param ) {
+  switch (param) {
     case 'location':
     case 'rate-structure':
     case 'loan-term':
@@ -23,7 +24,7 @@ function getSelection( param ) {
       val = elm.value;
       break;
     default:
-      val = unFormatUSD( elm.value || elm.getAttribute( 'placeholder' ) );
+      val = unFormatUSD(elm.value || elm.getAttribute('placeholder'));
   }
 
   return val;

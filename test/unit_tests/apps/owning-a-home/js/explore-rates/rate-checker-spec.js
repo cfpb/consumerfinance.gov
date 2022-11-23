@@ -1,9 +1,10 @@
 import * as rateChecker from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/rate-checker.js';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 
-global.fetch = jest.fn( () => Promise.resolve( {
-  json: () => new Promise( r => r )
-} )
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => new Promise((r) => r),
+  })
 );
 
 const HTML_SNIPPET = `
@@ -155,43 +156,43 @@ let downPaymentDom;
 let rateStructureDom;
 let armTypeDom;
 
-describe( 'explore-rates/rate-checker', () => {
-  describe( 'init()', () => {
-    beforeEach( () => {
+describe('explore-rates/rate-checker', () => {
+  describe('init()', () => {
+    beforeEach(() => {
       document.body.innerHTML = HTML_SNIPPET;
-    } );
+    });
 
-    it( "should not initialize when rate-checker class isn't found", () => {
+    it("should not initialize when rate-checker class isn't found", () => {
       document.body.innerHTML = '';
-      expect( rateChecker.init() ).toBe( false );
-    } );
+      expect(rateChecker.init()).toBe(false);
+    });
 
-    it( 'should initialize when rate-checker class is found', () => {
-      expect( rateChecker.init() ).toBe( true );
-    } );
-  } );
+    it('should initialize when rate-checker class is found', () => {
+      expect(rateChecker.init()).toBe(true);
+    });
+  });
 
-  describe( 'interactions', () => {
-    beforeEach( () => {
+  describe('interactions', () => {
+    beforeEach(() => {
       document.body.innerHTML = HTML_SNIPPET;
-      downPaymentDom = document.querySelector( '#down-payment' );
-      rateStructureDom = document.querySelector( '#rate-structure' );
-      armTypeDom = document.querySelector( '#arm-type' );
+      downPaymentDom = document.querySelector('#down-payment');
+      rateStructureDom = document.querySelector('#rate-structure');
+      armTypeDom = document.querySelector('#arm-type');
       rateChecker.init();
-    } );
+    });
 
-    it( 'Should process value in down payment when leaving focus', () => {
-      expect( downPaymentDom.value ).toBe( '20000' );
-      simulateEvent( 'focusout', downPaymentDom );
-      expect( downPaymentDom.value ).toBe( '20,000' );
-    } );
+    it('Should process value in down payment when leaving focus', () => {
+      expect(downPaymentDom.value).toBe('20000');
+      simulateEvent('focusout', downPaymentDom);
+      expect(downPaymentDom.value).toBe('20,000');
+    });
 
-    it( 'rate structure', () => {
-      expect( rateStructureDom.value ).toBe( 'fixed' );
-    } );
+    it('rate structure', () => {
+      expect(rateStructureDom.value).toBe('fixed');
+    });
 
-    it( 'ARM type', () => {
-      expect( armTypeDom.value ).toBe( '5-1' );
-    } );
-  } );
-} );
+    it('ARM type', () => {
+      expect(armTypeDom.value).toBe('5-1');
+    });
+  });
+});

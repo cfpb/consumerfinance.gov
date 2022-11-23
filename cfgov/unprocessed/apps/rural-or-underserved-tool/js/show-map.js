@@ -8,29 +8,30 @@ const mapIdString = 'mapbox://styles/mapbox/streets-v11';
  * Dynamically add mapbox CSS to document head.
  */
 function injectMapboxCSS() {
-  const mapStyles = document.createElement( 'link' );
+  const mapStyles = document.createElement('link');
   mapStyles.rel = 'stylesheet';
   mapStyles.href = MAPBOX_CSS_URL;
-  document.head.appendChild( mapStyles );
+  document.head.appendChild(mapStyles);
 }
 
 /**
  * Dynamically add mapbox JavaScript to document head.
  */
 function injectMapboxJS() {
-  const mapScript = document.createElement( 'script' );
-  mapScript.addEventListener( 'load', scriptLoaded );
+  const mapScript = document.createElement('script');
+  mapScript.addEventListener('load', scriptLoaded);
   mapScript.async = true;
   mapScript.src = MAPBOX_JS_URL;
-  document.head.appendChild( mapScript );
+  document.head.appendChild(mapScript);
 }
 
 /**
  * Event handler for successful load of mapbox JavaScript file.
- * @param  {Event} evt - The event object from the load event.
+ *
+ * @param {Event} evt - The event object from the load event.
  */
-function scriptLoaded( evt ) {
-  evt.target.removeEventListener( 'load', scriptLoaded );
+function scriptLoaded(evt) {
+  evt.target.removeEventListener('load', scriptLoaded);
   initializeMap();
 }
 
@@ -42,32 +43,32 @@ function initializeMap() {
 }
 
 // when a.jsLoadMap is clicked
-const resultsMapDom = document.querySelector( '#results' );
-resultsMapDom.addEventListener( 'click', function( evt ) {
+const resultsMapDom = document.querySelector('#results');
+resultsMapDom.addEventListener('click', function (evt) {
   const target = evt.target;
   let toggleMapLink = target;
-  if ( DT.hasClass( target.parentNode, 'jsLoadMap' ) ) {
+  if (DT.hasClass(target.parentNode, 'jsLoadMap')) {
     toggleMapLink = target.parentNode;
   }
 
-  if ( DT.hasClass( toggleMapLink, 'jsLoadMap' ) ) {
+  if (DT.hasClass(toggleMapLink, 'jsLoadMap')) {
     evt.preventDefault();
 
     // setup vars (data attributes)
-    const lat = DT.getElData( toggleMapLink, 'lat' );
-    const lon = DT.getElData( toggleMapLink, 'lon' );
-    const id = DT.getElData( toggleMapLink, 'id' );
-    const isMapShown = DT.getElData( toggleMapLink, 'map' ) === 'true';
+    const lat = DT.getElData(toggleMapLink, 'lat');
+    const lon = DT.getElData(toggleMapLink, 'lon');
+    const id = DT.getElData(toggleMapLink, 'id');
+    const isMapShown = DT.getElData(toggleMapLink, 'map') === 'true';
 
-    const parentMapRow = DT.getParentEls( toggleMapLink, 'tr' )[0];
-    const mapTDs = DT.getChildEls( parentMapRow, 'td' );
-    const mapRow = DT.getNextEls( parentMapRow, 'tr' )[0];
-    const hasHideClass = DT.hasClass( mapRow, 'u-hidden' );
+    const parentMapRow = DT.getParentEls(toggleMapLink, 'tr')[0];
+    // const mapTDs = DT.getChildEls( parentMapRow, 'td' );
+    const mapRow = DT.getNextEls(parentMapRow, 'tr')[0];
+    const hasHideClass = DT.hasClass(mapRow, 'u-hidden');
 
     // if the map row is hidden
-    if ( hasHideClass ) {
+    if (hasHideClass) {
       // show it
-      DT.removeClass( mapRow, 'u-hidden' );
+      DT.removeClass(mapRow, 'u-hidden');
 
       // change text
       DT.changeElHTML(
@@ -76,34 +77,34 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
       );
 
       // only show initiate the map the first time
-      if ( isMapShown === false ) {
+      if (isMapShown === false) {
         // set the map to true (won't try to initate again)
-        toggleMapLink.setAttribute( 'data-map', true );
+        toggleMapLink.setAttribute('data-map', true);
 
-        DT.nextFrame( function() {
-          const latlng = window.L.latLng( lon, lat );
+        DT.nextFrame(function () {
+          const latlng = window.L.latLng(lon, lat);
           const map = window.L.mapbox
-            .map( id )
-            .setView( latlng, 12 )
-            .addLayer( window.L.mapbox.styleLayer( mapIdString ) );
+            .map(id)
+            .setView(latlng, 12)
+            .addLayer(window.L.mapbox.styleLayer(mapIdString));
           map.dragging.disable();
           map.touchZoom.disable();
           map.doubleClickZoom.disable();
           map.scrollWheelZoom.disable();
 
-          if ( map.tap ) {
+          if (map.tap) {
             map.tap.disable();
           }
 
           // add marker
-          const marker = window.L.marker( latlng ).addTo( map );
-        } );
+          window.L.marker(latlng).addTo(map);
+        });
       }
     } else {
       // map is being displayed
 
       // hide it
-      DT.addClass( mapRow, 'u-hidden' );
+      DT.addClass(mapRow, 'u-hidden');
 
       // change text
       DT.changeElHTML(
@@ -112,7 +113,7 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
       );
     }
   }
-} );
+});
 
 // Get started by injecting the Mapbox CSS and JavaScript in the document head…
 injectMapboxCSS();

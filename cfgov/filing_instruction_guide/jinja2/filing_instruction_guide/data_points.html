@@ -3,11 +3,10 @@
     {% for point in page.data_points.order_by('number') %}
         {%- set data_fields = point.data_fields_json.order_by("pk") -%}
 
-        <div class="block o-fig_section__sub" data-search-section>
+        <div class="o-fig_section__sub" data-search-section data-scrollspy="{{ point.anchor }}">
             <h3 class="report-header o-fig_heading">
                 <a id="{{ point.anchor }}"
-                   href="#{{ point.anchor }}"
-                   data-scrollspy>
+                   href="#{{ point.anchor }}">
                     {{parent_section_id}}.{{point.number}} {{ point.title }}
                 </a>
             </h3>
@@ -19,7 +18,7 @@
         </div>
 
         {% for field in data_fields %}
-            {{ individual_data_field(field) }}
+            {{ individual_data_field(field, point.anchor) }}
         {% endfor %}
 
     {% endfor %}
@@ -41,8 +40,8 @@
     {% endif %}
 {% endmacro %}
 
-{% macro individual_data_field(field) %}
-    <div class="block o-fig_section__sub-sub" data-search-section>
+{% macro individual_data_field(field, nav_section) %}
+    <div class="o-fig_section__sub-sub" data-search-section data-scrollspy="{{ nav_section }}">
         <h4 class="report-header o-fig_heading">
             <a id="{{field.info.get('short_name', '')}}"
                     href="#{{field.info.get('short_name', '')}}">
@@ -50,44 +49,55 @@
             </a>
         </h4>
 
-        <h5>Short name</h5>
+        {%- set citation = field.info.get('citation', '') -%}
+        {% if citation %}
+            <p>Rule section: {{ citation }}</p>
+        {% endif %}
+
+        <h5>Column name</h5>
         {{field.info.get('short_name', '')}}
 
         <h5>Instructions</h5>
-        {{field.info.get('instruction_text', '') | safe }}
         <ul>
             <li>Field type: {{field.info.get('type', '')}} </li>
             <li>{{field.info.get('conditionality', '')}} </li>
         </ul>
+        <p>{{field.info.get('instruction_text', '') | safe }}<p>
 
         {{ list_if_present(field.info.get('examples'), "Examples") }}
 
-        {%- set valid_values = field.info.get('valid_values') -%}
-        {% if valid_values %}
-            {%- set header_row = valid_values[0] -%}
-            {%- set body_rows = valid_values[1:] -%}
-                <table>
-                    <thead>
-                        <tr>
-                           {% for column in header_row %}
-                           <th>{{ column }}</th>
-                           {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for row in body_rows %}
-                        <tr>
-                        {% for cell in row %}
-                            <td> {{cell}}</td>
-                        {% endfor %}
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-        {% endif %}
+        {{ values_table(field.info.get('valid_values')) }}
 
         {{ list_if_present(field.info.get('validations'), 'Validations') }}
     </div>
+{% endmacro %}
+
+{% macro values_table(valid_values) %}
+    {% if valid_values %}
+        {%- set header_row = valid_values[0] -%}
+        {%- set body_rows = valid_values[1:] -%}
+        <div class="o-table o-table-wrapper__scrolling">
+            <table>
+                <thead>
+                    <tr>
+                       {% for column in header_row %}
+                       <th>{{ column }}</th>
+                       {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for row in body_rows %}
+                    <tr>
+                    {% for column in header_row %}
+                        {%- set cell_value = row[loop.index0] if row[loop.index0] is defined else '' -%}
+                        <td>{{ cell_value | safe }}</td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endmacro %}
 
 {% macro list_if_present(items, header) %}

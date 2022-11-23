@@ -18,7 +18,7 @@ class BlogContent(blocks.StreamBlock):
     email_signup = v1_blocks.EmailSignUpChooserBlock()
     simple_chart = organisms.SimpleChart()
     faq_schema = schema.FAQ(label="FAQ schema")
-    how_to_schema = schema.HowTo(label="HowTo schema")
+    how_to_schema = schema.HowTo(label="HowTo schema", max_num=1)
 
 
 class BlogPage(AbstractFilterPage):

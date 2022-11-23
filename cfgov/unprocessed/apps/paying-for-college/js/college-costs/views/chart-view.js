@@ -3,7 +3,7 @@ import {
   getFinancialValue,
   getSchoolCohortValue,
   getSchoolValue,
-  getStateValue
+  getStateValue,
 } from '../dispatchers/get-model-values.js';
 import Highcharts from 'highcharts/highstock';
 import accessibility from 'highcharts/modules/accessibility';
@@ -15,15 +15,15 @@ import { updateState } from '../dispatchers/update-state.js';
 // curlies in strings is a way of formatting Highcharts labels
 /* eslint-disable no-template-curly-in-string */
 
-more( Highcharts );
-patternFill( Highcharts );
+more(Highcharts);
+patternFill(Highcharts);
 
 const columnChartOpts = {
   _meterChartBtns: null,
 
   chart: {
     type: 'column',
-    marginRight: 250
+    marginRight: 250,
   },
   legend: {
     layout: 'vertical',
@@ -33,19 +33,19 @@ const columnChartOpts = {
     itemMarginTop: 10,
     itemStyle: {
       fontSize: '1.2em',
-      lineHeight: '3em'
+      lineHeight: '3em',
     },
     verticalAlign: 'middle',
     x: -90,
     y: -45,
-    labelFormatter: function() {
+    labelFormatter: function () {
       return this.name;
-    }
+    },
   },
   title: false,
   tooltip: false,
   xAxis: {
-    categories: [ '10 year period', '25 year period' ]
+    categories: ['10 year period', '25 year period'],
   },
   yAxis: {
     min: 0,
@@ -53,32 +53,32 @@ const columnChartOpts = {
     title: '',
     stackLabels: {
       enabled: true,
-      format: '${total:,.0f}'
-    }
+      format: '${total:,.0f}',
+    },
   },
   series: [
     {
       name: 'Interest',
-      data: [ 0, 0 ],
-      color: '#ffe1b9'
+      data: [0, 0],
+      color: '#ffe1b9',
     },
     {
       name: 'Principal',
-      data: [ 0, 0 ],
-      color: '#ff9e1b'
-    }
+      data: [0, 0],
+      color: '#ff9e1b',
+    },
   ],
   plotOptions: {
     series: {
       pointPadding: 0.1,
       dataLabels: {
-        enabled: false
-      }
+        enabled: false,
+      },
     },
     column: {
-      stacking: 'normal'
-    }
-  }
+      stacking: 'normal',
+    },
+  },
 };
 
 const meterOpts = {
@@ -88,11 +88,11 @@ const meterOpts = {
     plotBackgroundColor: 'none',
     plotBackgroundImage: null,
     height: 300,
-    styledMode: false
+    styledMode: false,
   },
 
   title: {
-    text: ''
+    text: '',
   },
 
   pane: [
@@ -100,13 +100,13 @@ const meterOpts = {
       startAngle: -90,
       endAngle: 90,
       background: null,
-      center: [ '50%', '90%' ],
-      size: 275
-    }
+      center: ['50%', '90%'],
+      size: 275,
+    },
   ],
 
   exporting: {
-    enabled: false
+    enabled: false,
   },
 
   tooltip: false,
@@ -131,8 +131,8 @@ const meterOpts = {
             text: '<strong>MIN</strong>',
             align: 'left',
             x: 80,
-            y: 75
-          }
+            y: 75,
+          },
         },
         {
           from: 60,
@@ -144,8 +144,8 @@ const meterOpts = {
             text: '<strong>MEDIAN</strong>',
             align: 'center',
             x: 135,
-            y: -15
-          }
+            y: -15,
+          },
         },
         {
           from: 120,
@@ -157,51 +157,51 @@ const meterOpts = {
             text: '<strong>MAX</strong>',
             align: 'right',
             x: -60,
-            y: 75
-          }
-        }
+            y: 75,
+          },
+        },
       ],
       pane: 0,
       title: {
         text: '',
-        y: -40
-      }
-    }
+        y: -40,
+      },
+    },
   ],
 
   plotOptions: {
     gauge: {
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       dial: {
-        radius: '100%'
-      }
-    }
+        radius: '100%',
+      },
+    },
   },
 
   series: [
     {
       name: '',
-      data: [ 50 ],
-      yAxis: 0
-    }
-  ]
+      data: [50],
+      yAxis: 0,
+    },
+  ],
 };
 
 const horizontalBarOpts = {
   chart: {
     type: 'bar',
     marginTop: 75,
-    height: 250
+    height: 250,
   },
   title: false,
   subtitle: false,
   xAxis: {
     categories: [],
     title: {
-      text: null
-    }
+      text: null,
+    },
   },
   yAxis: {
     min: 0,
@@ -209,7 +209,7 @@ const horizontalBarOpts = {
     stackLabels: {
       enabled: true,
       format: 'Your funding<br>${total:,.0f}',
-      align: 'right'
+      align: 'right',
     },
     plotLines: [
       {
@@ -222,25 +222,25 @@ const horizontalBarOpts = {
           text: 'Cost of Attendance<br>$25,896',
           rotation: 0,
           x: 0,
-          y: -25
-        }
-      }
+          y: -25,
+        },
+      },
     ],
     title: false,
     labels: {
-      overflow: 'justify'
-    }
+      overflow: 'justify',
+    },
   },
   tooltip: false,
   plotOptions: {
     bar: {
       dataLabels: {
-        enabled: false
-      }
+        enabled: false,
+      },
     },
     series: {
-      stacking: 'normal'
-    }
+      stacking: 'normal',
+    },
   },
   legend: {
     enabled: false,
@@ -252,41 +252,41 @@ const horizontalBarOpts = {
     floating: true,
     borderWidth: 1,
     backgroundColor: '#FFFFFF',
-    shadow: true
+    shadow: true,
   },
   credits: {
-    enabled: false
+    enabled: false,
   },
   series: [
     {
-      data: [ 10000 ]
-    }
-  ]
+      data: [10000],
+    },
+  ],
 };
 
 const compareCostOfBorrowingOpts = {
   yAxis: {
-    max: 60000
+    max: 60000,
   },
   series: [
     {
       name: 'Interest',
-      data: [ 6448, 17506 ],
-      color: '#ffe1b9'
+      data: [6448, 17506],
+      color: '#ffe1b9',
     },
     {
       name: 'Principal',
-      data: [ 30000, 30000 ],
-      color: '#ff9e1b'
-    }
-  ]
+      data: [30000, 30000],
+      color: '#ff9e1b',
+    },
+  ],
 };
 
 const costOfBorrowingOpts = {
   chart: {
     type: 'bar',
     marginTop: 95,
-    height: 300
+    height: 300,
   },
   tooltip: false,
   title: false,
@@ -298,7 +298,7 @@ const costOfBorrowingOpts = {
     itemMarginBottom: 5,
     itemStyle: {
       fontSize: '14px',
-      fontWeight: '100'
+      fontWeight: '100',
     },
     layout: 'vertical',
     margin: 30,
@@ -307,94 +307,94 @@ const costOfBorrowingOpts = {
     symbolRadius: 0,
     useHTML: true,
     verticalAlign: 'top',
-    x: -10
+    x: -10,
   },
   xAxis: {
-    categories: [ '' ]
+    categories: [''],
   },
   yAxis: {
     title: {
-      text: 'Dollars'
-    }
+      text: 'Dollars',
+    },
   },
   plotOptions: {
     series: {
-      stacking: 'normal'
-    }
+      stacking: 'normal',
+    },
   },
   series: [
     {
       name: 'Estimated total interest: <strong>$5,000</strong>',
       pointWidth: 60,
-      data: [ 10000 ],
-      color: '#ff9e1b'
+      data: [10000],
+      color: '#ff9e1b',
     },
     {
       name: 'Estimated total borrowed: <strong>$55,000</strong>',
       pointWidth: 60,
-      data: [ 40000 ],
-      color: '#ffe1b9'
-    }
-  ]
+      data: [40000],
+      color: '#ffe1b9',
+    },
+  ],
 };
 
 const makePlanOpts = {
   series: [
     {
-      color: '#addc91'
-    }
-  ]
+      color: '#addc91',
+    },
+  ],
 };
 
 const maxDebtOpts = {
   chart: {
     type: 'bar',
     marginTop: 0,
-    height: 300
+    height: 300,
   },
   title: false,
   subtitle: false,
   xAxis: {
-    categories: [ '' ],
+    categories: [''],
     title: {
-      text: null
-    }
+      text: null,
+    },
   },
   yAxis: {
     min: 0,
     max: 45000,
     stackLabels: {
-      enabled: false
+      enabled: false,
     },
     title: false,
     labels: {
-      overflow: 'justify'
-    }
+      overflow: 'justify',
+    },
   },
   tooltip: false,
   plotOptions: {
     bar: {
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
-      groupPadding: 0.001
-    }
+      groupPadding: 0.001,
+    },
   },
   legend: {
-    enabled: false
+    enabled: false,
   },
   credits: {
-    enabled: false
+    enabled: false,
   },
   series: [
     {
-      data: [ 43000 ],
+      data: [43000],
       pointWidth: 60,
       pointPlacement: -0.09,
-      color: '#ff9e1b'
+      color: '#ff9e1b',
     },
     {
-      data: [ 35000 ],
+      data: [35000],
       pointWidth: 60,
       color: {
         pattern: {
@@ -405,18 +405,18 @@ const maxDebtOpts = {
           color: '#fff',
           backgroundColor: '#20aa3f',
           opacity: 0.9,
-          patternTransform: 'scale(.75)'
-        }
-      }
-    }
-  ]
+          patternTransform: 'scale(.75)',
+        },
+      },
+    },
+  ],
 };
 
 const affordingOpts = {
   chart: {
     type: 'bar',
     marginTop: 100,
-    height: 375
+    height: 375,
   },
   tooltip: false,
   title: false,
@@ -428,7 +428,7 @@ const affordingOpts = {
     itemMarginBottom: 5,
     itemStyle: {
       fontSize: '14px',
-      fontWeight: '100'
+      fontWeight: '100',
     },
     layout: 'vertical',
     symbolHeight: 14,
@@ -436,43 +436,43 @@ const affordingOpts = {
     symbolRadius: 0,
     useHTML: true,
     verticalAlign: 'top',
-    x: -10
+    x: -10,
   },
   xAxis: {
-    categories: [ '' ]
+    categories: [''],
   },
   yAxis: {
     title: {
-      text: 'Dollars'
-    }
+      text: 'Dollars',
+    },
   },
   plotOptions: {
     series: {
-      stacking: 'normal'
-    }
+      stacking: 'normal',
+    },
   },
   series: [
     {
       name: 'Estimated monthly loan payment: <strong>$524</strong>',
       pointWidth: 60,
       pointPlacement: 0.05,
-      data: [ 524 ],
+      data: [524],
       color: '#ffe1b9',
-      stack: 'costs'
+      stack: 'costs',
     },
     {
       name: 'Average monthly expenses: <strong>$2,246</strong>',
       pointWidth: 60,
       pointPlacement: 0.05,
-      data: [ 2246 ],
+      data: [2246],
       color: '#ff9e1b',
-      stack: 'costs'
+      stack: 'costs',
     },
     {
       name: 'Monthly median salary: <strong>$4,357</strong>',
       pointWidth: 60,
       pointPlacement: -0.05,
-      data: [ 4357 ],
+      data: [4357],
       color: {
         pattern: {
           path: 'M -1,11 l11,-11 M -2 2 l3,-3 M 8, 12 l3, -3',
@@ -482,12 +482,12 @@ const affordingOpts = {
           color: '#fff',
           backgroundColor: '#20aa3f',
           opacity: 0.9,
-          patternTransform: 'scale(.75)'
-        }
+          patternTransform: 'scale(.75)',
+        },
       },
-      stack: 'salary'
-    }
-  ]
+      stack: 'salary',
+    },
+  ],
 };
 
 const gradMeterOpts = {};
@@ -511,7 +511,7 @@ const chartView = {
   gradMeterChart: null,
   repaymentMeterChart: null,
 
-  init: body => {
+  init: (body) => {
     chartView._meterChartBtns = body.querySelectorAll(
       '.school-results_cohort-buttons input.a-radio'
     );
@@ -521,12 +521,12 @@ const chartView = {
     chartView.compareCostElem = body.querySelector(
       '#compare-cost-of-borrowing_chart'
     );
-    chartView.makePlanElem = body.querySelector( '#make-a-plan_chart' );
-    chartView.maxDebtElem = body.querySelector( '#max-debt-guideline_chart' );
+    chartView.makePlanElem = body.querySelector('#make-a-plan_chart');
+    chartView.maxDebtElem = body.querySelector('#max-debt-guideline_chart');
     chartView.affordingElem = body.querySelector(
       '#affording-your-loans_chart'
     );
-    chartView.gradMeterElem = body.querySelector( '#school-results_grad-meter' );
+    chartView.gradMeterElem = body.querySelector('#school-results_grad-meter');
     chartView.repaymentMeterElem = body.querySelector(
       '#school-results_repayment-meter'
     );
@@ -534,17 +534,17 @@ const chartView = {
     _addRadioListeners();
 
     // Set initial buttons
-    document.querySelector( '#graduation-rate_us' ).checked = true;
-    document.querySelector( '#repayment-rate_us' ).checked = true;
+    document.querySelector('#graduation-rate_us').checked = true;
+    document.querySelector('#repayment-rate_us').checked = true;
 
-    accessibility( Highcharts );
+    accessibility(Highcharts);
 
-    Highcharts.setOptions( {
+    Highcharts.setOptions({
       lang: {
         rangeSelectorZoom: '',
-        thousandsSep: ','
-      }
-    } );
+        thousandsSep: ',',
+      },
+    });
 
     chartView.costOfBorrowingChart = Highcharts.chart(
       chartView.costOfBorrowingElem,
@@ -556,42 +556,42 @@ const chartView = {
       { ...columnChartOpts, ...compareCostOfBorrowingOpts }
     );
 
-    chartView.makePlanChart = Highcharts.chart( chartView.makePlanElem, {
+    chartView.makePlanChart = Highcharts.chart(chartView.makePlanElem, {
       ...horizontalBarOpts,
-      ...makePlanOpts
-    } );
+      ...makePlanOpts,
+    });
 
-    chartView.maxDebtChart = Highcharts.chart( chartView.maxDebtElem, {
-      ...maxDebtOpts
-    } );
+    chartView.maxDebtChart = Highcharts.chart(chartView.maxDebtElem, {
+      ...maxDebtOpts,
+    });
 
     chartView.maxDebtChart.debtText = chartView.maxDebtChart.renderer
-      .text( 'Estimated total debt at graduation: ', 60, 90 )
-      .attr( {
-        zIndex: 5
-      } )
-      .css( {
-        fontSize: '14px'
-      } )
+      .text('Estimated total debt at graduation: ', 60, 90)
+      .attr({
+        zIndex: 5,
+      })
+      .css({
+        fontSize: '14px',
+      })
       .add();
     chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer
-      .text( 'Estimated total debt at graduation: ', 60, 90 )
-      .attr( {
-        zIndex: 5
-      } )
-      .css( {
-        fontSize: '14px'
-      } )
+      .text('Estimated total debt at graduation: ', 60, 90)
+      .attr({
+        zIndex: 5,
+      })
+      .css({
+        fontSize: '14px',
+      })
       .add();
 
-    chartView.affordingChart = Highcharts.chart( chartView.affordingElem, {
-      ...affordingOpts
-    } );
+    chartView.affordingChart = Highcharts.chart(chartView.affordingElem, {
+      ...affordingOpts,
+    });
 
-    chartView.gradMeterChart = Highcharts.chart( chartView.gradMeterElem, {
+    chartView.gradMeterChart = Highcharts.chart(chartView.gradMeterElem, {
       ...meterOpts,
-      ...gradMeterOpts
-    } );
+      ...gradMeterOpts,
+    });
 
     chartView.repaymentMeterChart = Highcharts.chart(
       chartView.repaymentMeterElem,
@@ -600,44 +600,44 @@ const chartView = {
   },
 
   updateCostOfBorrowingChart: () => {
-    const totalBorrowingAtGrad = getFinancialValue( 'debt_totalAtGrad' );
-    const borrowedString = numberToMoney( {
+    const totalBorrowingAtGrad = getFinancialValue('debt_totalAtGrad');
+    const borrowedString = numberToMoney({
       amount: totalBorrowingAtGrad,
-      decimalPlaces: 0
-    } );
-    const interest10years = getFinancialValue( 'debt_tenYearInterest' );
-    const interestString = numberToMoney( {
+      decimalPlaces: 0,
+    });
+    const interest10years = getFinancialValue('debt_tenYearInterest');
+    const interestString = numberToMoney({
       amount: interest10years,
-      decimalPlaces: 0
-    } );
+      decimalPlaces: 0,
+    });
 
-    chartView.costOfBorrowingChart.yAxis[0].update( {
-      max: Math.floor( getFinancialValue( 'debt_tenYearTotal' ) * 1.1 )
-    } );
-    chartView.costOfBorrowingChart.series[0].update( {
-      data: [ interest10years ],
+    chartView.costOfBorrowingChart.yAxis[0].update({
+      max: Math.floor(getFinancialValue('debt_tenYearTotal') * 1.1),
+    });
+    chartView.costOfBorrowingChart.series[0].update({
+      data: [interest10years],
       name:
-        'Estimated total interest: <strong>' + interestString + '</strong>'
-    } );
-    chartView.costOfBorrowingChart.series[1].update( {
-      data: [ totalBorrowingAtGrad ],
+        'Estimated total interest: <strong>' + interestString + '</strong>',
+    });
+    chartView.costOfBorrowingChart.series[1].update({
+      data: [totalBorrowingAtGrad],
       name:
-        'Estimated total borrowed: <strong>' + borrowedString + '</strong>'
-    } );
+        'Estimated total borrowed: <strong>' + borrowedString + '</strong>',
+    });
   },
 
   updateMakePlanChart: () => {
-    const totalCosts = getFinancialValue( 'total_costs' );
-    const totalFunding = getFinancialValue( 'total_funding' );
-    const max = Math.max( totalCosts * 1.1, totalFunding * 1.1 );
+    const totalCosts = getFinancialValue('total_costs');
+    const totalFunding = getFinancialValue('total_funding');
+    const max = Math.max(totalCosts * 1.1, totalFunding * 1.1);
     const text =
       'Your costs<br>' +
-      numberToMoney( {
+      numberToMoney({
         amount: totalCosts,
-        decimalPlaces: 0
-      } );
+        decimalPlaces: 0,
+      });
 
-    chartView.makePlanChart.yAxis[0].update( {
+    chartView.makePlanChart.yAxis[0].update({
       max: max,
       plotLines: [
         {
@@ -650,29 +650,29 @@ const chartView = {
             text: text,
             rotation: 0,
             x: 0,
-            y: -25
-          }
-        }
-      ]
-    } );
-    chartView.makePlanChart.series[0].setData( [ totalFunding ] );
+            y: -25,
+          },
+        },
+      ],
+    });
+    chartView.makePlanChart.series[0].setData([totalFunding]);
   },
 
   updateMaxDebtChart: () => {
-    const totalDebt = getFinancialValue( 'debt_totalAtGrad' );
-    const debtString = numberToMoney( { amount: totalDebt, decimalPlaces: 0 } );
-    const salary = getFinancialValue( 'salary_annual' );
-    const salaryString = numberToMoney( { amount: salary, decimalPlaces: 0 } );
-    const max = Math.max( totalDebt * 1.1, salary * 1.1 );
+    const totalDebt = getFinancialValue('debt_totalAtGrad');
+    const debtString = numberToMoney({ amount: totalDebt, decimalPlaces: 0 });
+    const salary = getFinancialValue('salary_annual');
+    const salaryString = numberToMoney({ amount: salary, decimalPlaces: 0 });
+    const max = Math.max(totalDebt * 1.1, salary * 1.1);
 
-    chartView.maxDebtChart.yAxis[0].update( {
+    chartView.maxDebtChart.yAxis[0].update({
       min: 0,
-      max: max
-    } );
+      max: max,
+    });
 
-    chartView.maxDebtChart.series[0].setData( [ totalDebt ] );
+    chartView.maxDebtChart.series[0].setData([totalDebt]);
 
-    chartView.maxDebtChart.series[1].setData( [ salary ] );
+    chartView.maxDebtChart.series[1].setData([salary]);
 
     chartView.maxDebtChart.salaryText.destroy();
     chartView.maxDebtChart.debtText.destroy();
@@ -685,12 +685,12 @@ const chartView = {
         13,
         50
       )
-      .attr( {
-        zIndex: 5
-      } )
-      .css( {
-        fontSize: '14px'
-      } )
+      .attr({
+        zIndex: 5,
+      })
+      .css({
+        fontSize: '14px',
+      })
       .add();
 
     chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer
@@ -701,153 +701,150 @@ const chartView = {
         13,
         160
       )
-      .attr( {
-        zIndex: 5
-      } )
-      .css( {
-        fontSize: '14px'
-      } )
+      .attr({
+        zIndex: 5,
+      })
+      .css({
+        fontSize: '14px',
+      })
       .add();
   },
 
   updateAffordingChart: () => {
-    const monthlyExpenses = getExpensesValue( 'total_expenses' );
-    const expensesString = numberToMoney( {
+    const monthlyExpenses = getExpensesValue('total_expenses');
+    const expensesString = numberToMoney({
       amount: monthlyExpenses,
-      decimalPlaces: 0
-    } );
-    const monthlyPayment = getFinancialValue( 'debt_tenYearMonthly' );
-    const paymentString = numberToMoney( {
+      decimalPlaces: 0,
+    });
+    const monthlyPayment = getFinancialValue('debt_tenYearMonthly');
+    const paymentString = numberToMoney({
       amount: monthlyPayment,
-      decimalPlaces: 0
-    } );
-    const monthlySalary = getFinancialValue( 'salary_monthly' );
-    const salaryString = numberToMoney( {
+      decimalPlaces: 0,
+    });
+    const monthlySalary = getFinancialValue('salary_monthly');
+    const salaryString = numberToMoney({
       amount: monthlySalary,
-      decimalPlaces: 0
-    } );
+      decimalPlaces: 0,
+    });
 
     const totalMonthlySalary = monthlySalary * 1.1;
-    const totalMonthlyExpenses = ( monthlyExpenses + monthlyPayment ) * 1.1;
-    const max = Math.max( totalMonthlySalary, totalMonthlyExpenses );
-    const text =
-      'Monthly Salary<br>' +
-      numberToMoney( { amount: monthlySalary, decimalPlaces: 0 } );
+    const totalMonthlyExpenses = (monthlyExpenses + monthlyPayment) * 1.1;
+    const max = Math.max(totalMonthlySalary, totalMonthlyExpenses);
 
-    chartView.affordingChart.yAxis[0].update( {
+    chartView.affordingChart.yAxis[0].update({
       min: 0,
-      max: max
-    } );
+      max: max,
+    });
 
-    chartView.affordingChart.series[0].update( {
-      data: [ monthlyPayment ],
+    chartView.affordingChart.series[0].update({
+      data: [monthlyPayment],
       name:
         'Estimated monthly loan payment: <strong>' +
         paymentString +
-        '</strong>'
-    } );
-    chartView.affordingChart.series[1].update( {
-      data: [ monthlyExpenses ],
+        '</strong>',
+    });
+    chartView.affordingChart.series[1].update({
+      data: [monthlyExpenses],
       name:
-        'Average monthly expenses: <strong>' + expensesString + '</strong>'
-    } );
-    chartView.affordingChart.series[2].update( {
-      data: [ monthlySalary ],
-      name: 'Monthly median salary: <strong>' + salaryString + '</strong>'
-    } );
+        'Average monthly expenses: <strong>' + expensesString + '</strong>',
+    });
+    chartView.affordingChart.series[2].update({
+      data: [monthlySalary],
+      name: 'Monthly median salary: <strong>' + salaryString + '</strong>',
+    });
   },
 
   updateGradMeterChart: () => {
-    let cohort = getStateValue( 'gradMeterCohort' );
-    if ( !cohort ) {
+    let cohort = getStateValue('gradMeterCohort');
+    if (!cohort) {
       cohort = 'cohortRankByHighestDegree';
     }
-    const cohortGradRate = getSchoolCohortValue( cohort, 'grad_rate' );
-    if ( cohortGradRate ) {
+    const cohortGradRate = getSchoolCohortValue(cohort, 'grad_rate');
+    if (cohortGradRate) {
       let percentile = cohortGradRate.percentile_rank;
 
-      if ( percentile <= 33 ) {
-        updateState.byProperty( 'gradMeterThird', 'bottom third' );
-        updateState.byProperty( 'rategraduationrange', 'low' );
-      } else if ( percentile <= 66 ) {
-        updateState.byProperty( 'gradMeterThird', 'middle third' );
-        updateState.byProperty( 'rategraduationrange', 'medium' );
+      if (percentile <= 33) {
+        updateState.byProperty('gradMeterThird', 'bottom third');
+        updateState.byProperty('rategraduationrange', 'low');
+      } else if (percentile <= 66) {
+        updateState.byProperty('gradMeterThird', 'middle third');
+        updateState.byProperty('rategraduationrange', 'medium');
       } else {
-        updateState.byProperty( 'gradMeterThird', 'top third' );
-        updateState.byProperty( 'rategraduationrange', 'high' );
+        updateState.byProperty('gradMeterThird', 'top third');
+        updateState.byProperty('rategraduationrange', 'high');
       }
 
       // Percentile works along a 180-degree axis:
-      percentile = ( percentile / 100 ) * 180;
-      chartView.gradMeterChart.series[0].setData( [ percentile ] );
+      percentile = (percentile / 100) * 180;
+      chartView.gradMeterChart.series[0].setData([percentile]);
     } else {
-      updateState.byProperty( 'gradMeterThird', '' );
+      updateState.byProperty('gradMeterThird', '');
     }
   },
 
   updateRepaymentMeterChart: () => {
-    let cohort = getStateValue( 'repayMeterCohort' );
-    if ( !cohort ) {
+    let cohort = getStateValue('repayMeterCohort');
+    if (!cohort) {
       cohort = 'cohortRankByHighestDegree';
     }
-    const cohortRepayRate = getSchoolCohortValue( cohort, 'repay_3yr' );
-    if ( cohortRepayRate ) {
+    const cohortRepayRate = getSchoolCohortValue(cohort, 'repay_3yr');
+    if (cohortRepayRate) {
       const percentile = cohortRepayRate.percentile_rank;
 
-      if ( percentile <= 33 ) {
-        updateState.byProperty( 'repayMeterThird', 'bottom third' );
-        updateState.byProperty( 'raterepay3yrrange', 'low' );
-      } else if ( percentile <= 66 ) {
-        updateState.byProperty( 'repayMeterThird', 'middle third' );
-        updateState.byProperty( 'raterepay3yrrange', 'medium' );
+      if (percentile <= 33) {
+        updateState.byProperty('repayMeterThird', 'bottom third');
+        updateState.byProperty('raterepay3yrrange', 'low');
+      } else if (percentile <= 66) {
+        updateState.byProperty('repayMeterThird', 'middle third');
+        updateState.byProperty('raterepay3yrrange', 'medium');
       } else {
-        updateState.byProperty( 'repayMeterThird', 'top third' );
-        updateState.byProperty( 'raterepay3yrrange', 'high' );
+        updateState.byProperty('repayMeterThird', 'top third');
+        updateState.byProperty('raterepay3yrrange', 'high');
       }
 
       // Percentile works along a 180-degree axis:
-      const arc = ( percentile / 100 ) * 180;
-      chartView.repaymentMeterChart.series[0].setData( [ arc ] );
+      const arc = (percentile / 100) * 180;
+      chartView.repaymentMeterChart.series[0].setData([arc]);
     }
-  }
+  },
 };
 
 /**
  * Listen for radio button clicks.
  */
 function _addRadioListeners() {
-  chartView._meterChartBtns.forEach( elem => {
-    elem.addEventListener( 'click', _handleRadioClicks );
-  } );
+  chartView._meterChartBtns.forEach((elem) => {
+    elem.addEventListener('click', _handleRadioClicks);
+  });
 }
 
 /**
  * @param {MouseEvent} event - The click event object.
  */
-function _handleRadioClicks( event ) {
+function _handleRadioClicks(event) {
   const target = event.target;
   const cohort = target.value;
-  const graph = target.getAttribute( 'name' ).replace( /-/g, '' );
+  const graph = target.getAttribute('name').replace(/-/g, '');
   const handlers = {
     repaymentratemeterselector: {
-      'function': chartView.updateRepaymentMeterChart,
-      'stateProp': 'repayMeterCohort',
-      'cohortName': 'repayMeterCohortName'
+      function: chartView.updateRepaymentMeterChart,
+      stateProp: 'repayMeterCohort',
+      cohortName: 'repayMeterCohortName',
     },
     graduationratemeterselector: {
-      'function': chartView.updateGradMeterChart,
-      'stateProp': 'gradMeterCohort',
-      'cohortName': 'gradMeterCohortName'
-    }
+      function: chartView.updateGradMeterChart,
+      stateProp: 'gradMeterCohort',
+      cohortName: 'gradMeterCohortName',
+    },
   };
   const names = {
     cohortRankByHighestDegree: 'U.S.',
-    cohortRankByState: getSchoolValue( 'stateName' ),
-    cohortRankByControl: getSchoolValue( 'control' )
+    cohortRankByState: getSchoolValue('stateName'),
+    cohortRankByControl: getSchoolValue('control'),
   };
 
-  updateState.byProperty( handlers[graph].cohortName, names[cohort] );
-  updateState.byProperty( handlers[graph].stateProp, cohort );
+  updateState.byProperty(handlers[graph].cohortName, names[cohort]);
+  updateState.byProperty(handlers[graph].stateProp, cohort);
   handlers[graph].function();
 }
 

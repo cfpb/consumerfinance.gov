@@ -109,6 +109,19 @@ Once activated, our Python CI requirements can be installed in the virtualenv:
 pip install -r requirements/ci.txt
 ```
 
+### Configure VSCode formatters (optional)
+
+For developers who use [Visual Studio Code](https://code.visualstudio.com/)
+as their editor of choice, you may wish to install certain
+[extensions](https://marketplace.visualstudio.com/VSCode)
+to support easier code formatting.
+
+This repository includes a `.vscode/settings.json` file that sets the
+[Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+as the default code formatter. It also sets the
+[Python extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+as the formatter for Python files.
+
 ### Install pre-commit
 
 We use `pre-commit` to automatically run our linting tools before a commit

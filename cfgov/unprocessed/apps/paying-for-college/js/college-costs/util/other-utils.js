@@ -49,15 +49,15 @@ const statesByCode = {
   WA: 'Washington',
   WV: 'West Virginia',
   WI: 'Wisconsin',
-  WY: 'Wyoming'
+  WY: 'Wyoming',
 };
 
 /**
  * @param {string} code - An abbreviated state name.
  * @returns {string} A full state name, spelled out.
  */
-function getStateByCode( code ) {
-  if ( statesByCode.hasOwnProperty( code ) ) {
+function getStateByCode(code) {
+  if ({}.hasOwnProperty.call(statesByCode, code)) {
     return statesByCode[code];
   }
 
@@ -67,11 +67,12 @@ function getStateByCode( code ) {
 /**
  * Search for support of the matches() method by looking at
  * browser prefixes.
- * @param {HTMLNode} el
- *   The element to check for support of matches() method.
+ *
+ * @param {HTMLElement} el - The element to check for support
+ *   of matches() method.
  * @returns {Function} The appropriate matches() method of elem.
  */
-function _getMatchesMethod( el ) {
+function _getMatchesMethod(el) {
   return (
     el.matches ||
     el.webkitMatchesSelector ||
@@ -83,13 +84,13 @@ function _getMatchesMethod( el ) {
 /**
  * Determine whether element matches a selector.
  *
- * @param {HTMLNode} el - DOM element to check.
+ * @param {HTMLElement} el - DOM element to check.
  * @param {string} selector - a selector string.
  * @returns {boolean} True if element matches selector, false otherwise.
  */
-function selectorMatches( el, selector ) {
-  const matchesMethod = _getMatchesMethod( el );
-  return matchesMethod.call( el, selector );
+function selectorMatches(el, selector) {
+  const matchesMethod = _getMatchesMethod(el);
+  return matchesMethod.call(el, selector);
 }
 
 export { getStateByCode, selectorMatches };

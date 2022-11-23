@@ -9,14 +9,14 @@ const dataLayerEventRadio = {
   action: 'Questionnaire Radio Button Clicked',
   label: 'I could handle a major unexpected expense',
   eventCallback: undefined, // eslint-disable-line  no-undefined
-  eventTimeout: 500
+  eventTimeout: 500,
 };
 const dataLayerEventSubmit = {
   event: 'Financial Well-Being Tool Interaction',
   action: 'Questionnaire Submitted',
   label: 'Get my score',
   eventCallback: undefined, // eslint-disable-line  no-undefined
-  eventTimeout: 500
+  eventTimeout: 500,
 };
 
 const HTML_SNIPPET = `
@@ -128,47 +128,50 @@ const HTML_SNIPPET = `
 </form>
 `;
 
+/**
+ * Click the radio buttons on the financial well-being form.
+ */
 function fillOutForm() {
-  const radioButtons = document.querySelectorAll( '[type="radio"]' );
-  [].forEach.call( radioButtons, radioElement => {
-    simulateEvent( 'click', radioElement );
-  } );
+  const radioButtons = document.querySelectorAll('[type="radio"]');
+  [].forEach.call(radioButtons, (radioElement) => {
+    simulateEvent('click', radioElement);
+  });
 }
 
-describe( 'fwb-questions', () => {
-  beforeEach( () => {
+describe('fwb-questions', () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
     window.dataLayer = [];
     window['google_tag_manager'] = {};
-    formDom = document.querySelector( '#quiz-form' );
-    submitBtnDom = document.querySelector( '#submit-quiz' );
-    radioButtonsDom = document.querySelectorAll( '[type="radio"]' );
+    formDom = document.querySelector('#quiz-form');
+    submitBtnDom = document.querySelector('#submit-quiz');
+    radioButtonsDom = document.querySelectorAll('[type="radio"]');
 
     /* JSDOM does not support form submission at this time
        and will throw an error. Prevent the form from submitting,
        even when the submit button is triggered. */
-    formDom.addEventListener( 'submit', evt => {
+    formDom.addEventListener('submit', (evt) => {
       evt.preventDefault();
-    } );
-  } );
+    });
+  });
 
-  it( 'submit button should have the correct state on initialization.', () => {
+  it('submit button should have the correct state on initialization.', () => {
     fwbQuestions.init();
-    expect( submitBtnDom.disabled ).toBe( true );
+    expect(submitBtnDom.disabled).toBe(true);
 
-    expect( submitBtnDom.title ).toBe(
+    expect(submitBtnDom.title).toBe(
       'Please answer all questions to get your score'
     );
-  } );
+  });
 
   it(
     'submit button shouldn’t submit the form ' +
       'unless all the questions are completed.',
     () => {
       fwbQuestions.init();
-      const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
-      expect( submitBtnDom.disabled ).toBe( true );
-      expect( formSubmissionStatus ).toBe( false );
+      const formSubmissionStatus = simulateEvent('click', submitBtnDom);
+      expect(submitBtnDom.disabled).toBe(true);
+      expect(formSubmissionStatus).toBe(false);
     }
   );
 
@@ -178,9 +181,9 @@ describe( 'fwb-questions', () => {
     () => {
       fillOutForm();
       fwbQuestions.init();
-      const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
-      expect( submitBtnDom.disabled ).toBe( false );
-      expect( formSubmissionStatus ).toBe( true );
+      const formSubmissionStatus = simulateEvent('click', submitBtnDom);
+      expect(submitBtnDom.disabled).toBe(false);
+      expect(formSubmissionStatus).toBe(true);
     }
   );
 
@@ -190,22 +193,22 @@ describe( 'fwb-questions', () => {
     () => {
       fwbQuestions.init();
       fillOutForm();
-      const formSubmissionStatus = simulateEvent( 'click', submitBtnDom );
-      expect( submitBtnDom.disabled ).toBe( false );
-      expect( formSubmissionStatus ).toBe( true );
+      const formSubmissionStatus = simulateEvent('click', submitBtnDom);
+      expect(submitBtnDom.disabled).toBe(false);
+      expect(formSubmissionStatus).toBe(true);
     }
   );
 
-  it( 'should send the correct analytics when a radio button is clicked', () => {
+  it('should send the correct analytics when a radio button is clicked', () => {
     fwbQuestions.init();
-    simulateEvent( 'click', radioButtonsDom[0] );
-    expect( window.dataLayer[0] ).toStrictEqual( dataLayerEventRadio );
-  } );
+    simulateEvent('click', radioButtonsDom[0]);
+    expect(window.dataLayer[0]).toStrictEqual(dataLayerEventRadio);
+  });
 
-  it( 'should send the correct analytics when the submit button is clicked', () => {
+  it('should send the correct analytics when the submit button is clicked', () => {
     fillOutForm();
     fwbQuestions.init();
-    simulateEvent( 'click', submitBtnDom );
-    expect( window.dataLayer[0] ).toStrictEqual( dataLayerEventSubmit );
-  } );
-} );
+    simulateEvent('click', submitBtnDom);
+    expect(window.dataLayer[0]).toStrictEqual(dataLayerEventSubmit);
+  });
+});

@@ -7,7 +7,7 @@ let _localStorage;
 
 try {
   _localStorage = window.localStorage;
-} catch ( err ) {
+} catch (err) {
   _localStorage = null;
 }
 
@@ -21,14 +21,14 @@ try {
  * Submission of an email address dismisses the popup permanently.
  */
 
-const POPUP_WAIT_PERIOD = [ 4, 30, 60 ];
+const POPUP_WAIT_PERIOD = [4, 30, 60];
 const FOREVER = 10000;
 
 /**
  * @param {string} popupLabel - label for this popup.
  * @returns {string} Local storage key to count popup views.
  */
-function _getCountKey( popupLabel ) {
+function _getCountKey(popupLabel) {
   return popupLabel + 'PopupCount';
 }
 
@@ -36,7 +36,7 @@ function _getCountKey( popupLabel ) {
  * @param {string} popupLabel - label for this popup.
  * @returns {string} Local storage key to record next time to show popup.
  */
-function _getNextShowKey( popupLabel ) {
+function _getNextShowKey(popupLabel) {
   return popupLabel + 'PopupShowNext';
 }
 
@@ -44,94 +44,99 @@ function _getNextShowKey( popupLabel ) {
  * @param {number} days - The number of days to a future date.
  * @returns {Date} A future date x amount of days from now.
  */
-function _getFutureDate( days ) {
+function _getFutureDate(days) {
   const date = new Date();
-  return date.setTime( date.getTime() + days * 24 * 60 * 60 * 1000 );
+  return date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
 }
 
 /**
  * Record in local storage that the email popup has been viewed.
+ *
  * @param {string} popupLabel - label for this popup.
  */
-function recordEmailPopupView( popupLabel ) {
-  const countKey = _getCountKey( popupLabel );
-  const nextShowKey = _getNextShowKey( popupLabel );
+function recordEmailPopupView(popupLabel) {
+  const countKey = _getCountKey(popupLabel);
+  const nextShowKey = _getNextShowKey(popupLabel);
 
-  let count = Number( webStorageProxy.getItem( countKey, _localStorage ) ) || 0;
+  let count = Number(webStorageProxy.getItem(countKey, _localStorage)) || 0;
   const max = POPUP_WAIT_PERIOD.length - 1;
   count = count >= max ? max : count;
   const days = POPUP_WAIT_PERIOD[count];
-  webStorageProxy.setItem( countKey, count + 1, _localStorage );
-  webStorageProxy.setItem( nextShowKey, _getFutureDate( days ), _localStorage );
+  webStorageProxy.setItem(countKey, count + 1, _localStorage);
+  webStorageProxy.setItem(nextShowKey, _getFutureDate(days), _localStorage);
 }
 
 /**
  * Record in local storage that the email popup has been closed.
+ *
  * @param {string} popupLabel - label for this popup.
  */
-function recordEmailPopupClosure( popupLabel ) {
-  const countKey = _getCountKey( popupLabel );
-  const nextShowKey = _getNextShowKey( popupLabel );
+function recordEmailPopupClosure(popupLabel) {
+  const countKey = _getCountKey(popupLabel);
+  const nextShowKey = _getNextShowKey(popupLabel);
 
   const count = POPUP_WAIT_PERIOD.length - 1;
   const days = POPUP_WAIT_PERIOD[count];
-  webStorageProxy.setItem( countKey, count, _localStorage );
-  webStorageProxy.setItem( nextShowKey, _getFutureDate( days ), _localStorage );
+  webStorageProxy.setItem(countKey, count, _localStorage);
+  webStorageProxy.setItem(nextShowKey, _getFutureDate(days), _localStorage);
 }
 
 /**
  * Sets email popup key in local storage with a very long expiry date.
+ *
  * @param {string} popupLabel - label for this popup.
  */
-function recordEmailRegistration( popupLabel ) {
-  const nextShowKey = _getNextShowKey( popupLabel );
+function recordEmailRegistration(popupLabel) {
+  const nextShowKey = _getNextShowKey(popupLabel);
 
-  webStorageProxy.setItem( nextShowKey, _getFutureDate( FOREVER ), _localStorage );
+  webStorageProxy.setItem(nextShowKey, _getFutureDate(FOREVER), _localStorage);
 }
 
 /**
  * Checks today's date against that in local storage for the purposes of
  * displaying a popup.
+ *
  * @param {string} popupLabel - label for this popup.
  * @returns {boolean} True if the popup should display, false otherwise.
  */
-function showEmailPopup( popupLabel ) {
-  const nextShowKey = _getNextShowKey( popupLabel );
+function showEmailPopup(popupLabel) {
+  const nextShowKey = _getNextShowKey(popupLabel);
   const today = new Date().getTime();
   const nextDisplayDate =
-    Number( webStorageProxy.getItem( nextShowKey, _localStorage ) ) || 0;
+    Number(webStorageProxy.getItem(nextShowKey, _localStorage)) || 0;
   return today > nextDisplayDate;
 }
 
 /**
  * Show the popup when scrolling.
- * @param  {HTMLNode} elToShow - Element to check the height of.
- * @param  {Object} opts - Object with callback and target HTML element.
+ *
+ * @param {HTMLElement} elToShow - Element to check the height of.
+ * @param {object} opts - Object with callback and target HTML element.
  */
-function showOnScroll( elToShow, opts ) {
+function showOnScroll(elToShow, opts) {
   let UNDEFINED;
   const defaults = {
     scrollPercent: 50,
     throttleDelay: 10,
     targetElement: null,
-    cb: function() {
+    cb: function () {
       return UNDEFINED;
-    }
+    },
   };
 
-  opts = assign( defaults, opts || {} );
+  opts = assign(defaults, opts || {});
 
   /**
    * @returns {number} Scroll target vertical position in pixels from top.
    */
   function _getScrollTargetPosition() {
     const elHeight = elToShow.offsetHeight;
-    if ( opts.targetElement && opts.targetElement.length ) {
+    if (opts.targetElement && opts.targetElement.length) {
       const top = opts.targetElement.offset().top;
       return top + elHeight;
     }
     const percentageTarget =
-      document.body.offsetHeight * ( opts.scrollPercent / 100 );
+      document.body.offsetHeight * (opts.scrollPercent / 100);
     return percentageTarget + elHeight;
   }
 
@@ -147,16 +152,16 @@ function showOnScroll( elToShow, opts ) {
     return windowBottom > scrollTargetPosition;
   }
 
-  const handler = throttle( function( event ) {
-    if ( _scrollTargetPositionReached() ) {
-      window.removeEventListener( 'scroll', handler );
-      if ( typeof opts.cb === 'function' ) {
+  const handler = throttle(function () {
+    if (_scrollTargetPositionReached()) {
+      window.removeEventListener('scroll', handler);
+      if (typeof opts.cb === 'function') {
         opts.cb();
       }
     }
-  }, opts.throttleDelay );
+  }, opts.throttleDelay);
 
-  window.addEventListener( 'scroll', handler );
+  window.addEventListener('scroll', handler);
 }
 
 export {
@@ -164,5 +169,5 @@ export {
   recordEmailPopupView,
   recordEmailRegistration,
   recordEmailPopupClosure,
-  showOnScroll
+  showOnScroll,
 };

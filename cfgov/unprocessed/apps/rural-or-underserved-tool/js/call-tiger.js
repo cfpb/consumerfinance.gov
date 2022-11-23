@@ -1,13 +1,14 @@
-const jsonP = require( 'jsonp-p' ).default;
+const jsonP = require('jsonp-p').default;
 
 /**
  * Call the Census geospatial API.
+ *
  * @param {number} x - Latitude.
  * @param {number} y - Longitude.
  * @param {string} layer - Layer ID.
  * @returns {Promise} A promise returned from the API.
  */
-function callTiger( x, y, layer ) {
+function callTiger(x, y, layer) {
   // See versions at https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb
   const apiVersion = 'tigerWMS_ACS2019';
   const url =
@@ -29,7 +30,7 @@ function callTiger( x, y, layer ) {
     '&outFields=*' +
     '&f=json';
 
-  return jsonP( url ).promise;
+  return jsonP(url).promise;
 }
 
 export default callTiger;

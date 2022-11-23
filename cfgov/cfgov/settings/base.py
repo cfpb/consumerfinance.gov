@@ -475,7 +475,6 @@ CSP_SCRIPT_SRC = (
     "*.googleoptimize.com",
     "tagmanager.google.com",
     "optimize.google.com",
-    "search.usa.gov",
     "api.mapbox.com",
     "js-agent.newrelic.com",
     "dnn506yrbagrg.cloudfront.net",
@@ -510,13 +509,11 @@ CSP_IMG_SRC = (
     "s3.amazonaws.com",
     "img.youtube.com",
     "*.google-analytics.com",
-    "searchstats.usa.gov",
     "*.googletagmanager.com",
     "tagmanager.google.com",
     "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
-    "stats.search.usa.gov",
     "blob:",
     "data:",
     "www.gravatar.com",
@@ -601,9 +598,6 @@ FLAGS = {
     "PATH_MATCHES_FOR_QUALTRICS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
-    # When enabled, show Wagtail versions of Closing Disclosure and
-    # Loan Estimate form explainers instead of hardcoded cf.gov pages
-    "WAGTAIL_FORM_EXPLAINERS": [],
 }
 
 # We want the ability to serve the latest drafts of some pages on beta

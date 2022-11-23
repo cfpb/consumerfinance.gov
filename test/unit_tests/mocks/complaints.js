@@ -9,7 +9,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 0.97,
-    displayValue: 713
+    displayValue: 713,
   },
   {
     className: 'deselected',
@@ -20,7 +20,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.14,
-    displayValue: 10380
+    displayValue: 10380,
   },
   {
     className: 'selected',
@@ -31,7 +31,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.48,
-    displayValue: 4402
+    displayValue: 4402,
   },
   {
     className: 'default',
@@ -42,7 +42,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.16,
-    displayValue: 14708
+    displayValue: 14708,
   },
   {
     className: 'default',
@@ -53,7 +53,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.53,
-    displayValue: 98601
+    displayValue: 98601,
   },
   {
     className: 'default',
@@ -64,7 +64,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.96,
-    displayValue: 10643
+    displayValue: 10643,
   },
   {
     className: 'default',
@@ -75,7 +75,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.2,
-    displayValue: 7897
+    displayValue: 7897,
   },
   {
     className: 'default',
@@ -86,7 +86,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 5.51,
-    displayValue: 3704
+    displayValue: 3704,
   },
   {
     className: 'default',
@@ -97,7 +97,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 3.59,
-    displayValue: 3387
+    displayValue: 3387,
   },
   {
     className: 'default',
@@ -108,7 +108,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 4.25,
-    displayValue: 86241
+    displayValue: 86241,
   },
   {
     className: 'default',
@@ -119,7 +119,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 4.57,
-    displayValue: 46649
+    displayValue: 46649,
   },
   {
     className: 'default',
@@ -130,7 +130,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.46,
-    displayValue: 2081
+    displayValue: 2081,
   },
   {
     className: 'default',
@@ -141,7 +141,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 0.85,
-    displayValue: 2647
+    displayValue: 2647,
   },
   {
     className: 'default',
@@ -152,7 +152,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.12,
-    displayValue: 1849
+    displayValue: 1849,
   },
   {
     className: 'default',
@@ -163,7 +163,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.42,
-    displayValue: 31170
+    displayValue: 31170,
   },
   {
     className: 'default',
@@ -174,7 +174,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.28,
-    displayValue: 8446
+    displayValue: 8446,
   },
   {
     className: 'default',
@@ -185,7 +185,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.22,
-    displayValue: 3553
+    displayValue: 3553,
   },
   {
     className: 'default',
@@ -196,7 +196,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.14,
-    displayValue: 5029
+    displayValue: 5029,
   },
   {
     className: 'default',
@@ -207,7 +207,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.41,
-    displayValue: 11253
+    displayValue: 11253,
   },
   {
     className: 'default',
@@ -218,7 +218,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.77,
-    displayValue: 12010
+    displayValue: 12010,
   },
   {
     className: 'default',
@@ -229,7 +229,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 3.05,
-    displayValue: 18317
+    displayValue: 18317,
   },
   {
     className: 'default',
@@ -240,7 +240,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.15,
-    displayValue: 1526
+    displayValue: 1526,
   },
   {
     className: 'default',
@@ -251,7 +251,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.66,
-    displayValue: 16521
+    displayValue: 16521,
   },
   {
     className: 'default',
@@ -262,7 +262,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.26,
-    displayValue: 6902
+    displayValue: 6902,
   },
   {
     className: 'default',
@@ -273,7 +273,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.93,
-    displayValue: 11735
+    displayValue: 11735,
   },
   {
     className: 'default',
@@ -284,7 +284,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.75,
-    displayValue: 5230
+    displayValue: 5230,
   },
   {
     className: 'default',
@@ -295,7 +295,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.06,
-    displayValue: 1093
+    displayValue: 1093,
   },
   {
     className: 'default',
@@ -306,7 +306,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.58,
-    displayValue: 25978
+    displayValue: 25978,
   },
   {
     className: 'default',
@@ -317,7 +317,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.01,
-    displayValue: 753
+    displayValue: 753,
   },
   {
     className: 'default',
@@ -328,7 +328,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 0.95,
-    displayValue: 1801
+    displayValue: 1801,
   },
   {
     className: 'default',
@@ -339,7 +339,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.4,
-    displayValue: 1869
+    displayValue: 1869,
   },
   {
     className: 'default',
@@ -350,7 +350,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.86,
-    displayValue: 25600
+    displayValue: 25600,
   },
   {
     className: 'default',
@@ -361,7 +361,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.31,
-    displayValue: 2725
+    displayValue: 2725,
   },
   {
     className: 'default',
@@ -372,7 +372,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 3.8,
-    displayValue: 10974
+    displayValue: 10974,
   },
   {
     className: 'default',
@@ -383,7 +383,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.68,
-    displayValue: 53008
+    displayValue: 53008,
   },
   {
     className: 'default',
@@ -394,7 +394,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.89,
-    displayValue: 21901
+    displayValue: 21901,
   },
   {
     className: 'default',
@@ -405,7 +405,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.11,
-    displayValue: 4329
+    displayValue: 4329,
   },
   {
     className: 'default',
@@ -416,7 +416,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.45,
-    displayValue: 5838
+    displayValue: 5838,
   },
   {
     className: 'default',
@@ -427,7 +427,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2,
-    displayValue: 25605
+    displayValue: 25605,
   },
   {
     className: 'default',
@@ -438,7 +438,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.78,
-    displayValue: 1884
+    displayValue: 1884,
   },
   {
     className: 'default',
@@ -449,7 +449,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.82,
-    displayValue: 13788
+    displayValue: 13788,
   },
   {
     className: 'default',
@@ -460,7 +460,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 0.82,
-    displayValue: 702
+    displayValue: 702,
   },
   {
     className: 'default',
@@ -471,7 +471,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.08,
-    displayValue: 13730
+    displayValue: 13730,
   },
   {
     className: 'default',
@@ -482,7 +482,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.64,
-    displayValue: 72300
+    displayValue: 72300,
   },
   {
     className: 'default',
@@ -493,7 +493,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.09,
-    displayValue: 6252
+    displayValue: 6252,
   },
   {
     className: 'default',
@@ -504,7 +504,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.26,
-    displayValue: 18919
+    displayValue: 18919,
   },
   {
     className: 'default',
@@ -515,7 +515,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.12,
-    displayValue: 702
+    displayValue: 702,
   },
   {
     className: 'default',
@@ -526,7 +526,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.7,
-    displayValue: 12217
+    displayValue: 12217,
   },
   {
     className: 'default',
@@ -537,7 +537,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.26,
-    displayValue: 7234
+    displayValue: 7234,
   },
   {
     className: 'default',
@@ -548,7 +548,7 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 0.84,
-    displayValue: 1540
+    displayValue: 1540,
   },
   {
     className: 'default',
@@ -559,8 +559,8 @@ export const raw = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.12,
-    displayValue: 651
-  }
+    displayValue: 651,
+  },
 ];
 export const perCapita = [
   {
@@ -571,7 +571,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 0.97,
-    displayValue: 0.97
+    displayValue: 0.97,
   },
   {
     className: 'default',
@@ -582,7 +582,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.14,
-    displayValue: 2.14
+    displayValue: 2.14,
   },
   {
     className: 'default',
@@ -593,7 +593,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.48,
-    displayValue: 1.48
+    displayValue: 1.48,
   },
   {
     className: 'default',
@@ -604,7 +604,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.16,
-    displayValue: 2.16
+    displayValue: 2.16,
   },
   {
     className: 'default',
@@ -615,7 +615,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.53,
-    displayValue: 2.53
+    displayValue: 2.53,
   },
   {
     className: 'default',
@@ -626,7 +626,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.96,
-    displayValue: 1.96
+    displayValue: 1.96,
   },
   {
     className: 'default',
@@ -637,7 +637,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.2,
-    displayValue: 2.2
+    displayValue: 2.2,
   },
   {
     className: 'default',
@@ -648,7 +648,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 5.51,
-    displayValue: 5.51
+    displayValue: 5.51,
   },
   {
     className: 'default',
@@ -659,7 +659,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 3.59,
-    displayValue: 3.59
+    displayValue: 3.59,
   },
   {
     className: 'default',
@@ -670,7 +670,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 4.25,
-    displayValue: 4.25
+    displayValue: 4.25,
   },
   {
     className: 'default',
@@ -681,7 +681,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 4.57,
-    displayValue: 4.57
+    displayValue: 4.57,
   },
   {
     className: 'default',
@@ -692,7 +692,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.46,
-    displayValue: 1.46
+    displayValue: 1.46,
   },
   {
     className: 'default',
@@ -703,7 +703,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 0.85,
-    displayValue: 0.85
+    displayValue: 0.85,
   },
   {
     className: 'default',
@@ -714,7 +714,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.12,
-    displayValue: 1.12
+    displayValue: 1.12,
   },
   {
     className: 'default',
@@ -725,7 +725,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.42,
-    displayValue: 2.42
+    displayValue: 2.42,
   },
   {
     className: 'default',
@@ -736,7 +736,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.28,
-    displayValue: 1.28
+    displayValue: 1.28,
   },
   {
     className: 'default',
@@ -747,7 +747,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.22,
-    displayValue: 1.22
+    displayValue: 1.22,
   },
   {
     className: 'default',
@@ -758,7 +758,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.14,
-    displayValue: 1.14
+    displayValue: 1.14,
   },
   {
     className: 'default',
@@ -769,7 +769,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.41,
-    displayValue: 2.41
+    displayValue: 2.41,
   },
   {
     className: 'default',
@@ -780,7 +780,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.77,
-    displayValue: 1.77
+    displayValue: 1.77,
   },
   {
     className: 'default',
@@ -791,7 +791,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 3.05,
-    displayValue: 3.05
+    displayValue: 3.05,
   },
   {
     className: 'default',
@@ -802,7 +802,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.15,
-    displayValue: 1.15
+    displayValue: 1.15,
   },
   {
     className: 'default',
@@ -813,7 +813,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.66,
-    displayValue: 1.66
+    displayValue: 1.66,
   },
   {
     className: 'default',
@@ -824,7 +824,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.26,
-    displayValue: 1.26
+    displayValue: 1.26,
   },
   {
     className: 'default',
@@ -835,7 +835,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.93,
-    displayValue: 1.93
+    displayValue: 1.93,
   },
   {
     className: 'default',
@@ -846,7 +846,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.75,
-    displayValue: 1.75
+    displayValue: 1.75,
   },
   {
     className: 'default',
@@ -857,7 +857,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.06,
-    displayValue: 1.06
+    displayValue: 1.06,
   },
   {
     className: 'default',
@@ -868,7 +868,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.58,
-    displayValue: 2.58
+    displayValue: 2.58,
   },
   {
     className: 'default',
@@ -879,7 +879,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.01,
-    displayValue: 1.01
+    displayValue: 1.01,
   },
   {
     className: 'default',
@@ -890,7 +890,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 0.95,
-    displayValue: 0.95
+    displayValue: 0.95,
   },
   {
     className: 'default',
@@ -901,7 +901,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.4,
-    displayValue: 1.4
+    displayValue: 1.4,
   },
   {
     className: 'default',
@@ -912,7 +912,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.86,
-    displayValue: 2.86
+    displayValue: 2.86,
   },
   {
     className: 'default',
@@ -923,7 +923,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.31,
-    displayValue: 1.31
+    displayValue: 1.31,
   },
   {
     className: 'default',
@@ -934,7 +934,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 3.8,
-    displayValue: 3.8
+    displayValue: 3.8,
   },
   {
     className: 'default',
@@ -945,7 +945,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.68,
-    displayValue: 2.68
+    displayValue: 2.68,
   },
   {
     className: 'default',
@@ -956,7 +956,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.89,
-    displayValue: 1.89
+    displayValue: 1.89,
   },
   {
     className: 'default',
@@ -967,7 +967,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.11,
-    displayValue: 1.11
+    displayValue: 1.11,
   },
   {
     className: 'default',
@@ -978,7 +978,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.45,
-    displayValue: 1.45
+    displayValue: 1.45,
   },
   {
     className: 'default',
@@ -989,7 +989,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2,
-    displayValue: 2
+    displayValue: 2,
   },
   {
     className: 'default',
@@ -1000,7 +1000,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.78,
-    displayValue: 1.78
+    displayValue: 1.78,
   },
   {
     className: 'default',
@@ -1011,7 +1011,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.82,
-    displayValue: 2.82
+    displayValue: 2.82,
   },
   {
     className: 'default',
@@ -1022,7 +1022,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 0.82,
-    displayValue: 0.82
+    displayValue: 0.82,
   },
   {
     className: 'default',
@@ -1033,7 +1033,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.08,
-    displayValue: 2.08
+    displayValue: 2.08,
   },
   {
     className: 'default',
@@ -1044,7 +1044,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.64,
-    displayValue: 2.64
+    displayValue: 2.64,
   },
   {
     className: 'default',
@@ -1055,7 +1055,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.09,
-    displayValue: 2.09
+    displayValue: 2.09,
   },
   {
     className: 'default',
@@ -1066,7 +1066,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 2.26,
-    displayValue: 2.26
+    displayValue: 2.26,
   },
   {
     className: 'default',
@@ -1077,7 +1077,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.12,
-    displayValue: 1.12
+    displayValue: 1.12,
   },
   {
     className: 'default',
@@ -1088,7 +1088,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.7,
-    displayValue: 1.7
+    displayValue: 1.7,
   },
   {
     className: 'default',
@@ -1099,7 +1099,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.26,
-    displayValue: 1.26
+    displayValue: 1.26,
   },
   {
     className: 'default',
@@ -1110,7 +1110,7 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 0.84,
-    displayValue: 0.84
+    displayValue: 0.84,
   },
   {
     className: 'default',
@@ -1121,6 +1121,6 @@ export const perCapita = [
     product:
       'Credit reporting, credit repair services, or other personal consumer reports',
     perCapita: 1.12,
-    displayValue: 1.12
-  }
+    displayValue: 1.12,
+  },
 ];

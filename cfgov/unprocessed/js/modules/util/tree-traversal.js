@@ -14,11 +14,11 @@
  * @param {Function} callback - Function to call at each node.
  *   `this` will be the treeTranserval module within the callback.
  */
-function backtrack( node, callback ) {
-  callback.call( this, node );
+function backtrack(node, callback) {
+  callback.call(this, node);
   const parent = node.parent;
-  if ( parent ) {
-    backtrack.apply( this, [ parent, callback ] );
+  if (parent) {
+    backtrack.apply(this, [parent, callback]);
   }
 }
 
@@ -38,17 +38,17 @@ function backtrack( node, callback ) {
  * @param {Function} callback - Function to call at each node.
  *   `this` will be the treeTranserval module within the callback.
  */
-function bfs( node, callback ) {
-  let queue = [ node ];
+function bfs(node, callback) {
+  let queue = [node];
   let currNode;
   let children;
-  while ( queue.length > 0 ) {
+  while (queue.length > 0) {
     currNode = queue.shift();
     children = currNode.children;
-    if ( children.length > 0 ) {
-      queue = queue.concat( children );
+    if (children.length > 0) {
+      queue = queue.concat(children);
     }
-    callback.call( this, currNode );
+    callback.call(this, currNode);
   }
 }
 
@@ -68,11 +68,11 @@ function bfs( node, callback ) {
  * @param {Function} callback - Function to call at each node.
  *   `this` will be the treeTranserval module within the callback.
  */
-function dfs( node, callback ) {
-  callback.call( this, node );
+function dfs(node, callback) {
+  callback.call(this, node);
   const children = node.children;
-  for ( let i = 0, len = children.length; i < len; i++ ) {
-    dfs.apply( this, [ children[i], callback ] );
+  for (let i = 0, len = children.length; i < len; i++) {
+    dfs.apply(this, [children[i], callback]);
   }
 }
 

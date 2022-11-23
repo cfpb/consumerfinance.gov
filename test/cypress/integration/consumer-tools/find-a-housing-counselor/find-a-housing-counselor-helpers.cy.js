@@ -2,37 +2,37 @@ import mapboxAPIResponses from '../../../fixtures/mapbox-api.json';
 
 export class FindAHousingCounselor {
   open() {
-    cy.visit( '/find-a-housing-counselor/' );
+    cy.visit('/find-a-housing-counselor/');
   }
 
   // Stub Mapbox API responses
   interceptMapboxAPIRequests() {
     cy.intercept(
       {
-        url: /api\.mapbox\.com\/styles\/v1\/mapbox\/streets-v\d+\?access_token/
+        url: /api\.mapbox\.com\/styles\/v1\/mapbox\/streets-v\d+\?access_token/,
       },
-      request => {
-        request.reply( mapboxAPIResponses.streets );
+      (request) => {
+        request.reply(mapboxAPIResponses.streets);
       }
-    ).as( 'mapboxStreets' );
+    ).as('mapboxStreets');
     cy.intercept(
       {
-        url: /api\.mapbox\.com\/v\d+/
+        url: /api\.mapbox\.com\/v\d+/,
       },
-      request => {
-        request.reply( mapboxAPIResponses.text );
+      (request) => {
+        request.reply(mapboxAPIResponses.text);
       }
-    ).as( 'mapboxText' );
+    ).as('mapboxText');
   }
 
-  searchZipCode( zipCode ) {
-    cy.get( '#hud_hca_api_query' ).type( zipCode );
-    cy.get( '.m-form-field-with-button_wrapper' ).within( () => {
-      cy.get( 'button' ).click();
-    } );
+  searchZipCode(zipCode) {
+    cy.get('#hud_hca_api_query').type(zipCode);
+    cy.get('.m-form-field-with-button_wrapper').within(() => {
+      cy.get('button').click();
+    });
   }
 
   resultsSection() {
-    return cy.get( '#hud_results-list_container' );
+    return cy.get('#hud_results-list_container');
   }
 }

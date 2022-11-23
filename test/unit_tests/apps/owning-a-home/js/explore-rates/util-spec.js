@@ -1,5 +1,5 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const util = require( BASE_JS_PATH + 'js/explore-rates/util' );
+const util = require(BASE_JS_PATH + 'js/explore-rates/util');
 
 const HTML_SNIPPET = `
   <input id="credit-score" type="range" min="0" max="100" value="50">
@@ -45,93 +45,93 @@ let accessibleDataDom;
 let accessibleDataTableHeadDom;
 let accessibleDataTableBodyDom;
 
-describe( 'explore-rates/util', () => {
-  beforeEach( () => {
+describe('explore-rates/util', () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-    timeStampDom = document.querySelector( '#timestamp' );
-    loanAmountResultDom = document.querySelector( '#loan-amount-result' );
-    accessibleDataDom = document.querySelector( '#accessible-data' );
+    timeStampDom = document.querySelector('#timestamp');
+    loanAmountResultDom = document.querySelector('#loan-amount-result');
+    accessibleDataDom = document.querySelector('#accessible-data');
     accessibleDataTableHeadDom =
-      accessibleDataDom.querySelector( '.table-head' );
+      accessibleDataDom.querySelector('.table-head');
     accessibleDataTableBodyDom =
-      accessibleDataDom.querySelector( '.table-body' );
-  } );
+      accessibleDataDom.querySelector('.table-body');
+  });
 
-  describe( 'removeDollarAddCommas()', () => {
-    it( 'should return true if HTML element has u-hidden class.', () => {
-      expect( util.removeDollarAddCommas( '$10000' ) ).toBe( '10,000' );
-    } );
-  } );
+  describe('removeDollarAddCommas()', () => {
+    it('should return true if HTML element has u-hidden class.', () => {
+      expect(util.removeDollarAddCommas('$10000')).toBe('10,000');
+    });
+  });
 
-  describe( 'calcLoanAmount()', () => {
+  describe('calcLoanAmount()', () => {
     it(
       'should calculate a loan amount in USD ' +
         'given a house price and down payment amount.',
       () => {
-        expect( util.calcLoanAmount( 200000, 20000 ) ).toBe( 180000 );
+        expect(util.calcLoanAmount(200000, 20000)).toBe(180000);
       }
     );
 
-    it( 'should return 0 if loan amount is negative.', () => {
-      expect( util.calcLoanAmount( 200000, 2000000 ) ).toBe( 0 );
-    } );
-  } );
+    it('should return 0 if loan amount is negative.', () => {
+      expect(util.calcLoanAmount(200000, 2000000)).toBe(0);
+    });
+  });
 
-  describe( 'checkIfZero()', () => {
-    it( 'should return true if value is zero.', () => {
-      expect( util.checkIfZero( '0' ) ).toBe( true );
-      expect( util.checkIfZero( 0 ) ).toBe( true );
-    } );
+  describe('checkIfZero()', () => {
+    it('should return true if value is zero.', () => {
+      expect(util.checkIfZero('0')).toBe(true);
+      expect(util.checkIfZero(0)).toBe(true);
+    });
 
-    it( 'should return false if value is NOT zero.', () => {
-      expect( util.checkIfZero( '1' ) ).toBe( false );
-      expect( util.checkIfZero( -1 ) ).toBe( false );
-    } );
-  } );
+    it('should return false if value is NOT zero.', () => {
+      expect(util.checkIfZero('1')).toBe(false);
+      expect(util.checkIfZero(-1)).toBe(false);
+    });
+  });
 
-  describe( 'delay()', () => {
-    it( 'should delay function execution.', () => {
+  describe('delay()', () => {
+    it('should delay function execution.', () => {
       const testFunct = jest.fn();
       jest.useFakeTimers();
-      jest.spyOn( global, 'setTimeout' );
-      util.delay( testFunct, 500 );
-      expect( setTimeout ).toHaveBeenLastCalledWith( testFunct, 500 );
-    } );
-  } );
+      jest.spyOn(global, 'setTimeout');
+      util.delay(testFunct, 500);
+      expect(setTimeout).toHaveBeenLastCalledWith(testFunct, 500);
+    });
+  });
 
-  describe( 'formatTimestampMMddyyyy()', () => {
-    it( 'should format a timestamp as a date.', () => {
-      expect( util.formatTimestampMMddyyyy( '2018-03-14T12:00:00Z' ) ).toBe(
+  describe('formatTimestampMMddyyyy()', () => {
+    it('should format a timestamp as a date.', () => {
+      expect(util.formatTimestampMMddyyyy('2018-03-14T12:00:00Z')).toBe(
         '03/14/2018'
       );
-    } );
-  } );
+    });
+  });
 
-  describe( 'isKeyAllowed()', () => {
-    it( 'should return true if key code is not in forbidden list.', () => {
-      expect( util.isKeyAllowed( 0 ) ).toBe( true );
-    } );
+  describe('isKeyAllowed()', () => {
+    it('should return true if key code is not in forbidden list.', () => {
+      expect(util.isKeyAllowed(0)).toBe(true);
+    });
 
-    it( 'should return false if key code is in forbidden list.', () => {
-      expect( util.isKeyAllowed( 9 ) ).toBe( false );
-    } );
-  } );
+    it('should return false if key code is in forbidden list.', () => {
+      expect(util.isKeyAllowed(9)).toBe(false);
+    });
+  });
 
-  describe( 'isVisible()', () => {
-    it( 'should return true if HTML element has u-hidden class.', () => {
-      expect( util.isVisible( timeStampDom ) ).toBe( true );
-    } );
+  describe('isVisible()', () => {
+    it('should return true if HTML element has u-hidden class.', () => {
+      expect(util.isVisible(timeStampDom)).toBe(true);
+    });
 
-    it( 'should return false if HTML element does NOT have u-hidden class.', () => {
-      timeStampDom.classList.add( 'u-hidden' );
-      expect( util.isVisible( timeStampDom ) ).toBe( false );
-    } );
-  } );
+    it('should return false if HTML element does NOT have u-hidden class.', () => {
+      timeStampDom.classList.add('u-hidden');
+      expect(util.isVisible(timeStampDom)).toBe(false);
+    });
+  });
 
-  describe( 'renderAccessibleData()', () => {
-    it( 'should format a timestamp as a date.', () => {
-      const mockLabels = [ '4.500%', '4.625%' ];
-      const mockVals = [ 3, 6 ];
+  describe('renderAccessibleData()', () => {
+    it('should format a timestamp as a date.', () => {
+      const mockLabels = ['4.500%', '4.625%'];
+      const mockVals = [3, 6];
 
       const tableHeadHtml = '<th>4.500%</th><th>4.625%</th>';
       const tableBodyHtml = '<td>3</td><td>6</td>';
@@ -142,43 +142,43 @@ describe( 'explore-rates/util', () => {
         mockLabels,
         mockVals
       );
-      expect( accessibleDataTableHeadDom.innerHTML ).toBe( tableHeadHtml );
-      expect( accessibleDataTableBodyDom.innerHTML ).toBe( tableBodyHtml );
-    } );
-  } );
+      expect(accessibleDataTableHeadDom.innerHTML).toBe(tableHeadHtml);
+      expect(accessibleDataTableBodyDom.innerHTML).toBe(tableBodyHtml);
+    });
+  });
 
-  describe( 'renderDatestamp()', () => {
-    it( 'should format a timestamp as a date.', () => {
-      util.renderDatestamp( timeStampDom, '2018-03-14T12:00:00Z' );
-      expect( timeStampDom.textContent ).toBe( '03/14/2018' );
-    } );
+  describe('renderDatestamp()', () => {
+    it('should format a timestamp as a date.', () => {
+      util.renderDatestamp(timeStampDom, '2018-03-14T12:00:00Z');
+      expect(timeStampDom.textContent).toBe('03/14/2018');
+    });
 
-    it( 'should format timestamp only if timestamp is passed.', () => {
-      util.renderDatestamp( timeStampDom );
-      expect( timeStampDom.textContent ).toBe( '' );
-    } );
-  } );
+    it('should format timestamp only if timestamp is passed.', () => {
+      util.renderDatestamp(timeStampDom);
+      expect(timeStampDom.textContent).toBe('');
+    });
+  });
 
-  describe( 'renderLoanAmount()', () => {
-    it( 'should format a timestamp as a date.', () => {
-      util.renderLoanAmount( loanAmountResultDom, 180000 );
-      expect( loanAmountResultDom.textContent ).toBe( '$180,000' );
-    } );
-  } );
+  describe('renderLoanAmount()', () => {
+    it('should format a timestamp as a date.', () => {
+      util.renderLoanAmount(loanAmountResultDom, 180000);
+      expect(loanAmountResultDom.textContent).toBe('$180,000');
+    });
+  });
 
-  describe( 'setSelections()', () => {
-    it( 'should set value or attribute of element.', () => {
-      downPaymentDom = document.querySelector( '#down-payment' );
-      housePriceDom = document.querySelector( '#house-price' );
+  describe('setSelections()', () => {
+    it('should set value or attribute of element.', () => {
+      downPaymentDom = document.querySelector('#down-payment');
+      housePriceDom = document.querySelector('#house-price');
       const mockParams = {
         'down-payment': '20,000',
-        'house-price': '200,000'
+        'house-price': '200,000',
       };
-      expect( downPaymentDom.value ).toBe( '0' );
-      expect( housePriceDom.getAttribute( 'placeholder' ) ).toBe( '0' );
-      util.setSelections( mockParams );
-      expect( downPaymentDom.value ).toBe( '20,000' );
-      expect( housePriceDom.getAttribute( 'placeholder' ) ).toBe( '200,000' );
-    } );
-  } );
-} );
+      expect(downPaymentDom.value).toBe('0');
+      expect(housePriceDom.getAttribute('placeholder')).toBe('0');
+      util.setSelections(mockParams);
+      expect(downPaymentDom.value).toBe('20,000');
+      expect(housePriceDom.getAttribute('placeholder')).toBe('200,000');
+    });
+  });
+});
