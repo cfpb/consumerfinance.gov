@@ -35,9 +35,9 @@ it would be a good idea to peruse their docs before diving in here.
 To run a single test file, pass the name (or path) of the spec:
 
 ```bash
-yarn jest Notification-spec.js
+yarn test Notification-spec.js
 # Equivalent to:
-yarn jest test/unit_tests/js/molecules/Notification-spec.js
+yarn test test/unit_tests/js/molecules/Notification-spec.js
 # The name argument would technically would match all Notification-spec.js files
 # This usually isn't a problem in our codebase (and you can always get more specific if needed)
 ```
@@ -47,19 +47,13 @@ yarn jest test/unit_tests/js/molecules/Notification-spec.js
 A directory of unit tests can be run by passing its name or path:
 
 ```bash
-yarn jest organisms
-yarn jest test/unit_tests/js/organisms
+yarn test organisms
+yarn test test/unit_tests/js/organisms
 ```
 
 ### Run all unit tests
 
 To run all of the unit tests:
-
-```bash
-yarn jest
-```
-
-To first lint all files and then run tests:
 
 ```bash
 yarn test
@@ -177,7 +171,7 @@ to save and commit your changes.
 1. Run your sample test using
 
    ```bash
-   yarn jest sample-spec.js
+   yarn test sample-spec.js
    ```
 
    (substituting your own filename).
