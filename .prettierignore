@@ -1,7 +1,15 @@
 .github/
 .tox/
+helm
 cfgov/agreements/static/agreements/js/chosen.jquery.js
 cfgov/agreements/static/agreements/js/jquery-3.5.1.min.js
+cfgov/alerts/tests/json/
+cfgov/data_research/data/
+cfgov/retirement_api/data/
 cfgov/static_built/
 cfgov/legacy/static/nemo/_/js/
+**/fixtures/
 collectstatic/
+
+# Ignore all HTML files:
+*.html

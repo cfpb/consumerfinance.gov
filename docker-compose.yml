@@ -1,70 +1,70 @@
-version: "3.4"
+version: '3.4'
 
 volumes:
-    postgres_data:
+  postgres_data:
 
 services:
-    elasticsearch:
-        build:
-            context: ./
-            dockerfile: ./docker/elasticsearch/Dockerfile
-        ports:
-            - 127.0.0.1:9200:9200
-            - 127.0.0.1:9300:9300
-        environment:
-            discovery.type: single-node
-            ES_JAVA_OPTS: "-Xms512m -Xmx512m"
-    kibana:
-        image: docker.elastic.co/kibana/kibana:7.16.0
-        depends_on:
-            - elasticsearch
-        ports:
-            - 127.0.0.1:5601:5601
-    postgres:
-        image: postgres:13-alpine
-        user: postgres
-        restart: always
-        volumes:
-            - postgres_data:/var/lib/postgresql/data/
-        environment:
-            POSTGRES_USER: cfpb
-            POSTGRES_PASSWORD: cfpb
-            POSTGRES_DB: cfgov
-        ports:
-            - 127.0.0.1:5432:5432
-    python:
-        image: cfgov_python:local
-        build:
-            context: .
-            dockerfile: Dockerfile
-        depends_on:
-            - elasticsearch
-            - postgres
-        stdin_open: true
-        tty: true
-        environment:
-            PGDATABASE: cfgov
-            PGUSER: cfpb
-            PGPASSWORD: cfpb
-            POSTGRES_USER: cfpb
-            PGHOST: postgres
-            PGPORT: 5432
-            ES_HOST: elasticsearch
-            SECRET_KEY: abcdefghijklmnopqrstuvwxyz
-    docs:
-        build:
-            context: ./
-            dockerfile: ./docker/docs/Dockerfile
-        ports:
-            - 127.0.0.1:8888:8888
-        environment:
-            LANG: en_US.utf8
-            LC_ALL: en_US.utf8
-        volumes:
-            - ./:/src/consumerfinance.gov
-        entrypoint:
-            - sh
-            - /src/consumerfinance.gov/docker/docs/entrypoint.sh
-        working_dir: /src/consumerfinance.gov
-        stdin_open: true
-        tty: true
+  elasticsearch:
+    build:
+      context: ./
+      dockerfile: ./docker/elasticsearch/Dockerfile
+    ports:
+      - 127.0.0.1:9200:9200
+      - 127.0.0.1:9300:9300
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: '-Xms512m -Xmx512m'
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.16.0
+    depends_on:
+      - elasticsearch
+    ports:
+      - 127.0.0.1:5601:5601
+  postgres:
+    image: postgres:13-alpine
+    user: postgres
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: cfpb
+      POSTGRES_PASSWORD: cfpb
+      POSTGRES_DB: cfgov
+    ports:
+      - 127.0.0.1:5432:5432
+  python:
+    image: cfgov_python:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - elasticsearch
+      - postgres
+    stdin_open: true
+    tty: true
+    environment:
+      PGDATABASE: cfgov
+      PGUSER: cfpb
+      PGPASSWORD: cfpb
+      POSTGRES_USER: cfpb
+      PGHOST: postgres
+      PGPORT: 5432
+      ES_HOST: elasticsearch
+      SECRET_KEY: abcdefghijklmnopqrstuvwxyz
+  docs:
+    build:
+      context: ./
+      dockerfile: ./docker/docs/Dockerfile
+    ports:
+      - 127.0.0.1:8888:8888
+    environment:
+      LANG: en_US.utf8
+      LC_ALL: en_US.utf8
+    volumes:
+      - ./:/src/consumerfinance.gov
+    entrypoint:
+      - sh
+      - /src/consumerfinance.gov/docker/docs/entrypoint.sh
+    working_dir: /src/consumerfinance.gov
+    stdin_open: true
+    tty: true
