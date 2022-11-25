@@ -33,7 +33,6 @@ const init = () => {
   fetch(NOTICES_URL)
     .then((response) => response.json())
     .then((notices) => {
-      console.log('notices', notices);
       notices = notices.results;
       const html = processNotices(notices);
       noticesContainer.innerHTML = '';
