@@ -1,4 +1,3 @@
-import { fetch } from './regs3k-utils';
 import { queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 const NOTICES_URL = './recent-notices-json';
@@ -29,17 +28,21 @@ const processNotices = (notices) => {
 };
 
 const init = () => {
+  console.log('init called!!!!!');
   const noticesContainer = find('#regs3k-notices');
-  fetch(NOTICES_URL, (err, notices) => {
-    if (err !== null) {
+  fetch(NOTICES_URL)
+    .then((response) => response.json())
+    .then((notices) => {
+      console.log('notices', notices);
+      notices = notices.results;
+      const html = processNotices(notices);
+      noticesContainer.innerHTML = '';
+      noticesContainer.appendChild(html);
+    })
+    .catch((err) => {
       // No need to handle the error, the default HTML is a graceful fallback.
-      return console.error(err);
-    }
-    notices = JSON.parse(notices).results;
-    const html = processNotices(notices);
-    noticesContainer.innerHTML = '';
-    return noticesContainer.appendChild(html);
-  });
+      console.error(err);
+    });
 };
 
 window.addEventListener('load', init);
