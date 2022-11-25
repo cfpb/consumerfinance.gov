@@ -28,7 +28,6 @@ const processNotices = (notices) => {
 };
 
 const init = () => {
-  console.log('init called!!!!!');
   const noticesContainer = find('#regs3k-notices');
   fetch(NOTICES_URL)
     .then((response) => response.json())
