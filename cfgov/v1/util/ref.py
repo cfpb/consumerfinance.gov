@@ -143,7 +143,7 @@ categories = [
     ),
     (
         "Research Hub",
-        (("research-report", "Office of Research Report"),),
+        (("research-publication", "Office of Research Publication"),),
     ),
     (
         "Research Report",
