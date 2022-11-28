@@ -1,4 +1,4 @@
-import * as utils from './regs3k-utils';
+import { getNewHash, isOldHash } from './regs3k-utils';
 import { handleContentClick, handleNavClick } from './analytics';
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 import { queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
@@ -48,8 +48,8 @@ const init = () => {
     bindSecondaryNav();
     bindAnalytics();
   }
-  if (utils.isOldHash(window.location.hash)) {
-    window.location.hash = utils.getNewHash(window.location.hash);
+  if (isOldHash(window.location.hash)) {
+    window.location.hash = getNewHash(window.location.hash);
   }
 };
 
