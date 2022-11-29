@@ -1,6 +1,12 @@
+from collections import Counter
+from operator import itemgetter
 from unittest import TestCase
 
-from v1.util.ref import get_appropriate_categories, get_category_children
+from v1.util.ref import (
+    categories,
+    get_appropriate_categories,
+    get_category_children,
+)
 
 
 class TestGetAppropriateCategories(TestCase):
@@ -58,3 +64,18 @@ class TestGetCategoryChildren(TestCase):
     def test_get_children_with_invalid_category_raises_keyerror(self):
         with self.assertRaises(KeyError):
             get_category_children(["This is not a valid category"])
+
+
+class CategoryTests(TestCase):
+    def test_that_all_category_slugs_are_unique(self):
+        counter = Counter()
+
+        for _, subcategories in categories:
+            counter.update(map(itemgetter(0), subcategories))
+
+        duplicates = [
+            category for category, count in counter.items() if count > 1
+        ]
+
+        if duplicates:
+            self.fail(f"Duplicate categories: {', '.join(duplicates)}")
