@@ -1,7 +1,7 @@
 const {
   closest,
 } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
-const Cookie = require('js-cookie');
+import Cookies from 'js-cookie';
 import clipboardCopy from 'copy-to-clipboard';
 const {
   ANSWERS_SESS_KEY,
@@ -21,7 +21,7 @@ const $ = document.querySelector.bind(document);
 function resultsPage() {
   modals.init();
   sessionStorage.removeItem(ANSWERS_SESS_KEY);
-  Cookie.remove(SURVEY_COOKIE);
+  Cookies.remove(SURVEY_COOKIE);
   initials.init();
 
   handleShareModal();
@@ -136,11 +136,11 @@ function handleResetModal() {
       if (button.dataset.cancel) {
         modals.close();
       } else {
-        Cookie.remove(RESULT_COOKIE);
+        Cookies.remove(RESULT_COOKIE);
         location.href = $('[data-grade-select-url]').dataset.gradeSelectUrl;
       }
     }
   });
 }
 
-export { resultsPage, ANSWERS_SESS_KEY, Cookie };
+export { resultsPage, ANSWERS_SESS_KEY };

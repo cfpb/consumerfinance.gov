@@ -1,15 +1,15 @@
-import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys';
+import Cookies from 'js-cookie';
+import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js';
 import {
-  Cookie,
-  resultsPage,
-} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page';
+  resultsPage
+} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page.js';
 import {
   ANSWERS_SESS_KEY,
   SURVEY_COOKIE,
-} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
-import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
-import * as initials from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/initials';
-import * as obfuscation from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation';
+} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config.js';
+import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js';
+import * as initials from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/initials.js';
+import * as obfuscation from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation.js';
 import HTML_SNIPPET from '../../html/results-page';
 
 // eslint-disable-next-line import/no-unresolved
@@ -23,7 +23,7 @@ describe('The TDP survey results page', () => {
   });
 
   it('should be recognized from HTML', () => {
-    const cookieSpy = jest.spyOn(Cookie, 'remove');
+    const cookieSpy = jest.spyOn(Cookies, 'remove');
     const modalSpy = jest.spyOn(modals, 'init');
     const initialsSpy = jest.spyOn(initials, 'init');
     sessionStorage.setItem(ANSWERS_SESS_KEY, 'testItem');
