@@ -3,6 +3,8 @@ const {
 } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
 const analytics = require('./tdp-analytics');
 
+import { handleSurveyResultsModalClose } from './tdp-analytics.js';
+
 /**
  * Holds the only reference to Modal instance, which is only created just
  * before opened.
@@ -65,7 +67,7 @@ class Modal {
     }
 
     // Send close event to GA.
-    analytics.handleSurveyResultsModalClose(el);
+    handleSurveyResultsModalClose(el);
   }
 
   _addFocusTraps() {
