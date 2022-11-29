@@ -1,9 +1,8 @@
 import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
 import { SCORES_UNSET_KEY } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/';
-const tdpAnalytics = require(BASE_JS_PATH +
-  'teachers-digital-platform/js/tdp-analytics.js');
+import { bindAnalytics } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js';
+
 import HTML_SNIPPET from '../../html/results-page-analytics';
 
 const xhr = global.XMLHttpRequest;
@@ -36,7 +35,7 @@ describe('Custom analytics for the TDP survey results page', () => {
     );
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -48,7 +47,7 @@ describe('Custom analytics for the TDP survey results page', () => {
     const target = document.querySelector('.a-link__icon');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -62,7 +61,7 @@ describe('Custom analytics for the TDP survey results page', () => {
     const target = document.querySelector('[data-open-modal="modal-print"]');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -78,7 +77,7 @@ describe('Custom analytics for the TDP survey results page', () => {
     );
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -97,7 +96,7 @@ describe('Custom analytics for the TDP survey results page', () => {
     );
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -111,7 +110,7 @@ describe('Custom analytics for the TDP survey results page', () => {
     );
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
     expect(spy.mock.calls[0][0]).toEqual('Share: Get Link');
@@ -132,7 +131,7 @@ describe('Custom analytics for the TDP survey results page', () => {
     );
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -145,7 +144,7 @@ describe('Custom analytics for the TDP survey results page', () => {
     const target = document.querySelector('[data-open-modal="modal-reset"]');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -157,14 +156,14 @@ describe('Custom analytics for the TDP survey results page', () => {
     sessionStorage.removeItem(SCORES_UNSET_KEY);
 
     let spy = jest.fn();
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     expect(spy.mock.calls.length).toEqual(0);
 
     sessionStorage.setItem(SCORES_UNSET_KEY, '1');
 
     spy = jest.fn();
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     expect(spy.mock.calls.length).toEqual(4);
     expect(spy.mock.calls[0][0]).toEqual('Results: 9-12');
