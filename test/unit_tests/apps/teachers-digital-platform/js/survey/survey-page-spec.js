@@ -1,17 +1,17 @@
-import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys';
+import Cookies from 'js-cookie';
+import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js';
 import {
-  Cookie,
   ChoiceField,
   scrollToEl,
   surveyPage,
   progressBar,
-} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/survey-page';
+} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/survey-page.js';
 import {
   ANSWERS_SESS_KEY,
   RESULT_COOKIE,
   SCORES_UNSET_KEY,
-} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
-import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
+} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config.js';
+import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js';
 import HTML_SNIPPET from '../../html/survey-page';
 
 const $ = document.querySelector.bind(document);
@@ -154,7 +154,7 @@ describe('The TDP survey page', () => {
     const origLocation = location;
     delete window.location;
     window.location = {};
-    Cookie.set(RESULT_COOKIE, 'any truthy value');
+    Cookies.set(RESULT_COOKIE, 'any truthy value');
 
     surveyPage();
 
