@@ -13,10 +13,6 @@ function getApi(url) {
         resolve(resp);
       })
       .catch(function (error) {
-        console.log(
-          'An error occurred accessing ' + url.replace(/[^a-z0-9]/gi, ''),
-          error
-        );
         reject(new Error(error));
       });
   });

@@ -11,25 +11,6 @@ const HTML_SNIPPET = `
   <ul id="regs3k-notices"></ul>
 `;
 
-/* eslint-disable camelcase */
-const TEST_DATA = {
-  results: [
-    {
-      html_url: 'https://example.com',
-      title: 'Notice A',
-    },
-    {
-      html_url: 'https://example.com',
-      title: 'Notice B',
-    },
-    {
-      html_url: 'https://example.com',
-      title: 'Notice C',
-    },
-  ],
-};
-/* eslint-enable camelcase */
-
 // Mock console logging
 delete global.console;
 global.console = { error: jest.fn(), log: jest.fn() };

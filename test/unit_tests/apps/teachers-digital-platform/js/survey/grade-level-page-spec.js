@@ -1,11 +1,11 @@
-import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys';
-import { Cookie } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/grade-level-page';
+import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js';
+import Cookies from 'js-cookie';
 import {
   ANSWERS_SESS_KEY,
   RESULT_COOKIE,
   SURVEY_COOKIE,
-} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
-import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
+} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config.js';
+import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js';
 
 const HTML_SNIPPET = `
 <div data-tdp-page="grade-level">
@@ -18,7 +18,7 @@ describe('The TDP survey grade-level page', () => {
   });
 
   it('should be recognized from HTML', () => {
-    const cookieSpy = jest.spyOn(Cookie, 'remove');
+    const cookieSpy = jest.spyOn(Cookies, 'remove');
     const modalSpy = jest.spyOn(modals, 'init');
     sessionStorage.setItem(ANSWERS_SESS_KEY, 'testItem');
 

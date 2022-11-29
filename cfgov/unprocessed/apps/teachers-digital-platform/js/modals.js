@@ -1,7 +1,6 @@
 const {
   closest,
 } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
-const CustomEvt = require('customevent');
 import { handleSurveyResultsModalClose } from './tdp-analytics.js';
 
 /**
@@ -29,7 +28,7 @@ class Modal {
 
     const el = this.getElement();
 
-    const event = new CustomEvt('modal:open:before', {
+    const event = new CustomEvent('modal:open:before', {
       bubbles: true,
       detail: { modal: this },
     });
