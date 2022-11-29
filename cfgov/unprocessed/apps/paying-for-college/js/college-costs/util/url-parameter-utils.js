@@ -110,14 +110,20 @@ const models = {
  * @returns {object} key-value pairs of the queryString
  */
 function getQueryVariables() {
-  let queryVariables = {};
-  const queryStringValues = new Proxy( new URLSearchParams( window.location.search ), {
-    get: ( queryVariables, prop ) => queryVariables.get( prop ),
-  } );
+  const queryVariables = {};
+  const queryStringValues = new Proxy(
+    new URLSearchParams(window.location.search),
+    {
+      get: (queryVariables, prop) => queryVariables.get(prop),
+    }
+  );
 
-  for ( const key in urlParameters ) {
-    if ( queryStringValues[key] !== null ) {
-      queryVariables[key] = queryStringValues[key].replace(/[^a-z0-9.-]/gi, '');      
+  for (const key in urlParameters) {
+    if (queryStringValues[key] !== null) {
+      queryVariables[key] = queryStringValues[key].replace(
+        /[^a-z0-9.-]/gi,
+        ''
+      );
     }
   }
 

@@ -6,16 +6,16 @@ import { promiseRequest } from '../util/promise-request';
  * @param {string} url - URL of API endpoint
  * @returns {object} Promise
  */
-function getApi( url ) {
-  return new Promise( function( resolve, reject ) {
-    promiseRequest( 'GET', url )
-      .then( function( resp ) {
-        resolve( resp );
-      } )
-      .catch( function( error ) {
-        reject( new Error( error ) );
-      } );
-  } );
+function getApi(url) {
+  return new Promise(function (resolve, reject) {
+    promiseRequest('GET', url)
+      .then(function (resp) {
+        resolve(resp);
+      })
+      .catch(function (error) {
+        reject(new Error(error));
+      });
+  });
 }
 
 /**
