@@ -14,12 +14,16 @@ from v1.atomic_elements.molecules import (
     TextIntroduction,
 )
 from v1.documents import FilterablePagesDocument
-from v1.models.browse_filterable_page import BrowseFilterablePage
-from v1.models.browse_page import BrowsePage
-from v1.models.landing_page import LandingPage
-from v1.models.learn_page import DocumentDetailPage, LearnPage
-from v1.models.sublanding_filterable_page import SublandingFilterablePage
-from v1.models.sublanding_page import SublandingPage
+from v1.models import (
+    BrowseFilterablePage,
+    BrowsePage,
+    CFGOVPage,
+    DocumentDetailPage,
+    LandingPage,
+    LearnPage,
+    SublandingFilterablePage,
+    SublandingPage,
+)
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
@@ -243,6 +247,21 @@ class TestTextIntroductionValidation(TestCase):
             block.clean(value)
         except StructBlockValidationError:  # pragma: no cover
             self.fail("eyebrow with heading should not fail validation")
+
+    def test_render_without_page_does_not_show_authors(self):
+        block = TextIntroduction()
+        value = block.to_python({"heading": "Heading"})
+        html = block.render(value=value)
+        self.assertNotIn("By", html)
+
+    def test_render_with_page_pulls_authors(self):
+        block = TextIntroduction()
+        value = block.to_python({"heading": "Heading"})
+        page = CFGOVPage()
+        page.authors.add("Bilbo Baggins")
+        page.authors.add("Frodo Baggins")
+        html = block.render(value=value, context={"page": page})
+        self.assertIn("By Bilbo Baggins and Frodo Baggins", html)
 
 
 class RSSFeedTests(TestCase):

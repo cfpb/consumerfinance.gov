@@ -38,21 +38,20 @@
 
 <article class="post">
     <header>
-        {% set data = {
-            'category': page.categories.all(),
+        {% with value = {
             'heading': page.title,
             'date': page.date_published,
-            'has_social': True,
+            'has_social': true,
             'social_options': { 'is_printable': true }
         } %}
+            {% for block in page.header -%}
+                {% if block.block_type == 'article_subheader' %}
+                    {% do value.update( { 'paragraph': block.value } ) %}
+                {% endif %}
+            {% endfor %}
 
-        {% for block in page.header -%}
-            {% if block.block_type == 'article_subheader' %}
-                {% do data.update({'paragraph': block.value}) %}
-            {% endif %}
-        {% endfor %}
-
-        {{ item_introduction.render(data) }}
+            {% include 'organisms/item-introduction.html' with context %}
+        {% endwith %}
     </header>
 
     <div class="post_body">

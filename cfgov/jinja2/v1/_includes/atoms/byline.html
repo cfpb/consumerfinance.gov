@@ -1,0 +1,49 @@
+{# ==========================================================================
+
+   Create a byline when given:
+
+   value.authors:   List of author names.
+
+   value.date:      Publication date.
+
+========================================================================== #}
+
+{%- macro render( value ) %}
+{%- if value.authors or value.date -%}
+<div class="a-byline">
+    {% if value.authors %}
+    <span class="byline">
+        {%- for author in value.authors -%}
+            {% if loop.first %}By {% elif loop.last %} and {% endif -%}
+            {{ author }}
+            {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
+        {%- endfor -%}
+    </span>
+    {% endif -%}
+
+    {% if value.authors and value.date -%}
+    &ndash;
+    {%- endif %}
+
+    {%- if value.date %}
+    <span class="a-date">
+        {% import 'macros/time.html' as time %}
+        {{ time.render( value.date, { 'date': true } ) }}
+    </span>
+    {% endif %}
+</div>
+{%- endif %}
+{%- endmacro %}
+
+
+{%- if value %}
+
+{% if page and not "authors" in value %}
+    {% do value.update(
+        { "authors": page.authors.values_list( "name", flat=True ) }
+    ) %}
+{% endif %}
+
+{{- render( value ) -}}
+
+{% endif -%}

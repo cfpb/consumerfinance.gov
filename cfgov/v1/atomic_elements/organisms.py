@@ -721,7 +721,6 @@ class ItemIntroduction(blocks.StructBlock):
     class Meta:
         icon = "form"
         template = "_includes/organisms/item-introduction.html"
-        classname = "block__flush-top"
 
 
 class FilterableList(BaseExpandable):

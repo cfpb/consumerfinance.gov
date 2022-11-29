@@ -33,11 +33,14 @@ from v1.models.snippets import (
     ReusableText,
 )
 from v1.template_debug import (
+    byline_test_cases,
     call_to_action_test_cases,
     featured_content_test_cases,
     heading_test_cases,
+    item_introduction_test_cases,
     notification_test_cases,
     register_template_debug,
+    text_introduction_test_cases,
     video_player_test_cases,
 )
 from v1.views.reports import (
@@ -483,6 +486,11 @@ def add_export_feedback_permission_to_wagtail_admin_group_view():
 
 
 register_template_debug(
+    "v1", "byline", "_includes/atoms/byline.html", byline_test_cases
+)
+
+
+register_template_debug(
     "v1",
     "call_to_action",
     "_includes/molecules/call-to-action.html",
@@ -506,9 +514,25 @@ register_template_debug(
 
 register_template_debug(
     "v1",
+    "item_introduction",
+    "_includes/organisms/item-introduction.html",
+    item_introduction_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
     "notification",
     "_includes/molecules/notification.html",
     notification_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
+    "text_introduction",
+    "_includes/molecules/text-introduction.html",
+    text_introduction_test_cases,
 )
 
 

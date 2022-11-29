@@ -4,26 +4,26 @@
 
    =========================================================================
 
-   Description:
-
    Create a Text Introduction molecule.
-   See [GHE]/flapjack/Modules-V1/wiki/Text-Introduction
 
-   value:                     Object defined from a StreamField block.
+   https://cfpb.github.io/design-system/patterns/text-introductions
 
    value.eyebrow:             (Optional) Text to display above heading.
 
    value.heading:             (Optional) String for heading text.
 
-   value.intro:               (Optional) String for body introduction text.
+   value.authors:             (Optional) A list of author names to be included
+                              on a byline.
 
-   value.intro.source:        TODO: add type and description.
+   value.date:                (Optional) A date to be included on a byline.
+
+   value.intro:               (Optional) String for body introduction text.
 
    value.body:                (Optional) String for body text.
 
-   value.links:               A tuple to create a list of links, containing:
+   value.links:               A list of links, containing:
 
-   value.links[i].text:       (Optional) A string for the text of the link.
+   value.links[i].text:       A string for the text of the link.
 
    value.links[i].url:        A string for the URL of the link.
 
@@ -33,21 +33,27 @@
                               (border-bottom) at the bottom of the molecule.
 
    ========================================================================== #}
-{% if value.eyebrow %}
-    <div class="eyebrow">{{ value.eyebrow }}</div>
-{% endif %}
-{% if value.heading %}
-    <h1>{{ value.heading }}</h1>
-{% endif %}
 
-{% if value.intro.source %}
+{% if value.eyebrow -%}
+    <div class="eyebrow">{{ value.eyebrow }}</div>
+{%- endif %}
+
+{% if value.heading -%}
+    <h1>{{ value.heading }}</h1>
+{%- endif %}
+
+{% include 'atoms/byline.html' with context %}
+
+{% if value.intro -%}
     <div class="lead-paragraph">
         {{ value.intro | safe }}
     </div>
-{% endif %}
+{%- endif %}
+
 {% if value.body %}
     {{ value.body | safe }}
 {% endif %}
+
 {% for link in value.links %}
     {% if link.text %}
         {% if loop.first %}<ul class="m-list m-list__links">{% endif %}
