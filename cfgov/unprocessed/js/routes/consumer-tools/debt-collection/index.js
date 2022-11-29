@@ -1,1 +1,2 @@
-require('../../../modules/util/add-email-popup');
+import addEmailPopup from '../../../modules/util/add-email-popup.js';
+addEmailPopup.init();
