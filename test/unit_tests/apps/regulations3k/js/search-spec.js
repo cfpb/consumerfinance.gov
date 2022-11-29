@@ -1,6 +1,9 @@
+import { enableFetchMocks } from 'jest-fetch-mock';
 const simulateEvent = require('../../../../util/simulate-event').simulateEvent;
 
 import('../../../../../cfgov/unprocessed/apps/regulations3k/js/search.js');
+
+enableFetchMocks();
 
 const HTML_SNIPPET = `
   <form action="/search" data-js-hook="behavior_submit-search">
@@ -29,7 +32,6 @@ const HTML_SNIPPET = `
   <div id="regs3k-results"></div>
 `;
 
-const xhr = global.XMLHttpRequest;
 global.console = { error: jest.fn(), log: jest.fn() };
 
 /**
@@ -48,8 +50,7 @@ function mockWindowLocation() {
 
 describe('The Regs3K search page', () => {
   beforeEach(() => {
-    // Reset global XHR
-    global.XMLHttpRequest = xhr;
+    fetch.resetMocks();
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
     // Fire `load` event
@@ -70,15 +71,6 @@ describe('The Regs3K search page', () => {
   });
 
   it('should clear a filter when its X icon is clicked', () => {
-    const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
-      readyState: 4,
-      status: 200,
-      onreadystatechange: jest.fn(),
-      responseText: [],
-    };
-    global.XMLHttpRequest = jest.fn(() => mockXHR);
     const clearIcon = document.querySelector('svg');
 
     let numFilters = document.querySelectorAll('div.a-tag').length;
@@ -87,8 +79,6 @@ describe('The Regs3K search page', () => {
     simulateEvent('click', clearIcon);
     numFilters = document.querySelectorAll('div.a-tag').length;
     expect(numFilters).toEqual(0);
-
-    mockXHR.onreadystatechange();
   });
 
   it('should not clear a filter when its tag is clicked', () => {
@@ -103,15 +93,6 @@ describe('The Regs3K search page', () => {
   });
 
   it('should clear all filters when the `clear all` link is clicked', () => {
-    const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
-      readyState: 4,
-      status: 200,
-      onreadystatechange: jest.fn(),
-      responseText: [],
-    };
-    global.XMLHttpRequest = jest.fn(() => mockXHR);
     const clearAllLink = document.querySelector('.filters_clear');
 
     let numFilters = document.querySelectorAll('div.a-tag').length;
@@ -120,20 +101,10 @@ describe('The Regs3K search page', () => {
     simulateEvent('click', clearAllLink);
     numFilters = document.querySelectorAll('div.a-tag').length;
     expect(numFilters).toEqual(0);
-
-    mockXHR.onreadystatechange();
   });
 
   it('should handle errors when the server is down', (done) => {
-    const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
-      readyState: 4,
-      status: 404,
-      onreadystatechange: jest.fn(),
-      responseText: 'Server error!',
-    };
-    global.XMLHttpRequest = jest.fn(() => mockXHR);
+    fetch.mockReject(new Error('Server error!'));
     const clearIcon = document.querySelector('svg');
 
     simulateEvent('click', clearIcon);
@@ -142,7 +113,5 @@ describe('The Regs3K search page', () => {
       expect(console.error).toBeCalled();
       done();
     }, 100);
-
-    mockXHR.onreadystatechange();
   });
 });
