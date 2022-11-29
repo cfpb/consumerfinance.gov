@@ -1,8 +1,6 @@
 const {
   closest,
 } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
-const objectValues = require('object.values');
-const objectEntries = require('object.entries');
 
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
@@ -69,7 +67,7 @@ ChoiceField.get = (name) => {
  * @returns {ChoiceField[]} unset choice fields
  */
 ChoiceField.findUnsets = () =>
-  objectValues(ChoiceField.cache).filter((cf) => cf.value === null);
+  Object.values(ChoiceField.cache).filter((cf) => cf.value === null);
 
 /**
  * Remove all the error indicators
@@ -102,7 +100,7 @@ ChoiceField.restoreFromSession = (key) => {
     }
   };
 
-  objectEntries(ChoiceField.cache).forEach(checkCache);
+  Object.entries(ChoiceField.cache).forEach(checkCache);
 
   if (update) {
     sessionStorage.setItem(key, JSON.stringify(store));
