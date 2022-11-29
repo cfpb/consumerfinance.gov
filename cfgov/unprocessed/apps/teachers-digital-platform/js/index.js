@@ -8,7 +8,7 @@ import beforeExpandableTransitionInit from './expandable-mobile';
 const scroll = require('./scroll');
 const search = require('./search');
 const sticky = require('./sticky');
-const analytics = require('./tdp-analytics');
+import { bindAnalytics } from './tdp-analytics.js';
 import surveys from './tdp-surveys';
 
 const app = {
@@ -28,7 +28,7 @@ const app = {
     scroll.init();
     sticky.init();
     surveys.init();
-    analytics.bindAnalytics();
+    bindAnalytics();
   },
 };
 
