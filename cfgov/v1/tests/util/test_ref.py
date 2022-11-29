@@ -77,6 +77,4 @@ class CategoryTests(TestCase):
             category for category, count in counter.items() if count > 1
         ]
 
-        self.assertFalse(
-            duplicates, f"Duplicate categories: {', '.join(duplicates)}"
-        )
+        self.assertFalse(sorted(duplicates), "Duplicate categories")
