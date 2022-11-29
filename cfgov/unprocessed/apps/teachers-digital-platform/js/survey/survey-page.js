@@ -1,7 +1,6 @@
 const {
   closest,
 } = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
-const objectEntries = require('object.entries');
 import Cookies from 'js-cookie';
 const {
   ANSWERS_SESS_KEY,
@@ -75,7 +74,7 @@ function readSurveyData() {
    * @type {SurveyData}
    */
   const data = Object.create(null);
-  objectEntries(el.dataset).forEach(([k, v]) => {
+  Object.entries(el.dataset).forEach(([k, v]) => {
     try {
       data[k] = JSON.parse(v);
     } catch (err) {
