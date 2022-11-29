@@ -18,7 +18,7 @@ module.exports = {
     '\\.(svg)$': '<rootDir>/test/unit_tests/mocks/fileMock.js',
   },
   modulePaths: [
-    '<rootDir>/cfgov/unprocessed/apps/teachers-digital-platform/node_modules'
+    '<rootDir>/cfgov/unprocessed/apps/teachers-digital-platform/node_modules',
   ],
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/',

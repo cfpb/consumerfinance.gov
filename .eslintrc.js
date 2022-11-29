@@ -1,6 +1,17 @@
 module.exports = {
   parser: '@babel/eslint-parser',
   settings: {
+    'import/resolver': {
+      node: {
+        paths: ['src'],
+        extensions: ['.js', '.ts', '.d.ts', '.tsx'],
+        moduleDirectory: [
+          'node_modules',
+          // TDP module path is for resolving js-cookie in TDP tests.
+          'cfgov/unprocessed/apps/teachers-digital-platform/node_modules',
+        ],
+      },
+    },
     react: {
       version: 'detect',
     },
@@ -36,7 +47,6 @@ module.exports = {
     'no-var': ['error'],
     'prefer-const': ['error'],
     radix: ['error'],
-    'import/no-unresolved': 0,
     // TODO: remove this and fix definition order.
     'no-use-before-define': 0,
   },
