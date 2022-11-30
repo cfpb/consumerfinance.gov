@@ -38,6 +38,7 @@ from v1.template_debug import (
     heading_test_cases,
     notification_test_cases,
     register_template_debug,
+    related_posts_test_cases,
     video_player_test_cases,
 )
 from v1.views.reports import (
@@ -509,6 +510,14 @@ register_template_debug(
     "notification",
     "_includes/molecules/notification.html",
     notification_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
+    "related_posts",
+    "_includes/molecules/related-posts.html",
+    related_posts_test_cases,
 )
 
 
