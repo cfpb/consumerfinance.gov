@@ -43,6 +43,7 @@ from v1.template_debug import (
 )
 from v1.views.reports import (
     AskReportView,
+    CategoryIconReportView,
     DocumentsReportView,
     EnforcementActionsReportView,
     ImagesReportView,
@@ -285,6 +286,26 @@ def register_ask_report_url():
             r"^reports/ask-cfpb/$",
             AskReportView.as_view(),
             name="ask_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_category_icons_report_menu_item():
+    return MenuItem(
+        "Category Icons",
+        reverse("category_icons_report"),
+        classnames="icon icon-" + CategoryIconReportView.header_icon,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_category_icons_report_url():
+    return [
+        re_path(
+            r"^reports/category-icons/$",
+            CategoryIconReportView.as_view(),
+            name="category_icons_report",
         ),
     ]
 
