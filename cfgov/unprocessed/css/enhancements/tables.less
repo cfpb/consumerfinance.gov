@@ -91,9 +91,7 @@
 @tr-link-color: @white;
 @tr-link-bg-hover: @pacific-80;
 
-
 .o-table {
-
   &__row-links {
     .respond-to-min( 961px, {
       tr:hover {
@@ -111,7 +109,7 @@
 
   tbody th {
     border-bottom: 1px solid @table-head-bg;
-    padding: unit( 10px / @font-size, em );
+    padding: unit(10px / @font-size, em);
     color: @table-head-text;
     background: @table-head-bg;
     .h5();
@@ -119,55 +117,7 @@
       border-top: 1px solid @table-head-bg;
     }
   }
-
 }
-
-.respond-to-max( @bp-xs-max, {
-  .o-table__stack-on-small {
-    border-top: 1px solid @gray-40;
-
-    tr,
-    td,
-    [data-display-table="row"],
-    [data-display-table="cell"] {
-      display: block;
-    }
-
-    tr,
-    [data-display-table="row"] {
-      // padding-top: unit( 30px / @base-font-size-px, em );
-      padding-bottom: unit( 30px / @base-font-size-px, em );
-    }
-
-    th,
-    td,
-    [data-display-table="cell"] {
-      padding-right: 0;
-      padding-left: 0;
-      width: 100%;
-    }
-
-    & > thead,
-    [data-display-table="thead"] {
-      display: none;
-    }
-
-    td[data-label]:before,
-    [data-display-table="cell"][data-label]:before {
-      .heading-5();
-
-      display: block;
-      margin-bottom: unit( 5px / @font-size, em );
-      content: attr( data-label );
-    }
-
-    // td:last-child,
-    // [data-display-table="cell"]:last-child {
-    //     margin-bottom: unit( 30px / @base-font-size-px, em );
-    // }
-  }
-  } );
-
 
 /* topdoc
   name: EOF
