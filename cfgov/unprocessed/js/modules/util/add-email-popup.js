@@ -1,13 +1,17 @@
-import * as emailHelpers from './email-popup-helpers';
-import EmailPopup from '../../organisms/EmailPopup';
+import { showOnScroll, showEmailPopup } from './email-popup-helpers.js';
+import EmailPopup from '../../organisms/EmailPopup.js';
 
-const emailPopup = document.querySelector('.' + EmailPopup.BASE_CLASS);
+export default {
+  init() {
+    const emailPopup = document.querySelector('.' + EmailPopup.BASE_CLASS);
 
-if (emailPopup && emailHelpers.showEmailPopup()) {
-  const popup = new EmailPopup(emailPopup);
-  popup.init();
-  emailHelpers.showOnScroll(popup.getDom(), {
-    cb: popup.showPopup,
-    targetElement: document.querySelector('.o-info-unit-group'),
-  });
-}
+    if (emailPopup && showEmailPopup()) {
+      const popup = new EmailPopup(emailPopup);
+      popup.init();
+      showOnScroll(popup.getDom(), {
+        cb: popup.showPopup,
+        targetElement: document.querySelector('.o-info-unit-group'),
+      });
+    }
+  },
+};
