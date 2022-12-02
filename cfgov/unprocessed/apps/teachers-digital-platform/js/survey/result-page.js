@@ -1,17 +1,19 @@
-const {
-  closest,
-} = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import Cookies from 'js-cookie';
 import clipboardCopy from 'copy-to-clipboard';
-const {
+import {
   ANSWERS_SESS_KEY,
   INITIALS_LIMIT,
   RESULT_COOKIE,
   SURVEY_COOKIE,
-} = require('./config');
-const obfuscation = require('../obfuscation');
-const modals = require('../modals');
-const initials = require('./initials');
+} from './config.js';
+import { encodeNameInUrl } from '../obfuscation.js';
+import { init as modalsInit, close as modalsClose } from '../modals.js';
+import {
+  init as initialsInit,
+  update as initialsUpdate,
+  get as initialsGet,
+} from './initials.js';
 
 const $ = document.querySelector.bind(document);
 
@@ -19,10 +21,10 @@ const $ = document.querySelector.bind(document);
  * Initialize the results page
  */
 function resultsPage() {
-  modals.init();
+  modalsInit();
   sessionStorage.removeItem(ANSWERS_SESS_KEY);
   Cookies.remove(SURVEY_COOKIE);
-  initials.init();
+  initialsInit();
 
   handleShareModal();
   handlePrintModal();
@@ -92,12 +94,12 @@ function handleShareModal() {
   });
 
   withValidInitials(desc, (value) => {
-    initials.update(value);
+    initialsUpdate(value);
     a.href =
       '../view/?r=' + encodeURIComponent(shareOutput.dataset.signedCode);
     // href property read gives you full URL
     const shareUrl = a.href;
-    a.href = obfuscation.encodeNameInUrl(shareUrl, initials.get());
+    a.href = encodeNameInUrl(shareUrl, initialsGet());
     copiedMsg.hidden = true;
     shareOutput.hidden = false;
   });
@@ -119,8 +121,8 @@ function handleShareModal() {
  */
 function handlePrintModal() {
   withValidInitials($('#modal-print_desc'), (value) => {
-    initials.update(value);
-    modals.close();
+    initialsUpdate(value);
+    modalsClose();
     window.print();
   });
 }
@@ -134,7 +136,7 @@ function handleResetModal() {
     if (button) {
       event.preventDefault();
       if (button.dataset.cancel) {
-        modals.close();
+        modalsClose();
       } else {
         Cookies.remove(RESULT_COOKIE);
         location.href = $('[data-grade-select-url]').dataset.gradeSelectUrl;

@@ -1,17 +1,15 @@
-const {
-  closest,
-} = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import Cookies from 'js-cookie';
-const {
+import {
   ANSWERS_SESS_KEY,
   RESULT_COOKIE,
   SURVEY_COOKIE,
   SCORES_UNSET_KEY,
-} = require('./config');
-const modals = require('../modals');
-const ChoiceField = require('./ChoiceField');
-const ProgressBar = require('./ProgressBar');
-const SectionLink = require('./SectionLink');
+} from './config.js';
+import { init as modalsInit, close as modalsClose } from '../modals.js';
+import ChoiceField from './ChoiceField.js';
+import ProgressBar from './ProgressBar.js';
+import SectionLink from './SectionLink.js';
 
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
@@ -39,7 +37,7 @@ function surveyPage() {
   }
 
   const data = readSurveyData();
-  modals.init();
+  modalsInit();
   ChoiceField.init();
   const store = ChoiceField.restoreFromSession(ANSWERS_SESS_KEY);
   data.numAnswered = Object.keys(store).length;
@@ -153,7 +151,7 @@ function allowStartOver() {
     if (button) {
       event.preventDefault();
       if (button.dataset.cancel) {
-        modals.close();
+        modalsClose();
       } else {
         sessionStorage.removeItem(ANSWERS_SESS_KEY);
         Cookies.remove(SURVEY_COOKIE);
@@ -336,10 +334,4 @@ function breakSeparatedAnswers() {
   });
 }
 
-export {
-  surveyPage,
-  scrollToEl,
-  ChoiceField,
-  progressBar,
-  SectionLink,
-};
+export { surveyPage, scrollToEl, ChoiceField, progressBar, SectionLink };

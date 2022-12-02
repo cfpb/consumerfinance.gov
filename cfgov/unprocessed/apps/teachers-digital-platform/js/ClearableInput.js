@@ -4,9 +4,7 @@
  * refresh the results on the page.
  */
 
-// Required modules.
-const checkDom =
-  require('@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js').checkDom;
+import { checkDom } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 
 /**
  * ClearableInput
@@ -96,6 +94,4 @@ function ClearableInput(element) {
 }
 
 // Expose public methods.
-module.exports = {
-  ClearableInput: ClearableInput,
-};
+export default ClearableInput;
