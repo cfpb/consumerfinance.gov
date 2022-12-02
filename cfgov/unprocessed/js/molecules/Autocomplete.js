@@ -5,7 +5,6 @@ import {
   setInitFlag,
 } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import { ajaxRequest } from '../modules/util/ajax-request';
 import throttle from 'lodash.throttle';
 
 /**
@@ -78,7 +77,8 @@ function Autocomplete(element, opts) {
   };
 
   // Search variables
-  let _xhr;
+  const searchRequest = new AbortController();
+  const { signal } = searchRequest.signal;
   let _searchTerm = '';
   const _throttleFetch = throttle(function () {
     _fetchSuggestions();
@@ -320,42 +320,19 @@ function Autocomplete(element, opts) {
    * request.
    */
   function _fetchSuggestions() {
-    if (_xhr) {
-      _xhr.abort();
-    }
-    _xhr = ajaxRequest(
-      'GET',
-      _settings.url + _settings.cleanQuery(_searchTerm),
-      {
-        success: _success,
-        fail: _fail,
-      }
-    );
-  }
+    searchRequest.abort();
 
-  /**
-   * On success, tries to parse xhr response
-   * and use resulting data to populate autocomplete
-   * suggestions list.
-   */
-  function _success() {
-    try {
-      _data = JSON.parse(_xhr.responseText);
-      _updateSuggestions();
-    } catch (err) {
-      _fail();
-    }
-    _xhr = null;
-  }
-
-  /**
-   * On xhr failure, clears data array and
-   * resets and hides autocomplete.
-   */
-  function _fail() {
-    _data = [];
-    _reset();
-    _hide();
+    fetch(_settings.url + _settings.cleanQuery(_searchTerm), { signal })
+      .then((response) => response.json())
+      .then((data) => {
+        _data = data;
+        _updateSuggestions();
+      })
+      .catch(() => {
+        _data = [];
+        _reset();
+        _hide();
+      });
   }
 
   const eventObserver = new EventObserver();
