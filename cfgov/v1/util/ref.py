@@ -378,5 +378,5 @@ def get_category_icon(category_name):
         "reverse mortgages": "loan",
         "speech": "microphone",
         "student loans": "college",
-        "testimony": "government",
+        "testimony": "taxes",
     }.get(category_name.lower())
