@@ -1,4 +1,4 @@
-import { queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+import { queryOne } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 const NOTICES_URL = './recent-notices-json';
 const CFPB_NOTICES =
@@ -28,7 +28,7 @@ const processNotices = (notices) => {
 };
 
 const init = () => {
-  const noticesContainer = find('#regs3k-notices');
+  const noticesContainer = queryOne('#regs3k-notices');
   fetch(NOTICES_URL)
     .then((response) => response.json())
     .then((notices) => {
