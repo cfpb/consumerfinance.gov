@@ -672,51 +672,7 @@ the window object; session storage; page history; etc.</p>
 <p>One way of doing this is to create a <strong>spy</strong>
 (a special kind of mocked function)
 that watches for browser API calls to be made
-a certain number of times or with a specific payload.
-One example is found in
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/o-table-row-links-spec.js">the tests for our full-table-row-linking code</a>.</p>
-<p>In
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/o-table-row-links.js">the module code</a>
-(<code>o-table-row-links.js</code>),
-if an event listener detects a click anywhere on
-one of these special table rows,
-it invokes <code>window.location</code> to send the browser
-to the <code>href</code> of the first link in that row:</p>
-<pre class="highlight"><code class="language-js">window.location.assign(target.querySelector('a').getAttribute('href'));</code></pre>
-<p>To test this, in the aforementioned <code>o-table-row-links-spec.js</code> file, we first
-<a href="https://jestjs.io/docs/en/mock-functions">set up a standard Jest mock</a>
-for <code>window.location.assign</code>, and then
-<a href="https://jestjs.io/docs/en/jest-object#jestspyonobject-methodname">create our spy</a>
-to watch it:</p>
-<pre class="highlight"><code class="language-js">describe( 'o-table-row-links', () =&gt; {
-  beforeEach( () =&gt; {
-    window.location.assign = jest.fn();
-    locationSpy = jest.spyOn( window.location, 'assign' );
-    …
-  } );
-
-  …
-} );</code></pre>
-<p>A little further down (after finishing the DOM setup
-and initializing the module we’re testing),
-we have three tests that simulate clicks
-and then assert things that the spy can answer for us:
-whether it was called with a particular location parameter,
-and that it was called a specific number of times (zero).</p>
-<pre class="highlight"><code class="language-js">it('should navigate to new location when link row cell clicked', () =&gt; {
-  simulateEvent('click', linkRowCellDom);
-  expect(locationSpy).toBeCalledWith('https://www.example.com');
-});
-
-it('should not set window location when link is clicked', () =&gt; {
-  simulateEvent('click', linkDom);
-  expect(locationSpy).toHaveBeenCalledTimes(0);
-});
-
-it('should not navigate to new location when non link row cell clicked', () =&gt; {
-  simulateEvent('click', nonLinkRowCellDom);
-  expect(locationSpy).toHaveBeenCalledTimes(0);
-});</code></pre>
+a certain number of times or with a specific payload.</p>
 <h3 id="testing-user-interaction">Testing user interaction<a class="headerlink" href="#testing-user-interaction" title="Permanent link">¶</a></h3>
 <p>Testing user interaction with simulated pointer events, keystrokes,
 or form submissions is best handled via browser tests, not unit tests.
