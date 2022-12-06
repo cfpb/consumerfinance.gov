@@ -57,32 +57,6 @@
                 </tr>
             </tbody>
         </table>
-    - name: o-table__row-links (modifier)
-      markup: |
-        <table class="o-table o-table__row-links">
-            <thead>
-                <tr>
-                    <th>Column 1</th>
-                    <th>Column 2</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="#">Lorem ipsum dolor.</a></td>
-                    <td class="o-table_row-heading">Lorem ipsum dolor.</td>
-                </tr>
-                <tr>
-                    <td><a href="#">Lorem ipsum dolor.</a></td>
-                    <td class="o-table_row-heading">Lorem ipsum dolor.</td>
-                </tr>
-            </tbody>
-        </table>
-      codenotes:
-        - |
-          .o-table.o-table__row-links
-      notes:
-        - "Modifier that makes rows appear to be hoverable links.
-           Used in coordination with o-table-row-links.js."
     tags:
   tags:
     - cfgov-cf-enhancements
@@ -92,21 +66,6 @@
 @tr-link-bg-hover: @pacific-80;
 
 .o-table {
-  &__row-links {
-    .respond-to-min( 961px, {
-      tr:hover {
-        td {
-          background: @tr-link-bg-hover;
-          color: @tr-link-color;
-          cursor: pointer;
-        }
-        a {
-          color: @tr-link-color;
-        }
-      }
-    } );
-  }
-
   tbody th {
     border-bottom: 1px solid @table-head-bg;
     padding: unit(10px / @font-size, em);

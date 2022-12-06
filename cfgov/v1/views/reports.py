@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 from ask_cfpb.models.answer_page import AnswerPage
 from v1.models import CFGOVPage
 from v1.models.enforcement_action_page import EnforcementActionPage
+from v1.util.ref import categories, get_category_icon
 
 
 def process_categories(queryset):
@@ -337,3 +338,29 @@ class AskReportView(ReportView):
             "portal_category",
             "related_questions",
         ).order_by("language", "-answer_base__id")
+
+
+class CategoryIconReportView(ReportView):
+    title = "Category Icons"
+    header_icon = "site"
+    template_name = "v1/category_icon_report.html"
+    paginate_by = 0
+
+    list_export = [
+        "subcategory",
+        "category_slug",
+        "category_name",
+        "icon",
+    ]
+
+    def get_queryset(self):
+        return [
+            {
+                "subcategory": subcategory,
+                "category_slug": category_slug,
+                "category_name": category_name,
+                "icon": get_category_icon(category_name),
+            }
+            for subcategory, subcategories in categories
+            for category_slug, category_name in subcategories
+        ]

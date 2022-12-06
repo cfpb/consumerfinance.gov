@@ -1,6 +1,5 @@
 {% extends 'layout-2-1.html' %}
 {% import 'atoms/partially-styled-link.html' as partially_styled_link with context %}
-{% import 'macros/category-icon.html' as category_icon %}
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'organisms/ask-search.html' as ask_search with context %}
 
@@ -37,7 +36,7 @@
                             <span class="a-link_text">
                                 {{ portal.title }}
                             </span>
-                            {{ category_icon.render(portal.topic) }}
+                            {% if portal.icon %}{{ svg_icon( portal.icon ) }}{% endif %}
                         </a>
                     </li>
                 {% endfor %}
@@ -56,7 +55,11 @@
                         <article class="m-card">
                             <h2 class="m-card_heading">
                                 <a href="{{ portal.url }}">
-                                    <span class="m-card_icon">{{ category_icon.render( portal.topic ) }}</span>
+                                    {% if portal.icon -%}
+                                    <span class="m-card_icon">
+                                        {{- svg_icon( portal.icon ) -}}
+                                    </span>
+                                    {%- endif %}
                                     <span>{{ portal.title }}</span>
                                 </a>
                             </h2>
