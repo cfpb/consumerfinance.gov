@@ -525,7 +525,15 @@ class PortalSearchPageTest(TestCase):
         self.assertContains(response, "Amortización")
 
     def test_landing_page_live_portal(self):
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 2)
+        portal_cards = self.english_ask_parent.get_portal_cards()
+
+        self.assertEqual(len(portal_cards), 2)
+
+        self.assertEqual(portal_cards[0]["title"], "Auto loans")
+        self.assertEqual(portal_cards[0]["icon"], "car")
+
+        self.assertEqual(portal_cards[1]["title"], "Bank accounts")
+        self.assertEqual(portal_cards[1]["icon"], "bank")
 
     def test_landing_page_draft_portal(self):
         self.english_portal.unpublish()
