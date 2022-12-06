@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const behavior = require(BASE_JS_PATH + 'modules/util/behavior');
+import * as behavior from '../../../../../cfgov/unprocessed/js/modules/util/behavior.js';
 
 let containerDom;
 let behaviorElmDom;

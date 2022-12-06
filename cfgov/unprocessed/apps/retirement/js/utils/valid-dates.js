@@ -1,4 +1,4 @@
-import enforceRange from './enforce-range';
+import enforceRange from './enforce-range.js';
 
 /**
  * Checks if the given date is valid.

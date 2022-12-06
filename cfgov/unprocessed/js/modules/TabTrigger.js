@@ -1,4 +1,3 @@
-// Required modules.
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 
 /**
