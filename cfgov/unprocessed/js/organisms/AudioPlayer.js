@@ -1,9 +1,8 @@
-// Required modules.
 import {
   checkDom,
   setInitFlag,
 } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
-import Analytics from '../modules/Analytics';
+import Analytics from '../modules/Analytics.js';
 
 const BASE_CLASS = 'o-audio-player';
 const EVENT_CATEGORY = 'Audio Player Events';
