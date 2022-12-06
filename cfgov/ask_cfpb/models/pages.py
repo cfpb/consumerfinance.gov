@@ -38,6 +38,7 @@ from v1.models import (
     SublandingPage,
 )
 from v1.models.snippets import ReusableText
+from v1.util.ref import get_category_icon
 
 
 REUSABLE_TEXT_TITLES = {
@@ -171,6 +172,7 @@ class AnswerLandingPage(LandingPage):
                     "title": topic.title(self.language),
                     "url": url,
                     "featured_answers": featured_answers,
+                    "icon": get_category_icon(topic.heading),
                 }
             )
         return portal_cards

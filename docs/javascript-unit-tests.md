@@ -633,62 +633,6 @@ One way of doing this is to create a **spy**
 (a special kind of mocked function)
 that watches for browser API calls to be made
 a certain number of times or with a specific payload.
-One example is found in
-[the tests for our full-table-row-linking code](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/o-table-row-links-spec.js).
-
-In
-[the module code](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/o-table-row-links.js)
-(`o-table-row-links.js`),
-if an event listener detects a click anywhere on
-one of these special table rows,
-it invokes `window.location` to send the browser
-to the `href` of the first link in that row:
-
-```js
-window.location.assign(target.querySelector('a').getAttribute('href'));
-```
-
-To test this, in the aforementioned `o-table-row-links-spec.js` file, we first
-[set up a standard Jest mock](https://jestjs.io/docs/en/mock-functions)
-for `window.location.assign`, and then
-[create our spy](https://jestjs.io/docs/en/jest-object#jestspyonobject-methodname)
-to watch it:
-
-```js
-describe( 'o-table-row-links', () => {
-  beforeEach( () => {
-    window.location.assign = jest.fn();
-    locationSpy = jest.spyOn( window.location, 'assign' );
-    …
-  } );
-
-  …
-} );
-```
-
-A little further down (after finishing the DOM setup
-and initializing the module we’re testing),
-we have three tests that simulate clicks
-and then assert things that the spy can answer for us:
-whether it was called with a particular location parameter,
-and that it was called a specific number of times (zero).
-
-```js
-it('should navigate to new location when link row cell clicked', () => {
-  simulateEvent('click', linkRowCellDom);
-  expect(locationSpy).toBeCalledWith('https://www.example.com');
-});
-
-it('should not set window location when link is clicked', () => {
-  simulateEvent('click', linkDom);
-  expect(locationSpy).toHaveBeenCalledTimes(0);
-});
-
-it('should not navigate to new location when non link row cell clicked', () => {
-  simulateEvent('click', nonLinkRowCellDom);
-  expect(locationSpy).toHaveBeenCalledTimes(0);
-});
-```
 
 ### Testing user interaction
 
