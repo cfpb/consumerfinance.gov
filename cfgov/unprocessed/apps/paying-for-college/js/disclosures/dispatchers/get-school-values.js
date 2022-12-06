@@ -1,4 +1,4 @@
-const schoolModel = require('../models/school-model');
+import schoolModel from '../models/school-model.js';
 
 const getSchoolValues = {
   values: function () {

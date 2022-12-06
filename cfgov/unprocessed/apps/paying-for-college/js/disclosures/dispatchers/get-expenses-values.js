@@ -1,4 +1,4 @@
-const expensesModel = require('../models/expenses-model');
+import expensesModel from '../models/expenses-model.js';
 
 const getExpensesValues = {
   values: function () {
@@ -6,4 +6,4 @@ const getExpensesValues = {
   },
 };
 
-module.exports = getExpensesValues;
+export default getExpensesValues;

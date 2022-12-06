@@ -1,4 +1,4 @@
-const getFinancial = require('../dispatchers/get-financial-values');
+import getFinancial from '../dispatchers/get-financial-values.js';
 
 const expensesModel = {
   values: {},
@@ -109,4 +109,4 @@ const expensesModel = {
   },
 };
 
-module.exports = expensesModel;
+export default expensesModel;

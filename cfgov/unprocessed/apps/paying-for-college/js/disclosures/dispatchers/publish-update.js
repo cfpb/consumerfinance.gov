@@ -1,8 +1,8 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const financialModel = require('../models/financial-model');
-const expensesModel = require('../models/expenses-model');
+import financialModel from '../models/financial-model.js';
+import expensesModel from '../models/expenses-model.js';
 
 const publishUpdate = {
   /**
@@ -88,4 +88,4 @@ const publishUpdate = {
   },
 };
 
-module.exports = publishUpdate;
+export default publishUpdate;

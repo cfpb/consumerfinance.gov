@@ -1,5 +1,5 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
 const schoolModel = {
   values: {},
@@ -90,4 +90,5 @@ const schoolModel = {
     return values;
   },
 };
-module.exports = schoolModel;
+
+export default schoolModel;

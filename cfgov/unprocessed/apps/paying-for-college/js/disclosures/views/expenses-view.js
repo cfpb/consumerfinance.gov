@@ -1,12 +1,12 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const Analytics = require('../utils/Analytics');
+import Analytics from '../utils/Analytics.js';
 const getDataLayerOptions = Analytics.getDataLayerOptions;
-const getExpenses = require('../dispatchers/get-expenses-values');
-const publish = require('../dispatchers/publish-update');
-const formatUSD = require('format-usd');
-const stringToNum = require('../utils/handle-string-input');
+import getExpenses from '../dispatchers/get-expenses-values.js';
+import publish from '../dispatchers/publish-update.js';
+import formatUSD from 'format-usd';
+import stringToNum from '../utils/handle-string-input.js';
 
 const expensesView = {
   $elements: $('[data-expenses]'),
@@ -166,4 +166,4 @@ const expensesView = {
   },
 };
 
-module.exports = expensesView;
+export default expensesView;

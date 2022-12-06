@@ -1,8 +1,8 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const formatURL = require('../utils/format-url');
-const constructScorecardSearch = require('../utils/construct-scorecard-search');
+import formatURL from '../utils/format-url.js';
+import constructScorecardSearch from '../utils/construct-scorecard-search.js';
 
 const linksView = {
   $gradLinkText: $('.graduation-link'),
@@ -134,4 +134,4 @@ const linksView = {
   },
 };
 
-module.exports = linksView;
+export default linksView;

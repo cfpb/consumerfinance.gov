@@ -179,4 +179,4 @@ function constructScorecardSearch(pcip, zip, radius) {
   return 'search/?' + searchParameters.join('&');
 }
 
-module.exports = constructScorecardSearch;
+export default constructScorecardSearch;

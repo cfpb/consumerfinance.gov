@@ -1,8 +1,8 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const recalculate = require('student-debt-calc');
-const getViewValues = require('../dispatchers/get-view-values');
+import recalculate from 'student-debt-calc';
+import getViewValues from '../dispatchers/get-view-values.js';
 
 const financialModel = {
   values: {},
@@ -139,4 +139,4 @@ const financialModel = {
   },
 };
 
-module.exports = financialModel;
+export default financialModel;

@@ -1,4 +1,4 @@
-const queryHandler = require('../utils/query-handler');
+import queryHandler from '../utils/query-handler.js';
 
 const getUrlValues = {
   /**

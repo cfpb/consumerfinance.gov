@@ -1,7 +1,7 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const financialView = require('../views/financial-view');
+import financialView from '../views/financial-view.js';
 
 const getApiValues = {
   values: {},
