@@ -1,6 +1,4 @@
-const {
-  closest,
-} = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { handleSurveyResultsModalClose } from './tdp-analytics.js';
 
 /**
