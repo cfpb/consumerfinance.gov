@@ -17,7 +17,6 @@ const jsPaths = [
   `${routes}/es/single.js`,
   `${routes}/external-site.js`,
   // js for specific pages, based on url
-  `${routes}/about-us/careers/current-openings/index.js`,
   `${routes}/consumer-tools/debt-collection/index.js`,
   `${routes}/data-research/prepaid-accounts/search-agreements/index.js`,
   `${routes}/owning-a-home/mortgage-estimate/index.js`,

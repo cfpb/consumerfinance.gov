@@ -19,8 +19,6 @@
                           that triggers the insertion of an icon before
                           the heading.
 
-   value.row_links:       Boolean indicating if the table contains row links.
-
    value.is_stacked:      Boolean indicating if the table columns
                           should be stacked on mobile.
 
@@ -60,7 +58,6 @@
     </{{ value.heading_level}}>
 {% endif %}
 <table class="o-table
-              {{- ' o-table__row-links' if value.row_links else '' -}}
               {{- ' o-table__stack-on-small' if value.is_stacked else '' -}}
               {{- ' o-table__striped' if value.is_striped else '' -}}
               {{- ' u-w100pct' if value.is_full_width else '' -}}
@@ -134,4 +131,3 @@
 {% elif value.empty_table_msg %}
     <h3>{{ value.empty_table_msg }}</h3>
 {% endif %}
-
