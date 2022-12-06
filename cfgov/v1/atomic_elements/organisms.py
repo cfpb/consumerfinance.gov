@@ -288,7 +288,7 @@ class RelatedPosts(blocks.StructBlock):
             ]
 
         related_types = []
-        related_items = {}
+        related_items = []
         if value.get("relate_posts"):
             related_types.append("blog")
         if value.get("relate_newsroom"):
@@ -342,10 +342,16 @@ class RelatedPosts(blocks.StructBlock):
                 # If specified in the admin, change this to match ALL tags
                 related_queryset = match_all_topic_tags(related_queryset, tags)
 
-            related_items[parent.title()] = related_queryset[:limit]
+            if related_queryset:
+                related_items.append(
+                    {
+                        "title": parent.title(),
+                        "icon": ref.get_category_icon(parent),
+                        "posts": related_queryset[:limit],
+                    }
+                )
 
-        # Return items in the dictionary that have non-empty querysets
-        return {key: value for key, value in related_items.items() if value}
+        return related_items
 
     @staticmethod
     def view_more_url(page, request):

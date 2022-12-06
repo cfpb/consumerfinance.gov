@@ -6,6 +6,7 @@ from .call_to_action import call_to_action_test_cases  # noqa 401
 from .featured_content import featured_content_test_cases  # noqa 401
 from .heading import heading_test_cases  # noqa 401
 from .notification import notification_test_cases  # noqa 401
+from .related_posts import related_posts_test_cases  # noqa 401
 from .video_player import video_player_test_cases  # noqa 401
 
 
