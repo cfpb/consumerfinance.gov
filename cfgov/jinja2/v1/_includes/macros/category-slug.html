@@ -28,8 +28,6 @@
    ========================================================================== #}
 
 {% macro render(category, href, classes='', use_blog_category=false) %}
-    {% import 'macros/category-icon.html' as category_icon %}
-
     {% if href %}
         {# TODO: Remove use_blog_category parameter when this element becomes atomic. #}
         {% if use_blog_category %}
@@ -40,8 +38,9 @@
     {% endif %}
 
     {% call _category_link(href, classes) %}
-        {% set cat = category_label(category) or category %}
-        {{ category_icon.render(cat) }}
+        {%- set cat = category_label(category) or category -%}
+        {%- set icon_name = get_category_icon( cat ) -%}
+        {%- if icon_name %}{{ svg_icon( icon_name ) }}{% endif %}
         <span class="u-visually-hidden">Category:</span>
         {{ cat | safe }}
     {% endcall %}

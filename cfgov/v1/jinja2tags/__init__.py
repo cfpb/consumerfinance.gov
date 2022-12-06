@@ -150,6 +150,7 @@ class V1Extension(Extension):
                 "category_label": ref.category_label,
                 "choices_for_page_type": ref.choices_for_page_type,
                 "email_popup": email_popup,
+                "get_category_icon": ref.get_category_icon,
                 "get_model": get_model,
                 "get_unique_id": get_unique_id,
                 "image_alt_value": image_alt_value,

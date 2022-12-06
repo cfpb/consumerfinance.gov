@@ -1,5 +1,6 @@
 import json
 from datetime import date
+from operator import itemgetter
 
 from django.test import TestCase
 from django.utils import timezone
@@ -23,6 +24,7 @@ from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.ref import categories
 from v1.views.reports import (
     AskReportView,
+    CategoryIconReportView,
     DocumentsReportView,
     EnforcementActionsReportView,
     PageMetadataReportView,
@@ -238,3 +240,10 @@ class ServeViewTestCase(TestCase):
         self.assertEqual(ask_page_content, "Test content test")
         self.assertEqual(ask_page_schema_content, "How-to description")
         self.assertEqual(blank_ask_page_content, "")
+
+    # Category icons report
+    def test_category_icons_report_get_queryset(self):
+        self.assertEqual(
+            len(CategoryIconReportView().get_queryset()),
+            sum(map(len, map(itemgetter(1), categories))),
+        )

@@ -1,11 +1,11 @@
-import { getNewHash, isOldHash } from './regs3k-utils';
-import { handleContentClick, handleNavClick } from './analytics';
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
-import { queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+import { getNewHash, isOldHash } from './regs3k-utils.js';
+import { handleContentClick, handleNavClick } from './analytics.js';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { queryOne } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
-const navHeader = find('.o-regs3k-navigation_header');
-const navItems = find('.o-regs3k-sections');
-const regContent = find('.content_main.regulations3k');
+const navHeader = queryOne('.o-regs3k-navigation_header');
+const navItems = queryOne('.o-regs3k-sections');
+const regContent = queryOne('.content_main.regulations3k');
 
 /**
  * toggleSecondaryNav - Show/hide the secondary nav on smaller screens
