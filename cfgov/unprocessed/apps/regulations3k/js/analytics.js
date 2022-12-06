@@ -1,4 +1,4 @@
-import Analytics from '../../../js/modules/Analytics';
+import Analytics from '../../../js/modules/Analytics.js';
 import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 /* eslint-disable consistent-return */
