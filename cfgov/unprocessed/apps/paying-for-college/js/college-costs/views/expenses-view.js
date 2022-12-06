@@ -2,7 +2,7 @@
 import { updateExpense, updateRegion } from '../dispatchers/update-models.js';
 import { getExpensesValue } from '../dispatchers/get-model-values.js';
 import numberToMoney from 'format-usd';
-import { selectorMatches } from '../util/other-utils';
+import { selectorMatches } from '../util/other-utils.js';
 import { stringToNum } from '../util/number-utils.js';
 import {
   updateAffordingChart,
