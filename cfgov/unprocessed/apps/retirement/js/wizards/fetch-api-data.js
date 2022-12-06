@@ -1,4 +1,4 @@
-import update from './update-model';
+import update from './update-model.js';
 
 // TODO: remove jquery.
 import $ from 'jquery';

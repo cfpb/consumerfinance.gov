@@ -1,4 +1,4 @@
-import Analytics from '../../../../../js/modules/Analytics';
+import Analytics from '../../../../../js/modules/Analytics.js';
 
 /**
  * Sends an event to the dataLayer for Google Tag Manager
