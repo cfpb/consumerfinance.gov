@@ -1,14 +1,13 @@
-// Required modules.
 import {
   checkDom,
   setInitFlag,
 } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
-import AlphaTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/AlphaTransition';
-import BaseTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/BaseTransition';
-import ERROR_MESSAGES from '../config/error-messages-config';
+import AlphaTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/AlphaTransition.js';
+import BaseTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/BaseTransition.js';
+import ERROR_MESSAGES from '../config/error-messages-config.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import Notification from '../molecules/Notification';
-import { scrollIntoView } from '../modules/util/scroll';
+import Notification from '../molecules/Notification.js';
+import { scrollIntoView } from '../modules/util/scroll.js';
 
 const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
 

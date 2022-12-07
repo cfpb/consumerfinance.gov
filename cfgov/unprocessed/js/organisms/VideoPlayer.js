@@ -2,14 +2,13 @@
    Video Player Class
    ========================================================================== */
 
-// Required modules.
 import {
   checkDom,
   setInitFlag,
 } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import { formatTimestamp } from '../modules/util/strings.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import youTubeAPI from '../modules/youtube-api';
+import youTubeAPI from '../modules/youtube-api.js';
 
 const BASE_CLASS = 'o-video-player';
 

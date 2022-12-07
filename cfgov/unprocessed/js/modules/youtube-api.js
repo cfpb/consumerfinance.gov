@@ -2,7 +2,7 @@
    YouTube API
    ========================================================================== */
 
-import jsLoader from './util/js-loader';
+import jsLoader from './util/js-loader.js';
 
 const IMAGE_URL = 'https://img.youtube.com/vi/%video_id%/maxresdefault.jpg';
 const SCRIPT_API = 'https://www.youtube.com/iframe_api';

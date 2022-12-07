@@ -2,8 +2,8 @@ import {
   closest,
   queryOne,
 } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-import Analytics from '../../../js/modules/Analytics';
-import { SCORES_UNSET_KEY } from './survey/config';
+import Analytics from '../../../js/modules/Analytics.js';
+import { SCORES_UNSET_KEY } from './survey/config.js';
 
 /* eslint-disable consistent-return */
 

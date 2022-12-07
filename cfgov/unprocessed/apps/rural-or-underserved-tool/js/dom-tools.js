@@ -28,8 +28,8 @@ function _mutate(selector, callback) {
    XHTML parsers do not magically insert elements in the
    same way that tag soup parsers do. So we cannot shorten
    this by omitting <tbody> or other required elements. */
-const firstTag = /<([a-z][^/\0>\x20\t\r\n\f]+)/;
-const wrapMap = {
+const _firstTag = /<([a-z][^/\0>\x20\t\r\n\f]+)/;
+const _wrapMap = {
   col: [2, '<table><colgroup>', '</colgroup></table>'],
   default: [0, '', ''],
   option: [1, "<select multiple='multiple'>", '</select>'],
@@ -111,18 +111,26 @@ function changeElHTML(selector, HTML) {
 }
 
 /**
+ * @param {HTMLElement} element - An element.
+ * @param {string} filterNode - The string to filter by.
+ */
+function getNextEls(element, filterNode) {
+  return _filter(element, 'nextElementSibling', filterNode);
+}
+
+/**
  * Code copied from jQuery with minimal modifications.
  *
  * @param {HTMLElement|string} HTML - An HTML DOM node or snippet.
  * @returns {DocumentFragment} The created document fragment node.
  */
 function createEl(HTML) {
-  if (isEl(HTML)) {
+  if (_isEl(HTML)) {
     return HTML;
   }
   let container = document.createElement('div');
-  const tag = (firstTag.exec(HTML) || ['', ''])[1].toLowerCase();
-  const elWrapper = wrapMap[tag] || wrapMap.default;
+  const tag = (_firstTag.exec(HTML) || ['', ''])[1].toLowerCase();
+  const elWrapper = _wrapMap[tag] || _wrapMap.default;
   const docFrag = document.createDocumentFragment();
   container.innerHTML = elWrapper[1] + HTML + elWrapper[2];
   let wrapperCount = elWrapper[0];
@@ -184,21 +192,11 @@ function removeClass(selector, className) {
 }
 
 /**
- * @param {string} selector - A CSS selector.
- * @param {string} className - A CSS class to remove.
- */
-function toggleClass(selector, className) {
-  _mutate(selector, function (element) {
-    return element.classList.toggle(className);
-  });
-}
-
-/**
  * @param {HTMLElement} element - An element.
  * @param {string} propName - An HTML element property to select for.
  * @param {string} filter - The string to filter by.
  */
-function filter(element, propName, filter) {
+function _filter(element, propName, filter) {
   const _propName = propName || '';
   const _filter = filter || '*';
 
@@ -220,7 +218,7 @@ function filter(element, propName, filter) {
  *  or the selector passed into this method.
  */
 function getEl(selector) {
-  if (isEl(selector)) {
+  if (_isEl(selector)) {
     return selector;
   }
   return document.querySelector(selector);
@@ -232,24 +230,10 @@ function getEl(selector) {
  *  or the selector passed into this method.
  */
 function getEls(selector) {
-  if (isEl(selector)) {
+  if (_isEl(selector)) {
     return selector;
   }
   return document.querySelectorAll(selector);
-}
-
-/**
- *
- * @param {HTMLElement} element - An HTML element node.
- * @param {string} filter - A string to filter by.
- */
-function getChildEls(element, filter) {
-  const firstChild = element.childNodes[0];
-  const elements = getNextEls(firstChild, filter);
-  if (firstChild.matches(filter)) {
-    elements.unshift(firstChild);
-  }
-  return elements;
 }
 
 /**
@@ -257,23 +241,7 @@ function getChildEls(element, filter) {
  * @param {string} filterNode - The string to filter by.
  */
 function getParentEls(element, filterNode) {
-  return filter(element, 'parentNode', filterNode);
-}
-
-/**
- * @param {HTMLElement} element - An element.
- * @param {string} filterNode - The string to filter by.
- */
-function getPreviousEls(element, filterNode) {
-  return filter(element, 'previousElementSibling', filterNode);
-}
-
-/**
- * @param {HTMLElement} element - An element.
- * @param {string} filterNode - The string to filter by.
- */
-function getNextEls(element, filterNode) {
-  return filter(element, 'nextElementSibling', filterNode);
+  return _filter(element, 'parentNode', filterNode);
 }
 
 /**
@@ -281,79 +249,13 @@ function getNextEls(element, filterNode) {
  *
  * @param {*} element - An object to check for element-ness.
  */
-function isEl(element) {
+function _isEl(element) {
   return (
     element instanceof NodeList ||
     element instanceof HTMLElement ||
     element instanceof DocumentFragment ||
     element instanceof Window
   );
-}
-
-/**
- * @param {*} selector - Something, possibly a list, element or window instance.
- */
-function hide(selector) {
-  _mutate(selector, function (element) {
-    return (element.style.display = 'block');
-  });
-}
-
-/**
- * @param {*} selector - Something, possibly a list, element or window instance.
- */
-function show(selector) {
-  _mutate(selector, function (element) {
-    return (element.style.display = 'block');
-  });
-}
-
-/**
- * @param {string} selector - A CSS selector for an element.
- * @param {number} time - When to call the callback.
- * @param {Function} [callback] - Function to call after delay.
- */
-function fadeIn(selector, time, callback) {
-  const element = getEl(selector);
-  element.style.transition = 'opacity ' + time + 'ms ease-in-out';
-  element.style.opacity = 0.05;
-  element.style.display = 'block';
-
-  window.setTimeout(function () {
-    return (element.style.opacity = 1);
-  }, 100);
-
-  window.setTimeout(function () {
-    element.style.display = 'block';
-    return (callback || NO_OP)();
-  }, time);
-}
-
-/**
- * @param {string} selector - A CSS selector for an element.
- * @param {number} time - When to call the callback.
- * @param {Function} [callback] - Function to call after delay.
- */
-function fadeOut(selector, time, callback) {
-  const element = getEl(selector);
-  element.style.transition = 'opacity ' + time + 'ms ease-in-out';
-  element.style.opacity = 1;
-
-  window.setTimeout(function () {
-    return (element.style.opacity = 0.05);
-  }, 100);
-
-  window.setTimeout(function () {
-    element.style.display = 'none';
-    return (callback || NO_OP)();
-  }, time);
-}
-
-/**
- * @param {Function} callback - Function to call on mutate.
- */
-function mutate(callback) {
-  _mutate(callback);
 }
 
 /**
@@ -364,7 +266,7 @@ function nextFrame(callback) {
   fastDom.raf(callback);
 }
 
-export default {
+export {
   applyAll,
   bindEvents,
   addEl,
@@ -376,19 +278,9 @@ export default {
   addClass,
   hasClass,
   removeClass,
-  toggleClass,
-  filter,
   getEl,
   getEls,
-  getChildEls,
   getParentEls,
-  getPreviousEls,
   getNextEls,
-  isEl,
-  hide,
-  show,
-  fadeIn,
-  fadeOut,
-  mutate,
   nextFrame,
 };

@@ -184,19 +184,6 @@ categories = [
     ),
 ]
 
-supported_languages = [
-    ("ar", "Arabic"),
-    ("zh-Hans", "Chinese (Simplified)"),
-    ("zh-Hant", "Chinese (Traditional)"),
-    ("en", "English"),
-    ("ht", "Haitian Creole"),
-    ("ko", "Korean"),
-    ("ru", "Russian"),
-    ("es", "Spanish"),
-    ("tl", "Tagalog"),
-    ("vi", "Vietnamese"),
-]
-
 
 def get_appropriate_categories(specific_categories, page_type):
     """An array of specific categories is provided from whatever

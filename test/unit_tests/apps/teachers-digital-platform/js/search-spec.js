@@ -1,12 +1,10 @@
 import { enableFetchMocks } from 'jest-fetch-mock';
 import { simulateEvent } from '../../../../util/simulate-event.js';
-
-const search = require('../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js');
+import { init as searchInit } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js';
 
 enableFetchMocks();
 
 const HTML_SNIPPET = `
-
   <form class="tdp-activity-search" id="search-form" action="." data-js-hook="behavior_submit-search">
     <div class="input-contains-label">
       <label for="search-text" class="input-contains-label_before input-contains-label_before__search">
@@ -157,11 +155,11 @@ describe('The TDP search page', () => {
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
     // Fire init
-    search.init();
+    searchInit();
   });
 
   it('should not throw any errors on init', () => {
-    expect(() => search.init()).not.toThrow();
+    expect(() => searchInit()).not.toThrow();
   });
 
   it('should handle search form submissions', () => {

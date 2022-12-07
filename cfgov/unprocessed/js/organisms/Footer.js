@@ -1,5 +1,4 @@
-// Required modules.
-import * as footerButton from '../modules/footer-button';
+import { init as footerButtonInit } from '../modules/footer-button.js';
 import {
   checkDom,
   setInitFlag,
@@ -27,7 +26,7 @@ function Footer(element) {
       return this;
     }
 
-    footerButton.init();
+    footerButtonInit();
 
     return this;
   }

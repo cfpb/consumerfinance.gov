@@ -1,11 +1,11 @@
-const Stickyfill = require('stickyfilljs');
+import { add } from 'stickyfilljs';
 
 const sticky = {
   init: () => {
     const stickies = document.querySelectorAll('[data-sticky]');
 
-    Stickyfill.add(stickies);
+    add(stickies);
   },
 };
 
-module.exports = sticky;
+export default sticky;

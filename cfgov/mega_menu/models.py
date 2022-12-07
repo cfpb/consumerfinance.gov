@@ -10,7 +10,7 @@ from mega_menu.frontend_conversion import FrontendConverter
 
 class Menu(models.Model):
     language = models.CharField(
-        choices=settings.LANGUAGES, max_length=2, primary_key=True
+        choices=settings.LANGUAGES, max_length=100, primary_key=True
     )
 
     submenus = StreamField(MenuStreamBlock())
