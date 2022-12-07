@@ -111,6 +111,14 @@ function changeElHTML(selector, HTML) {
 }
 
 /**
+ * @param {HTMLElement} element - An element.
+ * @param {string} filterNode - The string to filter by.
+ */
+function getNextEls(element, filterNode) {
+  return _filter(element, 'nextElementSibling', filterNode);
+}
+
+/**
  * Code copied from jQuery with minimal modifications.
  *
  * @param {HTMLElement|string} HTML - An HTML DOM node or snippet.
@@ -273,5 +281,6 @@ export {
   getEl,
   getEls,
   getParentEls,
+  getNextEls,
   nextFrame,
 };
