@@ -69,7 +69,7 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
         ]
     )
 
-    template = "browse-filterable/index.html"
+    template = "v1/browse-filterable/index.html"
 
     page_description = (
         "Left-hand navigation, no right-hand sidebar. Use if children should "
@@ -87,7 +87,7 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
 
 
 class EnforcementActionsFilterPage(BrowseFilterablePage):
-    template = "browse-filterable/index.html"
+    template = "v1/browse-filterable/index.html"
 
     @staticmethod
     def get_form_class():
@@ -105,7 +105,7 @@ class EnforcementActionsFilterPage(BrowseFilterablePage):
 
 
 class EventArchivePage(BrowseFilterablePage):
-    template = "browse-filterable/index.html"
+    template = "v1/browse-filterable/index.html"
 
     @staticmethod
     def get_model_class():
