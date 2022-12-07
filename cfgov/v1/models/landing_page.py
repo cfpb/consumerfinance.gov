@@ -42,7 +42,7 @@ class LandingPage(CFGOVPage):
         ]
     )
 
-    template = "landing-page/index.html"
+    template = "v1/landing-page/index.html"
 
     search_fields = CFGOVPage.search_fields + [
         index.SearchField("content"),
