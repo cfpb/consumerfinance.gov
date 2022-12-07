@@ -27,7 +27,7 @@ class BlogPage(AbstractFilterPage):
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel("content")
     )
-    template = "blog/blog_page.html"
+    template = "v1/blog/blog_page.html"
 
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")
@@ -56,7 +56,7 @@ class LegacyBlogPage(AbstractFilterPage):
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel("content")
     )
-    template = "blog/blog_page.html"
+    template = "v1/blog/blog_page.html"
 
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")
