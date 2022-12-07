@@ -155,7 +155,7 @@ class LearnPage(AbstractFilterPage):
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel("content")
     )
-    template = "learn-page/index.html"
+    template = "v1/learn-page/index.html"
 
     page_description = "Right-hand sidebar, no left-hand sidebar."
 
