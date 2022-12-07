@@ -437,7 +437,7 @@ class EventPage(AbstractFilterPage):
         ]
     )
 
-    template = "events/event.html"
+    template = "v1/events/event.html"
 
     @property
     def event_state(self):
