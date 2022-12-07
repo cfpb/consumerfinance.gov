@@ -8,7 +8,10 @@ import schoolModel from './models/school-model.js';
 import expensesModel from './models/expenses-model.js';
 import getFinancial from './dispatchers/get-financial-values.js';
 import getExpenses from './dispatchers/get-expenses-values.js';
-import getUrlValues from './dispatchers/get-url-values.js';
+import {
+  getUrlOfferExists,
+  getUrlValues,
+} from './dispatchers/get-url-values.js';
 import financialView from './views/financial-view.js';
 import expensesView from './views/expenses-view.js';
 import metricView from './views/metric-view.js';
@@ -27,9 +30,9 @@ const app = {
         expensesModel.init(expenses[0]);
         expensesView.init();
       }
-      if (getUrlValues.urlOfferExists()) {
+      if (getUrlOfferExists()) {
         // Check for URL offer data
-        const urlValues = getUrlValues.urlValues();
+        const urlValues = getUrlValues();
         $.when(
           fetch.schoolData(urlValues.collegeID, urlValues.programID)
         ).done(function (schoolData, programData, nationalData) {

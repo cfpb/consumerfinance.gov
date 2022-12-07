@@ -1,9 +1,9 @@
 import expensesModel from '../models/expenses-model.js';
 
-const getExpensesValues = {
+const getExpenses = {
   values: function () {
     return expensesModel.values;
   },
 };
 
-export default getExpensesValues;
+export default getExpenses;

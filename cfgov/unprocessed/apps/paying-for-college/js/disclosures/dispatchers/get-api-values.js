@@ -147,4 +147,4 @@ const getApiValues = {
   },
 };
 
-module.exports = getApiValues;
+export default getApiValues;
