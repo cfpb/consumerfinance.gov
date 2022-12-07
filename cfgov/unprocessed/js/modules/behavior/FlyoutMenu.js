@@ -1,4 +1,3 @@
-// Required modules.
 import {
   BEHAVIOR_PREFIX,
   JS_HOOK,

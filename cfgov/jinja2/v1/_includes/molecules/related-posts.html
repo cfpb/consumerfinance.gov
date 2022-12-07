@@ -15,31 +15,31 @@
    ========================================================================== #}
 
 {% macro _related_posts_list(posts, limit) %}
-    {% set limit = limit | int if posts | length >= limit | int else posts | length %}
+    {% if limit %}{% set posts = posts[ :limit | int ] %}{% endif %}
     <ul class="m-related-posts_list
                m-list
                m-list__unstyled
                m-list__spaced">
-        {% for i in range(limit) %}
-            {% set post_url = posts[i].url or '' %}
+        {% for post in posts %}
+            {% set post_url = post.url or '' %}
             <li class="m-list_item">
                 <h3 class="h4 u-mb5">
                     <a class="m-list_link"
-                       href="{{ post_url or posts[i].permalink }}">
-                        {{ posts[i].title | safe }}
+                       href="{{ post_url or post.permalink }}">
+                        {{ post.title | safe }}
                     </a>
                 </h3>
-                {% if posts[i].text %}
+                {% if post.text %}
                 <p>
-                    {{ posts[i].text | safe }}
+                    {{ post.text | safe }}
                 </p>
                 {% endif %}
                 <p class="a-date">
                     {% import 'macros/time.html' as time %}
-                    {% set date = posts[i].start_dt
-                                  or posts[i].date_published
-                                  or posts[i].latest_revision_created_at
-                                  or posts[i].date %}
+                    {% set date = post.start_dt
+                                  or post.date_published
+                                  or post.latest_revision_created_at
+                                  or post.date %}
                     {{ time.render(date, {'date':true}) }}
                 </p>
             </li>
@@ -54,63 +54,77 @@
 
    ==========================================================================
 
-   Description:
+   value.header_title:      String for the module heading.
 
-   Creates related posts markup for RelatedPosts block.
+   value.limit:             Integer setting the number of posts that will be
+                            shown for each type of post selected. Optional.
 
-   Uses these entries from the block's value:
+   value.posts:             List of posts to render, grouped into sublists.
+                            Required.
 
-   value.header_title:  String for the heading at the top of the rendered
-                        module.
+   value.posts[i].title:    Title of sublist, for example "Newsroom".
 
-   value.limit:         Integer setting the number of posts that will be shown
-                        for each type of post selected.
+   value.posts[i].icon:     Icon to use for sublist, for example "newspaper".
 
-   value.show_heading:  Boolean indicating whether or not the heading and icon
-                        for each type of post will be shown. Defaults to True.
+   value.posts[i].posts:    List of posts. See _related_posts_list for format.
 
-   Also expects context to contain these extra parameters:
+   value.view_more_url:     URL for "View more" link. Required.
 
-   half_width:          Boolean indicating whether the posts should be at half
-                        width. Defaults to False.
+   value.show_heading:      Boolean indicating whether or not the heading and
+                            icon for each post sublist will be shown.
+                            Optional, default false.
 
-   hide_header_slug:    Boolean indicating whether the header should be hidden.
-                        Defaults to False.
-
-   posts:               List of related posts to render. Required.
-
-   view_more_url:       URL for "View more" link. Required.
+   value.half_width:        Boolean indicating whether the posts should be at
+                            half width. Optional, default false.
 
    ========================================================================== #}
 
-{% import 'macros/category-icon.html' as category_icon %}
-
+{% macro render( value ) %}
 <div class="m-related-posts
-    {{'m-related-posts__half-width' if half_width else '' }}">
-    {% if not hide_header_slug %}
-        <header class="m-slug-header">
-            <h2 class="a-heading">
-                {{ value.header_title }}
-            </h2>
-        </header>
-    {% endif %}
-    {% for post_type, post_type_list in posts.items() %}
-        {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", category_icon.render('blog')) %}
+    {{'m-related-posts__half-width' if value.half_width else '' }}">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
+            {{ value.header_title }}
+        </h2>
+    </header>
+    {% for subposts in value.posts %}
         <div class="m-related-posts_list-container">
             {% if value.show_heading %}
                 <h3 class="h4">
-                    {{ icon }} {{ title }}
+                    {% if subposts.icon %}{{ svg_icon( subposts.icon ) }}{% endif %}
+                    {{ subposts.title }}
                 </h3>
             {% endif %}
-            {{ _related_posts_list(post_type_list, value.limit) }}
+            {{ _related_posts_list( subposts.posts, value.limit ) }}
         </div>
     {% endfor %}
 
     <a class="a-link a-link__jump"
-       href="{{ view_more_url }}"
+       href="{{ value.view_more_url }}"
        aria-label="{{ _('View more related posts') }}">
         <span class="a-link_text">
             {{ _('View more') }}
         </span>
     </a>
 </div>
+{% endmacro %}
+
+{%- if value %}
+
+{# Consolidate additional context variables into the single "value" dict. #}
+
+{% if half_width is defined and not "half_width" in value %}
+    {% do value.update( { "half_width": half_width } ) %}
+{% endif %}
+
+{% if posts is defined and not "posts" in value %}
+    {% do value.update( { "posts": posts } ) %}
+{% endif %}
+
+{% if view_more_url is defined and not "view_more_url" in value %}
+    {% do value.update( { "view_more_url": view_more_url } ) %}
+{% endif %}
+
+{{- render( value ) -}}
+
+{% endif -%}

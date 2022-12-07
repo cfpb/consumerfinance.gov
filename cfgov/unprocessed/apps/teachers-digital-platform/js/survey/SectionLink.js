@@ -133,4 +133,4 @@ SectionLink.update = function (numAnswered) {
   }
 };
 
-module.exports = SectionLink;
+export default SectionLink;

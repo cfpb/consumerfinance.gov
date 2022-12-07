@@ -1,13 +1,24 @@
-const behavior = require('../../../js/modules/util/behavior');
-const utils = require('./search-utils');
+import { attach } from '../../../js/modules/util/behavior.js';
+import {
+  getSearchValues,
+  serializeFormFields,
+  buildSearchResultsURL,
+  showLoading,
+  hideLoading,
+  handleError,
+  updateUrl,
+} from './search-utils.js';
 import {
   closest,
-  queryOne as find,
+  queryOne,
 } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-import expandableFacets from './expandable-facets';
-import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable';
-const analytics = require('./tdp-analytics');
-const ClearableInput = require('./ClearableInput').ClearableInput;
+import expandableFacets from './expandable-facets.js';
+import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable.js';
+import {
+  handleClearAllClick,
+  handleFetchSearchResults,
+} from './tdp-analytics.js';
+import ClearableInput from './ClearableInput.js';
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
 const searchRequest = new AbortController();
@@ -30,11 +41,11 @@ function init() {
  */
 function attachHandlers() {
   addDataGtmIgnore();
-  behavior.attach('submit-search', 'submit', handleSubmit);
-  behavior.attach('change-filter', 'change', handleFilter);
-  behavior.attach('clear-filter', 'click', clearFilter);
-  behavior.attach('clear-all', 'click', clearFilters);
-  behavior.attach('clear-search', 'clear', clearSearch);
+  attach('submit-search', 'submit', handleSubmit);
+  attach('change-filter', 'change', handleFilter);
+  attach('clear-filter', 'click', clearFilter);
+  attach('clear-all', 'click', clearFilters);
+  attach('clear-search', 'clear', clearSearch);
   cfExpandables.init();
   expandableFacets.init();
   const inputContainsLabel = document.querySelector(
@@ -72,7 +83,7 @@ function clearFilter(event) {
     return;
   }
   target = closest(event.target, '.a-tag');
-  const checkbox = find(`${target.getAttribute('data-value')}`);
+  const checkbox = queryOne(`${target.getAttribute('data-value')}`);
   // Remove the filter tag
   removeTag(target);
   // Uncheck the filter checkbox
@@ -101,7 +112,7 @@ function removeTag(tag) {
  */
 function clearFilters(event) {
   // Handle Analytics here before tags vanish.
-  analytics.handleClearAllClick(event);
+  handleClearAllClick(event);
 
   let filterIcons = document.querySelectorAll('.a-tag svg');
   // IE doesn't support forEach w/ node lists so convert it to an array.
@@ -150,38 +161,39 @@ function handleSubmit(event) {
  * @returns {string} New page URL with search terms
  */
 function fetchSearchResults(filters = []) {
-  const searchContainer = find('#tdp-search-facets-and-results');
+  const searchContainer = queryOne('#tdp-search-facets-and-results');
   const baseUrl = window.location.href.split('?')[0];
-  const searchField = find('input[name=q]');
-  const searchTerms = utils.getSearchValues(searchField, filters);
-  const searchParams = utils.serializeFormFields(searchTerms);
+  const searchField = queryOne('input[name=q]');
+  const searchTerms = getSearchValues(searchField, filters);
+  const searchParams = serializeFormFields(searchTerms);
 
-  const searchUrl = utils.buildSearchResultsURL(baseUrl, searchParams, {
+  const searchUrl = buildSearchResultsURL(baseUrl, searchParams, {
     partial: true,
   });
 
-  utils.updateUrl(baseUrl, searchParams);
-  utils.showLoading(searchContainer);
+  updateUrl(baseUrl, searchParams);
+  showLoading(searchContainer);
 
   fetch(searchUrl, { signal })
     .then((response) => response.text())
     .then((data) => {
-      utils.hideLoading(searchContainer);
+      hideLoading(searchContainer);
       searchContainer.innerHTML = data;
 
       // Update the query params in the URL
-      utils.updateUrl(baseUrl, searchParams);
+      updateUrl(baseUrl, searchParams);
 
       // Reattach event handlers after tags are reloaded
       attachHandlers();
 
       // Send search query to Analytics.
-      analytics.handleFetchSearchResults(searchField.value);
+      handleFetchSearchResults(searchField.value);
     })
     .catch((err) => {
       // TODO: Add message banner above search results
-      console.error(utils.handleError(err).msg);
+      console.error(handleError(err).msg);
     });
+
   return searchUrl;
 }
 

@@ -1,17 +1,17 @@
-const Cookie = require('js-cookie');
-const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } = require('./config');
-const modals = require('../modals');
+import Cookies from 'js-cookie';
+import { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE } from './config.js';
+import { init as modalsInit } from '../modals.js';
 
 /**
  * Initialize a grade-level intro page
  */
 function gradeLevelPage() {
   // Clear session to prepare for fresh entry
-  Cookie.remove(RESULT_COOKIE);
-  Cookie.remove(SURVEY_COOKIE);
+  Cookies.remove(RESULT_COOKIE);
+  Cookies.remove(SURVEY_COOKIE);
   sessionStorage.removeItem(ANSWERS_SESS_KEY);
 
-  modals.init();
+  modalsInit();
 }
 
-export { gradeLevelPage, Cookie };
+export { gradeLevelPage };

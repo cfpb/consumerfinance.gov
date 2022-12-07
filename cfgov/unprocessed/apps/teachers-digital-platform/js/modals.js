@@ -1,8 +1,5 @@
-const {
-  closest,
-} = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
-const CustomEvt = require('customevent');
-const analytics = require('./tdp-analytics');
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+import { handleSurveyResultsModalClose } from './tdp-analytics.js';
 
 /**
  * Holds the only reference to Modal instance, which is only created just
@@ -29,7 +26,7 @@ class Modal {
 
     const el = this.getElement();
 
-    const event = new CustomEvt('modal:open:before', {
+    const event = new CustomEvent('modal:open:before', {
       bubbles: true,
       detail: { modal: this },
     });
@@ -66,7 +63,7 @@ class Modal {
     }
 
     // Send close event to GA.
-    analytics.handleSurveyResultsModalClose(el);
+    handleSurveyResultsModalClose(el);
   }
 
   _addFocusTraps() {

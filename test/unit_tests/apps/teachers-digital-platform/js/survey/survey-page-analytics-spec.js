@@ -1,7 +1,5 @@
 import { simulateEvent } from '../../../../../util/simulate-event.js';
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/';
-const tdpAnalytics = require(BASE_JS_PATH +
-  'teachers-digital-platform/js/tdp-analytics.js');
+import { bindAnalytics } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js';
 import HTML_SNIPPET from '../../html/survey-page-analytics';
 
 const xhr = global.XMLHttpRequest;
@@ -32,7 +30,7 @@ describe('Custom analytics for the TDP survey form page', () => {
     const target = document.querySelector('label[for="id_p3-q10_0"]');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -58,7 +56,7 @@ describe('Custom analytics for the TDP survey form page', () => {
     const target = document.querySelector('label[for="test-radio"]');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -69,7 +67,7 @@ describe('Custom analytics for the TDP survey form page', () => {
     const target = document.querySelector('.m-notification__error a');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -83,7 +81,7 @@ describe('Custom analytics for the TDP survey form page', () => {
     const target = document.querySelector('[data-open-modal="modal-restart"]');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -97,7 +95,7 @@ describe('Custom analytics for the TDP survey form page', () => {
     );
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -109,7 +107,7 @@ describe('Custom analytics for the TDP survey form page', () => {
     const target = document.querySelector('[data-editable="1"]');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 
@@ -136,7 +134,7 @@ describe('Custom analytics for the TDP survey form page', () => {
     const target = document.querySelector('button.a-btn[type="submit"]');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', target);
 

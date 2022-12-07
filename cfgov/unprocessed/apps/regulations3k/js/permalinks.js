@@ -17,10 +17,10 @@ import {
   updateParagraphPositions,
   updateUrlHash,
   updateWayfinder,
-} from './permalinks-utils';
-import { queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+} from './permalinks-utils.js';
+import { queryOne } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
-const wayfinderLink = find('.o-regulations-wayfinder_link');
+const wayfinderLink = queryOne('.o-regulations-wayfinder_link');
 
 /**
  * init - Initialize the permalink functionality by cataloging all paragraph

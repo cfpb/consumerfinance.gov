@@ -1,8 +1,8 @@
-import { handleFetchSearchResults } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js';
 import { simulateEvent } from '../../../../util/simulate-event.js';
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
-const tdpAnalytics = require(BASE_JS_PATH +
-  'teachers-digital-platform/js/tdp-analytics.js');
+import {
+  bindAnalytics,
+  handleFetchSearchResults,
+} from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js';
 
 const EMPTY_SEARCH_HTML = `
   <div id="tdp-search-facets-and-results">
@@ -215,14 +215,14 @@ describe('The TDP custom analytics', () => {
   });
 
   it('should not throw any errors on bind', () => {
-    expect(() => tdpAnalytics.bindAnalytics()).not.toThrow();
+    expect(() => bindAnalytics()).not.toThrow();
   });
 
   it('should send an analytics event when a filter clear icon is clicked', () => {
     const clearIcon = document.querySelector('.results_filters svg');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', clearIcon);
 
@@ -233,7 +233,7 @@ describe('The TDP custom analytics', () => {
     const filterTag = document.querySelector('.results_filters .a-tag');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', filterTag);
 
@@ -244,7 +244,7 @@ describe('The TDP custom analytics', () => {
     const paginationButton = document.querySelector('.m-pagination_btn-next');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', paginationButton);
 
@@ -255,7 +255,7 @@ describe('The TDP custom analytics', () => {
     const expandable = document.querySelector('.o-expandable_header');
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     simulateEvent('click', expandable);
 
@@ -266,7 +266,7 @@ describe('The TDP custom analytics', () => {
     document.body.innerHTML = EMPTY_SEARCH_HTML;
     const spy = jest.fn();
 
-    tdpAnalytics.bindAnalytics(spy);
+    bindAnalytics(spy);
 
     handleFetchSearchResults('Not Found');
 

@@ -17,6 +17,9 @@ module.exports = {
   moduleNameMapper: {
     '\\.(svg)$': '<rootDir>/test/unit_tests/mocks/fileMock.js',
   },
+  modulePaths: [
+    '<rootDir>/cfgov/unprocessed/apps/teachers-digital-platform/node_modules',
+  ],
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/develop-apps/',
