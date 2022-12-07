@@ -75,6 +75,6 @@ class ResearchHubPage(CategoryFilterableMixin, SublandingFilterablePage):
 
 
 class ActivityLogPage(CategoryFilterableMixin, SublandingFilterablePage):
-    template = "activity-log/index.html"
+    template = "v1/activity-log/index.html"
     filterable_categories = ("Blog", "Newsroom", "Research Report")
     filterable_per_page_limit = 100

@@ -138,7 +138,7 @@
                             block__flush-top
                             {%- endif %}">
                 {% if value.categories.page_type == 'activity-log' %}
-                    {% import 'activity-log/_activity-list.html' as activity_list with context %}
+                    {% import 'v1/activity-log/_activity-list.html' as activity_list with context %}
                     {{ activity_list.render(posts) }}
                 {% elif value.output_5050 %}
                     {% from 'molecules/info-unit-2.html' import info_unit with context %}
