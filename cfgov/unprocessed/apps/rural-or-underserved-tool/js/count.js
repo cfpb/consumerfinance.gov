@@ -1,4 +1,10 @@
-import DT from './dom-tools';
+import {
+  addClass,
+  changeElHTML,
+  changeElText,
+  getEl,
+  getEls,
+} from './dom-tools.js';
 
 let types = {};
 let totalCount = 0;
@@ -7,7 +13,7 @@ let totalCount = 0;
  * Reset the counter.
  */
 function reset() {
-  DT.changeElHTML('.counter', '0');
+  changeElHTML('.counter', '0');
   types = {};
   totalCount = 0;
 }
@@ -18,24 +24,24 @@ function reset() {
  * @param {number} number - The number of this address.
  */
 function updateAddressCount(number) {
-  DT.changeElText('#addressCount', number);
+  changeElText('#addressCount', number);
 }
 
 /**
  * Add one to the total address count.
  */
 function incrementTotal() {
-  const totalCountElement = DT.getEl('#totalCnt');
-  const addressCount = parseInt(DT.getEl('#addressCount').textContent, 10);
+  const totalCountElement = getEl('#totalCnt');
+  const addressCount = parseInt(getEl('#addressCount').textContent, 10);
 
   // add one to the total
   totalCount++;
 
-  DT.changeElText(totalCountElement, totalCount);
+  changeElText(totalCountElement, totalCount);
 
   // hide spinner
   if (totalCount === addressCount) {
-    DT.addClass('#spinner', 'u-hidden');
+    addClass('#spinner', 'u-hidden');
   }
 }
 
@@ -49,26 +55,21 @@ function updateCount(type) {
   let noun = 'addresses';
   let verb = 'are';
 
-  const countElements = DT.getEls('.' + type + 'Cnt');
+  const countElements = getEls('.' + type + 'Cnt');
   // add one to correct type
   let typeCount = types[type] || 0;
   types[type] = ++typeCount;
-  DT.changeElText(countElements, typeCount);
+  changeElText(countElements, typeCount);
 
   if (typeCount === 1) {
     noun = 'address';
     verb = 'is';
   }
 
-  DT.changeElText('.' + type + 'Verb', verb);
-  DT.changeElText('.' + type + 'Case', noun + ' ' + verb);
+  changeElText('.' + type + 'Verb', verb);
+  changeElText('.' + type + 'Case', noun + ' ' + verb);
 
-  this.incrementTotal();
+  incrementTotal();
 }
 
-export default {
-  reset,
-  updateAddressCount,
-  incrementTotal,
-  updateCount,
-};
+export { reset, updateAddressCount, incrementTotal, updateCount };
