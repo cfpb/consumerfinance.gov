@@ -10,7 +10,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
-from legacy.forms import HousingCounselorForm
+from housing_counselor.forms import HousingCounselorForm
 
 
 logger = logging.getLogger(__name__)
