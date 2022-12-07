@@ -1,5 +1,6 @@
 import re
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import F, Value
@@ -75,7 +76,7 @@ class CFGOVPage(Page):
         through=CFGOVTaggedPages, blank=True, related_name="tagged_pages"
     )
     language = models.CharField(
-        choices=ref.supported_languages, default="en", max_length=100
+        choices=settings.LANGUAGES, default="en", max_length=100
     )
     social_sharing_image = models.ForeignKey(
         "v1.CFGOVImage",
