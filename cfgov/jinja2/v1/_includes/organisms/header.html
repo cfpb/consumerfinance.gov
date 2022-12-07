@@ -109,7 +109,7 @@
             {{ global_search.render( language ) }}
 
             {% if mega_menu_content %}
-                {% from 'organisms/mega-menu.html' import mega_menu with context %}
+                {% from 'mega_menu/mega-menu.html' import mega_menu with context %}
                 {{ mega_menu ( mega_menu_content, language=language ) }}
             {% endif %}
         </div>
