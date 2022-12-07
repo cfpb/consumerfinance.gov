@@ -182,7 +182,7 @@ class DocumentDetailPage(AbstractFilterPage):
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel("content")
     )
-    template = "document-detail/index.html"
+    template = "v1/document-detail/index.html"
 
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")
