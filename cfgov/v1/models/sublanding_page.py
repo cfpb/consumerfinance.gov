@@ -117,7 +117,7 @@ class SublandingPage(CFGOVPage):
         ]
     )
 
-    template = "sublanding-page/index.html"
+    template = "v1/sublanding-page/index.html"
 
     search_fields = CFGOVPage.search_fields + [
         index.SearchField("content"),

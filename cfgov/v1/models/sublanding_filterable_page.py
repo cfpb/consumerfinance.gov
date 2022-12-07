@@ -56,7 +56,7 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
         ]
     )
 
-    template = "sublanding-page/index.html"
+    template = "v1/sublanding-page/index.html"
 
     page_description = (
         "Right-hand sidebar, no left-hand sidebar. Use if children should be "
@@ -70,7 +70,7 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
 
 
 class ResearchHubPage(CategoryFilterableMixin, SublandingFilterablePage):
-    template = "sublanding-page/index.html"
+    template = "v1/sublanding-page/index.html"
     filterable_categories = ["Research Hub"]
 
 
