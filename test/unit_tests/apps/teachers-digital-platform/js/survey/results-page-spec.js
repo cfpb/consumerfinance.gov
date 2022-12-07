@@ -1,8 +1,6 @@
 import Cookies from 'js-cookie';
 import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js';
-import {
-  resultsPage
-} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page.js';
+import { resultsPage } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page.js';
 import {
   ANSWERS_SESS_KEY,
   SURVEY_COOKIE,
@@ -10,7 +8,7 @@ import {
 import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js';
 import * as initials from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/initials.js';
 import * as obfuscation from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation.js';
-import HTML_SNIPPET from '../../html/results-page';
+import HTML_SNIPPET from '../../html/results-page.js';
 
 // eslint-disable-next-line import/no-unresolved
 import clipboardCopy from 'copy-to-clipboard';

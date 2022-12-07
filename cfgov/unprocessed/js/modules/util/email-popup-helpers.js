@@ -1,6 +1,6 @@
-import { assign } from './assign';
+import { assign } from './assign.js';
 import throttle from 'lodash.throttle';
-import webStorageProxy from './web-storage-proxy';
+import webStorageProxy from './web-storage-proxy.js';
 
 // If cookies are turned off, we set localStorage variables to an empty object.
 let _localStorage;

@@ -1,6 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
-const ClearableInput = require(BASE_JS_PATH +
-  'teachers-digital-platform/js/ClearableInput').ClearableInput;
+import ClearableInput from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/ClearableInput.js';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 
 let baseDom;

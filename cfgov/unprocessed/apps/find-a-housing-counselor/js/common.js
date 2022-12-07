@@ -1,4 +1,4 @@
-const hud = require('./hud-util');
+import { checkHudData } from './hud-util.js';
 
 const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js';
 const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css';
@@ -118,7 +118,7 @@ function updateMap(data) {
   map.setZoom(2);
   map.setView([40, -80]);
 
-  if (hud.checkHudData(data) === true) {
+  if (checkHudData(data) === true) {
     const lat = data.zip.lat;
     const lng = data.zip.lng;
     const ziplatlng = [lat, lng];

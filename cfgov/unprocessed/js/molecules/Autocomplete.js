@@ -1,4 +1,3 @@
-// Required modules.
 import { assign } from '../modules/util/assign';
 import {
   checkDom,

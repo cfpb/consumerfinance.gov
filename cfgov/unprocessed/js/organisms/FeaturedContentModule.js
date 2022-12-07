@@ -2,12 +2,11 @@
    Featured Content Module Class
    ========================================================================== */
 
-// Required modules.
 import {
   checkDom,
   setInitFlag,
 } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
-import VideoPlayer from './VideoPlayer';
+import VideoPlayer from './VideoPlayer.js';
 
 const BASE_CLASS = 'o-featured-content-module';
 

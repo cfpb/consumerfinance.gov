@@ -11,7 +11,7 @@ import {
   updateFinancialsFromSchool,
 } from '../dispatchers/update-models.js';
 import numberToMoney from 'format-usd';
-import { selectorMatches } from '../util/other-utils';
+import { selectorMatches } from '../util/other-utils.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
 

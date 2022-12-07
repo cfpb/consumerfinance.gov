@@ -1,6 +1,4 @@
-const {
-  closest,
-} = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
@@ -141,4 +139,4 @@ ChoiceField.init = () => {
   });
 };
 
-module.exports = ChoiceField;
+export default ChoiceField;

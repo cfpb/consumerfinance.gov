@@ -3,7 +3,7 @@
    ========================================================================== */
 
 import AtomicComponent from '@cfpb/cfpb-atomic-component/src/components/AtomicComponent.js';
-import ExpandableFacetTransition from './ExpandableFacetTransition';
+import ExpandableFacetTransition from './ExpandableFacetTransition.js';
 
 const ExpandableFacets = AtomicComponent.extend({
   ui: {
