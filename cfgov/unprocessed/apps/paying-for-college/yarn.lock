@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@cfpb/student-debt-calculator@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/student-debt-calculator/-/student-debt-calculator-3.0.1.tgz#410949af118edab1bd9db8ce51497fe4ae9967e8"
-  integrity sha512-BX6T1Ircw7KOLwcyN7CGHuIyqNbNcKRtQgcycHEnlF3tBf9Pe60MANFdXx2l9QfbkcqffRR+ygg85BLaKaOU1w==
+"@cfpb/student-debt-calculator@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/student-debt-calculator/-/student-debt-calculator-3.0.2.tgz#cdc1b048efde249851ecf5df8b5e437949b50012"
+  integrity sha512-4e68GvtW+SpbwbBHrNXl1ZXppys2304M7RVzpCM3K6O6dUDxSs2yQgYH95Fh/i1d2DZQQCvu7e/gHq96bRgwMw==
 
 format-usd@1.0.1:
   version "1.0.1"
