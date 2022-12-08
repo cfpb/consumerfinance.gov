@@ -51,7 +51,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "7.19.1",
     "cypress": "11.1.0",
-    "eslint": "8.28.0",
+    "eslint": "8.29.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsdoc": "39.6.4",
@@ -62,9 +62,9 @@
     "jest-environment-jsdom": "28.1.0",
     "jest-fetch-mock": "3.0.3",
     "postcss-less": "6.0.0",
-    "prettier": "2.8.0",
-    "snyk": "1.1064.0",
-    "stylelint": "14.15.0",
+    "prettier": "2.8.1",
+    "snyk": "1.1069.0",
+    "stylelint": "14.16.0",
     "stylelint-config-recommended-less": "1.0.4"
   },
   "scripts": {
