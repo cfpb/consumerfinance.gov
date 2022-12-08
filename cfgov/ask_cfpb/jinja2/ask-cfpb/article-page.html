@@ -1,6 +1,6 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
-{% import 'templates/render_block.html' as render_block with context %}
-{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% import 'v1/includes/templates/render_block.html' as render_block with context %}
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block content_modifiers -%}
     {{ super() }} ask-cfpb-page ask-cfpb-page__article
@@ -19,7 +19,7 @@
                 'links': inset_links
             }%}
             <div class="m-inset">
-            {% include 'molecules/related-content.html' with context %}
+            {% include 'v1/includes/molecules/related-content.html' with context %}
             </div>
         {% endif %}
 

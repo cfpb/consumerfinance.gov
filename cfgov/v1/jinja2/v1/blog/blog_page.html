@@ -1,6 +1,6 @@
 {% extends 'v1/layouts/layout-2-1.html' %}
 
-{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block og_type -%}
     article
@@ -16,7 +16,7 @@
 {%- endblock %}
 
 {% block content_main %}
-    {% include 'article.html' %}
+    {% include 'v1/includes/article.html' %}
     {% block post_article_content %}
     <div class="block join-the-conversation">
         <p>
@@ -39,7 +39,7 @@
     {{ streamfield_sidefoot.render(page.sidefoot) }}
     {% if rss_feed %}
     <div class="block block__sub">
-        {% import 'molecules/rss-feed.html' as rss %}
+        {% import 'v1/includes/molecules/rss-feed.html' as rss %}
         {{ rss.render(rss_feed) }}
     </div>
     {% endif %}

@@ -20,7 +20,7 @@
 {% block content_main %}
   <div id="ccdb-ui-root">
     <div class="js-is-hidden wrapper u-mt60 u-mb60">
-      {% import 'molecules/notification.html' as notification with context %}
+      {% import 'v1/includes/molecules/notification.html' as notification with context %}
       {{ notification.render(
            'error',
            true,

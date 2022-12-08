@@ -108,7 +108,7 @@
                 {% if event_state == 'past' and event.live_stream_availability and not event.archive_video_id %}
                     Video replay will be<br> available shortly
                 {% else %}
-                    {% import 'macros/time.html' as time %}
+                    {% import 'v1/includes/macros/time.html' as time %}
                     {% if event.start_dt %}
                         {{ time.render(event.start_dt) }}
                     {% endif %}
@@ -123,7 +123,7 @@
             <figure class="event-media_container">
                 {% if event_state == 'present' and event.live_video_id %}
                     {# DISPLAY LIVESTREAM #}
-                    {% import 'organisms/video-player.html' as video_player with context %}
+                    {% import 'v1/includes/organisms/video-player.html' as video_player with context %}
                     {{ video_player.render(
                         video_id=event.live_video_id,
                         button_pos='bottom-right'
@@ -131,7 +131,7 @@
                 {% elif event_state == 'past' %}
                     {% if event.archive_video_id %}
                         {# DISPLAY VIDEO RECORDING #}
-                        {% import 'organisms/video-player.html' as video_player with context %}
+                        {% import 'v1/includes/organisms/video-player.html' as video_player with context %}
                         {{ video_player.render(
                             video_id=event.archive_video_id,
                             button_pos='bottom-right'
@@ -205,7 +205,7 @@
           {% set bound = block.value.bound_blocks %}
             <tr>
                 <td>
-                    {% import 'macros/time.html' as time %}
+                    {% import 'v1/includes/macros/time.html' as time %}
                     {% if bound.start_time.value is not none %}
                       {{ time.render(
                           bound.start_time.render(),

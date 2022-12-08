@@ -1,4 +1,4 @@
-{% import 'macros/time.html' as time %}
+{% import 'v1/includes/macros/time.html' as time %}
 
 <article class="post post__event">
     <header>
@@ -18,7 +18,7 @@
                 ) }}
             </div>
             {% endif %}
-            {% import 'molecules/social-media.html' as social_media with context %}
+            {% import 'v1/includes/molecules/social-media.html' as social_media with context %}
             {{ social_media.render( {
                 'title':            page.twtr_text,
                 'twitter_related':  page.twtr_rel,
@@ -79,7 +79,7 @@
     </div>
     {% if page.tags.names() | length %}
     <footer>
-        {%- import 'tags.html' as tags %}
+        {%- import 'v1/includes/tags.html' as tags %}
         {{ tags.render(page.related_metadata_tags()) }}
     </footer>
     {% endif %}

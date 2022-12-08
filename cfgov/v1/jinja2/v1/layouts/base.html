@@ -244,7 +244,7 @@
     </div>
 
     {% block header %}
-        {% import 'organisms/header.html' as o_header with context %}
+        {% import 'v1/includes/organisms/header.html' as o_header with context %}
         {{ o_header.render(
             show_mega_menu=true,
             language=language
@@ -274,7 +274,7 @@
     {% endblock %}
 
     {% block footer %}
-        {% import 'organisms/footer.html' as o_footer with context %}
+        {% import 'v1/includes/organisms/footer.html' as o_footer with context %}
         {{ o_footer.render( language ) }}
     {% endblock footer %}
 

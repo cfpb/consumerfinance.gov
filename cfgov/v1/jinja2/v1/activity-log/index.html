@@ -16,7 +16,7 @@
                 {% include_block block %}
             </div>
         {% else %}
-            {% import 'templates/render_block.html' as render_block with context %}
+            {% import 'v1/includes/templates/render_block.html' as render_block with context %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}
     {% endfor %}

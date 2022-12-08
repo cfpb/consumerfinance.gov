@@ -37,7 +37,7 @@ class AnchorLink(blocks.StructBlock):
 
     class Meta:
         icon = "link"
-        template = "_includes/atoms/anchor-link.html"
+        template = "v1/includes/atoms/anchor-link.html"
         label = "Anchor link"
 
 
@@ -77,7 +77,7 @@ class HeadingBlock(blocks.StructBlock):
 
     class Meta:
         icon = "title"
-        template = "_includes/blocks/heading.html"
+        template = "v1/includes/blocks/heading.html"
         form_template = (
             "admin/form_templates/struct-with-block-wrapper-classes.html"
         )
@@ -142,7 +142,7 @@ class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
 
 class ReusableTextChooserBlock(SnippetChooserBlock):
     class Meta:
-        template = "_includes/snippets/reusable_text.html"
+        template = "v1/includes/snippets/reusable_text.html"
 
 
 class RAFTBlock(blocks.StructBlock):
@@ -158,7 +158,7 @@ class RAFTBlock(blocks.StructBlock):
     class Meta:
         icon = "cog"
         label = "RAF Tool (configurable)"
-        template = "_includes/blocks/raf_tool.html"
+        template = "v1/includes/blocks/raf_tool.html"
 
     class Media:
         js = ["erap.js"]
@@ -170,7 +170,7 @@ class EmailSignUpChooserBlock(SnippetChooserBlock):
 
     class Meta:
         icon = "mail"
-        template = "_includes/blocks/email-signup.html"
+        template = "v1/includes/blocks/email-signup.html"
 
     class Media:
         js = ["email-signup.js"]

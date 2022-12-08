@@ -1,6 +1,6 @@
 {% extends 'v1/layouts/layout-side-nav.html' %}
 
-{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -27,7 +27,7 @@
                 {% include_block block %}
             </div>
         {% else %}
-            {% import 'templates/render_block.html' as render_block with context %}
+            {% import 'v1/includes/templates/render_block.html' as render_block with context %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}
     {% endfor %}
@@ -45,7 +45,7 @@
                                 block__flush-top
                                 content-l_col
                                 content-l_col-1-2">
-                    {% import 'related-links.html' as related_links %}
+                    {% import 'v1/includes/related-links.html' as related_links %}
                     {{- related_links.render([
                         [
                             '/about-us/blog/',
@@ -58,7 +58,7 @@
                     ]) -}}
                 </section>
                 <section class="block content-l_col content-l_col-1-2">
-                    {% include 'templates/upcoming-events.html' %}
+                    {% include 'v1/includes/templates/upcoming-events.html' %}
                 </section>
             </div>
         </div>
