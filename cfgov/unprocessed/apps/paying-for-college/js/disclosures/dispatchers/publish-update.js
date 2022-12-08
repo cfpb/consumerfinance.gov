@@ -1,6 +1,3 @@
-// TODO: Remove jquery.
-const $ = require('jquery');
-
 const financialModel = require('../models/financial-model');
 const expensesModel = require('../models/expenses-model');
 
@@ -23,7 +20,7 @@ const publishUpdate = {
    * @param {object} object - an object of financial model values
    */
   extendFinancialData: function (object) {
-    $.extend(financialModel.values, object);
+    Object.assign(financialModel.values, object);
     financialModel.calc(financialModel.values);
     expensesModel.calc();
   },
