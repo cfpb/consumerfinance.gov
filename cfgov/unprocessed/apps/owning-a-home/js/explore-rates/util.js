@@ -1,6 +1,5 @@
 import formatDate from 'date-format';
-import formatUSD from 'format-usd';
-import unFormatUSD from 'unformat-usd';
+import { unFormatUSD, formatUSD } from '../../../../js/modules/util/format.js';
 
 /**
  * Check if the house price entered is 0

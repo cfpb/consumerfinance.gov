@@ -9,7 +9,8 @@ import { getStateByCode } from '../util/other-utils.js';
 import { getSchoolData } from '../dispatchers/get-api-values.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
-import { isNumeric, stringToNum } from '../util/number-utils.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
+import { isNumeric } from '../util/number-utils.js';
 import {
   getProgramInfo,
   getSchoolValue,
@@ -179,13 +180,13 @@ function updateSchoolData(iped) {
         if (programInfo) {
           financialModel.setValue(
             'salary_annual',
-            stringToNum(programInfo.salary)
+            convertStringToNumber(programInfo.salary)
           );
           stateModel.setValue('programName', programInfo.name);
         } else {
           financialModel.setValue(
             'salary_annual',
-            stringToNum(getSchoolValue('medianAnnualPay6Yr'))
+            convertStringToNumber(getSchoolValue('medianAnnualPay6Yr'))
           );
         }
 
@@ -241,7 +242,7 @@ function parseQueryParameters(queryObj) {
       if (key === 'plus') {
         financialModel.setValue(
           'plusLoan_gradPlus',
-          stringToNum(queryObj[key]),
+          convertStringToNumber(queryObj[key]),
           false
         );
       }
@@ -251,7 +252,7 @@ function parseQueryParameters(queryObj) {
   // Copy programLength into the financial model
   financialModel.setValue(
     'other_programLength',
-    stringToNum(queryObj.lenp),
+    convertStringToNumber(queryObj.lenp),
     false
   );
 }

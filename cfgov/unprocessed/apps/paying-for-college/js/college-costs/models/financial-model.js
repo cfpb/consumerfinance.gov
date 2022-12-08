@@ -19,7 +19,8 @@ import {
 } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { debtCalculator } from '../util/debt-calculator.js';
-import { enforceRange, stringToNum } from '../util/number-utils.js';
+import { enforceRange } from '../util/number-utils.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
@@ -43,7 +44,7 @@ const financialModel = {
   extendValues: (data) => {
     for (const key in data) {
       if ({}.hasOwnProperty.call(financialModel.values, key)) {
-        financialModel.values[key] = stringToNum(data[key]);
+        financialModel.values[key] = convertStringToNumber(data[key]);
       }
     }
     financialModel.recalculate();
@@ -91,7 +92,7 @@ const financialModel = {
    */
   setValue: (name, value, updateView) => {
     if ({}.hasOwnProperty.call(financialModel.values, name)) {
-      financialModel.values[name] = stringToNum(value);
+      financialModel.values[name] = convertStringToNumber(value);
       financialModel.recalculate();
 
       if (updateView !== false) {
@@ -368,7 +369,7 @@ const financialModel = {
     }
 
     // Get correct tuition based on property name
-    financialModel.values.dirCost_tuition = stringToNum(
+    financialModel.values.dirCost_tuition = convertStringToNumber(
       getSchoolValue(tuitionProp)
     );
 
@@ -380,19 +381,19 @@ const financialModel = {
     if (housing === 'withFamily') {
       financialModel.values.dirCost_housing = 0;
     } else {
-      financialModel.values.dirCost_housing = stringToNum(
+      financialModel.values.dirCost_housing = convertStringToNumber(
         getSchoolValue(housingProp)
       );
     }
 
     // Get Other costs
     otherProp += otherProperties[housing];
-    financialModel.values.indiCost_other = stringToNum(
+    financialModel.values.indiCost_other = convertStringToNumber(
       getStateValue(otherProp)
     );
 
     // Get Books costs
-    financialModel.values.indiCost_books = stringToNum(
+    financialModel.values.indiCost_books = convertStringToNumber(
       getSchoolValue('books')
     );
 

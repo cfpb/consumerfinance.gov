@@ -19,9 +19,10 @@ import {
   updateRepaymentMeterChart,
 } from '../dispatchers/update-view.js';
 import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
+import { decimalToPercentString } from '../util/number-utils.js';
 import { schoolSearch } from '../dispatchers/get-api-values.js';
 import { updateState } from '../dispatchers/update-state.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 
 const schoolView = {
   _searchSection: null,
@@ -264,7 +265,7 @@ function _handleProgramSelectChange(event) {
   } else {
     updateFinancial(
       'salary_annual',
-      stringToNum(getSchoolValue('medianAnnualPay6Yr'))
+      convertStringToNumber(getSchoolValue('medianAnnualPay6Yr'))
     );
   }
   refreshExpenses();

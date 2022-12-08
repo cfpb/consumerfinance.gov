@@ -1,4 +1,4 @@
-import stringToNum from './handle-string-input.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 
 /**
  * Handles URL questy string to turn key-value pairs into an object.
@@ -91,7 +91,7 @@ function queryHandler(queryString) {
     let newValue = value;
 
     if (numericKeys.indexOf(key) !== -1) {
-      newValue = stringToNum(value);
+      newValue = convertStringToNumber(value);
     }
 
     return newValue;

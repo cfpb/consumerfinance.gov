@@ -5,8 +5,10 @@ import Analytics from '../utils/Analytics.js';
 const getDataLayerOptions = Analytics.getDataLayerOptions;
 import getExpenses from '../dispatchers/get-expenses-values.js';
 import publish from '../dispatchers/publish-update.js';
-import formatUSD from 'format-usd';
-import stringToNum from '../utils/handle-string-input.js';
+import {
+  convertStringToNumber,
+  formatUSD,
+} from '../../../../../js/modules/util/format.js';
 
 const expensesView = {
   $elements: $('[data-expenses]'),
@@ -83,14 +85,14 @@ const expensesView = {
   },
 
   /**
-   * Helper function for handling user entries in expenses model INPUT fields
+   * Helper function for handling user entries in expenses model INPUT fields.
    *
-   * @param {string} id - The id attribute of the element to be handled
+   * @param {string} id - The id attribute of the element to be handled.
    */
   inputHandler: function (id) {
-    const $ele = $('#' + id);
-    const value = stringToNum($ele.val());
-    const key = $ele.attr('data-expenses');
+    const ele = document.querySelector('#' + id);
+    const value = convertStringToNumber(ele.value);
+    const key = ele.getAttribute('data-expenses');
     publish.expensesData(key, value);
     expensesView.updateView(getExpenses.values());
   },

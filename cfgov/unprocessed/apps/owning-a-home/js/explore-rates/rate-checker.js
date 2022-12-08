@@ -18,12 +18,11 @@ import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import amortize from 'amortize';
 import dropdown from '../dropdown-utils';
-import formatUSD from 'format-usd';
 import jumbo from 'jumbo-mortgage';
 import median from 'median';
 import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
-import unFormatUSD from 'unformat-usd';
+import { unFormatUSD, formatUSD } from '../../../../js/modules/util/format.js';
 
 // TODO: remove jquery.
 import $ from 'jquery';

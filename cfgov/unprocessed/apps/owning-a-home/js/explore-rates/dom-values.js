@@ -1,4 +1,4 @@
-const unFormatUSD = require('unformat-usd');
+import { unFormatUSD } from '../../../../js/modules/util/format.js';
 
 /**
  * Get value(s) of an individual HTML element in the control panel.

@@ -5,7 +5,7 @@ import {
 } from '../dispatchers/update-view.js';
 import { getExpenses } from '../dispatchers/get-api-values.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
-import { stringToNum } from '../util/number-utils.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 import { updateState } from '../dispatchers/update-state.js';
 
 // Please excuse some uses of underscore for code/HTML property clarity!
@@ -64,7 +64,7 @@ const expensesModel = {
    * @param {boolean} updateView - (defaults true) should view be updated?
    */
   setValue: (name, value, updateView) => {
-    expensesModel.values[name] = stringToNum(value);
+    expensesModel.values[name] = convertStringToNumber(value);
     expensesModel.calculateTotals();
     if (updateView !== false) {
       updateExpensesView();
@@ -129,7 +129,7 @@ const expensesModel = {
       if ({}.hasOwnProperty.call(propertyTranslator, key)) {
         const data = expensesModel.rawData[key];
         if (data) {
-          let value = stringToNum(
+          let value = convertStringToNumber(
             expensesModel.rawData[key][region][salaryRange]
           );
           value = Math.round(value / 12);
