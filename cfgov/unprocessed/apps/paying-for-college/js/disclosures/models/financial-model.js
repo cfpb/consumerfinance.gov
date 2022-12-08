@@ -1,6 +1,3 @@
-// TODO: Remove jquery.
-const $ = require('jquery');
-
 const recalculate = require('student-debt-calc');
 const getViewValues = require('../dispatchers/get-view-values');
 
@@ -110,7 +107,7 @@ const financialModel = {
     ) {
       schoolValues.undergrad = false;
     }
-    $.extend(this.values, schoolValues);
+    Object.assign(this.values, schoolValues);
   },
 
   /**
