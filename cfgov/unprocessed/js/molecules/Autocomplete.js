@@ -77,8 +77,7 @@ function Autocomplete(element, opts) {
   };
 
   // Search variables
-  const searchRequest = new AbortController();
-  const { signal } = searchRequest.signal;
+  let searchRequest;
   let _searchTerm = '';
   const _throttleFetch = throttle(function () {
     _fetchSuggestions();
@@ -321,6 +320,8 @@ function Autocomplete(element, opts) {
    */
   function _fetchSuggestions() {
     searchRequest.abort();
+    searchRequest = new AbortController();
+    const { signal } = searchRequest.signal;
 
     fetch(_settings.url + _settings.cleanQuery(_searchTerm), { signal })
       .then((response) => response.json())
