@@ -18,7 +18,6 @@ let progressBar;
 
 /**
  * @typedef {object} SurveyData
- * @property {string} itemBullet
  * @property {number} numAnswered
  * @property {number} pageIdx
  * @property {number[]} questionsByPage

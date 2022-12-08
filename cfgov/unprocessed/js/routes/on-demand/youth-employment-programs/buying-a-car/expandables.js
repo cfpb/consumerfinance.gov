@@ -3,8 +3,7 @@ const TEXT_TO_REPLACE = 'Show';
 const BUTTON_TEXT = 'Learn more';
 
 /**
- *
- * @param expandables
+ * @param expandables - {array} - List of expandable dom elements.
  */
 function updateExpandableButtonText(expandables) {
   expandables.forEach((expandable) => {

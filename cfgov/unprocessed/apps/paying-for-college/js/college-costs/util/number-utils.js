@@ -28,7 +28,8 @@ function stringToNum(numberString) {
   numberString = numberString.replace(/[^0-9.]+/g, '');
 
   /**
-   * Strip any periods after the first.
+   * This helper function places commas in the string. It's set up to
+   * be passed as a parameter to String.replace()
    *
    * @param {string} match - The matched substring.
    * @param {number} offset - The numeric offset of the matched substring.

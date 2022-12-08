@@ -30,12 +30,14 @@ function handleStringInput(numberString) {
   // Strip non-numeric values, maintaining periods
   numberString = numberString.replace(/[^0-9.]+/g, '');
 
-  // Strip any periods after the first
   /**
+   * This helper function places commas in the string. It's set up to
+   * be passed as a parameter to String.replace()
    *
-   * @param match
-   * @param offset
-   * @param full
+   * @param {string} match - The matched substring.
+   * @param {number} offset - The numeric offset of the matched substring.
+   * @param {string} full - The full string to be matched against.
+   * @returns {string} new string to replace.
    */
   function replaceCommas(match, offset, full) {
     if (offset === full.indexOf('.')) {
