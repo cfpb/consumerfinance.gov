@@ -1,5 +1,4 @@
-// Required modules.
-import * as treeTraversal from '../modules/util/tree-traversal.js';
+import { bfs } from '../modules/util/tree-traversal.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
 
@@ -333,7 +332,7 @@ function MegaMenuMobile(menus) {
     if (!_suspended) {
       _suspended = true;
 
-      treeTraversal.bfs(_menus.getRoot(), _handleSuspendTraversal);
+      bfs(_menus.getRoot(), _handleSuspendTraversal);
       _rootMenuContentDom.classList.remove('u-invisible');
       _rootMenuContentDom.classList.remove('u-hidden-overflow');
 

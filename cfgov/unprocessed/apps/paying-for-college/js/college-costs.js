@@ -1,4 +1,4 @@
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 import { appView } from './college-costs/views/app-view.js';
 import { chartView } from './college-costs/views/chart-view.js';
 import { constantsModel } from './college-costs/models/constants-model.js';

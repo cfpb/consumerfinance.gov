@@ -20,12 +20,11 @@
    <div data-js-hook="behavior_flyout-menu_content">
    ========================================================================== */
 
-// Required modules.
-import * as dataHook from '@cfpb/cfpb-atomic-component/src/utilities/data-hook.js';
+import { contains } from '@cfpb/cfpb-atomic-component/src/utilities/data-hook.js';
 import {
   BEHAVIOR_PREFIX,
   JS_HOOK,
-} from '@cfpb/cfpb-atomic-component/src/utilities/standard-type';
+} from '@cfpb/cfpb-atomic-component/src/utilities/standard-type.js';
 
 /**
  * @param {string} behaviorSelector - Behavior type used to find the element
@@ -95,7 +94,7 @@ function checkBehaviorDom(element, behaviorDataAttr) {
   // Check that the behavior is found on the passed DOM node.
   let dom;
 
-  if (dataHook.contains(element, behaviorDataAttr)) {
+  if (contains(element, behaviorDataAttr)) {
     dom = element;
     return dom;
   }

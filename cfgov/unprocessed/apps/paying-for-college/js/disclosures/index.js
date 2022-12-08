@@ -34,7 +34,7 @@ const app = {
           fetch.schoolData(urlValues.collegeID, urlValues.programID)
         ).done(function (schoolData, programData, nationalData) {
           const data = {};
-          $.extend(data, schoolData[0], programData[0], nationalData[0]);
+          Object.assign(data, schoolData[0], programData[0], nationalData[0]);
           const schoolValues = schoolModel.init(
             nationalData[0],
             schoolData[0],
@@ -42,7 +42,7 @@ const app = {
           );
 
           /* If PID exists, update the financial model and view based
-                 on program data */
+             on program data */
           if (!{}.hasOwnProperty.call(data, 'pidNotFound')) {
             financialModel.updateModelWithProgram(schoolValues);
             financialView.updateViewWithProgram(schoolValues, urlValues);

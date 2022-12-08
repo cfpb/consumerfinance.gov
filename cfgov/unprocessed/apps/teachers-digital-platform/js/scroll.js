@@ -1,5 +1,4 @@
-const scrollIntoView =
-  require('../../../js/modules/util/scroll').scrollIntoView;
+import { scrollIntoView } from '../../../js/modules/util/scroll.js';
 
 const scroll = {
   init: () => {
@@ -42,4 +41,4 @@ const scroll = {
   },
 };
 
-module.exports = scroll;
+export default scroll;

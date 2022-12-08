@@ -1,4 +1,4 @@
-import { assign } from './assign';
+import { assign } from './assign.js';
 
 const _requestAnimationFrame =
   window.requestAnimationFrame ||
