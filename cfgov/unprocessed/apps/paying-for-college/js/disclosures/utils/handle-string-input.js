@@ -10,6 +10,11 @@ function stringToNum(numberString) {
   if (typeof numberString === 'number') {
     return numberString;
   }
+
+  if (typeof numberString === 'undefined') {
+    return 0;
+  }
+
   let signMaker = 1;
   const minusPosition = numberString.indexOf(numberString.match('-'));
   const digitPosition = numberString.indexOf(numberString.match(/\d/));

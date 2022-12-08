@@ -1,6 +1,3 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
 import financialModel from '../models/financial-model.js';
 import expensesModel from '../models/expenses-model.js';
 
@@ -23,7 +20,7 @@ const publishUpdate = {
    * @param {object} object - an object of financial model values
    */
   extendFinancialData: function (object) {
-    $.extend(financialModel.values, object);
+    Object.assign(financialModel.values, object);
     financialModel.calc(financialModel.values);
     expensesModel.calc();
   },

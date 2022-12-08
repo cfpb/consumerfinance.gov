@@ -1,6 +1,3 @@
-// TODO: Remove jquery.
-import $ from 'jquery';
-
 import studentDebtCalculator from '@cfpb/student-debt-calculator';
 import getViewValues from '../dispatchers/get-view-values.js';
 
@@ -110,7 +107,7 @@ const financialModel = {
     ) {
       schoolValues.undergrad = false;
     }
-    $.extend(this.values, schoolValues);
+    Object.assign(this.values, schoolValues);
   },
 
   /**
