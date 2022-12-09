@@ -318,7 +318,7 @@ function Autocomplete(element, opts) {
    * request.
    */
   function _fetchSuggestions() {
-    searchRequest.abort();
+    if (searchRequest) searchRequest.abort();
     searchRequest = new AbortController();
     const { signal } = searchRequest.signal;
 
