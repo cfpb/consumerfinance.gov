@@ -27,6 +27,14 @@ export class FilingInstructionGuide {
     return cy.get('#ctrl-f-search-input');
   }
 
+  getSearchInputClearButton() {
+    return cy.get('#ctrl-f-clear-button');
+  }
+
+  getSearchModalCloseButton() {
+    return cy.get('#ctrl-f-close-button');
+  }
+
   getSearchResults() {
     return cy.get('#ctrl-f-search-results');
   }
