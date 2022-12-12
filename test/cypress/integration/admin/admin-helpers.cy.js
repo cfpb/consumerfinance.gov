@@ -85,11 +85,11 @@ export class AdminPage {
   }
 
   openNavigationTab(name) {
-    cy.get('.nav-main').contains(name).click();
+    cy.get('.sidebar-menu-item').contains(name).click();
   }
 
   selectSubMenu(name) {
-    cy.get('.menu-item').contains(name).click();
+    cy.get('.sidebar-menu-item--in-sub-menu').contains(name).click();
   }
 
   openRegulations() {
