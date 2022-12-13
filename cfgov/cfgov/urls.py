@@ -589,14 +589,14 @@ if settings.DEBUG:
     urlpatterns.append(
         re_path(
             r"^500/$",
-            TemplateView.as_view(template_name="500.html"),
+            TemplateView.as_view(template_name="v1/layouts/500.html"),
             name="500",
         )
     )
     urlpatterns.append(
         re_path(
             r"^404/$",
-            TemplateView.as_view(template_name="404.html"),
+            TemplateView.as_view(template_name="v1/layouts/404.html"),
             name="404",
         )
     )
@@ -618,7 +618,7 @@ def handle_error(code, request, exception=None):
     try:
         return render(
             request,
-            "%s.html" % code,
+            "v1/layouts/%s.html" % code,
             context={"request": request},
             status=code,
         )

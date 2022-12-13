@@ -1,0 +1,105 @@
+
+{# ==========================================================================
+
+   pagination.render()
+
+   ==========================================================================
+
+   Description:
+
+   Builds pagination markup when given:
+
+   total_pages: Total number of pages.
+
+   current_page:   Currently selected page (out of the total).
+
+   fragment_id: The fragment identifier attached
+                to the prev/next pagination buttons.
+                Default is empty string.
+
+   index:       A unique number given to render the form and its fields with.
+                Default is 0.
+
+   ========================================================================== #}
+
+{% macro render(total_pages, current_page, fragment_id='', index=0, prev_text='Newer', next_text='Older') %}
+{% if total_pages > 1 and current_page <= total_pages %}
+{% from 'v1/includes/macros/util/url_parameters.html' import url_parameters %}
+
+{% set fragment_id = '#' + fragment_id if fragment_id else '' %}
+
+    <nav class="m-pagination"
+         role="navigation"
+         aria-label="{{ _('Pagination') }}">
+        {%- if current_page > 1 %}
+        <a class="a-btn
+                  m-pagination_btn-prev"
+           href="?page={{ (current_page - 1) ~
+                          url_parameters(request.GET) ~
+                          fragment_id }}">
+        {%- else %}
+        <a class="a-btn
+                  a-btn__disabled
+                  m-pagination_btn-prev">
+        {% endif %}
+            <span class="a-btn_icon a-btn_icon__on-left">
+                {{- svg_icon('left') -}}
+            </span>
+            {{ _(prev_text) }}
+        </a>
+        {%- if current_page < total_pages %}
+        <a class="a-btn
+                  m-pagination_btn-next"
+           href="?page={{ (current_page + 1) ~
+                          url_parameters(request.GET) ~
+                          fragment_id }}">
+        {%- else %}
+        <a class="a-btn
+                  a-btn__disabled
+                  m-pagination_btn-next">
+        {% endif -%}
+            {{ _(next_text) }}
+            <span class="a-btn_icon a-btn_icon__on-right">
+                {{- svg_icon('right') -}}
+            </span>
+        </a>
+        <form class="m-pagination_form" action="{{ fragment_id }}">
+            <label for="m-pagination_current-page-{{ index | string }}">
+                <span class="m-pagination_label">
+                    {{ _('Page') }}
+                </span>
+                <span class="u-visually-hidden">
+                    {{ current_page }} out of {{ total_pages }} total pages
+                </span>
+            </label>
+            {% for (key, value_as_list) in request.GET.lists() %}
+                {% for list_item in value_as_list %}
+                    {% if list_item != '' and key != 'page' %}
+                        <input type="hidden"
+                               name="{{ key }}"
+                               value="{{ list_item }}">
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            <input id="m-pagination_current-page-{{ index | string }}"
+                   class="m-pagination_current-page"
+                   name="page"
+                   type="number"
+                   min="1"
+                   max="{{ total_pages }}"
+                   pattern="[0-9]*"
+                   inputmode="numeric"
+                   value="{{ current_page }}">
+            <span class="m-pagination_label">
+                {{- ' ' ~ _('of') ~ ' ' -}} {{- total_pages -}}
+            </span>
+            <button class="a-btn
+                           a-btn__link
+                           m-pagination_btn-submit"
+                    type="submit">
+                {{ _('Go') }}
+            </button>
+        </form>
+    </nav>
+{% endif %}
+{% endmacro %}

@@ -84,7 +84,7 @@ class BrowsePage(CFGOVPage):
         ]
     )
 
-    template = "browse-basic/index.html"
+    template = "v1/browse-basic/index.html"
 
     page_description = "Left-hand navigation, no right-hand sidebar."
 

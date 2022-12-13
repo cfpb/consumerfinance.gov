@@ -14,4 +14,4 @@ class MortgageDataDownloads(blocks.StructBlock):
     class Meta:
         label = "Mortgage Downloads Block"
         icon = "table"
-        template = "_includes/organisms/mortgage-performance-downloads.html"
+        template = "data_research/mortgage-performance-downloads.html"

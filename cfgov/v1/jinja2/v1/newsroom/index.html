@@ -1,0 +1,66 @@
+{% extends 'v1/layouts/layout-side-nav.html' %}
+
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+    {% for block in page.header %}
+        {% if 'featured_content' in block.block_type %}
+            <div class="block
+                        {{ 'u-mt0' if loop.first }}">
+                        {# u-mt0 is used instead of block__flush-top to keep top border #}
+                {% include_block block %}
+            </div>
+        {% elif loop.index == 1 %}
+        <div class="block
+                    block__flush-top">
+            {{ render_stream_child(block) }}
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% for block in page.content %}
+        {% if 'filter_controls' in block.block_type %}
+            <div class="block block__flush-top">
+                {% include_block block %}
+            </div>
+        {% else %}
+            {% import 'v1/includes/templates/render_block.html' as render_block with context %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {% endfor %}
+    <aside class="o-prefooter">
+        {% if page.sidefoot %}
+            {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+        {% endif %}
+        <div class="block
+                    block__bg
+                    block__flush-sides
+                    block__flush-bottom
+                    block__border-top">
+            <div class="content-l content-l__main">
+                <section class="block
+                                block__flush-top
+                                content-l_col
+                                content-l_col-1-2">
+                    {% import 'v1/includes/related-links.html' as related_links %}
+                    {{- related_links.render([
+                        [
+                            '/about-us/blog/',
+                            'The blog'
+                        ],
+                        [
+                            '/about-us/the-bureau/',
+                            'About us'
+                        ]
+                    ]) -}}
+                </section>
+                <section class="block content-l_col content-l_col-1-2">
+                    {% include 'v1/includes/templates/upcoming-events.html' %}
+                </section>
+            </div>
+        </div>
+    </aside>
+{% endblock %}

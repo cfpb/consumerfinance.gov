@@ -1,13 +1,13 @@
-{% import 'atoms/checkbox.html' as checkbox %}
-{% import 'atoms/radio-button.html' as radio %}
-{% import 'atoms/tag.html' as tag %}
-{% import 'search_result_item.html' as search_item %}
-{% import 'molecules/pagination.html' as pagination with context %}
-{% from 'organisms/expandable.html' import expandable with context %}
+{% import 'v1/includes/atoms/checkbox.html' as checkbox %}
+{% import 'v1/includes/atoms/radio-button.html' as radio %}
+{% import 'v1/includes/atoms/tag.html' as tag %}
+{% import 'prepaid_agreements//search_result_item.html' as search_item %}
+{% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+{% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 
 <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters">
     <h3>Narrow results by...</h3>
-    
+
     <form method="get" action="." class="o-form ">
         {% if query %}
             <input type="hidden" name="q" value="{{ query }}">
@@ -24,7 +24,7 @@
             </label>
             <select name="issuer_name" multiple="multiple" data-placeholder="Enter prepaid account issuer name" placeholder="Enter card issuer name" id="issuer_name" class="o-multiselect">
                 {% for issuer in active_filters['issuer_name'] %}
-                    <option 
+                    <option
                         value="{{ issuer }}"
                         {{ ' selected' if issuer in selections else '' }}>
                             {{ issuer }}
@@ -32,7 +32,7 @@
                 {% endfor %}
             </select>
         </div>
-                
+
         <div class="filter-section">
             {% set selections = filters['prepaid_type'] %}
             {% set expandable_settings = {
@@ -75,7 +75,7 @@
                 'paragraph': 'This will be either active or withdrawn.'
             } %}
             {% call() expandable(expandable_settings) %}
-            
+
              <div class="o-form_group">
                 <fieldset class="o-form_fieldset">
                     <ul class="m-list m-list__unstyled">
@@ -95,7 +95,7 @@
             </div>
             {% endcall %}
         </div>
-            
+
         <button class="a-btn u-mb15 u-hide-on-js">Apply filters</button>
     </form>
 </aside>
@@ -120,9 +120,9 @@
             </div>
         {% endif %}
     </div>
-    
+
     {% if filters | length %}
-    
+
         <div class="filters_applied">
             <div class="filters_tags">
                 <span class="filters_applied-label">
