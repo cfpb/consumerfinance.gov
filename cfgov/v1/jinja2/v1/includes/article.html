@@ -1,0 +1,71 @@
+
+{# ==========================================================================
+
+   render()
+
+   ==========================================================================
+
+   Description:
+
+   Render an article when given:
+
+   post:               The Sheer document that is available to a _single.html
+                       template. For example in blog/_single.html the variable
+                       `post` is available and represents the post for the
+                       `_single` page. In newsroom/_single.html this variables
+                       is called `newsroom`.
+
+   path:               The path to which post filters are applies. For example,
+                       if the post is a blog post then path should be
+                       '/about-us/blog/'.  Remember to leverage vars.path
+                       instead of using the literal string '/about-us/blog/'.
+                       Path is used to create the filtered URL:
+                       {{ path }}?tags={{ tag }}
+
+   ========================================================================== #}
+
+{% import 'v1/includes/organisms/item-introduction.html' as item_introduction with context %}
+{%- import 'v1/includes/templates/render_block.html' as render_block with context -%}
+{%- import 'v1/includes/tags.html' as tags -%}
+
+{% macro setCTAFlag( blocks ) %}
+  {% for block in blocks.value %}
+      {% if block.block_type == 'cta' %}
+        {% do block.value.update({ 'is_inset': true }) %}
+      {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+<article class="post">
+    <header>
+        {% set data = {
+            'category': page.categories.all(),
+            'heading': page.title,
+            'date': page.date_published,
+            'has_social': True,
+            'social_options': { 'is_printable': true }
+        } %}
+
+        {% for block in page.header -%}
+            {% if block.block_type == 'article_subheader' %}
+                {% do data.update({'paragraph': block.value}) %}
+            {% endif %}
+        {% endfor %}
+
+        {{ item_introduction.render(data) }}
+    </header>
+
+    <div class="post_body">
+        {% for block in page.content %}
+            {% if block.block_type == 'full_width_text' %}
+                {{ setCTAFlag( block ) }}
+            {% endif %}
+            {{ render_block.render(block, loop.index) }}
+        {% endfor %}
+    </div>
+    {% if page.tags.all() | length %}
+        <footer>
+            {{ tags.render(page.related_metadata_tags()) }}
+        </footer>
+    {% endif %}
+</article>

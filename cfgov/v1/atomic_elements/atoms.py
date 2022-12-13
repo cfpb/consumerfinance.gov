@@ -66,7 +66,7 @@ class Hyperlink(blocks.StructBlock):
 
     class Meta:
         icon = "link"
-        template = "_includes/atoms/hyperlink.html"
+        template = "v1/includes/atoms/hyperlink.html"
 
 
 class Button(Hyperlink):

@@ -80,4 +80,4 @@ const Analytics = {
 
 Analytics.init();
 
-module.exports = Analytics;
+export default Analytics;

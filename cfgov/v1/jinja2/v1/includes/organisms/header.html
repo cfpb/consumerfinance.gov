@@ -1,0 +1,120 @@
+{# ==========================================================================
+
+   header.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for Header organism.
+
+   show_mega_menu:  Whether the mega menu is included. Default is true.
+
+   language:        The page's language value (used to display different
+                    information on Spanish pages). Defaults to 'en' for
+                    English.
+
+   ========================================================================== #}
+
+{% macro render( show_mega_menu=true, language='en' ) %}
+
+{% set mega_menu_content = show_mega_menu and get_mega_menu_content() %}
+
+<header class="o-header{% if mega_menu_content %} o-header__mega-menu{% endif %}">
+
+    {% if flag_enabled('BETA_NOTICE') %}
+    {% import 'v1/includes/molecules/notification.html' as notification with context %}
+    <div class="m-global-banner">
+      <div class="wrapper
+                  wrapper__match-content">
+            {{ notification.render(
+                'warning',
+                true,
+                'This beta site is a work in progress. Our regular site continues to be
+                <a href="https://www.consumerfinance.gov/">www.consumerfinance.gov</a>.' | safe
+            ) }}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if banners %}
+        {% for banner in banners %}
+            <div class="m-global-banner">
+                <div class="wrapper
+                          wrapper__match-content">
+                    {% include_block banner.content %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if flag_enabled('COLLECT_OUTAGE') %}
+        {{ collect_outage_banner(request) }}
+    {% endif %}
+
+    {% if flag_enabled('COMPLAINT_INTAKE_TECHNICAL_ISSUES') %}
+        {{ complaint_issue_banner(request) }}
+    {% endif %}
+
+    {% if flag_enabled('COMPLAINT_INTAKE_MAINTENANCE') %}
+        {{ complaint_maintenance_banner(request) }}
+    {% endif %}
+
+    {% if flag_enabled('OMWI_SALESFORCE_OUTAGE') %}
+        {{ omwi_salesforce_outage_banner(request) }}
+    {% endif %}
+
+    {% import 'v1/includes/molecules/global-eyebrow.html' as global_eyebrow with context %}
+    {{ global_eyebrow.render( true, language ) }}
+
+    <div class="o-header_content">
+
+        <div class="wrapper wrapper__match-content">
+            {% if language == 'es' %}
+            <a class="o-header_logo" href="/es/">
+                <img class="o-header_logo-img"
+                     src="{{ static('img/logo_es_286x50.png') }}"
+                     srcset="{{ static('img/logo_es_228x40.png') }} 228w,
+                             {{ static('img/logo_es_228x40@2x.png') }} 456w,
+                             {{ static('img/logo_es_228x40@3x.png') }} 684w,
+                             {{ static('img/logo_es_228x40@4x.png') }} 912w,
+                             {{ static('img/logo_es_286x50.png') }} 286w,
+                             {{ static('img/logo_es_286x50@2x.png') }} 572w"
+                     sizes="(max-width: 900px) 228px,
+                            286px"
+                     alt="Oficina para la Protección Financiera del Consumidor">
+            </a>
+            {% else %}
+            <a class="o-header_logo" href="/">
+                <img class="o-header_logo-img"
+                     src="{{ static('img/logo_237x50.png') }}"
+                     srcset="{{ static('img/logo_161x34.png') }} 161w,
+                             {{ static('img/logo_161x34@2x.png') }} 322w,
+                             {{ static('img/logo_161x34@3x.png') }} 483w,
+                             {{ static('img/logo_161x34@4x.png') }} 644w,
+                             {{ static('img/logo_237x50.png') }} 237w,
+                             {{ static('img/logo_237x50@2x.png') }} 474w"
+                     sizes="(max-width: 900px) 161px,
+                            237px"
+                     alt="Consumer Financial Protection Bureau"
+                     width="237"
+                     height="50">
+            </a>
+            {% endif %}
+
+            {% import 'v1/includes/molecules/global-header-cta.html' as global_header_cta with context %}
+            {{ global_header_cta.render( language ) }}
+
+            {% import 'v1/includes/molecules/global-search.html' as global_search with context %}
+            {{ global_search.render( language ) }}
+
+            {% if mega_menu_content %}
+                {% from 'mega_menu/mega-menu.html' import mega_menu with context %}
+                {{ mega_menu ( mega_menu_content, language=language ) }}
+            {% endif %}
+        </div>
+
+    </div>
+</header>
+
+{% endmacro %}

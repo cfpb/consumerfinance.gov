@@ -1,4 +1,4 @@
-const stringToNum = require('./handle-string-input.js');
+import stringToNum from './handle-string-input.js';
 
 /**
  * Handles URL questy string to turn key-value pairs into an object.
@@ -167,4 +167,4 @@ function queryHandler(queryString) {
   return valuePairs;
 }
 
-module.exports = queryHandler;
+export default queryHandler;

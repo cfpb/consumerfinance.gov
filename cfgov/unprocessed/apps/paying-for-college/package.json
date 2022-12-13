@@ -14,9 +14,9 @@
   "private": "true",
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
+    "@cfpb/student-debt-calculator": "3.0.2",
     "format-usd": "1.0.1",
-    "jquery": "3.5.1",
-    "sticky-kit": "1.1.3",
-    "student-debt-calc": "2.6.6"
+    "jquery": "3.6.1",
+    "sticky-kit": "1.1.3"
   }
 }

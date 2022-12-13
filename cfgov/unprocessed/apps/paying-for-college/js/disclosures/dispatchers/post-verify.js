@@ -1,5 +1,5 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
 const postVerify = {
   csrfToken: null,
@@ -39,4 +39,4 @@ const postVerify = {
   },
 };
 
-module.exports = postVerify;
+export default postVerify;

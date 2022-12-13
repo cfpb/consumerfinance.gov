@@ -1,0 +1,28 @@
+<style>
+#rental-assistance-finder {
+  max-width: 41.875rem;
+}
+#rental-assistance-finder dl a {
+  word-break: break-all;
+}
+#rental-assistance-finder .m-form-field + .m-form-field {
+  margin-top: 15px;
+}
+</style>
+
+<div id="rental-assistance-finder"
+     data-language="{{ page.language if page and page.language else 'en' }}"
+     {% if value.county_threshold %}
+     data-county-threshold={{ value.county_threshold }}
+     {% endif %}>
+</div>
+
+<div class="js-is-hidden">
+  {% import 'v1/includes/molecules/notification.html' as notification with context %}
+    {{ notification.render(
+      'error',
+      true,
+      'This interactive tool is not supported in your web browser, but you can still
+       <a style="text-decoration:underline" href="https://files.consumerfinance.gov/data/rental-assistance.html">view the full list of rental assistance programs</a>.'
+    ) }}
+</div>

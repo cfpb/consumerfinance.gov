@@ -31,7 +31,7 @@
    ========================================================================== #}
 
 
-{%- import 'macros/time.html' as time %}
+{%- import 'v1/includes/macros/time.html' as time %}
 
 {%- set columns = [ 'TITLE', 'GRADE', 'POSTING CLOSES', 'LOCATION' ] %}
 {%- set rows = [] %}
@@ -60,5 +60,5 @@
     'first_row_is_table_header': true,
     'is_stacked': true
 } %}
-    {% include '_includes/organisms/table.html' %}
+    {% include 'v1/includes/organisms/table.html' %}
 {% endwith %}

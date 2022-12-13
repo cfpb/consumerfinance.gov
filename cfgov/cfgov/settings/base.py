@@ -17,7 +17,9 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
 # This is the root of the Django project, 'cfgov'
 PROJECT_ROOT = REPOSITORY_ROOT.joinpath("cfgov")
-V1_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2", "v1")
+
+# Templates that are not scoped to specific Django apps will live here
+GLOBAL_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2")
 
 SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(32))
 
@@ -195,9 +197,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.jinja2.Jinja2",
         # Look for Jinja2 templates in these directories
         "DIRS": [
-            V1_TEMPLATE_ROOT,
-            V1_TEMPLATE_ROOT.joinpath("_includes"),
-            V1_TEMPLATE_ROOT.joinpath("_layouts"),
+            GLOBAL_TEMPLATE_ROOT,
             PROJECT_ROOT.joinpath("static_built"),
         ],
         # Look for Jinja2 templates in each app under a jinja2 subdirectory

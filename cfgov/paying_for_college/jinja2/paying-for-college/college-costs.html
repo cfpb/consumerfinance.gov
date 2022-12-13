@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'v1/layouts/base.html' %}
 {# import any other needed atoms, elements here #}
-{% import 'templates/render_block.html' as render_block with context %}
-{% import 'atoms/radio-button.html' as radio %}
-{% import 'molecules/notification.html' as notification with context %}
+{% import 'v1/includes/templates/render_block.html' as render_block with context %}
+{% import 'v1/includes/atoms/radio-button.html' as radio %}
+{% import 'v1/includes/molecules/notification.html' as notification with context %}
 {% from 'college-cost-blocks/macros/financial-item-expandable.html' import expandable with context %}
 {% import 'college-cost-blocks/macros/financial-item-input.html' as input with context %}
 {% import 'college-cost-blocks/macros/financial-item-text.html' as text_item with context %}
@@ -14,7 +14,7 @@
 {%- endblock css %}
 
 {% block content scoped %}
-    {%- import 'macros/accessible-languages.html' as accessible_languages with context-%}
+    {%- import 'v1/includes/macros/accessible-languages.html' as accessible_languages with context-%}
     <main class="content college-costs" data-state_gotstarted="false"
           id="main"
           {{ accessible_languages.render() }}> <!-- content__hide-horizontal-overflow removed for position sticky to work-->

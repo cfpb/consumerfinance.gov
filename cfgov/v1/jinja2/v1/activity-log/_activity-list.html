@@ -1,0 +1,50 @@
+{% import 'v1/includes/macros/category-slug.html' as category_slug %}
+
+{% macro render(posts) %}
+    {% set page_url = pageurl(page) %}
+    <table class="u-w100pct" data-qa-hook="filter-results">
+        <tbody>
+            <tr class="u-visually-hidden">
+                <th>
+                    Category
+                </th>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Date published
+                </th>
+            </tr>
+        {%- for post in posts %}
+            {% set post_url = pageurl(post) %}
+            <tr>
+                <td class="u-w20pct">
+                    {% if is_blog(post) %}
+                        {{ category_slug.render(category='blog', href=page_url) }}
+                    {% elif is_report(post) %}
+                        {{ category_slug.render(category='report', href=page_url) }}
+                    {% else %}
+                        {% for cat in post.categories.all() %}
+                            {% if loop.index > 1 %}
+                                |
+                            {% endif %}
+                            {{ category_slug.render(category=cat.name, href=page_url) }}
+                        {% endfor %}
+                    {% endif %}
+                </td>
+                <td class="u-w65pct">
+                    <a href="{{ post_url }}">
+                        <span class="h4 u-mb0">
+                            {{ post.preview_title | safe if post.preview_title else post.title }}
+                        </span>
+                    </a>
+                </td>
+                <td class="u-w15pct">
+                    {% import 'v1/includes/macros/time.html' as time %}
+                    {{ time.render(post.date_published, {'date':true}) }}
+                </td>
+            </tr>
+        {%- endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

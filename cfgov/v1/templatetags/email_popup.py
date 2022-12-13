@@ -19,7 +19,7 @@ def email_popup(request):
         if not flag_enabled(feature_flag, request=request):
             continue
 
-        template = "organisms/email-popup/{}.html".format(label)
+        template = "v1/includes/organisms/email-popup/{}.html".format(label)
         context = {"popup_label": label, "request": request}
         return mark_safe(render_to_string(template, context=context))
 

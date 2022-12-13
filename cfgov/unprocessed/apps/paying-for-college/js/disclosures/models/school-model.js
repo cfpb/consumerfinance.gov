@@ -87,4 +87,5 @@ const schoolModel = {
     return values;
   },
 };
-module.exports = schoolModel;
+
+export default schoolModel;

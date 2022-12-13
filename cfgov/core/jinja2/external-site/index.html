@@ -1,0 +1,56 @@
+{% extends 'v1/layouts/layout-full.html' %}
+
+{% set external_url = request_url or request_host %}
+
+{% block title -%}
+    External Site | Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block desc -%}
+    External Site
+{%- endblock %}
+
+{% block primary_nav -%}
+    {# No primary navigation needed on this page. #}
+{%- endblock %}
+
+{% block header -%}
+    {% include 'v1/includes/templates/header-without-nav.html' %}
+{%- endblock %}
+
+{% block footer -%}
+    {# No footer needed on this page. #}
+{%- endblock %}
+
+{% block javascript %}
+<script type='text/javascript'>
+    {% include '/js/routes/external-site.js' %}
+</script>
+{% endblock javascript %}
+
+{% block content_main %}
+    <div class="external-site">
+        {% if form.is_valid() %}
+        <h1>Thank you for visiting consumerfinance.gov.</h1>
+        <p class="lead-paragraph">
+            You are leaving the CFPB web server.
+            You will now access
+            <b>{{ form.cleaned_data['validated_url'] }}</b>,<br>
+            which may have different privacy policies.
+            We hope your visit was informative and enjoyable.
+        </p>
+        <p class="lead-paragraph u-js-only">
+            We’ll take you to the page in:
+            <span class="external-site_reload-container"></span>
+        </p>
+        <a id="external-site_proceed-btn"
+           href="{{ form.cleaned_data['validated_url'] }}"
+           class="a-btn
+                  a-btn__full-on-xs">
+            Proceed to external site
+        </a>
+        {% else %}
+            You attempted to reach an external link, but something went wrong.
+        {% endif %}
+    </div>
+{% endblock %}

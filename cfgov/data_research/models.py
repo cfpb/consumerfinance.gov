@@ -341,7 +341,7 @@ class MortgagePerformancePage(BrowsePage):
     and related data visualizations.
     """
 
-    template = "browse-basic/index.html"
+    template = "v1/browse-basic/index.html"
 
     def get_mortgage_meta(self):
         meta_names = ["sampling_dates", "download_files"]

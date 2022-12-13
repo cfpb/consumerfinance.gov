@@ -1,0 +1,321 @@
+{# ==========================================================================
+
+   event_meta_address()
+
+   ==========================================================================
+
+   Description:
+
+   Create HTML event meta address markup when given:
+
+   venue:                     A post date from a query result.
+
+   address_format (optional): A python string format to display to
+                              address information
+                              (e.g. '{venue} - {city}, {state}').
+                              Defaults to '{city}, {state}'.
+
+   ========================================================================== #}
+
+{% macro event_meta_address(event, address_format='{city}, {state}') %}
+    {%- set city   =  event.venue_city   | default('', true) -%}
+    {%- set state  =  event.venue_state  | default('', true) -%}
+    {%- set street =  event.venue_street | default('', true) -%}
+    {%- set suite  =  event.venue_suite  | default('', true) -%}
+    {%- set name   =  event.venue_name   | default('', true) -%}
+    {%- set zip    =  event.venue_zipcode | default('', true) -%}
+    <p class="event-meta_address h-adr">
+        {%- macro _city() %}
+            <span class="event-meta_city p-locality">{{ city }}</span>
+        {% endmacro %}
+
+        {%- macro _state() %}
+            <span class="event-meta_state p-state">{{ state }}</span>
+        {% endmacro %}
+
+        {%- macro _street() %}
+            <span class="event-meta_street p-street-address">{{ street }}</span>
+        {% endmacro -%}
+
+        {%- macro _suite() %}
+            <span class="event-meta_suite p-extended-address">{{ suite }}</span>
+        {% endmacro -%}
+
+        {% macro _venue() %}
+            <span class="event-meta_venue p-extended-address">{{ name }}</span>
+        {% endmacro %}
+
+        {% macro _zip() %}
+            <span class="event-meta_zip p-postal-code">{{ zip }}</span>
+        {% endmacro %}
+
+        {{
+            address_format.format(**{
+                'city'   : _city()   | trim,
+                'street' : _street() | trim,
+                'state'  : _state()  | trim,
+                'suite'  : _suite()  | trim,
+                'venue'  : _venue()  | trim,
+                'zip'    : _zip()    | trim
+            }) | safe
+        }}
+    </p>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   event_venue()
+
+   ==========================================================================
+
+   Description:
+
+   Create an event post venue when given:
+
+   post: A post from a query result.
+
+   event_state: A string indicating the state of the event.
+                Possible values: past, present, future.
+
+   ========================================================================== #}
+
+{% macro event_venue(event, event_state) %}
+    {% set state_prefix = ', ' if event.venue_city and event.venue_state else '' %}
+    {% set city_prefix_state = event.venue_city ~ state_prefix ~ event.venue_state %}
+
+    <section class="event-venue">
+        <div class="event-venue_details">
+            <header class="event-venue_header">
+                {% if ( event_state == 'present' ) %}
+                <button class="a-btn event-venue_live-btn">
+                    {{ svg_icon('broadcast') }}
+                    <span class="event-venue_live-btn_text">Live</span>
+                </button>
+                {% endif %}
+                <h2 class="event-venue_heading">
+                    {{ city_prefix_state }}
+                </h2>
+            </header>
+            <div class="content-l">
+                <div class="event-meta content-l_col content-l_col-1-2">
+                    {{ event_meta_address(event,
+                        address_format ='{venue} {street} {suite}
+                        {city}' ~ state_prefix ~ '{state} {zip}'
+                    ) }}
+                </div>
+                <div class="content-l_col content-l_col-1-2 event-calendar_container">
+                {% if event_state == 'past' and event.live_stream_availability and not event.archive_video_id %}
+                    Video replay will be<br> available shortly
+                {% else %}
+                    {% import 'v1/includes/macros/time.html' as time %}
+                    {% if event.start_dt %}
+                        {{ time.render(event.start_dt) }}
+                    {% endif %}
+                {% endif %}
+                </div>
+          </div>
+        </div>
+    {% if event.venue_image != 'none'
+       or (event_state == 'past' and event.archive_video_id)
+       or (event_state == 'present' and event.live_video_id) %}
+        <footer>
+            <figure class="event-media_container">
+                {% if event_state == 'present' and event.live_video_id %}
+                    {# DISPLAY LIVESTREAM #}
+                    {% import 'v1/includes/organisms/video-player.html' as video_player with context %}
+                    {{ video_player.render(
+                        video_id=event.live_video_id,
+                        button_pos='bottom-right'
+                    ) }}
+                {% elif event_state == 'past' %}
+                    {% if event.archive_video_id %}
+                        {# DISPLAY VIDEO RECORDING #}
+                        {% import 'v1/includes/organisms/video-player.html' as video_player with context %}
+                        {{ video_player.render(
+                            video_id=event.archive_video_id,
+                            button_pos='bottom-right'
+                        ) }}
+                    {% elif event.post_event_image_type == 'image' %}
+                        {# DISPLAY SPECIFICALLY-CHOSEN POST-EVENT IMAGE #}
+                        {% set img = image(event.post_event_image, 'width-1416') %}
+                        <img class="o-post-preview_image"
+                             src="{{ img.url }}"
+                             alt="{{ image_alt_value(img) }}">
+                    {% else %}
+                        {# DISPLAY PLACEHOLDER POST-EVENT IMAGE #}
+                        {% set img = image(event.post_event_image, 'width-1416') %}
+                        <img class="o-post-preview_image"
+                             src="{{ static('img/cfpb_video_cover_card_1380x776.png') }}"
+                             alt="">
+                    {% endif %}
+                {% elif event.venue_image_type == 'map' %}
+                    {# DISPLAY MAP IMAGE #}
+                    {# Note: Max dimesions for Mapbox static image API: 1280x1280. #}
+                    <img src="{{ event.location_image_url(size='708x398') }}" alt="">
+                {% elif event.venue_image_type == 'image' %}
+                    {# DISPLAY SPECIFICALLY-CHOSEN VENUE IMAGE #}
+                    {% set img = image(event.venue_image, 'width-1416') %}
+                    <img class="o-post-preview_image"
+                         src="{{ img.url }}"
+                         alt="{{ image_alt_value(img) }}">
+                {% endif %}
+            </figure>
+        </footer>
+    {% endif %}
+    </section>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   event_agenda()
+
+   ==========================================================================
+
+   Description:
+
+   Create an event agenda table when given
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
+{% macro event_agenda(event) %}
+  <div class="block
+              block__padded-top
+              block__border-top">
+    <h2>Agenda</h2>
+    <table class="o-table
+                  event-agenda_table
+                  o-table__stack-on-small
+                  u-w100pct
+                  block
+                  block__flush-top">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Agenda</th>
+                <th>Location</th>
+                <th>Speakers</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for block in event.agenda_items %}
+          {% set bound = block.value.bound_blocks %}
+            <tr>
+                <td>
+                    {% import 'v1/includes/macros/time.html' as time %}
+                    {% if bound.start_time.value is not none %}
+                      {{ time.render(
+                          bound.start_time.render(),
+                          {'date':false,'time':true,'timezone':false}
+                      ) }}
+                    {% endif %}
+                    {% if bound.end_time.value is not none %}
+                      &ndash;
+                      {{ time.render(bound.end_time.render(), {'time':true, 'timezone':true}) }}
+                    {% endif %}
+                </td>
+                <td data-label="Agenda">
+                    {{ bound.description.render() }}
+                </td>
+                <td data-label="Location">
+                  {% if bound.location.render() %}
+                    {{ bound.location.render() }}
+                  {% endif %}
+                </td>
+                <td data-label="Speakers">
+                {% for speaker in bound.speakers.value %}
+                    {%- if speaker.bound_blocks.url.render() -%}
+                    <a href="{{ speaker.bound_blocks.url.render() }}">
+                    {{- speaker.bound_blocks.name.render() -}}
+                    </a>
+                    {%- else -%}
+                    {{- speaker.bound_blocks.name.render() -}}
+                    {%- endif -%}
+                    {{ '; ' if loop.index < loop.length else '' }}
+                {%- endfor -%}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+{% endmacro %}
+
+{# ==========================================================================
+
+   event_media()
+
+   ==========================================================================
+
+   Description:
+
+   Create event archive media markup when given:
+
+   event: An event from a query result.
+
+   ========================================================================== #}
+
+{% macro event_media( event ) %}
+{% set col_classes = 'content-l_col
+                      content-l_col-1-2
+                      block
+                      block__padded-top
+                      block__flush-top
+                      block__flush-bottom'
+%}
+
+{% if event.speech_transcript or event.video_transcript or event.flickr_url %}
+<div class="block block__border-top">
+    <div class="event-archive_media-container
+                content-l
+                content-l__large-gutters">
+        {% if event.flickr_url %}
+        <section class="{{ col_classes }} block__padded-bottom">
+            <h4>Photography</h4>
+            <p class="u-flexible-container">
+                <img class="u-flexible-container_inner"
+                     src='{{ event.flickr_url }}' >
+            </p>
+            <p class="speech_link-container">
+                <a class="a-link
+                          a-link__jump
+                          a-link__external-link"
+                    href="{{ event.flickr_url }}">
+                    See the album for the Event
+                </a>
+            </p>
+        </section>
+        {% endif %}
+        <div class="{{ col_classes }}">
+            {% if event.speech_transcript %}
+            <section class="block block__flush-top">
+                <h4>Speech text</h4>
+                <p>
+                    <a href="{{ event.speech_transcript.url }}"
+                       class="a-link
+                              a-link__jump">
+                       Download speech
+                    </a>
+                </p>
+            </section>
+            {% endif %}
+            {% if event.video_transcript %}
+            <section class="block block__flush-bottom">
+                <h4>Video transcript</h4>
+                <p>
+                    <a href="{{ event.video_transcript.url }}"
+                       class="a-link
+                              a-link__jump">
+                       Download transcript
+                    </a>
+                </p>
+            </section>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endmacro %}

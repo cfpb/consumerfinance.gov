@@ -12,7 +12,7 @@
 
 {% macro render() %}
     {% set nav_items, has_children = get_secondary_nav_items(request, page) %}
-    {% from 'organisms/expandable.html' import expandable with context %}
+    {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
     <nav class="o-regs3k-navigation o-expandable__padded"
          aria-label="Section navigation">
         <button class="o-regs3k-navigation_header o-expandable_header o-expandable_target">
@@ -37,7 +37,7 @@
             </span>
         </button>
         <div class="o-regs3k-sections">
-            {% import 'molecules/nav-link.html' as nav_link %}
+            {% import 'v1/includes/molecules/nav-link.html' as nav_link %}
             {%- for subpart in nav_items %}
                 {% set sec_nav_settings = {
                     'label': subpart.subpart_heading ~ ' ' ~ subpart.title ~ ' ' ~ subpart.section_range|safe,

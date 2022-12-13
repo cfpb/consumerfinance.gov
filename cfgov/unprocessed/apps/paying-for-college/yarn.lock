@@ -2,29 +2,22 @@
 # yarn lockfile v1
 
 
-extend@3.0.2:
+"@cfpb/student-debt-calculator@3.0.2":
   version "3.0.2"
-  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
-  integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
+  resolved "https://registry.yarnpkg.com/@cfpb/student-debt-calculator/-/student-debt-calculator-3.0.2.tgz#cdc1b048efde249851ecf5df8b5e437949b50012"
+  integrity sha512-4e68GvtW+SpbwbBHrNXl1ZXppys2304M7RVzpCM3K6O6dUDxSs2yQgYH95Fh/i1d2DZQQCvu7e/gHq96bRgwMw==
 
 format-usd@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/format-usd/-/format-usd-1.0.1.tgz#b5f80cf8d9eab5cf5f94135aa7cee272be5d705c"
   integrity sha512-tFCdsZS3MNvrCCEHp7pk98NWOzOOYTzyCdoMNOuwvbtTOCK0g9y178G9LU+YWR5ROtw0MrIB3gjHOJEYC4UeZg==
 
-jquery@3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
-  integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
+jquery@3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.1.tgz#fab0408f8b45fc19f956205773b62b292c147a16"
+  integrity sha512-opJeO4nCucVnsjiXOE+/PcCgYw9Gwpvs/a6B1LL/lQhwWwpbVEVYDZ1FokFr8PRc7ghYlrFPuyHuiiDNTQxmcw==
 
 sticky-kit@1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/sticky-kit/-/sticky-kit-1.1.3.tgz#dab5ace49b462cf6d4969b1d58e639fc01377570"
   integrity sha512-3TTTqSvKP/wfgXuEY444fwN5w1jsN35PIh1yIg2/1vCNmKJh+PRAXUhvSnZqjddOq86WtpL9slNm+BcEXBrteA==
-
-student-debt-calc@2.6.6:
-  version "2.6.6"
-  resolved "https://registry.yarnpkg.com/student-debt-calc/-/student-debt-calc-2.6.6.tgz#894f79ebaef64865e9004a8ddcd2d7f1e3fbb373"
-  integrity sha512-DACtsgkK+AJfcg02SZsi9vcsp+j0EYE6sThr71NwnmlTpRaOwT9YVtGufI+qYtxf+yL2HzgCZZkSpXr229Xg4Q==
-  dependencies:
-    extend "3.0.2"
