@@ -1,4 +1,4 @@
-{% extends 'layout-2-1.html' %}
+{% extends 'v1/layouts/layout-2-1.html' %}
 
 {% set breadcrumb_items = [{
     "title": "Diversity and Inclusion at the Bureau",
@@ -39,7 +39,7 @@
                 Rendered above the form for styling purposes.
             #}
             {% if form.errors %}
-                {% import 'molecules/notification.html' as notification %}
+                {% import 'v1/includes/molecules/notification.html' as notification %}
                 <div class="u-mb15">
                     {% for error in form.non_field_errors() %}
                         {{- notification.render( 'error', true, error | richtext ) }}

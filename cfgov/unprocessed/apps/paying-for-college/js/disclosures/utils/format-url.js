@@ -18,4 +18,4 @@ function formatSchoolURL(url) {
   return formattedURL;
 }
 
-module.exports = formatSchoolURL;
+export default formatSchoolURL;

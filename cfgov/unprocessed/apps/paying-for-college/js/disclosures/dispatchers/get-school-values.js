@@ -1,9 +1,5 @@
-const schoolModel = require('../models/school-model');
+import schoolModel from '../models/school-model.js';
 
-const getSchoolValues = {
-  values: function () {
-    return schoolModel.values;
-  },
-};
+const values = () => schoolModel.values;
 
-module.exports = getSchoolValues;
+export default { values };

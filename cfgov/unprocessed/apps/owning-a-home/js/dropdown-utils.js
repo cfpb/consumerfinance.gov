@@ -1,3 +1,4 @@
+// TODO: Remove jquery.
 import $ from 'jquery';
 
 /**

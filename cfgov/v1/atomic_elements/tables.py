@@ -66,7 +66,7 @@ class AtomicTableBlock(TableBlock):
     class Meta:
         default = None
         icon = "table"
-        template = "_includes/organisms/table.html"
+        template = "v1/includes/organisms/table.html"
         label = "Table"
 
     class Media:

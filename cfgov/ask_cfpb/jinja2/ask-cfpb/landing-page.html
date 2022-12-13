@@ -1,0 +1,126 @@
+{% extends 'v1/layouts/layout-2-1.html' %}
+{% import 'v1/includes/atoms/partially-styled-link.html' as partially_styled_link with context %}
+{% import 'v1/includes/templates/render_block.html' as render_block with context %}
+{% import 'v1/includes/organisms/ask-search.html' as ask_search with context %}
+
+{% set read_answer_text = _('Read answer') %}
+
+{% block content_modifiers -%}
+    {{ super() }} ask-cfpb-page ask-cfpb-page__landing
+{%- endblock %}
+
+{% block hero -%}
+    {% for block in page.header -%}
+        {{ render_block.render(block, loop.index) }}
+    {%- endfor %}
+{% endblock %}
+
+{% block content_main %}
+    <div class="content-l">
+        <section class="ask-search block__sub block__flush-top">
+            {{ ask_search.render( language=page.language, is_subsection=False ) }}
+        </section>
+
+        <section class="ask-categories">
+            <h2 class="u-show-on-mobile u-mt45">
+                {{ _('Browse questions by category') }}
+            </h2>
+            <ul class="u-show-on-mobile category_list m-list m-list__links u-mb0">
+                {% for portal in portal_cards %}
+                    <li class="m-list_item">
+                        <a class="m-list_link
+                                  a-link
+                                  a-link__jump
+                                  a-link__icon-after-text"
+                            href="{{ portal.url }} ">
+                            <span class="a-link_text">
+                                {{ portal.title }}
+                            </span>
+                            {% if portal.icon %}{{ svg_icon( portal.icon ) }}{% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="u-hide-on-mobile question-categories u-mb15">
+
+                {#
+                    TODO: This can use the standard card-group.html template
+                          if the partially styled links are removed.
+                #}
+                <div class="o-card-group o-card-group__column-2">
+                    <div class="o-card-group_cards">
+
+                    {% for portal in portal_cards %}
+                        <article class="m-card">
+                            <h2 class="m-card_heading">
+                                <a href="{{ portal.url }}">
+                                    {% if portal.icon -%}
+                                    <span class="m-card_icon">
+                                        {{- svg_icon( portal.icon ) -}}
+                                    </span>
+                                    {%- endif %}
+                                    <span>{{ portal.title }}</span>
+                                </a>
+                            </h2>
+
+                            <ul class="m-list
+                                       m-list__flush-left
+                                       question_list
+                                       u-mt10
+                                       u-mb30">
+                                {% for page in portal.featured_answers %}
+                                    <li class="m-list_item">
+                                    {{ partially_styled_link.render({
+                                        'plain_text': page.question,
+                                        'underlined_text': read_answer_text,
+                                        'url': page.url })
+                                    }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                            <div class="m-card_footer">
+                                <a href="{{ portal.url }}">
+                                {{ _('Learn more about') }} {{ portal.title|lower }}
+                                </a>
+                            </div>
+
+                        </article>
+                    {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+<a class="a-link a-link__jump"
+   href="{{'/ask-cfpb/' if page.language == 'es' else '/es/obtener-respuestas/'}}">
+    <span class="a-link_text">
+    {% if page.language == 'es'%}
+        View page in English
+    {% else %}
+        Ver página en español
+    {% endif %}
+    </span>
+</a>
+{% if about_us %}
+<div class="block u-mt45 u-mb45 about-us-text">
+    {{ about_us.text | richtext }}
+</div>
+{% endif %}
+{% if disclaimer %}
+<div class="block block__border-top block__padded-top disclaimer-text">
+    <h3 class="h4">{{ disclaimer.sidefoot_heading }}</h3>
+    {{ disclaimer.text | richtext }}
+</div>
+{% endif %}
+{%- endblock %}

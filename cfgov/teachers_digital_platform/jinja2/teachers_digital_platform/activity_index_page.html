@@ -1,6 +1,6 @@
-{% extends 'layout-full.html' %}
+{% extends 'v1/layouts/layout-full.html' %}
 
-{% import 'templates/render_block.html' as render_block with context %}
+{% import 'v1/includes/templates/render_block.html' as render_block with context %}
 
 {% block css -%}
     {{ super() }}
@@ -15,7 +15,7 @@
 {{ breadcrumb_items | length }}
 {% if breadcrumb_items | length > 0 %}
     <div class="content_wrapper">
-        {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
+        {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
         {{ breadcrumbs.render(breadcrumb_items) }}
     </div>
 {% endif %}

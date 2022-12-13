@@ -507,7 +507,7 @@ def add_export_feedback_permission_to_wagtail_admin_group_view():
 register_template_debug(
     "v1",
     "call_to_action",
-    "_includes/molecules/call-to-action.html",
+    "v1/includes/molecules/call-to-action.html",
     call_to_action_test_cases,
 )
 
@@ -515,21 +515,21 @@ register_template_debug(
 register_template_debug(
     "v1",
     "featured_content",
-    "_includes/organisms/featured-content.html",
+    "v1/includes/organisms/featured-content.html",
     featured_content_test_cases,
     extra_js=["featured-content-module.js"],
 )
 
 
 register_template_debug(
-    "v1", "heading", "_includes/blocks/heading.html", heading_test_cases
+    "v1", "heading", "v1/includes/blocks/heading.html", heading_test_cases
 )
 
 
 register_template_debug(
     "v1",
     "notification",
-    "_includes/molecules/notification.html",
+    "v1/includes/molecules/notification.html",
     notification_test_cases,
 )
 
@@ -537,7 +537,7 @@ register_template_debug(
 register_template_debug(
     "v1",
     "related_posts",
-    "_includes/molecules/related-posts.html",
+    "v1/includes/molecules/related-posts.html",
     related_posts_test_cases,
 )
 
@@ -545,7 +545,7 @@ register_template_debug(
 register_template_debug(
     "v1",
     "video_player",
-    "_includes/organisms/video-player.html",
+    "v1/includes/organisms/video-player.html",
     video_player_test_cases,
     extra_js=["video-player.js"],
 )
