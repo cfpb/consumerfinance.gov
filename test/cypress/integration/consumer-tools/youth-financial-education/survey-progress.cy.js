@@ -6,8 +6,8 @@ const survey = new TdpSurveyHelpers();
 describe('Youth Financial Education Survey: Progress', () => {
   /**
    *
-   * @param numDone
-   * @param percent
+   * @param numDone - {number}
+   * @param percent - {number}
    */
   function verifyProgress(numDone, percent) {
     cy.get('.tdp-survey-progress-out-of').should(
