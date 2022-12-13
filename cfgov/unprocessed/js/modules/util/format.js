@@ -24,7 +24,7 @@ function convertStringToNumber(numberString) {
   // Strip non-numeric values, maintaining periods
   numberString = numberString.replace(/[^0-9.]+/g, '');
 
-  numberString = numberString.replace(/\./g, replaceCommas);
+  numberString = numberString.replace(/\./g, stripExtraPeriods);
 
   // Get number value of string, then multiply by signMaker and return
   return Number(numberString) * signMaker;
@@ -38,7 +38,7 @@ function convertStringToNumber(numberString) {
  * @param {string} full - The full string to be matched against.
  * @returns {string} new string to replace.
  */
-function replaceCommas(match, offset, full) {
+function stripExtraPeriods(match, offset, full) {
   if (offset === full.indexOf('.')) {
     return '.';
   }
