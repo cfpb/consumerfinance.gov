@@ -1,31 +1,30 @@
-version: "3.4"
+version: '3.4'
 
 volumes:
-    postgres_data:
+  postgres_data:
 
 services:
+  elasticsearch:
+    environment:
+      ES_JAVA_OPTS: '-Xms1g -Xmx1g'
 
-    elasticsearch:
-        environment:
-            ES_JAVA_OPTS: "-Xms1g -Xmx1g"
-
-    python:
-        image: cfgov_python:prod
-        build:
-            target: cfgov-prod
-        environment:
-            ALLOW_ADMIN_URL: 'True'
-            APACHE_PORT: 8000
-            APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
-            DJANGO_ADMIN_USERNAME: admin
-            DJANGO_ADMIN_PASSWORD: admin
-            SECRET_KEY: abcdefghijklmnopqrstuvwxyz
-            MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
-            WATCHMAN_TOKENS: "token"
-            APACHE_STATUS_ALLOW_FROM: 127.0.0.1
-        ports:
-            - "8000:8000"
-        volumes:
-            - ./cfgov/apache/conf/:/src/consumerfinance.gov/cfgov/apache/conf/
-            - ./cfgov/apache/conf.d/:/src/consumerfinance.gov/cfgov/apache/conf.d/
-            - ./cfgov/apache/conf.modules.d/:/src/consumerfinance.gov/cfgov/apache/conf.modules.d/
+  python:
+    image: cfgov_python:prod
+    build:
+      target: cfgov-prod
+    environment:
+      ALLOW_ADMIN_URL: 'True'
+      APACHE_PORT: 8000
+      APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
+      DJANGO_ADMIN_USERNAME: admin
+      DJANGO_ADMIN_PASSWORD: admin
+      SECRET_KEY: abcdefghijklmnopqrstuvwxyz
+      MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
+      WATCHMAN_TOKENS: 'token'
+      APACHE_STATUS_ALLOW_FROM: 127.0.0.1
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./cfgov/apache/conf/:/src/consumerfinance.gov/cfgov/apache/conf/
+      - ./cfgov/apache/conf.d/:/src/consumerfinance.gov/cfgov/apache/conf.d/
+      - ./cfgov/apache/conf.modules.d/:/src/consumerfinance.gov/cfgov/apache/conf.modules.d/

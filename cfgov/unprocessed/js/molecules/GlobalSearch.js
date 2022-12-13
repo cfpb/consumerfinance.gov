@@ -1,4 +1,3 @@
-// Required modules.
 import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state.js';
 import {
   checkDom,

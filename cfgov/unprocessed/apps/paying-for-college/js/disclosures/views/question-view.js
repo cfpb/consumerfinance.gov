@@ -1,10 +1,10 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const Analytics = require('../utils/Analytics');
-const postVerification = require('../dispatchers/post-verify');
-const getFinancial = require('../dispatchers/get-financial-values');
-const getSchool = require('../dispatchers/get-school-values');
+import Analytics from '../utils/Analytics.js';
+import postVerification from '../dispatchers/post-verify.js';
+import getFinancial from '../dispatchers/get-financial-values.js';
+import getSchool from '../dispatchers/get-school-values.js';
 const getDataLayerOptions = Analytics.getDataLayerOptions;
 
 const questionView = {
@@ -110,4 +110,4 @@ const questionView = {
   },
 };
 
-module.exports = questionView;
+export default questionView;

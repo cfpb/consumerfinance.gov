@@ -25,6 +25,4 @@ function checkHudData(data) {
   return true;
 }
 
-module.exports = {
-  checkHudData,
-};
+export { checkHudData };

@@ -76,27 +76,25 @@
     {% if valid_values %}
         {%- set header_row = valid_values[0] -%}
         {%- set body_rows = valid_values[1:] -%}
-        <div class="o-table o-table-wrapper__scrolling">
-            <table>
-                <thead>
-                    <tr>
-                       {% for column in header_row %}
-                       <th>{{ column }}</th>
-                       {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                {% for row in body_rows %}
-                    <tr>
+        <table class="o-table o-table__stack-on-small">
+            <thead>
+                <tr>
                     {% for column in header_row %}
-                        {%- set cell_value = row[loop.index0] if row[loop.index0] is defined else '' -%}
-                        <td>{{ cell_value | safe }}</td>
+                    <th>{{ column }}</th>
                     {% endfor %}
-                    </tr>
+                </tr>
+            </thead>
+            <tbody>
+            {% for row in body_rows %}
+                <tr>
+                {% for column in header_row %}
+                    {%- set cell_value = row[loop.index0] if row[loop.index0] is defined else '' -%}
+                    <td data-label="{{ column }}">{{ cell_value | safe }}</td>
                 {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 {% endmacro %}
 

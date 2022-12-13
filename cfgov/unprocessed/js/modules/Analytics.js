@@ -1,5 +1,5 @@
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import typeCheckers from '@cfpb/cfpb-atomic-component/src/utilities/type-checkers';
+import { isArray } from '@cfpb/cfpb-atomic-component/src/utilities/type-checkers.js';
 
 const eventObserver = new EventObserver();
 const Analytics = {
@@ -81,7 +81,7 @@ const Analytics = {
    * @param {Array} eventsArray - Array of event objects.
    */
   sendEvents: function (eventsArray) {
-    if (typeCheckers.isArray(eventsArray)) {
+    if (isArray(eventsArray)) {
       for (let i = 0, len = eventsArray.length; i < len; i++) {
         Analytics.sendEvent(eventsArray[i]);
       }

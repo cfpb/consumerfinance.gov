@@ -1,0 +1,49 @@
+{% extends 'v1/layouts/layout-side-nav.html' %}
+
+{% import 'v1/includes/templates/render_block.html' as render_block with context %}
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+    {% for block in page.header -%}
+        {% if 'featured_content' in block.block_type %}
+            <div class="block
+                        {{ 'u-mt0' if loop.first }}">
+                        {# u-mt0 is used instead of block__flush-top to keep top border #}
+                {% include_block block %}
+            </div>
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+
+    {% if page.share_and_print %}
+        {% import "v1/includes/molecules/social-media.html" as social_media with context -%}
+        <div class="block block__flush-top block__flush-bottom block__padded-bottom">
+            {{ social_media.render(
+                {
+                    'is_share_view': true,
+                    'is_printable': true
+                }
+            ) }}
+        </div>
+    {% endif %}
+
+    {% for block in page.content -%}
+        {% if block.block_type in ['job_listing_table', 'simple_chart'] %}
+            {% include_block block %}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+
+    {% if page.sidefoot %}
+        <aside class="o-prefooter">
+            {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+        </aside>
+    {% endif %}
+
+{% endblock %}

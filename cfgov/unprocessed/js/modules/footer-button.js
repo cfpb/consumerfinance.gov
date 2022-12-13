@@ -5,14 +5,13 @@
    scrolltop-animation-without-jquery
    ========================================================================== */
 
-// Required modules.
-import * as behavior from './util/behavior';
+import { attach } from './util/behavior.js';
 
 /**
  * Set up event handler for button to scroll to top of page.
  */
 function init() {
-  behavior.attach('return-to-top', 'click', (event) => {
+  attach('return-to-top', 'click', (event) => {
     event.preventDefault();
     _scrollToTop();
   });

@@ -1,5 +1,4 @@
-// Required modules.
-import * as treeTraversal from '../modules/util/tree-traversal.js';
+import { bfs } from '../modules/util/tree-traversal.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
 
@@ -175,7 +174,7 @@ function MegaMenuDesktop(baseClass, menus) {
    */
   function resume() {
     if (_suspended) {
-      treeTraversal.bfs(_menus.getRoot(), _handleResumeTraversal);
+      bfs(_menus.getRoot(), _handleResumeTraversal);
       _suspended = false;
     }
 
@@ -192,7 +191,7 @@ function MegaMenuDesktop(baseClass, menus) {
       // Clear active menu.
       _updateMenuState(null);
 
-      treeTraversal.bfs(_menus.getRoot(), _handleSuspendTraversal);
+      bfs(_menus.getRoot(), _handleSuspendTraversal);
 
       _suspended = true;
     }

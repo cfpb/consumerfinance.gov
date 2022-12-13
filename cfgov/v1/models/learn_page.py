@@ -155,7 +155,7 @@ class LearnPage(AbstractFilterPage):
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel("content")
     )
-    template = "learn-page/index.html"
+    template = "v1/learn-page/index.html"
 
     page_description = "Right-hand sidebar, no left-hand sidebar."
 
@@ -182,7 +182,7 @@ class DocumentDetailPage(AbstractFilterPage):
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel("content")
     )
-    template = "document-detail/index.html"
+    template = "v1/document-detail/index.html"
 
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")
@@ -437,7 +437,7 @@ class EventPage(AbstractFilterPage):
         ]
     )
 
-    template = "events/event.html"
+    template = "v1/events/event.html"
 
     @property
     def event_state(self):

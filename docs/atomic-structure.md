@@ -185,9 +185,9 @@ HTML, Less, and JavaScript for each component are in separate directories.
 ### HTML
 
 ```
-consumerfinance.gov/cfgov/jinja2/v1/_includes/atoms/
-consumerfinance.gov/cfgov/jinja2/v1/_includes/molecules/
-consumerfinance.gov/cfgov/jinja2/v1/_includes/organisms/
+consumerfinance.gov/cfgov/v1/jinja2/v1/includes/atoms/
+consumerfinance.gov/cfgov/v1/jinja2/v1/includes/molecules/
+consumerfinance.gov/cfgov/v1/jinja2/v1/includes/organisms/
 ```
 
 !!! note
@@ -253,7 +253,7 @@ You can get more information by reading the following:
 Routes are used to serve JavaScript bundles to the browser based
 on the requested URL or Wagtail page's `Media` definition.
 This happens via code contained in
-[`base.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_layouts/base.html#L85-L123). This file serves as the base HTML template for serving Wagtail pages.
+[`v1/layouts/base.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/jinja2/v1/layouts/base.html#L85-L123). This file serves as the base HTML template for serving Wagtail pages.
 
 ### Wagtail page `Media` class
 

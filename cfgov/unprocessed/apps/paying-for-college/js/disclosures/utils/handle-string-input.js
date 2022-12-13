@@ -6,10 +6,15 @@
  * @param {string} numberString - A string representing a number.
  * @returns {number} The assumed numeric value of numberString.
  */
-function handleStringInput(numberString) {
+function stringToNum(numberString) {
   if (typeof numberString === 'number') {
     return numberString;
   }
+
+  if (typeof numberString === 'undefined') {
+    return 0;
+  }
+
   let signMaker = 1;
   const minusPosition = numberString.indexOf(numberString.match('-'));
   const digitPosition = numberString.indexOf(numberString.match(/\d/));
@@ -44,4 +49,4 @@ function handleStringInput(numberString) {
   return Number(numberString) * signMaker;
 }
 
-module.exports = handleStringInput;
+export default stringToNum;

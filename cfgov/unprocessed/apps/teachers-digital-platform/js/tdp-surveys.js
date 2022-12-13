@@ -1,6 +1,6 @@
-import { gradeLevelPage } from './survey/grade-level-page';
-import { surveyPage } from './survey/survey-page';
-import { resultsPage } from './survey/result-page';
+import { gradeLevelPage } from './survey/grade-level-page.js';
+import { surveyPage } from './survey/survey-page.js';
+import { resultsPage } from './survey/result-page.js';
 
 const $ = document.querySelector.bind(document);
 

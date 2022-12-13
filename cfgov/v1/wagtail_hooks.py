@@ -38,10 +38,12 @@ from v1.template_debug import (
     heading_test_cases,
     notification_test_cases,
     register_template_debug,
+    related_posts_test_cases,
     video_player_test_cases,
 )
 from v1.views.reports import (
     AskReportView,
+    CategoryIconReportView,
     DocumentsReportView,
     EnforcementActionsReportView,
     ImagesReportView,
@@ -288,6 +290,26 @@ def register_ask_report_url():
     ]
 
 
+@hooks.register("register_reports_menu_item")
+def register_category_icons_report_menu_item():
+    return MenuItem(
+        "Category Icons",
+        reverse("category_icons_report"),
+        classnames="icon icon-" + CategoryIconReportView.header_icon,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_category_icons_report_url():
+    return [
+        re_path(
+            r"^reports/category-icons/$",
+            CategoryIconReportView.as_view(),
+            name="category_icons_report",
+        ),
+    ]
+
+
 @hooks.register("construct_reports_menu")
 # Alphabetizie and title case report menu items
 def clean_up_report_menu_items(request, report_menu_items):
@@ -485,7 +507,7 @@ def add_export_feedback_permission_to_wagtail_admin_group_view():
 register_template_debug(
     "v1",
     "call_to_action",
-    "_includes/molecules/call-to-action.html",
+    "v1/includes/molecules/call-to-action.html",
     call_to_action_test_cases,
 )
 
@@ -493,29 +515,37 @@ register_template_debug(
 register_template_debug(
     "v1",
     "featured_content",
-    "_includes/organisms/featured-content.html",
+    "v1/includes/organisms/featured-content.html",
     featured_content_test_cases,
     extra_js=["featured-content-module.js"],
 )
 
 
 register_template_debug(
-    "v1", "heading", "_includes/blocks/heading.html", heading_test_cases
+    "v1", "heading", "v1/includes/blocks/heading.html", heading_test_cases
 )
 
 
 register_template_debug(
     "v1",
     "notification",
-    "_includes/molecules/notification.html",
+    "v1/includes/molecules/notification.html",
     notification_test_cases,
 )
 
 
 register_template_debug(
     "v1",
+    "related_posts",
+    "v1/includes/molecules/related-posts.html",
+    related_posts_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
     "video_player",
-    "_includes/organisms/video-player.html",
+    "v1/includes/organisms/video-player.html",
     video_player_test_cases,
     extra_js=["video-player.js"],
 )

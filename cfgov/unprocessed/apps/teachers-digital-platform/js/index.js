@@ -1,34 +1,34 @@
 // External modules
 const AOS = require('aos/dist/aos');
-import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable';
-import expandableFacets from './expandable-facets';
-import beforeExpandableTransitionInit from './expandable-mobile';
+import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable.js';
+import expandableFacets from './expandable-facets.js';
+import beforeExpandableTransitionInit from './expandable-mobile.js';
 
 // Internal modules
-const scroll = require('./scroll');
-const search = require('./search');
-const sticky = require('./sticky');
-const analytics = require('./tdp-analytics');
-import surveys from './tdp-surveys';
+import scroll from './scroll.js';
+import { init as searchInit } from './search.js';
+import sticky from './sticky.js';
+import { bindAnalytics } from './tdp-analytics.js';
+import surveys from './tdp-surveys.js';
 
 const app = {
   init: () => {
     AOS.init();
 
     /**
-     * This must come before search.init() because it will also initialize
+     * This must come before searchInit() because it will also initialize
      * cfExpandables.
      */
     beforeExpandableTransitionInit();
 
-    search.init();
+    searchInit();
     cfExpandables.init();
     expandableFacets.init();
 
     scroll.init();
     sticky.init();
     surveys.init();
-    analytics.bindAnalytics();
+    bindAnalytics();
   },
 };
 

@@ -1,6 +1,13 @@
+from collections import Counter
+from operator import itemgetter
 from unittest import TestCase
 
-from v1.util.ref import get_appropriate_categories, get_category_children
+from v1.util.ref import (
+    categories,
+    get_appropriate_categories,
+    get_category_children,
+    get_category_icon,
+)
 
 
 class TestGetAppropriateCategories(TestCase):
@@ -58,3 +65,28 @@ class TestGetCategoryChildren(TestCase):
     def test_get_children_with_invalid_category_raises_keyerror(self):
         with self.assertRaises(KeyError):
             get_category_children(["This is not a valid category"])
+
+
+class TestGetCategoryIcon(TestCase):
+    def test_example_category_name(self):
+        self.assertEqual(get_category_icon("Auto loans"), "car")
+
+    def test_example_category_name_lowercase(self):
+        self.assertEqual(get_category_icon("auto loans"), "car")
+
+    def test_nonexistent_category_name_returns_none(self):
+        self.assertIsNone(get_category_icon("Invalid category name"))
+
+
+class CategoryTests(TestCase):
+    def test_that_all_category_slugs_are_unique(self):
+        counter = Counter()
+
+        for _, subcategories in categories:
+            counter.update(map(itemgetter(0), subcategories))
+
+        duplicates = [
+            category for category, count in counter.items() if count > 1
+        ]
+
+        self.assertFalse(sorted(duplicates), "Duplicate categories")

@@ -5,6 +5,11 @@ module.exports = {
       node: {
         paths: ['src'],
         extensions: ['.js', '.ts', '.d.ts', '.tsx'],
+        moduleDirectory: [
+          'node_modules',
+          // TDP module path is for resolving js-cookie in TDP tests.
+          'cfgov/unprocessed/apps/teachers-digital-platform/node_modules',
+        ],
       },
     },
     react: {

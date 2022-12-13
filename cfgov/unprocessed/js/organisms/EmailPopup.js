@@ -1,5 +1,10 @@
-import * as emailHelpers from '../modules/util/email-popup-helpers';
-import * as validators from '../modules/util/validators';
+import {
+  showEmailPopup,
+  recordEmailPopupView,
+  recordEmailRegistration,
+  recordEmailPopupClosure,
+} from '../modules/util/email-popup-helpers.js';
+import { email as validatorsEmail } from '../modules/util/validators.js';
 import {
   checkDom,
   setInitFlag,
@@ -37,7 +42,7 @@ function EmailPopup(element) {
    */
   function hidePopup() {
     _dom.classList.remove(VISIBLE_CLASS);
-    emailHelpers.recordEmailPopupClosure(_popupLabel);
+    recordEmailPopupClosure(_popupLabel);
 
     return this;
   }
@@ -48,9 +53,9 @@ function EmailPopup(element) {
    * @returns {boolean} True if the popup is shown, false otherwise.
    */
   function showPopup() {
-    if (emailHelpers.showEmailPopup(_popupLabel)) {
+    if (showEmailPopup(_popupLabel)) {
       _dom.classList.add(VISIBLE_CLASS);
-      emailHelpers.recordEmailPopupView(_popupLabel);
+      recordEmailPopupView(_popupLabel);
       return true;
     }
 
@@ -64,14 +69,14 @@ function EmailPopup(element) {
    * @returns {object} Validation status.
    */
   function emailValidation(fields) {
-    return validators.email(fields.email, '', { language: _language }).msg;
+    return validatorsEmail(fields.email, '', { language: _language }).msg;
   }
 
   /**
    * Callback function invoked after successful email submission.
    */
   function _onEmailSignupSuccess() {
-    emailHelpers.recordEmailRegistration(_popupLabel);
+    recordEmailRegistration(_popupLabel);
   }
 
   /**

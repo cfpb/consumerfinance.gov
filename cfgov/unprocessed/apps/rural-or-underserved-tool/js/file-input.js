@@ -1,10 +1,10 @@
-import DT from './dom-tools';
+import { changeElHTML, addClass, removeClass, getEl } from './dom-tools.js';
 
 /**
  * Reset the file input value.
  */
 function resetFileName() {
-  DT.getEl('#file-name').value = 'No file chosen';
+  getEl('#file-name').value = 'No file chosen';
 }
 
 /**
@@ -13,16 +13,16 @@ function resetFileName() {
  * @param {string} fileName - A filename.
  */
 function setFileName(fileName) {
-  DT.getEl('#file-name').value = fileName;
+  getEl('#file-name').value = fileName;
 }
 
 /**
  * Clear errors.
  */
 function resetError() {
-  DT.addClass('#file-error', 'u-hidden');
-  DT.addClass('#process-error', 'u-hidden');
-  DT.changeElHTML('.js-error-message', '');
+  addClass('#file-error', 'u-hidden');
+  addClass('#process-error', 'u-hidden');
+  changeElHTML('.js-error-message', '');
 }
 
 /**
@@ -31,8 +31,8 @@ function resetError() {
  * @param {string} message - An error message.
  */
 function setError(message) {
-  DT.changeElHTML('#file-error-desc', message);
-  DT.removeClass('#file-error', 'u-hidden');
+  changeElHTML('#file-error-desc', message);
+  removeClass('#file-error', 'u-hidden');
 }
 
 /**
@@ -57,7 +57,7 @@ function isCSV(fileName) {
   return fileName.substr(fileName.lastIndexOf('.') + 1) === 'csv';
 }
 
-export default {
+export {
   resetFileName,
   setFileName,
   resetError,

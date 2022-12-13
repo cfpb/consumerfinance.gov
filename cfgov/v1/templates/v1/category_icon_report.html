@@ -1,0 +1,48 @@
+{% extends 'v1/report_no-xlsx_base.html' %}
+
+{% load svg_icon %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <style>
+        .cf-icon-svg {
+            height: 1.1875em;
+            vertical-align: text-top;
+            fill: currentColor;
+        max-width: 1em;
+        }
+    </style>
+{% endblock %}
+
+{% block results %}
+    {% if object_list %}
+        <table class="listing">
+            <thead>
+                <tr>
+                    <th>Subcategory</th>
+                    <th>Category slug</th>
+                    <th>Category name</th>
+                    <th>Icon</th>
+                    <th>Icon name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for document in object_list %}
+                    <tr>
+                        <td>{{ document.subcategory }}</td>
+                        <td>{{ document.category_slug }}</td>
+                        <td>{{ document.category_name }}</td>
+                        <td>
+                            {% if document.icon %}
+                                {% svg_icon document.icon %}
+                            {% endif %}
+                        </td>
+                        <td>{{ document.icon | default:"" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No categories defined.</p>
+    {% endif %}
+{% endblock %}

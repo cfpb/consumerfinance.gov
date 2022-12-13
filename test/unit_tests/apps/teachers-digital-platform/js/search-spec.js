@@ -1,9 +1,10 @@
+import { enableFetchMocks } from 'jest-fetch-mock';
 import { simulateEvent } from '../../../../util/simulate-event.js';
+import { init as searchInit } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js';
 
-const search = require('../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js');
+enableFetchMocks();
 
 const HTML_SNIPPET = `
-
   <form class="tdp-activity-search" id="search-form" action="." data-js-hook="behavior_submit-search">
     <div class="input-contains-label">
       <label for="search-text" class="input-contains-label_before input-contains-label_before__search">
@@ -146,48 +147,28 @@ const HTML_SNIPPET = `
   </div>
 `;
 
-const xhr = global.XMLHttpRequest;
 global.console = { error: jest.fn(), log: jest.fn() };
 
 describe('The TDP search page', () => {
   beforeEach(() => {
-    // Reset global XHR
-    global.XMLHttpRequest = xhr;
+    fetch.resetMocks();
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
     // Fire init
-    search.init();
+    searchInit();
   });
 
   it('should not throw any errors on init', () => {
-    expect(() => search.init()).not.toThrow();
+    expect(() => searchInit()).not.toThrow();
   });
 
   it('should handle search form submissions', () => {
-    const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
-      readyState: 4,
-      status: 200,
-      onreadystatechange: jest.fn(),
-      responseText: [],
-    };
-    global.XMLHttpRequest = jest.fn(() => mockXHR);
     const form = document.querySelector('form#search-form');
     simulateEvent('submit', form);
     expect(window.location.href).toEqual('http://localhost/?q=executive');
   });
 
   it('should clear a filter when its X icon is clicked', () => {
-    const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
-      readyState: 4,
-      status: 200,
-      onreadystatechange: jest.fn(),
-      responseText: [],
-    };
-    global.XMLHttpRequest = jest.fn(() => mockXHR);
     const clearIcon = document.querySelector('.results_filters svg');
 
     let numFilters = document.querySelectorAll('div.a-tag').length;
@@ -196,8 +177,6 @@ describe('The TDP search page', () => {
     simulateEvent('click', clearIcon);
     numFilters = document.querySelectorAll('div.a-tag').length;
     expect(numFilters).toEqual(1);
-
-    mockXHR.onreadystatechange();
   });
 
   it('should not clear a filter when its tag is clicked', () => {
@@ -212,15 +191,6 @@ describe('The TDP search page', () => {
   });
 
   it('should clear all filters when the `clear all` link is clicked', () => {
-    const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
-      readyState: 4,
-      status: 200,
-      onreadystatechange: jest.fn(),
-      responseText: [],
-    };
-    global.XMLHttpRequest = jest.fn(() => mockXHR);
     const clearAllLink = document.querySelector('.results_filters-clear');
 
     let numFilters = document.querySelectorAll('div.a-tag').length;
@@ -229,20 +199,9 @@ describe('The TDP search page', () => {
     simulateEvent('click', clearAllLink);
     numFilters = document.querySelectorAll('div.a-tag').length;
     expect(numFilters).toEqual(0);
-
-    mockXHR.onreadystatechange();
   });
 
   it('should check nested filter when parent filter is clicked', () => {
-    const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
-      readyState: 4,
-      status: 200,
-      onreadystatechange: jest.fn(),
-      responseText: [],
-    };
-    global.XMLHttpRequest = jest.fn(() => mockXHR);
     const parentCheckbox = document.querySelector('#topic--earn');
 
     let numChecked = document.querySelectorAll(
@@ -273,15 +232,7 @@ describe('The TDP search page', () => {
   });
 
   it('should handle errors when the server is down', (done) => {
-    const mockXHR = {
-      open: jest.fn(),
-      send: jest.fn(),
-      readyState: 4,
-      status: 404,
-      onreadystatechange: jest.fn(),
-      responseText: 'Server error!',
-    };
-    global.XMLHttpRequest = jest.fn(() => mockXHR);
+    fetch.mockReject(new Error('Server error!'));
     const clearIcon = document.querySelector('.results_filters svg');
 
     simulateEvent('click', clearIcon);
@@ -290,7 +241,5 @@ describe('The TDP search page', () => {
       expect(console.error).toBeCalled();
       done();
     }, 100);
-
-    mockXHR.onreadystatechange();
   });
 });

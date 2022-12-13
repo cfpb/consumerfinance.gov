@@ -1,0 +1,133 @@
+
+{# ==========================================================================
+
+   Table - See [GHE]/flapjack/Modules-V1/wiki/Tables
+
+   ==========================================================================
+
+   Description:
+
+   Creates Table markup when given:
+
+   value.data:            A multi-dimensional list representing table rows.
+
+   value.heading_text:    (Optional) The text of a heading.
+
+   value.heading_level:   The heading level (H2, H3, H4). Default: H2
+
+   value.heading_icon:    (Optional) A string containing cf-icon name
+                          that triggers the insertion of an icon before
+                          the heading.
+
+   value.is_stacked:      Boolean indicating if the table columns
+                          should be stacked on mobile.
+
+   value.is_striped:      Boolean indicating if the table should be striped.
+
+   value.is_full_width:   Boolean indicating if the table should be full width.
+
+   value.has_data:        Boolean indicating if the table has data.
+
+   value.empty_table_msg: String containing message to display if table has no
+                          data.
+
+   value.first_row_is_table_header: Boolean indicating if the first row is the
+                          table header.
+
+   value.fixed_col_widths: Boolean indicating if the table has fixed column
+                           widths.
+
+   value.column_widths:   A list of column width (classes) to be applied in
+                          order to the table columns.
+
+   value.sortable:        Boolean indicating if the table is sortable.
+
+   ========================================================================== #}
+
+
+{% if value.has_data is not defined or value.has_data %}
+{% macro _render_cell(cell) %}
+    {{ (cell or '&nbsp;') | richtext | linebreaksbr | trim | safe }}
+{% endmacro %}
+{% if value.heading_text %}
+    <{{ value.heading_level -}}>
+        {%- if value.heading_icon %}
+            {{ svg_icon(value.heading_icon) }}
+        {% endif -%}
+        {{ value.heading_text | safe }}
+    </{{ value.heading_level}}>
+{% endif %}
+<table class="o-table
+              {{- ' o-table__stack-on-small' if value.is_stacked else '' -}}
+              {{- ' o-table__striped' if value.is_striped else '' -}}
+              {{- ' u-w100pct' if value.is_full_width else '' -}}
+              {{- ' o-table__sortable' if value.is_sortable else '' -}}">
+    {% set row_index = 0 %}
+    {% set first_row = value.data[row_index] %}
+    {% if value.first_row_is_table_header and value.data | list | length > 0 %}
+    {% set row_index = 1 %}
+    <thead>
+
+        {# Check to verify the row isn't empty. #}
+        {% if first_row | reject('none') | list | length %}
+        <tr>
+            {% for cell in value.data[0] %}
+                {% if value.fixed_col_widths and value.column_widths[loop.index0] != '' %}
+                    {% set width_class = ' class="' + value.column_widths[loop.index0] + '"' %}
+                {% endif %}
+            <th scope="col"{{ width_class | default }}>
+                {% if value.is_sortable and value.sortable_types[loop.index0] != '' %}
+                    {% set sort_value = value.sortable_types[loop.index0] %}
+                    {% set data_sort = sort_value | replace('-default', '') %}
+                    {% set sort_default = true if '-default' in sort_value else false %}
+                    <button class="sortable{{ ' sorted-up' if sort_default else '' }}"
+                            data-sort_type="{{ data_sort }}">
+                        {{ _render_cell(cell) | striptags }}
+                    </button>
+                {% else %}
+                    {{ _render_cell(cell) }}
+                {% endif %}
+            </th>
+            {% endfor %}
+        </tr>
+        {% endif %}
+    </thead>
+    {% endif %}
+    <tbody>
+    {% for row in value.data[row_index:] or [] %}
+        {% if row | reject('none') | list | length %}
+        <tr>
+            {% for cell in row or [] %}
+                {% set tag = 'td' %}
+                {% set attributes = '' %}
+
+                {# Logic to determine if the first column is a header. #}
+                {% if value.first_col_is_header and loop.first %}
+                    {% set tag = 'th' %}
+                    {% set attributes = ' scope="row"' %}
+                {% endif %}
+
+                {# Logic to determine if fixed widths need to be added. #}
+                {% if value.fixed_col_widths %}
+                    {% set attributes = attributes + ' class="' + value.column_widths[loop.index0] + '"' %}
+                {% endif %}
+
+                {# Logic to add data labels for creating responsive tables on mobile. #}
+                {% if value.first_row_is_table_header and
+                      first_row[loop.index0] is not none and
+                      value.is_stacked
+                %}
+                    {% set attributes = attributes + ' data-label="' + first_row[loop.index0]|striptags|trim + '"' %}
+                {% endif %}
+                <{{ tag | safe }}{{ attributes | safe }}>
+                    {{ _render_cell(cell) }}
+                </{{ tag | safe }}>
+            {% endfor %}
+        </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+{% elif value.empty_table_msg %}
+    <h3>{{ value.empty_table_msg }}</h3>
+{% endif %}

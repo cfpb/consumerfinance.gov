@@ -1,18 +1,3 @@
-import { ajaxRequest as xhr } from '../../../js/modules/util/ajax-request';
-
-/**
- * fetch - Wrapper for our ajax request method with callback support.
- *
- * @param {string} url - URL to request.
- * @param {Function} cb - Success/failure callback.
- * @returns {object} XMLHttpRequest object
- */
-const fetch = (url, cb) =>
-  xhr('GET', url, {
-    success: (data) => cb(null, data),
-    fail: (err) => cb(err),
-  });
-
 /**
  * getNewHash - Convert an old eRegs hash into a Regs3K hash.
  *
@@ -37,4 +22,4 @@ const getNewHash = (hash) => {
  */
 const isOldHash = (hash) => /^#?\d\d\d\d/.test(hash);
 
-export { fetch, getNewHash, isOldHash };
+export { getNewHash, isOldHash };

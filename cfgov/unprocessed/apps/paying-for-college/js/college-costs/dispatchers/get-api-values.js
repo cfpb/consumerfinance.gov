@@ -1,4 +1,4 @@
-import { promiseRequest } from '../util/promise-request';
+import { promiseRequest } from '../util/promise-request.js';
 
 /**
  * getApi - Make an API request to the endpoint specified with parameters specified
@@ -13,10 +13,6 @@ function getApi(url) {
         resolve(resp);
       })
       .catch(function (error) {
-        console.log(
-          'An error occurred accessing ' + url.replace(/[^a-z0-9]/gi, ''),
-          error
-        );
         reject(new Error(error));
       });
   });

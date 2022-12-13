@@ -1,4 +1,4 @@
-import DT from './dom-tools';
+import { addEl, getEl, getEls, removeClass } from './dom-tools';
 
 /**
  * Checks whether an address is a duplicate to that in an array of addresses.
@@ -69,16 +69,16 @@ function isValid(row) {
  * @param {object} result - Address data.
  */
 function render(result) {
-  let rowCount = DT.getEls('#' + result.type + ' tbody tr').length;
+  let rowCount = getEls('#' + result.type + ' tbody tr').length;
   if (result.type === 'rural' || result.type === 'notRural') {
-    rowCount = DT.getEls('#' + result.type + ' tbody tr').length / 2;
+    rowCount = getEls('#' + result.type + ' tbody tr').length / 2;
   }
 
   let hideRow = false;
   if (rowCount >= 5) {
     hideRow = true;
-    DT.removeClass('#' + result.type + 'More', 'u-hidden');
-    DT.removeClass('#' + result.type + 'All', 'u-hidden');
+    removeClass('#' + result.type + 'More', 'u-hidden');
+    removeClass('#' + result.type + 'All', 'u-hidden');
   }
 
   let rural;
@@ -131,8 +131,8 @@ function render(result) {
       '"></div></td></tr>';
   }
 
-  DT.removeClass('#' + result.type, 'u-hidden');
-  DT.addEl(DT.getEl('#' + result.type + ' tbody'), rowHTML);
+  removeClass('#' + result.type, 'u-hidden');
+  addEl(getEl('#' + result.type + ' tbody'), rowHTML);
 }
 
 /**
@@ -153,7 +153,7 @@ function pushAddress(row, addresses) {
   return addresses;
 }
 
-export default {
+export {
   isDup,
   isFound,
   isRural,

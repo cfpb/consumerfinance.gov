@@ -1,8 +1,8 @@
-{% extends "layout-full.html" %}
+{% extends "v1/layouts/layout-full.html" %}
 
 {% block body_classes %} class="content-grid" {% endblock body_classes %}
 
-{% import "organisms/card-group.html" as card_group with context %}
+{% import "v1/includes/organisms/card-group.html" as card_group with context %}
 
 {% block title -%}
     {{ _('Consumer Financial Protection Bureau') }}
@@ -17,7 +17,7 @@ content_main__flush-inner
 
     <section class="content_level--1">
         {% with value = hardcoded.hero, image = image_passthrough %}
-            {% include "molecules/hero.html" with context %}
+            {% include "v1/includes/molecules/hero.html" with context %}
         {% endwith %}
 
         <section class="o-well">

@@ -1,7 +1,7 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const Analytics = require('./Analytics');
+import Analytics from './Analytics.js';
 const getDataLayerOptions = Analytics.getDataLayerOptions;
 
 $(document).ready(function () {

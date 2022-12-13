@@ -2,8 +2,8 @@ import {
   closest,
   queryOne,
 } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-import Analytics from '../../../js/modules/Analytics';
-import { SCORES_UNSET_KEY } from './survey/config';
+import Analytics from '../../../js/modules/Analytics.js';
+import { SCORES_UNSET_KEY } from './survey/config.js';
 
 /* eslint-disable consistent-return */
 
@@ -744,36 +744,8 @@ const bindAnalytics = (spyMethod) => {
 };
 
 export {
-  getExpandable,
-  getPaginator,
-  getClearBtn,
-  getExpandableState,
-  handleExpandableClick,
-  handleFilterClick,
-  handleClearFilterClick,
-  handlePaginationClick,
   handleClearAllClick,
   handleFetchSearchResults,
-  handleSurveySwitchGradeClick,
-  handleSurveyPrivacyModalClick,
-  handleSurveyLetsDoThisClick,
-  handleSurveyChoiceChange,
-  handleSurveyErrorNoticeClick,
-  handleSurveyRestartModalClick,
-  handleSurveyExpandableClick,
-  handleSurveySectionClick,
-  handleSurveySubmitClick,
-  handleSurveyResultsExpandableClick,
-  handleSurveyDownloadClick,
-  handleSurveyResultsModalClick,
   handleSurveyResultsModalClose,
-  handleSurveyResultsSavePdfClick,
-  handleSurveyResultsGetLinkClick,
-  handleSurveyResultsCopyLinkClick,
-  handleSurveyResultsPrintClick,
-  handleSurveyViewPrintClick,
-  sendEvent,
-  sendSurveyEvent,
-  surveyResultsPageLoad,
   bindAnalytics,
 };

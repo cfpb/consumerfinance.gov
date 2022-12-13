@@ -17,7 +17,9 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
 # This is the root of the Django project, 'cfgov'
 PROJECT_ROOT = REPOSITORY_ROOT.joinpath("cfgov")
-V1_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2", "v1")
+
+# Templates that are not scoped to specific Django apps will live here
+GLOBAL_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2")
 
 SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(32))
 
@@ -195,9 +197,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.jinja2.Jinja2",
         # Look for Jinja2 templates in these directories
         "DIRS": [
-            V1_TEMPLATE_ROOT,
-            V1_TEMPLATE_ROOT.joinpath("_includes"),
-            V1_TEMPLATE_ROOT.joinpath("_layouts"),
+            GLOBAL_TEMPLATE_ROOT,
             PROJECT_ROOT.joinpath("static_built"),
         ],
         # Look for Jinja2 templates in each app under a jinja2 subdirectory
@@ -252,8 +252,16 @@ DATABASES = {
 LANGUAGE_CODE = "en-us"
 
 LANGUAGES = (
+    ("ar", _("Arabic")),
+    ("zh-Hans", _("Chinese (Simplified)")),
+    ("zh-Hant", _("Chinese (Traditional)")),
     ("en", _("English")),
+    ("ht", _("Haitian Creole")),
+    ("ko", _("Korean")),
+    ("ru", _("Russian")),
     ("es", _("Spanish")),
+    ("tl", _("Tagalog")),
+    ("vi", _("Vietnamese")),
 )
 
 LOCALE_PATHS = (os.path.join(PROJECT_ROOT, "locale"),)
@@ -473,18 +481,13 @@ CSP_SCRIPT_SRC = (
     "*.google-analytics.com",
     "*.googletagmanager.com",
     "*.googleoptimize.com",
-    "tagmanager.google.com",
-    "optimize.google.com",
     "api.mapbox.com",
     "js-agent.newrelic.com",
-    "dnn506yrbagrg.cloudfront.net",
     "bam.nr-data.net",
     "gov-bam.nr-data.net",
     "*.youtube.com",
     "*.ytimg.com",
-    "cdn.mouseflow.com",
-    "n2.mouseflow.com",
-    "us.mouseflow.com",
+    "*.mouseflow.com",
     "*.geo.census.gov",
     "about:",
     "www.federalregister.gov",
@@ -496,8 +499,6 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     "*.consumerfinance.gov",
-    "tagmanager.google.com",
-    "optimize.google.com",
     "api.mapbox.com",
 )
 
@@ -510,8 +511,6 @@ CSP_IMG_SRC = (
     "img.youtube.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
-    "tagmanager.google.com",
-    "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
     "blob:",
@@ -529,7 +528,6 @@ CSP_FRAME_SRC = (
     "*.googletagmanager.com",
     "*.google-analytics.com",
     "*.googleoptimize.com",
-    "optimize.google.com",
     "www.youtube.com",
     "*.qualtrics.com",
     "mailto:",

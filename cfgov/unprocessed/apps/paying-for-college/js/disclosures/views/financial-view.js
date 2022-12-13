@@ -1,17 +1,17 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const Analytics = require('../utils/Analytics');
-const getFinancial = require('../dispatchers/get-financial-values');
-const getExpenses = require('../dispatchers/get-expenses-values');
-const publish = require('../dispatchers/publish-update');
-const stringToNum = require('../utils/handle-string-input');
-const formatUSD = require('format-usd');
-const numberToWords = require('number-to-words');
-const linksView = require('../views/links-view');
-const metricView = require('../views/metric-view');
-const expensesView = require('../views/expenses-view');
-const postVerification = require('../dispatchers/post-verify');
+import Analytics from '../utils/Analytics.js';
+import getFinancial from '../dispatchers/get-financial-values.js';
+import getExpenses from '../dispatchers/get-expenses-values.js';
+import publish from '../dispatchers/publish-update.js';
+import stringToNum from '../utils/handle-string-input.js';
+import formatUSD from 'format-usd';
+import { toWords } from 'number-to-words';
+import linksView from '../views/links-view.js';
+import metricView from '../views/metric-view.js';
+import expensesView from '../views/expenses-view.js';
+import postVerification from '../dispatchers/post-verify.js';
 
 window.jQuery = window.$ = $;
 require('../../../node_modules/sticky-kit/dist/sticky-kit.js');
@@ -633,7 +633,7 @@ const financialView = {
     this.$programLength.on('change', function () {
       const programLength = Number($(this).val());
       const values = getFinancial.values();
-      let yearsAttending = numberToWords.toWords(programLength);
+      let yearsAttending = toWords(programLength);
       const $yearOrLess = $('[data-multi_year="false"]');
       const $multiYears = $('[data-multi_year="true"]');
 
@@ -951,4 +951,4 @@ const financialView = {
   },
 };
 
-module.exports = financialView;
+export default financialView;
