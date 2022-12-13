@@ -1,0 +1,37 @@
+{% extends 'v1/layouts/layout-2-1.html' %}
+
+{% import 'v1/includes/organisms/item-introduction.html' as item_introduction with context %}
+{% import 'v1/includes/templates/render_block.html' as render_block with context %}
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+    {% for block in page.header -%}
+        {% if block.block_type == 'item_introduction' %}
+            {{ item_introduction.render(block.value) }}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+
+    {% for block in page.content -%}
+        {% if block.block_type == 'contact_expandable_group' %}
+            <div class="block">
+                {% include_block block %}
+            </div>
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+{%- endblock %}

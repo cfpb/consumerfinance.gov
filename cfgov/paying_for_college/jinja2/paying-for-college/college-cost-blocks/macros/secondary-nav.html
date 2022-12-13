@@ -21,7 +21,7 @@
         'is_bordered': false,
         'is_expanded': false
     } %}
-    {% from 'organisms/expandable.html' import expandable with context %}
+    {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
     {% call() expandable(sec_nav_settings) %}
         <ul class="m-list
                    m-list__unstyled
@@ -32,7 +32,7 @@
                 data-nav-is-active="{{item.current if item.current else 'False'}}"
                 data-nav-is-open="False"
                 role="tab">
-                <a class="m-nav-link 
+                <a class="m-nav-link
                           m-nav-link__parent"
                     href="#"
                     data-gtm_ignore="true"

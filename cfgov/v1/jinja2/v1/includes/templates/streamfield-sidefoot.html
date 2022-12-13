@@ -1,0 +1,28 @@
+{% import 'v1/includes/molecules/related-metadata.html' as related_metadata with context %}
+{% import 'v1/includes/molecules/social-media.html' as social_media with context %}
+
+
+{% macro render(streamfield, half_width=false) %}
+    {% for block in streamfield %}
+        {% if 'related_posts' in block.block_type %}
+            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+                {% include_block block %}
+            </div>
+        {% elif 'related_metadata' in block.block_type %}
+            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+                {{ related_metadata.render(block.value) }}
+            </div>
+        {% elif 'social_media' in block.block_type %}
+            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+                {{ social_media.render(block.value) }}
+            </div>
+        {% elif 'rss_feed' in block.block_type %}
+            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+                {% include_block block %}
+            </div>
+        {% else %}
+            {% import 'v1/includes/templates/render_block.html' as render_block with context %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}

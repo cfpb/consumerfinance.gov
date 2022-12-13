@@ -16,7 +16,6 @@ import {
   getStateValue,
 } from '../dispatchers/get-model-values.js';
 import { updateSchoolView } from './update-view.js';
-// import { updateState } from '../dispatchers/update-state.js';
 import { urlParameters } from '../util/url-parameter-utils.js';
 
 /**

@@ -287,7 +287,7 @@ class EnforcementActionPage(AbstractFilterPage):
         ]
     )
 
-    template = "enforcement-action/index.html"
+    template = "v1/enforcement-action/index.html"
 
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField("content")

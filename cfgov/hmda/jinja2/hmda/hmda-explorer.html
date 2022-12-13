@@ -1,11 +1,11 @@
-{% extends 'layout-2-1.html' %}
+{% extends 'v1/layouts/layout-2-1.html' %}
 
 {% import 'hmda-explorer-controls.html' as controls with context %}
 {% import 'hmda-explorer-results.html' as results with context %}
 {% import 'hmda-explorer-institutions.html' as institutions with context %}
-{% import 'organisms/item-introduction.html' as item_introduction with context %}
-{% import 'templates/render_block.html' as render_block with context %}
-{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% import 'v1/includes/organisms/item-introduction.html' as item_introduction with context %}
+{% import 'v1/includes/templates/render_block.html' as render_block with context %}
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom

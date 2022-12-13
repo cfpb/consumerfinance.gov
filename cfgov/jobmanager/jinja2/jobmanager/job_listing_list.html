@@ -32,7 +32,7 @@
                   {{ job.title }}
                 <span class="m-list_link-subtext">
                     Closing
-                    {% import 'macros/time.html' as time %}
+                    {% import 'v1/includes/macros/time.html' as time %}
                     {{ time.render(job.close_date, {'date': true}, text_format=True) }}
                </span>
             </a>

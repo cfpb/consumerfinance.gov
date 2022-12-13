@@ -1,9 +1,5 @@
-const expensesModel = require('../models/expenses-model');
+import expensesModel from '../models/expenses-model.js';
 
-const getExpensesValues = {
-  values: function () {
-    return expensesModel.values;
-  },
-};
+const values = () => expensesModel.values;
 
-module.exports = getExpensesValues;
+export default { values };
