@@ -23,7 +23,7 @@ function convertStringToNumber(numberString) {
   }
 
   // Strip non-numeric values, maintaining periods
-  numberString = numberString.replace(/[^0-9\.]+/g, '');
+  numberString = numberString.replace(/[^0-9.]+/g, '');
 
   numberString = numberString.replace(/\./g, replaceCommas);
 
