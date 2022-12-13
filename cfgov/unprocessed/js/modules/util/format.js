@@ -117,7 +117,7 @@ function formatUSD(opts) {
  */
 function unFormatUSD(str) {
   return typeof str === 'string'
-    ? parseFloat(str.replace(/[^0-9\.]/g, '')) || str
+    ? parseFloat(str.replace(/[^0-9.]/g, '')) || str
     : str;
 }
 
