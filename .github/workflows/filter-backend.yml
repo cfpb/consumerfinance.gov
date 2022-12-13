@@ -1,0 +1,22 @@
+name: filter-backend
+on:
+  pull_request:
+    paths-ignore:
+      - '**.py'
+      - 'requirements/**.txt'
+      - '**.html'
+      - '**.mo'
+      - '**.po'
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toxenv:
+          - lint
+          - validate-migrations
+          - validate-assets
+          - validate-translations
+          - unittest
+    steps:
+      - run: 'echo "Skipping backend ${{ matrix.toxenv }}"'

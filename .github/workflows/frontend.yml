@@ -2,6 +2,9 @@ name: frontend
 
 on:
   pull_request:
+    paths:
+      - '**.js'
+      - '**package.json'
 
 jobs:
 
@@ -10,38 +13,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            frontend:
-              - '**.js'
-              - '**package.json'
 
       - name: Set up Node
         uses: actions/setup-node@v3
-        if: steps.filter.outputs.frontend == 'true'
         with:
             node-version: '16.x'
 
       - name: Install dependencies
-        if: steps.filter.outputs.frontend == 'true'
         run: |
           yarn
 
-      - name: Lint and test Javascript
-        if: steps.filter.outputs.frontend == 'true'
+      - name: Test Javascript
         run: yarn run test
 
       - name: Store test coverage
-        if: steps.filter.outputs.frontend == 'true'
         uses: actions/upload-artifact@v3
         with:
           name: frontend_coverage
           path: ./test/unit_test_coverage/clover.xml
 
       - name: Build Javascript
-        if: steps.filter.outputs.frontend == 'true'
         run: yarn build
 
   coverage:
@@ -53,34 +44,23 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            frontend:
-              - '**.js'
-              - '**package.json'
 
       - name: Set up Python
         uses: actions/setup-python@v3
-        if: steps.filter.outputs.frontend == 'true'
         with:
           python-version: 3.8
 
       - name: Install dependencies
-        if: steps.filter.outputs.frontend == 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements/ci.txt
 
       - name: Retrieve frontend coverage
         uses: actions/download-artifact@v3
-        if: steps.filter.outputs.frontend == 'true'
         with:
           name: frontend_coverage
           path: frontend_coverage
 
       - name: Check frontend test coverage
-        if: steps.filter.outputs.frontend == 'true'
         run: |
           diff-cover frontend_coverage/clover.xml --compare-branch=origin/main --fail-under=100
