@@ -2,7 +2,6 @@ import {
   convertStringToNumber,
   commaSeparate,
   formatUSD,
-  unFormatUSD,
 } from '../../../../../cfgov/unprocessed/js/modules/util/format.js';
 
 describe('convertStringToNumber', () => {
@@ -26,6 +25,32 @@ describe('convertStringToNumber', () => {
   it('Handle things that are not strings', () => {
     expect(convertStringToNumber(1234)).toBe(1234);
     expect(convertStringToNumber(undefined)).toBe(0);
+  });
+
+  it('Strip dollar sign', () => {
+    expect(convertStringToNumber('$0.00')).toBe(0);
+    expect(convertStringToNumber('$123')).toBe(123);
+    expect(convertStringToNumber('$123.4')).toBe(123.4);
+    expect(convertStringToNumber('$123.45')).toBe(123.45);
+    expect(convertStringToNumber('$123.456')).toBe(123.456);
+  });
+
+  it('Deal with extraneous characters', () => {
+    expect(convertStringToNumber('$%123')).toBe(123);
+    expect(convertStringToNumber('123.45.67')).toBe(123.4567);
+    expect(convertStringToNumber('79aaasdfa69s89')).toBe(796989);
+  });
+
+  it('Ignore non-parseable strings', () => {
+    const obj = { foo: 'bar' };
+    const func = function (a) {
+      return a;
+    };
+
+    expect(convertStringToNumber('blah')).toBe(0);
+    expect(convertStringToNumber(obj)).toBe(0);
+    expect(convertStringToNumber(func)).toBe(0);
+    expect(convertStringToNumber(Date)).toBe(0);
   });
 });
 
@@ -102,32 +127,5 @@ describe('formatUSD', () => {
     expect(formatUSD({ amount: -99, decimalPlaces: 0 })).toBe('-$99');
     expect(formatUSD({ amount: -1234, decimalPlaces: 0 })).toBe('-$1,234');
     expect(formatUSD({ amount: -5.55, decimalPlaces: 2 })).toBe('-$5.55');
-  });
-});
-
-describe('unFormatUSD', () => {
-  it('Strip dollar sign', () => {
-    expect(unFormatUSD('$123')).toBe(123);
-    expect(unFormatUSD('$123.4')).toBe(123.4);
-    expect(unFormatUSD('$123.45')).toBe(123.45);
-    expect(unFormatUSD('$123.456')).toBe(123.456);
-  });
-
-  it('Deal with extraneous characters', () => {
-    expect(unFormatUSD('$%123')).toBe(123);
-    expect(unFormatUSD('123.45.67')).toBe(123.45);
-    expect(unFormatUSD('79aaasdfa69s89')).toBe(796989);
-  });
-
-  it('Ignore non-parseable strings', () => {
-    const obj = { foo: 'bar' };
-    const func = function (a) {
-      return a;
-    };
-
-    expect(unFormatUSD('blah')).toBe('blah');
-    expect(unFormatUSD(obj)).toBe(obj);
-    expect(unFormatUSD(func)).toBe(func);
-    expect(unFormatUSD(Date)).toBe(Date);
   });
 });

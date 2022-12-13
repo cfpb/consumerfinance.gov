@@ -32,8 +32,7 @@ function convertStringToNumber(numberString) {
 }
 
 /**
- * This helper function places commas in the string. It's set up to
- * be passed as a parameter to String.replace()
+ * Strip any periods after the first.
  *
  * @param {string} match - The matched substring.
  * @param {number} offset - The numeric offset of the matched substring.
@@ -110,15 +109,4 @@ function formatUSD(opts) {
   return formattedString;
 }
 
-/**
- * @param  {string} str  USD-formatted string to be converted into a number.
- * @return {string}      The converted number OR the original argument if a
- *   string was not passed.
- */
-function unFormatUSD(str) {
-  return typeof str === 'string'
-    ? parseFloat(str.replace(/[^0-9.]/g, '')) || str
-    : str;
-}
-
-export { convertStringToNumber, commaSeparate, formatUSD, unFormatUSD };
+export { convertStringToNumber, commaSeparate, formatUSD };
