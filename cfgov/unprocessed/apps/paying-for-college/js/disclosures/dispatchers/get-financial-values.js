@@ -1,9 +1,5 @@
-const financialModel = require('../models/financial-model');
+import financialModel from '../models/financial-model.js';
 
-const getFinancialValues = {
-  values: function () {
-    return financialModel.values;
-  },
-};
+const values = () => financialModel.values;
 
-module.exports = getFinancialValues;
+export default { values };

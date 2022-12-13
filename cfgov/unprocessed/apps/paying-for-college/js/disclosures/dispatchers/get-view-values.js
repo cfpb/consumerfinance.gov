@@ -1,4 +1,4 @@
-const stringToNum = require('../utils/handle-string-input');
+import stringToNum from '../utils/handle-string-input.js';
 
 const getViewValues = {
   def: 0,
@@ -48,4 +48,4 @@ const getViewValues = {
   },
 };
 
-module.exports = getViewValues;
+export default getViewValues;
