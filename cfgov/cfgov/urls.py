@@ -122,10 +122,6 @@ urlpatterns = [
         name="kbyo-compare",
     ),
     re_path(
-        r"^your-story/$",
-        TemplateView.as_view(template_name="/your-story/index.html"),
-    ),
-    re_path(
         r"^parents/(?P<path>.*)$",
         RedirectView.as_view(
             url="/money-as-you-grow/%(path)s", permanent=True
