@@ -298,9 +298,9 @@ atomicHelpers.instantiateAll('.o-expandable', Expandable);</code></pre>
 <p>Our atomic components are separated and named based on asset type.
 HTML, Less, and JavaScript for each component are in separate directories.</p>
 <h3 id="html_3">HTML<a class="headerlink" href="#html_3" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code>consumerfinance.gov/cfgov/jinja2/v1/_includes/atoms/
-consumerfinance.gov/cfgov/jinja2/v1/_includes/molecules/
-consumerfinance.gov/cfgov/jinja2/v1/_includes/organisms/</code></pre>
+<pre class="highlight"><code>consumerfinance.gov/cfgov/v1/jinja2/v1/includes/atoms/
+consumerfinance.gov/cfgov/v1/jinja2/v1/includes/molecules/
+consumerfinance.gov/cfgov/v1/jinja2/v1/includes/organisms/</code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 </div>
@@ -346,7 +346,7 @@ You can get more information by reading the following:</p>
 <p>Routes are used to serve JavaScript bundles to the browser based
 on the requested URL or Wagtail page's <code>Media</code> definition.
 This happens via code contained in
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_layouts/base.html#L85-L123"><code>base.html</code></a>. This file serves as the base HTML template for serving Wagtail pages.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/jinja2/v1/layouts/base.html#L85-L123"><code>v1/layouts/base.html</code></a>. This file serves as the base HTML template for serving Wagtail pages.</p>
 <h3 id="wagtail-page-media-class">Wagtail page <code>Media</code> class<a class="headerlink" href="#wagtail-page-media-class" title="Permanent link">¶</a></h3>
 <p>Each atomic component has a <code>Media</code> class that lists the JavaScript files
 that should be loaded via <code>base.html</code>.
