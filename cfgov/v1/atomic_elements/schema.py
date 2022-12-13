@@ -10,7 +10,7 @@ class Tip(blocks.StructBlock):
 
     class Meta:
         icon = "title"
-        template = "_includes/blocks/schema/tip.html"
+        template = "v1/includes/blocks/schema/tip.html"
 
 
 class SchemaContent(blocks.StreamBlock):
@@ -43,7 +43,7 @@ class SchemaContent(blocks.StreamBlock):
     video_player = organisms.VideoPlayer()
 
     class Meta:
-        template = "_includes/blocks/schema/content-block.html"
+        template = "v1/includes/blocks/schema/content-block.html"
 
 
 class HowTo(blocks.StructBlock):
@@ -134,7 +134,7 @@ class HowTo(blocks.StructBlock):
 
     class Meta:
         icon = "grip"
-        template = "_includes/blocks/schema/how-to.html"
+        template = "v1/includes/blocks/schema/how-to.html"
         label = "How To"
 
 
@@ -171,7 +171,7 @@ class FAQ(blocks.StructBlock):
 
     class Meta:
         icon = "grip"
-        template = "_includes/blocks/schema/faq.html"
+        template = "v1/includes/blocks/schema/faq.html"
         label = "FAQ"
 
 
@@ -235,5 +235,5 @@ class FAQGroup(blocks.StructBlock):
 
     class Meta:
         icon = "grip"
-        template = "_includes/blocks/schema/faq-group.html"
+        template = "v1/includes/blocks/schema/faq-group.html"
         label = "FAQ"

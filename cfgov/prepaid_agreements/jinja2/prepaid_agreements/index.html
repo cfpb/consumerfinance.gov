@@ -1,4 +1,4 @@
-{% extends 'layout-full.html' %}
+{% extends 'v1/layouts/layout-full.html' %}
 
 {# HEAD items #}
 
@@ -24,7 +24,7 @@
 {%- endblock %}
 
 {% block content_main scoped %}
-    {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
+    {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
     {% set breadcrumb_items = [{
         'href': '/data-research/prepaid-accounts/',
         'title': 'Prepaid Account Agreements'

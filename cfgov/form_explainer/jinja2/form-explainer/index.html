@@ -1,7 +1,7 @@
-{% extends 'layout-full.html' %}
+{% extends 'v1/layouts/layout-full.html' %}
 
-{% import 'templates/render_block.html' as render_block with context %}
-{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% import 'v1/includes/templates/render_block.html' as render_block with context %}
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block css -%}
     {{ super() }}
@@ -10,10 +10,10 @@
 
 {% if page and not breadcrumb_items %}
     {% set breadcrumb_items = page.get_breadcrumbs(request) %}
-{% endif %}    
+{% endif %}
 
 {% if breadcrumb_items | length > 0 %}
-    {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
+    {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
     <div class="block block__sub block__flush-top">
     {{ breadcrumbs.render(breadcrumb_items) }}
     </div>

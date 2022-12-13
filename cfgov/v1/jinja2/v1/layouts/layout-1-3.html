@@ -1,0 +1,36 @@
+{% extends 'v1/layouts/content-base.html' %}
+
+{% block skip_nav_target -%}
+    {# Overrides the default skip nav target of #main so that we skip over the
+       left side nav on pages that extend this template and go right to the
+       main content area. #}
+    #content_main
+{%- endblock %}
+
+{% if page and not breadcrumb_items %}
+{% set breadcrumb_items = page.get_breadcrumbs(request) %}
+{% endif %}
+
+{{ breadcrumb_items | length }}
+{% if breadcrumb_items | length > 0 %}
+    <div class="content_wrapper">
+        {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
+        {{ breadcrumbs.render(breadcrumb_items) }}
+    </div>
+{% endif %}
+
+{% block body_content scoped %}
+<div class="wrapper content_wrapper {% block content_wrapper_modifiers -%}{%- endblock %}">
+    <aside class="content_sidebar {% block content_sidebar_modifiers -%}{%- endblock %}">
+        {% block content_sidebar scoped -%}{%- endblock %}
+    </aside>
+    <div class="content_main {% block content_main_modifiers -%}{%- endblock %}"
+         id="content_main">
+        {% block content_main scoped -%}{%- endblock %}
+    </div>
+</div>
+{% endblock %}
+
+{% block content_modifiers -%}
+    content__1-3
+{%- endblock %}

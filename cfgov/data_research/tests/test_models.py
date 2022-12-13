@@ -308,7 +308,7 @@ class MortgagePerformancePageTests(django.test.TestCase):
 
     def test_page_template(self):
         self.assertEqual(
-            self.chart_page_30.template, "browse-basic/index.html"
+            self.chart_page_30.template, "v1/browse-basic/index.html"
         )
 
     def test_chart_page_context_30_89(self):

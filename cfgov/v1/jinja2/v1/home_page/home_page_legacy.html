@@ -1,6 +1,6 @@
-{% extends "layout-full.html" %}
+{% extends "v1/layouts/layout-full.html" %}
 
-{% import "organisms/card-group.html" as card_group with context %}
+{% import "v1/includes/organisms/card-group.html" as card_group with context %}
 
 {% block title -%}
     {{ _('Consumer Financial Protection Bureau') }}
@@ -23,7 +23,7 @@
     {% import "v1/home_page/_hardcoded_legacy_" ~ language ~ ".html" as hardcoded %}
 
     {% with image = image_passthrough, value = hardcoded.hero %}
-        {% include "molecules/hero.html" with context %}
+        {% include "v1/includes/molecules/hero.html" with context %}
     {% endwith %}
 
     {% with value = hardcoded.features %}
@@ -35,7 +35,7 @@
                         block__flush-top
                         u-mb0"
         >
-            {% include "organisms/info-unit-group-2.html" with context %}
+            {% include "v1/includes/organisms/info-unit-group-2.html" with context %}
         </section>
     {% endwith %}
 {% endblock hero %}
@@ -48,7 +48,7 @@
         image_alt_value = image_alt_value_passthrough,
         value = hardcoded.info_units
     %}
-        {% include 'organisms/info-unit-group-2.html' %}
+        {% include 'v1/includes/organisms/info-unit-group-2.html' %}
     {% endwith %}
 
     <section class="block">
