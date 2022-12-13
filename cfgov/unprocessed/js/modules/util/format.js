@@ -15,10 +15,9 @@ function convertStringToNumber(numberString) {
   let signMaker = 1;
   const minusPosition = numberString.indexOf(numberString.match('-'));
   const digitPosition = numberString.indexOf(numberString.match(/\d/));
-  const dashPosition = numberString.indexOf(numberString.match('-'));
 
   // If a '-' appears before the first digit, we assume numberString is negative
-  if (dashPosition !== -1 && minusPosition < digitPosition) {
+  if (minusPosition !== -1 && minusPosition < digitPosition) {
     signMaker = -1;
   }
 
