@@ -1,10 +1,13 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const emailPopupsHelpers = require(BASE_JS_PATH +
-  'modules/util/email-popup-helpers');
+import {
+  showEmailPopup,
+  recordEmailPopupView,
+  recordEmailRegistration,
+  recordEmailPopupClosure,
+} from '../../../../../cfgov/unprocessed/js/modules/util/email-popup-helpers';
 describe('email-popup-helpers', () => {
   describe('showEmailPopup()', () => {
     it('should return true if no date is in storage', () => {
-      expect(emailPopupsHelpers.showEmailPopup('testPopup')).toBe(true);
+      expect(showEmailPopup('testPopup')).toBe(true);
     });
 
     it('should return true if date in storage is before today', () => {
@@ -13,15 +16,15 @@ describe('email-popup-helpers', () => {
       const date = new Date();
       const last = new Date(date.getTime() - days * 24 * 60 * 60 * 1000);
       localStorage.setItem('testPopupPopupShowNext', last);
-      expect(emailPopupsHelpers.showEmailPopup('testPopup')).toBe(true);
+      expect(showEmailPopup('testPopup')).toBe(true);
     });
   });
 
   describe('recordEmailPopupView()', () => {
     it('should record number of times popup has been shown', () => {
-      emailPopupsHelpers.recordEmailPopupView('testPopup');
+      recordEmailPopupView('testPopup');
       expect(localStorage.getItem('testPopupPopupCount')).toBe('1');
-      emailPopupsHelpers.recordEmailPopupView('testPopup');
+      recordEmailPopupView('testPopup');
       expect(localStorage.getItem('testPopupPopupCount')).toBe('2');
     });
   });
@@ -31,7 +34,7 @@ describe('email-popup-helpers', () => {
       'should set email popup key in local storage with ' +
         'a very long expiry date',
       () => {
-        emailPopupsHelpers.recordEmailRegistration('testPopup');
+        recordEmailRegistration('testPopup');
         const date = new Date();
         const testDate = date.setTime(
           date.getTime() + 10000 * 24 * 60 * 60 * 1000
@@ -51,7 +54,7 @@ describe('email-popup-helpers', () => {
       'should record in local storage that ' +
         'the email popup has been closed.',
       () => {
-        emailPopupsHelpers.recordEmailPopupClosure('testPopup');
+        recordEmailPopupClosure('testPopup');
         const date = new Date();
         const testDate = date.setTime(
           date.getTime() + 60 * 24 * 60 * 60 * 1000

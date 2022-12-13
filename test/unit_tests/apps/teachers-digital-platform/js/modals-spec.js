@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import * as modals from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
 import HTML_SNIPPET from '../html/survey-page';
 

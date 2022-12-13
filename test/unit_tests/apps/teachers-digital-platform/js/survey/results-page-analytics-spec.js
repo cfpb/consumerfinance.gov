@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
 import { SCORES_UNSET_KEY } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
 import { simulateEvent } from '../../../../../util/simulate-event.js';

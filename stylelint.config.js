@@ -18,7 +18,7 @@ less/no-duplicate-variables
   Both of the above settings are turned off till
   https://github.com/ssivanatarajan/stylelint-less/issues/6 is addressed.
 */
-module.exports = {
+export default {
   extends: 'stylelint-config-recommended-less',
   ignoreFiles: ['packages/**/node_modules/**/*.less'],
   customSyntax: 'postcss-less',

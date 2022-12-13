@@ -1,7 +1,8 @@
-const { readFile } = require('fs').promises;
-const { dirname } = require('path');
-const postcss = require('postcss');
-const less = require('less');
+import * as fs from 'fs';
+const { readFile } = fs.promises;
+import { dirname } from 'path';
+import postcss from 'postcss';
+import less from 'less';
 
 const postCSSPlugin = ({ plugins = [], lessOptions = {} }) => ({
   name: 'less-and-postcss',
@@ -26,4 +27,4 @@ const postCSSPlugin = ({ plugins = [], lessOptions = {} }) => ({
   },
 });
 
-module.exports = postCSSPlugin;
+export default postCSSPlugin;

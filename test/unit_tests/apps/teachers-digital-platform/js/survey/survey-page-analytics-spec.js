@@ -1,5 +1,7 @@
+import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 import { bindAnalytics } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js';
+
 import HTML_SNIPPET from '../../html/survey-page-analytics';
 
 const xhr = global.XMLHttpRequest;

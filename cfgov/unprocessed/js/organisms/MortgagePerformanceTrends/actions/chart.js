@@ -1,5 +1,5 @@
-import defaultActionCreators from './default';
-import utils from '../utils';
+import defaultActionCreators from './default.js';
+import utils from '../utils.js';
 
 const chartActionCreators = defaultActionCreators();
 
@@ -40,6 +40,7 @@ chartActionCreators.fetchMetroStates = (metroState) => (dispatch) =>
     }
     dispatch(chartActionCreators.setStates(metroStates));
     dispatch(chartActionCreators.fetchMetros(metroState));
+
     return metroStates;
   });
 

@@ -17,6 +17,7 @@ const { signal } = searchRequest.signal;
  * Initialize search functionality.
  */
 function init() {
+  console.log('init search');
   // Override search form submission
   attach('submit-search', 'submit', handleSubmit);
   attach('change-filter', 'change', handleFilter);
@@ -102,6 +103,7 @@ function handleSubmit(event) {
   const baseUrl = window.location.href.split('?')[0];
   const searchParams = serializeFormFields(searchTerms);
   const searchUrl = buildSearchResultsURL(baseUrl, searchParams);
+  console.log('handleSubmit', searchUrl);
   window.location.assign(searchUrl);
   return searchUrl;
 }

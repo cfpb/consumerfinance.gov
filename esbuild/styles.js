@@ -1,10 +1,11 @@
-const esbuild = require('esbuild');
-const { readdirSync } = require('fs');
-const postCSSPlugin = require('./plugins/postcss.js');
-const autoprefixer = require('autoprefixer');
-const { getAll } = require('./utils.js');
+import esbuild from 'esbuild';
+import { readdirSync } from 'fs';
+import postCSSPlugin from './plugins/postcss.js';
+import autoprefixer from 'autoprefixer';
+import { getAll } from './utils.js';
 
-const { unprocessed, modules } = require('../config/environment.js').paths;
+import environment from '../config/environment.js';
+const { unprocessed, modules } = environment.paths;
 
 const css = `${unprocessed}/css`;
 const apps = `${unprocessed}/apps`;
@@ -30,7 +31,7 @@ const cssPaths = [
   ...styledApps.map((app) => `${apps}/${app}/css/main.less`),
 ];
 
-module.exports = function (baseConfig) {
+function styles(baseConfig) {
   esbuild.build({
     ...baseConfig,
     entryPoints: cssPaths,
@@ -50,4 +51,6 @@ module.exports = function (baseConfig) {
       }),
     ],
   });
-};
+}
+
+export { styles };

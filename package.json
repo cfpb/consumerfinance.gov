@@ -17,9 +17,6 @@
   },
   "browserslist": "> 0.5%, Chrome >= 76, Edge >= 98, Firefox >= 78, safari >= 12, not dead",
   "dependencies": {
-    "@babel/core": "7.20.5",
-    "@babel/plugin-transform-runtime": "7.19.6",
-    "@babel/preset-env": "7.20.2",
     "@cfpb/cfpb-atomic-component": "0.18.1",
     "@cfpb/cfpb-buttons": "0.18.1",
     "@cfpb/cfpb-core": "0.18.1",
@@ -72,7 +69,7 @@
     "preinstall": "node scripts/preinstall.js",
     "postinstall": "yarn enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
     "lint": "./scripts/lint.sh",
-    "jest": "jest",
+    "jest": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "test": "yarn lint && yarn jest",
     "snyk": "snyk test",
     "copy": "yarn build copy",
@@ -81,5 +78,6 @@
     "watch": "yarn build watch",
     "build": "node ./esbuild/build.js"
   },
-  "snyk": true
+  "snyk": true,
+  "type": "module"
 }

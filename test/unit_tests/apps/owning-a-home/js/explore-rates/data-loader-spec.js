@@ -1,5 +1,8 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const domLoader = require(BASE_JS_PATH + 'js/explore-rates/data-loader');
+import { jest } from '@jest/globals';
+import {
+  getData,
+  getCounties,
+} from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/data-loader.js';
 
 const mockResp = { data: 'mock data' };
 
@@ -12,7 +15,7 @@ global.fetch = jest.fn(() =>
 describe('explore-rates/data-loader', () => {
   describe('getData()', () => {
     it('should call data API with correct query', () => {
-      domLoader.getData({ a: 'b', c: 'd' });
+      getData({ a: 'b', c: 'd' });
       return expect(fetch.mock.calls[0][0]).toBe(
         '/oah-api/rates/rate-checker?a=b&c=d'
       );
@@ -21,7 +24,7 @@ describe('explore-rates/data-loader', () => {
 
   describe('getCounties()', () => {
     it('should call county API with correct state query', () => {
-      domLoader.getCounties('AL');
+      getCounties('AL');
       return expect(fetch).toHaveBeenCalledWith('/oah-api/county/?state=AL');
     });
   });

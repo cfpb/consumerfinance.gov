@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import scroll from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/scroll.js';
 
 const HTML_SNIPPET = `

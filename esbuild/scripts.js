@@ -1,7 +1,8 @@
-const esbuild = require('esbuild');
+import esbuild from 'esbuild';
 
-const { getAll } = require('./utils.js');
-const { unprocessed } = require('../config/environment.js').paths;
+import { getAll } from './utils.js';
+import environment from '../config/environment.js';
+const { unprocessed } = environment.paths;
 
 const routes = `${unprocessed}/js/routes`;
 const apps = `${unprocessed}/apps`;
@@ -50,10 +51,12 @@ const jsPaths = [
   `${apps}/filing-instruction-guide/js/fig-search.js`,
 ];
 
-module.exports = function (baseConfig) {
+function scripts(baseConfig) {
   esbuild.build({
     ...baseConfig,
     entryPoints: jsPaths,
     target: 'es6',
   });
-};
+}
+
+export { scripts };
