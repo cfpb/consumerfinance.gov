@@ -2,6 +2,7 @@
 **
 
 # ...except these directories
+!apps
 !cfgov
 !config
 !esbuild

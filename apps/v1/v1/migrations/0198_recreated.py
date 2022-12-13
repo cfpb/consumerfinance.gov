@@ -5,20 +5,9 @@ import datetime
 
 import django.core.validators
 import django.db.models.deletion
-import localflavor.us.models
-import modelcluster.contrib.taggit
-import modelcluster.fields
-import taggit.managers
-import v1.atomic_elements.atoms
-import v1.atomic_elements.molecules
-import v1.atomic_elements.organisms
-import v1.blocks
-import v1.feeds
-import v1.models.filterable_list_mixins
-import v1.models.snippets
-import v1.util.ref
 from django.conf import settings
 from django.db import migrations, models
+
 from wagtail.core import blocks as core_blocks
 from wagtail.core import fields as core_fields
 from wagtail.core import models as core_models
@@ -27,6 +16,20 @@ from wagtail.images import blocks as images_blocks
 from wagtail.images import models as images_models
 from wagtail.search import index
 from wagtail.snippets import blocks as snippets_blocks
+
+import localflavor.us.models
+import modelcluster.contrib.taggit
+import modelcluster.fields
+import taggit.managers
+
+import v1.atomic_elements.atoms
+import v1.atomic_elements.molecules
+import v1.atomic_elements.organisms
+import v1.blocks
+import v1.feeds
+import v1.models.filterable_list_mixins
+import v1.models.snippets
+import v1.util.ref
 
 
 class Migration(migrations.Migration):

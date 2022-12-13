@@ -29,6 +29,7 @@ RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev
 
 # Install python requirements
 COPY requirements requirements
+COPY apps apps
 RUN mkdir /build && pip install --prefix=/build -r requirements/deployment.txt
 
 #######################################################################
