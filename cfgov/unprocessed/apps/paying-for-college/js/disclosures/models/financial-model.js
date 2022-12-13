@@ -1,5 +1,5 @@
-const recalculate = require('student-debt-calc');
-const getViewValues = require('../dispatchers/get-view-values');
+import studentDebtCalculator from '@cfpb/student-debt-calculator';
+import getViewValues from '../dispatchers/get-view-values.js';
 
 const financialModel = {
   values: {},
@@ -41,7 +41,7 @@ const financialModel = {
   calc: function () {
     this.sumScholarships();
     this.checkPerkins();
-    this.values = recalculate(this.values);
+    this.values = studentDebtCalculator(this.values);
     this.sumTotals();
     this.roundValues();
   },
@@ -136,4 +136,4 @@ const financialModel = {
   },
 };
 
-module.exports = financialModel;
+export default financialModel;
