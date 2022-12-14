@@ -79,9 +79,7 @@ function clearFilter(event) {
     return;
   }
   target = event.target.closest('.a-tag');
-  const checkbox = document.querySelector(
-    `${target.getAttribute('data-value')}`
-  );
+  const checkbox = document.querySelector(target.getAttribute('data-value'));
   // Remove the filter tag
   removeTag(target);
   // Uncheck the filter checkbox
