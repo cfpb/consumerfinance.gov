@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 import getFinancial from '../dispatchers/get-financial-values.js';
 import getSchool from '../dispatchers/get-school-values.js';
-import formatUSD from 'format-usd';
+import { formatUSD } from '../../../../../js/modules/util/format.js';
 
 const metricView = {
   metrics: {
