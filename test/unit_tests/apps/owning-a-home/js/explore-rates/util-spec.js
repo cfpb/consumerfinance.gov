@@ -11,7 +11,7 @@ import {
   renderDatestamp,
   renderLoanAmount,
   setSelections,
-} from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/util';
+} from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/util.js';
 
 const HTML_SNIPPET = `
   <input id="credit-score" type="range" min="0" max="100" value="50">

@@ -1,8 +1,8 @@
 import { jest } from '@jest/globals';
-import surveys from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys';
-import * as gradeLevelModule from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/grade-level-page';
-import * as resultsModule from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page';
-import * as surveyModule from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/survey-page';
+import surveys from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js';
+import * as gradeLevelModule from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/grade-level-page.js';
+import * as resultsModule from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page.js';
+import * as surveyModule from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/survey-page.js';
 
 let glp;
 let rp;

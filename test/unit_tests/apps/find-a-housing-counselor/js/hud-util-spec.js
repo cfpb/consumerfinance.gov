@@ -1,4 +1,4 @@
-import { checkHudData } from '../../../../../cfgov/unprocessed/apps/find-a-housing-counselor/js/hud-util';
+import { checkHudData } from '../../../../../cfgov/unprocessed/apps/find-a-housing-counselor/js/hud-util.js';
 
 describe('hud', () => {
   describe('checkHudData', () => {

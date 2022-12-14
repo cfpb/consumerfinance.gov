@@ -13,7 +13,7 @@ import {
   SCORES_UNSET_KEY,
 } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config.js';
 import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js';
-import HTML_SNIPPET from '../../html/survey-page';
+import HTML_SNIPPET from '../../html/survey-page.js';
 
 const $ = document.querySelector.bind(document);
 

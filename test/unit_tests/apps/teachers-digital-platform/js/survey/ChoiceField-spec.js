@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
-import ChoiceField from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/ChoiceField';
-import { ANSWERS_SESS_KEY } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
-import HTML_SNIPPET from '../../html/survey-page';
+import ChoiceField from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/ChoiceField.js';
+import { ANSWERS_SESS_KEY } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config.js';
+import HTML_SNIPPET from '../../html/survey-page.js';
 
 const $ = document.querySelector.bind(document);
 

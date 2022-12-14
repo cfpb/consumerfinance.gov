@@ -1,7 +1,7 @@
 import fetchMock from 'jest-fetch-mock';
 fetchMock.enableMocks();
 import { jest } from '@jest/globals';
-import { simulateEvent } from '../../../../util/simulate-event';
+import { simulateEvent } from '../../../../util/simulate-event.js';
 
 await import(
   '../../../../../cfgov/unprocessed/apps/regulations3k/js/search.js'

@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import * as modals from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
+import * as modals from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js';
 import HTML_SNIPPET from '../html/survey-page';
 
 const $ = document.querySelector.bind(document);

@@ -3,7 +3,7 @@ import {
   getVal,
   setVal,
   update,
-} from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/params';
+} from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/params.js';
 
 const HTML_SNIPPET = `
   <input id="credit-score"

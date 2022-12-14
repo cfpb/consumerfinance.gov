@@ -1,4 +1,4 @@
-import HTML_SNIPPET from '../fixtures/sample-fig-page';
+import HTML_SNIPPET from '../fixtures/sample-fig-page.js';
 
 import { getSearchData } from '../../../../../cfgov/unprocessed/apps/filing-instruction-guide/js/fig-search.js';
 let sections;

@@ -1,4 +1,4 @@
-import { getSelection } from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/dom-values';
+import { getSelection } from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/dom-values.js';
 
 const HTML_SNIPPET = `
   <input id="credit-score"

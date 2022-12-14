@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import RateCheckerChartMenu from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/RateCheckerChartMenu';
+import RateCheckerChartMenu from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/RateCheckerChartMenu.js';
 import Highcharts from '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/highcharts';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 

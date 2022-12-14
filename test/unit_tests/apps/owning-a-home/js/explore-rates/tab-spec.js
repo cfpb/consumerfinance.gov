@@ -1,5 +1,4 @@
-import { init as tabInit } from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/tab';
-
+import { init as tabInit } from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/tab.js';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 
 const HTML_SNIPPET = `

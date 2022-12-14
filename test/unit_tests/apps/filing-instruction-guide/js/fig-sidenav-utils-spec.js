@@ -1,4 +1,4 @@
-import HTML_SNIPPET from '../fixtures/sample-fig-page';
+import HTML_SNIPPET from '../fixtures/sample-fig-page.js';
 
 import {
   appRoot,
