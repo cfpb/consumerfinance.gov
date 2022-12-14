@@ -108,47 +108,45 @@ function init() {
  * Set up clicks to open (and close)
  */
 function handleClicks() {
-  document.addEventListener(
-    'click',
-    ({ target, preventDefault, stopPropagation }) => {
-      const opener = target.closest('[data-open-modal]');
-      if (opener) {
-        preventDefault();
-        stopPropagation();
-        const id = opener.dataset.openModal;
-        const modal = new Modal(id, opener);
-        modal.open();
+  document.addEventListener('click', (event) => {
+    const { target } = event;
+    const opener = target.closest('[data-open-modal]');
+    if (opener) {
+      event.preventDefault();
+      event.stopPropagation();
+      const id = opener.dataset.openModal;
+      const modal = new Modal(id, opener);
+      modal.open();
+      return;
+    }
+
+    if (!openModal) {
+      return;
+    }
+
+    const closeAndCancelEvent = () => {
+      openModal.close();
+      event.stopPropagation();
+    };
+
+    const content = openModal.getElement().querySelector('.o-modal_content');
+    if (content.contains(target)) {
+      // Close if clicking modal's close button(s)
+      if (content.querySelector('.o-modal_close').contains(target)) {
+        closeAndCancelEvent();
         return;
       }
 
-      if (!openModal) {
-        return;
-      }
-
-      const closeAndCancelEvent = () => {
-        openModal.close();
-        stopPropagation();
-      };
-
-      const content = openModal.getElement().querySelector('.o-modal_content');
-      if (content.contains(target)) {
-        // Close if clicking modal's close button(s)
-        if (content.querySelector('.o-modal_close').contains(target)) {
-          closeAndCancelEvent();
-          return;
-        }
-
-        // Close if clicked footer button with "close"
-        const btn = content.querySelector('.o-modal_footer button');
-        if (target === btn && /\bclose\b/i.test(btn.textContent)) {
-          closeAndCancelEvent();
-        }
-      } else {
-        // Outside modal
+      // Close if clicked footer button with "close"
+      const btn = content.querySelector('.o-modal_footer button');
+      if (target === btn && /\bclose\b/i.test(btn.textContent)) {
         closeAndCancelEvent();
       }
+    } else {
+      // Outside modal
+      closeAndCancelEvent();
     }
-  );
+  });
 }
 
 /**

@@ -1,7 +1,3 @@
-Cypress.on('uncaught:exception', function (err, runnable) {
-  console.log('ERROR', err);
-  return false;
-});
 describe('Youth Financial Education Survey: Grade Selection', () => {
   for (const grades of ['3-5', '6-8', '9-12']) {
     it(`Can load ${grades} page`, () => {
