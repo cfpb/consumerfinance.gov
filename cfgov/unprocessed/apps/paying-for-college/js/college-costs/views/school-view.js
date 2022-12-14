@@ -18,7 +18,7 @@ import {
   updateGradMeterChart,
   updateRepaymentMeterChart,
 } from '../dispatchers/update-view.js';
-import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
+import { decimalToPercentString } from '../util/number-utils.js';
 import { schoolSearch } from '../dispatchers/get-api-values.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
