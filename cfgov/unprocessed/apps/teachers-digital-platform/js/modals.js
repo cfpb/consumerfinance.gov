@@ -1,4 +1,3 @@
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { handleSurveyResultsModalClose } from './tdp-analytics.js';
 
 /**
@@ -111,7 +110,7 @@ function init() {
 function handleClicks() {
   document.addEventListener('click', (event) => {
     const t = event.target;
-    const opener = closest(t, '[data-open-modal]');
+    const opener = t.closest('[data-open-modal]');
     if (opener) {
       event.preventDefault();
       event.stopPropagation();
@@ -169,12 +168,12 @@ function handleEscKey() {
  */
 function handleFocusChanges() {
   document.addEventListener('focusin', (event) => {
-    const trap = closest(event.target, '[data-trap]');
+    const trap = event.target.closest('[data-trap]');
     if (!trap) {
       return;
     }
 
-    const content = closest(trap, '.o-modal_content');
+    const content = trap.closest('.o-modal_content');
 
     if (trap.dataset.trap === '1') {
       const first = content.querySelector('.o-modal_close');
