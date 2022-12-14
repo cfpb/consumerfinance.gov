@@ -1,9 +1,9 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const getFinancial = require('../dispatchers/get-financial-values');
-const getSchool = require('../dispatchers/get-school-values');
-const formatUSD = require('format-usd');
+import getFinancial from '../dispatchers/get-financial-values.js';
+import getSchool from '../dispatchers/get-school-values.js';
+import { formatUSD } from '../../../../../js/modules/util/format.js';
 
 const metricView = {
   metrics: {
@@ -427,4 +427,4 @@ const metricView = {
   },
 };
 
-module.exports = metricView;
+export default metricView;

@@ -33,7 +33,7 @@
     margin-top: 45px;
   }
 
-  :not(.m-info-unit_heading-text) > h4 {
+  :not( .m-info-unit_heading-text ) > h4 {
     .h3();
     margin-top: 30px;
   }
@@ -46,12 +46,12 @@
   pre {
     font-family: Menlo, 'Andale Mono', 'Courier New', monospace;
     overflow-x: auto;
-    font-size: unit(14px / @base-font-size-px, em);
+    font-size: unit( 14px / @base-font-size-px, em );
     white-space: pre;
   }
 
   .o-table {
-    margin-top: unit(30px / @base-font-size-px, em);
+    margin-top: unit( 30px / @base-font-size-px, em );
     td {
       vertical-align: top;
       hyphens: auto;
@@ -62,9 +62,9 @@
   }
 
   .u-fig-print-link {
-    margin-top: unit(45px / @base-font-size-px, em);
-    margin-bottom: unit(60px / @base-font-size-px, em);
-    padding-top: unit(30px / @base-font-size-px, em);
+    margin-top: unit( 45px / @base-font-size-px, em );
+    margin-bottom: unit( 60px / @base-font-size-px, em );
+    padding-top: unit( 30px / @base-font-size-px, em );
   }
 
   .respond-to-min( @bp-med-min, {
@@ -92,17 +92,17 @@
 }
 
 .o-fig_section__sub-sub {
-  margin-top: unit(45px / @base-font-size-px, em);
-  margin-bottom: unit(45px / @base-font-size-px, em);
+  margin-top: unit( 45px / @base-font-size-px, em );
+  margin-bottom: unit( 45px / @base-font-size-px, em );
 
   // Put a horizontal rule below all sub level 3 headings
   &:after {
     display: inline-block;
     content: '';
     border-top: 2px solid @gray-50;
-    width: calc(100% + 30px);
-    margin: unit(45px / @base-font-size-px, em) 0 0
-      unit(-30px / @base-font-size-px, em);
+    width: calc( 100% + 30px );
+    margin: unit( 45px / @base-font-size-px, em ) 0 0
+      unit( -30px / @base-font-size-px, em );
   }
 }
 
@@ -120,7 +120,7 @@
       // Add a large buffer underneath to ensure mobile users
       // can use assistive technology like Reachability to access
       // items at the bottom of the list
-      padding-bottom: unit(420px / @base-font-size-px, em);
+      padding-bottom: unit( 420px / @base-font-size-px, em );
     }
   }
 
@@ -131,21 +131,21 @@
   } );
 
   .m-nav-link {
-    padding-left: unit(40px / @base-font-size-px, em);
-    text-indent: unit(-30px / @base-font-size-px, em);
+    padding-left: unit( 40px / @base-font-size-px, em );
+    text-indent: unit( -30px / @base-font-size-px, em );
   }
 
   .o-secondary-navigation_list__parents > li > a {
-    padding-left: unit(30px / @base-font-size-px, em);
-    text-indent: unit(-18px / @base-font-size-px, em);
+    padding-left: unit( 30px / @base-font-size-px, em );
+    text-indent: unit( -18px / @base-font-size-px, em );
   }
 
   h4 {
-    padding-left: unit(19px / @size-iv, em);
+    padding-left: unit( 19px / @size-iv, em );
   }
 
   .o-report-sidenav__appendix > li > a {
-    text-indent: unit(-20px / @base-font-size-px, em);
+    text-indent: unit( -20px / @base-font-size-px, em );
   }
 
   .parent-header {
@@ -163,7 +163,7 @@
 
 .research-report {
   // 670px, plus a 15px gutter on each side (standard paragrah widths)
-  max-width: unit((670 + 30) / 16, em);
+  max-width: unit( (670 + 30) / 16, em );
 
   .lead-paragraph,
   .author-names {
@@ -210,5 +210,5 @@
 }
 
 #ctrl-f-modal h3 {
-  font-size: unit(16px / @base-font-size-px, em);
+  font-size: unit( 16px / @base-font-size-px, em );
 }

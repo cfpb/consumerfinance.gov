@@ -31,12 +31,11 @@ describe('The Regs3K analytics', () => {
       classList: {
         contains: () => true,
       },
-      parentNode: {
-        matches: () => false,
-      },
     };
     const event = {
-      target: mockTarget,
+      target: {
+        closest: () => mockTarget,
+      },
     };
     const expandable = analytics.getExpandable(event);
 
@@ -118,9 +117,7 @@ describe('The Regs3K analytics', () => {
         classList: {
           contains: () => true,
         },
-        parentNode: {
-          matches: () => false,
-        },
+        closest: () => null,
         getAttribute: () => 'Section 1',
       },
     };
@@ -141,9 +138,7 @@ describe('The Regs3K analytics', () => {
         classList: {
           contains: () => false,
         },
-        parentNode: {
-          matches: () => false,
-        },
+        closest: () => null,
         getAttribute: () => 'Section 1',
       },
     };

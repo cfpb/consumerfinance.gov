@@ -1,0 +1,130 @@
+{# ==========================================================================
+
+   _related_posts_list()
+
+   ==========================================================================
+
+   Description:
+
+   Creates related posts markup when given:
+
+   posts: A list of dictionaries containing related posts.
+
+   limit: Number at which to limit displaying posts.
+
+   ========================================================================== #}
+
+{% macro _related_posts_list(posts, limit) %}
+    {% if limit %}{% set posts = posts[ :limit | int ] %}{% endif %}
+    <ul class="m-related-posts_list
+               m-list
+               m-list__unstyled
+               m-list__spaced">
+        {% for post in posts %}
+            {% set post_url = post.url or '' %}
+            <li class="m-list_item">
+                <h3 class="h4 u-mb5">
+                    <a class="m-list_link"
+                       href="{{ post_url or post.permalink }}">
+                        {{ post.title | safe }}
+                    </a>
+                </h3>
+                {% if post.text %}
+                <p>
+                    {{ post.text | safe }}
+                </p>
+                {% endif %}
+                <p class="a-date">
+                    {% import 'v1/includes/macros/time.html' as time %}
+                    {% set date = post.start_dt
+                                  or post.date_published
+                                  or post.latest_revision_created_at
+                                  or post.date %}
+                    {{ time.render(date, {'date':true}) }}
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endmacro %}
+
+{# ==========================================================================
+
+   Template for v1.atomic_elements.organisms.RelatedPosts.
+
+   ==========================================================================
+
+   value.header_title:      String for the module heading.
+
+   value.limit:             Integer setting the number of posts that will be
+                            shown for each type of post selected. Optional.
+
+   value.posts:             List of posts to render, grouped into sublists.
+                            Required.
+
+   value.posts[i].title:    Title of sublist, for example "Newsroom".
+
+   value.posts[i].icon:     Icon to use for sublist, for example "newspaper".
+
+   value.posts[i].posts:    List of posts. See _related_posts_list for format.
+
+   value.view_more_url:     URL for "View more" link. Required.
+
+   value.show_heading:      Boolean indicating whether or not the heading and
+                            icon for each post sublist will be shown.
+                            Optional, default false.
+
+   value.half_width:        Boolean indicating whether the posts should be at
+                            half width. Optional, default false.
+
+   ========================================================================== #}
+
+{% macro render( value ) %}
+<div class="m-related-posts
+    {{'m-related-posts__half-width' if value.half_width else '' }}">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
+            {{ value.header_title }}
+        </h2>
+    </header>
+    {% for subposts in value.posts %}
+        <div class="m-related-posts_list-container">
+            {% if value.show_heading %}
+                <h3 class="h4">
+                    {% if subposts.icon %}{{ svg_icon( subposts.icon ) }}{% endif %}
+                    {{ subposts.title }}
+                </h3>
+            {% endif %}
+            {{ _related_posts_list( subposts.posts, value.limit ) }}
+        </div>
+    {% endfor %}
+
+    <a class="a-link a-link__jump"
+       href="{{ value.view_more_url }}"
+       aria-label="{{ _('View more related posts') }}">
+        <span class="a-link_text">
+            {{ _('View more') }}
+        </span>
+    </a>
+</div>
+{% endmacro %}
+
+{%- if value %}
+
+{# Consolidate additional context variables into the single "value" dict. #}
+
+{% if half_width is defined and not "half_width" in value %}
+    {% do value.update( { "half_width": half_width } ) %}
+{% endif %}
+
+{% if posts is defined and not "posts" in value %}
+    {% do value.update( { "posts": posts } ) %}
+{% endif %}
+
+{% if view_more_url is defined and not "view_more_url" in value %}
+    {% do value.update( { "view_more_url": view_more_url } ) %}
+{% endif %}
+
+{{- render( value ) -}}
+
+{% endif -%}

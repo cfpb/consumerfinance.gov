@@ -18,10 +18,10 @@ import {
   updateGradMeterChart,
   updateRepaymentMeterChart,
 } from '../dispatchers/update-view.js';
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
+import { decimalToPercentString } from '../util/number-utils.js';
 import { schoolSearch } from '../dispatchers/get-api-values.js';
 import { updateState } from '../dispatchers/update-state.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 
 const schoolView = {
   _searchSection: null,
@@ -130,9 +130,9 @@ const schoolView = {
         'INPUT[name="' + name + '"][value="' + value + '"]'
       );
       if (input !== null) {
-        const label = closest(input, '.m-form-field__radio').querySelector(
-          'LABEL'
-        );
+        const label = input
+          .closest('.m-form-field__radio')
+          .querySelector('LABEL');
         label.click();
       }
     }
@@ -264,7 +264,7 @@ function _handleProgramSelectChange(event) {
   } else {
     updateFinancial(
       'salary_annual',
-      stringToNum(getSchoolValue('medianAnnualPay6Yr'))
+      convertStringToNumber(getSchoolValue('medianAnnualPay6Yr'))
     );
   }
   refreshExpenses();
@@ -282,7 +282,7 @@ function _handleResultButtonClick(event) {
   if (target.tagName === 'BUTTON') {
     button = target;
   } else {
-    button = closest(target, 'BUTTON');
+    button = target.closest('BUTTON');
   }
 
   // Clear pid from state
@@ -310,7 +310,7 @@ function _handleResultButtonClick(event) {
  * @param {MouseEvent} event - click event object.
  */
 function _handleProgramRadioClick(event) {
-  const container = closest(event.target, '.m-form-field');
+  const container = event.target.closest('.m-form-field');
   const input = container.querySelector('input');
   const recalcProps = [
     'programProgress',

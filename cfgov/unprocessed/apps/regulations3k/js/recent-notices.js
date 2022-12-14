@@ -1,5 +1,3 @@
-import { queryOne } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-
 const NOTICES_URL = './recent-notices-json';
 const CFPB_NOTICES =
   'https://www.federalregister.gov/agencies/consumer-financial-protection-bureau';
@@ -28,7 +26,7 @@ const processNotices = (notices) => {
 };
 
 const init = () => {
-  const noticesContainer = queryOne('#regs3k-notices');
+  const noticesContainer = document.querySelector('#regs3k-notices');
   fetch(NOTICES_URL)
     .then((response) => response.json())
     .then((notices) => {

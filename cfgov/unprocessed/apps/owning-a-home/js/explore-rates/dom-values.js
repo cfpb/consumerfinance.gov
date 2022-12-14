@@ -1,4 +1,4 @@
-const unFormatUSD = require('unformat-usd');
+import { convertStringToNumber } from '../../../../js/modules/util/format.js';
 
 /**
  * Get value(s) of an individual HTML element in the control panel.
@@ -24,7 +24,9 @@ function getSelection(param) {
       val = elm.value;
       break;
     default:
-      val = unFormatUSD(elm.value || elm.getAttribute('placeholder'));
+      val = convertStringToNumber(
+        elm.value || elm.getAttribute('placeholder')
+      );
   }
 
   return val;

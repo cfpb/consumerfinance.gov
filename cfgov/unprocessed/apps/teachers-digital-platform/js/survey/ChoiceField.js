@@ -1,5 +1,3 @@
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
@@ -30,7 +28,7 @@ class ChoiceField {
    * @returns {HTMLUListElement} The UL of the main set of answers
    */
   getUl() {
-    return closest(this.inputs[0], 'ul.ChoiceField');
+    return this.inputs[0].closest('ul.ChoiceField');
   }
 
   markError() {
@@ -84,7 +82,6 @@ ChoiceField.removeErrors = () => {
 ChoiceField.restoreFromSession = (key) => {
   const store = JSON.parse(sessionStorage.getItem(key) || '{}');
   let update = false;
-
   const checkCache = ([name, grp]) => {
     if (grp.value === null) {
       if (typeof store[name] !== 'undefined') {

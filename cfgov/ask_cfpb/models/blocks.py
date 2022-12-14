@@ -47,4 +47,4 @@ class AskAnswerContent(blocks.StreamBlock):
     faq_schema = FAQ()
 
     class Meta:
-        template = "_includes/blocks/schema/content-block.html"
+        template = "v1/includes/blocks/schema/content-block.html"

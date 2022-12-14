@@ -144,7 +144,10 @@ class HandleErrorTestCase(TestCase):
         request = self.factory.get("/Test")
         urls.handle_error(404, request)
         mock_render.assert_called_with(
-            request, "404.html", context={"request": request}, status=404
+            request,
+            "v1/layouts/404.html",
+            context={"request": request},
+            status=404,
         )
 
 

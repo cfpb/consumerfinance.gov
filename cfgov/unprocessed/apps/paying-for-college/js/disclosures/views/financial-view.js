@@ -1,17 +1,19 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const Analytics = require('../utils/Analytics');
-const getFinancial = require('../dispatchers/get-financial-values');
-const getExpenses = require('../dispatchers/get-expenses-values');
-const publish = require('../dispatchers/publish-update');
-const stringToNum = require('../utils/handle-string-input');
-const formatUSD = require('format-usd');
-const numberToWords = require('number-to-words');
-const linksView = require('../views/links-view');
-const metricView = require('../views/metric-view');
-const expensesView = require('../views/expenses-view');
-const postVerification = require('../dispatchers/post-verify');
+import Analytics from '../utils/Analytics.js';
+import getFinancial from '../dispatchers/get-financial-values.js';
+import getExpenses from '../dispatchers/get-expenses-values.js';
+import publish from '../dispatchers/publish-update.js';
+import {
+  convertStringToNumber,
+  formatUSD,
+} from '../../../../../js/modules/util/format.js';
+import { toWords } from 'number-to-words';
+import linksView from '../views/links-view.js';
+import metricView from '../views/metric-view.js';
+import expensesView from '../views/expenses-view.js';
+import postVerification from '../dispatchers/post-verify.js';
 
 window.jQuery = window.$ = $;
 require('../../../node_modules/sticky-kit/dist/sticky-kit.js');
@@ -497,7 +499,7 @@ const financialView = {
    */
   inputHandler: function (id) {
     const $ele = $('#' + id);
-    let value = stringToNum($ele.val());
+    let value = convertStringToNumber($ele.val());
     const key = $ele.attr('data-financial');
     const privateLoanKey = $ele.attr('data-private-loan_key');
     const percentage = $ele.attr('data-percentage_value');
@@ -633,7 +635,7 @@ const financialView = {
     this.$programLength.on('change', function () {
       const programLength = Number($(this).val());
       const values = getFinancial.values();
-      let yearsAttending = numberToWords.toWords(programLength);
+      let yearsAttending = toWords(programLength);
       const $yearOrLess = $('[data-multi_year="false"]');
       const $multiYears = $('[data-multi_year="true"]');
 
@@ -951,4 +953,4 @@ const financialView = {
   },
 };
 
-module.exports = financialView;
+export default financialView;

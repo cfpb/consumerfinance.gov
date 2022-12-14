@@ -68,8 +68,8 @@ The structure looks like this:
 
 - Apps use a Jinja template that extends the `base.html`
   template used by the rest of the site.
-  This template would reside in `cfgov/jinja2/v1/[project namespace]/index.html`
-  or similar (for example, [owning-a-home](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/owning-a-home/explore-rates/index.html)).
+  This template would reside in `cfgov/jinja2/[project namespace]/index.html`
+  or similar (for example, [owning-a-home](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/owning-a-home/explore-rates/index.html)).
 
 !!! note
 A template may support a non-standard browser, like an older IE version,

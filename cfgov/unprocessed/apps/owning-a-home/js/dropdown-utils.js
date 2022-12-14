@@ -1,3 +1,4 @@
+// TODO: Remove jquery.
 import $ from 'jquery';
 
 /**
@@ -78,6 +79,7 @@ const utils = function (id) {
 
   /**
    * @param {object} values - Map of option values.
+   * @returns {object} The top-level utils object.
    */
   function addOption(values) {
     const opts = values || {};
@@ -109,7 +111,7 @@ const utils = function (id) {
    * @param {string|Array} optionVal - The value(s) of the options
    *  that you'd like to remove. Can be a string or an array. If no
    *  option(s) are specified, all options are removed.
-   * @returns {object} An instance.
+   * @returns {object} The top-level utils object.
    */
   function removeOption(optionVal) {
     if (!optionVal) {
@@ -124,6 +126,7 @@ const utils = function (id) {
 
   /**
    * @param {object} value - Map of option values.
+   * @returns {object} The top-level utils object.
    */
   function hasOption(value) {
     if (!value) {
@@ -138,7 +141,7 @@ const utils = function (id) {
   /**
    * Resets the select's element to its first option.
    *
-   * @returns {object} An instance.
+   * @returns {object} The top-level utils object.
    */
   function reset() {
     $el.each(function () {
@@ -151,7 +154,7 @@ const utils = function (id) {
   /**
    * Show a dropdown.
    *
-   * @returns {object} An instance.
+   * @returns {object} The top-level utils object.
    */
   function show() {
     $el.each(function () {
@@ -165,7 +168,7 @@ const utils = function (id) {
   /**
    * Hide a dropdown.
    *
-   * @returns {object} An instance.
+   * @returns {object} The top-level utils object.
    */
   function hide() {
     $el.each(function () {
@@ -179,7 +182,7 @@ const utils = function (id) {
   /**
    * Show a loading animation.
    *
-   * @returns {object} An instance.
+   * @returns {object} The top-level utils object.
    */
   function showLoading() {
     $el.each(function () {
@@ -193,7 +196,7 @@ const utils = function (id) {
   /**
    * Hide the loading animation.
    *
-   * @returns {object} An instance.
+   * @returns {object} The top-level utils object.
    */
   function hideLoading() {
     $el.each(function () {
@@ -207,7 +210,7 @@ const utils = function (id) {
   /**
    * Give a dropdown a yellow border to highlight it.
    *
-   * @returns {object} An instance.
+   * @returns {object} The top-level utils object.
    */
   function showHighlight() {
     $el.each(function () {
@@ -220,7 +223,7 @@ const utils = function (id) {
   /**
    * Remove a dropdown's highlight.
    *
-   * @returns {object} An instance.
+   * @returns {object} The top-level utils object.
    */
   function hideHighlight() {
     $el.each(function () {
@@ -231,18 +234,18 @@ const utils = function (id) {
   }
 
   return {
-    disable: disable,
-    enable: enable,
-    show: show,
-    hide: hide,
-    addOption: addOption,
-    removeOption: removeOption,
-    hasOption: hasOption,
+    disable,
+    enable,
+    show,
+    hide,
+    addOption,
+    removeOption,
+    hasOption,
     showLoadingAnimation: showLoading,
     hideLoadingAnimation: hideLoading,
-    showHighlight: showHighlight,
-    hideHighlight: hideHighlight,
-    reset: reset,
+    showHighlight,
+    hideHighlight,
+    reset,
   };
 };
 

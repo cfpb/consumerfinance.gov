@@ -1,5 +1,5 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
 const postVerify = {
   csrfToken: null,
@@ -27,10 +27,11 @@ const postVerify = {
       errors: 'none',
       URL: window.location.href,
     };
+    const urlBase = document
+      .querySelector('main')
+      .getAttribute('data-context');
     const urlPath =
-      '/' +
-      $('main').attr('data-context') +
-      '/understanding-your-financial-aid-offer/api/verify/';
+      '/' + urlBase + '/understanding-your-financial-aid-offer/api/verify/';
     if (error === true) {
       postdata.errors =
         'INVALID: student indicated the offer information is wrong';
@@ -39,4 +40,4 @@ const postVerify = {
   },
 };
 
-module.exports = postVerify;
+export default postVerify;
