@@ -18,9 +18,8 @@ import {
   updateUrlHash,
   updateWayfinder,
 } from './permalinks-utils.js';
-import { queryOne } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
-const wayfinderLink = queryOne('.o-regulations-wayfinder_link');
+const wayfinderLink = document.querySelector('.o-regulations-wayfinder_link');
 
 /**
  * init - Initialize the permalink functionality by cataloging all paragraph

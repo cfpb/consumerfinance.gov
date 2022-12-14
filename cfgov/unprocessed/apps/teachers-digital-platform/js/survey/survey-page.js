@@ -1,4 +1,3 @@
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import Cookies from 'js-cookie';
 import {
   ANSWERS_SESS_KEY,
@@ -146,7 +145,7 @@ function userTriedReentry() {
  */
 function allowStartOver() {
   document.addEventListener('click', (event) => {
-    const button = closest(event.target, '#modal-restart [data-cancel]');
+    const button = event.target.closest('#modal-restart [data-cancel]');
     if (button) {
       event.preventDefault();
       if (button.dataset.cancel) {
@@ -308,7 +307,7 @@ function breakSeparatedAnswers() {
    */
   const labels = [].slice.call($$('.ChoiceField .a-label'));
   labels.forEach((label) => {
-    if (closest(label, 'li:first-child') === label.parentElement) {
+    if (label.closest('li:first-child') === label.parentElement) {
       // Reset to "a"
       charCode = 97;
     }

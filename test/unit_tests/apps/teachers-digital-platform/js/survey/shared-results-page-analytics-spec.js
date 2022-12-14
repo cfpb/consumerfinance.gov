@@ -36,7 +36,7 @@ describe('Custom analytics for the TDP survey results page', () => {
 
     simulateEvent('click', target);
 
-    expect(spy.mock.calls[0][0]).toEqual('View Dropdown: Expand');
+    expect(spy.mock.calls[0][0]).toEqual('Results Dropdown: Expand');
     expect(spy.mock.calls[0][1]).toEqual('9-12: Planning and self-control');
     expect(spy).toHaveBeenCalled();
   });
