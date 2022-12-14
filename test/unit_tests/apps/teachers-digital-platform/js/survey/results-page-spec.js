@@ -16,7 +16,7 @@ import clipboardCopy from 'copy-to-clipboard';
 
 const $ = document.querySelector.bind(document);
 
-describe('The TDP survey results page', () => {
+xdescribe('The TDP survey results page', () => {
   beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
   });

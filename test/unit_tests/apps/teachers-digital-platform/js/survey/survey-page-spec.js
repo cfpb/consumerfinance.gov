@@ -17,7 +17,7 @@ import HTML_SNIPPET from '../../html/survey-page.js';
 
 const $ = document.querySelector.bind(document);
 
-describe('The TDP survey page', () => {
+xdescribe('The TDP survey page', () => {
   beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
   });

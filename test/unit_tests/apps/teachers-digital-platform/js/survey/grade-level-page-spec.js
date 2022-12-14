@@ -13,7 +13,7 @@ const HTML_SNIPPET = `
 </div>
 `;
 
-describe('The TDP survey grade-level page', () => {
+xdescribe('The TDP survey grade-level page', () => {
   beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
   });
