@@ -6,12 +6,6 @@ import {
   navItemContainers,
   highlightNavItem,
   unHighlightNavItem,
-  scrollNavItem,
-  showElement,
-  hideElement,
-  scrollIntoViewWithOffset,
-  updateNav,
-  handleIntersect,
 } from '../../../../../cfgov/unprocessed/apps/filing-instruction-guide/js/fig-sidenav-utils.js';
 
 describe('The Filing Instruction Guide side navigation', () => {

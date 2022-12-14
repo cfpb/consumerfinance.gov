@@ -5,6 +5,10 @@ import { getFiles, copyAll } from './utils.js';
 import environment from '../config/environment.js';
 const { unprocessed, modules } = environment.paths;
 
+/**
+ *
+ * @param baseConfig
+ */
 async function copy(baseConfig) {
   const resolvedBase = resolve(unprocessed);
   const files = await getFiles(resolvedBase);

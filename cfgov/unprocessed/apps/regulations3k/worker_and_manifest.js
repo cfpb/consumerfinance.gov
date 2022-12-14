@@ -71,6 +71,9 @@ const ensureDirectoryExistence = (filePath) => {
   return fs.mkdirSync(dirname); // eslint-disable-line no-sync
 };
 
+/**
+ *
+ */
 function runWorkerAndManifest() {
   fancyLog('Started generating service worker file...');
   ensureDirectoryExistence(SERVICE_WORKER_DEST);

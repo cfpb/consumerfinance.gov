@@ -51,6 +51,10 @@ const jsPaths = [
   `${apps}/filing-instruction-guide/js/fig-search.js`,
 ];
 
+/**
+ *
+ * @param baseConfig
+ */
 function scripts(baseConfig) {
   esbuild.build({
     ...baseConfig,

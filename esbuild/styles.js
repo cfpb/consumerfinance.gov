@@ -31,6 +31,10 @@ const cssPaths = [
   ...styledApps.map((app) => `${apps}/${app}/css/main.less`),
 ];
 
+/**
+ *
+ * @param baseConfig
+ */
 function styles(baseConfig) {
   esbuild.build({
     ...baseConfig,

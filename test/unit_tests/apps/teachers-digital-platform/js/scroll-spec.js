@@ -12,9 +12,10 @@ const HTML_SNIPPET = `
 
 /**
  * Helper function to simulate events
- * @param eventType {string} - The type of event to dispatch.
- * @param target {HTMLElement} - The element to dispatch from.
- * @param eventOption {object} - Any options for the event.
+ *
+ * @param eventType - {string} - The type of event to dispatch.
+ * @param target - {HTMLElement} - The element to dispatch from.
+ * @param eventOption - {object} - Any options for the event.
  */
 function simulateEvent(eventType, target, eventOption) {
   const event = document.createEvent('Event');

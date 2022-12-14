@@ -1,5 +1,7 @@
-export default {
-  parser: '@babel/eslint-parser',
+module.exports = {
+  parserOptions: {
+    sourceType: 'module',
+  },
   settings: {
     'import/resolver': {
       node: {
