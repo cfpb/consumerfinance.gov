@@ -1,4 +1,4 @@
-import stringToNum from '../utils/handle-string-input.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 
 const getViewValues = {
   def: 0,
@@ -20,7 +20,7 @@ const getViewValues = {
         if (key === 'rate') {
           value /= 100;
         }
-        loanObject[key] = stringToNum(value);
+        loanObject[key] = convertStringToNumber(value);
       });
       values.privateLoanMulti.push(loanObject);
     });
@@ -35,7 +35,7 @@ const getViewValues = {
     elements.forEach((elem) => {
       if (!elem.hasAttribute('data-private-loan_key')) {
         const name = elem.getAttribute('data-financial');
-        values[name] = stringToNum(elem.value) || 0;
+        values[name] = convertStringToNumber(elem.value) || 0;
         if (elem.getAttribute('data-percentage_value') === 'true') {
           values[name] /= 100;
         }
