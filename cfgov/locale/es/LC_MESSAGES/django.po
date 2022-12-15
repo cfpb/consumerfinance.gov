@@ -438,30 +438,6 @@ msgstr ""
 msgid "View permissions for this user"
 msgstr ""
 
-#: search/templates/search/_list_explore_revised.html:17
-msgid "Edit this page"
-msgstr ""
-
-#: search/templates/search/_list_explore_revised.html:37
-msgid "Edit"
-msgstr ""
-
-#: search/templates/search/_list_explore_revised.html:47
-#, fuzzy
-#| msgid "View more"
-msgid "View Draft"
-msgstr "Ver más"
-
-#: search/templates/search/_list_explore_revised.html:57
-#, fuzzy
-#| msgid "View more"
-msgid "View Live"
-msgstr "Ver más"
-
-#: search/templates/search/external_links.html:4
-msgid "External Links Management"
-msgstr ""
-
 #: teachers_digital_platform/jinja2/teachers_digital_platform/activity_search_result.html:33
 msgid "Available in Spanish"
 msgstr ""
