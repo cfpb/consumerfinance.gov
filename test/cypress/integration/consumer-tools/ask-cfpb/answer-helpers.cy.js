@@ -1,4 +1,4 @@
-export class AskCfpbAnswerPage {
+export default class AskCfpbAnswerPage {
   open() {
     cy.visit('/ask-cfpb/').get('.ask-categories article li a').first().click();
   }

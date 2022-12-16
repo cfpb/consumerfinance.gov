@@ -1,6 +1,6 @@
 import mapboxAPIResponses from '../../../fixtures/mapbox-api.json';
 
-export class FindAHousingCounselor {
+export default class FindAHousingCounselor {
   open() {
     cy.visit('/find-a-housing-counselor/');
   }

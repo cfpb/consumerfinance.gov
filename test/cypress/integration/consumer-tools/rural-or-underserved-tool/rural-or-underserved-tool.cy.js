@@ -1,4 +1,4 @@
-import { RuralOrUnderservedTool } from './rural-or-underserved-tool-helpers.cy.js';
+import RuralOrUnderservedTool from './rural-or-underserved-tool-helpers.cy.js';
 
 const page = new RuralOrUnderservedTool();
 

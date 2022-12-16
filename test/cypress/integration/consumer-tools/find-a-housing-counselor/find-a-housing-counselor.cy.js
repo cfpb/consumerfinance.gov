@@ -1,4 +1,4 @@
-import { FindAHousingCounselor } from './find-a-housing-counselor-helpers.cy.js';
+import FindAHousingCounselor from './find-a-housing-counselor-helpers.cy.js';
 
 const page = new FindAHousingCounselor();
 

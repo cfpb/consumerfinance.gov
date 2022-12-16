@@ -1,4 +1,4 @@
-export class ActivitySearch {
+export default class ActivitySearch {
   open() {
     cy.visit(
       '/consumer-tools/educator-tools/youth-financial-education/teach/activities/'

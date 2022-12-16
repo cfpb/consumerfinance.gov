@@ -1,6 +1,6 @@
 import retirementAPIResponse from '../../../fixtures/retirement-api.json';
 
-export class BeforeYouClaim {
+export default class BeforeYouClaim {
   open() {
     cy.visit('/consumer-tools/retirement/before-you-claim/');
   }

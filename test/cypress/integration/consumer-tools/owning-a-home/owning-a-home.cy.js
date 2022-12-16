@@ -1,4 +1,4 @@
-import { ExploreRates } from './explore-rates-helpers.cy.js';
+import ExploreRates from './explore-rates-helpers.cy.js';
 
 const exploreRates = new ExploreRates();
 

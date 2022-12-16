@@ -1,4 +1,4 @@
-import { ActivitySearch } from './tdp-activity-search-helpers.cy.js';
+import ActivitySearch from './tdp-activity-search-helpers.cy.js';
 const $ = Cypress.$;
 
 const search = new ActivitySearch();

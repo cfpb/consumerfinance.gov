@@ -1,4 +1,4 @@
-import { FinancialWellBeing } from './financial-well-being-helpers.cy.js';
+import FinancialWellBeing from './financial-well-being-helpers.cy.js';
 
 const financialWellBeing = new FinancialWellBeing();
 

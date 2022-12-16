@@ -1,4 +1,4 @@
-import { AskCfpbSearch } from '../ask-cfpb/search-helpers.cy.js';
+import AskCfpbSearch from '../ask-cfpb/search-helpers.cy.js';
 
 const buscar = new AskCfpbSearch();
 
