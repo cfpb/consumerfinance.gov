@@ -32,8 +32,7 @@ const cssPaths = [
 ];
 
 /**
- *
- * @param baseConfig
+ * @param {object} baseConfig - The base esbuild configuration.
  */
 function styles(baseConfig) {
   esbuild.build({

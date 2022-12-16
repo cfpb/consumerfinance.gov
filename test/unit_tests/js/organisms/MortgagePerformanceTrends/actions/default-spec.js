@@ -3,24 +3,30 @@ fetchMock.enableMocks();
 import { jest } from '@jest/globals';
 import defaultActionCreators from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/default.js';
 
-jest.unstable_mockModule(
-  '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils.js',
-  () => ({
-    getNonMetroData: (cb) => {
-      const nonMetros = [
-        {
-          valid: true,
-          fips: '12345',
-          name: 'Acme metro',
-          abbr: 'AL',
-        },
-      ];
-      cb(nonMetros);
-    },
-  })
-);
+const mockAPIResponse = {
+  getMetroData: () => {
+    return [
+      {
+        valid: true,
+        fips: '12345',
+        name: 'Acme metro',
+        abbr: 'AL',
+      },
+    ];
+  },
+  getNonMetroData: () => {
+    return [
+      {
+        valid: true,
+        fips: '12345',
+        name: 'Acme metro',
+        abbr: 'AL',
+      },
+    ];
+  },
+};
 
-xdescribe('Mortgage Performance default action creators', () => {
+describe('Mortgage Performance default action creators', () => {
   it('should create an action to set a geo', () => {
     const action = defaultActionCreators().setGeo(12345, 'Alabama', 'state');
     expect(action).toStrictEqual({
@@ -91,32 +97,52 @@ xdescribe('Mortgage Performance default action creators', () => {
     });
   });
 
-  it('should create an action to request metros', () => {
-    const action = defaultActionCreators().requestMetros();
-    expect(action).toStrictEqual({
-      type: 'REQUEST_METROS',
-      isLoadingMetros: true,
+  describe('getMetroData', () => {
+    beforeEach(() => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve(mockAPIResponse.getMetroData()),
+        })
+      );
+    });
+
+    it('should create an action to request metros', async () => {
+      const action = await defaultActionCreators().requestMetros();
+      expect(action).toStrictEqual({
+        type: 'REQUEST_METROS',
+        isLoadingMetros: true,
+      });
     });
   });
 
-  it('should create an action to request non-metros', () => {
-    const action = defaultActionCreators().requestNonMetros();
-    expect(action).toStrictEqual({
-      type: 'REQUEST_NON_METROS',
-      isLoadingNonMetros: true,
+  describe('getNonMetroData', () => {
+    beforeEach(() => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve(mockAPIResponse.getNonMetroData()),
+        })
+      );
     });
-  });
 
-  it('should dispatch actions to fetch non-metros', () => {
-    const dispatch = jest.fn();
-    defaultActionCreators().fetchNonMetros('AL', true)(dispatch);
-    expect(dispatch).toHaveBeenCalledTimes(4);
-    defaultActionCreators().fetchNonMetros('CA', true)(dispatch);
-    expect(dispatch).toHaveBeenCalledTimes(8);
-  });
+    it('should create an action to request non-metros', async () => {
+      const action = await defaultActionCreators().requestNonMetros();
+      expect(action).toStrictEqual({
+        type: 'REQUEST_NON_METROS',
+        isLoadingNonMetros: true,
+      });
+    });
 
-  it('should fail on bad non-metro state abbr', () => {
-    expect(defaultActionCreators().fetchNonMetros('bloop', true)).toThrow();
+    it('should dispatch actions to fetch non-metros', async () => {
+      const dispatch = jest.fn();
+      await defaultActionCreators().fetchNonMetros('AL', true)(dispatch);
+      expect(dispatch).toHaveBeenCalledTimes(4);
+      await defaultActionCreators().fetchNonMetros('CA', true)(dispatch);
+      expect(dispatch).toHaveBeenCalledTimes(8);
+    });
+
+    it('should fail on bad non-metro state abbr', () => {
+      expect(defaultActionCreators().fetchNonMetros('bloop', true)).toThrow();
+    });
   });
 
   it('should create an action to set metros', () => {

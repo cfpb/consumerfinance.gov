@@ -7,7 +7,7 @@ let scrollNavItem;
 let prevTarget;
 
 /**
- *
+ * Initialize the side navigation variables.
  */
 function init() {
   appRoot = document.querySelector('main.o-fig');

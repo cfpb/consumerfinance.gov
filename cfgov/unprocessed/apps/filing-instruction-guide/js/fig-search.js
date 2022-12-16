@@ -17,7 +17,7 @@ const searchOptions = {
 };
 
 /**
- *
+ * Initialize the ctrl-f search modal.
  */
 function init() {
   // Each searchable item (an HTML section with a heading and some paragraphs)

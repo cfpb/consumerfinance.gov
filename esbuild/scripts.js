@@ -51,8 +51,7 @@ const jsPaths = [
 ];
 
 /**
- *
- * @param baseConfig
+ * @param {object} baseConfig - The base esbuild configuration.
  */
 function scripts(baseConfig) {
   esbuild.build({

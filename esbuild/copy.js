@@ -6,8 +6,7 @@ import environment from '../config/environment.js';
 const { unprocessed, modules } = environment.paths;
 
 /**
- *
- * @param baseConfig
+ * @param {object} baseConfig - The base esbuild configuration.
  */
 async function copy(baseConfig) {
   const resolvedBase = resolve(unprocessed);
