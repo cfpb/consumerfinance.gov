@@ -2,8 +2,8 @@
 /* Cypress tests cover all the UI interactions on this page. */
 
 import search from 'ctrl-f';
-import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
-import * as fig from './fig-sidenav-utils';
+import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
+import { scrollIntoViewWithOffset } from './fig-sidenav-utils.js';
 
 const buttonText = 'Search this guide';
 
@@ -16,9 +16,16 @@ const searchOptions = {
   threshold: 0.4,
 };
 
-/* Each searchable item (an HTML section with a heading and some paragraphs)
-   is tagged with a `data-search-section` attribute in the jinja2 template */
-const sections = [...document.querySelectorAll('[data-search-section]')];
+function init() {
+  // Each searchable item (an HTML section with a heading and some paragraphs)
+  // is tagged with a `data-search-section` attribute in the jinja2 template.
+  const sectionsList = [...document.querySelectorAll('[data-search-section]')];
+
+  const searchContainer = document.getElementById('ctrl-f');
+  const searchData = getSearchData(sectionsList);
+
+  search(searchContainer, { buttonText, searchOptions, searchData, onFollow });
+}
 
 /**
  * Generate a list of structured items to search
@@ -68,14 +75,9 @@ const onFollow = (event) => {
       .click();
     // Scrolling before the expandable closes causes jitters on some devices
     setTimeout(() => {
-      fig.scrollIntoViewWithOffset(document.getElementById(target), 60);
+      scrollIntoViewWithOffset(document.getElementById(target), 60);
     }, 300);
   }
 };
 
-const searchContainer = document.getElementById('ctrl-f');
-const searchData = getSearchData(sections);
-
-search(searchContainer, { buttonText, searchOptions, searchData, onFollow });
-
-export { getSearchData };
+export { init, getSearchData };
