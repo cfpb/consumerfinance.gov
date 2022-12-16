@@ -8,7 +8,7 @@ import {
   getStateValue,
 } from '../dispatchers/get-model-values.js';
 import { financialModel } from '../models/financial-model.js';
-import { stringToNum } from '../util/number-utils.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
@@ -79,7 +79,7 @@ function calculateDirectLoanDebt(
   }
 
   for (let x = 0; x < programLength; x++) {
-    const progressNumber = stringToNum(progress) + x;
+    const progressNumber = convertStringToNumber(progress) + x;
     if (progressNumber === 0) {
       subPrincipal += directSub;
       unsubPrincipal += directUnsub;

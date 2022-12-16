@@ -4,7 +4,6 @@ import {
   getAllStateValues,
   getStateValue,
 } from '../dispatchers/get-model-values.js';
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateState } from '../dispatchers/update-state.js';
 
@@ -53,8 +52,8 @@ const navigationView = {
     const navItem = document.querySelector(
       '[data-nav_item="' + activeName + '"]'
     );
-    const activeElem = closest(navItem, 'li');
-    const activeParent = closest(activeElem, '.m-list_item__parent');
+    const activeElem = navItem.closest('li');
+    const activeParent = activeElem.closest('.m-list_item__parent');
 
     this._navListItems.forEach((elem) => {
       elem.setAttribute('data-nav-is-active', 'False');
@@ -186,7 +185,7 @@ function _addButtonListeners(iped) {
  * @param {MouseEvent} event - The click event object.
  */
 function _handleAffordingChoicesClick(event) {
-  const parent = closest(event.target, '.m-form-field');
+  const parent = event.target.closest('.m-form-field');
   const input = parent.querySelector('input[name="affording-display-radio"]');
   updateState.byProperty('expensesChoice', input.value);
 }
@@ -219,10 +218,9 @@ function _handleNavButtonClick(event) {
     if (typeof target.dataset.nav_item !== 'undefined') {
       updateState.activeSection(target.dataset.nav_item);
     } else if (typeof target.dataset.nav_section !== 'undefined') {
-      closest(target, '[data-nav-is-open]').setAttribute(
-        'data-nav-is-open',
-        'True'
-      );
+      target
+        .closest('[data-nav-is-open]')
+        .setAttribute('data-nav-is-open', 'True');
     }
   }
 }

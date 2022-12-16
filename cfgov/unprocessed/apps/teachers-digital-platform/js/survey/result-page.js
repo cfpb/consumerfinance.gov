@@ -1,4 +1,3 @@
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import Cookies from 'js-cookie';
 import clipboardCopy from 'copy-to-clipboard';
 import {
@@ -132,7 +131,7 @@ function handlePrintModal() {
  */
 function handleResetModal() {
   $('#modal-reset').addEventListener('click', (event) => {
-    const button = closest(event.target, '[data-cancel]');
+    const button = event.target.closest('[data-cancel]');
     if (button) {
       event.preventDefault();
       if (button.dataset.cancel) {

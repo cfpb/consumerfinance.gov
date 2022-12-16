@@ -2,7 +2,6 @@ import { scrollIntoView } from '../../../js/modules/util/scroll';
 import DT from '../../owning-a-home/js/form-explainer/dom-tools';
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 import { assign } from '../../../js/modules/util/assign';
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 const CSS = {
   HAS_ATTENTION: 'has-attention',
@@ -294,10 +293,7 @@ class FormExplainer {
      * update the image overlay.
      */
     DT.bindEvents('.o-expandable_target', 'focus', (event) => {
-      const expandable = closest(
-        event.target,
-        '.o-expandable__form-explainer'
-      );
+      const expandable = event.target.closest('.o-expandable__form-explainer');
       this.updateAttention(expandable, CSS.HOVER_HAS_ATTENTION);
     });
 
@@ -322,9 +318,7 @@ class FormExplainer {
       ['click', 'keypress'],
       (event) => {
         if (event.which === 13 || event.type === 'click') {
-          const target = event.target;
-          const closestFormExplainer = closest(
-            target,
+          const closestFormExplainer = event.target.closest(
             '.o-expandable__form-explainer'
           );
 

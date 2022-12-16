@@ -1,5 +1,3 @@
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-
 /**
  * FormModel
  *
@@ -105,7 +103,7 @@ function FormModel(form) {
     let labelDom;
 
     if (isInGroup) {
-      labelDom = closest(field, 'fieldset');
+      labelDom = field.closest('fieldset');
       if (labelDom) {
         labelDom = labelDom.querySelector('legend');
       }

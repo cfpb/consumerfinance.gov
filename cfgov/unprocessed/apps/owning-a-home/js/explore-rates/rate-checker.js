@@ -18,12 +18,14 @@ import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import amortize from 'amortize';
 import dropdown from '../dropdown-utils';
-import formatUSD from 'format-usd';
 import jumbo from 'jumbo-mortgage';
 import median from 'median';
 import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
-import unFormatUSD from 'unformat-usd';
+import {
+  convertStringToNumber,
+  formatUSD,
+} from '../../../../js/modules/util/format.js';
 
 // TODO: remove jquery.
 import $ from 'jquery';
@@ -600,7 +602,7 @@ function renderInterestAmounts() {
       amortizeTerm: length,
     });
     const totalInterest = amortizedVal.interest;
-    const roundedInterest = Math.round(unFormatUSD(totalInterest));
+    const roundedInterest = Math.round(convertStringToNumber(totalInterest));
     const $el = $(item).find('.new-cost');
     $el.text(formatUSD({ amount: roundedInterest, decimalPlaces: 0 }));
     // Add short term rates, interest, and term to the shortTermVal array.

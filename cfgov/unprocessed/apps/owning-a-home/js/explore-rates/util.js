@@ -1,6 +1,8 @@
 import formatDate from 'date-format';
-import formatUSD from 'format-usd';
-import unFormatUSD from 'unformat-usd';
+import {
+  convertStringToNumber,
+  formatUSD,
+} from '../../../../js/modules/util/format.js';
 
 /**
  * Check if the house price entered is 0
@@ -75,7 +77,7 @@ function isVisible(elem) {
  * @returns {string} Value with commas and no dollar sign.
  */
 function removeDollarAddCommas(value) {
-  let parseValue = unFormatUSD(value);
+  let parseValue = convertStringToNumber(value);
   parseValue = formatUSD({ amount: parseValue, decimalPlaces: 0 }).replace(
     '$',
     ''
@@ -132,7 +134,8 @@ function renderDatestamp(elem, time) {
  * @returns {number} Loan amount.
  */
 function calcLoanAmount(housePrice, downPayment) {
-  const loan = unFormatUSD(housePrice) - unFormatUSD(downPayment);
+  const loan =
+    convertStringToNumber(housePrice) - convertStringToNumber(downPayment);
 
   if (loan > 0) {
     return loan;

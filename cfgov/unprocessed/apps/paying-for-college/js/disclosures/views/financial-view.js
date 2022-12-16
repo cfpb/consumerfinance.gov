@@ -5,8 +5,10 @@ import Analytics from '../utils/Analytics.js';
 import getFinancial from '../dispatchers/get-financial-values.js';
 import getExpenses from '../dispatchers/get-expenses-values.js';
 import publish from '../dispatchers/publish-update.js';
-import stringToNum from '../utils/handle-string-input.js';
-import formatUSD from 'format-usd';
+import {
+  convertStringToNumber,
+  formatUSD,
+} from '../../../../../js/modules/util/format.js';
 import { toWords } from 'number-to-words';
 import linksView from '../views/links-view.js';
 import metricView from '../views/metric-view.js';
@@ -497,7 +499,7 @@ const financialView = {
    */
   inputHandler: function (id) {
     const $ele = $('#' + id);
-    let value = stringToNum($ele.val());
+    let value = convertStringToNumber($ele.val());
     const key = $ele.attr('data-financial');
     const privateLoanKey = $ele.attr('data-private-loan_key');
     const percentage = $ele.attr('data-percentage_value');

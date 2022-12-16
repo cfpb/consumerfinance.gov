@@ -1,5 +1,3 @@
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-
 // Array that tracks paragraph positions
 let paragraphPositions;
 const regs3kMainContent = document.querySelector('.regulations3k');
@@ -255,7 +253,7 @@ const updateParagraphPositions = () => {
   const visibleParagraphs = [];
   // IE doesn't support `forEach` w/ node lists
   for (let i = 0; i < paragraphs.length; i++) {
-    const hiddenParagraphContainer = closest(paragraphs[i], '.u-hidden');
+    const hiddenParagraphContainer = paragraphs[i].closest('.u-hidden');
     if (!hiddenParagraphContainer) {
       visibleParagraphs.push(paragraphs[i]);
     }
