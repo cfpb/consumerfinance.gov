@@ -1,6 +1,5 @@
-import HTML_SNIPPET from '../fixtures/sample-fig-page.js';
-
 import {
+  init as figeSidenavUtilsInit,
   appRoot,
   navItems,
   navItemContainers,
@@ -13,6 +12,7 @@ describe('The Filing Instruction Guide side navigation', () => {
     beforeEach(() => {
       // Load HTML fixture
       document.body.innerHTML = HTML_SNIPPET;
+      figeSidenavUtilsInit();
     });
 
     it('should find the app root', () => {

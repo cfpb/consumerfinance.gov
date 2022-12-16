@@ -1,6 +1,6 @@
+import { getSearchData } from '../../../../../cfgov/unprocessed/apps/filing-instruction-guide/js/fig-search.js';
 import HTML_SNIPPET from '../fixtures/sample-fig-page.js';
 
-import { getSearchData } from '../../../../../cfgov/unprocessed/apps/filing-instruction-guide/js/fig-search.js';
 let sections;
 
 describe('The Filing Instruction Guide search functionality', () => {
