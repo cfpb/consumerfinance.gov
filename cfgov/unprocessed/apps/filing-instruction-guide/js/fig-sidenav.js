@@ -18,6 +18,8 @@ import {
 
 /**
  * Default scroll into view with an 60 pixel offset.
+ *
+ * @param target
  */
 const defaultScrollOffset = (target) => {
   scrollIntoViewWithOffset(

@@ -16,6 +16,9 @@ const searchOptions = {
   threshold: 0.4,
 };
 
+/**
+ *
+ */
 function init() {
   // Each searchable item (an HTML section with a heading and some paragraphs)
   // is tagged with a `data-search-section` attribute in the jinja2 template.
