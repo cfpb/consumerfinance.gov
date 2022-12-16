@@ -199,11 +199,6 @@ export class AdminPage {
     return cy.get('.listing');
   }
 
-  openExternalLinks() {
-    this.openNavigationTab('Reports');
-    this.selectSubMenu('External Links');
-  }
-
   searchExternalLink(link) {
     cy.get('#id_url').type(link);
     this.submitForm();
