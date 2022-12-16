@@ -13,7 +13,7 @@
   "private": "true",
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
-    "ctrl-f": "1.1.2"
+    "ctrl-f": "1.2.1"
   },
   "devDependencies": {}
 }

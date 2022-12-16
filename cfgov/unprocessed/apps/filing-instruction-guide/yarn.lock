@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-ctrl-f@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/ctrl-f/-/ctrl-f-1.1.2.tgz#676e2fbf491a08b4f35b998194ce6c40de94c5e2"
-  integrity sha512-yu7CV7CGCvK9fMipBUSWjMQ7E2xRfCzfppeyP9n8+oVL6XI+JHY7DP1nBt8bX0qpAwT+nQy4a8H/bGOKBggRvQ==
+ctrl-f@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/ctrl-f/-/ctrl-f-1.2.1.tgz#b2935804415f79dd10d37b52479dbe174826b1c4"
+  integrity sha512-1dIcRZ45NAtFrInHROuNbb89V36kFCFn0nJf8rRu84Wmn/QStU7V9iqdJFCIQsvr9RTpizRX9q+mX0z0/h3Umg==
