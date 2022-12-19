@@ -6,9 +6,23 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "CC0"}
 authors = [
-  {name = "CFPB", email = "tech@cfpb.gov" }
+    {name = "CFPB", email = "tech@cfpb.gov" }
 ]
 dependencies = [
+    "django==3.2",
+    "wagtail==2.15",
+    "Jinja2==2.11.3",
+    "MarkupSafe==2.0.1",
+    "django-flags",
+    "wagtail-flags",
+    "wagtail-inventory",
+    "django-url-or-relative-url-field==0.2.0",
+    "wagtailmedia==0.9.0",
+]
+
+[project.optional-dependencies]
+testing = [
+    "coverage",
 ]
 
 # List additional groups of dependencies here (e.g. development
@@ -55,3 +69,49 @@ dependencies = [
 [build-system]
 requires = ["setuptools>=43.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 79
+target-version = ['py36', 'py38']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs
+    | \.git
+    | \.tox
+    | \*.egg-info
+    | _build
+    | build
+    | dist
+    | migrations
+    | site
+  )/
+)
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 79
+lines_after_imports = 2
+skip = [".tox", "migrations", ".venv", "venv"]
+known_django = ["django"]
+known_wagtail = ["wagtail", "wagtailsharing"]
+default_section = "THIRDPARTY"
+sections = [
+    "STDLIB",
+    "DJANGO",
+    "WAGTAIL",
+    "THIRDPARTY",
+    "FIRSTPARTY",
+    "LOCALFOLDER"
+]
+
+[tool.bandit]
+exclude_dirs = [
+    "*/tests/*",
+]
+skips = [
+    "B308",
+    "B703",
+]
