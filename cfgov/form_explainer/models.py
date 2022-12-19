@@ -5,7 +5,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
-from wagtail.search import index
 
 from form_explainer.blocks import Explainer
 from v1.atomic_elements import molecules, organisms
@@ -55,5 +54,3 @@ class FormExplainerPage(CFGOVPage):
     )
 
     template = "form-explainer/index.html"
-
-    search_fields = CFGOVPage.search_fields + [index.SearchField("header")]

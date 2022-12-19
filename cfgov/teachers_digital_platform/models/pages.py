@@ -11,9 +11,8 @@ from wagtail.admin.edit_handlers import (
     TabbedInterface,
 )
 from wagtail.core.fields import RichTextField
-from wagtail.core.models import Orderable, Page
+from wagtail.core.models import Orderable
 from wagtail.documents.edit_handlers import DocumentChooserPanel
-from wagtail.search import index
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 
@@ -239,28 +238,6 @@ class ActivityPage(CFGOVPage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
-
-    # admin use only
-    search_fields = Page.search_fields + [
-        index.SearchField("summary"),
-        index.SearchField("big_idea"),
-        index.SearchField("essential_questions"),
-        index.SearchField("objectives"),
-        index.SearchField("what_students_will_do"),
-        index.FilterField("date"),
-        index.FilterField("building_block"),
-        index.FilterField("school_subject"),
-        index.FilterField("topic"),
-        index.FilterField("grade_level"),
-        index.FilterField("age_range"),
-        index.FilterField("student_characteristics"),
-        index.FilterField("activity_type"),
-        index.FilterField("teaching_strategy"),
-        index.FilterField("blooms_taxonomy_level"),
-        index.FilterField("activity_duration"),
-        index.FilterField("jump_start_coalition"),
-        index.FilterField("council_for_economic_education"),
-    ]
 
     def get_subtopic_ids(self):
         """Get a list of this activity's subtopic ids."""
