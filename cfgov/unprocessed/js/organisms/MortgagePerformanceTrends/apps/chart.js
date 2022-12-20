@@ -36,6 +36,7 @@ class MortgagePerformanceLineChart {
       source: `time-series/${this.timespan}/national`,
       type: 'line-comparison',
     });
+    this.$chart.setAttribute('data-chart-ignore', 'true');
     this.eventListeners();
     utils.hideEl(this.$chartTitleComparison);
     utils.hideEl(this.$loadingSpinner);
