@@ -5,7 +5,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
-from wagtail.search import index
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
@@ -62,11 +61,6 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
         "Right-hand sidebar, no left-hand sidebar. Use if children should be "
         "searchable using standard search filters module."
     )
-
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
 
 
 class ResearchHubPage(CategoryFilterableMixin, SublandingFilterablePage):
