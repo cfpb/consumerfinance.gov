@@ -28,11 +28,11 @@ regdown==1.0.5
 requests==2.27.1
 requests-aws4auth==1.1.2
 s3transfer==0.5.2
-wagtail-autocomplete==0.8.0
-wagtail-flags==5.1.0
-wagtail-inventory==1.5
+wagtail-autocomplete==0.9.0
+wagtail-flags==5.2.0
+wagtail-inventory==1.6
 wagtail-placeholder-images==0.1.1
-wagtail-sharing==2.6
+wagtail-sharing==2.7
 wagtail-treemodeladmin==1.5.0
 wagtailmedia==0.9.0
 
