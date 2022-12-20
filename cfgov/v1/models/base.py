@@ -20,7 +20,6 @@ from wagtail.admin.edit_handlers import (
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, Site
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.search import index
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
@@ -131,10 +130,6 @@ class CFGOVPage(Page):
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
-
-    search_fields = Page.search_fields + [
-        index.SearchField("sidefoot"),
-    ]
 
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
