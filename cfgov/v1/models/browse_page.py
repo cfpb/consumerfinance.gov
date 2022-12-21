@@ -1,12 +1,7 @@
 from django.db import models
 
 from wagtail import blocks
-from wagtail.admin.panels import (
-    FieldPanel,
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.fields import StreamField
 
 from data_research.blocks import MortgageDataDownloads
@@ -65,9 +60,9 @@ class BrowsePage(CFGOVPage):
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
+        FieldPanel("header"),
         FieldPanel("share_and_print"),
-        StreamFieldPanel("content"),
+        FieldPanel("content"),
     ]
 
     sidefoot_panels = CFGOVPage.sidefoot_panels + [

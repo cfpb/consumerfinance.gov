@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 
-from wagtail.admin.panels import FieldPanel, StreamFieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.fields import StreamField
 
 from mega_menu.blocks import MenuStreamBlock
@@ -20,7 +20,7 @@ class Menu(models.Model):
 
     panels = [
         FieldPanel("language"),
-        StreamFieldPanel("submenus"),
+        FieldPanel("submenus"),
     ]
 
     def __str__(self):

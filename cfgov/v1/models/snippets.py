@@ -1,6 +1,6 @@
 from django.db import models
 
-from wagtail.admin.panels import FieldPanel, PageChooserPanel, StreamFieldPanel
+from wagtail.admin.panels import FieldPanel, PageChooserPanel
 from wagtail.fields import RichTextField, StreamField
 from wagtail.snippets.models import register_snippet
 
@@ -56,7 +56,7 @@ class Contact(models.Model):
         FieldPanel("heading"),
         FieldPanel("body"),
         FieldPanel("body_shown_in_expandables"),
-        StreamFieldPanel("contact_info"),
+        FieldPanel("contact_info"),
     ]
 
     def __str__(self):

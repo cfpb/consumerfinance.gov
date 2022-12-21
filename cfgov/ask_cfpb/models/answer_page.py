@@ -8,7 +8,6 @@ from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.fields import RichTextField, StreamField
@@ -226,8 +225,8 @@ class AnswerPage(CFGOVPage):
             classname="collapsible",
         ),
         FieldPanel("share_and_print"),
-        StreamFieldPanel("notification"),
-        StreamFieldPanel("answer_content"),
+        FieldPanel("notification"),
+        FieldPanel("answer_content"),
         MultiFieldPanel(
             [
                 SnippetChooserPanel("related_resource"),
@@ -288,7 +287,7 @@ class AnswerPage(CFGOVPage):
     )
 
     sidebar_panels = [
-        StreamFieldPanel("sidebar"),
+        FieldPanel("sidebar"),
     ]
 
     edit_handler = TabbedInterface(

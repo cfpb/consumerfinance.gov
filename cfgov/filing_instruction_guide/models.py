@@ -9,7 +9,6 @@ from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.blocks import StreamBlock
@@ -130,8 +129,8 @@ class FIGContentPage(CFGOVPage, ClusterableModel):
             ],
             heading="FIG Version Information",
         ),
-        StreamFieldPanel("top_content"),
-        StreamFieldPanel("content"),
+        FieldPanel("top_content"),
+        FieldPanel("content"),
     ]
 
     # Data points panel

@@ -1,4 +1,4 @@
-from wagtail.admin.panels import ObjectList, StreamFieldPanel, TabbedInterface
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
@@ -24,8 +24,8 @@ class LandingPage(CFGOVPage):
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     # Tab handler interface

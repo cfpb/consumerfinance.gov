@@ -15,7 +15,6 @@ from wagtail.admin.panels import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.documents.edit_handlers import DocumentChooserPanel
@@ -102,7 +101,7 @@ class AbstractFilterPage(CFGOVPage):
     @classmethod
     def generate_edit_handler(self, content_panel):
         content_panels = [
-            StreamFieldPanel("header"),
+            FieldPanel("header"),
             content_panel,
         ]
         return TabbedInterface(
@@ -150,7 +149,7 @@ class LearnPage(AbstractFilterPage):
     )
 
     edit_handler = AbstractFilterPage.generate_edit_handler(
-        content_panel=StreamFieldPanel("content")
+        content_panel=FieldPanel("content")
     )
     template = "v1/learn-page/index.html"
 
@@ -173,7 +172,7 @@ class DocumentDetailPage(AbstractFilterPage):
         blank=True,
     )
     edit_handler = AbstractFilterPage.generate_edit_handler(
-        content_panel=StreamFieldPanel("content")
+        content_panel=FieldPanel("content")
     )
     template = "v1/document-detail/index.html"
 
@@ -355,7 +354,7 @@ class EventPage(AbstractFilterPage):
         ),
         FieldPanel("live_body"),
         FieldPanel("future_body"),
-        StreamFieldPanel("persistent_body"),
+        FieldPanel("persistent_body"),
         MultiFieldPanel(
             [
                 FieldPanel("live_stream_availability"),
@@ -395,7 +394,7 @@ class EventPage(AbstractFilterPage):
     ]
     # Agenda content tab
     agenda_panels = [
-        StreamFieldPanel("agenda_items"),
+        FieldPanel("agenda_items"),
     ]
     # Promotion panels
     promote_panels = [

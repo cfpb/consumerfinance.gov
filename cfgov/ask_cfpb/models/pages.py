@@ -16,7 +16,6 @@ from wagtail.admin.panels import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
@@ -141,7 +140,7 @@ class AnswerLandingPage(LandingPage):
     Page type for Ask CFPB's landing page.
     """
 
-    content_panels = CFGOVPage.content_panels + [StreamFieldPanel("header")]
+    content_panels = CFGOVPage.content_panels + [FieldPanel("header")]
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="Content"),
@@ -602,7 +601,7 @@ class ArticlePage(CFGOVPage):
             heading="Inset links",
             classname="collapsible",
         ),
-        StreamFieldPanel("sections"),
+        FieldPanel("sections"),
     ]
 
     sidebar = StreamField(
@@ -623,7 +622,7 @@ class ArticlePage(CFGOVPage):
     )
 
     sidebar_panels = [
-        StreamFieldPanel("sidebar"),
+        FieldPanel("sidebar"),
     ]
 
     edit_handler = TabbedInterface(

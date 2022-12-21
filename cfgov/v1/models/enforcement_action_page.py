@@ -5,7 +5,6 @@ from wagtail.admin.panels import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.fields import StreamField
@@ -230,7 +229,7 @@ class EnforcementActionPage(AbstractFilterPage):
         blank=True,
     )
 
-    content_panels = [StreamFieldPanel("header"), StreamFieldPanel("content")]
+    content_panels = [FieldPanel("header"), FieldPanel("content")]
 
     metadata_panels = [
         FieldPanel("public_enforcement_action"),

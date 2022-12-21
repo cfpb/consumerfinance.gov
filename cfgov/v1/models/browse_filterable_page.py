@@ -1,11 +1,6 @@
 from django.db import models
 
-from wagtail.admin.panels import (
-    FieldPanel,
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.blocks import StreamBlock
 from wagtail.fields import StreamField
 
@@ -51,8 +46,8 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     sidefoot_panels = CFGOVPage.sidefoot_panels + [

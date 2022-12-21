@@ -14,7 +14,6 @@ from wagtail.admin.panels import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.fields import StreamField
@@ -161,7 +160,7 @@ class CFGOVPage(Page):
     ]
 
     sidefoot_panels = [
-        StreamFieldPanel("sidefoot"),
+        FieldPanel("sidefoot"),
     ]
 
     settings_panels = [

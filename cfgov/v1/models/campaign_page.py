@@ -1,4 +1,4 @@
-from wagtail.admin.panels import ObjectList, StreamFieldPanel, TabbedInterface
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.blocks import StreamBlock
 from wagtail.fields import StreamField
 
@@ -33,8 +33,8 @@ class CampaignPage(CFGOVPage):
     content = StreamField(CampaignContent, blank=True)
 
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     edit_handler = TabbedInterface(
