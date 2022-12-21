@@ -8,7 +8,8 @@ from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.http import http_date
 
-from wagtail.admin.edit_handlers import (
+from wagtail import blocks
+from wagtail.admin.panels import (
     FieldPanel,
     FieldRowPanel,
     InlinePanel,
@@ -17,11 +18,10 @@ from wagtail.admin.edit_handlers import (
     StreamFieldPanel,
     TabbedInterface,
 )
-from wagtail.core import blocks
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
 from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.fields import RichTextField, StreamField
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.models import Page
 
 from localflavor.us.models import USStateField
 

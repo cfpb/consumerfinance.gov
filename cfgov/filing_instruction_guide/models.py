@@ -4,16 +4,16 @@ from datetime import date
 from django import forms
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.forms import WagtailAdminPageForm
+from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
     ObjectList,
     StreamFieldPanel,
     TabbedInterface,
 )
-from wagtail.admin.forms import WagtailAdminPageForm
-from wagtail.core.blocks import StreamBlock
-from wagtail.core.fields import StreamField
+from wagtail.blocks import StreamBlock
+from wagtail.fields import StreamField
 
 import requests
 from filing_instruction_guide import import_data_points

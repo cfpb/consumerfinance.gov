@@ -6,7 +6,7 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 

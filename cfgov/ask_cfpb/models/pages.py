@@ -10,7 +10,8 @@ from django.utils.text import slugify
 from django.utils.translation import activate, deactivate_all
 from django.utils.translation import gettext as _
 
-from wagtail.admin.edit_handlers import (
+from wagtail import blocks
+from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
@@ -19,9 +20,8 @@ from wagtail.admin.edit_handlers import (
     TabbedInterface,
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable
+from wagtail.fields import StreamField
+from wagtail.models import Orderable
 
 from modelcluster.fields import ParentalKey
 

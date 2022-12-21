@@ -4,7 +4,7 @@ import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
-from wagtail.core.blocks import StreamValue
+from wagtail.blocks import StreamValue
 
 from treebeard.mp_tree import MP_Node
 

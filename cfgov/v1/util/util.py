@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.http import Http404, HttpResponseRedirect
 from django.urls import resolve
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 
 # These messages are manually mirrored on the

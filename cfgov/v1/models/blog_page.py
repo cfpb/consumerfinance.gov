@@ -1,6 +1,6 @@
-from wagtail.admin.edit_handlers import StreamFieldPanel
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
+from wagtail import blocks
+from wagtail.admin.panels import StreamFieldPanel
+from wagtail.fields import StreamField
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import organisms, schema

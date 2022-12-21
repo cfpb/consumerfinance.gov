@@ -1,4 +1,4 @@
-from wagtail.core.models import PageRevision
+from wagtail.models import PageRevision
 from wagtail.search import index
 
 

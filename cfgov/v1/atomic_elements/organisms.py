@@ -7,10 +7,10 @@ from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
-from wagtail.core import blocks
-from wagtail.core.blocks.struct_block import StructBlockValidationError
-from wagtail.core.models import Page
+from wagtail import blocks
+from wagtail.blocks.struct_block import StructBlockValidationError
 from wagtail.images import blocks as images_blocks
+from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from taggit.models import Tag

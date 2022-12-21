@@ -14,14 +14,14 @@ from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     ObjectList,
     StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core.fields import StreamField
+from wagtail.fields import StreamField
 from wagtailsharing.models import ShareableRoutablePageMixin
 
 import requests

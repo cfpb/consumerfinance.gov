@@ -1,13 +1,13 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
+from wagtail import blocks
+from wagtail.admin.panels import (
     FieldPanel,
     ObjectList,
     StreamFieldPanel,
     TabbedInterface,
 )
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
+from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
 
 from jobmanager.blocks import JobListingList

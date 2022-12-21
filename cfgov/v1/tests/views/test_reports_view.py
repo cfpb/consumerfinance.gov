@@ -5,8 +5,8 @@ from operator import itemgetter
 from django.test import TestCase
 from django.utils import timezone
 
-from wagtail.core.models import Site
 from wagtail.documents.models import Document
+from wagtail.models import Site
 
 from model_bakery import baker
 from taggit.models import Tag

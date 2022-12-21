@@ -20,7 +20,7 @@ from django.core.management import BaseCommand
 from django.http.response import Http404
 from django.test import RequestFactory
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from v1.models.base import CFGOVContentOwner
 

@@ -6,8 +6,8 @@ import django.db.models.deletion
 import v1.atomic_elements.organisms
 import v1.blocks
 from django.db import migrations, models
-from wagtail.core import blocks as core_blocks
-from wagtail.core import fields as core_fields
+from wagtail import blocks as core_blocks
+from wagtail import fields as core_fields
 from wagtail.images import blocks as images_blocks
 
 

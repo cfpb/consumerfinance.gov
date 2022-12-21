@@ -51,17 +51,17 @@ class TestRunner(DiscoverRunner):
         migration_methods = (
             (
                 "wagtailcore",
-                "wagtail.core.migrations.0054_initial_locale",
+                "wagtail.migrations.0054_initial_locale",
                 "initial_locale",
             ),
             (
                 "wagtailcore",
-                "wagtail.core.migrations.0002_initial_data",
+                "wagtail.migrations.0002_initial_data",
                 "initial_data",
             ),
             (
                 "wagtailcore",
-                "wagtail.core.migrations.0025_collection_initial_data",
+                "wagtail.migrations.0025_collection_initial_data",
                 "initial_data",
             ),
         )

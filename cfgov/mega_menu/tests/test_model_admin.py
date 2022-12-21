@@ -2,7 +2,7 @@ import json
 
 from django.test import TestCase
 
-from wagtail.tests.utils import WagtailTestUtils
+from wagtail.test.utils import WagtailTestUtils
 
 from mega_menu.models import Menu
 

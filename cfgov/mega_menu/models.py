@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.db import models
 
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.admin.panels import FieldPanel, StreamFieldPanel
+from wagtail.fields import StreamField
 
 from mega_menu.blocks import MenuStreamBlock
 from mega_menu.frontend_conversion import FrontendConverter

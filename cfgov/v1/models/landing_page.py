@@ -1,9 +1,5 @@
-from wagtail.admin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core.fields import StreamField
+from wagtail.admin.panels import ObjectList, StreamFieldPanel, TabbedInterface
+from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage

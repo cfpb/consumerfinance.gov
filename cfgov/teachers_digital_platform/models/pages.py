@@ -3,16 +3,16 @@ from django import forms
 from django.db import models
 from django.utils import timezone
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
     TabbedInterface,
 )
-from wagtail.core.fields import RichTextField
-from wagtail.core.models import Orderable
 from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.fields import RichTextField
+from wagtail.models import Orderable
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 

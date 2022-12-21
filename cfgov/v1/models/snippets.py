@@ -1,11 +1,7 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
-    FieldPanel,
-    PageChooserPanel,
-    StreamFieldPanel,
-)
-from wagtail.core.fields import RichTextField, StreamField
+from wagtail.admin.panels import FieldPanel, PageChooserPanel, StreamFieldPanel
+from wagtail.fields import RichTextField, StreamField
 from wagtail.snippets.models import register_snippet
 
 from v1.atomic_elements import molecules

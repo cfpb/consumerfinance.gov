@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied
 from django.urls import reverse
 from django.utils.html import format_html_join
 
+from wagtail import hooks
 from wagtail.admin.menu import MenuItem
 from wagtail.admin.rich_text.converters.editor_html import (
     WhitelistRule as AllowlistRule,
@@ -18,8 +19,7 @@ from wagtail.contrib.modeladmin.options import (
     ModelAdminGroup,
     modeladmin_register,
 )
-from wagtail.core import hooks
-from wagtail.core.whitelist import attribute_rule
+from wagtail.whitelist import attribute_rule
 
 from ask_cfpb.models.snippets import GlossaryTerm
 from v1.admin_views import manage_cdn

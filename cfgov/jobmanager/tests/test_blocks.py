@@ -2,7 +2,7 @@ from datetime import date
 
 from django.test import RequestFactory, TestCase
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from jobmanager.blocks import JobListingList, JobListingTable
 from jobmanager.models.django import JobCategory

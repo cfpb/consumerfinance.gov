@@ -4,12 +4,8 @@ from collections import OrderedDict
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core.fields import StreamField
+from wagtail.admin.panels import ObjectList, StreamFieldPanel, TabbedInterface
+from wagtail.fields import StreamField
 
 from opensearch_dsl import Q
 

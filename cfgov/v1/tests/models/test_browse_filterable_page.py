@@ -3,7 +3,7 @@ from io import StringIO
 
 from django.test import TestCase
 
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import FilterablePagesDocument
