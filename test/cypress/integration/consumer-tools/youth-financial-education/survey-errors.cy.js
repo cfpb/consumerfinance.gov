@@ -1,5 +1,4 @@
 import { TdpSurveyHelpers } from './survey-helpers.cy.js';
-import { skipOn } from '@cypress/skip-test';
 
 const survey = new TdpSurveyHelpers();
 
@@ -14,14 +13,11 @@ describe('Youth Financial Education Survey: Errors', () => {
     survey.clickNext();
   }
 
-  // This tests fails in headless browsers, so skip it there
-  skipOn('headless', () => {
-    it('jumps to errors at top', () => {
-      refreshErrors();
-      cy.wait(1200);
-      cy.window().then((win) => {
-        expect(win.scrollY).lessThan(400);
-      });
+  it('jumps to errors at top', () => {
+    refreshErrors();
+    cy.wait(1200);
+    cy.window().then((win) => {
+      expect(win.scrollY).lessThan(400);
     });
   });
 
@@ -51,15 +47,12 @@ describe('Youth Financial Education Survey: Errors', () => {
     );
   });
 
-  // This tests fails in headless browsers, so skip it there
-  skipOn('headless', () => {
-    it('links jump to questions', () => {
-      refreshErrors();
-      cy.get('form .m-notification__error li:nth-child(2) a').click();
-      cy.wait(1200);
-      cy.window().then((win) => {
-        expect(win.scrollY).greaterThan(1000);
-      });
+  it('links jump to questions', () => {
+    refreshErrors();
+    cy.get('form .m-notification__error li:nth-child(2) a').click();
+    cy.wait(1200);
+    cy.window().then((win) => {
+      expect(win.scrollY).greaterThan(1000);
     });
   });
 
