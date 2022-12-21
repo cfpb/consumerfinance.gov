@@ -8,7 +8,6 @@ from wagtail.admin.panels import (
     TabbedInterface,
 )
 from wagtail.fields import StreamField
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.models import Page
 
 from modelcluster.fields import ParentalKey
@@ -255,7 +254,7 @@ class EnforcementActionPage(AbstractFilterPage):
                 FieldPanel("preview_description"),
                 FieldPanel("secondary_link_url"),
                 FieldPanel("secondary_link_text"),
-                ImageChooserPanel("preview_image"),
+                FieldPanel("preview_image"),
             ],
             heading="Page Preview Fields",
             classname="collapsible",

@@ -17,7 +17,6 @@ from wagtail.admin.panels import (
     TabbedInterface,
 )
 from wagtail.fields import StreamField
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.models import Page, Site
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -155,7 +154,7 @@ class CFGOVPage(Page):
 
     # Panels
     promote_panels = Page.promote_panels + [
-        ImageChooserPanel("social_sharing_image"),
+        FieldPanel("social_sharing_image"),
         FieldPanel("force_breadcrumbs", "Breadcrumbs"),
     ]
 

@@ -19,7 +19,6 @@ from wagtail.admin.panels import (
 )
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.fields import RichTextField, StreamField
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.models import Page
 
 from localflavor.us.models import USStateField
@@ -74,7 +73,7 @@ class AbstractFilterPage(CFGOVPage):
                 FieldPanel("preview_description"),
                 FieldPanel("secondary_link_url"),
                 FieldPanel("secondary_link_text"),
-                ImageChooserPanel("preview_image"),
+                FieldPanel("preview_image"),
             ],
             heading="Page Preview Fields",
             classname="collapsible",
@@ -344,7 +343,7 @@ class EventPage(AbstractFilterPage):
         MultiFieldPanel(
             [
                 FieldPanel("archive_body"),
-                ImageChooserPanel("archive_image"),
+                FieldPanel("archive_image"),
                 DocumentChooserPanel("video_transcript"),
                 DocumentChooserPanel("speech_transcript"),
                 FieldPanel("flickr_url"),
@@ -380,14 +379,14 @@ class EventPage(AbstractFilterPage):
         MultiFieldPanel(
             [
                 FieldPanel("venue_image_type"),
-                ImageChooserPanel("venue_image"),
+                FieldPanel("venue_image"),
             ],
             heading="Venue Image",
         ),
         MultiFieldPanel(
             [
                 FieldPanel("post_event_image_type"),
-                ImageChooserPanel("post_event_image"),
+                FieldPanel("post_event_image"),
             ],
             heading="Post-event Image",
         ),

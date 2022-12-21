@@ -4,7 +4,6 @@ from django.db import models
 from wagtail.admin.panels import FieldPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.fields import RichTextField
-from wagtail.images.edit_handlers import ImageChooserPanel
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
@@ -84,7 +83,7 @@ class Resource(ClusterableModel):
     panels = [
         FieldPanel("title"),
         FieldPanel("desc"),
-        ImageChooserPanel("thumbnail"),
+        FieldPanel("thumbnail"),
         DocumentChooserPanel("related_file"),
         DocumentChooserPanel("alternate_file"),
         FieldPanel("link"),
