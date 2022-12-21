@@ -71,32 +71,29 @@ describe('Youth Financial Education Survey: Progress', () => {
     });
   }
 
-  // This tests fails in headless browsers, so skip it there
-  skipOn('headless', () => {
-    it('updates section UI', () => {
-      cy.window().then((win) => win.sessionStorage.clear());
-      survey.open('3-5/p1');
-      verifySectionColors(['blue']);
-      survey.selectAnswers([0, 0, 0, 0, 0, 0]);
-      survey.clickNext();
+  it('updates section UI', () => {
+    cy.window().then((win) => win.sessionStorage.clear());
+    survey.open('3-5/p1');
+    verifySectionColors(['blue']);
+    survey.selectAnswers([0, 0, 0, 0, 0, 0]);
+    survey.clickNext();
 
-      verifySectionColors(['green', 'blue']);
-      survey.selectAnswers([0, 0]);
-      survey.clickNext();
+    verifySectionColors(['green', 'blue']);
+    survey.selectAnswers([0, 0]);
+    survey.clickNext();
 
-      verifySectionColors(['green', 'green', 'blue']);
-      cy.get(
-        '.tdp-survey-section:first-child .tdp-survey-section__edit span'
-      ).click();
+    verifySectionColors(['green', 'green', 'blue']);
+    cy.get(
+      '.tdp-survey-section:first-child .tdp-survey-section__edit span'
+    ).click();
 
-      verifySectionColors(['blue', 'green', 'white']);
-      survey.clickNext();
+    verifySectionColors(['blue', 'green', 'white']);
+    survey.clickNext();
 
-      verifySectionColors(['green', 'blue', 'white']);
-      survey.clickNext();
+    verifySectionColors(['green', 'blue', 'white']);
+    survey.clickNext();
 
-      verifySectionColors(['green', 'green', 'blue']);
-    });
+    verifySectionColors(['green', 'green', 'blue']);
   });
 
   it('stores answers without submit', () => {
