@@ -1,6 +1,5 @@
-import * as fs from 'fs';
-const { readdir, copyFile } = fs.promises;
-const { readdirSync } = fs;
+import {promises, readdirSync} from 'fs';
+const { readdir, copyFile } = promises;
 import { resolve } from 'path';
 
 /**
