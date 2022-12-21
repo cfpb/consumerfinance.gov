@@ -1,4 +1,4 @@
-import {promises, readdirSync} from 'fs';
+import { promises, readdirSync } from 'fs';
 const { readdir, copyFile } = promises;
 import { resolve } from 'path';
 
