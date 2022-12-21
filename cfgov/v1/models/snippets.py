@@ -1,6 +1,6 @@
 from django.db import models
 
-from wagtail.admin.panels import FieldPanel, PageChooserPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.fields import RichTextField, StreamField
 from wagtail.snippets.models import register_snippet
 
@@ -153,7 +153,7 @@ class EmailSignUp(models.Model):
         FieldPanel("url"),
         FieldPanel("heading"),
         FieldPanel("text"),
-        PageChooserPanel("disclaimer_page", "wagtailcore.Page"),
+        FieldPanel("disclaimer_page"),
     ]
 
     def __str__(self):
