@@ -3,6 +3,11 @@ import { onlyOn } from '@cypress/skip-test';
 
 const fig = new FilingInstructionGuide();
 
+let windowConsoleError;
+Cypress.on('window:before:load', (win) => {
+  windowConsoleError = cy.spy(win.console, 'error');
+});
+
 describe('1071 Filing Instruction Guide (FIG)', () => {
   describe('FIG table of contents', () => {
     /* Our FIG sample page only exists in certain environments so continue
@@ -17,6 +22,10 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
           context(desktop, () => {
             beforeEach(() => {
               cy.viewport(desktop);
+            });
+
+            afterEach(() => {
+              expect(windowConsoleError).to.not.be.called;
             });
 
             it('should be present', () => {
@@ -126,6 +135,10 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
               cy.viewport(tablet);
             });
 
+            afterEach(() => {
+              expect(windowConsoleError).to.not.be.called;
+            });
+
             it('should be present', () => {
               fig.open();
               fig.toc().should('be.visible');
@@ -169,6 +182,10 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
           context(mobile, () => {
             beforeEach(() => {
               cy.viewport(mobile);
+            });
+
+            afterEach(() => {
+              expect(windowConsoleError).to.not.be.called;
             });
 
             it('should be present', () => {
