@@ -1,4 +1,4 @@
-export default class TdpSurveyHelpers {
+export class TdpSurveyHelpers {
   open(path) {
     cy.visit(this.url(path));
   }

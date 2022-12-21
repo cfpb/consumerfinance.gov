@@ -1,4 +1,4 @@
-import BeforeYouClaim from './before-you-claim-helpers.cy.js';
+import { BeforeYouClaim } from './before-you-claim-helpers.cy.js';
 
 const claim = new BeforeYouClaim();
 

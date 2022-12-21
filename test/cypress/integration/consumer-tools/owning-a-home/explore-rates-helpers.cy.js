@@ -1,4 +1,4 @@
-export default class ExploreRates {
+export class ExploreRates {
   open() {
     cy.visit('/owning-a-home/explore-rates/');
   }

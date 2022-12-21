@@ -1,4 +1,4 @@
-export default class AskCfpbSearch {
+export class AskCfpbSearch {
   open(language) {
     const path = language === 'es' ? '/es/obtener-respuestas/' : '/ask-cfpb/';
     cy.visit(path);

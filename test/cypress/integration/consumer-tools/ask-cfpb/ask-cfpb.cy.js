@@ -1,5 +1,5 @@
-import AskCfpbSearch from './search-helpers.cy.js';
-import AskCfpbAnswerPage from './answer-helpers.cy.js';
+import { AskCfpbSearch } from './search-helpers.cy.js';
+import { AskCfpbAnswerPage } from './answer-helpers.cy.js';
 
 const search = new AskCfpbSearch();
 const answerPage = new AskCfpbAnswerPage();

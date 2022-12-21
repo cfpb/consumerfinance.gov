@@ -1,6 +1,6 @@
 import censusAPIResponses from '../../../fixtures/census-api.json';
 
-export default class RuralOrUnderservedTool {
+export class RuralOrUnderservedTool {
   open() {
     cy.visit('rural-or-underserved-tool/');
   }

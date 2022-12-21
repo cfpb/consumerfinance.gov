@@ -1,5 +1,5 @@
-import TdpResultsHelpers from './results-helpers.cy.js';
-import TdpSurveyHelpers from './survey-helpers.cy.js';
+import { TdpResultsHelpers } from './results-helpers.cy.js';
+import { TdpSurveyHelpers } from './survey-helpers.cy.js';
 
 const results = new TdpResultsHelpers();
 const survey = new TdpSurveyHelpers();

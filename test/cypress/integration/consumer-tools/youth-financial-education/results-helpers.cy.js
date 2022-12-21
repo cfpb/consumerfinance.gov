@@ -1,4 +1,4 @@
-export default class TdpResultsHelpers {
+export class TdpResultsHelpers {
   getPath(grades) {
     return `/consumer-tools/educator-tools/youth-financial-education/survey/${grades}/results/`;
   }

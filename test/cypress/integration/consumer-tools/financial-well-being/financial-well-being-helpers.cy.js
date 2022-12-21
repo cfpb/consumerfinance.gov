@@ -1,4 +1,4 @@
-export default class FinancialWellBeing {
+export class FinancialWellBeing {
   open() {
     cy.visit('/consumer-tools/financial-well-being/');
   }
