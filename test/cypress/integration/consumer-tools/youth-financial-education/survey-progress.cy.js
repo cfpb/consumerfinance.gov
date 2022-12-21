@@ -1,5 +1,4 @@
 import { TdpSurveyHelpers } from './survey-helpers.cy.js';
-import { skipOn } from '@cypress/skip-test';
 
 const survey = new TdpSurveyHelpers();
 
