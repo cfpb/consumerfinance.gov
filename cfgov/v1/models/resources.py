@@ -2,7 +2,6 @@ from django.core.validators import URLValidator
 from django.db import models
 
 from wagtail.admin.panels import FieldPanel
-from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.fields import RichTextField
 
 from modelcluster.fields import ParentalKey
@@ -84,8 +83,8 @@ class Resource(ClusterableModel):
         FieldPanel("title"),
         FieldPanel("desc"),
         FieldPanel("thumbnail"),
-        DocumentChooserPanel("related_file"),
-        DocumentChooserPanel("alternate_file"),
+        FieldPanel("related_file"),
+        FieldPanel("alternate_file"),
         FieldPanel("link"),
         FieldPanel("alternate_link"),
         FieldPanel("order"),

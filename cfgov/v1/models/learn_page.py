@@ -17,7 +17,6 @@ from wagtail.admin.panels import (
     ObjectList,
     TabbedInterface,
 )
-from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page
 
@@ -344,8 +343,8 @@ class EventPage(AbstractFilterPage):
             [
                 FieldPanel("archive_body"),
                 FieldPanel("archive_image"),
-                DocumentChooserPanel("video_transcript"),
-                DocumentChooserPanel("speech_transcript"),
+                FieldPanel("video_transcript"),
+                FieldPanel("speech_transcript"),
                 FieldPanel("flickr_url"),
                 FieldPanel("archive_video_id"),
             ],
