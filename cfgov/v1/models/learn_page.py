@@ -64,7 +64,7 @@ class AbstractFilterPage(CFGOVPage):
     settings_panels = [
         MultiFieldPanel(CFGOVPage.promote_panels, "Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
-        FieldPanel("tags", "Tags"),
+        FieldPanel("tags", heading="Tags"),
         MultiFieldPanel(
             [
                 FieldPanel("preview_title"),
@@ -77,9 +77,9 @@ class AbstractFilterPage(CFGOVPage):
             heading="Page Preview Fields",
             classname="collapsible",
         ),
-        FieldPanel("schema_json", "Structured Data"),
-        FieldPanel("authors", "Authors"),
-        FieldPanel("content_owners", "Content Owners"),
+        FieldPanel("schema_json", heading="Structured Data"),
+        FieldPanel("authors", heading="Authors"),
+        FieldPanel("content_owners", heading="Content Owners"),
         MultiFieldPanel(
             [
                 FieldPanel("date_published"),
@@ -89,8 +89,8 @@ class AbstractFilterPage(CFGOVPage):
             "Relevant Dates",
             classname="collapsible",
         ),
-        MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
-        FieldPanel("language", "Language"),
+        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
+        FieldPanel("language", heading="Language"),
     ]
 
     # This page class cannot be created.

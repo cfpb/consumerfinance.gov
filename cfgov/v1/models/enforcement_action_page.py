@@ -259,7 +259,7 @@ class EnforcementActionPage(AbstractFilterPage):
             heading="Page Preview Fields",
             classname="collapsible",
         ),
-        FieldPanel("authors", "Authors"),
+        FieldPanel("authors", heading="Authors"),
         MultiFieldPanel(
             [
                 FieldPanel("date_published"),
@@ -268,8 +268,8 @@ class EnforcementActionPage(AbstractFilterPage):
             "Relevant Dates",
             classname="collapsible",
         ),
-        MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
-        FieldPanel("language", "Language"),
+        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
+        FieldPanel("language", heading="Language"),
     ]
 
     edit_handler = TabbedInterface(

@@ -155,7 +155,7 @@ class CFGOVPage(Page):
     # Panels
     promote_panels = Page.promote_panels + [
         FieldPanel("social_sharing_image"),
-        FieldPanel("force_breadcrumbs", "Breadcrumbs"),
+        FieldPanel("force_breadcrumbs", heading="Breadcrumbs"),
     ]
 
     sidefoot_panels = [
@@ -163,14 +163,14 @@ class CFGOVPage(Page):
     ]
 
     settings_panels = [
-        MultiFieldPanel(promote_panels, "Settings"),
+        MultiFieldPanel(promote_panels, heading="Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
-        FieldPanel("tags", "Tags"),
-        FieldPanel("authors", "Authors"),
-        FieldPanel("content_owners", "Content Owners"),
-        FieldPanel("schema_json", "Structured Data"),
-        MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
-        FieldPanel("language", "language"),
+        FieldPanel("tags", heading="Tags"),
+        FieldPanel("authors", heading="Authors"),
+        FieldPanel("content_owners", heading="Content Owners"),
+        FieldPanel("schema_json", heading="Structured Data"),
+        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
+        FieldPanel("language", heading="Language"),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass
