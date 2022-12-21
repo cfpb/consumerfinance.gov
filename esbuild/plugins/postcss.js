@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-const { readFile } = fs.promises;
+import { promises } from 'fs';
+const { readFile } = promises;
 import { dirname } from 'path';
 import postcss from 'postcss';
 import less from 'less';
