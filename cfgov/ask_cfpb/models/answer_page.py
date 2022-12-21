@@ -11,7 +11,6 @@ from wagtail.admin.panels import (
     TabbedInterface,
 )
 from wagtail.fields import RichTextField, StreamField
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtailautocomplete.edit_handlers import AutocompletePanel
@@ -229,7 +228,7 @@ class AnswerPage(CFGOVPage):
         FieldPanel("answer_content"),
         MultiFieldPanel(
             [
-                SnippetChooserPanel("related_resource"),
+                FieldPanel("related_resource"),
                 AutocompletePanel(
                     "related_questions", target_model="ask_cfpb.AnswerPage"
                 ),
