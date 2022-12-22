@@ -80,7 +80,7 @@ export class FilingInstructionGuide {
   }
 
   scrollToBottom() {
-    return cy.get('footer').scrollIntoView();
+    return cy.get('.o-fig_heading').last().scrollIntoView();
   }
 
   getUnrenderedListTags() {
