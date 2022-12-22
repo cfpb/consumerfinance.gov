@@ -15,6 +15,7 @@ function refreshErrors() {
 describe('Youth Financial Education Survey: Errors', () => {
   it('jumps to errors at top', () => {
     refreshErrors();
+    cy.wait(1200);
     cy.get('main h1').isScrolledTo();
     cy.window().then((win) => {
       expect(win.scrollY).lessThan(400);
@@ -50,6 +51,7 @@ describe('Youth Financial Education Survey: Errors', () => {
   it('links jump to questions', () => {
     refreshErrors();
     cy.get('form .m-notification__error li:nth-child(2) a').click();
+    cy.wait(1200);
     cy.get('.survey-reset--link--wrap').isScrolledTo();
     cy.window().then((win) => {
       expect(win.scrollY).greaterThan(1000);
