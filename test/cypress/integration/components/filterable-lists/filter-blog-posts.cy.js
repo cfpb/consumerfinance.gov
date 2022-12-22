@@ -347,12 +347,14 @@ describe('Filter Blog Posts based on content', () => {
     blog.applyFilters();
     blog.notification().should('be.visible');
     // Then I should see only results posted by the selected language
-    blog.resultsContent().get('.o-post-preview[lang|="es"]').should(
-      'have.length.greaterThan', 0
-    );
-    blog.resultsContent().get('.o-post-preview[lang]:not(.o-post-preview[lang|="es"])').should(
-      'have.length', 0
-    );
+    blog
+      .resultsContent()
+      .get('.o-post-preview[lang|="es"]')
+      .should('have.length.greaterThan', 0);
+    blog
+      .resultsContent()
+      .get('.o-post-preview[lang]:not(.o-post-preview[lang|="es"])')
+      .should('have.length', 0);
     // And the page url should contain "language=es"
     cy.url().should('include', 'language=es');
     // And the page url should not contain "language=en"
@@ -366,9 +368,10 @@ describe('Filter Blog Posts based on content', () => {
     blog.applyFilters();
     // Then I should see only results posted by at least one of the two selected languages
     blog.notification().should('be.visible');
-    blog.resultsContent().get('.o-post-preview[lang|="es"], .o-post-preview[lang|="tl"]').should(
-      'have.length.greaterThan', 0
-    );
+    blog
+      .resultsContent()
+      .get('.o-post-preview[lang|="es"], .o-post-preview[lang|="tl"]')
+      .should('have.length.greaterThan', 0);
     // And the page url should contain "language=es"
     cy.url().should('include', 'language=es');
     // And the page url should contain "language=ar"
@@ -383,12 +386,14 @@ describe('Filter Blog Posts based on content', () => {
     blog.applyFilters();
     // Then I should see only results posted by the selected language
     blog.notification().should('be.visible');
-    blog.resultsContent().get('.o-post-preview[lang|="es"]').should(
-      'have.length.greaterThan', 0
-    );
-    blog.resultsContent().get('.o-post-preview[lang]:not(.o-post-preview[lang|="es"])').should(
-      'have.length', 0
-    );
+    blog
+      .resultsContent()
+      .get('.o-post-preview[lang|="es"]')
+      .should('have.length.greaterThan', 0);
+    blog
+      .resultsContent()
+      .get('.o-post-preview[lang]:not(.o-post-preview[lang|="es"])')
+      .should('have.length', 0);
     // And the page url should contain "language=es"
     cy.url().should('include', 'language=es');
     // And the page url should not contain "language=en"

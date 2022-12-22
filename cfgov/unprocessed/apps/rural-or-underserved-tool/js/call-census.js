@@ -1,4 +1,5 @@
-import jsonpP from 'jsonp-p';
+import jsonpPModule from 'jsonp-p';
+const jsonpP = jsonpPModule.default;
 import { addEl, createEl, getEl, removeClass } from './dom-tools.js';
 import { incrementTotal } from './count.js';
 

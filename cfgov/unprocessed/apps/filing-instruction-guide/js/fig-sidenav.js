@@ -18,6 +18,8 @@ import {
 
 /**
  * Default scroll into view with an 60 pixel offset.
+ *
+ * @param {HTMLElement} target - A link with an href attribute.
  */
 const defaultScrollOffset = (target) => {
   scrollIntoViewWithOffset(

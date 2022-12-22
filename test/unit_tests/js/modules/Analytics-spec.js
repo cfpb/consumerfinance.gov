@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import Analytics from '../../../../cfgov/unprocessed/js/modules/Analytics.js';
 let dataLayerOptions;
 let getDataLayerOptions;

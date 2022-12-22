@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 import {
   bindAnalytics,

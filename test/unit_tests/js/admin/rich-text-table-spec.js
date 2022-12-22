@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import tableWrapper from '../../../../cfgov/unprocessed/apps/admin/js/rich-text-table.js';
 
 describe('Initializes RichTextEditor', () => {

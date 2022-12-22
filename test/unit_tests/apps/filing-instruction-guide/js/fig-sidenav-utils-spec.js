@@ -1,4 +1,3 @@
-import HTML_SNIPPET from '../fixtures/sample-fig-page.js';
 import {
   init as figeSidenavUtilsInit,
   appRoot,
@@ -7,6 +6,8 @@ import {
   highlightNavItem,
   unHighlightNavItem,
 } from '../../../../../cfgov/unprocessed/apps/filing-instruction-guide/js/fig-sidenav-utils.js';
+
+import HTML_SNIPPET from '../fixtures/sample-fig-page.js';
 
 describe('The Filing Instruction Guide side navigation', () => {
   describe('Table of contents', () => {

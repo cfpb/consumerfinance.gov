@@ -1,4 +1,9 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
+import {
+  getAllParams,
+  getVal,
+  setVal,
+  update,
+} from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/params.js';
 
 const HTML_SNIPPET = `
   <input id="credit-score"
@@ -30,34 +35,32 @@ const HTML_SNIPPET = `
   </select>
 `;
 
-const params = require(BASE_JS_PATH + 'js/explore-rates/params');
-
 describe('explore-rates/params', () => {
   beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
   });
 
   it('should be able to get a value', () => {
-    expect(params.getVal('credit-score')).toBe(700);
-    expect(params.getVal('down-payment')).toBe('20,000');
-    expect(params.getVal('dp-constant')).toBe('');
-    expect(params.getVal('house-price')).toBe('200,000');
-    expect(params.getVal('loan-amount')).toBeUndefined();
-    expect(params.getVal('location')).toBe('AL');
-    expect(params.getVal('rate-structure')).toBe('fixed');
-    expect(params.getVal('loan-term')).toBe(30);
-    expect(params.getVal('loan-type')).toBe('conf');
-    expect(params.getVal('arm-type')).toBe('5-1');
-    expect(params.getVal('edited')).toBe(false);
-    expect(params.getVal('isJumbo')).toBe(false);
-    expect(params.getVal('prevLoanType')).toBe('');
-    expect(params.getVal('prevLocation')).toBe('');
-    expect(params.getVal('request')).toBeUndefined();
+    expect(getVal('credit-score')).toBe(700);
+    expect(getVal('down-payment')).toBe('20,000');
+    expect(getVal('dp-constant')).toBe('');
+    expect(getVal('house-price')).toBe('200,000');
+    expect(getVal('loan-amount')).toBeUndefined();
+    expect(getVal('location')).toBe('AL');
+    expect(getVal('rate-structure')).toBe('fixed');
+    expect(getVal('loan-term')).toBe(30);
+    expect(getVal('loan-type')).toBe('conf');
+    expect(getVal('arm-type')).toBe('5-1');
+    expect(getVal('edited')).toBe(false);
+    expect(getVal('isJumbo')).toBe(false);
+    expect(getVal('prevLoanType')).toBe('');
+    expect(getVal('prevLocation')).toBe('');
+    expect(getVal('request')).toBeUndefined();
   });
 
   it('should be able to set a value', () => {
-    params.setVal('credit-score', 800);
-    expect(params.getVal('credit-score')).toBe(800);
+    setVal('credit-score', 800);
+    expect(getVal('credit-score')).toBe(800);
   });
 
   it('should be able to return all stored values', () => {
@@ -79,21 +82,21 @@ describe('explore-rates/params', () => {
       prevLocation: '',
       request: UNDEFINED,
     };
-    const storedValues = params.getAllParams();
+    const storedValues = getAllParams();
     expect(storedValues).toStrictEqual(mockData);
   });
 
   it('should be able to update a value from the HTML', () => {
-    expect(params.getVal('prevLoanType')).toBe('');
-    expect(params.getVal('prevLocation')).toBe('');
-    params.update();
-    expect(params.getVal('prevLoanType')).toBe('conf');
-    expect(params.getVal('prevLocation')).toBe('AL');
+    expect(getVal('prevLoanType')).toBe('');
+    expect(getVal('prevLocation')).toBe('');
+    update();
+    expect(getVal('prevLoanType')).toBe('conf');
+    expect(getVal('prevLocation')).toBe('AL');
 
     const sliderElement = document.querySelector('#credit-score');
-    expect(params.getVal('credit-score')).toBe(700);
+    expect(getVal('credit-score')).toBe(700);
     sliderElement.value = 800;
-    params.update();
-    expect(params.getVal('credit-score')).toBe(800);
+    update();
+    expect(getVal('credit-score')).toBe(800);
   });
 });

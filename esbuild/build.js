@@ -1,9 +1,12 @@
 /* eslint-disable complexity,consistent-return,global-require */
-const copy = require('./copy.js');
-const scripts = require('./scripts.js');
-const styles = require('./styles.js');
+import { copy } from './copy.js';
+import { scripts } from './scripts.js';
+import { styles } from './styles.js';
 
-const { processed } = require('../config/environment.js').paths;
+import environment from '../config/environment.js';
+const { processed } = environment.paths;
+
+import { runWorkerAndManifest } from '../cfgov/unprocessed/apps/regulations3k/worker_and_manifest.js';
 
 const baseConfig = {
   logLevel: 'info',
@@ -30,5 +33,5 @@ const arg = process.argv.slice(2)[0];
   copy(baseConfig);
 
   // Run app-specific scripts
-  require('../cfgov/unprocessed/apps/regulations3k/worker_and_manifest.js');
+  runWorkerAndManifest();
 })();

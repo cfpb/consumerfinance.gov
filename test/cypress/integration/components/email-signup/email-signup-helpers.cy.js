@@ -1,6 +1,6 @@
 import subscriptionSuccessResponse from '../../../fixtures/subscription.json';
 
-export default class EmailSignup {
+export class EmailSignup {
   open() {
     cy.visit('/about-us/blog/');
   }

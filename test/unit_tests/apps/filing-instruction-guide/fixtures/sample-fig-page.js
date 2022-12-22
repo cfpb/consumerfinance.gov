@@ -1,4 +1,4 @@
-module.exports = `<main class="content content__1-3 o-fig" id="main">
+export default `<main class="content content__1-3 o-fig" id="main">
   <div class="wrapper content_wrapper">
     <nav class="breadcrumbs" aria-label="Breadcrumbs">
       <svg

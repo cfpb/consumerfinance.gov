@@ -1,9 +1,14 @@
-const { mkdir, copyFile } = require('fs').promises;
-const { dirname, resolve } = require('path');
-const { getFiles, copyAll } = require('./utils.js');
-const { unprocessed, modules } = require('../config/environment.js').paths;
+import * as fs from 'fs';
+const { mkdir, copyFile } = fs.promises;
+import { dirname, resolve } from 'path';
+import { getFiles, copyAll } from './utils.js';
+import environment from '../config/environment.js';
+const { unprocessed, modules } = environment.paths;
 
-module.exports = async function (baseConfig) {
+/**
+ * @param {object} baseConfig - The base esbuild configuration.
+ */
+async function copy(baseConfig) {
   const resolvedBase = resolve(unprocessed);
   const files = await getFiles(resolvedBase);
 
@@ -35,4 +40,6 @@ module.exports = async function (baseConfig) {
     `${modules}/@cfpb/cfpb-icons/src/icons`,
     `${baseConfig.outdir}/icons`
   );
-};
+}
+
+export { copy };

@@ -15,8 +15,7 @@ import metricView from '../views/metric-view.js';
 import expensesView from '../views/expenses-view.js';
 import postVerification from '../dispatchers/post-verify.js';
 
-window.jQuery = window.$ = $;
-require('../../../node_modules/sticky-kit/dist/sticky-kit.js');
+import('../../../node_modules/sticky-kit/dist/sticky-kit.js');
 
 const getDataLayerOptions = Analytics.getDataLayerOptions;
 

@@ -7,7 +7,7 @@ import {
   getElData,
   getParentEls,
   getNextEls,
-} from './dom-tools';
+} from './dom-tools.js';
 
 const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js';
 const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css';
