@@ -6,6 +6,9 @@ let unHighlightNavItem;
 let scrollNavItem;
 let prevTarget;
 
+/**
+ * Initialize the side navigation variables.
+ */
 function init() {
   appRoot = document.querySelector('main.o-fig');
   navItems = appRoot.querySelectorAll('.m-nav-link[href]');

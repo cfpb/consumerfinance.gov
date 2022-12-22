@@ -15,5 +15,5 @@
   "dependencies": {
     "ctrl-f": "1.2.1"
   },
-  "devDependencies": {}
+  "type": "module"
 }

@@ -1,5 +1,6 @@
-module.exports = {
+export default {
   testEnvironment: 'jsdom',
+  transform: {},
   verbose: false,
   collectCoverage: true,
   collectCoverageFrom: ['<rootDir>/cfgov/unprocessed/**/*.js'],

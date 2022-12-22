@@ -14,5 +14,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cfpb/ccdb5-ui"
-  }
+  },
+  "type": "module"
 }

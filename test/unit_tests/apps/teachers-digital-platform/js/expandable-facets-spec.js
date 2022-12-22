@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 import ExpandableFacets from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-facets.js';
 
