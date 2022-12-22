@@ -12,20 +12,20 @@ const HTML_SNIPPET = `
 
 describe('The TDP survey grade-level page', () => {
   let surveys;
-  const remove = jest.fn();
-  const init = jest.fn();
+  const cookieRemove = jest.fn();
+  const modalsInit = jest.fn();
 
   beforeAll(async () => {
     jest.unstable_mockModule('js-cookie', () => ({
       default: {
-        remove,
+        remove: cookieRemove,
       },
     }));
 
     jest.unstable_mockModule(
       '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js',
       () => ({
-        init,
+        init: modalsInit,
         close: jest.fn(),
       })
     );
@@ -44,9 +44,9 @@ describe('The TDP survey grade-level page', () => {
 
     surveys.init();
 
-    expect(remove.mock.calls[0][0]).toEqual(RESULT_COOKIE);
-    expect(remove.mock.calls[1][0]).toEqual(SURVEY_COOKIE);
+    expect(cookieRemove.mock.calls[0][0]).toEqual(RESULT_COOKIE);
+    expect(cookieRemove.mock.calls[1][0]).toEqual(SURVEY_COOKIE);
     expect(sessionStorage.getItem(ANSWERS_SESS_KEY)).toBeNull();
-    expect(init).toHaveBeenCalled();
+    expect(modalsInit).toHaveBeenCalled();
   });
 });

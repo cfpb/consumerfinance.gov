@@ -9,27 +9,27 @@ const $ = document.querySelector.bind(document);
 
 describe('The TDP survey results page', () => {
   let initials, surveys, resultsPage, obfuscation;
-  const remove = jest.fn();
-  const init = jest.fn();
-  const close = jest.fn();
-  const copy = jest.fn();
+  const cookieRemove = jest.fn();
+  const modalsInit = jest.fn();
+  const modalsClose = jest.fn();
+  const copyClipboard = jest.fn();
 
   beforeAll(async () => {
     jest.unstable_mockModule('js-cookie', () => ({
       default: {
-        remove,
+        remove: cookieRemove,
       },
     }));
 
     jest.unstable_mockModule('copy-to-clipboard', () => ({
-      default: copy,
+      default: copyClipboard,
     }));
 
     jest.unstable_mockModule(
       '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js',
       () => ({
-        init,
-        close,
+        init: modalsInit,
+        close: modalsClose,
       })
     );
 
@@ -64,8 +64,8 @@ describe('The TDP survey results page', () => {
     surveys.init();
 
     expect(sessionStorage.getItem(ANSWERS_SESS_KEY)).toBeNull();
-    expect(remove.mock.calls[0][0]).toEqual(SURVEY_COOKIE);
-    expect(init).toHaveBeenCalled();
+    expect(cookieRemove.mock.calls[0][0]).toEqual(SURVEY_COOKIE);
+    expect(modalsInit).toHaveBeenCalled();
   });
 
   it('should read initials', () => {
@@ -99,7 +99,7 @@ describe('The TDP survey results page', () => {
 
     $('#modal-reset [data-cancel="1"]').click();
 
-    expect(close).toHaveBeenCalled();
+    expect(modalsClose).toHaveBeenCalled();
 
     $('#modal-reset [data-cancel=""]').click();
 
@@ -134,7 +134,7 @@ describe('The TDP survey results page', () => {
 
     shared.click();
 
-    expect(copy).toHaveBeenCalled();
+    expect(copyClipboard).toHaveBeenCalled();
     expect($('.share-output__copied').hidden).toBeFalsy();
   });
 });
