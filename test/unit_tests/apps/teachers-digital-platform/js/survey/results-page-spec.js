@@ -33,9 +33,11 @@ describe('The TDP survey results page', () => {
       })
     );
 
-    surveys = await import(
-      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js'
-    );
+    surveys = (
+      await import(
+        '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js'
+      )
+    ).default;
 
     resultsPage = (
       await import(
@@ -59,7 +61,7 @@ describe('The TDP survey results page', () => {
   it('should be recognized from HTML', () => {
     sessionStorage.setItem(ANSWERS_SESS_KEY, 'testItem');
 
-    surveys.default.init();
+    surveys.init();
 
     expect(sessionStorage.getItem(ANSWERS_SESS_KEY)).toBeNull();
     expect(remove.mock.calls[0][0]).toEqual(SURVEY_COOKIE);

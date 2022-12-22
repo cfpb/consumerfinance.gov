@@ -30,9 +30,11 @@ describe('The TDP survey grade-level page', () => {
       })
     );
 
-    surveys = await import(
-      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js'
-    );
+    surveys = (
+      await import(
+        '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js'
+      )
+    ).default;
 
     document.body.innerHTML = HTML_SNIPPET;
   });
@@ -40,7 +42,7 @@ describe('The TDP survey grade-level page', () => {
   it('should be recognized from HTML', () => {
     sessionStorage.setItem(ANSWERS_SESS_KEY, 'testItem');
 
-    surveys.default.init();
+    surveys.init();
 
     expect(remove.mock.calls[0][0]).toEqual(RESULT_COOKIE);
     expect(remove.mock.calls[1][0]).toEqual(SURVEY_COOKIE);
