@@ -29,7 +29,7 @@
     "@cfpb/cfpb-pagination": "0.18.1",
     "@cfpb/cfpb-tables": "0.18.1",
     "@cfpb/cfpb-typography": "0.18.1",
-    "@cfpb/rental-assistance-finder": "0.5.2",
+    "@cfpb/rental-assistance-finder": "0.5.3",
     "@cypress/skip-test": "2.6.1",
     "autoprefixer": "10.4.13",
     "cfpb-chart-builder": "6.4.2",
