@@ -1,0 +1,77 @@
+{# ==========================================================================
+
+   Expandable
+
+   ==========================================================================
+
+   Description:
+
+   Create a financial item expandable when given:
+
+   value:                   Object with following properties:
+
+   value.label:             Label for expandable header.
+
+   value.value:             Value for expandable header.
+
+   value.is_editable:       Whether expandable contains form elements.
+                            Determines the open/close cues.
+
+   value.note:              Additional text for expandable header.
+
+   value.data_attribute:    Data attribute for value element.
+
+   value.status:            Status descriptor for financial item value.
+                            Options include warning.
+
+   ========================================================================== #}
+
+{% macro expandable(value) %}
+<div data-qa-hook="expandable"
+     class="o-expandable
+            o-expandable__padded">
+    <button class="o-expandable_header
+                   o-expandable_target
+                   financial-item 
+                   financial-item__expandable
+                   {{ ('financial-item__' + value.status | safe ) if value.status else ''}}" 
+            type="button">
+      <span class="flex-container">
+        <span class="h4 o-expandable_header-left o-expandable_label">
+            {{ value.label }}
+        </span>
+        <span class="o-expandable_header-right o-expandable_link">
+            <span class="financial-item_value" {{ value.data_attribute | safe if value.data_attribute else '' }} >
+               {{ value.value }}
+            </span>
+            <span class="o-expandable_cue o-expandable_cue-open">
+                <span class="u-visually-hidden-on-mobile">
+                    {{ 'Edit' if value.is_editable else 'Show' }}
+                </span>
+                {{ svg_icon('edit') if value.is_editable else svg_icon('plus-round') }}
+            </span>
+            <span class="o-expandable_cue o-expandable_cue-close">
+                <span class="u-visually-hidden-on-mobile">
+                    {{ 'Save' if value.is_editable else 'Hide' }}
+                </span>
+                {{ svg_icon('check-round') if value.is_editable else svg_icon('minus-round') }}
+            </span>
+        </span>
+        </span>
+        {% if value.note %}
+            <span class="financial-item_note">
+                {{ value.note | safe }}
+            </span>
+        {% endif %}
+    </button>
+    <div class="o-expandable_content">
+        {% if caller is defined %}
+            {{ caller() }}
+        {% endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% if value %}
+    {{ expandable(value) }}
+{% endif %}

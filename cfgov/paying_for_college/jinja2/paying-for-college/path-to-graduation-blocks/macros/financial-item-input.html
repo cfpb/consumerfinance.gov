@@ -1,0 +1,46 @@
+{# ==========================================================================
+
+   Financial item input
+
+   ==========================================================================
+
+   Description: Builds right-aligned input with inline label.
+
+   value:                   Object with the following properties:
+
+   value.data_attribute:    Data attribute for input element.
+
+   value.helper_text:       Label helper text.
+
+   value.label:             Name of the field.
+
+   value.id:                Input id.
+
+   value.value:             Input value.
+
+   ========================================================================== #}
+
+{% macro render( value ) -%}
+{% set ht_id = 'ht_' ~ value.id %}
+<div class="financial-item">
+    <div class="financial-item_label">
+        <label class="a-label a-label__heading" for="{{ value.id }}">
+            {{ value.label }}
+        </label>
+        {%- if value.helper_text -%}
+            <p id="{{ ht_id }}"><small>{{ value.helper_text | safe }}</small></p>
+        {%- endif -%}
+    </div>
+    <div class="financial-item_value">
+        <input class="a-text-input"
+               type="text"
+               autocomplete="off"
+               id="{{ value.id if value.id else '' }}"
+               name="{{ value.id if value.id else '' }}"
+               value="{{ value.value if value.value else '' }}"
+               {{ ('aria-describedby="' ~ ht_id ~ '"') | safe if value.helper_text else '' }}
+               {{ value.data_attribute | safe if value.data_attribute else ''}}>
+    </div>
+</div>
+
+{%- endmacro %}

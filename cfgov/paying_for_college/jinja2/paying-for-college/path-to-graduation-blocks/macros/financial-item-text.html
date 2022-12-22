@@ -1,0 +1,44 @@
+{# ==========================================================================
+
+   Financial Text Item
+
+   ==========================================================================
+
+   Description:
+
+   Outputs inline label and right-aligned value when given:
+
+   value:                 Object with the following properties:
+
+   value.label:           Label text.
+
+   value.helper_text:       Label helper text.
+
+   value.value:           Value text.
+
+   value.type:            Item type. Options include 'subtotal' and 'total'.
+
+   value.status:          Item status. Options include 'warning'
+
+   value.data_attribute:  Data attribute for value element.
+
+   ========================================================================== #}
+
+
+{% macro render( value ) -%}
+<div class="financial-item
+            {{ 'financial-item__' + ( value.type if value.type else 'text' ) }}
+            {% if value.status %} {{ 'financial-item__' + value.status }} {% endif %}">
+    <div class="financial-item_label">
+        <div>{{ value.label | safe }}</div>
+        {%- if value.helper_text -%}
+            <p><small>{{ value.helper_text | safe }}</small></p>
+        {%- endif -%}
+    </div>
+    <div class="financial-item_value"> 
+        <span {% if value.data_attribute %}{{ value.data_attribute | safe }}{% endif %}>
+            {{ value.value | safe }}
+        </span> 
+    </div>
+</div>
+{%- endmacro %}

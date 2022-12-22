@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{# import any other needed atoms, elements here #}
+{% import 'templates/render_block.html' as render_block with context %}
+{% import 'atoms/radio-button.html' as radio %}
+{% import 'molecules/notification.html' as notification with context %}
+{% from 'path-to-graduation-blocks/macros/financial-item-expandable.html' import expandable with context %}
+{% import 'path-to-graduation-blocks/macros/financial-item-input.html' as input with context %}
+{% import 'path-to-graduation-blocks/macros/financial-item-text.html' as text_item with context %}
+{% import 'path-to-graduation-blocks/macros/number-callout.html' as number_callout with context %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/paying-for-college/css/main.css') }}">
+{%- endblock css %}
+
+{% block content scoped %}
+    {%- import 'macros/accessible-languages.html' as accessible_languages with context-%}
+    <main class="content college-costs" data-state_gotstarted="false"
+          id="main"
+          {{ accessible_languages.render() }}> <!-- content__hide-horizontal-overflow removed for position sticky to work-->
+        {%- include 'path-to-graduation-blocks/0-intro.html' -%}
+        <div class="college-costs_app-segment content content__1-3 block block__flush-top">
+            <div class="wrapper content_wrapper">
+                {%- include 'path-to-graduation-blocks/nav.html' -%}
+                <div class="content_main
+                            content__flush-top-on-small
+                            content__half-top-on-desk
+                            content__flush-bottom">
+                    <div class="app-container">
+                        <div class="app">
+                            {%- include 'path-to-graduation-blocks/01-school-search.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/02-costs.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/03-grants-and-scholarships.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/04-work-study.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/05-federal-loans.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/06-school-loans.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/07-other-resources.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/08-loan-counseling.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/09-make-a-plan.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/10-max-debt-guideline.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/11-cost-of-borrowing.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/12-affording-your-loan.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/13-school-results.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/14-summary.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/15-action-plan.html' with context -%}
+                            {%- include 'path-to-graduation-blocks/16-save-and-finish.html' with context -%}
+                            <div class="college-costs_tool-section_buttons block block__mid">
+                                <button class="a-btn college-costs_buttons__next btn__next-step">Next step</button>
+                                <button class="a-btn a-btn__link btn__save" data-app-button="save-and-finish-later">Save and finish later</button>
+                            </div>
+                            <div class="college-costs_save-for-later block block__mid" data-state-based-visibility="save-for-later">
+                                <p>Copy and save this link so that you can come back and review your plan.</p>
+                                {% include 'path-to-graduation-blocks/copy-link-form.html' %}
+                            </div>
+                        </div>
+                        <div class="costs-not-covered costs-not-covered-sticky">
+                            {{ number_callout.render({
+                                    'header': 'Costs not covered yet',
+                                    'data_attribute': 'data-financial-item="total_gap"' | safe,
+                                    'additional_classes': 'number-callout__warning number-callout__right'
+                                })
+                            }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function() {
+          var s = [
+            '{{ static('apps/paying-for-college/js/path-to-graduation.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}
