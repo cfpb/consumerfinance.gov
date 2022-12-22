@@ -73,7 +73,7 @@ function track(event, action, label) {
   analyticsLog(event, action, label);
 }
 
-module.exports = {
+export {
   addEventListenerToSelector,
   addEventListenerToElem,
   analyticsLog,

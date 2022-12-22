@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import beforeExpandableTransitionInit, {
   setInnerWidth,
   MOBILE_COLLAPSED_CLASS,

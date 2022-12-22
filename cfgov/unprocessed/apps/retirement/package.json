@@ -14,5 +14,6 @@
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
     "jquery": "3.6.1"
-  }
+  },
+  "type": "module"
 }

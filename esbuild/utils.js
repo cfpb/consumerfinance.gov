@@ -1,6 +1,6 @@
-const { readdir, copyFile } = require('fs').promises;
-const { readdirSync } = require('fs');
-const { resolve } = require('path');
+import { promises, readdirSync } from 'fs';
+const { readdir, copyFile } = promises;
+import { resolve } from 'path';
 
 /**
  * @param {string} path - The directory with the needed js
@@ -52,4 +52,4 @@ async function copyAll(from, to) {
   return files.map((f) => copyFile(f, f.replace(rFrom, rTo)));
 }
 
-module.exports = { getAll, getFiles, copyAll };
+export { getAll, getFiles, copyAll };

@@ -2,6 +2,7 @@
  * Turns a string into a number.
  * Assumes each number in the string should be preserved (unlike parseInt)
  * Assumes the first instance of a decimal point is the intended one.
+ *
  * @param  {string} numberString - A string representing a number.
  * @returns {number} The assumed numeric value of numberString
  */
@@ -64,14 +65,14 @@ function commaSeparate(numberString) {
 }
 
 /**
- * @param {object} opts The options object
- * @param {number|string} opts.amount The number or string to be formatted
- * @param {number} decimalPlaces Optionally specify the number of decimal places
+ * @param {object} opts - The options object
+ * @param {number|string} opts.amount - The number or string to be formatted
+ * @param {number} decimalPlaces - Optionally specify the number of decimal places
  *   you'd like in the returned string
  * @returns {string}      The number in USD format.
  */
 function formatUSD(opts) {
-  let num = opts.amount;
+  const num = opts.amount;
   let decPlaces = 0;
   let sign = '';
   let numericValue = num;

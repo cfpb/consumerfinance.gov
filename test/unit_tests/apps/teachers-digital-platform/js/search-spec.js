@@ -1,8 +1,8 @@
-import { enableFetchMocks } from 'jest-fetch-mock';
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 import { init as searchInit } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js';
-
-enableFetchMocks();
 
 const HTML_SNIPPET = `
   <form class="tdp-activity-search" id="search-form" action="." data-js-hook="behavior_submit-search">

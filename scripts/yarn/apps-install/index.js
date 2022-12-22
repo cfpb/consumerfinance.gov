@@ -4,11 +4,13 @@ under consumerfinance.gov, but has its own package.json. These projects appear
 under the ./cfgov/unprocessed/apps/ path.
  */
 
-const fs = require('fs');
+import * as fs from 'fs';
 // eslint-disable-next-line no-sync
-const execSync = require('child_process').execSync;
+import childProcess from 'child_process';
+const execSync = childProcess.execSync;
 
-const paths = require('../../../config/environment').paths;
+import environment from '../../../config/environment.js';
+const paths = environment.paths;
 
 // Aggregate application namespaces that appear in unprocessed/apps.
 // eslint-disable-next-line no-sync

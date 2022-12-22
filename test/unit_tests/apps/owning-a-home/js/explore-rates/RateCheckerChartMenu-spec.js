@@ -1,9 +1,6 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const RateCheckerChartMenu = require(BASE_JS_PATH +
-  'js/explore-rates/RateCheckerChartMenu').default;
-
-const Highcharts = require(BASE_JS_PATH + 'node_modules/highcharts');
-
+import { jest } from '@jest/globals';
+import RateCheckerChartMenu from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/RateCheckerChartMenu.js';
+import Highcharts from '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/highcharts';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 
 const STATE_OPEN = 'open';

@@ -25,7 +25,7 @@ import getRuralCounties from './get-rural-counties.js';
 import * as textInputs from './text-inputs.js';
 import callTiger from './call-tiger.js';
 
-require('./show-map');
+import('./show-map.js');
 
 Expandable.init();
 

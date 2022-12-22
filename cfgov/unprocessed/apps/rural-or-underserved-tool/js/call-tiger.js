@@ -1,4 +1,6 @@
-import jsonpP from 'jsonp-p';
+import jsonpPModule from 'jsonp-p';
+const jsonpP = jsonpPModule.default;
+
 /**
  * Call the Census geospatial API.
  *
