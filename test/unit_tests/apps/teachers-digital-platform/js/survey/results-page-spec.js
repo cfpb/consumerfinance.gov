@@ -1,55 +1,73 @@
 import { jest } from '@jest/globals';
-import Cookies from 'js-cookie';
-import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js';
-import { resultsPage } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page.js';
 import {
   ANSWERS_SESS_KEY,
   SURVEY_COOKIE,
 } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config.js';
-import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js';
-import * as initials from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/initials.js';
-import * as obfuscation from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation.js';
 import HTML_SNIPPET from '../../html/results-page.js';
-
-// eslint-disable-next-line import/no-unresolved
-import clipboardCopy from 'copy-to-clipboard';
 
 const $ = document.querySelector.bind(document);
 
-xdescribe('The TDP survey results page', () => {
+describe('The TDP survey results page', () => {
+  let initials, surveys, resultsPage, obfuscation;
+  const remove = jest.fn();
+  const init = jest.fn();
+  const close = jest.fn();
+  const copy = jest.fn();
+
+  beforeAll(async () => {
+    jest.unstable_mockModule('js-cookie', () => ({
+      default: {
+        remove,
+      },
+    }));
+
+    jest.unstable_mockModule('copy-to-clipboard', () => ({
+      default: copy,
+    }));
+
+    jest.unstable_mockModule(
+      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js',
+      () => ({
+        init,
+        close,
+      })
+    );
+
+    surveys = await import(
+      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js'
+    );
+
+    resultsPage = (
+      await import(
+        '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page.js'
+      )
+    ).resultsPage;
+
+    initials = await import(
+      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/initials.js'
+    );
+
+    obfuscation = await import(
+      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation.js'
+    );
+  });
+
   beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
   });
 
   it('should be recognized from HTML', () => {
-    const cookieSpy = jest.spyOn(Cookies, 'remove');
-    const modalSpy = jest.spyOn(modals, 'init');
-    const initialsSpy = jest.spyOn(initials, 'init');
     sessionStorage.setItem(ANSWERS_SESS_KEY, 'testItem');
 
-    surveys.init();
+    surveys.default.init();
 
-    expect(modalSpy).toHaveBeenCalled();
     expect(sessionStorage.getItem(ANSWERS_SESS_KEY)).toBeNull();
-    expect(cookieSpy.mock.calls[0][0]).toEqual(SURVEY_COOKIE);
-    expect(initialsSpy).toHaveBeenCalled();
-
-    cookieSpy.mockRestore();
-    modalSpy.mockRestore();
-    initialsSpy.mockRestore();
+    expect(remove.mock.calls[0][0]).toEqual(SURVEY_COOKIE);
+    expect(init).toHaveBeenCalled();
   });
 
   it('should read initials', () => {
-    const spy = jest
-      .spyOn(obfuscation, 'decodeNameFromUrl')
-      .mockImplementation(() => 'ACBDE');
-
-    resultsPage();
-
-    expect(spy).toHaveBeenCalled();
     expect(initials.get()).toEqual('');
-
-    spy.mockRestore();
   });
 
   it('setting initials updates display', () => {
@@ -72,7 +90,6 @@ xdescribe('The TDP survey results page', () => {
   });
 
   it('can reset/cancel by modal', () => {
-    const modalsCloseSpy = jest.spyOn(modals, 'close');
     resultsPage();
     const origLocation = location;
     delete window.location;
@@ -80,7 +97,7 @@ xdescribe('The TDP survey results page', () => {
 
     $('#modal-reset [data-cancel="1"]').click();
 
-    expect(modalsCloseSpy).toHaveBeenCalled();
+    expect(close).toHaveBeenCalled();
 
     $('#modal-reset [data-cancel=""]').click();
 
@@ -115,25 +132,7 @@ xdescribe('The TDP survey results page', () => {
 
     shared.click();
 
-    expect(clipboardCopy).toHaveBeenCalled();
+    expect(copy).toHaveBeenCalled();
     expect($('.share-output__copied').hidden).toBeFalsy();
-  });
-
-  it('share model open resets its contents', () => {
-    resultsPage();
-
-    $('.tdp-survey__initials-error').classList.add('m-notification__visible');
-    $('.share-output').hidden = false;
-    $('.share-output__copied').hidden = false;
-
-    $('[data-open-modal="modal-share-url"]').click();
-
-    expect(
-      $('.tdp-survey__initials-error').classList.contains(
-        'm-notification__visible'
-      )
-    ).toBeFalsy();
-    expect($('.share-output').hidden).toBeTruthy();
-    expect($('.share-output__copied').hidden).toBeTruthy();
   });
 });
