@@ -10,16 +10,16 @@ import HTML_SNIPPET from '../../html/survey-page.js';
 const $ = document.querySelector.bind(document);
 
 describe('The TDP survey page', () => {
-  const modalInit = jest.fn();
-  const close = jest.fn();
+  const modalsInit = jest.fn();
+  const modalsClose = jest.fn();
   let scrollToEl, surveyPage, surveys;
 
   beforeAll(async () => {
     jest.unstable_mockModule(
       '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js',
       () => ({
-        init: modalInit,
-        close,
+        init: modalsInit,
+        close: modalsClose,
       })
     );
 
@@ -28,9 +28,11 @@ describe('The TDP survey page', () => {
     );
     scrollToEl = surveyExports.scrollToEl;
     surveyPage = surveyExports.surveyPage;
-    surveys = await import(
-      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js'
-    );
+    surveys = (
+      await import(
+        '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js'
+      )
+    ).default;
   });
 
   beforeEach(() => {
@@ -40,7 +42,7 @@ describe('The TDP survey page', () => {
   it('should be recognized from HTML', () => {
     sessionStorage.clear();
 
-    surveys.default.init();
+    surveys.init();
 
     const answers = JSON.parse(sessionStorage.getItem(ANSWERS_SESS_KEY));
     expect(answers).toEqual({ 'p1-q6': '3' });
@@ -76,7 +78,7 @@ describe('The TDP survey page', () => {
     window.location = {};
     const modal = $('#modal-restart [data-cancel="1"]');
     modal.click();
-    expect(close).toHaveBeenCalled();
+    expect(modalsClose).toHaveBeenCalled();
 
     $('#modal-restart [data-cancel=""]').click();
 

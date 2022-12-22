@@ -7,7 +7,7 @@ const res =
 const sur =
   '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/survey-page.js';
 
-let surveys, g, r, s;
+let surveys, gradeLevelPage, resultsPage, surveyPage;
 
 describe('The TDP survey router', () => {
   beforeAll(async () => {
@@ -27,32 +27,32 @@ describe('The TDP survey router', () => {
       '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js'
     );
     surveys = surveys.default;
-    g = await import(gl);
-    r = await import(res);
-    s = await import(sur);
+    gradeLevelPage = (await import(gl)).gradeLevelPage;
+    resultsPage = (await import(res)).resultsPage;
+    surveyPage = (await import(sur)).surveyPage;
   });
 
   it('recognizes grade level page', () => {
     document.body.innerHTML = '<div data-tdp-page="grade-level"></div>';
     surveys.init();
-    expect(g.gradeLevelPage).toHaveBeenCalled();
-    expect(r.resultsPage).not.toHaveBeenCalled();
-    expect(s.surveyPage).not.toHaveBeenCalled();
+    expect(gradeLevelPage).toHaveBeenCalled();
+    expect(resultsPage).not.toHaveBeenCalled();
+    expect(surveyPage).not.toHaveBeenCalled();
   });
 
   it('recognizes survey page', () => {
     document.body.innerHTML = '<div data-tdp-page="survey"></div>';
     surveys.init();
-    expect(g.gradeLevelPage.mock.calls.length).toBe(1);
-    expect(s.surveyPage.mock.calls.length).toBe(1);
-    expect(r.resultsPage).not.toHaveBeenCalled();
+    expect(gradeLevelPage.mock.calls.length).toBe(1);
+    expect(surveyPage.mock.calls.length).toBe(1);
+    expect(resultsPage).not.toHaveBeenCalled();
   });
 
   it('recognizes results page', () => {
     document.body.innerHTML = '<div data-tdp-page="results"></div>';
     surveys.init();
-    expect(g.gradeLevelPage.mock.calls.length).toBe(1);
-    expect(s.surveyPage.mock.calls.length).toBe(1);
-    expect(r.resultsPage.mock.calls.length).toBe(1);
+    expect(gradeLevelPage.mock.calls.length).toBe(1);
+    expect(surveyPage.mock.calls.length).toBe(1);
+    expect(resultsPage.mock.calls.length).toBe(1);
   });
 });
