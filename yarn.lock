@@ -443,10 +443,10 @@
     "@cfpb/cfpb-core" "^0.3.1"
     "@cfpb/cfpb-icons" "^0.3.2"
 
-"@cfpb/rental-assistance-finder@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/rental-assistance-finder/-/rental-assistance-finder-0.4.0.tgz#fd06695d2798f734a1f972125f593419943bbed9"
-  integrity sha512-XHQHh/g5SQ3SWY2F4gWGcx+y8UeGEH+qb5D9Q9Q0//5osOPiwtm8qc0F/85Rp4r61eRukaMamPDqNdM1qEdYMQ==
+"@cfpb/rental-assistance-finder@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/rental-assistance-finder/-/rental-assistance-finder-0.5.1.tgz#ef9c1a72f115c798b2a4eaa4a2f2a7676f948122"
+  integrity sha512-J03BBVu4/vVuo0McSl4WnH2w/eQPoNO3vIvPHVa8inJecvUbhNTjq1iGoSrzGDwPk/CuCxvOlv5a+PACKfkFeQ==
 
 "@colors/colors@1.5.0":
   version "1.5.0"
