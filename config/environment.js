@@ -22,7 +22,7 @@ const paths = {
   test: './test',
 };
 
-module.exports = {
+export default {
   envvars,
   paths,
 };

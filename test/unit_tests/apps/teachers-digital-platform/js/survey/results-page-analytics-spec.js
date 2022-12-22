@@ -1,9 +1,10 @@
-import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
-import { SCORES_UNSET_KEY } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
+import { jest } from '@jest/globals';
+import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js';
+import { SCORES_UNSET_KEY } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config.js';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 import { bindAnalytics } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js';
 
-import HTML_SNIPPET from '../../html/results-page-analytics';
+import HTML_SNIPPET from '../../html/results-page-analytics.js';
 
 const xhr = global.XMLHttpRequest;
 

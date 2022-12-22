@@ -1,4 +1,4 @@
-import { addEl, getEl, getEls, removeClass } from './dom-tools';
+import { addEl, getEl, getEls, removeClass } from './dom-tools.js';
 
 /**
  * Checks whether an address is a duplicate to that in an array of addresses.

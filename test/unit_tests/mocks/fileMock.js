@@ -1,1 +1,1 @@
-module.exports = 'svg-file-stub';
+export default 'svg-file-stub';
