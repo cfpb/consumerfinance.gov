@@ -14,6 +14,7 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
+    PageChooserPanel,
     StreamFieldPanel,
     TabbedInterface,
 )
@@ -76,6 +77,17 @@ class CFGOVPage(Page):
     )
     language = models.CharField(
         choices=settings.LANGUAGES, default="en", max_length=100
+    )
+    english_page = models.ForeignKey(
+        Page,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="non_english_pages",
+        help_text=(
+            "Optionally select the English version of this page "
+            "(non-English pages only)"
+        ),
     )
     social_sharing_image = models.ForeignKey(
         "v1.CFGOVImage",
