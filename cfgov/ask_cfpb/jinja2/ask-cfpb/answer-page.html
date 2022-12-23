@@ -13,6 +13,11 @@
     {{- meta_description -}}
 {%- endblock -%}
 
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('css/on-demand/ask.css') }}">
+{%- endblock css %}
+
 {% block content_modifiers -%}
     {{ super() }} ask-cfpb-page ask-cfpb-page__answer
 {%- endblock %}
