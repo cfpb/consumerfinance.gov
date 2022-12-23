@@ -30,7 +30,7 @@
         {{ event_venue( page, event_state ) }}
     </header>
     <div class="post_body">
-        {% if 1 == 1 or (event_state == 'future' and page.live_stream_availability) %}
+        {% if event_state == 'future' and page.live_stream_availability %}
         <aside class="post_inset post_inset__right line-container event-status">
             <div class="line-container_body">
                 <h1 class="u-visually-hidden">Event viewing details</h1>
