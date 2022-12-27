@@ -1,7 +1,4 @@
 /* NOTES:
-at-rule-no-unknown -
-  This rule enforces only @ rules that appear in the CSS spec,
-  however, @plugin appears in Less, so should be ignored.
 no-descending-specificity -
   Turned off, but probably shouldn't be.
   TODO: Turn on this rule and see if issues can be fixed.
