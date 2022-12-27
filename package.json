@@ -43,6 +43,7 @@
     "number-to-words": "1.2.4",
     "papaparse": "5.3.2",
     "postcss": "8.4.20",
+    "stylelint-prettier": "2.0.0",
     "svg-inline-loader": "0.8.2"
   },
   "devDependencies": {

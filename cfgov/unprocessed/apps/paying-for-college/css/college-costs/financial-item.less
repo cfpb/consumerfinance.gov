@@ -1,14 +1,14 @@
 .financial-item {
-  margin-top: unit( 30px / @base-font-size-px, em );
+  margin-top: unit(30px / @base-font-size-px, em);
 
-  &:not( &__expandable ) {
+  &:not(&__expandable) {
     .financial-item_label,
     .financial-item_value {
       display: inline-block;
       border-width: 0;
       border: solid transparent;
       box-sizing: border-box;
-      margin-right: -.25em;
+      margin-right: -0.25em;
       vertical-align: top;
       width: 50%;
     }
@@ -38,7 +38,7 @@
 
   &__subtotal,
   &__total {
-    .financial-item_label > :not( p ),
+    .financial-item_label > :not(p),
     .financial-item_value {
       .heading-4();
       margin-bottom: 0;
@@ -57,9 +57,9 @@
     }
 
     .financial-item_note {
-      margin-top: unit( 15px / @base-font-size-px, em );
+      margin-top: unit(15px / @base-font-size-px, em);
     }
-		
+
     .financial-item_value {
       color: @black;
     }
@@ -72,7 +72,7 @@
       }
       .o-expandable_cue-open {
         display: inline;
-        margin-left: unit( 5px / @base-font-size-px, em );
+        margin-left: unit(5px / @base-font-size-px, em);
       }
     }
 
@@ -82,7 +82,7 @@
       }
       .o-expandable_cue-close {
         display: inline;
-        margin-left: unit( 5px / @base-font-size-px, em );
+        margin-left: unit(5px / @base-font-size-px, em);
       }
     }
 
@@ -96,9 +96,9 @@
   }
 
   &__total {
-    font-size: unit( 20px / @size-iv, em );
+    font-size: unit(20px / @size-iv, em);
     border-top: 1px solid @gray-60;
-    padding-top: unit( 10px / @base-font-size-px, em );
+    padding-top: unit(10px / @base-font-size-px, em);
   }
 
   &__warning {
@@ -109,20 +109,20 @@
 
   &__full-width {
     div + div {
-      margin-top: unit( 5px / @base-font-size-px, em );
+      margin-top: unit(5px / @base-font-size-px, em);
     }
   }
 }
 
 .financial-item-group {
   .financial-item {
-    margin-top: unit( 15px / @base-font-size-px, em );
+    margin-top: unit(15px / @base-font-size-px, em);
   }
 }
 
 .text-item__bigger {
   .financial-item_label div {
-    font-size: unit( 18px / @base-font-size-px, em );
+    font-size: unit(18px / @base-font-size-px, em);
     font-weight: 500;
   }
 }

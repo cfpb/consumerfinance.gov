@@ -1,4 +1,3 @@
-
 .college-costs {
   // remove border between sidebar and main content
   & .content_main {
@@ -36,8 +35,8 @@
   }
 
   .block.block__mid {
-    margin-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
-    margin-bottom: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
+    margin-top: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
+    margin-bottom: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
   }
 
   // Notification explanation doesn't need top margin unless it follows message
@@ -46,13 +45,13 @@
   }
 
   .m-notification_message + .m-notification_explanation {
-    margin-top: unit( 5px / @base-font-size-px, em );
+    margin-top: unit(5px / @base-font-size-px, em);
   }
 
   &_tool-section {
     display: none;
 
-    max-width: unit( 570px / @base-font-size-px, rem );
+    max-width: unit(570px / @base-font-size-px, rem);
 
     .equation-row {
       .financial-item {
@@ -70,10 +69,9 @@
       }
     }
 
-
     .m-notification {
-      margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-      margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+      margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+      margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
     }
 
     input {
@@ -91,12 +89,12 @@
 
     &__school-search {
       .m-notification {
-        margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-        margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+        margin-top: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
       }
 
       .m-form-field {
-        margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+        margin-top: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
       }
     }
 
@@ -109,18 +107,18 @@
 
       .costs_button-section {
         .m-form-field {
-          margin-bottom: unit( 15px / @base-font-size-px, em );
+          margin-bottom: unit(15px / @base-font-size-px, em);
         }
       }
     }
 
     &__debt-guideline {
       .h3 .financial-item__subtotal {
-        margin-top: unit( 15px / @base-font-size-px, em );
+        margin-top: unit(15px / @base-font-size-px, em);
       }
 
       h2.step-2 {
-        margin-top: unit( 45px / @base-font-size-px, em );
+        margin-top: unit(45px / @base-font-size-px, em);
       }
     }
 
@@ -130,7 +128,7 @@
       }
 
       h2 {
-        margin-top: unit( 30px / @base-font-size-px, em );
+        margin-top: unit(30px / @base-font-size-px, em);
       }
 
       .o-expandable_header {
@@ -145,7 +143,7 @@
       }
 
       .financial-item + .financial-item {
-        margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+        margin-top: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
       }
 
       dl {
@@ -156,13 +154,13 @@
           margin-bottom: 0;
         }
         dd:after {
-          height: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+          height: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
         }
       }
     }
 
     .other-borrowing-btns {
-      margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+      margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
     }
 
     .action-plan_choices,
@@ -185,39 +183,38 @@
       }
 
       &_about {
-        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
       }
-
     }
   }
 
   .school-results_comparison-section {
     border: 2px solid @gray-20;
-    padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    padding: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
 
     legend {
-      margin-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+      margin-bottom: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
     }
 
     .school-results_rank-display {
       display: flex;
       align-items: center;
-      margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+      margin: unit(@grid_gutter-width / @base-font-size-px, em) 0;
     }
 
     .big-percentile {
       @big-percentile-font-size-px: 36px;
-      height: unit( 110px / @big-percentile-font-size-px, em );
-      width: unit( 110px / @big-percentile-font-size-px, em );
+      height: unit(110px / @big-percentile-font-size-px, em);
+      width: unit(110px / @big-percentile-font-size-px, em);
       border: 5px solid @black;
       border-radius: 50%;
-      margin-right: unit( 15px / @big-percentile-font-size-px, em );
-      line-height: unit( 110px / @big-percentile-font-size-px, em );
+      margin-right: unit(15px / @big-percentile-font-size-px, em);
+      line-height: unit(110px / @big-percentile-font-size-px, em);
       text-align: center;
-      font-size: unit( 36px / @base-font-size-px, em );
+      font-size: unit(36px / @base-font-size-px, em);
       font-weight: 600;
       flex: 1;
-      flex-basis: unit( 110px / @big-percentile-font-size-px, em );
+      flex-basis: unit(110px / @big-percentile-font-size-px, em);
       flex-grow: 0;
       flex-shrink: 0;
     }
@@ -227,14 +224,14 @@
     }
   }
 
-  [data-state-based-visibility="school-fields-errors"] ul {
+  [data-state-based-visibility='school-fields-errors'] ul {
     padding-left: 0;
     list-style: none;
   }
 
   .o-table__financial {
     .indented-row td:first-child {
-      padding-left: unit( @grid_gutter-width * 2/3 / @base-font-size-px, em );
+      padding-left: unit(@grid_gutter-width * 2/3 / @base-font-size-px, em);
     }
     .subtotal-row {
       font-weight: 600;

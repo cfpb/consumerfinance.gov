@@ -14,7 +14,6 @@
    ========================================================================== */
 
 .btn__full-small {
-
   .respond-to-max(@bp-xs-max, {
     display: block;
     width: 100%;
@@ -30,7 +29,6 @@
   }
 
   & + & {
-
     .respond-to-max(@bp-xs-max, {
       margin-top: unit(10px / @base-font-size-px, em);
       margin-left: auto;
@@ -39,7 +37,6 @@
 }
 
 a.btn__full-small.btn__link {
-
   .respond-to-max(@bp-xs-max, {
     display: inline-block;
   });
@@ -64,7 +61,7 @@ a.btn__full-small.btn__link {
 
 .form-label_text-wrapper {
   display: block;
-  margin-bottom: unit( 5px / @base-font-size-px, em );
+  margin-bottom: unit(5px / @base-font-size-px, em);
   font-size: 1.125em;
 }
 
@@ -114,7 +111,7 @@ a.btn__full-small.btn__link {
     left: @notification-padding__px + 4px;
 
     color: @gray-20;
-    font-size: unit( 18px / @base-font-size-px, em );
+    font-size: unit(18px / @base-font-size-px, em);
 
     &__error {
       color: #d14327;
@@ -161,25 +158,45 @@ a.btn__full-small.btn__link {
     margin-right: @char-icon-spacing;
     position: absolute;
     left: 0;
-    top: unit( @base-line-height - @char-icon-size, em );
+    top: unit(@base-line-height - @char-icon-size, em);
     background: @green-20;
     color: @black;
-    font-size: unit( 18px / @base-font-size-px, em );
+    font-size: unit(18px / @base-font-size-px, em);
     line-height: @char-icon-size;
     text-align: center;
     text-indent: 0;
   }
 
-  &__1:before { content: '1'; }
-  &__2:before { content: '2'; }
-  &__3:before { content: '3'; }
-  &__4:before { content: '4'; }
-  &__5:before { content: '5'; }
-  &__6:before { content: '6'; }
-  &__7:before { content: '7'; }
-  &__8:before { content: '8'; }
-  &__9:before { content: '9'; }
-  &__0:before { content: '0'; }
+  &__1:before {
+    content: '1';
+  }
+  &__2:before {
+    content: '2';
+  }
+  &__3:before {
+    content: '3';
+  }
+  &__4:before {
+    content: '4';
+  }
+  &__5:before {
+    content: '5';
+  }
+  &__6:before {
+    content: '6';
+  }
+  &__7:before {
+    content: '7';
+  }
+  &__8:before {
+    content: '8';
+  }
+  &__9:before {
+    content: '9';
+  }
+  &__0:before {
+    content: '0';
+  }
 }
 
 // Ordered list with char-icon-style numerals
@@ -193,7 +210,7 @@ a.btn__full-small.btn__link {
   }
 
   & > li:before {
-    content: counter( steps );
+    content: counter(steps);
   }
 }
 
@@ -202,8 +219,8 @@ a.btn__full-small.btn__link {
    ========================================================================== */
 
 .column-well {
-  padding-top: unit( 25px / @base-font-size-px, em );
-  padding-bottom: unit( 10px / @base-font-size-px, em );
+  padding-top: unit(25px / @base-font-size-px, em);
+  padding-bottom: unit(10px / @base-font-size-px, em);
   position: relative;
 
   .respond-to-min(@bp-sm-min, {
@@ -217,7 +234,7 @@ a.btn__full-small.btn__link {
     height: 9999px;
     position: absolute;
     top: 0;
-    left: unit( -( @grid_gutter-width / @base-font-size-px ) / 2, em );
+    left: unit(-(@grid_gutter-width / @base-font-size-px) / 2, em);
     z-index: 0;
     background-color: @gray-5;
     content: '';
@@ -251,9 +268,7 @@ a.btn__full-small.btn__link {
   }
 
   &__bleed {
-
     &:after {
-
       .respond-to-min(@bp-med-min, {
         padding-right: @grid_gutter-width * 2;
         left: -@grid_gutter-width;
@@ -261,7 +276,6 @@ a.btn__full-small.btn__link {
     }
 
     .column-well_content {
-
       .respond-to-min(@bp-med-min, {
         padding-right: 0;
         padding-left: 0;
@@ -304,7 +318,6 @@ a.btn__full-small.btn__link {
    ========================================================================== */
 
 .content__bleedbar {
-
   .content_wrapper:after {
     background-color: @gray-5;
   }
@@ -323,7 +336,6 @@ a.btn__full-small.btn__link {
 }
 
 .block_section__h2 {
-
   p + &,
   ul + &,
   ol + &,
@@ -333,7 +345,7 @@ a.btn__full-small.btn__link {
   table + &,
   blockquote + &,
   .block_section + & {
-    margin-top: unit( 45px / @base-font-size-px, em );
+    margin-top: unit(45px / @base-font-size-px, em);
   }
 
   h1 + &,
@@ -346,7 +358,7 @@ a.btn__full-small.btn__link {
   .h5 + &,
   h6 + &,
   .h6 + & {
-    margin-top: unit( 30px / @base-font-size-px, em );
+    margin-top: unit(30px / @base-font-size-px, em);
   }
 
   .respond-to-max(@bp-xs-max, {

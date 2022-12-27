@@ -64,18 +64,16 @@
     - cfgov-organisms
 */
 
-@margin__em: unit( @grid_gutter-width / @base-font-size-px, em );
-@o-sidebar-breakout_img-width:  300px;
+@margin__em: unit(@grid_gutter-width / @base-font-size-px, em);
+@o-sidebar-breakout_img-width: 300px;
 @o-sidebar-breakout_img-height: 170px;
 
 .o-sidebar-breakout {
-
   .respond-to-max(@bp-xs-max, {
     margin-bottom: @margin__em;
   });
 
   &_col {
-
     .respond-to-max(@bp-sm-max, {
       width: 100%;
       &:last-child {
@@ -125,7 +123,6 @@
   }
 
   &_text-container {
-
     .respond-to-range(@bp-sm-min, @bp-sm-max, {
       overflow: auto;
     });
@@ -145,14 +142,12 @@
   }
 
   .m-related-posts_list .m-list_item {
-
     .respond-to-range(@bp-sm-min, @bp-sm-max, {
       border: 0;
       width: 100%
     });
   }
 }
-
 
 /* topdoc
     name: EOF

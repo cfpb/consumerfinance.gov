@@ -13,14 +13,14 @@
   }
 
   .terms {
-    padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
 
     .term {
-      margin-bottom: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
+      margin-bottom: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
     }
 
     .term + .term {
-      padding-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
+      padding-top: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
     }
 
     .term_name {
@@ -43,22 +43,22 @@
       }
     } );
 
-    margin-top: unit( 40px / @base-font-size-px, em );
+    margin-top: unit(40px / @base-font-size-px, em);
   }
 
   .search-bar {
-    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
 
     label {
-      margin-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+      margin-bottom: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
     }
 
     .a-btn {
-      margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+      margin-top: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
     }
 
     .a-btn__link {
-      margin-left: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+      margin-left: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
     }
 
     .respond-to-min( @bp-sm-min, {
@@ -74,30 +74,30 @@
 
         .a-btn__link {
           flex-shrink: 0;
-          margin-top: .5em;
+          margin-top: 0.5em;
         }
       }
     } );
   }
 
   h1 + .search-bar {
-    margin-top: unit( 25px / @base-font-size-px, em );
+    margin-top: unit(25px / @base-font-size-px, em);
   }
 
   .results-message {
-    margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-    margin-bottom: unit( 40px / @base-font-size-px, em );
+    margin-top: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+    margin-bottom: unit(40px / @base-font-size-px, em);
   }
 
   .results-link {
-    margin: unit( 5px / @base-font-size-px, em ) 0;
+    margin: unit(5px / @base-font-size-px, em) 0;
     display: block;
   }
 
   .results {
     article {
-      padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-      padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+      padding-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+      padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
       border-top: 1px solid @block__border-top;
 
       .h3 {
@@ -116,16 +116,14 @@
     }
 
     article:last-of-type {
-      padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+      padding-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
     }
   }
-
 }
 
 /* Answer page */
 
 .ask-cfpb-page__answer {
-
   .m-notification {
     max-width: 41.875rem;
   }
@@ -147,26 +145,26 @@
       max-width: 41.875rem;
     }
     .row + .row {
-      margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+      margin-top: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
     }
 
     .video_player-row + .row,
     .table_block-row + .row,
     .row + .row > .o-table:first-child,
     .row + .row > .o-video-player:first-child {
-      margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+      margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
     }
 
     .row + .row h2 {
-      margin-top: unit( @grid_gutter-width / @size-ii, em );
+      margin-top: unit(@grid_gutter-width / @size-ii, em);
     }
 
     .row + .row h3 {
-      margin-top: unit( @grid_gutter-width / @size-iii, em );
+      margin-top: unit(@grid_gutter-width / @size-iii, em);
     }
 
-    .row + .row:not( .inset-row ) h4 {
-      margin-top: unit( @grid_gutter-width / @size-iv, em );
+    .row + .row:not(.inset-row) h4 {
+      margin-top: unit(@grid_gutter-width / @size-iv, em);
     }
 
     .respond-to-min( @bp-lg-min, {
@@ -201,32 +199,33 @@
     }
 
     .about-us-text {
-      margin-bottom: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
+      margin-bottom: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
     }
 
     .about-us-text + .block {
-      margin-top: unit( @grid_gutter-width * 2 / @base-font-size-px, em ) !important;
+      margin-top: unit(
+        @grid_gutter-width * 2 / @base-font-size-px,
+        em
+      ) !important;
     }
 
     .about-us-text + .disclaimer-text {
       border-top: 1px solid @block__border;
-      margin-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
-      padding-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
+      margin-top: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
+      padding-top: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
     }
 
     .a-link + .about-us-text {
-      margin-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
+      margin-top: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
     }
 
     .disclaimer-text {
-      margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+      margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
     }
-
   }
 
-
   .m-list_item__last {
-    padding-top: unit( 7px / @base-font-size-px, em );
+    padding-top: unit(7px / @base-font-size-px, em);
   }
 
   .o-search-bar_input {
@@ -256,8 +255,8 @@
   .answer-module {
     border-top: 3px solid @green;
     border-bottom: 1px solid @block__border-bottom;
-    padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em ) 0;
-    margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+    padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em) 0;
+    margin: unit(@grid_gutter-width / @base-font-size-px, em) 0;
     color: @gray;
 
     .respond-to-min(@bp-sm-min, {
@@ -268,10 +267,14 @@
       width: 80%;
     } );
 
-    h1, h2, h3, h4, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h6 {
       .heading-5();
       margin-top: 0;
-      margin-bottom: unit( ( @grid_gutter-width / 3 ) / @base-font-size-px, em );
+      margin-bottom: unit((@grid_gutter-width / 3) / @base-font-size-px, em);
     }
 
     p:last-child,
@@ -301,7 +304,7 @@
     max-width: 31.25rem;
   }
 
-  form[action="/ask-cfpb/search/"] h2 {
+  form[action='/ask-cfpb/search/'] h2 {
     .heading-4();
 
     .respond-to-min( @bp-med-min, {
@@ -317,7 +320,6 @@
       width: auto;
     }
   } );
-
 }
 
 .ask-cfpb-page {
@@ -328,8 +330,8 @@
   }
   .responsive-object {
     position: relative;
-    margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+    margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
     clear: both;
   }
 
@@ -370,7 +372,7 @@
   }
 
   .question_summary {
-    padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em ) 0;
+    padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em) 0;
 
     .respond-to-min( @bp-med-min, {
       padding:  unit( @grid_gutter-width / @base-font-size-px, em ) 0;
@@ -390,20 +392,20 @@
   }
 
   .lead-paragraph {
-    margin-bottom: unit( @grid_gutter-width / @size-iii, em );
+    margin-bottom: unit(@grid_gutter-width / @size-iii, em);
   }
 
   .article {
     .m-inset {
-      margin-top: unit( 5px / @base-font-size-px, em );
+      margin-top: unit(5px / @base-font-size-px, em);
     }
 
     .article-section {
-      margin-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
+      margin-top: unit(@grid_gutter-width * 1.5 / @base-font-size-px, em);
     }
 
     .article-subsection {
-      margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+      margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
     }
   }
 
