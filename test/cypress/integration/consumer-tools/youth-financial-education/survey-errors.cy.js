@@ -17,9 +17,6 @@ describe('Youth Financial Education Survey: Errors', () => {
     refreshErrors();
     cy.wait(1200);
     cy.get('main h1').isScrolledTo();
-    cy.window().then((win) => {
-      expect(win.scrollY).lessThan(400);
-    });
   });
 
   it('alerts of missing questions', () => {
@@ -53,9 +50,6 @@ describe('Youth Financial Education Survey: Errors', () => {
     cy.get('form .m-notification__error li:nth-child(2) a').click();
     cy.wait(1200);
     cy.get('.survey-reset--link--wrap').isScrolledTo();
-    cy.window().then((win) => {
-      expect(win.scrollY).greaterThan(1000);
-    });
   });
 
   it('warns until none missing', () => {
