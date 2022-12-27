@@ -34,14 +34,16 @@ class MortgagePerformanceMap {
       date,
       middleware: [utils.thunkMiddleware, utils.loggerMiddleware],
     });
+    this.$chart = this.$container.querySelector('#mp-map');
     this.chart = ccb.createChart({
-      el: this.$container.querySelector('#mp-map'),
+      el: this.$chart,
       source: `map-data/${this.timespan}/states/${date}`,
       type: 'geo-map',
       color: this.$container.getAttribute('data-chart-color'),
       metadata: 'states',
       tooltipFormatter: this.renderTooltip(),
     });
+    this.$chart.setAttribute('data-chart-ignore', 'true');
     this.eventListeners();
     this.renderYears();
     this.setDate();

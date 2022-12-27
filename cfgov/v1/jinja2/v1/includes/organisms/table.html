@@ -40,7 +40,6 @@
    value.column_widths:   A list of column width (classes) to be applied in
                           order to the table columns.
 
-   value.sortable:        Boolean indicating if the table is sortable.
 
    ========================================================================== #}
 
@@ -60,8 +59,7 @@
 <table class="o-table
               {{- ' o-table__stack-on-small' if value.is_stacked else '' -}}
               {{- ' o-table__striped' if value.is_striped else '' -}}
-              {{- ' u-w100pct' if value.is_full_width else '' -}}
-              {{- ' o-table__sortable' if value.is_sortable else '' -}}">
+              {{- ' u-w100pct' if value.is_full_width else '' -}}">
     {% set row_index = 0 %}
     {% set first_row = value.data[row_index] %}
     {% if value.first_row_is_table_header and value.data | list | length > 0 %}
@@ -76,17 +74,7 @@
                     {% set width_class = ' class="' + value.column_widths[loop.index0] + '"' %}
                 {% endif %}
             <th scope="col"{{ width_class | default }}>
-                {% if value.is_sortable and value.sortable_types[loop.index0] != '' %}
-                    {% set sort_value = value.sortable_types[loop.index0] %}
-                    {% set data_sort = sort_value | replace('-default', '') %}
-                    {% set sort_default = true if '-default' in sort_value else false %}
-                    <button class="sortable{{ ' sorted-up' if sort_default else '' }}"
-                            data-sort_type="{{ data_sort }}">
-                        {{ _render_cell(cell) | striptags }}
-                    </button>
-                {% else %}
-                    {{ _render_cell(cell) }}
-                {% endif %}
+                {{ _render_cell(cell) }}
             </th>
             {% endfor %}
         </tr>
