@@ -56,7 +56,7 @@
       font-weight: 500;
 
       display: block;
-      margin-bottom: unit( 4px / @base-font-size-px, em );
+      margin-bottom: unit(4px / @base-font-size-px, em);
       text-transform: none;
     }
 
@@ -65,21 +65,21 @@
     }
 
     section {
-      padding: unit( 30px / @base-font-size-px, em ) 0;
+      padding: unit(30px / @base-font-size-px, em) 0;
       border-top: 1px solid @gray-10;
     }
 
     section:first-child,
-    section:nth-child( 2 ) {
+    section:nth-child(2) {
       border-top: none;
     }
 
     section:first-child {
-      padding: unit( 30px / @base-font-size-px, em ) 0 0;
+      padding: unit(30px / @base-font-size-px, em) 0 0;
     }
 
     .calc-footer {
-      padding: unit( 15px / @base-font-size-px, em ) 0; // the bottom <section> has less padding
+      padding: unit(15px / @base-font-size-px, em) 0; // the bottom <section> has less padding
     }
 
     input[type='number'] {
@@ -92,37 +92,35 @@
     }
 
     .calc-subsection {
-      padding: 0 0 unit( 30px / @base-font-size-px, em );
+      padding: 0 0 unit(30px / @base-font-size-px, em);
       border-top: none;
     }
 
     #arm-warning {
       padding-top: 0;
       border-top: 0;
-      margin-top: unit( -10px / @base-font-size-px, em );
+      margin-top: unit(-10px / @base-font-size-px, em);
     }
   }
 
   .calc-loan-details {
     .upper {
-      margin-bottom: unit( 15px / @base-font-size-px, em );
+      margin-bottom: unit(15px / @base-font-size-px, em);
     }
   }
 
-
   .loan-amt-total {
-    padding-top: unit( 10px / @base-font-size-px, em );
+    padding-top: unit(10px / @base-font-size-px, em);
 
     span {
       display: block;
-      margin-top: unit( 10px / @base-font-size-px, em );
+      margin-top: unit(10px / @base-font-size-px, em);
       font-weight: 500;
     }
   }
 
-
   .county {
-    padding-top: unit( 10px / @base-font-size-px, em );
+    padding-top: unit(10px / @base-font-size-px, em);
   }
 
   .half-width-gt-1230 {
@@ -130,7 +128,7 @@
   }
 
   .downpayment-warning {
-    padding-top: unit( 10px / @base-font-size-px, em );
+    padding-top: unit(10px / @base-font-size-px, em);
     font-size: 0.875em;
   }
 
@@ -144,10 +142,9 @@
         Main section with output
         --------------------------- */
   .rate-checker-heading {
-    margin-top: unit( 40px / @base-font-size-px, em );
+    margin-top: unit(40px / @base-font-size-px, em);
     font-size: 1.375em;
   }
-
 
   /*
         Middle section with chart
@@ -162,10 +159,9 @@
 
   .highcharts-tooltip > span {
     z-index: 9999;
-    padding: unit( 4px / @base-font-size-px, em )
-                 unit( 10px / @base-font-size-px, em )
-                 unit( 4px / @base-font-size-px, em )
-                 unit( 8px / @base-font-size-px, em );
+    padding: unit(4px / @base-font-size-px, em)
+      unit(10px / @base-font-size-px, em) unit(4px / @base-font-size-px, em)
+      unit(8px / @base-font-size-px, em);
     border: 2px solid @green-60;
     margin: 0 2px;
     background-color: @white;
@@ -174,36 +170,30 @@
 
   .chart {
     position: relative;
-    padding-top: unit( 40px / @base-font-size-px, em );
+    padding-top: unit(40px / @base-font-size-px, em);
     border-top: 1px solid @gray-10;
     border-bottom: 1px solid @gray-10;
-    margin: unit( 20px / @base-font-size-px, em )
-                unit( 20px / @base-font-size-px, em )
-                unit( 20px / @base-font-size-px, em )
-                0;
+    margin: unit(20px / @base-font-size-px, em)
+      unit(20px / @base-font-size-px, em) unit(20px / @base-font-size-px, em) 0;
 
     &.geolocating {
-      background: transparent
-                        url( '@{image_path}icon_spinner.gif' )
-                        scroll
-                        no-repeat
-                        center
-                        center;
+      background: transparent url('@{image_path}icon_spinner.gif') scroll
+        no-repeat center center;
       #chart {
         opacity: 0;
       }
     }
 
     .highcharts-color-0 {
-      fill: #ADDC91;
+      fill: #addc91;
 
       &:hover {
-        fill: #2CB34A;
+        fill: #2cb34a;
       }
     }
 
     .highcharts-tooltip-box {
-      fill: none
+      fill: none;
     }
 
     .m-notification {
@@ -241,7 +231,7 @@
     padding-right: 1em;
     padding-bottom: 1em;
     // Magic number to line up caption with chart
-    margin-left: unit( 60px / @base-font-size-px, em );
+    margin-left: unit(60px / @base-font-size-px, em);
     font-size: 1em;
   }
 
@@ -252,10 +242,8 @@
 
   .rc-data-link {
     text-align: left;
-    margin: unit( 20px / @base-font-size-px, em )
-                0
-                unit( 10px / @base-font-size-px, em )
-                0;
+    margin: unit(20px / @base-font-size-px, em) 0
+      unit(10px / @base-font-size-px, em) 0;
   }
 
   .chart-tooltip {
@@ -268,7 +256,6 @@
       max-width: 30%;
       font-size: 3em;
       text-align: right;
-
     }
 
     .text {
@@ -281,7 +268,7 @@
         Compare interest rate costs
         --------------------------- */
   .compare {
-    margin-top: unit( 30px / @base-font-size-px, em );
+    margin-top: unit(30px / @base-font-size-px, em);
     label {
       .u-visually-hidden;
     }
@@ -297,8 +284,8 @@
   }
 
   .rc-comp-3-push {
-    .grid_column( @columns: 3; @prefix: 1; @suffix: 0 )
-    }
+    .grid_column( @columns: 3; @prefix: 1; @suffix: 0 );
+  }
 
   .rc-comp-5 {
     .grid_column( 5 );
@@ -327,7 +314,7 @@
     .grid_column( 6 );
 
     position: relative;
-    margin-bottom: unit( 10px / @base-font-size-px, em );
+    margin-bottom: unit(10px / @base-font-size-px, em);
   }
 
   .dollar-input,
@@ -337,7 +324,7 @@
     input {
       width: 100%;
       box-sizing: border-box;
-      padding-left: unit( 15px / @base-font-size-px, em );
+      padding-left: unit(15px / @base-font-size-px, em);
     }
 
     .unit {
@@ -352,7 +339,7 @@
 
   .percent-input {
     input {
-      padding-left: unit( 4px / @base-font-size-px, em );
+      padding-left: unit(4px / @base-font-size-px, em);
     }
 
     .unit {
@@ -388,7 +375,7 @@
         --------------------------- */
   .next-steps {
     margin-top: 5em;
-    margin-bottom: unit( 45px / @base-font-size-px, em );
+    margin-bottom: unit(45px / @base-font-size-px, em);
 
     .tabs {
       box-sizing: border-box;
@@ -405,7 +392,6 @@
     font-size: 1.125em;
   }
 
-
   .next-steps-list {
     .u-reset;
 
@@ -414,7 +400,6 @@
     margin: 0;
     counter-reset: li;
     list-style: none;
-
 
     li {
       position: relative;
@@ -431,7 +416,7 @@
     background: @green-60;
     border-radius: 20px;
     color: @black;
-    content: counter( li );
+    content: counter(li);
     counter-increment: li;
     font-size: 12px;
     line-height: 20px;
@@ -464,10 +449,9 @@
 
     &_btn {
       width: 100%;
-      padding: unit( 15px / @base-font-size-px, em )
-                     unit( 15px / @base-font-size-px, em )
-                     unit( 5px / @base-font-size-px, em )
-                     unit( 15px / @base-font-size-px, em );
+      padding: unit(15px / @base-font-size-px, em)
+        unit(15px / @base-font-size-px, em) unit(5px / @base-font-size-px, em)
+        unit(15px / @base-font-size-px, em);
       border: none;
       background-color: @white;
       color: @pacific;
@@ -486,10 +470,8 @@
 
       li {
         list-style: none;
-        padding: unit( 5px / @base-font-size-px, em )
-                         0
-                         unit( 5px / @base-font-size-px, em )
-                         unit( 15px / @base-font-size-px, em );
+        padding: unit(5px / @base-font-size-px, em) 0
+          unit(5px / @base-font-size-px, em) unit(15px / @base-font-size-px, em);
         margin: 0;
 
         &:hover {
@@ -504,7 +486,6 @@
 
       .chart-menu_options {
         height: 110px;
-
       }
     }
   }
@@ -584,7 +565,7 @@
     }
 
     .interest-cost {
-      margin-bottom: .5em;
+      margin-bottom: 0.5em;
       font-weight: 600;
       color: @gray-60;
     }

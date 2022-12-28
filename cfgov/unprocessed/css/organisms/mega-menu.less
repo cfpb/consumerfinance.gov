@@ -1,6 +1,6 @@
-
 // Import Design System's Atomic Component less file to get transition CSS.
-@import (less) '@cfpb/cfpb-atomic-component/src/utilities/transition/transition.less';
+@import (less)
+  '@cfpb/cfpb-atomic-component/src/utilities/transition/transition.less';
 
 @mobile_trigger_ht__px: 54px;
 
@@ -195,7 +195,6 @@ body {
 // a focus rectangle in the :after pseudo-element.
 //
 
-
 // Create a bar for hover purposes to the left of an item.
 .u-bar-left( @color, @position: -@menu_link_hover_bar_px - 10px ) {
   position: relative;
@@ -303,7 +302,7 @@ body {
 
   &:after {
     left: -@menu_link_hover_bar_px - 9px;
-    width: calc( 100% + @menu_link_hover_bar_px + 6px );
+    width: calc(100% + @menu_link_hover_bar_px + 6px);
   }
 }
 
@@ -313,7 +312,7 @@ body {
 
   &:after {
     left: -@menu_link_hover_bar_px - 9px;
-    width: calc( 100% + @menu_link_hover_bar_px + 9px );
+    width: calc(100% + @menu_link_hover_bar_px + 9px);
   }
 }
 
@@ -323,7 +322,7 @@ body {
 
   &:after {
     left: -@menu_link_hover_bar_px - 7px;
-    width: calc( 100% + @menu_link_hover_bar_px + 6px );
+    width: calc(100% + @menu_link_hover_bar_px + 6px);
   }
 }
 
@@ -333,7 +332,7 @@ body {
 
   &:after {
     left: -@menu_link_hover_bar_px;
-    width: calc( 100% + @menu_link_hover_bar_px + 5px );
+    width: calc(100% + @menu_link_hover_bar_px + 5px);
   }
 }
 
@@ -343,7 +342,7 @@ body {
 
   &:after {
     left: -@menu_link_hover_bar_px - 9px;
-    width: calc( 100% + @menu_link_hover_bar_px + 14px );
+    width: calc(100% + @menu_link_hover_bar_px + 14px);
   }
 }
 
@@ -355,30 +354,31 @@ body {
 // u-current-link-mobile
 //
 
-
 // Default current link appearance, desktop.
 .u-current-link-desktop() {
-  &, &:hover {
+  &,
+  &:hover {
     .u-bar-left( @black );
   }
 }
 
 // Current link with an icon, desktop.
 .u-current-link-icon-desktop() {
-  &, &:hover {
+  &,
+  &:hover {
     .u-bar-left( @black, -@menu_link_hover_bar_px - 8px );
   }
 }
 
 // Default current link, mobile.
 .u-current-link-mobile() {
-  &, &:hover {
+  &,
+  &:hover {
     .u-bar-left( @black );
   }
 }
 
 .o-mega-menu {
-
   // Reset default unordered list padding and margin.
   ul {
     padding-left: 0;
@@ -393,10 +393,9 @@ body {
   }
 
   &_content {
-
     &-overview-heading {
       margin-bottom: 0;
-      font-size: unit( 18px / @base-font-size-px, rem );
+      font-size: unit(18px / @base-font-size-px, rem);
       font-weight: normal;
     }
 
@@ -628,7 +627,7 @@ body {
         padding-top: unit( 15px / 18px, em );
         padding-bottom: unit( 15px / 18px, em );
 
-        // Hide ">" icon when we do not have children.
+        // Hide  >  icon when we do not have children.
         &-icon-post {
           display: none;
         }
@@ -756,7 +755,7 @@ body {
       display: none;
     }
 
-    // Hide the ">" icon next to menu items on desktop…
+    // Hide the  >  icon next to menu items on desktop…
     &_content-link-icon-post {
       display: none;
     }
@@ -1158,17 +1157,16 @@ body {
 }
 
 .o-mega-menu_content-2-item__has-icon {
-  .cf-icon-svg:nth-child( 3 ){
+  .cf-icon-svg:nth-child(3) {
     margin-left: -20px;
-    transform: translateX( 25px );
+    transform: translateX(25px);
   }
-  .a-link_text:nth-last-child( 2 ){
+  .a-link_text:nth-last-child(2) {
     display: inline-block;
     margin-left: -5px;
-    transform: translateX( 5px );
+    transform: translateX(5px);
   }
 }
-
 
 /* topdoc
     name: EOF

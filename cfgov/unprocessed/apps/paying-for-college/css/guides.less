@@ -1,75 +1,273 @@
 .college-guides {
-  .screen-hide{display:none;}
-  .letterhead {display:none;}
-  .font-xs,.font-s,.font-m,.font-l,.font-xl,.font-xxl {font-family:"Avenir Next", Arial, sans-serif;}
-  .font-xs {font-size:10px;}
-  .font-s {font-size:12px; line-height:18px;}
-  .font-m {font-size:14px; line-height:20px;}
-  .font-l {font-size:16px; line-height:22px;}
-  .font-xl {font-size:18px; line-height:26px;}
-  .font-xxl {font-size:20px; line-height:28px; font-weight:500;}
-  .font-xxxl {font-size:28px; line-height:30px;font-weight:500;}
-  .horizontal-bar {padding:5px 0 5px 20px; font-size:12px; font-weight:500; text-transform:uppercase;}
-  .guide-content{margin:20px 36px 60px;}
+  .screen-hide {
+    display: none;
+  }
+  .letterhead {
+    display: none;
+  }
+  .font-xs,
+  .font-s,
+  .font-m,
+  .font-l,
+  .font-xl,
+  .font-xxl {
+    font-family: 'Avenir Next', Arial, sans-serif;
+  }
+  .font-xs {
+    font-size: 10px;
+  }
+  .font-s {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .font-m {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .font-l {
+    font-size: 16px;
+    line-height: 22px;
+  }
+  .font-xl {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .font-xxl {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 500;
+  }
+  .font-xxxl {
+    font-size: 28px;
+    line-height: 30px;
+    font-weight: 500;
+  }
+  .horizontal-bar {
+    padding: 5px 0 5px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .guide-content {
+    margin: 20px 36px 60px;
+  }
 
   /* LAYOUT */
-  .row{margin-left:-20px;font-family: "Avenir Next", Arial, sans-serif;}
-  .row:before,.row:after{content:"";display:table;}
-  .row:after{clear:both;}
-  .span2, .span3, .span9, .span6{float:left;margin-left:20px;}
-  .span9{width:660px;}
-  .span3{width:205px;}
-  .span2{width:130px;}
-  .span6{width:440px;}
-  .skyblue-bg{background-color:#DBF3F9;color:#231F20;border-color:#DBF3F9;}
-  .guide-sect-header{font-family:"Avenir Next", Arial, sans-serif;font-weight:500;color:#5281AB;text-transform:uppercase;font-size:1em;letter-spacing:1px;}
-  .vspace1 {margin-bottom:10px;}
-  .vspace2 {margin-bottom:20px;}
-  .vspace3 {margin-bottom:30px;}
-  .vspace4 {margin-bottom:40px;}
-  .vspace5 {margin-bottom:50px;}
+  .row {
+    margin-left: -20px;
+    font-family: 'Avenir Next', Arial, sans-serif;
+  }
+  .row:before,
+  .row:after {
+    content: '';
+    display: table;
+  }
+  .row:after {
+    clear: both;
+  }
+  .span2,
+  .span3,
+  .span9,
+  .span6 {
+    float: left;
+    margin-left: 20px;
+  }
+  .span9 {
+    width: 660px;
+  }
+  .span3 {
+    width: 205px;
+  }
+  .span2 {
+    width: 130px;
+  }
+  .span6 {
+    width: 440px;
+  }
+  .skyblue-bg {
+    background-color: #dbf3f9;
+    color: #231f20;
+    border-color: #dbf3f9;
+  }
+  .guide-sect-header {
+    font-family: 'Avenir Next', Arial, sans-serif;
+    font-weight: 500;
+    color: #5281ab;
+    text-transform: uppercase;
+    font-size: 1em;
+    letter-spacing: 1px;
+  }
+  .vspace1 {
+    margin-bottom: 10px;
+  }
+  .vspace2 {
+    margin-bottom: 20px;
+  }
+  .vspace3 {
+    margin-bottom: 30px;
+  }
+  .vspace4 {
+    margin-bottom: 40px;
+  }
+  .vspace5 {
+    margin-bottom: 50px;
+  }
 
   /* ICONS!
     -------------------------------------------------------------------------------*/
-  .ico {background: url( "/static/apps/paying-for-college/img/resources.png" ) no-repeat top left;padding-left:26px;padding-top:0px;padding-bottom:15px;}
-  .ico-repay{ background-position: 0 -77px; width: 23px; height: 13px; }
-  .ico-ask { background-position: 0 0; width: 12px; height: 17px; margin-bottom:3px; }
-  .ico-watch{ background-position: 0 -37px; width: 21px; height: 20px; }
-  .ico-explore{ background-position: 0 -77px; width: 23px; height: 13px; margin-bottom:7px; }
-  .ico-compare{ background-position: 0 -110px; width: 19px; height: 19px; margin-bottom:1px; }
-  .icon {width:23px;height:23px;background: url( "/static/apps/paying-for-college/img/icons.png" ) no-repeat top left;position:absolute;margin-top:14px;}
+  .ico {
+    background: url('/static/apps/paying-for-college/img/resources.png')
+      no-repeat top left;
+    padding-left: 26px;
+    padding-top: 0px;
+    padding-bottom: 15px;
+  }
+  .ico-repay {
+    background-position: 0 -77px;
+    width: 23px;
+    height: 13px;
+  }
+  .ico-ask {
+    background-position: 0 0;
+    width: 12px;
+    height: 17px;
+    margin-bottom: 3px;
+  }
+  .ico-watch {
+    background-position: 0 -37px;
+    width: 21px;
+    height: 20px;
+  }
+  .ico-explore {
+    background-position: 0 -77px;
+    width: 23px;
+    height: 13px;
+    margin-bottom: 7px;
+  }
+  .ico-compare {
+    background-position: 0 -110px;
+    width: 19px;
+    height: 19px;
+    margin-bottom: 1px;
+  }
+  .icon {
+    width: 23px;
+    height: 23px;
+    background: url('/static/apps/paying-for-college/img/icons.png') no-repeat
+      top left;
+    position: absolute;
+    margin-top: 14px;
+  }
 
-  .ico-bullet_check .cf-icon-svg{ color: #20aa3f; }
-  .ico-bullet_minus .cf-icon-svg{ color: #d14124; }
-  .ico-bullet_plus .cf-icon-svg{ color: #257675; }
+  .ico-bullet_check .cf-icon-svg {
+    color: #20aa3f;
+  }
+  .ico-bullet_minus .cf-icon-svg {
+    color: #d14124;
+  }
+  .ico-bullet_plus .cf-icon-svg {
+    color: #257675;
+  }
 
-  .ico-criteria_eligibility{ background-position: -111px 0; width: 21px; height: 19px; }
-  .ico-criteria_interest{ background-position: -152px 0; width: 20px; height: 18px; }
-  .ico-criteria_limits{ background-position: -192px 0; width: 23px; height: 17px; }
-  .ico-criteria_repayment{ background-position: -235px 0; width: 20px; height: 19px; }
-  .ico-process {width:37px; height:37px; background: url( "/static/apps/paying-for-college/img/process.png" ) no-repeat top left;}
-  .ico-process-banking{ background-position: 0 0; }
+  .ico-criteria_eligibility {
+    background-position: -111px 0;
+    width: 21px;
+    height: 19px;
+  }
+  .ico-criteria_interest {
+    background-position: -152px 0;
+    width: 20px;
+    height: 18px;
+  }
+  .ico-criteria_limits {
+    background-position: -192px 0;
+    width: 23px;
+    height: 17px;
+  }
+  .ico-criteria_repayment {
+    background-position: -235px 0;
+    width: 20px;
+    height: 19px;
+  }
+  .ico-process {
+    width: 37px;
+    height: 37px;
+    background: url('/static/apps/paying-for-college/img/process.png') no-repeat
+      top left;
+  }
+  .ico-process-banking {
+    background-position: 0 0;
+  }
   .ico-process-banking.selected,
-  .ico-process-banking:hover { background-position: -47px 0; }
-  .ico-process-loans{ background-position: -94px 0; }
+  .ico-process-banking:hover {
+    background-position: -47px 0;
+  }
+  .ico-process-loans {
+    background-position: -94px 0;
+  }
   .ico-process-loans.selected,
-  .ico-process-loans:hover { background-position: -141px 0; }
-  .icon-positioning-fix {position: relative; display: block;}
-  .icon-positioning-fix .cf-icon-svg {left:-15px; top:0;position: absolute;font-size:1.2em;}
-  .no-pad .icon-positioning-fix .cf-icon-svg {left:-23px;}
-  .rh{text-align:right;}
-  .uc {text-transform:uppercase; font-weight:400;}
-  .no-pad{padding:0px;}
-  .no-marg{margin:0px;}
+  .ico-process-loans:hover {
+    background-position: -141px 0;
+  }
+  .icon-positioning-fix {
+    position: relative;
+    display: block;
+  }
+  .icon-positioning-fix .cf-icon-svg {
+    left: -15px;
+    top: 0;
+    position: absolute;
+    font-size: 1.2em;
+  }
+  .no-pad .icon-positioning-fix .cf-icon-svg {
+    left: -23px;
+  }
+  .rh {
+    text-align: right;
+  }
+  .uc {
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  .no-pad {
+    padding: 0px;
+  }
+  .no-marg {
+    margin: 0px;
+  }
 
   /* Options Table */
-  table{border:0px;border-collapse: separate;border-spacing: 18px 0px;padding-bottom: 20px;}
-  table th{background:transparent;color:#212121;border:0px;text-align:left;}
-  table td{border:0px; }
-  .thick-line {border-top: 3px solid #000;}
-  .line {border-top:1px solid #000;}
-  td{padding: 10px 0px 10px;}
-  td, .smlr-text{font-family: Georgia, Arial, sans-serif;font-size: 14px;line-height: 20px;font-weight: 500;}
+  table {
+    border: 0px;
+    border-collapse: separate;
+    border-spacing: 18px 0px;
+    padding-bottom: 20px;
+  }
+  table th {
+    background: transparent;
+    color: #212121;
+    border: 0px;
+    text-align: left;
+  }
+  table td {
+    border: 0px;
+  }
+  .thick-line {
+    border-top: 3px solid #000;
+  }
+  .line {
+    border-top: 1px solid #000;
+  }
+  td {
+    padding: 10px 0px 10px;
+  }
+  td,
+  .smlr-text {
+    font-family: Georgia, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+  }
 
   /* ACCORDION!
     -------------------------------------------------------------------------------*/
@@ -77,7 +275,7 @@
     padding: 8px 18px 8px;
     border-top-width: 4px;
     border-top-style: solid;
-    border-color:#CEE0F2;
+    border-color: #cee0f2;
   }
 
   .accordion-heading.offset {
@@ -86,107 +284,240 @@
 
   .accordion-body {
     padding: 18px;
-    position:relative;
+    position: relative;
   }
   .accordion-body.offset {
     padding: 18px 18px 18px 139px;
   }
 
-  .accordion .row {margin-left:-18px;}
+  .accordion .row {
+    margin-left: -18px;
+  }
   .accordion .span6,
   .accordion .span2,
-  .accordion .span3 {margin-left:18px;}
+  .accordion .span3 {
+    margin-left: 18px;
+  }
   .accordion td.span6,
   .accordion td.span2,
-  .accordion td.span3 {margin:0;}
-  .accordion .span6 {width:503px;margin-left:18px;}
-  .accordion .span2 {width:155px;margin-left:18px;}
-  .accordion .span3 {width:242px;margin-left:18px;}
+  .accordion td.span3 {
+    margin: 0;
+  }
+  .accordion .span6 {
+    width: 503px;
+    margin-left: 18px;
+  }
+  .accordion .span2 {
+    width: 155px;
+    margin-left: 18px;
+  }
+  .accordion .span3 {
+    width: 242px;
+    margin-left: 18px;
+  }
 
   /* COLORS!
     -------------------------------------------------------------------------------*/
   /* black */
-  .black {color:#101820;}
-  .black-bg {background-color:#101820; border-color:#101820; color:#FFFFFF;}
+  .black {
+    color: #101820;
+  }
+  .black-bg {
+    background-color: #101820;
+    border-color: #101820;
+    color: #ffffff;
+  }
 
   /* orange */
-  .orange {color:#D83D00;}
-  .orange-bg {background-color:#D83D00; border-color:#D83D00; color:#FFFFFF;}
+  .orange {
+    color: #d83d00;
+  }
+  .orange-bg {
+    background-color: #d83d00;
+    border-color: #d83d00;
+    color: #ffffff;
+  }
 
   /* orange light */
-  .orange-light {color:#DD6344;}
-  .orange-light-bg {background-color:#DD6344; border-color:#DD6344; color:#FFFFFF;}
+  .orange-light {
+    color: #dd6344;
+  }
+  .orange-light-bg {
+    background-color: #dd6344;
+    border-color: #dd6344;
+    color: #ffffff;
+  }
 
   /* orange lighter */
-  .orange-lighter {color:#EA9D8A;}
-  .orange-lighter-bg {background-color:#EA9D8A; border-color:#EA9D8A; color:#FFFFFF;}
+  .orange-lighter {
+    color: #ea9d8a;
+  }
+  .orange-lighter-bg {
+    background-color: #ea9d8a;
+    border-color: #ea9d8a;
+    color: #ffffff;
+  }
 
   /* orange lightest */
-  .orange-lightest {color: #F7D8D0;}
-  .orange-lightest-bg {background-color:#F7D8D0; border-color:#F7D8D0; color:#FFFFFF;}
+  .orange-lightest {
+    color: #f7d8d0;
+  }
+  .orange-lightest-bg {
+    background-color: #f7d8d0;
+    border-color: #f7d8d0;
+    color: #ffffff;
+  }
 
   /* slate blue */
-  .slate-blue {color:#004E6B;}
-  .slate-blue-bg {background-color:#004E6B; border-color:#004E6B; color:#FFFFFF;}
+  .slate-blue {
+    color: #004e6b;
+  }
+  .slate-blue-bg {
+    background-color: #004e6b;
+    border-color: #004e6b;
+    color: #ffffff;
+  }
 
-  .sky-lightest-bg{background-color: #D2E1EF;border-color: #D2E1EF;color: #212121;}
+  .sky-lightest-bg {
+    background-color: #d2e1ef;
+    border-color: #d2e1ef;
+    color: #212121;
+  }
 
   /* slate blue light */
-  .slate-blue-light {color:#3B7187;}
-  .slate-blue-light-bg {background-color:#3B7187; border-color:#3B7187; color:#FFFFFF;}
-  .well.slate-blue-light {border-color:#3B7187;color:#212121;}
-  section,header {border-color:#3B7187;}
+  .slate-blue-light {
+    color: #3b7187;
+  }
+  .slate-blue-light-bg {
+    background-color: #3b7187;
+    border-color: #3b7187;
+    color: #ffffff;
+  }
+  .well.slate-blue-light {
+    border-color: #3b7187;
+    color: #212121;
+  }
+  section,
+  header {
+    border-color: #3b7187;
+  }
 
   /* slate blue lighter */
-  .slate-blue-lighter {color:#83A5B3;}
-  .slate-blue-lighter-bg {background-color:#83A5B3; border-color:#83A5B3; color:#FFFFFF;}
+  .slate-blue-lighter {
+    color: #83a5b3;
+  }
+  .slate-blue-lighter-bg {
+    background-color: #83a5b3;
+    border-color: #83a5b3;
+    color: #ffffff;
+  }
 
   /* slate blue lightest */
-  .slate-blue-lightest {color:#CDDBE0;}
-  .slate-blue-lightest-bg {background-color:#CDDBE0; border-color:#CDDBE0; color:#212121;}
+  .slate-blue-lightest {
+    color: #cddbe0;
+  }
+  .slate-blue-lightest-bg {
+    background-color: #cddbe0;
+    border-color: #cddbe0;
+    color: #212121;
+  }
 
   /* ------- */
 
   /* dark teal */
-  .teal {color:#004047;}
-  .teal-bg {background-color:#004047; border-color:#004047; color:#FFFFFF;}
+  .teal {
+    color: #004047;
+  }
+  .teal-bg {
+    background-color: #004047;
+    border-color: #004047;
+    color: #ffffff;
+  }
 
   /* dark teal light */
-  .teal-light {color:#38666B;}
-  .teal-light-bg {background-color:#38666B; border-color:#38666B; color:#FFFFFF;}
+  .teal-light {
+    color: #38666b;
+  }
+  .teal-light-bg {
+    background-color: #38666b;
+    border-color: #38666b;
+    color: #ffffff;
+  }
 
   /* dark teal lighter */
-  .teal-lighter {color:#829FA2;}
-  .teal-lighter-bg {background-color:#829FA2; border-color:#829FA2; color:#FFFFFF;}
+  .teal-lighter {
+    color: #829fa2;
+  }
+  .teal-lighter-bg {
+    background-color: #829fa2;
+    border-color: #829fa2;
+    color: #ffffff;
+  }
 
   /* dark teal lightest */
-  .teal-lightest {color:#CDD9DA;}
-  .teal-lightest-bg {background-color:#CDD9DA; border-color:#CDD9DA; color:#FFFFFF;}
+  .teal-lightest {
+    color: #cdd9da;
+  }
+  .teal-lightest-bg {
+    background-color: #cdd9da;
+    border-color: #cdd9da;
+    color: #ffffff;
+  }
 
   /* ------- */
 
   /* pacific */
-  .pacific {color:#256AB4;}
-  .pacific-bg {background-color:#256AB4; border-color:#256AB4; color:#FFFFFF;}
-  .bubble.active {background-color:#256AB4;border-color:#256AB4;color:#FFF;}
+  .pacific {
+    color: #256ab4;
+  }
+  .pacific-bg {
+    background-color: #256ab4;
+    border-color: #256ab4;
+    color: #ffffff;
+  }
+  .bubble.active {
+    background-color: #256ab4;
+    border-color: #256ab4;
+    color: #fff;
+  }
 
   /* pacific light */
-  .pacific-light {color:#4188C7;}
-  .pacific-light-bg {background-color:#4188C7; border-color:#4188C7; color:#FFFFFF;}
+  .pacific-light {
+    color: #4188c7;
+  }
+  .pacific-light-bg {
+    background-color: #4188c7;
+    border-color: #4188c7;
+    color: #ffffff;
+  }
 
   /* pacific lighter*/
-  .pacific-lighter {color:#86B4E0;}
-  .pacific-lighter-bg {background-color:#86B4E0; border-color:#86B4E0; color:#212121;}
+  .pacific-lighter {
+    color: #86b4e0;
+  }
+  .pacific-lighter-bg {
+    background-color: #86b4e0;
+    border-color: #86b4e0;
+    color: #212121;
+  }
 
   /* pacific lightest */
-  .pacific-lightest {color:#CEE0F2;}
-  .pacific-lightest-bg {background-color:#CEE0F2; border-color:#CEE0F2; color:#212121;}
+  .pacific-lightest {
+    color: #cee0f2;
+  }
+  .pacific-lightest-bg {
+    background-color: #cee0f2;
+    border-color: #cee0f2;
+    color: #212121;
+  }
 
   /* ------- */
 
-  .green-bg{background:#101820;}
-  .bullet{
-    color:white;
+  .green-bg {
+    background: #101820;
+  }
+  .bullet {
+    color: white;
     height: 25px;
     width: 25px;
     text-align: center;
@@ -194,11 +525,13 @@
     font-size: 18px;
     border-radius: 100%;
   }
-  .pad-top{margin-top:10px;}
+  .pad-top {
+    margin-top: 10px;
+  }
 
   /* DOWNLOAD BTN */
   .btn-document {
-    background-image: url( "/static/apps/paying-for-college/img/download.png" );
+    background-image: url('/static/apps/paying-for-college/img/download.png');
     background-repeat: no-repeat;
     background-size: auto 36px;
     background-position: 16px 8px;
@@ -207,9 +540,10 @@
     padding-left: 62px;
   }
 
-  .btn, .btn:hover{
+  .btn,
+  .btn:hover {
     display: inline-block;
-    font-family: "Avenir Next", Arial, sans-serif;
+    font-family: 'Avenir Next', Arial, sans-serif;
     padding: 8px 0px;
     margin-bottom: 0;
     font-size: 13px;
@@ -225,112 +559,278 @@
   }
 
   /* BIG BUBBLES */
-  .bubbles{clear:both;}
-  .bubble{width:208px;float:left;background:#E3E4E5;border-color:#CEE0F2;color:#212121;margin:0 5px 10px 5px;cursor:pointer;height:270px;}
-  .bubble.bubble-active{background:#ADDC91;}
-  .bubble-text{min-height:150px;background-repeat:no-repeat;background-position:20px 20px;
-    padding:80px 20px 0 20px;color:black;font-size:18px;line-height:26px;}
-  .bubble.bubble-active .bubble-text{color:#101820;}
-  .bubble-text.key-dollar {background-image:url( "/static/apps/paying-for-college/img/key_dollar.png" );}
-  .bubble-text.key-check {background-image:url( "/static/apps/paying-for-college/img/key_check.png" );}
-  .bubble-text.key-clock {background-image:url( "/static/apps/paying-for-college/img/key_clock.png" );}
-  .bubble-text.key-compass {background-image:url( "/static/apps/paying-for-college/img/key_compass.png" );}
-  .bubble-text.key-bank {background-image:url( "/static/apps/paying-for-college/img/key_bank.png" );}
-  .bubble-text.key-checklist {background-image:url( "/static/apps/paying-for-college/img/key_checklist.png" );}
-  .answer-box{border:1px solid #5281AB;margin-bottom:45px;padding:14px;}
-  .answer-box .answer-entry{display:none;}
-  .answer-box .answer-entry.bubble-active{display:block;}
-  .answer-box .answer-entry.bubble-active b{/*text-transform:uppercase;*/font-weight:600;font-family: "Avenir Next", Arial, sans-serif;}
-  .answer-box .answer-entry.bubble-active li{margin:14px; line-height:23px;}
-  ul.m,ol.m {font-size:14px; line-height:20px;}
+  .bubbles {
+    clear: both;
+  }
+  .bubble {
+    width: 208px;
+    float: left;
+    background: #e3e4e5;
+    border-color: #cee0f2;
+    color: #212121;
+    margin: 0 5px 10px 5px;
+    cursor: pointer;
+    height: 270px;
+  }
+  .bubble.bubble-active {
+    background: #addc91;
+  }
+  .bubble-text {
+    min-height: 150px;
+    background-repeat: no-repeat;
+    background-position: 20px 20px;
+    padding: 80px 20px 0 20px;
+    color: black;
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .bubble.bubble-active .bubble-text {
+    color: #101820;
+  }
+  .bubble-text.key-dollar {
+    background-image: url('/static/apps/paying-for-college/img/key_dollar.png');
+  }
+  .bubble-text.key-check {
+    background-image: url('/static/apps/paying-for-college/img/key_check.png');
+  }
+  .bubble-text.key-clock {
+    background-image: url('/static/apps/paying-for-college/img/key_clock.png');
+  }
+  .bubble-text.key-compass {
+    background-image: url('/static/apps/paying-for-college/img/key_compass.png');
+  }
+  .bubble-text.key-bank {
+    background-image: url('/static/apps/paying-for-college/img/key_bank.png');
+  }
+  .bubble-text.key-checklist {
+    background-image: url('/static/apps/paying-for-college/img/key_checklist.png');
+  }
+  .answer-box {
+    border: 1px solid #5281ab;
+    margin-bottom: 45px;
+    padding: 14px;
+  }
+  .answer-box .answer-entry {
+    display: none;
+  }
+  .answer-box .answer-entry.bubble-active {
+    display: block;
+  }
+  .answer-box .answer-entry.bubble-active b {
+    /*text-transform:uppercase;*/
+    font-weight: 600;
+    font-family: 'Avenir Next', Arial, sans-serif;
+  }
+  .answer-box .answer-entry.bubble-active li {
+    margin: 14px;
+    line-height: 23px;
+  }
+  ul.m,
+  ol.m {
+    font-size: 14px;
+    line-height: 20px;
+  }
 
-  #print-questions{display:none;}
-  .answer-hidden{display:none;} /*hides answer box--added 11-30-12 by dzg*/
-  h4 {padding:0px; color:#212121; letter-spacing:0px;margin-left:0px;}
-  h3 {text-transform:none; color:#212121;}
-  .comparison-h2{font-size:24px;}
-  p {line-height:1.4em;margin:10px 12px 10px 12px;margin-top:0px;margin-left:0px;}
-  .rel-ico-span{position: relative;width:300px;margin-left:21px; float:left; height:100%;}
-  #ask-cfpb-print {display:none;}
-  .guide-hero{margin-top:40px;}
+  #print-questions {
+    display: none;
+  }
+  .answer-hidden {
+    display: none;
+  } /*hides answer box--added 11-30-12 by dzg*/
+  h4 {
+    padding: 0px;
+    color: #212121;
+    letter-spacing: 0px;
+    margin-left: 0px;
+  }
+  h3 {
+    text-transform: none;
+    color: #212121;
+  }
+  .comparison-h2 {
+    font-size: 24px;
+  }
+  p {
+    line-height: 1.4em;
+    margin: 10px 12px 10px 12px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+  .rel-ico-span {
+    position: relative;
+    width: 300px;
+    margin-left: 21px;
+    float: left;
+    height: 100%;
+  }
+  #ask-cfpb-print {
+    display: none;
+  }
+  .guide-hero {
+    margin-top: 40px;
+  }
 
-  .bubble-transparent{
-    width:186px;
-    padding-top:16px;
-    padding-left:16px;
-    background-image:url( "/static/apps/paying-for-college/img/bubble.png" );
-    background-repeat:no-repeat;
-    background-position:bottom;
+  .bubble-transparent {
+    width: 186px;
+    padding-top: 16px;
+    padding-left: 16px;
+    background-image: url('/static/apps/paying-for-college/img/bubble.png');
+    background-repeat: no-repeat;
+    background-position: bottom;
     background-position-x: 0;
-    padding-bottom:40px;
-    cursor:pointer;
+    padding-bottom: 40px;
+    cursor: pointer;
   }
 
-  .bubble-transparent-answer{
-    color:#000;
+  .bubble-transparent-answer {
+    color: #000;
     /*position:absolute;*/
-    margin:-10px 0 15px 0;
-    width:170px;
-    padding:16px;
-    box-shadow: 0px 0px 5px rgba( 51, 51, 51, 0.35 );
-    -moz-box-shadow: 0px 0px 5px rgba( 51, 51, 51, 0.35 );
-    -webkit-box-shadow: 0px 0px 5px rgba( 51, 51, 51, 0.35 );
-    background-color:#FFF;
-    z-index:99;
-    display:none;
+    margin: -10px 0 15px 0;
+    width: 170px;
+    padding: 16px;
+    box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.35);
+    -moz-box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.35);
+    -webkit-box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.35);
+    background-color: #fff;
+    z-index: 99;
+    display: none;
   }
 
-  .bubble-transparent-answer li{line-height:1.4em; padding-bottom:.67em;font-family:"Avenir Next", Arial, sans-serif;}
-  .bubble-transparent-answer ul{padding:1.4em;font-family:"Avenir Next", Arial, sans-serif;}
-
-  .bubble-transparent-selected{
-    background-image:url( "/static/apps/paying-for-college/img/bubble_selected.png" );
-    color:#FFF;
+  .bubble-transparent-answer li {
+    line-height: 1.4em;
+    padding-bottom: 0.67em;
+    font-family: 'Avenir Next', Arial, sans-serif;
+  }
+  .bubble-transparent-answer ul {
+    padding: 1.4em;
+    font-family: 'Avenir Next', Arial, sans-serif;
   }
 
-  .btn-close{float:right;cursor:pointer;font-size:1.4em;margin:0 0 5px 5px;}
-  .related-resources-col {float:left;margin:20px 0 0 18px;width:155px;border-top-left-radius:3px;border-top-right-radius:3px;border-top:3px solid #50B748;padding-top:20px;}
-  .related-resources-col:first-child {width:190px;border:0;padding-top:0;font-weight:400;font-size:1.1em;}
-  .related-resources-col h6{font-weight:400; font-size:1.2em;line-height:1.3em;}
-  .related-resources-col p{font-size:.8em;}
+  .bubble-transparent-selected {
+    background-image: url('/static/apps/paying-for-college/img/bubble_selected.png');
+    color: #fff;
+  }
+
+  .btn-close {
+    float: right;
+    cursor: pointer;
+    font-size: 1.4em;
+    margin: 0 0 5px 5px;
+  }
+  .related-resources-col {
+    float: left;
+    margin: 20px 0 0 18px;
+    width: 155px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-top: 3px solid #50b748;
+    padding-top: 20px;
+  }
+  .related-resources-col:first-child {
+    width: 190px;
+    border: 0;
+    padding-top: 0;
+    font-weight: 400;
+    font-size: 1.1em;
+  }
+  .related-resources-col h6 {
+    font-weight: 400;
+    font-size: 1.2em;
+    line-height: 1.3em;
+  }
+  .related-resources-col p {
+    font-size: 0.8em;
+  }
 
   /* Related Resources */
-  .green {color:#50B748;}
-  .hero, .sub-hero{font-family:"Avenir Next", Arial, sans-serif;font-weight:500;}
-  .hero{font-size:36px;line-height:58px; margin-bottom:45px;}
-  .sub-hero{font-size:28px; line-height:30px;margin-top:0; margin-left:0;}
-  span.ec{cursor:pointer;}
-
-  .ec,.ec-blk {
-    font-size:14px;
-    font-weight:400;
-    text-decoration:none;
-    padding-left:20px;
-    padding-right:20px;
-    background-image:url( "/static/apps/paying-for-college/img/expand_collapse.png" );
-    background-repeat:no-repeat;
-    background-position-x:0px;
-    background-position-y:-1px;
+  .green {
+    color: #50b748;
+  }
+  .hero,
+  .sub-hero {
+    font-family: 'Avenir Next', Arial, sans-serif;
+    font-weight: 500;
+  }
+  .hero {
+    font-size: 36px;
+    line-height: 58px;
+    margin-bottom: 45px;
+  }
+  .sub-hero {
+    font-size: 28px;
+    line-height: 30px;
+    margin-top: 0;
+    margin-left: 0;
+  }
+  span.ec {
+    cursor: pointer;
   }
 
-  .collapse {background-position-y:-24px;color:#212121;}
-  .compare-table{margin-top:0px;}
-  .line p{margin-top:0px;margin-left:1px;}
+  .ec,
+  .ec-blk {
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-image: url('/static/apps/paying-for-college/img/expand_collapse.png');
+    background-repeat: no-repeat;
+    background-position-x: 0px;
+    background-position-y: -1px;
+  }
+
+  .collapse {
+    background-position-y: -24px;
+    color: #212121;
+  }
+  .compare-table {
+    margin-top: 0px;
+  }
+  .line p {
+    margin-top: 0px;
+    margin-left: 1px;
+  }
   /*.ico-pad .icon{margin-top:8px;}*/
-  thead th {padding:1px;}
-  #print-accordion {display:none;}
-  .td2{width:150px;}
-  .no-marg-top-childs p{margin-top:0px;}
-  h2{text-transform:none;margin-left:0px;letter-spacing:0px;}
-  .td2 h2{font-weight:500; padding-bottom:.4em; border-bottom:1px solid #212121;}
+  thead th {
+    padding: 1px;
+  }
+  #print-accordion {
+    display: none;
+  }
+  .td2 {
+    width: 150px;
+  }
+  .no-marg-top-childs p {
+    margin-top: 0px;
+  }
+  h2 {
+    text-transform: none;
+    margin-left: 0px;
+    letter-spacing: 0px;
+  }
+  .td2 h2 {
+    font-weight: 500;
+    padding-bottom: 0.4em;
+    border-bottom: 1px solid #212121;
+  }
 
   /* Round numbered bullets. */
-  ol.action-steps,ul.action-steps {padding:0; list-style: none;}
-  ol.action-steps li {position: relative;margin-bottom:10px;padding-left:30px;}
-  ol.action-steps {counter-reset: bullets;}
+  ol.action-steps,
+  ul.action-steps {
+    padding: 0;
+    list-style: none;
+  }
+  ol.action-steps li {
+    position: relative;
+    margin-bottom: 10px;
+    padding-left: 30px;
+  }
+  ol.action-steps {
+    counter-reset: bullets;
+  }
   ol.action-steps li:before {
     counter-increment: bullets;
-    content: counter( bullets );
+    content: counter(bullets);
     position: absolute;
     top: 3px;
     left: 0;
@@ -346,40 +846,77 @@
     font-size: 0.7em;
   }
 
-  .intro-row {margin-top: 50px;margin-left:-20px;font-family: "Avenir Next", Arial, sans-serif;}
-  .intro-row:before,.row:after{content:"";display:table;}
-  .intro-row:after{clear:both;}
-  .banks-icon{background-image:url( "/static/apps/paying-for-college/img/banking.png" );}
-  .loans-icon{background-image:url( "/static/apps/paying-for-college/img/loans.png" );}
-  .intro-icon{width:83px;height:83px;position:absolute;margin:-60px 0 0 0px;}
-  .intro-block{padding:20px;min-height:300px;margin-bottom:10px;font-size:1em;}
-  .intro-header{text-transform:uppercase;margin-top:30px; font-weight:500; margin-left:0px; line-height:26px;}
-  .intro-h3{margin-top:10px;text-transform:none; font-size:1.5em; font-weight:400;}
-  .blurb p{font-size:1em;}
-
-  .intro-half-block-1{
-    float:left;
-    vertical-align:middle;
-    text-align:center;
-    padding:22px 10px;
-    width:170px;
-    margin:10px 0px 10px 20px;
-    line-height:20px;
+  .intro-row {
+    margin-top: 50px;
+    margin-left: -20px;
+    font-family: 'Avenir Next', Arial, sans-serif;
+  }
+  .intro-row:before,
+  .row:after {
+    content: '';
+    display: table;
+  }
+  .intro-row:after {
+    clear: both;
+  }
+  .banks-icon {
+    background-image: url('/static/apps/paying-for-college/img/banking.png');
+  }
+  .loans-icon {
+    background-image: url('/static/apps/paying-for-college/img/loans.png');
+  }
+  .intro-icon {
+    width: 83px;
+    height: 83px;
+    position: absolute;
+    margin: -60px 0 0 0px;
+  }
+  .intro-block {
+    padding: 20px;
+    min-height: 300px;
+    margin-bottom: 10px;
+    font-size: 1em;
+  }
+  .intro-header {
+    text-transform: uppercase;
+    margin-top: 30px;
+    font-weight: 500;
+    margin-left: 0px;
+    line-height: 26px;
+  }
+  .intro-h3 {
+    margin-top: 10px;
+    text-transform: none;
+    font-size: 1.5em;
+    font-weight: 400;
+  }
+  .blurb p {
+    font-size: 1em;
   }
 
-  .intro-half-block-2{
-    float:left;
-    vertical-align:middle;
-    text-align:center;
-    padding:14px 10px;
-    width:170px;
-    margin:10px 0px 10px 20px;
-    line-height:18px;
+  .intro-half-block-1 {
+    float: left;
+    vertical-align: middle;
+    text-align: center;
+    padding: 22px 10px;
+    width: 170px;
+    margin: 10px 0px 10px 20px;
+    line-height: 20px;
+  }
+
+  .intro-half-block-2 {
+    float: left;
+    vertical-align: middle;
+    text-align: center;
+    padding: 14px 10px;
+    width: 170px;
+    margin: 10px 0px 10px 20px;
+    line-height: 18px;
   }
 
   .legal-disclaimer {
     margin-top: 30px;
-    font-family: "Avenir Next", Arial, sans-serif;
+    font-family: 'Avenir Next', Arial, sans-serif;
   }
 
   .legal-disclaimer h5 {
@@ -388,30 +925,50 @@
 
   .legal-disclaimer p {
     max-width: 670px;
-    font-family: "Avenir Next", Arial, sans-serif;
+    font-family: 'Avenir Next', Arial, sans-serif;
   }
 
-  .no-btm{margin-bottom:0px;}
-  .well-icon{display:none;}
-  .major-sect{border-top: 1px solid #babbbd;}
-  .guide-sect-header h5{color: #D83D00;}
-  #take-action .font-s p{font-family: "Avenir Next", Arial, sans-serif;}
-  .loans-table td {width:242px;}
-  .loans-table td.rh {width:80px;}
+  .no-btm {
+    margin-bottom: 0px;
+  }
+  .well-icon {
+    display: none;
+  }
+  .major-sect {
+    border-top: 1px solid #babbbd;
+  }
+  .guide-sect-header h5 {
+    color: #d83d00;
+  }
+  #take-action .font-s p {
+    font-family: 'Avenir Next', Arial, sans-serif;
+  }
+  .loans-table td {
+    width: 242px;
+  }
+  .loans-table td.rh {
+    width: 80px;
+  }
 
   .loans-table .rh {
-    position:relative;
-    padding-left:23px;
-    padding-top:14px;
+    position: relative;
+    padding-left: 23px;
+    padding-top: 14px;
   }
 
-  .banking-table td {width:155px;}
-  .banking-table td.rh {width:80px;}
-  .banking-table th {font-size:18px;}
+  .banking-table td {
+    width: 155px;
+  }
+  .banking-table td.rh {
+    width: 80px;
+  }
+  .banking-table th {
+    font-size: 18px;
+  }
 
   .banking-table .rh {
-    position:relative;
-    padding-left:23px;
+    position: relative;
+    padding-left: 23px;
   }
 
   /* Image hero and navigation */
@@ -449,7 +1006,7 @@
     display: none;
   }
 
-  @media screen and ( min-width: 50.0625em ) {
+  @media screen and (min-width: 50.0625em) {
     .pfc-hero-wrapper {
       display: block;
     }
@@ -475,7 +1032,7 @@
   }
 
   .breadcrumbs > p {
-    font-family: "Avenir Next", Verdana, sans-serif;
+    font-family: 'Avenir Next', Verdana, sans-serif;
     font-weight: 600;
     margin-bottom: 0.625em;
     margin-top: 0.25em;
@@ -484,7 +1041,7 @@
   .pfc-hero-content {
     /* Not an official color, but a mix of green and white. */
     background-color: #d3efdb;
-    font-family: "Avenir Next", Verdana, sans-serif;
+    font-family: 'Avenir Next', Verdana, sans-serif;
     float: left;
     min-height: 155px;
     padding: 1em;
@@ -498,7 +1055,7 @@
   }
 
   .pfc-hero-content p {
-    font-family: "Avenir Next", Verdana, sans-serif;
+    font-family: 'Avenir Next', Verdana, sans-serif;
     margin-left: 0;
     margin-right: 0;
   }
@@ -532,7 +1089,7 @@
     font-size: 2.125em;
     font-weight: 600;
     margin-bottom: 0.25em;
-    font-family: "Avenir Next", Arial, sans-serif;
+    font-family: 'Avenir Next', Arial, sans-serif;
     text-transform: none;
   }
 
@@ -564,7 +1121,7 @@
   .pfc-nav-wrapper ul li {
     background-color: #337e7d;
     display: inline-block;
-    font-family: "Avenir Next", Verdana, sans-serif;
+    font-family: 'Avenir Next', Verdana, sans-serif;
     font-weight: 500;
     font-size: 1em;
     margin: 0;
@@ -644,12 +1201,14 @@
   }
 
   .pfc-nav-wrapper li:hover > ul,
-  .pfc-nav-wrapper li.focus > ul { /* Display the dropdown on hover */
+  .pfc-nav-wrapper li.focus > ul {
+    /* Display the dropdown on hover */
     left: 0; /* Bring back on-screen when needed */
   }
 
   .pfc-nav-wrapper ul ul li:hover > ul,
-  .pfc-nav-wrapper ul ul li.focus > ul { /* Display the dropdown on hover */
+  .pfc-nav-wrapper ul ul li.focus > ul {
+    /* Display the dropdown on hover */
     left: 100%; /* Bring back on-screen when needed */
     top: 0;
   }
