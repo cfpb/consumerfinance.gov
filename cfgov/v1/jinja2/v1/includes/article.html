@@ -36,7 +36,7 @@
   {% endfor %}
 {% endmacro %}
 
-<article class="post">
+<article>
     <header>
         {% set data = {
             'category': page.categories.all(),
@@ -55,7 +55,7 @@
         {{ item_introduction.render(data) }}
     </header>
 
-    <div class="post_body">
+    <div>
         {% for block in page.content %}
             {% if block.block_type == 'full_width_text' %}
                 {{ setCTAFlag( block ) }}
