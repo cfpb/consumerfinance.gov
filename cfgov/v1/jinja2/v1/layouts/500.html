@@ -8,6 +8,11 @@
     500 internal server error
 {%- endblock %}
 
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('css/on-demand/error.css') }}">
+{%- endblock css %}
+
 {% block content_modifiers -%}
     error_main error_main__500
 {%- endblock %}
