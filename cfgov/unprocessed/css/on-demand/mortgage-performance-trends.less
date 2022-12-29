@@ -2,14 +2,11 @@
 // This is also imported by the chart block (in chart.less)
 @import 'cfpb-chart-builder.less';
 
-
 .o-mp-map {
-
   border: 1px solid @gray-40;
-  margin-top: unit( 30px / @base-font-size-px, em );
-  padding: unit( 30px / @base-font-size-px, em )
-             unit( 30px / @base-font-size-px, em )
-             unit( 15px / @base-font-size-px, em );
+  margin-top: unit(30px / @base-font-size-px, em);
+  padding: unit(30px / @base-font-size-px, em)
+    unit(30px / @base-font-size-px, em) unit(15px / @base-font-size-px, em);
 
   h3 span {
     font-weight: 600;
@@ -51,7 +48,6 @@
     fill-opacity: 1;
     stroke: @black;
   }
-
 }
 
 .m-mp-map-tooltip {
@@ -74,40 +70,63 @@
 }
 
 .m-color-ramp {
-
-  margin-top: unit( 15px / @base-font-size-px, em );
+  margin-top: unit(15px / @base-font-size-px, em);
   width: 100%;
 
   &[data-chart-color='blue'] {
-
     .a-ramp-value {
-      &-0 { fill: @gray-5; }
-      &-1 { fill: @pacific-20; }
-      &-2 { fill: @pacific-40; }
-      &-3 { fill: @pacific-60; }
-      &-4 { fill: @pacific-80; }
-      &-5 { fill: @pacific; }
-      &-6 { fill: @pacific-dark; }
+      &-0 {
+        fill: @gray-5;
+      }
+      &-1 {
+        fill: @pacific-20;
+      }
+      &-2 {
+        fill: @pacific-40;
+      }
+      &-3 {
+        fill: @pacific-60;
+      }
+      &-4 {
+        fill: @pacific-80;
+      }
+      &-5 {
+        fill: @pacific;
+      }
+      &-6 {
+        fill: @pacific-dark;
+      }
     }
-
   }
 
   &[data-chart-color='navy'] {
-
     .a-ramp-value {
-      &-0 { fill: @gray-5; }
-      &-1 { fill: @navy-20; }
-      &-2 { fill: @navy-40; }
-      &-3 { fill: @navy-60; }
-      &-4 { fill: @navy-80; }
-      &-5 { fill: @navy; }
-      &-6 { fill: @navy-dark; }
+      &-0 {
+        fill: @gray-5;
+      }
+      &-1 {
+        fill: @navy-20;
+      }
+      &-2 {
+        fill: @navy-40;
+      }
+      &-3 {
+        fill: @navy-60;
+      }
+      &-4 {
+        fill: @navy-80;
+      }
+      &-5 {
+        fill: @navy;
+      }
+      &-6 {
+        fill: @navy-dark;
+      }
     }
-
   }
 
   rect {
-    font-size: unit( 12px / @base-font-size-px, em );
+    font-size: unit(12px / @base-font-size-px, em);
     height: 15px;
     stroke: #838588;
     stroke-miterlimit: 10;
@@ -116,7 +135,7 @@
   }
 
   text {
-    font-size: unit( 12px / @base-font-size-px, em );
+    font-size: unit(12px / @base-font-size-px, em);
     text-anchor: start;
   }
 
@@ -128,12 +147,10 @@
       font-size: unit( 16px / @base-font-size-px, em );;
     }
   } );
-
 }
 
 #mp-line-chart-container,
 #mp-map-container {
-
   // Highcharts auto resizes the charts, causing odd overflow issues
   overflow: inherit;
 
@@ -146,7 +163,7 @@
   fieldset {
     border: 0;
     margin-left: 0;
-    padding:0;
+    padding: 0;
   }
   .content-l_col {
     border-left-width: 0;
@@ -156,9 +173,8 @@
   .m-field-helper-text {
     color: @gray-80;
     @font-size: 12px;
-    font-size: unit( @font-size / @base-font-size-px, em );
+    font-size: unit(@font-size / @base-font-size-px, em);
   }
-
 }
 
 #mp-line-chart-controls,
@@ -174,5 +190,5 @@
 #mp-map-month-container label,
 #mp-map-year-container label {
   @font-size: 14px;
-  font-size: unit( @font-size / @base-font-size-px, em );
+  font-size: unit(@font-size / @base-font-size-px, em);
 }

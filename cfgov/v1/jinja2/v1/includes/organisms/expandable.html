@@ -38,8 +38,7 @@
 
 {% macro expandable(value, expandable_cue_additional_text='') %}
 
-<div data-qa-hook="expandable"
-     class="o-expandable
+<div class="o-expandable
             o-expandable__padded
             {{ 'o-expandable__background' if value.is_midtone else '' }}
             {{ 'o-expandable__border' if value.is_bordered else '' }}"

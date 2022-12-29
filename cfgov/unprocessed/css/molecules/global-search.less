@@ -90,9 +90,7 @@
 */
 
 .m-global-search {
-
   &_trigger {
-
     // Hide search unless we have JavaScript (JS).
     html.no-js & {
       display: none;
@@ -142,10 +140,9 @@
       overflow-x: hidden;
     }
 
-    &[aria-expanded="true"] &-form {
+    &[aria-expanded='true'] &-form {
       display: block;
     }
-
   }
 
   // Up to desktops.
@@ -267,8 +264,8 @@
   .respond-to-min(480px, {
     &_content-form {
 
-      // The "search" button needs to be more flexible than in our usual
-      // input-w-btn element to accommodate longer translations of "search",
+      // The  search  button needs to be more flexible than in our usual
+      // input-w-btn element to accommodate longer translations of  search ,
       // so we will make it flexbox
       .o-form__input-w-btn {
         display: flex;

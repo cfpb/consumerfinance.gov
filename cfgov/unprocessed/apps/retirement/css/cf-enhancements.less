@@ -14,7 +14,6 @@
    ========================================================================== */
 
 .a-btn__full-small {
-
   .respond-to-max( @bp-xs-max, {
     display: block;
     width: 100%;
@@ -30,7 +29,6 @@
   }
 
   & + & {
-
     .respond-to-max( @bp-xs-max, {
       margin-top: unit(10px / @base-font-size-px, em);
       margin-left: auto;
@@ -39,7 +37,6 @@
 }
 
 a.a-btn__full-small.a-btn__link {
-
   .respond-to-max( @bp-xs-max, {
     display: inline-block;
   } );
@@ -50,7 +47,6 @@ a.a-btn__full-small.a-btn__link {
    ========================================================================== */
 
 .content__bleedbar {
-
   .content_wrapper:after {
     background-color: @gray-5;
   }
@@ -73,7 +69,6 @@ a.a-btn__full-small.a-btn__link {
    ========================================================================== */
 
 .a-btn__full {
-
   .respond-to-max( @bp-xs-max, {
     display: block;
     width: 100%;
@@ -89,14 +84,14 @@ a.a-btn__full-small.a-btn__link {
    Range slider
    https://github.com/cfarm/cf-forms/blob/range/src/cf-forms.less
    ========================================================================== */
-@input-range-bg:       @gray-80;
-@input-range-border:   @gray-40;
-@input-range-handle:   @gray-10;
+@input-range-bg: @gray-80;
+@input-range-border: @gray-40;
+@input-range-handle: @gray-10;
 
 @input-inset-selected: @pacific-20;
-@input-border-focus:   @pacific;
+@input-border-focus: @pacific;
 
-input[type=range] {
+input[type='range'] {
   width: 100%;
   padding-left: 0;
   margin: 15px 0;

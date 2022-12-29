@@ -52,6 +52,9 @@ const deviceAgnosticSpecs = () => {
   it('should have keyboard-navigable search results', () => {
     cy.visit(fig.url() + '?search=true');
     fig.getSearchInput().type('filing');
+    // The search input has a 300ms debounce so wait for results to show
+    // before hitting the downArrow key twice
+    fig.getSearchResults().should('be.visible');
     fig.getSearchInput().type('{downArrow}{downArrow}');
     cy.focused().parent().should('have.class', 'ctrl-f-search-result');
   });
