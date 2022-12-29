@@ -53,19 +53,20 @@
   margin-right: auto;
 
   &__bottom-rule {
-    padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    padding-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
     border-bottom: 1px solid @horizontal-rule;
   }
 
   &_caption {
-    margin-top: unit( 15px / @base-font-size-px, em );
+    margin-top: unit(15px / @base-font-size-px, em);
   }
 
-  &__bordered { // Styling for "Tip" insets, most commonly used in Ask CFPB
+  &__bordered {
+    // Styling for "Tip" insets, most commonly used in Ask CFPB
     border-top: 4px solid @teal-60;
     border-bottom: 2px solid @teal-40;
-    padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
-    margin-bottom: unit( @grid_gutter-width /2 / @base-font-size-px, em );
+    padding: unit(@grid_gutter-width / 2 / @base-font-size-px, em) 0;
+    margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
 
     .respond-to-min(@bp-sm-min, {
       margin: unit( 3px / @base-font-size-px, em )
@@ -78,12 +79,12 @@
 
   &.m-inset__170 {
     // Ensure that 170px inset images are that same size on XS screens
-    width: unit( 170px / @base-font-size-px, em );
+    width: unit(170px / @base-font-size-px, em);
   }
 
   &__270 {
     // Ensure that 270px inset images are that same size on XS screens
-    width: unit( 270px / @base-font-size-px, em );
+    width: unit(270px / @base-font-size-px, em);
   }
 
   .respond-to-min( @bp-sm-min, {
@@ -110,17 +111,17 @@
 
   .m-call-to-action,
   .m-related-links {
-    padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+    padding-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
     border-bottom: 1px solid @horizontal-rule;
   }
 
   .m-full-width-text,
   .m-quote {
-    padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
-    padding-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
+    padding-bottom: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
     border-top: 1px solid @horizontal-rule;
     border-bottom: 1px solid @horizontal-rule;
-    margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    margin-bottom: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
   }
 
   &__email {
@@ -132,9 +133,9 @@
     } );
 
     .o-email-signup {
-      padding: unit( @grid_gutter-width / @base-font-size-px, em );
+      padding: unit(@grid_gutter-width / @base-font-size-px, em);
       border: 1px solid @block__border-top;
-      margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+      margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
       background-color: @block__bg;
 
       .respond-to-range( @bp-sm-min, @bp-sm-max, {
@@ -156,7 +157,6 @@
     width: percentage( 4 / 9 );
   } );
 }
-
 
 /* topdoc
     name: EOF

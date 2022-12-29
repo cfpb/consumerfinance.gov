@@ -22,7 +22,8 @@
     margin-top: 0;
   }
 
-  th, td {
+  th,
+  td {
     font-size: 16px;
   }
 
@@ -38,7 +39,7 @@
 
 .post__event {
   > footer {
-    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
   }
 
   .respond-to-min(@bp-med-min, {
@@ -47,14 +48,12 @@
   });
 }
 
-
 /* Event-Media-Container
    ========================================================================== */
 
 .event-media_container {
   border: 1px solid @gray-10;
 }
-
 
 /* Event-Meta
    ========================================================================== */
@@ -77,8 +76,8 @@
   text-transform: capitalize;
   display: inline-block;
 
-  .event-meta_street:not( :empty ):after,
-  .event-meta_suite:not( :empty ):after {
+  .event-meta_street:not(:empty):after,
+  .event-meta_suite:not(:empty):after {
     // Adding a linebreak after the street if it's contents
     // aren't empty.
     content: '\A';
@@ -89,7 +88,6 @@
 .event-calendar_container .datetime {
   letter-spacing: normal;
 }
-
 
 /* Event-Status
    ========================================================================== */
@@ -106,20 +104,19 @@
 // Spacing should follow a 1/2/1 ratio (15px/30px/15px).
 .event-status_rsvp p:first-child {
   line-height: 1;
-  margin-bottom: unit( 15px / @base-font-size-px, em );
+  margin-bottom: unit(15px / @base-font-size-px, em);
 }
 
 .event-status_rsvp p:last-child {
-  margin-bottom: unit( 30px / @base-font-size-px, em );
+  margin-bottom: unit(30px / @base-font-size-px, em);
 }
 
 .event-status_livestream p:first-child {
   line-height: 1;
   // The margin is kept at 10px to accommodate the line-height
   // of the text so that the gap appears to be 15px.
-  margin-bottom: unit( 10px / @base-font-size-px, em );
+  margin-bottom: unit(10px / @base-font-size-px, em);
 }
-
 
 /* Event-Venue
    ========================================================================== */
@@ -130,7 +127,7 @@
 }
 
 .event-venue_details {
-  padding: 1.5em 1.5em .5em;
+  padding: 1.5em 1.5em 0.5em;
 
   .respond-to-max(@bp-xs-max, {
     padding: 1.5em;
@@ -174,7 +171,6 @@
   margin-bottom: 0;
   vertical-align: middle;
 }
-
 
 /* Event-Footer
    ========================================================================== */

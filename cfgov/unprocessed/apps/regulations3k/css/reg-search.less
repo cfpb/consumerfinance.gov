@@ -52,7 +52,7 @@
       padding-bottom: 15px;
       border-bottom: 1px solid @gray-40;
       margin-bottom: 15px;
-      &:nth-child( 3n ) {
+      &:nth-child(3n) {
         border-bottom: none;
       }
       &_label {
@@ -73,10 +73,9 @@
     padding-top: 0;
   }
   .results_count {
-    padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em )
-                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em )
-                 0
-                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em)
+      unit((@grid_gutter-width / 2) / @base-font-size-px, em) 0
+      unit((@grid_gutter-width / 2) / @base-font-size-px, em);
     border-right: 1px solid @gray-40;
     border-bottom: 1px solid @gray-40;
     background-color: @green-20;
@@ -86,25 +85,25 @@
     }
   }
   .results_list {
-    padding: unit( @grid_gutter-width / @base-font-size-px, em )
-                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    padding: unit(@grid_gutter-width / @base-font-size-px, em)
+      unit((@grid_gutter-width / 2) / @base-font-size-px, em);
     li {
       list-style-type: none;
     }
   }
   .results_item {
-    margin: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-    &+ .results_item {
-      margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+    & + .results_item {
+      margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
       h4 {
-        padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        padding-top: unit(@grid_gutter-width / @base-font-size-px, em);
         border-top: 1px solid @gray-40;
       }
     }
   }
   .results_paginator {
-    margin: 0 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-    padding: 0 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    margin: 0 unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+    padding: 0 unit((@grid_gutter-width / 2) / @base-font-size-px, em);
     max-width: 41.875rem;
   }
 }
@@ -187,7 +186,7 @@
         width: 100%;
       }
       .o-search-bar_col + .o-search-bar_col {
-        margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        margin-top: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
       }
     }
 
@@ -202,7 +201,7 @@
       .o-search-bar_label {
         width: auto;
         vertical-align: top;
-        padding-right: unit( ( @grid_gutter-width / 2) / @base-font-size-px, em );
+        padding-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
         white-space: nowrap;
         .break {
           display: block;

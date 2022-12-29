@@ -8,6 +8,11 @@
     404 error: the page requested could not be found
 {%- endblock %}
 
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('css/on-demand/error.css') }}">
+{%- endblock css %}
+
 {% block content_modifiers -%}
     error_main error_main__404
 {%- endblock %}

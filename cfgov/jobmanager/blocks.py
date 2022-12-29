@@ -32,6 +32,9 @@ class JobListingList(blocks.StructBlock):
         icon = "list-ul"
         template = "jobmanager/job_listing_list.html"
 
+    class Media:
+        css = ["job_listing_list.css"]
+
 
 class JobListingTable(blocks.StaticBlock):
     def get_context(self, value, parent_context=None):
