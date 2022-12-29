@@ -2,7 +2,7 @@
 select.o-multiselect {
   box-sizing: border-box;
   width: 100%;
-  padding: unit( 7px / @base-font-size-px, em );
+  padding: unit(7px / @base-font-size-px, em);
 }
 
 .o-multiselect {
@@ -12,7 +12,7 @@ select.o-multiselect {
     position: relative;
   }
 
-  &_search[type="text"] {
+  &_search[type='text'] {
     display: block;
 
     box-sizing: border-box;
@@ -52,13 +52,13 @@ select.o-multiselect {
 
   &_options {
     background-color: @white;
-    padding: unit( 10px / @base-font-size-px, em );
+    padding: unit(10px / @base-font-size-px, em);
 
     li:last-child {
       margin-bottom: 0;
     }
 
-    &.u-filtered li:not( .u-filter-match ) {
+    &.u-filtered li:not(.u-filter-match) {
       display: none;
     }
 
@@ -86,7 +86,7 @@ select.o-multiselect {
   &_choices {
     // The following is required to make side-by-side LI
     // have a space between them.
-    margin-right: unit( -10px / @base-font-size-px, em );
+    margin-right: unit(-10px / @base-font-size-px, em);
     margin-bottom: 0;
 
     li {
@@ -94,23 +94,23 @@ select.o-multiselect {
 
       // The following is required to make side-by-side LI
       // have a space between them.
-      margin-right: unit( 10px / @base-font-size-px, em );
+      margin-right: unit(10px / @base-font-size-px, em);
     }
 
     li:last-child {
-      margin-bottom: unit( 10px / @base-font-size-px, em );
+      margin-bottom: unit(10px / @base-font-size-px, em);
     }
 
     label {
       display: inline-block;
       padding: 2px 5px;
-      padding-right: unit( 25px / @size-v, em );
+      padding-right: unit(25px / @size-v, em);
 
       background-color: @navy-80;
-      border-radius: unit( 4px / @size-v, em );
+      border-radius: unit(4px / @size-v, em);
       color: @white;
       cursor: pointer;
-      font-size: unit( 14px / @base-font-size-px, em );
+      font-size: unit(14px / @base-font-size-px, em);
       position: relative;
 
       &:hover {

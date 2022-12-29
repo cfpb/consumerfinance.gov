@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* Cypress tests cover all the UI interactions on this page. */
 
+import Analytics from '../../../js/modules/Analytics.js';
 import search from 'ctrl-f';
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
 import { scrollIntoViewWithOffset } from './fig-sidenav-utils.js';
@@ -27,7 +28,13 @@ function init() {
   const searchContainer = document.getElementById('ctrl-f');
   const searchData = getSearchData(sectionsList);
 
-  search(searchContainer, { buttonText, searchOptions, searchData, onFollow });
+  search(searchContainer, {
+    buttonText,
+    searchOptions,
+    searchData,
+    onFollow,
+    onSubmit,
+  });
 }
 
 /**
@@ -81,6 +88,21 @@ const onFollow = (event) => {
       scrollIntoViewWithOffset(document.getElementById(target), 60);
     }, 300);
   }
+};
+
+/**
+ * Event listener that's fired after a user searches for something.
+ * We're reporting the user's search terms to Google Analytics.
+ *
+ * @param {string} query - Search term that was submitted.
+ */
+const onSubmit = (query) => {
+  const eventData = Analytics.getDataLayerOptions(
+    'Search Submission',
+    query,
+    'Small Business Lending FIG Search'
+  );
+  Analytics.sendEvent(eventData);
 };
 
 export { init, getSearchData };

@@ -1,8 +1,8 @@
 .breadcrumbs {
   .grid_column( 1, 1 );
 
-  padding-top: unit( @grid_gutter-width / 14px, em );
-  font-size: unit( 14px / @base-font-size-px, em );
+  padding-top: unit(@grid_gutter-width / 14px, em);
+  font-size: unit(14px / @base-font-size-px, em);
 
   .cf-icon-svg {
     fill: @pacific;
@@ -14,10 +14,11 @@
     padding-bottom: unit( @grid_gutter-width / 2 / 14px, em );
   } );
 
-  &_link, &_text {
+  &_link,
+  &_text {
     padding-left: 4px;
 
-    &:not( :last-child ):after {
+    &:not(:last-child):after {
       padding-left: 4px;
       color: @text;
       content: ' /';
