@@ -24,7 +24,7 @@
    ========================================================================== #}
 
 {% from 'v1/includes/macros/util/format/contact.html' import format_phone as format_phone %}
-<div class="m-contact m-contact-phone" data-qa-hook="contact-phone">
+<div class="m-contact m-contact-phone">
     {# TODO: Update fax param name to is_fax to make clear it's a boolean. #}
     {% if value.fax == true %}
         {% set icon = 'fax' %}
