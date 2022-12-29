@@ -3,7 +3,6 @@
    cfgov-post
    ========================================================================== */
 
-
 /* topdoc
   name: Blog post
   family: cfgov-post
@@ -365,7 +364,7 @@
 .post_heading {
   .h2();
   // Eyeballed to 24px.
-  margin-bottom: unit( 13px / @font-size, em );
+  margin-bottom: unit(13px / @font-size, em);
   .respond-to-min(@bp-sm-min, {
     .h1();
     // Eyeballed to 24px.
@@ -379,7 +378,7 @@
 .post_dek {
   .h4();
   // Eyeballed to 30px.
-  margin-bottom: unit( 20px / @font-size, em );
+  margin-bottom: unit(20px / @font-size, em);
 }
 
 // TODO: `post_body` is used on article.html and events/_event-detail.html.
@@ -387,37 +386,43 @@
 
 .post_body {
   .u-clearfix();
-  margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+  margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
   color: @gray-dark;
 
   // Spacing has been eyeballed to be 30px.
-  p ~ h1, p ~ .h1 {
-    margin-top: unit( 22px / @base-font-size-px, em );
+  p ~ h1,
+  p ~ .h1 {
+    margin-top: unit(22px / @base-font-size-px, em);
   }
 
   // Spacing has been eyeballed to be 30px.
-  p ~ h2, p ~ .h2 {
-    margin-top: unit( 31px / @base-font-size-px, em );
+  p ~ h2,
+  p ~ .h2 {
+    margin-top: unit(31px / @base-font-size-px, em);
   }
 
   // Spacing has been eyeballed to be 30px.
-  p ~ h3, p ~ .h3 {
-    margin-top: unit( 35px / @base-font-size-px, em );
+  p ~ h3,
+  p ~ .h3 {
+    margin-top: unit(35px / @base-font-size-px, em);
   }
 
   // Spacing has been eyeballed to be 15px.
-  p ~ h4, p ~ .h4 {
-    margin-bottom: unit( 7px / @base-font-size-px, em );
+  p ~ h4,
+  p ~ .h4 {
+    margin-bottom: unit(7px / @base-font-size-px, em);
   }
 
   // Spacing has been eyeballed to be 15px.
-  p ~ h5, p ~ .h5 {
-    margin-bottom: unit( 6px / @base-font-size-px, em );
+  p ~ h5,
+  p ~ .h5 {
+    margin-bottom: unit(6px / @base-font-size-px, em);
   }
 
   // Spacing has been eyeballed to be 15px.
-  p ~ h6, p ~ .h6 {
-    margin-bottom: unit( 5px / @base-font-size-px, em );
+  p ~ h6,
+  p ~ .h6 {
+    margin-bottom: unit(5px / @base-font-size-px, em);
   }
 }
 
@@ -425,7 +430,7 @@
 //       Refactor to use CF classes.
 
 .post_inset {
-  margin: unit( 30px / @base-font-size-px, em ) 0;
+  margin: unit(30px / @base-font-size-px, em) 0;
   color: @black;
 
   &__right {

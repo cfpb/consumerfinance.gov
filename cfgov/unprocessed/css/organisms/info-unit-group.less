@@ -44,9 +44,8 @@
     - cfgov-organisms
 */
 .o-info-unit-group {
-
   .content-l {
-    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
   }
 
   > .content-l:first-child {
@@ -55,7 +54,7 @@
 
   .content-l_col-1 + .content-l_col-1 {
     // Adds margin top to info units that follow another
-    margin-top: unit( @grid_gutter-width / @base-font-size-px, em ) !important;
+    margin-top: unit(@grid_gutter-width / @base-font-size-px, em) !important;
   }
 
   .content-l__top-divider {
@@ -68,7 +67,7 @@
   .content-l__top-divider + .content-l__top-divider {
     // Adds top divider between multi-column info unit rows
     .grid_column__top-divider;
-    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
   }
 
   .respond-to-max( @bp-xs-max, {

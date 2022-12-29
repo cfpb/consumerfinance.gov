@@ -6,7 +6,7 @@
   max-width: 1200px !important;
 }
 
-@tablet: ~"only screen and (min-width: 600px) and (max-width: 900px)";
+@tablet: ~'only screen and (min-width: 600px) and (max-width: 900px)';
 
 .wrapper__match-content {
   @media @tablet {
@@ -24,14 +24,15 @@
   left: 50%;
   right: 50%;
   position: relative;
-  padding: 0 unit( 15px / 16px, em ) !important;
+  padding: 0 unit(15px / 16px, em) !important;
 
   .respond-to-max( @bp-sm-max, {
     padding: 0 unit( 10px / 16px, em ) !important;
   } );
 
   // Overrides for design system.
-  .o-expandable_target .o-expandable_cue-close, .o-expandable_target .o-expandable_cue-open {
+  .o-expandable_target .o-expandable_cue-close,
+  .o-expandable_target .o-expandable_cue-open {
     display: block !important;
   }
 
@@ -40,9 +41,9 @@
   }
 
   // Overrides for cfpb-chart-builder.
-  .cfpb-chart[data-chart-type="tile_map"] {
+  .cfpb-chart[data-chart-type='tile_map'] {
     .highcharts-legend__tile-map {
-      transform: translate( 7px, 50px );
+      transform: translate(7px, 50px);
     }
   }
 
