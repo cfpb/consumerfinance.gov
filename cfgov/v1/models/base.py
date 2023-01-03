@@ -184,7 +184,13 @@ class CFGOVPage(Page):
         FieldPanel("content_owners", "Content Owners"),
         FieldPanel("schema_json", "Structured Data"),
         MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
-        FieldPanel("language", "language"),
+        MultiFieldPanel(
+            [
+                FieldPanel("language", "Language"),
+                PageChooserPanel("english_page"),
+            ],
+            "Translation",
+        ),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass
