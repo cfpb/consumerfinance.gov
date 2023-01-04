@@ -40,6 +40,8 @@
     {% endif %}
     <h1>{{ value.heading | safe }}</h1>
 
+    {% include 'v1/includes/molecules/translations.html' %}
+
     {% if value.paragraph %}
         <div class="lead-paragraph">{{ value.paragraph | safe }}</div>
     {% endif %}

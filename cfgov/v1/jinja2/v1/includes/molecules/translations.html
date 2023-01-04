@@ -1,0 +1,21 @@
+{# =========================================================================
+
+    Render a list of page translation links.
+
+    page:       a Wagtail CFGOVPage instance
+
+    language:   the language of the current page.
+
+    ======================================================================== #}
+
+{%- for translation in page.translations %}
+    <a href="{{ pageurl( translation ) }}"
+        {%- if language and translation.language != language -%}
+            hreflang="{{ translation.language }}"
+        {%- endif -%}
+    >
+        {{- translation.get_language_display() -}}
+    </a>
+    {% if not loop.last %}|{% endif %}
+{% endfor %}
+
