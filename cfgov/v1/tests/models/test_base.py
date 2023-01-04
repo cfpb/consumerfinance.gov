@@ -3,6 +3,7 @@ from unittest import mock
 
 from django.test import TestCase
 from django.test.client import RequestFactory
+from django.utils.text import slugify
 
 from wagtail.core import blocks
 from wagtail.core.models import Site
@@ -500,4 +501,46 @@ class TestCFGOVPageBreadcrumbs(TestCase):
         self.assertIn(
             "second",
             [p.slug for p in self.third_level_page.get_breadcrumbs(request)],
+        )
+
+
+class TestCFGOVPageTranslations(TestCase):
+    def setUp(self):
+        self.site_root = Site.objects.get(is_default_site=True).root_page
+
+    def make_page(self, **kwargs):
+        page = BrowsePage(title="test", slug=slugify(kwargs), **kwargs)
+        self.site_root.add_child(instance=page)
+        return page
+
+    def test_pages_without_translations(self):
+        page_en = self.make_page(language="en")
+        self.assertEqual(page_en.translations.count(), 0)
+
+        page_es = self.make_page(language="es")
+        self.assertEqual(page_es.translations.count(), 0)
+
+    def test_pages_with_translations(self):
+        page_en = self.make_page(language="en")
+        page_es = self.make_page(language="es", english_page=page_en)
+
+        self.assertEqual(page_en.translations.count(), 1)
+        self.assertEqual(page_en.translations.first().pk, page_es.pk)
+
+        self.assertEqual(page_es.translations.count(), 1)
+        self.assertEqual(page_es.translations.first().pk, page_en.pk)
+
+    def test_page_translation_ordering(self):
+        page_en = self.make_page(language="en")
+        page_es = self.make_page(language="es", english_page=page_en)
+        self.make_page(language="ht", english_page=page_en)
+        self.make_page(language="ko", english_page=page_en)
+
+        self.assertSequenceEqual(
+            page_en.translations.values_list("language", flat=True),
+            ["es", "ht", "ko"],
+        )
+        self.assertSequenceEqual(
+            page_es.translations.values_list("language", flat=True),
+            ["en", "ht", "ko"],
         )

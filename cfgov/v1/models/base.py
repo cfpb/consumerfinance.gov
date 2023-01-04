@@ -3,7 +3,7 @@ import re
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models import F, Value
+from django.db.models import F, Q, Value
 from django.utils import timezone, translation
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
@@ -395,6 +395,19 @@ class CFGOVPage(Page):
     @property
     def post_preview_cache_key(self):
         return "post_preview_{}".format(self.id)
+
+    @property
+    def translations(self):
+        if self.language == "en":
+            qs = CFGOVPage.objects.filter(english_page=self)
+        elif self.english_page:
+            qs = CFGOVPage.objects.filter(
+                Q(english_page=self.english_page) | Q(pk=self.english_page.pk)
+            ).exclude(pk=self.pk)
+        else:
+            qs = CFGOVPage.objects.none()
+
+        return qs.order_by("language")
 
 
 class CFGOVPageCategory(models.Model):
