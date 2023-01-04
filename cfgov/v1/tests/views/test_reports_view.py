@@ -2,11 +2,13 @@ import json
 from datetime import date
 from operator import itemgetter
 
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
+from django.urls import reverse
 from django.utils import timezone
 
 from wagtail.core.models import Site
 from wagtail.documents.models import Document
+from wagtail.tests.utils import WagtailTestUtils
 
 from model_bakery import baker
 from taggit.models import Tag
@@ -14,6 +16,7 @@ from taggit.models import Tag
 from ask_cfpb.models import AnswerPage
 from v1.models import (
     BlogPage,
+    BrowsePage,
     CFGOVPageCategory,
     EnforcementActionPage,
     EnforcementActionProduct,
@@ -241,9 +244,47 @@ class ServeViewTestCase(TestCase):
         self.assertEqual(ask_page_schema_content, "How-to description")
         self.assertEqual(blank_ask_page_content, "")
 
-    # Category icons report
-    def test_category_icons_report_get_queryset(self):
+
+class TestCategoryIconsReport(SimpleTestCase):
+    def test_get_queryset(self):
         self.assertEqual(
             len(CategoryIconReportView().get_queryset()),
             sum(map(len, map(itemgetter(1), categories))),
         )
+
+
+class TestTranslatedPagesReport(TestCase, WagtailTestUtils):
+    def setUp(self):
+        self.site_root = Site.objects.get(is_default_site=True).root_page
+        self.url = reverse("translated_pages_report")
+
+        self.login()
+
+    def test_empty_report(self):
+        response = self.client.get(self.url)
+        self.assertContains(response, "Translated Pages")
+        self.assertContains(response, "No pages found.")
+
+    def test_report_with_results_and_filtering(self):
+        self.english_page = BrowsePage(title="en", slug="en", live=True)
+        self.site_root.add_child(instance=self.english_page)
+        self.spanish_page = BrowsePage(
+            title="es",
+            slug="es",
+            language="es",
+            live=True,
+            english_page=self.english_page,
+        )
+        self.site_root.add_child(instance=self.spanish_page)
+
+        response = self.client.get(self.url)
+        self.assertContains(response, "Translated Pages")
+        self.assertNotContains(response, "No pages found.")
+
+        response = self.client.get(self.url + "?language=es")
+        self.assertContains(response, "Translated Pages")
+        self.assertNotContains(response, "No pages found.")
+
+        response = self.client.get(self.url + "?language=ht")
+        self.assertContains(response, "Translated Pages")
+        self.assertContains(response, "No pages found.")

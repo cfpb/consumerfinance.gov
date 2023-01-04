@@ -48,6 +48,7 @@ from v1.views.reports import (
     EnforcementActionsReportView,
     ImagesReportView,
     PageMetadataReportView,
+    TranslatedPagesReportView,
 )
 
 
@@ -306,6 +307,26 @@ def register_category_icons_report_url():
             r"^reports/category-icons/$",
             CategoryIconReportView.as_view(),
             name="category_icons_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_translated_pages_report_menu_item():
+    return MenuItem(
+        "Translated Pages",
+        reverse("translated_pages_report"),
+        classnames="icon icon-" + TranslatedPagesReportView.header_icon,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_translated_pages_report_url():
+    return [
+        re_path(
+            r"^reports/translated-pages/$",
+            TranslatedPagesReportView.as_view(),
+            name="translated_pages_report",
         ),
     ]
 
