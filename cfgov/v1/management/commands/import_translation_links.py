@@ -4,17 +4,22 @@
 #
 # By default only saves translation link as a new page revision.
 #
-# If --publish is specified, pages whose most recent revision is
-# already live will have the new revision published as well. If
-# a page is live but already has a draft revision saved, a new
-# draft revision will be saved with the translation link.
+# If --republish is specified, pages whose most recent revision
+# is already live will have the new revision published as well.
+# If a page is live but already has a draft revision saved,
+# a new draft revision will be saved with the translation link.
 #
 # Usage:
 #
-#    manage.py import_translation_links [--dry-run] [--publish] input.csv
+#    manage.py import_translation_links
+#       [--dry-run]
+#       [--revision-username REVISION_USERNAME]
+#       [--republish]
+#       input.csv
 #
-#       --dry-run: only read CSV, don't save anything
-#       ---publish: republish already-live pages
+#    --dry-run: Only read CSV, don't save anything
+#    --revision-username: username used for new revisions
+#    --republish: Republish already-live pages
 
 import argparse
 import csv
