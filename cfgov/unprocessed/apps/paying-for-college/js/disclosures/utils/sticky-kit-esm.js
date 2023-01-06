@@ -8,7 +8,7 @@
  * @param {object} $ - jquery instance.
  */
 export default ($) => {
-  win = $(window);
+  var win = $(window);
 
   $.fn.stick_in_parent = function (opts) {
     var doc,
