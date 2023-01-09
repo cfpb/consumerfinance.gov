@@ -2,6 +2,11 @@
 
 {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
 
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('css/on-demand/ask.css') }}">
+{%- endblock css %}
+
 {% block content_modifiers -%}
     {{ super() }} ask-cfpb-page ask-cfpb-page__see-all
 {%- endblock %}

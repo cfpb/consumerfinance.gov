@@ -3,6 +3,11 @@
 
 {% extends 'v1/layouts/layout-2-1.html' %}
 
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('css/on-demand/ask.css') }}">
+{%- endblock css %}
+
 {% block content_modifiers -%}
     {{ super() }} ask-cfpb-page ask-cfpb-page__search
 {%- endblock %}
