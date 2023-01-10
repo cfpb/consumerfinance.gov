@@ -1,0 +1,464 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-10 15:49-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: retirement_api/jinja2/retirement_api/about.html:4
+msgid "About this tool"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/about.html:4
+#: retirement_api/jinja2/retirement_api/claiming.html:11
+msgid "Consumer Financial Protection Bureau"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:11
+#: retirement_api/jinja2/retirement_api/claiming.html:30
+msgid "Planning your Social Security claiming age"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:21
+msgid "Yes"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:22
+msgid "No"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:23
+msgid "Not Sure"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:24
+msgid "Step"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:32
+msgid ""
+"The age you claim Social Security affects your lifetime income. We’ll help "
+"you think through this decision."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:53
+msgid ""
+"Explore how the age you start collecting Social Security affects your "
+"retirement benefits"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:55
+msgid "Enter your information below to calculate your estimated benefits."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:64
+msgid "Date of birth"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:66
+msgid "MM"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:69
+msgid "DD"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:72
+msgid "YYYY"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:77
+msgid "Highest annual work income"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:84
+msgid ""
+"Enter your total work income before taxes and other deductions. If your work "
+"income is 0 (zero) because you are now retired or unemployed, enter the "
+"income for the last full year in which you worked."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:90
+msgid "Get your estimates"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:100
+msgid ""
+"The calculator bases your benefit estimate on current formulas from the "
+"Social Security Administration. Your answers are anonymous. Because we do "
+"not access or use your Social Security earnings record, these are rough "
+"estimates."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:107
+msgid "Your estimated benefits:"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:108
+msgid ""
+"Select claiming ages on the graph to see how your estimated benefit changes."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:116
+msgid "Claiming at age"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:119
+msgid "Age"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:125
+msgid "is your full benefit claiming age."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:128
+msgid "Compared to claiming at your full benefit claiming age."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:132
+msgid "By age 85, an average lifespan, your total benefits will be"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:135
+msgid "in today's dollars"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:140
+msgid ""
+"Social Security retirement benefits are not designed to be your sole source "
+"of retirement income, but waiting even one month will increase your benefits."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:143
+msgid "About your maximum benefit claiming age:"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:145
+msgid "Always 70."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:146
+msgid "At this age, you will get the maximum possible monthly benefit."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:150
+msgid "About your full benefit claiming age:"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:152
+msgid "It is based on the year you were born."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:153
+msgid "At this age, you will receive your full benefit with no reductions."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:157
+msgid "About your early benefit claiming age:"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:159
+msgid "Earliest age you can claim your benefit is 62."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:160
+msgid ""
+"If you claim your benefit before your full claiming age, it will be reduced."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:163
+msgid ""
+"Remember, claiming age here refers only to your Social Security retirement "
+"benefit, and not when you decide to stop working or apply for Medicare."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:169
+msgid "Where do these numbers come from?"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:176
+msgid "View estimated benefits as:"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:177
+msgid "monthly income"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:178
+msgid "annual income"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:208
+msgid "Estimated benefits"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:209
+msgid "Claiming age"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:215
+msgid "Learn tips specific to your situation"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:216
+msgid "Picture your life in retirement to receive claiming tips."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:222
+msgid "Are you married?"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:231
+msgid "You can protect the financial security of your surviving spouse."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:249
+msgid ""
+"Claiming at your full retirement age or later permanently increases your "
+"benefit."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:266
+msgid ""
+"Your claiming age matters for your own retirement benefits and your "
+"survivor's benefits."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:292
+msgid "Do you plan to continue working in your 60s?"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:301
+#: retirement_api/jinja2/retirement_api/claiming.html:323
+msgid "Working in your 60s will help you maximize your income and savings."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:345
+#: retirement_api/jinja2/retirement_api/claiming.html:374
+msgid ""
+"You can maximize your benefits even if you work fewer hours or stop working."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:403
+msgid ""
+"Consider working in your 60s for an extra boost to your income and savings."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:427
+msgid ""
+"Consider working extra years in your 60s for an extra boost to your income "
+"and savings"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:456
+#: retirement_api/jinja2/retirement_api/claiming.html:799
+msgid ""
+"Once you reach your full retirement benefits claiming age, you can work and "
+"earn as much as you want and your benefits will not be reduced. If you claim "
+"before this age and continue to work, your benefits could be temporarily "
+"reduced if you earn over a certain limit, but any reductions you receive "
+"will be credited back to you once you reach full retirement age."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:459
+#: retirement_api/jinja2/retirement_api/claiming.html:805
+msgid ""
+"A type of retirement savings account offered by employers to help their "
+"employees save for retirement."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:462
+#: retirement_api/jinja2/retirement_api/claiming.html:808
+msgid ""
+"IRAs are types of retirement savings plans with special tax incentives. In "
+"these plans, your savings equal the contributions that you make to the "
+"account plus the gains or losses of your investments."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:465
+msgid ""
+"If you claim before full retirement age and continue to work, your benefits "
+"could be temporarily reduced if you earn over a certain amount. Any "
+"reductions you receive will be credited back to you once you reach full "
+"retirement age."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:474
+msgid "Will your expenses decrease after you retire?"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:483
+#: retirement_api/jinja2/retirement_api/claiming.html:504
+msgid "Retirement could be more expensive than you expect."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:525
+#: retirement_api/jinja2/retirement_api/claiming.html:546
+msgid "Maintain your lifestyle by planning ahead."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:567
+#: retirement_api/jinja2/retirement_api/claiming.html:588
+msgid "Many people find retirement is more expensive than expected."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:613
+msgid ""
+"Do you expect to have additional sources of retirement income beyond Social "
+"Security?"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:622
+msgid "Continue saving in the coming years."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:651
+msgid "You have an opportunity to continue growing your money."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:680
+msgid "It's a perfect time to start saving."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:710
+#: retirement_api/jinja2/retirement_api/claiming.html:770
+msgid "It's never too late to start saving!"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:742
+msgid ""
+"There are many ways to plan for a secure retirement outside of Social "
+"Security."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:802
+msgid ""
+"Your Social Security benefits could be reduced if you receive federal, "
+"state, or local government pensions that are based on work where you did not "
+"pay Social Security taxes."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:811
+msgid ""
+"Catch-up contributions are additional contributions that individuals who are "
+"age 50 or older can make to their 401(k) or IRA accounts to help them boost "
+"their savings as they approach retirement."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:818
+msgid "Do you expect to live a long life?"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:826
+msgid "Many people live longer than they expect."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:846
+msgid "Claiming at your full benefit age could still make sense for you."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:868
+msgid "There's a good chance that you'll live into your 80s and beyond."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:893
+msgid "Learn your next steps"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:896
+msgid ""
+"Select the age you plan to start collecting your Social Security retirement "
+"benefits."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:899
+msgid ""
+"(This will not affect your Social Security account or eligibility and it "
+"will not begin an application.)"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:905
+msgid "Choose age"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:922
+#: retirement_api/jinja2/retirement_api/claiming.html:926
+#: retirement_api/jinja2/retirement_api/claiming.html:930
+#: retirement_api/jinja2/retirement_api/claiming.html:934
+msgid "You’ve chosen age"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:922
+msgid ", which is your maximum Social Security benefit claiming age."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:923
+msgid ""
+"This means you will get your maximum possible monthly benefit! Here are a "
+"few things to keep in mind in the next few years."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:926
+msgid ""
+", which is later than your Social Security full retirement claiming age."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:927
+msgid ""
+"This means you will get an increase in your monthly benefits! Here are a few "
+"things to keep in mind in the next few years."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:930
+msgid ", which is your Social Security full retirement claiming age."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:931
+msgid ""
+"That means you’ll receive your full benefit with no reductions! Here are a "
+"few things to keep in mind in the next few years."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:934
+msgid ""
+", which is earlier than your Social Security full retirement claiming age."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:935
+msgid ""
+"If you start collecting at this age you will receive less than your full "
+"benefit amount. Here are a few things to keep in mind in the next few years."
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:948
+msgid ""
+"If your income, employment, or marital status changes, you may need to "
+"reconsider the age you want to start collecting your benefits. Visit us "
+"again!"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:951
+msgid "Legal Disclaimer:"
+msgstr ""
+
+#: retirement_api/jinja2/retirement_api/claiming.html:953
+msgid ""
+"The content on this page provides general consumer information. It is not "
+"legal advice or regulatory guidance. The CFPB updates this information "
+"periodically. This information may include links or references to third-"
+"party resources or content. We do not endorse the third-party or guarantee "
+"the accuracy of this third-party information. There may be other resources "
+"that also serve your needs."
+msgstr ""
