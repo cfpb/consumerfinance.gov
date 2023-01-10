@@ -142,6 +142,7 @@ export class AdminPage {
   clickBlock(name) {
     return cy
       .get(`.action-add-block-${name}`, { timeout: 60000 })
+      .scrollIntoView()
       .should('be.visible')
       .click();
   }
