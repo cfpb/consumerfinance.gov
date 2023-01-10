@@ -28,6 +28,10 @@ function getDataBuckets(filter, data, isDate) {
   return options;
 }
 
+function cctFormatFilter (data, rawOrTransformed) {
+    
+}
+
 /**
  * @param {number} option - The JS-date formatted option
  * @returns {string} Specially formatted date
@@ -223,6 +227,9 @@ function initFilters(dataAttributes, chartNode, chart, data) {
 
     filters.forEach((filter) => {
       const buckets = getDataBuckets(filter, rawOrTransformed);
+      if (filter.filterOnColumn) {
+        cctFormatFilter(filter, rawOrTransformed)
+      }
       if (buckets.length < 6) {
         selectors.push(makeRadioFilterDOM(buckets, chartNode, filter));
       } else {
