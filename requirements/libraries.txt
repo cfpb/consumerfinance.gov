@@ -33,7 +33,7 @@ wagtail-flags==5.2.0
 wagtail-inventory==1.6
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.7
-wagtail-treemodeladmin==1.5.0
+wagtail-treemodeladmin==1.6.0
 wagtailmedia==0.9.0
 
 # These packages are installed from GitHub.
