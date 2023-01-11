@@ -13,7 +13,7 @@ function refreshErrors() {
 }
 
 describe('Youth Financial Education Survey: Errors', () => {
-  it('jumps to errors at top', () => {
+  it('will not advance to the next page if there are errors', () => {
     refreshErrors();
     survey.clickNext();
     cy.get('main h1').isScrolledTo();
