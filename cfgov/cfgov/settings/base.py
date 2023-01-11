@@ -452,9 +452,11 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "*.consumerfinance.gov",
+    "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
     "*.googleoptimize.com",
+    "optimize.google.com",
     "api.mapbox.com",
     "js-agent.newrelic.com",
     "bam.nr-data.net",
@@ -473,6 +475,8 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     "*.consumerfinance.gov",
+    "optimize.google.com",
+    "fonts.googleapis.com",
     "api.mapbox.com",
 )
 
@@ -485,6 +489,7 @@ CSP_IMG_SRC = (
     "img.youtube.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
+    "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
     "blob:",
@@ -502,13 +507,14 @@ CSP_FRAME_SRC = (
     "*.googletagmanager.com",
     "*.google-analytics.com",
     "*.googleoptimize.com",
+    "optimize.google.com",
     "www.youtube.com",
     "*.qualtrics.com",
     "mailto:",
 )
 
 # These specify where we allow fonts to come from
-CSP_FONT_SRC = "'self'"
+CSP_FONT_SRC = ("'self'", "fonts.gstatic.com")
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to
 CSP_CONNECT_SRC = (
