@@ -15,6 +15,7 @@ function refreshErrors() {
 describe('Youth Financial Education Survey: Errors', () => {
   it('jumps to errors at top', () => {
     refreshErrors();
+    cy.get('.m-notification__visible');
     cy.get('main h1').isScrolledTo();
   });
 
