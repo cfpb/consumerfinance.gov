@@ -1,7 +1,10 @@
 /* istanbul ignore file */
 /* Cypress tests cover all the UI interactions on this page. */
 
-import Analytics from '../../../js/modules/Analytics.js';
+import {
+  addEventListenerToSelector,
+  track,
+} from '../../../apps/analytics-gtm/js/util/analytics-util';
 import search from 'ctrl-f';
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
 import { scrollIntoViewWithOffset } from './fig-sidenav-utils.js';
@@ -34,6 +37,11 @@ function init() {
     searchData,
     onFollow,
     onSubmit,
+  });
+
+  // Track clicks on the FIG search form button
+  addEventListenerToSelector('#ctrl-f', 'click', () => {
+    track('Small Business Lending FIG event', 'search:click', '');
   });
 }
 
@@ -71,15 +79,16 @@ const getSearchData = (sections) => {
  * @param {object} event - Search result follow event
  */
 const onFollow = (event) => {
+  const target = event.target
+    .closest('a')
+    .getAttribute('href')
+    .replace('#', '');
+
   // Only proceed if the browser window is no greater than 900px
   if (
     window.matchMedia(`(max-width: ${varsBreakpoints.bpSM.max}px)`).matches
   ) {
     event.preventDefault();
-    const target = event.target
-      .closest('a')
-      .getAttribute('href')
-      .replace('#', '');
     document
       .querySelector('.o-fig_sidebar button.o-expandable_header')
       .click();
@@ -88,6 +97,9 @@ const onFollow = (event) => {
       scrollIntoViewWithOffset(document.getElementById(target), 60);
     }, 300);
   }
+
+  // Track clicks on individual search results
+  track('Small Business Lending FIG event', 'searchresults:click', target);
 };
 
 /**
@@ -97,12 +109,7 @@ const onFollow = (event) => {
  * @param {string} query - Search term that was submitted.
  */
 const onSubmit = (query) => {
-  const eventData = Analytics.getDataLayerOptions(
-    'Search Submission',
-    query,
-    'Small Business Lending FIG Search'
-  );
-  Analytics.sendEvent(eventData);
+  track('Small Business Lending FIG event', 'search:entry', query);
 };
 
 export { init, getSearchData };
