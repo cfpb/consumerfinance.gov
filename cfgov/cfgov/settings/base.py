@@ -445,6 +445,17 @@ if ENABLE_CLOUDFRONT_CACHE_PURGE:
     }
 
 # CSP Allowlists
+#
+# Please note: Changing these lists will change the value of the
+# Content-Security-Policy header Django returns. Django does NOT include
+# header values when calculating the response hash returned in the ETag
+# header.
+# Our Akamai cache uses the ETag header to know whether a cached copy of a
+# page has been updated after it expires or after an invalidation purge.
+#
+# Together, this means that any changes to these CSP values WILL NOT BE
+# RETURNED by Akamai until a page's non-header content changes, or a
+# delete-purge is performed.
 
 # These specify what is allowed in <script> tags
 CSP_SCRIPT_SRC = (
