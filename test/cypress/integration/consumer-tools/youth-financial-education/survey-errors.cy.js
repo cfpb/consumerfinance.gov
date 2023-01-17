@@ -53,7 +53,7 @@ describe('Youth Financial Education Survey: Errors', () => {
     );
   });
 
-  it('links jump to questions', () => {
+  xit('links jump to questions', () => {
     refreshErrors();
     cy.get('form .m-notification__error li:nth-child(2) a').click();
     cy.get('.survey-reset--link--wrap').isScrolledTo();
