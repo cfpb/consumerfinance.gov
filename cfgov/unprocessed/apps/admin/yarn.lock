@@ -8,9 +8,9 @@ asap@~2.0.3:
   integrity sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==
 
 core-js@^3.6.4:
-  version "3.26.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.26.0.tgz#a516db0ed0811be10eac5d94f3b8463d03faccfe"
-  integrity sha512-+DkDrhoR4Y0PxDz6rurahuB+I45OsEUv8E1maPTB6OuHRohMMcznBq9TMpdpDMm/hUPob/mJJS3PqgbHpMTQgw==
+  version "3.27.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.27.1.tgz#23cc909b315a6bb4e418bf40a52758af2103ba46"
+  integrity sha512-GutwJLBChfGCpwwhbYoqfv03LAfmiz7e7D/BNxzeMxwQf10GRSzqiOjx7AmtEk+heiD/JWmBuyBPgFtx0Sg1ww==
 
 cross-fetch@^3.0.4:
   version "3.1.5"
