@@ -81,9 +81,7 @@ describe('expandable-mobile', () => {
 
     expect(expandableDiv.classList.contains(OPEN_DEFAULT_CLASS)).toEqual(true);
     beforeExpandableTransitionInit();
-    expect(expandableDiv.classList.contains(OPEN_DEFAULT_CLASS)).toEqual(
-      false
-    );
+    expect(expandableDiv.classList.contains(OPEN_DEFAULT_CLASS)).toEqual(false);
   });
 
   it('should leave the OPEN_DEFAULT class for tablet innerWidth', () => {

@@ -91,10 +91,7 @@ function Summary(element) {
    * suspends or resumes the mobile or desktop menu behaviors.
    */
   function _resizeHandler() {
-    if (
-      (_hasMobileModifier && viewportIsIn(DESKTOP)) ||
-      viewportIsIn(TABLET)
-    ) {
+    if ((_hasMobileModifier && viewportIsIn(DESKTOP)) || viewportIsIn(TABLET)) {
       _suspend();
     } else {
       _resume();
