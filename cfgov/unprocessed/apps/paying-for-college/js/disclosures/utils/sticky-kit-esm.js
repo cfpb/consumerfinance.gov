@@ -1,3 +1,4 @@
+/*eslint-disable */
 /* This is https://github.com/leafo/sticky-kit, but wrapped in ESM syntax, so it
    can be imported synchronously. */
 /**
