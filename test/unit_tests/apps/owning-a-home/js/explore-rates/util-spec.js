@@ -63,10 +63,8 @@ describe('explore-rates/util', () => {
     timeStampDom = document.querySelector('#timestamp');
     loanAmountResultDom = document.querySelector('#loan-amount-result');
     accessibleDataDom = document.querySelector('#accessible-data');
-    accessibleDataTableHeadDom =
-      accessibleDataDom.querySelector('.table-head');
-    accessibleDataTableBodyDom =
-      accessibleDataDom.querySelector('.table-body');
+    accessibleDataTableHeadDom = accessibleDataDom.querySelector('.table-head');
+    accessibleDataTableBodyDom = accessibleDataDom.querySelector('.table-body');
   });
 
   describe('removeDollarAddCommas()', () => {

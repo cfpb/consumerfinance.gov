@@ -85,13 +85,9 @@ const onFollow = (event) => {
     .replace('#', '');
 
   // Only proceed if the browser window is no greater than 900px
-  if (
-    window.matchMedia(`(max-width: ${varsBreakpoints.bpSM.max}px)`).matches
-  ) {
+  if (window.matchMedia(`(max-width: ${varsBreakpoints.bpSM.max}px)`).matches) {
     event.preventDefault();
-    document
-      .querySelector('.o-fig_sidebar button.o-expandable_header')
-      .click();
+    document.querySelector('.o-fig_sidebar button.o-expandable_header').click();
     // Scrolling before the expandable closes causes jitters on some devices
     setTimeout(() => {
       scrollIntoViewWithOffset(document.getElementById(target), 60);
