@@ -43,7 +43,7 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 # Application definition
 INSTALLED_APPS = (
     "permissions_viewer",
-    "wagtail.core",
+    "wagtail",
     "wagtailadmin_overrides",
     "wagtail.admin",
     "wagtail.documents",
@@ -144,7 +144,7 @@ ROOT_URLCONF = "cfgov.urls"
 # for an overview of how Django templates work.
 
 wagtail_extensions = [
-    "wagtail.core.jinja2tags.core",
+    "wagtail.jinja2tags.core",
     "wagtail.admin.jinja2tags.userbar",
     "wagtail.images.jinja2tags.images",
 ]

@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied
 from django.urls import reverse
 from django.utils.html import format_html_join
 
+from wagtail import hooks
 from wagtail.admin.menu import MenuItem
 from wagtail.contrib.modeladmin.mixins import ThumbnailMixin
 from wagtail.contrib.modeladmin.options import (
@@ -15,7 +16,6 @@ from wagtail.contrib.modeladmin.options import (
     ModelAdminGroup,
     modeladmin_register,
 )
-from wagtail.core import hooks
 
 from ask_cfpb.models.snippets import GlossaryTerm
 from v1.admin_views import manage_cdn

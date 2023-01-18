@@ -5,7 +5,7 @@ from django.apps import apps
 from django.db import models
 from django.test import TestCase, override_settings
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from django_opensearch_dsl import fields
 from django_opensearch_dsl.documents import Document

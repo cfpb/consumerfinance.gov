@@ -4,7 +4,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.forms import WagtailAdminPageForm
+from wagtail.admin.panels import (
     FieldPanel,
     FieldRowPanel,
     HelpPanel,
@@ -13,9 +14,8 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     TabbedInterface,
 )
-from wagtail.admin.forms import WagtailAdminPageForm
-from wagtail.core.fields import RichTextField
-from wagtail.core.models import PageManager, PageQuerySet
+from wagtail.fields import RichTextField
+from wagtail.models import PageManager, PageQuerySet
 
 import pytz
 from modelcluster.fields import ParentalManyToManyField

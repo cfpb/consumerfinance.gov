@@ -6,9 +6,9 @@ from django.test.utils import isolate_apps
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.core.models import Site
-from wagtail.tests.testapp.models import BusinessIndex, BusinessSubIndex
-from wagtail.tests.utils import WagtailTestUtils
+from wagtail.models import Site
+from wagtail.test.testapp.models import BusinessIndex, BusinessSubIndex
+from wagtail.test.utils import WagtailTestUtils
 
 from v1.models import BrowsePage
 

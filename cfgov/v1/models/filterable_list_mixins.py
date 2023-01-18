@@ -1,7 +1,7 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from wagtail.contrib.routable_page.models import route
-from wagtail.core.models import Site
+from wagtail.models import Site
 from wagtailsharing.models import ShareableRoutablePageMixin
 
 from v1.documents import FilterablePagesDocumentSearch

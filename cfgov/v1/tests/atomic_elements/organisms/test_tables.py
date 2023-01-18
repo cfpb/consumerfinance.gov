@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from wagtail.core.models import Site
-from wagtail.tests.testapp.models import SimplePage
+from wagtail.models import Site
+from wagtail.test.testapp.models import SimplePage
 
 from v1.atomic_elements.organisms import (  # import from organisms for import check
     AtomicTableBlock,

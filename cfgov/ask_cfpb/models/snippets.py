@@ -1,6 +1,6 @@
 from django.db import models
 
-from wagtail.core.fields import RichTextField
+from wagtail.fields import RichTextField
 from wagtail.snippets.models import register_snippet
 
 from modelcluster.fields import ParentalKey

@@ -7,13 +7,13 @@ from django.test import (
     override_settings,
 )
 
+from wagtail import hooks
 from wagtail.admin.views.pages.bulk_actions.delete import DeleteBulkAction
 from wagtail.admin.views.pages.delete import delete
-from wagtail.core import hooks
-from wagtail.core.models import Page, Site
-from wagtail.core.whitelist import Whitelister as Allowlister
-from wagtail.tests.testapp.models import SimplePage
-from wagtail.tests.utils import WagtailTestUtils
+from wagtail.models import Page, Site
+from wagtail.test.testapp.models import SimplePage
+from wagtail.test.utils import WagtailTestUtils
+from wagtail.whitelist import Whitelister as Allowlister
 
 from v1.models.base import CFGOVPage, CFGOVPageCategory
 from v1.models.blog_page import BlogPage
