@@ -29,9 +29,7 @@ try {
      if either button was pressed. */
   const detailedBackForward = true;
 
-  let openTabs = JSON.parse(
-    webStorageProxy.getItem('_tab_ids', _localStorage)
-  );
+  let openTabs = JSON.parse(webStorageProxy.getItem('_tab_ids', _localStorage));
   let tabId = webStorageProxy.getItem('_tab_id', _sessionStorage);
   let navPath = JSON.parse(
     webStorageProxy.getItem('_nav_path', _sessionStorage)
@@ -154,10 +152,7 @@ try {
           break;
         case 1:
           navigationType = 'RELOAD';
-          if (
-            navPath.length === 0 ||
-            navPath[navPath.length - 1] !== curPage
-          ) {
+          if (navPath.length === 0 || navPath[navPath.length - 1] !== curPage) {
             navPath.push(curPage);
           }
           break;

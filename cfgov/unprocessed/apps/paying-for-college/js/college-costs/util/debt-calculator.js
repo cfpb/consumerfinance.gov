@@ -210,11 +210,7 @@ function debtCalculator() {
     debts.totalAtGrad += debts[key];
 
     // 10 year term calculations
-    let tenYearMonthly = calcMonthlyPayment(
-      debts[key],
-      fin['rate_' + key],
-      10
-    );
+    let tenYearMonthly = calcMonthlyPayment(debts[key], fin['rate_' + key], 10);
 
     if (isNaN(tenYearMonthly)) {
       tenYearMonthly = 0;

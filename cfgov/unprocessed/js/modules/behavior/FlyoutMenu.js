@@ -98,10 +98,8 @@ function FlyoutMenu(element) {
       while (triggerParent !== element) {
         if (
           triggerParent.getAttribute(JS_HOOK) &&
-          triggerParent
-            .getAttribute(JS_HOOK)
-            .split(' ')
-            .indexOf(BASE_CLASS) !== -1
+          triggerParent.getAttribute(JS_HOOK).split(' ').indexOf(BASE_CLASS) !==
+            -1
         ) {
           isSubTrigger = true;
           triggerParent = element;

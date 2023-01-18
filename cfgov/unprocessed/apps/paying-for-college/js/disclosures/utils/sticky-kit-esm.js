@@ -199,8 +199,7 @@ export default ($) => {
         last_pos = scroll;
         if (fixed) {
           if (enable_bottoming) {
-            will_bottom =
-              scroll + height + offset > parent_height + parent_top;
+            will_bottom = scroll + height + offset > parent_height + parent_top;
             if (bottomed && !will_bottom) {
               bottomed = false;
               elm
@@ -269,8 +268,7 @@ export default ($) => {
         }
         if (fixed && enable_bottoming) {
           if (will_bottom == null) {
-            will_bottom =
-              scroll + height + offset > parent_height + parent_top;
+            will_bottom = scroll + height + offset > parent_height + parent_top;
           }
           if (!bottomed && will_bottom) {
             bottomed = true;

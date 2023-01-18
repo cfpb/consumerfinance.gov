@@ -94,8 +94,7 @@ function handleShareModal() {
 
   withValidInitials(desc, (value) => {
     initialsUpdate(value);
-    a.href =
-      '../view/?r=' + encodeURIComponent(shareOutput.dataset.signedCode);
+    a.href = '../view/?r=' + encodeURIComponent(shareOutput.dataset.signedCode);
     // href property read gives you full URL
     const shareUrl = a.href;
     a.href = encodeNameInUrl(shareUrl, initialsGet());

@@ -84,9 +84,7 @@ describe('formatUSD', () => {
     expect(formatUSD({ amount: 1, decimalPlaces: 1 })).toBe('$1.0');
     expect(formatUSD({ amount: 1.25, decimalPlaces: 1 })).toBe('$1.3');
     expect(formatUSD({ amount: 1.258, decimalPlaces: 1 })).toBe('$1.3');
-    expect(formatUSD({ amount: 1.25889349857, decimalPlaces: 1 })).toBe(
-      '$1.3'
-    );
+    expect(formatUSD({ amount: 1.25889349857, decimalPlaces: 1 })).toBe('$1.3');
     expect(formatUSD({ amount: 798127394873, decimalPlaces: 1 })).toBe(
       '$798,127,394,873.0'
     );
@@ -117,9 +115,9 @@ describe('formatUSD', () => {
 
   it('Format strings by removing non-numeric characters', () => {
     expect(formatUSD({ amount: 'foo99', decimalPlaces: 0 })).toBe('$99');
-    expect(
-      formatUSD({ amount: '--??!!1,2,3,4,5,6,7', decimalPlaces: 0 })
-    ).toBe('-$1,234,567');
+    expect(formatUSD({ amount: '--??!!1,2,3,4,5,6,7', decimalPlaces: 0 })).toBe(
+      '-$1,234,567'
+    );
     expect(formatUSD({ amount: 'zero', decimalPlaces: 0 })).toBe('$0');
   });
 

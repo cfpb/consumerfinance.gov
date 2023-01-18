@@ -24,9 +24,7 @@ function getSelection(param) {
       val = elm.value;
       break;
     default:
-      val = convertStringToNumber(
-        elm.value || elm.getAttribute('placeholder')
-      );
+      val = convertStringToNumber(elm.value || elm.getAttribute('placeholder'));
   }
 
   return val;
