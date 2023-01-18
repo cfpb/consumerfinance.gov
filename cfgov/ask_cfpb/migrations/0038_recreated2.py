@@ -11,8 +11,8 @@ import v1.models.snippets
 from django.conf import settings
 from django.db import migrations, models
 from wagtail.contrib.routable_page import models as routable_models
-from wagtail.core import blocks as core_blocks
-from wagtail.core import fields as core_fields
+from wagtail import blocks as core_blocks
+from wagtail import fields as core_fields
 from wagtail.search import index
 from wagtail.snippets import blocks as snippets_blocks
 

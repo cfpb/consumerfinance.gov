@@ -6,7 +6,7 @@ from wagtail.contrib.table_block.blocks import (
     TableInput,
     TableInputAdapter,
 )
-from wagtail.core.telepath import register
+from wagtail.telepath import register
 
 
 class RichTextTableInput(TableInput):

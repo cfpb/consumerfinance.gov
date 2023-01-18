@@ -10,18 +10,17 @@ from django.utils.text import slugify
 from django.utils.translation import activate, deactivate_all
 from django.utils.translation import gettext as _
 
-from wagtail.admin.edit_handlers import (
+from wagtail import blocks
+from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable
+from wagtail.fields import StreamField
+from wagtail.models import Orderable
 
 from modelcluster.fields import ParentalKey
 
@@ -141,7 +140,7 @@ class AnswerLandingPage(LandingPage):
     Page type for Ask CFPB's landing page.
     """
 
-    content_panels = CFGOVPage.content_panels + [StreamFieldPanel("header")]
+    content_panels = CFGOVPage.content_panels + [FieldPanel("header")]
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="Content"),
@@ -602,7 +601,7 @@ class ArticlePage(CFGOVPage):
             heading="Inset links",
             classname="collapsible",
         ),
-        StreamFieldPanel("sections"),
+        FieldPanel("sections"),
     ]
 
     sidebar = StreamField(
@@ -623,7 +622,7 @@ class ArticlePage(CFGOVPage):
     )
 
     sidebar_panels = [
-        StreamFieldPanel("sidebar"),
+        FieldPanel("sidebar"),
     ]
 
     edit_handler = TabbedInterface(

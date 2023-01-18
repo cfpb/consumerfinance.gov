@@ -1,5 +1,5 @@
-from wagtail.core import blocks
-from wagtail.core.models import Page
+from wagtail import blocks
+from wagtail.models import Page
 
 
 class LinkBlock(blocks.StructBlock):

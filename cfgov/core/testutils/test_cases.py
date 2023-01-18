@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 
 
 class WagtailPageTreeTestCase(TestCase):

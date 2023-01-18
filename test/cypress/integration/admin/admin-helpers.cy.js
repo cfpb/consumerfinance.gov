@@ -140,10 +140,9 @@ export class AdminPage {
   }
 
   clickBlock(name) {
-    return cy
-      .get(`.action-add-block-${name}`, { timeout: 60000 })
-      .should('be.visible')
-      .click();
+    const block = `.action-add-block-${name}`;
+    cy.get(block).scrollIntoView().should('be.visible');
+    return cy.get(block).click();
   }
 
   addFullWidthText() {

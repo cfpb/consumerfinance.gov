@@ -6,7 +6,7 @@ from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.test import TestCase
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 import pytz
 from freezegun import freeze_time

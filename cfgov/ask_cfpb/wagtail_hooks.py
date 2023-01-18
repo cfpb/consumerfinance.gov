@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.utils.html import format_html
 
-from wagtail.core import hooks
-from wagtail.core.models import Page
+from wagtail import hooks
+from wagtail.models import Page
 
 from ask_cfpb.models import Answer, AnswerPage
 

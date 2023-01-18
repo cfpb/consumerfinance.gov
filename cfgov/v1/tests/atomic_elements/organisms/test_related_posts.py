@@ -3,7 +3,7 @@ import re
 
 from django.test import RequestFactory, TestCase
 
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 
 from pytz import timezone
 

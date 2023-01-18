@@ -4,8 +4,8 @@ from io import StringIO
 from django.core.management import call_command
 from django.test import TestCase
 
-from wagtail.core.models import Site
-from wagtail.tests.testapp.models import SimplePage
+from wagtail.models import Site
+from wagtail.test.testapp.models import SimplePage
 
 
 class SearchPageRevisionsTestCase(TestCase):

@@ -2,8 +2,8 @@ import json
 
 from django.test import TestCase
 
-from wagtail.core import blocks
-from wagtail.tests.utils import WagtailTestUtils
+from wagtail import blocks
+from wagtail.test.utils import WagtailTestUtils
 
 from v1.atomic_elements.organisms import (
     ContactExpandable,

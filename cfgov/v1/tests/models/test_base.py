@@ -4,8 +4,8 @@ from unittest import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from wagtail.core import blocks
-from wagtail.core.models import Page, Site
+from wagtail import blocks
+from wagtail.models import Page, Site
 
 from v1.models import (
     AbstractFilterPage,

@@ -19,9 +19,9 @@ import v1.models.snippets
 import v1.util.ref
 from django.conf import settings
 from django.db import migrations, models
-from wagtail.core import blocks as core_blocks
-from wagtail.core import fields as core_fields
-from wagtail.core import models as core_models
+from wagtail import blocks as core_blocks
+from wagtail import fields as core_fields
+from wagtail import models as core_models
 from wagtail.documents import blocks as docs_blocks
 from wagtail.images import blocks as images_blocks
 from wagtail.images import models as images_models

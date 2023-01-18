@@ -3,7 +3,7 @@ from unittest import TestCase
 from django.http import HttpRequest
 from django.test.client import RequestFactory
 
-from wagtail.tests.utils import WagtailTestUtils
+from wagtail.test.utils import WagtailTestUtils
 
 from teachers_digital_platform.models.activity_index_page import (
     validate_results_per_page,
