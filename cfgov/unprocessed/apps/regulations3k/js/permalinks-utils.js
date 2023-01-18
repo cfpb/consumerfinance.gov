@@ -238,7 +238,9 @@ const updateWayfinder = function (scroll, wayfinder, mainContent) {
 
     if (scroll === true && window.location.hash.slice(1) !== '') {
       const elem = document.getElementById(window.location.hash.slice(1));
-      window.scrollTo(0, getYLocation(elem) - wayfinderOffset + 30);
+      if (elem) {
+        window.scrollTo(0, getYLocation(elem) - wayfinderOffset + 30);
+      }
     }
   }
 };
