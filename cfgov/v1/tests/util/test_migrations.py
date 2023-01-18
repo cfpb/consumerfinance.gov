@@ -3,9 +3,9 @@ from unittest import mock
 from django.apps import apps
 from django.test import SimpleTestCase, TestCase
 
-from wagtail.core import blocks
-from wagtail.core.models import Page, Site
-from wagtail.tests.testapp.models import StreamPage
+from wagtail import blocks
+from wagtail.models import Page, Site
+from wagtail.test.testapp.models import StreamPage
 
 from v1.models.snippets import EmailSignUp
 from v1.tests.wagtail_pages.helpers import save_new_page

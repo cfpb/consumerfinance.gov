@@ -1,13 +1,8 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
-    FieldPanel,
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core.blocks import StreamBlock
-from wagtail.core.fields import StreamField
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.blocks import StreamBlock
+from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
 from v1.documents import (
@@ -51,8 +46,8 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     sidefoot_panels = CFGOVPage.sidefoot_panels + [

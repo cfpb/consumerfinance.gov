@@ -2,7 +2,7 @@ import re
 from difflib import ndiff
 from functools import partial
 
-from wagtail.core.blocks import RawHTMLBlock
+from wagtail.blocks import RawHTMLBlock
 
 from v1.tests.wagtail_pages.helpers import save_page
 

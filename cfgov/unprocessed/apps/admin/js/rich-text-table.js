@@ -3,6 +3,7 @@
 import { stateToHTML } from 'draft-js-export-html';
 
 const body = document.querySelector('body');
+
 /**
  * @param {MouseEvent} event - The mouse event from a modal click.
  */
