@@ -3,7 +3,7 @@ import json
 from django.test import RequestFactory, TestCase
 from django.utils.text import slugify
 
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 
 from mega_menu.frontend_conversion import FrontendConverter
 from mega_menu.models import Menu

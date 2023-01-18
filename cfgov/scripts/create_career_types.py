@@ -1,5 +1,3 @@
-import json
-
 from jobmanager.models import (
     ApplicantType,
     JobLength,
@@ -78,8 +76,9 @@ def update_job_pages():
                 page.save()
 
         for revision in page.revisions.all():
-            content = json.loads(revision.content_json)
-            usajobs_application_links = content["usajobs_application_links"]
+            usajobs_application_links = revision.content[
+                "usajobs_application_links"
+            ]
 
             for link in usajobs_application_links:
                 applicant_type = ApplicantType.objects.filter(
@@ -91,14 +90,18 @@ def update_job_pages():
                     )
                     for s in service_types:
                         if s in current_applicant_type:
-                            content["service_type"] = service_type_dict[s].pk
+                            revision.content[
+                                "service_type"
+                            ] = service_type_dict[s].pk
                     for j in job_lengths:
                         if j in current_applicant_type:
-                            content["job_length"] = job_length_dict[j].pk
+                            revision.content["job_length"] = job_length_dict[
+                                j
+                            ].pk
                     for a in new_applicant_types:
                         if a.lower() in current_applicant_type:
                             link["applicant_type"] = applicant_type_dict[a].pk
-        revision.content_json = json.dumps(content)
+
         revision.save()
 
 

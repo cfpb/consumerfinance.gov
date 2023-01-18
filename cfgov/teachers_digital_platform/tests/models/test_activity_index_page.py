@@ -4,10 +4,10 @@ from unittest import mock
 from django.http import HttpRequest
 from django.test import RequestFactory, TestCase
 
-from wagtail.core.blocks import StreamValue
-from wagtail.core.models import Site
+from wagtail.blocks import StreamValue
 from wagtail.documents.models import Document
-from wagtail.tests.utils import WagtailPageTests
+from wagtail.models import Site
+from wagtail.test.utils import WagtailPageTests
 
 from model_bakery import baker
 

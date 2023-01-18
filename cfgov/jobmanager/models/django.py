@@ -1,7 +1,7 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
-from wagtail.core.fields import RichTextField
+from wagtail.admin.panels import FieldPanel, InlinePanel
+from wagtail.fields import RichTextField
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel

@@ -4,7 +4,7 @@ from unittest import mock
 
 from django.test import RequestFactory, TestCase
 
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import FilterablePagesDocument

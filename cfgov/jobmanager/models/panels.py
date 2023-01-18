@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.http import urlquote
 
-from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.core.models import Orderable
+from wagtail.admin.panels import FieldPanel
+from wagtail.models import Orderable
 
 from modelcluster.fields import ParentalKey
 

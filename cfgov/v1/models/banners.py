@@ -2,9 +2,9 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.safestring import mark_safe
 
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.core.blocks import StreamBlock
-from wagtail.core.fields import StreamField
+from wagtail.admin.panels import FieldPanel
+from wagtail.blocks import StreamBlock
+from wagtail.fields import StreamField
 
 from v1.atomic_elements.molecules import Notification
 
@@ -43,7 +43,7 @@ class Banner(models.Model):
     panels = [
         FieldPanel("title"),
         FieldPanel("url_pattern"),
-        StreamFieldPanel("content"),
+        FieldPanel("content"),
         FieldPanel("enabled"),
     ]
 

@@ -1,7 +1,7 @@
 from django.urls import reverse
 
+from wagtail import hooks
 from wagtail.admin.menu import MenuItem
-from wagtail.core import hooks
 from wagtail.users.widgets import UserListingButton
 
 

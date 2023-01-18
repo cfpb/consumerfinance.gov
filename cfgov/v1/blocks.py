@@ -2,7 +2,7 @@ from django.template.loader import render_to_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
 
-from wagtail.core import blocks
+from wagtail import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from bs4 import BeautifulSoup

@@ -10,18 +10,15 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    PageChooserPanel,
-    StreamFieldPanel,
     TabbedInterface,
 )
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Page, Site
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.fields import StreamField
+from wagtail.models import Page, Site
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
@@ -171,26 +168,26 @@ class CFGOVPage(Page):
 
     # Panels
     promote_panels = Page.promote_panels + [
-        ImageChooserPanel("social_sharing_image"),
-        FieldPanel("force_breadcrumbs", "Breadcrumbs"),
+        FieldPanel("social_sharing_image"),
+        FieldPanel("force_breadcrumbs", heading="Breadcrumbs"),
     ]
 
     sidefoot_panels = [
-        StreamFieldPanel("sidefoot"),
+        FieldPanel("sidefoot"),
     ]
 
     settings_panels = [
-        MultiFieldPanel(promote_panels, "Settings"),
+        MultiFieldPanel(promote_panels, heading="Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
-        FieldPanel("tags", "Tags"),
-        FieldPanel("authors", "Authors"),
-        FieldPanel("content_owners", "Content Owners"),
-        FieldPanel("schema_json", "Structured Data"),
-        MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
+        FieldPanel("tags", heading="Tags"),
+        FieldPanel("authors", heading="Authors"),
+        FieldPanel("content_owners", heading="Content Owners"),
+        FieldPanel("schema_json", heading="Structured Data"),
+        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
         MultiFieldPanel(
             [
-                FieldPanel("language", "Language"),
-                PageChooserPanel("english_page"),
+                FieldPanel("language", heading="Language"),
+                FieldPanel("english_page"),
             ],
             "Translation",
         ),

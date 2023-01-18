@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase as DjangoTestCase
 from django.utils import timezone
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from model_bakery import baker
 
