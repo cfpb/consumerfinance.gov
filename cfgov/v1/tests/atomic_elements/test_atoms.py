@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.test import SimpleTestCase, TestCase
 
-from wagtail.core.blocks.struct_block import StructBlockValidationError
+from wagtail.blocks.struct_block import StructBlockValidationError
 from wagtail.images.tests.utils import get_test_image_file
 
 from v1.atomic_elements.atoms import (

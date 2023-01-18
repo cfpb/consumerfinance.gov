@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 
 from wagtail.admin.views.pages.utils import get_valid_next_url_from_request
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 
 # This code was backported rom Wagtail 3.0 to support this feature:

@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from scripts import create_careers_pages
 from v1.tests.wagtail_pages.helpers import save_page

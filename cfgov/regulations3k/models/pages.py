@@ -14,14 +14,9 @@ from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
 
-from wagtail.admin.edit_handlers import (
-    FieldPanel,
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core.fields import StreamField
+from wagtail.fields import StreamField
 from wagtailsharing.models import ShareableRoutablePageMixin
 
 import requests
@@ -180,8 +175,8 @@ class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     # Tab handler interface
@@ -258,9 +253,9 @@ class RegulationPage(ShareableRoutablePageMixin, CFGOVPage):
     )
 
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
-        FieldPanel("regulation", Part),
+        FieldPanel("header"),
+        FieldPanel("content"),
+        FieldPanel("regulation", heading="Part"),
     ]
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

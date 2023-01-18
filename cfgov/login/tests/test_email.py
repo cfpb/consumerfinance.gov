@@ -5,7 +5,7 @@ from django.core import mail
 from django.http import HttpRequest
 from django.test import TestCase, override_settings
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from login.email import create_request_for_email, send_password_reset_email
 from model_bakery import baker

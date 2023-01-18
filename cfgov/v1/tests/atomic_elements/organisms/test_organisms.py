@@ -3,10 +3,10 @@ from django.core.files import File
 from django.core.files.base import ContentFile
 from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
+from wagtail.blocks import StreamValue
 from wagtail.contrib.table_block.blocks import TableBlock
-from wagtail.core.blocks import StreamValue
-from wagtail.core.models import Site
 from wagtail.images.tests.utils import get_test_image_file
+from wagtail.models import Site
 
 from wagtailmedia.models import Media
 

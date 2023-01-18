@@ -2,7 +2,7 @@ from datetime import date
 
 from django.test import TestCase
 
-from wagtail.tests.utils import WagtailTestUtils
+from wagtail.test.utils import WagtailTestUtils
 
 from model_bakery import baker
 

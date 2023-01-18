@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import TestCase
 
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 
 from ask_cfpb.models import Answer, AnswerLandingPage, AnswerPage
 from ask_cfpb.wagtail_hooks import create_answer_id, editor_css

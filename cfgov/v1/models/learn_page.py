@@ -8,21 +8,17 @@ from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.http import http_date
 
-from wagtail.admin.edit_handlers import (
+from wagtail import blocks
+from wagtail.admin.panels import (
     FieldPanel,
     FieldRowPanel,
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    PageChooserPanel,
-    StreamFieldPanel,
     TabbedInterface,
 )
-from wagtail.core import blocks
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
-from wagtail.documents.edit_handlers import DocumentChooserPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.fields import RichTextField, StreamField
+from wagtail.models import Page
 
 from localflavor.us.models import USStateField
 
@@ -68,7 +64,7 @@ class AbstractFilterPage(CFGOVPage):
     settings_panels = [
         MultiFieldPanel(CFGOVPage.promote_panels, "Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
-        FieldPanel("tags", "Tags"),
+        FieldPanel("tags", heading="Tags"),
         MultiFieldPanel(
             [
                 FieldPanel("preview_title"),
@@ -76,14 +72,14 @@ class AbstractFilterPage(CFGOVPage):
                 FieldPanel("preview_description"),
                 FieldPanel("secondary_link_url"),
                 FieldPanel("secondary_link_text"),
-                ImageChooserPanel("preview_image"),
+                FieldPanel("preview_image"),
             ],
             heading="Page Preview Fields",
             classname="collapsible",
         ),
-        FieldPanel("schema_json", "Structured Data"),
-        FieldPanel("authors", "Authors"),
-        FieldPanel("content_owners", "Content Owners"),
+        FieldPanel("schema_json", heading="Structured Data"),
+        FieldPanel("authors", heading="Authors"),
+        FieldPanel("content_owners", heading="Content Owners"),
         MultiFieldPanel(
             [
                 FieldPanel("date_published"),
@@ -93,11 +89,11 @@ class AbstractFilterPage(CFGOVPage):
             "Relevant Dates",
             classname="collapsible",
         ),
-        MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
+        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
         MultiFieldPanel(
             [
-                FieldPanel("language", "Language"),
-                PageChooserPanel("english_page"),
+                FieldPanel("language", heading="Language"),
+                FieldPanel("english_page"),
             ],
             "Translation",
         ),
@@ -109,7 +105,7 @@ class AbstractFilterPage(CFGOVPage):
     @classmethod
     def generate_edit_handler(self, content_panel):
         content_panels = [
-            StreamFieldPanel("header"),
+            FieldPanel("header"),
             content_panel,
         ]
         return TabbedInterface(
@@ -157,7 +153,7 @@ class LearnPage(AbstractFilterPage):
     )
 
     edit_handler = AbstractFilterPage.generate_edit_handler(
-        content_panel=StreamFieldPanel("content")
+        content_panel=FieldPanel("content")
     )
     template = "v1/learn-page/index.html"
 
@@ -180,7 +176,7 @@ class DocumentDetailPage(AbstractFilterPage):
         blank=True,
     )
     edit_handler = AbstractFilterPage.generate_edit_handler(
-        content_panel=StreamFieldPanel("content")
+        content_panel=FieldPanel("content")
     )
     template = "v1/document-detail/index.html"
 
@@ -352,9 +348,9 @@ class EventPage(AbstractFilterPage):
         MultiFieldPanel(
             [
                 FieldPanel("archive_body"),
-                ImageChooserPanel("archive_image"),
-                DocumentChooserPanel("video_transcript"),
-                DocumentChooserPanel("speech_transcript"),
+                FieldPanel("archive_image"),
+                FieldPanel("video_transcript"),
+                FieldPanel("speech_transcript"),
                 FieldPanel("flickr_url"),
                 FieldPanel("archive_video_id"),
             ],
@@ -362,7 +358,7 @@ class EventPage(AbstractFilterPage):
         ),
         FieldPanel("live_body"),
         FieldPanel("future_body"),
-        StreamFieldPanel("persistent_body"),
+        FieldPanel("persistent_body"),
         MultiFieldPanel(
             [
                 FieldPanel("live_stream_availability"),
@@ -388,21 +384,21 @@ class EventPage(AbstractFilterPage):
         MultiFieldPanel(
             [
                 FieldPanel("venue_image_type"),
-                ImageChooserPanel("venue_image"),
+                FieldPanel("venue_image"),
             ],
             heading="Venue Image",
         ),
         MultiFieldPanel(
             [
                 FieldPanel("post_event_image_type"),
-                ImageChooserPanel("post_event_image"),
+                FieldPanel("post_event_image"),
             ],
             heading="Post-event Image",
         ),
     ]
     # Agenda content tab
     agenda_panels = [
-        StreamFieldPanel("agenda_items"),
+        FieldPanel("agenda_items"),
     ]
     # Promotion panels
     promote_panels = [

@@ -8,8 +8,8 @@ from unittest.mock import patch
 from django.conf import settings
 from django.core.management import call_command
 
-from wagtail.core.models import Page
-from wagtail.core.signals import (
+from wagtail.models import Page
+from wagtail.signals import (
     page_published,
     page_unpublished,
     post_page_move,
