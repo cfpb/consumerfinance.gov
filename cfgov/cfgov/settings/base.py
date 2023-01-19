@@ -227,7 +227,6 @@ LANGUAGE_CODE = "en-us"
 
 LANGUAGES = (
     ("ar", _("Arabic")),
-    ("zh-Hans", _("Chinese (Simplified)")),
     ("zh-Hant", _("Chinese (Traditional)")),
     ("en", _("English")),
     ("ht", _("Haitian Creole")),
