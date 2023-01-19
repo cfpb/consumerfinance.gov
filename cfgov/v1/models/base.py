@@ -396,18 +396,32 @@ class CFGOVPage(Page):
     def post_preview_cache_key(self):
         return "post_preview_{}".format(self.id)
 
-    @property
-    def translations(self):
+    def get_translations(self, inclusive=True):
         if self.language == "en":
-            qs = CFGOVPage.objects.filter(english_page=self)
+            query = Q(english_page=self)
         elif self.english_page:
-            qs = CFGOVPage.objects.filter(
-                Q(english_page=self.english_page) | Q(pk=self.english_page.pk)
-            ).exclude(pk=self.pk)
+            query = Q(english_page=self.english_page) | Q(
+                pk=self.english_page.pk
+            )
         else:
-            qs = CFGOVPage.objects.none()
+            query = Q(pk__in=[])
 
-        return qs.order_by("language")
+        if inclusive:
+            query = query | Q(pk=self.pk)
+        else:
+            query = query & ~Q(pk=self.pk)
+
+        return CFGOVPage.objects.filter(query).order_by("language")
+
+    def get_translation_links(self, request, inclusive=True):
+        return [
+            {
+                "href": translation.get_url(request=request),
+                "hreflang": translation.language,
+                "language": translation.get_language_display(),
+            }
+            for translation in self.get_translations(inclusive=inclusive)
+        ]
 
 
 class CFGOVPageCategory(models.Model):
