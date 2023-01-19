@@ -1,6 +1,6 @@
 # Import page translation links from a CSV file with format:
 #
-#    translated_page_relative_url,translated_page_english_url
+#    translated_page_relative_url,english_relative_url
 #
 # By default only saves translation link as a new page revision.
 #
