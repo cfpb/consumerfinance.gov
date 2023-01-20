@@ -56,10 +56,29 @@ class TestImportTranslationLinks(TestCase, WagtailTestUtils):
         self.assertIsNone(self.spanish_live_and_draft_page.english_page)
         self.assertTrue(self.spanish_live_and_draft_page.live)
 
-    def test_invalid_path_fails(self):
+    def test_ignore_missing(self):
         with self.make_tempfile(b"/invalid/,/en/\n") as tf:
             with self.assertRaises(Http404):
                 call_command("import_translation_links", "--dry-run", tf.name)
+
+            call_command(
+                "import_translation_links",
+                "--dry-run",
+                "--ignore-missing",
+                tf.name,
+            )
+
+    def test_skip_header(self):
+        with self.make_tempfile(b"from,to\n/es/,/en/\n") as tf:
+            with self.assertRaises(Http404):
+                call_command("import_translation_links", "--dry-run", tf.name)
+
+            call_command(
+                "import_translation_links",
+                "--dry-run",
+                "--skip-header",
+                tf.name,
+            )
 
     def test_save_requires_username(self):
         with self.make_tempfile(b"/es/,/en/\n/es2/,/en/\n") as tf:
