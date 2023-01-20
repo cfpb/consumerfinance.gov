@@ -39,6 +39,7 @@ from v1.template_debug import (
     notification_test_cases,
     register_template_debug,
     related_posts_test_cases,
+    translation_links_test_cases,
     video_player_test_cases,
 )
 from v1.views.reports import (
@@ -560,6 +561,14 @@ register_template_debug(
     "related_posts",
     "v1/includes/molecules/related-posts.html",
     related_posts_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
+    "translation_links",
+    "v1/includes/molecules/translation-links.html",
+    translation_links_test_cases,
 )
 
 

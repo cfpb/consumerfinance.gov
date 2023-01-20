@@ -417,8 +417,8 @@ class CFGOVPage(Page):
         return [
             {
                 "href": translation.get_url(request=request),
-                "hreflang": translation.language,
-                "language": translation.get_language_display(),
+                "language": translation.language,
+                "text": translation.get_language_display(),
             }
             for translation in self.get_translations(inclusive=inclusive)
         ]
