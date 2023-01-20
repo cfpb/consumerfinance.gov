@@ -30,7 +30,7 @@ function TabTrigger(element) {
       return false;
     }
 
-    this.dispatchEvent('tabPressed');
+    this.dispatchEvent('tabpressed');
     return true;
   }
 
