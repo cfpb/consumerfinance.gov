@@ -1,0 +1,52 @@
+{# =========================================================================
+
+    Render a list of translation links, given:
+
+    value.language: The current page language code, e.g. "en".
+
+    value.links:    A list of translation links.
+
+    Each translation link should have:
+
+    link.href:      Link URL.
+
+    link.language:  Link destination language code, e.g. "en".
+
+    link.text:      Link text, e.g. "English".
+
+    This template can optionally instead use variables from context:
+
+    language:       The current page language code, e.g. "en".
+
+    page:           A Wagtail page instance providing
+                    page.get_translation_links(), which gets called to
+                    generate the list of translation links.
+
+    request:        The Django request, used by page.get_translation_links().
+
+    ======================================================================== #}
+
+{% if flag_enabled( "TRANSLATION_LINKS" ) -%}
+
+{%- if page and not value %}
+    {% set value = {
+        "language": language | default( "en" ),
+        "links": page.get_translation_links( request ),
+    } %}
+{% endif -%}
+
+{%- if value.links and value.links|length > 1 %}
+<div class="m-translation-links">
+{%- for link in value.links %}
+    {% set render_link = value.language and link.language != value.language %}
+    {% if render_link -%}
+        <a href="{{ link.href }}" hreflang="{{ link.language }}">
+    {%- endif %}
+    {{- link.text -}}
+    {% if render_link %}</a>{% endif %}
+    {% if not loop.last %}|{% endif %}
+{% endfor -%}
+</div>
+{%- endif %}
+
+{%- endif %}

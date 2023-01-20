@@ -14,6 +14,7 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
+    PageChooserPanel,
     StreamFieldPanel,
     TabbedInterface,
 )
@@ -93,7 +94,13 @@ class AbstractFilterPage(CFGOVPage):
             classname="collapsible",
         ),
         MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
-        FieldPanel("language", "Language"),
+        MultiFieldPanel(
+            [
+                FieldPanel("language", "Language"),
+                PageChooserPanel("english_page"),
+            ],
+            "Translation",
+        ),
     ]
 
     # This page class cannot be created.

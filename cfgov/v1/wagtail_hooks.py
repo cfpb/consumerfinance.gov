@@ -39,6 +39,7 @@ from v1.template_debug import (
     notification_test_cases,
     register_template_debug,
     related_posts_test_cases,
+    translation_links_test_cases,
     video_player_test_cases,
 )
 from v1.views.reports import (
@@ -48,6 +49,7 @@ from v1.views.reports import (
     EnforcementActionsReportView,
     ImagesReportView,
     PageMetadataReportView,
+    TranslatedPagesReportView,
 )
 
 
@@ -310,6 +312,26 @@ def register_category_icons_report_url():
     ]
 
 
+@hooks.register("register_reports_menu_item")
+def register_translated_pages_report_menu_item():
+    return MenuItem(
+        "Translated Pages",
+        reverse("translated_pages_report"),
+        classnames="icon icon-" + TranslatedPagesReportView.header_icon,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_translated_pages_report_url():
+    return [
+        re_path(
+            r"^reports/translated-pages/$",
+            TranslatedPagesReportView.as_view(),
+            name="translated_pages_report",
+        ),
+    ]
+
+
 @hooks.register("construct_reports_menu")
 # Alphabetizie and title case report menu items
 def clean_up_report_menu_items(request, report_menu_items):
@@ -539,6 +561,14 @@ register_template_debug(
     "related_posts",
     "v1/includes/molecules/related-posts.html",
     related_posts_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
+    "translation_links",
+    "v1/includes/molecules/translation-links.html",
+    translation_links_test_cases,
 )
 
 

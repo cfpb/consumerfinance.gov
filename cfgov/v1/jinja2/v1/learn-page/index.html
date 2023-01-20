@@ -17,6 +17,8 @@
         {% endif %}
     {%- endfor %}
 
+    {% include "v1/includes/molecules/translation-links.html" %}
+
     {% for block in page.content -%}
         {% if block.block_type == 'contact_expandable_group' %}
             <div class="block">
