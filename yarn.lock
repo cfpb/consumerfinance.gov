@@ -441,6 +441,10 @@
   resolved "https://registry.yarnpkg.com/@cfpb/rental-assistance-finder/-/rental-assistance-finder-0.5.3.tgz#137ea4def24b90f8210896f124cb7fa5ff8949a9"
   integrity sha512-2Bl9OX6CRJLj5LtyNeth2nXKGyZPKeZgjN4RJ8+bvSe+Ix7igReeIHYWAu6vuqmFpSmD2aEy4RCbkDVnjTLdfw==
 
+"@cfpb/rental-assistance-finder@https://github.com/cfpb/rental-assistance-finder.git#status":
+  version "0.5.3"
+  resolved "https://github.com/cfpb/rental-assistance-finder.git#7b6287489b42fba0233b4136e87404e811ace115"
+
 "@colors/colors@1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
