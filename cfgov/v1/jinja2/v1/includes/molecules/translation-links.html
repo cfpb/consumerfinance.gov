@@ -26,6 +26,8 @@
 
     ======================================================================== #}
 
+{% if flag_enabled( "TRANSLATION_LINKS" ) -%}
+
 {%- if page and not value %}
     {% set value = {
         "language": language | default( "en" ),
@@ -45,4 +47,6 @@
     {% if not loop.last %}|{% endif %}
 {% endfor -%}
 </div>
+{%- endif %}
+
 {%- endif %}
