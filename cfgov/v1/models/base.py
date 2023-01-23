@@ -1,4 +1,5 @@
 import re
+from operator import itemgetter
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -76,7 +77,9 @@ class CFGOVPage(Page):
         through=CFGOVTaggedPages, blank=True, related_name="tagged_pages"
     )
     language = models.CharField(
-        choices=settings.LANGUAGES, default="en", max_length=100
+        choices=sorted(settings.LANGUAGES, key=itemgetter(1)),
+        default="en",
+        max_length=100,
     )
     english_page = models.ForeignKey(
         Page,
@@ -420,7 +423,16 @@ class CFGOVPage(Page):
         if site:
             pages = pages.in_site(site)
 
-        return pages.order_by("language")
+        pages = pages.annotate(
+            language_display_order=models.Case(
+                *[
+                    models.When(language=language, then=i)
+                    for i, language in enumerate(dict(settings.LANGUAGES))
+                ]
+            ),
+        ).order_by("language_display_order")
+
+        return pages
 
     def get_translation_links(self, request, inclusive=True, live=True):
         return [
@@ -429,7 +441,9 @@ class CFGOVPage(Page):
                 "language": translation.language,
                 "text": translation.get_language_display(),
             }
-            for translation in self.get_translations(inclusive=inclusive)
+            for translation in self.get_translations(
+                inclusive=inclusive, live=live
+            )
         ]
 
 

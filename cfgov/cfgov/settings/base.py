@@ -226,15 +226,15 @@ DATABASES = {
 LANGUAGE_CODE = "en-us"
 
 LANGUAGES = (
-    ("ar", _("Arabic")),
-    ("zh-Hant", _("Chinese (Traditional)")),
     ("en", _("English")),
-    ("ht", _("Haitian Creole")),
-    ("ko", _("Korean")),
-    ("ru", _("Russian")),
     ("es", _("Spanish")),
-    ("tl", _("Tagalog")),
+    ("zh-Hant", _("Chinese (Traditional)")),
     ("vi", _("Vietnamese")),
+    ("ko", _("Korean")),
+    ("tl", _("Tagalog")),
+    ("ru", _("Russian")),
+    ("ar", _("Arabic")),
+    ("ht", _("Haitian Creole")),
 )
 
 LOCALE_PATHS = (os.path.join(PROJECT_ROOT, "locale"),)
