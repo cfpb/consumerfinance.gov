@@ -420,16 +420,51 @@ class CFGOVPage(Page):
         if site:
             pages = pages.in_site(site)
 
-        return pages.order_by("language")
+        language_ordering = {
+            "en": "English",
+            "es": "Español",
+            "zh-Hant": "繁體中文",
+            "vi": "Tiếng Việt",
+            "ko": "한국어",
+            "tl": "Tagalog",
+            "ru": "Pусский",
+            "ar": "العربية",
+            "ht": "Kreyòl Ayisyen",
+        }
+
+        pages = pages.annotate(
+            language_display_order=models.Case(
+                *[
+                    models.When(
+                        language=language,
+                        then=list(language_ordering).index(language),
+                    )
+                    for language in language_ordering
+                ]
+            ),
+            language_display_name=models.Case(
+                *[
+                    models.When(
+                        language=language,
+                        then=models.Value(language_display_name),
+                    )
+                    for language, language_display_name in language_ordering.items()
+                ],
+            ),
+        ).order_by("language_display_order")
+
+        return pages
 
     def get_translation_links(self, request, inclusive=True, live=True):
         return [
             {
                 "href": translation.get_url(request=request),
                 "language": translation.language,
-                "text": translation.get_language_display(),
+                "text": translation.language_display_name,
             }
-            for translation in self.get_translations(inclusive=inclusive)
+            for translation in self.get_translations(
+                inclusive=inclusive, live=live
+            )
         ]
 
 

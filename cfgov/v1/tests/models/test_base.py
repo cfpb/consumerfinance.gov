@@ -559,11 +559,11 @@ class TestCFGOVPageTranslations(TestCase):
 
         self.assertSequenceEqual(
             page_en.get_translations().values_list("language", flat=True),
-            ["en", "es", "ht", "ko"],
+            ["en", "es", "ko", "ht"],
         )
         self.assertSequenceEqual(
             page_es.get_translations().values_list("language", flat=True),
-            ["en", "es", "ht", "ko"],
+            ["en", "es", "ko", "ht"],
         )
 
     def test_page_not_live_excluded(self):
@@ -609,7 +609,7 @@ class TestCFGOVPageTranslations(TestCase):
                 {
                     "href": "/es/",
                     "language": "es",
-                    "text": "Spanish",
+                    "text": "Español",
                 },
             ],
         )
@@ -620,7 +620,7 @@ class TestCFGOVPageTranslations(TestCase):
                 {
                     "href": "/es/",
                     "language": "es",
-                    "text": "Spanish",
+                    "text": "Español",
                 },
             ],
         )
