@@ -2,12 +2,15 @@ import html
 from datetime import date
 from functools import partial
 
+from django.conf import settings
 from django.utils import html as html_util
 
+from wagtail.admin.filters import WagtailFilterSet
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
 from wagtail.images import get_image_model
 
+import django_filters
 from bs4 import BeautifulSoup
 
 from ask_cfpb.models.answer_page import AnswerPage
@@ -364,3 +367,36 @@ class CategoryIconReportView(ReportView):
             for subcategory, subcategories in categories
             for category_slug, category_name in subcategories
         ]
+
+
+class TranslatedPagesReportFilterSet(WagtailFilterSet):
+    language = django_filters.MultipleChoiceFilter(
+        label="Translation",
+        method="filter_language",
+        choices=[
+            (code, name) for code, name in settings.LANGUAGES if code != "en"
+        ],
+    )
+
+    def filter_language(self, queryset, name, value):
+        if value:
+            queryset = queryset.filter(non_english_pages__language__in=value)
+
+        return queryset
+
+
+class TranslatedPagesReportView(PageReportView):
+    title = "Translated Pages"
+    header_icon = "site"
+    template_name = "v1/translated_pages_report.html"
+    filterset_class = TranslatedPagesReportFilterSet
+
+    def get_queryset(self):
+        return CFGOVPage.objects.filter(
+            non_english_pages__isnull=False
+        ).distinct()
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["languages"] = settings.LANGUAGES
+        return context
