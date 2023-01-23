@@ -15,11 +15,14 @@
 #       [--dry-run]
 #       [--revision-username REVISION_USERNAME]
 #       [--republish]
+#       [--ignore_missing]
 #       input.csv
 #
 #    --dry-run: Only read CSV, don't save anything
-#    --revision-username: username used for new revisions
+#    --revision-username: Username used for new revisions
 #    --republish: Republish already-live pages
+#    --ignore-missing: Ignore any invalid URLs in the input CSV
+#    --skip-header: Skip first row of input CSV
 
 import argparse
 import csv
@@ -42,7 +45,9 @@ class Command(BaseCommand):
         self.request_factory = RequestFactory()
 
     def add_arguments(self, parser):
-        parser.add_argument("filename", type=argparse.FileType("r"))
+        parser.add_argument(
+            "filename", type=argparse.FileType("r", encoding="utf-8-sig")
+        )
         parser.add_argument(
             "--dry-run",
             action="store_true",
@@ -56,9 +61,22 @@ class Command(BaseCommand):
             action="store_true",
             help="Republish already-live pages",
         )
+        parser.add_argument(
+            "--ignore-missing",
+            action="store_true",
+            help="Ignore any invalid URLs in the input CSV",
+        )
+        parser.add_argument(
+            "--skip-header",
+            action="store_true",
+            help="Skip first row of input CSV",
+        )
 
     def handle(self, *args, **options):
         reader = csv.reader(options["filename"])
+
+        if options["skip_header"]:
+            next(reader)
 
         dry_run = options["dry_run"]
         revision_username = options["revision_username"]
@@ -74,8 +92,14 @@ class Command(BaseCommand):
             revision_user = User.objects.get(username=revision_username)
 
         for translated_relative_url, english_relative_url in reader:
-            translated_page = self.route(translated_relative_url)
-            english_page = self.route(english_relative_url)
+            try:
+                translated_page = self.route(translated_relative_url.strip())
+                english_page = self.route(english_relative_url.strip())
+            except Http404:
+                if options["ignore_missing"]:
+                    continue
+                else:
+                    raise
 
             has_unpublished_changes = translated_page.has_unpublished_changes
             translated_page.english_page = english_page
