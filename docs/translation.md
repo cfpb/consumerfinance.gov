@@ -62,8 +62,10 @@ To generate or update the portable object file for Spanish:
 
 ```shell
 cd cfgov
-django-admin.py makemessages -l es
+django-admin.py makemessages -l es --ignore=tests
 ```
+
+Using `--ignore=tests` will ignore any calls to gettext inside our unit tests.
 
 #### 3. Edit the portable object file to add a translation for the string
 
