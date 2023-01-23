@@ -1,6 +1,7 @@
 import html
 from datetime import date
 from functools import partial
+from operator import itemgetter
 
 from django.conf import settings
 from django.utils import html as html_util
@@ -374,7 +375,9 @@ class TranslatedPagesReportFilterSet(WagtailFilterSet):
         label="Translation",
         method="filter_language",
         choices=[
-            (code, name) for code, name in settings.LANGUAGES if code != "en"
+            (code, name)
+            for code, name in sorted(settings.LANGUAGES, key=itemgetter(1))
+            if code != "en"
         ],
     )
 

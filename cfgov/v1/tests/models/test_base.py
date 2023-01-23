@@ -609,7 +609,7 @@ class TestCFGOVPageTranslations(TestCase):
                 {
                     "href": "/es/",
                     "language": "es",
-                    "text": "Español",
+                    "text": "Spanish",
                 },
             ],
         )
@@ -620,7 +620,7 @@ class TestCFGOVPageTranslations(TestCase):
                 {
                     "href": "/es/",
                     "language": "es",
-                    "text": "Español",
+                    "text": "Spanish",
                 },
             ],
         )

@@ -1,4 +1,5 @@
 import re
+from operator import itemgetter
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -76,7 +77,9 @@ class CFGOVPage(Page):
         through=CFGOVTaggedPages, blank=True, related_name="tagged_pages"
     )
     language = models.CharField(
-        choices=settings.LANGUAGES, default="en", max_length=100
+        choices=sorted(settings.LANGUAGES, key=itemgetter(1)),
+        default="en",
+        max_length=100,
     )
     english_page = models.ForeignKey(
         Page,
@@ -420,36 +423,12 @@ class CFGOVPage(Page):
         if site:
             pages = pages.in_site(site)
 
-        language_ordering = {
-            "en": "English",
-            "es": "Español",
-            "zh-Hant": "繁體中文",
-            "vi": "Tiếng Việt",
-            "ko": "한국어",
-            "tl": "Tagalog",
-            "ru": "Pусский",
-            "ar": "العربية",
-            "ht": "Kreyòl Ayisyen",
-        }
-
         pages = pages.annotate(
             language_display_order=models.Case(
                 *[
-                    models.When(
-                        language=language,
-                        then=list(language_ordering).index(language),
-                    )
-                    for language in language_ordering
+                    models.When(language=language, then=i)
+                    for i, language in enumerate(dict(settings.LANGUAGES))
                 ]
-            ),
-            language_display_name=models.Case(
-                *[
-                    models.When(
-                        language=language,
-                        then=models.Value(language_display_name),
-                    )
-                    for language, language_display_name in language_ordering.items()
-                ],
             ),
         ).order_by("language_display_order")
 
@@ -460,7 +439,7 @@ class CFGOVPage(Page):
             {
                 "href": translation.get_url(request=request),
                 "language": translation.language,
-                "text": translation.language_display_name,
+                "text": translation.get_language_display(),
             }
             for translation in self.get_translations(
                 inclusive=inclusive, live=live
