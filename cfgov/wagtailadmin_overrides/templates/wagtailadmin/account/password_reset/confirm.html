@@ -1,6 +1,6 @@
 {% extends "wagtailadmin/admin_base.html" %}
 {% load static i18n %}
-{% block titletag %}{% trans "Set your new password" %}{% endblock %}
+{% block titletag %}Set your new password{% endblock %}
 {% block bodyclass %}login{% endblock %}
 {% load wagtailadmin_tags %}
 
@@ -24,7 +24,7 @@
 
         <form method="post" novalidate>
             {% csrf_token %}
-            <h1>{% trans "Set your new password" %}</h1>
+            <h1>Set your new password</h1>
             <ul class="fields">
                 {% for field in form %}
                     <li class="{% if field.field.required %}required{% endif %} {{ wrapper_classes }} {{ li_classes }} {% if field.errors %}error{% endif %}">
@@ -35,7 +35,7 @@
                     </li>
                 {% endfor %}
                 <li class="submit">
-                    <button type="submit" class="button button-longrunning" tabindex="3" data-clicked-text="Working..."><span class="icon icon-spinner"></span><em>{% trans 'Reset password' %}</em></button>
+                    <button type="submit" class="button button-longrunning" tabindex="3" data-clicked-text="Working..."><span class="icon icon-spinner"></span><em>Reset password</em></button>
                 </li>
             </ul>
         </form>
