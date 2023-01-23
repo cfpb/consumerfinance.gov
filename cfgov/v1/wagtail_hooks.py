@@ -9,9 +9,6 @@ from django.urls import reverse
 from django.utils.html import format_html_join
 
 from wagtail.admin.menu import MenuItem
-from wagtail.admin.rich_text.converters.editor_html import (
-    WhitelistRule as AllowlistRule,
-)
 from wagtail.contrib.modeladmin.mixins import ThumbnailMixin
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin,
@@ -19,7 +16,6 @@ from wagtail.contrib.modeladmin.options import (
     modeladmin_register,
 )
 from wagtail.core import hooks
-from wagtail.core.whitelist import attribute_rule
 
 from ask_cfpb.models.snippets import GlossaryTerm
 from v1.admin_views import manage_cdn
@@ -490,33 +486,6 @@ def hide_snippets_menu_item(request, menu_items):
         for item in menu_items
         if item.url != reverse("wagtailsnippets:index")
     ]
-
-
-# The construct_whitelister_element_rules was depricated in Wagtail 2,
-# so we'll use register_rich_text_features instead.
-# Only applies to Hallo editors, which only remain in our custom
-# AtomicTableBlock table cells.
-@hooks.register("register_rich_text_features")
-def register_span_feature(features):
-    allow_html_class = attribute_rule(
-        {
-            "class": True,
-            "id": True,
-        }
-    )
-
-    # register a feature 'span'
-    # which allowlists the <span> element
-    features.register_converter_rule(
-        "editorhtml",
-        "span",
-        [
-            AllowlistRule("span", allow_html_class),
-        ],
-    )
-
-    # add 'span' to the default feature set
-    features.default_features.append("span")
 
 
 @hooks.register("register_permissions")
