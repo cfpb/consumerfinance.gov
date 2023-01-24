@@ -185,6 +185,7 @@ TEMPLATES = [
                 "jinja2.ext.loopcontrols",
                 "flags.jinja2tags.flags",
                 "core.jinja2tags.filters",
+                "core.jinja2tags.language",
                 "agreements.jinja2tags.agreements",
                 "mega_menu.jinja2tags.MegaMenuExtension",
                 "prepaid_agreements.jinja2tags.prepaid_agreements",

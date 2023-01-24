@@ -42,7 +42,7 @@
     {% if render_link -%}
         <a href="{{ link.href }}" hreflang="{{ link.language }}">
     {%- endif %}
-    {{- link.text -}}
+    {%- language link.language %}{{- _( link.text ) -}}{% endlanguage -%}
     {% if render_link %}</a>{% endif %}
     {% if not loop.last %}|{% endif %}
 {% endfor -%}
