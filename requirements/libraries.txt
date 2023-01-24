@@ -18,7 +18,7 @@ djangosaml2==1.5.0
 edgegrid-python==1.2.1
 elasticsearch<7.11  # Keep pinned to the deployed ES version
 govdelivery==1.4.0
-Jinja2==3.0.3
+Jinja2==3.1.2
 lxml==4.9.1
 opensearch-dsl==1.0.0
 opensearch-py==1.1.0
