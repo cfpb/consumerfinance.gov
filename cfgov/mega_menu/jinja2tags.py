@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from jinja2 import contextfunction
+from jinja2 import pass_context
 from jinja2.ext import Extension
 
 from mega_menu.models import Menu
@@ -41,8 +41,6 @@ class MegaMenuExtension(Extension):
 
         self.environment.globals.update(
             {
-                "get_mega_menu_content": contextfunction(
-                    get_mega_menu_content
-                ),
+                "get_mega_menu_content": pass_context(get_mega_menu_content),
             }
         )
