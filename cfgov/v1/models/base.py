@@ -435,11 +435,13 @@ class CFGOVPage(Page):
         return pages
 
     def get_translation_links(self, request, inclusive=True, live=True):
+        language_names = dict(settings.LANGUAGES)
+
         return [
             {
                 "href": translation.get_url(request=request),
                 "language": translation.language,
-                "text": translation.get_language_display(),
+                "text": language_names[translation.language],
             }
             for translation in self.get_translations(
                 inclusive=inclusive, live=live
