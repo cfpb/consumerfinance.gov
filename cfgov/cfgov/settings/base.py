@@ -237,7 +237,10 @@ LANGUAGES = (
     ("ht", _("Haitian Creole")),
 )
 
-LOCALE_PATHS = (os.path.join(PROJECT_ROOT, "locale"),)
+# Add the Django project cfgov/cfgov/locale/ directory to LOCALE_PATHS.
+# This will make the search order: cfgov/locale then APP/locale for every APP
+# in INSTALLED_APPS.
+LOCALE_PATHS = (os.path.join(PROJECT_ROOT, "cfgov", "locale"),)
 
 TIME_ZONE = "America/New_York"
 

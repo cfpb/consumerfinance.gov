@@ -14,7 +14,6 @@ from django.shortcuts import redirect, render, resolve_url
 from django.template.response import TemplateResponse
 from django.urls import resolve
 from django.utils.http import is_safe_url
-from django.utils.translation import gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
@@ -61,7 +60,7 @@ def change_password(request):
             update_session_auth_hash(request, form.user)
 
             messages.success(
-                request, _("Your password has been changed successfully!")
+                request, "Your password has been changed successfully!"
             )
             return redirect("wagtailadmin_account")
         else:
