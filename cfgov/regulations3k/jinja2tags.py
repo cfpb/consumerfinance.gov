@@ -48,7 +48,7 @@ class RegulationsExtension(Extension):
 
         self.environment.globals.update(
             {
-                "routablepageurl": jinja2.contextfunction(routablepageurl),
+                "routablepageurl": jinja2.pass_context(routablepageurl),
                 "ap_date": ap_date,
             }
         )
