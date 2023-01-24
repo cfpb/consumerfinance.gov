@@ -41,7 +41,7 @@
         </ul>
         {% endif %}
 
-        {% for name, rendered in debug_test_cases.items() %}
+        {% for name, rendered in debug_test_cases | items %}
         <div class="content_line"></div>
         <div id="{{ name | slugify }}" class="test-case">
             <h2>
