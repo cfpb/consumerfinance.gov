@@ -20,7 +20,7 @@ from wagtail.fields import StreamField
 from wagtailsharing.models import ShareableRoutablePageMixin
 
 import requests
-from jinja2 import Markup
+from markupsafe import Markup
 from regdown import regdown
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin

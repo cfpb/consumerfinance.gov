@@ -2,8 +2,9 @@ import html
 
 from django.utils.module_loading import import_string
 
-from jinja2 import Markup, pass_context
+from jinja2 import pass_context
 from jinja2.ext import Extension
+from markupsafe import Markup
 
 from core.feature_flags import environment_is
 from v1.jinja2tags.datetimes import DatetimesExtension
