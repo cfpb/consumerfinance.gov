@@ -85,9 +85,7 @@ describe('Notification', () => {
       const testMsg = 'Notification message content';
       notification.update(Notification.SUCCESS, testMsg);
 
-      const message = notificationElem.querySelector(
-        '.m-notification_message'
-      );
+      const message = notificationElem.querySelector('.m-notification_message');
       const explanation = notificationElem.querySelector(
         '.m-notification_explanation'
       );
@@ -102,9 +100,7 @@ describe('Notification', () => {
       const testExplanation = 'Notification explanation content';
       notification.update(Notification.SUCCESS, testMsg, testExplanation);
 
-      const message = notificationElem.querySelector(
-        '.m-notification_message'
-      );
+      const message = notificationElem.querySelector('.m-notification_message');
       const explanation = notificationElem.querySelector(
         '.m-notification_explanation'
       );

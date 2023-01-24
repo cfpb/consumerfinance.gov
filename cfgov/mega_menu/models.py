@@ -1,3 +1,5 @@
+from operator import itemgetter
+
 from django.conf import settings
 from django.db import models
 
@@ -10,7 +12,9 @@ from mega_menu.frontend_conversion import FrontendConverter
 
 class Menu(models.Model):
     language = models.CharField(
-        choices=settings.LANGUAGES, max_length=100, primary_key=True
+        choices=sorted(settings.LANGUAGES, key=itemgetter(1)),
+        max_length=100,
+        primary_key=True,
     )
 
     submenus = StreamField(MenuStreamBlock())
