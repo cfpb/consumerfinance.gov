@@ -12,10 +12,15 @@
 
 <div id="rental-assistance-finder"
      data-language="{{ page.language if page and page.language else 'en' }}"
+     {% if flag_enabled('RAFT_TESTING') %}
+     beta-testing="true"
+     {% endif %}
      {% if value.county_threshold %}
      data-county-threshold={{ value.county_threshold }}
+     data-testing={}
      {% endif %}>
 </div>
+
 
 <div class="js-is-hidden">
   {% import 'v1/includes/molecules/notification.html' as notification with context %}
