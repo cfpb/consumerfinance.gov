@@ -465,7 +465,7 @@
                     Filters applied
                 </span>
                 <div class="results_filters-tags">
-                    {% for facet_name, facet_items in facets.items() %}
+                    {% for facet_name, facet_items in facets | items %}
                         {% if facet_name == 'topic'%}
                             {{ build_nested_filter_tags(facet_items, facet_name) }}
                         {% else %}
