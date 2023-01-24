@@ -195,11 +195,19 @@ mystring = _("Hello World!")</code></pre>
 <p>The string in the call to the translation function will be the <code>msgid</code> in the portable object file below.</p>
 <h4 id="2-run-the-makemessages-management-command-to-add-the-string-to-the-portable-object-file">2. Run the <code>makemessages</code> management command to add the string to the portable object file<a class="headerlink" href="#2-run-the-makemessages-management-command-to-add-the-string-to-the-portable-object-file" title="Permanent link">¶</a></h4>
 <p>The <code>makemessages</code> management command will look through all Python, Django, and Jinja2 template files to find strings that are wrapped in a translation function call and add them to the portable object file for a particular language. The language is specified with <code>-l</code>. The command also must be called from the root of the Django app tree, <em>not</em> the project root.</p>
-<p>To generate or update the portable object file for Spanish:</p>
+<p>To generate or update the portable object file for a specific language, like Spanish:</p>
 <pre class="highlight"><code class="language-shell">cd cfgov
-django-admin.py makemessages -l es</code></pre>
+django-admin.py makemessages -l es --ignore=tests</code></pre>
+<p>Or for all supported languages:</p>
+<pre class="highlight"><code class="language-shell">cd cfgov
+django-admin.py makemessages --all --ignore=tests</code></pre>
+<p>Using <code>--ignore=tests</code> will ignore any calls to gettext inside our unit tests.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+</div>
+<p>If you're generating all languages, this will create <code>django.po</code> files in all our apps with translations. Please do not commit <code>django.po</code> and <code>django.mo</code> files for apps you have not editted.</p>
 <h4 id="3-edit-the-portable-object-file-to-add-a-translation-for-the-string">3. Edit the portable object file to add a translation for the string<a class="headerlink" href="#3-edit-the-portable-object-file-to-add-a-translation-for-the-string" title="Permanent link">¶</a></h4>
-<p>The portable object files are stored in <code>cfgov/locale/[LANGUAGE]/LC_MESSAGES/</code>. For the Spanish portable object file, edit <code>cfgov/locale/es/LC_MESSAGES/django.po</code> and add the Spanish translation as the <code>msgstr</code> for your new <code>msgid</code></p>
+<p>The portable object files are stored in <code>[APP]/locale/[LANGUAGE]/LC_MESSAGES/</code>. For the Spanish portable object file, edit <code>[APP]/locale/es/LC_MESSAGES/django.po</code> and add the Spanish translation as the <code>msgstr</code> for your new <code>msgid</code></p>
 <pre class="highlight"><code class="language-po">msgid "Hello World!"
 msgstr "Hola Mundo!"</code></pre>
 <h4 id="4-run-the-compilemessages-management-command-to-compile-the-machine-object-file">4. Run the <code>compilemessages</code> management command to compile the machine object file<a class="headerlink" href="#4-run-the-compilemessages-management-command-to-compile-the-machine-object-file" title="Permanent link">¶</a></h4>
