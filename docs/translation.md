@@ -22,7 +22,7 @@ msgstr "Esta es una cadena traducible."
 
 These portable object files are compiled into machine object files (`.mo`) that the translation system uses when looking up the original string.
 
-By convention the `.po` and `.mo` files live inside a `locale/[LANGUAGE]/LC_MESSAGES/` folder structure, for example, `cfgov/locale/es/LC_MESSAGES/django.po` for the Spanish language portable object file for all of our consumerfinance.gov messages.
+By convention the `.po` and `.mo` files live inside a `[APP]/locale/[LANGUAGE]/LC_MESSAGES/` folder structure, for example, `ask_cfpb/locale/es/LC_MESSAGES/django.po` for the Spanish language portable object file for all of our consumerfinance.gov messages.
 
 ## How to translate text in consumerfinance.gov
 
