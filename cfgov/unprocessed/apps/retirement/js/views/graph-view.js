@@ -570,8 +570,7 @@ function drawBars() {
  */
 function drawGraphBackground() {
   const barInterval = graphSettings.graphHeight / 4;
-  const totalWidth =
-    graphSettings.barWidth * 9 + graphSettings.gutterWidth * 8;
+  const totalWidth = graphSettings.barWidth * 9 + graphSettings.gutterWidth * 8;
   let yCoord = graphSettings.graphHeight - barInterval;
   const $backgroundBars = $('[data-bg-bar-number]');
 

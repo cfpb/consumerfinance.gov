@@ -19,6 +19,8 @@
 {% endblock %}
 
 {% block content_main %}
+    {% include "v1/includes/molecules/translation-links.html" %}
+
     {% for block in page.content -%}
         {% if block.block_type == 'notification' %}
             <div class="block

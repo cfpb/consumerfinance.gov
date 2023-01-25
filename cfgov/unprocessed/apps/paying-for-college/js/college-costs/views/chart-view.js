@@ -523,9 +523,7 @@ const chartView = {
     );
     chartView.makePlanElem = body.querySelector('#make-a-plan_chart');
     chartView.maxDebtElem = body.querySelector('#max-debt-guideline_chart');
-    chartView.affordingElem = body.querySelector(
-      '#affording-your-loans_chart'
-    );
+    chartView.affordingElem = body.querySelector('#affording-your-loans_chart');
     chartView.gradMeterElem = body.querySelector('#school-results_grad-meter');
     chartView.repaymentMeterElem = body.querySelector(
       '#school-results_repayment-meter'
@@ -616,13 +614,11 @@ const chartView = {
     });
     chartView.costOfBorrowingChart.series[0].update({
       data: [interest10years],
-      name:
-        'Estimated total interest: <strong>' + interestString + '</strong>',
+      name: 'Estimated total interest: <strong>' + interestString + '</strong>',
     });
     chartView.costOfBorrowingChart.series[1].update({
       data: [totalBorrowingAtGrad],
-      name:
-        'Estimated total borrowed: <strong>' + borrowedString + '</strong>',
+      name: 'Estimated total borrowed: <strong>' + borrowedString + '</strong>',
     });
   },
 
@@ -695,9 +691,7 @@ const chartView = {
 
     chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer
       .text(
-        'Estimated salary at graduation: <strong>' +
-          salaryString +
-          '</strong>',
+        'Estimated salary at graduation: <strong>' + salaryString + '</strong>',
         13,
         160
       )
@@ -745,8 +739,7 @@ const chartView = {
     });
     chartView.affordingChart.series[1].update({
       data: [monthlyExpenses],
-      name:
-        'Average monthly expenses: <strong>' + expensesString + '</strong>',
+      name: 'Average monthly expenses: <strong>' + expensesString + '</strong>',
     });
     chartView.affordingChart.series[2].update({
       data: [monthlySalary],

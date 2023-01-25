@@ -340,8 +340,7 @@ const handleSurveyChoiceChange = (event) => {
  * @returns {object} Event data.
  */
 const handleSurveyErrorNoticeClick = (event) => {
-  const link =
-    event.target.closest('.m-notification__error a') || event.target;
+  const link = event.target.closest('.m-notification__error a') || event.target;
   if (link.getAttribute('href') !== '#') {
     return;
   }

@@ -7,9 +7,7 @@ const getApiValues = {
   values: {},
 
   constants: function () {
-    const urlBase = document
-      .querySelector('main')
-      .getAttribute('data-context');
+    const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' + urlBase + '/understanding-your-financial-aid-offer/api/constants/';
     const constantsRequest = $.ajax({
@@ -28,9 +26,7 @@ const getApiValues = {
   },
 
   expenses: function () {
-    const urlBase = document
-      .querySelector('main')
-      .getAttribute('data-context');
+    const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' + urlBase + '/understanding-your-financial-aid-offer/api/expenses/';
     const expensesRequest = $.ajax({
@@ -48,9 +44,7 @@ const getApiValues = {
   },
 
   fetchSchoolData: function (iped) {
-    const urlBase = document
-      .querySelector('main')
-      .getAttribute('data-context');
+    const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' +
       urlBase +
@@ -82,9 +76,7 @@ const getApiValues = {
       ];
     }
 
-    const urlBase = document
-      .querySelector('main')
-      .getAttribute('data-context');
+    const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' +
       urlBase +
@@ -108,9 +100,7 @@ const getApiValues = {
   },
 
   fetchNationalData: function (iped, pid) {
-    const urlBase = document
-      .querySelector('main')
-      .getAttribute('data-context');
+    const urlBase = document.querySelector('main').getAttribute('data-context');
     let url =
       '/' +
       urlBase +

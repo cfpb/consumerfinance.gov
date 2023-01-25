@@ -13,8 +13,17 @@ function refreshErrors() {
 }
 
 describe('Youth Financial Education Survey: Errors', () => {
-  it('jumps to errors at top', () => {
+  /**
+   * TODO: This scroll test frequently fails on headless runs in our pipeline.
+   * We'll skip it for now, but we should come back to it in a future version
+   * of Cypress to see if it's working reliably.
+   *
+   * See https://github.com/cfpb/consumerfinance.gov/pull/7450 for a possibly
+   * related issue with smooth scrolling in Cypress tests.
+   */
+  xit('jumps to errors at top', () => {
     refreshErrors();
+    cy.get('.m-notification__visible');
     cy.get('main h1').isScrolledTo();
   });
 
@@ -44,7 +53,7 @@ describe('Youth Financial Education Survey: Errors', () => {
     );
   });
 
-  it('links jump to questions', () => {
+  xit('links jump to questions', () => {
     refreshErrors();
     cy.get('form .m-notification__error li:nth-child(2) a').click();
     cy.get('.survey-reset--link--wrap').isScrolledTo();

@@ -221,8 +221,7 @@ function updateLanguage(totalVals) {
    */
   function renderLocation() {
     const stateDropDown = document.querySelector('#location');
-    const selectedDropDown =
-      stateDropDown.options[stateDropDown.selectedIndex];
+    const selectedDropDown = stateDropDown.options[stateDropDown.selectedIndex];
     const state = selectedDropDown.textContent;
     const locations = document.querySelectorAll('.location');
     // forEach could be used here, but it's not supported in IE11.
@@ -949,9 +948,7 @@ function registerEvents() {
         .each(function () {
           $(this).val($(this).attr('placeholder'));
         });
-      $('#house-price, #percent-down, #down-payment').removeAttr(
-        'placeholder'
-      );
+      $('#house-price, #percent-down, #down-payment').removeAttr('placeholder');
       params.setVal('edited', true);
     }
   });

@@ -168,10 +168,7 @@ const schoolView = {
  */
 function _addListeners() {
   schoolView._searchBox.addEventListener('keyup', _handleInputChange);
-  schoolView._searchResults.addEventListener(
-    'click',
-    _handleResultButtonClick
-  );
+  schoolView._searchResults.addEventListener('click', _handleResultButtonClick);
 
   schoolView._programRadioLabels.forEach((elem) => {
     elem.addEventListener('click', _handleProgramRadioClick);
@@ -204,11 +201,7 @@ function _formatSearchResults(responseText) {
       school.schoolname +
       '</strong>';
     html +=
-      '<p><em>' +
-      school.city +
-      ', ' +
-      school.state +
-      '</em></p></button></li>';
+      '<p><em>' + school.city + ', ' + school.state + '</em></p></button></li>';
   }
   html += '</li>';
   schoolView._searchResults.innerHTML = html;
