@@ -32,9 +32,7 @@ export class MegaMenu {
   }
 
   clickLink(value) {
-    return this.megaMenuContent(`${value}-link`)
-      .first()
-      .click({ force: true });
+    return this.megaMenuContent(`${value}-link`).first().click({ force: true });
   }
 
   clickTriggerBtn() {

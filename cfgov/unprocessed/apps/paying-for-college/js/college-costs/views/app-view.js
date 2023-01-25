@@ -116,9 +116,7 @@ const appView = {
     appView._didThisHelpChoices = document.querySelectorAll(
       '[data-impact] .m-form-field input.a-radio'
     );
-    appView._restartBtn = document.querySelector(
-      '[data-app-button="restart"]'
-    );
+    appView._restartBtn = document.querySelector('[data-app-button="restart"]');
     appView._saveForLaterBtn = document.querySelector(
       '[data-app-button="save-and-finish-later"]'
     );

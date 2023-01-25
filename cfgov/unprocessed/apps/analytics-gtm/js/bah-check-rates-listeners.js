@@ -7,11 +7,7 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
   for (let i = 0, len = rangeSliders.length; i < len; i++) {
     rangeSliderEl = rangeSliders[i];
     addEventListenerToElem(rangeSliderEl, 'click', _rangeSliderEventHandler);
-    addEventListenerToElem(
-      rangeSliderEl,
-      'touchend',
-      _rangeSliderEventHandler
-    );
+    addEventListenerToElem(rangeSliderEl, 'touchend', _rangeSliderEventHandler);
   }
 
   /**

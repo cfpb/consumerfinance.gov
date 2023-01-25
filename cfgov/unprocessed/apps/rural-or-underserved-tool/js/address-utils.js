@@ -153,12 +153,4 @@ function pushAddress(row, addresses) {
   return addresses;
 }
 
-export {
-  isDup,
-  isFound,
-  isRural,
-  isRuralCensus,
-  isValid,
-  render,
-  pushAddress,
-};
+export { isDup, isFound, isRural, isRuralCensus, isValid, render, pushAddress };
