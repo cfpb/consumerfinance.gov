@@ -22,7 +22,7 @@ msgstr "Esta es una cadena traducible."
 
 These portable object files are compiled into machine object files (`.mo`) that the translation system uses when looking up the original string.
 
-By convention the `.po` and `.mo` files live inside a `locale/[LANGUAGE]/LC_MESSAGES/` folder structure, for example, `cfgov/locale/es/LC_MESSAGES/django.po` for the Spanish language portable object file for all of our consumerfinance.gov messages.
+By convention the `.po` and `.mo` files live inside an `[APP]/locale/[LANGUAGE]/LC_MESSAGES/` folder structure, for example, `ask_cfpb/locale/es/LC_MESSAGES/django.po` for the Spanish language portable object file for our Ask CFPB-specific translatable strings.
 
 ## How to translate text in consumerfinance.gov
 
@@ -58,16 +58,28 @@ The string in the call to the translation function will be the `msgid` in the po
 
 The `makemessages` management command will look through all Python, Django, and Jinja2 template files to find strings that are wrapped in a translation function call and add them to the portable object file for a particular language. The language is specified with `-l`. The command also must be called from the root of the Django app tree, _not_ the project root.
 
-To generate or update the portable object file for Spanish:
+To generate or update the portable object file for a specific language, like Spanish:
 
 ```shell
 cd cfgov
-django-admin.py makemessages -l es
+django-admin.py makemessages -l es --ignore=tests
 ```
+
+Or for all supported languages:
+
+```shell
+cd cfgov
+django-admin.py makemessages --all --ignore=tests
+```
+
+Using `--ignore=tests` will ignore any calls to gettext inside our unit tests.
+
+!!! note
+If you're generating all languages, this will create `django.po` files in all our apps with translations. Please do not commit `django.po` and `django.mo` files for apps you have not editted.
 
 #### 3. Edit the portable object file to add a translation for the string
 
-The portable object files are stored in `cfgov/locale/[LANGUAGE]/LC_MESSAGES/`. For the Spanish portable object file, edit `cfgov/locale/es/LC_MESSAGES/django.po` and add the Spanish translation as the `msgstr` for your new `msgid`
+The portable object files are stored in `[APP]/locale/[LANGUAGE]/LC_MESSAGES/`. For the Spanish portable object file, edit `[APP]/locale/es/LC_MESSAGES/django.po` and add the Spanish translation as the `msgstr` for your new `msgid`
 
 ```po
 msgid "Hello World!"
