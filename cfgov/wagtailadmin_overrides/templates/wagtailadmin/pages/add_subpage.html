@@ -12,11 +12,10 @@
     https://github.com/wagtail/wagtail/blob/v3.0/wagtail/admin/templates/wagtailadmin/pages/add_subpage.html
 {% endcomment %}
 
-{% block titletag %}Create a page in {{ title }}{% endblock %}
+{% block titletag %}Create a page in {{ parent_page.get_admin_display_title }}{% endblock %}
 
 {% block content %}
-    Create a page in
-    {% include "wagtailadmin/shared/header.html" with title=create_str subtitle=parent_page.get_admin_display_title icon="doc-empty-inverse" %}
+    {% include "wagtailadmin/shared/header.html" with title="Create a page in" subtitle=parent_page.get_admin_display_title icon="doc-empty-inverse" %}
 
     <div class="nice-padding">
         <p>Choose which type of page you'd like to create.</p>
@@ -36,7 +35,7 @@
                             </div>
 
                             <small class="col4" style="text-align:end">
-                                <a href="{% url 'wagtailadmin_pages:type_use' app_label model_name %}" class="nolink">Pages using {{ page_type }}</a>
+                                <a href="{% url 'wagtailadmin_pages:type_use' app_label model_name %}" class="nolink">Pages using {{ verbose_name }}</a>
                             </small>
 
                         </div>

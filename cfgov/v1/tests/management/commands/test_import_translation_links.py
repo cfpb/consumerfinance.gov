@@ -129,12 +129,13 @@ class TestImportTranslationLinks(TestCase, WagtailTestUtils):
             self.english_page.pk,
         )
 
-    def test_republish(self):
+    def test_republish_only(self):
         with self.make_tempfile(b"/es/,/en/\n/es2/,/en/\n") as tf:
             call_command(
                 "import_translation_links",
                 "--revision-username=test@email.com",
-                "--republish",
+                "--publish",
+                "--republish-only",
                 tf.name,
             )
 
