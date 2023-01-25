@@ -15,11 +15,7 @@ const fetch = {
         '/es/';
     } else {
       url =
-        '../retirement-api/estimator/' +
-        birthdate +
-        '/' +
-        Number(salary) +
-        '/';
+        '../retirement-api/estimator/' + birthdate + '/' + Number(salary) + '/';
     }
 
     const apiDataRequest = $.ajax({

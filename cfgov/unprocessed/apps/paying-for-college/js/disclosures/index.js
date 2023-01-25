@@ -33,39 +33,39 @@ const app = {
       if (getUrlOfferExists()) {
         // Check for URL offer data
         const urlValues = getUrlValues();
-        $.when(
-          fetch.schoolData(urlValues.collegeID, urlValues.programID)
-        ).done(function (schoolData, programData, nationalData) {
-          const data = {};
-          Object.assign(data, schoolData[0], programData[0], nationalData[0]);
-          const schoolValues = schoolModel.init(
-            nationalData[0],
-            schoolData[0],
-            programData[0]
-          );
+        $.when(fetch.schoolData(urlValues.collegeID, urlValues.programID)).done(
+          function (schoolData, programData, nationalData) {
+            const data = {};
+            Object.assign(data, schoolData[0], programData[0], nationalData[0]);
+            const schoolValues = schoolModel.init(
+              nationalData[0],
+              schoolData[0],
+              programData[0]
+            );
 
-          /* If PID exists, update the financial model and view based
+            /* If PID exists, update the financial model and view based
              on program data */
-          if (!{}.hasOwnProperty.call(data, 'pidNotFound')) {
-            financialModel.updateModelWithProgram(schoolValues);
-            financialView.updateViewWithProgram(schoolValues, urlValues);
-          }
+            if (!{}.hasOwnProperty.call(data, 'pidNotFound')) {
+              financialModel.updateModelWithProgram(schoolValues);
+              financialView.updateViewWithProgram(schoolValues, urlValues);
+            }
 
-          // Add url values to the financial model
-          publish.extendFinancialData(urlValues);
-          if (typeof urlValues.totalCost === 'undefined') {
-            publish.financialData('totalCost', null);
-          }
-          financialView.updateViewWithURL(schoolValues, urlValues);
-          // initialize metric view
-          metricView.init();
-          financialView.updateView(getFinancial.values());
-          questionView.init();
+            // Add url values to the financial model
+            publish.extendFinancialData(urlValues);
+            if (typeof urlValues.totalCost === 'undefined') {
+              publish.financialData('totalCost', null);
+            }
+            financialView.updateViewWithURL(schoolValues, urlValues);
+            // initialize metric view
+            metricView.init();
+            financialView.updateView(getFinancial.values());
+            questionView.init();
 
-          // Update expenses model bases on region and salary
-          const region = schoolValues.BLSAverage.substr(0, 2);
-          $('#bls-region-select').val(region).change();
-        });
+            // Update expenses model bases on region and salary
+            const region = schoolValues.BLSAverage.substr(0, 2);
+            $('#bls-region-select').val(region).change();
+          }
+        );
       }
       // set financial caps based on data
       financialView.setCaps(getFinancial.values());
