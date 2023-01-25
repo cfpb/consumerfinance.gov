@@ -4,23 +4,25 @@
 #
 # By default only saves translation link as a new page revision.
 #
-# If --republish is specified, pages whose most recent revision
-# is already live will have the new revision published as well.
-# If a page is live but already has a draft revision saved,
-# a new draft revision will be saved with the translation link.
+# If --publish is specified, the new revision will be published.
+#
+# If --republish-only is also specified, only pages whose most recent
+# revision is already live will have the new revision published.
 #
 # Usage:
 #
 #    manage.py import_translation_links
 #       [--dry-run]
 #       [--revision-username REVISION_USERNAME]
-#       [--republish]
-#       [--ignore_missing]
+#       [--publish]
+#       [--republish-only]
+#       [--ignore-missing]
 #       input.csv
 #
 #    --dry-run: Only read CSV, don't save anything
 #    --revision-username: Username used for new revisions
-#    --republish: Republish already-live pages
+#    --publish: Publish new revisions
+#    --republish-only: Only publish pages without existing drafts
 #    --ignore-missing: Ignore any invalid URLs in the input CSV
 #    --skip-header: Skip first row of input CSV
 
@@ -57,9 +59,14 @@ class Command(BaseCommand):
             "--revision-username", help="Username used for new revisions"
         )
         parser.add_argument(
-            "--republish",
+            "--publish",
             action="store_true",
-            help="Republish already-live pages",
+            help="Publish new revisions",
+        )
+        parser.add_argument(
+            "--republish-only",
+            action="store_true",
+            help="Only publish pages without existing drafts",
         )
         parser.add_argument(
             "--ignore-missing",
@@ -101,19 +108,24 @@ class Command(BaseCommand):
                 else:
                     raise
 
+            is_live = translated_page.live
             has_unpublished_changes = translated_page.has_unpublished_changes
+
+            translated_page = translated_page.get_latest_revision_as_page()
             translated_page.english_page = english_page
 
             if not options["dry_run"]:
                 revision = translated_page.save_revision(
                     user=revision_user, log_action=True
                 )
-                if (
-                    options["republish"]
-                    and translated_page.live
-                    and not has_unpublished_changes
-                ):
-                    revision.publish()
+
+                if options["publish"]:
+                    if options["republish_only"] and (
+                        (not is_live) or has_unpublished_changes
+                    ):
+                        continue
+
+                    revision.publish(user=revision_user)
 
     def route(self, relative_url):
         try:
