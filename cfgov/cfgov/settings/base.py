@@ -592,6 +592,12 @@ FLAGS = {
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
     # Whether to render auto-generated page translation links.
     "TRANSLATION_LINKS": [],
+    # RAFT Testing
+    "RAFT_TESTING": [
+        ("environment is", "beta"),
+        ("after date", "2023-01-22"),
+        ("before date", "2023-01-31"),
+    ],
 }
 
 # We want the ability to serve the latest drafts of some pages on beta
