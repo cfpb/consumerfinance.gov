@@ -9,7 +9,6 @@ from wagtail.admin.edit_handlers import (
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.search import index
 
 from jobmanager.blocks import JobListingList
 from v1.atomic_elements import molecules, organisms
@@ -117,12 +116,7 @@ class SublandingPage(CFGOVPage):
         ]
     )
 
-    template = "sublanding-page/index.html"
-
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
+    template = "v1/sublanding-page/index.html"
 
     def get_browsefilterable_posts(self, limit):
         filter_pages = [

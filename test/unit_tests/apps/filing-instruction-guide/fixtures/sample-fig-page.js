@@ -1,4 +1,4 @@
-module.exports = `<main class="content content__1-3 o-fig" id="main">
+export default `<main class="content content__1-3 o-fig" id="main">
   <div class="wrapper content_wrapper">
     <nav class="breadcrumbs" aria-label="Breadcrumbs">
       <svg
@@ -34,8 +34,7 @@ module.exports = `<main class="content content__1-3 o-fig" id="main">
       >
         <h3 class="u-hide-on-mobile">Table of contents</h3>
 
-        <div
-          data-qa-hook="expandable"
+        <div 
           class="o-expandable o-expandable__padded o-expandable__background"
           data-js-hook="state_atomic_init"
         >

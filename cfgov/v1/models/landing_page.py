@@ -4,7 +4,6 @@ from wagtail.admin.edit_handlers import (
     TabbedInterface,
 )
 from wagtail.core.fields import StreamField
-from wagtail.search import index
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
@@ -42,9 +41,4 @@ class LandingPage(CFGOVPage):
         ]
     )
 
-    template = "landing-page/index.html"
-
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
+    template = "v1/landing-page/index.html"

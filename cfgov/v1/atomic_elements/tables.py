@@ -53,6 +53,8 @@ class AtomicTableBlock(TableBlock):
                     if cell:
                         has_data = True
                         break
+                if has_data:
+                    break
         return has_data
 
     def get_table_options(self, table_options=None):
@@ -66,8 +68,5 @@ class AtomicTableBlock(TableBlock):
     class Meta:
         default = None
         icon = "table"
-        template = "_includes/organisms/table.html"
+        template = "v1/includes/organisms/table.html"
         label = "Table"
-
-    class Media:
-        js = ["table.js"]

@@ -1,6 +1,4 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const tab = require(BASE_JS_PATH + 'js/explore-rates/tab');
-
+import { init as tabInit } from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/tab.js';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 
 const HTML_SNIPPET = `
@@ -41,13 +39,13 @@ describe('explore-rates/params', () => {
   });
 
   it('should add u-hidden class when JS is initialized.', () => {
-    tab.init();
+    tabInit();
     expect(tabContentDom1.classList.contains('u-hidden')).toBe(false);
     expect(tabContentDom2.classList.contains('u-hidden')).toBe(true);
   });
 
   it('should move u-hidden class when tab is clicked.', () => {
-    tab.init();
+    tabInit();
     simulateEvent('click', tabLink2);
     expect(tabContentDom1.classList.contains('u-hidden')).toBe(true);
     expect(tabContentDom2.classList.contains('u-hidden')).toBe(false);

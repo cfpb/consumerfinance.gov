@@ -1,4 +1,4 @@
-import { promiseRequest } from '../util/promise-request';
+import { promiseRequest } from '../util/promise-request.js';
 
 /**
  * getApi - Make an API request to the endpoint specified with parameters specified

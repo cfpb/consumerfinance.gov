@@ -1,6 +1,3 @@
-const {
-  closest,
-} = require('@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js');
 import { handleSurveyResultsModalClose } from './tdp-analytics.js';
 
 /**
@@ -112,8 +109,8 @@ function init() {
  */
 function handleClicks() {
   document.addEventListener('click', (event) => {
-    const t = event.target;
-    const opener = closest(t, '[data-open-modal]');
+    const { target } = event;
+    const opener = target.closest('[data-open-modal]');
     if (opener) {
       event.preventDefault();
       event.stopPropagation();
@@ -133,16 +130,16 @@ function handleClicks() {
     };
 
     const content = openModal.getElement().querySelector('.o-modal_content');
-    if (content.contains(t)) {
+    if (content.contains(target)) {
       // Close if clicking modal's close button(s)
-      if (content.querySelector('.o-modal_close').contains(t)) {
+      if (content.querySelector('.o-modal_close').contains(target)) {
         closeAndCancelEvent();
         return;
       }
 
       // Close if clicked footer button with "close"
       const btn = content.querySelector('.o-modal_footer button');
-      if (t === btn && /\bclose\b/i.test(btn.textContent)) {
+      if (target === btn && /\bclose\b/i.test(btn.textContent)) {
         closeAndCancelEvent();
       }
     } else {
@@ -171,12 +168,12 @@ function handleEscKey() {
  */
 function handleFocusChanges() {
   document.addEventListener('focusin', (event) => {
-    const trap = closest(event.target, '[data-trap]');
+    const trap = event.target.closest('[data-trap]');
     if (!trap) {
       return;
     }
 
-    const content = closest(trap, '.o-modal_content');
+    const content = trap.closest('.o-modal_content');
 
     if (trap.dataset.trap === '1') {
       const first = content.querySelector('.o-modal_close');

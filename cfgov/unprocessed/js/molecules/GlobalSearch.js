@@ -1,4 +1,3 @@
-// Required modules.
 import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state.js';
 import {
   checkDom,
@@ -66,9 +65,7 @@ function GlobalSearch(element) {
       '.' + BASE_CLASS + ' .o-form__input-w-btn_btn-container button';
 
     _clearBtnDom = _contentDom.querySelector(clearBtnSel);
-    const inputContainsLabel = _contentDom.querySelector(
-      inputContainsLabelSel
-    );
+    const inputContainsLabel = _contentDom.querySelector(inputContainsLabelSel);
     _searchInputDom = inputContainsLabel.querySelector('input');
     _searchBtnDom = _contentDom.querySelector(searchBtnSel);
 

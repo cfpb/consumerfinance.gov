@@ -3,6 +3,11 @@ import { onlyOn } from '@cypress/skip-test';
 
 const fig = new FilingInstructionGuide();
 
+let windowConsoleError;
+Cypress.on('window:before:load', (win) => {
+  windowConsoleError = cy.spy(win.console, 'error');
+});
+
 describe('1071 Filing Instruction Guide (FIG)', () => {
   describe('FIG table of contents', () => {
     /* Our FIG sample page only exists in certain environments so continue
@@ -17,6 +22,10 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
           context(desktop, () => {
             beforeEach(() => {
               cy.viewport(desktop);
+            });
+
+            afterEach(() => {
+              expect(windowConsoleError).to.not.be.called;
             });
 
             it('should be present', () => {
@@ -41,15 +50,9 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             it('should highlight the current section', () => {
               fig.goToSection(2);
               fig.getNavItem(2).should('have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(1)
-                .should('not.have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(3)
-                .should('not.have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(4)
-                .should('not.have.class', 'm-nav-link__current');
+              fig.getNavItem(1).should('not.have.class', 'm-nav-link__current');
+              fig.getNavItem(3).should('not.have.class', 'm-nav-link__current');
+              fig.getNavItem(4).should('not.have.class', 'm-nav-link__current');
             });
 
             it('should auto-expand subsections', () => {
@@ -126,6 +129,10 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
               cy.viewport(tablet);
             });
 
+            afterEach(() => {
+              expect(windowConsoleError).to.not.be.called;
+            });
+
             it('should be present', () => {
               fig.open();
               fig.toc().should('be.visible');
@@ -169,6 +176,10 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
           context(mobile, () => {
             beforeEach(() => {
               cy.viewport(mobile);
+            });
+
+            afterEach(() => {
+              expect(windowConsoleError).to.not.be.called;
             });
 
             it('should be present', () => {

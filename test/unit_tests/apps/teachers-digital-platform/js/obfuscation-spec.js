@@ -1,7 +1,7 @@
 import {
   encodeNameInUrl,
   decodeNameFromUrl,
-} from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation';
+} from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation.js';
 
 const testName = 'Iñtërnâtiô Nàlizætiøn';
 

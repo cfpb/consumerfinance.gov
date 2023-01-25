@@ -1,6 +1,6 @@
-{% import 'atoms/tag.html' as tag %}
-{% import 'molecules/pagination.html' as pagination with context %}
-{% from 'organisms/expandable.html' import expandable with context %}
+{% import 'v1/includes/atoms/tag.html' as tag %}
+{% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+{% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 
 {% macro build_nested_facets(facets, type, is_child=False) %}
     <ul class="m-list m-list__unstyled{% if not is_child %} u-mt15{% else %} o-expandable-facets_content{% endif %}">
@@ -17,13 +17,13 @@
                             <span aria-hidden="true">{{ facet.title }}</span>
                             <span class="o-expandable-facets_cue o-expandable-facets_cue-open">
                                 <span class="u-visually-hidden">
-                                    {{ _('Show') }}
+                                    Show
                                 </span>
                                 {{ svg_icon('chevron-down') }}
                             </span>
                             <span class="o-expandable-facets_cue o-expandable-facets_cue-close">
                                 <span class="u-visually-hidden">
-                                    {{ _('Hide') }}
+                                    Hide
                                 </span>
                                 {{ svg_icon('chevron-up') }}
                             </span>

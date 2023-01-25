@@ -18,12 +18,14 @@ import { getSelection } from './dom-values';
 import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import amortize from 'amortize';
 import dropdown from '../dropdown-utils';
-import formatUSD from 'format-usd';
 import jumbo from 'jumbo-mortgage';
 import median from 'median';
 import RateCheckerChart from './RateCheckerChart';
 import Slider from './Slider';
-import unFormatUSD from 'unformat-usd';
+import {
+  convertStringToNumber,
+  formatUSD,
+} from '../../../../js/modules/util/format.js';
 
 // TODO: remove jquery.
 import $ from 'jquery';
@@ -219,8 +221,7 @@ function updateLanguage(totalVals) {
    */
   function renderLocation() {
     const stateDropDown = document.querySelector('#location');
-    const selectedDropDown =
-      stateDropDown.options[stateDropDown.selectedIndex];
+    const selectedDropDown = stateDropDown.options[stateDropDown.selectedIndex];
     const state = selectedDropDown.textContent;
     const locations = document.querySelectorAll('.location');
     // forEach could be used here, but it's not supported in IE11.
@@ -600,7 +601,7 @@ function renderInterestAmounts() {
       amortizeTerm: length,
     });
     const totalInterest = amortizedVal.interest;
-    const roundedInterest = Math.round(unFormatUSD(totalInterest));
+    const roundedInterest = Math.round(convertStringToNumber(totalInterest));
     const $el = $(item).find('.new-cost');
     $el.text(formatUSD({ amount: roundedInterest, decimalPlaces: 0 }));
     // Add short term rates, interest, and term to the shortTermVal array.
@@ -947,9 +948,7 @@ function registerEvents() {
         .each(function () {
           $(this).val($(this).attr('placeholder'));
         });
-      $('#house-price, #percent-down, #down-payment').removeAttr(
-        'placeholder'
-      );
+      $('#house-price, #percent-down, #down-payment').removeAttr('placeholder');
       params.setVal('edited', true);
     }
   });

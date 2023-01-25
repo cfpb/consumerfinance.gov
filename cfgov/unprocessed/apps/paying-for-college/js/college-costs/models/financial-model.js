@@ -19,7 +19,8 @@ import {
 } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { debtCalculator } from '../util/debt-calculator.js';
-import { enforceRange, stringToNum } from '../util/number-utils.js';
+import { enforceRange } from '../util/number-utils.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
@@ -43,7 +44,7 @@ const financialModel = {
   extendValues: (data) => {
     for (const key in data) {
       if ({}.hasOwnProperty.call(financialModel.values, key)) {
-        financialModel.values[key] = stringToNum(data[key]);
+        financialModel.values[key] = convertStringToNumber(data[key]);
       }
     }
     financialModel.recalculate();
@@ -64,8 +65,7 @@ const financialModel = {
       financialModel.values.salary_annual / 12;
 
     // set text of "hours to cover payment"
-    const hours =
-      Math.floor(financialModel.values.debt_repayHours * 100) / 100;
+    const hours = Math.floor(financialModel.values.debt_repayHours * 100) / 100;
     const weeks =
       Math.floor(financialModel.values.debt_repayWorkWeeks * 100) / 100;
     const coverString = hours + 'hours, or ' + weeks + 'forty-hour work weeks';
@@ -91,7 +91,7 @@ const financialModel = {
    */
   setValue: (name, value, updateView) => {
     if ({}.hasOwnProperty.call(financialModel.values, name)) {
-      financialModel.values[name] = stringToNum(value);
+      financialModel.values[name] = convertStringToNumber(value);
       financialModel.recalculate();
 
       if (updateView !== false) {
@@ -151,8 +151,7 @@ const financialModel = {
       vals.total_publicLoans +
       vals.total_privateLoans +
       vals.total_plusLoans;
-    vals.total_grantsScholarships =
-      vals.total_grants + vals.total_scholarships;
+    vals.total_grantsScholarships = vals.total_grants + vals.total_scholarships;
     vals.total_otherResources = vals.total_savings + vals.total_income;
     vals.total_workStudyFellowAssist =
       vals.total_workStudy + vals.total_fellowAssist;
@@ -368,7 +367,7 @@ const financialModel = {
     }
 
     // Get correct tuition based on property name
-    financialModel.values.dirCost_tuition = stringToNum(
+    financialModel.values.dirCost_tuition = convertStringToNumber(
       getSchoolValue(tuitionProp)
     );
 
@@ -380,19 +379,19 @@ const financialModel = {
     if (housing === 'withFamily') {
       financialModel.values.dirCost_housing = 0;
     } else {
-      financialModel.values.dirCost_housing = stringToNum(
+      financialModel.values.dirCost_housing = convertStringToNumber(
         getSchoolValue(housingProp)
       );
     }
 
     // Get Other costs
     otherProp += otherProperties[housing];
-    financialModel.values.indiCost_other = stringToNum(
+    financialModel.values.indiCost_other = convertStringToNumber(
       getStateValue(otherProp)
     );
 
     // Get Books costs
-    financialModel.values.indiCost_books = stringToNum(
+    financialModel.values.indiCost_books = convertStringToNumber(
       getSchoolValue('books')
     );
 

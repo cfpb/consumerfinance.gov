@@ -23,7 +23,7 @@ class InfoUnit(blocks.StructBlock):
 
     class Meta:
         icon = "image"
-        template = "_includes/molecules/info-unit.html"
+        template = "v1/includes/molecules/info-unit.html"
 
 
 class TextIntroduction(blocks.StructBlock):
@@ -65,7 +65,7 @@ class TextIntroduction(blocks.StructBlock):
 
     class Meta:
         icon = "title"
-        template = "_includes/molecules/text-introduction.html"
+        template = "v1/includes/molecules/text-introduction.html"
         classname = "block__flush-top"
 
 
@@ -131,7 +131,7 @@ class AbstractHero(blocks.StructBlock):
     )
 
     class Meta:
-        template = "_includes/molecules/hero.html"
+        template = "v1/includes/molecules/hero.html"
         classname = "block__flush-top block__flush-bottom"
         icon = "image"
 
@@ -206,7 +206,7 @@ class Notification(blocks.StructBlock):
 
     class Meta:
         icon = "warning"
-        template = "_includes/molecules/notification.html"
+        template = "v1/includes/molecules/notification.html"
 
 
 class CallToAction(blocks.StructBlock):
@@ -215,7 +215,7 @@ class CallToAction(blocks.StructBlock):
     button = atoms.Button()
 
     class Meta:
-        template = "_includes/molecules/call-to-action.html"
+        template = "v1/includes/molecules/call-to-action.html"
         icon = "grip"
         label = "Call to action"
 
@@ -229,7 +229,7 @@ class ContactAddress(blocks.StructBlock):
     zip_code = blocks.CharBlock(max_length=15, required=False)
 
     class Meta:
-        template = "_includes/molecules/contact-address.html"
+        template = "v1/includes/molecules/contact-address.html"
         icon = "mail"
         label = "Address"
 
@@ -265,7 +265,7 @@ class ContactEmail(blocks.StructBlock):
 
     class Meta:
         icon = "mail"
-        template = "_includes/molecules/contact-email.html"
+        template = "v1/includes/molecules/contact-email.html"
         label = "Email"
 
 
@@ -323,7 +323,7 @@ class ContactPhone(blocks.StructBlock):
 
     class Meta:
         icon = "mail"
-        template = "_includes/molecules/contact-phone.html"
+        template = "v1/includes/molecules/contact-phone.html"
         label = "Phone"
 
 
@@ -333,7 +333,7 @@ class ContactHyperlink(blocks.StructBlock):
 
     class Meta:
         icon = "link"
-        template = "_includes/molecules/contact-hyperlink.html"
+        template = "v1/includes/molecules/contact-hyperlink.html"
         label = "Hyperlink"
 
 
@@ -364,7 +364,7 @@ class ContentImage(blocks.StructBlock):
 
     class Meta:
         icon = "image"
-        template = "_includes/molecules/content-image.html"
+        template = "v1/includes/molecules/content-image.html"
         label = "Image"
 
 
@@ -375,7 +375,7 @@ class RelatedLinks(blocks.StructBlock):
 
     class Meta:
         icon = "grip"
-        template = "_includes/molecules/related-content.html"
+        template = "v1/includes/molecules/related-content.html"
         label = "Related content"
 
 
@@ -386,7 +386,7 @@ class Quote(blocks.StructBlock):
 
     class Meta:
         icon = "openquote"
-        template = "_includes/molecules/quote.html"
+        template = "v1/includes/molecules/quote.html"
 
 
 class RelatedMetadata(blocks.StructBlock):
@@ -445,14 +445,14 @@ class RelatedMetadata(blocks.StructBlock):
 
     class Meta:
         icon = "grip"
-        template = "_includes/molecules/related-metadata.html"
+        template = "v1/includes/molecules/related-metadata.html"
         label = "Related metadata"
 
 
 class RSSFeed(blocks.StaticBlock):
     class Meta:
         icon = "plus"
-        template = "_includes/molecules/rss-feed.html"
+        template = "v1/includes/molecules/rss-feed.html"
         label = "RSS feed"
         admin_text = mark_safe(
             "<h3>RSS Feed</h3>"
@@ -542,7 +542,7 @@ class SocialMedia(blocks.StructBlock):
 
     class Meta:
         icon = "site"
-        template = "_includes/molecules/social-media.html"
+        template = "v1/includes/molecules/social-media.html"
 
 
 class ContentWithAnchor(blocks.StructBlock):
@@ -551,4 +551,4 @@ class ContentWithAnchor(blocks.StructBlock):
 
     class Meta:
         icon = "edit"
-        template = "_includes/molecules/full-width-text-anchor.html"
+        template = "v1/includes/molecules/full-width-text-anchor.html"

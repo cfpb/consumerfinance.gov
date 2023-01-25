@@ -1,4 +1,4 @@
-{% extends 'layout-1-3.html' %}
+{% extends 'v1/layouts/layout-1-3.html' %}
 
 {% set version_statuses = {
     'current': '',
@@ -17,7 +17,7 @@
 
 {% block banner_top %}
     {% if version_status %}
-        {% import 'molecules/notification.html' as notification with context %}
+        {% import 'v1/includes/molecules/notification.html' as notification with context %}
         <div class="o-banner{{ banner_modification }}">
             <div class="wrapper
                         wrapper__match-content">
@@ -37,7 +37,7 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    {% import 'organisms/secondary-navigation-fig.html' as secondary_navigation with context %}
+    {% import 'v1/includes/organisms/secondary-navigation-fig.html' as secondary_navigation with context %}
     {{ secondary_navigation.render(version_status, effective_start_date, effective_end_date) }}
 {% endblock %}
 

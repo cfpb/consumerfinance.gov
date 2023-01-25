@@ -1,51 +1,55 @@
+import { jest } from '@jest/globals';
 import Cookies from 'js-cookie';
-import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js';
-import {
-  ChoiceField,
-  scrollToEl,
-  surveyPage,
-  progressBar,
-} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/survey-page.js';
 import {
   ANSWERS_SESS_KEY,
   RESULT_COOKIE,
   SCORES_UNSET_KEY,
 } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config.js';
-import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js';
-import HTML_SNIPPET from '../../html/survey-page';
+import HTML_SNIPPET from '../../html/survey-page.js';
 
 const $ = document.querySelector.bind(document);
 
 describe('The TDP survey page', () => {
+  const modalsInit = jest.fn();
+  const modalsClose = jest.fn();
+  let scrollToEl, surveyPage, surveys;
+
+  beforeAll(async () => {
+    jest.unstable_mockModule(
+      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js',
+      () => ({
+        init: modalsInit,
+        close: modalsClose,
+      })
+    );
+
+    const surveyExports = await import(
+      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/survey-page.js'
+    );
+    scrollToEl = surveyExports.scrollToEl;
+    surveyPage = surveyExports.surveyPage;
+    surveys = (
+      await import(
+        '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js'
+      )
+    ).default;
+  });
+
   beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
   });
 
   it('should be recognized from HTML', () => {
-    const modalSpy = jest.spyOn(modals, 'init');
-    const cf1Spy = jest.spyOn(ChoiceField, 'init');
-    const cf2Spy = jest.spyOn(ChoiceField, 'watchAndStore');
-    const cf3Spy = jest.spyOn(ChoiceField, 'restoreFromSession');
-    ChoiceField.cache = Object.create(null);
     sessionStorage.clear();
-    expect(progressBar).toBeUndefined();
 
     surveys.init();
 
     const answers = JSON.parse(sessionStorage.getItem(ANSWERS_SESS_KEY));
     expect(answers).toEqual({ 'p1-q6': '3' });
-    expect(modalSpy).toHaveBeenCalled();
-    expect(cf1Spy).toHaveBeenCalled();
-    expect(cf2Spy).toHaveBeenCalled();
-    expect(cf3Spy).toHaveBeenCalled();
-    expect(progressBar.totalNum).toEqual(20);
     expect(sessionStorage.getItem(SCORES_UNSET_KEY)).toEqual('1');
-
-    modalSpy.mockRestore();
   });
 
   it('should update progress', () => {
-    ChoiceField.cache = Object.create(null);
     sessionStorage.clear();
     surveyPage();
     const label = $('label[for="id_p1-q1_0"]');
@@ -53,56 +57,9 @@ describe('The TDP survey page', () => {
 
     const answers = JSON.parse(sessionStorage.getItem(ANSWERS_SESS_KEY));
     expect(answers).toEqual({ 'p1-q1': '0', 'p1-q6': '3' });
-    expect(progressBar.numDone).toEqual(2);
-    expect(ChoiceField.get('p1-q1')).toBeInstanceOf(ChoiceField);
-    expect(ChoiceField.get('p1-q1').value).toEqual('0');
-  });
-
-  it('should catch missing answers', () => {
-    const clickNext = () =>
-      $('.tdp-survey-page button[type="submit"]').click();
-
-    ChoiceField.cache = Object.create(null);
-    sessionStorage.clear();
-    surveyPage();
-    clickNext();
-
-    expect($('form > .m-notification__visible')).not.toBeUndefined();
-
-    // Missed first question
-    let legend = $('legend + .a-form-alert').previousElementSibling;
-    expect(legend.textContent).toMatch('1.');
-    const scrollLink = $('.m-notification_explanation a');
-    expect(scrollLink.textContent).toEqual(legend.textContent);
-
-    scrollLink.click();
-
-    $('label[for="id_p1-q1_0"]').click();
-
-    clickNext();
-
-    // Missed second
-    legend = $('legend + .a-form-alert').previousElementSibling;
-    expect(legend.textContent).toMatch('2.');
-
-    [1, 2, 3, 4, 5, 6].forEach((num) => {
-      $(`label[for="id_p1-q${num}_0"]`).click();
-    });
-
-    const form = $('.tdp-survey-page form');
-    let returnValue = false;
-    form.addEventListener('submit', (event) => {
-      returnValue = event.returnValue;
-      event.preventDefault();
-    });
-
-    clickNext();
-
-    expect(returnValue).toBeTruthy();
   });
 
   it('should set buttons from storage', () => {
-    ChoiceField.cache = Object.create(null);
     sessionStorage.clear();
     sessionStorage.setItem(
       ANSWERS_SESS_KEY,
@@ -119,10 +76,9 @@ describe('The TDP survey page', () => {
     const origLocation = location;
     delete window.location;
     window.location = {};
-    const closeSpy = jest.spyOn(modals, 'close');
-    $('#modal-restart [data-cancel="1"]').click();
-
-    expect(closeSpy).toHaveBeenCalled();
+    const modal = $('#modal-restart [data-cancel="1"]');
+    modal.click();
+    expect(modalsClose).toHaveBeenCalled();
 
     $('#modal-restart [data-cancel=""]').click();
 

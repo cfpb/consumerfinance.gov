@@ -1,9 +1,13 @@
-import * as behavior from '../../../js/modules/util/behavior';
-import * as utils from './search-utils';
+import { attach } from '../../../js/modules/util/behavior.js';
 import {
-  closest,
-  queryOne as find,
-} from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+  getSearchValues,
+  serializeFormFields,
+  buildSearchResultsURL,
+  showLoading,
+  hideLoading,
+  handleError,
+  updateUrl,
+} from './search-utils.js';
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
 const searchRequest = new AbortController();
@@ -14,8 +18,8 @@ const { signal } = searchRequest.signal;
  */
 function init() {
   // Override search form submission
-  behavior.attach('submit-search', 'submit', handleSubmit);
-  behavior.attach('change-filter', 'change', handleFilter);
+  attach('submit-search', 'submit', handleSubmit);
+  attach('change-filter', 'change', handleFilter);
   attachHandlers();
 }
 
@@ -23,8 +27,8 @@ function init() {
  * Attach search results handlers
  */
 function attachHandlers() {
-  behavior.attach('clear-filter', 'click', clearFilter);
-  behavior.attach('clear-all', 'click', clearFilters);
+  attach('clear-filter', 'click', clearFilter);
+  attach('clear-all', 'click', clearFilters);
 }
 
 /**
@@ -38,8 +42,10 @@ function clearFilter(event) {
   if (target !== 'svg' && target !== 'path') {
     return;
   }
-  target = closest(event.target, '.a-tag');
-  const checkbox = find(`#regulation-${target.getAttribute('data-value')}`);
+  target = event.target.closest('.a-tag');
+  const checkbox = document.querySelector(
+    `#regulation-${target.getAttribute('data-value')}`
+  );
   // Remove the filter tag
   removeTag(target);
   // Uncheck the filter checkbox
@@ -71,7 +77,7 @@ function clearFilters(event) {
   // IE doesn't support forEach w/ node lists so convert it to an array.
   filterIcons = Array.prototype.slice.call(filterIcons);
   filterIcons.forEach((filterIcon) => {
-    const target = closest(filterIcon, '.a-tag');
+    const target = filterIcon.closest('.a-tag');
     clearFilter({
       target: filterIcon,
       value: target,
@@ -91,11 +97,11 @@ function handleSubmit(event) {
     event.preventDefault();
   }
   const filters = document.querySelectorAll('input:checked');
-  const searchField = find('input[name=q]');
-  const searchTerms = utils.getSearchValues(searchField, filters);
+  const searchField = document.querySelector('input[name=q]');
+  const searchTerms = getSearchValues(searchField, filters);
   const baseUrl = window.location.href.split('?')[0];
-  const searchParams = utils.serializeFormFields(searchTerms);
-  const searchUrl = utils.buildSearchResultsURL(baseUrl, searchParams);
+  const searchParams = serializeFormFields(searchTerms);
+  const searchUrl = buildSearchResultsURL(baseUrl, searchParams);
   window.location.assign(searchUrl);
   return searchUrl;
 }
@@ -114,31 +120,32 @@ function handleFilter(event) {
   try {
     searchRequest.abort();
   } catch (err) {}
-  const searchContainer = find('#regs3k-results');
+  const searchContainer = document.querySelector('#regs3k-results');
   const filters = document.querySelectorAll('input:checked');
-  const searchField = find('input[name=q]');
-  const searchTerms = utils.getSearchValues(searchField, filters);
+  const searchField = document.querySelector('input[name=q]');
+  const searchTerms = getSearchValues(searchField, filters);
   const baseUrl = window.location.href.split('?')[0];
-  const searchParams = utils.serializeFormFields(searchTerms);
-  const searchUrl = utils.buildSearchResultsURL(baseUrl, searchParams, {
+  const searchParams = serializeFormFields(searchTerms);
+  const searchUrl = buildSearchResultsURL(baseUrl, searchParams, {
     partial: true,
   });
 
   // Update the filter query params in the URL
-  utils.updateUrl(baseUrl, searchParams);
-  utils.showLoading(searchContainer);
+  updateUrl(baseUrl, searchParams);
+  showLoading(searchContainer);
   fetch(searchUrl, { signal })
     .then((response) => response.text())
     .then((data) => {
+      hideLoading(searchContainer);
       searchContainer.innerHTML = data;
       // Update the query params in the URL
-      utils.updateUrl(baseUrl, searchParams);
+      updateUrl(baseUrl, searchParams);
       // Reattach event handlers after tags are reloaded
       attachHandlers();
     })
     .catch((err) => {
       // TODO: Add message banner above search results
-      console.error(utils.handleError(err).msg);
+      console.error(handleError(err).msg);
     });
 }
 

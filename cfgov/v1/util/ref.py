@@ -184,19 +184,6 @@ categories = [
     ),
 ]
 
-supported_languages = [
-    ("ar", "Arabic"),
-    ("zh-Hans", "Chinese (Simplified)"),
-    ("zh-Hant", "Chinese (Traditional)"),
-    ("en", "English"),
-    ("ht", "Haitian Creole"),
-    ("ko", "Korean"),
-    ("ru", "Russian"),
-    ("es", "Spanish"),
-    ("tl", "Tagalog"),
-    ("vi", "Vietnamese"),
-]
-
 
 def get_appropriate_categories(specific_categories, page_type):
     """An array of specific categories is provided from whatever
@@ -307,11 +294,6 @@ def is_blog(page):
         return True
 
 
-def is_event(page):
-    if "Event" in page.specific_class.__name__:
-        return True
-
-
 def is_report(page):
     for category in page.categories.all():
         for choice in choices_for_page_type("research-reports"):
@@ -334,3 +316,49 @@ def get_category_children(category_names):
             )
         )
     )
+
+
+def get_category_icon(category_name):
+    """Given a category name, return the name of its icon.
+
+    Return None if no matching icon exists.
+    """
+    return {
+        "at the cfpb": "bullhorn",
+        "auto loans": "car",
+        "bank accounts": "bank",
+        "bank accounts and services": "bank",
+        "blog": "speech-bubble",
+        "consumer advisories": "complaint",
+        "credit cards": "credit-card",
+        "credit reporting": "credit-report",
+        "credit reports and scores": "credit-report",
+        "data, research, and reports": "chart",
+        "debt collection": "debt-collection",
+        "director's notebook": "edit",
+        "director's statement": "open-quote",
+        "events": "date",
+        "families and money": "money",
+        "featured event": "date",
+        "featured blog": "speech-bubble",
+        "featured video": "play-round",
+        "featured tool": "settings",
+        "featured news": "newspaper",
+        "featured": "favorite",
+        "fraud and scams": "money",
+        "info for consumers": "information",
+        "mortgages": "mortgage",
+        "money basics": "money",
+        "money transfers": "money-transfer",
+        "newsroom": "newspaper",
+        "op-ed": "fountain-pen",
+        "payday loans": "payday-loan",
+        "policy and compliance": "bank",
+        "prepaid cards": "prepaid-cards",
+        "press release": "bullhorn",
+        "report": "chart",
+        "reverse mortgages": "loan",
+        "speech": "microphone",
+        "student loans": "college",
+        "testimony": "taxes",
+    }.get(category_name.lower())

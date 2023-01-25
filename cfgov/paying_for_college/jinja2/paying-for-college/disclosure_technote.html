@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "v1/layouts/base.html" %}
 
 {% block title %}
     Understanding your financial aid offer | Consumer Financial Protection Bureau
@@ -1071,14 +1071,4 @@
 
 {% block javascript scoped %}
 {{ super() }}
-<script>
-  if (document.body.parentElement.className.indexOf('no-js') === -1) {
-    !function() {
-      var s = [
-        '{{ static('apps/paying-for-college/js/disclosures/index.js') }}'
-      ];
-      jsl(s);
-    }()
-  }
-</script>
 {% endblock javascript %}

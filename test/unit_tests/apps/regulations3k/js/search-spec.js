@@ -1,9 +1,9 @@
-import { enableFetchMocks } from 'jest-fetch-mock';
-const simulateEvent = require('../../../../util/simulate-event').simulateEvent;
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+import { jest } from '@jest/globals';
+import { simulateEvent } from '../../../../util/simulate-event.js';
 
-import('../../../../../cfgov/unprocessed/apps/regulations3k/js/search.js');
-
-enableFetchMocks();
+import '../../../../../cfgov/unprocessed/apps/regulations3k/js/search.js';
 
 const HTML_SNIPPET = `
   <form action="/search" data-js-hook="behavior_submit-search">

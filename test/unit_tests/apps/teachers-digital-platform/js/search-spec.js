@@ -1,12 +1,10 @@
-import { enableFetchMocks } from 'jest-fetch-mock';
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../util/simulate-event.js';
-
-const search = require('../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js');
-
-enableFetchMocks();
+import { init as searchInit } from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js';
 
 const HTML_SNIPPET = `
-
   <form class="tdp-activity-search" id="search-form" action="." data-js-hook="behavior_submit-search">
     <div class="input-contains-label">
       <label for="search-text" class="input-contains-label_before input-contains-label_before__search">
@@ -24,7 +22,7 @@ const HTML_SNIPPET = `
   <form id="filter-form" action="." method="get" data-js-hook="behavior_change-filter">
     <input type="hidden" name="q" value="{% if search_query: %}{{ search_query }}{% endif %}">
     <input type="hidden" name="page" inputmode="numeric" value="1">
-    <div data-qa-hook="expandable" class="o-expandable o-expandable__padded o-expandable__background" data-bound="true">
+    <div class="o-expandable o-expandable__padded o-expandable__background" data-bound="true">
       <button class="o-expandable_header o-expandable_target o-expandable_target__expanded" type="button">
         <span class="h4 o-expandable_label">
           Building block
@@ -68,7 +66,7 @@ const HTML_SNIPPET = `
       </div>
     </div>
 
-    <div data-qa-hook="expandable" class="o-expandable o-expandable__padded o-expandable__background" data-bound="true">
+    <div class="o-expandable o-expandable__padded o-expandable__background" data-bound="true">
       <button class="o-expandable_header o-expandable_target o-expandable_target__expanded" type="button">
         <span class="h4 o-expandable_label">Topic</span>
         <span class="o-expandable_link">
@@ -157,11 +155,11 @@ describe('The TDP search page', () => {
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
     // Fire init
-    search.init();
+    searchInit();
   });
 
   it('should not throw any errors on init', () => {
-    expect(() => search.init()).not.toThrow();
+    expect(() => searchInit()).not.toThrow();
   });
 
   it('should handle search form submissions', () => {

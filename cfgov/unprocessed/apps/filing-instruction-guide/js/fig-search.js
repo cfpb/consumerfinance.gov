@@ -1,9 +1,13 @@
 /* istanbul ignore file */
 /* Cypress tests cover all the UI interactions on this page. */
 
+import {
+  addEventListenerToSelector,
+  track,
+} from '../../../apps/analytics-gtm/js/util/analytics-util';
 import search from 'ctrl-f';
-import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
-import * as fig from './fig-sidenav-utils';
+import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
+import { scrollIntoViewWithOffset } from './fig-sidenav-utils.js';
 
 const buttonText = 'Search this guide';
 
@@ -16,9 +20,30 @@ const searchOptions = {
   threshold: 0.4,
 };
 
-/* Each searchable item (an HTML section with a heading and some paragraphs)
-   is tagged with a `data-search-section` attribute in the jinja2 template */
-const sections = [...document.querySelectorAll('[data-search-section]')];
+/**
+ * Initialize the ctrl-f search modal.
+ */
+function init() {
+  // Each searchable item (an HTML section with a heading and some paragraphs)
+  // is tagged with a `data-search-section` attribute in the jinja2 template.
+  const sectionsList = [...document.querySelectorAll('[data-search-section]')];
+
+  const searchContainer = document.getElementById('ctrl-f');
+  const searchData = getSearchData(sectionsList);
+
+  search(searchContainer, {
+    buttonText,
+    searchOptions,
+    searchData,
+    onFollow,
+    onSubmit,
+  });
+
+  // Track clicks on the FIG search form button
+  addEventListenerToSelector('#ctrl-f', 'click', () => {
+    track('Small Business Lending FIG event', 'search:click', '');
+  });
+}
 
 /**
  * Generate a list of structured items to search
@@ -54,28 +79,33 @@ const getSearchData = (sections) => {
  * @param {object} event - Search result follow event
  */
 const onFollow = (event) => {
+  const target = event.target
+    .closest('a')
+    .getAttribute('href')
+    .replace('#', '');
+
   // Only proceed if the browser window is no greater than 900px
-  if (
-    window.matchMedia(`(max-width: ${varsBreakpoints.bpSM.max}px)`).matches
-  ) {
+  if (window.matchMedia(`(max-width: ${varsBreakpoints.bpSM.max}px)`).matches) {
     event.preventDefault();
-    const target = event.target
-      .closest('a')
-      .getAttribute('href')
-      .replace('#', '');
-    document
-      .querySelector('.o-fig_sidebar button.o-expandable_header')
-      .click();
+    document.querySelector('.o-fig_sidebar button.o-expandable_header').click();
     // Scrolling before the expandable closes causes jitters on some devices
     setTimeout(() => {
-      fig.scrollIntoViewWithOffset(document.getElementById(target), 60);
+      scrollIntoViewWithOffset(document.getElementById(target), 60);
     }, 300);
   }
+
+  // Track clicks on individual search results
+  track('Small Business Lending FIG event', 'searchresults:click', target);
 };
 
-const searchContainer = document.getElementById('ctrl-f');
-const searchData = getSearchData(sections);
+/**
+ * Event listener that's fired after a user searches for something.
+ * We're reporting the user's search terms to Google Analytics.
+ *
+ * @param {string} query - Search term that was submitted.
+ */
+const onSubmit = (query) => {
+  track('Small Business Lending FIG event', 'search:entry', query);
+};
 
-search(searchContainer, { buttonText, searchOptions, searchData, onFollow });
-
-export { getSearchData };
+export { init, getSearchData };

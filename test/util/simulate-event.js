@@ -24,6 +24,4 @@ function simulateEvent(eventType, target, eventOption = {}) {
   return target.dispatchEvent(event);
 }
 
-module.exports = {
-  simulateEvent,
-};
+export { simulateEvent };

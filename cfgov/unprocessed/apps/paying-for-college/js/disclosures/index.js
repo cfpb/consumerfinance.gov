@@ -1,21 +1,24 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const fetch = require('./dispatchers/get-api-values');
-const verifyOffer = require('./dispatchers/post-verify');
-const financialModel = require('./models/financial-model');
-const schoolModel = require('./models/school-model');
-const expensesModel = require('./models/expenses-model');
-const getFinancial = require('./dispatchers/get-financial-values');
-const getExpenses = require('./dispatchers/get-expenses-values');
-const getUrlValues = require('./dispatchers/get-url-values');
-const financialView = require('./views/financial-view');
-const expensesView = require('./views/expenses-view');
-const metricView = require('./views/metric-view');
-const questionView = require('./views/question-view');
-const publish = require('./dispatchers/publish-update');
+import fetch from './dispatchers/get-api-values.js';
+import verifyOffer from './dispatchers/post-verify.js';
+import financialModel from './models/financial-model.js';
+import schoolModel from './models/school-model.js';
+import expensesModel from './models/expenses-model.js';
+import getFinancial from './dispatchers/get-financial-values.js';
+import getExpenses from './dispatchers/get-expenses-values.js';
+import {
+  getUrlOfferExists,
+  getUrlValues,
+} from './dispatchers/get-url-values.js';
+import financialView from './views/financial-view.js';
+import expensesView from './views/expenses-view.js';
+import metricView from './views/metric-view.js';
+import questionView from './views/question-view.js';
+import publish from './dispatchers/publish-update.js';
 
-require('./utils/print-page');
+import('./utils/print-page.js');
 
 const app = {
   init: function () {
@@ -27,42 +30,42 @@ const app = {
         expensesModel.init(expenses[0]);
         expensesView.init();
       }
-      if (getUrlValues.urlOfferExists()) {
+      if (getUrlOfferExists()) {
         // Check for URL offer data
-        const urlValues = getUrlValues.urlValues();
-        $.when(
-          fetch.schoolData(urlValues.collegeID, urlValues.programID)
-        ).done(function (schoolData, programData, nationalData) {
-          const data = {};
-          $.extend(data, schoolData[0], programData[0], nationalData[0]);
-          const schoolValues = schoolModel.init(
-            nationalData[0],
-            schoolData[0],
-            programData[0]
-          );
+        const urlValues = getUrlValues();
+        $.when(fetch.schoolData(urlValues.collegeID, urlValues.programID)).done(
+          function (schoolData, programData, nationalData) {
+            const data = {};
+            Object.assign(data, schoolData[0], programData[0], nationalData[0]);
+            const schoolValues = schoolModel.init(
+              nationalData[0],
+              schoolData[0],
+              programData[0]
+            );
 
-          /* If PID exists, update the financial model and view based
-                 on program data */
-          if (!{}.hasOwnProperty.call(data, 'pidNotFound')) {
-            financialModel.updateModelWithProgram(schoolValues);
-            financialView.updateViewWithProgram(schoolValues, urlValues);
+            /* If PID exists, update the financial model and view based
+             on program data */
+            if (!{}.hasOwnProperty.call(data, 'pidNotFound')) {
+              financialModel.updateModelWithProgram(schoolValues);
+              financialView.updateViewWithProgram(schoolValues, urlValues);
+            }
+
+            // Add url values to the financial model
+            publish.extendFinancialData(urlValues);
+            if (typeof urlValues.totalCost === 'undefined') {
+              publish.financialData('totalCost', null);
+            }
+            financialView.updateViewWithURL(schoolValues, urlValues);
+            // initialize metric view
+            metricView.init();
+            financialView.updateView(getFinancial.values());
+            questionView.init();
+
+            // Update expenses model bases on region and salary
+            const region = schoolValues.BLSAverage.substr(0, 2);
+            $('#bls-region-select').val(region).change();
           }
-
-          // Add url values to the financial model
-          publish.extendFinancialData(urlValues);
-          if (typeof urlValues.totalCost === 'undefined') {
-            publish.financialData('totalCost', null);
-          }
-          financialView.updateViewWithURL(schoolValues, urlValues);
-          // initialize metric view
-          metricView.init();
-          financialView.updateView(getFinancial.values());
-          questionView.init();
-
-          // Update expenses model bases on region and salary
-          const region = schoolValues.BLSAverage.substr(0, 2);
-          $('#bls-region-select').val(region).change();
-        });
+        );
       }
       // set financial caps based on data
       financialView.setCaps(getFinancial.values());

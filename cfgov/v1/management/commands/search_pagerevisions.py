@@ -22,8 +22,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **kwargs):
-        search_backend = get_search_backend("fulltext")
-        revision_results = search_backend.search(
+        revision_results = get_search_backend().search(
             kwargs["search string"], IndexedPageRevision
         )
 

@@ -1,4 +1,4 @@
-import isElementInView from '../utils/is-element-in-view';
+import isElementInView from '../utils/is-element-in-view.js';
 
 // TODO: remove jquery.
 import $ from 'jquery';

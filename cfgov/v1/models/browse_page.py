@@ -8,7 +8,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
-from wagtail.search import index
 
 from data_research.blocks import MortgageDataDownloads
 from jobmanager.blocks import JobListingTable
@@ -84,14 +83,9 @@ class BrowsePage(CFGOVPage):
         ]
     )
 
-    template = "browse-basic/index.html"
+    template = "v1/browse-basic/index.html"
 
     page_description = "Left-hand navigation, no right-hand sidebar."
-
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
 
     @property
     def page_js(self):

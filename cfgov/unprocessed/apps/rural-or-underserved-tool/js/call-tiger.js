@@ -1,4 +1,5 @@
-const jsonP = require('jsonp-p').default;
+import jsonpPModule from 'jsonp-p';
+const jsonpP = jsonpPModule.default;
 
 /**
  * Call the Census geospatial API.
@@ -30,7 +31,7 @@ function callTiger(x, y, layer) {
     '&outFields=*' +
     '&f=json';
 
-  return jsonP(url).promise;
+  return jsonpP(url).promise;
 }
 
 export default callTiger;

@@ -25,4 +25,4 @@ class ProgressBar {
 
 ProgressBar.UPDATE_EVT = 'ProgressBar:update';
 
-module.exports = ProgressBar;
+export default ProgressBar;

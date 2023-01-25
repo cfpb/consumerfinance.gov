@@ -2,8 +2,8 @@
 import { updateExpense, updateRegion } from '../dispatchers/update-models.js';
 import { getExpensesValue } from '../dispatchers/get-model-values.js';
 import numberToMoney from 'format-usd';
-import { selectorMatches } from '../util/other-utils';
-import { stringToNum } from '../util/number-utils.js';
+import { selectorMatches } from '../util/other-utils.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 import {
   updateAffordingChart,
   updateCostOfBorrowingChart,
@@ -83,7 +83,7 @@ function _handleInputChange(event) {
   clearTimeout(expensesView._inputChangeTimeout);
   const elem = event.target;
   const name = elem.dataset.expensesItem;
-  const value = stringToNum(elem.value);
+  const value = convertStringToNumber(elem.value);
 
   expensesView._currentInput = elem;
 

@@ -1,0 +1,53 @@
+{% extends 'v1/layouts/layout-2-1.html' %}
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block desc -%}
+    {{ page.search_description if page.search_description else '' }}
+{%- endblock %}
+
+{% block og_type -%}
+    article
+{%- endblock %}
+
+{% block og_article_prefix -%}
+    article: http://ogp.me/ns/article#
+{%- endblock %}
+
+{% block og_article_author -%}
+    <meta property="article:author" content="https://www.facebook.com/CFPB">
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('css/on-demand/event.css') }}">
+{%- endblock css %}
+
+{% block content_main %}
+    {% include 'v1/events/_event-detail.html' %}
+    {% from 'v1/events/_macros.html' import event_media as event_media with context %}
+    {% if event_state and event_state != 'future' %}
+        {{ event_media(page) }}
+    {% endif %}
+
+    {% if page.agenda_items %}
+        {% from 'v1/events/_macros.html' import event_agenda as event_agenda with context%}
+        {{ event_agenda(page) }}
+    {% endif %}
+{% endblock %}
+
+{% block content_sidebar %}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+    <section class="block">
+        {%- import 'v1/includes/related-links.html' as related_links -%}
+        {{- related_links.render([
+            [
+                '/about-us/the-bureau/',
+                'About us'
+            ],
+            [
+                '/about-us/contact-us/',
+                'Contact us'
+            ],
+        ]) -}}
+    </section>
+{% endblock %}

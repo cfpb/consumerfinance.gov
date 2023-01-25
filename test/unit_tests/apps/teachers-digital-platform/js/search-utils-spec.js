@@ -1,6 +1,13 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
-const utils = require(BASE_JS_PATH +
-  'teachers-digital-platform/js/search-utils.js');
+import { jest } from '@jest/globals';
+import {
+  getSearchValues,
+  serializeFormFields,
+  buildSearchResultsURL,
+  showLoading,
+  hideLoading,
+  handleError,
+  updateUrl,
+} from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search-utils.js';
 
 describe('The TDP search utils', () => {
   it('should get values from search form fields', () => {
@@ -14,40 +21,40 @@ describe('The TDP search utils', () => {
         value: 'buzz',
       },
     ];
-    const values = utils.getSearchValues(searchEl, filterEls);
+    const values = getSearchValues(searchEl, filterEls);
     expect(values).toEqual([{ foo: 'bar' }, { fizz: 'buzz' }]);
   });
 
   it('should serialize form fields', () => {
-    const serialized = utils.serializeFormFields([{ foo: 'bar' }]);
+    const serialized = serializeFormFields([{ foo: 'bar' }]);
     expect(serialized).toEqual('foo=bar');
   });
 
   it('should build a search results URL', () => {
-    let url = utils.buildSearchResultsURL('foo', 'bar');
+    let url = buildSearchResultsURL('foo', 'bar');
     expect(url).toEqual('foo?bar');
-    url = utils.buildSearchResultsURL('foo', 'bar', { partial: true });
+    url = buildSearchResultsURL('foo', 'bar', { partial: true });
     expect(url).toEqual('foo?bar&partial');
   });
 
   it('should show an element loading', () => {
     let el = { style: { opacity: 1 } };
-    el = utils.showLoading(el);
+    el = showLoading(el);
     expect(el.style.opacity).toEqual(0.5);
   });
 
   it('should stop an element loading', () => {
     let el = { style: { opacity: 0.5 } };
-    el = utils.hideLoading(el);
+    el = hideLoading(el);
     expect(el.style.opacity).toEqual(1);
   });
 
   it('should handle errors', () => {
-    const searchError = utils.handleError('no-results');
+    const searchError = handleError('no-results');
     expect(searchError.msg).toEqual('Your query returned zero results.');
-    const cancelError = utils.handleError(0);
+    const cancelError = handleError(0);
     expect(cancelError.msg).toEqual('Search request was cancelled.');
-    const unknownError = utils.handleError();
+    const unknownError = handleError();
     expect(unknownError.msg).toEqual(
       'Sorry, our search engine is temporarily down.'
     );
@@ -57,14 +64,11 @@ describe('The TDP search utils', () => {
     const rs = (global.history.replaceState = jest.fn());
     expect(rs.mock.calls.length).toEqual(0);
 
-    utils.updateUrl('foo', 'bar');
+    updateUrl('foo', 'bar');
     expect(rs.mock.calls.length).toEqual(1);
     expect(rs.mock.calls[0]).toEqual([null, null, 'foo?bar']);
 
-    utils.updateUrl(
-      '/teach/activities/',
-      'building_block=1&topic=3&q=executive'
-    );
+    updateUrl('/teach/activities/', 'building_block=1&topic=3&q=executive');
     expect(rs.mock.calls.length).toEqual(2);
     expect(rs.mock.calls[1]).toEqual([
       null,

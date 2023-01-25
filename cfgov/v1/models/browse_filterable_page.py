@@ -8,7 +8,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
-from wagtail.search import index
 
 from v1.atomic_elements import molecules, organisms
 from v1.documents import (
@@ -69,17 +68,12 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
         ]
     )
 
-    template = "browse-filterable/index.html"
+    template = "v1/browse-filterable/index.html"
 
     page_description = (
         "Left-hand navigation, no right-hand sidebar. Use if children should "
         "be searchable using standard search filters module."
     )
-
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
 
     @property
     def page_js(self):
@@ -87,7 +81,7 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
 
 
 class EnforcementActionsFilterPage(BrowseFilterablePage):
-    template = "browse-filterable/index.html"
+    template = "v1/browse-filterable/index.html"
 
     @staticmethod
     def get_form_class():
@@ -105,7 +99,7 @@ class EnforcementActionsFilterPage(BrowseFilterablePage):
 
 
 class EventArchivePage(BrowseFilterablePage):
-    template = "browse-filterable/index.html"
+    template = "v1/browse-filterable/index.html"
 
     @staticmethod
     def get_model_class():
@@ -123,5 +117,5 @@ class EventArchivePage(BrowseFilterablePage):
 
 
 class NewsroomLandingPage(CategoryFilterableMixin, BrowseFilterablePage):
-    template = "newsroom/index.html"
+    template = "v1/newsroom/index.html"
     filterable_categories = ["Newsroom"]

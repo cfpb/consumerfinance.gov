@@ -1,16 +1,20 @@
-const behavior = require('../../../js/modules/util/behavior');
-const utils = require('./search-utils');
+import { attach } from '../../../js/modules/util/behavior.js';
 import {
-  closest,
-  queryOne as find,
-} from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-import expandableFacets from './expandable-facets';
-import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable';
+  getSearchValues,
+  serializeFormFields,
+  buildSearchResultsURL,
+  showLoading,
+  hideLoading,
+  handleError,
+  updateUrl,
+} from './search-utils.js';
+import expandableFacets from './expandable-facets.js';
+import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable.js';
 import {
   handleClearAllClick,
   handleFetchSearchResults,
 } from './tdp-analytics.js';
-const ClearableInput = require('./ClearableInput').ClearableInput;
+import ClearableInput from './ClearableInput.js';
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
 const searchRequest = new AbortController();
@@ -33,11 +37,11 @@ function init() {
  */
 function attachHandlers() {
   addDataGtmIgnore();
-  behavior.attach('submit-search', 'submit', handleSubmit);
-  behavior.attach('change-filter', 'change', handleFilter);
-  behavior.attach('clear-filter', 'click', clearFilter);
-  behavior.attach('clear-all', 'click', clearFilters);
-  behavior.attach('clear-search', 'clear', clearSearch);
+  attach('submit-search', 'submit', handleSubmit);
+  attach('change-filter', 'change', handleFilter);
+  attach('clear-filter', 'click', clearFilter);
+  attach('clear-all', 'click', clearFilters);
+  attach('clear-search', 'clear', clearSearch);
   cfExpandables.init();
   expandableFacets.init();
   const inputContainsLabel = document.querySelector(
@@ -74,8 +78,8 @@ function clearFilter(event) {
   if (target !== 'svg' && target !== 'path') {
     return;
   }
-  target = closest(event.target, '.a-tag');
-  const checkbox = find(`${target.getAttribute('data-value')}`);
+  target = event.target.closest('.a-tag');
+  const checkbox = document.querySelector(target.getAttribute('data-value'));
   // Remove the filter tag
   removeTag(target);
   // Uncheck the filter checkbox
@@ -110,7 +114,7 @@ function clearFilters(event) {
   // IE doesn't support forEach w/ node lists so convert it to an array.
   filterIcons = Array.prototype.slice.call(filterIcons);
   filterIcons.forEach((filterIcon) => {
-    const target = closest(filterIcon, 'button');
+    const target = filterIcon.closest('button');
     clearFilter({
       target: filterIcon,
       value: target,
@@ -153,27 +157,29 @@ function handleSubmit(event) {
  * @returns {string} New page URL with search terms
  */
 function fetchSearchResults(filters = []) {
-  const searchContainer = find('#tdp-search-facets-and-results');
+  const searchContainer = document.querySelector(
+    '#tdp-search-facets-and-results'
+  );
   const baseUrl = window.location.href.split('?')[0];
-  const searchField = find('input[name=q]');
-  const searchTerms = utils.getSearchValues(searchField, filters);
-  const searchParams = utils.serializeFormFields(searchTerms);
+  const searchField = document.querySelector('input[name=q]');
+  const searchTerms = getSearchValues(searchField, filters);
+  const searchParams = serializeFormFields(searchTerms);
 
-  const searchUrl = utils.buildSearchResultsURL(baseUrl, searchParams, {
+  const searchUrl = buildSearchResultsURL(baseUrl, searchParams, {
     partial: true,
   });
 
-  utils.updateUrl(baseUrl, searchParams);
-  utils.showLoading(searchContainer);
+  updateUrl(baseUrl, searchParams);
+  showLoading(searchContainer);
 
   fetch(searchUrl, { signal })
     .then((response) => response.text())
     .then((data) => {
-      utils.hideLoading(searchContainer);
+      hideLoading(searchContainer);
       searchContainer.innerHTML = data;
 
       // Update the query params in the URL
-      utils.updateUrl(baseUrl, searchParams);
+      updateUrl(baseUrl, searchParams);
 
       // Reattach event handlers after tags are reloaded
       attachHandlers();
@@ -183,7 +189,7 @@ function fetchSearchResults(filters = []) {
     })
     .catch((err) => {
       // TODO: Add message banner above search results
-      console.error(utils.handleError(err).msg);
+      console.error(handleError(err).msg);
     });
 
   return searchUrl;
@@ -209,9 +215,7 @@ function handleFilter(event, target = null) {
   const wrapperLI = target.parentElement.parentElement;
   if (wrapperLI && wrapperLI.tagName.toLowerCase() === 'li') {
     // Check all children if parent is checked.
-    const checkboxes = wrapperLI.querySelectorAll(
-      'ul>li input[type=checkbox]'
-    );
+    const checkboxes = wrapperLI.querySelectorAll('ul>li input[type=checkbox]');
     for (let i = 0; i < checkboxes.length; i++) {
       if (
         wrapperLI.contains(checkboxes[i]) === true &&
@@ -224,9 +228,7 @@ function handleFilter(event, target = null) {
     const parentLI = wrapperLI.parentElement.parentElement;
     const parentUL = wrapperLI.parentElement.parentElement.parentElement;
     if (parentUL && parentUL.tagName.toLowerCase() === 'ul') {
-      const parentCheckbox = parentLI.querySelector(
-        'div>input[type=checkbox]'
-      );
+      const parentCheckbox = parentLI.querySelector('div>input[type=checkbox]');
       if (
         parentCheckbox &&
         parentCheckbox.parentElement.parentElement === parentLI

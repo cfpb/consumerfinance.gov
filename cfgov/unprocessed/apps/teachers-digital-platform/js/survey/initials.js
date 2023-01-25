@@ -1,5 +1,5 @@
-const { INITIALS_LIMIT } = require('./config');
-const obfuscation = require('../obfuscation');
+import { INITIALS_LIMIT } from './config.js';
+import { decodeNameFromUrl } from '../obfuscation.js';
 
 const $ = document.querySelector.bind(document);
 
@@ -41,7 +41,7 @@ function get() {
  */
 function init() {
   // Show initials encoded in URL hash
-  let fromUrl = obfuscation.decodeNameFromUrl(location.href) || '';
+  let fromUrl = decodeNameFromUrl(location.href) || '';
   if (fromUrl.length > INITIALS_LIMIT) {
     // Definitely invalid, reject.
     fromUrl = '';

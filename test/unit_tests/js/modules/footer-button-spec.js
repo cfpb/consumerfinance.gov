@@ -1,6 +1,5 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const FooterButton = require(BASE_JS_PATH + 'modules/footer-button.js');
-
+import { jest } from '@jest/globals';
+import { init as FooterButtonInit } from '../../../../cfgov/unprocessed/js/modules/footer-button.js';
 import { simulateEvent } from '../../../util/simulate-event.js';
 
 let footerBtnDom;
@@ -41,7 +40,7 @@ describe('footer-button', () => {
       'and requestAnimationFrame is supported',
     (done) => {
       window.scrollY = 10;
-      FooterButton.init();
+      FooterButtonInit();
       simulateEvent('click', footerBtnDom);
 
       window.setTimeout(() => {
@@ -58,7 +57,7 @@ describe('footer-button', () => {
       jest.spyOn(window, 'scrollTo');
       delete window.requestAnimationFrame;
       window.scrollY = 10;
-      FooterButton.init();
+      FooterButtonInit();
       simulateEvent('click', footerBtnDom);
 
       expect(window.scrollTo).toHaveBeenCalledWith(0, 0);

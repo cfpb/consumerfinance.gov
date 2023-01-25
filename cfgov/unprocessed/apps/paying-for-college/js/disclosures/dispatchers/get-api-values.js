@@ -1,13 +1,13 @@
 // TODO: Remove jquery.
-const $ = require('jquery');
+import $ from 'jquery';
 
-const financialView = require('../views/financial-view');
+import financialView from '../views/financial-view.js';
 
 const getApiValues = {
   values: {},
 
   constants: function () {
-    const urlBase = $('main').attr('data-context');
+    const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' + urlBase + '/understanding-your-financial-aid-offer/api/constants/';
     const constantsRequest = $.ajax({
@@ -26,7 +26,7 @@ const getApiValues = {
   },
 
   expenses: function () {
-    const urlBase = $('main').attr('data-context');
+    const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' + urlBase + '/understanding-your-financial-aid-offer/api/expenses/';
     const expensesRequest = $.ajax({
@@ -44,7 +44,7 @@ const getApiValues = {
   },
 
   fetchSchoolData: function (iped) {
-    const urlBase = $('main').attr('data-context');
+    const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' +
       urlBase +
@@ -76,7 +76,7 @@ const getApiValues = {
       ];
     }
 
-    const urlBase = $('main').attr('data-context');
+    const urlBase = document.querySelector('main').getAttribute('data-context');
     const url =
       '/' +
       urlBase +
@@ -100,7 +100,7 @@ const getApiValues = {
   },
 
   fetchNationalData: function (iped, pid) {
-    const urlBase = $('main').attr('data-context');
+    const urlBase = document.querySelector('main').getAttribute('data-context');
     let url =
       '/' +
       urlBase +
@@ -138,7 +138,9 @@ const getApiValues = {
 
   initialData: function () {
     // If there's a [data-warning], display error
-    const warning = $('[data-warning]').attr('data-warning');
+    const warning = document
+      .querySelector('[data-warning]')
+      .getAttribute('data-warning');
     if (warning !== '' && typeof warning !== 'undefined') {
       financialView.missingData(warning);
       return $.Deferred;
@@ -147,4 +149,4 @@ const getApiValues = {
   },
 };
 
-module.exports = getApiValues;
+export default getApiValues;

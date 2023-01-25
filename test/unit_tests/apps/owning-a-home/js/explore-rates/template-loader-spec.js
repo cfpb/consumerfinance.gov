@@ -1,6 +1,11 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const templateLoader = require(BASE_JS_PATH +
-  'js/explore-rates/template-loader');
+import {
+  county,
+  countyConfWarning,
+  countyFHAWarning,
+  countyVAWarning,
+  countyGenWarning,
+  chartTooltip,
+} from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/template-loader.js';
 
 describe('explore-rates/template-loader', () => {
   it('should be able to render county template', () => {
@@ -14,29 +19,29 @@ describe('explore-rates/template-loader', () => {
     };
     /* eslint-enable camelcase */
 
-    const testTemplate = templateLoader.county(mockData);
+    const testTemplate = county(mockData);
     expect(testTemplate).toBe(
       '<option value="1" data-gse="1" data-fha="1" data-va="1">Test</option>'
     );
   });
 
   it('should be able to render countyConfWarning template', () => {
-    const testTemplate = templateLoader.countyConfWarning;
+    const testTemplate = countyConfWarning;
     expect(typeof testTemplate).toBe('string');
   });
 
   it('should be able to render countyFHAWarning template', () => {
-    const testTemplate = templateLoader.countyFHAWarning;
+    const testTemplate = countyFHAWarning;
     expect(typeof testTemplate).toBe('string');
   });
 
   it('should be able to render countyVAWarning template', () => {
-    const testTemplate = templateLoader.countyVAWarning;
+    const testTemplate = countyVAWarning;
     expect(typeof testTemplate).toBe('string');
   });
 
   it('should be able to render countyGenWarning template', () => {
-    const testTemplate = templateLoader.countyGenWarning;
+    const testTemplate = countyGenWarning;
     expect(typeof testTemplate).toBe('string');
   });
 
@@ -45,7 +50,7 @@ describe('explore-rates/template-loader', () => {
       y: 1,
       key: '50%',
     };
-    const testTemplate = templateLoader.chartTooltip(mockData);
+    const testTemplate = chartTooltip(mockData);
     expect(testTemplate).toBe(
       '<div class="chart-tooltip">' +
         '<strong class="lenders">1</strong>' +
@@ -62,7 +67,7 @@ describe('explore-rates/template-loader', () => {
       y: 3,
       key: '60%',
     };
-    const testTemplate = templateLoader.chartTooltip(mockData);
+    const testTemplate = chartTooltip(mockData);
     expect(testTemplate).toBe(
       '<div class="chart-tooltip">' +
         '<strong class="lenders">3</strong>' +

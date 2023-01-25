@@ -1,11 +1,8 @@
-// TODO: Remove jquery.
-const $ = require('jquery');
-
 const schoolModel = {
   values: {},
 
   init: function (nationalData, schoolData, programData) {
-    $.extend(this.values, schoolData, programData, nationalData);
+    Object.assign(this.values, schoolData, programData, nationalData);
 
     // Initialize default rate
     this.values.programDefaultRate = programData.defaultRate;
@@ -90,4 +87,5 @@ const schoolModel = {
     return values;
   },
 };
-module.exports = schoolModel;
+
+export default schoolModel;

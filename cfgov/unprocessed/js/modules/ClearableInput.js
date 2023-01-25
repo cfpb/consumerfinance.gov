@@ -1,4 +1,3 @@
-// Required modules.
 import { checkDom } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 
 /**
@@ -25,9 +24,7 @@ function ClearableInput(element) {
   function init() {
     _clearBtnDom.addEventListener('mousedown', _clearClicked);
     _inputDom.addEventListener('keyup', _inputTyped);
-
     _setClearBtnState(_inputDom.value);
-
     return this;
   }
 

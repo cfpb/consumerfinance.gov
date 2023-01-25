@@ -1,7 +1,5 @@
 import { analyticsLog, track } from './util/analytics-util';
 
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-
 // Retirement - Before You Claim custom analytics file
 
 (function () {
@@ -120,8 +118,7 @@ import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.
     for (let i = 0, len = lifestyleBtns.length; i < len; i++) {
       lifestyleBtns[i].addEventListener('click', function (event) {
         const target = event.currentTarget;
-        // TODO: migrate off closest requirement, if possible.
-        const $container = closest(target, '.lifestyle-question_container');
+        const $container = target.closest('.lifestyle-question_container');
         const question = $container.querySelector('h3').innerText.trim();
         const value = target.value;
         if (questionsAnswered.indexOf(question) === -1) {

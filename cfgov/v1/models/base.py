@@ -1,8 +1,10 @@
 import re
+from operator import itemgetter
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models import F, Value
+from django.db.models import F, Q, Value
 from django.utils import timezone, translation
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
@@ -13,13 +15,13 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
+    PageChooserPanel,
     StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, Site
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.search import index
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
@@ -75,7 +77,20 @@ class CFGOVPage(Page):
         through=CFGOVTaggedPages, blank=True, related_name="tagged_pages"
     )
     language = models.CharField(
-        choices=ref.supported_languages, default="en", max_length=100
+        choices=sorted(settings.LANGUAGES, key=itemgetter(1)),
+        default="en",
+        max_length=100,
+    )
+    english_page = models.ForeignKey(
+        Page,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="non_english_pages",
+        help_text=(
+            "Optionally select the English version of this page "
+            "(non-English pages only)"
+        ),
     )
     social_sharing_image = models.ForeignKey(
         "v1.CFGOVImage",
@@ -131,10 +146,6 @@ class CFGOVPage(Page):
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
 
-    search_fields = Page.search_fields + [
-        index.SearchField("sidefoot"),
-    ]
-
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
     sidefoot = StreamField(
@@ -176,7 +187,13 @@ class CFGOVPage(Page):
         FieldPanel("content_owners", "Content Owners"),
         FieldPanel("schema_json", "Structured Data"),
         MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
-        FieldPanel("language", "language"),
+        MultiFieldPanel(
+            [
+                FieldPanel("language", "Language"),
+                PageChooserPanel("english_page"),
+            ],
+            "Translation",
+        ),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass
@@ -381,6 +398,55 @@ class CFGOVPage(Page):
     @property
     def post_preview_cache_key(self):
         return "post_preview_{}".format(self.id)
+
+    def get_translations(self, inclusive=True, live=True):
+        if self.language == "en":
+            query = Q(english_page=self)
+        elif self.english_page:
+            query = Q(english_page=self.english_page) | Q(
+                pk=self.english_page.pk
+            )
+        else:
+            query = Q(pk__in=[])
+
+        if inclusive:
+            query = query | Q(pk=self.pk)
+        else:
+            query = query & ~Q(pk=self.pk)
+
+        pages = CFGOVPage.objects.filter(query)
+
+        if live:
+            pages = pages.live()
+
+        site = self.get_site()
+        if site:
+            pages = pages.in_site(site)
+
+        pages = pages.annotate(
+            language_display_order=models.Case(
+                *[
+                    models.When(language=language, then=i)
+                    for i, language in enumerate(dict(settings.LANGUAGES))
+                ]
+            ),
+        ).order_by("language_display_order")
+
+        return pages
+
+    def get_translation_links(self, request, inclusive=True, live=True):
+        language_names = dict(settings.LANGUAGES)
+
+        return [
+            {
+                "href": translation.get_url(request=request),
+                "language": translation.language,
+                "text": language_names[translation.language],
+            }
+            for translation in self.get_translations(
+                inclusive=inclusive, live=live
+            )
+        ]
 
 
 class CFGOVPageCategory(models.Model):

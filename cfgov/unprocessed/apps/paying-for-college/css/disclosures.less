@@ -2,22 +2,20 @@
    Global
    ========================================================================== */
 
-@small-font-size-px:    14px;
-@x-small-font-size-px:  12px;
+@small-font-size-px: 14px;
+@x-small-font-size-px: 12px;
 // Minimum width that putting the + or - sign inline with values in two-column line items works
-@bp-inline-sign-min:    689px;
+@bp-inline-sign-min: 689px;
 // Minimum width that bar graphs work in two columns
-@bp-graph-cols-min:     740px;
+@bp-graph-cols-min: 740px;
 
 .understanding-financial-aid-offer {
-
   // Hide the clear-input "helper" in IE10+; it throws off calculations
   input::-ms-clear {
     display: none;
   }
 
   .content {
-
     &_main {
       padding-top: 0;
       padding-bottom: 0;
@@ -37,21 +35,27 @@
     }
   }
 
-  .information-right, .information-wrong,
-  .offer-part_content-positive-cost, .offer-part_content-negative-cost,
-  .evaluate, .question, .get-options, .followup__no-not-sure, .followup__yes,
+  .information-right,
+  .information-wrong,
+  .offer-part_content-positive-cost,
+  .offer-part_content-negative-cost,
+  .evaluate,
+  .question,
+  .get-options,
+  .followup__no-not-sure,
+  .followup__yes,
   .next-steps {
     display: none;
   }
 
-  #info-right:target, #info-wrong:target {
+  #info-right:target,
+  #info-wrong:target {
     display: block;
     outline: none;
   }
 }
 
 .step {
-
   &_heading {
     .heading-2();
   }
@@ -66,7 +70,6 @@
 // A bottom border for the sections in step 3 that use a special grid (11 columns plus bleeding into one gutter)
 .offer-part:after,
 .criteria_wrapper:after {
-
   .respond-to-min( @bp-sm-min, {
     display: block;
     height: 1px;
@@ -92,12 +95,12 @@
    ========================================================================== */
 
 .understanding-financial-aid-offer .m-hero_image {
-  background-image: url( '/static/apps/paying-for-college/img/intro-195.png' );
+  background-image: url('/static/apps/paying-for-college/img/intro-195.png');
 }
 
-@media ( -webkit-min-device-pixel-ratio: 2 ), ( min-resolution: 192dpi ) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .understanding-financial-aid-offer .m-hero_image {
-    background-image: url( '/static/apps/paying-for-college/img/intro-390.png' );
+    background-image: url('/static/apps/paying-for-college/img/intro-390.png');
   }
 }
 
@@ -106,14 +109,14 @@
    ========================================================================== */
 
 .verify {
-  margin-top: unit( 20px / @base-font-size-px, em );
+  margin-top: unit(20px / @base-font-size-px, em);
 
   .respond-to-min( @bp-sm-min, {
     margin-top: unit(30px / @base-font-size-px, em);
   } );
 
   &_wrapper {
-    margin-bottom: unit( 20px / @base-font-size-px, em );
+    margin-bottom: unit(20px / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       .grid_nested-col-group();
@@ -122,8 +125,8 @@
   }
 
   &_content {
-
-    dt, dd {
+    dt,
+    dd {
       display: block;
     }
 
@@ -138,12 +141,11 @@
     .respond-to-min( @bp-xl-min, {
       .grid_column(6);
     } );
-
   }
 
   &_prompt {
     .heading-2();
-    margin-bottom: unit( 30px / @font-size, em );
+    margin-bottom: unit(30px / @font-size, em);
   }
 
   &_school,
@@ -160,8 +162,8 @@
   }
 
   &_list {
-    margin-top: unit( 15px / @base-font-size-px, em );
-    margin-bottom: unit( 15px / @base-font-size-px, em );
+    margin-top: unit(15px / @base-font-size-px, em);
+    margin-bottom: unit(15px / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       margin-top: unit(20px / @base-font-size-px, em);
@@ -179,7 +181,7 @@
   }
 
   &_value + &_heading {
-    padding-top: unit( 15px / @x-small-font-size-px, em );
+    padding-top: unit(15px / @x-small-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       padding-top: unit(20px / @x-small-font-size-px, em);
@@ -194,7 +196,7 @@
   }
 
   &_controls {
-    margin-top: unit( 30px / @base-font-size-px, em );
+    margin-top: unit(30px / @base-font-size-px, em);
     text-align: center;
 
     .respond-to-min( @bp-sm-min, {
@@ -216,10 +218,10 @@
    ========================================================================== */
 
 .instructions {
-  margin-top: unit( 30px / @base-font-size-px, em );
+  margin-top: unit(30px / @base-font-size-px, em);
 
   &_wrapper {
-    padding-bottom: unit( 5px / @base-font-size-px, em );
+    padding-bottom: unit(5px / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       .grid_nested-col-group();
@@ -228,7 +230,6 @@
   }
 
   &_content {
-
     .respond-to-min( @bp-sm-min, {
       .grid_column(6);
     } );
@@ -239,9 +240,9 @@
   }
 
   &_about-wrapper {
-    padding-top: unit( 20px / @base-font-size-px, em );
-    padding-bottom: unit( 20px / @base-font-size-px, em );
-    margin-top: unit( 30px / @base-font-size-px, em );
+    padding-top: unit(20px / @base-font-size-px, em);
+    padding-bottom: unit(20px / @base-font-size-px, em);
+    margin-top: unit(30px / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       .grid_column(5);
@@ -255,7 +256,6 @@
   &_about-heading {
     .heading-5();
   }
-
 }
 
 /* ==========================================================================
@@ -264,7 +264,7 @@
 
 .aid-form {
   @aid-form-left-inset: 40px;
-  margin-top: unit( 30px / @base-font-size-px, em );
+  margin-top: unit(30px / @base-font-size-px, em);
 
   .respond-to-min( @bp-sm-min, {
     margin-top: 0;
@@ -275,7 +275,7 @@
   } );
 
   &_heading {
-    margin-bottom: unit( 20px / @base-font-size-px, em );
+    margin-bottom: unit(20px / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       padding-bottom: unit(5px / @base-font-size-px, em);
@@ -284,7 +284,7 @@
   }
 
   &_title {
-    margin-bottom: unit( 5px / 18px, em );
+    margin-bottom: unit(5px / 18px, em);
   }
 
   &_caption {
@@ -294,7 +294,6 @@
 
   &_label-wrapper,
   .form-label_text-wrapper {
-
     .respond-to-min( @bp-sm-min, {
       .grid_column(12);
     } );
@@ -304,12 +303,11 @@
     } );
 
     .aid-form_definition {
-      margin-bottom: unit( 5px / @small-font-size-px, em );
+      margin-bottom: unit(5px / @small-font-size-px, em);
     }
   }
 
   &_input-wrapper {
-
     .respond-to-min( @bp-sm-min, {
       .grid_column(12);
     } );
@@ -333,7 +331,7 @@
 
     &__percent,
     &__time {
-      width: unit( 65px / @base-font-size-px, em );
+      width: unit(65px / @base-font-size-px, em);
       text-align: right;
     }
 
@@ -347,43 +345,43 @@
 
     &&__error {
       border-color: @red-80;
-      border-width: unit( 2px / @base-font-size-px, em );
+      border-width: unit(2px / @base-font-size-px, em);
     }
   }
 
   &_calc-error {
-    font-size: unit( @small-font-size-px / @base-font-size-px, em );
+    font-size: unit(@small-font-size-px / @base-font-size-px, em);
     line-height: 1.5;
-    margin-top: unit( 5px / @base-font-size-px, em );
+    margin-top: unit(5px / @base-font-size-px, em);
     display: none;
 
     & > .cf-icon-svg {
       color: @red-80;
-      margin-right: unit( 5px / @base-font-size-px, em );
+      margin-right: unit(5px / @base-font-size-px, em);
     }
   }
 
   &_unit {
     display: inline-block;
-    margin-top: unit( 6px / @base-font-size-px, em );
-    margin-left: unit( 10px / @base-font-size-px, em );
+    margin-top: unit(6px / @base-font-size-px, em);
+    margin-left: unit(10px / @base-font-size-px, em);
   }
 
   &_equals-line {
-    margin-top: unit( 15px / @base-font-size-px, em );
-    margin-bottom: unit( 5px / @base-font-size-px, em );
+    margin-top: unit(15px / @base-font-size-px, em);
+    margin-bottom: unit(5px / @base-font-size-px, em);
     background-color: @black;
   }
 
   &_summary,
   &_summary.column-well_content {
-    padding-top: unit( 20px / @base-font-size-px, em );
+    padding-top: unit(20px / @base-font-size-px, em);
     padding-right: (@grid_gutter-width / 2);
-    padding-bottom: unit( 20px / @base-font-size-px, em );
+    padding-bottom: unit(20px / @base-font-size-px, em);
     padding-left: (@grid_gutter-width / 2);
-    margin-top: unit( 30px / @base-font-size-px, em );
-    margin-right: -( @grid_gutter-width / 2 );
-    margin-left: -( @grid_gutter-width / 2 );
+    margin-top: unit(30px / @base-font-size-px, em);
+    margin-right: -(@grid_gutter-width / 2);
+    margin-left: -(@grid_gutter-width / 2);
     background-color: @gray-5;
 
     .respond-to-min( @bp-sm-min, {
@@ -403,7 +401,7 @@
   }
 
   &_summary-heading {
-    padding-bottom: unit( 5px / @font-size, em );
+    padding-bottom: unit(5px / @font-size, em);
     border-bottom: 1px solid @black;
     .heading-4();
 
@@ -413,11 +411,11 @@
   }
 
   &_definition {
-    font-size: unit( @small-font-size-px / @base-font-size-px, em );
+    font-size: unit(@small-font-size-px / @base-font-size-px, em);
   }
 
   &_group-header {
-    margin-bottom: unit( 20px / @base-font-size-px, em );
+    margin-bottom: unit(20px / @base-font-size-px, em);
 
     .respond-to-min( @bp-lg-min, {
       margin-left: unit(-@aid-form-left-inset / @base-font-size-px, em);
@@ -425,32 +423,28 @@
   }
 
   &_inline-subtotal {
-
     .respond-to-min( @bp-sm-min, {
       display: none;
     } );
   }
 
   .form-group + .form-group {
-    margin-top: unit( 60px / @base-font-size-px, em );
+    margin-top: unit(60px / @base-font-size-px, em);
   }
 
   .form-group_item {
-
     .respond-to-min( @bp-sm-min, {
       .grid_nested-col-group();
     } );
   }
 
   .form-group_item + .form-group_item {
-
     .respond-to-min( @bp-sm-min, {
       margin-top: unit(20px / @base-font-size-px, em);
     } );
   }
 
   .form-label {
-
     .respond-to-min( @bp-med-min, {
       margin-top: unit(4px / @base-font-size-px, em);
     } );
@@ -459,22 +453,22 @@
   .form-label-header {
     font-style: normal;
     font-weight: bolder;
-    font-size: .875em;
+    font-size: 0.875em;
     display: block;
     letter-spacing: 1px;
     line-height: 1.25;
     text-transform: uppercase;
-    margin-bottom: .71428571em;
-    padding-bottom: unit( 5px / @small-font-size-px, em );
+    margin-bottom: 0.71428571em;
+    padding-bottom: unit(5px / @small-font-size-px, em);
     border-bottom: 1px solid @gray-40;
 
     & + .aid-form_definition {
-      margin-top: unit( -5px / @small-font-size-px, em );
+      margin-top: unit(-5px / @small-font-size-px, em);
     }
   }
 
   .form-label + .aid-form_definition {
-    margin-top: unit( -5px / @small-font-size-px, em );
+    margin-top: unit(-5px / @small-font-size-px, em);
   }
 }
 
@@ -482,24 +476,24 @@
   @line-item-font-size: 18px;
 
   .grid_nested-col-group();
-  margin-bottom: unit( 15px / @font-size, em );
+  margin-bottom: unit(15px / @font-size, em);
   .heading-4();
 
   &_sign {
     display: inline-block;
-    margin-right: unit( 5px / @line-item-font-size, em );
-    font-size: unit( @line-item-font-size / @font-size, em );
+    margin-right: unit(5px / @line-item-font-size, em);
+    font-size: unit(@line-item-font-size / @font-size, em);
   }
 
   &_currency {
     position: absolute;
-    right: unit( 88px / @font-size, em );
+    right: unit(88px / @font-size, em);
   }
 
   &_explanation {
     display: block;
-    margin-top: unit( 5px / @line-item-font-size, em );
-    font-size: unit( 14px / @line-item-font-size, em );
+    margin-top: unit(5px / @line-item-font-size, em);
+    font-size: unit(14px / @line-item-font-size, em);
   }
 
   &_title {
@@ -543,7 +537,7 @@
   }
 
   & + p {
-    margin-top: unit( 20px / @base-font-size-px, em );
+    margin-top: unit(20px / @base-font-size-px, em);
   }
 }
 
@@ -552,21 +546,19 @@
    ========================================================================== */
 
 .review {
-  margin-top: unit( 45px / @base-font-size-px, em );
+  margin-top: unit(45px / @base-font-size-px, em);
 
   &_wrapper {
-
     .respond-to-min( @bp-med-min, {
       .grid_nested-col-group();
     } );
 
     & + .criteria {
-      margin-top: unit( 30px / @base-font-size-px, em );
+      margin-top: unit(30px / @base-font-size-px, em);
     }
   }
 
   &_intro {
-
     .respond-to-min( @bp-med-min, {
       .grid_column(10);
     } );
@@ -580,7 +572,7 @@
 .offer-part {
   /* padding-top, z-index, and background color need to be set here to make
      sticky sidebars work correctly */
-  padding-top: unit( 45px / @base-font-size-px, em );
+  padding-top: unit(45px / @base-font-size-px, em);
   z-index: 200;
   background-color: #fff;
 
@@ -590,7 +582,7 @@
   } );
 
   &_intro {
-    margin-bottom: unit( 15px / @base-font-size-px, em );
+    margin-bottom: unit(15px / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       .grid_column(12);
@@ -598,14 +590,12 @@
   }
 
   &_intro-wrapper {
-
     .respond-to-min( @bp-sm-min, {
       .grid_nested-col-group();
     } );
   }
 
   &_intro-content {
-
     .respond-to-min( @bp-sm-min, {
       .grid_column(12);
     } );
@@ -624,14 +614,12 @@
   }
 
   &_form-wrapper {
-
     .respond-to-min( @bp-sm-min, {
       .grid_column(6);
     } );
   }
 
   &_summary-wrapper {
-
     .respond-to-min( @bp-sm-min, {
       .grid_column(6);
       padding-top: unit(30px / @base-font-size-px, em);
@@ -654,7 +642,6 @@
     } );
 
     .line-item {
-
       .respond-to-range( @bp-sm-min, @bp-inline-sign-min, {
         font-size: unit(16px / @base-font-size-px, em);
       } );
@@ -662,7 +649,6 @@
   }
 
   &_terms {
-
     .respond-to-min( @bp-sm-min, {
       .grid_column(12);
     } );
@@ -674,26 +660,24 @@
   }
 
   &_term {
-    margin-top: unit( 15px / @base-font-size-px, em );
-    margin-bottom: unit( 5px / @base-font-size-px, em );
+    margin-top: unit(15px / @base-font-size-px, em);
+    margin-bottom: unit(5px / @base-font-size-px, em);
   }
 
   &.cost-to-attend {
-    margin-top: unit( 30px / @base-font-size-px, em );
+    margin-top: unit(30px / @base-font-size-px, em);
   }
 }
 
 .contributions,
 .loans,
 .future {
-
   .column-well {
     padding-top: 0;
     padding-bottom: 0;
   }
 
   .aid-form_summary {
-
     .respond-to-min( @bp-sm-min, {
       padding-top: unit(30px / @base-font-size-px, em);
       padding-bottom: unit(30px / @base-font-size-px, em);
@@ -703,7 +687,6 @@
 
 .contributions,
 .loans {
-
   .big-picture {
     display: none;
     padding-bottom: 0;
@@ -720,7 +703,6 @@
 }
 
 .future {
-
   .aid-form_summary.debt-summary {
     margin-top: 0;
     background-color: @gold-40;
@@ -740,11 +722,10 @@
 }
 
 .loans {
-
   &_line {
     border-top: 1px dotted @gray-40;
-    margin-top: unit( 30px / @base-font-size-px, em );
-    margin-bottom: unit( 15px / @base-font-size-px, em );
+    margin-top: unit(30px / @base-font-size-px, em);
+    margin-bottom: unit(15px / @base-font-size-px, em);
     background-color: transparent;
 
     .respond-to-min( @bp-sm-min, {
@@ -755,11 +736,11 @@
 
 .private-loans {
   border-bottom: 1px dotted @gray-40;
-  margin-bottom: unit( 15px / @base-font-size-px, em );
+  margin-bottom: unit(15px / @base-font-size-px, em);
 
   &_heading {
     border-bottom: 1px solid @gray-40;
-    margin-bottom: unit( 15px / @base-font-size-px, em );
+    margin-bottom: unit(15px / @base-font-size-px, em);
     position: relative;
   }
 
@@ -781,26 +762,25 @@
 
   &_remove-btn {
     position: absolute;
-    top: unit( -8px / @base-font-size-px, em );
+    top: unit(-8px / @base-font-size-px, em);
     right: 0;
     font-size: 1em;
   }
 
   &_add-btn {
-    margin-top: unit( 20px / @base-font-size-px, em );
+    margin-top: unit(20px / @base-font-size-px, em);
     margin-right: 0;
-    margin-bottom: unit( 30px / @base-font-size-px, em );
+    margin-bottom: unit(30px / @base-font-size-px, em);
     margin-left: 0;
     text-align: left;
   }
 
   &_loan + &_loan {
-    margin-top: unit( 45px / @base-font-size-px, em );
+    margin-top: unit(45px / @base-font-size-px, em);
   }
 }
 
 .debt-summary {
-
   .aid-form_summary-heading {
     .heading-3();
 
@@ -815,21 +795,19 @@
    ========================================================================== */
 
 .evaluate {
-  margin-top: unit( 45px / @base-font-size-px, em );
+  margin-top: unit(45px / @base-font-size-px, em);
 
   &_wrapper {
-
     .respond-to-min( @bp-med-min, {
       .grid_nested-col-group();
     } );
 
     & + .criteria {
-      margin-top: unit( 30px / @base-font-size-px, em );
+      margin-top: unit(30px / @base-font-size-px, em);
     }
   }
 
   &_intro {
-
     .respond-to-min( @bp-med-min, {
       .grid_column(10);
     } );
@@ -841,7 +819,7 @@
 }
 
 .criteria {
-  margin-top: unit( 30px / @base-font-size-px, em );
+  margin-top: unit(30px / @base-font-size-px, em);
 
   .respond-to-min( @bp-graph-cols-min, {
     margin-top: unit(45px / @base-font-size-px, em);
@@ -852,13 +830,11 @@
   }
 
   &_wrapper {
-
     .respond-to-min( @bp-sm-min, {
       .grid_nested-col-group();
     } );
 
     &:after {
-
       .respond-to-range( @bp-sm-min, @bp-graph-cols-min - 1, {
         display: none;
       } );
@@ -866,7 +842,6 @@
   }
 
   &_intro {
-
     .respond-to-min( @bp-sm-min, {
       .grid_column(10);
     } );
@@ -881,7 +856,7 @@
   }
 
   & + & {
-    padding-top: unit( 15px / @base-font-size-px, em );
+    padding-top: unit(15px / @base-font-size-px, em);
     border-top: 1px solid @gray-20;
 
     .respond-to-min( @bp-graph-cols-min, {
@@ -892,7 +867,6 @@
 }
 
 .metric {
-
   .respond-to-min( @bp-sm-min, {
     .grid_column(10);
   } );
@@ -916,12 +890,12 @@
   }
 
   &_explanation {
-    margin-bottom: unit( 15px / 14px, em );
-    font-size: unit( 14px / @base-font-size-px, em );
+    margin-bottom: unit(15px / 14px, em);
+    font-size: unit(14px / @base-font-size-px, em);
   }
 
   &_notification {
-    margin-bottom: unit( 15px / @base-font-size-px, em );
+    margin-bottom: unit(15px / @base-font-size-px, em);
 
     .cf-notification_text,
     .cf-notification_icon {
@@ -959,21 +933,18 @@
   }
 
   &.column-well__not-stacked {
-
     .respond-to-range( @bp-sm-min, @bp-graph-cols-min - 1, {
       padding-top: 0;
     } );
   }
 
   &.column-well__not-stacked:after {
-
     .respond-to-range( @bp-sm-min, @bp-graph-cols-min - 1, {
       display: none;
     } );
   }
 
   .column-well_content {
-
     .respond-to-range( @bp-sm-min, @bp-graph-cols-min - 1, {
       padding-right: 0;
       padding-left: 0;
@@ -982,13 +953,12 @@
 }
 
 .salary-and-debt {
-
   @salary-and-debt-font-size: 18px;
 
   &_projection {
     .grid_nested-col-group();
-    max-width: unit( 380px / @base-font-size-px, em );
-    margin-bottom: unit( 20px / @base-font-size-px, em );
+    max-width: unit(380px / @base-font-size-px, em);
+    margin-bottom: unit(20px / @base-font-size-px, em);
   }
 
   &_projection-name {
@@ -1004,12 +974,12 @@
 
   &_explanation {
     display: block;
-    margin-top: unit( 5px / @salary-and-debt-font-size, em );
-    font-size: unit( 14px / @salary-and-debt-font-size, em );
+    margin-top: unit(5px / @salary-and-debt-font-size, em);
+    font-size: unit(14px / @salary-and-debt-font-size, em);
   }
 
   &_payment-term {
-    margin-bottom: unit( 30px / @base-font-size-px, em );
+    margin-bottom: unit(30px / @base-font-size-px, em);
 
     label {
       // Bug in Chrome and Safari
@@ -1030,11 +1000,10 @@
 }
 
 .debt-burden {
-
   &_projection {
     .grid_nested-col-group();
-    max-width: unit( 380px / @base-font-size-px, em );
-    margin-bottom: unit( 20px / @base-font-size-px, em );
+    max-width: unit(380px / @base-font-size-px, em);
+    margin-bottom: unit(20px / @base-font-size-px, em);
   }
 
   &_projection-name {
@@ -1047,7 +1016,7 @@
   }
 
   &_payment-term {
-    margin-bottom: unit( 30px / @base-font-size-px, em );
+    margin-bottom: unit(30px / @base-font-size-px, em);
 
     label {
       // Bug in Chrome and Safari
@@ -1068,9 +1037,9 @@
 }
 
 .debt-equation {
-  max-width: unit( 380px / @base-font-size-px, em );
-  padding-top: unit( 10px / @base-font-size-px, em );
-  margin-bottom: unit( 30px / @base-font-size-px, em );
+  max-width: unit(380px / @base-font-size-px, em);
+  padding-top: unit(10px / @base-font-size-px, em);
+  margin-bottom: unit(30px / @base-font-size-px, em);
 
   &_part {
     float: left;
@@ -1090,7 +1059,7 @@
 
   &_symbol {
     @symbol-font-size-px: 36px;
-    margin-top: unit( 3px / @symbol-font-size-px, em );
+    margin-top: unit(3px / @symbol-font-size-px, em);
     width: 15%;
     float: left;
     font-size: @symbol-font-size-px;
@@ -1098,29 +1067,29 @@
   }
 
   &_number {
-    font-size: unit( 18px / @base-font-size-px, em );
+    font-size: unit(18px / @base-font-size-px, em);
   }
 }
 
 .bar-graph {
-  @bar-graph-container-max-width:  380px;
-  @bar-graph-width:                45px;
-  @bar-graph-width-sm:             25px;
-  @bar-graph-width-xs:             17px;
-  @bar-graph-height:              130px;
-  @bar-graph-label-width:         135px;
-  @bar-graph-value-min-width:      95px;
-  @bar-graph-you-font-size:        18px;
-  @bar-graph-average-font-size:    16px;
-  @bar-graph-line-overhang:         6px;
-  @bar-graph-top-label-width:      70px;
-  @bar-graph-top-label-height:     20px;
+  @bar-graph-container-max-width: 380px;
+  @bar-graph-width: 45px;
+  @bar-graph-width-sm: 25px;
+  @bar-graph-width-xs: 17px;
+  @bar-graph-height: 130px;
+  @bar-graph-label-width: 135px;
+  @bar-graph-value-min-width: 95px;
+  @bar-graph-you-font-size: 18px;
+  @bar-graph-average-font-size: 16px;
+  @bar-graph-line-overhang: 6px;
+  @bar-graph-top-label-width: 70px;
+  @bar-graph-top-label-height: 20px;
   // A little cheat to make the line look vertically centered
-  @bar-graph-line-top-cheat:        3px;
+  @bar-graph-line-top-cheat: 3px;
 
   height: @bar-graph-height;
-  max-width: unit( @bar-graph-container-max-width / @base-font-size-px, em );
-  margin-bottom: unit( 10px / @base-font-size-px, em );
+  max-width: unit(@bar-graph-container-max-width / @base-font-size-px, em);
+  margin-bottom: unit(10px / @base-font-size-px, em);
   position: relative;
 
   &_point {
@@ -1192,22 +1161,22 @@
 
   &_top-label {
     width: @bar-graph-top-label-width;
-    margin-left: -( @bar-graph-top-label-width - @bar-graph-width ) / 2 - @bar-graph-line-overhang;
+    margin-left: -(@bar-graph-top-label-width - @bar-graph-width) / 2 - @bar-graph-line-overhang;
     position: absolute;
-    top: unit( -@bar-graph-top-label-height / @small-font-size-px, em );
+    top: unit(-@bar-graph-top-label-height / @small-font-size-px, em);
     left: 50%;
     z-index: 100;
-    font-size: unit( @small-font-size-px / @base-font-size-px, em );
+    font-size: unit(@small-font-size-px / @base-font-size-px, em);
     text-align: center;
   }
 
   &_point__you {
-    font-size: unit( @bar-graph-you-font-size / @base-font-size-px, em );
+    font-size: unit(@bar-graph-you-font-size / @base-font-size-px, em);
 
     .bar-graph_line {
       border-top-color: @black;
       border-top-style: solid;
-      top: unit( (@bar-graph-you-font-size + @bar-graph-line-top-cheat) / 2, px );
+      top: unit((@bar-graph-you-font-size + @bar-graph-line-top-cheat) / 2, px);
     }
   }
 
@@ -1217,7 +1186,10 @@
     .bar-graph_line {
       border-top-color: @gray-dark;
       border-top-style: dotted;
-      top: unit( (@bar-graph-average-font-size + @bar-graph-line-top-cheat) / 2, px );
+      top: unit(
+        (@bar-graph-average-font-size + @bar-graph-line-top-cheat) / 2,
+        px
+      );
     }
   }
 
@@ -1238,8 +1210,8 @@
   }
 
   // Median salary and loan default graphs need room above for the top-label
-  &[data-metric="medianSalary"],
-  &[data-metric="defaultRate"], {
+  &[data-metric='medianSalary'],
+  &[data-metric='defaultRate'] {
     border-top: @bar-graph-top-label-height solid transparent;
   }
 }
@@ -1253,18 +1225,17 @@
    ========================================================================== */
 
 .debt-burden .column-well_content {
-
   .respond-to-min( @bp-graph-cols-min, {
     position: absolute;
   } );
 }
 
 .estimated-expenses {
-  padding-top: unit( 10px / @base-font-size-px, em );
-  padding-bottom: unit( 15px / @base-font-size-px, em );
+  padding-top: unit(10px / @base-font-size-px, em);
+  padding-bottom: unit(15px / @base-font-size-px, em);
   border-top: 1px solid @gray-40;
-  margin-top: unit( 30px / @base-font-size-px, em );
-  margin-bottom: unit( 15px / @base-font-size-px, em );
+  margin-top: unit(30px / @base-font-size-px, em);
+  margin-bottom: unit(15px / @base-font-size-px, em);
 
   .respond-to-min( @bp-sm-min, {
     .grid_column(10);
@@ -1281,7 +1252,7 @@
   } );
 
   &_region {
-    margin-bottom: unit( 20px / @base-font-size-px, em );
+    margin-bottom: unit(20px / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       .grid_column(6);
@@ -1293,14 +1264,12 @@
     margin-top: 0;
 
     &_heading {
-
       .respond-to-range( @bp-sm-min, @bp-graph-cols-min, {
         border-bottom: none;
       } );
     }
 
     .form-label_text-wrapper {
-
       .respond-to-min( @bp-sm-min, {
         .grid_column(12);
       } );
@@ -1311,7 +1280,6 @@
     }
 
     &_input-wrapper {
-
       .respond-to-min( @bp-sm-min, {
         .grid_column(12);
       } );
@@ -1342,11 +1310,9 @@
       .respond-to-min( @bp-med-min, {
         width: 75%;
       } );
-
     }
 
     &_summary {
-
       .respond-to-min( @bp-sm-min, {
         padding-left: 0;
         margin-top: unit(30px / @base-font-size-px, em);
@@ -1365,22 +1331,19 @@
 
     &_summary-heading {
       .heading-4();
-      margin-bottom: unit( 10px / @font-size, em );
+      margin-bottom: unit(10px / @font-size, em);
       text-transform: none;
     }
   }
 
   .line-item {
-
     &_title {
-
       .respond-to-min( @bp-sm-min, {
         .grid_column(8);
       } );
     }
 
     &_value {
-
       .respond-to-min( @bp-sm-min, {
         .grid_column(4);
       } );
@@ -1388,7 +1351,7 @@
 
     &_sign {
       position: absolute;
-      right: unit( 100px / @base-font-size-px, em );
+      right: unit(100px / @base-font-size-px, em);
     }
   }
 }
@@ -1401,7 +1364,7 @@
   width: 100%;
   padding: 15px;
   background-color: @gold-20;
-  font-size: unit( 14px / @base-font-size-px, em );
+  font-size: unit(14px / @base-font-size-px, em);
 
   .respond-to-min( @bp-med-min, {
     top: -100em;
@@ -1412,10 +1375,11 @@
    Continue to step 2, and the big question
    ========================================================================== */
 
-.continue, .question {
-  padding-top: unit( 25px / @base-font-size-px, em );
-  padding-bottom: unit( 5px / @base-font-size-px, em );
-  margin-top: unit( 30px / @base-font-size-px, em );
+.continue,
+.question {
+  padding-top: unit(25px / @base-font-size-px, em);
+  padding-bottom: unit(5px / @base-font-size-px, em);
+  margin-top: unit(30px / @base-font-size-px, em);
   background-color: @teal-20;
 
   .respond-to-min( @bp-sm-min, {
@@ -1425,14 +1389,12 @@
   } );
 
   &_wrapper {
-
     .respond-to-min( @bp-med-min, {
       .grid_nested-col-group();
     } );
   }
 
   &_content {
-
     .respond-to-min( @bp-med-min, {
       .grid_column(10);
     } );
@@ -1442,9 +1404,10 @@
     } );
   }
 
-  &_answers, &_controls {
-    margin-top: unit( 20px / @base-font-size-px, em );
-    margin-bottom: unit( 20px / @base-font-size-px, em );
+  &_answers,
+  &_controls {
+    margin-top: unit(20px / @base-font-size-px, em);
+    margin-bottom: unit(20px / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       margin-top: unit(30px / @base-font-size-px, em);
@@ -1458,28 +1421,25 @@
    ========================================================================== */
 
 .get-options {
-  margin-top: unit( 45px / @base-font-size-px, em );
+  margin-top: unit(45px / @base-font-size-px, em);
 
   .respond-to-min( @bp-sm-min, {
     padding-bottom: unit(30px / @base-font-size-px, em);
   } );
 
   &_wrapper {
-
     .respond-to-min( @bp-med-min, {
       .grid_nested-col-group();
     } );
   }
 
   &_wrapper + &_wrapper {
-
     .respond-to-min( @bp-sm-min, {
       .grid_nested-col-group();
     } );
   }
 
   &_intro {
-
     .respond-to-min( @bp-med-min, {
       .grid_column(10);
     } );
@@ -1494,7 +1454,7 @@
   }
 
   .step_intro + p {
-    margin-top: unit( 20px / @base-font-size-px, em );
+    margin-top: unit(20px / @base-font-size-px, em);
   }
 
   & + .content_line {
@@ -1506,7 +1466,6 @@
   }
 
   &__settlement {
-
     .respond-to-min( @bp-sm-min, {
       .grid_column(6);
     } );
@@ -1517,7 +1476,7 @@
   }
 
   &__sidebar {
-    margin-top: unit( 60px / @base-font-size-px, em );
+    margin-top: unit(60px / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       .grid_column(6);
@@ -1528,13 +1487,13 @@
     } );
 
     .header-slug {
-      margin-top: unit( 45px / @base-font-size-px, em );
+      margin-top: unit(45px / @base-font-size-px, em);
     }
   }
 }
 
 .option {
-  margin-top: unit( 45px / @base-font-size-px, em );
+  margin-top: unit(45px / @base-font-size-px, em);
 
   .respond-to-min( @bp-med-min, {
     .grid_column(4);
@@ -1556,53 +1515,52 @@
   }
 
   &__maximize-grants {
-    background-image: url( '/static/apps/paying-for-college/img/maximize-grants_150.png' );
+    background-image: url('/static/apps/paying-for-college/img/maximize-grants_150.png');
   }
 
   &__reduce-costs {
-    background-image: url( '/static/apps/paying-for-college/img/reduce-costs_150.png' );
+    background-image: url('/static/apps/paying-for-college/img/reduce-costs_150.png');
   }
 
   &__different-program {
-    background-image: url( '/static/apps/paying-for-college/img/different-program_150.png' );
+    background-image: url('/static/apps/paying-for-college/img/different-program_150.png');
   }
 
   &__transfer-credits {
-    background-image: url( '/static/apps/paying-for-college/img/transfer-credits_150.png' );
+    background-image: url('/static/apps/paying-for-college/img/transfer-credits_150.png');
   }
 
   &__explore-schools {
-    background-image: url( '/static/apps/paying-for-college/img/explore-schools_150.png' );
+    background-image: url('/static/apps/paying-for-college/img/explore-schools_150.png');
   }
 
   &__work-while-studying {
-    background-image: url( '/static/apps/paying-for-college/img/work-while-studying_150.png' );
+    background-image: url('/static/apps/paying-for-college/img/work-while-studying_150.png');
   }
 
-  @media ( -webkit-min-device-pixel-ratio: 2 ), ( min-resolution: 192dpi ) {
-
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     &__maximize-grants {
-      background-image: url( '/static/apps/paying-for-college/img/maximize-grants_300.png' );
+      background-image: url('/static/apps/paying-for-college/img/maximize-grants_300.png');
     }
 
     &__reduce-costs {
-      background-image: url( '/static/apps/paying-for-college/img/reduce-costs_300.png' );
+      background-image: url('/static/apps/paying-for-college/img/reduce-costs_300.png');
     }
 
     &__different-program {
-      background-image: url( '/static/apps/paying-for-college/img/different-program_300.png' );
+      background-image: url('/static/apps/paying-for-college/img/different-program_300.png');
     }
 
     &__transfer-credits {
-      background-image: url( '/static/apps/paying-for-college/img/transfer-credits_300.png' );
+      background-image: url('/static/apps/paying-for-college/img/transfer-credits_300.png');
     }
 
     &__explore-schools {
-      background-image: url( '/static/apps/paying-for-college/img/explore-schools_300.png' );
+      background-image: url('/static/apps/paying-for-college/img/explore-schools_300.png');
     }
 
     &__work-while-studying {
-      background-image: url( '/static/apps/paying-for-college/img/work-while-studying_300.png' );
+      background-image: url('/static/apps/paying-for-college/img/work-while-studying_300.png');
     }
   }
 
@@ -1610,7 +1568,7 @@
   // X-small and small screens: 150px + 30px padding above and below the image
   // Meidum and larger screens: 150px + 60px padding above and below the image
   &_heading {
-    padding-top: unit( 210px / @font-size, em );
+    padding-top: unit(210px / @font-size, em);
     .heading-4();
 
     .respond-to-min( @bp-med-min, {
@@ -1632,7 +1590,6 @@
   }
 
   & + & + & &_heading {
-
     .respond-to-min( @bp-sm-min, {
       border-top: 1px solid @gray-40;
     } );
@@ -1643,7 +1600,6 @@
   }
 
   & + & + & + & &_heading {
-
     .respond-to-min( @bp-med-min, {
       border-top: 1px solid @gray-40;
     } );
@@ -1651,7 +1607,6 @@
 
   // Settlement school modifications
   &__settlement {
-
     .respond-to-min( @bp-med-min, {
       .grid_column(1, 2);
     } );
@@ -1666,15 +1621,12 @@
     }
 
     & + & + & .option_heading {
-
       .respond-to-min( @bp-sm-min, {
         border-top: 1px solid @gray-40;
       } );
-
     }
 
     & + & + & + & .option_heading {
-
       .respond-to-min( @bp-med-min, {
         border-top: 1px solid @gray-40;
       } );
@@ -1687,10 +1639,10 @@
    ========================================================================== */
 
 .next-steps {
-  padding-bottom: unit( 30px / @base-font-size-px, em );
+  padding-bottom: unit(30px / @base-font-size-px, em);
 
   &_wrapper {
-    margin-top: unit( 30px / @base-font-size-px, em );
+    margin-top: unit(30px / @base-font-size-px, em);
 
     .respond-to-min( @bp-med-min, {
       margin-top: unit(45px / @base-font-size-px, em);
@@ -1699,7 +1651,6 @@
   }
 
   &_intro {
-
     .respond-to-min( @bp-med-min, {
       .grid_column(10);
     } );
@@ -1710,7 +1661,7 @@
   }
 
   &_list {
-    margin-top: unit( 45px / @base-font-size-px, em );
+    margin-top: unit(45px / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       .grid_nested-col-group();
@@ -1722,7 +1673,7 @@
   }
 
   &_list-item {
-    margin-top: unit( 30px / @base-font-size-px, em );
+    margin-top: unit(30px / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       margin-top: 0;
@@ -1739,7 +1690,7 @@
   }
 
   &_controls {
-    margin-top: unit( 20px / @base-font-size-px, em );
+    margin-top: unit(20px / @base-font-size-px, em);
     margin-left: -2.5em;
 
     .respond-to-min( @bp-sm-min, {
@@ -1773,12 +1724,11 @@
    ========================================================================== */
 
 .about-this-tool {
-  margin-bottom: unit( 60px / @base-font-size-px, em );
+  margin-bottom: unit(60px / @base-font-size-px, em);
 
   .content_intro {
     border: 0;
-    padding: unit( @grid_gutter-width / @base-font-size-px, em )
-             0;
+    padding: unit(@grid_gutter-width / @base-font-size-px, em) 0;
 
     .respond-to-min( @bp-sm-min, {
       .grid_column(12);
@@ -1797,6 +1747,6 @@
    Scripted Elements
    ========================================================================== */
 
-[data-multi_year="false"] {
+[data-multi_year='false'] {
   display: none;
 }

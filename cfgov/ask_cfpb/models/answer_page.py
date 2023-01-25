@@ -12,8 +12,6 @@ from wagtail.admin.edit_handlers import (
     TabbedInterface,
 )
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
-from wagtail.search import index
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
@@ -291,11 +289,6 @@ class AnswerPage(CFGOVPage):
 
     sidebar_panels = [
         StreamFieldPanel("sidebar"),
-    ]
-
-    search_fields = Page.search_fields + [
-        index.SearchField("answer_content"),
-        index.SearchField("short_answer"),
     ]
 
     edit_handler = TabbedInterface(

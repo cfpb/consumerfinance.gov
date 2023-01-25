@@ -17,7 +17,9 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
 # This is the root of the Django project, 'cfgov'
 PROJECT_ROOT = REPOSITORY_ROOT.joinpath("cfgov")
-V1_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2", "v1")
+
+# Templates that are not scoped to specific Django apps will live here
+GLOBAL_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2")
 
 SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(32))
 
@@ -112,32 +114,6 @@ INSTALLED_APPS = (
     "rest_framework",
 )
 
-WAGTAILSEARCH_BACKENDS = {
-    # The default search backend for Wagtail is the db backend, which does not
-    # support the custom search_fields defined on Page model descendents when
-    # using `Page.objects.search()`.
-    #
-    # Other backends *do* support those custom search_fields, so for now to
-    # preserve the current behavior of /admin/pages/search (which calls
-    # `Page.objects.search()`), the default backend will remain `db`.
-    #
-    # This also preserves the current behavior of our external link search,
-    # /admin/external-links/, which calls each page model's `objects.search()`
-    # explicitly to get results, but which returns fewer results with the
-    # Postgres full text backend.
-    #
-    # An upcoming effort to overhaul search within consumerfinance.gov and
-    # Wagtail should address these issues. In the meantime, Postgres full text
-    # search with the custom search_fields defined on our models is available
-    # with the "fulltext" backend defined below.
-    "default": {
-        "BACKEND": "wagtail.search.backends.db",
-    },
-    "fulltext": {
-        "BACKEND": "wagtail.search.backends.database",
-    },
-}
-
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
@@ -195,9 +171,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.jinja2.Jinja2",
         # Look for Jinja2 templates in these directories
         "DIRS": [
-            V1_TEMPLATE_ROOT,
-            V1_TEMPLATE_ROOT.joinpath("_includes"),
-            V1_TEMPLATE_ROOT.joinpath("_layouts"),
+            GLOBAL_TEMPLATE_ROOT,
             PROJECT_ROOT.joinpath("static_built"),
         ],
         # Look for Jinja2 templates in each app under a jinja2 subdirectory
@@ -211,6 +185,7 @@ TEMPLATES = [
                 "jinja2.ext.loopcontrols",
                 "flags.jinja2tags.flags",
                 "core.jinja2tags.filters",
+                "core.jinja2tags.language",
                 "agreements.jinja2tags.agreements",
                 "mega_menu.jinja2tags.MegaMenuExtension",
                 "prepaid_agreements.jinja2tags.prepaid_agreements",
@@ -254,9 +229,19 @@ LANGUAGE_CODE = "en-us"
 LANGUAGES = (
     ("en", _("English")),
     ("es", _("Spanish")),
+    ("zh-Hant", _("Chinese (Traditional)")),
+    ("vi", _("Vietnamese")),
+    ("ko", _("Korean")),
+    ("tl", _("Tagalog")),
+    ("ru", _("Russian")),
+    ("ar", _("Arabic")),
+    ("ht", _("Haitian Creole")),
 )
 
-LOCALE_PATHS = (os.path.join(PROJECT_ROOT, "locale"),)
+# Add the Django project cfgov/cfgov/locale/ directory to LOCALE_PATHS.
+# This will make the search order: cfgov/locale then APP/locale for every APP
+# in INSTALLED_APPS.
+LOCALE_PATHS = (os.path.join(PROJECT_ROOT, "cfgov", "locale"),)
 
 TIME_ZONE = "America/New_York"
 
@@ -463,6 +448,17 @@ if ENABLE_CLOUDFRONT_CACHE_PURGE:
     }
 
 # CSP Allowlists
+#
+# Please note: Changing these lists will change the value of the
+# Content-Security-Policy header Django returns. Django does NOT include
+# header values when calculating the response hash returned in the ETag
+# header.
+# Our Akamai cache uses the ETag header to know whether a cached copy of a
+# page has been updated after it expires or after an invalidation purge.
+#
+# Together, this means that any changes to these CSP values WILL NOT BE
+# RETURNED by Akamai until a page's non-header content changes, or a
+# delete-purge is performed.
 
 # These specify what is allowed in <script> tags
 CSP_SCRIPT_SRC = (
@@ -470,21 +466,18 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "*.consumerfinance.gov",
+    "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
     "*.googleoptimize.com",
-    "tagmanager.google.com",
     "optimize.google.com",
     "api.mapbox.com",
     "js-agent.newrelic.com",
-    "dnn506yrbagrg.cloudfront.net",
     "bam.nr-data.net",
     "gov-bam.nr-data.net",
     "*.youtube.com",
     "*.ytimg.com",
-    "cdn.mouseflow.com",
-    "n2.mouseflow.com",
-    "us.mouseflow.com",
+    "*.mouseflow.com",
     "*.geo.census.gov",
     "about:",
     "www.federalregister.gov",
@@ -496,8 +489,8 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     "*.consumerfinance.gov",
-    "tagmanager.google.com",
     "optimize.google.com",
+    "fonts.googleapis.com",
     "api.mapbox.com",
 )
 
@@ -510,7 +503,6 @@ CSP_IMG_SRC = (
     "img.youtube.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
-    "tagmanager.google.com",
     "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
@@ -536,7 +528,7 @@ CSP_FRAME_SRC = (
 )
 
 # These specify where we allow fonts to come from
-CSP_FONT_SRC = "'self'"
+CSP_FONT_SRC = ("'self'", "fonts.gstatic.com")
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to
 CSP_CONNECT_SRC = (
@@ -598,6 +590,14 @@ FLAGS = {
     "PATH_MATCHES_FOR_QUALTRICS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
+    # Whether to render auto-generated page translation links.
+    "TRANSLATION_LINKS": [],
+    # RAFT Testing
+    "RAFT_TESTING": [
+        ("environment is", "beta"),
+        ("after date", "2023-01-22"),
+        ("before date", "2023-01-31"),
+    ],
 }
 
 # We want the ability to serve the latest drafts of some pages on beta

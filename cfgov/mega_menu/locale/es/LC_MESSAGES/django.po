@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-19 11:38-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: mega_menu/jinja2/mega_menu/mega-menu.html:55
+msgid "continued"
+msgstr "continuación"
+
+#: mega_menu/jinja2/mega_menu/mega-menu.html:137
+msgid "Back"
+msgstr "Regresar"
+
+#: mega_menu/jinja2/mega_menu/mega-menu.html:150
+#, python-format
+msgid "%(overview_link_text)s Overview"
+msgstr "Información General %(overview_link_text)s"
+
+#: mega_menu/jinja2/mega_menu/mega-menu.html:174
+#: mega_menu/jinja2/mega_menu/mega-menu.html:176
+msgid "Featured"
+msgstr "Destacado"
+
+#: mega_menu/jinja2/mega_menu/mega-menu.html:196
+#: mega_menu/jinja2/mega_menu/mega-menu.html:198
+msgid "Additional Resources"
+msgstr "Recursos adicionales"
+
+#: mega_menu/jinja2/mega_menu/mega-menu.html:307
+msgid "Main menu"
+msgstr "Menú principal"
+
+#: mega_menu/jinja2/mega_menu/mega-menu.html:314
+msgid "Open the main menu"
+msgstr "Abre el menú principal"
+
+#: mega_menu/jinja2/mega_menu/mega-menu.html:320
+msgid "Close the main menu"
+msgstr "Cerrar el menú principal"
+
+#: mega_menu/wagtail_hooks.py:21
+#, fuzzy
+#| msgid "Previous"
+msgid "Preview"
+msgstr "Anterior"
+
+#: mega_menu/wagtail_hooks.py:25
+#, python-format
+msgid "Preview this %s"
+msgstr ""

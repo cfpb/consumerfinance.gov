@@ -1,6 +1,7 @@
-const jsonP = require('jsonp-p').default;
-import DT from './dom-tools';
-import count from './count';
+import jsonpPModule from 'jsonp-p';
+const jsonpP = jsonpPModule.default;
+import { addEl, createEl, getEl, removeClass } from './dom-tools.js';
+import { incrementTotal } from './count.js';
 
 /**
  * Call the census.gov API and display an error if warranted.
@@ -16,18 +17,18 @@ function callCensus(address, ruralCounties, cb) {
   url += '&benchmark=4';
   url += '&format=jsonp';
 
-  jsonP(url)
+  jsonpP(url)
     .promise.then(function (data) {
       cb(data, ruralCounties);
     })
     .catch(function (error) {
       if (error) {
-        const addressElement = DT.createEl('<li>' + address + '</li>');
+        const addressElement = createEl('<li>' + address + '</li>');
 
-        DT.addEl(DT.getEl('#process-error-desc'), addressElement);
-        DT.removeClass('#process-error', 'u-hidden');
+        addEl(getEl('#process-error-desc'), addressElement);
+        removeClass('#process-error', 'u-hidden');
 
-        count.incrementTotal();
+        incrementTotal();
       }
     });
 }

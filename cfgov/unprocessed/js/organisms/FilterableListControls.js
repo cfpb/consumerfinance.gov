@@ -1,16 +1,15 @@
-// Required modules.
-import * as validators from '../modules/util/validators';
+import * as validators from '../modules/util/validators.js';
 import {
   checkDom,
   instantiateAll,
   setInitFlag,
 } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
-import Analytics from '../modules/Analytics';
-import ERROR_MESSAGES from '../config/error-messages-config';
+import Analytics from '../modules/Analytics.js';
+import ERROR_MESSAGES from '../config/error-messages-config.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
-import FormModel from '../modules/util/FormModel';
-import Multiselect from '@cfpb/cfpb-forms/src/organisms/Multiselect';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import FormModel from '../modules/util/FormModel.js';
+import Multiselect from '@cfpb/cfpb-forms/src/organisms/Multiselect.js';
 
 const BASE_CLASS = 'o-filterable-list-controls';
 const FIELD_ERROR_CLASS = 'a-text-input__error';

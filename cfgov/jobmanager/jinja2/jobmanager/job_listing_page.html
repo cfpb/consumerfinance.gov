@@ -1,6 +1,11 @@
-{% extends 'layout-2-1.html' %}
+{% extends 'v1/layouts/layout-2-1.html' %}
 
-{%- import 'macros/util/format/datetime.html' as dt %}
+{%- import 'v1/includes/macros/util/format/datetime.html' as dt %}
+
+{% block css -%}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ static('css/on-demand/job_listing_page.css') }}">
+{%- endblock css %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -74,7 +79,7 @@
 
             <button class="o-summary_btn u-hidden"
                     data-js-hook="behavior_flyout-menu_trigger">
-                {{ _('Read full description') }}
+                Read full description
                 {{ svg_icon('plus-round') }}
             </button>
         </div>
@@ -202,7 +207,7 @@
             Follow us on LinkedIn
         </h2>
     </header>
-    <p data-qa-hook="info-section-desc">
+    <p>
         The CFPB is one of the most searched-for agencies
         in the federal government.
         Connect with us to stay updated on the work

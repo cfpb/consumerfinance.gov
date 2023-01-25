@@ -1,6 +1,7 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
-import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
+import { decimalToPercentString } from '../util/number-utils.js';
 import {
   getFinancialValue,
   getStateValue,
@@ -11,7 +12,7 @@ import {
   updateFinancialsFromSchool,
 } from '../dispatchers/update-models.js';
 import numberToMoney from 'format-usd';
-import { selectorMatches } from '../util/other-utils';
+import { selectorMatches } from '../util/other-utils.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
 
@@ -125,7 +126,7 @@ function _handleInputChange(event) {
   const name = elem.dataset.financialItem;
   const isRate = name.substr(0, 5) === 'rate_';
   const isFee = name.substr(0, 4) === 'fee_';
-  let value = stringToNum(elem.value);
+  let value = convertStringToNumber(elem.value);
 
   financialView._currentInput = elem;
 

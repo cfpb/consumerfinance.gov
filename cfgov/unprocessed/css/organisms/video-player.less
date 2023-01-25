@@ -1,4 +1,3 @@
-
 /* ==========================================================================
    consumerfinance.gov
    o-video-player
@@ -28,7 +27,7 @@
   background: @white;
 
   // When JavaScript is disabled add a border to stand-alone videos.
-  .no-js &:not( .o-featured-content-module_visual ) {
+  .no-js &:not(.o-featured-content-module_visual) {
     border: 1px solid @gray-40;
   }
 
@@ -91,21 +90,21 @@
   // Remove space below image created by inline display spacing.
   display: block;
   opacity: 0;
-  transition: opacity .25s;
+  transition: opacity 0.25s;
   // Needed for IE11 to not stretch the image.
   flex-shrink: 0;
   align-self: center;
 
   // Using the default CFPB cover card image.
-  &[src^="/static/img/cfpb_video_cover_card_954x200"] {
-    padding: unit( 60px / @base-font-size-px, em );
+  &[src^='/static/img/cfpb_video_cover_card_954x200'] {
+    padding: unit(60px / @base-font-size-px, em);
     box-sizing: border-box;
 
     // Overrides values set in featured-content-module.less file in the DS.
     &.o-featured-content-module_img {
       max-width: 100%;
       height: auto;
-      padding: unit( 15px / @base-font-size-px, em );
+      padding: unit(15px / @base-font-size-px, em);
       left: 0;
       transform: none;
     }
@@ -120,13 +119,13 @@
 
 .o-video-player_duration {
   color: @white;
-  background: rgba( 0, 0, 0, 0.4 );
+  background: rgba(0, 0, 0, 0.4);
   z-index: 1;
   padding-left: 6px;
   padding-right: 6px;
   padding-top: 3px;
   padding-bottom: 3px;
-  font-size: unit( 16px / @base-font-size-px, rem );
+  font-size: unit(16px / @base-font-size-px, rem);
   position: absolute;
   right: 0;
   bottom: 0;
@@ -142,24 +141,34 @@
   position: absolute;
   z-index: 3;
   // !important is needed for when this is applied to a link.
-  background-color: rgba( 16, 24, 32, 0.75 ) !important; // CFPB Black (#101820) at 80% opacity
+  background-color: rgba(
+    16,
+    24,
+    32,
+    0.75
+  ) !important; // CFPB Black (#101820) at 80% opacity
   color: @white !important;
   font-size: @play-btn-icon-size;
 
   &:hover {
     // !important is needed to override non-hover background.
-    background-color: rgba( 0, 114, 206, 0.75 ) !important; // Pacific (#0072ce) at 80% opacity
+    background-color: rgba(
+      0,
+      114,
+      206,
+      0.75
+    ) !important; // Pacific (#0072ce) at 80% opacity
   }
 
   &__center {
     left: 50%;
     top: 50%;
-    transform: translate( -50%, -50% );
+    transform: translate(-50%, -50%);
   }
 
   &__bottom-right {
-    right: unit( @grid_gutter-width / 2 / @play-btn-icon-size, em );
-    bottom: unit( @grid_gutter-width / 2 / @play-btn-icon-size, em );
+    right: unit(@grid_gutter-width / 2 / @play-btn-icon-size, em);
+    bottom: unit(@grid_gutter-width / 2 / @play-btn-icon-size, em);
   }
 
   &__center,
@@ -200,7 +209,7 @@
     position: absolute;
     left: 55%;
     top: 50%;
-    transform: translate( -50%, -50% );
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -227,8 +236,8 @@ button.o-video-player_play-btn,
 
   .grid_wrapper();
 
-  padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-  padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+  padding-top: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+  padding-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
   color: @white;
 
   .m-social-media_heading {
@@ -287,7 +296,7 @@ button.o-video-player_play-btn,
 
   .m-social-media_icons {
     display: block;
-    margin-right: unit( 5px / @base-font-size-px, em );
+    margin-right: unit(5px / @base-font-size-px, em);
   }
 }
 
@@ -314,7 +323,7 @@ button.o-video-player_play-btn,
     margin: 0;
     padding: 0;
     // Magic number: height of standard button and 1px border around FCM.
-    top: ( @standard-btn-height__px + 1px ) * -1;
+    top: (@standard-btn-height__px + 1px) * -1;
   }
 
   .o-video-player_close-btn {

@@ -1,5 +1,4 @@
-import Analytics from '../../../js/modules/Analytics';
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+import Analytics from '../../../js/modules/Analytics.js';
 
 /* eslint-disable consistent-return */
 
@@ -25,7 +24,7 @@ const sendEvent = (action, label, category) => {
  * @returns {HTMLElement|null} The expandable or null if it's not an expandable
  */
 const getExpandable = (event) => {
-  const el = closest(event.target, '.o-expandable_header') || event.target;
+  const el = event.target.closest('.o-expandable_header') || event.target;
   if (el.classList.contains('o-expandable_header')) {
     return el;
   }

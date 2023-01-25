@@ -110,7 +110,7 @@ function handleError(code) {
   return error;
 }
 
-module.exports = {
+export {
   getSearchValues,
   serializeFormFields,
   buildSearchResultsURL,

@@ -4,8 +4,8 @@
    ========================================================================== */
 
 // Required Modules
-import typeCheckers from '@cfpb/cfpb-atomic-component/src/utilities/type-checkers';
-import ERROR_MESSAGES from '../../config/error-messages-config';
+import { isEmpty } from '@cfpb/cfpb-atomic-component/src/utilities/type-checkers.js';
+import ERROR_MESSAGES from '../../config/error-messages-config.js';
 
 /* TODO: Update all the validators to return both passed and failed states
    instead of returning an empty object if the value passed */
@@ -112,7 +112,7 @@ function email(field, currentStatus, options) {
 function empty(field, currentStatus) {
   const status = currentStatus || {};
   const isRequired = field.getAttribute('required') !== null;
-  if (isRequired && typeCheckers.isEmpty(field.value)) {
+  if (isRequired && isEmpty(field.value)) {
     status.msg = status.msg || '';
     status.msg += ERROR_MESSAGES.FIELD.REQUIRED;
     status.required = false;

@@ -1,4 +1,3 @@
-// Required modules.
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 
 /**
@@ -27,10 +26,7 @@ function TabTrigger(element) {
   function _handleFocusOut(event) {
     /* If focus is still in the element, do nothing.
        The relatedTarget parameter is the EventTarget losing focus. */
-    if (
-      event.relatedTarget === null ||
-      element.contains(event.relatedTarget)
-    ) {
+    if (event.relatedTarget === null || element.contains(event.relatedTarget)) {
       return false;
     }
 

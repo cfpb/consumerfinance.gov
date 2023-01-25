@@ -1,9 +1,15 @@
-import * as analytics from '../../../../../cfgov/unprocessed/apps/regulations3k/js/analytics.js';
+import {
+  getExpandable,
+  getExpandableState,
+  handleContentClick,
+  handleNavClick,
+  sendEvent,
+} from '../../../../../cfgov/unprocessed/apps/regulations3k/js/analytics.js';
 
 /* eslint-disable max-lines-per-function, no-undefined */
 describe('The Regs3K analytics', () => {
   it('should send events', () => {
-    const mockEvent = analytics.sendEvent('click', 'sidebar');
+    const mockEvent = sendEvent('click', 'sidebar');
 
     expect(mockEvent).toEqual({
       event: 'eRegs Event',
@@ -15,7 +21,7 @@ describe('The Regs3K analytics', () => {
   });
 
   it('should send events with custom categories', () => {
-    const mockEvent = analytics.sendEvent('click', 'sidebar', 'eregs');
+    const mockEvent = sendEvent('click', 'sidebar', 'eregs');
 
     expect(mockEvent).toEqual({
       event: 'eregs',
@@ -31,14 +37,13 @@ describe('The Regs3K analytics', () => {
       classList: {
         contains: () => true,
       },
-      parentNode: {
-        matches: () => false,
-      },
     };
     const event = {
-      target: mockTarget,
+      target: {
+        closest: () => mockTarget,
+      },
     };
-    const expandable = analytics.getExpandable(event);
+    const expandable = getExpandable(event);
 
     expect(expandable).toEqual(mockTarget);
   });
@@ -54,9 +59,9 @@ describe('The Regs3K analytics', () => {
         contains: () => false,
       },
     };
-    const state1 = analytics.getExpandableState(mockEl);
+    const state1 = getExpandableState(mockEl);
     expect(state1).toEqual('open');
-    const state2 = analytics.getExpandableState(mockEl2);
+    const state2 = getExpandableState(mockEl2);
     expect(state2).toEqual('close');
   });
 
@@ -66,7 +71,7 @@ describe('The Regs3K analytics', () => {
         href: '/policy-compliance/rulemaking/regulations/1002/11/',
       },
     };
-    event = analytics.handleNavClick(event);
+    event = handleNavClick(event);
 
     expect(event).toEqual({
       action: 'toc:click',
@@ -83,7 +88,7 @@ describe('The Regs3K analytics', () => {
         href: '/policy-compliance/rulemaking/regulations/1002/Interp-2/',
       },
     };
-    mockEvent = analytics.handleNavClick(mockEvent);
+    mockEvent = handleNavClick(mockEvent);
 
     expect(mockEvent).toEqual({
       action: 'toc:click',
@@ -100,14 +105,14 @@ describe('The Regs3K analytics', () => {
         href: 'https://example.com',
       },
     };
-    mockEvent = analytics.handleNavClick(mockEvent);
+    mockEvent = handleNavClick(mockEvent);
 
     expect(mockEvent).toBeUndefined();
   });
 
   it('should handle navigation clicks on non-links', () => {
     let mockEvent = { target: {} };
-    mockEvent = analytics.handleNavClick(mockEvent);
+    mockEvent = handleNavClick(mockEvent);
 
     expect(mockEvent).toBeUndefined();
   });
@@ -118,13 +123,11 @@ describe('The Regs3K analytics', () => {
         classList: {
           contains: () => true,
         },
-        parentNode: {
-          matches: () => false,
-        },
+        closest: () => null,
         getAttribute: () => 'Section 1',
       },
     };
-    mockEvent = analytics.handleContentClick(mockEvent);
+    mockEvent = handleContentClick(mockEvent);
 
     expect(mockEvent).toEqual({
       action: 'interpexpandables:open',
@@ -141,13 +144,11 @@ describe('The Regs3K analytics', () => {
         classList: {
           contains: () => false,
         },
-        parentNode: {
-          matches: () => false,
-        },
+        closest: () => null,
         getAttribute: () => 'Section 1',
       },
     };
-    mockEvent = analytics.handleContentClick(mockEvent);
+    mockEvent = handleContentClick(mockEvent);
 
     expect(mockEvent).toBeUndefined();
   });
