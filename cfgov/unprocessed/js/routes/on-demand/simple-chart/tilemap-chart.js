@@ -19,8 +19,7 @@ tilemap(Highmaps);
  * @returns {object} The configured style object
  */
 function makeTilemapOptions(data, dataAttributes) {
-  const { chartType, styleOverrides, description, yAxisLabel } =
-    dataAttributes;
+  const { chartType, styleOverrides, description, yAxisLabel } = dataAttributes;
 
   let defaultObj = cloneDeep(defaultTilemap);
 
@@ -251,12 +250,7 @@ function init(chartNode, target, data, dataAttributes) {
   legend.style.display = 'block';
   updateTilemapLegend(target, tilemapOptions, yAxisLabel);
 
-  makeTilemapSelect(
-    chartNode,
-    chart,
-    data,
-    transform && chartHooks[transform]
-  );
+  makeTilemapSelect(chartNode, chart, data, transform && chartHooks[transform]);
 
   /**
    * Fixes tilemap clipping

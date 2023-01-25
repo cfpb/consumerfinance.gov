@@ -182,11 +182,7 @@ describe('The Regs3K permalinks utils', () => {
       document.body.innerHTML = HTML_SNIPPET1;
       updateParagraphPositions();
       updateUrlHash();
-      expect(global.history.replaceState).toBeCalledWith(
-        null,
-        null,
-        '#z-14-i'
-      );
+      expect(global.history.replaceState).toBeCalledWith(null, null, '#z-14-i');
 
       document.body.innerHTML = HTML_SNIPPET2;
       updateParagraphPositions();

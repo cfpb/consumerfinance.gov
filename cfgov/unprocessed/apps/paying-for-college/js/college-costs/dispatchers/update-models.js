@@ -172,9 +172,7 @@ function updateSchoolData(iped) {
         );
 
         // add the full state name to the schoolModel
-        schoolModel.values.stateName = getStateByCode(
-          schoolModel.values.state
-        );
+        schoolModel.values.stateName = getStateByCode(schoolModel.values.state);
 
         // Some values must migrate to the financial model
         if (programInfo) {

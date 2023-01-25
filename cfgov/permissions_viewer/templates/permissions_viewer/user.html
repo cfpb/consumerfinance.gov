@@ -1,6 +1,6 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n %}
-{% block titletag %}{% trans "Permissions for" %} {{user}}{% endblock %}
+{% block titletag %}Permissions for {{ user }}{% endblock %}
 
 {% block content %}
     {% include "wagtailadmin/shared/header.html" with title="User Permissions" %}
@@ -24,7 +24,7 @@
 	    <table class="listing">
 		    <thead>
 		    <tr>
-			    <td></td> 
+			    <td></td>
 			{% for group in groups %}
 			<td class="title">
 				<a href="{% url "permissions:group" group.pk %}">{{group}}</a></td>
@@ -54,7 +54,7 @@
 	    <table class="listing">
 		    <thead>
 		    <tr>
-			    <td></td> 
+			    <td></td>
 			{% for group in groups %}
 			<td class="title">
 				<a href="{% url "permissions:group" group.pk %}">{{group}}</a></td>
@@ -85,7 +85,7 @@
 	    <table class="listing">
 		    <thead>
 		    <tr>
-			    <td></td> 
+			    <td></td>
 			{% for group in groups %}
 			<td class="title">
 				<a href="{% url "permissions:group" group.pk %}">{{group}}</a></td>

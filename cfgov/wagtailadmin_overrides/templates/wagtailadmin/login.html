@@ -7,7 +7,7 @@
             <div class="messages">
                 <ul>
                     {% if form.errors %}
-                        <li class="error">{% blocktrans %}Your {{ username_field }} and password didn't match. Please try again.{% endblocktrans %}</li>
+                        <li class="error">Your {{ username_field }} and password didn't match. Please try again.</li>
                     {% endif %}
                     {% for message in messages %}
                         <li class="{{ message.tags }}">{{ message }}</li>
@@ -25,7 +25,7 @@
             {% url 'wagtailadmin_home' as home_url %}
             <input type="hidden" name="next" value="{{ next|default:home_url }}" />
 
-            <h1>{% block branding_login %}{% trans "Sign in to Wagtail" %}{% endblock %}</h1>
+            <h1>{% block branding_login %}Sign in to Wagtail{% endblock %}</h1>
 
             <ul class="fields">
                 {% block fields %}
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     {% if show_password_reset %}
-                        <p class="help"><a href="{% url 'wagtailadmin_password_reset' %}" aria-label="{% trans 'Reset your password' %}">{% trans "Forgotten it?" %}</a></p>
+                        <p class="help"><a href="{% url 'wagtailadmin_password_reset' %}" aria-label="Reset your password">Forgotten it?</a></p>
                     {% endif %}
                 </li>
 
@@ -71,7 +71,7 @@
                 {% endblock %}
                 <li class="submit">
                     {% block submit_buttons %}
-                    <button type="submit" class="button button-longrunning" data-clicked-text="{% trans 'Signing in…' %}">{% icon name="spinner" %}<em>{% trans 'Accept and sign in' %}</em></button>
+                    <button type="submit" class="button button-longrunning" data-clicked-text="Signing in…">{% icon name="spinner" %}<em>Accept and sign in</em></button>
                     {% endblock %}
                 </li>
             </ul>
