@@ -20,6 +20,8 @@
         {% endif %}
     {%- endfor %}
 
+    {% include "v1/includes/molecules/translation-links.html" %}
+
     {% if page.share_and_print %}
         {% import "v1/includes/molecules/social-media.html" as social_media with context -%}
         <div class="block block__flush-top block__flush-bottom block__padded-bottom">

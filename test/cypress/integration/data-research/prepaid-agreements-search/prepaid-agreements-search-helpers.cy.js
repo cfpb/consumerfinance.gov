@@ -38,9 +38,7 @@ export class PrepaidAgreementsSearch {
   }
 
   selectProductType(product) {
-    this.filtersForm()
-      .find(`input[value="${product}"]`)
-      .check({ force: true });
+    this.filtersForm().find(`input[value="${product}"]`).check({ force: true });
   }
 
   expandCurrentStatusFilters() {

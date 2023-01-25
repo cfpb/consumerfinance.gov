@@ -27,9 +27,7 @@ const postVerify = {
       errors: 'none',
       URL: window.location.href,
     };
-    const urlBase = document
-      .querySelector('main')
-      .getAttribute('data-context');
+    const urlBase = document.querySelector('main').getAttribute('data-context');
     const urlPath =
       '/' + urlBase + '/understanding-your-financial-aid-offer/api/verify/';
     if (error === true) {

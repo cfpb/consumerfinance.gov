@@ -9,9 +9,6 @@ from django.urls import reverse
 from django.utils.html import format_html_join
 
 from wagtail.admin.menu import MenuItem
-from wagtail.admin.rich_text.converters.editor_html import (
-    WhitelistRule as AllowlistRule,
-)
 from wagtail.contrib.modeladmin.mixins import ThumbnailMixin
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin,
@@ -19,7 +16,6 @@ from wagtail.contrib.modeladmin.options import (
     modeladmin_register,
 )
 from wagtail.core import hooks
-from wagtail.core.whitelist import attribute_rule
 
 from ask_cfpb.models.snippets import GlossaryTerm
 from v1.admin_views import manage_cdn
@@ -39,6 +35,7 @@ from v1.template_debug import (
     notification_test_cases,
     register_template_debug,
     related_posts_test_cases,
+    translation_links_test_cases,
     video_player_test_cases,
 )
 from v1.views.reports import (
@@ -48,6 +45,7 @@ from v1.views.reports import (
     EnforcementActionsReportView,
     ImagesReportView,
     PageMetadataReportView,
+    TranslatedPagesReportView,
 )
 
 
@@ -310,6 +308,26 @@ def register_category_icons_report_url():
     ]
 
 
+@hooks.register("register_reports_menu_item")
+def register_translated_pages_report_menu_item():
+    return MenuItem(
+        "Translated Pages",
+        reverse("translated_pages_report"),
+        classnames="icon icon-" + TranslatedPagesReportView.header_icon,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_translated_pages_report_url():
+    return [
+        re_path(
+            r"^reports/translated-pages/$",
+            TranslatedPagesReportView.as_view(),
+            name="translated_pages_report",
+        ),
+    ]
+
+
 @hooks.register("construct_reports_menu")
 # Alphabetizie and title case report menu items
 def clean_up_report_menu_items(request, report_menu_items):
@@ -470,33 +488,6 @@ def hide_snippets_menu_item(request, menu_items):
     ]
 
 
-# The construct_whitelister_element_rules was depricated in Wagtail 2,
-# so we'll use register_rich_text_features instead.
-# Only applies to Hallo editors, which only remain in our custom
-# AtomicTableBlock table cells.
-@hooks.register("register_rich_text_features")
-def register_span_feature(features):
-    allow_html_class = attribute_rule(
-        {
-            "class": True,
-            "id": True,
-        }
-    )
-
-    # register a feature 'span'
-    # which allowlists the <span> element
-    features.register_converter_rule(
-        "editorhtml",
-        "span",
-        [
-            AllowlistRule("span", allow_html_class),
-        ],
-    )
-
-    # add 'span' to the default feature set
-    features.default_features.append("span")
-
-
 @hooks.register("register_permissions")
 def add_export_feedback_permission_to_wagtail_admin_group_view():
     return Permission.objects.filter(
@@ -539,6 +530,14 @@ register_template_debug(
     "related_posts",
     "v1/includes/molecules/related-posts.html",
     related_posts_test_cases,
+)
+
+
+register_template_debug(
+    "v1",
+    "translation_links",
+    "v1/includes/molecules/translation-links.html",
+    translation_links_test_cases,
 )
 
 

@@ -1,6 +1,6 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n %}
-{% block titletag %}{% trans "Roster and Permissions for" %} {{group}}{% endblock %}
+{% block titletag %}Roster and Permissions for {{ group }}{% endblock %}
 
 {% block content %}
     {% include "wagtailadmin/shared/header.html" with title="Members and Permissions" %}

@@ -15,7 +15,8 @@ import metricView from '../views/metric-view.js';
 import expensesView from '../views/expenses-view.js';
 import postVerification from '../dispatchers/post-verify.js';
 
-import('../../../node_modules/sticky-kit/dist/sticky-kit.js');
+import stickyKit from '../utils/sticky-kit-esm.js';
+stickyKit($);
 
 const getDataLayerOptions = Analytics.getDataLayerOptions;
 
@@ -345,9 +346,7 @@ const financialView = {
     } else {
       this.gradPlusVisible(false);
       this.pellGrantsVisible(typeof urlvalues.pell !== 'undefined');
-      this.subsidizedVisible(
-        typeof urlvalues.directSubsidized !== 'undefined'
-      );
+      this.subsidizedVisible(typeof urlvalues.directSubsidized !== 'undefined');
     }
   },
 
@@ -436,9 +435,7 @@ const financialView = {
       $container.find('[data-private-loan]:last .aid-form_input').val('0');
       publish.addPrivateLoan();
       financialView.updateView(getFinancial.values());
-      Analytics.sendEvent(
-        getDataLayerOptions('Private Loan Changed', 'Added')
-      );
+      Analytics.sendEvent(getDataLayerOptions('Private Loan Changed', 'Added'));
     });
   },
 
@@ -944,9 +941,7 @@ const financialView = {
     $('[data-financial]').one('change', function () {
       const dataFinancial = $(this).data('financial');
       if (dataFinancial) {
-        Analytics.sendEvent(
-          getDataLayerOptions('Value Edited', dataFinancial)
-        );
+        Analytics.sendEvent(getDataLayerOptions('Value Edited', dataFinancial));
       }
     });
   },

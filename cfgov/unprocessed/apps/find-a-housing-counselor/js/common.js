@@ -60,9 +60,7 @@ function scriptLoaded(evt) {
  * Set access map options and create map.
  */
 function initializeMap() {
-  const showMap = Boolean(
-    document.getElementById('hud_hca_api_map_container')
-  );
+  const showMap = Boolean(document.getElementById('hud_hca_api_map_container'));
 
   if (showMap) {
     const fcm = document.getElementById('hud_search_container');

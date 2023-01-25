@@ -1,0 +1,154 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-19 11:38-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-page.html:9
+msgid "Consumer Financial Protection Bureau"
+msgstr ""
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-page.html:34
+msgid "last reviewed"
+msgstr "revisado"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-page.html:78
+msgid "Read full answer"
+msgstr "Leer más"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-page.html:95
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:83
+msgid "Don't see what you're looking for?"
+msgstr "¿No encuentra lo que busca?"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-page.html:98
+msgid "Browse related questions"
+msgstr "Otras preguntas"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-page.html:111
+#: ask_cfpb/jinja2/ask-cfpb/landing-page.html:90
+msgid "Learn more about"
+msgstr "Sepa más sobre"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:19
+msgid "Search our library of answers"
+msgstr "Buscar en nuestra lista de respuestas"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:28
+msgid "Showing results for "
+msgstr "Se muestran resultados para "
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:30
+#: ask_cfpb/models/pages.py:259
+msgid "Showing"
+msgstr "Se muestran"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:30
+msgid "of"
+msgstr "de"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:30
+msgid "results for"
+msgstr "resultados para"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:33
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:75
+msgid "Search instead for"
+msgstr "Busca de"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:33
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:75
+msgid "/ask-cfpb/search"
+msgstr "/es/obtener-respuestas/buscar"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:69
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:71
+msgid "No results found for"
+msgstr "No se encontraron resultados para"
+
+#: ask_cfpb/jinja2/ask-cfpb/answer-search-results.html:86
+msgid "Please enter a search term in the box above."
+msgstr "Por favor escriba su búsqueda arriba"
+
+#: ask_cfpb/jinja2/ask-cfpb/article-page.html:33
+msgid "In this article"
+msgstr "En este artículo"
+
+#: ask_cfpb/jinja2/ask-cfpb/landing-page.html:6
+msgid "Read answer"
+msgstr "Leer la respuesta"
+
+#: ask_cfpb/jinja2/ask-cfpb/landing-page.html:31
+msgid "Browse questions by category"
+msgstr "Examinar las preguntas por categoría"
+
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:32
+msgid "Read more"
+msgstr "Leer más"
+
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:47
+msgid "Narrow your results"
+msgstr "Búsqueda especial"
+
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:53
+msgid "Search term"
+msgstr "Palabra a buscar"
+
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:57
+msgid "Search"
+msgstr "Buscar"
+
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:61
+msgid "Clear search"
+msgstr "Borrar búsqueda"
+
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:83
+msgid "/ask-cfpb/search/"
+msgstr "/es/obtener-respuestas/buscar/"
+
+#: ask_cfpb/jinja2/ask-cfpb/see-all.html:83
+msgid "Search our full library of answers"
+msgstr "Buscar en toda la lista de respuestas"
+
+#: ask_cfpb/models/pages.py:252
+msgid "for"
+msgstr "para"
+
+#: ask_cfpb/models/pages.py:256
+msgid "Showing "
+msgstr "Se muestra "
+
+#: ask_cfpb/models/pages.py:257
+msgid "result"
+msgstr "resultado"
+
+#: ask_cfpb/models/pages.py:260
+msgid "results"
+msgstr "resultados"
+
+#: ask_cfpb/models/pages.py:270 ask_cfpb/models/pages.py:278
+#: ask_cfpb/models/pages.py:281
+msgid "within"
+msgstr "en"
+
+#: ask_cfpb/models/pages.py:273
+msgid "See all results within"
+msgstr "Ver todos los resultados para"
+
+#: ask_cfpb/templates/admin/export.html:3
+msgid "Export Ask data"
+msgstr ""
