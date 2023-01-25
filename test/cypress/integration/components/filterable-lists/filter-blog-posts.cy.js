@@ -132,11 +132,9 @@ describe('Filter Blog Posts based on content', () => {
       blog.applyFilters();
       // Then I should see only results tagged with the selected topic
       blog.notification().should('be.visible');
-      filter
-        .getTopicLabel(topic.get(0).getAttribute('value'))
-        .then((label) => {
-          blog.resultsContent().should('contain', label.get(0).innerText);
-        });
+      filter.getTopicLabel(topic.get(0).getAttribute('value')).then((label) => {
+        blog.resultsContent().should('contain', label.get(0).innerText);
+      });
       // And the page url should contain "topics=" topic
       cy.url().should(
         'include',
@@ -482,9 +480,7 @@ describe('Filter Blog Posts based on content', () => {
         // When I type "loans" in the item name input box
         blog.filterItemName(title.get(0).innerText);
         // And I type "01/01/2020" in the From date entry field
-        blog.filterFromDate(
-          date.get(0).getAttribute('datetime').split('T')[0]
-        );
+        blog.filterFromDate(date.get(0).getAttribute('datetime').split('T')[0]);
         // And I type "01/01/2021" in the To date entry field to bound the date range
         blog.filterToDate(date.get(0).getAttribute('datetime').split('T')[0]);
         // And I click "Apply filters" button

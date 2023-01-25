@@ -209,9 +209,7 @@ function FormSubmit(element, baseClass, opts) {
    * Example: param1=value1
    */
   function _serializeField(fieldName, fieldValue) {
-    return (
-      encodeURIComponent(fieldName) + '=' + encodeURIComponent(fieldValue)
-    );
+    return encodeURIComponent(fieldName) + '=' + encodeURIComponent(fieldValue);
   }
 
   /**

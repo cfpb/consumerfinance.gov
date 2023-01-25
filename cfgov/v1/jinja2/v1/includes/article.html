@@ -55,6 +55,8 @@
         {{ item_introduction.render(data) }}
     </header>
 
+    {% include "v1/includes/molecules/translation-links.html" %}
+
     <div>
         {% for block in page.content %}
             {% if block.block_type == 'full_width_text' %}

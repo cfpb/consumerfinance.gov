@@ -65,8 +65,7 @@ const financialModel = {
       financialModel.values.salary_annual / 12;
 
     // set text of "hours to cover payment"
-    const hours =
-      Math.floor(financialModel.values.debt_repayHours * 100) / 100;
+    const hours = Math.floor(financialModel.values.debt_repayHours * 100) / 100;
     const weeks =
       Math.floor(financialModel.values.debt_repayWorkWeeks * 100) / 100;
     const coverString = hours + 'hours, or ' + weeks + 'forty-hour work weeks';
@@ -152,8 +151,7 @@ const financialModel = {
       vals.total_publicLoans +
       vals.total_privateLoans +
       vals.total_plusLoans;
-    vals.total_grantsScholarships =
-      vals.total_grants + vals.total_scholarships;
+    vals.total_grantsScholarships = vals.total_grants + vals.total_scholarships;
     vals.total_otherResources = vals.total_savings + vals.total_income;
     vals.total_workStudyFellowAssist =
       vals.total_workStudy + vals.total_fellowAssist;
