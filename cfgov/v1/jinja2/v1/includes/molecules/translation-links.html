@@ -40,7 +40,7 @@
     {%- for link in value.links %}
         {% set render_link = value.language and link.language != value.language %}
         <li>
-        {% if render_link -%}
+        {%- if render_link %}
             <a href="{{ link.href }}"
                lang="{{ link.language }}"
                hreflang="{{ link.language }}"
