@@ -1,3 +1,13 @@
+@import (reference) 'cfpb-core.less';
+
+.u-divider {
+  content: '';
+  display: block;
+  background: @gray;
+  width: 1px;
+  height: unit(20px / @base-font-size-px, em);
+}
+
 ul.m-translation-links {
   padding: 0;
   list-style: none;
@@ -23,11 +33,7 @@ ul.m-translation-links {
       position: absolute;
       left: -11px;
       top: 2px;
-      content: '';
-      display: block;
-      background: gray;
-      width: 1px;
-      height: 20px;
+      .u-divider();
     }
   }
 }
@@ -51,11 +57,7 @@ html[lang='ar'] ul.m-translation-links {
       position: absolute;
       right: -11px;
       top: 2px;
-      content: '';
-      display: block;
-      background: gray;
-      width: 1px;
-      height: 20px;
+      .u-divider();
     }
   }
 }
