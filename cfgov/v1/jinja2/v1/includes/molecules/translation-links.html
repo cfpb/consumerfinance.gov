@@ -36,17 +36,23 @@
 {% endif -%}
 
 {%- if value.links and value.links|length > 1 %}
-<div class="m-translation-links">
-{%- for link in value.links %}
-    {% set render_link = value.language and link.language != value.language %}
-    {% if render_link -%}
-        <a href="{{ link.href }}" hreflang="{{ link.language }}">
-    {%- endif %}
-    {%- language link.language %}{{- _( link.text ) -}}{% endlanguage -%}
-    {% if render_link %}</a>{% endif %}
-    {% if not loop.last %}|{% endif %}
-{% endfor -%}
-</div>
+<ul dir="ltr" class="m-translation-links">
+    {%- for link in value.links %}
+        {% set render_link = value.language and link.language != value.language %}
+        <li>
+        {% if render_link -%}
+            <a href="{{ link.href }}"
+               lang="{{ link.language }}"
+               hreflang="{{ link.language }}"
+               translate="no">
+        {%- endif %}
+        {%- language link.language %}{{- _( link.text ) -}}{% endlanguage -%}
+        {% if render_link %}
+            </a>
+        {% endif %}
+        </li>
+    {% endfor -%}
+</ul>
 {%- endif %}
 
 {%- endif %}
