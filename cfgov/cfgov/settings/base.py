@@ -122,7 +122,6 @@ MIDDLEWARE = (
     "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "wagtailadmin_overrides.middleware.WagtailAdminViewOverrideMiddleware",
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "core.middleware.SelfHealingMiddleware",
@@ -676,15 +675,6 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
             ]
         },
     },
-}
-
-# Override certain Wagtail admin views with our own.
-#
-# See wagtailadmin_pages.middleware.WagtailAdminViewOverrideMiddleware.
-WAGTAILADMIN_OVERRIDDEN_VIEWS = {
-    "wagtailadmin_pages:add_subpage": (
-        "wagtailadmin_overrides.views.add_subpage"
-    ),
 }
 
 # Serialize Decimal(3.14) as 3.14, not "3.14"
