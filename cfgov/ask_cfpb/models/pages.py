@@ -581,7 +581,8 @@ class ArticlePage(CFGOVPage):
                     ]
                 ),
             )
-        ]
+        ],
+        use_json_field=True,
     )
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel(
@@ -619,6 +620,7 @@ class ArticlePage(CFGOVPage):
             ),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     sidebar_panels = [

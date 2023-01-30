@@ -17,7 +17,7 @@ class Menu(models.Model):
         primary_key=True,
     )
 
-    submenus = StreamField(MenuStreamBlock())
+    submenus = StreamField(MenuStreamBlock(), use_json_field=True)
 
     class Meta:
         ordering = ("language",)

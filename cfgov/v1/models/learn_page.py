@@ -37,6 +37,7 @@ class AbstractFilterPage(CFGOVPage):
             ("notification", molecules.Notification()),
         ],
         blank=True,
+        use_json_field=True,
     )
     preview_title = models.CharField(max_length=255, null=True, blank=True)
     preview_subheading = models.CharField(
@@ -150,6 +151,7 @@ class LearnPage(AbstractFilterPage):
             ("faq_group", schema.FAQGroup()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     edit_handler = AbstractFilterPage.generate_edit_handler(
@@ -174,6 +176,7 @@ class DocumentDetailPage(AbstractFilterPage):
             ),
         ],
         blank=True,
+        use_json_field=True,
     )
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=FieldPanel("content")
@@ -223,6 +226,7 @@ class EventPage(AbstractFilterPage):
             ),
         ],
         blank=True,
+        use_json_field=True,
     )
     start_dt = models.DateTimeField("Start")
     end_dt = models.DateTimeField("End", blank=True, null=True)
@@ -334,7 +338,9 @@ class EventPage(AbstractFilterPage):
     )
 
     # Agenda content fields
-    agenda_items = StreamField([("item", AgendaItemBlock())], blank=True)
+    agenda_items = StreamField(
+        [("item", AgendaItemBlock())], blank=True, use_json_field=True
+    )
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [

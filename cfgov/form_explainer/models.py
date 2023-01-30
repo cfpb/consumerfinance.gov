@@ -30,9 +30,10 @@ class FormExplainerPage(CFGOVPage):
             ("text_introduction", molecules.TextIntroduction()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
-    content = StreamField(FormExplainerContent)
+    content = StreamField(FormExplainerContent, use_json_field=True)
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [

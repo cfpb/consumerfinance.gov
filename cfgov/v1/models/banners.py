@@ -36,7 +36,7 @@ class Banner(models.Model):
     # TODO: Add `min_num` and `max_num` arguments of 1 to the StreamField
     # and eliminate the BannerContent StreamBlock
     # if https://github.com/wagtail/wagtail/pull/5185 ever gets merged.
-    content = StreamField(BannerContent)
+    content = StreamField(BannerContent, use_json_field=True)
 
     enabled = models.BooleanField()
 

@@ -165,6 +165,7 @@ class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
             ("hero", molecules.Hero()),
         ],
         blank=True,
+        use_json_field=True,
     )
     content = StreamField(
         [
@@ -172,6 +173,7 @@ class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
             ("full_width_text", RegulationsListingFullWidthText()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     # General content tab
@@ -236,6 +238,7 @@ class RegulationPage(
             ("text_introduction", molecules.TextIntroduction()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     content = StreamField(
@@ -245,6 +248,7 @@ class RegulationPage(
         ],
         null=True,
         blank=True,
+        use_json_field=True,
     )
 
     regulation = models.ForeignKey(

@@ -21,7 +21,7 @@ class BlogContent(blocks.StreamBlock):
 
 
 class BlogPage(AbstractFilterPage):
-    content = StreamField(BlogContent)
+    content = StreamField(BlogContent, use_json_field=True)
 
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=FieldPanel("content")
@@ -46,7 +46,7 @@ class LegacyBlogContent(BlogContent):
 
 
 class LegacyBlogPage(AbstractFilterPage):
-    content = StreamField(LegacyBlogContent)
+    content = StreamField(LegacyBlogContent, use_json_field=True)
 
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=FieldPanel("content")

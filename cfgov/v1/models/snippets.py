@@ -50,6 +50,7 @@ class Contact(models.Model):
             ("hyperlink", molecules.ContactHyperlink()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     panels = [

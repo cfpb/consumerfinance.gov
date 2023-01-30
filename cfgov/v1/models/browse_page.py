@@ -21,6 +21,7 @@ class BrowsePage(CFGOVPage):
             ("notification", molecules.Notification()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     content = StreamField(
@@ -49,6 +50,7 @@ class BrowsePage(CFGOVPage):
             ("faq_group", schema.FAQGroup()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

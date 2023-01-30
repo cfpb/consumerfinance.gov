@@ -38,9 +38,10 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
         [
             ("text_introduction", molecules.TextIntroduction()),
             ("featured_content", organisms.FeaturedContent()),
-        ]
+        ],
+        use_json_field=True,
     )
-    content = StreamField(BrowseFilterableContent)
+    content = StreamField(BrowseFilterableContent, use_json_field=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
 
