@@ -98,7 +98,7 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
         prefix = ""
         value = "{}".format(*args)
         html = render_to_string(
-            "wagtailadmin/block_forms/field.html",
+            "v1/placeholderfieldblock_field.html",
             {
                 "name": self.name,
                 "classes": getattr(
