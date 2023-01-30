@@ -26,8 +26,6 @@
 
     ======================================================================== #}
 
-{% if flag_enabled( "TRANSLATION_LINKS" ) -%}
-
 {%- if page and not value %}
     {% set value = {
         "language": language | default( "en" ),
@@ -53,6 +51,4 @@
         </li>
     {% endfor -%}
 </ul>
-{%- endif %}
-
 {%- endif %}
