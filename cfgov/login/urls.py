@@ -6,9 +6,8 @@ from django.views.generic.base import RedirectView
 from login.forms import CFGOVPasswordChangeForm
 from login.views import (
     CFGOVPasswordResetConfirmView,
+    LoginView,
     change_password,
-    check_permissions,
-    login_with_lockout,
 )
 
 
@@ -35,7 +34,7 @@ if settings.SAML_AUTH:  # pragma: no cover
     ]
 else:
     urlpatterns = [
-        re_path(r"^login/$", login_with_lockout, name="cfpb_login"),
+        re_path(r"^login/$", LoginView.as_view(), name="cfpb_login"),
         # When SSO is not enabled, the Django login should redirect to our
         # /login URL, added above.
         re_path(
@@ -54,11 +53,6 @@ urlpatterns = urlpatterns + [
     re_path(
         r"^admin/login/$",
         RedirectView.as_view(url="/login/", permanent=True, query_string=True),
-    ),
-    re_path(
-        r"^login/check_permissions/$",
-        check_permissions,
-        name="check_permissions",
     ),
     re_path(
         r"^django-admin/password_change",
