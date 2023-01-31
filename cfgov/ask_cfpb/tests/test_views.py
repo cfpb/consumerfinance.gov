@@ -1,3 +1,4 @@
+import json
 from unittest import mock
 
 from django.apps import apps
@@ -57,8 +58,17 @@ class AnswerPagePreviewTestCase(TestCase):
             language="en",
             slug="test-question1-en-{}".format(self.test_answer.pk),
             title="Test question1",
-            answer_content="Test answer1.",
-            question="Test question1.",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Test answer1",
+                        },
+                    }
+                ]
+            ),
         )
         self.english_parent_page.add_child(instance=self.english_answer_page)
         self.english_answer_page.save_revision().publish()
@@ -67,7 +77,17 @@ class AnswerPagePreviewTestCase(TestCase):
             language="en",
             slug="test-question2-en-{}".format(self.test_answer2.pk),
             title="Test question2",
-            answer_content="Test answer2.",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Test answer2",
+                        },
+                    }
+                ]
+            ),
             question="Test question2.",
         )
         self.english_parent_page.add_child(instance=self.english_answer_page2)

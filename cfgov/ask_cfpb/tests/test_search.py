@@ -1,3 +1,4 @@
+import json
 import unittest
 from io import StringIO
 from unittest import mock
@@ -80,7 +81,17 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
         test_answer_page = AnswerPage(
             title="Money 101",
             question="What is money?",
-            answer_content="Money makes the world go round.",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Money makes the world go round.",
+                        },
+                    }
+                ]
+            ),
             slug="test-answer-page",
             live=True,
         )
@@ -99,7 +110,17 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
         test_answer_page = AnswerPage(
             title="Money 101",
             question="What is money?",
-            answer_content="Money makes the world go round.",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Money makes the world go round.",
+                        },
+                    }
+                ]
+            ),
             slug="test-answer-page3",
             live=True,
         )

@@ -81,11 +81,9 @@ def get_streamfield_data(page_or_revision, field_name):
     """Get the streamfield data for a given field name on a page or a
     revision"""
     if is_page(page_or_revision):
-        field = getattr(page_or_revision, field_name)
-        return field.raw_data
+        return getattr(page_or_revision, field_name).raw_data
     else:
-        field = page_or_revision.content.get(field_name, "[]")
-        return json.loads(field)
+        return page_or_revision.content.get(field_name, [])
 
 
 def set_streamfield_data(page_or_revision, field_name, data, commit=True):
