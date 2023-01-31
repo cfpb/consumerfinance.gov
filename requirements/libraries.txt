@@ -38,4 +38,4 @@ wagtailmedia==0.9.0
 
 # These packages are installed from GitHub.
 https://github.com/cfpb/owning-a-home-api/releases/download/0.17.3/owning_a_home_api-0.17.3-py3-none-any.whl
-https://github.com/cfpb/ccdb5-api/releases/download/1.6.6/ccdb5_api-1.6.6-py3-none-any.whl
+https://github.com/cfpb/ccdb5-api/releases/download/1.7.0/ccdb5_api-1.7.0-py3-none-any.whl
