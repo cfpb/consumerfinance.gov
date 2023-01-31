@@ -26,8 +26,6 @@
 
     ======================================================================== #}
 
-{% if flag_enabled( "TRANSLATION_LINKS" ) -%}
-
 {%- if page and not value %}
     {% set value = {
         "language": language | default( "en" ),
@@ -38,9 +36,9 @@
 {%- if value.links and value.links|length > 1 %}
 <ul dir="ltr" class="m-translation-links">
     {%- for link in value.links %}
-        {% set render_link = value.language and link.language != value.language %}
+        {%- set render_link = value.language and link.language != value.language %}
         <li>
-        {% if render_link -%}
+        {%- if render_link %}
             <a href="{{ link.href }}"
                lang="{{ link.language }}"
                hreflang="{{ link.language }}"
@@ -49,10 +47,8 @@
         {%- language link.language %}{{- _( link.text ) -}}{% endlanguage -%}
         {% if render_link %}
             </a>
-        {% endif %}
+        {% endif -%}
         </li>
     {% endfor -%}
 </ul>
-{%- endif %}
-
 {%- endif %}
