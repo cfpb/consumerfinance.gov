@@ -82,7 +82,7 @@ categories = [
             ("nationwide", "Nationwide"),
             ("employment-screening", "Employment screening"),
             ("tenant-screening", "Tenant screening"),
-            ("check-bank-screening", "Check and bank screening"),
+            ("check-bank-screening", "Check and bank account screening"),
             ("personal-property-insurance", "Personal property insurance"),
             ("medical", "Medical"),
             ("low-income-and-subprime", "Low-income and subprime"),
