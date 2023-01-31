@@ -79,10 +79,9 @@ const getSearchData = (sections) => {
  * @param {object} event - Search result follow event
  */
 const onFollow = (event) => {
-  const target = event.target
-    .closest('a')
-    .getAttribute('href')
-    .replace('#', '');
+  const target = event.target.closest('a');
+  const figLinkID = target.getAttribute('href').replace('#', '');
+  const figHeadingLabel = target.querySelector('h4').innerText;
 
   // Only proceed if the browser window is no greater than 900px
   if (window.matchMedia(`(max-width: ${varsBreakpoints.bpSM.max}px)`).matches) {
@@ -90,12 +89,16 @@ const onFollow = (event) => {
     document.querySelector('.o-fig_sidebar button.o-expandable_header').click();
     // Scrolling before the expandable closes causes jitters on some devices
     setTimeout(() => {
-      scrollIntoViewWithOffset(document.getElementById(target), 60);
+      scrollIntoViewWithOffset(document.getElementById(figLinkID), 60);
     }, 300);
   }
 
   // Track clicks on individual search results
-  track('Small Business Lending FIG event', 'searchresults:click', target);
+  track(
+    'Small Business Lending FIG event',
+    'searchresults:click',
+    figHeadingLabel
+  );
 };
 
 /**
