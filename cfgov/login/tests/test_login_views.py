@@ -95,7 +95,6 @@ class LoginViewsTestCase(TestCase):
 
 
 class PasswordResetViewTestCase(TestCase, WagtailTestUtils):
-
     # The setup methods come from Wagtail's TestPasswordReset test case.
     # They handle user and password-reset token creation.
     def setUp(self):
@@ -105,7 +104,6 @@ class PasswordResetViewTestCase(TestCase, WagtailTestUtils):
         )
 
     def setup_password_reset_confirm_tests(self):
-
         # Get user
         self.user = get_user_model().objects.get(email="test@email.com")
 
