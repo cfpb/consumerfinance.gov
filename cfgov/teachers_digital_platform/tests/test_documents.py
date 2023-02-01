@@ -14,7 +14,6 @@ from teachers_digital_platform.models import (
 
 
 class TeachersDigitalPlatformDocumentTest(TestCase):
-
     fixtures = ["tdp_initial_data"]
 
     def setUp(self):

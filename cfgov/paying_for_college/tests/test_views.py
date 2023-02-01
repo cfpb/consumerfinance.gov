@@ -84,7 +84,6 @@ class TestViews(django.test.TestCase):
 
 
 class SchoolProgramTest(django.test.TestCase):
-
     fixtures = ["test_fixture.json", "test_program.json"]
 
     def test_get_school(self):
@@ -142,7 +141,6 @@ class ConstantsTest(django.test.TestCase):
 
 
 class OfferTest(django.test.TestCase):
-
     fixtures = ["test_fixture.json", "test_program.json"]
 
     # /paying-for-college2/understanding-your-financial-aid-offer/offer/?[QUERYSTRING]
@@ -213,7 +211,6 @@ class OfferTest(django.test.TestCase):
 
 
 class APITests(django.test.TestCase):
-
     fixtures = [
         "test_fixture.json",
         "test_constants.json",
@@ -310,7 +307,6 @@ class APITests(django.test.TestCase):
 
 
 class VerifyViewTest(django.test.TestCase):
-
     fixtures = ["test_fixture.json"]
     post_data = {
         "oid": "f38283b5b7c939a058889f997949efa566c616c5",

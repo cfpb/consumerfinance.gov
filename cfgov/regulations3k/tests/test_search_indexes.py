@@ -8,7 +8,6 @@ from regulations3k.models import Section, SectionParagraph
 
 
 class RegulationIndexTestCase(TestCase):
-
     # a single reg branch: Part > EffectiveDate > Subpart > Section
     fixtures = ["tree_limb.json"]
 

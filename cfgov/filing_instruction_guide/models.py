@@ -63,7 +63,6 @@ class FIGPageForm(WagtailAdminPageForm):
 
 
 class FIGContentPage(CFGOVPage, ClusterableModel):
-
     # FIG Header Section Fields
     eyebrow = models.CharField(max_length=100, blank=True)
     page_header = models.CharField(max_length=200, blank=True)
