@@ -54,15 +54,15 @@ msgstr ""
 #: v1/jinja2/v1/includes/blocks/email-signup.html:54
 #: v1/jinja2/v1/includes/blocks/email-signup.html:79
 msgid "Sign up"
-msgstr ""
+msgstr "Đăng ký"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:68
 msgid "Email address"
-msgstr ""
+msgstr "Địa chỉ email"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:84
 msgid "See Privacy Act statement"
-msgstr ""
+msgstr "Xem tuyên bố Privacy Act (Đạo Luật Quyền Riêng Tư)"
 
 #: v1/jinja2/v1/includes/blocks/schema/tip.html:19
 msgid "Tip"
