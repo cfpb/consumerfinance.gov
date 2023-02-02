@@ -22,7 +22,6 @@ from v1.models.newsroom_page import LegacyNewsroomPage, NewsroomPage
 
 @registry.register_document
 class FilterablePagesDocument(Document):
-
     tags = fields.ObjectField(
         properties={"slug": fields.KeywordField(), "name": fields.TextField()}
     )
@@ -184,7 +183,6 @@ class FilterablePagesDocumentSearch:
         to_date=None,
         from_date=None,
     ):
-
         if topics is None:
             topics = []
         if categories is None:

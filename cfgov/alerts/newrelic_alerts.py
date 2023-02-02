@@ -5,7 +5,6 @@ import requests
 
 
 class NewRelicAlertViolations:
-
     newrelic_url = "https://api.newrelic.com/v2/"
 
     def __init__(

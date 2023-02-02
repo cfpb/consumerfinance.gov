@@ -12,7 +12,6 @@ from paying_for_college.views import school_autocomplete
 
 # paying-for-college2/understanding-your-financial-aid-offer/api/search-schools.json?q=Kansas
 class SchoolSearchTest(TestCase):
-
     fixtures = ["test_fixture.json", "test_school.json"]
 
     @mock.patch.object(SchoolDocument, "search")

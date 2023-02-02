@@ -12,7 +12,6 @@ from search.elasticsearch_helpers import (
 
 @registry.register_document
 class SchoolDocument(Document):
-
     autocomplete = fields.TextField(analyzer=ngram_tokenizer)
     text = fields.TextField(attr="primary_alias", boost=10)
     url = fields.TextField()

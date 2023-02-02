@@ -66,7 +66,6 @@ THROUGH_DATE = datetime.date(2016, 12, 1)
 
 
 class SourceToTableTest(django.test.TestCase):
-
     fixtures = [
         "mortgage_states.json",
         "mortgage_counties.json",
@@ -214,11 +213,9 @@ class SourceToTableTest(django.test.TestCase):
 
 
 class DataLoadIntegrityTest(django.test.TestCase):
-
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
     def setUp(self):
-
         FL = baker.make(
             State,
             fips="12",
@@ -301,11 +298,9 @@ class DataLoadIntegrityTest(django.test.TestCase):
 
 
 class MergeTheDadesTest(django.test.TestCase):
-
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
     def setUp(self):
-
         self.old_dade_fips = "12025"
         self.new_dade_fips = "12086"
 
@@ -362,7 +357,6 @@ class DataExportTest(django.test.TestCase):
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
     def setUp(self):
-
         baker.make(
             State,
             fips="12",
@@ -541,7 +535,6 @@ class DataLoadTest(django.test.TestCase):
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
     def setUp(self):
-
         FL = baker.make(
             State,
             fips="12",
@@ -707,11 +700,9 @@ class DataLoadTest(django.test.TestCase):
 
 
 class UpdateSamplingDatesTest(django.test.TestCase):
-
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
     def setUp(self):
-
         baker.make(
             CountyMortgageData,
             current=1250,
@@ -802,7 +793,6 @@ class SaveMetadataTests(django.test.TestCase):
 
 
 class BuildStateMsaDropdownTests(django.test.TestCase):
-
     fixtures = ["mortgage_constants.json"]
 
     def setUp(self):
@@ -882,7 +872,6 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
 
 
 class UpdateStateMsaDropdownTests(django.test.TestCase):
-
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
     @mock.patch(

@@ -14,7 +14,6 @@ except ImportError:
 
 @hooks.register("register_admin_urls")
 def register_admin_urls():
-
     urls = [
         re_path(
             r"^permissions/",

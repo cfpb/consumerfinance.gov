@@ -77,7 +77,6 @@ class ActivityIndexPageTests(WagtailPageTests):
 
 
 class ActivitySetUpTests(TestCase):
-
     from teachers_digital_platform.documents import ActivityPageDocument
 
     fixtures = ["tdp_initial_data"]

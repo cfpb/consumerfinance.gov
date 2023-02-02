@@ -129,7 +129,6 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
 
     @mock.patch("ask_cfpb.forms.AutocompleteForm")
     def test_ask_search_autocomplete_honors_max_chars(self, mock_query):
-
         valid_term_1 = "Here is an ask_cfpb query that is exactly,"
         valid_term_2 = " like 100 percent, 75 characters."
         overage = " This is overage text that should not appear in the query"
