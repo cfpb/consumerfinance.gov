@@ -50,15 +50,9 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             it('should highlight the current section', () => {
               fig.goToSection(2);
               fig.getNavItem(2).should('have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(1)
-                .should('not.have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(3)
-                .should('not.have.class', 'm-nav-link__current');
-              fig
-                .getNavItem(4)
-                .should('not.have.class', 'm-nav-link__current');
+              fig.getNavItem(1).should('not.have.class', 'm-nav-link__current');
+              fig.getNavItem(3).should('not.have.class', 'm-nav-link__current');
+              fig.getNavItem(4).should('not.have.class', 'm-nav-link__current');
             });
 
             it('should auto-expand subsections', () => {

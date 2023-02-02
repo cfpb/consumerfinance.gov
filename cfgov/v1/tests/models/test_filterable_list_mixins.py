@@ -118,6 +118,15 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
             response.get("Edge-Cache-Tag"), self.filterable_page.slug
         )
 
+    def test_x_robots_tag(self):
+        response = self.client.get(
+            self.filterable_page.url, {"topics": "test1"}
+        )
+        self.assertIsNone(response.get("X-Robots-Tag"))
+
+        response = self.client.get(self.filterable_page.url, {"title": "test"})
+        self.assertEqual(response.get("X-Robots-Tag"), "noindex")
+
 
 class MockSearch:
     def __init__(self, search_root, children_only):

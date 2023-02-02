@@ -215,9 +215,7 @@ function handleFilter(event, target = null) {
   const wrapperLI = target.parentElement.parentElement;
   if (wrapperLI && wrapperLI.tagName.toLowerCase() === 'li') {
     // Check all children if parent is checked.
-    const checkboxes = wrapperLI.querySelectorAll(
-      'ul>li input[type=checkbox]'
-    );
+    const checkboxes = wrapperLI.querySelectorAll('ul>li input[type=checkbox]');
     for (let i = 0; i < checkboxes.length; i++) {
       if (
         wrapperLI.contains(checkboxes[i]) === true &&
@@ -230,9 +228,7 @@ function handleFilter(event, target = null) {
     const parentLI = wrapperLI.parentElement.parentElement;
     const parentUL = wrapperLI.parentElement.parentElement.parentElement;
     if (parentUL && parentUL.tagName.toLowerCase() === 'ul') {
-      const parentCheckbox = parentLI.querySelector(
-        'div>input[type=checkbox]'
-      );
+      const parentCheckbox = parentLI.querySelector('div>input[type=checkbox]');
       if (
         parentCheckbox &&
         parentCheckbox.parentElement.parentElement === parentLI

@@ -28,7 +28,7 @@
 .o-tour_content {
   box-sizing: border-box;
   min-height: 100vh;
-  padding: unit( 30px / @base-font-size-px, em ) 0;
+  padding: unit(30px / @base-font-size-px, em) 0;
   position: relative;
   z-index: 1;
 
@@ -54,14 +54,14 @@
 
 .o-tour_content-intro {
   display: flex;
-  margin: 0 unit( 15px / @base-font-size-px, em );
+  margin: 0 unit(15px / @base-font-size-px, em);
 }
 
 .o-tour_content-text,
 .o-tour_content-image {
   box-sizing: border-box;
   margin: 0;
-  padding: 0 unit( 15px / @base-font-size-px, em );
+  padding: 0 unit(15px / @base-font-size-px, em);
 
   .respond-to-min( @bp-med-min, {
     flex-basis: 48%;
@@ -69,7 +69,7 @@
 }
 
 .o-tour_content-text {
-  max-width: unit( 670px / @base-font-size-px, em );
+  max-width: unit(670px / @base-font-size-px, em);
 
   .respond-to-min( @bp-med-min, {
     align-items: center;
@@ -92,7 +92,7 @@
 
 .o-tour_content-page {
   min-height: 100vh;
-  min-height: calc( 100vh - unit( 60px / @base-font-size-px, em ) );
+  min-height: calc(100vh - unit(60px / @base-font-size-px, em));
   outline: 0;
 
   .respond-to-min( @bp-sm-min, {
@@ -111,7 +111,7 @@
 
 .o-tour_content-page__building-block-overview {
   min-height: 100vh;
-  min-height: calc( 85vh - unit( 90px / @base-font-size-px, em ) );
+  min-height: calc(85vh - unit(90px / @base-font-size-px, em));
 
   .respond-to-min( @bp-med-min, {
     min-height: calc(100vh - unit( 60px / @base-font-size-px, em ));
@@ -122,8 +122,8 @@
 
 .o-tour_content-page__building-block {
   min-height: 100vh;
-  min-height: calc( 85vh - unit( 90px / @base-font-size-px, em ) );
-  padding-top: calc( 15vh + unit( 90px / @base-font-size-px, em ) );
+  min-height: calc(85vh - unit(90px / @base-font-size-px, em));
+  padding-top: calc(15vh + unit(90px / @base-font-size-px, em));
 
   .respond-to-min( @bp-med-min, {
     min-height: calc(100vh - unit( 60px / @base-font-size-px, em ));
@@ -139,10 +139,10 @@
 }
 
 .o-tour_content-image {
-  margin-bottom: unit( 30px / @base-font-size-px, em );
-  margin-top: unit( -30px / @base-font-size-px, em );
-  padding-bottom: unit( 30px / @base-font-size-px, em );
-  padding-top: unit( 30px / @base-font-size-px, em );
+  margin-bottom: unit(30px / @base-font-size-px, em);
+  margin-top: unit(-30px / @base-font-size-px, em);
+  padding-bottom: unit(30px / @base-font-size-px, em);
+  padding-top: unit(30px / @base-font-size-px, em);
   position: relative;
 
   .respond-to-min( @bp-sm-min, {
@@ -168,9 +168,9 @@
   &:before {
     bottom: 0;
     content: '';
-    left: unit( -15px / @base-font-size-px, em );
+    left: unit(-15px / @base-font-size-px, em);
     position: absolute;
-    right: unit( -15px / @base-font-size-px, em );
+    right: unit(-15px / @base-font-size-px, em);
     top: 0;
     z-index: -1;
 
@@ -206,7 +206,7 @@
   #block-executive-function,
   #block-financial-habits,
   #block-financial-knowledge {
-    transform: perspective( 100rem );
+    transform: perspective(100rem);
     transition-duration: 1000ms;
     transition-property: opacity, transform;
   }
@@ -214,36 +214,36 @@
   .is-on-executive-function.aos-animate {
     #block-executive-function {
       opacity: 1;
-      transform: scale( 1.1 ) translate3d( -1.4rem, 0, 0.1rem );
+      transform: scale(1.1) translate3d(-1.4rem, 0, 0.1rem);
     }
     #block-financial-habits,
     #block-financial-knowledge {
       opacity: 0.25;
-      transform: scale( 1 ) translate3d( 0, 0, 0 );
+      transform: scale(1) translate3d(0, 0, 0);
     }
   }
 
   .is-on-financial-habits.aos-animate {
     #block-financial-habits {
       opacity: 1;
-      transform: scale( 1.1 ) translate3d( -2.4rem, -2.4rem, 0.1rem );
+      transform: scale(1.1) translate3d(-2.4rem, -2.4rem, 0.1rem);
     }
     #block-executive-function,
     #block-financial-knowledge {
       opacity: 0.25;
-      transform: scale( 1 ) translate3d( 0, 0, 0 );
+      transform: scale(1) translate3d(0, 0, 0);
     }
   }
 
   .is-on-financial-knowledge.aos-animate {
     #block-financial-knowledge {
       opacity: 1;
-      transform: scale( 1.1 ) translate3d( 0, -2.4rem, 0.1rem );
+      transform: scale(1.1) translate3d(0, -2.4rem, 0.1rem);
     }
     #block-executive-function,
     #block-financial-habits {
       opacity: 0.25;
-      transform: scale( 1 ) translate3d( 0, 0, 0 );
+      transform: scale(1) translate3d(0, 0, 0);
     }
   }
 
@@ -252,12 +252,12 @@
     #block-financial-knowledge,
     #block-executive-function {
       opacity: 1;
-      transform: scale( 1 ) translate3d( 0, 0, 0 );
+      transform: scale(1) translate3d(0, 0, 0);
     }
   }
 }
 
-@media ( prefers-reduced-motion: reduce ) {
+@media (prefers-reduced-motion: reduce) {
   .o-tour_illustration {
     #block-executive-function,
     #block-financial-habits,
@@ -270,23 +270,22 @@
 .o-tour_illustration__intro {
   fill: @pacific-50;
   position: relative;
-  top: unit( -70px / @base-font-size-px, em );
+  top: unit(-70px / @base-font-size-px, em);
 }
-
 
 .building-block-initial() {
   opacity: 1;
-  transform: scale( 1 ) translate3d( 0, 0, 0 );
+  transform: scale(1) translate3d(0, 0, 0);
 }
 
 .building-block-inactive() {
   opacity: 0.25;
-  transform: scale( 1 ) translate3d( 0, 0, 0 );
+  transform: scale(1) translate3d(0, 0, 0);
 }
 
 .building-block-active() {
   opacity: 1;
-  transform: scale( 1.1 ) translate3d( 0, 0, 0 );
+  transform: scale(1.1) translate3d(0, 0, 0);
 }
 
 .o-tour_building-blocks {
@@ -296,7 +295,7 @@
 .o-tour_expandable-list {
   border-top: 1px solid @gray-40;
   list-style-type: none;
-  margin: unit( 30px / @base-font-size-px, em ) 0;
+  margin: unit(30px / @base-font-size-px, em) 0;
   padding-left: 0;
 
   li {
@@ -320,14 +319,14 @@
 
   .a-link__icon {
     display: inline-block;
-    margin-bottom: unit( 10px / @base-font-size-px, em );
+    margin-bottom: unit(10px / @base-font-size-px, em);
     padding-top: 2px;
   }
 
   .a-icon {
     display: block;
     float: left;
-    height: unit( 28px / @base-font-size-px, em );
+    height: unit(28px / @base-font-size-px, em);
     margin: -2px 0.5em 0 0;
   }
 }

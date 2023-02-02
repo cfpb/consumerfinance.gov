@@ -54,10 +54,7 @@ describe('Ask CFPB', () => {
         'have.class',
         'u-max-height-transition'
       );
-      cy.get('.o-summary_content').should(
-        'have.class',
-        'u-max-height-summary'
-      );
+      cy.get('.o-summary_content').should('have.class', 'u-max-height-summary');
       cy.get('.o-summary_content').invoke('outerHeight').should('be.lte', 88);
       answerPage.clickSummary();
       cy.get('.o-summary_content').should(
@@ -69,10 +66,7 @@ describe('Ask CFPB', () => {
         'not.have.class',
         'u-max-height-summary'
       );
-      cy.get('.o-summary_content').should(
-        'have.class',
-        'u-max-height-default'
-      );
+      cy.get('.o-summary_content').should('have.class', 'u-max-height-default');
       cy.get('.o-summary_content').invoke('outerHeight').should('be.gt', 88);
     });
   });

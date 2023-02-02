@@ -1,6 +1,10 @@
 /* istanbul ignore file */
 /* Cypress tests cover all the UI interactions on this page. */
 
+import {
+  addEventListenerToSelector,
+  track,
+} from '../../../apps/analytics-gtm/js/util/analytics-util';
 import search from 'ctrl-f';
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
 import { scrollIntoViewWithOffset } from './fig-sidenav-utils.js';
@@ -27,7 +31,18 @@ function init() {
   const searchContainer = document.getElementById('ctrl-f');
   const searchData = getSearchData(sectionsList);
 
-  search(searchContainer, { buttonText, searchOptions, searchData, onFollow });
+  search(searchContainer, {
+    buttonText,
+    searchOptions,
+    searchData,
+    onFollow,
+    onSubmit,
+  });
+
+  // Track clicks on the FIG search form button
+  addEventListenerToSelector('#ctrl-f', 'click', () => {
+    track('Small Business Lending FIG event', 'search:click', '');
+  });
 }
 
 /**
@@ -64,23 +79,36 @@ const getSearchData = (sections) => {
  * @param {object} event - Search result follow event
  */
 const onFollow = (event) => {
+  const target = event.target.closest('a');
+  const figLinkID = target.getAttribute('href').replace('#', '');
+  const figHeadingLabel = target.querySelector('h4').innerText;
+
   // Only proceed if the browser window is no greater than 900px
-  if (
-    window.matchMedia(`(max-width: ${varsBreakpoints.bpSM.max}px)`).matches
-  ) {
+  if (window.matchMedia(`(max-width: ${varsBreakpoints.bpSM.max}px)`).matches) {
     event.preventDefault();
-    const target = event.target
-      .closest('a')
-      .getAttribute('href')
-      .replace('#', '');
-    document
-      .querySelector('.o-fig_sidebar button.o-expandable_header')
-      .click();
+    document.querySelector('.o-fig_sidebar button.o-expandable_header').click();
     // Scrolling before the expandable closes causes jitters on some devices
     setTimeout(() => {
-      scrollIntoViewWithOffset(document.getElementById(target), 60);
+      scrollIntoViewWithOffset(document.getElementById(figLinkID), 60);
     }, 300);
   }
+
+  // Track clicks on individual search results
+  track(
+    'Small Business Lending FIG event',
+    'searchresults:click',
+    figHeadingLabel
+  );
+};
+
+/**
+ * Event listener that's fired after a user searches for something.
+ * We're reporting the user's search terms to Google Analytics.
+ *
+ * @param {string} query - Search term that was submitted.
+ */
+const onSubmit = (query) => {
+  track('Small Business Lending FIG event', 'search:entry', query);
 };
 
 export { init, getSearchData };

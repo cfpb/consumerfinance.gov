@@ -145,12 +145,7 @@ MortgagePerformanceLineChart.prototype.onChange = function (event) {
     case 'mp-line-chart-county':
       geoId = this.$county.value;
       geoName = this.$county.options[this.$county.selectedIndex].text;
-      action = actions.updateChart(
-        geoId,
-        geoName,
-        'county',
-        includeComparison
-      );
+      action = actions.updateChart(geoId, geoName, 'county', includeComparison);
       break;
     case 'mp-line-chart-compare':
       utils.hideEl(this.$chartTitleComparison);
@@ -224,9 +219,7 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function (
     this.$container.querySelector('#mp-state-non-metro-helper-text')
   );
   if (geoType === 'county') {
-    utils.showEl(
-      this.$container.querySelector('#mp-state-county-helper-text')
-    );
+    utils.showEl(this.$container.querySelector('#mp-state-county-helper-text'));
     utils.showEl(
       this.$container.querySelector('#mp-line-chart-state-container')
     );

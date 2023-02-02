@@ -91,35 +91,35 @@
   }
 
   &_before ~ .a-text-input {
-    padding-left: unit( 30px / @btn-font-size, em );
+    padding-left: unit(30px / @btn-font-size, em);
 
     &.input__super {
-      padding-left: unit( 40px / @btn__super-font-size, em );
+      padding-left: unit(40px / @btn__super-font-size, em);
     }
   }
 
   &_after ~ .a-text-input {
-    padding-right: unit( 30px / @btn-font-size, em );
+    padding-right: unit(30px / @btn-font-size, em);
 
     &.input__super {
-      padding-right: unit( 35px / @btn__super-font-size, em );
+      padding-right: unit(35px / @btn__super-font-size, em);
     }
   }
 
   &_before,
   &_after {
     position: absolute;
-    top: unit( 8px / @btn-font-size, em );
+    top: unit(8px / @btn-font-size, em);
     cursor: pointer;
-    font-size: unit( @btn-font-size / @base-font-size-px, em );
+    font-size: unit(@btn-font-size / @base-font-size-px, em);
   }
 
   &_before {
-    left: unit( 12px / @btn-font-size, em );
+    left: unit(12px / @btn-font-size, em);
   }
 
   &_after {
-    right: unit( 14px / @btn-font-size, em );
+    right: unit(14px / @btn-font-size, em);
 
     .respond-to-min( @bp-sm-min, {
       display: none;
@@ -129,19 +129,18 @@
   &.input__super {
     .input-contains-label_before,
     .input-contains-label_after {
-      font-size: unit( @btn__super-font-size / @base-font-size-px, em );
+      font-size: unit(@btn__super-font-size / @base-font-size-px, em);
     }
 
     .input-contains-label_before {
-      left: unit( 12px / @btn__super-font-size, em );
+      left: unit(12px / @btn__super-font-size, em);
     }
 
     .input-contains-label_after {
-      right: unit( 12px / @btn__super-font-size, em );
+      right: unit(12px / @btn__super-font-size, em);
     }
   }
 }
-
 
 // TODO: Move to the DM and update existing o-form__input-w-btn in CF
 
@@ -161,7 +160,7 @@ input {
     padding-bottom: 7px;
 
     // Match button font-size
-    font-size: unit( 14px / @base-font-size-px, em );
+    font-size: unit(14px / @base-font-size-px, em);
 
     &:focus {
       box-shadow: 0 0 0 1px @pacific inset;
@@ -206,7 +205,7 @@ input {
   display: table;
   width: 100%;
 
-  @supports( display: flex ) {
+  @supports (display: flex) {
     display: flex;
     width: auto;
   }
@@ -217,7 +216,7 @@ input {
     float: left;
     margin-bottom: 0;
 
-    @supports( display: flex ) {
+    @supports (display: flex) {
       display: flex;
       width: auto;
       float: none;
@@ -235,7 +234,7 @@ input {
     width: 1%;
     vertical-align: middle;
 
-    @supports( display: flex ) {
+    @supports (display: flex) {
       display: flex;
       width: auto;
     }
@@ -248,7 +247,6 @@ input {
   }
 }
 
-
 // TODO: Move to the DM & CF
 
 /* ==========================================================================
@@ -259,11 +257,10 @@ input {
 @radio-button-diameter: 18px;
 
 .o-scale {
-
   + .o-scale {
-    padding-top: unit( 30px / @base-font-size-px, em );
+    padding-top: unit(30px / @base-font-size-px, em);
     border-top: 1px solid @gray-40;
-    margin-top: unit( 30px / @base-font-size-px, em );
+    margin-top: unit(30px / @base-font-size-px, em);
   }
 
   .m-form-field + .m-form-field {
@@ -340,8 +337,8 @@ input {
  * Sets minimum height when an input is a datepicker.
  * This is for an issue in iOS Safari where the input is collapsed.
  */
-input[type=date] {
-  min-height: unit( 35px / @base-font-size-px, rem );
+input[type='date'] {
+  min-height: unit(35px / @base-font-size-px, rem);
 }
 
 /* topdoc

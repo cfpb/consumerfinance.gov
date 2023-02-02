@@ -1,5 +1,4 @@
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.menu import MenuItem
 from wagtail.core import hooks
@@ -15,7 +14,6 @@ except ImportError:
 
 @hooks.register("register_admin_urls")
 def register_admin_urls():
-
     urls = [
         re_path(
             r"^permissions/",
@@ -40,8 +38,8 @@ def register_settings_menu_item():
 @hooks.register("register_user_listing_buttons")
 def user_listing_buttons(context, user):
     yield UserListingButton(
-        _("View Permissions"),
+        "View Permissions",
         reverse("permissions:user", args=[user.pk]),
-        attrs={"title": _("View permissions for this user")},
+        attrs={"title": "View permissions for this user"},
         priority=15,
     )

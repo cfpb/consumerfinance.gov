@@ -126,9 +126,7 @@ function richTextTable(Handsontable) {
   RichTextEditor.prototype.setValue = function (value) {
     let contentState;
 
-    const blocksFromHTML = value
-      ? window.DraftJS.convertFromHTML(value)
-      : null;
+    const blocksFromHTML = value ? window.DraftJS.convertFromHTML(value) : null;
     if (blocksFromHTML && blocksFromHTML.contentBlocks) {
       contentState = window.DraftJS.ContentState.createFromBlockArray(
         blocksFromHTML.contentBlocks,
@@ -682,10 +680,7 @@ class RichTextTableInput {
 }
 
 if (window.telepath) {
-  window.telepath.register(
-    'v1.widgets.RichTextTableInput',
-    RichTextTableInput
-  );
+  window.telepath.register('v1.widgets.RichTextTableInput', RichTextTableInput);
 }
 
 if (window.Handsontable) richTextTable(window.Handsontable);

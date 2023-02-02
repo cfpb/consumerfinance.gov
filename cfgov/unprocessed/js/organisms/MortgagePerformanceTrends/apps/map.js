@@ -201,10 +201,7 @@ MortgagePerformanceMap.prototype.renderChart = function (prevState, state) {
   }
 };
 
-MortgagePerformanceMap.prototype.renderChartForm = function (
-  prevState,
-  state
-) {
+MortgagePerformanceMap.prototype.renderChartForm = function (prevState, state) {
   let geoType = state.geo.type;
   if (state.isLoadingCounties) {
     geoType = 'county';

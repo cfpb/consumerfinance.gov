@@ -82,7 +82,7 @@ categories = [
             ("nationwide", "Nationwide"),
             ("employment-screening", "Employment screening"),
             ("tenant-screening", "Tenant screening"),
-            ("check-bank-screening", "Check and bank screening"),
+            ("check-bank-screening", "Check and bank account screening"),
             ("personal-property-insurance", "Personal property insurance"),
             ("medical", "Medical"),
             ("low-income-and-subprime", "Low-income and subprime"),
@@ -291,11 +291,6 @@ def is_blog(page):
             if category.name == choice[0]:
                 return True
     if "Blog" in page.specific_class.__name__:
-        return True
-
-
-def is_event(page):
-    if "Event" in page.specific_class.__name__:
         return True
 
 
