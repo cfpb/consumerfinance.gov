@@ -54,15 +54,15 @@ msgstr ""
 #: v1/jinja2/v1/includes/blocks/email-signup.html:54
 #: v1/jinja2/v1/includes/blocks/email-signup.html:79
 msgid "Sign up"
-msgstr ""
+msgstr "登記註冊"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:68
 msgid "Email address"
-msgstr ""
+msgstr "電子郵件地址"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:84
 msgid "See Privacy Act statement"
-msgstr ""
+msgstr "請參見《隱私法》聲明"
 
 #: v1/jinja2/v1/includes/blocks/schema/tip.html:19
 msgid "Tip"
