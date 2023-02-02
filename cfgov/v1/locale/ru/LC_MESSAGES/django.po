@@ -167,11 +167,11 @@ msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/expandable.html:56
 msgid "Show"
-msgstr "Test"
+msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/expandable.html:64
 msgid "Hide"
-msgstr "Test2"
+msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/footer.html:32
 msgid "Back to top"
