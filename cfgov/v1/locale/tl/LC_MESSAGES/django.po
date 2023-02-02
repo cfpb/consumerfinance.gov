@@ -54,15 +54,15 @@ msgstr ""
 #: v1/jinja2/v1/includes/blocks/email-signup.html:54
 #: v1/jinja2/v1/includes/blocks/email-signup.html:79
 msgid "Sign up"
-msgstr ""
+msgstr "Mag-sign up"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:68
 msgid "Email address"
-msgstr ""
+msgstr "Email address"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:84
 msgid "See Privacy Act statement"
-msgstr ""
+msgstr "Tingnan ang pahayag ng Batas sa Pagkapribado"
 
 #: v1/jinja2/v1/includes/blocks/schema/tip.html:19
 msgid "Tip"
@@ -165,11 +165,11 @@ msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/expandable.html:56
 msgid "Show"
-msgstr ""
+msgstr "Ipakita"
 
 #: v1/jinja2/v1/includes/organisms/expandable.html:64
 msgid "Hide"
-msgstr ""
+msgstr "Ikubli"
 
 #: v1/jinja2/v1/includes/organisms/footer.html:32
 msgid "Back to top"
