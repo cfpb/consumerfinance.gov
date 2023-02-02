@@ -55,15 +55,15 @@ msgstr ""
 #: v1/jinja2/v1/includes/blocks/email-signup.html:54
 #: v1/jinja2/v1/includes/blocks/email-signup.html:79
 msgid "Sign up"
-msgstr ""
+msgstr "التسجيل"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:68
 msgid "Email address"
-msgstr ""
+msgstr "عنوان البريد الإلكترون"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:84
 msgid "See Privacy Act statement"
-msgstr ""
+msgstr "انظر بيان قانون الخصوصية"
 
 #: v1/jinja2/v1/includes/blocks/schema/tip.html:19
 msgid "Tip"
@@ -166,11 +166,11 @@ msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/expandable.html:56
 msgid "Show"
-msgstr ""
+msgstr "عرض"
 
 #: v1/jinja2/v1/includes/organisms/expandable.html:64
 msgid "Hide"
-msgstr ""
+msgstr "إخفاء"
 
 #: v1/jinja2/v1/includes/organisms/footer.html:32
 msgid "Back to top"
