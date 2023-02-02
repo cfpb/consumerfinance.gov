@@ -54,15 +54,15 @@ msgstr ""
 #: v1/jinja2/v1/includes/blocks/email-signup.html:54
 #: v1/jinja2/v1/includes/blocks/email-signup.html:79
 msgid "Sign up"
-msgstr ""
+msgstr "Enskri"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:68
 msgid "Email address"
-msgstr ""
+msgstr "Adrès imèl"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:84
 msgid "See Privacy Act statement"
-msgstr ""
+msgstr "Gade Privacy Act Statement (Lwa sou Pwoteksyon Vi Prive a)"
 
 #: v1/jinja2/v1/includes/blocks/schema/tip.html:19
 msgid "Tip"
@@ -165,11 +165,11 @@ msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/expandable.html:56
 msgid "Show"
-msgstr ""
+msgstr "Montre"
 
 #: v1/jinja2/v1/includes/organisms/expandable.html:64
 msgid "Hide"
-msgstr ""
+msgstr "Kache"
 
 #: v1/jinja2/v1/includes/organisms/footer.html:32
 msgid "Back to top"
