@@ -56,15 +56,15 @@ msgstr ""
 #: v1/jinja2/v1/includes/blocks/email-signup.html:54
 #: v1/jinja2/v1/includes/blocks/email-signup.html:79
 msgid "Sign up"
-msgstr ""
+msgstr "Подписаться"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:68
 msgid "Email address"
-msgstr ""
+msgstr "Эл. почта"
 
 #: v1/jinja2/v1/includes/blocks/email-signup.html:84
 msgid "See Privacy Act statement"
-msgstr ""
+msgstr "См. заявление касательно закона «О неприкосновенности частной жизни»"
 
 #: v1/jinja2/v1/includes/blocks/schema/tip.html:19
 msgid "Tip"
