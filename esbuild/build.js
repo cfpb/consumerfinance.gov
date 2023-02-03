@@ -43,8 +43,8 @@ const arg = process.argv.slice(2)[0];
     return await ctx.dispose();
   } else {
     const ctx = await esbuild.context(mergedConfig);
-    ctx.rebuild();
-    ctx.dispose();
+    await ctx.rebuild();
+    await ctx.dispose();
   }
 
   await copy(baseConfig);
