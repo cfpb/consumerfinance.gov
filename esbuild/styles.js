@@ -1,4 +1,3 @@
-import esbuild from 'esbuild';
 import { readdirSync } from 'fs';
 import postCSSPlugin from './plugins/postcss.js';
 import autoprefixer from 'autoprefixer';
@@ -35,7 +34,7 @@ const cssPaths = [
  * @param {object} baseConfig - The base esbuild configuration.
  */
 function styles(baseConfig) {
-  esbuild.build({
+  return {
     ...baseConfig,
     entryPoints: cssPaths,
     plugins: [
@@ -53,7 +52,7 @@ function styles(baseConfig) {
         },
       }),
     ],
-  });
+  };
 }
 
-export { styles };
+export { styles, cssPaths };

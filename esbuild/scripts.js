@@ -1,5 +1,3 @@
-import esbuild from 'esbuild';
-
 import { getAll } from './utils.js';
 import environment from '../config/environment.js';
 const { unprocessed } = environment.paths;
@@ -54,11 +52,11 @@ const jsPaths = [
  * @param {object} baseConfig - The base esbuild configuration.
  */
 function scripts(baseConfig) {
-  esbuild.build({
+  return {
     ...baseConfig,
     entryPoints: jsPaths,
     target: 'es6',
-  });
+  };
 }
 
-export { scripts };
+export { scripts, jsPaths };

@@ -1,7 +1,8 @@
 /* eslint-disable complexity,consistent-return,global-require */
+import esbuild from 'esbuild';
 import { copy } from './copy.js';
-import { scripts } from './scripts.js';
-import { styles } from './styles.js';
+import { scripts, jsPaths } from './scripts.js';
+import { styles, cssPaths } from './styles.js';
 
 import environment from '../config/environment.js';
 const { processed } = environment.paths;
@@ -22,15 +23,31 @@ const baseConfig = {
 
 const arg = process.argv.slice(2)[0];
 
-(function () {
-  if (arg === 'copy') return copy(baseConfig);
-  if (arg === 'scripts') return scripts(baseConfig);
-  if (arg === 'styles') return styles(baseConfig);
-  if (arg === 'watch') baseConfig.watch = true;
+(async function () {
+  const scriptsConfig = scripts(baseConfig);
+  const stylesConfig = styles(baseConfig);
+  const mergedConfig = { ...scriptsConfig, ...stylesConfig };
+  mergedConfig.entryPoints = jsPaths.concat(cssPaths);
 
-  scripts(baseConfig);
-  styles(baseConfig);
-  copy(baseConfig);
+  if (arg === 'watch') {
+    const ctx = await esbuild.context(mergedConfig);
+    await ctx.watch();
+    // Not disposing context here as the user will ctrl+c to end watching.
+  } else if (arg === 'scripts') {
+    const ctx = await esbuild.context(scriptsConfig);
+    await ctx.rebuild();
+    return await ctx.dispose();
+  } else if (arg === 'styles') {
+    const ctx = await esbuild.context(stylesConfig);
+    await ctx.rebuild();
+    return await ctx.dispose();
+  } else {
+    const ctx = await esbuild.context(mergedConfig);
+    ctx.rebuild();
+    ctx.dispose();
+  }
+
+  await copy(baseConfig);
 
   // Run app-specific scripts
   runWorkerAndManifest();
