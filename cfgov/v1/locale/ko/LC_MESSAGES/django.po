@@ -1,0 +1,277 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 13:58-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: v1/jinja2/v1/blog/blog_page.html:23
+#: v1/jinja2/v1/includes/molecules/social-media.html:95
+msgid "https://twitter.com/CFPB"
+msgstr ""
+
+#: v1/jinja2/v1/blog/blog_page.html:26
+#: v1/jinja2/v1/includes/molecules/social-media.html:87
+msgid "https://www.facebook.com/CFPB"
+msgstr ""
+
+#: v1/jinja2/v1/blog/blog_page.html:29
+#, python-format
+msgid ""
+"Join the conversation. Follow CFPB on %(twitter_link)s and %(facebook_link)s."
+msgstr ""
+
+#: v1/jinja2/v1/home_page/home_page.html:8
+#: v1/jinja2/v1/home_page/home_page_legacy.html:6
+#: v1/jinja2/v1/layouts/base.html:49
+msgid "Consumer Financial Protection Bureau"
+msgstr ""
+
+#: v1/jinja2/v1/includes/atoms/tagline.html:18
+msgid "An official website of the"
+msgstr ""
+
+#: v1/jinja2/v1/includes/atoms/tagline.html:19
+msgid "United States government"
+msgstr ""
+
+#: v1/jinja2/v1/includes/blocks/audio.html:6
+msgid "Your browser does not support this audio player."
+msgstr ""
+
+#: v1/jinja2/v1/includes/blocks/email-signup.html:54
+#: v1/jinja2/v1/includes/blocks/email-signup.html:79
+msgid "Sign up"
+msgstr "신청하기"
+
+#: v1/jinja2/v1/includes/blocks/email-signup.html:68
+msgid "Email address"
+msgstr "이메일 주소"
+
+#: v1/jinja2/v1/includes/blocks/email-signup.html:84
+msgid "See Privacy Act statement"
+msgstr "개인정보보호법 안내문 보기"
+
+#: v1/jinja2/v1/includes/blocks/schema/tip.html:19
+msgid "Tip"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/breadcrumbs.html:17
+msgid "Breadcrumbs"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/global-header-cta.html:24
+msgid "Submit a Complaint"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/global-search.html:28
+#: v1/jinja2/v1/includes/molecules/global-search.html:36
+#: v1/jinja2/v1/includes/molecules/global-search.html:71
+#: v1/jinja2/v1/includes/molecules/global-search.html:90
+#: v1/jinja2/v1/includes/organisms/ask-search.html:94
+msgid "Search"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/global-search.html:33
+msgid "Search the consumerfinance.gov website"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/global-search.html:40
+#: v1/jinja2/v1/includes/organisms/video-player.html:63
+msgid "Close"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/global-search.html:76
+#: v1/jinja2/v1/includes/molecules/global-search.html:79
+msgid "Search the CFPB"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/global-search.html:85
+msgid "Clear search"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/pagination.html:33
+msgid "Pagination"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/pagination.html:69
+msgid "Page"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/pagination.html:100
+msgid "Go"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/related-posts.html:104
+msgid "View more related posts"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/related-posts.html:106
+msgid "View more"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/social-media.html:53
+msgid "Look what I found on the CFPB's site!"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/social-media.html:61
+msgid "Check out this page from the CFPB"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/social-media.html:75
+msgid "Share & print"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/social-media.html:77
+msgid "Share this"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/social-media.html:128
+msgid "Print this page"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/social-media.html:159
+msgid "Share on"
+msgstr ""
+
+#: v1/jinja2/v1/includes/molecules/social-media.html:167
+msgid "Visit us on"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/ask-search.html:44
+msgid "/ask-cfpb/search/"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/ask-search.html:47
+#: v1/jinja2/v1/includes/organisms/ask-search.html:63
+msgid "Search for your question"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/ask-search.html:93
+msgid "Search Ask CFPB for your question"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/expandable.html:56
+msgid "Show"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/expandable.html:64
+msgid "Hide"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/footer.html:32
+msgid "Back to top"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/footer.html:185
+msgid "https://usa.gov/"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/footer.html:185
+msgid "USA.gov"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/secondary-navigation-fig.html:21
+#: v1/jinja2/v1/includes/organisms/secondary-navigation-fig.html:22
+msgid "Table of contents"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/secondary-navigation.html:17
+msgid "Section navigation"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/secondary-navigation.html:18
+msgid "In this section"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/video-player.html:60
+msgid "Close video"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/video-player.html:95
+msgid "Play video on YouTube"
+msgstr ""
+
+#: v1/jinja2/v1/includes/organisms/video-player.html:107
+msgid "Play video"
+msgstr ""
+
+#: v1/jinja2/v1/layouts/base.html:242
+msgid "Skip to main content"
+msgstr ""
+
+#: v1/models/base.py:43
+msgid "Author"
+msgstr ""
+
+#: v1/models/base.py:44
+msgid "Authors"
+msgstr ""
+
+#: v1/models/base.py:51
+msgid "Tag"
+msgstr ""
+
+#: v1/models/base.py:52
+msgid "Tags"
+msgstr ""
+
+#: v1/models/base.py:57
+msgid "Content Owner"
+msgstr ""
+
+#: v1/models/base.py:58
+msgid "Content Owners"
+msgstr ""
+
+#: v1/models/base.py:471
+msgid "password"
+msgstr ""
+
+#: v1/templates/cdnadmin/disabled.html:3 v1/templates/cdnadmin/index.html:5
+msgid "CDN Manager"
+msgstr ""
+
+#: v1/templates/v1/_list_translated_page.html:17
+msgid "Edit this page"
+msgstr ""
+
+#: v1/templates/v1/export_feedback.html:3
+msgid "Export feedback"
+msgstr ""
+
+#: v1/templates/v1/page_metadata_report.html:7
+#: v1/templates/v1/report_no-xlsx_base.html:7
+msgid "Download CSV"
+msgstr ""
+
+#: v1/templates/v1/translated_pages_report.html:9
+msgid "No pages found."
+msgstr ""
+
+#: v1/tests/management/commands/test_makemessages_data/__init__.py:4
+msgid "Test string from Python file."
+msgstr ""
+
+#: v1/tests/management/commands/test_makemessages_data/jinja2/test.html:1
+msgid ""
+"\n"
+"Test string from Jinja template.\n"
+"This is in a multi-line block.\n"
+msgstr ""
+
+#: v1/tests/management/commands/test_makemessages_data/templates/test.html:2
+msgid "Test string from Django template."
+msgstr ""
