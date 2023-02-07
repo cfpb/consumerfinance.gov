@@ -342,7 +342,6 @@ class FilterableListForm(forms.Form):
 
 
 class EnforcementActionsFilterForm(FilterableListForm):
-
     statuses = forms.MultipleChoiceField(
         required=False,
         choices=enforcement_action_page.enforcement_statuses,

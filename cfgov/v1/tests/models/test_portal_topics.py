@@ -4,7 +4,6 @@ from v1.models.portal_topics import PortalCategory, PortalTopic
 
 
 class TestPortalTagObjects(TestCase):
-
     fixtures = [
         "portal_categories.json",
         "portal_topics.json",

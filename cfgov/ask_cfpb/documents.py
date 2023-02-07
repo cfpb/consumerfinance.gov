@@ -11,7 +11,6 @@ from search.elasticsearch_helpers import (
 
 @registry.register_document
 class AnswerPageDocument(Document):
-
     autocomplete = fields.TextField(analyzer=ngram_tokenizer)
     portal_topics = fields.KeywordField()
     portal_categories = fields.TextField()

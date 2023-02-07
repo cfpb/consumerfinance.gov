@@ -22,7 +22,6 @@ class TestUnicodeCompatibility(TestCase):
 
 class TestTranslations(TestCase):
     def test_related_resource_translations(self):
-
         test_resource = RelatedResource(
             title="English title",
             title_es="Spanish title",

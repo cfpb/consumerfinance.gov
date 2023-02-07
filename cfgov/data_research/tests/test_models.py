@@ -31,7 +31,6 @@ class GeoValidationTests(django.test.TestCase):
     fixtures = ["mortgage_metadata.json", "mortgage_constants.json"]
 
     def setUp(self):
-
         baker.make(
             State,
             fips="12",
@@ -287,7 +286,6 @@ class MortgageBaseCountiesTest(unittest.TestCase):
 
 
 class MortgagePerformancePageTests(django.test.TestCase):
-
     fixtures = ["mortgage_metadata.json"]
 
     def setUp(self):
@@ -329,7 +327,6 @@ class MortgagePerformancePageTests(django.test.TestCase):
 
 
 class ModelStringTest(django.test.TestCase):
-
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
     def test_county_string_max_length(self):
@@ -353,11 +350,9 @@ class ModelStringTest(django.test.TestCase):
 
 
 class MortgageModelTests(django.test.TestCase):
-
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
     def setUp(self):
-
         self.base_data = baker.make(
             CountyMortgageData,
             fips="12081",
