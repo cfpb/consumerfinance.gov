@@ -1,12 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.shortcuts import redirect, render
 
 from wagtail.admin.views import account
-from wagtail.admin.views.account import LoginView as WagtailLoginView
 from wagtail.admin.views.account import PasswordResetConfirmView
 
 from login.forms import CFGOVPasswordChangeForm, CFGOVSetPasswordForm
@@ -60,17 +58,3 @@ def change_password(request):
             "can_change_password": can_change_password,
         },
     )
-
-
-class LoginView(WagtailLoginView):
-    def form_valid(self, form):
-        response = super().form_valid(form)
-
-        # After successful login, remove any failed login attempts.
-        user = form.get_user()
-        try:
-            user.failedloginattempt.delete()
-        except ObjectDoesNotExist:
-            pass
-
-        return response

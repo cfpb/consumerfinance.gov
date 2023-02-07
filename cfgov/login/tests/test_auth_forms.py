@@ -1,10 +1,25 @@
+from datetime import timedelta
 from unittest.mock import patch
 
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.core.exceptions import ValidationError
+from django.test import TestCase, override_settings
+from django.utils.timezone import now
 
-from login.forms import CFGOVPasswordChangeForm, UserCreationForm, UserEditForm
+from login.forms import (
+    CFGOVPasswordChangeForm,
+    LoginForm,
+    UserCreationForm,
+    UserEditForm,
+)
 from login.tests.test_password_policy import TestWithUser
+
+from v1.models.base import (
+    FailedLoginAttempt,
+    PasswordHistoryItem,
+    TemporaryLockout,
+)
 
 
 @patch("login.forms.send_password_reset_email")
@@ -108,3 +123,83 @@ class PasswordValidationMixinTestCase(TestWithUser):
         )
         form.is_valid()
         self.assertTrue(form.is_valid())
+
+
+class LoginFormTestCase(TestCase):
+    def test_successful_login(self):
+        form = LoginForm(data={"username": "admin", "password": "admin"})
+        self.assertTrue(form.is_valid())
+
+    def test_successful_login_object_dne(self):
+        """Clear password history to and then successfully login"""
+        User.objects.get(
+            username="admin"
+        ).passwordhistoryitem_set.all().delete()
+        form = LoginForm(data={"username": "admin", "password": "admin"})
+        self.assertTrue(form.is_valid())
+
+    def test_failed_login_recorded(self):
+        """Record the failure for a failed login"""
+        form = LoginForm(data={"username": "admin", "password": "badadmin"})
+        self.assertFalse(form.is_valid())
+        self.assertIsNotNone(
+            User.objects.get(username="admin").failedloginattempt
+        )
+
+    def test_failed_login_invalid_user(self):
+        """Handle a non-existent user when a login fails"""
+        form = LoginForm(data={"username": "badmin", "password": "badadmin"})
+        self.assertFalse(form.is_valid())
+        self.assertIn(
+            "correct username and password", form.errors["__all__"][0]
+        )
+
+    @override_settings(LOGIN_FAILS_ALLOWED=0)
+    def test_failed_login_lockout(self):
+        """Ensure lockout if our failed logins are over our limit"""
+        form = LoginForm(data={"username": "admin", "password": "badadmin"})
+        self.assertFalse(form.is_valid())
+        with self.assertRaises(ValidationError):
+            form.check_for_lockout(User.objects.get(username="admin"))
+
+    def test_login_locked_out(self):
+        """Ensure we get locked out"""
+        form = LoginForm()
+        user = User.objects.get(username="admin")
+        TemporaryLockout(
+            user=user, expires_at=(now() + timedelta(hours=1))
+        ).save()
+        user.refresh_from_db()
+        with self.assertRaises(ValidationError):
+            form.check_for_lockout(user)
+
+    def test_password_expired(self):
+        """Ensure login is denied if our password is expired"""
+        form = LoginForm()
+        user = User.objects.get(username="admin")
+        PasswordHistoryItem(
+            user=user,
+            expires_at=now(),
+            locked_until=(now() + timedelta(hours=1)),
+            encrypted_password=make_password("testing"),
+        ).save()
+        user.refresh_from_db()
+        with self.assertRaises(ValidationError):
+            form.check_for_password_expiration(user)
+
+    def test_clear_failed_login_attempts(self):
+        """Ensure we can clear failed login attempts"""
+        form = LoginForm()
+        user = User.objects.get(username="admin")
+        FailedLoginAttempt(user=user).save()
+
+        user.refresh_from_db()
+        self.assertIsNotNone(user.failedloginattempt)
+
+        form.clear_failed_login_attempts(user)
+
+        user.refresh_from_db()
+        with self.assertRaises(
+            User.failedloginattempt.RelatedObjectDoesNotExist
+        ):
+            user.failedloginattempt

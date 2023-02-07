@@ -3,12 +3,10 @@ from django.contrib.auth import views as django_auth_views
 from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 
+from wagtail.admin.views.account import LoginView
+
 from login.forms import CFGOVPasswordChangeForm
-from login.views import (
-    CFGOVPasswordResetConfirmView,
-    LoginView,
-    change_password,
-)
+from login.views import CFGOVPasswordResetConfirmView, change_password
 
 
 if settings.SAML_AUTH:  # pragma: no cover

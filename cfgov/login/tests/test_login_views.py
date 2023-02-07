@@ -2,7 +2,6 @@ from datetime import timedelta
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth import views as auth_views
-from django.contrib.auth.models import User
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.test import TestCase
 from django.urls import reverse
@@ -15,54 +14,6 @@ from wagtail.tests.utils import WagtailTestUtils
 from login.views import CFGOVPasswordResetConfirmView
 
 from v1.models.base import TemporaryLockout
-
-
-class LoginViewsTestCase(TestCase):
-    def test_login_no_auth(self):
-        response = self.client.get("/login/?next=https://example.com")
-        self.assertTemplateUsed(response, "wagtailadmin/login.html")
-        self.assertEqual(response.context["next"], "")
-
-    def test_login_failed_bad_login(self):
-        self.client.post(
-            "/login/", {"username": "admin", "password": "badadmin"}
-        )
-        self.assertIsNotNone(
-            User.objects.get(username="admin").failedloginattempt
-        )
-
-    def test_login_with_failure(self):
-        response = self.client.post(
-            "/login/", {"username": "admin", "password": "admin"}
-        )
-        self.assertRedirects(
-            response,
-            "/admin/",
-            target_status_code=302,
-            fetch_redirect_response=False,
-        )
-
-    def test_login_success_after_failed_login(self):
-        self.client.post(
-            "/login/", {"username": "admin", "password": "badadmin"}
-        )
-        self.assertIsNotNone(
-            User.objects.get(username="admin").failedloginattempt
-        )
-
-        response = self.client.post(
-            "/login/", {"username": "admin", "password": "admin"}
-        )
-        self.assertRedirects(
-            response,
-            "/admin/",
-            target_status_code=302,
-            fetch_redirect_response=False,
-        )
-        with self.assertRaises(
-            User.failedloginattempt.RelatedObjectDoesNotExist
-        ):
-            User.objects.get(username="admin").failedloginattempt
 
 
 class PasswordResetViewTestCase(TestCase, WagtailTestUtils):
