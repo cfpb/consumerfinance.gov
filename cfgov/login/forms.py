@@ -16,8 +16,7 @@ from wagtail.users import forms as wagtailforms
 
 import login.utils
 from login.email import send_password_reset_email
-
-from v1.models import base
+from login.models import FailedLoginAttempt
 
 
 class PasswordValidationMixin:
@@ -98,7 +97,7 @@ class LoginForm(AuthenticationForm):
                 params={"username": self.username_field.verbose_name},
             )
 
-        fa, created = base.FailedLoginAttempt.objects.get_or_create(user=user)
+        fa, created = FailedLoginAttempt.objects.get_or_create(user=user)
         now = time.time()
         fa.failed(now)
 

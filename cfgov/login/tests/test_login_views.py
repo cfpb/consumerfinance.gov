@@ -11,9 +11,8 @@ from django.utils.timezone import now
 
 from wagtail.tests.utils import WagtailTestUtils
 
+from login.models import TemporaryLockout
 from login.views import CFGOVPasswordResetConfirmView
-
-from v1.models.base import TemporaryLockout
 
 
 class PasswordResetViewTestCase(TestCase, WagtailTestUtils):

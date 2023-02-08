@@ -13,13 +13,12 @@ from login.forms import (
     UserCreationForm,
     UserEditForm,
 )
-from login.tests.test_password_policy import TestWithUser
-
-from v1.models.base import (
+from login.models import (
     FailedLoginAttempt,
     PasswordHistoryItem,
     TemporaryLockout,
 )
+from login.tests.test_password_policy import TestWithUser
 
 
 @patch("login.forms.send_password_reset_email")
