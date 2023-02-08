@@ -3,17 +3,17 @@
    {% set block_classes = ['block'] %}
 
    {% if block.value.has_top_border or block.value.has_top_rule_line %}
-      {{ block_classes.append('block__padded-top block__border-top') }}
+      {{ block_classes.append('block__padded-top block__border-top') | default('', true) }}
    {% elif index == 1 %}
-      {{ block_classes.append('block__flush-top') }}
+      {{ block_classes.append('block__flush-top') | default('', true) }}
    {% endif %}
 
    {% if block.value.has_rule or block.value.has_bottom_border %}
-      {{ block_classes.append('block__padded-bottom block__border-bottom') }}
+      {{ block_classes.append('block__padded-bottom block__border-bottom') | default('', true) }}
    {% endif %}
 
    {% if block.block.meta.classname %}
-      {{ block_classes.append(block.block.meta.classname) }}
+      {{ block_classes.append(block.block.meta.classname) | default('', true) }}
    {% endif %}
 
    <div class="{{ block_classes | unique | join(' ') }}"
