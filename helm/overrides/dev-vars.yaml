@@ -13,8 +13,6 @@ extraEnvs:
     value: "abcdefghijklmnopqrstuvwxyz"
   - name: MEDIA_ROOT
     value: "/src/consumerfinance.gov/cfgov/f/"
-  - name: WATCHMAN_TOKENS
-    value: "token"
   - name: APACHE_STATUS_ALLOW_FROM
     value: "127.0.0.1"
   - name: AWS_CONFIG_FILE
