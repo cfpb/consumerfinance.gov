@@ -1,17 +1,23 @@
 {% macro render(block, index) %}
-    {%- import 'v1/includes/macros/accessible-languages.html' as accessible_languages with context -%}
-    <div class="block
-                {{ 'block__flush-top' if index == 1
-                   and not (block.value.has_top_border or block.value.has_top_rule_line) else '' }}
+   {%- import 'v1/includes/macros/accessible-languages.html' as accessible_languages with context -%}
+   {% set block_classes = ['block'] %}
 
-                {{ 'block__padded-top block__border-top'
-                   if block.value.has_top_border or block.value.has_top_rule_line else '' }}
+   {% if block.value.has_top_border or block.value.has_top_rule_line %}
+      {% do block_classes.append('block__padded-top block__border-top') %}
+   {% elif index == 1 %}
+      {% do block_classes.append('block__flush-top') %}
+   {% endif %}
 
-                {{ 'block__padded-bottom block__border-bottom'
-                   if block.value.has_rule or block.value.has_bottom_border else '' }}
+   {% if block.value.has_rule or block.value.has_bottom_border %}
+      {% do block_classes.append('block__padded-bottom block__border-bottom') %}
+   {% endif %}
 
-                {{ block.block.meta.classname if block.block.meta.classname else '' -}}"
-        {{ accessible_languages.render() }}>
-        {{ render_stream_child(block) | safe }}
-    </div>
+   {% if block.block.meta.classname %}
+      {% do block_classes.append(block.block.meta.classname) %}
+   {% endif %}
+
+   <div class="{{ block_classes | unique | join(' ') }}"
+      {{- accessible_languages.render() -}}>
+      {{ render_stream_child(block) | safe }}
+   </div>
 {% endmacro %}
