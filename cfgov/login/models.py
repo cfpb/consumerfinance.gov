@@ -16,17 +16,9 @@ class PasswordHistoryItem(models.Model):
     class Meta:
         get_latest_by = "created"
 
-    @classmethod
-    def current_for_user(cls, user):
-        return user.passwordhistoryitem_set.latest()
-
     def can_change_password(self):
         now = timezone.now()
         return now > self.locked_until
-
-    def must_change_password(self):
-        now = timezone.now()
-        return self.expires_at < now
 
 
 # User Failed Login Attempts
@@ -35,14 +27,6 @@ class FailedLoginAttempt(models.Model):
     # comma-separated timestamp values, right now it's a 10 digit number,
     # so we can store about 91 last failed attempts
     failed_attempts = models.CharField(max_length=1000)
-
-    def __str__(self):
-        attempts_no = (
-            0
-            if not self.failed_attempts
-            else len(self.failed_attempts.split(","))
-        )
-        return f"{self.user} has {attempts_no} failed login attempts"
 
     def clean_attempts(self, timestamp):
         """Leave only those that happened after <timestamp>"""
