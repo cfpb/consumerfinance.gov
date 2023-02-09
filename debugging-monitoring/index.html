@@ -157,7 +157,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Running this Project &raquo;</li><li>Debugging and Monitoring</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/debugging-monitoring.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/debugging-monitoring.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -172,32 +172,36 @@
 <p>When running locally it is possible to enable the
 <a href="https://django-debug-toolbar.readthedocs.io/en/stable/">Django Debug Toolbar</a>
 by defining the <code>ENABLE_DEBUG_TOOLBAR</code> environment variable:</p>
-<pre class="highlight"><code class="language-sh">$ ENABLE_DEBUG_TOOLBAR=1 ./runserver.sh</code></pre>
+<div class="highlight"><pre><span></span><code>$ <span class="nv">ENABLE_DEBUG_TOOLBAR</span><span class="o">=</span><span class="m">1</span> ./runserver.sh
+</code></pre></div>
 <p>This tool exposes various useful pieces of information about things like HTTP headers,
 Django settings, SQL queries, and template variables. Note that running with the toolbar on
 may have an impact on local server performance.</p>
 <h3 id="logging-database-queries-to-console">Logging database queries to console<a class="headerlink" href="#logging-database-queries-to-console" title="Permanent link">¶</a></h3>
 <p>To log database queries to the console when running locally,
 define the <code>ENABLE_SQL_LOGGING</code> environment variable:</p>
-<pre class="highlight"><code class="language-sh">$ ENABLE_SQL_LOGGING=1 cfgov/manage.py shell
+<div class="highlight"><pre><span></span><code>$ <span class="nv">ENABLE_SQL_LOGGING</span><span class="o">=</span><span class="m">1</span> cfgov/manage.py shell
 &gt;&gt;&gt; from django.contrib.auth import get_user_model
-&gt;&gt;&gt; User = get_user_model()
-&gt;&gt;&gt; User.objects.count()
-(0.004) SELECT COUNT(*) AS "__count" FROM "auth_user"; args=()
-97</code></pre>
+&gt;&gt;&gt; <span class="nv">User</span> <span class="o">=</span> get_user_model<span class="o">()</span>
+&gt;&gt;&gt; User.objects.count<span class="o">()</span>
+<span class="o">(</span><span class="m">0</span>.004<span class="o">)</span> SELECT COUNT<span class="o">(</span>*<span class="o">)</span> AS <span class="s2">&quot;__count&quot;</span> FROM <span class="s2">&quot;auth_user&quot;</span><span class="p">;</span> <span class="nv">args</span><span class="o">=()</span>
+<span class="m">97</span>
+</code></pre></div>
 <p>This will log any database queries (and time taken to execute them)
 to the console, and works with any Django code invoked from the shell,
 including the server and management commands:</p>
-<pre class="highlight"><code class="language-sh">$ ENABLE_SQL_LOGGING=1 ./runserver.sh
-$ ENABLE_SQL_LOGGING=1 cfgov/manage.py some_management_command</code></pre>
+<div class="highlight"><pre><span></span><code>$ <span class="nv">ENABLE_SQL_LOGGING</span><span class="o">=</span><span class="m">1</span> ./runserver.sh
+$ <span class="nv">ENABLE_SQL_LOGGING</span><span class="o">=</span><span class="m">1</span> cfgov/manage.py some_management_command
+</code></pre></div>
 <h3 id="logging-elasticsearch-queries-to-console">Logging Elasticsearch queries to console<a class="headerlink" href="#logging-elasticsearch-queries-to-console" title="Permanent link">¶</a></h3>
 <p>Similarly, to log Elasticsearch queries to the console when running locally,
 define the <code>ENABLE_ES_LOGGING</code> environment variable.</p>
 <p>This will log any Elasticsearch queries (and time taken to execute them)
 to the console, and works with any Django code invoked from the shell,
 including the server and management commands:</p>
-<pre class="highlight"><code class="language-sh">$ ENABLE_ES_LOGGING=1 ./runserver.sh
-$ ENABLE_ES_LOGGING=1 cfgov/manage.py some_management_command</code></pre>
+<div class="highlight"><pre><span></span><code>$ <span class="nv">ENABLE_ES_LOGGING</span><span class="o">=</span><span class="m">1</span> ./runserver.sh
+$ <span class="nv">ENABLE_ES_LOGGING</span><span class="o">=</span><span class="m">1</span> cfgov/manage.py some_management_command
+</code></pre></div>
 <h3 id="monitoring-using-new-relic">Monitoring using New Relic<a class="headerlink" href="#monitoring-using-new-relic" title="Permanent link">¶</a></h3>
 <p>This project can be configured for real-time monitoring with
 <a href="https://newrelic.com/">New Relic</a>. This requires an active New Relic account
@@ -210,7 +214,8 @@ This package is not part of the standard development requirements but is
 included in
 the <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/deployment.txt"><code>requirements/deployment.txt</code></a> file.
 It can be installed into your Python environment using the following command:</p>
-<pre class="highlight"><code class="language-shell">$ pip install newrelic</code></pre>
+<div class="highlight"><pre><span></span><code>$ pip install newrelic
+</code></pre></div>
 <p>New Relic monitoring is implemented by wrapping every request to the Django
 web server with a call to the Python agent. This agent records information
 about web requests and reports it back to New Relic's servers. Additionally,
@@ -241,7 +246,8 @@ file contains placeholder entries for these two variables.</p>
 <p>When you make your first web request, you'll see messages in the console
 indicating that the New Relic Python agent has been activated. You should also
 see a message containing a link to the New Relic console:</p>
-<pre class="highlight"><code class="language-txt">Reporting to: https://rpm.newrelic.com/accounts/XXXXXXXX/applications/XXXXXXXX</code></pre>
+<div class="highlight"><pre><span></span><code>Reporting to: https://rpm.newrelic.com/accounts/XXXXXXXX/applications/XXXXXXXX
+</code></pre></div>
 <p>You should now be able to use that link to navigate to the New Relic console
 and, after a few seconds, see your web server traffic in New Relic APM and
 New Relic Browser.</p>
@@ -273,7 +279,7 @@ New Relic Browser.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

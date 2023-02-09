@@ -155,7 +155,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Pages and Components &raquo;</li><li>Debugging Templates</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/debugging-templates.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/debugging-templates.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -171,7 +171,8 @@ that renders a single module with a series of test cases.</p>
 <p>Consider an example module that renders a simple hyperlink. This module
 requires a target URL and also accepts optional link text. A simple Jinja
 template for this module might look like this:</p>
-<pre class="highlight"><code class="language-html">&lt;a href="{{ value.url }}"&gt; {{ value.text | default( value.url, true ) }} &lt;/a&gt;</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ value.url }}&quot;</span><span class="p">&gt;</span> {{ value.text | default( value.url, true ) }} <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</code></pre></div>
 <h2 id="defining-template-test-cases">Defining template test cases<a class="headerlink" href="#defining-template-test-cases" title="Permanent link">¶</a></h2>
 <p>Next, define test cases for the module that cover all supported input
 configurations. For this simple link module, there are only a few useful
@@ -179,42 +180,45 @@ test cases, but more complicated modules might have many more.</p>
 <p>Test cases should be defined as a Python dict, where the key is a string name
 of the test case and the value is a dict that will be passed to the module
 template.</p>
-<pre class="highlight"><code class="language-py"># myapp/template_debug.py
-link_test_cases = {
-    'Link without text': {
-        'url': 'https://www.consumerfinance.gov',
-    },
+<div class="highlight"><pre><span></span><code><span class="c1"># myapp/template_debug.py</span>
+<span class="n">link_test_cases</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Link without text&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://www.consumerfinance.gov&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
 
-    'Link with empty text': {
-        'url': 'https://www.consumerfinance.gov',
-        'text': '',
-    },
+    <span class="s1">&#39;Link with empty text&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://www.consumerfinance.gov&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
 
-    'Link with text': {
-        'url': 'https://www.consumerfinance.gov',
-        'text': 'Visit our website',
-    },
-}</code></pre>
+    <span class="s1">&#39;Link with text&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://www.consumerfinance.gov&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;Visit our website&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</code></pre></div>
 <h2 id="registering-the-template-debug-view">Registering the template debug view<a class="headerlink" href="#registering-the-template-debug-view" title="Permanent link">¶</a></h2>
 <p>The next step is to register the template debug view with Django so that it can
 be loaded in a browser.</p>
-<pre class="highlight"><code class="language-py"># in myapp/wagtail_hooks.py
-from myapp.template_debug import link_test_cases
-from v1.template_debug import register_template_debug
+<div class="highlight"><pre><span></span><code><span class="c1"># in myapp/wagtail_hooks.py</span>
+<span class="kn">from</span> <span class="nn">myapp.template_debug</span> <span class="kn">import</span> <span class="n">link_test_cases</span>
+<span class="kn">from</span> <span class="nn">v1.template_debug</span> <span class="kn">import</span> <span class="n">register_template_debug</span>
 
-register_template_debug('myapp', 'link', 'myapp/link.html', link_test_cases)</code></pre>
+<span class="n">register_template_debug</span><span class="p">(</span><span class="s1">&#39;myapp&#39;</span><span class="p">,</span> <span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;myapp/link.html&#39;</span><span class="p">,</span> <span class="n">link_test_cases</span><span class="p">)</span>
+</code></pre></div>
 <p>Once logged into the Wagtail admin, the template debug view for this module
 will now be available at the <code>/admin/template_debug/myapp/link/</code> URL.</p>
 <h2 id="including-component-javascript">Including component JavaScript<a class="headerlink" href="#including-component-javascript" title="Permanent link">¶</a></h2>
 <p>Associated JavaScript required by the module can be included in the template
 debug view by listing it in the <code>register_template_debug</code> call:</p>
-<pre class="highlight"><code class="language-py">register_template_debug(
-    'myapp',
-    'link',
-    'myapp/link.html',
-    link_test_cases
-    extra_js=['link.js']
-)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">register_template_debug</span><span class="p">(</span>
+    <span class="s1">&#39;myapp&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;link&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;myapp/link.html&#39;</span><span class="p">,</span>
+    <span class="n">link_test_cases</span>
+    <span class="n">extra_js</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;link.js&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div>
               
             </div>
           </div><footer>
@@ -243,7 +247,7 @@ debug view by listing it in the <code>register_template_debug</code> call:</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

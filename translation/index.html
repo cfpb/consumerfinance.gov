@@ -157,7 +157,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Supporting Features &raquo;</li><li>Translation</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/translation.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/translation.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -173,34 +173,41 @@
 <p>Django translations use <a href="https://en.wikipedia.org/wiki/Gettext">GNU gettext</a> (see
 <a href="../installation/#install-gnu-gettext-for-django-translation-support">the installation instructions</a>).</p>
 <p>By convention, translations are usually performed in code by wrapping a string to be translated in a function that is either named or aliased with an underscore. For example:</p>
-<pre class="highlight"><code class="language-python">_("This is a translatable string.")</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">_</span><span class="p">(</span><span class="s2">&quot;This is a translatable string.&quot;</span><span class="p">)</span>
+</code></pre></div>
 <p>These strings are collected into portable object (<code>.po</code>) files for each supported language. These files map the original string (<code>msgid</code>) to a matching translated string (<code>msgstr</code>). For example:</p>
-<pre class="highlight"><code class="language-po">msgid "This is a translatable string."
-msgstr "Esta es una cadena traducible."</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;This is a translatable string.&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Esta es una cadena traducible.&quot;</span>
+</code></pre></div>
 <p>These portable object files are compiled into machine object files (<code>.mo</code>) that the translation system uses when looking up the original string.</p>
 <p>By convention the <code>.po</code> and <code>.mo</code> files live inside an <code>[APP]/locale/[LANGUAGE]/LC_MESSAGES/</code> folder structure, for example, <code>ask_cfpb/locale/es/LC_MESSAGES/django.po</code> for the Spanish language portable object file for our Ask CFPB-specific translatable strings.</p>
 <h2 id="how-to-translate-text-in-consumerfinancegov">How to translate text in consumerfinance.gov<a class="headerlink" href="#how-to-translate-text-in-consumerfinancegov" title="Permanent link">¶</a></h2>
 <p>This brief howto will guide you through adding translatable text to consumerfinance.gov.</p>
 <h4 id="1-add-the-translation-function-around-the-string">1. Add the translation function around the string<a class="headerlink" href="#1-add-the-translation-function-around-the-string" title="Permanent link">¶</a></h4>
 <p>In Jinja2 templates:</p>
-<pre class="highlight"><code class="language-jinja">{{ _("Hello World!") }}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="cp">{{</span> <span class="kp">_</span><span class="o">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+</code></pre></div>
 <p>In Django templates:</p>
-<pre class="highlight"><code class="language-django">{% load i18n %}
+<div class="highlight"><pre><span></span><code><span class="cp">{%</span> <span class="k">load</span> <span class="nv">i18n</span> <span class="cp">%}</span><span class="x"></span>
 
-{% trans "Hello World!" %}</code></pre>
+<span class="cp">{%</span> <span class="k">trans</span> <span class="s2">&quot;Hello World!&quot;</span> <span class="cp">%}</span><span class="x"></span>
+</code></pre></div>
 <p>In Python code:</p>
-<pre class="highlight"><code class="language-python">from django.utils.translation import gettext as _
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">gettext</span> <span class="k">as</span> <span class="n">_</span>
 
-mystring = _("Hello World!")</code></pre>
+<span class="n">mystring</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
+</code></pre></div>
 <p>The string in the call to the translation function will be the <code>msgid</code> in the portable object file below.</p>
 <h4 id="2-run-the-makemessages-management-command-to-add-the-string-to-the-portable-object-file">2. Run the <code>makemessages</code> management command to add the string to the portable object file<a class="headerlink" href="#2-run-the-makemessages-management-command-to-add-the-string-to-the-portable-object-file" title="Permanent link">¶</a></h4>
 <p>The <code>makemessages</code> management command will look through all Python, Django, and Jinja2 template files to find strings that are wrapped in a translation function call and add them to the portable object file for a particular language. The language is specified with <code>-l</code>. The command also must be called from the root of the Django app tree, <em>not</em> the project root.</p>
 <p>To generate or update the portable object file for a specific language, like Spanish:</p>
-<pre class="highlight"><code class="language-shell">cd cfgov
-django-admin.py makemessages -l es --ignore=tests</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> cfgov
+django-admin.py makemessages -l es --ignore<span class="o">=</span>tests
+</code></pre></div>
 <p>Or for all supported languages:</p>
-<pre class="highlight"><code class="language-shell">cd cfgov
-django-admin.py makemessages --all --ignore=tests</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> cfgov
+django-admin.py makemessages --all --ignore<span class="o">=</span>tests
+</code></pre></div>
 <p>Using <code>--ignore=tests</code> will ignore any calls to gettext inside our unit tests.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -208,11 +215,13 @@ django-admin.py makemessages --all --ignore=tests</code></pre>
 <p>If you're generating all languages, this will create <code>django.po</code> files in all our apps with translations. Please do not commit <code>django.po</code> and <code>django.mo</code> files for apps you have not editted.</p>
 <h4 id="3-edit-the-portable-object-file-to-add-a-translation-for-the-string">3. Edit the portable object file to add a translation for the string<a class="headerlink" href="#3-edit-the-portable-object-file-to-add-a-translation-for-the-string" title="Permanent link">¶</a></h4>
 <p>The portable object files are stored in <code>[APP]/locale/[LANGUAGE]/LC_MESSAGES/</code>. For the Spanish portable object file, edit <code>[APP]/locale/es/LC_MESSAGES/django.po</code> and add the Spanish translation as the <code>msgstr</code> for your new <code>msgid</code></p>
-<pre class="highlight"><code class="language-po">msgid "Hello World!"
-msgstr "Hola Mundo!"</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;Hello World!&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Hola Mundo!&quot;</span>
+</code></pre></div>
 <h4 id="4-run-the-compilemessages-management-command-to-compile-the-machine-object-file">4. Run the <code>compilemessages</code> management command to compile the machine object file<a class="headerlink" href="#4-run-the-compilemessages-management-command-to-compile-the-machine-object-file" title="Permanent link">¶</a></h4>
-<pre class="highlight"><code class="language-shell">cd cfgov
-django-admin.py compilemessages</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> cfgov
+django-admin.py compilemessages
+</code></pre></div>
 <h2 id="wagtail-considerations">Wagtail Considerations<a class="headerlink" href="#wagtail-considerations" title="Permanent link">¶</a></h2>
 <p>All of our Wagtail pages include a language-selection dropdown under its Configuration tab:</p>
 <p><img alt="Wagtail page language selection" src="../img/wagtail-language.png" /></p>
@@ -222,28 +231,34 @@ django-admin.py compilemessages</code></pre>
 <p><code>makemessages</code> converts all Django <code>{% translate %}</code>, <code>{% blocktranslate %}</code>, and Jinja2 <code>{% trans %}</code> tags into <code>_(…)</code> gettext calls and then to have <a href="https://www.gnu.org/software/gettext/manual/gettext.html"><code>xgettext</code></a> process the files as if they were Python. This process <em>does not</em> work the same as general template parsing, and it means that it's best to make the translatable strings as discoverable as possible.</p>
 <p>There are a few things to avoid to make sure the strings are picked up by <code>makemessages</code>:</p>
 <h4 id="do-not-include-the-_-call-in-a-larger-jinja2-template-data-structure">Do not include the <code>_()</code> call in a larger Jinja2 template data structure:<a class="headerlink" href="#do-not-include-the-_-call-in-a-larger-jinja2-template-data-structure" title="Permanent link">¶</a></h4>
-<pre class="highlight"><code class="language-diff">+ {% set link_text = _("Visit our website") %}
-{% set link_data = {
-    "url": "https://consumerfinance.gov",
--     "text": _("Visit our website"),
-+     "text": link_text,
-} %}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="gi">+ {% set link_text = _(&quot;Visit our website&quot;) %}</span><span class="w"></span>
+<span class="w">{% set link_data = {</span>
+<span class="w"> </span>   &quot;url&quot;: &quot;https://consumerfinance.gov&quot;,<span class="w"></span>
+<span class="gd">-     &quot;text&quot;: _(&quot;Visit our website&quot;),</span><span class="w"></span>
+<span class="gi">+     &quot;text&quot;: link_text,</span><span class="w"></span>
+<span class="w">} %}</span>
+</code></pre></div>
 <h4 id="do-not-include-spaces-between-the-parentheses-and-the-string-in-jinja2-templates">Do not include spaces between the parentheses and the string in Jinja2 templates:<a class="headerlink" href="#do-not-include-spaces-between-the-parentheses-and-the-string-in-jinja2-templates" title="Permanent link">¶</a></h4>
-<pre class="highlight"><code class="language-diff">- {{ _( "Hello World!" ) }}
-+ {{ _("Hello World!") }}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="gd">- {{ _( &quot;Hello World!&quot; ) }}</span><span class="w"></span>
+<span class="gi">+ {{ _(&quot;Hello World!&quot;) }}</span><span class="w"></span>
+</code></pre></div>
 <h4 id="do-not-use-f-strings-in-python-calls-to-gettext">Do not use f-strings in Python calls to gettext:<a class="headerlink" href="#do-not-use-f-strings-in-python-calls-to-gettext" title="Permanent link">¶</a></h4>
-<pre class="highlight"><code class="language-diff">- _(f"Hello {world_name}")
-+ _("Hello %(world_name)s" % {'world_name': world_name})</code></pre>
+<div class="highlight"><pre><span></span><code><span class="gd">- _(f&quot;Hello {world_name}&quot;)</span><span class="w"></span>
+<span class="gi">+ _(&quot;Hello %(world_name)s&quot; % {&#39;world_name&#39;: world_name})</span><span class="w"></span>
+</code></pre></div>
 <p>Django's documentation <a href="https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#standard-translation">has some additional information on the limitations of translatable strings and gettext</a>.</p>
 <h4 id="do-mark-variable-strings-for-translation-with-gettext_noop">Do mark variable strings for translation with <a href="https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#marking-strings-as-no-op"><code>gettext_noop</code></a><a class="headerlink" href="#do-mark-variable-strings-for-translation-with-gettext_noop" title="Permanent link">¶</a></h4>
 <p>If you have a variable that will be translated in a template later using the variable name, but you need to mark it for translation so that <code>makemessages</code> will pick it up, use Django's <a href="https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#marking-strings-as-no-op"><code>gettext_noop</code></a>:</p>
-<pre class="highlight"><code class="language-python">from django.utils.translation import gettext_noop
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">gettext_noop</span>
 
-mystring = gettext_noop("Hello World!")</code></pre>
-<pre class="highlight"><code class="language-jinja">{{ _(mystring) }}</code></pre>
+<span class="n">mystring</span> <span class="o">=</span> <span class="n">gettext_noop</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="cp">{{</span> <span class="kp">_</span><span class="o">(</span><span class="nv">mystring</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+</code></pre></div>
 <h3 id="do-ensure-gettext-is-relatively-recent">Do ensure gettext is relatively recent<a class="headerlink" href="#do-ensure-gettext-is-relatively-recent" title="Permanent link">¶</a></h3>
 <p>Django's <code>makemessages</code> and <code>compilemessages</code> management commands invoke GNU gettext to generate the message files. gettext versions below 0.20 had an issue where they will bring creation dates forward from the text <code>.po</code> file into the binary <code>.mo</code> file. This can break our pull request check to ensure that translations have been updated. To check the version of gettext Django will use, run:</p>
-<pre class="highlight"><code class="language-shell">gettext -V</code></pre>
+<div class="highlight"><pre><span></span><code>gettext -V
+</code></pre></div>
 <p>Our CentOS 7 Docker container unfortunately uses an older version of gettext. If the <code>validate-translations</code> check on pull requests fails, please try to run <code>makemessages</code> and <code>compilemessages</code> <a href="https://cfpb.github.io/consumerfinance.gov/installation/#set-up-the-consumerfinancegov-virtualenv">in a local virtualenv</a>.</p>
               
             </div>
@@ -273,7 +288,7 @@ mystring = gettext_noop("Hello World!")</code></pre>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

@@ -159,7 +159,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Supporting Features &raquo;</li><li>Feature Flags</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/feature-flags.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/feature-flags.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -190,12 +190,13 @@
 </ul>
 <h2 id="adding-a-flag">Adding a flag<a class="headerlink" href="#adding-a-flag" title="Permanent link">¶</a></h2>
 <p>Feature flags are defined in code in the <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/cfgov/settings/base.py#L562"><code>cfgov/settings/base.py</code></a> file as part of the <code>FLAGS</code> setting. Each flag consists of a single string and a Python list of its hard-coded conditions (see <a href="#enabling-a-flag">Enabling a flag</a> below).</p>
-<pre class="highlight"><code class="language-python">FLAGS = {
-    # Beta banner, seen on beta.consumerfinance.gov
-    # When enabled, a banner appears across the top of the site proclaiming
-    # "This beta site is a work in progress."
-    'BETA_NOTICE': [],
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">FLAGS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Beta banner, seen on beta.consumerfinance.gov</span>
+    <span class="c1"># When enabled, a banner appears across the top of the site proclaiming</span>
+    <span class="c1"># &quot;This beta site is a work in progress.&quot;</span>
+    <span class="s1">&#39;BETA_NOTICE&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>By convention our flag names are all uppercase, with underscores instead of whitespace. A comment is expected above each flag with a short description fo what happens when it is enabled.</p>
 <h2 id="checking-a-flag">Checking a flag<a class="headerlink" href="#checking-a-flag" title="Permanent link">¶</a></h2>
 <p>Flags can be checked either in Python code or in Django or Jinja2 template files. See the full <a href="https://github.com/cfpb/wagtail-flags/blob/main/README.md#api">Wagtail Flags API is documented </a> for more information.</p>
@@ -206,47 +207,49 @@
 <p><code>flag_disabled('MY_FLAG')</code> will return <code>True</code> if the conditions under which <code>MY_FLAG</code> is enabled <strong>are not</strong> met.</p>
 <p>See <a href="#enabling-a-flag">Enabling a flag</a> below for more on flag conditions.</p>
 <p>An example is <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_includes/organisms/header.html#L28-L41">the <code>BETA_NOTICE flag</code> as implemented in <code>header.html</code></a>:</p>
-<pre class="highlight"><code class="language-jinja">{% if flag_enabled('BETA_NOTICE') %}
-&lt;div class="m-global-banner"&gt;
-    &lt;div class="wrapper
-                wrapper__match-content
-                o-expandable
-                o-expandable__expanded"&gt;
-        &lt;div class="m-global-banner_head"&gt;
-            &lt;span class="cf-icon
-                         cf-icon-error-round
-                         m-global-banner_icon"&gt;&lt;/span&gt;
-            This beta site is a work in progress.
-        &lt;/div&gt;
-        …
-    &lt;/div&gt;
-&lt;/div&gt;
-{% endif %}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="cp">{%</span> <span class="k">if</span> <span class="nv">flag_enabled</span><span class="o">(</span><span class="s1">&#39;BETA_NOTICE&#39;</span><span class="o">)</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">&lt;div class=&quot;m-global-banner&quot;&gt;</span>
+<span class="x">    &lt;div class=&quot;wrapper</span>
+<span class="x">                wrapper__match-content</span>
+<span class="x">                o-expandable</span>
+<span class="x">                o-expandable__expanded&quot;&gt;</span>
+<span class="x">        &lt;div class=&quot;m-global-banner_head&quot;&gt;</span>
+<span class="x">            &lt;span class=&quot;cf-icon</span>
+<span class="x">                         cf-icon-error-round</span>
+<span class="x">                         m-global-banner_icon&quot;&gt;&lt;/span&gt;</span>
+<span class="x">            This beta site is a work in progress.</span>
+<span class="x">        &lt;/div&gt;</span>
+<span class="x">        …</span>
+<span class="x">    &lt;/div&gt;</span>
+<span class="x">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="x"></span>
+</code></pre></div>
 <h4 id="django">Django<a class="headerlink" href="#django" title="Permanent link">¶</a></h4>
 <p>In Django templates (used in Satellite apps and the Wagtail admin), two template functions are provided <code>flag_enabled</code> and <code>flag_disabled</code> once the <code>feature_flags</code> template tag library is loaded.</p>
 <p><code>flag_enabled 'MY_FLAG'</code> will return <code>True</code> if the conditions under which <code>MY_FLAG</code> is enabled <strong>are</strong> met.</p>
 <p><code>flag_disabled 'MY_FLAG'</code> will return <code>True</code> if the conditions under which <code>MY_FLAG</code> is enabled <strong>are not</strong> met.</p>
 <p>See <a href="#enabling-a-flag">Enabling a flag</a> below for more on flag conditions.</p>
 <p>The <code>BETA_NOTICE</code> <a href="#jinja2">Jinja2</a> example above when implemented with Django templates would look like this:</p>
-<pre class="highlight"><code class="language-django">{% load feature_flags %}
+<div class="highlight"><pre><span></span><code><span class="cp">{%</span> <span class="k">load</span> <span class="nv">feature_flags</span> <span class="cp">%}</span><span class="x"></span>
 
-{% flag_enabled 'BETA_NOTICE' as beta_flag %}
-{% if beta_flag %}
-&lt;div class="m-global-banner"&gt;
-    &lt;div class="wrapper
-                wrapper__match-content
-                o-expandable
-                o-expandable__expanded"&gt;
-        &lt;div class="m-global-banner_head"&gt;
-            &lt;span class="cf-icon
-                         cf-icon-error-round
-                         m-global-banner_icon"&gt;&lt;/span&gt;
-            This beta site is a work in progress.
-        &lt;/div&gt;
-        …
-    &lt;/div&gt;
-&lt;/div&gt;
-{% endif %}</code></pre>
+<span class="cp">{%</span> <span class="k">flag_enabled</span> <span class="s1">&#39;BETA_NOTICE&#39;</span> <span class="k">as</span> <span class="nv">beta_flag</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">beta_flag</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">&lt;div class=&quot;m-global-banner&quot;&gt;</span>
+<span class="x">    &lt;div class=&quot;wrapper</span>
+<span class="x">                wrapper__match-content</span>
+<span class="x">                o-expandable</span>
+<span class="x">                o-expandable__expanded&quot;&gt;</span>
+<span class="x">        &lt;div class=&quot;m-global-banner_head&quot;&gt;</span>
+<span class="x">            &lt;span class=&quot;cf-icon</span>
+<span class="x">                         cf-icon-error-round</span>
+<span class="x">                         m-global-banner_icon&quot;&gt;&lt;/span&gt;</span>
+<span class="x">            This beta site is a work in progress.</span>
+<span class="x">        &lt;/div&gt;</span>
+<span class="x">        …</span>
+<span class="x">    &lt;/div&gt;</span>
+<span class="x">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="x"></span>
+</code></pre></div>
 <h3 id="in-code">In code<a class="headerlink" href="#in-code" title="Permanent link">¶</a></h3>
 <p>In Python code three functions are available for checking feature flags, <code>flag_state</code>, <code>flag_enabled</code>, and <code>flag_disabled</code>. The Python API is slightly different from the <a href="#jinja2">Jinja2</a> or <a href="#django">Django template</a> API, in that flag conditions can take more potential arguments than requests, and thus flags are more flexible when checked in Python (in and outside a request cycle).</p>
 <p>See the <a href="https://cfpb.github.io/django-flags/api/state/">Django-Flags flag state API documentation for more</a>.</p>
@@ -255,35 +258,38 @@
 <p>There are two ways to flag Django URL patterns in <code>urls.py</code>: with <code>flagged_url()</code> in place of <code>url()</code> for a single pattern, or with the <code>flagged_urls()</code> context manager for multiple URLs.</p>
 <p><code>flagged_url(flag_name, regex, view, kwargs=None, name=None, state=True, fallback=None)</code> works exactly like <code>url()</code> except it takes a flag name as its first argument. If the flag's state matches the given <code>state</code>, the URL pattern will be served from the given <code>view</code>; if not, and <code>fallback</code> is given, the <code>fallback</code> will be used.</p>
 <p>An example is <a href="https://github.com/cfpb/consumerfinance.gov/blob/4c3521e967abc5a35fc42566ae409d6ba008f81e/cfgov/cfgov/urls.py#L204-L210">our <code>WAGTAIL_ABOUT_US</code> flag</a>:</p>
-<pre class="highlight"><code class="language-python">flagged_url('WAGTAIL_ABOUT_US',
-            r'^about-us/$',
-            lambda req: ServeView.as_view()(req, req.path),
-            fallback=SheerTemplateView.as_view(
-                template_name='about-us/index.html'),
-            name='about-us'),</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">flagged_url</span><span class="p">(</span><span class="s1">&#39;WAGTAIL_ABOUT_US&#39;</span><span class="p">,</span>
+            <span class="sa">r</span><span class="s1">&#39;^about-us/$&#39;</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">req</span><span class="p">:</span> <span class="n">ServeView</span><span class="o">.</span><span class="n">as_view</span><span class="p">()(</span><span class="n">req</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
+            <span class="n">fallback</span><span class="o">=</span><span class="n">SheerTemplateView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span>
+                <span class="n">template_name</span><span class="o">=</span><span class="s1">&#39;about-us/index.html&#39;</span><span class="p">),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;about-us&#39;</span><span class="p">),</span>
+</code></pre></div>
 <p>Ignoring the <code>view</code> being a <code>lambda</code> for now (see <a href="#flagging-wagtail-urls">Flagging Wagtail URLs below</a>), this URL will be served via Wagtail if <code>WAGTAIL_ABOUT_US</code>'s conditions are <code>True</code>, and from a <code>TemplateView</code> if its conditions are <code>False</code>.</p>
 <p>If you need to flag multiple URLs with the same flag, you can use the <code>flagged_urls()</code> context manager.</p>
 <p><code>with flagged_urls(flag_name, state=True, fallback=None) as url</code> provides a context in which the returned <code>url()</code> function can be used in place of the Django <code>url()</code> function in patterns and those patterns will share the same feature flag, state, and fallback.</p>
 <p>An example is <a href="https://github.com/cfpb/consumerfinance.gov/blob/3cd79689aac7e22e3c2f07373a7db7f2fbbed304/cfgov/cfgov/urls.py#L405-L433">our <code>WAGTAIL_ASK_CFPB</code> flag</a>:</p>
-<pre class="highlight"><code class="language-python">with flagged_urls('WAGTAIL_ASK_CFPB') as url:
-    ask_patterns = [
-        url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
-            view_answer,
-            name='ask-english-answer'),
-        url(r'^(?i)obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
-            view_answer,
-            name='ask-spanish-answer'),
-        …
-    ]
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">flagged_urls</span><span class="p">(</span><span class="s1">&#39;WAGTAIL_ASK_CFPB&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">url</span><span class="p">:</span>
+    <span class="n">ask_patterns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$&#39;</span><span class="p">,</span>
+            <span class="n">view_answer</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ask-english-answer&#39;</span><span class="p">),</span>
+        <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^(?i)obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$&#39;</span><span class="p">,</span>
+            <span class="n">view_answer</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ask-spanish-answer&#39;</span><span class="p">),</span>
+        <span class="err">…</span>
+    <span class="p">]</span>
 
-urlpatterns += ask_patterns</code></pre>
+<span class="n">urlpatterns</span> <span class="o">+=</span> <span class="n">ask_patterns</span>
+</code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 </div>
 <p>Do not attempt to use <code>flag_check</code> or any flag state-checking functions in <code>urls.py</code>. Because they will be evaluated on import of <code>urls.py</code> they will attempt to access the Django FlagState model before it is ready and will error.</p>
 <h4 id="flagging-wagtail-urls">Flagging Wagtail URLs<a class="headerlink" href="#flagging-wagtail-urls" title="Permanent link">¶</a></h4>
 <p>Wagtail views in <code>flagged_url</code> with a Django view as fallback (or vice-versa) can be a bit awkward. Django views are typically called with <code>request</code> as the first argument, and Wagtail's <code>serve</code> view takes both the request and the path. To get around this, in <code>flagged_url</code> we typically use a <code>lambda</code> for the view:</p>
-<pre class="highlight"><code class="language-python">lambda req: ServeView.as_view()(req, req.path)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">lambda</span> <span class="n">req</span><span class="p">:</span> <span class="n">ServeView</span><span class="o">.</span><span class="n">as_view</span><span class="p">()(</span><span class="n">req</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div>
 <p>This lambda takes the request and calls the <a href="https://github.com/cfpb/wagtail-sharing">Wagtail-Sharing</a> <code>ServeView</code> (which we're using in place of <code>wagtail.core.views.serve</code>).</p>
 <h2 id="enabling-a-flag">Enabling a flag<a class="headerlink" href="#enabling-a-flag" title="Permanent link">¶</a></h2>
 <p>Feature flags are enabled based on a set of conditions that are given either in the Django settings files (in <code>cfgov/cfgov/settings/</code>) or in the Django or Wagtail admin. Multiple conditions can be given, both in settings and in the admin, and if any condition is satisfied a flag is enabled.</p>
@@ -292,17 +298,18 @@ urlpatterns += ask_patterns</code></pre>
 <p>Conditions that are defined in the Django settings are hard-coded, and require a change to files in consumerfinance.gov, a new tagged release, and new deployment to change. These conditions should be used for flags that are relatively long-lasting and that can require a round-trip through the release and deployment process to change.</p>
 <p>When <a href="#adding-a-flag">adding a flag</a> to the Django settings the flag's dictionary of conditions can contain a condition name and value that must be satisfied for the flag to be enabled. The nature of that value changes depending on the condition type. <a href="https://cfpb.github.io/django-flags/conditions/">See the Django-Flags conditions documentation</a> for more on individual conditions.</p>
 <p>There is a simple <code>boolean</code> condition that is either <code>True</code> or <code>False</code>, and if it is <code>True</code> the flag is enabled and if it is <code>False</code> the flag is disabled. If we want to always turn the <code>BETA_NOTICE</code> flag on in settings with a <code>boolean</code> condition, that would look like this:</p>
-<pre class="highlight"><code class="language-python">FLAGS = {
-    # Beta banner, seen on beta.consumerfinance.gov
-    # When enabled, a banner appears across the top of the site proclaiming
-    # "This beta site is a work in progress."
-    'BETA_NOTICE': [
-        {
-            'condition': 'boolean',
-            'value': True,
-        },
-    ],
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">FLAGS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Beta banner, seen on beta.consumerfinance.gov</span>
+    <span class="c1"># When enabled, a banner appears across the top of the site proclaiming</span>
+    <span class="c1"># &quot;This beta site is a work in progress.&quot;</span>
+    <span class="s1">&#39;BETA_NOTICE&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;condition&#39;</span><span class="p">:</span> <span class="s1">&#39;boolean&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+<span class="p">}</span>
+</code></pre></div>
 <h3 id="database-conditions">Database conditions<a class="headerlink" href="#database-conditions" title="Permanent link">¶</a></h3>
 <p>Conditions that are managed via the Wagtail or Django admin are stored in the database. These conditions can be changed in real-time and do not require any code changes or release and deployment to change (presuming the code that uses the feature flag is in place).</p>
 <p>To view, delete, and add database conditions, navigate to "Settings &gt; Flags" in the Wagtail admin.</p>
@@ -351,7 +358,7 @@ urlpatterns += ask_patterns</code></pre>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

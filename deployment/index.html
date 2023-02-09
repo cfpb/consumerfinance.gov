@@ -149,7 +149,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Running this Project &raquo;</li><li>Artifacts and Deployment</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/deployment.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/deployment.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -171,7 +171,7 @@ and save it to <code>./cfgov_current_build.zip</code>.</p>
 be compiled for the same environment they will be run in.</p>
 <h1 id="whats-in-an-artifact">What's in an artifact?<a class="headerlink" href="#whats-in-an-artifact" title="Permanent link">¶</a></h1>
 <p>Here's a (very abbreviated) peek into what's <em>in</em> the zip file:</p>
-<pre class="highlight"><code>__main__.py
+<div class="highlight"><pre><span></span><code>__main__.py
 cfgov.pth
 install_wheels.py
 loadenv.py
@@ -185,7 +185,8 @@ static.in/0/fonts/8344e877-560d-44d4-82eb-9822766676f9.woff
 ...
 bootstrap_wheels/setuptools-41.2.0-py2.py3-none-any.whl
 bootstrap_wheels/pip-19.2.3-py2.py3-none-any.whl
-cfgov/...</code></pre>
+cfgov/...
+</code></pre></div>
 <p>The <code>__main__.py</code> file contains <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/deployable_zipfile/extract.py">the code that runs when the zip file is invoked
 as a Python module</a>.</p>
 <p>The <code>wheels/</code> directory contains all of our python dependencies, while
@@ -240,7 +241,7 @@ If we ignore some specifics and quirks of our environment, the basic steps look 
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

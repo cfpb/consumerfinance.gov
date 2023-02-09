@@ -161,7 +161,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Testing &raquo;</li><li>JavaScript Unit Testing</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/javascript-unit-tests.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/javascript-unit-tests.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -201,20 +201,24 @@ it would be a good idea to peruse their docs before diving in here.</p>
 <h2 id="running-unit-tests">Running unit tests<a class="headerlink" href="#running-unit-tests" title="Permanent link">¶</a></h2>
 <h3 id="run-a-single-test-file">Run a single test file<a class="headerlink" href="#run-a-single-test-file" title="Permanent link">¶</a></h3>
 <p>To run a single test file, pass the name (or path) of the spec:</p>
-<pre class="highlight"><code class="language-bash">yarn jest Notification-spec.js
-# Equivalent to:
+<div class="highlight"><pre><span></span><code>yarn jest Notification-spec.js
+<span class="c1"># Equivalent to:</span>
 yarn jest test/unit_tests/js/molecules/Notification-spec.js
-# The name argument would technically would match all Notification-spec.js files
-# This usually isn't a problem in our codebase (and you can always get more specific if needed)</code></pre>
+<span class="c1"># The name argument would technically would match all Notification-spec.js files</span>
+<span class="c1"># This usually isn&#39;t a problem in our codebase (and you can always get more specific if needed)</span>
+</code></pre></div>
 <h3 id="run-a-directory-of-unit-tests">Run a directory of unit tests<a class="headerlink" href="#run-a-directory-of-unit-tests" title="Permanent link">¶</a></h3>
 <p>A directory of unit tests can be run by passing its name or path:</p>
-<pre class="highlight"><code class="language-bash">yarn jest organisms
-yarn jest test/unit_tests/js/organisms</code></pre>
+<div class="highlight"><pre><span></span><code>yarn jest organisms
+yarn jest test/unit_tests/js/organisms
+</code></pre></div>
 <h3 id="run-all-unit-tests">Run all unit tests<a class="headerlink" href="#run-all-unit-tests" title="Permanent link">¶</a></h3>
 <p>To run all of the unit tests:</p>
-<pre class="highlight"><code class="language-bash">yarn jest</code></pre>
+<div class="highlight"><pre><span></span><code>yarn jest
+</code></pre></div>
 <p>To first lint all files and then run tests:</p>
-<pre class="highlight"><code class="language-bash">yarn test</code></pre>
+<div class="highlight"><pre><span></span><code>yarn <span class="nb">test</span>
+</code></pre></div>
 <p>Because we invoke jest directly, you can pass any command-line args it accepts
 to filter your output or to target specific tests <a href="https://jestjs.io/docs/cli">see the docs for more</a>.</p>
 <h2 id="where-to-find-tests">Where to find tests<a class="headerlink" href="#where-to-find-tests" title="Permanent link">¶</a></h2>
@@ -261,11 +265,13 @@ then we will make it pass, following the principles of TDD.</p>
 <li>Copy the sample test file to a new location by
    running this command from the root of consumerfinance.gov:</li>
 </ol>
-<pre class="highlight"><code class="language-bash">cp docs/samples/sample-spec.js test/unit_tests/js/modules/</code></pre>
+<div class="highlight"><pre><span></span><code>cp docs/samples/sample-spec.js test/unit_tests/js/modules/
+</code></pre></div>
 <ol>
 <li>Copy the sample module file to a new location by running this command:</li>
 </ol>
-<pre class="highlight"><code class="language-bash">cp docs/samples/sample.js cfgov/unprocessed/js/modules/</code></pre>
+<div class="highlight"><pre><span></span><code>cp docs/samples/sample.js cfgov/unprocessed/js/modules/
+</code></pre></div>
 <p>Test file names should always match what they are testing,
 with the addition of a <code>-spec</code> suffix.</p>
 <h3 id="folder-structure-where-to-put-your-javascript-and-tests">Folder structure (where to put your JavaScript and tests)<a class="headerlink" href="#folder-structure-where-to-put-your-javascript-and-tests" title="Permanent link">¶</a></h3>
@@ -301,13 +307,15 @@ to save and commit your changes.</p>
 <li>Edit line 6 of your spec file and remove the call to the <code>.skip</code> method.
    The line should now read:</li>
 </ol>
-<pre class="highlight"><code class="language-js">it( 'should return a string with expected value', () =&gt; {
-  …
-} );</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nx">it</span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;should return a string with expected value&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="err">…</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
 <ol>
 <li>Run your sample test using</li>
 </ol>
-<pre class="highlight"><code class="language-bash">yarn jest sample-spec.js</code></pre>
+<div class="highlight"><pre><span></span><code>yarn jest sample-spec.js
+</code></pre></div>
 <p>(substituting your own filename).</p>
 <p>You should see output like this:</p>
 <p><img alt="Console output for failing unit test: &quot;sample should return a string with expected value&quot;" src="../img/js-unit-test-output-fail.png" /></p>
@@ -319,7 +327,8 @@ to save and commit your changes.</p>
    (<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/sample.js">see <code>sample.js</code></a>)
    to the following:</li>
 </ol>
-<pre class="highlight"><code class="language-js">return 'Shredder';</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">return</span><span class="w"> </span><span class="s1">&#39;Shredder&#39;</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
 <ol>
 <li>Run the test again to confirm the test now passes.
    You should see output like this:</li>
@@ -336,7 +345,8 @@ Let’s take a look at the structure of our very basic sample test file.</p>
 <p>Line 1 of any spec file will use an <code>import</code> statement to
 include the JavaScript file that you are testing.
 Additional dependencies should be added in the same manner.</p>
-<pre class="highlight"><code class="language-js">import sample from '../../../../cfgov/unprocessed/js/modules/sample.js';</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">sample</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;../../../../cfgov/unprocessed/js/modules/sample.js&#39;</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
 <p>Some test files use <code>const</code> declarations to
 <code>require</code> scripts instead of <code>import</code>,
 because those files were written before <code>import</code> was available.
@@ -349,14 +359,15 @@ as they prevent Webpack from figuring out which modules are duplicates.
 For example, this snippet shows how a <code>require</code> statement
 should be converted to an <code>import</code> statement,
 but without including the <code>BASE_JS_PATH</code> variable in the file path:</p>
-<pre class="highlight"><code class="language-js">// This works, but could duplicate footer-button.js, if other files also require it.
-const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
+<div class="highlight"><pre><span></span><code><span class="c1">// This works, but could duplicate footer-button.js, if other files also require it.</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">FooterButton</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="w"> </span><span class="nx">BASE_JS_PATH</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;modules/footer-button.js&#39;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-// This doesn't work and the build will fail.
-import * as FooterButton from BASE_JS_PATH + 'modules/footer-button.js';
+<span class="c1">// This doesn&#39;t work and the build will fail.</span><span class="w"></span>
+<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">FooterButton</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="nx">BASE_JS_PATH</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;modules/footer-button.js&#39;</span><span class="p">;</span><span class="w"></span>
 
-// This is ugly, but it works and supports tree shaking.
-import * as FooterButton from '../../../../cfgov/unprocessed/js/modules/footer-button.js';</code></pre>
+<span class="c1">// This is ugly, but it works and supports tree shaking.</span><span class="w"></span>
+<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">FooterButton</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;../../../../cfgov/unprocessed/js/modules/footer-button.js&#39;</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
 <p><code>import</code> also provides a benefit in that you can choose specific parts
 of a module so that you only import the dependencies you need.
 For testing purposes, we will typically import the whole module
@@ -372,9 +383,10 @@ to outline the methods you need in your JS module.</p>
 the name of the JavaScript module we are testing.
 For the sample, the name of our module is <code>sample</code>,
 so we set this up on line 4 of <code>sample-spec.js</code>:</p>
-<pre class="highlight"><code class="language-js">describe( 'sample', () =&gt; {
-  …
-} );</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nx">describe</span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;sample&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="err">…</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
 <p>This module name will appear in your test output in the console
 when the test is running:</p>
 <p><img alt="Snippet of console output for a unit test that reads 'sample: should return a string with expected value'" src="../img/js-unit-test-output-with-describes.png" /></p>
@@ -383,25 +395,26 @@ children of the root <code>describe</code> block –
 that should correspond to a particular method in the module.
 For example, if we want to add more functionality to our sample JS,
 we could start by writing these tests in <code>sample-spec.js</code>:</p>
-<pre class="highlight"><code class="language-js">describe('sample', () =&gt; {
-  describe('gimmeString()', () =&gt; {
-    it('should return a string with expected value', () =&gt; {
-      const sampleString = 'Shredder';
-      expect(sample.gimmeString()).toBe(sampleString);
-    });
-  });
+<div class="highlight"><pre><span></span><code><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;gimmeString()&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should return a string with expected value&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">sampleString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Shredder&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="nx">expect</span><span class="p">(</span><span class="nx">sample</span><span class="p">.</span><span class="nx">gimmeString</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">sampleString</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="p">});</span><span class="w"></span>
 
-  describe('gimmeObject()', () =&gt; {
-    it('should return an object with expected value', () =&gt; {
-      const sampleObject = {
-        image:
-          'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
-        caption: 'Krang portrait',
-      };
-      expect(sample.gimmeObject()).toBe(sampleObject);
-    });
-  });
-});</code></pre>
+<span class="w">  </span><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;gimmeObject()&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should return an object with expected value&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">sampleObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">image</span><span class="o">:</span><span class="w"></span>
+<span class="w">          </span><span class="s1">&#39;https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png&#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nx">caption</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Krang portrait&#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="p">};</span><span class="w"></span>
+<span class="w">      </span><span class="nx">expect</span><span class="p">(</span><span class="nx">sample</span><span class="p">.</span><span class="nx">gimmeObject</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">sampleObject</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="p">});</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
+</code></pre></div>
 <p>(We’ll talk more about writing the individual tests in the next section.)</p>
 <p>And then we would create the <code>gimmeString</code> and <code>gimmeObject</code> methods
 in our <code>sample.js</code> file.</p>
@@ -419,27 +432,29 @@ which is an alias of
 that confirm that the result of executing some code is what you expected.
 These are called <a href="https://jestjs.io/docs/en/using-matchers">“matchers”</a>
 in Jest parlance, and they all follow this format:</p>
-<pre class="highlight"><code class="language-js">expect(someValue).someKindOfComparisonWith(someOtherValue);</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nx">expect</span><span class="p">(</span><span class="nx">someValue</span><span class="p">).</span><span class="nx">someKindOfComparisonWith</span><span class="p">(</span><span class="nx">someOtherValue</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
 <p>For example, let’s take another look at the sample tests we wrote above:</p>
-<pre class="highlight"><code class="language-js">describe('sample', () =&gt; {
-  describe('gimmeString()', () =&gt; {
-    it('should return a string with expected value', () =&gt; {
-      const sampleString = 'Shredder';
-      expect(sample.gimmeString()).toBe(sampleString);
-    });
-  });
+<div class="highlight"><pre><span></span><code><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;gimmeString()&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should return a string with expected value&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">sampleString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Shredder&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="nx">expect</span><span class="p">(</span><span class="nx">sample</span><span class="p">.</span><span class="nx">gimmeString</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">sampleString</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="p">});</span><span class="w"></span>
 
-  describe('gimmeObject()', () =&gt; {
-    it('should return an object with expected value', () =&gt; {
-      const sampleObject = {
-        image:
-          'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
-        caption: 'Krang portrait',
-      };
-      expect(sample.gimmeObject()).toBe(sampleObject);
-    });
-  });
-});</code></pre>
+<span class="w">  </span><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;gimmeObject()&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should return an object with expected value&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">sampleObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">image</span><span class="o">:</span><span class="w"></span>
+<span class="w">          </span><span class="s1">&#39;https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png&#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nx">caption</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Krang portrait&#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="p">};</span><span class="w"></span>
+<span class="w">      </span><span class="nx">expect</span><span class="p">(</span><span class="nx">sample</span><span class="p">.</span><span class="nx">gimmeObject</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">sampleObject</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="p">});</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
+</code></pre></div>
 <p>In these tests, we check <em>(<code>expect</code>)</em> that
 the string returned by <code>sample.gimmeString()</code>
 and the object returned by <code>sample.gimmeObject()</code>
@@ -499,45 +514,47 @@ and use <code>expect</code> to check that you receive the desired result.</p>
 <p>Here is a simple example from our
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/util/array-helpers.js">array helpers module</a>
 (<code>cfgov/unprocessed/js/modules/util/array-helpers.js</code>):</p>
-<pre class="highlight"><code class="language-js">function indexOfObject(array, key, val) {
-  let match = -1;
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">indexOfObject</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span><span class="w"> </span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">;</span><span class="w"></span>
 
-  if (!array.length &gt; 0) {
-    return match;
-  }
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">match</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 
-  array.forEach(function (item, index) {
-    if (item[key] === val) {
-      match = index;
-    }
-  });
+<span class="w">  </span><span class="nx">array</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">item</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">item</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nx">match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">index</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">});</span><span class="w"></span>
 
-  return match;
-}</code></pre>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">match</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
 <p>Tests for that function, from
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/array-helpers-spec.js">test/unit_tests/js/modules/util/array-helpers-spec.js</a>:</p>
-<pre class="highlight"><code class="language-js">describe('indexOfObject()', () =&gt; {
-  it('should return -1 if the array is empty', () =&gt; {
-    array = [];
-    index = arrayHelpers.indexOfObject(array, 'foo');
+<div class="highlight"><pre><span></span><code><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;indexOfObject()&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should return -1 if the array is empty&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span><span class="w"></span>
+<span class="w">    </span><span class="nx">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">arrayHelpers</span><span class="p">.</span><span class="nx">indexOfObject</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;foo&#39;</span><span class="p">);</span><span class="w"></span>
 
-    expect(index).toBe(-1);
-  });
+<span class="w">    </span><span class="nx">expect</span><span class="p">(</span><span class="nx">index</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="o">-</span><span class="mf">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">});</span><span class="w"></span>
 
-  it('should return -1 if there is no match', () =&gt; {
-    array = [{ value: 'bar' }, { value: 'baz' }];
-    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
+<span class="w">  </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should return -1 if there is no match&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bar&#39;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;baz&#39;</span><span class="w"> </span><span class="p">}];</span><span class="w"></span>
+<span class="w">    </span><span class="nx">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">arrayHelpers</span><span class="p">.</span><span class="nx">indexOfObject</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;value&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;foo&#39;</span><span class="p">);</span><span class="w"></span>
 
-    expect(index).toBe(-1);
-  });
+<span class="w">    </span><span class="nx">expect</span><span class="p">(</span><span class="nx">index</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="o">-</span><span class="mf">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">});</span><span class="w"></span>
 
-  it('should return the matched index', () =&gt; {
-    array = [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }];
-    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
+<span class="w">  </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should return the matched index&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;foo&#39;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bar&#39;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;baz&#39;</span><span class="w"> </span><span class="p">}];</span><span class="w"></span>
+<span class="w">    </span><span class="nx">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">arrayHelpers</span><span class="p">.</span><span class="nx">indexOfObject</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;value&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;foo&#39;</span><span class="p">);</span><span class="w"></span>
 
-    expect(index).toBe(0);
-  });
-});</code></pre>
+<span class="w">    </span><span class="nx">expect</span><span class="p">(</span><span class="nx">index</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">});</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
+</code></pre></div>
 <h3 id="testing-dom-manipulation">Testing DOM manipulation<a class="headerlink" href="#testing-dom-manipulation" title="Permanent link">¶</a></h3>
 <p><a href="https://jestjs.io/en/">Jest</a>, the JavaScript testing framework we use,
 <a href="https://jestjs.io/docs/en/configuration#testenvironment-string">includes jsdom</a>,
@@ -552,32 +569,33 @@ with different classes and SVG icon code to style it
 as a particular kind of notification (success, warning, etc.). In
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/molecules/Notification.js">the component JS</a>,
 we have this function that sets the type of a notification before displaying it:</p>
-<pre class="highlight"><code class="language-js">function _setType(type) {
-  // If type hasn't changed, return.
-  if (_currentType === type) {
-    return this;
-  }
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">_setType</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// If type hasn&#39;t changed, return.</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">_currentType</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 
-  // Remove existing type class
-  const classList = _dom.classList;
-  classList.remove(`${BASE_CLASS}__${_currentType}`);
+<span class="w">  </span><span class="c1">// Remove existing type class</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">classList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">_dom</span><span class="p">.</span><span class="nx">classList</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">BASE_CLASS</span><span class="si">}</span><span class="sb">__</span><span class="si">${</span><span class="nx">_currentType</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
 
-  if (type === SUCCESS || type === WARNING || type === ERROR) {
-    // Add new type class and update the value of _currentType
-    classList.add(`${BASE_CLASS}__${type}`);
-    _currentType = type;
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">SUCCESS</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">WARNING</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">ERROR</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Add new type class and update the value of _currentType</span><span class="w"></span>
+<span class="w">    </span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">BASE_CLASS</span><span class="si">}</span><span class="sb">__</span><span class="si">${</span><span class="nx">type</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nx">_currentType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">type</span><span class="p">;</span><span class="w"></span>
 
-    // Replace &lt;svg&gt; element with contents of type_ICON
-    const currentIcon = _dom.querySelector('.cf-icon-svg');
-    const newIconSetup = document.createElement('div');
-    newIconSetup.innerHTML = ICON[type];
-    const newIcon = newIconSetup.firstChild;
-    _dom.replaceChild(newIcon, currentIcon);
-  } else {
-    throw new Error(`${type} is not a supported notification type!`);
-  }
-  return this;
-}</code></pre>
+<span class="w">    </span><span class="c1">// Replace &lt;svg&gt; element with contents of type_ICON</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">currentIcon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">_dom</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;.cf-icon-svg&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">newIconSetup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nx">newIconSetup</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ICON</span><span class="p">[</span><span class="nx">type</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">newIcon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">newIconSetup</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">_dom</span><span class="p">.</span><span class="nx">replaceChild</span><span class="p">(</span><span class="nx">newIcon</span><span class="p">,</span><span class="w"> </span><span class="nx">currentIcon</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">type</span><span class="si">}</span><span class="sb"> is not a supported notification type!`</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
 <p>This function would be invoked by an instance of the Notification class.
 <code>_dom</code> is the DOM node for the Notification.
 As you can see from the code comments above,
@@ -586,30 +604,31 @@ it has a few different steps that modify the DOM node.</p>
 Here are the first 22 lines of
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/molecules/Notification-spec.js">the spec file</a>
 that tests this component:</p>
-<pre class="highlight"><code class="language-js">import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification';
-const BASE_CLASS = 'm-notification';
-const HTML_SNIPPET = `
-  &lt;div class="m-notification"&gt;
-    &lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"&gt;&lt;/svg&gt;
-    &lt;div class="m-notification_content"&gt;
-      &lt;div class="h4 m-notification_message"&gt;Notification content&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-`;
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">Notification</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;../../../../cfgov/unprocessed/js/molecules/Notification&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">BASE_CLASS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;m-notification&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">HTML_SNIPPET</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">  &lt;div class=&quot;m-notification&quot;&gt;</span>
+<span class="sb">    &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1000 1200&quot; class=&quot;cf-icon-svg&quot;&gt;&lt;/svg&gt;</span>
+<span class="sb">    &lt;div class=&quot;m-notification_content&quot;&gt;</span>
+<span class="sb">      &lt;div class=&quot;h4 m-notification_message&quot;&gt;Notification content&lt;/div&gt;</span>
+<span class="sb">    &lt;/div&gt;</span>
+<span class="sb">  &lt;/div&gt;</span>
+<span class="sb">`</span><span class="p">;</span><span class="w"></span>
 
-describe( 'Notification', () =&gt; {
-  let notificationElem;
-  let notification;
-  let thisNotification;
+<span class="nx">describe</span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;Notification&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">notificationElem</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">notification</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">thisNotification</span><span class="p">;</span><span class="w"></span>
 
-  beforeEach( () =&gt; {
-    document.body.innerHTML = HTML_SNIPPET;
-    notificationElem = document.querySelector( `.${ BASE_CLASS }` );
-    notification = new Notification( notificationElem, BASE_CLASS, {} );
-  } );
+<span class="w">  </span><span class="nx">beforeEach</span><span class="p">(</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">HTML_SNIPPET</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">notificationElem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="w"> </span><span class="sb">`.</span><span class="si">${</span><span class="w"> </span><span class="nx">BASE_CLASS</span><span class="w"> </span><span class="si">}</span><span class="sb">`</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nx">notification</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Notification</span><span class="p">(</span><span class="w"> </span><span class="nx">notificationElem</span><span class="p">,</span><span class="w"> </span><span class="nx">BASE_CLASS</span><span class="p">,</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-  …
-} );</code></pre>
+<span class="w">  </span><span class="err">…</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
 <p>The main things to note here at the beginning of the file are
 the addition of the <code>HTML_SNIPPET</code> definition,
 containing the markup we will used for testing
@@ -636,31 +655,32 @@ For now, just be aware of this when
 <p>Further down, here are some of the tests that cover the <code>_setType</code> function
 (by way of the <code>setTypeAndContent</code> function that
 wraps both <code>_setType</code> and <code>_setContent</code>):</p>
-<pre class="highlight"><code class="language-js">describe( 'setTypeAndContent()', () =&gt; {
-  it( 'should update the notification type for the success state', () =&gt; {
-    notification.init();
+<div class="highlight"><pre><span></span><code><span class="nx">describe</span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;setTypeAndContent()&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nx">it</span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;should update the notification type for the success state&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">notification</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span><span class="w"></span>
 
-    notification.setTypeAndContent(
-      notification.SUCCESS,
-      ''
-    );
+<span class="w">    </span><span class="nx">notification</span><span class="p">.</span><span class="nx">setTypeAndContent</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="nx">notification</span><span class="p">.</span><span class="nx">SUCCESS</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s1">&#39;&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
 
-    expect( notificationElem.classList ).toContain( 'm-notification__success' );
-  } );
+<span class="w">    </span><span class="nx">expect</span><span class="p">(</span><span class="w"> </span><span class="nx">notificationElem</span><span class="p">.</span><span class="nx">classList</span><span class="w"> </span><span class="p">).</span><span class="nx">toContain</span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;m-notification__success&#39;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-  it( 'should update the notification type for the warning state', () =&gt; {
-    notification.init();
+<span class="w">  </span><span class="nx">it</span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;should update the notification type for the warning state&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">notification</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span><span class="w"></span>
 
-    notification.setTypeAndContent(
-      notification.WARNING,
-      ''
-    );
+<span class="w">    </span><span class="nx">notification</span><span class="p">.</span><span class="nx">setTypeAndContent</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="nx">notification</span><span class="p">.</span><span class="nx">WARNING</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s1">&#39;&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
 
-    expect( notificationElem.classList ).toContain( 'm-notification__warning' );
-  } );
+<span class="w">    </span><span class="nx">expect</span><span class="p">(</span><span class="w"> </span><span class="nx">notificationElem</span><span class="p">.</span><span class="nx">classList</span><span class="w"> </span><span class="p">).</span><span class="nx">toContain</span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;m-notification__warning&#39;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
-  …
-} );</code></pre>
+<span class="w">  </span><span class="err">…</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
 <p>This part mostly works like testing any other function.
 The notable distinction here is that the test invokes the function
 using the DOM nodes and class set up in <code>beforeEach</code>.</p>
@@ -707,7 +727,7 @@ if the component wasn’t visible on the page, for instance.
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

@@ -156,7 +156,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Setup</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/installation.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/installation.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -172,12 +172,14 @@
 <ul>
 <li><a href="#clone-the-repository">Clone the repository</a>:</li>
 </ul>
-<pre class="highlight"><code class="language-sh">git clone https://github.com/cfpb/consumerfinance.gov.git
-cd consumerfinance.gov</code></pre>
+<div class="highlight"><pre><span></span><code>git clone https://github.com/cfpb/consumerfinance.gov.git
+<span class="nb">cd</span> consumerfinance.gov
+</code></pre></div>
 <ul>
 <li><a href="#set-up-and-run-the-docker-containers">Set up and run the Docker containers via docker-compose</a>:</li>
 </ul>
-<pre class="highlight"><code class="language-sh">docker-compose up</code></pre>
+<div class="highlight"><pre><span></span><code>docker-compose up
+</code></pre></div>
 <p>This may take some time, as it will also
 <a href="#load-initial-data">load initial data</a>
 and
@@ -197,16 +199,19 @@ Each step has some additional detail below.</p>
 <h3 id="clone-the-repository">Clone the repository<a class="headerlink" href="#clone-the-repository" title="Permanent link">¶</a></h3>
 <p>Using the console, navigate to the root directory in which your projects
 live and clone this project's repository:</p>
-<pre class="highlight"><code class="language-sh">git clone git@github.com:cfpb/consumerfinance.gov.git
-cd consumerfinance.gov</code></pre>
+<div class="highlight"><pre><span></span><code>git clone git@github.com:cfpb/consumerfinance.gov.git
+<span class="nb">cd</span> consumerfinance.gov
+</code></pre></div>
 <p>Configure <code>.git-blame-ignore-revs</code> by running the following command within
 the repository:</p>
-<pre class="highlight"><code class="language-sh">git config blame.ignoreRevsFile .git-blame-ignore-revs</code></pre>
+<div class="highlight"><pre><span></span><code>git config blame.ignoreRevsFile .git-blame-ignore-revs
+</code></pre></div>
 <h3 id="set-up-the-environment-optional">Set up the environment (optional)<a class="headerlink" href="#set-up-the-environment-optional" title="Permanent link">¶</a></h3>
 <p>The consumerfinance.gov Django site relies on environment variables defined
 in a <code>.env</code> file. If this is your first time setting up the project,
 copy <code>.env_SAMPLE</code> to <code>.env</code>:</p>
-<pre class="highlight"><code class="language-sh">cp -a .env_SAMPLE .env</code></pre>
+<div class="highlight"><pre><span></span><code>cp -a .env_SAMPLE .env
+</code></pre></div>
 <h3 id="set-up-a-local-python-environment-optional">Set up a local Python environment (optional)<a class="headerlink" href="#set-up-a-local-python-environment-optional" title="Permanent link">¶</a></h3>
 <p>For running our
 <a href="/python-unit-tests/">Python unit tests, linting, etc</a>
@@ -218,7 +223,7 @@ outside of the Docker container, we rely on a local Python environment.</p>
 with
 <a href="https://github.com/pyenv/pyenv-virtualenv">pyenv-virtualenv</a>.
 They can be installed from Homebrew on macOS:</p>
-<pre class="highlight"><code>```sh
+<div class="highlight"><pre><span></span><code>```sh
 brew install pyenv pyenv-virtualenv
 ```
 
@@ -227,14 +232,17 @@ Python 3.8 must then be installed once pyenv is installed:
 ```sh
 pyenv install 3.8.12
 ```
-</code></pre>
+</code></pre></div>
 <p>First we need to create a Python virtualenv for consumerfinance.gov:</p>
-<pre class="highlight"><code class="language-sh">pyenv virtualenv 3.8.12 consumerfinance.gov</code></pre>
+<div class="highlight"><pre><span></span><code>pyenv virtualenv <span class="m">3</span>.8.12 consumerfinance.gov
+</code></pre></div>
 <p>Then we'll need to activate it.
 Activating the virtualenv is necessary before using it in the future as well:</p>
-<pre class="highlight"><code class="language-sh">pyenv activate consumerfinance.gov</code></pre>
+<div class="highlight"><pre><span></span><code>pyenv activate consumerfinance.gov
+</code></pre></div>
 <p>Once activated, our Python CI requirements can be installed in the virtualenv:</p>
-<pre class="highlight"><code class="language-sh">pip install -r requirements/ci.txt</code></pre>
+<div class="highlight"><pre><span></span><code>pip install -r requirements/ci.txt
+</code></pre></div>
 <h3 id="configure-vscode-formatters-optional">Configure VSCode formatters (optional)<a class="headerlink" href="#configure-vscode-formatters-optional" title="Permanent link">¶</a></h3>
 <p>For developers who use <a href="https://code.visualstudio.com/">Visual Studio Code</a>
 as their editor of choice, you may wish to install certain
@@ -250,7 +258,8 @@ as the formatter for Python files.</p>
 takes place. These tools consist of <code>black</code>, <code>flake8</code>, <code>isort</code>, and <code>bandit</code>.
 To install <code>pre-commit</code>, running the following commands from within the
 <code>consumerfinance.gov</code> directory:</p>
-<pre class="highlight"><code class="language-sh">pip install -U pre-commit &amp;&amp; pre-commit install</code></pre>
+<div class="highlight"><pre><span></span><code>pip install -U pre-commit <span class="o">&amp;&amp;</span> pre-commit install
+</code></pre></div>
 <p>Before each commit, <code>pre-commit</code> will execute and run our <code>pre-commit</code> checks.
 If any task fails, it will attempt to resolve the issue automatically, notify
 you of the changes (if any), and ask for you to re-stage the changed files. If
@@ -268,7 +277,7 @@ We prefer
 <a href="https://github.com/nvm-sh/nvm">nvm</a>
 for Node.js version management.
 nvm can be installed using:</p>
-<pre class="highlight"><code>```sh
+<div class="highlight"><pre><span></span><code>```sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | sh
 ```
 
@@ -289,13 +298,15 @@ Yarn must then be installed:
 ```sh
 curl -o- -L https://yarnpkg.com/install.sh | sh
 ```
-</code></pre>
+</code></pre></div>
 <p>We have a single script that will install our frontend dependencies for both
 building and
 <a href="/javascript-unit-tests/">unit testing/linting/etc</a>:</p>
-<pre class="highlight"><code class="language-sh">./frontend.sh</code></pre>
+<div class="highlight"><pre><span></span><code>./frontend.sh
+</code></pre></div>
 <p>Yarn can be used to rebuild our assets after the initial setup:</p>
-<pre class="highlight"><code class="language-sh">yarn build</code></pre>
+<div class="highlight"><pre><span></span><code>yarn build
+</code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 </div>
@@ -308,9 +319,11 @@ You can use either
 to run these services along side the consumerfinance.gov Django site.</p>
 <p>To build and run our Docker containers for the first time, run:</p>
 <h4 id="docker-compose">docker-compose:<a class="headerlink" href="#docker-compose" title="Permanent link">¶</a></h4>
-<pre class="highlight"><code class="language-sh">docker-compose up</code></pre>
+<div class="highlight"><pre><span></span><code>docker-compose up
+</code></pre></div>
 <h4 id="kubernetes-via-helm">Kubernetes via Helm:<a class="headerlink" href="#kubernetes-via-helm" title="Permanent link">¶</a></h4>
-<pre class="highlight"><code class="language-shell">./build-images.sh &amp;&amp; ./helm-install.sh</code></pre>
+<div class="highlight"><pre><span></span><code>./build-images.sh <span class="o">&amp;&amp;</span> ./helm-install.sh
+</code></pre></div>
 <p>Either approach will build and start our
 PostgreSQL, Elasticsearch, and Python services.</p>
 <p>The first time this is fun, it will
@@ -336,8 +349,9 @@ and then does the following:</p>
   <code>DJANGO_HTTP_PORT</code> environment variables.</li>
 </ul>
 <p>This script must be run inside the Docker <code>python</code> container:</p>
-<pre class="highlight"><code class="language-sh">docker-compose exec python sh
-./initial-data.sh</code></pre>
+<div class="highlight"><pre><span></span><code>docker-compose <span class="nb">exec</span> python sh
+./initial-data.sh
+</code></pre></div>
 <h3 id="load-a-database-dump">Load a database dump<a class="headerlink" href="#load-a-database-dump" title="Permanent link">¶</a></h3>
 <p>Alternatively, one of our database dumps can be installed using our
 <code>refresh-data.sh</code> script. You can get a database dump by defining
@@ -346,11 +360,13 @@ GitHub Enterprise at
 [GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3, or
 inside a Docker <code>python</code> container sh immediately before running
 <code>refresh-data.sh</code>:</p>
-<pre class="highlight"><code class="language-sh">docker-compose exec python sh
-CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
-./refresh-data.sh</code></pre>
+<div class="highlight"><pre><span></span><code>docker-compose <span class="nb">exec</span> python sh
+<span class="nv">CFGOV_PROD_DB_LOCATION</span><span class="o">=</span>http://<span class="o">(</span>rest of the URL<span class="o">)</span>
+./refresh-data.sh
+</code></pre></div>
 <p><code>refresh-data.sh</code> can also be given a path to a gziped database dump:</p>
-<pre class="highlight"><code class="language-sh">./refresh-data.sh /path/to/dump.sql.gz</code></pre>
+<div class="highlight"><pre><span></span><code>./refresh-data.sh /path/to/dump.sql.gz
+</code></pre></div>
 <p>This automatically <a href="/search/#building-the-index">(re)builds the Elasticsearch index</a>,
 unless you run the <code>refresh-data.sh</code> script with the <code>--noindex</code> flag.</p>
 <h2 id="alternative-setups">Alternative setups<a class="headerlink" href="#alternative-setups" title="Permanent link">¶</a></h2>
@@ -369,25 +385,29 @@ and Elasticsearch (<code>elasticsearch</code>)
 containers from our
 <a href="https://docs.docker.com/compose/"><code>docker-compose</code></a> file,
 explicitly specify them as arguments to <code>docker-compose</code>:</p>
-<pre class="highlight"><code>docker-compose up postgres elasticsearch</code></pre>
+<div class="highlight"><pre><span></span><code>docker-compose up postgres elasticsearch
+</code></pre></div>
 <p>This will expose
 PostgreSQL on port <code>5432</code> on <code>localhost</code>
 and
 Elasticsearch on port <code>9200</code> on <code>localhost</code>.</p>
 <h3 id="postgresql-and-elasticsearch-from-homebrew">PostgreSQL and Elasticsearch from Homebrew<a class="headerlink" href="#postgresql-and-elasticsearch-from-homebrew" title="Permanent link">¶</a></h3>
 <p>You can install PostgreSQL and Elasticsearch from Homebrew if you're on a Mac:</p>
-<pre class="highlight"><code class="language-sh">brew install postgresql
-brew install elasticsearch</code></pre>
+<div class="highlight"><pre><span></span><code>brew install postgresql
+brew install elasticsearch
+</code></pre></div>
 <p>Once it's installed, you can configure it to run as a service:</p>
-<pre class="highlight"><code class="language-sh">brew services start postgresql
-brew services start elasticsearch</code></pre>
+<div class="highlight"><pre><span></span><code>brew services start postgresql
+brew services start elasticsearch
+</code></pre></div>
 <p>Our recommended Postgres configuration is a database named <code>cfgov</code> and a user
 named <code>cfpb</code>, with data stored in schema <code>cfpb</code>. This can be created with the
 following commands:</p>
-<pre class="highlight"><code class="language-sh">dropdb --if-exists cfgov &amp;&amp; dropuser --if-exists cfpb
-psql postgres -c "CREATE USER cfpb WITH LOGIN PASSWORD 'cfpb' CREATEDB"
-psql postgres -c "CREATE DATABASE cfgov OWNER cfpb"
-psql postgres://cfpb:cfpb@localhost/cfgov -c "CREATE SCHEMA cfpb"</code></pre>
+<div class="highlight"><pre><span></span><code>dropdb --if-exists cfgov <span class="o">&amp;&amp;</span> dropuser --if-exists cfpb
+psql postgres -c <span class="s2">&quot;CREATE USER cfpb WITH LOGIN PASSWORD &#39;cfpb&#39; CREATEDB&quot;</span>
+psql postgres -c <span class="s2">&quot;CREATE DATABASE cfgov OWNER cfpb&quot;</span>
+psql postgres://cfpb:cfpb@localhost/cfgov -c <span class="s2">&quot;CREATE SCHEMA cfpb&quot;</span>
+</code></pre></div>
 <p>We don't support using an SQLite database because we use database fields
 that are specific to Postgres. The <code>CREATEDB</code> keyword above allows the
 <code>cfpb</code> user to create a temporary Django database when running unit tests.</p>
@@ -397,11 +417,13 @@ that are specific to Postgres. The <code>CREATEDB</code> keyword above allows th
 <a href="#set-up-a-local-python-environment">set up a local Python environment</a>,
 and <a href="#build-the-frontend">built the frontend</a>,
 all the Python dependencies for running locally can be installed:</p>
-<pre class="highlight"><code class="language-sh">pyenv activate consumerfinance.gov
-pip install -r requirements/local.txt</code></pre>
+<div class="highlight"><pre><span></span><code>pyenv activate consumerfinance.gov
+pip install -r requirements/local.txt
+</code></pre></div>
 <p>Once complete, our <code>runserver.sh</code> script will bring up the site at
 <a href="http://localhost:8000">http://localhost:8000</a>.</p>
-<pre class="highlight"><code class="language-sh">./runserver.sh</code></pre>
+<div class="highlight"><pre><span></span><code>./runserver.sh
+</code></pre></div>
 <h2 id="additional-setup">Additional setup<a class="headerlink" href="#additional-setup" title="Permanent link">¶</a></h2>
 <h3 id="sync-local-image-and-document-storage-optional">Sync local image and document storage (optional)<a class="headerlink" href="#sync-local-image-and-document-storage-optional" title="Permanent link">¶</a></h3>
 <p>If using a database dump, pages will contain links to images or documents
@@ -415,24 +437,29 @@ running locally.</p>
 <p>This command downloads all remote images (and image renditions) referenced in the
 database, retrieving them from the specified URL and storing them in the
 specified local directory:</p>
-<pre class="highlight"><code class="language-sh">cfgov/manage.py sync_image_storage https://files.consumerfinance.gov/f/ ./cfgov/f/</code></pre>
+<div class="highlight"><pre><span></span><code>cfgov/manage.py sync_image_storage https://files.consumerfinance.gov/f/ ./cfgov/f/
+</code></pre></div>
 <p>This command does the same, but for documents:</p>
-<pre class="highlight"><code class="language-sh">cfgov/manage.py sync_document_storage https://files.consumerfinance.gov/f/ ./cfgov/f/</code></pre>
+<div class="highlight"><pre><span></span><code>cfgov/manage.py sync_document_storage https://files.consumerfinance.gov/f/ ./cfgov/f/
+</code></pre></div>
 <h3 id="install-gnu-gettext-for-django-translation-support-optional">Install GNU gettext for Django translation support (optional)<a class="headerlink" href="#install-gnu-gettext-for-django-translation-support-optional" title="Permanent link">¶</a></h3>
 <p>In order to generate Django translations as documented
 <a href="../translation/">here</a>, you'll need to install the
 <a href="https://www.gnu.org/software/gettext/">GNU gettext</a> library.</p>
 <p>On macOS, GNU gettext is available via Homebrew:</p>
-<pre class="highlight"><code>brew install gettext</code></pre>
+<div class="highlight"><pre><span></span><code>brew install gettext
+</code></pre></div>
 <p>but it gets installed as
 <a href="https://docs.brew.sh/FAQ#what-does-keg-only-mean">"keg-only"</a> due to conflicts
 with the default installation of BSD gettext. This means that GNU gettext won't
 be loaded in your PATH by default. To fix this, you can run</p>
-<pre class="highlight"><code>brew link --force gettext</code></pre>
+<div class="highlight"><pre><span></span><code>brew link --force gettext
+</code></pre></div>
 <p>to force its installation, or see <code>brew info gettext</code> for an alternate
 solution.</p>
 <p>If installed locally, you should be able to run this command successfully:</p>
-<pre class="highlight"><code>$ gettext --version</code></pre>
+<div class="highlight"><pre><span></span><code>$ gettext --version
+</code></pre></div>
 <p>GNU gettext is also required to run our translation-related unit tests locally.</p>
               
             </div>
@@ -462,7 +489,7 @@ solution.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

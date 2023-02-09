@@ -155,7 +155,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Contributing &raquo;</li><li>Contributing to the Docs</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/contributing-docs.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/contributing-docs.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -205,8 +205,9 @@ is a useful reference. MkDocs also includes
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/mkdocs.yml">mkdocs.yml file</a>
 in the appropriate place under <code>nav:</code> to get them to appear in the sidebar navigation.
 For example:</p>
-<pre class="highlight"><code>nav:
-- Introduction: index.md</code></pre>
+<div class="highlight"><pre><span></span><code>nav:
+- Introduction: index.md
+</code></pre></div>
 <h2 id="running-the-docs-locally">Running the docs locally<a class="headerlink" href="#running-the-docs-locally" title="Permanent link">¶</a></h2>
 <h3 id="with-docker">With Docker<a class="headerlink" href="#with-docker" title="Permanent link">¶</a></h3>
 <p>When running consumerfinance.gov using <a href="../installation/#docker-based-installation">Docker-compose</a>,
@@ -216,9 +217,10 @@ this documentation is running by default at <a href="http://localhost:8888">http
 <a href="../installation/#stand-alone-installation">the stand-alone installation</a>
 of consumerfinance.gov,
 you can run these docs with:</p>
-<pre class="highlight"><code class="language-bash">workon consumerfinance.gov
+<div class="highlight"><pre><span></span><code>workon consumerfinance.gov
 pip install -r requirements/docs.txt
-mkdocs serve -a :8888</code></pre>
+mkdocs serve -a :8888
+</code></pre></div>
 <p>Once running, they are accessible at <a href="http://localhost:8888">http://localhost:8888</a>.</p>
 <h2 id="deploying-the-docs-to-github-pages">Deploying the docs to GitHub Pages<a class="headerlink" href="#deploying-the-docs-to-github-pages" title="Permanent link">¶</a></h2>
 <p>Every time a PR is merged to main,
@@ -227,7 +229,8 @@ GitHub Actions will build and deploy the documentation to
 See <a href="../github-actions/">How we use GitHub Actions</a> for more info.</p>
 <p>If you would like to deploy to a fork of consumerfinance.gov owned by another user
 you can provide the <code>-r</code> argument:</p>
-<pre class="highlight"><code class="language-bash">mkdocs gh-deploy -r USER</code></pre>
+<div class="highlight"><pre><span></span><code>mkdocs gh-deploy -r USER
+</code></pre></div>
 <p>Where <code>USER</code> is the GitHub user.
 The docs will then be available at <a href="https://USER.github.io/consumerfinance.gov/">https://USER.github.io/consumerfinance.gov/</a> after a short period of time.</p>
 <p>See the
@@ -261,7 +264,7 @@ for more information.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

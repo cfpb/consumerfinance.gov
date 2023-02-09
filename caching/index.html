@@ -153,7 +153,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Supporting Features &raquo;</li><li>Caching</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/caching.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/caching.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -169,9 +169,11 @@
 <p>There are certain pages that do not live in Wagtail or are impacted by changes on another page (imagine our <a href="https://www.consumerfinance.gov/about-us/newsroom/">newsroom page</a> that lists titles of other pages) or another process (imagine data from Socrata gets updated) and thus will display outdated content until the page's time to live (TTL) has expired, a deploy has happened, or if someone manually invalidates that page. Our default TTL is 24 hours.</p>
 <h4 id="checking-the-cache-state-of-a-url">Checking the cache state of a URL<a class="headerlink" href="#checking-the-cache-state-of-a-url" title="Permanent link">¶</a></h4>
 <p>To get the current cache state of a URL (perhaps to see if that URL has been invalidated), you can use the following <code>curl</code> command to check the <code>X-Cache</code> header:</p>
-<pre class="highlight"><code class="language-shell">curl -sI -H "Pragma: akamai-x-cache-on" https://beta.consumerfinance.gov | grep "X-Cache"</code></pre>
+<div class="highlight"><pre><span></span><code>curl -sI -H <span class="s2">&quot;Pragma: akamai-x-cache-on&quot;</span> https://beta.consumerfinance.gov <span class="p">|</span> grep <span class="s2">&quot;X-Cache&quot;</span>
+</code></pre></div>
 <p>It will return something like:</p>
-<pre class="highlight"><code>X-Cache: TCP_HIT from a23-46-239-53.deploy.akamaitechnologies.com (AkamaiGHost/9.5.4-24580776) (-)</code></pre>
+<div class="highlight"><pre><span></span><code>X-Cache: TCP_HIT from a23-46-239-53.deploy.akamaitechnologies.com (AkamaiGHost/9.5.4-24580776) (-)
+</code></pre></div>
 <p>The possible cache state values are:</p>
 <ul>
 <li><code>TCP_HIT</code>: The object was fresh in cache and object from disk cache.</li>
@@ -189,9 +191,10 @@
 <p>Starting in December 2017, we use <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/jinja2tags/fragment_cache.py">template fragment caching</a> to cache all or part of a template. It is enabled on our "post previews", snippets of a page that we display on results of filterable pages (e.g. <a href="https://consumerfinance.gov/about-us/blog">our blog page</a> &amp; <a href="https://www.consumerfinance.gov/data-research/research-reports/">research &amp; reports</a>).</p>
 <p>It can easily be enabled on other templates. See <a href="https://github.com/cfpb/consumerfinance.gov/pull/3663/files">this PR</a> as an example of the code that would need to be introduced to cache a new fragment.</p>
 <p>When a page gets published, it will update the post preview cache for that particular page. However, if there are code changes that impact the page's content, or the post preview template itself gets updated, the entire post preview cache will need to be manually cleared. Clearing this particular cache could be an option when deploying, as it is with Akamai, but should not be a default since most deploys wouldn't impact the code in question. Currently, the manual way to do this would be to run the following from a production server's django shell:</p>
-<pre class="highlight"><code>from django.core.cache import caches
+<div class="highlight"><pre><span></span><code>from django.core.cache import caches
 
-caches['post_preview'].clear()</code></pre>
+caches[&#39;post_preview&#39;].clear()
+</code></pre></div>
 <p>To run the application locally with caching for post previews enabled, run <code>ENABLE_POST_PREVIEW_CACHE=1 ./runserver.sh</code>
 Alternatively, add this variable to your <code>.env</code> if you generally want it enabled locally.</p>
 <p>Due to the impossibility/difficulty/complexity of caching individual Wagtail blocks (they are not serializable) and invalidating content that does not have some type of <code>post_save</code> hook (e.g. Taggit models), we have started with caching segments that are tied to a Wagtail page (which can be easily invalidated using the <code>page_published</code> Wagtail signal), hence the post previews. With more research or improvements to these third-party libraries, it is possible we could expand Django-level caching to more content.</p>
@@ -223,7 +226,7 @@ Alternatively, add this variable to your <code>.env</code> if you generally want
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

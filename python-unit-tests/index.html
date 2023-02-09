@@ -159,7 +159,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Testing &raquo;</li><li>Python Unit Testing</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/python-unit-tests.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/python-unit-tests.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -182,16 +182,17 @@
 <p>When writing tests that rely on a running Elasticsearch service, consider using the
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/search/elasticsearch_helpers.py"><code>search.elasticsearch_helpers.ElasticsearchTestsMixin</code></a>
 mixin:</p>
-<pre class="highlight"><code class="language-py">from django.test import TestCase
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
 
-from search.elasticsearch_helpers import ElasticsearchTestsMixin
+<span class="kn">from</span> <span class="nn">search.elasticsearch_helpers</span> <span class="kn">import</span> <span class="n">ElasticsearchTestsMixin</span>
 
 
-class MyTests(ElasticsearchTestsMixin, TestCase):
-    def test_something(self):
-        self.rebuild_elasticsearch_index()
+<span class="k">class</span> <span class="nc">MyTests</span><span class="p">(</span><span class="n">ElasticsearchTestsMixin</span><span class="p">,</span> <span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rebuild_elasticsearch_index</span><span class="p">()</span>
 
-        # test something that relies on the Elasticsearch index</code></pre>
+        <span class="c1"># test something that relies on the Elasticsearch index</span>
+</code></pre></div>
 <p>Refer to the mixin's
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/search/elasticsearch_helpers.py">source code</a>
 for additional details on its functionality.</p>
@@ -201,31 +202,37 @@ for additional details on its functionality.</p>
 you'll need to
 <a href="/running-virtualenv/#3-launch-site">activate your virtual environment</a>
 before running the tests:</p>
-<pre class="highlight"><code class="language-sh">workon consumerfinance.gov</code></pre>
+<div class="highlight"><pre><span></span><code>workon consumerfinance.gov
+</code></pre></div>
 <p>If you have not set up the standalone installation of consumerfinance.gov,
 you can still run the tests if you install Tox in your
 <a href="https://github.com/cfpb/development/blob/main/guides/installing-python.md">local installation of Python</a>:</p>
-<pre class="highlight"><code>pip install tox</code></pre>
+<div class="highlight"><pre><span></span><code>pip install tox
+</code></pre></div>
 <p>If you have set up
 <a href="/installation/#docker-based-installation">a Docker-based installation of consumerfinance.gov</a>,
 you can run the tests there by
 <a href="http://localhost:8888/running-docker/#access-a-containers-shell">accessing the Python container's shell</a>:</p>
-<pre class="highlight"><code class="language-sh">docker-compose exec python sh</code></pre>
+<div class="highlight"><pre><span></span><code>docker-compose <span class="nb">exec</span> python sh
+</code></pre></div>
 <h2 id="running-tests">Running tests<a class="headerlink" href="#running-tests" title="Permanent link">¶</a></h2>
 <p>Our test suite can either be run in a local virtualenv or in Docker.
 Please note, the tests run quite slow in Docker.</p>
 <p>To run the the full suite of Python tests using Tox,
 make sure you are in the consumerfinance.gov root and then run:</p>
-<pre class="highlight"><code class="language-sh">tox</code></pre>
+<div class="highlight"><pre><span></span><code>tox
+</code></pre></div>
 <p>Tox runs different isolated Python environments with different versions of dependencies.
 We use it to format and lint our Python files, check out import sorting, and run unit tests
 in Python 3.8.</p>
 <p>To recreate the virtualenv for testing, run</p>
-<pre class="highlight"><code class="language-sh">tox -r</code></pre>
+<div class="highlight"><pre><span></span><code>tox -r
+</code></pre></div>
 <p>For additional information on tox arguments, refer to the <a href="https://tox.wiki/en/latest/config.html?#cmdoption-tox-arg-args">tox documentation</a></p>
 <p>You can select specific environments using <code>-e</code>.</p>
 <p>Running <code>tox</code> by itself is the same as running:</p>
-<pre class="highlight"><code class="language-sh">tox -e lint -e unittest</code></pre>
+<div class="highlight"><pre><span></span><code>tox -e lint -e unittest
+</code></pre></div>
 <p>These default environments are:</p>
 <ul>
 <li><code>lint</code>, which runs our <a href="#linting">linters</a>. We require this
@@ -239,13 +246,15 @@ in Python 3.8.</p>
 <p>Tests will run against the default Django database.</p>
 <p>If you would like to run only a specific test, or the tests for a specific app,
 you can provide a dotted path to the test as the final argument to any of the above calls to <code>tox</code>:</p>
-<pre class="highlight"><code class="language-sh">tox -e unittest regulations3k.tests.test_regdown</code></pre>
+<div class="highlight"><pre><span></span><code>tox -e unittest regulations3k.tests.test_regdown
+</code></pre></div>
 <p>If you would like to skip running Django migrations when testing, set the
 <code>SKIP_DJANGO_MIGRATIONS</code> environment variable to any value before running <code>tox</code>.</p>
 <h3 id="formatting">Formatting<a class="headerlink" href="#formatting" title="Permanent link">¶</a></h3>
 <p>We use <code>black</code> to autoformat our Python code. <code>black</code> is invoked by Tox using
 the <code>lint</code> environment (this will also run <code>flake8</code> and <code>isort</code>):</p>
-<pre class="highlight"><code class="language-sh">tox -e lint</code></pre>
+<div class="highlight"><pre><span></span><code>tox -e lint
+</code></pre></div>
 <p><strong>It is highly recommended to only invoke black via tox</strong></p>
 <h3 id="linting">Linting<a class="headerlink" href="#linting" title="Permanent link">¶</a></h3>
 <p>We use the <code>flake8</code> and <code>isort</code> tools to ensure compliance with
@@ -257,27 +266,33 @@ and the
 security issues in our Python code.</p>
 <p><code>flake8</code>, <code>isort</code>, and <code>bandit</code> can all be run using the Tox <code>lint</code> environment
 (this will also run <code>black</code>):</p>
-<pre class="highlight"><code class="language-sh">tox -e lint</code></pre>
+<div class="highlight"><pre><span></span><code>tox -e lint
+</code></pre></div>
 <p>This will run <code>isort</code> in check-only mode and it will print diffs for imports
 that need to be fixed. To automatically fix import sort issues, run:</p>
-<pre class="highlight"><code class="language-sh">isort --recursive cfgov/</code></pre>
+<div class="highlight"><pre><span></span><code>isort --recursive cfgov/
+</code></pre></div>
 <p>From the root of <code>consumerfinance.gov</code>.</p>
 <h3 id="coverage">Coverage<a class="headerlink" href="#coverage" title="Permanent link">¶</a></h3>
 <p>To see Python code coverage information immediately following a test run,
 you can add the <code>coverage</code> env to the list of envs for tox to run:</p>
-<pre class="highlight"><code class="language-sh">tox -e lint -e unittest -e coverage</code></pre>
+<div class="highlight"><pre><span></span><code>tox -e lint -e unittest -e coverage
+</code></pre></div>
 <p>You can also run coverage directly to see coverage information from a previous test run:</p>
-<pre class="highlight"><code class="language-sh">coverage report -m</code></pre>
+<div class="highlight"><pre><span></span><code>coverage report -m
+</code></pre></div>
 <p>To see coverage for a limited number of files,
 use the <code>--include</code> argument to <code>coverage</code> and provide a path to the files you wish to see:</p>
-<pre class="highlight"><code class="language-sh">coverage report -m --include=./cfgov/regulations3k/*</code></pre>
+<div class="highlight"><pre><span></span><code>coverage report -m --include<span class="o">=</span>./cfgov/regulations3k/*
+</code></pre></div>
 <h2 id="test-output">Test output<a class="headerlink" href="#test-output" title="Permanent link">¶</a></h2>
 <p>Python tests should avoid writing to stdout as part of their normal execution.
 To enforce this convention, the tests can be run using a custom Django test
 runner that fails if anything is written to stdout. This test runner is at
 <code>cfgov.test.StdoutCapturingTestRunner</code> and can be enabled with the <code>TEST_RUNNER</code>
 environment variable:</p>
-<pre class="highlight"><code class="language-sh">TEST_RUNNER=core.testutils.runners.StdoutCapturingTestRunner tox -e unittest</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nv">TEST_RUNNER</span><span class="o">=</span>core.testutils.runners.StdoutCapturingTestRunner tox -e unittest
+</code></pre></div>
 <p>This test runner is enabled when tests are run automatically on
 <a href="../github-actions/">GitHub Actions</a>,
 but is not used by default when running tests locally.</p>
@@ -315,7 +330,7 @@ but is not used by default when running tests locally.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

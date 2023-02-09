@@ -159,7 +159,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Pages and Components &raquo;</li><li>Wagtail Pages</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/wagtail-pages.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/wagtail-pages.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -196,13 +196,14 @@ and Wagtail pages can use any <a href="https://docs.djangoproject.com/en/1.11/re
 <p>For example, our <code>BrowsePage</code>
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/browse_page.py">includes a standard Django <code>BooleanField</code></a>
 that allows content editors to toggle secondary navigation sibling pages:</p>
-<pre class="highlight"><code class="language-python">from django.db import models
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
 
-from v1.models.base import CFGOVPage
+<span class="kn">from</span> <span class="nn">v1.models.base</span> <span class="kn">import</span> <span class="n">CFGOVPage</span>
 
 
-class BrowsePage(CFGOVPage):
-    secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)</code></pre>
+<span class="k">class</span> <span class="nc">BrowsePage</span><span class="p">(</span><span class="n">CFGOVPage</span><span class="p">):</span>
+    <span class="n">secondary_nav_exclude_sibling_pages</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
 <h2 id="streamfields">StreamFields<a class="headerlink" href="#streamfields" title="Permanent link">¶</a></h2>
 <p>StreamFields are special Django model fields provided by Wagtail for
 <a href="https://docs.wagtail.io/en/stable/topics/streamfield.html">freeform page content</a>.
@@ -213,18 +214,19 @@ In practice, this provides the flexibility of
 <p>For example, our <code>LandingPage</code> page model
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/landing_page.py">includes a <code>header</code> StreamField</a>
 that can have a hero and/or a text introduction:</p>
-<pre class="highlight"><code class="language-python">from wagtail.core.fields import StreamField
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">wagtail.core.fields</span> <span class="kn">import</span> <span class="n">StreamField</span>
 
-from v1.atomic_elements import molecules
-from v1.models import CFGOVPage
+<span class="kn">from</span> <span class="nn">v1.atomic_elements</span> <span class="kn">import</span> <span class="n">molecules</span>
+<span class="kn">from</span> <span class="nn">v1.models</span> <span class="kn">import</span> <span class="n">CFGOVPage</span>
 
 
-class LandingPage(CFGOVPage):
+<span class="k">class</span> <span class="nc">LandingPage</span><span class="p">(</span><span class="n">CFGOVPage</span><span class="p">):</span>
 
-    header = StreamField([
-        ('hero', molecules.Hero()),
-        ('text_introduction', molecules.TextIntroduction()),
-    ], blank=True)</code></pre>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">StreamField</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;hero&#39;</span><span class="p">,</span> <span class="n">molecules</span><span class="o">.</span><span class="n">Hero</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s1">&#39;text_introduction&#39;</span><span class="p">,</span> <span class="n">molecules</span><span class="o">.</span><span class="n">TextIntroduction</span><span class="p">()),</span>
+    <span class="p">],</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
 <p>The specifics of StreamField block components can be found in
 <a href="https://cfpb.github.io/consumerfinance.gov/editing-components/">Creating and Editing Wagtail Components</a>.</p>
 <h2 id="panels">Panels<a class="headerlink" href="#panels" title="Permanent link">¶</a></h2>
@@ -249,45 +251,47 @@ See the <a href="https://docs.wagtail.io/en/stable/topics/pages.html#editor-pane
 <p>For example, in our <code>BrowsePage</code> (used in the <a href="#fields">database fields example above</a>),
 the <code>secondary_nav_exclude_sibling_pages</code> <code>BooleanField</code>
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/browse_page.py">is added to the <code>sidefoot_panels</code> as a <code>FieldPanel</code></a>:</p>
-<pre class="highlight"><code class="language-python">from django.db import models
-from wagtail.admin.edit_handlers import FieldPanel
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">wagtail.admin.edit_handlers</span> <span class="kn">import</span> <span class="n">FieldPanel</span>
 
-from v1.models.base import CFGOVPage
+<span class="kn">from</span> <span class="nn">v1.models.base</span> <span class="kn">import</span> <span class="n">CFGOVPage</span>
 
 
-class BrowsePage(CFGOVPage):
-    secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
+<span class="k">class</span> <span class="nc">BrowsePage</span><span class="p">(</span><span class="n">CFGOVPage</span><span class="p">):</span>
+    <span class="n">secondary_nav_exclude_sibling_pages</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-    # …
+    <span class="c1"># …</span>
 
-    sidefoot_panels = CFGOVPage.sidefoot_panels + [
-        FieldPanel('secondary_nav_exclude_sibling_pages'),
-    ]</code></pre>
+    <span class="n">sidefoot_panels</span> <span class="o">=</span> <span class="n">CFGOVPage</span><span class="o">.</span><span class="n">sidefoot_panels</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="n">FieldPanel</span><span class="p">(</span><span class="s1">&#39;secondary_nav_exclude_sibling_pages&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+</code></pre></div>
 <p>Because <code>secondary_nav_exclude_sibling_pages</code> is a boolean field,
 this creates a checkbox on the "Sidebar/Footer" tab when editing a page.
 Checking or unchecking that checkbox will set the value of <code>secondary_nav_exclude_sibling_pages</code> when the page is saved.</p>
 <p>In our <code>LandingPage</code> (used in the <a href="#streamfields">StreamFields example above</a>),
 the <code>header</code> StreamField
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/landing_page.py#L31">is added to the <code>content_panels</code> as a <code>StreamFieldPanel</code></a>:</p>
-<pre class="highlight"><code class="language-python">from wagtail.admin.edit_handlers import StreamFieldPanel
-from wagtail.core.fields import StreamField
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">wagtail.admin.edit_handlers</span> <span class="kn">import</span> <span class="n">StreamFieldPanel</span>
+<span class="kn">from</span> <span class="nn">wagtail.core.fields</span> <span class="kn">import</span> <span class="n">StreamField</span>
 
-from v1.atomic_elements import molecules
-from v1.models import CFGOVPage
+<span class="kn">from</span> <span class="nn">v1.atomic_elements</span> <span class="kn">import</span> <span class="n">molecules</span>
+<span class="kn">from</span> <span class="nn">v1.models</span> <span class="kn">import</span> <span class="n">CFGOVPage</span>
 
 
-class LandingPage(CFGOVPage):
-    header = StreamField([
-        ('hero', molecules.Hero()),
-        ('text_introduction', molecules.TextIntroduction()),
-    ], blank=True)
+<span class="k">class</span> <span class="nc">LandingPage</span><span class="p">(</span><span class="n">CFGOVPage</span><span class="p">):</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">StreamField</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;hero&#39;</span><span class="p">,</span> <span class="n">molecules</span><span class="o">.</span><span class="n">Hero</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s1">&#39;text_introduction&#39;</span><span class="p">,</span> <span class="n">molecules</span><span class="o">.</span><span class="n">TextIntroduction</span><span class="p">()),</span>
+    <span class="p">],</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    # …
+    <span class="c1"># …</span>
 
-    content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel('header'),
-        # …
-    ]</code></pre>
+    <span class="n">content_panels</span> <span class="o">=</span> <span class="n">CFGOVPage</span><span class="o">.</span><span class="n">content_panels</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="n">StreamFieldPanel</span><span class="p">(</span><span class="s1">&#39;header&#39;</span><span class="p">),</span>
+        <span class="c1"># …</span>
+    <span class="p">]</span>
+</code></pre></div>
 <h2 id="parent-child-page-relationships">Parent / child page relationships<a class="headerlink" href="#parent-child-page-relationships" title="Permanent link">¶</a></h2>
 <p>Wagtail provides two attributes to page models that enable
 <a href="https://docs.wagtail.io/en/stable/topics/pages.html#parent-page-subpage-type-rules">restricting the types of subpages or parent pages</a>
@@ -303,21 +307,22 @@ we have a <code>RegulationLandingPage</code> that can be created anywhere in the
 This parent/child relationship is expressed by setting <code>subpage_types</code> on <code>RegulationLandingPage</code>
 and <code>parent_page_types</code> on <code>RegulationPage</code> and <code>RegulationSearchPage</code>
 to a model name in the form 'app_label.ModelName':</p>
-<pre class="highlight"><code class="language-python">from v1.models import CFGOVPage
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">v1.models</span> <span class="kn">import</span> <span class="n">CFGOVPage</span>
 
 
-class RegulationLandingPage(CFGOVPage):
-    subpage_types = ['regulations3k.RegulationPage', 'regulations3k.RegulationsSearchPage']
+<span class="k">class</span> <span class="nc">RegulationLandingPage</span><span class="p">(</span><span class="n">CFGOVPage</span><span class="p">):</span>
+    <span class="n">subpage_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;regulations3k.RegulationPage&#39;</span><span class="p">,</span> <span class="s1">&#39;regulations3k.RegulationsSearchPage&#39;</span><span class="p">]</span>
 
 
-class RegulationsSearchPage(CFGOVPage):
-    parent_page_types = ['regulations3k.RegulationLandingPage']
-    subpage_types = []
+<span class="k">class</span> <span class="nc">RegulationsSearchPage</span><span class="p">(</span><span class="n">CFGOVPage</span><span class="p">):</span>
+    <span class="n">parent_page_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;regulations3k.RegulationLandingPage&#39;</span><span class="p">]</span>
+    <span class="n">subpage_types</span> <span class="o">=</span> <span class="p">[]</span>
 
 
-class RegulationPage(CFGOVPage):
-    parent_page_types = ['regulations3k.RegulationLandingPage']
-    subpage_types = []</code></pre>
+<span class="k">class</span> <span class="nc">RegulationPage</span><span class="p">(</span><span class="n">CFGOVPage</span><span class="p">):</span>
+    <span class="n">parent_page_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;regulations3k.RegulationLandingPage&#39;</span><span class="p">]</span>
+    <span class="n">subpage_types</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 </div>
@@ -331,19 +336,21 @@ This is done by overriding the <code>template</code> attribute on the page model
 includes a customized list of recently issued notices that gets loaded dynamically from the Federal Register.
 To do this it provides its own template that inherits from our base templates
 and overrides the <code>content_sidebar</code> block to include a separate <code>recent_notices</code> template:</p>
-<pre class="highlight"><code class="language-python">from v1.models import CFGOVPage
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">v1.models</span> <span class="kn">import</span> <span class="n">CFGOVPage</span>
 
 
-class RegulationLandingPage(CFGOVPage):
-    template = 'regulations3k/landing-page.html'</code></pre>
+<span class="k">class</span> <span class="nc">RegulationLandingPage</span><span class="p">(</span><span class="n">CFGOVPage</span><span class="p">):</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;regulations3k/landing-page.html&#39;</span>
+</code></pre></div>
 <p>And in <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/regulations3k/jinja2/regulations3k/landing-page.html"><code>regulations3k/landing-page.html</code></a>:</p>
-<pre class="highlight"><code class="language-jinja2">{% extends 'layout-2-1.html' %}
+<div class="highlight"><pre><span></span><code>{% extends &#39;layout-2-1.html&#39; %}
 
-{% import 'recent-notices.html' as recent_notices with context %}
+{% import &#39;recent-notices.html&#39; as recent_notices with context %}
 
 {% block content_sidebar scoped -%}
     {{ recent_notices }}
-{%- endblock %}</code></pre>
+{%- endblock %}
+</code></pre></div>
               
             </div>
           </div><footer>
@@ -372,7 +379,7 @@ class RegulationLandingPage(CFGOVPage):
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

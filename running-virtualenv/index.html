@@ -159,7 +159,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Running this Project &raquo;</li><li>Running in a Virtual Environment</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/running-virtualenv.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/running-virtualenv.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -191,7 +191,8 @@ which will be used for:</p>
 <h3 id="1-git-operations">1. Git operations<a class="headerlink" href="#1-git-operations" title="Permanent link">¶</a></h3>
 <p>From this tab you can do Git operations,
 such as checking out our main branch:</p>
-<pre class="highlight"><code class="language-bash">git checkout main</code></pre>
+<div class="highlight"><pre><span></span><code>git checkout main
+</code></pre></div>
 <h4 id="updating-all-dependencies">Updating all dependencies<a class="headerlink" href="#updating-all-dependencies" title="Permanent link">¶</a></h4>
 <p>Each time you fetch from the upstream repository (this repo), run <code>./setup.sh</code>.
 This setup script will remove and reinstall the project dependencies
@@ -212,36 +213,41 @@ To install dependencies of one environment or the other run <code>./frontend.sh<
 requirement for basic functionality.</p>
 <p>If Elasticsearch is installed via <a href="https://brew.sh">Homebrew</a>, you can see
 instructions for running manually or as a background service using:</p>
-<pre class="highlight"><code class="language-bash">brew info elasticsearch</code></pre>
+<div class="highlight"><pre><span></span><code>brew info elasticsearch
+</code></pre></div>
 <p>Typically to run Elasticsearch as a background service you can run:</p>
-<pre class="highlight"><code class="language-bash">brew services start elasticsearch</code></pre>
+<div class="highlight"><pre><span></span><code>brew services start elasticsearch
+</code></pre></div>
 <h3 id="3-launch-site">3. Launch Site<a class="headerlink" href="#3-launch-site" title="Permanent link">¶</a></h3>
 <p>First, move into the <code>consumerfinance.gov</code> project directory
 and ready your environment:</p>
-<pre class="highlight"><code class="language-bash"># Use the consumerfinance.gov virtualenv.
+<div class="highlight"><pre><span></span><code><span class="c1"># Use the consumerfinance.gov virtualenv.</span>
 workon consumerfinance.gov
 
-# cd into this directory (if you aren't already there)
-cd consumerfinance.gov</code></pre>
+<span class="c1"># cd into this directory (if you aren&#39;t already there)</span>
+<span class="nb">cd</span> consumerfinance.gov
+</code></pre></div>
 <p>From the project root, start the Django server:</p>
-<pre class="highlight"><code class="language-bash">./runserver.sh</code></pre>
+<div class="highlight"><pre><span></span><code>./runserver.sh
+</code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 </div>
 <p>If prompted to migrate database changes,
 stop the server with <code>ctrl</code> + <code>c</code> and run these commands:</p>
-<pre class="highlight"><code class="language-bash">python cfgov/manage.py migrate
+<div class="highlight"><pre><span></span><code>python cfgov/manage.py migrate
 ./initial-data.sh
-./runserver.sh</code></pre>
+./runserver.sh
+</code></pre></div>
 <p>To view the site browse to: <a href="http://localhost:8000">http://localhost:8000</a></p>
 <div class="admonition note">
 <p class="admonition-title">Using a different port</p>
 </div>
 <p>If you want to run the server at a port other than 8000 use</p>
-<pre class="highlight"><code>`python cfgov/manage.py runserver &lt;port number&gt;`
+<div class="highlight"><pre><span></span><code>`python cfgov/manage.py runserver &lt;port number&gt;`
 
 Specify an alternate port number, e.g. `8001`.
-</code></pre>
+</code></pre></div>
 <p>To view the Wagtail admin login,
 browse to <a href="http://localhost:8000/admin">http://localhost:8000/admin</a> and login with username <code>admin</code>
 and password <code>admin</code> (created in <code>initial-data.sh</code> above; note that this
@@ -250,27 +256,30 @@ password will expire after 60 days).</p>
 <p class="admonition-title">Using HTTPS locally</p>
 </div>
 <p>To access a local server using HTTPS use</p>
-<pre class="highlight"><code>`./runserver.sh ssl`
+<div class="highlight"><pre><span></span><code>`./runserver.sh ssl`
 
-You'll need to ignore any browser certificate errors.
-</code></pre>
+You&#39;ll need to ignore any browser certificate errors.
+</code></pre></div>
 <h3 id="yarn-commands">yarn commands<a class="headerlink" href="#yarn-commands" title="Permanent link">¶</a></h3>
 <p>The following yarn tasks are available:</p>
-<pre class="highlight"><code>yarn scripts             # Build the Javascript with esbuild
+<div class="highlight"><pre><span></span><code>yarn scripts             # Build the Javascript with esbuild
 yarn styles              # Build the Less with esbuild w/ its PostCSSPlugin
 yarn copy                # Move static files to the output directory
 yarn build               # Run scripts, styles, and copy along with app-specific scripts
 yarn watch               # Run the build then watch JS and LESS changes
 yarn lint                # Run frontend linting
 yarn jest                # Run frontend tests
-yarn test                # Run both</code></pre>
+yarn test                # Run both
+</code></pre></div>
 <h3 id="reinstalling-the-virtual-environment">Reinstalling the virtual environment<a class="headerlink" href="#reinstalling-the-virtual-environment" title="Permanent link">¶</a></h3>
 <p>To remove an existing virtual environment for
 <a href="../installation/#stand-alone-installation">a reinstall of consumerfinance.gov</a>,
 first deactivate the virtual environment if it is active:</p>
-<pre class="highlight"><code class="language-bash">deactivate</code></pre>
+<div class="highlight"><pre><span></span><code>deactivate
+</code></pre></div>
 <p>Then remove the existing virtual environment:</p>
-<pre class="highlight"><code class="language-bash">rmvirtualenv consumerfinance.gov</code></pre>
+<div class="highlight"><pre><span></span><code>rmvirtualenv consumerfinance.gov
+</code></pre></div>
 <p>After this, you may follow
 <a href="installation/#stand-alone-installation">the installation instructions</a>
 again.</p>
@@ -302,7 +311,7 @@ again.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

@@ -167,7 +167,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Running this Project &raquo;</li><li>Running in Docker</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/running-docker.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/running-docker.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -196,8 +196,9 @@ for more about the format and use of this file.</p>
 <li>View this documentation: <a href="http://localhost:8888/">http://localhost:8888/</a></li>
 </ul>
 <p>To build and run the containers for the first time, run:</p>
-<pre class="highlight"><code class="language-bash">docker network create cfgov
-docker-compose up</code></pre>
+<div class="highlight"><pre><span></span><code>docker network create cfgov
+docker-compose up
+</code></pre></div>
 <h2 id="environment-variables">Environment variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h2>
 <p>Environment variables from your <code>.env</code> file are sourced
 when the Python container starts
@@ -228,21 +229,24 @@ for explicit commits.</p>
 <h3 id="updating-patch-version-locally">Updating <code>PATCH</code> version locally<a class="headerlink" href="#updating-patch-version-locally" title="Permanent link">¶</a></h3>
 <p>To update the <code>PATCH</code> version on your local Docker, replace <code>&lt;MAJOR.MINOR&gt;</code>
 with your target and run:</p>
-<pre class="highlight"><code class="language-bash">PYTHONVERSION=&lt;MAJOR.MINOR&gt;; \
-  docker pull python:${PYTHONVERSION}-alpine &amp;&amp; \
-  docker-compose build --no-cache python</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nv">PYTHONVERSION</span><span class="o">=</span>&lt;MAJOR.MINOR&gt;<span class="p">;</span> <span class="se">\</span>
+  docker pull python:<span class="si">${</span><span class="nv">PYTHONVERSION</span><span class="si">}</span>-alpine <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  docker-compose build --no-cache python
+</code></pre></div>
 <h2 id="update-python-dependencies">Update Python dependencies<a class="headerlink" href="#update-python-dependencies" title="Permanent link">¶</a></h2>
 <p>If the Python package requirements files have changed,
 you will need to stop <code>docker-compose</code> (if it is running)
 and rebuild the Python container using:</p>
-<pre class="highlight"><code class="language-bash">docker-compose up --build python</code></pre>
+<div class="highlight"><pre><span></span><code>docker-compose up --build python
+</code></pre></div>
 <h2 id="work-on-satellite-apps">Work on satellite apps<a class="headerlink" href="#work-on-satellite-apps" title="Permanent link">¶</a></h2>
 <p>See <a href="../related-projects/#using-docker">“Using Docker” on the Related Projects page</a>.</p>
 <h2 id="attach-for-debugging">Attach for debugging<a class="headerlink" href="#attach-for-debugging" title="Permanent link">¶</a></h2>
 <p>If you have inserted a <a href="https://docs.python.org/3/library/pdb.html">PDB breakpoint</a> in your code
 and need to interact with the running Django process when the breakpoint is reached
 you can run <a href="https://docs.docker.com/engine/reference/commandline/attach/"><code>docker attach</code></a>:</p>
-<pre class="highlight"><code class="language-bash">docker attach consumerfinancegov_python_1</code></pre>
+<div class="highlight"><pre><span></span><code>docker attach consumerfinancegov_python_1
+</code></pre></div>
 <p>When you're done, you can detach with <code>Ctrl+P Ctrl+Q</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -283,7 +287,8 @@ container in production.</p>
 <h3 id="how-do-i-use-it">How do I use it?<a class="headerlink" href="#how-do-i-use-it" title="Permanent link">¶</a></h3>
 <h4 id="just-docker">Just Docker<a class="headerlink" href="#just-docker" title="Permanent link">¶</a></h4>
 <p>If you just want to build the image:</p>
-<pre class="highlight"><code class="language-bash">docker build . -t your-desired-image-name</code></pre>
+<div class="highlight"><pre><span></span><code>docker build . -t your-desired-image-name
+</code></pre></div>
 <h4 id="docker-compose">Docker Compose<a class="headerlink" href="#docker-compose" title="Permanent link">¶</a></h4>
 <p>You can also launch the full cf.gov stack locally via <code>docker-compose</code>. This setup is
 a nice way to test out new Apache config changes. It includes volumes that mount your
@@ -292,18 +297,20 @@ change configs locally without having to rebuild the image each time.</p>
 <ol>
 <li>Launch the stack.</li>
 </ol>
-<pre class="highlight"><code class="language-bash">docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build</code></pre>
+<div class="highlight"><pre><span></span><code>docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build
+</code></pre></div>
 <p>This creates a container running cf.gov on Python, as well as
    Postgres and Elasticsearch containers, much like the development environment.</p>
 <ol>
 <li>Load the <code>cfgov</code> database (optional). If you do not already have a running
    <code>cfgov</code> database, you will need to download and load it from within the container.</li>
 </ol>
-<pre class="highlight"><code class="language-bash">docker-compose exec python sh
+<div class="highlight"><pre><span></span><code>docker-compose <span class="nb">exec</span> python sh
 
-# Once in the container...
-export CFGOV_PROD_DB_LOCATION=&lt;database-dump-url&gt;
-./refresh-data.sh</code></pre>
+<span class="c1"># Once in the container...</span>
+<span class="nb">export</span> <span class="nv">CFGOV_PROD_DB_LOCATION</span><span class="o">=</span>&lt;database-dump-url&gt;
+./refresh-data.sh
+</code></pre></div>
 <ol>
 <li>Browse to your new local cf.gov site.</li>
 </ol>
@@ -312,15 +319,17 @@ export CFGOV_PROD_DB_LOCATION=&lt;database-dump-url&gt;
 <li>Adjust an Apache <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache"><code>cfgov/apache</code></a>
    config and reload Apache (optional).</li>
 </ol>
-<pre class="highlight"><code class="language-bash">docker-compose exec python sh
+<div class="highlight"><pre><span></span><code>docker-compose <span class="nb">exec</span> python sh
 
-# Once in the container...
-httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -k restart</code></pre>
+<span class="c1"># Once in the container...</span>
+httpd -d /src/consumerfinance.gov/cfgov/apache -f /src/consumerfinance.gov/cfgov/apache/conf/httpd.conf -k restart
+</code></pre></div>
 <ol>
 <li>Switch back to the development Compose setup.</li>
 </ol>
-<pre class="highlight"><code class="language-bash">docker-compose rm -sf python
-docker-compose up --build python</code></pre>
+<div class="highlight"><pre><span></span><code>docker-compose rm -sf python
+docker-compose up --build python
+</code></pre></div>
 <h4 id="jenkins-ci-docker-swarm">Jenkins CI + Docker Swarm<a class="headerlink" href="#jenkins-ci-docker-swarm" title="Permanent link">¶</a></h4>
 <p>This repo also includes a Docker Swarm-compatible Compose file
 (<code>docker-stack.yml</code>).
@@ -375,7 +384,7 @@ This dramatically improves the overall final image size.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

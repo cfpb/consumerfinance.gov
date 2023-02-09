@@ -161,7 +161,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Pages and Components &raquo;</li><li>Atomic Structure and Design</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/atomic-structure.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/atomic-structure.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -189,14 +189,16 @@ require some Python programming—see the
 May not contain any other components.
 Prefixed with <code>a-</code> in class names.</p>
 <h3 id="html">HTML<a class="headerlink" href="#html" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-html">&lt;div class="a-tag"&gt;Tag label {{ svg_icon('error') }}&lt;/div&gt;</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;a-tag&quot;</span><span class="p">&gt;</span>Tag label {{ svg_icon(&#39;error&#39;) }}<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
 <h3 id="less">Less<a class="headerlink" href="#less" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-css">.a-tag {
-    cursor: default;
-    display: inline-block;
-    padding: 5px 10px;
-    …
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">.</span><span class="nc">a-tag</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">cursor</span><span class="p">:</span><span class="w"> </span><span class="kc">default</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline-block</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="kt">px</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">…</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
 <h3 id="javascript">JavaScript<a class="headerlink" href="#javascript" title="Permanent link">¶</a></h3>
 <p>None of our atoms require any JavaScript at this time.</p>
 <h2 id="molecules">Molecules<a class="headerlink" href="#molecules" title="Permanent link">¶</a></h2>
@@ -204,103 +206,113 @@ Prefixed with <code>a-</code> in class names.</p>
 May contain atoms.
 Prefixed with <code>m-</code> in class names.</p>
 <h3 id="html_1">HTML<a class="headerlink" href="#html_1" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-html">&lt;div
-  class="m-notification
-         m-notification__visible
-         m-notification__error"
-  data-js-hook="state_atomic_init"
-&gt;
-  {{ svg_icon('error') }}
-  &lt;div class="m-notification_content" role="alert"&gt;
-    &lt;div class="h4 m-notification_message"&gt;Page not found.&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span>
+  <span class="na">class</span><span class="o">=</span><span class="s">&quot;m-notification</span>
+<span class="s">         m-notification__visible</span>
+<span class="s">         m-notification__error&quot;</span>
+  <span class="na">data-js-hook</span><span class="o">=</span><span class="s">&quot;state_atomic_init&quot;</span>
+<span class="p">&gt;</span>
+  {{ svg_icon(&#39;error&#39;) }}
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;m-notification_content&quot;</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;alert&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;h4 m-notification_message&quot;</span><span class="p">&gt;</span>Page not found.<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
 <h3 id="less_1">Less<a class="headerlink" href="#less_1" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-css">.m-notification {
-    display: none;
-    position: relative;
-    padding: @notification-padding__px;
-    …
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">.</span><span class="nc">m-notification</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="o">@</span><span class="n">notification-padding__px</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">…</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
 <h3 id="javascript_1">JavaScript<a class="headerlink" href="#javascript_1" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-js">function Notification( element ) {
-  const BASE_CLASS = 'm-notification';
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">Notification</span><span class="p">(</span><span class="w"> </span><span class="nx">element</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">BASE_CLASS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;m-notification&#39;</span><span class="p">;</span><span class="w"></span>
 
-  // Constants for the state of this Notification.
-  const SUCCESS = 'success';
-  const WARNING = 'warning';
-  const ERROR = 'error';
+<span class="w">  </span><span class="c1">// Constants for the state of this Notification.</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">SUCCESS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;success&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">WARNING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;warning&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">ERROR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;error&#39;</span><span class="p">;</span><span class="w"></span>
 
-  // Constants for the Notification modifiers.
-  const MODIFIER_VISIBLE = BASE_CLASS + '__visible';
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
-  …
-}</code></pre>
+<span class="w">  </span><span class="c1">// Constants for the Notification modifiers.</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">MODIFIER_VISIBLE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">BASE_CLASS</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;__visible&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">_dom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">atomicHelpers</span><span class="p">.</span><span class="nx">checkDom</span><span class="p">(</span><span class="w"> </span><span class="nx">element</span><span class="p">,</span><span class="w"> </span><span class="nx">BASE_CLASS</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">_contentDom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">_dom</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;.&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">BASE_CLASS</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;_content&#39;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="err">…</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
 <p>The Notification molecule can be instantiated
 by adding the following to your project's JavaScript code:</p>
-<pre class="highlight"><code class="language-js">const notification = new Notification(_dom);
-notification.init();</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">notification</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Notification</span><span class="p">(</span><span class="nx">_dom</span><span class="p">);</span><span class="w"></span>
+<span class="nx">notification</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span><span class="w"></span>
+</code></pre></div>
 <h2 id="organisms">Organisms<a class="headerlink" href="#organisms" title="Permanent link">¶</a></h2>
 <p>The largest component.
 May contain atoms, molecules, or
 (if no other solution is viable) other organisms.
 Prefixed with <code>o-</code> in class names.</p>
 <h3 id="html_2">HTML<a class="headerlink" href="#html_2" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-html">&lt;div
-  class="o-expandable
-            o-expandable__borders
-            o-expandable__midtone
-            o-expandable__expanded"
-  data-js-hook="state_atomic_init"
-&gt;
-  &lt;button class="o-expandable_target" aria-pressed="true"&gt;
-    &lt;div class="o-expandable_header"&gt;…&lt;/div&gt;
-  &lt;/button&gt;
-&lt;/div&gt;</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span>
+  <span class="na">class</span><span class="o">=</span><span class="s">&quot;o-expandable</span>
+<span class="s">            o-expandable__borders</span>
+<span class="s">            o-expandable__midtone</span>
+<span class="s">            o-expandable__expanded&quot;</span>
+  <span class="na">data-js-hook</span><span class="o">=</span><span class="s">&quot;state_atomic_init&quot;</span>
+<span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;o-expandable_target&quot;</span> <span class="na">aria-pressed</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;o-expandable_header&quot;</span><span class="p">&gt;</span>…<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
 <h3 id="less_2">Less<a class="headerlink" href="#less_2" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-css">.o-expandable {
-    position: relative;
+<div class="highlight"><pre><span></span><code><span class="p">.</span><span class="nc">o-expandable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">relative</span><span class="p">;</span><span class="w"></span>
 
-    &amp;_target {
-        padding: 0;
-        border: 0;
-        …
-    }
-    …
-}</code></pre>
+<span class="w">    </span><span class="err">&amp;_target</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">border</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="err">…</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="err">…</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+</code></pre></div>
 <h3 id="javascript_2">JavaScript<a class="headerlink" href="#javascript_2" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code class="language-js"> function Expandable( element ) {
-  const BASE_CLASS = 'o-expandable';
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">Expandable</span><span class="p">(</span><span class="w"> </span><span class="nx">element</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">BASE_CLASS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;o-expandable&#39;</span><span class="p">;</span><span class="w"></span>
 
-  // Bitwise flags for the state of this Expandable.
-  const COLLAPSED = 0;
-  const COLLAPSING = 1;
-  const EXPANDING = 2;
-  const EXPANDED = 3;
+<span class="w">  </span><span class="c1">// Bitwise flags for the state of this Expandable.</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">COLLAPSED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">COLLAPSING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">EXPANDING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">EXPANDED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span><span class="w"></span>
 
-  // The Expandable element will directly be the Expandable
-  // when used in an ExpandableGroup, otherwise it can be the parent container.
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  const _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
-  const _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
-  …
-}</code></pre>
+<span class="w">  </span><span class="c1">// The Expandable element will directly be the Expandable</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// when used in an ExpandableGroup, otherwise it can be the parent container.</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">_dom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">atomicHelpers</span><span class="p">.</span><span class="nx">checkDom</span><span class="p">(</span><span class="w"> </span><span class="nx">element</span><span class="p">,</span><span class="w"> </span><span class="nx">BASE_CLASS</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">_target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">_dom</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;.&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">BASE_CLASS</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;_target&#39;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">_content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">_dom</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;.&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">BASE_CLASS</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;_content&#39;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="err">…</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
 <p>The Expandable organism can be instantiated
 by adding the following to your project's JavaScript code:</p>
-<pre class="highlight"><code class="language-js">const expandable = new Expandable(_dom.querySelector('.o-expandable'));
-expandable.init(_expandable.EXPANDED);</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">expandable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Expandable</span><span class="p">(</span><span class="nx">_dom</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;.o-expandable&#39;</span><span class="p">));</span><span class="w"></span>
+<span class="nx">expandable</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">_expandable</span><span class="p">.</span><span class="nx">EXPANDED</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
 <p>or</p>
-<pre class="highlight"><code class="language-js">const atomicHelpers = require('@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js');
-const Expandable = require('../../organisms/Expandable');
-atomicHelpers.instantiateAll('.o-expandable', Expandable);</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">atomicHelpers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">Expandable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;../../organisms/Expandable&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="nx">atomicHelpers</span><span class="p">.</span><span class="nx">instantiateAll</span><span class="p">(</span><span class="s1">&#39;.o-expandable&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">Expandable</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
 <h2 id="folder-structure">Folder structure<a class="headerlink" href="#folder-structure" title="Permanent link">¶</a></h2>
 <p>Our atomic components are separated and named based on asset type.
 HTML, Less, and JavaScript for each component are in separate directories.</p>
 <h3 id="html_3">HTML<a class="headerlink" href="#html_3" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code>consumerfinance.gov/cfgov/v1/jinja2/v1/includes/atoms/
+<div class="highlight"><pre><span></span><code>consumerfinance.gov/cfgov/v1/jinja2/v1/includes/atoms/
 consumerfinance.gov/cfgov/v1/jinja2/v1/includes/molecules/
-consumerfinance.gov/cfgov/v1/jinja2/v1/includes/organisms/</code></pre>
+consumerfinance.gov/cfgov/v1/jinja2/v1/includes/organisms/
+</code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 </div>
@@ -309,32 +321,36 @@ from the <a href="https://cfpb.github.io/design-system/">Design System</a>,
 but the HTML for their Wagtail block templates
 is stored in the above folders.</p>
 <h3 id="css">CSS<a class="headerlink" href="#css" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code>consumerfinance.gov/cfgov/unprocessed/css/atoms/
+<div class="highlight"><pre><span></span><code>consumerfinance.gov/cfgov/unprocessed/css/atoms/
 consumerfinance.gov/cfgov/unprocessed/css/molecules/
-consumerfinance.gov/cfgov/unprocessed/css/organisms/</code></pre>
+consumerfinance.gov/cfgov/unprocessed/css/organisms/
+</code></pre></div>
 <h3 id="javascript_3">JavaScript<a class="headerlink" href="#javascript_3" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code>consumerfinance.gov/cfgov/unprocessed/js/molecules/
-consumerfinance.gov/cfgov/unprocessed/js/organisms/</code></pre>
+<div class="highlight"><pre><span></span><code>consumerfinance.gov/cfgov/unprocessed/js/molecules/
+consumerfinance.gov/cfgov/unprocessed/js/organisms/
+</code></pre></div>
 <h3 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code>consumerfinance.gov/test/unit_tests/js/molecules/
-consumerfinance.gov/test/unit_tests/js/organisms/</code></pre>
+<div class="highlight"><pre><span></span><code>consumerfinance.gov/test/unit_tests/js/molecules/
+consumerfinance.gov/test/unit_tests/js/organisms/
+</code></pre></div>
 <h2 id="javascript-architecture">JavaScript architecture<a class="headerlink" href="#javascript-architecture" title="Permanent link">¶</a></h2>
 <p>JavaScript components are built to be rendered on the server
 and then enhanced via JavaScript on the client.
 The basic interface for the components is as follows:</p>
-<pre class="highlight"><code class="language-js">function AtomicComponent(domElement) {
-  // Ensure the passed in Element is in the DOM.
-  // Query and store references to sub-elements.
-  // Instantiate child atomic components.
-  // Bind necessary events for referenced DOM elements.
-  // Perform other initialization related tasks.
-  this.init = function init() {};
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">AtomicComponent</span><span class="p">(</span><span class="nx">domElement</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Ensure the passed in Element is in the DOM.</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Query and store references to sub-elements.</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Instantiate child atomic components.</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Bind necessary events for referenced DOM elements.</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Perform other initialization related tasks.</span><span class="w"></span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">init</span><span class="p">()</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
 
-  // General teardown function
-  // We don't remove the element from the DOM so
-  // we need to unbind the events.
-  this.destroy = function destroy() {};
-}</code></pre>
+<span class="w">  </span><span class="c1">// General teardown function</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// We don&#39;t remove the element from the DOM so</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// we need to unbind the events.</span><span class="w"></span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">destroy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">destroy</span><span class="p">()</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
 <p>We generally favor composition over inheritance.
 You can get more information by reading the following:</p>
 <ul>
@@ -355,8 +371,9 @@ loop all atomic components for the requested page and load
 the appropriate atomic JavaScript bundles.</p>
 <p>Here is an example of the <code>Media</code> class on a component,
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/atomic_elements/organisms.py#L223-L244">the <code>EmailSignUp</code> organism</a>:</p>
-<pre class="highlight"><code class="language-python">class Media:
-    js = ['email-signup.js']</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Media</span><span class="p">:</span>
+    <span class="n">js</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;email-signup.js&#39;</span><span class="p">]</span>
+</code></pre></div>
 <p>This will load the <code>email-signup.js</code> script on any page
 that includes the <code>EmailSignUp</code> organism in one of its StreamFields.</p>
               
@@ -387,7 +404,7 @@ that includes the <code>EmailSignUp</code> organism in one of its StreamFields.<
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

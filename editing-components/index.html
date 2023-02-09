@@ -155,7 +155,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Pages and Components &raquo;</li><li>Creating and Editing Components</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/editing-components.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/editing-components.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -234,15 +234,16 @@ but there are two major categories they fall into:</p>
 but these are the two most common locations
 where top-level Wagtail modules are stored.</p>
 <p>A simple component class looks like this:</p>
-<pre class="highlight"><code class="language-python">class RelatedContent(blocks.StructBlock):                      # 1
-    heading = blocks.CharBlock(required=False)                 # 2
-    paragraph = blocks.RichTextBlock(required=False)           # 3
-    links = blocks.ListBlock(atoms.Hyperlink())                # 4
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">RelatedContent</span><span class="p">(</span><span class="n">blocks</span><span class="o">.</span><span class="n">StructBlock</span><span class="p">):</span>                      <span class="c1"># 1</span>
+    <span class="n">heading</span> <span class="o">=</span> <span class="n">blocks</span><span class="o">.</span><span class="n">CharBlock</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>                 <span class="c1"># 2</span>
+    <span class="n">paragraph</span> <span class="o">=</span> <span class="n">blocks</span><span class="o">.</span><span class="n">RichTextBlock</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>           <span class="c1"># 3</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="n">blocks</span><span class="o">.</span><span class="n">ListBlock</span><span class="p">(</span><span class="n">atoms</span><span class="o">.</span><span class="n">Hyperlink</span><span class="p">())</span>                <span class="c1"># 4</span>
 
-    class Meta:                                                # 5
-        icon = 'grip'                                          # 6
-        label = 'Related content'                              # 7
-        template = '_includes/molecules/related-content.html'  # 8</code></pre>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>                                                <span class="c1"># 5</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="s1">&#39;grip&#39;</span>                                          <span class="c1"># 6</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Related content&#39;</span>                              <span class="c1"># 7</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;_includes/molecules/related-content.html&#39;</span>  <span class="c1"># 8</span>
+</code></pre></div>
 <p>There are a few things happening here:</p>
 <ol>
 <li>The <code>RelatedContent</code> class is a subclass of
@@ -291,15 +292,16 @@ by adding them to one of a page types's StreamFields.
 These are usually the first things in a page's class definition.
 For example, see this snippet from
 <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/blog_page.py"><code>blog_page.py</code></a>:</p>
-<pre class="highlight"><code class="language-python">class BlogPage(AbstractFilterPage):
-    content = StreamField([
-        ('full_width_text', organisms.FullWidthText()),
-        ('info_unit_group', organisms.InfoUnitGroup()),
-        ('expandable', organisms.Expandable()),
-        ('well', organisms.Well()),
-        ('email_signup', organisms.EmailSignUp()),
-    ])
-    …</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BlogPage</span><span class="p">(</span><span class="n">AbstractFilterPage</span><span class="p">):</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">StreamField</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;full_width_text&#39;</span><span class="p">,</span> <span class="n">organisms</span><span class="o">.</span><span class="n">FullWidthText</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s1">&#39;info_unit_group&#39;</span><span class="p">,</span> <span class="n">organisms</span><span class="o">.</span><span class="n">InfoUnitGroup</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s1">&#39;expandable&#39;</span><span class="p">,</span> <span class="n">organisms</span><span class="o">.</span><span class="n">Expandable</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s1">&#39;well&#39;</span><span class="p">,</span> <span class="n">organisms</span><span class="o">.</span><span class="n">Well</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s1">&#39;email_signup&#39;</span><span class="p">,</span> <span class="n">organisms</span><span class="o">.</span><span class="n">EmailSignUp</span><span class="p">()),</span>
+    <span class="p">])</span>
+    <span class="err">…</span>
+</code></pre></div>
 <p>This sets up a StreamField named <code>content</code> that allows for
 the insertion of any of those seven listed blocks into it.</p>
 <p>To make the <code>RelatedContent</code> module (shown above) available to this StreamField,
@@ -332,15 +334,16 @@ of atoms, molecules, and organisms.</p>
 can be controlled by writing a Django template
 and associating it with the block type.
 A custom block definition can specify the template path in its <code>Meta</code> class:</p>
-<pre class="highlight"><code class="language-python">from wagtail.core import blocks
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">wagtail.core</span> <span class="kn">import</span> <span class="n">blocks</span>
 
 
-class PersonBlock(blocks.StructBlock):
-    name = blocks.CharBlock()
-    email = blocks.EmailBlock()
+<span class="k">class</span> <span class="nc">PersonBlock</span><span class="p">(</span><span class="n">blocks</span><span class="o">.</span><span class="n">StructBlock</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">blocks</span><span class="o">.</span><span class="n">CharBlock</span><span class="p">()</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">blocks</span><span class="o">.</span><span class="n">EmailBlock</span><span class="p">()</span>
 
-    class Meta:
-        template = 'myapp/blocks/person_block.html'</code></pre>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;myapp/blocks/person_block.html&#39;</span>
+</code></pre></div>
 <p>StreamField block templates are loaded by the Django template loader
 in the same way that Django page templates are.
 The specified template path must be loadable
@@ -355,21 +358,22 @@ but Jinja2 is more commonly used.)
 for more details on the search algorithm used to locate a template.</p>
 <p>Returning to the <code>RelatedContent</code> example,
 this is what its Jinja2 template looks like (comments excluded):</p>
-<pre class="highlight"><code class="language-html">&lt;div class="m-related-content"&gt;
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;m-related-content&quot;</span><span class="p">&gt;</span>
   {% if value.heading %}
-  &lt;header class="m-slug-header"&gt;
-    &lt;h2 class="a-heading"&gt;{{ value.heading }}&lt;/h2&gt;
-  &lt;/header&gt;
+  <span class="p">&lt;</span><span class="nt">header</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;m-slug-header&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h2</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;a-heading&quot;</span><span class="p">&gt;</span>{{ value.heading }}<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
   {% endif %} {{ value.paragraph | safe }} {% if value.links %}
-  &lt;ul class="m-list m-list__links"&gt;
+  <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;m-list m-list__links&quot;</span><span class="p">&gt;</span>
     {% for link in value.links %}
-    &lt;li class="m-list_item"&gt;
-      &lt;a href="{{ link.url }}" class="m-list_link"&gt;{{ link.text }}&lt;/a&gt;
-    &lt;/li&gt;
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;m-list_item&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ link.url }}&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;m-list_link&quot;</span><span class="p">&gt;</span>{{ link.text }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
     {% endfor %}
-  &lt;/ul&gt;
+  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
   {% endif %}
-&lt;/div&gt;</code></pre>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
 <p>When Wagtail renders a block,
 it includes the values of its fields in an object named <code>value</code>.
 Above, you can see where the <code>heading</code> and <code>paragraph</code> fields are output with
@@ -425,11 +429,12 @@ When a page is requested via the browser,
 will loop all atomic components for the requested page and
 load the appropriate atomic JavaScript bundles.</p>
 <p>Here is how one would add the <code>Media</code> class to our <code>RelatedContent</code> example:</p>
-<pre class="highlight"><code class="language-python">class RelatedContent(blocks.StructBlock):
-    …  # see first example on this page
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">RelatedContent</span><span class="p">(</span><span class="n">blocks</span><span class="o">.</span><span class="n">StructBlock</span><span class="p">):</span>
+    <span class="err">…</span>  <span class="c1"># see first example on this page</span>
 
-    class Media:
-        js = ['related-content.js']</code></pre>
+    <span class="k">class</span> <span class="nc">Media</span><span class="p">:</span>
+        <span class="n">js</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;related-content.js&#39;</span><span class="p">]</span>
+</code></pre></div>
 <p>(The <code>related-content.js</code> file would need to be placed in
 <code>cfgov/unprocessed/js/molecules/</code>;
 see <a href="../atomic-structure/">Notes on Atomic Design</a>.)</p>
@@ -594,7 +599,7 @@ see <a href="../migrations/">the Wagtail Migrations page</a>.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

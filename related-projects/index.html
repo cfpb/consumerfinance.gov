@@ -155,7 +155,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Contributing &raquo;</li><li>Related Projects</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/related-projects.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/related-projects.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -223,31 +223,33 @@ with your local copy:</p>
 <p class="admonition-title">Note</p>
 </div>
 <p>and is shown for illustration purpooses only.</p>
-<pre class="highlight"><code class="language-sh"># In a local virtual environment, after installing consumerfinance.gov.
-# Python packages have been installed from requirements files.
-# This includes, for example, the retirement satellite app:
-(consumerfinance.gov) $ pip freeze | grep retirement
-retirement==0.10.0
+<div class="highlight"><pre><span></span><code><span class="c1"># In a local virtual environment, after installing consumerfinance.gov.</span>
+<span class="c1"># Python packages have been installed from requirements files.</span>
+<span class="c1"># This includes, for example, the retirement satellite app:</span>
+<span class="o">(</span>consumerfinance.gov<span class="o">)</span> $ pip freeze <span class="p">|</span> grep retirement
+<span class="nv">retirement</span><span class="o">==</span><span class="m">0</span>.10.0
 
-# Replace this version with an editable install pointing to your local copy.
-(consumerfinance.gov) $ pip install -e ../retirement/
+<span class="c1"># Replace this version with an editable install pointing to your local copy.</span>
+<span class="o">(</span>consumerfinance.gov<span class="o">)</span> $ pip install -e ../retirement/
 ...
 Installing collected packages: retirement
-  Found existing installation: retirement 0.10.0
+  Found existing installation: retirement <span class="m">0</span>.10.0
     Uninstalling retirement-0.10.0:
       Successfully uninstalled retirement-0.10.0
-  Running setup.py develop for retirement
+  Running setup.py develop <span class="k">for</span> retirement
 Successfully installed retirement
 
-# The Python environment is now using the local copy.
-(consumerfinance.gov) $ pip freeze | grep retirement
--e git+git@github.com:myfork/retirement.git@7d2b8eca86ed33d90b5cd7782e1f90b7ac89f6f9#egg=retirement</code></pre>
+<span class="c1"># The Python environment is now using the local copy.</span>
+<span class="o">(</span>consumerfinance.gov<span class="o">)</span> $ pip freeze <span class="p">|</span> grep retirement
+-e git+git@github.com:myfork/retirement.git@7d2b8eca86ed33d90b5cd7782e1f90b7ac89f6f9#egg<span class="o">=</span>retirement
+</code></pre></div>
 <p>Installing a local copy of source code in editable mode ensures that any
 changes made to files there will take effect immediately.</p>
 <p>To switch back to the default version of a Python package, removing the use
 of a local copy, you can manually install the version specified in the
 requirements files:</p>
-<pre class="highlight"><code class="language-sh">(consumerfinance.gov) $ pip install retirement==0.10.0</code></pre>
+<div class="highlight"><pre><span></span><code><span class="o">(</span>consumerfinance.gov<span class="o">)</span> $ pip install <span class="nv">retirement</span><span class="o">==</span><span class="m">0</span>.10.0
+</code></pre></div>
 <p>Re-running the full virtual environment
 <a href="../installation/#run-the-setup-script">setup script</a>
 will do the same thing.</p>
@@ -271,19 +273,21 @@ requirements files as part of the Docker images.</p>
 of a local copy, simply delete the copy from the <code>develop-apps</code> directory.</p>
 <p>For any satellite apps that provide front-end assets that need to be built,
 you will need to run that step seperately:</p>
-<pre class="highlight"><code class="language-bash"># Check out the retirement satellite app into develop-apps:
-cd develop-apps
+<div class="highlight"><pre><span></span><code><span class="c1"># Check out the retirement satellite app into develop-apps:</span>
+<span class="nb">cd</span> develop-apps
 git clone git@github.com:cfpb/retirement.git
 
-# Build the front-end:
-cd retirement
-./frontendbuild.sh</code></pre>
+<span class="c1"># Build the front-end:</span>
+<span class="nb">cd</span> retirement
+./frontendbuild.sh
+</code></pre></div>
 <p>If the satellite app needs any Python requirements that are not specified in
 <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/">the consumerfinance.gov requirements</a>,
 they will need to be installed seperately by accessing the Python container shell
 and using <code>pip</code>:</p>
-<pre class="highlight"><code class="language-bash">docker-compose exec python sh
-pip install [PACKAGE NAME]</code></pre>
+<div class="highlight"><pre><span></span><code>docker-compose <span class="nb">exec</span> python sh
+pip install <span class="o">[</span>PACKAGE NAME<span class="o">]</span>
+</code></pre></div>
               
             </div>
           </div><footer>
@@ -312,7 +316,7 @@ pip install [PACKAGE NAME]</code></pre>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

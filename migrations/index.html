@@ -161,7 +161,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Pages and Components &raquo;</li><li>Django and Wagtail Migrations</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/migrations.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/migrations.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -217,14 +217,16 @@ a migration.</p>
 determine that for you. Django's
 <a href="https://docs.djangoproject.com/en/1.11/ref/django-admin/#django-admin-makemigrations">makemigrations</a>
 management command can be used for this purpose:</p>
-<pre class="highlight"><code class="language-bash">./cfgov/manage.py makemigrations --dry-run</code></pre>
+<div class="highlight"><pre><span></span><code>./cfgov/manage.py makemigrations --dry-run
+</code></pre></div>
 <p>If you haven't made any changes to your local source code that would necessitate the
 creation of a new migration, this command will print <code>No changes detected</code>.</p>
 <p>Otherwise, if you have made changes that require a migration, Django will print
 information about the migration that would need to be created:</p>
-<pre class="highlight"><code class="language-bash">Migrations for 'v1':
+<div class="highlight"><pre><span></span><code>Migrations <span class="k">for</span> <span class="s1">&#39;v1&#39;</span>:
   cfgov/v1/migrations/0154_auto_20190412_1008.py
-    - Alter field alt on cfgovimage</code></pre>
+    - Alter field alt on cfgovimage
+</code></pre></div>
 <p>Running with the <code>--dry-run</code> flag won't actually create any migration files on disk.
 See below for more information on how to do this, including how to give your
 migrations a more descriptive name.</p>
@@ -236,7 +238,8 @@ will be required. This includes changes as small as modifying the <code>help_tex
 <p>To automatically generate a schema migration,
 run the following, editing it to give your migration a name
 that briefly describes the change(s) you're making:</p>
-<pre class="highlight"><code class="language-bash">./cfgov/manage.py makemigrations -n &lt;description_of_changes&gt;</code></pre>
+<div class="highlight"><pre><span></span><code>./cfgov/manage.py makemigrations -n &lt;description_of_changes&gt;
+</code></pre></div>
 <p>For examples of good migration names, look through some of
 <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/v1/migrations">our existing migration files</a>.</p>
 <div class="admonition note">
@@ -277,31 +280,33 @@ unless you're OK with jettisoning it.</p>
 You must write the script by hand that automates the transfer of data
 from old fields to new fields.</p>
 <p>To generate an empty migration file for your data migration, run:</p>
-<pre class="highlight"><code class="language-bash">./cfgov/manage.py makemigrations --empty yourappname</code></pre>
+<div class="highlight"><pre><span></span><code>./cfgov/manage.py makemigrations --empty yourappname
+</code></pre></div>
 <p>You can also copy the code below to get started with
 <code>forward()</code> and <code>backward()</code> functions to migrate your model's data:</p>
-<pre class="highlight"><code class="language-python">from django.db import migrations
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">migrations</span>
 
 
-def forwards(apps, schema_editor):
-    MyModel = apps.get_model('yourappname', 'MyModel')
-    for obj in MyModel.objects.all():
-        # Make forward changes to the object
-        pass
+<span class="k">def</span> <span class="nf">forwards</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
+    <span class="n">MyModel</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s1">&#39;yourappname&#39;</span><span class="p">,</span> <span class="s1">&#39;MyModel&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="c1"># Make forward changes to the object</span>
+        <span class="k">pass</span>
 
 
-def backwards(apps, schema_editor):
-    MyModel = apps.get_model('yourappname', 'MyModel')
-    for obj in MyModel.objects.all():
-        # Make backward changes to the object
-        pass
+<span class="k">def</span> <span class="nf">backwards</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
+    <span class="n">MyModel</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s1">&#39;yourappname&#39;</span><span class="p">,</span> <span class="s1">&#39;MyModel&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="c1"># Make backward changes to the object</span>
+        <span class="k">pass</span>
 
 
-class Migration(migrations.Migration):
-    dependencies = []
-    operations = [
-        migrations.RunPython(forwards, backwards),
-    ]</code></pre>
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">RunPython</span><span class="p">(</span><span class="n">forwards</span><span class="p">,</span> <span class="n">backwards</span><span class="p">),</span>
+    <span class="p">]</span>
+</code></pre></div>
 <p>The <code>forwards()</code> and <code>backwards()</code> functions are where any changes
 that need to happen to a model's data are made.</p>
 <div class="admonition note">
@@ -331,63 +336,65 @@ it's a three-step process to modify a field without losing data:</p>
 that make writing data migrations for StreamFields easier.
 Using these utilities, a Django data migration that modifies a StreamField
 would use the following format:</p>
-<pre class="highlight"><code class="language-python">from django.db import migrations
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">migrations</span>
 
-from v1.util.migrations import migrate_page_types_and_fields
-
-
-def forward_mapper(page_or_revision, data):
-    # Manipulate the stream block data forwards
-    return data
+<span class="kn">from</span> <span class="nn">v1.util.migrations</span> <span class="kn">import</span> <span class="n">migrate_page_types_and_fields</span>
 
 
-def backward_mapper(page_or_revision, data):
-    # Manipulate the stream block data backwards
-    return data
+<span class="k">def</span> <span class="nf">forward_mapper</span><span class="p">(</span><span class="n">page_or_revision</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="c1"># Manipulate the stream block data forwards</span>
+    <span class="k">return</span> <span class="n">data</span>
 
 
-def forwards(apps, schema_editor):
-    page_types_and_fields = [
-        ('myapp', 'MyPage', 'field_name', 'block_name'),
-    ]
-    migrate_page_types_and_fields(
-        apps,
-        page_types_and_fields,
-        forward_mapper
-    )
+<span class="k">def</span> <span class="nf">backward_mapper</span><span class="p">(</span><span class="n">page_or_revision</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="c1"># Manipulate the stream block data backwards</span>
+    <span class="k">return</span> <span class="n">data</span>
 
 
-def backwards(apps, schema_editor):
-    page_types_and_fields = [
-        ('myapp', 'MyPage', 'field_name', 'block_name'),
-    ]
-    migrate_page_types_and_fields(
-        apps,
-        page_types_and_fields,
-        backward_mapper
-    )
+<span class="k">def</span> <span class="nf">forwards</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
+    <span class="n">page_types_and_fields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;myapp&#39;</span><span class="p">,</span> <span class="s1">&#39;MyPage&#39;</span><span class="p">,</span> <span class="s1">&#39;field_name&#39;</span><span class="p">,</span> <span class="s1">&#39;block_name&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">migrate_page_types_and_fields</span><span class="p">(</span>
+        <span class="n">apps</span><span class="p">,</span>
+        <span class="n">page_types_and_fields</span><span class="p">,</span>
+        <span class="n">forward_mapper</span>
+    <span class="p">)</span>
 
 
-class Migration(migrations.Migration):
-    dependencies = []
-    operations = [
-        migrations.RunPython(forwards, backwards),
-    ]</code></pre>
+<span class="k">def</span> <span class="nf">backwards</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
+    <span class="n">page_types_and_fields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;myapp&#39;</span><span class="p">,</span> <span class="s1">&#39;MyPage&#39;</span><span class="p">,</span> <span class="s1">&#39;field_name&#39;</span><span class="p">,</span> <span class="s1">&#39;block_name&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">migrate_page_types_and_fields</span><span class="p">(</span>
+        <span class="n">apps</span><span class="p">,</span>
+        <span class="n">page_types_and_fields</span><span class="p">,</span>
+        <span class="n">backward_mapper</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">RunPython</span><span class="p">(</span><span class="n">forwards</span><span class="p">,</span> <span class="n">backwards</span><span class="p">),</span>
+    <span class="p">]</span>
+</code></pre></div>
 <p><code>field_name</code> is the name of the StreamField on the Page model that contains the blocks to migrate.
 <code>block_name</code> is the name of the block within a StreamField that contains the data to be migrated.</p>
 <p>StreamBlocks can themselves also contain child blocks.
 The block name can be given as a list of block names
 that form the "path" to the block that needs to be migrated.
 For example :</p>
-<pre class="highlight"><code class="language-python">def forwards(apps, schema_editor):
-    page_types_and_fields = [
-        ('myapp', 'MyPage', 'field_name', ['parent_block', 'child_block']),
-    ]
-    migrate_page_types_and_fields(
-        apps,
-        page_types_and_fields,
-        forward_mapper
-    )</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">forwards</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
+    <span class="n">page_types_and_fields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;myapp&#39;</span><span class="p">,</span> <span class="s1">&#39;MyPage&#39;</span><span class="p">,</span> <span class="s1">&#39;field_name&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;parent_block&#39;</span><span class="p">,</span> <span class="s1">&#39;child_block&#39;</span><span class="p">]),</span>
+    <span class="p">]</span>
+    <span class="n">migrate_page_types_and_fields</span><span class="p">(</span>
+        <span class="n">apps</span><span class="p">,</span>
+        <span class="n">page_types_and_fields</span><span class="p">,</span>
+        <span class="n">forward_mapper</span>
+    <span class="p">)</span>
+</code></pre></div>
 <p>In this example,
 a block with the name <code>child_block</code>
 that is inside a block named <code>parent_block</code>
@@ -453,18 +460,20 @@ attempting to squash.</p>
 <li>Set all <code>RunPython</code> blocks to have the argument <code>elidable=True</code>.</li>
 <li>Squash migrations for each app that has 3 or more non-squashed migrations</li>
 </ol>
-<pre class="highlight"><code class="language-sh"># start migration number is optional for apps that have never been squashed
+<div class="highlight"><pre><span></span><code><span class="c1"># start migration number is optional for apps that have never been squashed</span>
 cfgov/manage.py squashmigrations --squashed-name &lt;year&gt;_squash &lt;app_name&gt; &lt;starting_migration_number&gt; &lt;ending_migration_number&gt;
 
-# 2022 ask_cfp squash 0039 -&gt; 0045
-cfgov/manage.py squashmigrations --squashed-name 2022_squash ask_cfpb 0039 0045
+<span class="c1"># 2022 ask_cfp squash 0039 -&gt; 0045</span>
+cfgov/manage.py squashmigrations --squashed-name 2022_squash ask_cfpb <span class="m">0039</span> <span class="m">0045</span>
 
-# 2022 form_explainer squash 0001 -&gt; 0007
-cfgov/manage.py squashmigrations --squashed-name 2022_squash form_explainer 0007</code></pre>
+<span class="c1"># 2022 form_explainer squash 0001 -&gt; 0007</span>
+cfgov/manage.py squashmigrations --squashed-name 2022_squash form_explainer <span class="m">0007</span>
+</code></pre></div>
 <ol>
 <li>Once all apps are squashed, attempt to apply migrations to check for errors</li>
 </ol>
-<pre class="highlight"><code class="language-sh">cfgov/manage.py migrate</code></pre>
+<div class="highlight"><pre><span></span><code>cfgov/manage.py migrate
+</code></pre></div>
 <ol>
 <li>
 <p>Correct errors, if any, until there are no migrations to apply or create.
@@ -477,11 +486,13 @@ cfgov/manage.py squashmigrations --squashed-name 2022_squash form_explainer 0007
 </li>
 <li>Recreate fresh database, and load <code>test.sql.gz</code>, and apply the migrations.</li>
 </ol>
-<pre class="highlight"><code class="language-sh">./refresh-data.sh test.sql.gz</code></pre>
+<div class="highlight"><pre><span></span><code>./refresh-data.sh test.sql.gz
+</code></pre></div>
 <ol>
 <li>Dump test database back to <code>test.sql.gz</code></li>
 </ol>
-<pre class="highlight"><code class="language-sh">./dump-data.sh test.sql.gz</code></pre>
+<div class="highlight"><pre><span></span><code>./dump-data.sh test.sql.gz
+</code></pre></div>
 <ol>
 <li>Delete non-squashed migration files that were squashed.</li>
 </ol>
@@ -489,8 +500,9 @@ cfgov/manage.py squashmigrations --squashed-name 2022_squash form_explainer 0007
 <h4 id="2022">2022<a class="headerlink" href="#2022" title="Permanent link">¶</a></h4>
 <p><code>teachers_digital_platform</code> had an over-optimization or circular dependency
 issue, resulting in the following error.</p>
-<pre class="highlight"><code>ValueError: The field teachers_digital_platform.ActivityPage.student_characteristics was declared with a lazy reference to 'teachers_digital_platform.activityspecialpopulation', but app 'teachers_digital_platform' doesn't provide model 'activityspecialpopulation'.
-The field teachers_digital_platform.ActivityPage_student_characteristics.activityspecialpopulation was declared with a lazy reference to 'teachers_digital_platform.activityspecialpopulation', but app 'teachers_digital_platform' doesn't provide model 'activityspecialpopulation'.</code></pre>
+<div class="highlight"><pre><span></span><code>ValueError: The field teachers_digital_platform.ActivityPage.student_characteristics was declared with a lazy reference to &#39;teachers_digital_platform.activityspecialpopulation&#39;, but app &#39;teachers_digital_platform&#39; doesn&#39;t provide model &#39;activityspecialpopulation&#39;.
+The field teachers_digital_platform.ActivityPage_student_characteristics.activityspecialpopulation was declared with a lazy reference to &#39;teachers_digital_platform.activityspecialpopulation&#39;, but app &#39;teachers_digital_platform&#39; doesn&#39;t provide model &#39;activityspecialpopulation&#39;.
+</code></pre></div>
 <p>Corrected the error by changing the reference to the correct field for student char.
 An additional migration was generated for <code>teachers_digital_platform</code> once this error was corrected.
 <code>ActivitySpecialPopulation</code> -&gt; <code>ActivityStudentCharacteristics</code>.</p>
@@ -522,7 +534,7 @@ An additional migration was generated for <code>teachers_digital_platform</code>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

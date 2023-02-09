@@ -155,7 +155,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Supporting Features &raquo;</li><li>Page Search</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/page-search.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/page-search.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -188,61 +188,66 @@
 <li><a href="https://django-opensearch-dsl.readthedocs.io/en/latest/fields/">Custom fields to index</a>, and any preparation that they require</li>
 </ol>
 <p>We'll use our <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/ask_cfpb/documents.py">Ask CFPB answer search document as an example</a> for each of these:</p>
-<pre class="highlight"><code class="language-python">from django_opensearch_dsl import Document
-from django_opensearch_dsl.registries import registry
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django_opensearch_dsl</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">django_opensearch_dsl.registries</span> <span class="kn">import</span> <span class="n">registry</span>
 
-@registry.register_document
-class AnswerPageDocument(Document):
-    pass</code></pre>
+<span class="nd">@registry</span><span class="o">.</span><span class="n">register_document</span>
+<span class="k">class</span> <span class="nc">AnswerPageDocument</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="k">pass</span>
+</code></pre></div>
 <h3 id="elasticsearch-index-configuration">Elasticsearch index configuration<a class="headerlink" href="#elasticsearch-index-configuration" title="Permanent link">¶</a></h3>
 <p>The index configuration is provided by an <code>Index</code> subclass on the document class that defines the <a href="https://django-opensearch-dsl.readthedocs.io/en/latest/document/#index-subclass">django-opensearch-dsl index options</a>.</p>
-<pre class="highlight"><code class="language-python">from search.elasticsearch_helpers import environment_specific_index
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">search.elasticsearch_helpers</span> <span class="kn">import</span> <span class="n">environment_specific_index</span>
 
-class AnswerPageDocument(Document):
+<span class="k">class</span> <span class="nc">AnswerPageDocument</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
 
-    class Index:
-        name = environment_specific_index('ask-cfpb')
-        settings = {'number_of_shards': 1,
-                    'number_of_replicas': 0}</code></pre>
+    <span class="k">class</span> <span class="nc">Index</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">environment_specific_index</span><span class="p">(</span><span class="s1">&#39;ask-cfpb&#39;</span><span class="p">)</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;number_of_shards&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="s1">&#39;number_of_replicas&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+</code></pre></div>
 <p>For index naming, we have a helper function, <code>environment_specific_index</code>, that will generate the index name specific to the deployment environment. This allows each index to be isolated to a deployment environment within an Elasticsearch cluster.</p>
 <h3 id="django-model-information">Django model information<a class="headerlink" href="#django-model-information" title="Permanent link">¶</a></h3>
 <p>The Django model information is provided by a <code>Django</code> class on the document class that defines the model and any fields names to be indexed directly from the model. A <code>get_queryset</code> method can be overriden to perform any filtering on the model's queryset before content is indexed.</p>
-<pre class="highlight"><code class="language-python">from ask_cfpb.models.answer_page import AnswerPage
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ask_cfpb.models.answer_page</span> <span class="kn">import</span> <span class="n">AnswerPage</span>
 
-class AnswerPageDocument(Document):
+<span class="k">class</span> <span class="nc">AnswerPageDocument</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
 
-    def get_queryset(self):
-        query_set = super().get_queryset()
-        return query_set.filter(live=True, redirect_to_page=None)
+    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">query_set</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">query_set</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">live</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">redirect_to_page</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-    class Django:
-        model = AnswerPage
+    <span class="k">class</span> <span class="nc">Django</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">AnswerPage</span>
 
-        fields = [
-            'search_tags',
-            'language',
-        ]</code></pre>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;search_tags&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;language&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+</code></pre></div>
 <p>The fields in <code>fields</code> will be indexed without any preparation/manipulation, directly as are stored on the model.</p>
 <h3 id="custom-fields">Custom fields<a class="headerlink" href="#custom-fields" title="Permanent link">¶</a></h3>
 <p>Sometimes it might be desirable to index a field as an alternative type — say, the string that matches an integer for a Django field that species <code>choices</code>.</p>
 <p>It might also be desirable to construct a field to index from multiple fields on the model, particularly for Wagtail pages with stream fields.</p>
 <p>We may also want to specify Elasticsearch-specific <a href="https://django-opensearch-dsl.readthedocs.io/en/latest/fields/#field-classes">field properties</a>, like a custom analyzer.</p>
 <p>To do so, we specify <a href="https://django-opensearch-dsl.readthedocs.io/en/latest/fields/#using-attr-argument">custom fields</a> as attributes on the document class, with an <code>attr</code> argument that specifies the field on the model to reference.</p>
-<pre class="highlight"><code class="language-python">from django_opensearch_dsl import fields
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django_opensearch_dsl</span> <span class="kn">import</span> <span class="n">fields</span>
 
-from search.elasticsearch_helpers import synonym_analyzer
+<span class="kn">from</span> <span class="nn">search.elasticsearch_helpers</span> <span class="kn">import</span> <span class="n">synonym_analyzer</span>
 
-class AnswerPageDocument(Document):
-    text = fields.TextField(attr="text", analyzer=synonym_analyzer)</code></pre>
+<span class="k">class</span> <span class="nc">AnswerPageDocument</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">attr</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="n">analyzer</span><span class="o">=</span><span class="n">synonym_analyzer</span><span class="p">)</span>
+</code></pre></div>
 <p>The <code>attr</code> on the model can be a <code>@property</code> or a Django model field.</p>
 <p>We can also do any data preparation/manipulation for fields using <a href="https://django-opensearch-dsl.readthedocs.io/en/latest/fields/#using-prepare_field"><code>prepare_</code>-prefixed methods</a>.</p>
-<pre class="highlight"><code class="language-python">from django_opensearch_dsl import fields
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django_opensearch_dsl</span> <span class="kn">import</span> <span class="n">fields</span>
 
-class AnswerPageDocument(Document):
-    portal_topics = fields.KeywordField()
+<span class="k">class</span> <span class="nc">AnswerPageDocument</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">portal_topics</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">KeywordField</span><span class="p">()</span>
 
-    def prepare_portal_topics(self, instance):
-        return [topic.heading for topic in instance.portal_topic.all()]</code></pre>
+    <span class="k">def</span> <span class="nf">prepare_portal_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">topic</span><span class="o">.</span><span class="n">heading</span> <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">instance</span><span class="o">.</span><span class="n">portal_topic</span><span class="o">.</span><span class="n">all</span><span class="p">()]</span>
+</code></pre></div>
 <h3 id="helpers">Helpers<a class="headerlink" href="#helpers" title="Permanent link">¶</a></h3>
 <p>We provide a few common helpers in <code>search.elasticsearch_helpers</code> for use in creating document classes:</p>
 <ul>
@@ -250,53 +255,61 @@ class AnswerPageDocument(Document):
 <li><code>ngram_tokenizer</code>: A reusable ngram analyzer for creating fields that <a href="#autocomplete">autocomplete terms</a>. This is used for type-ahead search boxes.</li>
 <li><code>synonym_analyzer</code>: A reusable analyzer for creating fields that will match synonyms of a search term.</li>
 </ul>
-<pre class="highlight"><code class="language-python">from search.elasticsearch_helpers import (
-    environment_specific_index,
-    ngram_tokenizer,
-    synonym_analyzer,
-)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">search.elasticsearch_helpers</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">environment_specific_index</span><span class="p">,</span>
+    <span class="n">ngram_tokenizer</span><span class="p">,</span>
+    <span class="n">synonym_analyzer</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
 <h3 id="building-the-index">Building the index<a class="headerlink" href="#building-the-index" title="Permanent link">¶</a></h3>
 <p>With the <code>Document</code> class created for your model in a <code>documents.py</code> module within a Django app listed in <code>INSTALLED_APPS</code>, all that is left to do is to use the <a href="https://django-opensearch-dsl.readthedocs.io/en/latest/management/">django-opensearch-dsl management commands</a> to rebuild the index:</p>
-<pre class="highlight"><code class="language-shell">./cfgov/manage.py opensearch index --force rebuild [INDEX]
-./cfgov/manage.py opensearch document --force --indices [INDEX] --refresh --parallel index</code></pre>
+<div class="highlight"><pre><span></span><code>./cfgov/manage.py opensearch index --force rebuild <span class="o">[</span>INDEX<span class="o">]</span>
+./cfgov/manage.py opensearch document --force --indices <span class="o">[</span>INDEX<span class="o">]</span> --refresh --parallel index
+</code></pre></div>
 <p>The index for that app's models can also be rebuilt at any time:</p>
-<pre class="highlight"><code class="language-shell">./cfgov/manage.py opensearch index --force rebuild [INDEX]
-./cfgov/manage.py opensearch document --force --indices [INDEX] --refresh --parallel index</code></pre>
+<div class="highlight"><pre><span></span><code>./cfgov/manage.py opensearch index --force rebuild <span class="o">[</span>INDEX<span class="o">]</span>
+./cfgov/manage.py opensearch document --force --indices <span class="o">[</span>INDEX<span class="o">]</span> --refresh --parallel index
+</code></pre></div>
 <p>Finally, the indexes for all apps can be rebuilt using:</p>
-<pre class="highlight"><code class="language-shell">./cfgov/manage.py opensearch index --force rebuild
-./cfgov/manage.py opensearch document --force --refresh --parallel index</code></pre>
+<div class="highlight"><pre><span></span><code>./cfgov/manage.py opensearch index --force rebuild
+./cfgov/manage.py opensearch document --force --refresh --parallel index
+</code></pre></div>
 <h2 id="searching">Searching<a class="headerlink" href="#searching" title="Permanent link">¶</a></h2>
 <p>The document class <a href="https://django-opensearch-dsl.readthedocs.io/en/latest/getting_started/#search">provides a <code>search()</code> class method</a> that returns a <a href="https://opensearch.org/docs/latest/opensearch/rest-api/search/"><code>Search</code> object</a>. The <code>Search</code> object is opensearch-dsl-py's representation of Elasticsearch search requests.</p>
 <p>To <a href="https://django-opensearch-dsl.readthedocs.io/en/latest/getting_started/#search">query</a> for a specific term, for example:</p>
-<pre class="highlight"><code class="language-python">from ask_cfpb.documents import AnswerPageDocument
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ask_cfpb.documents</span> <span class="kn">import</span> <span class="n">AnswerPageDocument</span>
 
-AnswerPageDocument.search().query(
-    "match", text={"query": search_term, "operator": "AND"}
-)</code></pre>
+<span class="n">AnswerPageDocument</span><span class="o">.</span><span class="n">search</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+    <span class="s2">&quot;match&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="n">search_term</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;AND&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+</code></pre></div>
 <p>We can also <a href="https://django-opensearch-dsl.readthedocs.io/en/latest/getting_started/#search">add a filter context</a> before querying, which we do to limit results to a specific language in Ask CFPB:</p>
-<pre class="highlight"><code class="language-python">from ask_cfpb.documents import AnswerPageDocument
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ask_cfpb.documents</span> <span class="kn">import</span> <span class="n">AnswerPageDocument</span>
 
-search = AnswerPageDocument.search().filter("term", language=language)
-search.query(
-    "match", text={"query": search_term, "operator": "AND"}
-)</code></pre>
+<span class="n">search</span> <span class="o">=</span> <span class="n">AnswerPageDocument</span><span class="o">.</span><span class="n">search</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s2">&quot;term&quot;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">)</span>
+<span class="n">search</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+    <span class="s2">&quot;match&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="n">search_term</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;AND&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+</code></pre></div>
 <h3 id="autocomplete">Autocomplete<a class="headerlink" href="#autocomplete" title="Permanent link">¶</a></h3>
 <p>For search box autocomplete, we use a field with our <code>ngram_tokenizer</code> analyzer and then issue a "match" search query for that field.</p>
 <p>Using the Ask CFPB document search above, with its language filter context, this looks like:</p>
-<pre class="highlight"><code class="language-python">from search.elasticsearch_helpers import ngram_tokenizer
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">search.elasticsearch_helpers</span> <span class="kn">import</span> <span class="n">ngram_tokenizer</span>
 
-class AnswerPageDocument(Document):
-    autocomplete = fields.TextField(analyzer=ngram_tokenizer)
+<span class="k">class</span> <span class="nc">AnswerPageDocument</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="n">autocomplete</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">analyzer</span><span class="o">=</span><span class="n">ngram_tokenizer</span><span class="p">)</span>
 
-search = AnswerPageDocument.search().filter("term", language=language)
-search.query('match', autocomplete=search_term)</code></pre>
+<span class="n">search</span> <span class="o">=</span> <span class="n">AnswerPageDocument</span><span class="o">.</span><span class="n">search</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s2">&quot;term&quot;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">)</span>
+<span class="n">search</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">autocomplete</span><span class="o">=</span><span class="n">search_term</span><span class="p">)</span>
+</code></pre></div>
 <h3 id="suggestions">Suggestions<a class="headerlink" href="#suggestions" title="Permanent link">¶</a></h3>
 <p>For suggested spelling corrections for search terms, <a href="https://opensearch.org/docs/latest/opensearch/rest-api/search/">the <code>Search</code> object has a <code>suggest()</code> method</a> that provides spelling suggestions for a given term on a given field.</p>
 <p>Using the Ask CFPB document search above, with its language filter context, this looks like:</p>
-<pre class="highlight"><code class="language-python">from ask_cfpb.documents import AnswerPageDocument
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ask_cfpb.documents</span> <span class="kn">import</span> <span class="n">AnswerPageDocument</span>
 
-search = AnswerPageDocument.search().filter("term", language=language)
-search.suggest('suggestion', search_term, term={'field': 'text'})</code></pre>
+<span class="n">search</span> <span class="o">=</span> <span class="n">AnswerPageDocument</span><span class="o">.</span><span class="n">search</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s2">&quot;term&quot;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">)</span>
+<span class="n">search</span><span class="o">.</span><span class="n">suggest</span><span class="p">(</span><span class="s1">&#39;suggestion&#39;</span><span class="p">,</span> <span class="n">search_term</span><span class="p">,</span> <span class="n">term</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">})</span>
+</code></pre></div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://django-opensearch-dsl.readthedocs.io/en/latest/">django-opensearch-dsl</a></li>
@@ -330,7 +343,7 @@ search.suggest('suggestion', search_term, term={'field': 'text'})</code></pre>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

@@ -155,7 +155,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>Testing &raquo;</li><li>Profiling Django</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/profiling-django.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/profiling-django.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -189,7 +189,7 @@ you can add the <code>?prof</code> querystring
 in order to see a profile of the request/response cycle for that view.</p>
 <p>For example, <code>http://localhost:8000/about-us/newsroom/?prof</code>,
 might return something like:</p>
-<pre class="highlight"><code>         1579654 function calls (1575009 primitive calls) in 28.273 seconds
+<div class="highlight"><pre><span></span><code>         1579654 function calls (1575009 primitive calls) in 28.273 seconds
 
    Ordered by: internal time
    List reduced from 1108 to 500 due to restriction &lt;500&gt;
@@ -200,7 +200,8 @@ might return something like:</p>
     58330    1.985    0.000    5.482    0.000 utils.py:328(__getattr__)
     77732    1.900    0.000    5.027    0.000 utils.py:157(__getattr__)
      2776    1.821    0.001   21.265    0.008 documents.py:89(init_prepare)
-     …</code></pre>
+     …
+</code></pre></div>
 <p>You can also sort this output using a <code>sort</code> field.
 For example, to sort by call count instead of the default time sort: <code>http://localhost:8000/about-us/newsroom/?prof&amp;sort=ncalls</code>.
 The can be any supported by
@@ -220,10 +221,12 @@ The tool we recommend is
 a browser-based graphical viewer of cProfile data.</p>
 <p>To install SnakeViz locally
 <a href="https://github.com/cfpb/development/blob/main/guides/pipx.md">with pipx</a>:</p>
-<pre class="highlight"><code class="language-shell">pipx install snakeviz</code></pre>
+<div class="highlight"><pre><span></span><code>pipx install snakeviz
+</code></pre></div>
 <p>After downloading the profile data for a Django view,
 the data can be viewed with SnakeViz with:</p>
-<pre class="highlight"><code class="language-shell">snakeviz view.prof</code></pre>
+<div class="highlight"><pre><span></span><code>snakeviz view.prof
+</code></pre></div>
 <p>SnakeViz has two visualization styles,
 Icicle and Sunburst.
 Both visualizations represent function calls by
@@ -244,11 +247,14 @@ other calls will also highlight in the visualization.
 This is a good way to identify duplication that one may wish to refactor.</p>
 <h2 id="basic-workflow">Basic workflow<a class="headerlink" href="#basic-workflow" title="Permanent link">¶</a></h2>
 <p>Install SnakeViz, if you haven't already:</p>
-<pre class="highlight"><code class="language-shell">pipx install snakeviz</code></pre>
+<div class="highlight"><pre><span></span><code>pipx install snakeviz
+</code></pre></div>
 <p>Visit the local URL you wish to profile and download the profile data:</p>
-<pre class="highlight"><code>http://localhost:8000/about-us/newsroom/?prof&amp;download</code></pre>
+<div class="highlight"><pre><span></span><code>http://localhost:8000/about-us/newsroom/?prof&amp;download
+</code></pre></div>
 <p>Open the profile data in SnakeViz:</p>
-<pre class="highlight"><code class="language-shell">snakeviz view.prof</code></pre>
+<div class="highlight"><pre><span></span><code>snakeviz view.prof
+</code></pre></div>
 <p>Use the SnakeViz visualization to identify:</p>
 <ul>
 <li>The call stack of the request/response cycle for a particular Django view</li>
@@ -284,7 +290,7 @@ This is a good way to identify duplication that one may wish to refactor.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     

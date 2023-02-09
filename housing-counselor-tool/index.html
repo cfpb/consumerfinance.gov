@@ -151,7 +151,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>APIs and Data &raquo;</li><li>Find a Housing Counselor Tool</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/housing-counselor-tool.md"
+        <a href="https://github.com/higs4281/consumerfinance.gov/edit/master/docs/housing-counselor-tool.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -193,13 +193,14 @@ The management command in turn calls the <code>BulkZipCodeGeocoder</code> in <a 
 <code>BulkZipCodeGeocoder</code> uses the <a href="https://www.mapbox.com/">Mapbox</a> geocoding API to determine which 5-digit number sequences are ZIP codes and fetch their latitude and longitude values.
 The management command inserts this data into a CSV and saves it to <code>./zipcodes.csv</code> on the Jenkins job workspace.</p>
 <p>The generated file looks like this:</p>
-<pre class="highlight"><code class="language-csv">12305,42.81,-73.94
+<div class="highlight"><pre><span></span><code>12305,42.81,-73.94
 12306,42.77,-73.96
 12307,42.81,-73.93
 12308,42.82,-73.93
 12309,42.81,-73.91
 12325,42.88779,-73.99597
-12345,42.80856,-74.02737</code></pre>
+12345,42.80856,-74.02737
+</code></pre></div>
 <h3 id="generate-json-files">Generate JSON files<a class="headerlink" href="#generate-json-files" title="Permanent link">¶</a></h3>
 <p>When enabled, the <code>MAKE_JSON</code> step generates a JSON file of housing counselor data for each ZIP code in the U.S.
 Each file contains the ten results geographically nearest to the ZIP code's latitude and longitude.
@@ -218,39 +219,40 @@ which performs the following steps:</p>
 <p>Request every housing counselor in HUD's database
 with a request to <code>https://data.hud.gov/Housing_Counselor/searchByLocation?Lat=38.8951&amp;Long=-77.0367&amp;Distance=5000</code>.</p>
 <p>It returns thousands of results like this:</p>
-<pre class="highlight"><code class="language-json">{
-    "services": "DFC,FBC,PPC,RHC",
-    "languages": "ENG,SPA",
-    "agc_STATUS": "A",
-    "agc_SRC_CD": "HUD",
-    "counslg_METHOD": "Face to Face Counseling,Group Counseling,Phone Counseling",
-    "agcid": "80790",
-    "adr1": "1234 N. Example St.",
-    "adr2": " ",
-    "city": "SPRINGFIELD",
-    "email": "counselor@example.org",
-    "fax": "999-888-7777",
-    "nme": "EXAMPLE COMMUNITY HOUSING SERVICES",
-    "phone1": "111-222-3333",
-    "statecd": "MI",
-    "weburl": "www.example.org",
-    "zipcd": "48219-8888",
-    "agc_ADDR_LATITUDE": "42.442658",
-    "agc_ADDR_LONGITUDE": "-83.28329",
-    "parentid": "81228",
-    "county_NME": "",
-    "phone2": " ",
-    "mailingadr1": "1234 N. Example St.",
-    "mailingadr2": " ",
-    "mailingcity": "SPRINGFIELD",
-    "mailingzipcd": "48219-8888",
-    "mailingstatecd": "MI",
-    "state_NME": "Michigan",
-    "state_FIPS_CODE": null,
-    "faithbased": "N",
-    "colonias_IND": "Y",
-    "migrantwkrs_IND": "N"
-},</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;services&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DFC,FBC,PPC,RHC&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;languages&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ENG,SPA&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;agc_STATUS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;agc_SRC_CD&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HUD&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;counslg_METHOD&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Face to Face Counseling,Group Counseling,Phone Counseling&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;agcid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;80790&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;adr1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1234 N. Example St.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;adr2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SPRINGFIELD&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;counselor@example.org&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;fax&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;999-888-7777&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;nme&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EXAMPLE COMMUNITY HOUSING SERVICES&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;phone1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;111-222-3333&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;statecd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MI&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;weburl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;www.example.org&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;zipcd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;48219-8888&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;agc_ADDR_LATITUDE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;42.442658&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;agc_ADDR_LONGITUDE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-83.28329&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;parentid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;81228&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;county_NME&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;phone2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;mailingadr1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1234 N. Example St.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;mailingadr2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;mailingcity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SPRINGFIELD&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;mailingzipcd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;48219-8888&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;mailingstatecd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MI&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;state_NME&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Michigan&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;state_FIPS_CODE&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;faithbased&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;colonias_IND&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Y&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;migrantwkrs_IND&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;N&quot;</span><span class="w"></span>
+<span class="p">},</span><span class="w"></span>
+</code></pre></div>
 <p>Next, we replace the <code>languages</code> value with the full language names.
 We replace the <code>services</code> value with fully spelled out service descriptions.
 Both of these mappings come from the HUD API.</p>
@@ -279,55 +281,56 @@ For each counselor in the list, include its latitude and longitude (both in radi
 all of its information from the HUD API as a JSON text string.</p>
 <p>For each ZIP code in the U.S., query the database to find the 10 closest housing counselors to the lat/long of that ZIP.
 Put the information in a JSON structure like this (but with ten results instead of one):</p>
-<pre class="highlight"><code class="language-json">{
-  "zip": {
-    "lat": 42.80856,
-    "lng": -74.02737,
-    "zipcode": "12345"
-  },
-  "counseling_agencies": [
-    {
-      "adr1": "1234 N. Example St.",
-      "state_FIPS_CODE": null,
-      "adr2": " ",
-      "zipcd": "48219-8888",
-      "mailingcity": "Springfield",
-      "weburl": "http://www.example.org",
-      "agc_STATUS": "A",
-      "city": "Springfield",
-      "languages": ["English", "Spanish"],
-      "faithbased": "N",
-      "mailingstatecd": "MI",
-      "email": "counselor@example.org",
-      "fax": "999-888-7777",
-      "phone1": "111-222-3333",
-      "distance": 5.430720023569205,
-      "phone2": " ",
-      "agc_ADDR_LATITUDE": 42.442658,
-      "agcid": "80790",
-      "agc_SRC_CD": "HUD",
-      "nme": "Example Community Housing Services",
-      "migrantwkrs_IND": "N",
-      "parentid": "82772",
-      "services": [
-        "Mortgage Delinquency and Default Resolution Counse",
-        "Home Improvement and Rehabilitation Counseling",
-        "Pre-purchase Counseling",
-        "Pre-purchase Homebuyer Education Workshops",
-        "Rental Housing Counseling"
-      ],
-      "counslg_METHOD": "Face to Face Counseling,Group Counseling,Phone Counseling",
-      "county_NME": "",
-      "mailingadr1": "1234 N. Example St.",
-      "statecd": "MI",
-      "mailingadr2": " ",
-      "mailingzipcd": "48219-8888",
-      "state_NME": "Michigan",
-      "agc_ADDR_LONGITUDE": -83.28329,
-      "colonias_IND": "Y"
-    }
-  ]
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;zip&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;lat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">42.80856</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;lng&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-74.02737</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;zipcode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;12345&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;counseling_agencies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;adr1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1234 N. Example St.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;state_FIPS_CODE&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;adr2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;zipcd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;48219-8888&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;mailingcity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Springfield&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;weburl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://www.example.org&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;agc_STATUS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Springfield&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;languages&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;English&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Spanish&quot;</span><span class="p">],</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;faithbased&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;mailingstatecd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MI&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;counselor@example.org&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;fax&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;999-888-7777&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;phone1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;111-222-3333&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;distance&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5.430720023569205</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;phone2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;agc_ADDR_LATITUDE&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">42.442658</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;agcid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;80790&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;agc_SRC_CD&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HUD&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;nme&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Example Community Housing Services&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;migrantwkrs_IND&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;parentid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;82772&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;services&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Mortgage Delinquency and Default Resolution Counse&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Home Improvement and Rehabilitation Counseling&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Pre-purchase Counseling&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Pre-purchase Homebuyer Education Workshops&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Rental Housing Counseling&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">],</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;counslg_METHOD&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Face to Face Counseling,Group Counseling,Phone Counseling&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;county_NME&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;mailingadr1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1234 N. Example St.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;statecd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MI&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;mailingadr2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;mailingzipcd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;48219-8888&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;state_NME&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Michigan&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;agc_ADDR_LONGITUDE&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-83.28329</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;colonias_IND&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Y&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
 <p>Save the resulting JSON files on the Jenkins job workspace, in a <code>jsons</code> directory, e.g. <code>jsons/12345.json</code>.</p>
 <h3 id="generate-html-files">Generate HTML files<a class="headerlink" href="#generate-html-files" title="Permanent link">¶</a></h3>
 <p>When enabled, the <code>MAKE_HTML</code> step generates an HTML page of housing counselor results, including styles,
@@ -379,7 +382,7 @@ This step is enabled by default.</p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
         <span>
-          <a href="https://github.com/cfpb/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/higs4281/consumerfinance.gov" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
         </span>
     
     
