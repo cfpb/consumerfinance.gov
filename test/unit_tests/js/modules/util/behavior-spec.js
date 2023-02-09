@@ -30,14 +30,13 @@ const HTML_SNIPPET = `
 /**
  * @param {HTMLElement} target - The target element of the event.
  * @param {string} eventType - The event type description.
- * @param {string} eventOption - A keyCode, if the event is a keyup event.
  */
-function triggerEvent(target, eventType, eventOption) {
-  const event = document.createEvent('Event');
-  if (eventType === 'keyup') {
-    event.keyCode = eventOption || '';
-  }
-  event.initEvent(eventType, true, true);
+function triggerEvent(target, eventType) {
+  const event = new MouseEvent(eventType, {
+    bubbles: true,
+    cancelable: true,
+    view: window,
+  });
   target.dispatchEvent(event);
 }
 
