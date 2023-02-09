@@ -1,7 +1,10 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+
+User = get_user_model()
 
 
 # keep encrypted passwords around to ensure that user does not re-use
