@@ -163,28 +163,42 @@ class LoginFormTestCase(TestCase):
 
     def test_login_locked_out(self):
         """Ensure we get locked out"""
-        form = LoginForm()
         user = User.objects.get(username="admin")
         TemporaryLockout(
             user=user, expires_at=(now() + timedelta(hours=1))
         ).save()
+
+        form = LoginForm(data={"username": "admin", "password": "admin"})
+        self.assertFalse(form.is_valid())
+        self.assertIn("temporarily locked", form.errors["__all__"][0])
+
+        # Ensure that a temporary lockout doesn't result in a failed loing
         user.refresh_from_db()
-        with self.assertRaises(ValidationError):
-            form.check_for_lockout(user)
+        with self.assertRaises(
+            User.failedloginattempt.RelatedObjectDoesNotExist
+        ):
+            user.failedloginattempt
 
     def test_password_expired(self):
         """Ensure login is denied if our password is expired"""
-        form = LoginForm()
         user = User.objects.get(username="admin")
         PasswordHistoryItem(
             user=user,
             expires_at=now(),
             locked_until=(now() + timedelta(hours=1)),
-            encrypted_password=make_password("testing"),
+            encrypted_password=make_password("admin"),
         ).save()
+
+        form = LoginForm(data={"username": "admin", "password": "admin"})
+        self.assertFalse(form.is_valid())
+        self.assertIn("password has expired", form.errors["__all__"][0])
+
+        # Ensure that a password expiration doesn't result in a failed loing
         user.refresh_from_db()
-        with self.assertRaises(ValidationError):
-            form.check_for_password_expiration(user)
+        with self.assertRaises(
+            User.failedloginattempt.RelatedObjectDoesNotExist
+        ):
+            user.failedloginattempt
 
     def test_clear_failed_login_attempts(self):
         """Ensure we can clear failed login attempts"""

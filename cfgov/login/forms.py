@@ -19,6 +19,18 @@ from login.email import send_password_reset_email
 from login.models import FailedLoginAttempt
 
 
+class LockoutError(ValidationError):
+    """A validation error due to temporary account lockout"""
+
+    pass
+
+
+class PasswordExpiredError(ValidationError):
+    """A validation error due to password expiration"""
+
+    pass
+
+
 class PasswordValidationMixin:
     password_key = "new_password"  # nosec
     user_attribute = "user"
@@ -69,6 +81,11 @@ class LoginForm(AuthenticationForm):
     def clean(self):
         try:
             return super().clean()
+        except (LockoutError, PasswordExpiredError) as e:
+            # The user authenticated correctly, but either they are under a
+            # temporary lockout or their password has expired.
+            # Propogate the exception without recording this as a failed login.
+            raise e
         except ValidationError as e:
             # The Django AuthenticationForm raised a validation error because
             # it could not authenticate the username/password combination.
@@ -103,7 +120,7 @@ class LoginForm(AuthenticationForm):
                 expires_at=lockout_expires
             )
             lockout.save()
-            raise ValidationError(
+            raise LockoutError(
                 self.error_messages["temporary_lock"],
                 code="temporary_lock",
             )
@@ -126,7 +143,7 @@ class LoginForm(AuthenticationForm):
         now = timezone.now()
         lockout_query = user.temporarylockout_set.filter(expires_at__gt=now)
         if lockout_query.count() > 0:
-            raise ValidationError(
+            raise LockoutError(
                 self.error_messages["temporary_lock"],
                 code="temporary_lock",
             )
@@ -137,7 +154,7 @@ class LoginForm(AuthenticationForm):
             current_password_data = user.passwordhistoryitem_set.latest()
 
             if dt_now > current_password_data.expires_at:
-                raise ValidationError(
+                raise PasswordExpiredError(
                     self.error_messages["password_expired"],
                     code="password_expired",
                 )
