@@ -148,7 +148,7 @@ if SAML_AUTH:
         root_url=SAML_ROOT_URL,
         acs_path=reverse_lazy("saml2_acs"),
     )
-    ACS_DEFAULT_REDIRECT_URL = reverse_lazy("check_permissions")
+    ACS_DEFAULT_REDIRECT_URL = reverse_lazy("wagtailadmin_home")
 
     # Configure PySAML2 for our identity provider
     SAML_CONFIG = {
