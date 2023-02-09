@@ -130,7 +130,7 @@ class LoginFormTestCase(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_successful_login_object_dne(self):
-        """Clear password history to and then successfully login"""
+        """Clear password history and then successfully login"""
         User.objects.get(
             username="admin"
         ).passwordhistoryitem_set.all().delete()

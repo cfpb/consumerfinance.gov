@@ -52,26 +52,19 @@ class CFGOVSetPasswordForm(PasswordValidationMixin, SetPasswordForm):
 
 
 class LoginForm(AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.error_messages = dict(
-            super().error_messages,
-            **{
-                "temporary_lock": (
-                    "This account is temporarily locked; "
-                    'please try later or <a href="/admin/password_reset/" '
-                    'style="color:white;font-weight:bold">'
-                    "reset your password</a>."
-                ),
-                "password_expired": (
-                    "Your password has expired. Please "
-                    '<a href="/admin/password_reset/" '
-                    'style="color:white;font-weight:bold">'
-                    "reset your password</a>."
-                ),
-            },
-        )
+    error_messages = {
+        "temporary_lock": (
+            "This account is temporarily locked; please try later or "
+            '<a href="/admin/password_reset/" style="color:white;font-weight:bold">'
+            "reset your password</a>."
+        ),
+        "password_expired": (
+            "Your password has expired. Please "
+            '<a href="/admin/password_reset/" style="color:white;font-weight:bold">'
+            "reset your password</a>."
+        ),
+        **AuthenticationForm.error_messages,
+    }
 
     def clean(self):
         try:
@@ -91,11 +84,7 @@ class LoginForm(AuthenticationForm):
         try:
             user = UserModel._default_manager.get(username=username)
         except ObjectDoesNotExist:
-            raise ValidationError(
-                self.error_messages["invalid_login"],
-                code="invalid_login",
-                params={"username": self.username_field.verbose_name},
-            )
+            raise self.get_invalid_login_error()
 
         fa, created = FailedLoginAttempt.objects.get_or_create(user=user)
         now = time.time()
