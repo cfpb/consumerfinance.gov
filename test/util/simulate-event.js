@@ -13,14 +13,16 @@ function simulateEvent(eventType, target, eventOption = {}) {
       cancelable: true,
       view: window,
     });
+    // TODO: migrate to KeyBoardEvent, etc.
   } else {
     event = window.document.createEvent('Event', eventOption.currentTarget);
-  }
-  if (eventOption && eventOption.keyCode) {
-    event.keyCode = eventOption.keyCode;
+    event.initEvent(eventType, true, true);
+
+    if (eventOption && eventOption.keyCode) {
+      event.keyCode = eventOption.keyCode;
+    }
   }
 
-  event.initEvent(eventType, true, true);
   return target.dispatchEvent(event);
 }
 
