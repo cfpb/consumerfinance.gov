@@ -918,7 +918,7 @@ function registerEvents() {
    */
   function NoCalcOnForbiddenKeys(event) {
     const element = event.target;
-    const key = event.keyCode;
+    const key = event.key;
 
     // Don't recalculate on TAB or arrow keys.
     if (isKeyAllowed(key) || element.classList.contains('a-range')) {
