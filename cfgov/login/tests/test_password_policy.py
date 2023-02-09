@@ -7,8 +7,7 @@ from django.test import TestCase
 from django.utils import timezone
 
 import login.utils as password_policy
-
-from v1.models import PasswordHistoryItem
+from login.models import PasswordHistoryItem
 
 
 PASSWORD_RULES = [
