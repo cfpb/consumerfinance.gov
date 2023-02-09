@@ -15,7 +15,6 @@ from regulations3k.scripts.insert_section_links import (
 
 
 class LinkScriptTestCase(TestCase):
-
     fixtures = ["tree_limb"]
 
     def test_bad_part_number_is_skipped(self):

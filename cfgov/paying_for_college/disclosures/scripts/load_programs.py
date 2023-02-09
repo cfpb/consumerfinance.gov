@@ -27,7 +27,6 @@ To run the script, use this manage.py command:
 
 
 class ProgramSerializer(serializers.Serializer):
-
     # required fields
     ipeds_unit_id = serializers.CharField(max_length=6)  # '210960'
     program_code = serializers.CharField(max_length=255)
@@ -142,7 +141,6 @@ def strip_control_chars(ustring):
 
 
 def clean(data):
-
     number_fields = (
         "program_level",
         "program_length",
@@ -262,7 +260,6 @@ def load(source, s3=False):
 
         else:  # There is error
             for key, error_list in dict.items(serializer.errors):
-
                 fail_msg = "ERROR on row {}: {}: ".format(
                     raw_data.index(row) + 1, key
                 )

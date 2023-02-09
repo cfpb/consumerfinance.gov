@@ -8,14 +8,35 @@
 #rental-assistance-finder .m-form-field + .m-form-field {
   margin-top: 15px;
 }
+
+#rental-assistance-finder .result-item div.status-row {
+  margin-top: 15px;
+}
+
+#rental-assistance-finder .result-item dd.status-accepting,
+#rental-assistance-finder .result-item dd.status-rolling {
+  background-color: #e2efd8;  
+}
+
+#rental-assistance-finder .result-item dd.status-waitlist {
+  background-color: #fff0dd;  
+}
+
+#rental-assistance-finder .result-item dd.status-unknown {
+  background-color: #d2d3d5;  
+}
 </style>
 
 <div id="rental-assistance-finder"
      data-language="{{ page.language if page and page.language else 'en' }}"
+     {% if flag_enabled('RAFT_TESTING') %}
+     beta-testing="true"
+     {% endif %}
      {% if value.county_threshold %}
      data-county-threshold={{ value.county_threshold }}
      {% endif %}>
 </div>
+
 
 <div class="js-is-hidden">
   {% import 'v1/includes/molecules/notification.html' as notification with context %}

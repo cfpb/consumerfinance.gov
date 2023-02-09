@@ -5,6 +5,10 @@ import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
 
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 import {
+  addEventListenerToSelector,
+  track,
+} from '../../../apps/analytics-gtm/js/util/analytics-util';
+import {
   DESKTOP,
   viewportIsIn,
 } from '../../../js/modules/util/breakpoint-state.js';
@@ -94,6 +98,15 @@ const init = () => {
   if (!viewportIsIn(DESKTOP)) {
     appRoot.addEventListener('click', handleMobileNav);
   }
+
+  // Track clicks on the FIG sidebar nav links
+  addEventListenerToSelector('.o-fig_sidebar .m-nav-link', 'click', (event) => {
+    track(
+      'Small Business Lending FIG event',
+      'toc:click',
+      event.target?.innerText
+    );
+  });
 };
 
 export { init };

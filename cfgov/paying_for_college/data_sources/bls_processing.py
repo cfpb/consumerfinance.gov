@@ -45,14 +45,12 @@ OUT_FILE = "paying_for_college/fixtures/bls_data.json"
 
 
 def load_bls_data(csvfile):
-
     with open(csvfile, "rU") as f:
         reader = cdr(f)
         return [row for row in reader]
 
 
 def add_bls_dict_with_region(base_bls_dict, region, csvfile):
-
     CATEGORIES_KEY_MAP = {
         "Food": "Food",
         "Housing": "Housing",
@@ -109,7 +107,6 @@ def add_bls_dict_with_region(base_bls_dict, region, csvfile):
 
 
 def bls_as_dict(we_csvfile, ne_csvfile, mw_csvfile, so_csvfile):
-
     bls_dict = {
         "Food": {"note": "Dining out and in; all food costs"},
         "Housing": {"note": "Mortgage, rent, utilities, insurance"},
@@ -143,7 +140,6 @@ def create_bls_json_file(
     mw_csvfile=MW_CSVFILE,
     so_csvfile=SO_CSVFILE,
 ):
-
     with open(OUT_FILE, "w") as outfile:
         bls_dict = bls_as_dict(we_csvfile, ne_csvfile, mw_csvfile, so_csvfile)
         json.dump(bls_dict, outfile)

@@ -149,7 +149,6 @@ class FilterableListInvalidationTestCase(TestCase):
 
 
 class RefreshActivitiesTestCase(DjangoTestCase):
-
     fixtures = ["tdp_minimal_data"]
 
     def setUp(self):

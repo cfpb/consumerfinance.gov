@@ -7,7 +7,6 @@ from data_research.mortgage_utilities.fips_meta import load_constants
 
 
 class LoadConstantsTest(django.test.TestCase):
-
     fixtures = ["mortgage_constants.json", "mortgage_metadata.json"]
 
     @mock.patch("data_research.mortgage_utilities.fips_meta.FIPS")

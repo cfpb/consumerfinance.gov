@@ -150,7 +150,6 @@ class TaggingTests(django.test.TestCase):
 
 
 class PurgeTests(django.test.TestCase):
-
     fixtures = ["test_fixture.json", "test_program.json"]
 
     def test_purges(self):
@@ -169,7 +168,6 @@ class PurgeTests(django.test.TestCase):
 
 
 class TestScripts(django.test.TestCase):
-
     fixtures = ["test_fixture.json", "test_contacts.json"]
     api_fixture = "{}/fixtures/sample_4yr_api_result.json".format(COLLEGE_ROOT)
 

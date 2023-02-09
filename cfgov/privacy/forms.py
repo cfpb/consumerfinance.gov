@@ -92,7 +92,7 @@ class PrivacyActForm(forms.Form):
     # Form validations
     def escaped_fields(self):
         data = {}
-        for (key, value) in self.cleaned_data.items():
+        for key, value in self.cleaned_data.items():
             data.update({key: escape(value)})
         return data
 
