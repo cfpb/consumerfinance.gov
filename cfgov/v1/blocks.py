@@ -1,11 +1,8 @@
-from django.template.loader import render_to_string
-from django.utils.safestring import SafeText, mark_safe
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
 from wagtail.core import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
-
-from bs4 import BeautifulSoup
 
 from v1.util.util import get_unique_id
 
@@ -80,63 +77,6 @@ class HeadingBlock(blocks.StructBlock):
         template = "v1/includes/blocks/heading.html"
         form_template = (
             "admin/form_templates/struct-with-block-wrapper-classes.html"
-        )
-
-
-class PlaceholderFieldBlock(blocks.FieldBlock):
-    """
-    Provides a render_form method that outputs a block
-    placeholder, for use in a custom form_template.
-    """
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.placeholder = kwargs.pop("placeholder", None)
-
-    def render_form(self, *args, **kwargs):
-        # pragma: no cover
-        prefix = ""
-        value = "{}".format(*args)
-        html = render_to_string(
-            "v1/placeholderfieldblock_field.html",
-            {
-                "name": self.name,
-                "classes": getattr(
-                    self.meta, "form_classname", self.meta.classname
-                ),
-                "widget": self.field.widget.render(
-                    prefix,
-                    self.field.prepare_value(self.value_for_form(value)),
-                    attrs={"id": format(prefix), "placeholder": self.label},
-                ),
-                "field": self.field,
-                "errors": None,
-            },
-        )
-
-        if self.placeholder is not None:
-            html = self.replace_placeholder(html, self.placeholder)
-
-        return html
-
-    @staticmethod
-    def replace_placeholder(html, placeholder):
-        soup = BeautifulSoup(html, "html.parser")
-        inputs = soup.findAll("input")
-
-        if 1 != len(inputs):
-            raise ValueError("block must contain a single input tag")
-
-        inputs[0]["placeholder"] = placeholder
-
-        return SafeText(soup)
-
-
-class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
-    class Meta:
-        icon = "placeholder"
-        form_template = (
-            "admin/form_templates/struct_block_with_render_form.html"
         )
 
 
