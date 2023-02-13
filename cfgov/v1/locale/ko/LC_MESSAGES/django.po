@@ -165,11 +165,11 @@ msgstr ""
 
 #: v1/jinja2/v1/includes/organisms/expandable.html:56
 msgid "Show"
-msgstr ""
+msgstr "표시"
 
 #: v1/jinja2/v1/includes/organisms/expandable.html:64
 msgid "Hide"
-msgstr ""
+msgstr "숨기기"
 
 #: v1/jinja2/v1/includes/organisms/footer.html:32
 msgid "Back to top"
