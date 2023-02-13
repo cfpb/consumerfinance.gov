@@ -296,6 +296,7 @@ WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
 WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
 
+WAGTAILADMIN_USER_LOGIN_FORM = "login.forms.LoginForm"
 WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
@@ -590,12 +591,6 @@ FLAGS = {
     "PATH_MATCHES_FOR_QUALTRICS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
-    # RAFT Testing
-    "RAFT_TESTING": [
-        ("environment is", "beta"),
-        ("after date", "2023-01-22"),
-        ("before date", "2023-01-31"),
-    ],
 }
 
 # We want the ability to serve the latest drafts of some pages on beta
