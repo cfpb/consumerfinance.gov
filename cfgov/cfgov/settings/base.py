@@ -736,3 +736,9 @@ except (TypeError, ValueError):
 # A list of domain names that are allowed to be linked to without adding the
 # interstitial page.
 ALLOWED_LINKS_WITHOUT_INTERSTITIAL = ("public.govdelivery.com",)
+
+# Base URL to use when referring to full URLs within the Wagtail admin backend -
+# e.g. in notification emails. Don't include '/admin' or a trailing slash
+WAGTAILADMIN_BASE_URL = os.getenv(
+    "WAGTAILADMIN_BASE_URL", "http://localhost:8000"
+)
