@@ -23,6 +23,10 @@
   overflow: visible !important;
 }
 
+.handsontable .wtHider {
+  height: auto !important;
+}
+
 .heading-text-block,
 .heading-level-block,
 .heading-icon-block {
