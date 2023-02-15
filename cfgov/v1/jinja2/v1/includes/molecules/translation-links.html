@@ -26,7 +26,7 @@
 
     ======================================================================== #}
 
-{%- if page and not value %}
+{%- if page %}
     {% set value = {
         "language": language | default( "en" ),
         "links": page.get_translation_links( request ),
