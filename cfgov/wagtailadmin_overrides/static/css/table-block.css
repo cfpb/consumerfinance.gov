@@ -29,6 +29,10 @@
   vertical-align: top;
 }
 
+.handsontable td {
+  cursor: pointer;
+}
+
 .table-block-modal {
   box-sizing: border-box;
   display: none;

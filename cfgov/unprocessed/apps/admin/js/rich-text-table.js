@@ -193,6 +193,17 @@ function richTextTable(Handsontable) {
     body.removeEventListener('mousedown', _handleModalClicks);
   };
 
+  /**
+   * This is an override extension of https://github.com/handsontable/handsontable/blob/c2ba2dc02e3eb883a58f976ef5944fa629dc981d/src/editors/textEditor.js#L80-L83
+   * to ensure the top and left positions are cleared when the editor is shown.
+   */
+  RichTextEditor.prototype.showEditableElement = function () {
+    this.textareaParentStyle.zIndex =
+      this.holderZIndex >= 0 ? this.holderZIndex : '';
+    this.textareaParentStyle.position = '';
+    this.textareaParentStyle.top = 0;
+  };
+
   // Register the rich text editor
   Handsontable.editors.RichTextEditor = RichTextEditor;
   Handsontable.editors.registerEditor('RichTextEditor', RichTextEditor);
