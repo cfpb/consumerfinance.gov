@@ -195,7 +195,7 @@ function richTextTable(Handsontable) {
 
   /**
    * This is an override extension of https://github.com/handsontable/handsontable/blob/c2ba2dc02e3eb883a58f976ef5944fa629dc981d/src/editors/textEditor.js#L80-L83
-   * to ensure the top and left positions are cleared when the editor is shown.
+   * to ensure the top position is cleared when the editor is shown.
    */
   RichTextEditor.prototype.showEditableElement = function () {
     this.textareaParentStyle.zIndex =
@@ -559,6 +559,11 @@ window.initAtomicTable = initAtomicTable;
 class RichTextTableInput {
   constructor(options) {
     this.options = options;
+
+    // Setting preventOverflow to true sets mainTableScrollableElement to the window,
+    // which prevents scrolling to the top on click of the table cells.
+    // Used in the condition on https://github.com/handsontable/handsontable/blob/6a1706061163b8d1f7752e54ef6f10efbc764b8b/handsontable/src/3rdparty/walkontable/src/overlay/_base.js#L300
+    this.options.preventOverflow = true;
   }
 
   render(placeholder, name, id, initialState) {
