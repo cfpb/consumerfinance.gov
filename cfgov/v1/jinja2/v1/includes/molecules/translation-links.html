@@ -28,7 +28,7 @@
 
 {%- if page %}
     {% set value = {
-        "language": language | default( "en" ),
+        "language": ( language or page.language )| default( "en" ),
         "links": page.get_translation_links( request ),
     } %}
 {% endif -%}
