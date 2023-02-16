@@ -38,7 +38,12 @@
     {% if filter_page_url and page.categories.count() > 0 and value.show_category %}
         {{ category_slug.render(category=page.categories.first().name, href=filter_page_url) }}
     {% endif %}
-    <h1>{{ value.heading | safe }}</h1>
+
+    {% if value.heading -%}
+        <h1>{{ value.heading | safe }}</h1>
+
+        {% include "v1/includes/molecules/translation-links.html" %}
+    {%- endif %}
 
     {% if value.paragraph %}
         <div class="lead-paragraph">{{ value.paragraph | safe }}</div>

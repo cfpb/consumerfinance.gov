@@ -1,9 +1,8 @@
 from unittest import mock
 
 from django.test import TestCase
-from django.utils.safestring import SafeText
 
-from v1.blocks import AnchorLink, PlaceholderCharBlock, RAFTBlock
+from v1.blocks import AnchorLink, RAFTBlock
 
 
 class TestAnchorLink(TestCase):
@@ -44,65 +43,6 @@ class TestAnchorLink(TestCase):
 
         assert "anchor_" in result["link_id"]
         assert self.stringContainsNumbers(result["link_id"])
-
-
-class TestPlaceholderBlock(TestCase):
-    def setUp(self):
-        self.char_block = PlaceholderCharBlock()
-        self.placeholder = PlaceholderCharBlock(placeholder="Hi there!")
-
-    def test_render_no_placeholder_provided(self):
-        html = self.char_block.render_form("Hello world!")
-        self.assertInHTML(
-            (
-                '<input id="" name="" placeholder="" '
-                'type="text" value="Hello world!" />'
-            ),
-            html,
-        )
-
-    def test_render_no_placeholder_returns_safetext(self):
-        html = self.char_block.render_form("Hello world!")
-        self.assertIsInstance(html, SafeText)
-
-    def test_render_with_placeholder(self):
-        html = self.placeholder.render_form("Hello world!")
-        self.assertIn(
-            (
-                '<input id="" name="" placeholder="Hi there!" '
-                'type="text" value="Hello world!"/>'
-            ),
-            html,
-        )
-
-    def test_render_returns_safetext(self):
-        html = self.placeholder.render_form("Hello world!")
-        self.assertIsInstance(html, SafeText)
-
-    def test_replace_placeholder(self):
-        html = '<input id="foo" placeholder="a" />'
-        replaced = PlaceholderCharBlock.replace_placeholder(html, "b")
-        self.assertEqual(replaced, '<input id="foo" placeholder="b"/>')
-
-    def test_replace_placeholder_quotes(self):
-        html = '<input id="foo" placeholder="&quot;a&quot;" />'
-        replaced = PlaceholderCharBlock.replace_placeholder(html, '"b"')
-        self.assertEqual(replaced, '<input id="foo" placeholder=\'"b"\'/>')
-
-    def test_replace_placeholder_no_placeholder(self):
-        html = '<input id="foo" />'
-        replaced = PlaceholderCharBlock.replace_placeholder(html, "a")
-        self.assertEqual(replaced, '<input id="foo" placeholder="a"/>')
-
-    def test_no_inputs_raises_valueerror(self):
-        html = "<div>something</div>"
-        with self.assertRaises(ValueError):
-            PlaceholderCharBlock.replace_placeholder(html, "a")
-
-    def test_multiple_inputs_raises_valueerror(self):
-        html = '<input id="foo" /><input id="bar" />'
-        with self.assertRaises(ValueError):
-            PlaceholderCharBlock.replace_placeholder(html, "a")
 
 
 class RAFTBlockTestCase(TestCase):
