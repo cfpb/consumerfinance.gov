@@ -20,7 +20,6 @@ const blocklist = [
   '.yarnrc',
   'yarn.lock',
   'package.json',
-  'config.json',
   '.gitkeep',
   'root',
 ];
