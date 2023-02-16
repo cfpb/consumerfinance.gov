@@ -43,9 +43,11 @@
     {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
     {% call() expandable(sec_nav_settings) %}
         {% import 'v1/includes/molecules/nav-link.html' as nav_link %}
-        <p class="u-hide-on-desktop">
-            Effective {{ effective_start_date }} to {{ effective_end_date }}
-        </p>
+        {% if version_status %}
+            <p class="u-hide-on-desktop">
+                Effective {{ effective_start_date }} to {{ effective_end_date }}
+            </p>
+        {% endif %}
         <div id="ctrl-f"></div>
         <ul class="m-list
                  m-list__unstyled

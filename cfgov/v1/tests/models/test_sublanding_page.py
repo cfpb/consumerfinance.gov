@@ -2,7 +2,7 @@ import datetime as dt
 import json
 from io import StringIO
 
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 
 from scripts import _atomic_helpers as atomic
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
@@ -95,3 +95,17 @@ class SublandingPageTestCase(ElasticsearchTestsMixin, TestCase):
         posts = self.sublanding_page.get_browsefilterable_posts(self.limit)
         self.assertEqual(len(posts), 1)
         self.assertEqual(self.child1_of_post2, posts[0])
+
+
+class TestSublandingPageHasHero(SimpleTestCase):
+    def test_no_hero(self):
+        self.assertFalse(SublandingPage().has_hero)
+
+    def test_has_hero(self):
+        self.assertTrue(
+            SublandingPage(
+                header=json.dumps(
+                    [{"type": "hero", "value": {"heading": "Heading"}}]
+                )
+            ).has_hero
+        )
