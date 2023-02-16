@@ -1,4 +1,7 @@
-import config from '../../config.json';
+const config = {
+  rateCheckerAPI: '/oah-api/rates/rate-checker',
+  countyAPI: '/oah-api/county/',
+};
 
 /**
  * Get data from the API.
