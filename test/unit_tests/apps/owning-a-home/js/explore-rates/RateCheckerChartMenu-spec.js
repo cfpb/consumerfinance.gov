@@ -1,9 +1,6 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
-const RateCheckerChartMenu = require(BASE_JS_PATH +
-  'js/explore-rates/RateCheckerChartMenu').default;
-
-const Highcharts = require(BASE_JS_PATH + 'node_modules/highcharts');
-
+import { jest } from '@jest/globals';
+import RateCheckerChartMenu from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/RateCheckerChartMenu.js';
+import Highcharts from '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/highcharts';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 
 const STATE_OPEN = 'open';
@@ -104,22 +101,22 @@ describe('explore-rates/RateCheckerChartMenu', () => {
     it('should set proper classes on the menu DOM', () => {
       chartMenu.open();
       expect(chartMenu.state).toStrictEqual(STATE_OPEN);
-      expect(
-        chartMenuDOM.classList.contains('chart-menu__open')
-      ).toStrictEqual(true);
+      expect(chartMenuDOM.classList.contains('chart-menu__open')).toStrictEqual(
+        true
+      );
     });
   });
 
   describe('onClick()', () => {
     it('should set proper classes when the menu button is clicked', () => {
       simulateEvent('click', chartMenuBtnDOM);
-      expect(
-        chartMenuDOM.classList.contains('chart-menu__open')
-      ).toStrictEqual(true);
+      expect(chartMenuDOM.classList.contains('chart-menu__open')).toStrictEqual(
+        true
+      );
       simulateEvent('click', chartMenuBtnDOM);
-      expect(
-        chartMenuDOM.classList.contains('chart-menu__open')
-      ).toStrictEqual(false);
+      expect(chartMenuDOM.classList.contains('chart-menu__open')).toStrictEqual(
+        false
+      );
     });
 
     it('should set proper state when the menu button is clicked', () => {

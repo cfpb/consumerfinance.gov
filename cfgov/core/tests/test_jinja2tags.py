@@ -111,3 +111,27 @@ class SlugifyUniqueTests(SimpleTestCase):
                 self.render(self.template, {"request": HttpRequest()}),
                 "some-text",
             )
+
+
+class LanguageTagTests(SimpleTestCase):
+    def setUp(self):
+        self.engine = engines["wagtail-env"]
+
+    def render(self, template):
+        return self.engine.from_string(template).render()
+
+    def test_english_translation(self):
+        self.assertEqual(
+            self.render(
+                "{% language 'en' %}{{ _( 'English' ) }}{% endlanguage %}"
+            ),
+            "English",
+        )
+
+    def test_spanish_translation(self):
+        self.assertEqual(
+            self.render(
+                "{% language 'es' %}{{ _( 'English' ) }}{% endlanguage %}"
+            ),
+            "Inglés",
+        )

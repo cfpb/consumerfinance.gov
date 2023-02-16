@@ -1,4 +1,10 @@
-import * as behavior from '../../../../../cfgov/unprocessed/js/modules/util/behavior.js';
+import { jest } from '@jest/globals';
+import {
+  attach,
+  checkBehaviorDom,
+  find,
+  remove,
+} from '../../../../../cfgov/unprocessed/js/modules/util/behavior';
 
 let containerDom;
 let behaviorElmDom;
@@ -46,23 +52,23 @@ describe('behavior', () => {
     it('should register an event callback when passed a Node', () => {
       const spy = jest.fn();
       const linkDom = document.querySelector('a[href^="#"]');
-      behavior.attach(linkDom, 'click', spy);
+      attach(linkDom, 'click', spy);
       triggerEvent(linkDom, 'click');
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
     it('should register an event callback when passed a NodeList', () => {
       const spy = jest.fn();
-      const behaviorDom = behavior.find('flyout-menu_trigger');
-      behavior.attach(behaviorDom, 'mouseover', spy);
+      const behaviorDom = find('flyout-menu_trigger');
+      attach(behaviorDom, 'mouseover', spy);
       triggerEvent(behaviorDom[0], 'mouseover');
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
     it('should register an event callback when passed a behavior selector', () => {
       const spy = jest.fn();
-      const behaviorDom = behavior.find('flyout-menu_trigger');
-      behavior.attach('flyout-menu_trigger', 'mouseover', spy);
+      const behaviorDom = find('flyout-menu_trigger');
+      attach('flyout-menu_trigger', 'mouseover', spy);
       triggerEvent(behaviorDom[0], 'mouseover');
       expect(spy).toHaveBeenCalledTimes(1);
     });
@@ -70,7 +76,7 @@ describe('behavior', () => {
     it('should register an event callback when passed a dom selector', () => {
       const spy = jest.fn();
       const linkDom = document.querySelector('a[href^="#"]');
-      behavior.attach('a[href^="#"]', 'click', spy);
+      attach('a[href^="#"]', 'click', spy);
       triggerEvent(linkDom, 'click');
       expect(spy).toHaveBeenCalledTimes(1);
     });
@@ -84,7 +90,7 @@ describe('behavior', () => {
        *
        */
       function errFunc() {
-        behavior.checkBehaviorDom(null, 'behavior_flyout-menu');
+        checkBehaviorDom(null, 'behavior_flyout-menu');
       }
       expect(errFunc).toThrow(Error, errMsg);
     });
@@ -95,7 +101,7 @@ describe('behavior', () => {
        *
        */
       function errFunc() {
-        behavior.checkBehaviorDom(containerDom, 'mock-attr');
+        checkBehaviorDom(containerDom, 'mock-attr');
       }
       expect(errFunc).toThrow(Error, errMsg);
     });
@@ -104,10 +110,7 @@ describe('behavior', () => {
       'should return the correct HTMLElement ' +
         'when direct element is searched',
       () => {
-        const dom = behavior.checkBehaviorDom(
-          containerDom,
-          'behavior_flyout-menu'
-        );
+        const dom = checkBehaviorDom(containerDom, 'behavior_flyout-menu');
         expect(dom).toStrictEqual(containerDom);
       }
     );
@@ -116,7 +119,7 @@ describe('behavior', () => {
       'should return the correct HTMLElement ' +
         'when child element is searched',
       () => {
-        const dom = behavior.checkBehaviorDom(
+        const dom = checkBehaviorDom(
           behaviorElmDom,
           'behavior_flyout-menu_content'
         );
@@ -127,9 +130,9 @@ describe('behavior', () => {
 
   describe('find function', () => {
     it('should find all elements with the specific behavior hook', () => {
-      let behaviorDom = behavior.find('flyout-menu_trigger');
+      let behaviorDom = find('flyout-menu_trigger');
       expect(behaviorDom.length === 2).toBe(true);
-      behaviorDom = behavior.find('flyout-menu_content');
+      behaviorDom = find('flyout-menu_content');
       expect(behaviorDom.length === 1).toBe(true);
     });
 
@@ -137,7 +140,7 @@ describe('behavior', () => {
       const behaviorSelector = 'a[href^="#"]';
       const errorMsg =
         '[data-js-hook*=behavior_' + behaviorSelector + '] not found in DOM!';
-      const findFunction = behavior.find.bind(this, behaviorSelector);
+      const findFunction = find.bind(this, behaviorSelector);
       expect(findFunction).toThrow(Error, errorMsg);
     });
   });
@@ -146,11 +149,11 @@ describe('behavior', () => {
     it('should remove the event callback for the specific behavior hook', () => {
       const spy = jest.fn();
       const linkDom = document.querySelector('a[href^="#"]');
-      behavior.attach(linkDom, 'click', spy);
+      attach(linkDom, 'click', spy);
       triggerEvent(linkDom, 'click');
       expect(spy).toHaveBeenCalledTimes(1);
       spy.mockReset();
-      behavior.remove(linkDom, 'click', spy);
+      remove(linkDom, 'click', spy);
       triggerEvent(linkDom, 'click');
       expect(spy).toHaveBeenCalledTimes(0);
     });

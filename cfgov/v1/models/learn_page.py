@@ -14,6 +14,7 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
+    PageChooserPanel,
     StreamFieldPanel,
     TabbedInterface,
 )
@@ -22,7 +23,6 @@ from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.search import index
 
 from localflavor.us.models import USStateField
 
@@ -94,13 +94,17 @@ class AbstractFilterPage(CFGOVPage):
             classname="collapsible",
         ),
         MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
-        FieldPanel("language", "Language"),
+        MultiFieldPanel(
+            [
+                FieldPanel("language", "Language"),
+                PageChooserPanel("english_page"),
+            ],
+            "Translation",
+        ),
     ]
 
     # This page class cannot be created.
     is_creatable = False
-
-    search_fields = CFGOVPage.search_fields + [index.SearchField("header")]
 
     @classmethod
     def generate_edit_handler(self, content_panel):
@@ -159,10 +163,6 @@ class LearnPage(AbstractFilterPage):
 
     page_description = "Right-hand sidebar, no left-hand sidebar."
 
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField("content")
-    ]
-
 
 class DocumentDetailPage(AbstractFilterPage):
     content = StreamField(
@@ -183,10 +183,6 @@ class DocumentDetailPage(AbstractFilterPage):
         content_panel=StreamFieldPanel("content")
     )
     template = "v1/document-detail/index.html"
-
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField("content")
-    ]
 
 
 class AgendaItemBlock(blocks.StructBlock):
@@ -343,16 +339,6 @@ class EventPage(AbstractFilterPage):
 
     # Agenda content fields
     agenda_items = StreamField([("item", AgendaItemBlock())], blank=True)
-
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField("body"),
-        index.SearchField("archive_body"),
-        index.SearchField("live_video_id"),
-        index.SearchField("flickr_url"),
-        index.SearchField("archive_video_id"),
-        index.SearchField("future_body"),
-        index.SearchField("agenda_items"),
-    ]
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [

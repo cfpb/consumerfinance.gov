@@ -1,6 +1,8 @@
+import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 import { bindAnalytics } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js';
-import HTML_SNIPPET from '../../html/shared-results-page-analytics';
+
+import HTML_SNIPPET from '../../html/shared-results-page-analytics.js';
 
 const xhr = global.XMLHttpRequest;
 
@@ -36,7 +38,7 @@ describe('Custom analytics for the TDP survey results page', () => {
 
     simulateEvent('click', target);
 
-    expect(spy.mock.calls[0][0]).toEqual('View Dropdown: Expand');
+    expect(spy.mock.calls[0][0]).toEqual('Results Dropdown: Expand');
     expect(spy.mock.calls[0][1]).toEqual('9-12: Planning and self-control');
     expect(spy).toHaveBeenCalled();
   });

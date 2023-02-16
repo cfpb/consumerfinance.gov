@@ -4,7 +4,7 @@ import isElementInView from '../utils/is-element-in-view.js';
 import nextStepsView from './next-steps-view.js';
 import numToMoney from '../utils/num-to-money.js';
 import questionsView from './questions-view.js';
-import handleStringInput from '../utils/handle-string-input.js';
+import { convertStringToNumber } from '../../../../js/modules/util/format.js';
 import validDates from '../utils/valid-dates.js';
 
 // TODO: remove jquery.
@@ -132,7 +132,8 @@ function init() {
 
   // reformat salary
   $('#salary-input').blur(function () {
-    const salaryNumber = handleStringInput($('#salary-input').val()),
+    const salaryInputElm = document.querySelector('#salary-input');
+    const salaryNumber = convertStringToNumber(salaryInputElm.value),
       salary = numToMoney(salaryNumber);
     $('#salary-input').val(salary);
   });
@@ -244,7 +245,8 @@ function validateBirthdayFields() {
 function getYourEstimates() {
   const dataLang = document.querySelector('html').getAttribute('lang');
   const dates = validateBirthdayFields();
-  const salary = handleStringInput($('#salary-input').val());
+  const salaryInputElm = document.querySelector('#salary-input');
+  const salary = convertStringToNumber(salaryInputElm.value);
   let SSData;
 
   // Hide warnings, show loading indicator
@@ -568,8 +570,7 @@ function drawBars() {
  */
 function drawGraphBackground() {
   const barInterval = graphSettings.graphHeight / 4;
-  const totalWidth =
-    graphSettings.barWidth * 9 + graphSettings.gutterWidth * 8;
+  const totalWidth = graphSettings.barWidth * 9 + graphSettings.gutterWidth * 8;
   let yCoord = graphSettings.graphHeight - barInterval;
   const $backgroundBars = $('[data-bg-bar-number]');
 

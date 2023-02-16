@@ -5,16 +5,18 @@ import Analytics from '../utils/Analytics.js';
 import getFinancial from '../dispatchers/get-financial-values.js';
 import getExpenses from '../dispatchers/get-expenses-values.js';
 import publish from '../dispatchers/publish-update.js';
-import stringToNum from '../utils/handle-string-input.js';
-import formatUSD from 'format-usd';
+import {
+  convertStringToNumber,
+  formatUSD,
+} from '../../../../../js/modules/util/format.js';
 import { toWords } from 'number-to-words';
 import linksView from '../views/links-view.js';
 import metricView from '../views/metric-view.js';
 import expensesView from '../views/expenses-view.js';
 import postVerification from '../dispatchers/post-verify.js';
 
-window.jQuery = window.$ = $;
-require('../../../node_modules/sticky-kit/dist/sticky-kit.js');
+import stickyKit from '../utils/sticky-kit-esm.js';
+stickyKit($);
 
 const getDataLayerOptions = Analytics.getDataLayerOptions;
 
@@ -344,9 +346,7 @@ const financialView = {
     } else {
       this.gradPlusVisible(false);
       this.pellGrantsVisible(typeof urlvalues.pell !== 'undefined');
-      this.subsidizedVisible(
-        typeof urlvalues.directSubsidized !== 'undefined'
-      );
+      this.subsidizedVisible(typeof urlvalues.directSubsidized !== 'undefined');
     }
   },
 
@@ -435,9 +435,7 @@ const financialView = {
       $container.find('[data-private-loan]:last .aid-form_input').val('0');
       publish.addPrivateLoan();
       financialView.updateView(getFinancial.values());
-      Analytics.sendEvent(
-        getDataLayerOptions('Private Loan Changed', 'Added')
-      );
+      Analytics.sendEvent(getDataLayerOptions('Private Loan Changed', 'Added'));
     });
   },
 
@@ -497,7 +495,7 @@ const financialView = {
    */
   inputHandler: function (id) {
     const $ele = $('#' + id);
-    let value = stringToNum($ele.val());
+    let value = convertStringToNumber($ele.val());
     const key = $ele.attr('data-financial');
     const privateLoanKey = $ele.attr('data-private-loan_key');
     const percentage = $ele.attr('data-percentage_value');
@@ -943,9 +941,7 @@ const financialView = {
     $('[data-financial]').one('change', function () {
       const dataFinancial = $(this).data('financial');
       if (dataFinancial) {
-        Analytics.sendEvent(
-          getDataLayerOptions('Value Edited', dataFinancial)
-        );
+        Analytics.sendEvent(getDataLayerOptions('Value Edited', dataFinancial));
       }
     });
   },

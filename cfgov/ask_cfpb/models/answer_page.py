@@ -12,8 +12,6 @@ from wagtail.admin.edit_handlers import (
     TabbedInterface,
 )
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
-from wagtail.search import index
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
@@ -201,19 +199,15 @@ class AnswerPage(CFGOVPage):
         help_text="Include share and print buttons above answer.",
     )
 
-    # TODO: When we've updated to Wagtail 2.13.x remove the help_text
-    # and set the block_count for the notification to 1.
-    # See https://git.io/JODqS
     notification = StreamField(
         [
             (
                 "notification",
-                molecules.Notification(
-                    help_text="Include only one notification."
-                ),
+                molecules.Notification(),
             )
         ],
         blank=True,
+        max_num=1,
     )
 
     content_panels = CFGOVPage.content_panels + [
@@ -291,11 +285,6 @@ class AnswerPage(CFGOVPage):
 
     sidebar_panels = [
         StreamFieldPanel("sidebar"),
-    ]
-
-    search_fields = Page.search_fields + [
-        index.SearchField("answer_content"),
-        index.SearchField("short_answer"),
     ]
 
     edit_handler = TabbedInterface(

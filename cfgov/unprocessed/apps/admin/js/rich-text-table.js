@@ -126,9 +126,7 @@ function richTextTable(Handsontable) {
   RichTextEditor.prototype.setValue = function (value) {
     let contentState;
 
-    const blocksFromHTML = value
-      ? window.DraftJS.convertFromHTML(value)
-      : null;
+    const blocksFromHTML = value ? window.DraftJS.convertFromHTML(value) : null;
     if (blocksFromHTML && blocksFromHTML.contentBlocks) {
       contentState = window.DraftJS.ContentState.createFromBlockArray(
         blocksFromHTML.contentBlocks,
@@ -230,9 +228,7 @@ function initAtomicTable(id, tableOptions) {
   );
   const tableFullWidth = window.jQuery('#' + id + '-handsontable-full-width');
   const tableColFixed = window.jQuery('#' + id + '-handsontable-col-fixed');
-  const tableIsSortable = window.jQuery('#' + id + '-handsontable-sortable');
   const colWidthInput = window.jQuery('#' + id + '-fixed-width-column-input');
-  const colSortTypeInput = window.jQuery('#' + id + '-sortable-input');
   const colWidthSelector = window.jQuery(`
     <td>
       <select class="column-width-input" aria-label="Column width">
@@ -253,23 +249,11 @@ function initAtomicTable(id, tableOptions) {
       </select>
     </td>
   `);
-  const colSortSelector = window.jQuery(`
-    <td>
-      <select class="sortable-type-input" aria-label="Column sorting method">
-        <option value="">None</option>
-        <option value="string">Alphabetical</option>
-        <option value="number">Numerical</option>
-        <option value="string-default">Alphabetical and sort initially</option>
-        <option value="number-default">Numerical and sort initially</option>
-      </select>
-    </td>
-  `);
 
   /* Initialize the field values based on the JSON data in this table
      block's hidden field. */
   const hiddenStreamInput = window.jQuery('#' + id);
   let columnWidths;
-  let colSortTypes;
   let dataForForm = null;
   try {
     dataForForm = JSON.parse(hiddenStreamInput.val());
@@ -313,14 +297,8 @@ function initAtomicTable(id, tableOptions) {
     if ({}.hasOwnProperty.call(dataForForm, 'fixed_col_widths')) {
       tableColFixed.prop('checked', dataForForm.fixed_col_widths);
     }
-    if ({}.hasOwnProperty.call(dataForForm, 'is_sortable')) {
-      tableIsSortable.prop('checked', dataForForm.is_sortable);
-    }
     if ({}.hasOwnProperty.call(dataForForm, 'column_widths')) {
       columnWidths = dataForForm.column_widths;
-    }
-    if ({}.hasOwnProperty.call(dataForForm, 'sortable_types')) {
-      colSortTypes = dataForForm.sortable_types;
     }
   }
 
@@ -341,7 +319,7 @@ function initAtomicTable(id, tableOptions) {
     return cellsClassnames;
   };
 
-  /* Custom function to get column widths and sort types for all columns */
+  /* Custom function to get column widths for all columns */
   const getColAttributes = function (colAttributeTable) {
     const colAttributes = [];
     const selectedAttributes = colAttributeTable.find('option:selected');
@@ -373,9 +351,7 @@ function initAtomicTable(id, tableOptions) {
         is_stacked: stackOnMobile.prop('checked'),
         is_full_width: tableFullWidth.prop('checked'),
         fixed_col_widths: tableColFixed.prop('checked'),
-        is_sortable: tableIsSortable.prop('checked'),
         column_widths: getColAttributes(colWidthInput),
-        sortable_types: getColAttributes(colSortTypeInput),
       })
     );
   };
@@ -396,23 +372,15 @@ function initAtomicTable(id, tableOptions) {
     const colCount = columnWidths ? columnWidths.length : hot.countCols();
     for (let index = 0; index < colCount; index++) {
       const colWidthValue = columnWidths ? columnWidths[index] : '';
-      const colSortType = colSortTypes ? colSortTypes[index] : '';
       const colWidthSelectorClone = colWidthSelector
         .clone()
         .on('change', () => {
           persist();
         });
-      const colSortSelectorClone = colSortSelector.clone().on('change', () => {
-        persist();
-      });
       colWidthSelectorClone
         .find('select option[value="' + colWidthValue + '"]')
         .prop('selected', true);
-      colSortSelectorClone
-        .find('select option[value="' + colSortType + '"]')
-        .prop('selected', true);
       colWidthInput.find('tr').append(colWidthSelectorClone);
-      colSortTypeInput.find('tr').append(colSortSelectorClone);
     }
   };
 
@@ -422,8 +390,6 @@ function initAtomicTable(id, tableOptions) {
     let attributeInputTable;
     if (attributeName === 'handsontable-col-fixed') {
       attributeInputTable = colWidthInput;
-    } else if (attributeName === 'handsontable-sortable') {
-      attributeInputTable = colSortTypeInput;
     }
     toggleAttributeInputTable(attributeInputTable, isAttributeEnabled);
     persist();
@@ -462,10 +428,7 @@ function initAtomicTable(id, tableOptions) {
   tableColFixed.on('change', () => {
     handleColumnAttributeChange(event);
   });
-  tableIsSortable.on('change', () => {
-    handleColumnAttributeChange(event);
-  });
-  // Change handlers for column widths and sort types are in populateColumnAttributeInputs
+  // Change handlers for column widths are in populateColumnAttributeInputs
 
   /* The rest of this function is duplicated from Wagtail's initTable
      implementation in order to extend it to add extra fields. Those fields
@@ -516,27 +479,18 @@ function initAtomicTable(id, tableOptions) {
     // A newly inserted first column will have an index of 0
     const newColIndex = index - 1 < 0 ? 0 : index - 1;
     const colWidthInputCell = colWidthInput.find('td:eq(' + newColIndex + ')');
-    const colSortTypeCell = colSortTypeInput.find(
-      'td:eq(' + newColIndex + ')'
-    );
     const colWidthSelectorClone = colWidthSelector.clone().on('change', () => {
-      persist();
-    });
-    const colSortSelectorClone = colSortSelector.clone().on('change', () => {
       persist();
     });
     if (newColIndex === 0) {
       colWidthInputCell.before(colWidthSelectorClone);
-      colSortTypeCell.before(colSortSelectorClone);
     } else {
       colWidthInputCell.after(colWidthSelectorClone);
-      colSortTypeCell.after(colSortSelectorClone);
     }
     structureEvent(index, amount);
   };
   const handleRemoveCol = function (index, amount) {
     colWidthInput.find('td:eq(' + index + ')').remove();
-    colSortTypeInput.find('td:eq(' + index + ')').remove();
     structureEvent(index, amount);
   };
 
@@ -575,9 +529,6 @@ function initAtomicTable(id, tableOptions) {
   populateColumnAttributeInputs();
   if (tableColFixed.prop('checked')) {
     toggleAttributeInputTable(colWidthInput, true);
-  }
-  if (tableIsSortable.prop('checked')) {
-    toggleAttributeInputTable(colSortTypeInput, true);
   }
 
   if ('resize' in window.jQuery(window)) {
@@ -696,24 +647,7 @@ class RichTextTableInput {
       </div>
       <br/>
 
-      <div class="field boolean_field widget-checkbox_input">
-        <label for="${id}-handsontable-sortable">Sortable table</label>
-        <div class="field-content">
-          <div class="input">
-            <input type="checkbox" id="${id}-handsontable-sortable" name="handsontable-sortable">
-            <span class="help">Enable sortable table functionality</span>
-          </div>
-        </div>
-      </div>
-      <br/>
-
       <table id="${id}-fixed-width-column-input">
-        <tbody>
-          <tr></tr>
-        </tbody>
-      </table>
-
-      <table id="${id}-sortable-input">
         <tbody>
           <tr></tr>
         </tbody>
@@ -746,10 +680,7 @@ class RichTextTableInput {
 }
 
 if (window.telepath) {
-  window.telepath.register(
-    'v1.widgets.RichTextTableInput',
-    RichTextTableInput
-  );
+  window.telepath.register('v1.widgets.RichTextTableInput', RichTextTableInput);
 }
 
 if (window.Handsontable) richTextTable(window.Handsontable);

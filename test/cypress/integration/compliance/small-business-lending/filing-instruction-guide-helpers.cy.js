@@ -27,6 +27,14 @@ export class FilingInstructionGuide {
     return cy.get('#ctrl-f-search-input');
   }
 
+  getSearchInputClearButton() {
+    return cy.get('#ctrl-f-clear-button');
+  }
+
+  getSearchModalCloseButton() {
+    return cy.get('#ctrl-f-close-button');
+  }
+
   getSearchResults() {
     return cy.get('#ctrl-f-search-results');
   }
@@ -72,7 +80,7 @@ export class FilingInstructionGuide {
   }
 
   scrollToBottom() {
-    return cy.get('footer').scrollIntoView();
+    return cy.get('.o-fig_heading').last().scrollIntoView();
   }
 
   getUnrenderedListTags() {

@@ -1,5 +1,5 @@
-import SectionLink from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/SectionLink';
-import HTML_SNIPPET from '../../html/survey-page';
+import SectionLink from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/SectionLink.js';
+import HTML_SNIPPET from '../../html/survey-page.js';
 
 describe('SectionLink', () => {
   let buttons;

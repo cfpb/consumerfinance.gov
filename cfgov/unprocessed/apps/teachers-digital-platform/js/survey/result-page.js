@@ -1,4 +1,3 @@
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import Cookies from 'js-cookie';
 import clipboardCopy from 'copy-to-clipboard';
 import {
@@ -95,8 +94,7 @@ function handleShareModal() {
 
   withValidInitials(desc, (value) => {
     initialsUpdate(value);
-    a.href =
-      '../view/?r=' + encodeURIComponent(shareOutput.dataset.signedCode);
+    a.href = '../view/?r=' + encodeURIComponent(shareOutput.dataset.signedCode);
     // href property read gives you full URL
     const shareUrl = a.href;
     a.href = encodeNameInUrl(shareUrl, initialsGet());
@@ -132,7 +130,7 @@ function handlePrintModal() {
  */
 function handleResetModal() {
   $('#modal-reset').addEventListener('click', (event) => {
-    const button = closest(event.target, '[data-cancel]');
+    const button = event.target.closest('[data-cancel]');
     if (button) {
       event.preventDefault();
       if (button.dataset.cancel) {

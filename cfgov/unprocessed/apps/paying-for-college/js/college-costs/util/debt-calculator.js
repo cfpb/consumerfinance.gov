@@ -8,7 +8,7 @@ import {
   getStateValue,
 } from '../dispatchers/get-model-values.js';
 import { financialModel } from '../models/financial-model.js';
-import { stringToNum } from '../util/number-utils.js';
+import { convertStringToNumber } from '../../../../../js/modules/util/format.js';
 
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
@@ -79,7 +79,7 @@ function calculateDirectLoanDebt(
   }
 
   for (let x = 0; x < programLength; x++) {
-    const progressNumber = stringToNum(progress) + x;
+    const progressNumber = convertStringToNumber(progress) + x;
     if (progressNumber === 0) {
       subPrincipal += directSub;
       unsubPrincipal += directUnsub;
@@ -210,11 +210,7 @@ function debtCalculator() {
     debts.totalAtGrad += debts[key];
 
     // 10 year term calculations
-    let tenYearMonthly = calcMonthlyPayment(
-      debts[key],
-      fin['rate_' + key],
-      10
-    );
+    let tenYearMonthly = calcMonthlyPayment(debts[key], fin['rate_' + key], 10);
 
     if (isNaN(tenYearMonthly)) {
       tenYearMonthly = 0;

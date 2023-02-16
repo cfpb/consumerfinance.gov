@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import tableWrapper from '../../../../cfgov/unprocessed/apps/admin/js/rich-text-table.js';
 
 describe('Initializes RichTextEditor', () => {
@@ -42,10 +43,10 @@ describe('Initializes the AtomicTable', () => {
 
     tableWrapper.initAtomicTable('', {});
     expect(hot).toBeCalled();
-    expect(jq).toHaveBeenCalledTimes(17);
-    expect(on).toHaveBeenCalledTimes(11);
+    expect(jq).toHaveBeenCalledTimes(14);
+    expect(on).toHaveBeenCalledTimes(10);
     expect(render).toBeCalled();
-    expect(prop).toHaveBeenCalledTimes(2);
+    expect(prop).toHaveBeenCalledTimes(1);
   });
 });
 

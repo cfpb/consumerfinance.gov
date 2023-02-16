@@ -6,7 +6,8 @@
   margin-bottom: 1.5em;
 
   &_labels {
-    margin: unit( 15px / @base-font-size-px, em ) 0 unit( 8px / @base-font-size-px, em );
+    margin: unit(15px / @base-font-size-px, em) 0
+      unit(8px / @base-font-size-px, em);
     font-size: 0.625em;
     line-height: 0;
 
@@ -18,7 +19,7 @@
   &_text {
     position: absolute;
     display: block;
-    margin-left: unit( -10px / @base-font-size-px, em );
+    margin-left: unit(-10px / @base-font-size-px, em);
     font-size: 0.875em;
     white-space: nowrap;
     text-align: center;
@@ -30,12 +31,8 @@
   display: block;
   width: 100%;
   height: 20px;
-  background: transparent
-                url( '@{image_path}/slider-bg.png' )
-                scroll
-                no-repeat
-                center
-                center;
+  background: transparent url('@{image_path}/slider-bg.png') scroll no-repeat
+    center center;
   background-size: 100%;
 }
 
@@ -52,24 +49,16 @@
   width: 22px;
   height: 21px;
   border: 0;
-  background: transparent
-                url( '@{image_path}/slider-handle.png' )
-                no-repeat
-                0
-                0;
+  background: transparent url('@{image_path}/slider-handle.png') no-repeat 0 0;
   background-size: 100%;
 
   &.warning {
     width: 22px;
     height: 21px;
-    background: transparent
-                    url( '@{image_path}/slider-handle.png' )
-                    no-repeat
-                    0
-                    100%;
+    background: transparent url('@{image_path}/slider-handle.png') no-repeat 0
+      100%;
     background-size: 100%;
   }
-
 }
 
 .a-range_input:focus + .rangeslider .rangeslider__handle {
@@ -80,27 +69,20 @@
   outline-offset: 0;
 }
 
-@media( -webkit-min-device-pixel-ratio: 2 ),
-  ( min-resolution: 192dpi ) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .rangeslider__handle {
     width: 22px;
     height: 21px;
     border: 0;
-    background: transparent
-                    url( '@{image_path}/slider-handle@2x.png' )
-                    no-repeat
-                    0
-                    0;
+    background: transparent url('@{image_path}/slider-handle@2x.png') no-repeat
+      0 0;
     background-size: 100%;
 
     &.warning {
       width: 22px;
       height: 21px;
-      background: transparent
-                        url( '@{image_path}/slider-handle@2x.png' )
-                        no-repeat
-                        0
-                        100%;
+      background: transparent url('@{image_path}/slider-handle@2x.png')
+        no-repeat 0 100%;
       background-size: 100%;
     }
   }

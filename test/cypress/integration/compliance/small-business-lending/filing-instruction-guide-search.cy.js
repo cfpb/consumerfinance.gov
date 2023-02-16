@@ -26,6 +26,13 @@ const deviceAgnosticSpecs = () => {
     fig.getSearchModal().should('not.be.visible');
   });
 
+  it('should close when the close button is clicked', () => {
+    cy.visit(fig.url() + '?search=true');
+    fig.getSearchModal().should('be.visible');
+    fig.getSearchModalCloseButton().trigger('click');
+    fig.getSearchModal().should('not.be.visible');
+  });
+
   it('should show search results', () => {
     cy.visit(fig.url() + '?search=true');
     fig.getSearchResults().should('not.be.visible');
@@ -33,8 +40,23 @@ const deviceAgnosticSpecs = () => {
     fig.getSearchResults().should('be.visible');
   });
 
+  it('should clear search results and the search input when the clear button is clicked', () => {
+    cy.visit(fig.url() + '?search=true');
+    fig.getSearchResults().should('not.be.visible');
+    fig.getSearchInput().type('filing');
+    fig.getSearchResults().should('be.visible');
+    fig.getSearchInputClearButton().trigger('click');
+    fig.getSearchResults().should('not.be.visible');
+    fig.getSearchInput().invoke('val').should('be.empty');
+  });
+
   it('should have keyboard-navigable search results', () => {
-    fig.getSearchInput().type('{downArrow}');
+    cy.visit(fig.url() + '?search=true');
+    fig.getSearchInput().type('filing');
+    // The search input has a 300ms debounce so wait for results to show
+    // before hitting the downArrow key twice
+    fig.getSearchResults().should('be.visible');
+    fig.getSearchInput().type('{downArrow}{downArrow}');
     cy.focused().parent().should('have.class', 'ctrl-f-search-result');
   });
 

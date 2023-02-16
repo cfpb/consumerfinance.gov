@@ -74,7 +74,6 @@ class AnswerStringTest(TestCase):
 
 
 class ArticlePageTest(TestCase):
-
     fixtures = ["ask_tests"]
 
     def setUp(self):
@@ -122,7 +121,6 @@ class ArticlePageTest(TestCase):
 
 
 class PortalSearchPageTest(TestCase):
-
     fixtures = [
         "ask_tests",
         "portal_topics",
@@ -558,7 +556,6 @@ class PortalSearchPageTest(TestCase):
 
 
 class AnswerPageTest(TestCase):
-
     fixtures = ["ask_tests", "portal_topics"]
 
     def create_answer_page(self, **kwargs):

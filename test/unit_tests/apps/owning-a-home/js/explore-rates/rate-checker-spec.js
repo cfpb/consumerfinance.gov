@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import * as rateChecker from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/rate-checker.js';
 import { simulateEvent } from '../../../../../util/simulate-event.js';
 

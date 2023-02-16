@@ -8,10 +8,6 @@ import {
   handleError,
   updateUrl,
 } from './search-utils.js';
-import {
-  closest,
-  queryOne,
-} from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
 const searchRequest = new AbortController();
@@ -46,8 +42,8 @@ function clearFilter(event) {
   if (target !== 'svg' && target !== 'path') {
     return;
   }
-  target = closest(event.target, '.a-tag');
-  const checkbox = queryOne(
+  target = event.target.closest('.a-tag');
+  const checkbox = document.querySelector(
     `#regulation-${target.getAttribute('data-value')}`
   );
   // Remove the filter tag
@@ -81,7 +77,7 @@ function clearFilters(event) {
   // IE doesn't support forEach w/ node lists so convert it to an array.
   filterIcons = Array.prototype.slice.call(filterIcons);
   filterIcons.forEach((filterIcon) => {
-    const target = closest(filterIcon, '.a-tag');
+    const target = filterIcon.closest('.a-tag');
     clearFilter({
       target: filterIcon,
       value: target,
@@ -101,7 +97,7 @@ function handleSubmit(event) {
     event.preventDefault();
   }
   const filters = document.querySelectorAll('input:checked');
-  const searchField = queryOne('input[name=q]');
+  const searchField = document.querySelector('input[name=q]');
   const searchTerms = getSearchValues(searchField, filters);
   const baseUrl = window.location.href.split('?')[0];
   const searchParams = serializeFormFields(searchTerms);
@@ -124,9 +120,9 @@ function handleFilter(event) {
   try {
     searchRequest.abort();
   } catch (err) {}
-  const searchContainer = queryOne('#regs3k-results');
+  const searchContainer = document.querySelector('#regs3k-results');
   const filters = document.querySelectorAll('input:checked');
-  const searchField = queryOne('input[name=q]');
+  const searchField = document.querySelector('input[name=q]');
   const searchTerms = getSearchValues(searchField, filters);
   const baseUrl = window.location.href.split('?')[0];
   const searchParams = serializeFormFields(searchTerms);

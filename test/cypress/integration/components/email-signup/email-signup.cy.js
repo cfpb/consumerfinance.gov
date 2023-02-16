@@ -1,4 +1,4 @@
-import EmailSignup from './email-signup-helpers.cy.js';
+import { EmailSignup } from './email-signup-helpers.cy.js';
 
 const page = new EmailSignup();
 

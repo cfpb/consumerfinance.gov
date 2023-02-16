@@ -2,7 +2,6 @@
 application, and are otherwise inappropriate for the
 other views. */
 import { buildUrlQueryString } from '../util/url-parameter-utils.js';
-import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { recalculateFinancials } from '../dispatchers/update-models.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
@@ -56,8 +55,7 @@ const appView = {
   _handleCopyLinkBtn: (event) => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(window.location.href).then(function () {
-        const target = event.target;
-        const btn = closest(target, 'button');
+        const btn = event.target.closest('button');
         const copyBtnDefaultText = btn.querySelector('#default-text');
         const copyBtnSuccessText = btn.querySelector('#success-text');
         copyBtnDefaultText.classList.add(HIDDEN_CLASS);
@@ -118,9 +116,7 @@ const appView = {
     appView._didThisHelpChoices = document.querySelectorAll(
       '[data-impact] .m-form-field input.a-radio'
     );
-    appView._restartBtn = document.querySelector(
-      '[data-app-button="restart"]'
-    );
+    appView._restartBtn = document.querySelector('[data-app-button="restart"]');
     appView._saveForLaterBtn = document.querySelector(
       '[data-app-button="save-and-finish-later"]'
     );
@@ -169,8 +165,7 @@ function _addButtonListeners() {
  * @param {MouseEvent} event - Click event object.
  */
 function _handleDidThisHelpClick(event) {
-  const button = event.target;
-  const parent = closest(button, '.o-form_fieldset');
+  const parent = event.target.closest('.o-form_fieldset');
   sendAnalyticsEvent(
     'Impact question click: ' + parent.dataset.impact,
     event.target.value

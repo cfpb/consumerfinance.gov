@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import beforeExpandableTransitionInit, {
   setInnerWidth,
   MOBILE_COLLAPSED_CLASS,
@@ -5,7 +6,7 @@ import beforeExpandableTransitionInit, {
 
 // Markup created with settings: is_expanded=true, is_collapsed_for_mobile=true
 const HTML_SNIPPET = `
-  <div id="test-div" data-qa-hook="expandable"
+  <div id="test-div"
      class="o-expandable
             o-expandable__padded
             o-expandable__background
@@ -80,9 +81,7 @@ describe('expandable-mobile', () => {
 
     expect(expandableDiv.classList.contains(OPEN_DEFAULT_CLASS)).toEqual(true);
     beforeExpandableTransitionInit();
-    expect(expandableDiv.classList.contains(OPEN_DEFAULT_CLASS)).toEqual(
-      false
-    );
+    expect(expandableDiv.classList.contains(OPEN_DEFAULT_CLASS)).toEqual(false);
   });
 
   it('should leave the OPEN_DEFAULT class for tablet innerWidth', () => {

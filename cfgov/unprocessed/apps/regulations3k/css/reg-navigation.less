@@ -21,7 +21,6 @@
 
 // Regs3K secondary nav sections
 .o-regs3k-sections {
-
   .o-expandable_target {
     .respond-to-min( @bp-med-min, {
       padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
@@ -58,12 +57,10 @@
       display: block;
     } );
   }
-
 }
 
 // Regs3K secondary nav header
 .o-regs3k-navigation {
-
   .respond-to-max( @bp-sm-max, {
     padding: unit( 10px / @base-font-size-px, em )
     unit( 15px / @base-font-size-px, em );
@@ -76,9 +73,8 @@
       display: flex;
     } );
 
-    padding: unit( 10px / @base-font-size-px, em )
-                 0
-                 unit( 5px / @base-font-size-px, em );
+    padding: unit(10px / @base-font-size-px, em) 0
+      unit(5px / @base-font-size-px, em);
     .o-expandable_label {
       text-transform: uppercase;
     }
@@ -92,11 +88,9 @@
     text-align: right;
     width: 12%;
   }
-
 }
 
 .m-nav-link {
-
   color: @pacific;
 
   &__current {
@@ -109,15 +103,12 @@
     font-weight: 300;
     margin-bottom: 0;
   }
-
 }
 
 // Utility methods specific to when regs3k secondary nav
 // is stacked on top of the page's content
 .u-hide-on-stacked {
-
   .respond-to-max( @bp-sm-max, {
     display: none;
   } );
-
 }

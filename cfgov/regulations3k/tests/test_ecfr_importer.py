@@ -487,7 +487,6 @@ class ParagraphParsingTestCase(unittest.TestCase):
         )
 
     def test_divine_interp_tag(self):
-
         # HD1 elements
         HD = bS("<HD1>Introduction\n</HD1>", "lxml-xml").find("HD1")
         self.assertEqual(divine_interp_tag_use(HD, "1002"), "intro")
@@ -516,7 +515,6 @@ class ParagraphParsingTestCase(unittest.TestCase):
 
 
 class ParserIdTestCase(unittest.TestCase):
-
     LEVEL_STATE = IdLevelState()
 
     def test_current_token(self):
@@ -654,7 +652,6 @@ class ParserIdTestCase(unittest.TestCase):
 
 
 class PatternsTestCase(unittest.TestCase):
-
     levelstate = IdLevelState()
 
     def test_appendix_level_1_initial(self):

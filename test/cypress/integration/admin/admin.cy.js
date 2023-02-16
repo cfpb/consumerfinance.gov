@@ -109,12 +109,6 @@ describe('Admin', () => {
     admin.searchResults().should('be.visible');
   });
 
-  it('Should be able to search for external links', () => {
-    admin.openExternalLinks();
-    admin.searchExternalLink('https://www.federalreserve.gov');
-    admin.searchResults().should('be.visible');
-  });
-
   it('should run Page Metadata report', () => {
     admin.getPageMetadataReports().its('length').should('be.gt', 2);
   });

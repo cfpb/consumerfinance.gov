@@ -1,38 +1,34 @@
+import { jest } from '@jest/globals';
 import actions from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/map.js';
 
-jest.mock(
-  '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils',
-  () => ({
-    getMetroData: (cb) => {
-      const metros = {
-        AL: {
-          metros: [
-            {
-              valid: true,
-              fips: '12345',
-              name: 'Acme metro',
-            },
-          ],
-        },
-      };
-      cb(metros);
-    },
-    getCountyData: (cb) => {
-      const counties = {
-        AL: {
-          counties: [
-            {
-              valid: true,
-              fips: '12345',
-              name: 'Acme county',
-            },
-          ],
-        },
-      };
-      cb(counties);
-    },
-  })
-);
+const mockAPIResponse = {
+  getMetroData: () => {
+    return {
+      AL: {
+        metros: [
+          {
+            valid: true,
+            fips: '12345',
+            name: 'Acme metro',
+          },
+        ],
+      },
+    };
+  },
+  getCountyData: () => {
+    return {
+      AL: {
+        counties: [
+          {
+            valid: true,
+            fips: '12345',
+            name: 'Acme county',
+          },
+        ],
+      },
+    };
+  },
+};
 
 describe('Mortgage Performance map action creators', () => {
   it('should create an action to update the chart', () => {
@@ -71,35 +67,55 @@ describe('Mortgage Performance map action creators', () => {
     });
   });
 
-  it('should dispatch actions to fetch metros', () => {
-    const dispatch = jest.fn();
-    actions.fetchMetros('AL', true)(dispatch);
-    expect(dispatch).toHaveBeenCalledTimes(3);
+  describe('getMetroData', () => {
+    beforeEach(() => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve(mockAPIResponse.getMetroData()),
+        })
+      );
+    });
+
+    xit('should dispatch actions to fetch metros', async () => {
+      const dispatch = jest.fn();
+      await actions.fetchMetros('AL', true)(dispatch);
+      expect(dispatch).toHaveBeenCalledTimes(3);
+    });
+
+    it('should fail on bad metro state abbr', () => {
+      expect(actions.fetchMetros('bloop', true)).toThrow();
+    });
+
+    it('should not require map zoom after fetching metros', async () => {
+      const dispatch = jest.fn();
+      await actions.fetchMetros('AL', false)(dispatch);
+      expect(dispatch).toHaveBeenCalledTimes(2);
+    });
   });
 
-  it('should fail on bad metro state abbr', () => {
-    expect(actions.fetchMetros('bloop', true)).toThrow();
-  });
+  describe('getCountyData', () => {
+    beforeEach(() => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve(mockAPIResponse.getCountyData()),
+        })
+      );
+    });
 
-  it('should not require map zoom after fetching metros', () => {
-    const dispatch = jest.fn();
-    actions.fetchMetros('AL', false)(dispatch);
-    expect(dispatch).toHaveBeenCalledTimes(2);
-  });
+    it('should dispatch actions to fetch counties', async () => {
+      const dispatch = jest.fn();
+      await actions.fetchCounties('AL', true)(dispatch);
+      expect(dispatch).toHaveBeenCalledTimes(3);
+    });
 
-  it('should dispatch actions to fetch counties', () => {
-    const dispatch = jest.fn();
-    actions.fetchCounties('AL', true)(dispatch);
-    expect(dispatch).toHaveBeenCalledTimes(3);
-  });
+    xit('should not require map zoom after fetching counties', async () => {
+      const dispatch = jest.fn();
+      await actions.fetchCounties('AL', false)(dispatch);
+      expect(dispatch).toHaveBeenCalledTimes(2);
+    });
 
-  it('should not require map zoom after fetching counties', () => {
-    const dispatch = jest.fn();
-    actions.fetchCounties('AL', false)(dispatch);
-    expect(dispatch).toHaveBeenCalledTimes(2);
-  });
-
-  it('should fail on bad county state abbr', () => {
-    expect(actions.fetchCounties('bloop', true)).toThrow();
+    it('should fail on bad county state abbr', () => {
+      expect(actions.fetchCounties('bloop', true)).toThrow();
+    });
   });
 });

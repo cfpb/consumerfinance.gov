@@ -88,6 +88,7 @@
 .o-fig_heading {
   a {
     color: @black;
+    word-break: break-word;
   }
 }
 
@@ -209,6 +210,30 @@
   } );
 }
 
-#ctrl-f-modal h3 {
-  font-size: unit(16px / @base-font-size-px, em);
+#ctrl-f-modal {
+  h3 {
+    font-size: unit(16px / @base-font-size-px, em);
+  }
+  svg {
+    .cf-icon-svg();
+  }
+  input {
+    .a-text-input();
+    padding-left: unit(32px / @base-font-size-px, em);
+    &:focus {
+      .a-text-input.focus();
+    }
+  }
+  .ctrl-f-search-result {
+    border-bottom: 1px solid @gray-40;
+    a {
+      color: @black;
+      &:focus {
+        .a-text-input.focus();
+      }
+      &:hover {
+        .a-text-input.hover();
+      }
+    }
+  }
 }

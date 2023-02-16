@@ -1,37 +1,46 @@
-const appRoot = document.querySelector('main.o-fig');
+let appRoot;
+let navItems;
+let navItemContainers;
+let highlightNavItem;
+let unHighlightNavItem;
+let scrollNavItem;
+let prevTarget;
 
-let navItems = appRoot.querySelectorAll('.m-nav-link[href]');
-navItems = Array.from(navItems).reduce(
-  (map, navItem) => map.set(navItem.getAttribute('href'), navItem),
-  new Map()
-);
+/**
+ * Initialize the side navigation variables.
+ */
+function init() {
+  appRoot = document.querySelector('main.o-fig');
+  navItems = appRoot.querySelectorAll('.m-nav-link[href]');
 
-const navItemContainers = Array.from(navItems).reduce(
-  (map, [key, navItem]) => {
+  navItems = Array.from(navItems).reduce(
+    (map, navItem) => map.set(navItem.getAttribute('href'), navItem),
+    new Map()
+  );
+
+  navItemContainers = Array.from(navItems).reduce((map, [key, navItem]) => {
     const container =
       navItem.closest('.o-secondary-navigation_list__children') ||
       navItem.nextElementSibling;
     return map.set(key, container);
-  },
-  new Map()
-);
+  }, new Map());
 
-const highlightNavItem = (target) =>
-  navItems.get(target).classList.add('m-nav-link__current');
-const unHighlightNavItem = (target) =>
-  navItems.get(target).classList.remove('m-nav-link__current');
+  highlightNavItem = (target) =>
+    navItems.get(target).classList.add('m-nav-link__current');
 
-const scrollNavItem = (target) =>
-  navItems.get(target).scrollIntoView({
-    behavior: 'auto',
-    block: 'nearest',
-    inline: 'start',
-  });
+  unHighlightNavItem = (target) =>
+    navItems.get(target).classList.remove('m-nav-link__current');
+
+  scrollNavItem = (target) =>
+    navItems.get(target).scrollIntoView({
+      behavior: 'auto',
+      block: 'nearest',
+      inline: 'start',
+    });
+}
 
 const showElement = (el) => el && el.classList.remove('u-hide-on-desktop');
 const hideElement = (el) => el && el.classList.add('u-hide-on-desktop');
-
-let prevTarget;
 
 /**
  * The native scrollIntoView() function is great but when there's a sticky header,
@@ -53,20 +62,20 @@ const scrollIntoViewWithOffset = (el, offset) => {
 
 /**
  * Update the sidenav by highlighting the current section and showing
- * parent nav items as needed
+ * parent nav items as needed.
  *
- * @param {string} target - `href` value of the nav item to highlight
+ * @param {string} target - `href` value of the nav item to highlight.
  */
 const updateNav = (target) => {
   if (target === prevTarget) return;
 
-  // Highlight the current nav item and expand its container if necessary
+  // Highlight the current nav item and expand its container if necessary.
   const targetContainer = navItemContainers.get(target);
   showElement(targetContainer);
   highlightNavItem(target);
   scrollNavItem(target);
 
-  // Remove the highlighting from the previous menu item and close its container
+  // Remove highlighting from the previous menu item and close its container.
   if (prevTarget) {
     unHighlightNavItem(prevTarget);
     const prevTargetContainer = navItemContainers.get(prevTarget);
@@ -95,6 +104,7 @@ const handleIntersect = (entries) => {
 };
 
 export {
+  init,
   appRoot,
   navItems,
   navItemContainers,

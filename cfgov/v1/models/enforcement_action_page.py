@@ -5,13 +5,13 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
+    PageChooserPanel,
     StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.search import index
 
 from modelcluster.fields import ParentalKey
 
@@ -272,7 +272,13 @@ class EnforcementActionPage(AbstractFilterPage):
             classname="collapsible",
         ),
         MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
-        FieldPanel("language", "Language"),
+        MultiFieldPanel(
+            [
+                FieldPanel("language", "Language"),
+                PageChooserPanel("english_page"),
+            ],
+            "Translation",
+        ),
     ]
 
     edit_handler = TabbedInterface(
@@ -288,10 +294,6 @@ class EnforcementActionPage(AbstractFilterPage):
     )
 
     template = "v1/enforcement-action/index.html"
-
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField("content")
-    ]
 
     @property
     def status_strings(self):

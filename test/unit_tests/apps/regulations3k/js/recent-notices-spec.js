@@ -1,11 +1,11 @@
-import { enableFetchMocks } from 'jest-fetch-mock';
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+import { jest } from '@jest/globals';
 import { simulateEvent } from '../../../../util/simulate-event.js';
 import {
   processNotice,
   processNotices,
 } from '../../../../../cfgov/unprocessed/apps/regulations3k/js/recent-notices.js';
-
-enableFetchMocks();
 
 const HTML_SNIPPET = `
   <ul id="regs3k-notices"></ul>

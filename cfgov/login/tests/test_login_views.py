@@ -2,7 +2,6 @@ from datetime import timedelta
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth import views as auth_views
-from django.contrib.auth.models import User
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.test import TestCase
 from django.urls import reverse
@@ -12,90 +11,11 @@ from django.utils.timezone import now
 
 from wagtail.tests.utils import WagtailTestUtils
 
+from login.models import TemporaryLockout
 from login.views import CFGOVPasswordResetConfirmView
-
-from v1.models.base import TemporaryLockout
-
-
-class LoginViewsTestCase(TestCase):
-    def test_login_with_lockout_no_auth(self):
-        response = self.client.get("/login/?next=https://example.com")
-        self.assertTemplateUsed(response, "wagtailadmin/login.html")
-        self.assertEqual(response.context["next"], "/admin/")
-
-    def test_login_with_lockout_failed_login(self):
-        self.client.post(
-            "/login/", {"username": "admin", "password": "badadmin"}
-        )
-        self.assertIsNotNone(
-            User.objects.get(username="admin").failedloginattempt
-        )
-
-    def test_login_with_lockout_success_after_failed_login(self):
-        response = self.client.post(
-            "/login/", {"username": "admin", "password": "badadmin"}
-        )
-        response = self.client.post(
-            "/login/", {"username": "admin", "password": "admin"}
-        )
-        self.assertRedirects(
-            response,
-            "/login/check_permissions/?next=/admin/",
-            target_status_code=302,
-            fetch_redirect_response=False,
-        )
-
-    def test_login_with_lockout_success(self):
-        response = self.client.post(
-            "/login/", {"username": "admin", "password": "admin"}
-        )
-        self.assertRedirects(
-            response,
-            "/login/check_permissions/?next=/admin/",
-            target_status_code=302,
-            fetch_redirect_response=False,
-        )
-
-    def test_login_with_lockout_authenticated_redirects(self):
-        self.client.login(username="admin", password="admin")
-        response = self.client.get("/login/")
-        self.assertRedirects(
-            response,
-            "/login/check_permissions/?next=/admin/",
-            target_status_code=302,
-            fetch_redirect_response=False,
-        )
-
-    def test_check_permissions_no_auth(self):
-        response = self.client.get("/login/check_permissions/?next=/admin/")
-        self.assertRedirects(response, "/login/?next=/admin/")
-
-    def test_check_permissions_next_url_does_not_exist(self):
-        self.client.login(username="admin", password="admin")
-        response = self.client.get("/login/check_permissions/?next=/badurl/")
-        self.assertRedirects(response, "/admin/")
-
-    def test_check_permissions_next_url_unsafe(self):
-        self.client.login(username="admin", password="admin")
-        response = self.client.get(
-            "/login/check_permissions/?next=https://google.com/"
-        )
-        self.assertRedirects(response, "/admin/")
-
-    def test_check_permissions_next_permissions_problem(self):
-        User.objects.create_user(
-            username="noperm", email="", password="noperm"
-        )
-        self.client.login(username="noperm", password="noperm")
-        response = self.client.get("/login/check_permissions/?next=/admin/")
-        self.assertIn(
-            b"You do not have permission to access this page.",
-            response.content,
-        )
 
 
 class PasswordResetViewTestCase(TestCase, WagtailTestUtils):
-
     # The setup methods come from Wagtail's TestPasswordReset test case.
     # They handle user and password-reset token creation.
     def setUp(self):
@@ -105,7 +25,6 @@ class PasswordResetViewTestCase(TestCase, WagtailTestUtils):
         )
 
     def setup_password_reset_confirm_tests(self):
-
         # Get user
         self.user = get_user_model().objects.get(email="test@email.com")
 

@@ -1,4 +1,4 @@
-const domValues = require('./dom-values');
+import { getSelection } from './dom-values';
 
 let UNDEFINED;
 
@@ -64,14 +64,14 @@ function update() {
   let param;
   for (param in _params) {
     if (Object.prototype.hasOwnProperty.call(_params, param)) {
-      val = domValues.getSelection(param);
+      val = getSelection(param);
       if (
         param !== 'prevLoanType' &&
         param !== 'prevLocation' &&
         val !== UNDEFINED &&
         val !== null
       ) {
-        _params[param] = domValues.getSelection(param);
+        _params[param] = getSelection(param);
       }
     }
   }

@@ -8,7 +8,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
-from wagtail.search import index
 
 from v1.atomic_elements import molecules, organisms
 from v1.documents import (
@@ -75,11 +74,6 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
         "Left-hand navigation, no right-hand sidebar. Use if children should "
         "be searchable using standard search filters module."
     )
-
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
 
     @property
     def page_js(self):

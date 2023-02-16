@@ -23,5 +23,6 @@
     "median": "0.0.2",
     "rangeslider-js": "^3.0.2",
     "unformat-usd": "0.1.1"
-  }
+  },
+  "type": "module"
 }

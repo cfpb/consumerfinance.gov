@@ -8,10 +8,6 @@ import {
   handleError,
   updateUrl,
 } from './search-utils.js';
-import {
-  closest,
-  queryOne,
-} from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import expandableFacets from './expandable-facets.js';
 import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable.js';
 import {
@@ -82,8 +78,8 @@ function clearFilter(event) {
   if (target !== 'svg' && target !== 'path') {
     return;
   }
-  target = closest(event.target, '.a-tag');
-  const checkbox = queryOne(`${target.getAttribute('data-value')}`);
+  target = event.target.closest('.a-tag');
+  const checkbox = document.querySelector(target.getAttribute('data-value'));
   // Remove the filter tag
   removeTag(target);
   // Uncheck the filter checkbox
@@ -118,7 +114,7 @@ function clearFilters(event) {
   // IE doesn't support forEach w/ node lists so convert it to an array.
   filterIcons = Array.prototype.slice.call(filterIcons);
   filterIcons.forEach((filterIcon) => {
-    const target = closest(filterIcon, 'button');
+    const target = filterIcon.closest('button');
     clearFilter({
       target: filterIcon,
       value: target,
@@ -161,9 +157,11 @@ function handleSubmit(event) {
  * @returns {string} New page URL with search terms
  */
 function fetchSearchResults(filters = []) {
-  const searchContainer = queryOne('#tdp-search-facets-and-results');
+  const searchContainer = document.querySelector(
+    '#tdp-search-facets-and-results'
+  );
   const baseUrl = window.location.href.split('?')[0];
-  const searchField = queryOne('input[name=q]');
+  const searchField = document.querySelector('input[name=q]');
   const searchTerms = getSearchValues(searchField, filters);
   const searchParams = serializeFormFields(searchTerms);
 
@@ -217,9 +215,7 @@ function handleFilter(event, target = null) {
   const wrapperLI = target.parentElement.parentElement;
   if (wrapperLI && wrapperLI.tagName.toLowerCase() === 'li') {
     // Check all children if parent is checked.
-    const checkboxes = wrapperLI.querySelectorAll(
-      'ul>li input[type=checkbox]'
-    );
+    const checkboxes = wrapperLI.querySelectorAll('ul>li input[type=checkbox]');
     for (let i = 0; i < checkboxes.length; i++) {
       if (
         wrapperLI.contains(checkboxes[i]) === true &&
@@ -232,9 +228,7 @@ function handleFilter(event, target = null) {
     const parentLI = wrapperLI.parentElement.parentElement;
     const parentUL = wrapperLI.parentElement.parentElement.parentElement;
     if (parentUL && parentUL.tagName.toLowerCase() === 'ul') {
-      const parentCheckbox = parentLI.querySelector(
-        'div>input[type=checkbox]'
-      );
+      const parentCheckbox = parentLI.querySelector('div>input[type=checkbox]');
       if (
         parentCheckbox &&
         parentCheckbox.parentElement.parentElement === parentLI

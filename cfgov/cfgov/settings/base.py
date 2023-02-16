@@ -113,32 +113,6 @@ INSTALLED_APPS = (
     "rest_framework",
 )
 
-WAGTAILSEARCH_BACKENDS = {
-    # The default search backend for Wagtail is the db backend, which does not
-    # support the custom search_fields defined on Page model descendents when
-    # using `Page.objects.search()`.
-    #
-    # Other backends *do* support those custom search_fields, so for now to
-    # preserve the current behavior of /admin/pages/search (which calls
-    # `Page.objects.search()`), the default backend will remain `db`.
-    #
-    # This also preserves the current behavior of our external link search,
-    # /admin/external-links/, which calls each page model's `objects.search()`
-    # explicitly to get results, but which returns fewer results with the
-    # Postgres full text backend.
-    #
-    # An upcoming effort to overhaul search within consumerfinance.gov and
-    # Wagtail should address these issues. In the meantime, Postgres full text
-    # search with the custom search_fields defined on our models is available
-    # with the "fulltext" backend defined below.
-    "default": {
-        "BACKEND": "wagtail.search.backends.db",
-    },
-    "fulltext": {
-        "BACKEND": "wagtail.search.backends.database",
-    },
-}
-
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
@@ -210,6 +184,7 @@ TEMPLATES = [
                 "jinja2.ext.loopcontrols",
                 "flags.jinja2tags.flags",
                 "core.jinja2tags.filters",
+                "core.jinja2tags.language",
                 "agreements.jinja2tags.agreements",
                 "mega_menu.jinja2tags.MegaMenuExtension",
                 "prepaid_agreements.jinja2tags.prepaid_agreements",
@@ -251,19 +226,21 @@ DATABASES = {
 LANGUAGE_CODE = "en-us"
 
 LANGUAGES = (
-    ("ar", _("Arabic")),
-    ("zh-Hans", _("Chinese (Simplified)")),
-    ("zh-Hant", _("Chinese (Traditional)")),
     ("en", _("English")),
-    ("ht", _("Haitian Creole")),
-    ("ko", _("Korean")),
-    ("ru", _("Russian")),
     ("es", _("Spanish")),
-    ("tl", _("Tagalog")),
+    ("zh-Hant", _("Chinese (Traditional)")),
     ("vi", _("Vietnamese")),
+    ("ko", _("Korean")),
+    ("tl", _("Tagalog")),
+    ("ru", _("Russian")),
+    ("ar", _("Arabic")),
+    ("ht", _("Haitian Creole")),
 )
 
-LOCALE_PATHS = (os.path.join(PROJECT_ROOT, "locale"),)
+# Add the Django project cfgov/cfgov/locale/ directory to LOCALE_PATHS.
+# This will make the search order: cfgov/locale then APP/locale for every APP
+# in INSTALLED_APPS.
+LOCALE_PATHS = (os.path.join(PROJECT_ROOT, "cfgov", "locale"),)
 
 TIME_ZONE = "America/New_York"
 
@@ -318,6 +295,7 @@ WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
 WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
 
+WAGTAILADMIN_USER_LOGIN_FORM = "login.forms.LoginForm"
 WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
@@ -470,6 +448,17 @@ if ENABLE_CLOUDFRONT_CACHE_PURGE:
     }
 
 # CSP Allowlists
+#
+# Please note: Changing these lists will change the value of the
+# Content-Security-Policy header Django returns. Django does NOT include
+# header values when calculating the response hash returned in the ETag
+# header.
+# Our Akamai cache uses the ETag header to know whether a cached copy of a
+# page has been updated after it expires or after an invalidation purge.
+#
+# Together, this means that any changes to these CSP values WILL NOT BE
+# RETURNED by Akamai until a page's non-header content changes, or a
+# delete-purge is performed.
 
 # These specify what is allowed in <script> tags
 CSP_SCRIPT_SRC = (
@@ -477,9 +466,11 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "*.consumerfinance.gov",
+    "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
     "*.googleoptimize.com",
+    "optimize.google.com",
     "api.mapbox.com",
     "js-agent.newrelic.com",
     "bam.nr-data.net",
@@ -498,6 +489,8 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     "*.consumerfinance.gov",
+    "optimize.google.com",
+    "fonts.googleapis.com",
     "api.mapbox.com",
 )
 
@@ -510,6 +503,7 @@ CSP_IMG_SRC = (
     "img.youtube.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
+    "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
     "blob:",
@@ -527,13 +521,14 @@ CSP_FRAME_SRC = (
     "*.googletagmanager.com",
     "*.google-analytics.com",
     "*.googleoptimize.com",
+    "optimize.google.com",
     "www.youtube.com",
     "*.qualtrics.com",
     "mailto:",
 )
 
 # These specify where we allow fonts to come from
-CSP_FONT_SRC = "'self'"
+CSP_FONT_SRC = ("'self'", "fonts.gstatic.com")
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to
 CSP_CONNECT_SRC = (

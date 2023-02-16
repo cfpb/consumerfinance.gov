@@ -17,7 +17,6 @@ from v1.tests.wagtail_pages import helpers
 
 class RelatedPostsTestCase(TestCase):
     def setUp(self):
-
         # add some authors to a CFGOV page and give it some tags
 
         self.author1 = "Some Author"
