@@ -2,6 +2,7 @@ import json
 from datetime import date
 from operator import itemgetter
 
+from django.contrib.auth import get_user_model
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 from django.utils import timezone
@@ -26,6 +27,7 @@ from v1.models.snippets import RelatedResource
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.ref import categories
 from v1.views.reports import (
+    ActiveUsersReportView,
     AskReportView,
     CategoryIconReportView,
     DocumentsReportView,
@@ -288,3 +290,16 @@ class TestTranslatedPagesReport(TestCase, WagtailTestUtils):
         response = self.client.get(self.url + "?language=ht")
         self.assertContains(response, "Translated Pages")
         self.assertContains(response, "No pages found.")
+
+
+class TestActiveUsersReport(TestCase):
+    def test_get_queryset(self):
+        User = get_user_model()
+        test_user = User(
+            username="test", email="test@example.com", is_active=False
+        )
+        test_user.save()
+
+        report_users = ActiveUsersReportView().get_queryset()
+        self.assertGreater(len(User.objects.all()), len(report_users))
+        self.assertNotIn(test_user, report_users)
