@@ -15,14 +15,13 @@ const HTML_SNIPPET = `
  *
  * @param eventType - {string} - The type of event to dispatch.
  * @param target - {HTMLElement} - The element to dispatch from.
- * @param eventOption - {object} - Any options for the event.
  */
-function simulateEvent(eventType, target, eventOption) {
-  const event = document.createEvent('Event');
-  if (eventOption && eventOption.keyCode) {
-    event.keyCode = eventOption.keyCode;
-  }
-  event.initEvent(eventType, true, true);
+function simulateEvent(eventType, target) {
+  const event = new MouseEvent(eventType, {
+    bubbles: true,
+    cancelable: true,
+    view: window,
+  });
   return target.dispatchEvent(event);
 }
 
