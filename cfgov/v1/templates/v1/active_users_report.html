@@ -9,6 +9,7 @@
                     <th>Last name</th>
                     <th>Username</th>
                     <th>Email</th>
+                    <th>Last login</th>
                 </tr>
             </thead>
             <tbody>
@@ -18,6 +19,7 @@
                         <td>{{ user.last_name }}</td>
                         <td>{{ user.username }}</td>
                         <td>{{ user.email }}</td>
+                        <td>{{ user.last_login|date }} {{ user.last_login|time }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

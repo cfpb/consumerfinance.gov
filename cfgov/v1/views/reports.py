@@ -417,6 +417,7 @@ class ActiveUsersReportView(ReportView):
         "last_name",
         "username",
         "email",
+        "last_login",
     ]
 
     def get_queryset(self):
