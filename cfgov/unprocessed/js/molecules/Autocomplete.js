@@ -6,6 +6,20 @@ import {
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import throttle from 'lodash.throttle';
 
+// Class constants
+const BASE_CLASS = 'm-autocomplete';
+const HIDDEN_CLASS = 'u-hidden';
+const AUTOCOMPLETE_CLASS = 'm-autocomplete_results';
+const SELECTED_CLASS = 'm-autocomplete_selected';
+const ERROR_CLASS = 'a-text-input__error';
+
+// Key constants
+// See https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values
+const ENTER = 'Enter';
+const UP = 'ArrowUp';
+const DOWN = 'ArrowDown';
+const ESCAPE = 'Escape';
+
 /**
  * Autocomplete
  *
@@ -20,19 +34,6 @@ import throttle from 'lodash.throttle';
  * @returns {Autocomplete} An instance.
  */
 function Autocomplete(element, opts) {
-  // Class constants
-  const BASE_CLASS = 'm-autocomplete';
-  const HIDDEN_CLASS = 'u-hidden';
-  const AUTOCOMPLETE_CLASS = 'm-autocomplete_results';
-  const SELECTED_CLASS = 'm-autocomplete_selected';
-  const ERROR_CLASS = 'a-text-input__error';
-
-  // Key constants
-  const ENTER = 13;
-  const UP = 38;
-  const DOWN = 40;
-  const ESCAPE = 27;
-
   // Internal variables
   let _autocomplete;
   let _data = [];
@@ -195,7 +196,7 @@ function Autocomplete(element, opts) {
       }, 1);
     });
     _input.addEventListener('keydown', function (event) {
-      const key = event.keyCode;
+      const key = event.key;
       if (_isVisible) {
         if (key === UP) {
           _prev(event);

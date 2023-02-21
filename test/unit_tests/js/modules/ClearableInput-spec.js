@@ -66,18 +66,16 @@ describe('ClearableInput', () => {
     it('should show the clear button, if value present', () => {
       new ClearableInput(baseDom).init();
 
-      // Event code 65 is the `a` character.
-      simulateEvent('keyup', inputDom, { keyCode: 65 });
+      simulateEvent('keyup', inputDom, { key: 'a' });
       expect(clearBtnDom.classList.contains('u-hidden')).toStrictEqual(false);
     });
 
     it('should hide the clear button, if value not present', () => {
       new ClearableInput(baseDom).init();
 
-      // Event code 8 is backspace.
-      simulateEvent('keyup', inputDom, { keyCode: 65 });
+      simulateEvent('keyup', inputDom, { key: 'a' });
       expect(clearBtnDom.classList.contains('u-hidden')).toStrictEqual(false);
-      simulateEvent('keyup', inputDom, { keyCode: 8 });
+      simulateEvent('keyup', inputDom, { key: 'Backspace' });
       expect(clearBtnDom.classList.contains('u-hidden')).toStrictEqual(true);
     });
   });
