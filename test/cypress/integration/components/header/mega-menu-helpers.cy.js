@@ -83,10 +83,6 @@ export class MegaMenu {
     return this.megaMenuContent(`${value}-wrapper`);
   }
 
-  tagLine() {
-    return cy.get('a-tagline');
-  }
-
   globalEyebrowElement() {
     return cy.get('.m-global-eyebrow');
   }

@@ -10,18 +10,26 @@
 
    is_horizontal: Whether the molecule appears horizontally or vertically.
                   defaults to false.
+
    language:      The page's language value (used to display different
                   information on Spanish pages). Defaults to English.
 
+   has_tagline:   Whether this eyebrow should include the tagline or not.
+
    ========================================================================== #}
-{% macro render( is_horizontal=false, language='en' ) %}
+{% macro render(
+    is_horizontal=false,
+    language='en',
+    has_tagline=true ) %}
 {% import 'v1/includes/atoms/tagline.html' as tagline with context %}
     <div class="m-global-eyebrow
                 m-global-eyebrow__{{ 'horizontal' if is_horizontal
                                       else 'list' }}">
         <div class="wrapper
                     {{ 'wrapper__match-content' if is_horizontal else '' }}">
-            {{ tagline.render() }}
+            {% if has_tagline %}
+                {{ tagline.render() }}
+            {% endif %}
             <div class="m-global-eyebrow_actions">
                 <ul class="m-list
                            m-list__horizontal
