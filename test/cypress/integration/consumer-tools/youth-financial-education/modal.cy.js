@@ -66,7 +66,6 @@ describe('Youth Financial Education Survey: modal', () => {
 
     open();
     cy.get('.o-modal_container').trigger('keydown', {
-      keyCode: 27,
       key: 'Escape',
     });
     checkClosed();
