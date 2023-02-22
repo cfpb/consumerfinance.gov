@@ -103,7 +103,13 @@ class CFGOVPage(Page):
             "Maximum size: 4096w x 4096h."
         ),
     )
-
+    navigation_label = models.CharField(
+        Page,
+        null=True,
+        blank=True,
+        max_length=100,
+        help_text="Optional short label for left navigation.",
+    )
     content_owners = ClusterTaggableManager(
         through=CFGOVOwnedPages,
         blank=True,
@@ -112,7 +118,6 @@ class CFGOVPage(Page):
         + "Use division acronyms only.",
         related_name="cfgov_content_owners",
     )
-
     schema_json = models.JSONField(
         null=True,
         blank=True,
@@ -176,6 +181,7 @@ class CFGOVPage(Page):
 
     sidefoot_panels = [
         StreamFieldPanel("sidefoot"),
+        FieldPanel("navigation_label", "Navigation Label"),
     ]
 
     settings_panels = [

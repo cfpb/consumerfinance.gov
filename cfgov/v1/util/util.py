@@ -76,8 +76,13 @@ def get_secondary_nav_items(request, current_page):
 
         item_selected = current_page.pk == sibling.pk
 
+        if sibling.navigation_label:
+            label = sibling.navigation_label
+        else:
+            label = sibling.title
+
         item = {
-            "title": sibling.title,
+            "title": label,
             "slug": sibling.slug,
             "url": sibling.relative_url(site),
             "children": [],
