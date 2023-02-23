@@ -120,7 +120,7 @@ function MegaMenuDesktop(baseClass, menus) {
 
       // If we've ever opened the menu, _activeMenu has to be cleared.
       if (_activeMenu) {
-        _activeMenu.getTransition().animateOn();
+        _activeMenu.getTransition()?.animateOn();
         if (menu === null) _activeMenu.collapse();
         _activeMenu = null;
       }
@@ -130,16 +130,16 @@ function MegaMenuDesktop(baseClass, menus) {
     } else if (_activeMenu === null) {
       // A menu is opened.
       _activeMenu = menu;
-      _activeMenu.getTransition().animateOn();
+      _activeMenu.getTransition()?.animateOn();
 
       // Close the menu on click of the document body.
       _bodyDom.addEventListener('click', _handleBodyClick);
     } else {
       // An open menu has switched to another menu.
-      _activeMenu.getTransition().animateOff();
+      _activeMenu.getTransition()?.animateOff();
       _activeMenu.collapse();
       _activeMenu = menu;
-      _activeMenu.getTransition().animateOff();
+      _activeMenu.getTransition()?.animateOff();
     }
   }
 

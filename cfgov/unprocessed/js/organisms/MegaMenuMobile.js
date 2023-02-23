@@ -109,7 +109,7 @@ function MegaMenuMobile(menus) {
 
     // Halt any active transitions.
     if (_activeMenu) {
-      _activeMenu.getTransition().halt();
+      _activeMenu.getTransition()?.halt();
     }
 
     // Scroll to top of page so menu is always at the top.
