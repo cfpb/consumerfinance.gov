@@ -151,6 +151,7 @@ class LearnPage(AbstractFilterPage):
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
             ("faq_group", schema.FAQGroup()),
+            ("contact_us_table", organisms.ContactUsTable()),
         ],
         blank=True,
     )
