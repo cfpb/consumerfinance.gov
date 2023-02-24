@@ -16,7 +16,7 @@
                   information on Spanish pages). Defaults to English.
 
    ========================================================================== #}
-{% macro render( is_horizontal=false, language='en') %}
+{% macro render( is_horizontal=false, language='en' ) %}
 {% import 'v1/includes/atoms/tagline.html' as tagline with context %}
     <div class="m-global-eyebrow
                 m-global-eyebrow__{{ 'horizontal' if is_horizontal
