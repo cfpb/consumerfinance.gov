@@ -362,13 +362,6 @@
     </script>
 
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            '{{ static('apps/find-a-housing-counselor/js/common.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
+      jsl(['{{ static("apps/find-a-housing-counselor/js/common.js") }}']);
     </script>
 {% endblock javascript %}

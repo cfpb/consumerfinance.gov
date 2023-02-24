@@ -37,14 +37,6 @@
 {% block javascript scoped %}
     {{ super() }}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function(){
-          {# Include site-wide JavaScript. #}
-          var s = [
-            '{{ static('apps/filing-instruction-guide/js/fig-init.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
+        jsl(['{{ static("apps/filing-instruction-guide/js/fig-init.js") }}']);
     </script>
 {% endblock javascript %}
