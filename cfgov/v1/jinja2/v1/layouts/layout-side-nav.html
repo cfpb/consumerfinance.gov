@@ -21,14 +21,7 @@
 {% block javascript scoped %}
     {{ super() }}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            '{{ static('js/routes/on-demand/secondary-navigation.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
+      jsl(['{{ static("js/routes/on-demand/secondary-navigation.js") }}']);
     </script>
 {% endblock javascript %}
 
