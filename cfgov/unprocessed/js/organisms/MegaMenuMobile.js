@@ -1,6 +1,5 @@
 import { bfs } from '../modules/util/tree-traversal.js';
-import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
+import { EventObserver, MoveTransition } from '@cfpb/cfpb-atomic-component';
 
 /**
  * MegaMenuMobile

@@ -1,11 +1,11 @@
 import {
+  contains,
   checkDom,
   setInitFlag,
-} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
-import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import FlyoutMenu from '@cfpb/cfpb-atomic-component/src/utilities/behavior/FlyoutMenu.js';
-import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
-import { contains } from '@cfpb/cfpb-atomic-component/src/utilities/data-hook.js';
+  EventObserver,
+  FlyoutMenu,
+  MoveTransition,
+} from '@cfpb/cfpb-atomic-component';
 import MegaMenuDesktop from '../organisms/MegaMenuDesktop.js';
 import MegaMenuMobile from '../organisms/MegaMenuMobile.js';
 import TabTrigger from '../modules/TabTrigger.js';

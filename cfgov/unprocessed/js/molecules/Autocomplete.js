@@ -1,9 +1,9 @@
 import { assign } from '../modules/util/assign';
 import {
+  EventObserver,
   checkDom,
   setInitFlag,
-} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
-import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+} from '@cfpb/cfpb-atomic-component';
 import throttle from 'lodash.throttle';
 
 // Class constants
