@@ -277,13 +277,6 @@
 {% block javascript %}
     {{ super() }}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            '{{ static("js/routes/on-demand/privacy-forms.js") }}'
-          ];
-          jsl(s);
-        }();
-      }
+      jsl(['{{ static("js/routes/on-demand/privacy-forms.js") }}']);
     </script>
 {% endblock javascript %}
