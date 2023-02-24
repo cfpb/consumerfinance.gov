@@ -2,11 +2,11 @@ import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state.js';
 import {
   checkDom,
   setInitFlag,
-} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+  EventObserver,
+  FlyoutMenu,
+  MoveTransition,
+} from '@cfpb/cfpb-atomic-component';
 import ClearableInput from '../modules/ClearableInput.js';
-import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import FlyoutMenu from '@cfpb/cfpb-atomic-component/src/utilities/behavior/FlyoutMenu.js';
-import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
 import TabTrigger from '../modules/TabTrigger.js';
 
 const BASE_CLASS = 'm-global-search';

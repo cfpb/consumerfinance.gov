@@ -1,4 +1,4 @@
-import { attach } from '@cfpb/cfpb-atomic-component/src/utilities/behavior/behavior.js';
+import { attach } from '@cfpb/cfpb-atomic-component';
 import {
   getSearchValues,
   serializeFormFields,

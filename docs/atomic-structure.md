@@ -172,9 +172,9 @@ expandable.init(_expandable.EXPANDED);
 or
 
 ```js
-const atomicHelpers = require('@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js');
-const Expandable = require('../../organisms/Expandable');
-atomicHelpers.instantiateAll('.o-expandable', Expandable);
+import {instantiateAll} from '@cfpb/cfpb-atomic-component');
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+instantiateAll('.o-expandable', Expandable);
 ```
 
 ## Folder structure

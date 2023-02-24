@@ -1,11 +1,11 @@
 import {
   checkDom,
   setInitFlag,
-} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
-import AlphaTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/AlphaTransition.js';
-import BaseTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/BaseTransition.js';
+  AlphaTransition,
+  BaseTransition,
+  EventObserver,
+} from '@cfpb/cfpb-atomic-component';
 import ERROR_MESSAGES from '../config/error-messages-config.js';
-import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import Notification from '../molecules/Notification.js';
 import { scrollIntoView } from '../modules/util/scroll.js';
 

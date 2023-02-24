@@ -2,7 +2,7 @@
    Expandable Facets Organism
    ========================================================================== */
 
-import AtomicComponent from '@cfpb/cfpb-atomic-component/src/components/AtomicComponent.js';
+import { AtomicComponent } from '@cfpb/cfpb-atomic-component/src/components/AtomicComponent.js';
 import ExpandableFacetTransition from './ExpandableFacetTransition.js';
 
 const ExpandableFacets = AtomicComponent.extend({

@@ -3,6 +3,6 @@
    ========================================================================== */
 
 import VideoPlayer from '../../organisms/VideoPlayer';
-import { instantiateAll } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { instantiateAll } from '@cfpb/cfpb-atomic-component';
 
 instantiateAll(`.${VideoPlayer.BASE_CLASS}`, VideoPlayer);
