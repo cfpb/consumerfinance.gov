@@ -27,9 +27,9 @@
                                       else 'list' }}">
         <div class="wrapper
                     {{ 'wrapper__match-content' if is_horizontal else '' }}">
-            {% if has_tagline %}
+            {% if has_tagline -%}
                 {{ tagline.render() }}
-            {% endif %}
+            {%- endif %}
             <div class="m-global-eyebrow_actions">
                 <ul class="m-list
                            m-list__horizontal
