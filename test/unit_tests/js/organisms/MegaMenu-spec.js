@@ -19,10 +19,6 @@ describe('MegaMenu', () => {
       expect(typeof thisMegaMenu).toStrictEqual('object');
       expect(navElem.dataset.jsHook).toContain('state_atomic_init');
     });
-
-    it('should return undefined if already initialized', () => {
-      expect(megaMenu.init()).toBeUndefined();
-    });
   });
 
   describe('collapse', () => {

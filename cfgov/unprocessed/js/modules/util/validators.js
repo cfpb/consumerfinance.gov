@@ -4,7 +4,7 @@
    ========================================================================== */
 
 // Required Modules
-import { isEmpty } from '@cfpb/cfpb-atomic-component/src/utilities/type-checkers.js';
+import { isEmpty } from '@cfpb/cfpb-atomic-component';
 import ERROR_MESSAGES from '../../config/error-messages-config.js';
 
 /* TODO: Update all the validators to return both passed and failed states

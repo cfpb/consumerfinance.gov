@@ -119,11 +119,18 @@ describe('explore-rates/util', () => {
 
   describe('isKeyAllowed()', () => {
     it('should return true if key code is not in forbidden list.', () => {
-      expect(isKeyAllowed(0)).toBe(true);
+      expect(isKeyAllowed('Backspace')).toBe(true);
+      expect(isKeyAllowed(' ')).toBe(true);
     });
 
     it('should return false if key code is in forbidden list.', () => {
-      expect(isKeyAllowed(9)).toBe(false);
+      expect(isKeyAllowed('Tab')).toBe(false);
+      expect(isKeyAllowed('ArrowLeft')).toBe(false);
+      expect(isKeyAllowed('ArrowUp')).toBe(false);
+      expect(isKeyAllowed('ArrowRight')).toBe(false);
+      expect(isKeyAllowed('ArrowDown')).toBe(false);
+      expect(isKeyAllowed('Enter')).toBe(false);
+      expect(isKeyAllowed('Shift')).toBe(false);
     });
   });
 

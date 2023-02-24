@@ -45,18 +45,23 @@ function formatTimestampMMddyyyy(timestamp) {
 }
 
 /**
- * @param {number} keyCode - A key code.
+ * See keys on
+ * https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values
+ * @param {string} key - A key string.
  * @returns {boolean} True if key is forbidden, false otherwise.
  */
-function isKeyAllowed(keyCode) {
-  /* `FORBIDDEN_KEYS` are as follows:
-  9 = tab
-  37, 38, 39, 40 = arrow keys.
-  13 = enter
-  16 = shift */
-  const FORBIDDEN_KEYS = [9, 37, 38, 39, 40, 13, 16];
+function isKeyAllowed(key) {
+  const FORBIDDEN_KEYS = [
+    'Tab',
+    'ArrowLeft',
+    'ArrowUp',
+    'ArrowRight',
+    'ArrowDown',
+    'Enter',
+    'Shift',
+  ];
 
-  if (FORBIDDEN_KEYS.indexOf(keyCode) !== -1) {
+  if (FORBIDDEN_KEYS.indexOf(key) !== -1) {
     return false;
   }
   return true;

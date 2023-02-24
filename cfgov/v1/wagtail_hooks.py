@@ -39,6 +39,7 @@ from v1.template_debug import (
     video_player_test_cases,
 )
 from v1.views.reports import (
+    ActiveUsersReportView,
     AskReportView,
     CategoryIconReportView,
     DocumentsReportView,
@@ -324,6 +325,26 @@ def register_translated_pages_report_url():
             r"^reports/translated-pages/$",
             TranslatedPagesReportView.as_view(),
             name="translated_pages_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_active_users_report_menu_item():
+    return MenuItem(
+        "Active Users",
+        reverse("active_users_report"),
+        classnames="icon icon-" + ActiveUsersReportView.header_icon,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_active_users_report_url():
+    return [
+        re_path(
+            r"^reports/active-users/$",
+            ActiveUsersReportView.as_view(),
+            name="active_users_report",
         ),
     ]
 

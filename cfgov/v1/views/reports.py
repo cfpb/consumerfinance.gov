@@ -4,6 +4,7 @@ from functools import partial
 from operator import itemgetter
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.utils import html as html_util
 
 from wagtail.admin.filters import WagtailFilterSet
@@ -403,3 +404,21 @@ class TranslatedPagesReportView(PageReportView):
         context = super().get_context_data(*args, **kwargs)
         context["languages"] = settings.LANGUAGES
         return context
+
+
+class ActiveUsersReportView(ReportView):
+    title = "Active Users"
+    header_icon = "user"
+    template_name = "v1/active_users_report.html"
+    paginate_by = 0
+
+    list_export = [
+        "first_name",
+        "last_name",
+        "username",
+        "email",
+        "last_login",
+    ]
+
+    def get_queryset(self):
+        return get_user_model().objects.filter(is_active=True)

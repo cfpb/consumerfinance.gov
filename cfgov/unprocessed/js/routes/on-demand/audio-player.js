@@ -3,6 +3,6 @@
    ========================================================================== */
 
 import AudioPlayer from '../../organisms/AudioPlayer';
-import { instantiateAll } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { instantiateAll } from '@cfpb/cfpb-atomic-component';
 
 instantiateAll('audio', AudioPlayer);

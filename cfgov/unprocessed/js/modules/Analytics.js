@@ -1,5 +1,4 @@
-import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import { isArray } from '@cfpb/cfpb-atomic-component/src/utilities/type-checkers.js';
+import { EventObserver, isArray } from '@cfpb/cfpb-atomic-component';
 
 const eventObserver = new EventObserver();
 const Analytics = {

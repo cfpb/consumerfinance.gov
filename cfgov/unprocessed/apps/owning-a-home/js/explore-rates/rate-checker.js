@@ -881,29 +881,51 @@ function registerEvents() {
   );
 
   // Prevent non-numeric characters from being entered.
-  $('.calc-loan-amt .recalc').on('keydown', function (event) {
-    const key = event.which;
-    const allowedKeys = [
-      8, 9, 37, 38, 39, 40, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98,
-      99, 100, 101, 102, 103, 104, 105, 188, 190,
-    ];
+  const calcLoanAmountRecalcDoms = document.querySelectorAll(
+    '.calc-loan-amt .recalc'
+  );
+  calcLoanAmountRecalcDoms.forEach((calcLoanAmountRecalc) => {
+    calcLoanAmountRecalc.addEventListener('keydown', (event) => {
+      const key = event.key;
+      const allowedKeys = [
+        'Backspace',
+        'Tab',
+        'ArrowLeft',
+        'ArrowUp',
+        'ArrowRight',
+        'ArrowDown',
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        ',',
+        '.',
+      ];
 
-    /* If it's not an allowed key OR the shift key is held down
-       (and they're not tabbing) stop everything. */
-    if (allowedKeys.indexOf(key) === -1 || (event.shiftKey && key !== 9)) {
-      event.preventDefault();
-    }
-  });
+      /* If it's not an allowed key OR the shift key is held down
+         (and they're not tabbing) stop everything. */
+      if (
+        allowedKeys.indexOf(key) === -1 ||
+        (event.shiftKey && key !== 'Tab')
+      ) {
+        event.preventDefault();
+      }
+    });
 
-  /* Check if input value is a number.
-     If not, replace the character with an empty string. */
-  $('.calc-loan-amt .recalc').on('keyup', function (event) {
-    const key = event.which;
-    // on keyup (not tab or arrows), immediately gray chart
-    if (isKeyAllowed(key)) {
-      removeAlerts();
-      startLoading();
-    }
+    /* Check if input value is a number.
+       If not, replace the character with an empty string. */
+    calcLoanAmountRecalc.addEventListener('keyup', (event) => {
+      if (isKeyAllowed(event.key)) {
+        removeAlerts();
+        startLoading();
+      }
+    });
   });
 
   // Delayed function for processing and updating
@@ -918,7 +940,7 @@ function registerEvents() {
    */
   function NoCalcOnForbiddenKeys(event) {
     const element = event.target;
-    const key = event.keyCode;
+    const key = event.key;
 
     // Don't recalculate on TAB or arrow keys.
     if (isKeyAllowed(key) || element.classList.contains('a-range')) {
