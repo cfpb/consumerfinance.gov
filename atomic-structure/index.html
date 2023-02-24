@@ -291,9 +291,9 @@ by adding the following to your project's JavaScript code:</p>
 <pre class="highlight"><code class="language-js">const expandable = new Expandable(_dom.querySelector('.o-expandable'));
 expandable.init(_expandable.EXPANDED);</code></pre>
 <p>or</p>
-<pre class="highlight"><code class="language-js">const atomicHelpers = require('@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js');
-const Expandable = require('../../organisms/Expandable');
-atomicHelpers.instantiateAll('.o-expandable', Expandable);</code></pre>
+<pre class="highlight"><code class="language-js">import {instantiateAll} from '@cfpb/cfpb-atomic-component');
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+instantiateAll('.o-expandable', Expandable);</code></pre>
 <h2 id="folder-structure">Folder structure<a class="headerlink" href="#folder-structure" title="Permanent link">¶</a></h2>
 <p>Our atomic components are separated and named based on asset type.
 HTML, Less, and JavaScript for each component are in separate directories.</p>
