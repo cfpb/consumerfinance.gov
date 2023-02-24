@@ -387,10 +387,10 @@
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-icons/-/cfpb-icons-0.3.2.tgz#4dfd3ad2c9b072ee47f12e39dbc01fc5b0a0c430"
   integrity sha512-ChP684ab82Exn0GYH9KP8U6tHtnAgPlWpCC4A4iBSTmgZqAihn82UdRg1mkWxaspOTfbXKomvE1EqPV/TRNiuw==
 
-"@cfpb/cfpb-layout@0.21.1":
-  version "0.21.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.21.1.tgz#c54043babc5fb8d0cefe8fd5846967baa459544c"
-  integrity sha512-LU4USPpsAD8LP5o5aItE2H3IMKP0d9uaHISqr2pvMu5EsOnvRIEWxZk0N2gm8a1V/+5gAVDGsM/C/gxghZe1aw==
+"@cfpb/cfpb-layout@0.21.5":
+  version "0.21.5"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.21.5.tgz#6dfb4a0dc606be75736662462be4e726643dce68"
+  integrity sha512-acgqCiN2ROcwcR5i1BBaOp7Pst0H7zkgeePF9+UDiItc4zZnRAjtuuHHpjaG7BPqUoffnaT55LLGi4ItLcG9sw==
   dependencies:
     "@cfpb/cfpb-core" "^0.21.0"
     "@cfpb/cfpb-grid" "^0.21.0"
