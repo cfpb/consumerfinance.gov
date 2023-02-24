@@ -153,7 +153,9 @@ function FormSubmit(element, baseClass, opts) {
    *  Replaces form with notification on success.
    */
   function _replaceFormWithNotification(message) {
-    const transition = new AlphaTransition(_baseElement).init();
+    const transition = new AlphaTransition(_baseElement).init(
+      AlphaTransition.CLASSES.ALPHA_100
+    );
     scrollIntoView(_formElement, { offset: 100, callback: fadeOutForm });
 
     /**
