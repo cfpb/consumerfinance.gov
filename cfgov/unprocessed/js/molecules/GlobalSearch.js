@@ -5,9 +5,11 @@ import {
 } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import ClearableInput from '../modules/ClearableInput.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import FlyoutMenu from '../modules/behavior/FlyoutMenu.js';
+import FlyoutMenu from '@cfpb/cfpb-atomic-component/src/utilities/behavior/FlyoutMenu.js';
 import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
 import TabTrigger from '../modules/TabTrigger.js';
+
+const BASE_CLASS = 'm-global-search';
 
 /**
  * GlobalSearch
@@ -19,9 +21,6 @@ import TabTrigger from '../modules/TabTrigger.js';
  * @returns {GlobalSearch} An instance.
  */
 function GlobalSearch(element) {
-  // eslint-disable-line max-statements, no-inline-comments, max-len
-
-  const BASE_CLASS = 'm-global-search';
   const _dom = checkDom(element, BASE_CLASS);
   const _contentDom = _dom.querySelector(`.${BASE_CLASS}_content`);
   const _triggerDom = _dom.querySelector(`.${BASE_CLASS}_trigger`);
@@ -31,7 +30,7 @@ function GlobalSearch(element) {
   const _triggerOpenLabelText = _triggerDom
     .querySelector(`.${BASE_CLASS}_trigger-open-label`)
     .innerText.trim();
-  const _flyoutMenu = new FlyoutMenu(_dom);
+  const _flyout = new FlyoutMenu(_dom);
   let _searchInputDom;
   let _searchBtnDom;
   let _clearBtnDom;
@@ -49,20 +48,21 @@ function GlobalSearch(element) {
     }
 
     // Set initial appearance.
-    const transition = new MoveTransition(_contentDom).init();
-    transition.moveRight();
-    _flyoutMenu.setExpandTransition(transition, transition.moveToOrigin);
-    _flyoutMenu.setCollapseTransition(transition, transition.moveRight);
-    _flyoutMenu.init();
+    const transition = new MoveTransition(_contentDom).init(
+      MoveTransition.CLASSES.MOVE_RIGHT
+    );
+    _flyout.setTransition(
+      transition,
+      transition.moveRight,
+      transition.moveToOrigin
+    );
+    _flyout.init();
 
     _contentDom.classList.remove('u-hidden');
 
-    const clearBtnSel =
-      '.' + BASE_CLASS + ' .input-contains-label_after__clear';
-    const inputContainsLabelSel =
-      '.' + BASE_CLASS + '_content-form .input-contains-label';
-    const searchBtnSel =
-      '.' + BASE_CLASS + ' .o-form__input-w-btn_btn-container button';
+    const clearBtnSel = `.${BASE_CLASS} .input-contains-label_after__clear`;
+    const inputContainsLabelSel = `.${BASE_CLASS}_content-form .input-contains-label`;
+    const searchBtnSel = `.${BASE_CLASS} .o-form__input-w-btn_btn-container button`;
 
     _clearBtnDom = _contentDom.querySelector(clearBtnSel);
     const inputContainsLabel = _contentDom.querySelector(inputContainsLabelSel);
@@ -75,15 +75,22 @@ function GlobalSearch(element) {
     const handleExpandBeginBinded = _handleExpandBegin.bind(this);
     const handleCollapseEndBinded = _handleCollapseEnd.bind(this);
 
-    _flyoutMenu.addEventListener('expandBegin', handleExpandBeginBinded);
-    _flyoutMenu.addEventListener('collapseBegin', _handleCollapseBegin);
-    _flyoutMenu.addEventListener('collapseEnd', handleCollapseEndBinded);
+    _flyout.addEventListener('expandbegin', handleExpandBeginBinded);
+    _flyout.addEventListener('expandend', () => {
+      _searchInputDom.select();
+    });
+    _flyout.addEventListener('collapsebegin', _handleCollapseBegin);
+    _flyout.addEventListener('collapseend', handleCollapseEndBinded);
 
     _tabTrigger.init();
-    _tabTrigger.addEventListener('tabPressed', _handleTabPress);
+    _tabTrigger.addEventListener('tabpressed', () => {
+      if (_flyout.isExpanded()) {
+        collapse();
+      }
+    });
 
     // Set initial collapse state.
-    handleCollapseEndBinded();
+    _contentDom.classList.add('u-invisible');
 
     return this;
   }
@@ -131,29 +138,22 @@ function GlobalSearch(element) {
   }
 
   /**
-   * Event handler for when the tab key is pressed.
-   */
-  function _handleTabPress() {
-    collapse();
-  }
-
-  /**
    * Event handler for when FlyoutMenu expand transition begins.
-   * Use this to perform post-expandBegin actions.
+   * Use this to perform post-expandbegin actions.
    */
   function _handleExpandBegin() {
-    this.dispatchEvent('expandBegin', { target: this });
+    this.dispatchEvent('expandbegin', { target: this });
 
     /* TODO: Remove when Android 4.0-4.4 support is dropped.
        Hack to fix reflow issues on legacy Android devices. */
-    _contentDom.style.display = 'none';
+    /*_contentDom.style.display = 'none';
     // eslint-disable-next-line no-unused-expressions
     _contentDom.offsetHeight;
     _contentDom.style.display = '';
-
+    */
     _contentDom.classList.remove('u-invisible');
 
-    _searchInputDom.select();
+    //_searchInputDom.select();
 
     _triggerDom.setAttribute('aria-label', _triggerCloseLabelText);
 
@@ -162,19 +162,20 @@ function GlobalSearch(element) {
 
   /**
    * Event handler for when FlyoutMenu collapse transition begins.
-   * Use this to perform post-collapseBegin actions.
+   * Use this to perform post-collapsebegin actions.
    */
   function _handleCollapseBegin() {
+    _searchInputDom.blur();
     _triggerDom.setAttribute('aria-label', _triggerOpenLabelText);
     document.body.removeEventListener('mousedown', _handleBodyClick);
   }
 
   /**
    * Event handler for when FlyoutMenu collapse transition ends.
-   * Use this to perform post-collapseEnd actions.
+   * Use this to perform post-collapseend actions.
    */
   function _handleCollapseEnd() {
-    this.dispatchEvent('collapseEnd', { target: this });
+    this.dispatchEvent('collapseend', { target: this });
 
     /* TODO: When tabbing is used to collapse the search flyout
        it will not animate with the below line.
@@ -184,23 +185,12 @@ function GlobalSearch(element) {
   }
 
   /**
-   * Open the search box.
-   *
-   * @returns {object} An GlobalSearch instance.
-   */
-  function expand() {
-    _flyoutMenu.expand();
-
-    return this;
-  }
-
-  /**
    * Close the search box.
    *
    * @returns {object} An GlobalSearch instance.
    */
   function collapse() {
-    _flyoutMenu.collapse();
+    _flyout.collapse();
 
     return this;
   }
@@ -212,7 +202,6 @@ function GlobalSearch(element) {
   this.dispatchEvent = eventObserver.dispatchEvent;
 
   this.init = init;
-  this.expand = expand;
   this.collapse = collapse;
 
   return this;

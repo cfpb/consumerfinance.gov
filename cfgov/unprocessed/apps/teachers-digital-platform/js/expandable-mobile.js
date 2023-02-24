@@ -1,5 +1,4 @@
-import ExpandableTransition from '@cfpb/cfpb-expandables/src/ExpandableTransition.js';
-
+const OPEN_DEFAULT = 'o-expandable_content__onload-open';
 const MOBILE_COLLAPSED_CLASS = 'o-expandable__mobile-collapsed';
 const MOBILE_WIDTH = 900;
 
@@ -33,7 +32,7 @@ function beforeExpandableTransitionInit() {
   // IE11 lacks NodeList.forEach
   [].forEach.call(nodeList, (el) => {
     if (getInnerWidth() <= MOBILE_WIDTH) {
-      el.classList.remove(ExpandableTransition.CLASSES.OPEN_DEFAULT);
+      el.classList.remove(OPEN_DEFAULT);
     }
 
     // Always clean up this class, just used at init time

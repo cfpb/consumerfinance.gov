@@ -43,12 +43,12 @@ function Header(element) {
     // Don't initialize the mega menu if it isn't on the page.
     if (_dom.classList.contains(`${BASE_CLASS}__mega-menu`)) {
       _megaMenu = new MegaMenu(_dom);
-      _megaMenu.addEventListener('rootExpandBegin', _megaMenuExpandBegin);
-      _megaMenu.addEventListener('rootCollapseEnd', _megaMenuCollapseEnd);
+      _megaMenu.addEventListener('rootexpandbegin', _megaMenuExpandBegin);
+      _megaMenu.addEventListener('rootcollapseend', _megaMenuCollapseEnd);
 
       // If we have a mega menu, it needs to be collapsed when search is expanded.
-      _globalSearch.addEventListener('expandBegin', _globalSearchExpandBegin);
-      _globalSearch.addEventListener('collapseEnd', _globalSearchCollapseEnd);
+      _globalSearch.addEventListener('expandbegin', _globalSearchExpandBegin);
+      _globalSearch.addEventListener('collapseend', _globalSearchCollapseEnd);
 
       _megaMenu.init();
     }

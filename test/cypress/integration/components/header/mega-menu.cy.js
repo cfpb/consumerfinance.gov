@@ -1,73 +1,139 @@
-import { MegaMenu } from './mega-menu-helpers.cy.js';
+import { MegaMenuDesktop, MegaMenuMobile } from './mega-menu-helpers.cy.js';
 
-const menu = new MegaMenu();
+const menuDesktop = new MegaMenuDesktop();
+const menuMobile = new MegaMenuMobile();
 
-describe('Mega-Menu organism for site navigation on desktop', () => {
-  before(() => {
-    cy.visit('/');
-    cy.viewport(1200, 800);
+describe('Mega-Menu organism for site navigation', () => {
+  describe('on desktop', () => {
+    beforeEach(() => {
+      cy.visit('/');
+      cy.viewport(1200, 800);
+    });
+    it('on page load', () => {
+      // Then the mega-menu organism should not have expanded attributes.
+      menuDesktop.firstTab().should('have.attr', 'aria-expanded', 'false');
+      menuDesktop
+        .firstPanelContainer()
+        .should('have.attr', 'aria-expanded', 'false');
+      // Then the mega-menu organism should have correct CSS classes.
+      menuDesktop.firstPanel().should('have.class', 'u-move-transition');
+      menuDesktop.firstPanel().should('have.class', 'u-move-up');
+      menuDesktop.firstPanel().should('not.have.class', 'u-is-animating');
+      // Then the mega-menu organism panels should not be visible.
+      menuDesktop.firstPanel().should('not.be.visible');
+      menuDesktop.secondPanel().should('not.be.visible');
+    });
+    it('on clicking a tab', () => {
+      // When the first tab is clicked to open.
+      menuDesktop.firstTab().click();
+      // Then the mega-menu organism should have expanded attributes.
+      menuDesktop.firstTab().should('have.attr', 'aria-expanded', 'true');
+      menuDesktop
+        .firstPanelContainer()
+        .should('have.attr', 'aria-expanded', 'true');
+      // Then the mega-menu organism should have correct CSS classes.
+      menuDesktop.firstPanel().should('have.class', 'u-move-transition');
+      menuDesktop.firstPanel().should('have.class', 'u-move-to-origin');
+      menuDesktop.firstPanel().should('not.have.class', 'u-is-animating');
+      // Then the mega-menu organism panels should be correctly displayed.
+      menuDesktop.firstPanel().should('be.visible');
+      menuDesktop.secondPanel().should('not.be.visible');
+      // When the first tab is clicked to close.
+      menuDesktop.firstTab().click();
+      // Then the mega-menu organism first panel should not be visible.
+      menuDesktop.firstPanel().should('not.be.visible');
+      // Then the mega-menu organism should have correct CSS classes.
+      menuDesktop.firstPanel().should('have.class', 'u-move-transition');
+      menuDesktop.firstPanel().should('have.class', 'u-move-up');
+      menuDesktop.firstPanel().should('not.have.class', 'u-is-animating');
+      // When the second tab is clicked to open.
+      menuDesktop.secondTab().click();
+      // Then the mega-menu organism should have correct CSS classes.
+      menuDesktop.secondPanel().should('have.class', 'u-move-transition');
+      menuDesktop.secondPanel().should('have.class', 'u-move-to-origin');
+      menuDesktop.secondPanel().should('not.have.class', 'u-is-animating');
+      // Then the mega-menu organism panels should be correctly displayed.
+      menuDesktop.firstPanel().should('not.be.visible');
+      menuDesktop.secondPanel().should('be.visible');
+    });
+    it('on clicking between tabs', () => {
+      // When the first tab is clicked to open.
+      menuDesktop.firstTab().click();
+      // Then only the first panel should be visible.
+      menuDesktop.firstPanel().should('be.visible');
+      menuDesktop.secondPanel().should('not.be.visible');
+      // When the second tab is clicked to open.
+      menuDesktop.secondTab().click();
+      // Then only the second panel should be visible.
+      menuDesktop.firstPanel().should('not.be.visible');
+      menuDesktop.secondPanel().should('be.visible');
+    });
   });
-  it('Mega-Menu, on page Load', () => {
-    // Then the mega-menu organism should not show content
-    menu.contentLink('2').should('not.be.visible');
-  });
-  it('Mega-Menu, mouse moves between menu items', () => {
-    // When mouse moves from one link to another
-    menu.clickLink('1');
-    // Then should only show first link content
-    menu.contentLink('1').should('exist');
-    // When mouse moves from one link to another
-    menu.clickLink('2');
-    // Then should only show second link content
-    menu.contentLink('2').should('exist');
-  });
-  it('Mega-Menu, mouse click on menu items', () => {
-    // Then the mega-menu organism should show menu when clicked
-    menu.triggerOpen();
-    // Then the mega-menu organism should show not show menu when clicked
-    menu.triggerClose();
-    // Then the mega-menu organism should show menu content when clicked
-    menu.contentValueListGroup('1').should('be.visible');
-    // Then the mega-menu organism should show not menu content when clicked
-    menu.contentValueListGroup('2').should('not.be.visible');
-    // Then the mega-menu organism should shift menus when tabbing multiple times
-    menu.tabbing();
-    menu.globalEyebrowElement().should('be.visible');
-    // Then the global-eyebrow organism should show languages when clicked
-    menu.globalEyebrowLanguages().should('exist');
-    menu.globalEyebrow('actions').should('exist');
-    menu.globalEyebrow('phone').should('be.visible');
-  });
-});
 
-describe('Mega-Menu organism for site navigation on mobile', () => {
-  before(() => {
-    cy.visit('/');
-    cy.viewport(480, 800);
-  });
+  describe('on mobile', () => {
+    beforeEach(() => {
+      cy.viewport(480, 800);
+      cy.visit('/');
+    });
+    it('on page load', () => {
+      // Then the mega-menu organism should not have expanded attributes.
+      menuMobile.rootTrigger().should('have.attr', 'aria-expanded', 'false');
+      menuMobile.firstPanel().should('have.attr', 'aria-expanded', 'false');
+      menuMobile.firstLevelTrigger().should('have.attr', 'tabindex', '-1');
+      menuMobile.firstLevelTrigger().should('have.attr', 'aria-hidden', 'true');
+      // Then the mega-menu organism should have correct CSS classes.
+      menuMobile.firstPanel().should('have.class', 'u-move-transition');
+      menuMobile.firstPanel().should('have.class', 'u-move-left');
+      menuMobile.firstPanel().should('not.have.class', 'u-is-animating');
+      // Then the mega-menu organism panels should not be visible.
+      menuMobile.firstPanel().should('not.be.inViewport');
+      menuMobile.secondPanel().should('not.be.visible');
+    });
+    it('on drilling down to the second level and back', () => {
+      // When the hamburger menu is clicked to open.
+      menuMobile.rootTrigger().click();
+      // Then only the first panel should be visible.
+      menuMobile.firstPanel().should('be.visible');
+      menuMobile.secondPanel().should('not.be.visible');
+      menuMobile.firstLevelTrigger().should('not.have.attr', 'tabindex');
+      menuMobile.firstLevelTrigger().should('not.have.attr', 'aria-hidden');
+      // Then expected content is visible.
+      menuMobile.firstPanel().contains('Submit a Complaint');
+      menuMobile.firstPanel().contains('Español');
+      menuMobile.firstPanel().contains('(855) 411-2372');
+      // When the first child menu is clicked.
+      menuMobile.firstLevelTrigger().click();
+      // Then only the second panel should be visible.
+      menuMobile.firstPanel().should('not.be.inViewport');
+      menuMobile.secondPanel().should('be.visible');
+      // When the second panel's back button is clicked.
+      menuMobile.secondLevelFirstBackTrigger().should('be.focused');
+      menuMobile.secondLevelFirstBackTrigger().click();
+      // Then only the first panel should be visible.
+      menuMobile.firstPanel().should('be.visible');
+      menuMobile.secondPanel().should('not.be.visible');
+    });
+    it('on opening and closing the menu', () => {
+      // When the hamburger menu is clicked to open and then to close.
+      menuMobile.rootTrigger().click();
+      menuMobile.rootTrigger().click();
+      // Then the mega-menu organism panels should not be visible.
+      menuMobile.firstPanel().should('not.be.inViewport');
+      menuMobile.secondPanel().should('not.be.visible');
+      // When the hamburger menu is clicked to open.
+      menuMobile.rootTrigger().click();
+      // When the first child menu is clicked.
+      menuMobile.firstLevelTrigger().click();
+      // When the hamburger menu is clicked to close.
+      menuMobile.rootTrigger().click();
+      // Then the mega-menu organism panels should not be visible.
+      menuMobile.firstPanel().should('not.be.inViewport');
+      menuMobile.secondPanel().should('not.be.visible');
+    });
 
-  it('Mega-Menu, on tabbing interactions', () => {
-    // Focus the trigger button and open and navigate to the 2nd level menu.
-    menu.focusTriggerBtn();
-    // Then the 1st level links should have tabbing disabled.
-    menu.contentLink('1').should('have.attr', 'tabindex');
-    // Then click the focused trigger button to open it.
-    cy.focused().click();
-    // Then move focus to last link and it should have tabbing enabled.
-    menu.focusLastLink('1').should('not.have.attr', 'tabindex');
-    // Then click focused trigger item.
-    cy.focused().click();
-    // Then the 1st level links should have tabbing disabled.
-    menu.contentLink('1').should('have.attr', 'tabindex');
-    // Then click the trigger button again to close it.
-    menu.clickTriggerBtn();
-    // Then the 1st level links should have tabbing disabled.
-    menu.contentLink('1').should('have.attr', 'tabindex');
-    // Then focus the trigger button again to open it.
-    menu.focusTriggerBtn();
-    // Then click the focused trigger button to open it.
-    cy.focused().click();
-    // Then the 1st level links should have tabbing enabled.
-    menu.contentLink('1').should('not.have.attr', 'tabindex');
+    xit('on tabbing interactions', () => {
+      // TODO: Cypress does not currently support tabbing keyboard interactions.
+      // See https://github.com/cypress-io/cypress/issues/299
+    });
   });
 });

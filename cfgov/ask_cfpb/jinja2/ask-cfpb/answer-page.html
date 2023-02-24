@@ -66,15 +66,12 @@
 
         <div class="block block__sub">
 
-            <div class="o-summary o-summary__mobile"
-                 data-js-hook="behavior_flyout-menu">
-                <div class="o-summary_content answer-text"
-                     data-js-hook="behavior_flyout-menu_content">
+            <div class="o-summary o-summary__mobile">
+                <div class="o-summary_content answer-text">
                     {% include_block page.answer_content %}
                 </div>
 
-                <button class="o-summary_btn u-hidden"
-                        data-js-hook="behavior_flyout-menu_trigger">
+                <button class="o-summary_btn u-hidden">
                     {{ _('Read full answer') }}
                     {{ svg_icon('plus-round') }}
                 </button>
