@@ -10,7 +10,6 @@ from ask_cfpb.models.pages import (
     AnswerLandingPage,
     AnswerResultsPage,
     PortalSearchPage,
-    SecondaryNavigationJSMixin,
     TagResultsPage,
     get_ask_breadcrumbs,
     get_reusable_text_snippet,

@@ -185,17 +185,7 @@ class AnswerLandingPage(LandingPage):
         return context
 
 
-class SecondaryNavigationJSMixin:
-    """A page mixin that adds navigation JS."""
-
-    @property
-    def page_js(self):
-        return super().page_js + ["secondary-navigation.js"]
-
-
-class PortalSearchPage(
-    RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage
-):
+class PortalSearchPage(RoutablePageMixin, CFGOVPage):
     """
     A routable page type for Ask CFPB portal search ("see-all") pages.
     """
