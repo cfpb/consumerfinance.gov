@@ -1869,14 +1869,6 @@ export default `
         <div class="wrapper
                     ">
 
-<div class="a-tagline">
-	<span class="u-usa-flag"></span>
-   <div class="a-tagline_text">
-      An official website of the
-      <span class="u-nowrap">United States government</span>
-   </div>
-</div>
-
             <div class="m-global-eyebrow_actions">
                 <ul class="m-list
                            m-list__horizontal
@@ -1930,7 +1922,6 @@ export default `
             </div>
         </div>
     </div>
-
 
 </div>
 
