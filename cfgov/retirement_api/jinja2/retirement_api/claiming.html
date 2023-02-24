@@ -966,13 +966,6 @@
 {% block javascript scoped %}
 {{ super() }}
 <script>
-  if (document.body.parentElement.className.indexOf('no-js') === -1) {
-    !function() {
-      var s = [
-        '{{ static('apps/retirement/js/index.js') }}'
-      ];
-      jsl(s);
-    }()
-  }
+  jsl(['{{ static("apps/retirement/js/index.js") }}']);
 </script>
 {% endblock javascript %}
