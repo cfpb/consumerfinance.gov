@@ -169,3 +169,20 @@ class SearchGovAffiliateTests(SimpleTestCase):
     @override_settings(DEPLOY_ENVIRONMENT="beta")
     def test_beta_spanish(self):
         self.assertEqual(self.render({"language": "es"}), "cfpb_beta_es")
+
+
+class TestGetCategoryIcon(SimpleTestCase):
+    def checkRender(self, template, expected):
+        tmpl = engines["wagtail-env"].from_string(template)
+        self.assertEqual(tmpl.render(), expected)
+
+    def test_example_category_name(self):
+        self.checkRender("{{ get_category_icon('Auto loans') }}", "car")
+
+    def test_example_category_name_lowercase(self):
+        self.checkRender("{{ get_category_icon('auto loans') }}", "car")
+
+    def test_nonexistent_category_name_returns_none(self):
+        self.checkRender(
+            "{{ get_category_icon('Invalid category name') }}", "None"
+        )

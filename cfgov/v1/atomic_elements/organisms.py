@@ -47,7 +47,7 @@ class AskSearch(blocks.StructBlock):
 
     class Meta:
         icon = "search"
-        template = "_includes/organisms/ask-search.html"
+        template = "v1/includes/organisms/ask-search.html"
 
     class Media:
         js = ["ask-autocomplete.js"]
@@ -58,7 +58,7 @@ class Well(blocks.StructBlock):
 
     class Meta:
         icon = "placeholder"
-        template = "_includes/organisms/well.html"
+        template = "v1/includes/organisms/well.html"
 
 
 class InfoUnitGroup(blocks.StructBlock):
@@ -170,7 +170,7 @@ class InfoUnitGroup(blocks.StructBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "_includes/organisms/info-unit-group-2.html"
+        template = "v1/includes/organisms/info-unit-group-2.html"
 
 
 class PostPreviewSnapshot(blocks.StructBlock):
@@ -184,7 +184,7 @@ class PostPreviewSnapshot(blocks.StructBlock):
 
     class Meta:
         icon = "order"
-        template = "_includes/organisms/post-preview-snapshot.html"
+        template = "v1/includes/organisms/post-preview-snapshot.html"
 
 
 class RelatedPosts(blocks.StructBlock):
@@ -288,7 +288,7 @@ class RelatedPosts(blocks.StructBlock):
             ]
 
         related_types = []
-        related_items = {}
+        related_items = []
         if value.get("relate_posts"):
             related_types.append("blog")
         if value.get("relate_newsroom"):
@@ -342,10 +342,16 @@ class RelatedPosts(blocks.StructBlock):
                 # If specified in the admin, change this to match ALL tags
                 related_queryset = match_all_topic_tags(related_queryset, tags)
 
-            related_items[parent.title()] = related_queryset[:limit]
+            if related_queryset:
+                related_items.append(
+                    {
+                        "title": parent.title(),
+                        "icon": ref.get_category_icon(parent),
+                        "posts": related_queryset[:limit],
+                    }
+                )
 
-        # Return items in the dictionary that have non-empty querysets
-        return {key: value for key, value in related_items.items() if value}
+        return related_items
 
     @staticmethod
     def view_more_url(page, request):
@@ -368,7 +374,7 @@ class RelatedPosts(blocks.StructBlock):
 
     class Meta:
         icon = "link"
-        template = "_includes/molecules/related-posts.html"
+        template = "v1/includes/molecules/related-posts.html"
 
 
 class MainContactInfo(blocks.StructBlock):
@@ -381,12 +387,12 @@ class MainContactInfo(blocks.StructBlock):
 
     class Meta:
         icon = "wagtail"
-        template = "_includes/organisms/main-contact-info.html"
+        template = "v1/includes/organisms/main-contact-info.html"
 
 
 class SidebarContactInfo(MainContactInfo):
     class Meta:
-        template = "_includes/organisms/sidebar-contact-info.html"
+        template = "v1/includes/organisms/sidebar-contact-info.html"
 
     class Media:
         css = ["sidebar-contact-info.css"]
@@ -559,7 +565,7 @@ class SimpleChart(blocks.StructBlock):
     class Meta:
         label = "Simple Chart"
         icon = "image"
-        template = "_includes/organisms/simple-chart.html"
+        template = "v1/includes/organisms/simple-chart.html"
         form_classname = "struct-block simple-chart-block"
 
     class Media:
@@ -582,7 +588,7 @@ class FullWidthText(blocks.StreamBlock):
 
     class Meta:
         icon = "edit"
-        template = "_includes/organisms/full-width-text.html"
+        template = "v1/includes/organisms/full-width-text.html"
 
 
 class BaseExpandable(blocks.StructBlock):
@@ -593,7 +599,7 @@ class BaseExpandable(blocks.StructBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "_includes/organisms/expandable.html"
+        template = "v1/includes/organisms/expandable.html"
         label = "Expandable"
 
     class Media:
@@ -629,7 +635,7 @@ class BaseExpandableGroup(blocks.StructBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "_includes/organisms/expandable-group.html"
+        template = "v1/includes/organisms/expandable-group.html"
 
     class Media:
         js = ["expandable-group.js"]
@@ -661,7 +667,7 @@ class ContactExpandable(blocks.StructBlock):
 
     class Meta:
         icon = "user"
-        template = "_includes/organisms/contact-expandable.html"
+        template = "v1/includes/organisms/contact-expandable.html"
 
     class Media:
         js = ["expandable.js"]
@@ -720,7 +726,7 @@ class ItemIntroduction(blocks.StructBlock):
 
     class Meta:
         icon = "form"
-        template = "_includes/organisms/item-introduction.html"
+        template = "v1/includes/organisms/item-introduction.html"
         classname = "block__flush-top"
 
 
@@ -854,7 +860,7 @@ class FilterableList(BaseExpandable):
     class Meta:
         label = "Filterable List"
         icon = "form"
-        template = "_includes/organisms/filterable-list.html"
+        template = "v1/includes/organisms/filterable-list.html"
 
     class Media:
         js = ["filterable-list.js"]
@@ -980,7 +986,7 @@ class VideoPlayer(blocks.StructBlock):
 
     class Meta:
         icon = "media"
-        template = "_includes/organisms/video-player.html"
+        template = "v1/includes/organisms/video-player.html"
         value_class = VideoPlayerStructValue
 
     class Media:
@@ -1010,7 +1016,7 @@ class AudioPlayer(blocks.StructBlock):
 
     class Meta:
         icon = "media"
-        template = "_includes/organisms/audio-player.html"
+        template = "v1/includes/organisms/audio-player.html"
 
     class Media:
         js = ["audio-player.js"]
@@ -1072,7 +1078,7 @@ class FeaturedContent(blocks.StructBlock):
     video = VideoPlayer(required=False)
 
     class Meta:
-        template = "_includes/organisms/featured-content.html"
+        template = "v1/includes/organisms/featured-content.html"
         icon = "doc-full-inverse"
         label = "Featured Content"
         classname = "block__flush"
@@ -1156,7 +1162,7 @@ class ChartBlock(blocks.StructBlock):
     class Meta:
         label = "Chart Block"
         icon = "image"
-        template = "_includes/organisms/chart.html"
+        template = "v1/includes/organisms/chart.html"
 
     class Media:
         js = ["chart.js"]
@@ -1184,7 +1190,7 @@ class MortgageChartBlock(blocks.StructBlock):
     class Meta:
         label = "Mortgage Chart Block"
         icon = "image"
-        template = "_includes/organisms/mortgage-chart.html"
+        template = "v1/includes/organisms/mortgage-chart.html"
 
     class Media:
         js = ["mortgage-performance-trends.js"]
@@ -1195,7 +1201,7 @@ class MortgageMapBlock(MortgageChartBlock):
     class Meta:
         label = "Mortgage Map Block"
         icon = "image"
-        template = "_includes/organisms/mortgage-map.html"
+        template = "v1/includes/organisms/mortgage-map.html"
 
     class Media:
         js = ["mortgage-performance-trends.js"]
@@ -1266,7 +1272,7 @@ class ResourceList(blocks.StructBlock):
     class Meta:
         label = "Resource List"
         icon = "table"
-        template = "_includes/organisms/resource-list.html"
+        template = "v1/includes/organisms/resource-list.html"
 
 
 class DataSnapshot(blocks.StructBlock):
@@ -1342,4 +1348,4 @@ class DataSnapshot(blocks.StructBlock):
     class Meta:
         icon = "image"
         label = "CCT Data Snapshot"
-        template = "_includes/organisms/data_snapshot.html"
+        template = "v1/includes/organisms/data_snapshot.html"

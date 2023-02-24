@@ -71,7 +71,7 @@ class VoluntaryAssessmentForm(forms.Form):
         from_email = settings.DEFAULT_FROM_EMAIL
         recipient_list = ["OMWI_diversityassessments@cfpb.gov"]
 
-        for (name, field) in self.fields.items():
+        for name, field in self.fields.items():
             message += field.label + ": " + self.cleaned_data[name] + "\n"
 
         try:

@@ -8,13 +8,13 @@ the setup scripts.
 You will generally have three tabs (or windows) open in your terminal,
 which will be used for:
 
- 1. **Git operations**.
+1.  **Git operations**.
     Perform Git operations and general development in the repository,
     such as `git checkout main`.
- 2. **Elasticsearch**.
+2.  **Elasticsearch**.
     Run an Elasticsearch (ES) instance.
     See instructions [below](#2-run-elasticsearch-optional).
- 3. **Django server**. Start and stop the web server.
+3.  **Django server**. Start and stop the web server.
     Server is started with `./runserver.sh`,
     but see more details [below](#3-load-indexes--launch-site).
 
@@ -36,8 +36,8 @@ This setup script will remove and reinstall the project dependencies
 and rebuild the site's JavaScript and CSS assets.
 
 !!! note
-    You may also run `./backend.sh` or `./frontend.sh`
-    if you only want to re-build the backend or front-end, respectively.
+You may also run `./backend.sh` or `./frontend.sh`
+if you only want to re-build the backend or front-end, respectively.
 
 ##### Setting environments
 
@@ -66,6 +66,7 @@ brew services start elasticsearch
 ```
 
 ### 3. Launch Site
+
 First, move into the `consumerfinance.gov` project directory
 and ready your environment:
 
@@ -84,8 +85,8 @@ From the project root, start the Django server:
 ```
 
 !!! note
-    If prompted to migrate database changes,
-    stop the server with `ctrl` + `c` and run these commands:
+If prompted to migrate database changes,
+stop the server with `ctrl` + `c` and run these commands:
 
 ```bash
 python cfgov/manage.py migrate
@@ -96,7 +97,7 @@ python cfgov/manage.py migrate
 To view the site browse to: <http://localhost:8000>
 
 !!! note "Using a different port"
-    If you want to run the server at a port other than 8000 use
+If you want to run the server at a port other than 8000 use
 
     `python cfgov/manage.py runserver <port number>`
 
@@ -108,13 +109,14 @@ and password `admin` (created in `initial-data.sh` above; note that this
 password will expire after 60 days).
 
 !!! note "Using HTTPS locally"
-    To access a local server using HTTPS use
+To access a local server using HTTPS use
 
     `./runserver.sh ssl`
 
     You'll need to ignore any browser certificate errors.
 
 ### yarn commands
+
 The following yarn tasks are available:
 
 ```

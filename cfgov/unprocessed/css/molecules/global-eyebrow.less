@@ -49,7 +49,7 @@
 */
 
 .m-global-eyebrow {
-  font-size: unit( 12px / @base-font-size-px, em );
+  font-size: unit(12px / @base-font-size-px, em);
 
   &_actions {
     text-align: right;
@@ -58,8 +58,8 @@
   &_languages {
     display: inline;
 
-    .m-list_item:not( :last-child ) {
-      margin-right: unit( 7px / 12px, em );
+    .m-list_item:not(:last-child) {
+      margin-right: unit(7px / 12px, em);
       margin-bottom: 0;
 
       .respond-to-min( @bp-lg-min, {
@@ -73,14 +73,14 @@
   }
 
   &_phone {
-    padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    padding-left: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
   }
 
   &__horizontal {
     width: 100%;
     display: inline-block;
-    padding-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
-    padding-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+    padding-top: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
+    padding-bottom: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
     background: @gray-5;
     border-bottom: 1px solid @gray-40;
 
@@ -106,11 +106,12 @@
   }
 
   &__list {
-    padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-    padding-left: unit( @grid_gutter-width / @base-font-size-px, rem );
-    padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-    padding-bottom: unit( @grid_gutter-width / @base-font-size-px, rem );
+    padding-top: unit(@grid_gutter-width / 2 / @base-font-size-px, rem);
+    padding-left: unit(@grid_gutter-width / @base-font-size-px, rem);
+    padding-right: unit(@grid_gutter-width / 2 / @base-font-size-px, rem);
+    padding-bottom: unit(@grid_gutter-width / @base-font-size-px, rem);
 
+    // Only applied if the tagline was included in the global eyebrow template.
     .a-tagline {
       display: none;
     }
@@ -131,17 +132,17 @@
 
     .m-global-eyebrow_phone {
       border-top: 1px solid @gray-40;
-      padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+      padding-top: unit(@grid_gutter-width / 2 / @base-font-size-px, rem);
 
       // Apply padding to the phone number to increase the touch area.
       a {
-        padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-        padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+        padding-top: unit(@grid_gutter-width / 2 / @base-font-size-px, rem);
+        padding-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, rem);
       }
     }
 
     .m-global-eyebrow_languages {
-      margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+      margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, rem);
 
       .m-list_item {
         // Apply padding to the language links to increase their touch area.
@@ -149,8 +150,11 @@
           display: block;
           text-align: center;
           min-width: 48px;
-          padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
-          padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+          padding-top: unit(@grid_gutter-width / 2 / @base-font-size-px, rem);
+          padding-bottom: unit(
+            @grid_gutter-width / 2 / @base-font-size-px,
+            rem
+          );
         }
       }
     }

@@ -3,14 +3,14 @@
 For page searches on consumerfinance.gov, we use Elasticsearch and the [django-opensearch-dsl](https://django-opensearch-dsl.readthedocs.io/en/latest/) library, which is a lightweight wrapper around [opensearch-dsl-py](https://opensearch.org/docs/latest/).
 
 - [Indexing](#indexing)
-    - [Elasticsearch index configuration](#elasticsearch-index-configuration)
-    - [Django model information](#django-model-information)
-    - [Custom fields](#custom-fields)
-    - [Helpers](#helpers)
-    - [Building the index](#building-the-index)
+  - [Elasticsearch index configuration](#elasticsearch-index-configuration)
+  - [Django model information](#django-model-information)
+  - [Custom fields](#custom-fields)
+  - [Helpers](#helpers)
+  - [Building the index](#building-the-index)
 - [Searching](#searching)
-    - [Autocomplete](#autocomplete)
-    - [Suggestions](#suggestions)
+  - [Autocomplete](#autocomplete)
+  - [Suggestions](#suggestions)
 - [References](#references)
 
 ## Indexing
@@ -73,13 +73,13 @@ class AnswerPageDocument(Document):
         ]
 ```
 
-The fields in `fields` will be indexed without any preparation/manipulation, directly as are stored on the model. 
+The fields in `fields` will be indexed without any preparation/manipulation, directly as are stored on the model.
 
 ### Custom fields
 
-Sometimes it might be desirable to index a field as an alternative type — say, the string that matches an integer for a Django field that species `choices`. 
+Sometimes it might be desirable to index a field as an alternative type — say, the string that matches an integer for a Django field that species `choices`.
 
-It might also be desirable to construct a field to index from multiple fields on the model, particularly for Wagtail pages with stream fields. 
+It might also be desirable to construct a field to index from multiple fields on the model, particularly for Wagtail pages with stream fields.
 
 We may also want to specify Elasticsearch-specific [field properties](https://django-opensearch-dsl.readthedocs.io/en/latest/fields/#field-classes), like a custom analyzer.
 
@@ -200,7 +200,6 @@ from ask_cfpb.documents import AnswerPageDocument
 search = AnswerPageDocument.search().filter("term", language=language)
 search.suggest('suggestion', search_term, term={'field': 'text'})
 ```
-
 
 ## References
 

@@ -1,6 +1,11 @@
-{% extends 'layout-2-1.html' %}
+{% extends 'v1/layouts/layout-2-1.html' %}
 
-{%- import 'macros/util/format/datetime.html' as dt %}
+{%- import 'v1/includes/macros/util/format/datetime.html' as dt %}
+
+{% block css -%}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ static('css/on-demand/job_listing_page.css') }}">
+{%- endblock css %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -32,11 +37,9 @@
                     block__flush-bottom
                     vacancy-announcement_description">
 
-        <div class="o-summary o-summary__mobile"
-            data-js-hook="behavior_flyout-menu">
+        <div class="o-summary o-summary__mobile">
             <div id="job-description-expandable"
-                 class="o-summary_content"
-                 data-js-hook="behavior_flyout-menu_content">
+                 class="o-summary_content">
                 <h4>Summary</h4>
                 {{ page.description | safe }}
                 {% if page.responsibilities %}
@@ -72,9 +75,8 @@
                 {% endif %}
             </div>
 
-            <button class="o-summary_btn u-hidden"
-                    data-js-hook="behavior_flyout-menu_trigger">
-                {{ _('Read full description') }}
+            <button class="o-summary_btn u-hidden">
+                Read full description
                 {{ svg_icon('plus-round') }}
             </button>
         </div>
@@ -202,7 +204,7 @@
             Follow us on LinkedIn
         </h2>
     </header>
-    <p data-qa-hook="info-section-desc">
+    <p>
         The CFPB is one of the most searched-for agencies
         in the federal government.
         Connect with us to stay updated on the work

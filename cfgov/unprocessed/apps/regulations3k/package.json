@@ -16,5 +16,5 @@
   "dependencies": {
     "workbox-build": "6.5.3"
   },
-  "devDependencies": {}
+  "type": "module"
 }

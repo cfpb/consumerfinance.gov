@@ -5,7 +5,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
-from wagtail.search import index
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
@@ -56,25 +55,20 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
         ]
     )
 
-    template = "sublanding-page/index.html"
+    template = "v1/sublanding-page/index.html"
 
     page_description = (
         "Right-hand sidebar, no left-hand sidebar. Use if children should be "
         "searchable using standard search filters module."
     )
 
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
-
 
 class ResearchHubPage(CategoryFilterableMixin, SublandingFilterablePage):
-    template = "sublanding-page/index.html"
+    template = "v1/sublanding-page/index.html"
     filterable_categories = ["Research Hub"]
 
 
 class ActivityLogPage(CategoryFilterableMixin, SublandingFilterablePage):
-    template = "activity-log/index.html"
+    template = "v1/activity-log/index.html"
     filterable_categories = ("Blog", "Newsroom", "Research Report")
     filterable_per_page_limit = 100

@@ -1,7 +1,7 @@
 @import (reference) '../../../css/main.less';
+@import '../node_modules/ctrl-f/dist/css/index.css';
 
 .o-fig {
-
   // Make the side navigation sticky
   .content_sidebar {
     position: sticky;
@@ -15,7 +15,6 @@
       overflow-y: auto;
     }
   } );
-
 }
 
 .o-fig_main {
@@ -26,37 +25,33 @@
 
   h2 {
     .h1();
+    margin-top: 60px;
   }
 
   h3 {
     .h2();
+    margin-top: 45px;
   }
 
-  :not( .m-info-unit_heading-text ) > h4 {
+  :not(.m-info-unit_heading-text) > h4 {
     .h3();
+    margin-top: 30px;
   }
 
   h5 {
     .h4();
-  }
-
-  // Set the gap above all headings to 30px
-  * + h2,
-  * + h3,
-  * + h4,
-  * + h5 {
-    margin-top: unit( 30px / @base-font-size-px, em );
+    margin-top: 30px;
   }
 
   pre {
-    font-family: Menlo, "Andale Mono", "Courier New", monospace;
+    font-family: Menlo, 'Andale Mono', 'Courier New', monospace;
     overflow-x: auto;
-    font-size: unit( 14px / @base-font-size-px, em );
+    font-size: unit(14px / @base-font-size-px, em);
     white-space: pre;
   }
 
   .o-table {
-    margin-top: unit( 30px / @base-font-size-px, em );
+    margin-top: unit(30px / @base-font-size-px, em);
     td {
       vertical-align: top;
       hyphens: auto;
@@ -64,6 +59,12 @@
     br {
       display: none;
     }
+  }
+
+  .u-fig-print-link {
+    margin-top: unit(45px / @base-font-size-px, em);
+    margin-bottom: unit(60px / @base-font-size-px, em);
+    padding-top: unit(30px / @base-font-size-px, em);
   }
 
   .respond-to-min( @bp-med-min, {
@@ -87,26 +88,27 @@
 .o-fig_heading {
   a {
     color: @black;
+    word-break: break-word;
   }
 }
 
 .o-fig_section__sub-sub {
-  margin-top: unit( 45px / @base-font-size-px, em );
-  margin-bottom: unit( 45px / @base-font-size-px, em );
+  margin-top: unit(45px / @base-font-size-px, em);
+  margin-bottom: unit(45px / @base-font-size-px, em);
 
   // Put a horizontal rule below all sub level 3 headings
   &:after {
     display: inline-block;
-    content: "";
+    content: '';
     border-top: 2px solid @gray-50;
-    width: calc( 100% + 30px );
-    margin: unit( 45px / @base-font-size-px, em ) 0 0 unit( -30px / @base-font-size-px, em );
+    width: calc(100% + 30px);
+    margin: unit(45px / @base-font-size-px, em) 0 0
+      unit(-30px / @base-font-size-px, em);
   }
 }
 
 .o-fig_sidebar {
-
-  .o-expandable_header-left {
+  .o-expandable_label {
     width: 95%;
   }
 
@@ -119,7 +121,7 @@
       // Add a large buffer underneath to ensure mobile users
       // can use assistive technology like Reachability to access
       // items at the bottom of the list
-      padding-bottom: unit( 420px / @base-font-size-px, em );
+      padding-bottom: unit(420px / @base-font-size-px, em);
     }
   }
 
@@ -130,28 +132,28 @@
   } );
 
   .m-nav-link {
-    padding-left: unit( 40px / @base-font-size-px, em );
-    text-indent: unit( -30px / @base-font-size-px, em );
+    padding-left: unit(40px / @base-font-size-px, em);
+    text-indent: unit(-30px / @base-font-size-px, em);
   }
 
   .o-secondary-navigation_list__parents > li > a {
-    padding-left: unit( 30px / @base-font-size-px, em );
-    text-indent: unit( -18px / @base-font-size-px, em );
+    padding-left: unit(30px / @base-font-size-px, em);
+    text-indent: unit(-18px / @base-font-size-px, em);
   }
 
   h4 {
-    padding-left: unit( 19px / @size-iv, em );
+    padding-left: unit(19px / @size-iv, em);
   }
 
   .o-report-sidenav__appendix > li > a {
-    text-indent: unit( -20px / @base-font-size-px, em );
+    text-indent: unit(-20px / @base-font-size-px, em);
   }
 
   .parent-header {
-    .o-secondary-navigation_list__children  {
+    .o-secondary-navigation_list__children {
       display: block;
       margin-top: 0;
-      margin-bottom:0.5em;
+      margin-bottom: 0.5em;
       .m-nav-link {
         padding-top: 0.5em;
         padding-bottom: 0.5em;
@@ -160,12 +162,12 @@
   }
 }
 
-
 .research-report {
   // 670px, plus a 15px gutter on each side (standard paragrah widths)
-  max-width: unit( (670 + 30) / 16, em );
+  max-width: unit((670 + 30) / 16, em);
 
-  .lead-paragraph, .author-names {
+  .lead-paragraph,
+  .author-names {
     margin: 30px 0 30px 0;
   }
 
@@ -206,4 +208,32 @@
   .respond-to-max( @bp-sm-max, {
     display: none;
   } );
+}
+
+#ctrl-f-modal {
+  h3 {
+    font-size: unit(16px / @base-font-size-px, em);
+  }
+  svg {
+    .cf-icon-svg();
+  }
+  input {
+    .a-text-input();
+    padding-left: unit(32px / @base-font-size-px, em);
+    &:focus {
+      .a-text-input.focus();
+    }
+  }
+  .ctrl-f-search-result {
+    border-bottom: 1px solid @gray-40;
+    a {
+      color: @black;
+      &:focus {
+        .a-text-input.focus();
+      }
+      &:hover {
+        .a-text-input.hover();
+      }
+    }
+  }
 }

@@ -1,29 +1,29 @@
 /**
  * @param {string} eventType - The type of event.
- * @param {HTMLNode} target - Target of the event.
- * @param {Object} eventOption - Options to add to the event.
- * @returns {HTMLNode} The target of the event.
+ * @param {HTMLElement} target - Target of the event.
+ * @param {object} eventOption - Options to add to the event.
+ * @returns {HTMLElement} The target of the event.
  */
-function simulateEvent( eventType, target, eventOption = {} ) {
+function simulateEvent(eventType, target, eventOption = {}) {
   let event;
 
-  if ( eventType === 'click' ) {
-    event = new MouseEvent( 'click', {
+  if (eventType === 'click') {
+    event = new MouseEvent('click', {
       bubbles: true,
       cancelable: true,
-      view: window
-    } );
+      view: window,
+    });
+    // TODO: migrate to KeyBoardEvent, etc.
   } else {
-    event = window.document.createEvent( 'Event', eventOption.currentTarget );
-  }
-  if ( eventOption && eventOption.keyCode ) {
-    event.keyCode = eventOption.keyCode;
+    event = window.document.createEvent('Event', eventOption.currentTarget);
+    event.initEvent(eventType, true, true);
+
+    if (eventOption && eventOption.key) {
+      event.key = eventOption.key;
+    }
   }
 
-  event.initEvent( eventType, true, true );
-  return target.dispatchEvent( event );
+  return target.dispatchEvent(event);
 }
 
-module.exports = {
-  simulateEvent
-};
+export { simulateEvent };

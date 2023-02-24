@@ -50,20 +50,18 @@ const HTML_SNIPPET = `
 </form>
 `;
 
-describe( 'FormModel', () => {
-  beforeAll( () => {
+describe('FormModel', () => {
+  beforeAll(() => {
     document.body.innerHTML = HTML_SNIPPET;
-  } );
+  });
 
-  describe( '.getModel()', () => {
-    it( 'should return an object with properties of the form', () => {
-      const modelInst = new FormModel( document.forms[0] ).init();
+  describe('.getModel()', () => {
+    it('should return an object with properties of the form', () => {
+      const modelInst = new FormModel(document.forms[0]).init();
       const model = modelInst.getModel();
 
-      expect( model.get( 'elements' ).length ).toBe( 15 );
-      expect( model.get( 'validateableElements' ).length ).toBe( 13 );
-    } );
-
-  } );
-
-} );
+      expect(model.get('elements').length).toBe(15);
+      expect(model.get('validateableElements').length).toBe(13);
+    });
+  });
+});

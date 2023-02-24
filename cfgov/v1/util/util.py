@@ -117,7 +117,6 @@ def get_secondary_nav_items(request, current_page):
 
 
 def valid_destination_for_request(request, url):
-
     view, args, kwargs = resolve(url)
     kwargs["request"] = request
     try:

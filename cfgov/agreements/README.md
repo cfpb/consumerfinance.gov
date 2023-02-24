@@ -1,10 +1,8 @@
-Credit Card Agreement Database
-==============================
+# Credit Card Agreement Database
 
 This django application powers CFPB's database of credit card agreements.
 
-Loading Agreements
-------------------
+## Loading Agreements
 
 This process depends on a number of conventions.
 
@@ -12,11 +10,10 @@ This process depends on a number of conventions.
 2. There is a PDF version of each agreement
 3. The "metadata" available that describes the agreements, is based of the directory structure (see example below)
 4. These files are uploaded to S3
-5. The URL's are structured so that PDF's are in {root url}/pdf/{file_name}.pdf 
+5. The URL's are structured so that PDF's are in {root url}/pdf/{file_name}.pdf
 
+## Example Directory Structure
 
-Example Directory Structure
-------------------------------
 ```
 American Express
     |->
@@ -32,6 +29,6 @@ Bank Of America
 
 The actual loading process is then pretty simple:
 
-`./manage.py import\_agreements  --path /path/to/agreements`
+`./manage.py import\_agreements --path /path/to/agreements`
 
 This will wipe out the existing agreement database, and load the new metadata.

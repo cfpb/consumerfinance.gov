@@ -1,4 +1,4 @@
-{% extends 'layout-2-1.html' %}
+{% extends 'v1/layouts/layout-2-1.html' %}
 
 {% block css -%}
     {{ super() }}
@@ -20,7 +20,7 @@
 {% block hero %}
 <div class="wrapper content_wrapper">
 
-    {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
+    {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
     {% set breadcrumb_items = [{
         'href': url('prepaid_agreements:index'),
         'title': 'Prepaid Product Agreements Database'
@@ -60,8 +60,7 @@
             <dd>
             {% if product.other_relevant_parties %}
                 {% if product.other_relevant_parties | length > 500 %}
-                    <div data-qa-hook="expandable"
-                         class="o-expandable
+                    <div class="o-expandable
                                 o-expandable__read-more-toggle">
                         <div class="o-expandable_content">
                 {% endif%}

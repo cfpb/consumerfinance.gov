@@ -6,9 +6,8 @@
     </a>
     <div class="t-dark">
         <ul role="menu" class="c-dropdown__menu  u-toggle  u-arrow u-arrow--tl u-background">
-        {% trans 'Delete' as delete_label %}
         {% for button in buttons %}
-            {% if button.label != delete_label %}
+            {% if button.label != "Delete" %}
             <li class="c-dropdown__item ">
                 <a href="{{ button.url }}" title="{{ button.attrs.title }}" class="u-link is-live {{ button.classes|join:' ' }}">
                     {{ button.label }}

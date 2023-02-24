@@ -12,9 +12,8 @@ const lifetimeModel = {
     age67: 1,
     age68: 1,
     age69: 1,
-    age70: 1
-  }
+    age70: 1,
+  },
 };
-
 
 export default lifetimeModel;

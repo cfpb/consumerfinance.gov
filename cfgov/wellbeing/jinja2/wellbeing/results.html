@@ -1,4 +1,4 @@
-{% extends 'layout-2-1.html' %}
+{% extends 'v1/layouts/layout-2-1.html' %}
 
 {% set link_text =  _('Back to the questionnaire') %}
 {% set breadcrumb_items = [{
@@ -220,7 +220,7 @@
 {% endif %}
 {% set avg_pct = avg_score.pct %}
 {% set avg_pct_spectrum = avg_pct if score_box_positioning == 'left' else 100 - avg_pct %}
-{% import 'molecules/notification.html' as notification with context %}
+{% import 'v1/includes/molecules/notification.html' as notification with context %}
 
 
 {% block content_main %}
@@ -330,10 +330,10 @@
         <div class="o-expandable
                     o-expandable__padded">
             <button class="o-expandable_header o-expandable_target">
-                <span class="o-expandable_header-left o-expandable_label">
+                <span class="o-expandable_label">
                     {{ _('Review your answers') }}
                 </span>
-                <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_link">
                     <span class="o-expandable_cue o-expandable_cue-open">
                         <span class="u-visually-hidden-on-mobile">
                             {{ _('Show') }}

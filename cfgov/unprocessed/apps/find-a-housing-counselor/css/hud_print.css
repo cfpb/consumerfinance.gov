@@ -9,7 +9,6 @@
   }
 }
 
-
 @media print {
   .u-screen-only {
     display: none;
@@ -27,7 +26,7 @@
 
   /* Spell out abbreviations. */
   abbr[title]:after {
-    content: ' (' attr( title ) ')';
+    content: ' (' attr(title) ')';
   }
 
   /*
@@ -61,7 +60,7 @@
 
   @page {
     size: letter;
-    margin: .5in .5in .5in .5in;
+    margin: 0.5in 0.5in 0.5in 0.5in;
     padding: 0;
   }
 
@@ -80,13 +79,13 @@
   }
 
   /* Item services. */
-  td:nth-child( 2 ) {
+  td:nth-child(2) {
     grid-column-start: 1;
     grid-row-start: 2;
   }
 
   /* Item distance. */
-  td:nth-child( 3 ) {
+  td:nth-child(3) {
     grid-column-start: 2;
     grid-row-start: 1;
   }
@@ -111,5 +110,4 @@
   svg {
     display: none !important;
   }
-
 }

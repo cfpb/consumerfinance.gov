@@ -17,7 +17,6 @@ from v1.tests.wagtail_pages import helpers
 
 class RelatedPostsTestCase(TestCase):
     def setUp(self):
-
         # add some authors to a CFGOV page and give it some tags
 
         self.author1 = "Some Author"
@@ -70,7 +69,7 @@ class RelatedPostsTestCase(TestCase):
         )
         self.blog_child2.tags.add("tag 2")
         self.blog_child2.categories.add(
-            CFGOVPageCategory(name="policy_compliance")
+            CFGOVPageCategory(name="policy-compliance")
         )
 
         self.blog_child3 = BlogPage(
@@ -78,7 +77,7 @@ class RelatedPostsTestCase(TestCase):
         )
         self.blog_child3.tags.add("tag 3")
         self.blog_child3.categories.add(
-            CFGOVPageCategory(name="policy_compliance")
+            CFGOVPageCategory(name="policy-compliance")
         )
 
         self.newsroom_child1 = NewsroomPage(
@@ -133,6 +132,14 @@ class RelatedPostsTestCase(TestCase):
             "tag_filtering": "any",
         }
 
+    def test_no_related_posts(self):
+        self.assertEqual(
+            RelatedPosts.related_posts(
+                self.page_with_authors, self.block_value
+            ),
+            [],
+        )
+
     def test_related_posts_blog(self):
         """
         Tests whether related posts from the blog from the supplied specific
@@ -153,15 +160,15 @@ class RelatedPostsTestCase(TestCase):
             self.page_with_authors, self.block_value
         )
 
-        self.assertIn("Blog", related_posts)
-        self.assertEqual(len(related_posts["Blog"]), 2)
-        self.assertEqual(related_posts["Blog"][0], self.blog_child2)
-        self.assertEqual(related_posts["Blog"][1], self.blog_child1)
+        self.assertEqual(len(related_posts), 1)
         self.assertEqual(
-            related_posts["Blog"][0].content_type.model, "blogpage"
+            related_posts[0],
+            {
+                "title": "Blog",
+                "icon": "speech-bubble",
+                "posts": [self.blog_child2, self.blog_child1],
+            },
         )
-        self.assertNotIn("Newsroom", related_posts)
-        self.assertNotIn("Events", related_posts)
 
     def test_related_posts_blog_limit(self):
         """
@@ -185,11 +192,15 @@ class RelatedPostsTestCase(TestCase):
             self.page_with_authors, self.block_value
         )
 
-        self.assertIn("Blog", related_posts)
-        self.assertEqual(len(related_posts["Blog"]), 1)
-        self.assertEqual(related_posts["Blog"][0], self.blog_child2)
-        self.assertNotIn("Newsroom", related_posts)
-        self.assertNotIn("Events", related_posts)
+        self.assertEqual(len(related_posts), 1)
+        self.assertEqual(
+            related_posts[0],
+            {
+                "title": "Blog",
+                "icon": "speech-bubble",
+                "posts": [self.blog_child2],
+            },
+        )
 
     def test_related_posts_tag_filtering_all(self):
         """
@@ -207,11 +218,15 @@ class RelatedPostsTestCase(TestCase):
             self.page_with_authors, self.block_value
         )
 
-        self.assertNotIn("Blog", related_posts)
-        self.assertIn("Newsroom", related_posts)
-        self.assertEqual(len(related_posts["Newsroom"]), 1)
-        self.assertEqual(related_posts["Newsroom"][0], self.newsroom_child1)
-        self.assertNotIn("Events", related_posts)
+        self.assertEqual(len(related_posts), 1)
+        self.assertEqual(
+            related_posts[0],
+            {
+                "title": "Newsroom",
+                "icon": "newspaper",
+                "posts": [self.newsroom_child1],
+            },
+        )
 
     def test_related_posts_tag_filtering_any(self):
         """
@@ -227,10 +242,15 @@ class RelatedPostsTestCase(TestCase):
             self.page_with_authors, self.block_value
         )
 
-        self.assertIn("Blog", related_posts)
-        self.assertEqual(len(related_posts["Blog"]), 2)
-        self.assertEqual(related_posts["Blog"][0], self.blog_child2)
-        self.assertEqual(related_posts["Blog"][1], self.blog_child1)
+        self.assertEqual(len(related_posts), 1)
+        self.assertEqual(
+            related_posts[0],
+            {
+                "title": "Blog",
+                "icon": "speech-bubble",
+                "posts": [self.blog_child2, self.blog_child1],
+            },
+        )
 
     def test_related_posts_tag_filtering_ignore(self):
         """
@@ -245,11 +265,19 @@ class RelatedPostsTestCase(TestCase):
             self.page_with_authors, self.block_value
         )
 
-        self.assertIn("Blog", related_posts)
-        self.assertEqual(len(related_posts["Blog"]), 3)
-        self.assertEqual(related_posts["Blog"][0], self.blog_child3)
-        self.assertEqual(related_posts["Blog"][1], self.blog_child2)
-        self.assertEqual(related_posts["Blog"][2], self.blog_child1)
+        self.assertEqual(len(related_posts), 1)
+        self.assertEqual(
+            related_posts[0],
+            {
+                "title": "Blog",
+                "icon": "speech-bubble",
+                "posts": [
+                    self.blog_child3,
+                    self.blog_child2,
+                    self.blog_child1,
+                ],
+            },
+        )
 
     def test_related_posts_newsroom(self):
         """
@@ -269,14 +297,15 @@ class RelatedPostsTestCase(TestCase):
             self.page_with_authors, self.block_value
         )
 
-        self.assertIn("Newsroom", related_posts)
-        self.assertEqual(len(related_posts["Newsroom"]), 1)
-        self.assertEqual(related_posts["Newsroom"][0], self.newsroom_child1)
+        self.assertEqual(len(related_posts), 1)
         self.assertEqual(
-            related_posts["Newsroom"][0].content_type.model, "newsroompage"
+            related_posts[0],
+            {
+                "title": "Newsroom",
+                "icon": "newspaper",
+                "posts": [self.newsroom_child1],
+            },
         )
-        self.assertNotIn("Blog", related_posts)
-        self.assertNotIn("Events", related_posts)
 
     def test_related_posts_events(self):
         """
@@ -301,14 +330,15 @@ class RelatedPostsTestCase(TestCase):
             self.page_with_authors, self.block_value
         )
 
-        self.assertIn("Events", related_posts)
         self.assertEqual(len(related_posts), 1)
-        self.assertEqual(related_posts["Events"][0], self.events_child1)
         self.assertEqual(
-            related_posts["Events"][0].content_type.model, "eventpage"
+            related_posts[0],
+            {
+                "title": "Events",
+                "icon": "date",
+                "posts": [self.events_child1],
+            },
         )
-        self.assertNotIn("Blog", related_posts)
-        self.assertNotIn("Newsroom", related_posts)
 
     def test_related_posts_events_archive(self):
         """
@@ -336,12 +366,15 @@ class RelatedPostsTestCase(TestCase):
             self.page_with_authors, self.block_value
         )
 
-        self.assertIn("Events", related_posts)
-        self.assertEqual(len(related_posts["Events"]), 2)
-        self.assertNotIn("Blog", related_posts)
-        self.assertNotIn("Newsroom", related_posts)
-        self.assertEqual(related_posts["Events"][0], self.events_child1)
-        self.assertEqual(related_posts["Events"][1], self.events_child2)
+        self.assertEqual(len(related_posts), 1)
+        self.assertEqual(
+            related_posts[0],
+            {
+                "title": "Events",
+                "icon": "date",
+                "posts": [self.events_child1, self.events_child2],
+            },
+        )
 
     def test_related_posts_all(self):
         """
@@ -364,18 +397,27 @@ class RelatedPostsTestCase(TestCase):
             self.page_with_authors, self.block_value
         )
 
-        self.assertIn("Blog", related_posts)
-        self.assertIn("Newsroom", related_posts)
-        self.assertIn("Events", related_posts)
-
-        self.assertEqual(len(related_posts["Blog"]), 2)
-        self.assertEqual(len(related_posts["Events"]), 1)
-        self.assertEqual(len(related_posts["Newsroom"]), 1)
-
-        self.assertEqual(related_posts["Blog"][0], self.blog_child2)
-        self.assertEqual(related_posts["Blog"][1], self.blog_child1)
-        self.assertEqual(related_posts["Events"][0], self.events_child1)
-        self.assertEqual(related_posts["Newsroom"][0], self.newsroom_child1)
+        self.assertEqual(len(related_posts), 3)
+        self.assertEqual(
+            related_posts,
+            [
+                {
+                    "title": "Blog",
+                    "icon": "speech-bubble",
+                    "posts": [self.blog_child2, self.blog_child1],
+                },
+                {
+                    "title": "Newsroom",
+                    "icon": "newspaper",
+                    "posts": [self.newsroom_child1],
+                },
+                {
+                    "title": "Events",
+                    "icon": "date",
+                    "posts": [self.events_child1],
+                },
+            ],
+        )
 
     def test_related_posts_rendering(self):
         block_value = {

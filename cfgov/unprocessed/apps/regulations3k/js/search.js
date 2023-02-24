@@ -1,18 +1,25 @@
-import * as behavior from '../../../js/modules/util/behavior';
-import * as utils from './search-utils';
-import { closest, queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-import { fetch } from './regs3k-utils';
+import { attach } from '@cfpb/cfpb-atomic-component';
+import {
+  getSearchValues,
+  serializeFormFields,
+  buildSearchResultsURL,
+  showLoading,
+  hideLoading,
+  handleError,
+  updateUrl,
+} from './search-utils.js';
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
-let searchRequest = {};
+const searchRequest = new AbortController();
+const { signal } = searchRequest.signal;
 
 /**
  * Initialize search functionality.
  */
 function init() {
   // Override search form submission
-  behavior.attach( 'submit-search', 'submit', handleSubmit );
-  behavior.attach( 'change-filter', 'change', handleFilter );
+  attach('submit-search', 'submit', handleSubmit);
+  attach('change-filter', 'change', handleFilter);
   attachHandlers();
 }
 
@@ -20,29 +27,31 @@ function init() {
  * Attach search results handlers
  */
 function attachHandlers() {
-  behavior.attach( 'clear-filter', 'click', clearFilter );
-  behavior.attach( 'clear-all', 'click', clearFilters );
+  attach('clear-filter', 'click', clearFilter);
+  attach('clear-all', 'click', clearFilters);
 }
 
 /**
  * Remove a filter from the search results page.
  *
- * @param {Event} event Click event
+ * @param {Event} event - Click event.
  */
-function clearFilter( event ) {
+function clearFilter(event) {
   // Continue only if the X icon was clicked and not the parent button
   let target = event.target.tagName.toLowerCase();
-  if ( target !== 'svg' && target !== 'path' ) {
+  if (target !== 'svg' && target !== 'path') {
     return;
   }
-  target = closest( event.target, '.a-tag' );
-  const checkbox = find( `#regulation-${ target.getAttribute( 'data-value' ) }` );
+  target = event.target.closest('.a-tag');
+  const checkbox = document.querySelector(
+    `#regulation-${target.getAttribute('data-value')}`
+  );
   // Remove the filter tag
-  removeTag( target );
+  removeTag(target);
   // Uncheck the filter checkbox
   checkbox.checked = false;
-  if ( event instanceof Event ) {
-    handleFilter( event );
+  if (event instanceof Event) {
+    handleFilter(event);
   }
 }
 
@@ -50,99 +59,101 @@ function clearFilter( event ) {
  * Remove a filter tag from the search results page.
  * node.remove() isn't supported by IE so we have to removeChild();
  *
- * @param {Node} tag Filter tag HTML element
+ * @param {Node} tag - Filter tag HTML element.
  */
-function removeTag( tag ) {
-  if ( tag.parentNode !== null ) {
-    tag.parentNode.removeChild( tag );
+function removeTag(tag) {
+  if (tag.parentNode !== null) {
+    tag.parentNode.removeChild(tag);
   }
 }
 
 /**
  * Remove all filters from the search results page.
  *
- * @param {Event} event Click event
+ * @param {Event} event - Click event.
  */
-function clearFilters( event ) {
-  let filterIcons = document.querySelectorAll( '.filters_tags svg' );
+function clearFilters(event) {
+  let filterIcons = document.querySelectorAll('.filters_tags svg');
   // IE doesn't support forEach w/ node lists so convert it to an array.
-  filterIcons = Array.prototype.slice.call( filterIcons );
-  filterIcons.forEach( filterIcon => {
-    const target = closest( filterIcon, '.a-tag' );
-    clearFilter( {
+  filterIcons = Array.prototype.slice.call(filterIcons);
+  filterIcons.forEach((filterIcon) => {
+    const target = filterIcon.closest('.a-tag');
+    clearFilter({
       target: filterIcon,
-      value: target
-    } );
-  } );
-  handleFilter( event );
+      value: target,
+    });
+  });
+  handleFilter(event);
 }
 
 /**
  * Handle keyword search form submission.
  *
- * @param {Event} event Click event
- * @returns {String} New page URL with search terms.
+ * @param {Event} event - Click event.
+ * @returns {string} New page URL with search terms.
  */
-function handleSubmit( event ) {
-  if ( event instanceof Event ) {
+function handleSubmit(event) {
+  if (event instanceof Event) {
     event.preventDefault();
   }
-  const filters = document.querySelectorAll( 'input:checked' );
-  const searchField = find( 'input[name=q]' );
-  const searchTerms = utils.getSearchValues( searchField, filters );
-  const baseUrl = window.location.href.split( '?' )[0];
-  const searchParams = utils.serializeFormFields( searchTerms );
-  const searchUrl = utils.buildSearchResultsURL( baseUrl, searchParams );
-  window.location.assign( searchUrl );
+  const filters = document.querySelectorAll('input:checked');
+  const searchField = document.querySelector('input[name=q]');
+  const searchTerms = getSearchValues(searchField, filters);
+  const baseUrl = window.location.href.split('?')[0];
+  const searchParams = serializeFormFields(searchTerms);
+  const searchUrl = buildSearchResultsURL(baseUrl, searchParams);
+  window.location.assign(searchUrl);
   return searchUrl;
 }
 
 /**
  * Handle filter change events.
  *
- * @param {Event} event Click event
+ * @param {Event} event - Click event.
  */
-function handleFilter( event ) {
-  if ( event instanceof Event ) {
+function handleFilter(event) {
+  if (event instanceof Event) {
     event.preventDefault();
   }
   // Abort the previous search request if it's still active
   /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
   try {
     searchRequest.abort();
-  } catch ( err ) { }
-  const searchContainer = find( '#regs3k-results' );
-  const filters = document.querySelectorAll( 'input:checked' );
-  const searchField = find( 'input[name=q]' );
-  const searchTerms = utils.getSearchValues( searchField, filters );
-  const baseUrl = window.location.href.split( '?' )[0];
-  const searchParams = utils.serializeFormFields( searchTerms );
-  const searchUrl = utils.buildSearchResultsURL(
-    baseUrl, searchParams, { partial: true }
-  );
+  } catch (err) {}
+  const searchContainer = document.querySelector('#regs3k-results');
+  const filters = document.querySelectorAll('input:checked');
+  const searchField = document.querySelector('input[name=q]');
+  const searchTerms = getSearchValues(searchField, filters);
+  const baseUrl = window.location.href.split('?')[0];
+  const searchParams = serializeFormFields(searchTerms);
+  const searchUrl = buildSearchResultsURL(baseUrl, searchParams, {
+    partial: true,
+  });
+
   // Update the filter query params in the URL
-  utils.updateUrl( baseUrl, searchParams );
-  utils.showLoading( searchContainer );
-  searchRequest = fetch( searchUrl, ( err, data ) => {
-    utils.hideLoading( searchContainer );
-    if ( err !== null ) {
+  updateUrl(baseUrl, searchParams);
+  showLoading(searchContainer);
+  fetch(searchUrl, { signal })
+    .then((response) => response.text())
+    .then((data) => {
+      hideLoading(searchContainer);
+      searchContainer.innerHTML = data;
+      // Update the query params in the URL
+      updateUrl(baseUrl, searchParams);
+      // Reattach event handlers after tags are reloaded
+      attachHandlers();
+    })
+    .catch((err) => {
       // TODO: Add message banner above search results
-      return console.error( utils.handleError( err ).msg );
-    }
-    searchContainer.innerHTML = data;
-    // Update the query params in the URL
-    utils.updateUrl( baseUrl, searchParams );
-    // Reattach event handlers after tags are reloaded
-    attachHandlers();
-    return data;
-  } );
+      console.error(handleError(err).msg);
+    });
 }
 
 // Provide the no-JS experience to browsers without `replaceState`
-if ( 'replaceState' in window.history ) {
-  window.addEventListener( 'load', () => {
+if ('replaceState' in window.history) {
+  window.addEventListener('load', () => {
     init();
-  } );
+  });
 } else {
-  document.getElementById( 'main' ).className += ' no-js';
+  document.getElementById('main').className += ' no-js';
 }

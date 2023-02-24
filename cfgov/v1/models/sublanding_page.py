@@ -9,7 +9,6 @@ from wagtail.admin.edit_handlers import (
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.search import index
 
 from jobmanager.blocks import JobListingList
 from v1.atomic_elements import molecules, organisms
@@ -117,12 +116,7 @@ class SublandingPage(CFGOVPage):
         ]
     )
 
-    template = "sublanding-page/index.html"
-
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
+    template = "v1/sublanding-page/index.html"
 
     def get_browsefilterable_posts(self, limit):
         filter_pages = [
@@ -142,3 +136,14 @@ class SublandingPage(CFGOVPage):
         return sorted(
             posts_list, key=lambda p: p.date_published, reverse=True
         )[:limit]
+
+    @property
+    def has_hero(self):
+        """Returns boolean indicating whether the page includes a hero module.
+
+        TODO: On Wagtail 4.0, this functionality can be removed in favor of
+        using the built-in page.header.first_block_by_name("hero"):
+
+        https://docs.wagtail.org/en/stable/topics/streamfield.html#streamfield-retrieving-blocks-by-name
+        """
+        return bool(len(self.header))

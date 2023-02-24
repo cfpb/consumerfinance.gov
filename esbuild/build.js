@@ -1,35 +1,54 @@
 /* eslint-disable complexity,consistent-return,global-require */
-const copy = require( './copy.js' );
-const scripts = require( './scripts.js' );
-const styles = require( './styles.js' );
+import esbuild from 'esbuild';
+import { copy } from './copy.js';
+import { scripts, jsPaths } from './scripts.js';
+import { styles, cssPaths } from './styles.js';
 
-const { processed } = require( '../config/environment.js' ).paths;
+import environment from '../config/environment.js';
+const { processed } = environment.paths;
+
+import { runWorkerAndManifest } from '../cfgov/unprocessed/apps/regulations3k/worker_and_manifest.js';
 
 const baseConfig = {
   logLevel: 'info',
   bundle: true,
   minify: true,
   sourcemap: true,
-  external: [ '*.png', '*.woff', '*.woff2', '*.gif' ],
+  external: ['*.png', '*.woff', '*.woff2', '*.gif'],
   loader: {
-    '.svg': 'text'
+    '.svg': 'text',
   },
-  outdir: `${ processed }`
+  outdir: `${processed}`,
 };
 
-const arg = process.argv.slice( 2 )[0];
+const arg = process.argv.slice(2)[0];
 
-( function() {
-  if ( arg === 'copy' ) return copy( baseConfig );
-  if ( arg === 'scripts' ) return scripts( baseConfig );
-  if ( arg === 'styles' ) return styles( baseConfig );
-  if ( arg === 'watch' ) baseConfig.watch = true;
+(async function () {
+  const scriptsConfig = scripts(baseConfig);
+  const stylesConfig = styles(baseConfig);
+  const mergedConfig = { ...scriptsConfig, ...stylesConfig };
+  mergedConfig.entryPoints = jsPaths.concat(cssPaths);
 
-  scripts( baseConfig );
-  styles( baseConfig );
-  copy( baseConfig );
+  if (arg === 'watch') {
+    const ctx = await esbuild.context(mergedConfig);
+    await ctx.watch();
+    // Not disposing context here as the user will ctrl+c to end watching.
+  } else if (arg === 'scripts') {
+    const ctx = await esbuild.context(scriptsConfig);
+    await ctx.rebuild();
+    return await ctx.dispose();
+  } else if (arg === 'styles') {
+    const ctx = await esbuild.context(stylesConfig);
+    await ctx.rebuild();
+    return await ctx.dispose();
+  } else {
+    const ctx = await esbuild.context(mergedConfig);
+    await ctx.rebuild();
+    await ctx.dispose();
+  }
+
+  await copy(baseConfig);
 
   // Run app-specific scripts
-  require( '../cfgov/unprocessed/apps/regulations3k/worker_and_manifest.js' );
-} )();
-
+  runWorkerAndManifest();
+})();

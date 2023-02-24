@@ -1,33 +1,46 @@
-import DT from './dom-tools';
-import count from './count';
+import {
+  changeElText,
+  changeElHTML,
+  addClass,
+  removeClass,
+} from './dom-tools.js';
+import { reset } from './count.js';
 
 const monthNames = [
-  'January', 'February', 'March', 'April',
-  'May', 'June', 'July', 'August', 'September',
-  'October', 'November', 'December'
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
 /**
  * Hide the data sections. These get shown as needed in addresses.js (render)
  */
 function _hideData() {
-  DT.addClass( '#rural', 'u-hidden' );
-  DT.addClass( '#notRural', 'u-hidden' );
-  DT.addClass( '#duplicate', 'u-hidden' );
-  DT.addClass( '#notFound', 'u-hidden' );
+  addClass('#rural', 'u-hidden');
+  addClass('#notRural', 'u-hidden');
+  addClass('#duplicate', 'u-hidden');
+  addClass('#notFound', 'u-hidden');
 }
-
 
 /**
  * Setup the main UI.
  */
 function setup() {
   // set year
-  const yearValue = document.querySelector( '#year' ).value;
+  const yearValue = document.querySelector('#year').value;
 
-  DT.changeElText( '.chosenYear', yearValue );
-  DT.changeElText( '.chosenYear1', yearValue + 1 );
-  DT.changeElText( '.chosenYear2', yearValue + 2 );
+  changeElText('.chosenYear', yearValue);
+  changeElText('.chosenYear1', yearValue + 1);
+  changeElText('.chosenYear2', yearValue + 2);
 
   // set report generated date
   const date = new Date();
@@ -35,15 +48,16 @@ function setup() {
   const monthIndex = date.getMonth();
   const year = date.getFullYear();
 
-  DT.changeElText( '.report-date',
+  changeElText(
+    '.report-date',
     'Report generated ' + monthNames[monthIndex] + ' ' + day + ', ' + year
   );
 
-  DT.addClass( '#file-error', 'u-hidden' );
-  DT.addClass( '#error-message', 'u-hidden' );
-  DT.removeClass( '#spinner', 'u-hidden' );
+  addClass('#file-error', 'u-hidden');
+  addClass('#error-message', 'u-hidden');
+  removeClass('#spinner', 'u-hidden');
 
-  count.reset();
+  reset();
   _resetHTML();
   _showResults();
 }
@@ -53,20 +67,20 @@ function setup() {
  */
 function _showResults() {
   // hide search-tool and about
-  DT.addClass( '#search-tool', 'u-hidden' );
+  addClass('#search-tool', 'u-hidden');
   _hideData();
 
   // show the results
-  DT.removeClass( '#results', 'u-hidden' );
+  removeClass('#results', 'u-hidden');
 }
 
 /**
  * Clear the body of all the tables (data).
  */
 function _resetHTML() {
-  DT.changeElHTML( 'tbody', '' );
+  changeElHTML('tbody', '');
 }
 
 export default {
-  setup
+  setup,
 };

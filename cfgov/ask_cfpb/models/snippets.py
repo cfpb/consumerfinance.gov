@@ -1,14 +1,13 @@
 from django.db import models
 
 from wagtail.core.fields import RichTextField
-from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
 from modelcluster.fields import ParentalKey
 
 
 @register_snippet
-class GlossaryTerm(index.Indexed, models.Model):
+class GlossaryTerm(models.Model):
     name_en = models.CharField(max_length=255, verbose_name="TERM (ENGLISH)")
     definition_en = RichTextField(
         null=True, blank=True, verbose_name="DEFINITION (ENGLISH)"
@@ -50,12 +49,6 @@ class GlossaryTerm(index.Indexed, models.Model):
     portal_topic = ParentalKey(
         "v1.PortalTopic", related_name="glossary_terms", null=True, blank=True
     )
-    search_fields = [
-        index.SearchField("name_en", partial_match=True),
-        index.SearchField("definition_en", partial_match=True),
-        index.SearchField("name_es", partial_match=True),
-        index.SearchField("definition_es", partial_match=True),
-    ]
 
     def name(self, language="en"):
         if language == "es":

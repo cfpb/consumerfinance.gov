@@ -2,22 +2,33 @@ import time
 from datetime import timedelta
 
 from django.conf import settings
-from django.contrib.auth import authenticate, get_user_model
-from django.contrib.auth.forms import (
-    AuthenticationForm,
-    PasswordChangeForm,
-    PasswordResetForm,
-    SetPasswordForm,
-)
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import SetPasswordForm
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils import timezone
 
+from wagtail.admin.forms.auth import (
+    AuthenticationForm,
+    PasswordChangeForm,
+    PasswordResetForm,
+)
 from wagtail.users import forms as wagtailforms
 
 import login.utils
 from login.email import send_password_reset_email
+from login.models import FailedLoginAttempt
 
-from v1.models import base
+
+class LockoutError(ValidationError):
+    """A validation error due to temporary account lockout"""
+
+    pass
+
+
+class PasswordExpiredError(ValidationError):
+    """A validation error due to password expiration"""
+
+    pass
 
 
 class PasswordValidationMixin:
@@ -53,100 +64,108 @@ class CFGOVSetPasswordForm(PasswordValidationMixin, SetPasswordForm):
 
 
 class LoginForm(AuthenticationForm):
+    error_messages = {
+        "temporary_lock": (
+            "This account is temporarily locked; please try later or "
+            '<a href="/admin/password_reset/" style="color:white;font-weight:bold">'
+            "reset your password</a>."
+        ),
+        "password_expired": (
+            "Your password has expired. Please "
+            '<a href="/admin/password_reset/" style="color:white;font-weight:bold">'
+            "reset your password</a>."
+        ),
+        **AuthenticationForm.error_messages,
+    }
+
     def clean(self):
-        username = self.cleaned_data.get("username")
-        password = self.cleaned_data.get("password")
+        try:
+            return super().clean()
+        except (LockoutError, PasswordExpiredError) as e:
+            # The user authenticated correctly, but either they are under a
+            # temporary lockout or their password has expired.
+            # Propogate the exception without recording this as a failed login.
+            raise e
+        except ValidationError as e:
+            # The Django AuthenticationForm raised a validation error because
+            # it could not authenticate the username/password combination.
+            #
+            # We want to record the failed login attempt, and maybe raise a
+            # lockout validation error of our own before raising Django's
+            self.record_failed_login_attempt(self.cleaned_data["username"])
+            raise e
 
-        if username and password:
-            self.user_cache = authenticate(
-                username=username, password=password
+    def record_failed_login_attempt(self, username):
+        UserModel = get_user_model()
+
+        try:
+            user = UserModel._default_manager.get(username=username)
+        except ObjectDoesNotExist:
+            raise self.get_invalid_login_error()
+
+        fa, created = FailedLoginAttempt.objects.get_or_create(user=user)
+        now = time.time()
+        fa.failed(now)
+
+        # Defaults to a 2 hour lockout for a user
+        time_period = now - settings.LOGIN_FAIL_TIME_PERIOD
+        attempts_allowed = settings.LOGIN_FAILS_ALLOWED
+
+        if fa.too_many_attempts(attempts_allowed, time_period):
+            dt_now = timezone.now()
+            lockout_expires = dt_now + timedelta(
+                seconds=settings.LOGIN_FAIL_TIME_PERIOD
             )
-
-            if self.user_cache is None and username is not None:
-                UserModel = get_user_model()
-
-                try:
-                    user = UserModel._default_manager.get(username=username)
-                except ObjectDoesNotExist:
-                    raise ValidationError(
-                        self.error_messages["invalid_login"],
-                        code="invalid_login",
-                        params={"username": self.username_field.verbose_name},
-                    )
-
-                # fail fast if user is already blocked for some other
-                # reason
-                self.confirm_login_allowed(user)
-
-                fa, created = base.FailedLoginAttempt.objects.get_or_create(
-                    user=user
-                )
-                now = time.time()
-                fa.failed(now)
-                # Defaults to a 2 hour lockout for a user
-                time_period = now - int(settings.LOGIN_FAIL_TIME_PERIOD)
-                attempts_allowed = int(settings.LOGIN_FAILS_ALLOWED)
-                attempts_used = len(fa.failed_attempts.split(","))
-
-                if fa.too_many_attempts(attempts_allowed, time_period):
-                    dt_now = timezone.now()
-                    lockout_expires = dt_now + timedelta(
-                        seconds=settings.LOGIN_FAIL_TIME_PERIOD
-                    )
-                    lockout = user.temporarylockout_set.create(
-                        expires_at=lockout_expires
-                    )
-                    lockout.save()
-                    raise ValidationError(
-                        "This account is temporarily locked; "
-                        'please try later or <a href="/admin/password_reset/" '
-                        'style="color:white;font-weight:bold">'
-                        "reset your password</a>."
-                    )
-                else:
-                    fa.save()
-                    raise ValidationError(
-                        "Login failed. {attempts} more attempts until your "
-                        "account will be temporarily locked.".format(
-                            attempts=attempts_allowed - attempts_used
-                        )
-                    )
-
-            else:
-                self.confirm_login_allowed(self.user_cache)
-
-                dt_now = timezone.now()
-                try:
-                    current_password_data = (
-                        self.user_cache.passwordhistoryitem_set.latest()
-                    )
-
-                    if dt_now > current_password_data.expires_at:
-                        raise ValidationError(
-                            "Your password has expired. Please "
-                            '<a href="/admin/password_reset/" '
-                            'style="color:white;font-weight:bold">'
-                            "reset your password</a>."
-                        )
-
-                except ObjectDoesNotExist:
-                    pass
-
-                return self.cleaned_data
+            lockout = user.temporarylockout_set.create(
+                expires_at=lockout_expires
+            )
+            lockout.save()
+            raise LockoutError(
+                self.error_messages["temporary_lock"],
+                code="temporary_lock",
+            )
+        else:
+            fa.save()
 
     def confirm_login_allowed(self, user):
         super().confirm_login_allowed(user)
+
+        # Check to make sure the user is not already locked out.
+        self.check_for_lockout(user)
+
+        # Check to make sure the user's password hasn't expired.
+        self.check_for_password_expiration(user)
+
+        # Finally, clear any failed login attempts
+        self.clear_failed_login_attempts(user)
+
+    def check_for_lockout(self, user):
         now = timezone.now()
-
         lockout_query = user.temporarylockout_set.filter(expires_at__gt=now)
-
         if lockout_query.count() > 0:
-            raise ValidationError(
-                "This account is temporarily locked; "
-                'please try later or <a href="/admin/password_reset/" '
-                'style="color:white;font-weight:bold">'
-                "reset your password</a>."
+            raise LockoutError(
+                self.error_messages["temporary_lock"],
+                code="temporary_lock",
             )
+
+    def check_for_password_expiration(self, user):
+        dt_now = timezone.now()
+        try:
+            current_password_data = user.passwordhistoryitem_set.latest()
+
+            if dt_now > current_password_data.expires_at:
+                raise PasswordExpiredError(
+                    self.error_messages["password_expired"],
+                    code="password_expired",
+                )
+        except ObjectDoesNotExist:
+            pass
+
+    def clear_failed_login_attempts(self, user):
+        try:
+            user.failedloginattempt.delete()
+        except ObjectDoesNotExist:
+            pass
 
 
 class UserCreationForm(wagtailforms.UserCreationForm):

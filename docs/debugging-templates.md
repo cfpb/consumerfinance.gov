@@ -8,9 +8,7 @@ requires a target URL and also accepts optional link text. A simple Jinja
 template for this module might look like this:
 
 ```html
-<a href="{{ value.url }}">
-    {{ value.text | default( value.url, true ) }}
-</a>
+<a href="{{ value.url }}"> {{ value.text | default( value.url, true ) }} </a>
 ```
 
 ## Defining template test cases

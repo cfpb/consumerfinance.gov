@@ -1,9 +1,10 @@
 import re
+from operator import itemgetter
 
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
-from django.db.models import F, Value
-from django.utils import timezone, translation
+from django.db.models import F, Q, Value
+from django.utils import translation
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
@@ -13,13 +14,13 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
+    PageChooserPanel,
     StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, Site
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.search import index
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
@@ -75,7 +76,20 @@ class CFGOVPage(Page):
         through=CFGOVTaggedPages, blank=True, related_name="tagged_pages"
     )
     language = models.CharField(
-        choices=ref.supported_languages, default="en", max_length=100
+        choices=sorted(settings.LANGUAGES, key=itemgetter(1)),
+        default="en",
+        max_length=100,
+    )
+    english_page = models.ForeignKey(
+        Page,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="non_english_pages",
+        help_text=(
+            "Optionally select the English version of this page "
+            "(non-English pages only)"
+        ),
     )
     social_sharing_image = models.ForeignKey(
         "v1.CFGOVImage",
@@ -131,10 +145,6 @@ class CFGOVPage(Page):
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
 
-    search_fields = Page.search_fields + [
-        index.SearchField("sidefoot"),
-    ]
-
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
     sidefoot = StreamField(
@@ -176,7 +186,13 @@ class CFGOVPage(Page):
         FieldPanel("content_owners", "Content Owners"),
         FieldPanel("schema_json", "Structured Data"),
         MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
-        FieldPanel("language", "language"),
+        MultiFieldPanel(
+            [
+                FieldPanel("language", "Language"),
+                PageChooserPanel("english_page"),
+            ],
+            "Translation",
+        ),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass
@@ -382,6 +398,55 @@ class CFGOVPage(Page):
     def post_preview_cache_key(self):
         return "post_preview_{}".format(self.id)
 
+    def get_translations(self, inclusive=True, live=True):
+        if self.language == "en":
+            query = Q(english_page=self)
+        elif self.english_page:
+            query = Q(english_page=self.english_page) | Q(
+                pk=self.english_page.pk
+            )
+        else:
+            query = Q(pk__in=[])
+
+        if inclusive:
+            query = query | Q(pk=self.pk)
+        else:
+            query = query & ~Q(pk=self.pk)
+
+        pages = CFGOVPage.objects.filter(query)
+
+        if live:
+            pages = pages.live()
+
+        site = self.get_site()
+        if site:
+            pages = pages.in_site(site)
+
+        pages = pages.annotate(
+            language_display_order=models.Case(
+                *[
+                    models.When(language=language, then=i)
+                    for i, language in enumerate(dict(settings.LANGUAGES))
+                ]
+            ),
+        ).order_by("language_display_order")
+
+        return pages
+
+    def get_translation_links(self, request, inclusive=True, live=True):
+        language_names = dict(settings.LANGUAGES)
+
+        return [
+            {
+                "href": translation.get_url(request=request),
+                "language": translation.language,
+                "text": language_names[translation.language],
+            }
+            for translation in self.get_translations(
+                inclusive=inclusive, live=live
+            )
+        ]
+
 
 class CFGOVPageCategory(models.Model):
     page = ParentalKey(CFGOVPage, related_name="categories")
@@ -393,71 +458,3 @@ class CFGOVPageCategory(models.Model):
     panels = [
         FieldPanel("name"),
     ]
-
-
-# keep encrypted passwords around to ensure that user does not re-use
-# any of the previous 10
-class PasswordHistoryItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()  # password becomes invalid at...
-    locked_until = models.DateTimeField()  # password cannot be changed until
-    encrypted_password = models.CharField(_("password"), max_length=128)
-
-    class Meta:
-        get_latest_by = "created"
-
-    @classmethod
-    def current_for_user(cls, user):
-        return user.passwordhistoryitem_set.latest()
-
-    def can_change_password(self):
-        now = timezone.now()
-        return now > self.locked_until
-
-    def must_change_password(self):
-        now = timezone.now()
-        return self.expires_at < now
-
-
-# User Failed Login Attempts
-class FailedLoginAttempt(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # comma-separated timestamp values, right now it's a 10 digit number,
-    # so we can store about 91 last failed attempts
-    failed_attempts = models.CharField(max_length=1000)
-
-    def __unicode__(self):
-        attempts_no = (
-            0
-            if not self.failed_attempts
-            else len(self.failed_attempts.split(","))
-        )
-        return "%s has %s failed login attempts" % (self.user, attempts_no)
-
-    def clean_attempts(self, timestamp):
-        """Leave only those that happened after <timestamp>"""
-        attempts = self.failed_attempts.split(",")
-        self.failed_attempts = ",".join(
-            [fa for fa in attempts if int(fa) >= timestamp]
-        )
-
-    def failed(self, timestamp):
-        """Add another failed attempt"""
-        attempts = (
-            self.failed_attempts.split(",") if self.failed_attempts else []
-        )
-        attempts.append(str(int(timestamp)))
-        self.failed_attempts = ",".join(attempts)
-
-    def too_many_attempts(self, value, timestamp):
-        """Compare number of failed attempts to <value>"""
-        self.clean_attempts(timestamp)
-        attempts = self.failed_attempts.split(",")
-        return len(attempts) > value
-
-
-class TemporaryLockout(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()

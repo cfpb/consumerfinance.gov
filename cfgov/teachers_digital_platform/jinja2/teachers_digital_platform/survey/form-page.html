@@ -1,6 +1,6 @@
-{% extends 'layout-2-1.html' %}
+{% extends 'v1/layouts/layout-2-1.html' %}
 
-{% from 'organisms/expandable.html' import expandable with context %}
+{% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 
 {% block head %}
 {{ wizard.form.media }}
@@ -106,7 +106,7 @@
                 <div class="tdp-survey-sidebar__mobile-control">
                     <button class="o-expandable_header o-expandable_target"
                             title="Expand content">
-                        <span class="o-expandable_header-right o-expandable_link">
+                        <span class="o-expandable_link">
                             <span class="o-expandable_cue o-expandable_cue-open">
                                 {{ svg_icon('plus-round') }}
                             </span>

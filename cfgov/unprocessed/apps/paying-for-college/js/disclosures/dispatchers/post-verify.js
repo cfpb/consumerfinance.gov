@@ -1,10 +1,10 @@
 // TODO: Remove jquery.
-const $ = require( 'jquery' );
+import $ from 'jquery';
 
 const postVerify = {
   csrfToken: null,
 
-  init: function() {
+  init: function () {
     /* Alternate code. getting token from document.cookie:
        if ( document.cookie && document.cookie != '' ) {
        var cookies = document.cookie.split( ';' );
@@ -16,26 +16,26 @@ const postVerify = {
        }
        }
        } */
-    this.csrfToken = $( '[name="csrfmiddlewaretoken"]' ).val();
+    this.csrfToken = $('[name="csrfmiddlewaretoken"]').val();
   },
 
-  verify: function( offerID, collegeID, error ) {
+  verify: function (offerID, collegeID, error) {
     const postdata = {
       csrfmiddlewaretoken: this.csrfToken,
-      oid:                 offerID,
-      iped:                collegeID,
-      errors:              'none',
-      URL:                 window.location.href
+      oid: offerID,
+      iped: collegeID,
+      errors: 'none',
+      URL: window.location.href,
     };
-    const urlPath = '/' + $( 'main' ).attr( 'data-context' ) +
-                    '/understanding-your-financial-aid-offer/api/verify/';
-    if ( error === true ) {
+    const urlBase = document.querySelector('main').getAttribute('data-context');
+    const urlPath =
+      '/' + urlBase + '/understanding-your-financial-aid-offer/api/verify/';
+    if (error === true) {
       postdata.errors =
         'INVALID: student indicated the offer information is wrong';
     }
-    $.post( urlPath, postdata );
-  }
-
+    $.post(urlPath, postdata);
+  },
 };
 
-module.exports = postVerify;
+export default postVerify;

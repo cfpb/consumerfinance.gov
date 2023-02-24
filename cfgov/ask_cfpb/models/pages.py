@@ -38,6 +38,7 @@ from v1.models import (
     SublandingPage,
 )
 from v1.models.snippets import ReusableText
+from v1.util.ref import get_category_icon
 
 
 REUSABLE_TEXT_TITLES = {
@@ -156,31 +157,22 @@ class AnswerLandingPage(LandingPage):
         portal_pages = SublandingPage.objects.filter(
             portal_topic_id__isnull=False,
             language=self.language,
+            live=True,
         ).order_by("portal_topic__heading")
         for portal_page in portal_pages:
             topic = portal_page.portal_topic
+            url = portal_page.url
             # Only include a portal if it has featured answers
             featured_answers = topic.featured_answers(self.language)
             if not featured_answers:
                 continue
-            # If the portal page is live, link to it
-            if portal_page.live:
-                url = portal_page.url
-            # Otherwise, link to the topic "see all" page if there is one
-            else:
-                topic_page = topic.portal_search_pages.filter(
-                    language=self.language, live=True
-                ).first()
-                if topic_page:
-                    url = topic_page.url
-                else:
-                    continue  # pragma: no cover
             portal_cards.append(
                 {
                     "topic": topic,
                     "title": topic.title(self.language),
                     "url": url,
                     "featured_answers": featured_answers,
+                    "icon": get_category_icon(topic.heading),
                 }
             )
         return portal_cards
@@ -194,14 +186,11 @@ class AnswerLandingPage(LandingPage):
 
 
 class SecondaryNavigationJSMixin:
-    """A page mixin that adds navigation JS for English pages."""
+    """A page mixin that adds navigation JS."""
 
     @property
     def page_js(self):
-        js = super().page_js
-        if self.language == "en":
-            js += ["secondary-navigation.js"]
-        return js
+        return super().page_js + ["secondary-navigation.js"]
 
 
 class PortalSearchPage(

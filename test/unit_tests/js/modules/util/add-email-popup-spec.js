@@ -1,4 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/modules/util';
+import addEmailPopup from '../../../../../cfgov/unprocessed/js/modules/util/add-email-popup.js';
 
 const HTML_SNIPPET = `
 <div class="o-email-popup o-email-signup" lang="en" data-popup-label="testPopup">
@@ -51,16 +51,16 @@ const HTML_SNIPPET = `
 </div>
 `;
 
-describe( 'add-email-popup', () => {
-  beforeEach( () => {
+describe('add-email-popup', () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-  } );
+  });
 
-  it( 'should hide the email popup initially', () => {
-    // eslint-disable-next-line no-unused-vars
-    const addEmailPopup = require( BASE_JS_PATH + '/add-email-popup' );
-    const emailPopupDom = document.querySelector( '.o-email-popup' );
-    expect( emailPopupDom.classList.contains( 'o-email-popup__visible' ) )
-      .toBe( false );
-  } );
-} );
+  it('should hide the email popup initially', () => {
+    addEmailPopup.init();
+    const emailPopupDom = document.querySelector('.o-email-popup');
+    expect(emailPopupDom.classList.contains('o-email-popup__visible')).toBe(
+      false
+    );
+  });
+});

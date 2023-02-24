@@ -74,7 +74,6 @@ class AnswerStringTest(TestCase):
 
 
 class ArticlePageTest(TestCase):
-
     fixtures = ["ask_tests"]
 
     def setUp(self):
@@ -122,7 +121,6 @@ class ArticlePageTest(TestCase):
 
 
 class PortalSearchPageTest(TestCase):
-
     fixtures = [
         "ask_tests",
         "portal_topics",
@@ -525,18 +523,27 @@ class PortalSearchPageTest(TestCase):
         self.assertContains(response, "Amortización")
 
     def test_landing_page_live_portal(self):
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 2)
+        portal_cards = self.english_ask_parent.get_portal_cards()
+
+        self.assertEqual(len(portal_cards), 2)
+
+        self.assertEqual(portal_cards[0]["title"], "Auto loans")
+        self.assertEqual(portal_cards[0]["icon"], "car")
+
+        self.assertEqual(portal_cards[1]["title"], "Bank accounts")
+        self.assertEqual(portal_cards[1]["icon"], "bank")
 
     def test_landing_page_draft_portal(self):
         self.english_portal.unpublish()
+        self.english_portal.save()
         self.assertFalse(self.english_portal.live)
-        self.english_ask_parent.refresh_from_db()
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 2)
+        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 1)
 
     def test_landing_page_draft_portals(self):
         for sl_page in SublandingPage.objects.all():
             sl_page.unpublish()
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 2)
+            sl_page.save()
+        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 0)
 
     def test_landing_page_draft_portals_draft_search(self):
         for sl_page in SublandingPage.objects.all():
@@ -549,7 +556,6 @@ class PortalSearchPageTest(TestCase):
 
 
 class AnswerPageTest(TestCase):
-
     fixtures = ["ask_tests", "portal_topics"]
 
     def create_answer_page(self, **kwargs):

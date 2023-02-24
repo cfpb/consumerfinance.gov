@@ -1,11 +1,8 @@
-from django.template.loader import render_to_string
-from django.utils.safestring import SafeText, mark_safe
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
 from wagtail.core import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
-
-from bs4 import BeautifulSoup
 
 from v1.util.util import get_unique_id
 
@@ -37,7 +34,7 @@ class AnchorLink(blocks.StructBlock):
 
     class Meta:
         icon = "link"
-        template = "_includes/atoms/anchor-link.html"
+        template = "v1/includes/atoms/anchor-link.html"
         label = "Anchor link"
 
 
@@ -77,83 +74,15 @@ class HeadingBlock(blocks.StructBlock):
 
     class Meta:
         icon = "title"
-        template = "_includes/blocks/heading.html"
+        template = "v1/includes/blocks/heading.html"
         form_template = (
             "admin/form_templates/struct-with-block-wrapper-classes.html"
         )
 
 
-class PlaceholderFieldBlock(blocks.FieldBlock):
-    """
-    Provides a render_form method that outputs a block
-    placeholder, for use in a custom form_template.
-    """
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.placeholder = kwargs.pop("placeholder", None)
-
-    def render_form(self, *args, **kwargs):
-        # pragma: no cover
-        prefix = ""
-        value = "{}".format(*args)
-        html = render_to_string(
-            "wagtailadmin/block_forms/field.html",
-            {
-                "name": self.name,
-                "classes": getattr(
-                    self.meta, "form_classname", self.meta.classname
-                ),
-                "widget": self.field.widget.render(
-                    prefix,
-                    self.field.prepare_value(self.value_for_form(value)),
-                    attrs={"id": format(prefix), "placeholder": self.label},
-                ),
-                "field": self.field,
-                "errors": None,
-            },
-        )
-
-        if self.placeholder is not None:
-            html = self.replace_placeholder(html, self.placeholder)
-
-        return html
-
-    @staticmethod
-    def replace_placeholder(html, placeholder):
-        soup = BeautifulSoup(html, "html.parser")
-        inputs = soup.findAll("input")
-
-        if 1 != len(inputs):
-            raise ValueError("block must contain a single input tag")
-
-        inputs[0]["placeholder"] = placeholder
-
-        return SafeText(soup)
-
-
-class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
-    class Meta:
-        icon = "placeholder"
-        form_template = (
-            "admin/form_templates/struct_block_with_render_form.html"
-        )
-
-
 class ReusableTextChooserBlock(SnippetChooserBlock):
     class Meta:
-        template = "_includes/snippets/reusable_text.html"
-
-
-class RAFToolBlock(blocks.StaticBlock):
-    class Meta:
-        icon = "cog"
-        label = "Rental Assistance Finder Tool"
-        admin_text = "{label} has no options to configure".format(label=label)
-        template = "_includes/blocks/raf_tool.html"
-
-    class Media:
-        js = ["erap.js"]
+        template = "v1/includes/snippets/reusable_text.html"
 
 
 class RAFTBlock(blocks.StructBlock):
@@ -169,7 +98,7 @@ class RAFTBlock(blocks.StructBlock):
     class Meta:
         icon = "cog"
         label = "RAF Tool (configurable)"
-        template = "_includes/blocks/raf_tool.html"
+        template = "v1/includes/blocks/raf_tool.html"
 
     class Media:
         js = ["erap.js"]
@@ -181,7 +110,7 @@ class EmailSignUpChooserBlock(SnippetChooserBlock):
 
     class Meta:
         icon = "mail"
-        template = "_includes/blocks/email-signup.html"
+        template = "v1/includes/blocks/email-signup.html"
 
     class Media:
         js = ["email-signup.js"]

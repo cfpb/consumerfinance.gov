@@ -96,25 +96,11 @@ urlpatterns = [
         ),
     ),
     re_path(
-        r"^owning-a-home/closing-disclosure/$",
-        TemplateView.as_view(
-            template_name="owning-a-home/closing-disclosure/index.html"
-        ),
-        name="closing-disclosure",
-    ),
-    re_path(
         r"^owning-a-home/explore-rates/",
         TemplateView.as_view(
             template_name="owning-a-home/explore-rates/index.html"
         ),
         name="explore-rates",
-    ),
-    re_path(
-        r"^owning-a-home/loan-estimate/$",
-        TemplateView.as_view(
-            template_name="owning-a-home/loan-estimate/index.html"
-        ),
-        name="loan-estimate",
     ),
     re_path(
         r"^know-before-you-owe/$",
@@ -603,14 +589,14 @@ if settings.DEBUG:
     urlpatterns.append(
         re_path(
             r"^500/$",
-            TemplateView.as_view(template_name="500.html"),
+            TemplateView.as_view(template_name="v1/layouts/500.html"),
             name="500",
         )
     )
     urlpatterns.append(
         re_path(
             r"^404/$",
-            TemplateView.as_view(template_name="404.html"),
+            TemplateView.as_view(template_name="v1/layouts/404.html"),
             name="404",
         )
     )
@@ -632,7 +618,7 @@ def handle_error(code, request, exception=None):
     try:
         return render(
             request,
-            "%s.html" % code,
+            "v1/layouts/%s.html" % code,
             context={"request": request},
             status=code,
         )

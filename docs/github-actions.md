@@ -1,6 +1,7 @@
 # How we use GitHub Actions for continuous integration and automation
 
 ## What GitHub Actions do
+
 We use [GitHub Actions](https://help.github.com/en/articles/about-github-actions) on consumerfinance.gov to perform the following tasks:
 
 - Run automated lint checkers
@@ -10,6 +11,7 @@ We use [GitHub Actions](https://help.github.com/en/articles/about-github-actions
 - Clean up stored artifacts
 
 ## How GitHub Actions are configured
+
 We use the following constraints to optimize our CI builds for speed and utility:
 
 - Our linting and unit tests run on pull requests only, including subsequent pushes to a pull request's branch. Tests are not run on the `main` branch.
@@ -25,6 +27,7 @@ We use a combination of:
 Our workflows are defined in our [`.github/workflows`](https://github.com/cfpb/consumerfinance.gov/tree/main/.github/workflows) directory.
 
 ## An extra task for satellite repositories
+
 For our [satellite apps](../related-projects/#satellite-apps), we use GitHub Actions (or Travis, if a repo hasn't been migrated to Actions yet) to build and attach a deployment wheel file to every release.
 
 An example is the `.whl` file on [this release of the retirement app](https://github.com/cfpb/retirement/releases/tag/0.7.6).
