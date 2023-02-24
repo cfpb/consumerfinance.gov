@@ -1,7 +1,4 @@
-import {
-  checkDom,
-  setInitFlag,
-} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
 import Analytics from '../modules/Analytics.js';
 
 const BASE_CLASS = 'o-audio-player';

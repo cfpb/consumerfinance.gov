@@ -1,4 +1,4 @@
-import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+import { EventObserver } from '@cfpb/cfpb-atomic-component';
 
 /**
  * TabTrigger

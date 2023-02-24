@@ -4,7 +4,7 @@
  * refresh the results on the page.
  */
 
-import { checkDom } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { checkDom } from '@cfpb/cfpb-atomic-component';
 
 /**
  * ClearableInput

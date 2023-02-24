@@ -5,10 +5,7 @@ import {
   recordEmailPopupClosure,
 } from '../modules/util/email-popup-helpers.js';
 import { email as validatorsEmail } from '../modules/util/validators.js';
-import {
-  checkDom,
-  setInitFlag,
-} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
 import FormSubmit from './FormSubmit.js';
 
 /**

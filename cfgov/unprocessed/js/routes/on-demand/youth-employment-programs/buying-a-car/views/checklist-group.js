@@ -1,7 +1,4 @@
-import {
-  checkDom,
-  setInitFlag,
-} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
 
 const CLASSES = Object.freeze({
   CHECKLIST_GROUP_CONTAINER: 'm-checklist-group',
