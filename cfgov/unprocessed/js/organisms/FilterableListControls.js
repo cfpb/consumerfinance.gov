@@ -59,10 +59,10 @@ function FilterableListControls(element) {
 
     // If multiselects exist on the form, iterate over them.
     multiSelects.forEach((multiSelect) => {
-      multiSelect.addEventListener('expandBegin', _refreshExpandableHeight);
-      multiSelect.addEventListener('expandEnd', _refreshExpandableHeight);
+      multiSelect.addEventListener('expandbegin', _refreshExpandableHeight);
+      multiSelect.addEventListener('collapsebegin', _refreshExpandableHeight);
       multiSelect.addEventListener(
-        'selectionsUpdated',
+        'selectionsupdated',
         _refreshExpandableHeight
       );
     });
@@ -105,14 +105,14 @@ function FilterableListControls(element) {
     const cachedFields = {};
 
     _expandable.transition.addEventListener(
-      'expandBegin',
+      'expandbegin',
       function sendEvent() {
         Analytics.sendEvent('Filter:open', label);
       }
     );
 
     _expandable.transition.addEventListener(
-      'collapseBegin',
+      'collapsebegin',
       function sendEvent() {
         Analytics.sendEvent('Filter:close', label);
       }

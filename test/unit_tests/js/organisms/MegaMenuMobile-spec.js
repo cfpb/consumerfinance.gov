@@ -2,13 +2,14 @@ import HTML_SNIPPET from '../../mocks/megaMenuSnippet.js';
 import MegaMenu from '../../../../cfgov/unprocessed/js/organisms/MegaMenu.js';
 import { simulateEvent } from '../../../util/simulate-event.js';
 
-describe('MegaMenu', () => {
+describe('MegaMenuMobile', () => {
   let navElem;
   let megaMenu;
 
   beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
     navElem = document.querySelector('.o-mega-menu');
+    window.innerWidth = 420;
     megaMenu = new MegaMenu(navElem);
     megaMenu.init();
   });
@@ -21,15 +22,12 @@ describe('MegaMenu', () => {
        See https://github.com/jsdom/jsdom/issues/1781
     */
     it('should expand on the first level sub-menu button click', (done) => {
-      window.innerWidth = 420;
       const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
       const subTrigger = navElem.querySelector(
         '.o-mega-menu_content-1-link__has-children'
       );
-      const subContent = navElem.querySelector('.o-mega-menu_content-2');
-      const subContentWrapper = navElem.querySelector(
-        '.o-mega-menu_content-2-wrapper'
-      );
+      const firstPanel = navElem.querySelector('.o-mega-menu_content-1');
+      const secondPanel = navElem.querySelector('.o-mega-menu_content-2');
       let isExpanded;
 
       /**
@@ -45,7 +43,10 @@ describe('MegaMenu', () => {
         */
         const event = new Event('transitionend');
         event.propertyName = 'transform';
-        subContentWrapper.dispatchEvent(event);
+        firstPanel.dispatchEvent(event);
+
+        isExpanded = firstPanel.getAttribute('aria-expanded');
+        expect(isExpanded).toEqual('true');
 
         window.setTimeout(resolveSecondClick, 1000);
       }
@@ -54,8 +55,16 @@ describe('MegaMenu', () => {
        *
        */
       function resolveSecondClick() {
-        isExpanded = subContent.getAttribute('aria-expanded');
+        /* The transitionend event should fire on its own,
+           but for some reason the transitionend event is not firing within JSDom.
+           In a future JSDom update this should be revisited.
+           See https://github.com/jsdom/jsdom/issues/1781
+        */
+        const event = new Event('transitionend');
+        event.propertyName = 'transform';
+        secondPanel.dispatchEvent(event);
 
+        isExpanded = secondPanel.getAttribute('aria-expanded');
         expect(isExpanded).toEqual('true');
         done();
       }
@@ -66,24 +75,22 @@ describe('MegaMenu', () => {
     });
 
     it('should not be expanded by default', () => {
-      window.innerWidth = 420;
-      const subContent = navElem.querySelector('.o-mega-menu_content-2');
-      const isExpanded = subContent.getAttribute('aria-expanded');
+      const secondPanel = navElem.querySelector('.o-mega-menu_content-2');
+      const isExpanded = secondPanel.getAttribute('aria-expanded');
 
       expect(isExpanded).toEqual('false');
     });
 
     it('should not be expanded on the main trigger click', (done) => {
-      window.innerWidth = 420;
       const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
-      const subContent = navElem.querySelector('.o-mega-menu_content-2');
+      const secondPanel = navElem.querySelector('.o-mega-menu_content-2');
       let isExpanded;
 
       /**
        *
        */
       function resolveFirstClick() {
-        isExpanded = subContent.getAttribute('aria-expanded');
+        isExpanded = secondPanel.getAttribute('aria-expanded');
 
         expect(isExpanded).toEqual('false');
         done();
@@ -95,13 +102,12 @@ describe('MegaMenu', () => {
     });
 
     it('should collapse on the first level sub-menu back button click', (done) => {
-      window.innerWidth = 420;
       const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
       const subTrigger = navElem.querySelector(
         '.o-mega-menu_content-1-link__has-children'
       );
-      const subContent = navElem.querySelector('.o-mega-menu_content-2');
-      const subAltTrigger = subContent.querySelector(
+      const secondPanel = navElem.querySelector('.o-mega-menu_content-2');
+      const subAltTrigger = secondPanel.querySelector(
         '.o-mega-menu_content-alt-trigger'
       );
       let isExpanded;
@@ -128,7 +134,7 @@ describe('MegaMenu', () => {
        *
        */
       function resolveThirdClick() {
-        isExpanded = subContent.getAttribute('aria-expanded');
+        isExpanded = secondPanel.getAttribute('aria-expanded');
 
         expect(isExpanded).toEqual('false');
         done();

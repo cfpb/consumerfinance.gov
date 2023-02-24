@@ -8,7 +8,7 @@ export class Header {
   }
 
   /* Overlay is technically outside of the header,
-    but makes organizational sense to include here. */
+     but makes organizational sense to include here. */
   overlay() {
     return cy.get('.a-overlay');
   }
@@ -17,27 +17,11 @@ export class Header {
     return cy.get(`.m-global-header-${name}`);
   }
 
-  globalSearchElement(name) {
-    return cy.get(`.m-global-search_${name}`);
-  }
-
-  globalSearch() {
-    return cy.get('.m-global-search');
-  }
-
-  globalSearchTrigger() {
-    return this.globalSearchElement('trigger');
-  }
-
-  globalSearchContent() {
-    return this.globalSearchElement('content');
-  }
-
   globalHeaderCta() {
     return this.globalHeaderElement('cta');
   }
 
-  megaMenuHeader() {
-    return cy.get('.o-header__o-mega-menu');
+  globalEyebrowHorizontal() {
+    return cy.get('.m-global-eyebrow__horizontal');
   }
 }

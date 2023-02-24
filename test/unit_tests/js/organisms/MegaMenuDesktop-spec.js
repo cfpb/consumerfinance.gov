@@ -2,13 +2,14 @@ import HTML_SNIPPET from '../../mocks/megaMenuSnippet.js';
 import MegaMenu from '../../../../cfgov/unprocessed/js/organisms/MegaMenu.js';
 import { simulateEvent } from '../../../util/simulate-event.js';
 
-describe('MegaMenu', () => {
+describe('MegaMenuDesktop', () => {
   let navElem;
   let megaMenu;
 
   beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
     navElem = document.querySelector('.o-mega-menu');
+    window.innerWidth = 1220;
     megaMenu = new MegaMenu(navElem);
     megaMenu.init();
   });
@@ -21,9 +22,7 @@ describe('MegaMenu', () => {
        See https://github.com/jsdom/jsdom/issues/1781
     */
     it('should expand on the first level sub-menu button click', (done) => {
-      window.innerWidth = 1220;
-      const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
-      const subTrigger = navElem.querySelector(
+      const menuTrigger = navElem.querySelector(
         '.o-mega-menu_content-1-link__has-children'
       );
       const subContent = navElem.querySelector('.o-mega-menu_content-2');
@@ -33,11 +32,9 @@ describe('MegaMenu', () => {
       let isExpanded;
 
       /**
-       *
+       * Resolve a click of the first menu trigger.
        */
       function resolveFirstClick() {
-        simulateEvent('click', subTrigger);
-
         /* The transitionend event should fire on its own,
            but for some reason the transitionend event is not firing within JSDom.
            In a future JSDom update this should be revisited.
@@ -47,15 +44,7 @@ describe('MegaMenu', () => {
         event.propertyName = 'transform';
         subContentWrapper.dispatchEvent(event);
 
-        window.setTimeout(resolveSecondClick, 1000);
-      }
-
-      /**
-       *
-       */
-      function resolveSecondClick() {
         isExpanded = subContent.getAttribute('aria-expanded');
-
         expect(isExpanded).toEqual('true');
         done();
       }
@@ -66,7 +55,6 @@ describe('MegaMenu', () => {
     });
 
     it('should not be expanded by default', () => {
-      window.innerWidth = 1220;
       const subContent = navElem.querySelector('.o-mega-menu_content-2');
       const isExpanded = subContent.getAttribute('aria-expanded');
 
@@ -74,7 +62,6 @@ describe('MegaMenu', () => {
     });
 
     it('should not be expanded on the main trigger click', (done) => {
-      window.innerWidth = 1220;
       const menuTrigger = navElem.querySelector('.o-mega-menu_trigger');
       const subContent = navElem.querySelector('.o-mega-menu_content-2');
       let isExpanded;

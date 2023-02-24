@@ -5,7 +5,7 @@
    scrolltop-animation-without-jquery
    ========================================================================== */
 
-import { attach } from './util/behavior.js';
+import { attach } from '@cfpb/cfpb-atomic-component/src/utilities/behavior/behavior.js';
 
 /**
  * Set up event handler for button to scroll to top of page.
