@@ -1,4 +1,3 @@
-import { assign } from '../modules/util/assign';
 import {
   EventObserver,
   checkDom,
@@ -83,7 +82,7 @@ function Autocomplete(element, opts) {
     _fetchSuggestions();
   }, _settings.delay);
 
-  assign(_settings, opts);
+  Object.assign(_settings, opts);
 
   /**
    * Set up and create the autocomplete.
