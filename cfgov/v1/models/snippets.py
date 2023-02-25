@@ -44,7 +44,6 @@ class Contact(models.Model):
         help_text=("The snippet heading"),
     )
     body = RichTextField(blank=True)
-    body_shown_in_expandables = models.BooleanField(default=False)
 
     contact_info = StreamField(
         [
@@ -59,7 +58,6 @@ class Contact(models.Model):
     panels = [
         FieldPanel("heading"),
         FieldPanel("body"),
-        FieldPanel("body_shown_in_expandables"),
         StreamFieldPanel("contact_info"),
     ]
 

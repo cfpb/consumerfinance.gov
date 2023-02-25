@@ -136,7 +136,6 @@ class LearnPage(AbstractFilterPage):
             ("full_width_text", organisms.FullWidthText()),
             ("info_unit_group", organisms.InfoUnitGroup()),
             ("expandable_group", organisms.ExpandableGroup()),
-            ("contact_expandable_group", organisms.ContactExpandableGroup()),
             ("expandable", organisms.Expandable()),
             ("well", organisms.Well()),
             ("call_to_action", molecules.CallToAction()),
