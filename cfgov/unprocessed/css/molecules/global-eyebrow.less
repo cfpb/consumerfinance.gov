@@ -11,6 +11,9 @@
               <ul class="m-global-eyebrow_languages">
                 <li><a href="/es/" hreflang="es" lang="es">Español</a></li>
               </ul>
+              <span class="m-global-eyebrow_phone">
+                <a href="tel:+1-855-411-2372">(855) 411-2372</a>
+              </span>
             </div>
         </div>
       codenotes:
@@ -23,15 +26,18 @@
               ul.m-global-eyebrow_languages
                 li
                   a
+              span.m-global-eyebrow_phone
     - name: List item example
       markup: |
         <div class="m-global-eyebrow
                     m-global-eyebrow__list">
             <div class="wrapper">
-              <div class="m-global-eyebrow_tagline"></div>
               <ul class="m-global-eyebrow_languages">
                 <li><a href="/es/" hreflang="es" lang="es">Español</a></li>
               </ul>
+              <span class="m-global-eyebrow_phone">
+                <a href="tel:+1-855-411-2372">(855) 411-2372</a>
+              </span>
             </div>
         </div>
       codenotes:
@@ -40,10 +46,10 @@
           -----------------------
           .m-global-eyebrow.m-global-eyebrow__list
             .wrapper
-              .a-tagline
               ul.m-global-eyebrow_languages
                 li
                   a
+              span.m-global-eyebrow_phone
   tags:
     - cfgov-molecules
 */
@@ -110,10 +116,6 @@
     padding-left: unit(@grid_gutter-width / @base-font-size-px, rem);
     padding-right: unit(@grid_gutter-width / 2 / @base-font-size-px, rem);
     padding-bottom: unit(@grid_gutter-width / @base-font-size-px, rem);
-
-    .a-tagline {
-      display: none;
-    }
 
     .m-global-eyebrow_actions {
       padding: 0;

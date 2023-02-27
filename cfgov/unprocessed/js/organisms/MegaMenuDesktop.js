@@ -1,6 +1,5 @@
 import { bfs } from '../modules/util/tree-traversal.js';
-import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
+import { EventObserver, MoveTransition } from '@cfpb/cfpb-atomic-component';
 
 /**
  * MegaMenuDesktop
@@ -54,10 +53,11 @@ function MegaMenuDesktop(baseClass, menus) {
     if (_suspended) {
       return;
     }
+
     const eventMap = {
-      triggerClick: _handleTriggerClickBinded,
-      expandBegin: _handleExpandBeginBinded,
-      collapseEnd: _handleCollapseEndBinded,
+      triggerclick: _handleTriggerClickBinded,
+      expandbegin: _handleExpandBeginBinded,
+      collapseend: _handleCollapseEndBinded,
     };
 
     const currHandler = eventMap[event.type];
@@ -72,28 +72,18 @@ function MegaMenuDesktop(baseClass, menus) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleTriggerClick(event) {
-    this.dispatchEvent('triggerClick', { target: this });
     const menu = event.target;
-    if (menu.isAnimating()) {
-      return;
-    }
     _updateMenuState(menu);
   }
 
   /**
    * Event handler for when FlyoutMenu expand transition begins.
-   * Use this to perform post-expandBegin actions.
+   * Use this to perform post-expandbegin actions.
    */
   function _handleExpandBegin() {
-    this.dispatchEvent('expandBegin', { target: this });
-
     // Set keyboard focus on first menu item link.
     const activeMenuDom = _activeMenu.getDom().content;
     activeMenuDom.classList.remove('u-invisible');
-
-    /* TODO: Remove or uncomment when keyboard navigation is in.
-       var firstMenuLink = activeMenuDom.querySelector( 'a' );
-       firstMenuLink.focus(); */
   }
 
   /**
@@ -103,7 +93,6 @@ function MegaMenuDesktop(baseClass, menus) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleCollapseEnd(event) {
-    this.dispatchEvent('collapseEnd', { target: this });
     event.target.getDom().content.classList.add('u-invisible');
   }
 
@@ -130,8 +119,8 @@ function MegaMenuDesktop(baseClass, menus) {
 
       // If we've ever opened the menu, _activeMenu has to be cleared.
       if (_activeMenu) {
-        _activeMenu.getTransition().animateOn();
-        _activeMenu.collapse();
+        _activeMenu.getTransition()?.animateOn();
+        if (menu === null) _activeMenu.collapse();
         _activeMenu = null;
       }
 
@@ -140,18 +129,16 @@ function MegaMenuDesktop(baseClass, menus) {
     } else if (_activeMenu === null) {
       // A menu is opened.
       _activeMenu = menu;
-      _activeMenu.getTransition().animateOn();
+      _activeMenu.getTransition()?.animateOn();
 
       // Close the menu on click of the document body.
       _bodyDom.addEventListener('click', _handleBodyClick);
-
-      _activeMenu.expand();
     } else {
       // An open menu has switched to another menu.
-      _activeMenu.getTransition().animateOff();
+      _activeMenu.getTransition()?.animateOff();
       _activeMenu.collapse();
       _activeMenu = menu;
-      _activeMenu.getTransition().animateOff();
+      _activeMenu.getTransition()?.animateOff();
     }
   }
 
@@ -212,11 +199,14 @@ function MegaMenuDesktop(baseClass, menus) {
       const wrapperSel = `.${baseClass}_content-2-wrapper`;
       const contentDom = menu.getDom().content;
       const wrapperDom = contentDom.querySelector(wrapperSel);
-      let transition = menu.getTransition();
 
       // This ensures the transition has been removed by MegaMenuMobile.
-      transition = _setTransitionElement(wrapperDom, transition);
-      transition.moveUp();
+      let transition = menu.getTransition();
+      if (transition) transition.setElement(wrapperDom);
+      else
+        transition = new MoveTransition(wrapperDom).init(
+          MoveTransition.CLASSES.MOVE_UP
+        );
 
       /* TODO: The only reason hiding is necessary is that the
          drop-shadow of the menu extends below its border,
@@ -225,20 +215,14 @@ function MegaMenuDesktop(baseClass, menus) {
          or similar class to move up -110%. Or whether the drop-shadow
          could be included within the bounds of the menu. */
       menu.getDom().content.classList.add('u-invisible');
-      menu.setExpandTransition(transition, transition.moveToOrigin);
-      menu.setCollapseTransition(transition, transition.moveUp);
+      transition.animateOff();
+      transition.moveUp();
 
-      /* TODO: Investigate whether deferred collapse has another solution.
-         This check is necessary since a call to an already collapsed
-         menu will set a deferred collapse that will be called
-         on expandEnd next time the flyout is expanded.
-         The deferred collapse is used in cases where the
-         user clicks the flyout menu while it is animating open,
-         so that it appears like they can collapse it, even when
-         clicking during the expand animation. */
-      if (menu.isExpanded()) {
-        menu.collapse();
-      }
+      menu.setTransition(
+        transition,
+        transition.moveUp,
+        transition.moveToOrigin
+      );
     } else if (nLevel === 2) {
       menu.suspend();
     }
@@ -254,7 +238,7 @@ function MegaMenuDesktop(baseClass, menus) {
     const menu = node.data;
 
     if (nLevel === 1) {
-      menu.clearTransitions();
+      menu.clearTransition();
       menu.getDom().content.classList.remove('u-invisible');
 
       if (menu.isExpanded()) {
@@ -263,25 +247,6 @@ function MegaMenuDesktop(baseClass, menus) {
     } else if (nLevel === 2) {
       menu.resume();
     }
-  }
-
-  /**
-   * Set an element on an existing transition or create a new transition.
-   *
-   * @param {HTMLElement} element - Target of a transition.
-   * @param {MoveTransition} [setTransition] - The transition to apply.
-   * @returns {MoveTransition}
-   *   The passed in transition or a new transition if none was supplied.
-   */
-  function _setTransitionElement(element, setTransition) {
-    let transition = setTransition;
-    if (transition) {
-      transition.setElement(element);
-    } else {
-      transition = new MoveTransition(element).init();
-    }
-
-    return transition;
   }
 
   // Attach public events.

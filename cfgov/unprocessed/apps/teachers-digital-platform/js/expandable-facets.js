@@ -2,7 +2,7 @@
    Expandable Facets Organism
    ========================================================================== */
 
-import AtomicComponent from '@cfpb/cfpb-atomic-component/src/components/AtomicComponent.js';
+import { AtomicComponent } from '@cfpb/cfpb-atomic-component/src/components/AtomicComponent.js';
 import ExpandableFacetTransition from './ExpandableFacetTransition.js';
 
 const ExpandableFacets = AtomicComponent.extend({
@@ -47,7 +47,9 @@ function initialize() {
     this.ui.content,
     customClasses
   );
-  this.transition = transition.init();
+  this.transition = transition.init(
+    ExpandableFacetTransition.CLASSES.COLLAPSED
+  );
 
   if (this.ui.content.classList.contains(customClasses.OPEN_DEFAULT)) {
     this.ui.target.classList.add(this.classes.targetExpanded);

@@ -1,4 +1,4 @@
-import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+import { EventObserver } from '@cfpb/cfpb-atomic-component';
 
 /**
  * TabTrigger
@@ -30,7 +30,7 @@ function TabTrigger(element) {
       return false;
     }
 
-    this.dispatchEvent('tabPressed');
+    this.dispatchEvent('tabpressed');
     return true;
   }
 

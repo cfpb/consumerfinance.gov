@@ -9,7 +9,9 @@
    Creates markup for Global Eyebrow molecule.
 
    is_horizontal: Whether the molecule appears horizontally or vertically.
-                  defaults to false.
+                  Note: The tagline only renders if the eyebrow is horizontal.
+                  Defaults to false.
+
    language:      The page's language value (used to display different
                   information on Spanish pages). Defaults to English.
 
@@ -21,7 +23,9 @@
                                       else 'list' }}">
         <div class="wrapper
                     {{ 'wrapper__match-content' if is_horizontal else '' }}">
-            {{ tagline.render() }}
+            {% if is_horizontal -%}
+                {{ tagline.render() }}
+            {%- endif %}
             <div class="m-global-eyebrow_actions">
                 <ul class="m-list
                            m-list__horizontal

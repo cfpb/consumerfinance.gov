@@ -35,14 +35,9 @@
 {% block javascript scoped %}
     {{ super() }}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            'https://files.consumerfinance.gov/ccdb/metadata.js',
-            '{{ static('apps/ccdb-search/js/main.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
+      jsl([
+        'https://files.consumerfinance.gov/ccdb/metadata.js',
+        '{{ static("apps/ccdb-search/js/main.js") }}'
+      ]);
     </script>
 {% endblock javascript %}

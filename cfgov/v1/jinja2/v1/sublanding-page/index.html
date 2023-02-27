@@ -19,7 +19,9 @@
 {% endblock %}
 
 {% block content_main %}
-    {% include "v1/includes/molecules/translation-links.html" %}
+    {% if page.has_hero -%}
+        {% include "v1/includes/molecules/translation-links.html" %}
+    {%- endif %}
 
     {% for block in page.content -%}
         {% if block.block_type == 'notification' %}

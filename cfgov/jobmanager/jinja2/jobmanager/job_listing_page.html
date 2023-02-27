@@ -37,11 +37,9 @@
                     block__flush-bottom
                     vacancy-announcement_description">
 
-        <div class="o-summary o-summary__mobile"
-            data-js-hook="behavior_flyout-menu">
+        <div class="o-summary o-summary__mobile">
             <div id="job-description-expandable"
-                 class="o-summary_content"
-                 data-js-hook="behavior_flyout-menu_content">
+                 class="o-summary_content">
                 <h4>Summary</h4>
                 {{ page.description | safe }}
                 {% if page.responsibilities %}
@@ -77,8 +75,7 @@
                 {% endif %}
             </div>
 
-            <button class="o-summary_btn u-hidden"
-                    data-js-hook="behavior_flyout-menu_trigger">
+            <button class="o-summary_btn u-hidden">
                 Read full description
                 {{ svg_icon('plus-round') }}
             </button>

@@ -3,6 +3,6 @@
    ========================================================================== */
 
 import FeaturedContentModule from '../../organisms/FeaturedContentModule';
-import { instantiateAll } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { instantiateAll } from '@cfpb/cfpb-atomic-component';
 
 instantiateAll(`.${FeaturedContentModule.BASE_CLASS}`, FeaturedContentModule);

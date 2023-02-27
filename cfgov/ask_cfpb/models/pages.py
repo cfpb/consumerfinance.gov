@@ -186,14 +186,11 @@ class AnswerLandingPage(LandingPage):
 
 
 class SecondaryNavigationJSMixin:
-    """A page mixin that adds navigation JS for English pages."""
+    """A page mixin that adds navigation JS."""
 
     @property
     def page_js(self):
-        js = super().page_js
-        if self.language == "en":
-            js += ["secondary-navigation.js"]
-        return js
+        return super().page_js + ["secondary-navigation.js"]
 
 
 class PortalSearchPage(

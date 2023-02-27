@@ -2,7 +2,7 @@
    Scripts for `/external-site/`.
    ========================================================================== */
 
-import { checkDom } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { checkDom } from '@cfpb/cfpb-atomic-component';
 
 const BASE_CLASS = 'external-site';
 const TOTAL_DURATION = 5;

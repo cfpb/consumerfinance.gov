@@ -153,13 +153,6 @@
 {% block javascript scoped %}
     {{ super() }}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            '{{ static('js/routes/data-research/prepaid-accounts/search-agreements/index.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
+      jsl(['{{ static("js/routes/data-research/prepaid-accounts/search-agreements/index.js") }}']);
     </script>
 {% endblock javascript %}

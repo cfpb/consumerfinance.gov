@@ -1,8 +1,5 @@
 // Required modules.
-import {
-  checkDom,
-  setInitFlag,
-} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
 import rangesliderJs from 'rangeslider-js';
 
 /**

@@ -36,9 +36,12 @@
 {% if value.eyebrow %}
     <div class="eyebrow">{{ value.eyebrow }}</div>
 {% endif %}
-{% if value.heading %}
+
+{% if value.heading -%}
     <h1>{{ value.heading }}</h1>
-{% endif %}
+
+    {% include "v1/includes/molecules/translation-links.html" %}
+{%- endif %}
 
 {% if value.intro.source %}
     <div class="lead-paragraph">

@@ -1,8 +1,5 @@
 import { init as footerButtonInit } from '../modules/footer-button.js';
-import {
-  checkDom,
-  setInitFlag,
-} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
 
 /**
  * Footer

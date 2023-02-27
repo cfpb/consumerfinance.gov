@@ -1,4 +1,4 @@
-import { checkDom } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { checkDom } from '@cfpb/cfpb-atomic-component';
 
 const CONTAINER = 'cbg-checklist-error';
 
