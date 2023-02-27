@@ -75,10 +75,6 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
         "be searchable using standard search filters module."
     )
 
-    @property
-    def page_js(self):
-        return super().page_js + ["secondary-navigation.js"]
-
 
 class EnforcementActionsFilterPage(BrowseFilterablePage):
     template = "v1/browse-filterable/index.html"
