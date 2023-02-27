@@ -85,3 +85,4 @@ class ContactUsTable(blocks.StructBlock):
     class Meta:
         icon = "table"
         template = "v1/includes/organisms/contact-us-table.html"
+        label = "Table (Contact Us)"
