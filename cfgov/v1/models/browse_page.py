@@ -87,10 +87,6 @@ class BrowsePage(CFGOVPage):
 
     page_description = "Left-hand navigation, no right-hand sidebar."
 
-    @property
-    def page_js(self):
-        return super().page_js + ["secondary-navigation.js"]
-
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context.update({"get_secondary_nav_items": get_secondary_nav_items})
