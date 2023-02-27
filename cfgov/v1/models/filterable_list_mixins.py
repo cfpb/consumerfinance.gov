@@ -8,7 +8,6 @@ from v1.documents import FilterablePagesDocumentSearch
 from v1.feeds import FilterableFeed
 from v1.models.learn_page import AbstractFilterPage
 from v1.util.ref import get_category_children
-from v1.util.util import get_secondary_nav_items
 
 
 class FilterableListMixin(ShareableRoutablePageMixin):
@@ -91,7 +90,6 @@ class FilterableListMixin(ShareableRoutablePageMixin):
         context.update(
             {
                 "filter_data": filter_data,
-                "get_secondary_nav_items": get_secondary_nav_items,
                 "has_active_filters": has_active_filters,
                 "has_unfiltered_results": has_unfiltered_results,
             }

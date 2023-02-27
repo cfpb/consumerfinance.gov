@@ -11,17 +11,20 @@
    ========================================================================== #}
 
 {% macro render() %}
-{% set nav_items, has_children = get_secondary_nav_items(request, page) %}
+{%- set nav_items = page.get_secondary_nav_items( request ) -%}
+
+{%- set any_children = nav_items | map( "children" ) | reject() -%}
+
 <nav class="o-secondary-navigation
-            {{ '' if has_children else 'o-secondary-navigation__no-children' }}"
+            {{ '' if any_children else 'o-secondary-navigation__no-children' }}"
      aria-label="{{ _('Section navigation') }}">
-    {% set sec_nav_settings_label = _("In this section") %}
+    {% set sec_nav_settings_label = _("In this section") -%}
     {% set sec_nav_settings = {
         'label': sec_nav_settings_label,
         'is_midtone': true,
         'is_bordered': false,
         'is_expanded': false
-    } %}
+    } -%}
 
     {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
     {% call() expandable(sec_nav_settings) %}
