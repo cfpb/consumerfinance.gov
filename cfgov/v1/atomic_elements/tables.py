@@ -6,6 +6,7 @@ from wagtail.contrib.table_block.blocks import (
     TableInput,
     TableInputAdapter,
 )
+from wagtail.core import blocks
 from wagtail.core.telepath import register
 
 
@@ -70,3 +71,18 @@ class AtomicTableBlock(TableBlock):
         icon = "table"
         template = "v1/includes/organisms/table.html"
         label = "Table"
+
+
+class ContactUsRow(blocks.StructBlock):
+    title = blocks.CharBlock()
+    body = blocks.RichTextBlock(features=["bold", "italic", "link"])
+
+
+class ContactUsTable(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    rows = blocks.ListBlock(ContactUsRow, collapsed=True, min_num=1)
+
+    class Meta:
+        icon = "table"
+        template = "v1/includes/organisms/contact-us-table.html"
+        label = "Table (Contact Us)"
