@@ -188,6 +188,32 @@ const hooks = {
 
     return data.sort((a, b) => new Date(a.date) - new Date(b.date));
   },
+
+  /* Convert new CCT data format to a structure compatible
+     with simple chart filters */
+  cct_income_filterable(data) {
+    data = data.reduce((newData, datum) => {
+      newData.push({
+        date: datum.date,
+        high: datum.nsa_mtg_crti_incHigh,
+        middle: datum.nsa_mtg_crti_incMiddle,
+        moderate: datum.nsa_mtg_crti_incModerate,
+        low: datum.nsa_mtg_crti_incLow,
+        adjustment: 'Not seasonally adjusted',
+      });
+      newData.push({
+        date: datum.date,
+        high: datum.sa_mtg_crti_incHigh,
+        middle: datum.sa_mtg_crti_incMiddle,
+        moderate: datum.sa_mtg_crti_incModerate,
+        low: datum.sa_mtg_crti_incLow,
+        adjustment: 'Seasonally adjusted',
+      });
+      return newData;
+    }, []);
+
+    return data.sort((a, b) => new Date(a.date) - new Date(b.date));
+  },
 };
 
 export default hooks;
