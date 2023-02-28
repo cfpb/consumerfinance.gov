@@ -135,3 +135,9 @@ class JobListingTableTestCase(JobListingBlockTestUtils, TestCase):
         # https://github.com/wagtail/django-modelcluster/issues/101
         with self.assertNumQueries(13):
             self.render_block()
+
+    def test_disallows_unsafe_content(self):
+        self.make_job("<script>alert('hacked')</script>")
+        html = self.render_block()
+        self.assertNotIn("<script>", html)
+        self.assertIn("&lt;script&gt;", html)
