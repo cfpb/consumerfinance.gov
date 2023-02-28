@@ -13,7 +13,7 @@
 {% macro render() %}
 {%- set nav_items = page.get_secondary_nav_items( request ) -%}
 
-{%- set any_children = nav_items | map( "children" ) | reject() -%}
+{%- set any_children = nav_items | map( attribute="children" ) | reject( "undefined" ) | list -%}
 
 <nav class="o-secondary-navigation
             {{ '' if any_children else 'o-secondary-navigation__no-children' }}"

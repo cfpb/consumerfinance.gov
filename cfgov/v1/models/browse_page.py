@@ -2,6 +2,7 @@ from django.db import models
 
 from wagtail.admin.edit_handlers import (
     FieldPanel,
+    MultiFieldPanel,
     ObjectList,
     StreamFieldPanel,
     TabbedInterface,
@@ -18,10 +19,28 @@ from youth_employment.blocks import YESChecklist
 
 
 class AbstractBrowsePage(CFGOVPage):
-    secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
+    navigation_label = models.CharField(
+        null=True,
+        blank=True,
+        max_length=100,
+        help_text="Optional short label for left navigation.",
+    )
+    secondary_nav_exclude_sibling_pages = models.BooleanField(
+        default=False,
+        help_text="Don't show siblings of this page in the left navigation.",
+    )
 
     sidefoot_panels = CFGOVPage.sidefoot_panels + [
-        FieldPanel("secondary_nav_exclude_sibling_pages"),
+        MultiFieldPanel(
+            [
+                FieldPanel("navigation_label"),
+                FieldPanel(
+                    "secondary_nav_exclude_sibling_pages",
+                    heading="Exclude siblings",
+                ),
+            ],
+            heading="Secondary navigation",
+        ),
     ]
 
     class Meta:
@@ -45,35 +64,47 @@ class AbstractBrowsePage(CFGOVPage):
                 nav_root.get_siblings(inclusive=True)
                 .type(AbstractBrowsePage)
                 .live()
+                .specific()
             )
 
         nav_items = []
 
         for page in pages:
-            active = page.pk == self.pk
-            expanded = active or (page.pk == nav_root.pk)
+            nav_item = self._make_nav_item(page, request)
 
-            nav_item = {
-                "title": page.title,
-                "url": page.get_url(request),
-                "active": active,
-                "expanded": expanded,
-            }
+            expanded = (page.pk == self.pk) or (page.pk == nav_root.pk)
+            nav_item["expanded"] = expanded
 
             if expanded:
-                children = page.get_children().type(AbstractBrowsePage).live()
-                nav_item["children"] = [
-                    {
-                        "title": child.title,
-                        "url": child.get_url(request),
-                        "active": child.pk == self.pk,
-                    }
-                    for child in children
+                children = (
+                    page.get_children()
+                    .type(AbstractBrowsePage)
+                    .live()
+                    .specific()
+                )
+
+                child_items = [
+                    self._make_nav_item(child, request) for child in children
                 ]
+                if child_items:
+                    nav_item["children"] = child_items
 
             nav_items.append(nav_item)
 
         return nav_items
+
+    def _make_nav_item(self, page, request):
+        active = self.pk == page.pk
+
+        # Use self object to reflect draft/preview changes.
+        if active:
+            page = self
+
+        return {
+            "title": page.navigation_label or page.title,
+            "url": page.get_url(request),
+            "active": active,
+        }
 
 
 class BrowsePage(AbstractBrowsePage):
