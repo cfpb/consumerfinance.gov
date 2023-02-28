@@ -8,7 +8,7 @@ from django.utils import timezone
 
 from wagtail.documents.models import Document
 from wagtail.models import Site
-from wagtail.tests.utils import WagtailTestUtils
+from wagtail.test.utils import WagtailTestUtils
 
 from model_bakery import baker
 from taggit.models import Tag

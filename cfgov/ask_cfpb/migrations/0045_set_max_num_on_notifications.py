@@ -2,20 +2,84 @@
 
 from django.db import migrations
 
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('ask_cfpb', '0044_update_how_to_schema'),
+        ("ask_cfpb", "0044_update_how_to_schema"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='answerpage',
-            name='notification',
-            field=wagtail.core.fields.StreamField([('notification', wagtail.core.blocks.StructBlock([('type', wagtail.core.blocks.ChoiceBlock(choices=[('information', 'Information'), ('warning', 'Warning')])), ('message', wagtail.core.blocks.CharBlock(help_text='The main notification message to display.', required=True)), ('explanation', wagtail.core.blocks.TextBlock(help_text='Explanation text appears below the message in smaller type.', required=False)), ('links', wagtail.core.blocks.ListBlock(wagtail.core.blocks.StructBlock([('text', wagtail.core.blocks.CharBlock(required=False)), ('aria_label', wagtail.core.blocks.CharBlock(help_text='Add an ARIA label if the link text does not describe the destination of the link (e.g. has ambiguous text like "Learn more" that is not descriptive on its own).', required=False)), ('url', wagtail.core.blocks.CharBlock(default='/', required=False))]), help_text='Links appear on their own lines below the explanation.', required=False))]))], blank=True),
+            model_name="answerpage",
+            name="notification",
+            field=wagtail.fields.StreamField(
+                [
+                    (
+                        "notification",
+                        wagtail.blocks.StructBlock(
+                            [
+                                (
+                                    "type",
+                                    wagtail.blocks.ChoiceBlock(
+                                        choices=[
+                                            ("information", "Information"),
+                                            ("warning", "Warning"),
+                                        ]
+                                    ),
+                                ),
+                                (
+                                    "message",
+                                    wagtail.blocks.CharBlock(
+                                        help_text="The main notification message to display.",
+                                        required=True,
+                                    ),
+                                ),
+                                (
+                                    "explanation",
+                                    wagtail.blocks.TextBlock(
+                                        help_text="Explanation text appears below the message in smaller type.",
+                                        required=False,
+                                    ),
+                                ),
+                                (
+                                    "links",
+                                    wagtail.blocks.ListBlock(
+                                        wagtail.blocks.StructBlock(
+                                            [
+                                                (
+                                                    "text",
+                                                    wagtail.blocks.CharBlock(
+                                                        required=False
+                                                    ),
+                                                ),
+                                                (
+                                                    "aria_label",
+                                                    wagtail.blocks.CharBlock(
+                                                        help_text='Add an ARIA label if the link text does not describe the destination of the link (e.g. has ambiguous text like "Learn more" that is not descriptive on its own).',
+                                                        required=False,
+                                                    ),
+                                                ),
+                                                (
+                                                    "url",
+                                                    wagtail.blocks.CharBlock(
+                                                        default="/",
+                                                        required=False,
+                                                    ),
+                                                ),
+                                            ]
+                                        ),
+                                        help_text="Links appear on their own lines below the explanation.",
+                                        required=False,
+                                    ),
+                                ),
+                            ]
+                        ),
+                    )
+                ],
+                blank=True,
+            ),
         ),
     ]
