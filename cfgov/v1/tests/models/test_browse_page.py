@@ -35,6 +35,13 @@ class TestSecondaryNav(TestCase):
         self.assertEqual(nav[0]["title"], "Browse 1")
         self.assertEqual(nav[1]["title"], "Browse 2")
 
+    def test_nav_secondary_nav_exclude_sibling_pages(self):
+        self.browse1.secondary_nav_exclude_sibling_pages = True
+        nav = self.browse1.get_secondary_nav_items(self.request)
+
+        self.assertEqual(len(nav), 1)
+        self.assertEqual(nav[0]["title"], "Browse 1")
+
     def test_nav_includes_browse_filterable_sibling_pages(self):
         browse_filterable = BrowseFilterablePage(
             title="Browse filterable", live=True
