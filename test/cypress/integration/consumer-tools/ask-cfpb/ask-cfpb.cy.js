@@ -44,30 +44,54 @@ describe('Ask CFPB', () => {
   });
 
   describe('Answer Page', () => {
-    beforeEach(() => {
-      answerPage.open();
+    describe('on desktop', () => {
+      beforeEach(() => {
+        cy.viewport(1200, 800);
+        answerPage.open();
+      });
+
+      it('should not hide content on desktop', () => {
+        answerPage.getSummaryContentLink().should('be.visible');
+        answerPage.getSummaryContentLink().focus();
+        answerPage.getSummaryContentLink().should('be.visible');
+        answerPage.getSummaryBtn().should('not.be.visible');
+      });
     });
 
-    it('should hide content on mobile', () => {
-      cy.viewport(600, 1000);
-      cy.get('.o-summary_content').should(
-        'have.class',
-        'u-max-height-transition'
-      );
-      cy.get('.o-summary_content').should('have.class', 'u-max-height-summary');
-      cy.get('.o-summary_content').invoke('outerHeight').should('be.lte', 92);
-      answerPage.clickSummary();
-      cy.get('.o-summary_content').should(
-        'have.class',
-        'u-max-height-transition'
-      );
-      cy.get('.o-summary_content').should('not.have.class', 'u-no-animation');
-      cy.get('.o-summary_content').should(
-        'not.have.class',
-        'u-max-height-summary'
-      );
-      cy.get('.o-summary_content').should('have.class', 'u-max-height-default');
-      cy.get('.o-summary_content').invoke('outerHeight').should('be.gt', 92);
+    describe('on mobile', () => {
+      beforeEach(() => {
+        answerPage.open();
+        cy.viewport(480, 800);
+      });
+
+      it('should hide content on mobile', () => {
+        cy.get('.o-summary_content').should(
+          'have.class',
+          'u-max-height-transition'
+        );
+        cy.get('.o-summary_content').should(
+          'have.class',
+          'u-max-height-summary'
+        );
+        cy.get('.o-summary_content').invoke('outerHeight').should('be.lte', 92);
+        answerPage.getSummaryContentLink().should('not.be.visible');
+        answerPage.getSummaryBtn().click();
+        answerPage.getSummaryContentLink().should('be.visible');
+        cy.get('.o-summary_content').should(
+          'have.class',
+          'u-max-height-transition'
+        );
+        cy.get('.o-summary_content').should('not.have.class', 'u-no-animation');
+        cy.get('.o-summary_content').should(
+          'not.have.class',
+          'u-max-height-summary'
+        );
+        cy.get('.o-summary_content').should(
+          'have.class',
+          'u-max-height-default'
+        );
+        cy.get('.o-summary_content').invoke('outerHeight').should('be.gt', 92);
+      });
     });
   });
 });
