@@ -281,30 +281,32 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
             deactivate_all()
         return super().get_context(request, *args, **kwargs)
 
-    def get_nav_items(self, request, page):
+    def get_secondary_nav_items(self, request):
         """Return sorted nav items for sidebar."""
+        url = self.get_url(request)
+
         sorted_categories = [
             {
                 "title": category.title(self.language),
-                "url": "{}{}/".format(page.url, slug),
+                "url": "{}{}/".format(url, slug),
                 "active": (
                     False
-                    if not page.portal_category
+                    if not self.portal_category
                     else category.title(self.language)
-                    == page.portal_category.title(self.language)
+                    == self.portal_category.title(self.language)
                 ),
             }
             for slug, category in self.category_map.items()
         ]
         return [
             {
-                "title": page.portal_topic.title(self.language),
-                "url": page.url,
-                "active": False if page.portal_category else True,
+                "title": self.portal_topic.title(self.language),
+                "url": url,
+                "active": False if self.portal_category else True,
                 "expanded": True,
                 "children": sorted_categories,
             }
-        ], True
+        ]
 
     def get_results(self, request):
         context = self.get_context(request)
@@ -330,7 +332,6 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
                 "pages": paginator.page(page_number),
                 "paginator": paginator,
                 "current_page": page_number,
-                "get_secondary_nav_items": self.get_nav_items,
             }
         )
         return TemplateResponse(request, "ask-cfpb/see-all.html", context)
@@ -364,9 +365,9 @@ class PortalSearchPage(RoutablePageMixin, CFGOVPage):
         )
         if self.portal_category.heading == "Key terms":
             self.glossary_terms = self.get_glossary_terms()
-            context = self.get_context(request)
-            context.update({"get_secondary_nav_items": self.get_nav_items})
-            return TemplateResponse(request, "ask-cfpb/see-all.html", context)
+            return TemplateResponse(
+                request, "ask-cfpb/see-all.html", self.get_context(request)
+            )
         self.query_base = (
             AnswerPageDocument.search()
             .filter("match", portal_topics=self.portal_topic.heading)
