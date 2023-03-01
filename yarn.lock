@@ -313,6 +313,13 @@
   dependencies:
     ftdomdelegate "3.1.0"
 
+"@cfpb/cfpb-atomic-component@^0.21.6":
+  version "0.21.6"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.21.6.tgz#93c60e34d532605f1661f6dafe3a59f4928b8664"
+  integrity sha512-6PA9N+gCANvW4e0RjBvWoq/pJOxmyGaN7nlFs+u3XW55eYwD/kRE7Uhv/miWaQ67KQkBM+U0hA39ZkTDPQhKDg==
+  dependencies:
+    ftdomdelegate "3.1.0"
+
 "@cfpb/cfpb-buttons@0.21.0", "@cfpb/cfpb-buttons@^0.21.0":
   version "0.21.0"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-buttons/-/cfpb-buttons-0.21.0.tgz#1d5b6a9d4bb92a82b852ac8857a280ceb1735cd3"
@@ -336,12 +343,12 @@
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-expandables@0.21.4":
-  version "0.21.4"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.21.4.tgz#df58924bc37f7eb577a3345d9e47b0bbc989c0ba"
-  integrity sha512-IQc+UYoG+YtApcs5f4IoA0oXCKkQ9r8V7FH9hCmM0p4fmVJivYpvUmz0DhZUtMWlJFtTadffETUoslNXQC7VCw==
+"@cfpb/cfpb-expandables@0.21.7":
+  version "0.21.7"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.21.7.tgz#20a2599482cc358eb8518b8a230529ec51ded40f"
+  integrity sha512-xK0H3tWGEAf2Nx1yfk93rbokZy2RXVvFzP7ms2bRSjCklhK9rQkRaRK3JHY6kMSbwRDVADyuUYvZokay1GwfJw==
   dependencies:
-    "@cfpb/cfpb-atomic-component" "^0.21.4"
+    "@cfpb/cfpb-atomic-component" "^0.21.6"
     "@cfpb/cfpb-core" "^0.21.0"
     "@cfpb/cfpb-icons" "^0.21.0"
 
