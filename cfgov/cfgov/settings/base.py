@@ -229,7 +229,7 @@ LANGUAGE_CODE = "en-us"
 LANGUAGES = (
     ("en", _("English")),
     ("es", _("Spanish")),
-    ("zh-Hant", _("Chinese (Traditional)")),
+    ("zh-Hant", _("Chinese")),
     ("vi", _("Vietnamese")),
     ("ko", _("Korean")),
     ("tl", _("Tagalog")),
