@@ -4,7 +4,7 @@ export class AskCfpbAnswerPage {
   }
 
   getSummaryContentLink() {
-    return cy.get('a').contains('how to keep your credit score(s) up');
+    return cy.get('.o-summary_content a').first();
   }
 
   getSummaryBtn() {
