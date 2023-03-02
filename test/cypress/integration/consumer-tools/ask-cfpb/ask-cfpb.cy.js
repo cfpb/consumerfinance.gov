@@ -51,9 +51,9 @@ describe('Ask CFPB', () => {
       });
 
       it('should not hide content on desktop', () => {
-        answerPage.getSummaryContentLink().should('be.visible');
-        answerPage.getSummaryContentLink().focus();
-        answerPage.getSummaryContentLink().should('be.visible');
+        answerPage.getFirstLinkInSummary().should('be.visible');
+        answerPage.getFirstLinkInSummary().focus();
+        answerPage.getFirstLinkInSummary().should('be.visible');
         answerPage.getSummaryBtn().should('not.be.visible');
       });
     });
@@ -74,9 +74,9 @@ describe('Ask CFPB', () => {
           'u-max-height-summary'
         );
         cy.get('.o-summary_content').invoke('outerHeight').should('be.lte', 92);
-        answerPage.getSummaryContentLink().should('not.be.visible');
+        answerPage.getFirstLinkInSummary().should('not.be.visible');
         answerPage.getSummaryBtn().click();
-        answerPage.getSummaryContentLink().should('be.visible');
+        answerPage.getFirstLinkInSummary().should('be.visible');
         cy.get('.o-summary_content').should(
           'have.class',
           'u-max-height-transition'
