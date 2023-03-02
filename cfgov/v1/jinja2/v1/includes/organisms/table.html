@@ -40,14 +40,26 @@
    value.column_widths:   A list of column width (classes) to be applied in
                           order to the table columns.
 
+   value.allow_unsafe:    Boolean indicating whether to pass table data
+                          through the |safe filter, allowing unsafe characters.
+                          Defaults to true.
 
    ========================================================================== #}
 
 
 {% if value.has_data is not defined or value.has_data %}
-{% macro _render_cell(cell) %}
-    {{ (cell or '&nbsp;') | richtext | linebreaksbr | trim | safe }}
-{% endmacro %}
+
+{%- macro _render_cell( cell, allow_unsafe=true ) %}
+    {% set cell_str = (cell or '&nbsp;') | richtext | linebreaksbr | trim %}
+    {% if allow_unsafe %}
+        {% set cell_str = cell_str | safe %}
+    {% endif %}
+
+    {{- cell_str -}}
+{% endmacro -%}
+
+{% set allow_unsafe = value.allow_unsafe | default(true) %}
+
 {% if value.heading_text %}
     <{{ value.heading_level -}}>
         {%- if value.heading_icon %}
@@ -74,7 +86,7 @@
                     {% set width_class = ' class="' + value.column_widths[loop.index0] + '"' %}
                 {% endif %}
             <th scope="col"{{ width_class | default }}>
-                {{ _render_cell(cell) }}
+                {{ _render_cell(cell, allow_unsafe) }}
             </th>
             {% endfor %}
         </tr>
@@ -108,7 +120,7 @@
                     {% set attributes = attributes + ' data-label="' + first_row[loop.index0]|striptags|trim + '"' %}
                 {% endif %}
                 <{{ tag | safe }}{{ attributes | safe }}>
-                    {{ _render_cell(cell) }}
+                    {{ _render_cell(cell, allow_unsafe) }}
                 </{{ tag | safe }}>
             {% endfor %}
         </tr>

@@ -28,7 +28,6 @@ import requests
 from jinja2 import Markup
 from regdown import regdown
 
-from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import RegulationsListingFullWidthText
 from regulations3k.documents import SectionParagraphDocument
 from regulations3k.forms import SearchForm
@@ -226,9 +225,7 @@ class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
         return JsonResponse(response.json())
 
 
-class RegulationPage(
-    ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage
-):
+class RegulationPage(ShareableRoutablePageMixin, CFGOVPage):
     """A routable page for serving an eregulations page by Section ID."""
 
     parent_page_types = ["regulations3k.RegulationLandingPage"]

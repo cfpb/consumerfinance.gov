@@ -20,7 +20,7 @@
     "@cfpb/cfpb-atomic-component": "0.21.4",
     "@cfpb/cfpb-buttons": "0.21.0",
     "@cfpb/cfpb-core": "0.21.0",
-    "@cfpb/cfpb-expandables": "0.21.4",
+    "@cfpb/cfpb-expandables": "0.21.7",
     "@cfpb/cfpb-forms": "0.21.4",
     "@cfpb/cfpb-grid": "0.21.0",
     "@cfpb/cfpb-icons": "0.21.0",
@@ -60,7 +60,7 @@
     "postcss-less": "6.0.0",
     "prettier": "2.8.4",
     "snyk": "1.1107.0",
-    "stylelint": "15.2.0",
+    "stylelint": "14.16.1",
     "stylelint-config-prettier": "9.0.5",
     "stylelint-config-recommended-less": "1.0.4"
   },

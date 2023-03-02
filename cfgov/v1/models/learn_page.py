@@ -136,7 +136,6 @@ class LearnPage(AbstractFilterPage):
             ("full_width_text", organisms.FullWidthText()),
             ("info_unit_group", organisms.InfoUnitGroup()),
             ("expandable_group", organisms.ExpandableGroup()),
-            ("contact_expandable_group", organisms.ContactExpandableGroup()),
             ("expandable", organisms.Expandable()),
             ("well", organisms.Well()),
             ("call_to_action", molecules.CallToAction()),
@@ -152,6 +151,7 @@ class LearnPage(AbstractFilterPage):
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
             ("faq_group", schema.FAQGroup()),
+            ("contact_us_table", organisms.ContactUsTable()),
         ],
         blank=True,
     )
