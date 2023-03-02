@@ -95,11 +95,14 @@ describe('Mega-Menu organism for site navigation', () => {
       menuMobile.firstLevelTrigger().should('not.have.attr', 'tabindex');
       menuMobile.firstLevelTrigger().should('not.have.attr', 'aria-hidden');
       // Then expected content is visible.
-      menuMobile.firstPanel().contains('Submit a Complaint');
-      menuMobile.firstPanel().contains('Español');
-      menuMobile.firstPanel().contains('(855) 411-2372');
+      menuMobile.firstPanel().should('contain.text', 'Submit a Complaint');
+      menuMobile.firstPanel().should('contain.text', 'Español');
+      menuMobile.firstPanel().should('contain.text', '(855) 411-2372');
       // When the first child menu is clicked.
       menuMobile.firstLevelTrigger().click();
+      // Then the first panel's trigger should be hidden from screenreaders.
+      menuMobile.firstLevelTrigger().should('have.attr', 'tabindex', '-1');
+      menuMobile.firstLevelTrigger().should('have.attr', 'aria-hidden', 'true');
       // Then only the second panel should be visible.
       menuMobile.firstPanel().should('not.have.class', 'u-is-animating');
       menuMobile.firstPanel().should('not.be.inViewport');
