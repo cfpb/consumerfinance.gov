@@ -28,9 +28,6 @@ describe('Mega-Menu organism for site navigation', () => {
       menuDesktop.firstTab().click();
       // Then the mega-menu organism should have expanded attributes.
       menuDesktop.firstTab().should('have.attr', 'aria-expanded', 'true');
-      menuDesktop
-        .firstPanelContainer()
-        .should('have.attr', 'aria-expanded', 'true');
       // Then the mega-menu organism should have correct CSS classes.
       menuDesktop.firstPanel().should('have.class', 'u-move-transition');
       menuDesktop.firstPanel().should('have.class', 'u-move-to-origin');
@@ -104,7 +101,9 @@ describe('Mega-Menu organism for site navigation', () => {
       // When the first child menu is clicked.
       menuMobile.firstLevelTrigger().click();
       // Then only the second panel should be visible.
+      menuMobile.firstPanel().should('not.have.class', 'u-is-animating');
       menuMobile.firstPanel().should('not.be.inViewport');
+      menuMobile.secondPanel().should('not.have.class', 'u-is-animating');
       menuMobile.secondPanel().should('be.visible');
       // When the second panel's back button is clicked.
       menuMobile.secondLevelFirstBackTrigger().should('be.focused');
