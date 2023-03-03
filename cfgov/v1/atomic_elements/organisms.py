@@ -18,9 +18,11 @@ from wagtailmedia.blocks import AbstractMediaChooserBlock
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
 
-# Bring AtomicTableBlock into this module to
-# maintain import structure across the project
-from v1.atomic_elements.tables import AtomicTableBlock
+# Bring tables into this module to maintain import structure across the project.
+from v1.atomic_elements.tables import (  # noqa: F401
+    AtomicTableBlock,
+    ContactUsTable,
+)
 from v1.util import ref
 
 

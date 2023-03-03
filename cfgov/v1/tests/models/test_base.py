@@ -373,9 +373,9 @@ class TestCFGOVPageMediaJSProperty(TestCase):
             True,
         )
 
-        # The page media should only include the default BrowsePage media, and
-        # shouldn't add any additional files because of the FullWithText.
-        self.assertEqual(page.media_js, ["secondary-navigation.js"])
+        # The page media shouldn't add any additional files because of the
+        # FullWidthText.
+        self.assertEqual(page.media_js, [])
 
 
 class TestCFGOVPageMediaCSSProperty(TestCase):

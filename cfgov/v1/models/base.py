@@ -274,9 +274,6 @@ class CFGOVPage(Page):
     def get_appropriate_descendants(self, inclusive=True):
         return CFGOVPage.objects.live().descendant_of(self, inclusive)
 
-    def get_appropriate_siblings(self, inclusive=True):
-        return CFGOVPage.objects.live().sibling_of(self, inclusive)
-
     def remove_html_tags(self, text):
         clean = re.compile("<.*?>")
         return re.sub(clean, " ", text)
