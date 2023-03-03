@@ -54,7 +54,6 @@ class Contact(models.Model):
     panels = [
         FieldPanel("heading"),
         FieldPanel("body"),
-        FieldPanel("body_shown_in_expandables"),
         FieldPanel("contact_info"),
     ]
 
