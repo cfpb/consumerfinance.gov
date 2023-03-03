@@ -62,7 +62,7 @@ function MegaMenu(element) {
     const isInDesktop = viewportIsIn(DESKTOP);
 
     // Create root menu.
-    const rootMenu = new FlyoutMenu(rootMenuDom).init();
+    const rootMenu = new FlyoutMenu(rootMenuDom, false).init();
 
     // Set initial transition for root menu on mobile. It's hidden on desktop.
     if (!isInDesktop) {
@@ -149,7 +149,7 @@ function MegaMenu(element) {
   function _addMenu(dom, parentNode) {
     let newParentNode = parentNode;
     if (contains(dom, FlyoutMenu.BASE_CLASS)) {
-      const menu = new FlyoutMenu(dom).init();
+      const menu = new FlyoutMenu(dom, false).init();
       _addEvents(menu);
       newParentNode = newParentNode.tree.add(menu, newParentNode);
       menu.setData(newParentNode);
