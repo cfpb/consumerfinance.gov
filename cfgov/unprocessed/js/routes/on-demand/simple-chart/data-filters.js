@@ -25,11 +25,17 @@ function getDataBuckets(filter, data, isDate) {
 
   const options = Object.keys(vals);
   if (isDate) return options.map((v) => Number(new Date(v)));
+  console.log('OPTIONS:');
+  console.log(options);
   return options;
 }
 
-function cctFormatFilter (data, rawOrTransformed) {
-    
+function filterMultipleColumns (filter, rawOrTransformed) {
+  if (filter.key.length > 1) {
+    filter.forEach((f) => {
+      
+    });
+  }
 }
 
 /**
@@ -227,18 +233,30 @@ function initFilters(dataAttributes, chartNode, chart, data) {
 
     filters.forEach((filter) => {
       const buckets = getDataBuckets(filter, rawOrTransformed);
-      if (filter.filterOnColumn) {
-        cctFormatFilter(filter, rawOrTransformed)
-      }
+      // const filterOnColumn = filter.filterOnColumn ? filter.filterOnColumn : filter;
+
+      // if (filter.filterOnColumn) {
+      //   filterMultipleColumns(filter, rawOrTransformed)
+      // }
+
       if (buckets.length < 6) {
         selectors.push(makeRadioFilterDOM(buckets, chartNode, filter));
       } else {
         selectors.push(makeSelectFilterDOM(buckets, chartNode, filter));
       }
+      console.log('FILTERS:');
+      console.log(filters);
+
+      console.log('FILTER:');
+      console.log(filter);
+
+      console.log("Filter length");
+      console.log(filter.key.length);
     });
 
     if (selectors.length) {
       attachFilters(selectors, chart, dataAttributes, rawOrTransformed);
+      console.log(rawOrTransformed);
     }
   } catch (err) {
     /* eslint-disable-next-line */
