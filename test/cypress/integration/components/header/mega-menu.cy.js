@@ -14,7 +14,7 @@ describe('Mega-Menu organism for site navigation', () => {
       menuDesktop.firstTab().should('have.attr', 'aria-expanded', 'false');
       menuDesktop
         .firstPanelContainer()
-        .should('have.attr', 'aria-expanded', 'false');
+        .should('have.attr', 'data-open', 'false');
       // Then the mega-menu organism should have correct CSS classes.
       menuDesktop.firstPanel().should('have.class', 'u-move-transition');
       menuDesktop.firstPanel().should('have.class', 'u-move-up');
@@ -75,7 +75,7 @@ describe('Mega-Menu organism for site navigation', () => {
     it('on page load', () => {
       // Then the mega-menu organism should not have expanded attributes.
       menuMobile.rootTrigger().should('have.attr', 'aria-expanded', 'false');
-      menuMobile.firstPanel().should('have.attr', 'aria-expanded', 'false');
+      menuMobile.firstPanel().should('have.attr', 'data-open', 'false');
       menuMobile.firstLevelTrigger().should('have.attr', 'tabindex', '-1');
       menuMobile.firstLevelTrigger().should('have.attr', 'aria-hidden', 'true');
       // Then the mega-menu organism should have correct CSS classes.
