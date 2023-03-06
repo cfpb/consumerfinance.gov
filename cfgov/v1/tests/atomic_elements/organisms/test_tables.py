@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 
 from wagtail.core.models import Site
 from wagtail.tests.testapp.models import SimplePage
@@ -6,7 +6,7 @@ from wagtail.tests.testapp.models import SimplePage
 from v1.atomic_elements.organisms import (  # import from organisms for import check
     AtomicTableBlock,
 )
-from v1.atomic_elements.tables import RichTextTableInput
+from v1.atomic_elements.tables import ContactUsTable, RichTextTableInput
 
 
 class TestRichTextTableInput(TestCase):
@@ -45,7 +45,41 @@ class TestAtomicTableBlock(TestCase):
         result = block.render(value)
         self.assertIn("H\xebader", result)
 
+    def test_allows_unsafe_content(self):
+        block = AtomicTableBlock()
+        value = block.to_python(
+            {
+                "data": [
+                    ["<script>alert('header')</script>"],
+                    ["<script>alert('row')</script>"],
+                ]
+            }
+        )
+        html = block.render(value)
+
+        self.assertIn("<script>", html)
+        self.assertNotIn("&lt;script&gt;", html)
+
     def test_get_field(self):
         block = AtomicTableBlock()
         field = block.field
         self.assertEqual(field.widget.__class__, RichTextTableInput)
+
+
+class ContactUsTableTests(SimpleTestCase):
+    def test_disallows_unsafe_content(self):
+        block = ContactUsTable()
+        value = block.to_python(
+            {
+                "rows": [
+                    {
+                        "title": "<script>alert('title')</script>",
+                        "body": "<script>alert('body')</script>",
+                    }
+                ],
+            }
+        )
+        html = block.render(value)
+
+        self.assertNotIn("<script>", html)
+        self.assertIn("&lt;script&gt;", html)
