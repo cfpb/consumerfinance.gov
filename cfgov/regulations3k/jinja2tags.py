@@ -1,6 +1,6 @@
 import datetime
 
-from wagtail.contrib.routable_page.templatetags.wagtailroutablepage_tags import (  # noqa: B950
+from wagtail.contrib.routable_page.templatetags.wagtailroutablepage_tags import (  # noqa: E501
     routablepageurl,
 )
 

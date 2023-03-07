@@ -108,7 +108,7 @@ class ActivityIndexPage(CFGOVPage):
     def get_template(self, request):
         template = "teachers_digital_platform/activity_index_page.html"
         if "partial" in request.GET:
-            template = "teachers_digital_platform/activity_search_facets_and_results.html"  # noqa: B950
+            template = "teachers_digital_platform/activity_search_facets_and_results.html"  # noqa: E501
         return template
 
     def dsl_search(self, request, *args, **kwargs):

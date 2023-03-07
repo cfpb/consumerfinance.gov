@@ -40,20 +40,20 @@ ss_table_urls = {
     # not needed if we use SS calculator
     "bend_points": "https://www.ssa.gov/OACT/COLA/bendpoints.html",
     # useful as viz
-    "early_retirement_example": "https://www.ssa.gov/OACT/quickcalc/earlyretire.html",  # noqa: B950
+    "early_retirement_example": "https://www.ssa.gov/OACT/quickcalc/earlyretire.html",  # noqa: E501
     # info only
-    "explainer of AMI calculations": "https://www.ssa.gov/OACT/COLA/piaformula.html",  # noqa: B950
+    "explainer of AMI calculations": "https://www.ssa.gov/OACT/COLA/piaformula.html",  # noqa: E501
     # explanation of terms; info only
-    "benefit_terms": "https://www.ssa.gov/OACT/COLA/Benefits.html#aime",  # noqa: B950
+    "benefit_terms": "https://www.ssa.gov/OACT/COLA/Benefits.html#aime",  # noqa: E501
     # out of scope: rules for achieving 40 work credits (10 years of work);
     # not envisioned for app
-    "credit_rules": "https://www.ssa.gov/planners/retire/credits2.html",  # noqa: B950
+    "credit_rules": "https://www.ssa.gov/planners/retire/credits2.html",  # noqa: E501
     # out of scope: basic work-credit unit to determine whether a worker is
     # covered by SS; you can earn 4 credits a year
     "quarter_of_coverage": "https://www.ssa.gov/OACT/COLA/QC.html",
     # out of scope:
     # historical and projected male/female death probability tables
-    "death_probabilities": "https://www.ssa.gov/oact/STATS/table4c6.html",  # noqa: B950
+    "death_probabilities": "https://www.ssa.gov/oact/STATS/table4c6.html",  # noqa: E501
     # out of scope: compendium of bend points,
     # COlA and other adjustment values used in SS calculations
     "automatic_values": "https://www.ssa.gov/OACT/COLA/autoAdj.html",

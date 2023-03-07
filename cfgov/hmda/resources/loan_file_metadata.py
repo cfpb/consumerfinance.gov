@@ -1,4 +1,4 @@
-# flake8: noqa: B950
+# ruff: noqa: E501
 from hmda.models.hmda_data_file import HmdaDataFile
 
 

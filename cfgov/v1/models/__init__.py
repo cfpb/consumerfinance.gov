@@ -1,4 +1,4 @@
-# flake8: noqa F401
+# ruff: noqa: F401
 from django.conf import settings
 
 from v1.models.base import (
@@ -46,4 +46,4 @@ from v1.models.sublanding_filterable_page import (
     SublandingFilterablePage,
 )
 from v1.models.sublanding_page import SublandingPage
-from v1.util.ref import *
+from v1.util.ref import *  # noqa: F403

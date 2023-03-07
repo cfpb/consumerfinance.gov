@@ -83,7 +83,7 @@ class RecordsAccessFormTests(TestCase):
         form.is_valid()  # so form.cleaned_data will be populated
         body = form.email_body()
         self.assertIn(
-            "h1>Request for individual access to records protected under the Privacy Act</h1>",  # noqa: B950
+            "h1>Request for individual access to records protected under the Privacy Act</h1>",  # noqa: E501
             body,
         )
         self.assertIn("person@example.com", body)
@@ -146,7 +146,7 @@ class DisclosureConsentFormTests(TestCase):
         form.is_valid()  # so form.cleaned_data will be populated
         self.assertEqual(
             form.format_subject(),
-            "Disclosure request from consumerfinance.gov: Rufus Xavier Sarsapa...",  # noqa: B950
+            "Disclosure request from consumerfinance.gov: Rufus Xavier Sarsapa...",  # noqa: E501
         )
 
     def test_email_body(self):
@@ -155,7 +155,7 @@ class DisclosureConsentFormTests(TestCase):
         form.is_valid()  # so form.cleaned_data will be populated
         body = form.email_body()
         self.assertIn(
-            "<h1>Consent for disclosure of records protected under the Privacy Act</h1>",  # noqa: B950
+            "<h1>Consent for disclosure of records protected under the Privacy Act</h1>",  # noqa: E501
             body,
         )
         self.assertIn("person@example.com", body)
