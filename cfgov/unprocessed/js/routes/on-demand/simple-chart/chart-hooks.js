@@ -189,31 +189,64 @@ const hooks = {
     return data.sort((a, b) => new Date(a.date) - new Date(b.date));
   },
 
-  /* Convert new CCT data format to a structure compatible
+  /* Convert new CCT income data format to a structure compatible
      with simple chart filters */
   cct_income_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
+        high_income: datum.nsa_mtg_crti_incHigh,
+        middle_income: datum.nsa_mtg_crti_incMiddle,
+        moderate_income: datum.nsa_mtg_crti_incModerate,
+        low_income: datum.nsa_mtg_crti_incLow,
         date: datum.date,
-        high: datum.nsa_mtg_crti_incHigh,
-        middle: datum.nsa_mtg_crti_incMiddle,
-        moderate: datum.nsa_mtg_crti_incModerate,
-        low: datum.nsa_mtg_crti_incLow,
-        adjustment: 'Not seasonally adjusted',
+        adjustment: 'Unadjusted',
       });
       newData.push({
+        high_income: datum.sa_mtg_crti_incHigh,
+        middle_income: datum.sa_mtg_crti_incMiddle,
+        moderate_income: datum.sa_mtg_crti_incModerate,
+        low_income: datum.sa_mtg_crti_incLow,
         date: datum.date,
-        high: datum.sa_mtg_crti_incHigh,
-        middle: datum.sa_mtg_crti_incMiddle,
-        moderate: datum.sa_mtg_crti_incModerate,
-        low: datum.sa_mtg_crti_incLow,
-        adjustment: 'Seasonally adjusted',
+        adjustment: 'Seasonally Adjusted',
       });
       return newData;
     }, []);
 
     return data.sort((a, b) => new Date(a.date) - new Date(b.date));
   },
+
+  /* Convert new CCT year-over-year data format to a structure compatible
+     with simple chart filters */
+     cct_yoy_filterable(data) {
+      data = data.reduce((newData, datum) => {
+        newData.push({
+          high_yoy: datum.yoy_mtg_inqi_incHigh,
+          middle_yoy: datum.yoy_mtg_inqi_incMiddle,
+          moderate_yoy: datum.yoy_mtg_inqi_incModerate,
+          low_yoy: datum.yoy_mtg_inqi_incLow,
+          date: datum.date,
+          adjustment: 'Credit Inquiries',
+        });
+        newData.push({
+          high_yoy: datum.yoy_mtg_crti_incHigh,
+          middle_yoy: datum.yoy_mtg_crti_incMiddle,
+          moderate_yoy: datum.yoy_mtg_crti_incModerate,
+          low_yoy: datum.yoy_mtg_crti_incLow,
+          date: datum.date,
+          adjustment: 'Credit Tightness',
+        });
+
+        for (const [k, v] of Object.entries(datum)) {
+            if (k.startsWith('yoy_')) {
+              datum[k] = Math.round(v * 10000) / 100;
+            }
+            // add new datum value to newData
+        }
+        return newData;
+      }, []);
+  
+      return data.sort((a, b) => new Date(a.date) - new Date(b.date));
+    },
 };
 
 export default hooks;
