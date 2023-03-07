@@ -31,7 +31,7 @@ describe('MegaMenuMobile', () => {
       let isExpanded;
 
       /**
-       *
+       * Resolve first click.
        */
       function resolveFirstClick() {
         simulateEvent('click', subTrigger);
@@ -45,14 +45,14 @@ describe('MegaMenuMobile', () => {
         event.propertyName = 'transform';
         firstPanel.dispatchEvent(event);
 
-        isExpanded = firstPanel.getAttribute('aria-expanded');
+        isExpanded = firstPanel.getAttribute('data-open');
         expect(isExpanded).toEqual('true');
 
         window.setTimeout(resolveSecondClick, 1000);
       }
 
       /**
-       *
+       * Resolve second click.
        */
       function resolveSecondClick() {
         /* The transitionend event should fire on its own,
@@ -64,7 +64,7 @@ describe('MegaMenuMobile', () => {
         event.propertyName = 'transform';
         secondPanel.dispatchEvent(event);
 
-        isExpanded = secondPanel.getAttribute('aria-expanded');
+        isExpanded = secondPanel.getAttribute('data-open');
         expect(isExpanded).toEqual('true');
         done();
       }
@@ -76,7 +76,7 @@ describe('MegaMenuMobile', () => {
 
     it('should not be expanded by default', () => {
       const secondPanel = navElem.querySelector('.o-mega-menu_content-2');
-      const isExpanded = secondPanel.getAttribute('aria-expanded');
+      const isExpanded = secondPanel.getAttribute('data-open');
 
       expect(isExpanded).toEqual('false');
     });
@@ -87,10 +87,10 @@ describe('MegaMenuMobile', () => {
       let isExpanded;
 
       /**
-       *
+       * Resolve first click.
        */
       function resolveFirstClick() {
-        isExpanded = secondPanel.getAttribute('aria-expanded');
+        isExpanded = secondPanel.getAttribute('data-open');
 
         expect(isExpanded).toEqual('false');
         done();
@@ -113,7 +113,7 @@ describe('MegaMenuMobile', () => {
       let isExpanded;
 
       /**
-       *
+       * Resolve first click.
        */
       function resolveFirstClick() {
         simulateEvent('click', subTrigger);
@@ -122,7 +122,7 @@ describe('MegaMenuMobile', () => {
       }
 
       /**
-       *
+       * Resolve second click.
        */
       function resolveSecondClick() {
         simulateEvent('click', subAltTrigger);
@@ -131,10 +131,10 @@ describe('MegaMenuMobile', () => {
       }
 
       /**
-       *
+       * Resolve third click.
        */
       function resolveThirdClick() {
-        isExpanded = secondPanel.getAttribute('aria-expanded');
+        isExpanded = secondPanel.getAttribute('data-open');
 
         expect(isExpanded).toEqual('false');
         done();

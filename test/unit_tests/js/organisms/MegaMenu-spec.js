@@ -37,10 +37,10 @@ describe('MegaMenu', () => {
       let isExpanded;
 
       /**
-       *
+       * Resolve a click of a menu trigger.
        */
       function resolveClick() {
-        isExpanded = firstContent.getAttribute('aria-expanded');
+        isExpanded = firstContent.getAttribute('data-open');
         expect(isExpanded).toEqual('true');
         done();
       }
@@ -66,7 +66,7 @@ describe('MegaMenu', () => {
       let isExpanded;
 
       /**
-       *
+       * Resolve a click on a menu trigger.
        */
       function resolveClick() {
         megaMenu.collapse();
