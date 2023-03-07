@@ -562,7 +562,7 @@ body {
       }
 
       &.u-is-animating,
-      &[aria-expanded="true"] {
+      &[data-open="true"] {
         display: block;
       }
 
@@ -762,7 +762,7 @@ body {
 
     // 1st-level menu - Desktop.
     &_content-1 {
-      &[aria-expanded="true"] {
+      &[data-open="true"] {
         .o-mega-menu_content-1-wrapper {
           display: block;
           transform: translateY( 0 );
@@ -848,7 +848,7 @@ body {
         }
 
         // A main nav label has been selected and the menu is expanded.
-        &[aria-expanded="true"],
+        &[data-open="true"],
         &:active {
           position: relative;
           top: 1px;
@@ -860,7 +860,7 @@ body {
         }
 
         // Do not show hover when menu is expanded.
-        &[aria-expanded="true"]:hover,
+        &[data-open="true"]:hover,
         &:active:hover {
           border-bottom: none;
           padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -870,15 +870,15 @@ body {
           outline-offset: 2px;
         }
 
-        &[aria-expanded="true"]:focus {
+        &[data-open="true"]:focus {
           outline: none;
           box-shadow: 0 -4px 5px 0 @pacific-40,
           -5px -2px 5px 0 @pacific-40,
           5px -2px 5px 0 @pacific-40;
         }
 
-        &[aria-expanded="true"]:hover,
-        &[aria-expanded="true"]:focus {
+        &[data-open="true"]:hover,
+        &[data-open="true"]:focus {
           &:after {
             position: absolute;
             bottom: -5px;
@@ -904,11 +904,11 @@ body {
           display: inline-block;
         }
 
-        &[aria-expanded="true"] &-icon-open .cf-icon-svg {
+        &[data-open="true"] &-icon-open .cf-icon-svg {
           display: inline-block;
         }
 
-        &[aria-expanded="true"] &-icon-closed .cf-icon-svg {
+        &[data-open="true"] &-icon-closed .cf-icon-svg {
           display: none;
         }
 
@@ -925,7 +925,7 @@ body {
           }
         }
 
-        &__current[aria-expanded="true"]:after,
+        &__current[data-open="true"]:after,
         &__current:active:after {
           background-color: transparent;
         }
@@ -948,7 +948,7 @@ body {
         display: none;
       }
 
-      &[aria-expanded="true"] {
+      &[data-open="true"] {
         overflow: visible;
 
         .o-mega-menu_content-2-wrapper {

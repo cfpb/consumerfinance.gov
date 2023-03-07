@@ -14,7 +14,7 @@ describe('Mega-Menu organism for site navigation', () => {
       menuDesktop.firstTab().should('have.attr', 'aria-expanded', 'false');
       menuDesktop
         .firstPanelContainer()
-        .should('have.attr', 'aria-expanded', 'false');
+        .should('have.attr', 'data-open', 'false');
       // Then the mega-menu organism should have correct CSS classes.
       menuDesktop.firstPanel().should('have.class', 'u-move-transition');
       menuDesktop.firstPanel().should('have.class', 'u-move-up');
@@ -28,9 +28,6 @@ describe('Mega-Menu organism for site navigation', () => {
       menuDesktop.firstTab().click();
       // Then the mega-menu organism should have expanded attributes.
       menuDesktop.firstTab().should('have.attr', 'aria-expanded', 'true');
-      menuDesktop
-        .firstPanelContainer()
-        .should('have.attr', 'aria-expanded', 'true');
       // Then the mega-menu organism should have correct CSS classes.
       menuDesktop.firstPanel().should('have.class', 'u-move-transition');
       menuDesktop.firstPanel().should('have.class', 'u-move-to-origin');
@@ -78,7 +75,7 @@ describe('Mega-Menu organism for site navigation', () => {
     it('on page load', () => {
       // Then the mega-menu organism should not have expanded attributes.
       menuMobile.rootTrigger().should('have.attr', 'aria-expanded', 'false');
-      menuMobile.firstPanel().should('have.attr', 'aria-expanded', 'false');
+      menuMobile.firstPanel().should('have.attr', 'data-open', 'false');
       menuMobile.firstLevelTrigger().should('have.attr', 'tabindex', '-1');
       menuMobile.firstLevelTrigger().should('have.attr', 'aria-hidden', 'true');
       // Then the mega-menu organism should have correct CSS classes.
@@ -98,13 +95,18 @@ describe('Mega-Menu organism for site navigation', () => {
       menuMobile.firstLevelTrigger().should('not.have.attr', 'tabindex');
       menuMobile.firstLevelTrigger().should('not.have.attr', 'aria-hidden');
       // Then expected content is visible.
-      menuMobile.firstPanel().contains('Submit a Complaint');
-      menuMobile.firstPanel().contains('Español');
-      menuMobile.firstPanel().contains('(855) 411-2372');
+      menuMobile.firstPanel().should('contain.text', 'Submit a Complaint');
+      menuMobile.firstPanel().should('contain.text', 'Español');
+      menuMobile.firstPanel().should('contain.text', '(855) 411-2372');
       // When the first child menu is clicked.
       menuMobile.firstLevelTrigger().click();
+      // Then the first panel's trigger should be hidden from screenreaders.
+      menuMobile.firstLevelTrigger().should('have.attr', 'tabindex', '-1');
+      menuMobile.firstLevelTrigger().should('have.attr', 'aria-hidden', 'true');
       // Then only the second panel should be visible.
+      menuMobile.firstPanel().should('not.have.class', 'u-is-animating');
       menuMobile.firstPanel().should('not.be.inViewport');
+      menuMobile.secondPanel().should('not.have.class', 'u-is-animating');
       menuMobile.secondPanel().should('be.visible');
       // When the second panel's back button is clicked.
       menuMobile.secondLevelFirstBackTrigger().should('be.focused');
