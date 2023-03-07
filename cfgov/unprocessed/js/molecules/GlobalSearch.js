@@ -30,7 +30,7 @@ function GlobalSearch(element) {
   const _triggerOpenLabelText = _triggerDom
     .querySelector(`.${BASE_CLASS}_trigger-open-label`)
     .innerText.trim();
-  const _flyout = new FlyoutMenu(_dom);
+  const _flyout = new FlyoutMenu(_dom, false);
   let _searchInputDom;
   let _searchBtnDom;
   let _clearBtnDom;

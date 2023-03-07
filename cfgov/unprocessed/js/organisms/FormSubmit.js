@@ -10,6 +10,16 @@ import Notification from '../molecules/Notification.js';
 import { scrollIntoView } from '../modules/util/scroll.js';
 
 const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
+const DONE_CODE = 4;
+const SUCCESS_CODES = {
+  200: 'ok',
+  201: 'created',
+  202: 'accepted',
+  203: 'non-authoritative info',
+  204: 'no content',
+  205: 'reset content',
+  206: 'partial content',
+};
 
 /**
  * FormSubmit
@@ -19,9 +29,10 @@ const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
  * @param {HTMLElement} element - The DOM element within which to search
  *   for the organism.
  * @param {string} baseClass - class of organism
- * @param {object} opts - optional params, including
- *   validator: validation function, and
- *   replaceForm: Boolean, determines if form is replaced with message
+ * @param {object} opts - optional params:
+ *   language: A language string for the form message language.
+ *   replaceForm: Boolean, determines if form is replaced with message.
+ *   validator: validation function.
  * @returns {FormSubmit} An instance.
  */
 function FormSubmit(element, baseClass, opts) {
@@ -100,16 +111,6 @@ function FormSubmit(element, baseClass, opts) {
    * Sends form data and displays notification on success / failure.
    */
   function _submitForm() {
-    const DONE_CODE = 4;
-    const SUCCESS_CODES = {
-      200: 'ok',
-      201: 'created',
-      202: 'accepted',
-      203: 'non-authoritative info',
-      204: 'no content',
-      205: 'reset content',
-      206: 'partial content',
-    };
     let message = '';
     let heading = '';
     let state = 'ERROR';
