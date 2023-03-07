@@ -219,6 +219,11 @@ const hooks = {
      with simple chart filters */
      cct_yoy_filterable(data) {
       data = data.reduce((newData, datum) => {
+        for (const [k, v] of Object.entries(datum)) {
+          if (k.startsWith('yoy_')) {
+            datum[k] = Math.round(v * 10000) / 100;
+          }
+        }
         newData.push({
           high_yoy: datum.yoy_mtg_inqi_incHigh,
           middle_yoy: datum.yoy_mtg_inqi_incMiddle,
@@ -235,13 +240,6 @@ const hooks = {
           date: datum.date,
           adjustment: 'Credit Tightness',
         });
-
-        for (const [k, v] of Object.entries(datum)) {
-            if (k.startsWith('yoy_')) {
-              datum[k] = Math.round(v * 10000) / 100;
-            }
-            // add new datum value to newData
-        }
         return newData;
       }, []);
   
