@@ -245,21 +245,21 @@ const hooks = {
   cct_cc_crti_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
-      high_income: datum.nsa_cc_crti_incHigh,
-      middle_income: datum.nsa_cc_crti_incMiddle,
-      moderate_income: datum.nsa_cc_crti_incModerate,
-      low_income: datum.nsa_cc_crti_incLow,
-      date: datum.date,
-      adjustment: 'Unadjusted',
-    });
+        high_income: datum.nsa_cc_crti_incHigh,
+        middle_income: datum.nsa_cc_crti_incMiddle,
+        moderate_income: datum.nsa_cc_crti_incModerate,
+        low_income: datum.nsa_cc_crti_incLow,
+        date: datum.date,
+        adjustment: 'Unadjusted',
+      });
       newData.push({
-      high_income: datum.sa_cc_crti_incHigh,
-      middle_income: datum.sa_cc_crti_incMiddle,
-      moderate_income: datum.sa_cc_crti_incModerate,
-      low_income: datum.sa_cc_crti_incLow,
-      date: datum.date,
-      adjustment: 'Seasonally Adjusted',
-    });
+        high_income: datum.sa_cc_crti_incHigh,
+        middle_income: datum.sa_cc_crti_incMiddle,
+        moderate_income: datum.sa_cc_crti_incModerate,
+        low_income: datum.sa_cc_crti_incLow,
+        date: datum.date,
+        adjustment: 'Seasonally Adjusted',
+      });
     return newData;
   }, []);
   
