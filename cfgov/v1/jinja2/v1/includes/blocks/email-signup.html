@@ -44,7 +44,7 @@
 
 {# TODO: DRY this up so we don't repeat the m-btn-group and privacy link #}
 {% if value.url is not none %}
-    <div class="m-btn-group">
+    <div class="o-email-signup_buttons">
         <a class="a-btn"
            href="{{ value.url }}"
            target="_blank"
@@ -73,7 +73,7 @@
                    required>
         </div>
 
-        <div class="m-btn-group">
+        <div class="o-email-signup_buttons">
             <button class="a-btn">{{ _('Sign up') }}</button>
             <a class="a-btn a-btn__link a-btn__secondary"
                href="{{ pageurl(value.disclaimer_page) if value.disclaimer_page else disclaimer_url }}"
