@@ -72,7 +72,7 @@ const ensureDirectoryExistence = (filePath) => {
 };
 
 /**
- *
+ * Run a service worker to copy a manifest file.
  */
 function runWorkerAndManifest() {
   fancyLog('Started generating service worker file...');

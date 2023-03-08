@@ -47,6 +47,7 @@ function formatTimestampMMddyyyy(timestamp) {
 /**
  * See keys on
  * https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values
+ *
  * @param {string} key - A key string.
  * @returns {boolean} True if key is forbidden, false otherwise.
  */
