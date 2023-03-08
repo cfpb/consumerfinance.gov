@@ -346,8 +346,6 @@ const hooks = {
   },
 
   /* END of functions converting new CCT data sets for Credit Inquiries (MTG/AUTO/CC) */
-
-
 };
 
 export default hooks;
