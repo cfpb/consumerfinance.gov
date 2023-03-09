@@ -4,12 +4,8 @@ from collections import OrderedDict
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core.fields import StreamField
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.fields import StreamField
 
 from opensearch_dsl import Q
 
@@ -92,8 +88,8 @@ class ActivityIndexPage(CFGOVPage):
     results = {}
     activity_setups = None
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("header_sidebar"),
+        FieldPanel("header"),
+        FieldPanel("header_sidebar"),
     ]
 
     edit_handler = TabbedInterface(

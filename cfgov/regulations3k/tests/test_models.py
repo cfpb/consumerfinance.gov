@@ -10,7 +10,7 @@ from django.test import RequestFactory
 from django.test import TestCase as DjangoTestCase
 from django.test import override_settings
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from model_bakery import baker
 

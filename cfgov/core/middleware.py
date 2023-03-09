@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.utils import translation
 from django.utils.encoding import force_str
 
-from wagtail.core.rich_text import expand_db_html
+from wagtail.rich_text import expand_db_html
 
 from core.utils import add_link_markup, get_body_html, get_link_tags
 

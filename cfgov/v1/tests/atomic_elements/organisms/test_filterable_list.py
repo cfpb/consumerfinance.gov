@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.test import TestCase
 
-from wagtail.core.blocks import StreamValue
+from wagtail.blocks import StreamValue
 
 from pytz import timezone
 

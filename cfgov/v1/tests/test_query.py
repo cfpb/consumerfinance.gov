@@ -3,8 +3,8 @@ import json
 from django.core.exceptions import FieldDoesNotExist
 from django.test import TestCase
 
-from wagtail.core.models import Page, Site
-from wagtail.tests.testapp.models import DefaultStreamPage
+from wagtail.models import Page, Site
+from wagtail.test.testapp.models import DefaultStreamPage
 
 from v1.query import StreamBlockPageQuerySet
 
