@@ -12,7 +12,6 @@
 #   "/path/to/other/page/","owner1,owner2"
 import argparse
 import csv
-import json
 from itertools import chain
 from operator import itemgetter
 
@@ -20,7 +19,7 @@ from django.core.management import BaseCommand
 from django.http.response import Http404
 from django.test import RequestFactory
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from v1.models.base import CFGOVContentOwner
 
@@ -85,9 +84,8 @@ class Command(BaseCommand):
                     f"\t{j} / {revision_count}: "
                     f"Setting owners for revision {revision.pk}"
                 )
-                revision_content = json.loads(revision.content_json)
 
-                revision_owners = [
+                revision.content["cfgovownedpages_set"] = [
                     {
                         "pk": None,
                         "tag": owner_pks_by_name[owner],
@@ -96,10 +94,7 @@ class Command(BaseCommand):
                     for owner in owners
                 ]
 
-                revision_content["cfgovownedpages_set"] = revision_owners
-                revision.content_json = json.dumps(revision_content)
-
-                revision.save(update_fields=["content_json"])
+                revision.save(update_fields=["content"])
 
     def get_page(self, path):
         request = self.factory.get(path)

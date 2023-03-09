@@ -1,5 +1,3 @@
-import { assign } from './assign.js';
-
 const _requestAnimationFrame =
   window.requestAnimationFrame ||
   window.webkitRequestAnimationFrame ||
@@ -98,7 +96,7 @@ function scrollTo(to, opts) {
  */
 function scrollIntoView(elem, opts) {
   const defaults = { offset: 15 };
-  opts = assign(defaults, opts);
+  opts = Object.assign(defaults, opts);
   if (!elementInView(elem, true)) {
     const elementTop = elem.getBoundingClientRect().top;
     const to = Math.max(window.pageYOffset + elementTop - opts.offset, 0);

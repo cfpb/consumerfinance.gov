@@ -10,7 +10,7 @@ from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from model_bakery import baker
 

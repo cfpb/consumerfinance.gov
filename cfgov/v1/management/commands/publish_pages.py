@@ -23,7 +23,7 @@ from django.http import Http404
 from django.test import RequestFactory
 
 from wagtail.contrib.redirects.models import Redirect
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 
 class Command(BaseCommand):

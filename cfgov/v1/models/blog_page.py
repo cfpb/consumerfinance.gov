@@ -1,6 +1,6 @@
-from wagtail.admin.edit_handlers import StreamFieldPanel
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
+from wagtail import blocks
+from wagtail.admin.panels import FieldPanel
+from wagtail.fields import StreamField
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import organisms, schema
@@ -24,7 +24,7 @@ class BlogPage(AbstractFilterPage):
     content = StreamField(BlogContent)
 
     edit_handler = AbstractFilterPage.generate_edit_handler(
-        content_panel=StreamFieldPanel("content")
+        content_panel=FieldPanel("content")
     )
     template = "v1/blog/blog_page.html"
 
@@ -49,6 +49,6 @@ class LegacyBlogPage(AbstractFilterPage):
     content = StreamField(LegacyBlogContent)
 
     edit_handler = AbstractFilterPage.generate_edit_handler(
-        content_panel=StreamFieldPanel("content")
+        content_panel=FieldPanel("content")
     )
     template = "v1/blog/blog_page.html"

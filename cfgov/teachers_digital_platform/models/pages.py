@@ -3,16 +3,15 @@ from django import forms
 from django.db import models
 from django.utils import timezone
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
     TabbedInterface,
 )
-from wagtail.core.fields import RichTextField
-from wagtail.core.models import Orderable
-from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.fields import RichTextField
+from wagtail.models import Orderable
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 
@@ -35,7 +34,7 @@ class ActivityPageActivityDocuments(Orderable):
         verbose_name="Teacher guide",
     )
 
-    panels = [DocumentChooserPanel("documents")]
+    panels = [FieldPanel("documents")]
 
 
 class ActivityPageHandoutDocuments(Orderable):
@@ -52,7 +51,7 @@ class ActivityPageHandoutDocuments(Orderable):
         verbose_name="Student file",
     )
 
-    panels = [DocumentChooserPanel("documents")]
+    panels = [FieldPanel("documents")]
 
 
 class ActivityPage(CFGOVPage):
@@ -163,16 +162,16 @@ class ActivityPage(CFGOVPage):
         FieldPanel("what_students_will_do"),
         MultiFieldPanel(
             [
-                DocumentChooserPanel("activity_file"),
+                FieldPanel("activity_file"),
                 InlinePanel(
                     "activity_documents",
                     label="Additional activity files",
                     min_num=0,
                     max_num=5,
                 ),
-                DocumentChooserPanel("handout_file"),
-                DocumentChooserPanel("handout_file_2"),
-                DocumentChooserPanel("handout_file_3"),
+                FieldPanel("handout_file"),
+                FieldPanel("handout_file_2"),
+                FieldPanel("handout_file_3"),
                 InlinePanel(
                     "handout_documents",
                     label="Additional handout files",

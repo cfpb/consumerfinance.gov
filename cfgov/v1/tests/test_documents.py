@@ -6,7 +6,7 @@ from unittest.mock import patch
 from django.test import TestCase
 from django.utils import timezone
 
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 
 from dateutil.relativedelta import relativedelta
 

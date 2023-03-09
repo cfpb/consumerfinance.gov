@@ -1,10 +1,6 @@
-from wagtail.admin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core.blocks import StreamBlock
-from wagtail.core.fields import StreamField
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.blocks import StreamBlock
+from wagtail.fields import StreamField
 
 from form_explainer.blocks import Explainer
 from v1.atomic_elements import molecules, organisms
@@ -40,8 +36,8 @@ class FormExplainerPage(CFGOVPage):
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     # Tab handler interface

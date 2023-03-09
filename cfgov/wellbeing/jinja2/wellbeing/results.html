@@ -626,7 +626,7 @@
                     </span>
                 </dd>
 
-        {% for slug, means in group_means.items() %}
+        {% for slug, means in group_means | items %}
             {% for group_name, group_data in means %}
                 <dt class="comparison_data-point {{ slug }}_group">{{ _(group_name) }}</dt>
                 <dd class="comparison_data-point {{ slug }}_mean">

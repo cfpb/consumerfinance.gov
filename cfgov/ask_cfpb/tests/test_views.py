@@ -5,7 +5,7 @@ from django.http import Http404
 from django.test import RequestFactory, TestCase
 from django.utils import timezone
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 from wagtailsharing.models import SharingSite
 
 from model_bakery import baker

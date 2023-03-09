@@ -3,7 +3,7 @@ import csv
 from django.core.management.base import BaseCommand
 from django.urls import reverse
 
-from wagtail.core.models import Page
+from wagtail.models import Page
 from wagtail.search.backends import get_search_backend
 
 from v1.models import IndexedPageRevision

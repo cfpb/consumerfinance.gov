@@ -1,14 +1,13 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
+from wagtail import blocks
+from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
+from wagtail.fields import StreamField
 
 from data_research.blocks import MortgageDataDownloads
 from jobmanager.blocks import JobListingTable
@@ -152,9 +151,9 @@ class BrowsePage(AbstractBrowsePage):
 
     # General content tab
     content_panels = AbstractBrowsePage.content_panels + [
-        StreamFieldPanel("header"),
+        FieldPanel("header"),
         FieldPanel("share_and_print"),
-        StreamFieldPanel("content"),
+        FieldPanel("content"),
     ]
 
     # Tab handler interface

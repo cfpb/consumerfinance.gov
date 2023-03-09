@@ -1,13 +1,8 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
-    FieldPanel,
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
+from wagtail import blocks
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
 
 from jobmanager.blocks import JobListingList
@@ -98,13 +93,13 @@ class SublandingPage(CFGOVPage):
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
         FieldPanel("portal_topic"),
     ]
 
     sidebar_panels = [
-        StreamFieldPanel("sidebar_breakout"),
+        FieldPanel("sidebar_breakout"),
     ] + CFGOVPage.sidefoot_panels
 
     # Tab handler interface
