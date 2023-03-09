@@ -421,10 +421,10 @@
     "@cfpb/cfpb-atomic-component" "^0.21.9"
     "@cfpb/cfpb-core" "^0.21.0"
 
-"@cfpb/cfpb-typography@0.21.11":
-  version "0.21.11"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.21.11.tgz#7fdacce1630022e17a3df096a3982cd21e888c16"
-  integrity sha512-L65RfVcNCo/0YTcz5v7AjHIEJFan+Yzb7vBNpKdiWabQMAyYw9kxu/SJsBhi1JvNxl9F5w2ZI7+7OHlzGkAJqw==
+"@cfpb/cfpb-typography@0.21.13":
+  version "0.21.13"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.21.13.tgz#2d7ac9986764f17528520e641ed0b5016ea9babf"
+  integrity sha512-1wdvBAwhb35fRiQ9zOtx8qg5UrzMXFORLu6Oe8gmPztYAMVo7QmteTCuLNSLTX5gCxzND/uyNmoPvDctclcgag==
   dependencies:
     "@cfpb/cfpb-core" "^0.21.0"
     "@cfpb/cfpb-icons" "^0.21.11"
