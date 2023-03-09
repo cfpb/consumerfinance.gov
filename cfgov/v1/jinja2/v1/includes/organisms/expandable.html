@@ -18,7 +18,8 @@
    value.is_bordered:     Whether the Expandable has a bottom border or not.
                           Default is false.
 
-   value.is_collapsed_for_mobile: Whether the Expandable is always initially
+   value.is_collapsed_for_mobile:
+                          Whether the Expandable is always initially
                           collapsed below 800px.
                           Default is false.
 
@@ -51,16 +52,14 @@
         </span>
         <span class="o-expandable_link">
             <span class="o-expandable_cue o-expandable_cue-open">
-                <span class="u-visually-hidden-on-mobile
-                            {{ 'u-visually-hidden' if value.hide_cue_label else '' }}">
+                <span class="{{ 'u-visually-hidden' if value.hide_cue_label else 'u-visually-hidden-on-mobile' }}">
                     {{ _('Show') }}
                     {{ expandable_cue_additional_text }}
                 </span>
                 {{ svg_icon('plus-round') }}
             </span>
             <span class="o-expandable_cue o-expandable_cue-close">
-                <span class="u-visually-hidden-on-mobile
-                             {{ 'u-visually-hidden' if value.hide_cue_label else '' }}">
+                <span class="{{ 'u-visually-hidden' if value.hide_cue_label else 'u-visually-hidden-on-mobile' }}">
                     {{ _('Hide') }}
                     {{ expandable_cue_additional_text }}
                 </span>
