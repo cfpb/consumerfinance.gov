@@ -2,9 +2,9 @@ from functools import cached_property
 
 from django import forms
 
-from wagtail.core import blocks
-from wagtail.core.blocks.struct_block import StructBlockAdapter
-from wagtail.core.telepath import register
+from wagtail import blocks
+from wagtail.blocks.struct_block import StructBlockAdapter
+from wagtail.telepath import register
 
 from v1.atomic_elements import organisms, schema
 

@@ -1,7 +1,7 @@
 from django.db.models.expressions import RawSQL
 
-from wagtail.core.fields import StreamField
-from wagtail.core.query import PageQuerySet
+from wagtail.fields import StreamField
+from wagtail.query import PageQuerySet
 
 
 class StreamBlockPageQuerySet(PageQuerySet):

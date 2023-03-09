@@ -42,7 +42,7 @@ BAKER_CUSTOM_CLASS = "core.testutils.baker.ActualContentTypeBaker"
 
 INSTALLED_APPS += (
     "wagtail.contrib.settings",
-    "wagtail.tests.testapp",
+    "wagtail.test.testapp",
 )
 
 WAGTAILADMIN_RICH_TEXT_EDITORS = {
@@ -67,7 +67,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
         },
     },
     "custom": {
-        "WIDGET": "wagtail.tests.testapp.rich_text.CustomRichTextArea",
+        "WIDGET": "wagtail.test.testapp.rich_text.CustomRichTextArea",
     },
 }
 

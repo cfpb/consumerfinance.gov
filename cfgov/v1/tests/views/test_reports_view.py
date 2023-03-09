@@ -7,9 +7,9 @@ from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from wagtail.core.models import Site
 from wagtail.documents.models import Document
-from wagtail.tests.utils import WagtailTestUtils
+from wagtail.models import Site
+from wagtail.test.utils import WagtailTestUtils
 
 from model_bakery import baker
 from taggit.models import Tag

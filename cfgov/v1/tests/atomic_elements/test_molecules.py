@@ -2,8 +2,8 @@ from io import StringIO
 
 from django.test import SimpleTestCase, TestCase
 
-from wagtail.core.blocks import StreamValue
-from wagtail.core.blocks.struct_block import StructBlockValidationError
+from wagtail.blocks import StreamValue
+from wagtail.blocks.struct_block import StructBlockValidationError
 
 from scripts import _atomic_helpers as atomic
 from search.elasticsearch_helpers import ElasticsearchTestsMixin

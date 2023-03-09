@@ -1,13 +1,13 @@
 from django import forms
 from django.utils.functional import cached_property
 
+from wagtail import blocks
 from wagtail.contrib.table_block.blocks import (
     TableBlock,
     TableInput,
     TableInputAdapter,
 )
-from wagtail.core import blocks
-from wagtail.core.telepath import register
+from wagtail.telepath import register
 
 
 class RichTextTableInput(TableInput):

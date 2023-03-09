@@ -6,7 +6,7 @@ from django.core.cache import cache, caches
 from django.dispatch import receiver
 from django.utils import timezone
 
-from wagtail.core.signals import page_published, page_unpublished
+from wagtail.signals import page_published, page_unpublished
 
 from teachers_digital_platform.models.activity_index_page import (
     ActivityPage,

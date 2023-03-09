@@ -1,6 +1,6 @@
 from django.utils import translation
 
-from jinja2 import contextfilter
+from jinja2 import pass_context
 from jinja2.ext import Extension, nodes
 
 from core.templatetags.richtext import richtext_isempty
@@ -20,7 +20,7 @@ class CoreExtension(Extension):
         self.environment.filters.update(
             {
                 "richtext_isempty": richtext_isempty,
-                "slugify_unique": contextfilter(slugify_unique),
+                "slugify_unique": pass_context(slugify_unique),
             }
         )
 

@@ -6,7 +6,7 @@ from django.http import Http404
 from django.test import TestCase
 
 from wagtail.contrib.redirects.models import Redirect
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from v1.models import BrowsePage
 
