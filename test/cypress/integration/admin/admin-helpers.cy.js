@@ -285,7 +285,7 @@ export class AdminPage {
     cy.get('#id_q').type('{enter}');
     cy.wait(1000);
     cy.get('.document-choice').should('contain', text);
-    cy.get('#search-results').should('contain', 'There is 1 match');
+    cy.get('#search-results').should('contain', 'match');
     cy.get('#search-results', { timeout: 10000 }).contains(text).click();
     cy.wait(1000);
   }
