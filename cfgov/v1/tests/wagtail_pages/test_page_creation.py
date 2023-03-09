@@ -2,7 +2,7 @@ from datetime import date
 
 from django.test import TestCase
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from v1.tests.wagtail_pages.helpers import (
     create_blog_page,

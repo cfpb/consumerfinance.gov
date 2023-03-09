@@ -1,6 +1,6 @@
 from django.test import RequestFactory, TestCase
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from v1.models.home_page import HomePage
 

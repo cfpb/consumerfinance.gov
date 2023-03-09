@@ -1,7 +1,7 @@
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
-from wagtail.core import blocks
+from wagtail import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from v1.util.util import get_unique_id

@@ -2,8 +2,8 @@ from django.core.validators import RegexValidator
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
-from wagtail.core import blocks
-from wagtail.core.blocks.struct_block import StructBlockValidationError
+from wagtail import blocks
+from wagtail.blocks.struct_block import StructBlockValidationError
 from wagtail.images.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms

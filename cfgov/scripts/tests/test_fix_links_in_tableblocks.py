@@ -2,8 +2,8 @@ import datetime
 
 from django.test import RequestFactory, TestCase
 
-from wagtail.core.blocks import StreamValue
-from wagtail.core.models import Site
+from wagtail.blocks import StreamValue
+from wagtail.models import Site
 
 import pytz
 

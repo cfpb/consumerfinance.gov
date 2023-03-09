@@ -85,11 +85,11 @@ export class AdminPage {
   }
 
   openNavigationTab(name) {
-    cy.get('.nav-main').contains(name).click();
+    cy.get('.sidebar-menu-item').contains(name).click();
   }
 
   selectSubMenu(name) {
-    cy.get('.menu-item').contains(name).click();
+    cy.get('.sidebar-menu-item--in-sub-menu').contains(name).click();
   }
 
   openRegulations() {
@@ -140,10 +140,9 @@ export class AdminPage {
   }
 
   clickBlock(name) {
-    return cy
-      .get(`.action-add-block-${name}`, { timeout: 60000 })
-      .should('be.visible')
-      .click();
+    const block = `.action-add-block-${name}`;
+    cy.get(block).scrollIntoView().should('be.visible');
+    return cy.get(block).click();
   }
 
   addFullWidthText() {
