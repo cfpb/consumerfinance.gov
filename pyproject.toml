@@ -62,4 +62,8 @@ exclude_dirs = [
 skips = [
     "B308",
     "B703",
+
+    # Calls to requests.get() that don't include a timeout.
+    # TODO: We need to address those with relevant error handling of a timeout.
+    "B113",
 ]
