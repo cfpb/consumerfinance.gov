@@ -5,7 +5,7 @@ import {
   setInitFlag,
   EventObserver,
 } from '@cfpb/cfpb-atomic-component';
-import Analytics from '../modules/Analytics.js';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import ERROR_MESSAGES from '../config/error-messages-config.js';
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 import FormModel from '../modules/util/FormModel.js';
@@ -96,25 +96,44 @@ function FilterableListControls(element) {
   }
 
   /**
+   * Get data layer object.
+   *
+   * @param {string} action - Name of event.
+   * @param {string} label - DOM element label.
+   * @param {string} event - Type of event.
+   * @param {Function} [callback=undefined] - Function to call on GTM submission.
+   * @param {number} [timeout=500] - Callback invocation fallback time.
+   * @returns {object} Data layer object.
+   */
+  function _getDataLayerOptions(action, label, event, callback, timeout) {
+    return {
+      event: event || 'Page Interaction',
+      action: action,
+      label: label || '',
+      eventCallback: callback,
+      eventTimeout: timeout || 500,
+    };
+  }
+
+  /**
    * Initialize FilterableListControls events.
    */
   function _initAnalyticsEvents() {
     const label = _expandable.getLabelText();
-    const getDataLayerOptions = Analytics.getDataLayerOptions;
     let dataLayerArray = [];
     const cachedFields = {};
 
     _expandable.transition.addEventListener(
       'expandbegin',
       function sendEvent() {
-        Analytics.sendEvent('Filter:open', label);
+        analyticsSendEvent({ action: 'Filter:open', label });
       }
     );
 
     _expandable.transition.addEventListener(
       'collapsebegin',
       function sendEvent() {
-        Analytics.sendEvent('Filter:close', label);
+        analyticsSendEvent({ action: 'Filter:close', label });
       }
     );
 
@@ -125,7 +144,7 @@ function FilterableListControls(element) {
         return;
       }
       const action = field.name + ':change';
-      cachedFields[field.name] = getDataLayerOptions(action, field.value);
+      cachedFields[field.name] = _getDataLayerOptions(action, field.value);
     });
 
     const formSubmittedBinded = _formSubmitted.bind(this);
@@ -135,9 +154,11 @@ function FilterableListControls(element) {
         dataLayerArray.push(cachedFields[key]);
       });
       dataLayerArray.push(
-        getDataLayerOptions('Filter:submit', label, '', formSubmittedBinded)
+        _getDataLayerOptions('Filter:submit', label, '', formSubmittedBinded)
       );
-      Analytics.sendEvents(dataLayerArray);
+      dataLayerArray.forEach((payload) => {
+        analyticsSendEvent(payload);
+      });
       dataLayerArray = [];
     });
   }
@@ -152,7 +173,7 @@ function FilterableListControls(element) {
 
     if (validatedFields.invalid.length > 0) {
       _highlightInvalidFields(validatedFields);
-      this.dispatchEvent('fieldInvalid', {
+      this.dispatchEvent('fieldinvalid', {
         message: _buildErrorMessage(validatedFields.invalid),
       });
     } else {

@@ -1,11 +1,10 @@
 // TODO: Remove jquery.
 import $ from 'jquery';
 
-import Analytics from '../utils/Analytics.js';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import postVerification from '../dispatchers/post-verify.js';
 import getFinancial from '../dispatchers/get-financial-values.js';
 import getSchool from '../dispatchers/get-school-values.js';
-const getDataLayerOptions = Analytics.getDataLayerOptions;
 
 const questionView = {
   $settlementBigQuestion: $('.step_settlement'),
@@ -103,9 +102,10 @@ const questionView = {
           }
         );
 
-      Analytics.sendEvent(
-        getDataLayerOptions('Step Completed', $(this).text().trim())
-      );
+      analyticsSendEvent({
+        action: 'Step Completed',
+        label: $(this).text().trim(),
+      });
     });
   },
 };
