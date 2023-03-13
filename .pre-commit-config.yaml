@@ -16,8 +16,9 @@ repos:
         name: isort (python)
         args: ['cfgov']
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.4
+    rev: 1.7.5
     hooks:
       - id: bandit
         args: ['-c', 'pyproject.toml', '--recursive']
-        additional_dependencies: [toml==0.10.2]
+        additional_dependencies: ["bandit[toml]"]
+
