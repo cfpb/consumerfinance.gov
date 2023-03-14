@@ -36,10 +36,10 @@ class ExternalURLForm(forms.Form):
             signed_url = "{ext_url}:{signature}".format(**cleaned_data)
             try:
                 cleaned_data["validated_url"] = signer.unsign(signed_url)
-            except BadSignature:
+            except BadSignature as err:
                 raise ValidationError(
                     "Signature validation failed", code="invalid"
-                )
+                ) from err
         else:
             raise ValidationError(
                 "URL must either be allowed by "

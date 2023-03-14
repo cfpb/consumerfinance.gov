@@ -139,7 +139,7 @@ class FilterableListMixin(ShareableRoutablePageMixin):
                 "language",
                 "statuses",
                 "products",
-            ]:  # noqa: B950
+            ]:  # noqa: E501
                 value = request_dict.getlist(field, [])
             else:
                 value = request_dict.get(field, "")

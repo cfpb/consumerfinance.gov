@@ -31,7 +31,7 @@ class SchoolSearchTest(TestCase):
         mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
         mock_queryset.count.return_value = 1
         # mock_autocomplete.return_value = mock_queryset
-        mock_autocomplete().query().filter().sort().__getitem__().execute.return_value = [  # noqa: B950
+        mock_autocomplete().query().filter().sort().__getitem__().execute.return_value = [  # noqa: E501
             mock_return
         ]
         mock_count = mock.Mock(return_value=1)

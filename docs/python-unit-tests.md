@@ -118,7 +118,7 @@ If you would like to skip running Django migrations when testing, set the
 ### Formatting
 
 We use `black` to autoformat our Python code. `black` is invoked by Tox using
-the `lint` environment (this will also run `flake8` and `isort`):
+the `lint` environment (this will also run `ruff` and `isort`):
 
 ```sh
 tox -e lint
@@ -128,7 +128,7 @@ tox -e lint
 
 ### Linting
 
-We use the `flake8` and `isort` tools to ensure compliance with
+We use the `ruff` and `isort` tools to ensure compliance with
 [PEP8 style guide](https://www.python.org/dev/peps/pep-0008/),
 [Django coding style guidelines](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/),
 and the
@@ -137,7 +137,7 @@ and the
 We also use [Bandit](https://bandit.readthedocs.io/) to find any common
 security issues in our Python code.
 
-`flake8`, `isort`, and `bandit` can all be run using the Tox `lint` environment
+`ruff`, `isort`, and `bandit` can all be run using the Tox `lint` environment
 (this will also run `black`):
 
 ```sh

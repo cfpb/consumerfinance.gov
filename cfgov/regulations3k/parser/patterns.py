@@ -366,7 +366,7 @@ title_pattern = re.compile(r"PART ([^\-]+) \- ([^\(]+) \(?([^\)]+)?")
 paren_id_patterns = {
     "any": r"\(([^\)]{1,7})\)[^\(]+",
     "initial": r"\(([^\)]{1,7})\)",
-    "level_1_multiple": r"\((?P<ID1>[a-z]{1,2})\)(?P<phrase1>[^\(]+)\((?P<ID2>1)\)(?P<phrase2>[^\(]+)\((?P<ID3>i)\)?(?P<remainder>[^\n]+)",  # noqa: B950
+    "level_1_multiple": r"\((?P<ID1>[a-z]{1,2})\)(?P<phrase1>[^\(]+)\((?P<ID2>1)\)(?P<phrase2>[^\(]+)\((?P<ID3>i)\)?(?P<remainder>[^\n]+)",  # noqa: E501
     "lower": r"\(([a-z]{1,2})\)",
     "digit": r"\((\d{1,2})\)",
     "roman": r"\(([ivxlcdm]{1,5})\)",
@@ -381,7 +381,7 @@ dot_id_patterns = {
     "upper": r"([A-Z]{1,2})\.",
 }
 
-interp_reference_pattern = r"(\d{1,3})(\([a-z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?(\([A-Z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?"  # noqa: B950
-interp_inferred_section_pattern = r"(\([a-z]{1,2}\))(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?(\([A-Z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?"  # noqa: B950'
+interp_reference_pattern = r"(\d{1,3})(\([a-z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?(\([A-Z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?"  # noqa: E501
+interp_inferred_section_pattern = r"(\([a-z]{1,2}\))(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?(\([A-Z]{1,2}\))?(\(\d{1,2}\))?(\([ivxlcdm]{1,5}\))?"  # noqa: E501'
 
 LEVEL_STATE = IdLevelState()
