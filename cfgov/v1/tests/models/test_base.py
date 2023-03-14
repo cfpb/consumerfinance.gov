@@ -208,7 +208,7 @@ class TestCFGOVPageContext(TestCase):
         result = test_context["meta_description"]
         self.assertEqual(expected, result)
 
-    def test_get_context_sets_meta_description_from_header_item_introduction_paragraph(  # noqa: B950
+    def test_get_context_sets_meta_description_from_header_item_introduction_paragraph(  # noqa: E501
         self,
     ):
         expected = "Correct Meta Description"

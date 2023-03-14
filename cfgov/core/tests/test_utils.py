@@ -245,8 +245,8 @@ class LinkUtilsTests(SimpleTestCase):
         urls = [
             "/ask-cfpb/what-is-a-construction-loan-en-108/",
             "https://cfpb.gov/ask-cfpb/what-is-a-construction-loan-en-108/",
-            "https://consumerfinance.gov/ask-cfpb/what-is-a-construction-loan-en-108/",  # noqa: B950
-            "https://www.consumerfinance.gov/ask-cfpb/what-is-a-construction-loan-en-108/",  # noqa: B950
+            "https://consumerfinance.gov/ask-cfpb/what-is-a-construction-loan-en-108/",  # noqa: E501
+            "https://www.consumerfinance.gov/ask-cfpb/what-is-a-construction-loan-en-108/",  # noqa: E501
         ]
         path = "/"
         for url in urls:

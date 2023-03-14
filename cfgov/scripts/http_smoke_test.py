@@ -54,7 +54,7 @@ TIMEOUT = 30
 ALLOWED_TIMEOUTS = 1
 FULL = False
 BASE = "https://www.consumerfinance.gov"
-S3_URI = "https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json"  # noqa: B950
+S3_URI = "https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json"  # noqa: E501
 
 # Fall-back list of top 25 URLs, as of July 2, 2020, from hubcap/wiki
 # All URLs in the list should be canonical locations of the given pages,
@@ -66,13 +66,13 @@ TOP = [
     "/find-a-housing-counselor/",
     "/complaint/",
     "/learnmore/",
-    "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: B950
+    "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: E501
     "/coronavirus/",
     "/about-us/blog/guide-covid-19-economic-stimulus-checks/#qualify/",
     "/consumer-tools/prepaid-cards/",
     "/coronavirus/cares-act-mortgage-forbearance-what-you-need-know/",
     "/about-us/blog/economic-impact-payment-prepaid-card/",
-    "/about-us/blog/what-you-need-to-know-about-student-loans-and-coronavirus-pandemic/",  # noqa: B950
+    "/about-us/blog/what-you-need-to-know-about-student-loans-and-coronavirus-pandemic/",  # noqa: E501
     "/complaint/getting-started/",
     "/coronavirus/mortgage-and-housing-assistance/",
     "/ask-cfpb/what-is-forbearance-en-289/",
@@ -80,11 +80,11 @@ TOP = [
     "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",
     "/about-us/blog/protect-yourself-financially-from-impact-of-coronavirus/",
     "/about-us/contact-us/",
-    "/about-us/blog/guide-coronavirus-mortgage-relief-options/#relief-options/",  # noqa: B950
-    "/coronavirus/managing-your-finances/economic-impact-payment-prepaid-debit-cards/",  # noqa: B950
+    "/about-us/blog/guide-coronavirus-mortgage-relief-options/#relief-options/",  # noqa: E501
+    "/coronavirus/managing-your-finances/economic-impact-payment-prepaid-debit-cards/",  # noqa: E501
     "/ask-cfpb/how-can-i-tell-who-owns-my-mortgage-en-214/",
     "/rules-policy/regulations/",
-    "/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/",  # noqa: B950
+    "/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/",  # noqa: E501
 ]
 
 # URLs for cfgov sub-apps that are expected to be present
@@ -110,7 +110,7 @@ APPS = [
     "/know-before-you-owe/",
     "/fair-lending/",
     "/paying-for-college/",
-    "/paying-for-college2/understanding-your-financial-aid-offer/about-this-tool/",  # noqa: B950
+    "/paying-for-college2/understanding-your-financial-aid-offer/about-this-tool/",  # noqa: E501
     "/retirement/before-you-claim/",
     "/retirement/before-you-claim/es/",
     "/consumer-tools/auto-loans/",
@@ -185,8 +185,8 @@ def check_urls(base, url_list=None):
     (relative to the provided base) as the `url_list` value.
     This example tests two URLs against a local cfgov instance:
 
-    ./cfgov/scripts/http_smoke_test.py -v --base 'http://localhost:8000' --url_list '/' '/retirement/before-you-claim/'  # noqa: B950
-    """
+    ./cfgov/scripts/http_smoke_test.py -v --base 'http://localhost:8000' --url_list '/' '/retirement/before-you-claim/'
+    """  # noqa
     count = 0
     timeouts = []
     failures = []

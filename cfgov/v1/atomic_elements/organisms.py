@@ -820,7 +820,7 @@ class FilterableList(BaseExpandable):
     def get_filterable_topics(filterable_page_ids, value):
         """Given a set of page IDs, return the list of filterable topics"""
         tags = Tag.objects.filter(
-            v1_cfgovtaggedpages_items__content_object__id__in=filterable_page_ids  # noqa: B950
+            v1_cfgovtaggedpages_items__content_object__id__in=filterable_page_ids  # noqa: E501
         ).values_list("slug", "name")
 
         sort_order = value.get("topic_filtering", "sort_by_frequency")

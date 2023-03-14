@@ -1,4 +1,4 @@
-# flake8: noqa F401
+# ruff: noqa: F401
 from v1.util.ref import (
     category_label,
     choices_for_page_type,
