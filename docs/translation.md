@@ -41,7 +41,7 @@ In Django templates:
 ```django
 {% load i18n %}
 
-{% trans "Hello World!" %}
+{% translate "Hello World!" %}
 ```
 
 In Python code:

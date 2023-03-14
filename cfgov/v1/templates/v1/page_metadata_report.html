@@ -4,7 +4,7 @@
 {% block actions %}
     {% if view.list_export %}
         <div class="actionbutton">
-            <a href="{{ view.csv_export_url }}" class="button bicolor button--icon">{% icon name="download" wrapped=1 %}{% trans 'Download CSV' %}</a>
+            <a href="{{ view.csv_export_url }}" class="button bicolor button--icon">{% icon name="download" wrapped=1 %}{% translate 'Download CSV' %}</a>
         </div>
     {% endif %}
 {% endblock %}
