@@ -442,7 +442,7 @@ class RegModelTests(DjangoTestCase):
     @mock.patch.object(SectionParagraphDocument, "search")
     def test_routable_search_page_handles_null_highlights(
         self, mock_search
-    ):  # noqa: B950
+    ):  # noqa: E501
         mock_hit = mock.Mock()
         mock_hit.text = (
             "i. Mortgage escrow accounts for collecting",
@@ -455,7 +455,7 @@ class RegModelTests(DjangoTestCase):
         mock_hit.section_label = "Interp-2"
         mock_hit.short_name = "Regulation DD"
         mock_hit.paragraph_id = "2-a-Interp-2-i"
-        mock_search().query().highlight().filter().sort().__getitem__().execute.return_value = [  # noqa: B950
+        mock_search().query().highlight().filter().sort().__getitem__().execute.return_value = [  # noqa: E501
             mock_hit
         ]
         mock_count = mock.Mock(return_value=1)
@@ -479,7 +479,7 @@ class RegModelTests(DjangoTestCase):
     @mock.patch.object(SectionParagraphDocument, "search")
     def test_search_page_refuses_single_character_search_elasticsearch(
         self, mock_search
-    ):  # noqa: B950
+    ):  # noqa: E501
         response = self.client.get(
             self.reg_search_page.url
             + self.reg_search_page.reverse_subpage("regulation_results_page"),

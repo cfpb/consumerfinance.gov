@@ -311,7 +311,7 @@ class RegulationPage(ShareableRoutablePageMixin, CFGOVPage):
             )
         except ValidationError:
             # This can be raised by an invalid date string
-            raise Http404
+            raise Http404 from None
 
         if effective_version is None:
             raise Http404

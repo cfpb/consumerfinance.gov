@@ -38,10 +38,10 @@ def run(*args):
 
             expected_products = sorted(
                 [p.strip() for p in products.split(";")]
-            )  # noqa: B950
+            )  # noqa: E501
             actual_products = sorted(
                 [product.product for product in page.products.all()]
-            )  # noqa: B950
+            )  # noqa: E501
             if expected_products == actual_products:
                 continue
             else:

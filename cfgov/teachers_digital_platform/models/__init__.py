@@ -1,4 +1,4 @@
-# flake8: noqa F401
+# ruff: noqa: F401
 from teachers_digital_platform.models.activity_index_page import (
     FACET_LIST,
     FACET_MAP,

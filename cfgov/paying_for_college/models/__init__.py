@@ -1,4 +1,4 @@
-# flake8: noqa F401
+# ruff: noqa: F401
 
 from paying_for_college.models.disclosures import (
     CONTROL_MAP,
