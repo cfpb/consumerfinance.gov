@@ -1,8 +1,6 @@
 import Analytics from '../../../js/modules/Analytics.js';
 import { SCORES_UNSET_KEY } from './survey/config.js';
 
-/* eslint-disable consistent-return */
-
 /**
  * Sends the user interaction to Analytics
  *

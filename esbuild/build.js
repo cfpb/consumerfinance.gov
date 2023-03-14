@@ -1,4 +1,3 @@
-/* eslint-disable complexity,consistent-return,global-require */
 import esbuild from 'esbuild';
 import { copy } from './copy.js';
 import { scripts, jsPaths } from './scripts.js';

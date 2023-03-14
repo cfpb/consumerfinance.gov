@@ -17,7 +17,6 @@ const getApiValues = {
         return resp;
       },
       // TODO: the user should be notified of errors
-      // eslint-disable-next line no-unused-vars
       error: function (req, status, err) {
         console.log('API: constants', status, err);
       },

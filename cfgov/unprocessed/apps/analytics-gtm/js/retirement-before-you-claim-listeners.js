@@ -143,7 +143,6 @@ import { analyticsLog, track } from './util/analytics-util';
       'input[name="benefits-display"]'
     );
     for (let i = 0, len = benefitsRadios.length; i < len; i++) {
-      // eslint-disable-next-line no-loop-func
       benefitsRadios[i].addEventListener('click', function (event) {
         if (stepOneSubmitted) {
           const val = event.currentTarget.value;

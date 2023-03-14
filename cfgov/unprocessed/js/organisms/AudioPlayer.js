@@ -15,7 +15,6 @@ const EVENT_CATEGORY = 'Audio Player Events';
  * @returns {AudioPlayer} An instance.
  */
 function AudioPlayer(element) {
-  // eslint-disable-line max-lines-per-function
   const _dom = checkDom(element, BASE_CLASS);
 
   /**

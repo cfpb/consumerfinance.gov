@@ -1,7 +1,5 @@
 import Analytics from '../../../js/modules/Analytics.js';
 
-/* eslint-disable consistent-return */
-
 /**
  * Sends the user interaction to Analytics
  *
