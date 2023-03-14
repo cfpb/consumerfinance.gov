@@ -28,7 +28,7 @@
     "@cfpb/cfpb-notifications": "0.21.11",
     "@cfpb/cfpb-pagination": "0.21.11",
     "@cfpb/cfpb-tables": "0.21.9",
-    "@cfpb/cfpb-typography": "0.21.11",
+    "@cfpb/cfpb-typography": "0.21.13",
     "@cfpb/rental-assistance-finder": "0.6.0",
     "@cypress/skip-test": "2.6.1",
     "autoprefixer": "10.4.13",
