@@ -153,7 +153,7 @@ describe('Admin', () => {
     it('should be able to use link buttons', () => {
       admin.selectTableEditorButton('LINK');
       admin.selectInternalLink('CFGov');
-      const documentName = 'cfpb_interested-vendor-instructions_fy2020.pdf';
+      const documentName = 'cfpb_interested-vendor-instructions_';
       admin.selectTableEditorButton('DOCUMENT');
       admin.selectDocumentLink(documentName);
       admin.closeTableEditor();

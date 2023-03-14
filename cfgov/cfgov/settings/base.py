@@ -301,6 +301,16 @@ WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
 WAGTAILDOCS_SERVE_METHOD = "direct"
 
+# This is needed to maintain autocomplete search behavior in the Wagtail admin.
+# See https://github.com/wagtail/wagtail/issues/7720.
+# TODO: Remove once we're on Wagtail 4.2, where this should be fixed in
+# https://github.com/wagtail/wagtail/pull/9900.
+WAGTAILSEARCH_BACKENDS = {
+    "default": {
+        "BACKEND": "wagtail.search.backends.database.fallback",
+    }
+}
+
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
 
