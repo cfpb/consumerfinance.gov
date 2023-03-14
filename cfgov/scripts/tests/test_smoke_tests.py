@@ -17,7 +17,7 @@ class StaticAssetTests(unittest.TestCase):
     """Tests for the static assets smoke tests."""
 
     mock_links = '<script src="/static/js/atomic/header.97504b419ce4.js"></script>\n\
-                  <script src="static/js/atomic/header.97504b419ce4.js"></script>'  # noqa: B950
+                  <script src="static/js/atomic/header.97504b419ce4.js"></script>'  # noqa: E501
 
     @mock.patch("scripts.static_asset_smoke_test.requests.get")
     def test_home_page_test_success(self, mock_get):

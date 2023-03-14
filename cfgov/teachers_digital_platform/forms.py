@@ -29,7 +29,7 @@ def _replace_labels(html: str) -> str:
     """
     return re.sub(
         "<fieldset><label [^>]+>(.*?)</label>",
-        lambda m: f'<fieldset><legend class="tdp-question-legend">{m[1]}</legend>',  # noqa: B950
+        lambda m: f'<fieldset><legend class="tdp-question-legend">{m[1]}</legend>',  # noqa: E501
         html,
     )
 
@@ -89,7 +89,7 @@ class SharedUrlForm(Form):
         signer = signing.Signer()
         try:
             code = signer.unsign(signed_code)
-        except signing.BadSignature:
-            raise ValidationError("Failed signature check")
+        except signing.BadSignature as err:
+            raise ValidationError("Failed signature check") from err
 
         return signed_code, code

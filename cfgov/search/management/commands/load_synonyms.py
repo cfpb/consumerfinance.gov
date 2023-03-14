@@ -18,6 +18,8 @@ class Command(BaseCommand):
                     synonym = Synonym(synonym=line.rstrip("\n"))
                     synonym.save()
                     synonyms_saved += 1
-            except Exception:
-                raise CommandError("Failed to load synonym file %s", file)
+            except Exception as err:
+                raise CommandError(
+                    "Failed to load synonym file %s", file
+                ) from err
         self.stdout.write(f"Successfully saved {synonyms_saved} synonyms")

@@ -99,7 +99,7 @@ class AbstractHero(blocks.StructBlock):
         required=False,
         help_text=mark_safe(
             "When saving illustrations, use a transparent background. "
-            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa: B950
+            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa: E501
             "See image dimension guidelines.</a>"
         ),
     )
@@ -109,7 +109,7 @@ class AbstractHero(blocks.StructBlock):
             "<b>Optional.</b> Provides an alternate image for "
             "small displays when using a photo or bleeding hero. "
             "Not required for the standard illustration. "
-            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa: B950
+            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa: E501
             "See image dimension guidelines.</a>"
         ),
     )

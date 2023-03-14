@@ -284,7 +284,7 @@ ALLOWED_HOSTS = ["*"]
 EXTERNAL_URL_ALLOWLIST = (
     r"^https:\/\/facebook\.com\/cfpb$",
     r"^https:\/\/twitter\.com\/cfpb$",
-    r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa: B950
+    r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa: E501
     r"^https:\/\/www\.youtube\.com\/user\/cfpbvideo$",
     r"https:\/\/www\.flickr\.com\/photos\/cfpbphotos$",
 )
@@ -615,8 +615,8 @@ if DEPLOY_ENVIRONMENT == "beta":
 EMAIL_POPUP_URLS = {
     "debt": [
         "/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/",
-        "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: B950
-        "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",  # noqa: B950
+        "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: E501
+        "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",  # noqa: E501
         "/consumer-tools/debt-collection/",
     ],
     "oah": ["/owning-a-home/", "/owning-a-home/mortgage-estimate/"],

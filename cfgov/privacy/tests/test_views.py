@@ -12,7 +12,7 @@ class TestRecordsAccessForm(TestCase):
         response = self.client.get(reverse("privacy:records_access"))
         self.assertContains(
             response,
-            "Request for individual access to records protected under the Privacy Act",  # noqa: B950
+            "Request for individual access to records protected under the Privacy Act",  # noqa: E501
         )
 
     def test_invalid_form_post_does_not_send_email(self):

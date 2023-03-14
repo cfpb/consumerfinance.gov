@@ -68,7 +68,7 @@ class ActivityPage(CFGOVPage):
     objectives = RichTextField("Objectives", blank=False)
     what_students_will_do = RichTextField(
         "What students will do", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     search_tags = models.TextField(
         "Activity search tags",
         blank=True,
@@ -110,38 +110,38 @@ class ActivityPage(CFGOVPage):
     )
     building_block = ParentalManyToManyField(
         "teachers_digital_platform.ActivityBuildingBlock", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     school_subject = ParentalManyToManyField(
         "teachers_digital_platform.ActivitySchoolSubject", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     topic = ParentalTreeManyToManyField(
         "teachers_digital_platform.ActivityTopic", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     # Audience
     grade_level = ParentalManyToManyField(
         "teachers_digital_platform.ActivityGradeLevel", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     age_range = ParentalManyToManyField(
         "teachers_digital_platform.ActivityAgeRange", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     student_characteristics = ParentalManyToManyField(
         "teachers_digital_platform.ActivityStudentCharacteristics", blank=True
-    )  # noqa: B950
+    )  # noqa: E501
     # Activity Characteristics
     activity_type = ParentalManyToManyField(
         "teachers_digital_platform.ActivityType", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     teaching_strategy = ParentalManyToManyField(
         "teachers_digital_platform.ActivityTeachingStrategy", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     blooms_taxonomy_level = ParentalManyToManyField(
         "teachers_digital_platform.ActivityBloomsTaxonomyLevel", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     activity_duration = models.ForeignKey(
         "teachers_digital_platform.ActivityDuration",
         blank=False,
         on_delete=models.PROTECT,
-    )  # noqa: B950
+    )  # noqa: E501
     # Standards taught
     jump_start_coalition = ParentalManyToManyField(
         "teachers_digital_platform.ActivityJumpStartCoalition",
@@ -189,12 +189,12 @@ class ActivityPage(CFGOVPage):
             [
                 FieldPanel(
                     "grade_level", widget=forms.CheckboxSelectMultiple
-                ),  # noqa: B950
+                ),  # noqa: E501
                 FieldPanel("age_range", widget=forms.CheckboxSelectMultiple),
                 FieldPanel(
                     "student_characteristics",
                     widget=forms.CheckboxSelectMultiple,
-                ),  # noqa: B950
+                ),  # noqa: E501
             ],
             heading="Audience",
         ),
@@ -202,14 +202,14 @@ class ActivityPage(CFGOVPage):
             [
                 FieldPanel(
                     "activity_type", widget=forms.CheckboxSelectMultiple
-                ),  # noqa: B950
+                ),  # noqa: E501
                 FieldPanel(
                     "teaching_strategy", widget=forms.CheckboxSelectMultiple
-                ),  # noqa: B950
+                ),  # noqa: E501
                 FieldPanel(
                     "blooms_taxonomy_level",
                     widget=forms.CheckboxSelectMultiple,
-                ),  # noqa: B950
+                ),  # noqa: E501
                 FieldPanel("activity_duration"),
             ],
             heading="Activity characteristics",
