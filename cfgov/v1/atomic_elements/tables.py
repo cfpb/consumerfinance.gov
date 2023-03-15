@@ -86,3 +86,16 @@ class ContactUsTable(blocks.StructBlock):
         icon = "table"
         template = "v1/includes/organisms/tables/contact-us.html"
         label = "Table (Contact Us)"
+
+
+class ConsumerReportingCompanyTable(blocks.StructBlock):
+    website = blocks.RichTextBlock(features=["bold", "italic", "link"])
+    phone = blocks.RichTextBlock(features=["bold", "italic", "link"])
+    mailing_address = blocks.RichTextBlock(features=["bold", "italic", "link"])
+
+    class Meta:
+        icon = "table"
+        template = (
+            "v1/includes/organisms/tables/consumer-reporting-company.html"
+        )
+        label = "Table (Consumer Reporting Company)"
