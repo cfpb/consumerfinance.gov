@@ -172,6 +172,7 @@ class DocumentDetailPage(AbstractFilterPage):
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
+            ("crc_table", organisms.ConsumerReportingCompanyTable()),
         ],
         blank=True,
     )
