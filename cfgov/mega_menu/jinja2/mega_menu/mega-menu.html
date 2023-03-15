@@ -179,7 +179,7 @@
                                    {{- ' ' ~ _content_classes( nav_depth, '-item__has-icon' ) -}}">
                             <a class="{{ _content_classes( nav_depth, '-link' ) }}"
                                 href="{{ link.url }}">
-                                {{ svg_icon( 'favorite' ) }}
+                                {{ svg_icon('favorite') }}
                                 <span><span class="a-link_text">{{ link.text }}</span></span>
                             </a>
                         </li>
@@ -271,8 +271,8 @@
 
         {% if has_children %}
         <span class="{{- _content_classes( nav_depth, '-link-icon-post' ) -}}">{{ svg_icon('right') }}</span>
-        <span class="{{- _content_classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
-        <span class="{{- _content_classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
+        <span class="{{- _content_classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon('down') }}</span>
+        <span class="{{- _content_classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon('up') }}</span>
         {% endif %}
 
         {% if nav_depth == 1 %}
@@ -315,7 +315,7 @@
             </span>
         </span>
         <span class="{{ base_class ~ '_trigger-close' }}">
-            {{ svg_icon('close') }}
+            {{ svg_icon('error') }}
             <span class="u-visually-hidden">
                 {{ _('Close the main menu') }}
             </span>
