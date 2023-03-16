@@ -6,7 +6,6 @@ import {
   sendEvent,
 } from '../../../../../cfgov/unprocessed/apps/regulations3k/js/analytics.js';
 
-/* eslint-disable max-lines-per-function, no-undefined */
 describe('The Regs3K analytics', () => {
   it('should send events', () => {
     const mockEvent = sendEvent('click', 'sidebar');

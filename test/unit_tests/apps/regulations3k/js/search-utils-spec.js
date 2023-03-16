@@ -9,7 +9,6 @@ import {
   updateUrl,
 } from '../../../../../cfgov/unprocessed/apps/regulations3k/js/search-utils.js';
 
-/* eslint-disable no-empty-function */
 describe('The Regs3K search utils', () => {
   it('should get values from search form fields', () => {
     const searchEl = {
