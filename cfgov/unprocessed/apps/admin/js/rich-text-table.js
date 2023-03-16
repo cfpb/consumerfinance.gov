@@ -3,6 +3,7 @@
 import { stateToHTML } from 'draft-js-export-html';
 
 const body = document.querySelector('body');
+
 /**
  * @param {MouseEvent} event - The mouse event from a modal click.
  */
@@ -87,7 +88,7 @@ function richTextTable(Handsontable) {
 
     /* TextEditor's TEXTAREA will hold our data for Draftail, and we'll use
        its style when we open the editor. */
-    this.TEXTAREA.id = 'rich-text-table-cell-editor';
+    this.TEXTAREA.id = this.TEXTAREA_PARENT.parentElement.id + '-rich-text-table-cell-editor';
     this.TEXTAREA.style.display = 'none';
   };
 
@@ -190,6 +191,17 @@ function richTextTable(Handsontable) {
     // Remove the Draftail editor for this cell
     this.TEXTAREA_PARENT.querySelector('.Draftail-Editor__wrapper').remove();
     body.removeEventListener('mousedown', _handleModalClicks);
+  };
+
+  /**
+   * This is an override extension of https://github.com/handsontable/handsontable/blob/c2ba2dc02e3eb883a58f976ef5944fa629dc981d/src/editors/textEditor.js#L80-L83
+   * to ensure the top position is cleared when the editor is shown.
+   */
+  RichTextEditor.prototype.showEditableElement = function () {
+    this.textareaParentStyle.zIndex =
+      this.holderZIndex >= 0 ? this.holderZIndex : '';
+    this.textareaParentStyle.position = '';
+    this.textareaParentStyle.top = 0;
   };
 
   // Register the rich text editor
@@ -547,6 +559,11 @@ window.initAtomicTable = initAtomicTable;
 class RichTextTableInput {
   constructor(options) {
     this.options = options;
+
+    // Setting preventOverflow to true sets mainTableScrollableElement to the window,
+    // which prevents scrolling to the top on click of the table cells.
+    // Used in the condition on https://github.com/handsontable/handsontable/blob/6a1706061163b8d1f7752e54ef6f10efbc764b8b/handsontable/src/3rdparty/walkontable/src/overlay/_base.js#L300
+    this.options.preventOverflow = true;
   }
 
   render(placeholder, name, id, initialState) {

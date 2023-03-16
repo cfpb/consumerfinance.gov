@@ -33,7 +33,7 @@
                       <span class="u-hide-on-mobile">Search</span>
                   </span>
                   <span class="m-global-search_trigger-close-label">
-                      {{ svg_icon('delete') }}
+                      {{ svg_icon('error') }}
                       <span class="u-hide-on-mobile">Close</span>
                   </span>
               </button>
@@ -54,7 +54,7 @@
                                      class="input-contains-label_after
                                             input-contains-label_after__clear
                                             u-hidden">
-                                  {{ svg_icon('delete') }}
+                                  {{ svg_icon('error') }}
                                   <span class="u-visually-hidden">Clear search</span>
                               </label>
                               <input type="text"
@@ -140,7 +140,7 @@
       overflow-x: hidden;
     }
 
-    &[aria-expanded='true'] &-form {
+    &[data-open='true'] &-form {
       display: block;
     }
   }

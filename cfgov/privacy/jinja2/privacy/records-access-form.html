@@ -256,7 +256,7 @@
                 <div class="m-btn-group">
                   <button id="submit-button" class="a-btn">
                     Submit
-                    <span id ="submit-icon" class="a-btn_icon a-btn_icon__on-right">{{ svg_icon('updating') }}</span>
+                    <span id ="submit-icon" class="a-btn_icon a-btn_icon__on-right">{{ svg_icon('update') }}</span>
                   </button>
                     <a class="a-btn a-btn__link"
                        href="/privacy/records-disclosure-privacy-act-statement/"
@@ -277,13 +277,6 @@
 {% block javascript %}
     {{ super() }}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            '{{ static("js/routes/on-demand/privacy-forms.js") }}'
-          ];
-          jsl(s);
-        }();
-      }
+      jsl(['{{ static("js/routes/on-demand/privacy-forms.js") }}']);
     </script>
 {% endblock javascript %}

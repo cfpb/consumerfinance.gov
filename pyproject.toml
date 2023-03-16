@@ -62,4 +62,54 @@ exclude_dirs = [
 skips = [
     "B308",
     "B703",
+
+    # Calls to requests.get() that don't include a timeout.
+    # TODO: We need to address those with relevant error handling of a timeout.
+    "B113",
+]
+
+[tool.ruff]
+exclude = [
+    # These are directories that it's a waste of time to traverse
+    ".git",
+    ".tox",
+    ".venv",
+    "config",
+    "develop-apps",
+    "docs",
+    "esbuild",
+    "requirements",
+    "node_modules",
+    "site",
+    "venv",
+
+    # And directories in cfgov that don't have python files to lint
+    "__pycache__",
+    "*/jinja2",
+    "cfgov/static_built",
+    "cfgov/templates",
+    "cfgov/unprocessed",
+
+    # Generated migration files will throw errors. We need to find a way
+    # to exclude django-generated migrations while including
+    # manually-written migrations.
+    "*/migrations/*.py",
+
+    # Our settings files might need to conform to different readability
+    # standards
+    "cfgov/cfgov/settings",
+]
+ignore = [
+    # Assigned Lambdas are fine.
+    "E731",
+
+    # B905 checks for a `strict=` parameter on calls to `zip()`, but that
+    # parameter isn't available on Python < 3.10.
+    "B905"
+]
+select = [
+    "E",
+    "F",
+    "W",
+    "B",
 ]

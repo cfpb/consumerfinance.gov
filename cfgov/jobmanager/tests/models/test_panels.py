@@ -4,7 +4,7 @@ from unittest.mock import Mock
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from wagtail.core.models import Locale, Page
+from wagtail.models import Locale, Page
 
 from model_bakery import baker
 

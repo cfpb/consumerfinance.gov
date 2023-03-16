@@ -1,4 +1,3 @@
-import itertools
 from collections import Counter
 from urllib.parse import urlencode
 
@@ -7,10 +6,10 @@ from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
-from wagtail.core import blocks
-from wagtail.core.blocks.struct_block import StructBlockValidationError
-from wagtail.core.models import Page
+from wagtail import blocks
+from wagtail.blocks.struct_block import StructBlockValidationError
 from wagtail.images import blocks as images_blocks
+from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from taggit.models import Tag
@@ -19,9 +18,12 @@ from wagtailmedia.blocks import AbstractMediaChooserBlock
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
 
-# Bring AtomicTableBlock into this module to
-# maintain import structure across the project
-from v1.atomic_elements.tables import AtomicTableBlock
+# Bring tables into this module to maintain import structure across the project.
+from v1.atomic_elements.tables import (  # noqa: F401
+    AtomicTableBlock,
+    ConsumerReportingCompanyTable,
+    ContactUsTable,
+)
 from v1.util import ref
 
 
@@ -612,16 +614,13 @@ class Expandable(BaseExpandable):
             ("paragraph", blocks.RichTextBlock(required=False)),
             ("well", Well()),
             ("links", atoms.Hyperlink()),
-            ("email", molecules.ContactEmail()),
-            ("phone", molecules.ContactPhone()),
-            ("address", molecules.ContactAddress()),
             ("info_unit_group", InfoUnitGroup()),
         ],
         blank=True,
     )
 
 
-class BaseExpandableGroup(blocks.StructBlock):
+class ExpandableGroup(blocks.StructBlock):
     heading = blocks.CharBlock(
         required=False,
         help_text=mark_safe(
@@ -632,16 +631,6 @@ class BaseExpandableGroup(blocks.StructBlock):
             "this part of the page."
         ),
     )
-
-    class Meta:
-        icon = "list-ul"
-        template = "v1/includes/organisms/expandable-group.html"
-
-    class Media:
-        js = ["expandable-group.js"]
-
-
-class ExpandableGroup(BaseExpandableGroup):
     body = blocks.RichTextBlock(required=False)
     is_accordion = blocks.BooleanBlock(required=False)
     has_top_rule_line = blocks.BooleanBlock(
@@ -661,49 +650,12 @@ class ExpandableGroup(BaseExpandableGroup):
 
     expandables = blocks.ListBlock(Expandable())
 
-
-class ContactExpandable(blocks.StructBlock):
-    contact = SnippetChooserBlock("v1.Contact")
-
     class Meta:
-        icon = "user"
-        template = "v1/includes/organisms/contact-expandable.html"
+        icon = "list-ul"
+        template = "v1/includes/organisms/expandable-group.html"
 
     class Media:
-        js = ["expandable.js"]
-
-    def bulk_to_python(self, values):
-        """Support bulk retrieval of Contacts to reduce database queries."""
-        contact_model = self.child_blocks["contact"].target_model
-        contacts_by_id = contact_model.objects.in_bulk(
-            value["contact"] for value in values
-        )
-
-        for value in values:
-            value["contact"] = contacts_by_id.get(value["contact"])
-
-        return [blocks.StructValue(self, value) for value in values]
-
-
-class ContactExpandableGroup(BaseExpandableGroup):
-    expandables = blocks.ListBlock(ContactExpandable())
-
-    def bulk_to_python(self, values):
-        contact_expandable_values = list(
-            itertools.chain(*(value["expandables"] for value in values))
-        )
-
-        contacts = self.child_blocks["expandables"].child_block.bulk_to_python(
-            contact_expandable_values
-        )
-
-        index = 0
-        for value in values:
-            value_count = len(value["expandables"])
-            value["expandables"] = contacts[index : index + value_count]
-            index += value_count
-
-        return [blocks.StructValue(self, value) for value in values]
+        js = ["expandable-group.js"]
 
 
 class ItemIntroduction(blocks.StructBlock):
@@ -869,7 +821,7 @@ class FilterableList(BaseExpandable):
     def get_filterable_topics(filterable_page_ids, value):
         """Given a set of page IDs, return the list of filterable topics"""
         tags = Tag.objects.filter(
-            v1_cfgovtaggedpages_items__content_object__id__in=filterable_page_ids  # noqa: B950
+            v1_cfgovtaggedpages_items__content_object__id__in=filterable_page_ids  # noqa: E501
         ).values_list("slug", "name")
 
         sort_order = value.get("topic_filtering", "sort_by_frequency")

@@ -1,4 +1,3 @@
-import { assign } from './assign.js';
 import throttle from 'lodash.throttle';
 import webStorageProxy from './web-storage-proxy.js';
 
@@ -124,7 +123,7 @@ function showOnScroll(elToShow, opts) {
     },
   };
 
-  opts = assign(defaults, opts || {});
+  opts = Object.assign(defaults, opts || {});
 
   /**
    * @returns {number} Scroll target vertical position in pixels from top.

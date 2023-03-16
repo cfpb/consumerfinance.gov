@@ -196,6 +196,8 @@ example-job-name: # There is no default for name, this is required
       value: 'MY_CRONJOB_ENV_VALUE'
 ```
 
+To test out a new cronjob, you can use OpenLens to trigger a cronJob by clicking on the Workloads->CronJobs menu and selecting the cronJob from the list. This is great for testing the job without having to mess with the scheduling value in the cronJob. Do note that helm test command does not test the cronJobs so its up to the person adding/changing the job to make sure it works before merging.
+
 # OpenLens
 
 We like to use OpenLens to manage the Kubernetes stack.

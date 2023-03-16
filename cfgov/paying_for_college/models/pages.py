@@ -1,10 +1,6 @@
-from wagtail.admin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
+from wagtail import blocks
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage
@@ -22,8 +18,8 @@ class PayingForCollegePage(CFGOVPage):
     )
 
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
     # Tab handler interface
     edit_handler = TabbedInterface(
@@ -67,8 +63,8 @@ class CollegeCostsPage(PayingForCollegePage):
     )
 
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     # Tab handler interface

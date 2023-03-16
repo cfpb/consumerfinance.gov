@@ -1,14 +1,13 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from wagtail.contrib.routable_page.models import route
-from wagtail.core.models import Site
+from wagtail.models import Site
 from wagtailsharing.models import ShareableRoutablePageMixin
 
 from v1.documents import FilterablePagesDocumentSearch
 from v1.feeds import FilterableFeed
 from v1.models.learn_page import AbstractFilterPage
 from v1.util.ref import get_category_children
-from v1.util.util import get_secondary_nav_items
 
 
 class FilterableListMixin(ShareableRoutablePageMixin):
@@ -91,7 +90,6 @@ class FilterableListMixin(ShareableRoutablePageMixin):
         context.update(
             {
                 "filter_data": filter_data,
-                "get_secondary_nav_items": get_secondary_nav_items,
                 "has_active_filters": has_active_filters,
                 "has_unfiltered_results": has_unfiltered_results,
             }
@@ -141,7 +139,7 @@ class FilterableListMixin(ShareableRoutablePageMixin):
                 "language",
                 "statuses",
                 "products",
-            ]:  # noqa: B950
+            ]:  # noqa: E501
                 value = request_dict.getlist(field, [])
             else:
                 value = request_dict.get(field, "")

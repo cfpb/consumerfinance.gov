@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.utils.formats import date_format
 
-from wagtail.core.models import PageRevision
+from wagtail.models import PageRevision
 
 
 User = get_user_model()

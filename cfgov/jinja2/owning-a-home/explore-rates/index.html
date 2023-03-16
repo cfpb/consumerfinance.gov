@@ -7,8 +7,6 @@
 
 {% import "v1/includes/molecules/social-media.html" as social_media with context %}
 {% set page={"search_description":"Use this tool throughout your homebuying process to see how your credit score, home price, down payment, and more can affect mortgage interest rates."} %}
-{% set active_page = "explore-rates" %}
-{% set page_js = "explore-rates" %}
 
 {% block title -%}
     Explore interest rates | Consumer Financial Protection Bureau
@@ -627,14 +625,9 @@ home price, down payment, and more can affect mortgage interest rates.
 {% block javascript scoped %}
     {{ super() }}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            '{{ static('apps/owning-a-home/js/common.js') }}',
-            '{{ static('apps/owning-a-home/js/explore-rates/index.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
+      jsl([
+        '{{ static("apps/owning-a-home/js/common.js") }}',
+        '{{ static("apps/owning-a-home/js/explore-rates/index.js") }}'
+      ]);
     </script>
 {% endblock javascript %}

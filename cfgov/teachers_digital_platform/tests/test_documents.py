@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from wagtail.core.models import Site
 from wagtail.documents.models import Document
+from wagtail.models import Site
 
 from search.elasticsearch_helpers import strip_html
 from teachers_digital_platform.documents import ActivityPageDocument

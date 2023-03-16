@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
-from wagtail.core import blocks
+from wagtail import blocks
 from wagtail.images import blocks as images_blocks
 
 from v1.blocks import HeadingBlock

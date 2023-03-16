@@ -14,7 +14,7 @@ def richtext_isempty(value):
     https://github.com/wagtail/wagtail/issues/4549#issuecomment-500568445.
 
     Said workaround only worked for RichTextFields. RichTextBlock values
-    (wagtail.core.rich_text.RichText) passed in require accessing the `source`
+    (wagtail.rich_text.RichText) passed in require accessing the `source`
     attribute for the comparison.
 
     The replace() calls will also ensure that any passed value that amounts to

@@ -1,11 +1,7 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
-    FieldPanel,
-    PageChooserPanel,
-    StreamFieldPanel,
-)
-from wagtail.core.fields import RichTextField, StreamField
+from wagtail.admin.panels import FieldPanel
+from wagtail.fields import RichTextField, StreamField
 from wagtail.snippets.models import register_snippet
 
 from v1.atomic_elements import molecules
@@ -44,7 +40,6 @@ class Contact(models.Model):
         help_text=("The snippet heading"),
     )
     body = RichTextField(blank=True)
-    body_shown_in_expandables = models.BooleanField(default=False)
 
     contact_info = StreamField(
         [
@@ -59,8 +54,7 @@ class Contact(models.Model):
     panels = [
         FieldPanel("heading"),
         FieldPanel("body"),
-        FieldPanel("body_shown_in_expandables"),
-        StreamFieldPanel("contact_info"),
+        FieldPanel("contact_info"),
     ]
 
     def __str__(self):
@@ -157,7 +151,7 @@ class EmailSignUp(models.Model):
         FieldPanel("url"),
         FieldPanel("heading"),
         FieldPanel("text"),
-        PageChooserPanel("disclaimer_page", "wagtailcore.Page"),
+        FieldPanel("disclaimer_page"),
     ]
 
     def __str__(self):

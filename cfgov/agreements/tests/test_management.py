@@ -17,7 +17,7 @@ empty_folder_zip = os.path.dirname(__file__) + "/empty-folder-agreements.zip"
 utf8_zip = os.path.dirname(__file__) + "/UTF_agreements.zip"
 additional_directory = (
     os.path.dirname(__file__) + "/additional_directory_level.zip"
-)  # noqa: B950
+)  # noqa: E501
 
 
 class TestValidations(unittest.TestCase):

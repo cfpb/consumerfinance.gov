@@ -14,21 +14,15 @@ from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
 
-from wagtail.admin.edit_handlers import (
-    FieldPanel,
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core.fields import StreamField
+from wagtail.fields import StreamField
 from wagtailsharing.models import ShareableRoutablePageMixin
 
 import requests
-from jinja2 import Markup
+from markupsafe import Markup
 from regdown import regdown
 
-from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import RegulationsListingFullWidthText
 from regulations3k.documents import SectionParagraphDocument
 from regulations3k.forms import SearchForm
@@ -181,8 +175,8 @@ class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     # Tab handler interface
@@ -226,9 +220,7 @@ class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
         return JsonResponse(response.json())
 
 
-class RegulationPage(
-    ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage
-):
+class RegulationPage(ShareableRoutablePageMixin, CFGOVPage):
     """A routable page for serving an eregulations page by Section ID."""
 
     parent_page_types = ["regulations3k.RegulationLandingPage"]
@@ -261,9 +253,9 @@ class RegulationPage(
     )
 
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
-        FieldPanel("regulation", Part),
+        FieldPanel("header"),
+        FieldPanel("content"),
+        FieldPanel("regulation", heading="Part"),
     ]
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
@@ -319,7 +311,7 @@ class RegulationPage(
             )
         except ValidationError:
             # This can be raised by an invalid date string
-            raise Http404
+            raise Http404 from None
 
         if effective_version is None:
             raise Http404

@@ -36,14 +36,13 @@
             <span class="u-hide-on-mobile">{{ _('Search') }}</span>
         </span>
         <span class="m-global-search_trigger-close-label">
-            {{ svg_icon('delete') }}
+            {{ svg_icon('error') }}
             <span class="u-hide-on-mobile">{{ _('Close') }}</span>
         </span>
     </button>
     <div class="m-global-search_content
                 u-hidden"
          data-js-hook="behavior_flyout-menu_content"
-         aria-expanded="false"
          role="search">
         <form class="m-global-search_content-form"
               action="{{ search_url_base }}"
@@ -81,7 +80,7 @@
                               class="input-contains-label_after
                                      input-contains-label_after__clear
                                      u-hidden">
-                            {{ svg_icon('delete') }}
+                            {{ svg_icon('error') }}
                             <span class="u-visually-hidden">{{ _('Clear search') }}</span>
                        </label>
                    </div>

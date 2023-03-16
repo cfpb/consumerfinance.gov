@@ -2,9 +2,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.core.fields import RichTextField
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.admin.panels import FieldPanel
+from wagtail.fields import RichTextField
 
 
 ENGLISH_PARENT_SLUG = "ask-cfpb"
@@ -63,7 +62,7 @@ class Category(models.Model):
         FieldPanel("name_es", classname="title"),
         FieldPanel("slug_es"),
         FieldPanel("intro_es"),
-        ImageChooserPanel("category_image"),
+        FieldPanel("category_image"),
     ]
 
     def __str__(self):

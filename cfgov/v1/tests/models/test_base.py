@@ -4,8 +4,8 @@ from unittest import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from wagtail.core import blocks
-from wagtail.core.models import Page, Site
+from wagtail import blocks
+from wagtail.models import Page, Site
 
 from v1.models import (
     AbstractFilterPage,
@@ -208,7 +208,7 @@ class TestCFGOVPageContext(TestCase):
         result = test_context["meta_description"]
         self.assertEqual(expected, result)
 
-    def test_get_context_sets_meta_description_from_header_item_introduction_paragraph(  # noqa: B950
+    def test_get_context_sets_meta_description_from_header_item_introduction_paragraph(  # noqa: E501
         self,
     ):
         expected = "Correct Meta Description"
@@ -373,9 +373,9 @@ class TestCFGOVPageMediaJSProperty(TestCase):
             True,
         )
 
-        # The page media should only include the default BrowsePage media, and
-        # shouldn't add any additional files because of the FullWithText.
-        self.assertEqual(page.media_js, ["secondary-navigation.js"])
+        # The page media shouldn't add any additional files because of the
+        # FullWidthText.
+        self.assertEqual(page.media_js, [])
 
 
 class TestCFGOVPageMediaCSSProperty(TestCase):

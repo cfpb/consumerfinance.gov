@@ -1,5 +1,5 @@
-from wagtail.admin.edit_handlers import ObjectList, TabbedInterface
-from wagtail.core.models import Page
+from wagtail.admin.panels import ObjectList, TabbedInterface
+from wagtail.models import Page
 
 from v1.models.base import CFGOVPage
 

@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 
-from wagtail.core.models import Page
 from wagtail.documents import get_document_model
+from wagtail.models import Page
 
 from bs4 import BeautifulSoup
 

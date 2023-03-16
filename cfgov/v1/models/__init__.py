@@ -1,4 +1,4 @@
-# flake8: noqa F401
+# ruff: noqa: F401
 from django.conf import settings
 
 from v1.models.base import (
@@ -23,7 +23,6 @@ from v1.models.enforcement_action_page import (
 )
 from v1.models.home_page import HomePage
 from v1.models.images import CFGOVImage, CFGOVRendition
-from v1.models.indexed_page_revision import IndexedPageRevision
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import (
     AbstractFilterPage,
@@ -47,4 +46,4 @@ from v1.models.sublanding_filterable_page import (
     SublandingFilterablePage,
 )
 from v1.models.sublanding_page import SublandingPage
-from v1.util.ref import *
+from v1.util.ref import *  # noqa: F403

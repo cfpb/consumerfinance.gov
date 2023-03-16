@@ -1,8 +1,6 @@
 {% extends "v1/layouts/base.html" %}
 {% import "_templates/expandable.html" as expandable %}
 {% set page={"search_description":"Use this tool throughout your homebuying process to see how your credit score, home price, down payment, and more can affect mortgage interest rates."} %}
-{% set active_page = "explore-rates" %}
-{% set page_js = "explore-rates" %}
 
 {% block title -%}
     Rural and underserved areas tool | Consumer Financial Protection Bureau
@@ -22,15 +20,8 @@ home price, down payment, and more can affect mortgage interest rates.
 {% block javascript scoped %}
     {{ super() }}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        window.cfpbMapboxAccessToken = '{{ mapbox_access_token }}'
-        !function() {
-          var s = [
-            '{{ static('apps/rural-or-underserved-tool/js/common.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
+      window.cfpbMapboxAccessToken = '{{ mapbox_access_token }}';
+      jsl(['{{ static("apps/rural-or-underserved-tool/js/common.js") }}']);
     </script>
 {% endblock javascript %}
 

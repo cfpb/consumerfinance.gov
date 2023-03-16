@@ -44,7 +44,7 @@ describe('MegaMenuDesktop', () => {
         event.propertyName = 'transform';
         subContentWrapper.dispatchEvent(event);
 
-        isExpanded = subContent.getAttribute('aria-expanded');
+        isExpanded = subContent.getAttribute('data-open');
         expect(isExpanded).toEqual('true');
         done();
       }
@@ -67,7 +67,7 @@ describe('MegaMenuDesktop', () => {
       let isExpanded;
 
       /**
-       *
+       * Resolve first click.
        */
       function resolveFirstClick() {
         isExpanded = subContent.getAttribute('aria-expanded');

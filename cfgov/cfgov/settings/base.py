@@ -43,7 +43,7 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 # Application definition
 INSTALLED_APPS = (
     "permissions_viewer",
-    "wagtail.core",
+    "wagtail",
     "wagtailadmin_overrides",
     "wagtail.admin",
     "wagtail.documents",
@@ -121,7 +121,6 @@ MIDDLEWARE = (
     "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "wagtailadmin_overrides.middleware.WagtailAdminViewOverrideMiddleware",
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "core.middleware.SelfHealingMiddleware",
@@ -143,7 +142,7 @@ ROOT_URLCONF = "cfgov.urls"
 # for an overview of how Django templates work.
 
 wagtail_extensions = [
-    "wagtail.core.jinja2tags.core",
+    "wagtail.jinja2tags.core",
     "wagtail.admin.jinja2tags.userbar",
     "wagtail.images.jinja2tags.images",
 ]
@@ -228,7 +227,7 @@ LANGUAGE_CODE = "en-us"
 LANGUAGES = (
     ("en", _("English")),
     ("es", _("Spanish")),
-    ("zh-Hant", _("Chinese (Traditional)")),
+    ("zh-Hant", _("Chinese")),
     ("vi", _("Vietnamese")),
     ("ko", _("Korean")),
     ("tl", _("Tagalog")),
@@ -284,7 +283,7 @@ ALLOWED_HOSTS = ["*"]
 EXTERNAL_URL_ALLOWLIST = (
     r"^https:\/\/facebook\.com\/cfpb$",
     r"^https:\/\/twitter\.com\/cfpb$",
-    r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa: B950
+    r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa: E501
     r"^https:\/\/www\.youtube\.com\/user\/cfpbvideo$",
     r"https:\/\/www\.flickr\.com\/photos\/cfpbphotos$",
 )
@@ -300,6 +299,16 @@ WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
 WAGTAILDOCS_SERVE_METHOD = "direct"
+
+# This is needed to maintain autocomplete search behavior in the Wagtail admin.
+# See https://github.com/wagtail/wagtail/issues/7720.
+# TODO: Remove once we're on Wagtail 4.2, where this should be fixed in
+# https://github.com/wagtail/wagtail/pull/9900.
+WAGTAILSEARCH_BACKENDS = {
+    "default": {
+        "BACKEND": "wagtail.search.backends.database.fallback",
+    }
+}
 
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
@@ -605,8 +614,8 @@ if DEPLOY_ENVIRONMENT == "beta":
 EMAIL_POPUP_URLS = {
     "debt": [
         "/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/",
-        "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: B950
-        "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",  # noqa: B950
+        "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: E501
+        "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",  # noqa: E501
         "/consumer-tools/debt-collection/",
     ],
     "oah": ["/owning-a-home/", "/owning-a-home/mortgage-estimate/"],
@@ -677,15 +686,6 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
     },
 }
 
-# Override certain Wagtail admin views with our own.
-#
-# See wagtailadmin_pages.middleware.WagtailAdminViewOverrideMiddleware.
-WAGTAILADMIN_OVERRIDDEN_VIEWS = {
-    "wagtailadmin_pages:add_subpage": (
-        "wagtailadmin_overrides.views.add_subpage"
-    ),
-}
-
 # Serialize Decimal(3.14) as 3.14, not "3.14"
 REST_FRAMEWORK = {"COERCE_DECIMAL_TO_STRING": False}
 
@@ -745,3 +745,9 @@ except (TypeError, ValueError):
 # A list of domain names that are allowed to be linked to without adding the
 # interstitial page.
 ALLOWED_LINKS_WITHOUT_INTERSTITIAL = ("public.govdelivery.com",)
+
+# Base URL to use when referring to full URLs within the Wagtail admin backend -
+# e.g. in notification emails. Don't include '/admin' or a trailing slash
+WAGTAILADMIN_BASE_URL = os.getenv(
+    "WAGTAILADMIN_BASE_URL", "http://localhost:8000"
+)

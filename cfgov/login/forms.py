@@ -101,7 +101,7 @@ class LoginForm(AuthenticationForm):
         try:
             user = UserModel._default_manager.get(username=username)
         except ObjectDoesNotExist:
-            raise self.get_invalid_login_error()
+            raise self.get_invalid_login_error() from None
 
         fa, created = FailedLoginAttempt.objects.get_or_create(user=user)
         now = time.time()

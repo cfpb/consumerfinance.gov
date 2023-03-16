@@ -27,7 +27,7 @@ msgid "Spanish"
 msgstr ""
 
 #: cfgov/settings/base.py:231
-msgid "Chinese (Traditional)"
+msgid "Chinese"
 msgstr "中文"
 
 #: cfgov/settings/base.py:232

@@ -10,18 +10,17 @@ from django.utils.text import slugify
 from django.utils.translation import activate, deactivate_all
 from django.utils.translation import gettext as _
 
-from wagtail.admin.edit_handlers import (
+from wagtail import blocks
+from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable
+from wagtail.fields import StreamField
+from wagtail.models import Orderable
 
 from modelcluster.fields import ParentalKey
 
@@ -141,7 +140,7 @@ class AnswerLandingPage(LandingPage):
     Page type for Ask CFPB's landing page.
     """
 
-    content_panels = CFGOVPage.content_panels + [StreamFieldPanel("header")]
+    content_panels = CFGOVPage.content_panels + [FieldPanel("header")]
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="Content"),
@@ -185,17 +184,7 @@ class AnswerLandingPage(LandingPage):
         return context
 
 
-class SecondaryNavigationJSMixin:
-    """A page mixin that adds navigation JS."""
-
-    @property
-    def page_js(self):
-        return super().page_js + ["secondary-navigation.js"]
-
-
-class PortalSearchPage(
-    RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage
-):
+class PortalSearchPage(RoutablePageMixin, CFGOVPage):
     """
     A routable page type for Ask CFPB portal search ("see-all") pages.
     """
@@ -291,30 +280,32 @@ class PortalSearchPage(
             deactivate_all()
         return super().get_context(request, *args, **kwargs)
 
-    def get_nav_items(self, request, page):
+    def get_secondary_nav_items(self, request):
         """Return sorted nav items for sidebar."""
+        url = self.get_url(request)
+
         sorted_categories = [
             {
                 "title": category.title(self.language),
-                "url": "{}{}/".format(page.url, slug),
+                "url": "{}{}/".format(url, slug),
                 "active": (
                     False
-                    if not page.portal_category
+                    if not self.portal_category
                     else category.title(self.language)
-                    == page.portal_category.title(self.language)
+                    == self.portal_category.title(self.language)
                 ),
             }
             for slug, category in self.category_map.items()
         ]
         return [
             {
-                "title": page.portal_topic.title(self.language),
-                "url": page.url,
-                "active": False if page.portal_category else True,
+                "title": self.portal_topic.title(self.language),
+                "url": url,
+                "active": False if self.portal_category else True,
                 "expanded": True,
                 "children": sorted_categories,
             }
-        ], True
+        ]
 
     def get_results(self, request):
         context = self.get_context(request)
@@ -340,7 +331,6 @@ class PortalSearchPage(
                 "pages": paginator.page(page_number),
                 "paginator": paginator,
                 "current_page": page_number,
-                "get_secondary_nav_items": self.get_nav_items,
             }
         )
         return TemplateResponse(request, "ask-cfpb/see-all.html", context)
@@ -374,9 +364,9 @@ class PortalSearchPage(
         )
         if self.portal_category.heading == "Key terms":
             self.glossary_terms = self.get_glossary_terms()
-            context = self.get_context(request)
-            context.update({"get_secondary_nav_items": self.get_nav_items})
-            return TemplateResponse(request, "ask-cfpb/see-all.html", context)
+            return TemplateResponse(
+                request, "ask-cfpb/see-all.html", self.get_context(request)
+            )
         self.query_base = (
             AnswerPageDocument.search()
             .filter("match", portal_topics=self.portal_topic.heading)
@@ -599,7 +589,7 @@ class ArticlePage(CFGOVPage):
             heading="Inset links",
             classname="collapsible",
         ),
-        StreamFieldPanel("sections"),
+        FieldPanel("sections"),
     ]
 
     sidebar = StreamField(
@@ -620,7 +610,7 @@ class ArticlePage(CFGOVPage):
     )
 
     sidebar_panels = [
-        StreamFieldPanel("sidebar"),
+        FieldPanel("sidebar"),
     ]
 
     edit_handler = TabbedInterface(

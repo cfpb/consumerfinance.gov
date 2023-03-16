@@ -2,7 +2,7 @@ from unittest import TestCase, mock
 
 from django.test import TestCase as DjangoTestCase
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from teachers_digital_platform.models import ActivityPage, ActivitySetUp
 from v1.models import (

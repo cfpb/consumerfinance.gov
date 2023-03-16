@@ -137,7 +137,9 @@ def run(*args):
 
     The script ingests a through-date (YYYY-MM-DD) and dump location/slug.
     Sample command:
-    `manage.py runscript process_mortgage_data --script-args 2017-03-01 /tmp/mp_countydata`  # noqa: B950
+
+        manage.py runscript process_mortgage_data \
+            --script-args 2017-03-01 /tmp/mp_countydata`
     """
     dump_slug = None
     starting_date = MortgageDataConstant.objects.get(

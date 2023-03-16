@@ -26,7 +26,9 @@ class Command(BaseCommand):
                 page_to_delete = CFGOVPage.objects.get(slug=slug)
             except MultipleObjectsReturned as e:
                 self.stderr.write(str(e))
-                raise CommandError("Slug `{}` did not work".format(slug))
+                raise CommandError(
+                    "Slug `{}` did not work".format(slug)
+                ) from e
         elif page_id:
             page_to_delete = CFGOVPage.objects.get(id=page_id)
         else:
@@ -38,4 +40,4 @@ class Command(BaseCommand):
             self.stderr.write(str(e))
             raise CommandError(
                 "Failed to delete page {}".format(page_to_delete)
-            )
+            ) from e

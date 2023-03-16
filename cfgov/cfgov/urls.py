@@ -172,7 +172,7 @@ urlpatterns = [
                     re_path(
                         r"^success/$",
                         TemplateView.as_view(
-                            template_name="govdelivery-subscribe/success/index.html"  # noqa: B950
+                            template_name="govdelivery-subscribe/success/index.html"  # noqa: E501
                         ),
                         name="success",
                     ),
@@ -186,7 +186,7 @@ urlpatterns = [
                     re_path(
                         r"^server-error/$",
                         TemplateView.as_view(
-                            template_name="govdelivery-subscribe/server-error/index.html"  # noqa: B950
+                            template_name="govdelivery-subscribe/server-error/index.html"  # noqa: E501
                         ),
                         name="server_error",
                     ),
@@ -225,7 +225,7 @@ urlpatterns = [
                         r"^how-to-apply-for-a-federal-job-with-the-cfpb/$",
                         TemplateView.as_view(
                             template_name="transcripts/how-to-apply-for-a-federal-job-with-the-cfpb/index.html"
-                        ),  # noqa: B950
+                        ),  # noqa: E501
                         name="how-to-apply-for-a-federal-job-with-the-cfpb",
                     ),
                 ],
@@ -318,7 +318,7 @@ urlpatterns = [
         r"^askcfpb/$", RedirectView.as_view(url="/ask-cfpb/", permanent=True)
     ),
     re_path(
-        r"^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$",  # noqa: B950
+        r"^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$",  # noqa: E501
         RedirectView.as_view(
             url="/es/obtener-respuestas/slug-es-%(ask_id)s", permanent=True
         ),
@@ -490,28 +490,28 @@ category_redirects = [
     re_path(
         r"^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$",
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/prestamos-para-vehiculos/respuestas/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/prestamos-para-vehiculos/respuestas/",  # noqa: E501
             permanent=True,
         ),
     ),
     re_path(
-        r"^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$",  # noqa: B950
+        r"^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$",  # noqa: E501
         RedirectView.as_view(
             url="/es/herramientas-del-consumidor/cuentas-bancarias/",
             permanent=True,
         ),
     ),
     re_path(
-        r"^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$",  # noqa: B950
+        r"^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$",  # noqa: E501
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/",  # noqa: E501
             permanent=True,
         ),
     ),
     re_path(
         r"^es/obtener-respuestas/categoria-adquirir-credito/(.*)$",
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/",  # noqa: E501
             permanent=True,
         ),
     ),
@@ -531,7 +531,7 @@ category_redirects = [
     re_path(
         r"^es/obtener-respuestas/categoria-enviar-dinero/(.*)$",
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/transferencias-de-dinero/respuestas/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/transferencias-de-dinero/respuestas/",  # noqa: E501
             permanent=True,
         ),
     ),
@@ -544,21 +544,21 @@ category_redirects = [
     re_path(
         r"^es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$",
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/",  # noqa: E501
             permanent=True,
         ),
     ),
     re_path(
-        r"^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$",  # noqa: B950
+        r"^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$",  # noqa: E501
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/",  # noqa: E501
             permanent=True,
         ),
     ),
     re_path(
         r"^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$",
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/prestamos-estudiantiles/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/prestamos-estudiantiles/",  # noqa: E501
             permanent=True,
         ),
     ),

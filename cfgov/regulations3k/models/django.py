@@ -10,7 +10,7 @@ from django.dispatch import receiver
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 
 import regdown
