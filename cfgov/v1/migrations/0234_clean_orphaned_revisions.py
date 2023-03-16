@@ -11,21 +11,19 @@ def forwards(apps, schema_editor):
     Page = apps.get_model('wagtailcore', 'Page')
     PageRevision = apps.get_model('wagtailcore', 'PageRevision')
 
-    for revision_pk, page_pk in PageRevision.objects.values_list('pk', 'page'):
-        try:
-            page = Page.objects.get(pk=page_pk)
-        except Page.DoesNotExist:
-            page = None
-        else:
-            continue
+    orphaned_revisions = PageRevision.objects.exclude(
+        page_id__in=Page.objects.values_list("pk", flat=True)
+    )
 
-        revision = PageRevision.objects.get(pk=revision_pk)
-        revision.page = Page(title="Temporary page")
+    for pk, page_pk, content in orphaned_revisions.values_list(
+        "pk", "page_id", "content"
+    ):
         logger.info(
-            f"Deleting orphaned page revision with pk {revision_pk} "
-            f"page pk {page_pk}, and path {revision.content['url_path']}."
+            f"Deleting orphaned page revision with pk {pk} "
+            f"page pk {page_pk}, and path {content['url_path']}."
         )
-        revision.delete()
+
+    orphaned_revisions.delete()
 
 
 class Migration(migrations.Migration):
