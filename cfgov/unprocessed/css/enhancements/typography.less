@@ -1,36 +1,4 @@
 /* topdoc
-  name: Steps list modifier
-  family: cfgov-cf-enhancements
-  notes:
-    - "Set up a list with 'Step x:' instead of bullets "
-  patterns:
-    - name: Default example
-      markup: |
-        <ol class="list list__steps short-desc">
-            <li class="list-item">Fill out the form</li>
-            <li class="list-item">Generate a PDF</li>
-            <li class="list-item">Email, fax or mail the PDF</li>
-        </ol>
-  tags:
-    - cf-typography
-*/
-
-.m-list__steps {
-  padding-left: 0;
-  counter-reset: item;
-  list-style: none;
-
-  .m-list-item {
-    position: relative;
-
-    &:before {
-      content: 'Step ' counter(item) ': ';
-      counter-increment: item;
-    }
-  }
-}
-
-/* topdoc
   name: Lists
   family: cfgov-lists
   notes:
