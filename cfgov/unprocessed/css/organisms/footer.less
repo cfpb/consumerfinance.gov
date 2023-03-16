@@ -25,24 +25,6 @@
   border-top: 5px solid @green;
   background: @gray-5;
 
-  // TODO: Determine if this is used and if not, delete it!
-  &_share-icon-list {
-    margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
-    .m-list__horizontal();
-
-    .respond-to-min( @bp-sm-min, {
-      margin-bottom: 0;
-    } );
-
-    .respond-to-min( @bp-med-min, {
-      margin-top: 0;
-      position: absolute;
-      // Aligns with the baseline of .o-footer_nav-list text.
-            top: -9px;
-      right: 0;
-    } );
-  }
-
   &_nav-list {
     .m-list__links();
 
