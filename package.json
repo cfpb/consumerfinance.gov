@@ -43,8 +43,6 @@
     "number-to-words": "1.2.4",
     "papaparse": "5.3.2",
     "postcss": "8.4.21",
-    "react": "16.14.0",
-    "react-dom": "16.14.0",
     "svg-inline-loader": "0.8.2"
   },
   "devDependencies": {
