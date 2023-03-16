@@ -29,6 +29,7 @@ def forwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('wagtailcore', '0067_alter_pagerevision_content_json'),
         ('v1', '0233_crc_tables'),
     ]
 
