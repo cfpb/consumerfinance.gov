@@ -197,10 +197,10 @@ mystring = _("Hello World!")</code></pre>
 <p>The <code>makemessages</code> management command will look through all Python, Django, and Jinja2 template files to find strings that are wrapped in a translation function call and add them to the portable object file for a particular language. The language is specified with <code>-l</code>. The command also must be called from the root of the Django app tree, <em>not</em> the project root.</p>
 <p>To generate or update the portable object file for a specific language, like Spanish:</p>
 <pre class="highlight"><code class="language-shell">cd cfgov
-django-admin.py makemessages -l es --ignore=tests</code></pre>
+./manage.py makemessages -l es --ignore=tests</code></pre>
 <p>Or for all supported languages:</p>
 <pre class="highlight"><code class="language-shell">cd cfgov
-django-admin.py makemessages --all --ignore=tests</code></pre>
+./manage.py makemessages --all --ignore=tests</code></pre>
 <p>Using <code>--ignore=tests</code> will ignore any calls to gettext inside our unit tests.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
