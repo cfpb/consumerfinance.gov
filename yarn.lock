@@ -306,6 +306,13 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@cfpb/cfpb-analytics@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-analytics/-/cfpb-analytics-0.1.4.tgz#c3ccb6472ea5077039e1ce6adb3ec75f956a87de"
+  integrity sha512-mdQVmUO5KPwaf/uUCzfp62m2Pa0lBlsQnhIvDlpLHfFYuoo+y1nMVWc0cGxYRdDDgeAR76U83ZQAIvuucGu6lQ==
+  dependencies:
+    "@cfpb/cfpb-atomic-component" "^0.21.9"
+
 "@cfpb/cfpb-atomic-component@0.21.9", "@cfpb/cfpb-atomic-component@^0.21.9":
   version "0.21.9"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.21.9.tgz#9d4a66236979a22afa0222fb0c5b1e88cc9b1b37"
