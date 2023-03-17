@@ -1,4 +1,4 @@
-import { analyticsLog } from './util/analytics-util';
+import { analyticsLog } from '@cfpb/cfpb-analytics';
 
 // Default time delay before checking location.
 const callBackTime = 100;
