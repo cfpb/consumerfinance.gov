@@ -2,6 +2,7 @@
 base36==0.1.1
 beautifulsoup4==4.8.2
 boto3==1.22.7
+django-autocomplete-light==3.9.4
 django-cors-headers==3.11.0
 django-csp==3.7
 django-opensearch-dsl==0.4.1
@@ -30,7 +31,7 @@ requests-aws4auth==1.1.2
 s3transfer==0.5.2
 wagtail-autocomplete==0.9.0
 wagtail-flags==5.2.0
-wagtail-inventory==1.6
+wagtail-inventory==2.0.0
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.8
 wagtail-treemodeladmin==1.6.0
