@@ -1,5 +1,3 @@
-/* eslint-disable camelcase, no-shadow */
-
 // Define string templates and constants
 const county = ({ complete_fips, gse_limit, fha_limit, va_limit, county }) =>
   `<option value="${complete_fips}" data-gse="${gse_limit}" data-fha="${fha_limit}" data-va="${va_limit}">${county}</option>`;

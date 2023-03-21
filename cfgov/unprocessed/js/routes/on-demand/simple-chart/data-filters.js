@@ -1,6 +1,3 @@
-/* eslint-disable complexity */
-/* eslint max-statements: ["error", 30] */
-/* eslint max-params: ["error", 9] */
 import chartHooks from './chart-hooks.js';
 import { extractSeries, overrideStyles } from './utils.js';
 
@@ -234,7 +231,7 @@ function initFilters(dataAttributes, chartNode, chart, data) {
       attachFilters(selectors, chart, dataAttributes, rawOrTransformed);
     }
   } catch (err) {
-    /* eslint-disable-next-line */
+    /* eslint-disable-next-line no-console */
     console.error(err, 'Bad JSON in chart filters ', filters);
   }
 }

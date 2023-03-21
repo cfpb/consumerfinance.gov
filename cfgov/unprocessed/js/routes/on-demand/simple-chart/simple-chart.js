@@ -1,7 +1,3 @@
-/* eslint-disable complexity */
-/* eslint max-statements: ["error", 30] */
-/* eslint max-lines-per-function: ["error", 75] */
-/* eslint consistent-return: [0] */
 import Highcharts from 'highcharts/highstock';
 import Papa from 'papaparse';
 import accessibility from 'highcharts/modules/accessibility';
@@ -120,7 +116,6 @@ function makeChartOptions(data, dataAttributes) {
 
   defaultObj.series = formatSeries(data);
 
-  /* eslint-disable-next-line */
   defaultObj.title = { text: undefined };
   defaultObj.accessibility.description = description;
   defaultObj.yAxis.title.text = yAxisLabel;

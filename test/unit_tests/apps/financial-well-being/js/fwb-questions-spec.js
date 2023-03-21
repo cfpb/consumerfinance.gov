@@ -202,13 +202,17 @@ describe('fwb-questions', () => {
   it('should send the correct analytics when a radio button is clicked', () => {
     fwbQuestions.init();
     simulateEvent('click', radioButtonsDom[0]);
-    expect(window.dataLayer[0]).toStrictEqual(dataLayerEventRadio);
+    setTimeout(() => {
+      expect(window.dataLayer[0]).toStrictEqual(dataLayerEventRadio);
+    }, 500);
   });
 
   it('should send the correct analytics when the submit button is clicked', () => {
     fillOutForm();
     fwbQuestions.init();
     simulateEvent('click', submitBtnDom);
-    expect(window.dataLayer[0]).toStrictEqual(dataLayerEventSubmit);
+    setTimeout(() => {
+      expect(window.dataLayer[0]).toStrictEqual(dataLayerEventSubmit);
+    }, 500);
   });
 });

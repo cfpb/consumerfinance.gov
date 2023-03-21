@@ -26,7 +26,6 @@ function _easeInOutQuad(currentTime, startPosition, distance, duration) {
     distanceDelta = (distance / 2) * updatedTime * updatedTime;
   } else {
     updatedTime--;
-    // eslint-disable-next-line no-mixed-operators
     distanceDelta = (-distance / 2) * (updatedTime * (updatedTime - 2) - 1);
   }
   return distanceDelta + startPosition;

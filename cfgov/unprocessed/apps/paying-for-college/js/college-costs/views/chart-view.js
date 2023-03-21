@@ -12,9 +12,6 @@ import numberToMoney from 'format-usd';
 import patternFill from 'highcharts/modules/pattern-fill';
 import { updateState } from '../dispatchers/update-state.js';
 
-// curlies in strings is a way of formatting Highcharts labels
-/* eslint-disable no-template-curly-in-string */
-
 more(Highcharts);
 patternFill(Highcharts);
 
