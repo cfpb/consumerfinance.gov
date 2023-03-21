@@ -226,6 +226,7 @@ class EnforcementActionPage(AbstractFilterPage):
             ),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     content_panels = [FieldPanel("header"), FieldPanel("content")]

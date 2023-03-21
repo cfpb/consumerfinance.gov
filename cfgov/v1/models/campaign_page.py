@@ -29,8 +29,16 @@ class CampaignContent(StreamBlock):
 
 
 class CampaignPage(CFGOVPage):
-    header = StreamField(CampaignHeader, blank=True)
-    content = StreamField(CampaignContent, blank=True)
+    header = StreamField(
+        CampaignHeader,
+        blank=True,
+        use_json_field=True,
+    )
+    content = StreamField(
+        CampaignContent,
+        blank=True,
+        use_json_field=True,
+    )
 
     content_panels = CFGOVPage.content_panels + [
         FieldPanel("header"),

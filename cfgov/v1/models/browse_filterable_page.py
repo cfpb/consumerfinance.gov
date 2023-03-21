@@ -36,9 +36,13 @@ class BrowseFilterablePage(FilterableListMixin, AbstractBrowsePage):
         [
             ("text_introduction", molecules.TextIntroduction()),
             ("featured_content", organisms.FeaturedContent()),
-        ]
+        ],
+        use_json_field=True,
     )
-    content = StreamField(BrowseFilterableContent)
+    content = StreamField(
+        BrowseFilterableContent,
+        use_json_field=True,
+    )
 
     # General content tab
     content_panels = AbstractBrowsePage.content_panels + [
