@@ -50,6 +50,7 @@ const jsPaths = [
 
 /**
  * @param {object} baseConfig - The base esbuild configuration.
+ * @returns {object} The modified configuration object.
  */
 function scripts(baseConfig) {
   return {
