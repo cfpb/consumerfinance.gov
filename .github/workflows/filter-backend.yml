@@ -1,6 +1,7 @@
 name: filter-backend
 on:
   pull_request:
+  merge_group:
     paths-ignore:
       - '**.py'
       - 'requirements/**.txt'
