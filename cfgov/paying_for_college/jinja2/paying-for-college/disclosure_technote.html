@@ -4,36 +4,6 @@
     Understanding your financial aid offer | Consumer Financial Protection Bureau
 {% endblock %}
 
-{% block page_meta %}
-<meta charset="UTF-8" />
-<meta property="og:title" content="{{ page.title }} &gt; Consumer Financial Protection Bureau"/>
-<meta property="og:url" content="{{ URL }}"/>
-{% endblock %}
-
-{% block open_graph_image %}
-<meta property="og:image"
-    content="https://s3.amazonaws.com/files.consumerfinance.gov/f/images/ask-cfpb-social-student-loans.original.png">
-<meta property="twitter:image"
-    content="https://s3.amazonaws.com/files.consumerfinance.gov/f/images/ask-cfpb-social-student-loans.original.png">
-{% endblock %}
-
-{% block page_viewport %}
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-{% endblock %}
-
-{% block app_css %}
-<!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="{{ static('apps/paying-for-college/css/main.css') }}">
-<!--<![endif]-->
-
-
-{% endblock %}
-{% block responsive_nav %}
-<a class="toggle-menu" href="#" aria-label="Menu">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.5 1200" class="cf-icon-svg"><path d="M65 370.5h654.5c35.9 0 65-29.1 65-65s-29.1-65-65-65H65c-35.9 0-65 29.1-65 65s29.1 65 65 65zM719.5 515H65c-35.9 0-65 29.1-65 65s29.1 65 65 65h654.5c35.9 0 65-29.1 65-65s-29.1-65-65-65zM719.5 789.4H65c-35.9 0-65 29.1-65 65s29.1 65 65 65h654.5c35.9 0 65-29.1 65-65s-29.1-65-65-65z"></path></svg>
-</a>
-{% endblock %}
-
 {% block content %}
 <main class="understanding-financial-aid-offer" data-context="{{url_root}}">
     <div class="content content__2-1 content__bleedbar">
@@ -1066,9 +1036,4 @@
         </div>
     </div>
 </main>
-
 {% endblock %}
-
-{% block javascript scoped %}
-{{ super() }}
-{% endblock javascript %}

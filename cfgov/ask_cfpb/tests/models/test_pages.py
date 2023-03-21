@@ -26,9 +26,7 @@ from ask_cfpb.models.pages import (
     REUSABLE_TEXT_TITLES,
     AnswerLandingPage,
     AnswerPage,
-    ArticlePage,
     PortalSearchPage,
-    get_standard_text,
     strip_html,
     validate_page_number,
 )
@@ -71,53 +69,6 @@ class AnswerStringTest(TestCase):
         test_answer = Answer(question="Test question?")
         test_answer.save()
         self.assertEqual(test_answer.__str__(), test_answer.question)
-
-
-class ArticlePageTest(TestCase):
-    fixtures = ["ask_tests"]
-
-    def setUp(self):
-        def create_page(model, title, slug, parent, language="en", **kwargs):
-            new_page = model(
-                live=False, language=language, title=title, slug=slug
-            )
-            for k, v in kwargs.items():
-                setattr(new_page, k, v)
-            parent.add_child(instance=new_page)
-            new_page.save()
-            new_page.save_revision(user=self.test_user).publish()
-            return new_page
-
-        self.test_user = User.objects.last()
-        self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
-        self.tools_parent = create_page(
-            SublandingPage, "Consumer Tools", "consumer-tools", self.ROOT_PAGE
-        )
-        self.article_page = create_page(
-            ArticlePage,
-            "Article title",
-            "article-title",
-            self.tools_parent,
-            category="basics",
-            heading="Article heading",
-            intro="Article itro.",
-        )
-
-    def test_article_page_str(self):
-        self.assertEqual(
-            self.article_page.title, "{}".format(self.article_page)
-        )
-
-    def test_article_page_response(self):
-        response = self.client.get(self.article_page.url)
-        self.assertEqual(response.status_code, 200)
-
-    def test_article_page_context(self):
-        response = self.client.get(self.article_page.url)
-        self.assertEqual(
-            get_standard_text(self.article_page.language, "about_us"),
-            response.context_data.get("about_us"),
-        )
 
 
 class PortalSearchPageTest(TestCase):

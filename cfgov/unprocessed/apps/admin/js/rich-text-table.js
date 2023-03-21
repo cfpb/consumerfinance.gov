@@ -1,5 +1,3 @@
-/* eslint-disable camelcase, max-lines-per-function, complexity, max-statements, require-jsdoc, func-style, no-empty-function */
-
 import { stateToHTML } from 'draft-js-export-html';
 
 const body = document.querySelector('body');
@@ -88,7 +86,8 @@ function richTextTable(Handsontable) {
 
     /* TextEditor's TEXTAREA will hold our data for Draftail, and we'll use
        its style when we open the editor. */
-    this.TEXTAREA.id = this.TEXTAREA_PARENT.parentElement.id + '-rich-text-table-cell-editor';
+    this.TEXTAREA.id =
+      this.TEXTAREA_PARENT.parentElement.id + '-rich-text-table-cell-editor';
     this.TEXTAREA.style.display = 'none';
   };
 

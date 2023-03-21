@@ -1,4 +1,5 @@
-import { Delay, addEventListenerToElem, track } from './util/analytics-util';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
+import { Delay, addEventListenerToElem } from './util/analytics-util';
 
 (function () {
   // credit score slider
@@ -16,7 +17,11 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
   function _rangeSliderEventHandler() {
     const sliderRangeEl = document.querySelector('#slider-range');
     const score = sliderRangeEl.textContent;
-    track('OAH Rate Tool Interactions', 'Score range', score);
+    analyticsSendEvent({
+      event: 'OAH Rate Tool Interactions',
+      action: 'Score range',
+      label: score,
+    });
   }
 
   // state select
@@ -24,7 +29,11 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
   addEventListenerToElem(locationEl, 'change', function (evt) {
     const target = evt.target;
     const value = target.value;
-    track('OAH Rate Tool Interactions', 'Select state', value);
+    analyticsSendEvent({
+      event: 'OAH Rate Tool Interactions',
+      action: 'Select state',
+      label: value,
+    });
   });
 
   // house price
@@ -34,7 +43,11 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
     const target = evt.target;
     const value = target.value;
     housePriceDelay(() => {
-      track('OAH Rate Tool Interactions', 'House price', value);
+      analyticsSendEvent({
+        event: 'OAH Rate Tool Interactions',
+        action: 'House price',
+        label: value,
+      });
     }, 5000);
   });
 
@@ -45,7 +58,11 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
     const target = evt.target;
     const value = target.value;
     percentDownDelay(() => {
-      track('OAH Rate Tool Interactions', 'Down payment percent', value);
+      analyticsSendEvent({
+        event: 'OAH Rate Tool Interactions',
+        action: 'Down payment percent',
+        label: value,
+      });
     }, 5000);
   });
 
@@ -56,7 +73,11 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
     const target = evt.target;
     const value = target.value;
     downPaymentDelay(() => {
-      track('OAH Rate Tool Interactions', 'Down payment amount', value);
+      analyticsSendEvent({
+        event: 'OAH Rate Tool Interactions',
+        action: 'Down payment amount',
+        label: value,
+      });
     }, 5000);
   });
 
@@ -65,7 +86,11 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
   addEventListenerToElem(rateStructureEl, 'change', function (evt) {
     const target = evt.target;
     const value = target.value;
-    track('OAH Rate Tool Interactions', 'Rate structure', value);
+    analyticsSendEvent({
+      event: 'OAH Rate Tool Interactions',
+      action: 'Rate structure',
+      label: value,
+    });
   });
 
   // loan term
@@ -73,7 +98,11 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
   addEventListenerToElem(loanTermEl, 'change', function (evt) {
     const target = evt.target;
     const value = target.value;
-    track('OAH Rate Tool Interactions', 'Loan term', value);
+    analyticsSendEvent({
+      event: 'OAH Rate Tool Interactions',
+      action: 'Loan term',
+      label: value,
+    });
   });
 
   // loan type
@@ -81,7 +110,11 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
   addEventListenerToElem(loanTypeEl, 'change', function (evt) {
     const target = evt.target;
     const value = target.value;
-    track('OAH Rate Tool Interactions', 'Loan type', value);
+    analyticsSendEvent({
+      event: 'OAH Rate Tool Interactions',
+      action: 'Loan type',
+      label: value,
+    });
   });
 
   // arm type
@@ -89,7 +122,11 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
   addEventListenerToElem(armTypeEl, 'change', function (evt) {
     const target = evt.target;
     const value = target.value;
-    track('OAH Rate Tool Interactions', 'ARM type', value);
+    analyticsSendEvent({
+      event: 'OAH Rate Tool Interactions',
+      action: 'ARM type',
+      label: value,
+    });
   });
 
   // rate comparison select #1
@@ -97,7 +134,11 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
   addEventListenerToElem(rateCompare1El, 'change', function (evt) {
     const target = evt.target;
     const value = target.value;
-    track('OAH Rate Tool Interactions', 'Interest cost 1', value);
+    analyticsSendEvent({
+      event: 'OAH Rate Tool Interactions',
+      action: 'Interest cost 1',
+      label: value,
+    });
   });
 
   // rate comparison select #2
@@ -105,28 +146,40 @@ import { Delay, addEventListenerToElem, track } from './util/analytics-util';
   addEventListenerToElem(rateCompare2El, 'change', function (evt) {
     const target = evt.target;
     const value = target.value;
-    track('OAH Rate Tool Interactions', 'Interest cost 2', value);
+    analyticsSendEvent({
+      event: 'OAH Rate Tool Interactions',
+      action: 'Interest cost 2',
+      label: value,
+    });
   });
 
   // page reload link
   const reloadLinkEl = document.querySelector('#reload-link');
   addEventListenerToElem(reloadLinkEl, 'click', function () {
-    track(
-      'OAH Rate Tool Interactions',
-      'Revert',
-      '/owning-a-home/rate-checker'
-    );
+    analyticsSendEvent({
+      event: 'OAH Rate Tool Interactions',
+      action: 'Revert',
+      label: '/owning-a-home/rate-checker',
+    });
   });
 
   // next steps: I plan to buy in the next couple of months
   const planToBuyTabEl = document.querySelector('#plan-to-buy-tab');
   addEventListenerToElem(planToBuyTabEl, 'click', function () {
-    track('OAH Rate Tool Interactions', 'Click', 'Collapsed_Tabs_Buying');
+    analyticsSendEvent({
+      event: 'OAH Rate Tool Interactions',
+      action: 'Click',
+      label: 'Collapsed_Tabs_Buying',
+    });
   });
 
   // next steps: I won't buy for several months
   const wontBuyTabEl = document.querySelector('#wont-buy-tab');
   addEventListenerToElem(wontBuyTabEl, 'click', function () {
-    track('OAH Rate Tool Interactions', 'Click', 'Collapsed_Tabs_Not_Buying');
+    analyticsSendEvent({
+      event: 'OAH Rate Tool Interactions',
+      action: 'Click',
+      label: 'Collapsed_Tabs_Not_Buying',
+    });
   });
 })();

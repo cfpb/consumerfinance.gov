@@ -378,7 +378,7 @@ const utils = {
     console.groupCollapsed('previous state:');
     console.log(JSON.stringify(store.getState(), '', '\t'));
     console.groupEnd();
-    var result = next(action); // eslint-disable-line
+    const result = next(action);
     console.groupCollapsed('state:');
     console.log(JSON.stringify(store.getState(), '', '\t'));
     console.groupEnd();

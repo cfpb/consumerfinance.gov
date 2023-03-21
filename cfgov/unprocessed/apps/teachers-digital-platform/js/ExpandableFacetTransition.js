@@ -9,7 +9,6 @@ const CLASSES = {
   OPEN_DEFAULT: 'o-expandable-facets_content__onload-open',
 };
 
-/* eslint-disable max-lines-per-function */
 /**
  * ExpandableFacetTransition
  *

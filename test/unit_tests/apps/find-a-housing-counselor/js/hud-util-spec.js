@@ -4,7 +4,6 @@ describe('hud', () => {
   describe('checkHudData', () => {
     it('Should return true on a valid HUD data, false otherwise.', () => {
       const mockData = {
-        // eslint-disable-next-line camelcase
         counseling_agencies: [{}],
         zip: {},
       };

@@ -1,5 +1,3 @@
-/* eslint-disable complexity */
-
 import chartHooks from './chart-hooks.js';
 
 /**

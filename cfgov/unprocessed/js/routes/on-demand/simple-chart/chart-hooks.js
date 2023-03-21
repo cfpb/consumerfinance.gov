@@ -260,9 +260,9 @@ const hooks = {
         date: datum.date,
         adjustment: 'Seasonally Adjusted',
       });
-    return newData;
-  }, []);
-  
+      return newData;
+    }, []);
+
     return data.sort((a, b) => new Date(a.date) - new Date(b.date));
   },
 

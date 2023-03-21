@@ -53,7 +53,6 @@ function getBreakpointState(width) {
   width = width || window.innerWidth;
 
   let rangeKey;
-  // eslint-disable-next-line guard-for-in
   for (rangeKey in varsBreakpoints) {
     breakpointState[rangeKey] = _inBreakpointRange(
       varsBreakpoints[rangeKey],

@@ -1,5 +1,5 @@
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
-import Analytics from '../modules/Analytics.js';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 const BASE_CLASS = 'o-audio-player';
 const EVENT_CATEGORY = 'Audio Player Events';
@@ -15,7 +15,6 @@ const EVENT_CATEGORY = 'Audio Player Events';
  * @returns {AudioPlayer} An instance.
  */
 function AudioPlayer(element) {
-  // eslint-disable-line max-lines-per-function
   const _dom = checkDom(element, BASE_CLASS);
 
   /**
@@ -32,7 +31,7 @@ function AudioPlayer(element) {
     let pctComplete = 25;
 
     _dom.addEventListener('play', function sendEvent() {
-      Analytics.sendEvent({
+      analyticsSendEvent({
         event: EVENT_CATEGORY,
         action: 'Play',
         label: label,
@@ -43,7 +42,7 @@ function AudioPlayer(element) {
       const pct = Math.ceil((100 * currentTime) / event.target.duration);
 
       if (pct !== 100) {
-        Analytics.sendEvent({
+        analyticsSendEvent({
           event: EVENT_CATEGORY,
           action: `Paused at ${pct}%`,
           label: label,
@@ -51,7 +50,7 @@ function AudioPlayer(element) {
       }
     });
     _dom.addEventListener('ended', function sendEvent() {
-      Analytics.sendEvent({
+      analyticsSendEvent({
         event: EVENT_CATEGORY,
         action: 'Listened to end',
         label: label,
@@ -66,7 +65,7 @@ function AudioPlayer(element) {
            the event if this is the first pct that is greater than or equal to
            the current milestone. */
       if (pct >= pctComplete && pct <= 75) {
-        Analytics.sendEvent({
+        analyticsSendEvent({
           event: EVENT_CATEGORY,
           action: `Reached ${pctComplete}%`,
           label: label,
