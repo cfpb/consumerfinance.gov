@@ -37,7 +37,7 @@ wagtail-inventory==2.0.0
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.8
 wagtail-treemodeladmin==1.7.0
-wagtailmedia==0.9.0
+wagtailmedia==0.13
 
 # These packages are installed from GitHub.
 https://github.com/cfpb/owning-a-home-api/releases/download/0.17.3/owning_a_home_api-0.17.3-py3-none-any.whl
