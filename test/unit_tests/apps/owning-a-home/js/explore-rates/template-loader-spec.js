@@ -9,7 +9,6 @@ import {
 
 describe('explore-rates/template-loader', () => {
   it('should be able to render county template', () => {
-    /* eslint-disable camelcase */
     const mockData = {
       complete_fips: 1,
       gse_limit: 1,
@@ -17,7 +16,6 @@ describe('explore-rates/template-loader', () => {
       va_limit: 1,
       county: 'Test',
     };
-    /* eslint-enable camelcase */
 
     const testTemplate = county(mockData);
     expect(testTemplate).toBe(

@@ -18,7 +18,6 @@ let _scriptLoaded;
  */
 function attachAPIReadyCallback(callback) {
   if (_scriptLoaded) {
-    // eslint-disable-next-line callback-return
     callback();
   }
 

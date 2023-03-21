@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-len
 export const raw = [
   {
     className: 'default',

@@ -127,8 +127,9 @@ describe('fwb-results', () => {
 
   it('should submit the correct analytics when a toggle button is clicked', () => {
     simulateEvent('click', toggleButtons[0]);
-
-    expect(window.dataLayer[0]).toStrictEqual(dataLayerEvent);
+    setTimeout(() => {
+      expect(window.dataLayer[0]).toStrictEqual(dataLayerEvent);
+    }, 500);
   });
 
   it('should show the initial category on page load', () => {

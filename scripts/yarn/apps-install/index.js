@@ -5,7 +5,6 @@ under the ./cfgov/unprocessed/apps/ path.
  */
 
 import * as fs from 'fs';
-// eslint-disable-next-line no-sync
 import childProcess from 'child_process';
 const execSync = childProcess.execSync;
 
@@ -13,7 +12,6 @@ import environment from '../../../config/environment.js';
 const paths = environment.paths;
 
 // Aggregate application namespaces that appear in unprocessed/apps.
-// eslint-disable-next-line no-sync
 let apps = fs.readdirSync(`${paths.unprocessed}/apps/`);
 
 // Filter out hidden directories.
@@ -26,9 +24,7 @@ apps.forEach((app) => {
   const appsPath = `${paths.unprocessed}/apps/${app}`;
   const pkgPath = `${appsPath}/package.json`;
 
-  // eslint-disable-next-line no-sync
   if (fs.existsSync(pkgPath)) {
-    // eslint-disable-next-line no-sync
     const pkgJSON = JSON.parse(fs.readFileSync(pkgPath));
     if (
       (pkgJSON.dependencies &&
@@ -37,7 +33,6 @@ apps.forEach((app) => {
         Object.keys(pkgJSON.devDependencies).length !== 0)
     ) {
       try {
-        // eslint-disable-next-line no-sync
         const stdOut = execSync(`yarn --cwd ${appsPath} install`);
         // eslint-disable-next-line no-console
         console.log(`${appsPath}'s yarn output: ${stdOut.toString()}`);
@@ -49,7 +44,6 @@ apps.forEach((app) => {
 
         // eslint-disable-next-line no-console
         console.log(`exec error from ${appsPath}: ${error}`);
-        // eslint-disable-next-line no-process-exit
         process.exit(1);
       }
     }
