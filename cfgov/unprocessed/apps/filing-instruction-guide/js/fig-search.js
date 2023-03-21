@@ -1,10 +1,8 @@
 /* istanbul ignore file */
 /* Cypress tests cover all the UI interactions on this page. */
 
-import {
-  addEventListenerToSelector,
-  track,
-} from '../../../apps/analytics-gtm/js/util/analytics-util';
+import { addEventListenerToSelector } from '../../../apps/analytics-gtm/js/util/analytics-util';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import search from 'ctrl-f';
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
 import { scrollIntoViewWithOffset } from './fig-sidenav-utils.js';
@@ -41,7 +39,11 @@ function init() {
 
   // Track clicks on the FIG search form button
   addEventListenerToSelector('#ctrl-f', 'click', () => {
-    track('Small Business Lending FIG event', 'search:click', '');
+    analyticsSendEvent({
+      event: 'Small Business Lending FIG event',
+      action: 'search:click',
+      label: '',
+    });
   });
 }
 
@@ -94,11 +96,11 @@ const onFollow = (event) => {
   }
 
   // Track clicks on individual search results
-  track(
-    'Small Business Lending FIG event',
-    'searchresults:click',
-    figHeadingLabel
-  );
+  analyticsSendEvent({
+    event: 'Small Business Lending FIG event',
+    action: 'searchresults:click',
+    label: figHeadingLabel,
+  });
 };
 
 /**
@@ -108,7 +110,11 @@ const onFollow = (event) => {
  * @param {string} query - Search term that was submitted.
  */
 const onSubmit = (query) => {
-  track('Small Business Lending FIG event', 'search:entry', query);
+  analyticsSendEvent({
+    event: 'Small Business Lending FIG event',
+    action: 'search:entry',
+    label: query,
+  });
 };
 
 export { init, getSearchData };

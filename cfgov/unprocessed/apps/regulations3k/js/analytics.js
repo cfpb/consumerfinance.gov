@@ -1,4 +1,4 @@
-import Analytics from '../../../js/modules/Analytics.js';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 /**
  * Sends the user interaction to Analytics
@@ -9,10 +9,10 @@ import Analytics from '../../../js/modules/Analytics.js';
  * @returns {object} Event data
  */
 const sendEvent = (action, label, category) => {
-  category = category || 'eRegs Event';
-  const eventData = Analytics.getDataLayerOptions(action, label, category);
-  Analytics.sendEvent(eventData);
-  return eventData;
+  const event = category || 'eRegs Event';
+  const payload = { action, label, event };
+  analyticsSendEvent(payload);
+  return payload;
 };
 
 /**
