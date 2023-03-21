@@ -4,10 +4,8 @@
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
 
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
-import {
-  addEventListenerToSelector,
-  track,
-} from '../../../apps/analytics-gtm/js/util/analytics-util';
+import { addEventListenerToSelector } from '../../../apps/analytics-gtm/js/util/analytics-util';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import {
   DESKTOP,
   viewportIsIn,
@@ -101,11 +99,11 @@ const init = () => {
 
   // Track clicks on the FIG sidebar nav links
   addEventListenerToSelector('.o-fig_sidebar .m-nav-link', 'click', (event) => {
-    track(
-      'Small Business Lending FIG event',
-      'toc:click',
-      event.target?.innerText
-    );
+    analyticsSendEvent({
+      event: 'Small Business Lending FIG event',
+      action: 'toc:click',
+      label: event.target?.innerText,
+    });
   });
 };
 

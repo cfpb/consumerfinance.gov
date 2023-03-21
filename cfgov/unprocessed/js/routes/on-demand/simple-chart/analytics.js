@@ -1,4 +1,4 @@
-import Analytics from '../../../modules/Analytics.js';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 /**
  * Prints an aesthetic time range from a time-aware chart event
@@ -36,7 +36,7 @@ function getTimeRange(evt) {
  */
 function trackChartEvent(evt, name, label) {
   if (!label) label = getTimeRange(evt);
-  Analytics.sendEvent({
+  analyticsSendEvent({
     event: 'Page Interaction',
     action: `${name}: ${getChartTitle(evt)}`,
     label,

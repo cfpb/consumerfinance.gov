@@ -1,4 +1,5 @@
-import { addEventListenerToSelector, track } from './util/analytics-util';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
+import { addEventListenerToSelector } from './util/analytics-util';
 
 /*
 Buying a House /owning-a-home/loan-estimate/
@@ -53,7 +54,11 @@ export default function (label) {
   function trackFormExplainerPageLinkClick(event) {
     const target = event.target;
     const pageNumber = 'Page ' + target.getAttribute('data-page');
-    track(trackingLabel, 'Page link click', pageNumber);
+    analyticsSendEvent({
+      event: trackingLabel,
+      action: 'Page link click',
+      label: pageNumber,
+    });
   }
 
   /**
@@ -69,7 +74,7 @@ export default function (label) {
     if (target.classList.contains('prev')) {
       action = 'Previous Page button clicked';
     }
-    track(trackingLabel, action, currentPage);
+    analyticsSendEvent({ event: trackingLabel, action, label: currentPage });
   }
 
   /**
@@ -90,7 +95,7 @@ export default function (label) {
     if (expandableStates[expandableID] === true) {
       action = 'Expandable expanded';
     }
-    track(trackingLabel, action, text);
+    analyticsSendEvent({ event: trackingLabel, action, label: text });
   }
 
   /**
@@ -111,7 +116,7 @@ export default function (label) {
     if (expandableStates[expandableID] === true) {
       action = 'Image Overlay click - expandable expanded';
     }
-    track(trackingLabel, action, text);
+    analyticsSendEvent({ event: trackingLabel, action, label: text });
   }
 
   addEventListenerToSelector(

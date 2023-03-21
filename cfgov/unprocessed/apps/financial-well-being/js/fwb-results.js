@@ -1,4 +1,4 @@
-import Analytics from '../../../js/modules/Analytics.js';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 
 let buttonsDom;
@@ -37,18 +37,6 @@ function switchComparisons(category) {
 }
 
 /**
- * Sends the user interaction to Analytics
- *
- * @param {string} action - A GTM data attribute
- * @param {string} label - A GTM data attribute
- * @param {string} category - A GTM data attribute
- */
-function sendEvent(action, label, category) {
-  const eventData = Analytics.getDataLayerOptions(action, label, category);
-  Analytics.sendEvent(eventData);
-}
-
-/**
  * Grabs analytics event data from the passed element's data attributes.
  * Determines the state of the Analytics module and either passes the data
  * or waits for Analytics to report readiness, then passes the data.
@@ -60,12 +48,11 @@ function handleAnalytics(el) {
   const label = el.getAttribute('data-gtm-label');
   const category = el.getAttribute('data-gtm-category');
 
-  if (Analytics.tagManagerIsLoaded) {
-    sendEvent(action, label, category);
-  } else {
-    /* istanbul ignore next */
-    Analytics.addEventListener('gtmLoaded', sendEvent);
-  }
+  analyticsSendEvent({
+    action,
+    label,
+    category,
+  });
 }
 
 /**
