@@ -32,6 +32,7 @@ const cssPaths = [
 
 /**
  * @param {object} baseConfig - The base esbuild configuration.
+ * @returns {object} The modified configuration object.
  */
 function styles(baseConfig) {
   return {
