@@ -184,14 +184,8 @@ export class AdminPage {
   }
 
   openBlockInventory() {
-    this.openNavigationTab('Settings');
+    this.openNavigationTab('Reports');
     this.selectSubMenu('Block Inventory');
-  }
-
-  searchBlocks() {
-    cy.get('#id_form-0-block').select('ask_cfpb.models.blocks.Tip');
-    // This form doesn't follow the standard Wagtail Format
-    cy.get('form[action="/admin/inventory/"]').submit();
   }
 
   searchResults() {

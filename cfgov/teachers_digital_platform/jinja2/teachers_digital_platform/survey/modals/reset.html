@@ -11,7 +11,10 @@
     <div class="o-modal_content">
       <div class="o-modal_body">
         <button class="o-modal_close a-btn a-btn__link" type="button">
-          Close<span class="a-icon a-icon__large a-icon__space-before">{% include 'icons/close-round.svg' %}</span>
+          Close
+          <span class="a-icon a-icon__large a-icon__space-before">
+            {{ svg_icon('error-round') }}
+          </span>
         </button>
         <h2 id="{{ id }}_title" class="h3">Reset survey and start over</h2>
         <div id="{{ id }}_desc">
