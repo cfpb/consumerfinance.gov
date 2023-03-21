@@ -1,3 +1,4 @@
+import json
 import tempfile
 from unittest import mock
 
@@ -601,7 +602,17 @@ class AnswerPageTest(TestCase):
             answer_base=self.answer1234,
             slug="mock-question-en-1234",
             title="Mock question1",
-            answer_content="Mock answer 1",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Mock answer 1",
+                        },
+                    }
+                ]
+            ),
             question="Mock question1",
             search_tags="hippodrome",
         )
@@ -612,7 +623,17 @@ class AnswerPageTest(TestCase):
             slug="mock-spanish-question1-es-1234",
             title="Mock Spanish question1",
             answer_base=self.answer1234,
-            answer_content="Mock Spanish answer",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Mock Spanish answer",
+                        },
+                    }
+                ]
+            ),
             question="Mock Spanish question1",
             search_tags="hipotecas",
         )
@@ -625,7 +646,17 @@ class AnswerPageTest(TestCase):
             slug="mock-question2-en-5678",
             title="Mock question2",
             answer_base=self.answer5678,
-            answer_content="Mock answer 2",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Mock answer 2",
+                        },
+                    }
+                ]
+            ),
             question="Mock question2",
             search_tags="hippodrome",
         )
@@ -736,8 +767,8 @@ class AnswerPageTest(TestCase):
 
     def test_get_meta_description(self):
         page = self.page1
-        # Defaults to empty string
-        self.assertEqual(page.get_meta_description(), "")
+        # Defaults to standard answer content
+        self.assertEqual(page.get_meta_description(), "Mock answer 1")
 
         # Second fallback is truncated answer_content text block
         data = [
