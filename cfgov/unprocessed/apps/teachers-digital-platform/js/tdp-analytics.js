@@ -1,4 +1,4 @@
-import Analytics from '../../../js/modules/Analytics.js';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import { SCORES_UNSET_KEY } from './survey/config.js';
 
 /**
@@ -11,9 +11,9 @@ import { SCORES_UNSET_KEY } from './survey/config.js';
  */
 let sendEvent = (action, label, category) => {
   category = category || 'TDP Search Tool';
-  const eventData = Analytics.getDataLayerOptions(action, label, category);
-  Analytics.sendEvent(eventData);
-  return eventData;
+  const payload = { action, label, category };
+  analyticsSendEvent(payload);
+  return payload;
 };
 
 /**
@@ -25,9 +25,9 @@ let sendEvent = (action, label, category) => {
  */
 let sendSurveyEvent = (action, label) => {
   const category = 'Student Survey Interaction';
-  const eventData = Analytics.getDataLayerOptions(action, label, category);
-  Analytics.sendEvent(eventData);
-  return eventData;
+  const payload = { action, label, category };
+  analyticsSendEvent(payload);
+  return payload;
 };
 
 /**

@@ -1,3 +1,5 @@
+import { analyticsLog } from '@cfpb/cfpb-analytics';
+
 /**
  * Query a selector and add listeners to returned elements.
  *
@@ -28,22 +30,6 @@ function addEventListenerToElem(elem, event, callback) {
 }
 
 /**
- * Log a message to the console if the `debug-gtm` URL parameter is set.
- *
- * @param {string} msg - Message to load to the console.
- */
-function analyticsLog(...msg) {
-  // Check if URLSearchParams is supported (Chrome > 48; Edge > 16).
-  if (typeof window.URLSearchParams === 'function') {
-    // Get query params.
-    const queryParams = new URLSearchParams(window.location.search);
-    if (queryParams.get('debug-gtm') === 'true') {
-      console.log(`ANALYTICS DEBUG MODE: ${msg}`);
-    }
-  }
-}
-
-/**
  * Create a delay given a callback function and millisecond delay.
  *
  * @class
@@ -56,27 +42,4 @@ function Delay() {
   };
 }
 
-/**
- * TODO: Merge with Analytics.js.
- * Track an analytics event and log the event.
- *
- * @param {string} event - Type of event.
- * @param {string} action - Name of event.
- * @param {string} label - DOM element label.
- */
-function track(event, action, label) {
-  window.dataLayer.push({
-    event: event,
-    action: action,
-    label: label,
-  });
-  analyticsLog(event, action, label);
-}
-
-export {
-  addEventListenerToSelector,
-  addEventListenerToElem,
-  analyticsLog,
-  Delay,
-  track,
-};
+export { addEventListenerToSelector, addEventListenerToElem, Delay };

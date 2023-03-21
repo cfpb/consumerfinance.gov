@@ -184,18 +184,29 @@ export class AdminPage {
   }
 
   openBlockInventory() {
-    this.openNavigationTab('Settings');
+    this.openNavigationTab('Reports');
     this.selectSubMenu('Block Inventory');
   }
 
   searchBlocks() {
-    cy.get('#id_form-0-block').select('ask_cfpb.models.blocks.Tip');
-    // This form doesn't follow the standard Wagtail Format
-    cy.get('form[action="/admin/inventory/"]').submit();
+    // Use the Select2 widgets per https://www.cypress.io/blog/2020/03/20/working-with-select-elements-and-select2-widgets-in-cypress/
+    cy.get('.select2-container').first().click()
+    cy.get('input.select2-search__field').first().type('ask_cfpb.models.blocks{enter}')
+    cy.get('#id_include_page_blocks').invoke('val').should('have.length.above', 0);
+
+    // confirm Select2 widget renders the state name
+    cy.get('.select2-selection__choice').first().should(
+      (list) => {
+        expect(list[0].title).contains('ask_cfpb')
+      }
+    )
+
+    cy.get('.report__filters form').submit();
   }
 
   searchResults() {
-    return cy.get('.listing');
+    cy.get('.listing').should('be.visible');
+    return cy.get('.listing tbody tr');
   }
 
   searchExternalLink(link) {
