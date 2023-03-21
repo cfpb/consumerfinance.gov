@@ -12,12 +12,15 @@
     <div class="o-modal_content">
       <div class="o-modal_body">
         <button class="o-modal_close a-btn a-btn__link" type="button">
-          Close<span class="a-icon a-icon__large a-icon__space-before">{% include 'icons/close-round.svg' %}</span>
+          Close
+          <span class="a-icon a-icon__large a-icon__space-before">
+            {{ svg_icon('error-round') }}
+          </span>
         </button>
         <h2 id="{{ id }}_title" class="h3">Share</h2>
         <div id="{{ id }}_desc">
           <div class="m-notification m-notification__error tdp-survey__initials-error">
-            {% include 'icons/error-round.svg' %}
+            {{ svg_icon('error-round') }}
             <div class="m-notification_content">
               <div class="h4 m-notification_message">You forgot to enter your initials.</div>
             </div>
@@ -43,7 +46,7 @@
             <div>
               <button class="a-btn">Copy link</button>
               <div class="share-output__copied" hidden>
-                {% include 'icons/approved-round.svg' %}
+                {{ svg_icon('approved-round') }}
                 <div>Link copied to clipboard</div>
               </div>
             </div>
