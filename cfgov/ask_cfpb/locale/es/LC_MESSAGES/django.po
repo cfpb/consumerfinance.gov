@@ -84,10 +84,6 @@ msgstr "No se encontraron resultados para"
 msgid "Please enter a search term in the box above."
 msgstr "Por favor escriba su búsqueda arriba"
 
-#: ask_cfpb/jinja2/ask-cfpb/article-page.html:33
-msgid "In this article"
-msgstr "En este artículo"
-
 #: ask_cfpb/jinja2/ask-cfpb/landing-page.html:6
 msgid "Read answer"
 msgstr "Leer la respuesta"
