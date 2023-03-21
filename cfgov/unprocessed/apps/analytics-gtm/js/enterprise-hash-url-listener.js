@@ -1,4 +1,4 @@
-import { track } from './util/analytics-util';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 (function () {
   let action =
@@ -6,5 +6,5 @@ import { track } from './util/analytics-util';
   action = action.replace('#', 'GA_HASHTAG');
   const label = document.title;
 
-  track('Virtual Pageview', action, label);
+  analyticsSendEvent({ event: 'Virtual Pageview', action, label });
 })();

@@ -91,7 +91,6 @@ describe('breakpoint-state', () => {
     it('should set the correct state property when passed width', () => {
       let width;
 
-      // eslint-disable-next-line guard-for-in
       let rangeKey;
       for (rangeKey in varsBreakpoints) {
         if ({}.hasOwnProperty.call(varsBreakpoints, rangeKey)) {

@@ -36,7 +36,7 @@ function FilterableList(element) {
       _dom.querySelector(`.${FilterableListControls.BASE_CLASS}`)
     );
     _filterableListControls.addEventListener(
-      'fieldInvalid',
+      'fieldinvalid',
       _fieldInvalidHandler
     );
 

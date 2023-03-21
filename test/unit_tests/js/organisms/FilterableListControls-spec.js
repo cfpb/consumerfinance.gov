@@ -213,7 +213,7 @@ describe('FilterableListControls', () => {
 
       expect(field.classList.contains(FIELD_ERROR_CLASS)).toBeFalsy();
 
-      filterableListControls.addEventListener('fieldInvalid', () => {
+      filterableListControls.addEventListener('fieldinvalid', () => {
         expect(field.classList.contains(FIELD_ERROR_CLASS)).toBeTruthy();
         done();
       });

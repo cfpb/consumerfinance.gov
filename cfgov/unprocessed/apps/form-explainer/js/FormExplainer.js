@@ -62,7 +62,6 @@ class FormExplainer {
       }
     });
 
-    // eslint-disable-next-line global-require
     Expandable.init();
   }
 

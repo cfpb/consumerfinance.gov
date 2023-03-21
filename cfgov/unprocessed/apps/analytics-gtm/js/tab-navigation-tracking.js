@@ -18,7 +18,6 @@ try {
  * for tracking tab navigation of the site.
  */
 
-// eslint-disable-next-line max-lines-per-function, complexity, max-statements
 (() => {
   // Bail out if localStorage is not supported or is blocked.
   if (!window.Storage || _localStorage === null || _sessionStorage === null) {

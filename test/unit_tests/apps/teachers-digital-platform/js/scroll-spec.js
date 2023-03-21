@@ -25,7 +25,6 @@ function simulateEvent(eventType, target) {
   return target.dispatchEvent(event);
 }
 
-/* eslint-disable max-lines-per-function, no-undefined */
 describe('Scroll', () => {
   beforeEach(() => {
     // Load HTML fixture

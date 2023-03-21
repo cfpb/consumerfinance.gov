@@ -7,9 +7,7 @@
  * Environment variable mappings in JavaScript from the project root .env file.
  */
 const envvars = {
-  /* eslint-disable no-process-env */
   NODE_ENV: process.env.NODE_ENV,
-  /* eslint-enable no-process-env */
 };
 
 /**

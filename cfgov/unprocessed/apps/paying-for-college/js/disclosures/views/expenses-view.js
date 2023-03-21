@@ -1,8 +1,7 @@
 // TODO: Remove jquery.
 import $ from 'jquery';
 
-import Analytics from '../utils/Analytics.js';
-const getDataLayerOptions = Analytics.getDataLayerOptions;
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import getExpenses from '../dispatchers/get-expenses-values.js';
 import publish from '../dispatchers/publish-update.js';
 import {
@@ -62,12 +61,10 @@ const expensesView = {
       }
       if (values.monthlyLeftover > 0) {
         expensesHigherThanSalary.hide();
-        Analytics.sendEvent(
-          getDataLayerOptions(
-            'Total left at the end of the month',
-            'Zero left to pay'
-          )
-        );
+        analyticsSendEvent({
+          action: 'Total left at the end of the month',
+          label: 'Zero left to pay',
+        });
       } else {
         expensesHigherThanSalary.show();
       }
@@ -150,7 +147,7 @@ const expensesView = {
     $('[data-expenses]').one('change', function () {
       const expenses = $(this).data('expenses');
       if (expenses) {
-        Analytics.sendEvent(getDataLayerOptions('Value Edited', expenses));
+        analyticsSendEvent({ action: 'Value Edited', label: expenses });
       }
     });
   },
@@ -163,7 +160,7 @@ const expensesView = {
       const region = $(this).val();
       publish.updateRegion(region);
       expensesView.updateView(getExpenses.values());
-      Analytics.sendEvent(getDataLayerOptions('Region Changed', region));
+      analyticsSendEvent({ action: 'Region Changed', label: region });
     });
   },
 };
