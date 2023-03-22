@@ -1,6 +1,7 @@
 name: functional
 
 on:
+  pull_request:
   merge_group:
 
 jobs:
