@@ -183,7 +183,7 @@ Postgres Environment Vars
 Elasticsearch Environment Vars
 */}}
 {{- define "cfgov.elasticsearchEnv" -}}
-- name: ES_SCHEMA
+- name: ES_SCHEME
   value: "{{ default "http" .Values.elasticsearch.protocol }}"
 - name: ES_HOST
 {{- if .Values.elasticsearch.enabled }}
