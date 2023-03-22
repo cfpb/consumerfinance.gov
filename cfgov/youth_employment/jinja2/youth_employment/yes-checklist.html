@@ -6,8 +6,8 @@
 
    Description:
 
-   Build a checklist from a set of blocks for printing. Used in the Youth employment
-   success Car buying guide.
+   Build a checklist from a set of blocks for printing.
+   Used in the Youth employment success Car buying guide.
 
    value.checklist is a list of checklist blocks. each block has these elements:
 
@@ -21,7 +21,7 @@
     <div class="m-notification
                 m-notification__visible
                 m-notification__error">
-              {% include "icons/error-round.svg" %}
+      {{ svg_icon('error-round') }}
       <div class="m-notification_content">
         <div class="h4 m-notification_message">Choose at least one goal.</div>
       </div>
@@ -60,7 +60,7 @@
       <tbody class="cbg-print-goals-body"></tbody>
     </table>
   </div>
-  
+
   <div class="block block__flush-bottom">
     <h3>I’ll consider these goals next:</h3>
 
@@ -75,6 +75,6 @@
   </div>
 </div>
 
-<link rel="stylesheet" 
+<link rel="stylesheet"
       href="{{ static('css/on-demand/car-buying-guide.css') }}"
       media="print">
