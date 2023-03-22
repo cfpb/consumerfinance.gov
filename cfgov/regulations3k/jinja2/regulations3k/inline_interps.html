@@ -28,7 +28,7 @@
     </button>
 
     <div class="o-expandable_content">
-        {{ contents }}
+        {{ contents | safe }}
 
         <p><a href="{{ url }}">See interpretation of {% if section_title %}{{ section_title }}{% else %}this section{% endif %} in {{ interp_location }}</a></p>
     </div>
