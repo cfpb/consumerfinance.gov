@@ -295,6 +295,6 @@ kibana:
 
 # search is used when not deploying ES/OS via chart. Ergo, external to k8s
 search:
-  # schema: http
+  # scheme: http
   host: ""
   # port: 9200

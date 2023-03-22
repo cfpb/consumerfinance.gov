@@ -204,7 +204,7 @@ Elasticsearch Environment Vars
 Opensearch Environment Vars
 */}}
 {{- define "cfgov.opensearchEnv" -}}
-- name: ES_SCHEMA
+- name: ES_SCHEME
   value: "{{ default "https" .Values.opensearch.protocol }}"
 - name: ES_HOST
 {{- if .Values.opensearch.nameOverride }}
@@ -224,7 +224,7 @@ Opensearch Environment Vars
 {{- else if .Values.opensearch.enabled }}
 {{- include "cfgov.opensearchEnv" . }}
 {{- else }}
-- name: ES_SCHEMA
+- name: ES_SCHEME
   value: "{{ default "http" .Values.search.scheme }}"
 - name: ES_HOST
   value: "{{ .Values.search.host }}"
