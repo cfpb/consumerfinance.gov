@@ -1,6 +1,6 @@
 name: helmlint
 
-on: merge_group
+on: pull_request
 
 jobs:
   lint-test:
