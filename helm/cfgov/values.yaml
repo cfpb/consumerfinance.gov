@@ -76,6 +76,7 @@ ingress:
 
 mapping:
   enabled: false
+  domainSuffix: ""
 
 environmentName: dev-internal
 
@@ -280,6 +281,7 @@ elasticsearch:
   externalHostname: ""  # AWS OpenSearch
   service:
     type: ClusterIP
+  maxUnavailable: 0
 
 kibana:
   enabled: false

@@ -207,8 +207,8 @@ Mapping/Ingress Hostname FQDN
 {{- define "cfgov.fqdn" -}}
 {{- if .Values.fqdnOverride }}
 {{- .Values.fqdnOverride }}
-{{- else if .Values.domainName }}
-{{- include "cfgov.fullname" . }}-eks.{{ .Values.domainName }}
+{{- else if .Values.mapping.domainSuffix }}
+{{- include "cfgov.fullname" . }}-eks.{{ .Values.mapping.domainSuffix }}
 {{- else }}
 {{- include "cfgov.fullname" . }}-eks.{{ default "dev-internal" .Values.environmentName }}.aws.cfpb.gov
 {{- end }}
