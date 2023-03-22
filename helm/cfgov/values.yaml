@@ -12,6 +12,11 @@ release:
 
 replicaCount: 1
 
+ascp:
+  enabled: false
+  parameters: ""
+  secretObjects: ""
+
 image:
   repository: cfgov_python
   pullPolicy: IfNotPresent

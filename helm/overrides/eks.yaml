@@ -1,3 +1,6 @@
 mapping:
   enabled: true
   domainSuffix: ${DOMAIN_NAME}
+
+serviceAccount:
+  create: false

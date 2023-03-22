@@ -98,6 +98,40 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+CFGOV Volumes
+*/}}
+{{- define "cfgov.volumes" -}}
+{{- if .Values.ascp.enabled }}
+- name: aws-secrets
+  csi:
+    driver: secrets-store.csi.k8s.io
+    readOnly: true
+    volumeAttributes:
+      # This value must match metadata/name in SecretProviderClass
+      secretProviderClass: {{ include "cfgov.fullname" . }}-aws-secrets
+{{- end }}
+{{- range .Values.volumes }}
+- name: {{ .name }}
+  {{ toYaml .volume }}
+{{- end }}
+{{- end }}
+
+{{/*
+CFGOV Volume Mounts
+*/}}
+{{- define "cfgov.volumeMounts" -}}
+{{- if .Values.ascp.enabled }}
+- name: "aws-secrets"
+  mountPath: "/var/run/secrets/cfgov"
+  readOnly: true
+{{- end }}
+{{- range .Values.volumes }}
+- mountPath: {{ .mountPath }}
+  name: {{ .name }}
+{{- end }}
+{{- end }}
+
+{{/*
 Postgres Environment Vars
 */}}
 {{- define "cfgov.postgresEnv" -}}
@@ -115,8 +149,7 @@ Postgres Environment Vars
   value: "{{ include "postgresql.database" .Subcharts.postgresql | default "postgres" }}"
 - name: PGPORT
   value: "{{ include "postgresql.service.port" .Subcharts.postgresql }}"
-{{- else }}
-{{- if .Values.postgresql.auth.createSecret -}}
+{{- else if .Values.postgresql.auth.createSecret -}}
 - name: PGUSER
   valueFrom:
     secretKeyRef:
@@ -132,14 +165,13 @@ Postgres Environment Vars
     secretKeyRef:
       name: {{ include "cfgov.fullname" . }}-postgres
       key: database
-{{- else }}
+{{- else if not .Values.ascp.enabled }}
 - name: PGUSER
   value: "{{ .Values.postgresql.auth.username | default "postgres" }}"
 - name: PGPASSWORD
   value: {{ .Values.postgresql.auth.password | quote }}
 - name: PGDATABASE
   value: "{{ .Values.postgresql.auth.database | default "postgres" }}"
-{{- end }}
 - name: PGHOST
   value: {{ .Values.postgresql.external.host | quote }}
 - name: PGPORT
@@ -193,7 +225,7 @@ Opensearch Environment Vars
 {{- include "cfgov.opensearchEnv" . }}
 {{- else }}
 - name: ES_SCHEMA
-  value: "{{ default "http" .Values.search.schema }}"
+  value: "{{ default "http" .Values.search.scheme }}"
 - name: ES_HOST
   value: "{{ .Values.search.host }}"
 - name: ES_PORT

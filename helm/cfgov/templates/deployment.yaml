@@ -42,10 +42,7 @@ spec:
             {{- end }}
           {{- end }}
           volumeMounts:
-            {{- range .Values.volumes }}
-            - mountPath: {{ .mountPath }}
-              name: {{ .name }}
-            {{- end }}
+            {{- include "cfgov.volumeMounts" . | nindent 12 }}
           env:
             - name: RUN_MIGRATIONS
               value: "true"
@@ -92,10 +89,7 @@ spec:
               port: http
             timeoutSeconds: 3
           volumeMounts:
-            {{- range .Values.volumes }}
-            - mountPath: {{ .mountPath }}
-              name: {{ .name }}
-            {{- end }}
+            {{- include "cfgov.volumeMounts" . | nindent 12 }}
           env:
             - name: APACHE_PORT
               value: "8000"
@@ -108,10 +102,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-        {{- range .Values.volumes }}
-        - name: {{ .name }}
-          {{- toYaml .volume | nindent 10 }}
-        {{- end }}
+        {{- include "cfgov.volumes" . | nindent 8 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -l
 
 # ==========================================================================
 # Dump the contents of the Database into a gzipped SQL file.

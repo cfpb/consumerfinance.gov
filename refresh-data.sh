@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 
 # ==========================================================================
 # Import data from a gzipped dump. Provide the filename as the first arg.

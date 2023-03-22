@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 FROM python:3.8-alpine as base
 
 # Hard labels
@@ -138,8 +139,24 @@ ENV ALLOWED_HOSTS '["*"]'
 
 # Install Apache server and curl (container healthcheck),
 # and converts all Docker Secrets into environment variables.
-RUN apk add --no-cache apache2 curl && \
-    echo '[ -d /var/run/secrets ] && for s in $(find /var/run/secrets -type f -name "*" -maxdepth 1) ; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
+RUN apk add --no-cache apache2 curl
+
+# Convert sercrets to environment variables
+COPY <<EOF /etc/profile.d/secrets_env.sh
+if [ -d \${SECRETS_DIR:-/var/run/secrets/cfgov} ]; then
+    FIND_CMD="find"
+    if [ ! -z \$SECRETS_FOLLOW_SYMLINKS ] && \
+        [ $(echo -n "\$SECRETS_FOLLOW_SYMLINKS" | tr '[A-Z]' '[a-z]') == "true" ]; then
+        FIND_CMD="find -L"
+    fi
+    for s in $(\$FIND_CMD \${SECRETS_DIR:-/var/run/secrets/cfgov} -type f); do
+        if [ $(echo -n "\$s" | tr '[a-z]' '[A-Z]') == "SECRETS_FOLLOW_SYMLINKS" ]; then
+            continue
+        fi
+        export $(echo -n $(basename \$s) | tr '[a-z]' '[A-Z]' | tr '-' '_')="$(cat \$s)" > /dev/null 2>&1
+    done
+fi
+EOF
 
 # Link mime.types for RHEL Compatability in apache config.
 # TODO: Remove this link once RHEL is replaced

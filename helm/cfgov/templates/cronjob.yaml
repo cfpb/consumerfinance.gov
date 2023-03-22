@@ -34,10 +34,7 @@ spec:
               volumeMounts:
                 {{- if or $values.includeEnv (not (hasKey $values "includeEnv")) }}
                 # Add in main container volumes
-                {{- range $.Values.volumes }}
-                - mountPath: {{ .mountPath }}
-                  name: {{ .name }}
-                {{- end }}
+                {{- include "cfgov.volumeMounts" $ | nindent 16 }}
                 {{- end }}
                 # Add in the cronjob volumes
                 {{- range $values.volumes }}
@@ -61,10 +58,7 @@ spec:
           volumes:
             {{- if or $values.includeEnv (not (hasKey $values "includeEnv")) }}
             # Add in main container volumes
-            {{- range $.Values.volumes }}
-            - name: {{ .name }}
-              {{- toYaml .volume | nindent 14 }}
-            {{- end }}
+            {{- include "cfgov.volumes" $ | nindent 12 }}
             {{- end }}
             # Add in cronjob volumes
             {{- range $values.volumes }}

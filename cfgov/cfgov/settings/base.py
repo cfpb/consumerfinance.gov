@@ -11,6 +11,11 @@ from requests_aws4auth import AWS4Auth
 
 from cfgov.util import admin_emails
 
+from .secret_files import load_secret_files
+
+
+load_secret_files(os.getenv("SECRETS_DIR", "/var/run/secrets/cfgov"))
+
 
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
@@ -323,7 +328,7 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 
 # ElasticSearch 7 Configuration
 TESTING = False
-ES_SCHEMA = os.getenv("ES_SCHEMA", "http")
+ES_SCHEME = os.getenv("ES_SCHEME", "http")
 ES_HOST = os.getenv("ES_HOST", "localhost")
 ES_PORT = os.getenv("ES_PORT", "9200")
 OPENSEARCH_BIGINT = 50000
@@ -348,7 +353,7 @@ if os.environ.get("USE_AWS_ES", False):
 else:
     OPENSEARCH_DSL = {
         "default": {
-            "hosts": f"{ES_SCHEMA}://{ES_HOST}:{ES_PORT}",
+            "hosts": f"{ES_SCHEME}://{ES_HOST}:{ES_PORT}",
             "http_auth": (
                 os.getenv("ES_USER", "admin"),
                 os.getenv("ES_PASS", "admin"),
