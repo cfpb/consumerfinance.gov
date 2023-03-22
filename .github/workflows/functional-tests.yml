@@ -1,7 +1,6 @@
 name: functional
 
 on:
-  pull_request:
   merge_group:
 
 jobs:
@@ -60,6 +59,9 @@ jobs:
 
     - name: Run Cypress
       uses: cypress-io/github-action@v5
+      with:
+          # Cancel the run after 2 failed tests
+          auto-cancel-after-failures: 2
       env:
           MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           CYPRESS_ENVIRONMENT: github
