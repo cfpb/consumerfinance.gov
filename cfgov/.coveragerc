@@ -11,7 +11,6 @@ omit =
     */paying_for_college/data_sources/bls_processing.py
     */retirement_api/tests/*
     */retirement_api/utils/tests/*
-    */v1/management/commands/migrate_crc_tables.py
 data_file = ../.coverage
 
 [report]
