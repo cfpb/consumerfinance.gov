@@ -189,24 +189,22 @@ const hooks = {
     return data.sort((a, b) => new Date(a.date) - new Date(b.date));
   },
 
-  /* START of functions converting new CCT data sets for Credit Tightness Index (MTG/AUTO/CC) */
-
-  // mtg
-  cct_mtg_crti_filterable(data) {
+  /* Convert Credit Tightness Index to allow filterable selection between Unadjusted and Seasonally Adjusted data sets (MTG/AUTO/CC) */
+  cct_crti_income_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
-        high_income: datum.nsa_mtg_crti_incHigh,
-        middle_income: datum.nsa_mtg_crti_incMiddle,
-        moderate_income: datum.nsa_mtg_crti_incModerate,
-        low_income: datum.nsa_mtg_crti_incLow,
+        high_income: datum.nsa_auto_crti_incHigh || datum.nsa_mtg_crti_incHigh || datum.nsa_cc_crti_incHigh,
+        moderate_income: datum.nsa_auto_crti_incModerate || datum.nsa_mtg_crti_incModerate || datum.nsa_cc_crti_incModerate,
+        middle_income: datum.nsa_auto_crti_incMiddle || datum.nsa_mtg_crti_incMiddle || datum.nsa_cc_crti_incMiddle,
+        low_income: datum.nsa_auto_crti_incLow || datum.nsa_mtg_crti_incLow || datum.nsa_cc_crti_incLow,
         date: datum.date,
         adjustment: 'Unadjusted',
       });
       newData.push({
-        high_income: datum.sa_mtg_crti_incHigh,
-        middle_income: datum.sa_mtg_crti_incMiddle,
-        moderate_income: datum.sa_mtg_crti_incModerate,
-        low_income: datum.sa_mtg_crti_incLow,
+        high_income: datum.sa_auto_crti_incHigh || datum.sa_mtg_crti_incHigh || datum.sa_cc_crti_incHigh,
+        moderate_income: datum.sa_auto_crti_incModerate || datum.sa_mtg_crti_incModerate || datum.sa_cc_crti_incModerate,
+        middle_income: datum.sa_auto_crti_incMiddle || datum.sa_mtg_crti_incMiddle || datum.sa_cc_crti_incMiddle,
+        low_income: datum.sa_auto_crti_incLow || datum.sa_mtg_crti_incLow || datum.sa_cc_crti_incLow,
         date: datum.date,
         adjustment: 'Seasonally Adjusted',
       });
@@ -216,22 +214,22 @@ const hooks = {
     return data.sort((a, b) => new Date(a.date) - new Date(b.date));
   },
 
-  // auto
-  cct_auto_crti_filterable(data) {
+  /* Convert Credit Inquiries to allow filterable selection between Unadjusted and Seasonally Adjusted data sets (MTG/AUTO/CC) */
+  cct_inqi_income_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
-        high_income: datum.nsa_auto_crti_incHigh,
-        middle_income: datum.nsa_auto_crti_incMiddle,
-        moderate_income: datum.nsa_auto_crti_incModerate,
-        low_income: datum.nsa_auto_crti_incLow,
+        high_income: datum.nsa_auto_inqi_incHigh || datum.nsa_mtg_inqi_incHigh || datum.nsa_cc_inqi_incHigh,
+        moderate_income: datum.nsa_auto_inqi_incModerate || datum.nsa_mtg_inqi_incModerate || datum.nsa_cc_inqi_incModerate,
+        middle_income: datum.nsa_auto_inqi_incMiddle || datum.nsa_mtg_inqi_incMiddle || datum.nsa_cc_inqi_incMiddle,
+        low_income: datum.nsa_auto_inqi_incLow || datum.nsa_mtg_inqi_incLow || datum.nsa_cc_inqi_incLow,
         date: datum.date,
         adjustment: 'Unadjusted',
       });
       newData.push({
-        high_income: datum.sa_auto_crti_incHigh,
-        middle_income: datum.sa_auto_crti_incMiddle,
-        moderate_income: datum.sa_auto_crti_incModerate,
-        low_income: datum.sa_auto_crti_incLow,
+        high_income: datum.sa_auto_inqi_incHigh || datum.sa_mtg_inqi_incHigh || datum.sa_cc_inqi_incHigh,
+        moderate_income: datum.sa_auto_inqi_incModerate || datum.sa_mtg_inqi_incModerate || datum.sa_cc_inqi_incModerate,
+        middle_income: datum.sa_auto_inqi_incMiddle || datum.sa_mtg_inqi_incMiddle || datum.sa_cc_inqi_incMiddle,
+        low_income: datum.sa_auto_inqi_incLow || datum.sa_mtg_inqi_incLow || datum.sa_cc_inqi_incLow,
         date: datum.date,
         adjustment: 'Seasonally Adjusted',
       });
@@ -240,112 +238,6 @@ const hooks = {
 
     return data.sort((a, b) => new Date(a.date) - new Date(b.date));
   },
-
-  // cc
-  cct_cc_crti_filterable(data) {
-    data = data.reduce((newData, datum) => {
-      newData.push({
-        high_income: datum.nsa_cc_crti_incHigh,
-        middle_income: datum.nsa_cc_crti_incMiddle,
-        moderate_income: datum.nsa_cc_crti_incModerate,
-        low_income: datum.nsa_cc_crti_incLow,
-        date: datum.date,
-        adjustment: 'Unadjusted',
-      });
-      newData.push({
-        high_income: datum.sa_cc_crti_incHigh,
-        middle_income: datum.sa_cc_crti_incMiddle,
-        moderate_income: datum.sa_cc_crti_incModerate,
-        low_income: datum.sa_cc_crti_incLow,
-        date: datum.date,
-        adjustment: 'Seasonally Adjusted',
-      });
-      return newData;
-    }, []);
-
-    return data.sort((a, b) => new Date(a.date) - new Date(b.date));
-  },
-
-  /* END of functions converting new CCT data sets for Credit Tightness Index (MTG/AUTO/CC) */
-
-  /* START of functions converting new CCT data sets for Credit Inquiries (MTG/AUTO/CC) */
-
-  // mtg
-  cct_mtg_inqi_filterable(data) {
-    data = data.reduce((newData, datum) => {
-      newData.push({
-        high_income: datum.nsa_mtg_inqi_incHigh,
-        middle_income: datum.nsa_mtg_inqi_incMiddle,
-        moderate_income: datum.nsa_mtg_inqi_incModerate,
-        low_income: datum.nsa_mtg_inqi_incLow,
-        date: datum.date,
-        adjustment: 'Unadjusted',
-      });
-      newData.push({
-        high_income: datum.sa_mtg_inqi_incHigh,
-        middle_income: datum.sa_mtg_inqi_incMiddle,
-        moderate_income: datum.sa_mtg_inqi_incModerate,
-        low_income: datum.sa_mtg_inqi_incLow,
-        date: datum.date,
-        adjustment: 'Seasonally Adjusted',
-      });
-      return newData;
-    }, []);
-
-    return data.sort((a, b) => new Date(a.date) - new Date(b.date));
-  },
-
-  // auto
-  cct_auto_inqi_filterable(data) {
-    data = data.reduce((newData, datum) => {
-      newData.push({
-        high_income: datum.nsa_auto_inqi_incHigh,
-        middle_income: datum.nsa_auto_inqi_incMiddle,
-        moderate_income: datum.nsa_auto_inqi_incModerate,
-        low_income: datum.nsa_auto_inqi_incLow,
-        date: datum.date,
-        adjustment: 'Unadjusted',
-      });
-      newData.push({
-        high_income: datum.sa_auto_inqi_incHigh,
-        middle_income: datum.sa_auto_inqi_incMiddle,
-        moderate_income: datum.sa_auto_inqi_incModerate,
-        low_income: datum.sa_auto_inqi_incLow,
-        date: datum.date,
-        adjustment: 'Seasonally Adjusted',
-      });
-      return newData;
-    }, []);
-
-    return data.sort((a, b) => new Date(a.date) - new Date(b.date));
-  },
-
-  // cc
-  cct_cc_inqi_filterable(data) {
-    data = data.reduce((newData, datum) => {
-      newData.push({
-        high_income: datum.nsa_cc_inqi_incHigh,
-        middle_income: datum.nsa_cc_inqi_incMiddle,
-        moderate_income: datum.nsa_cc_inqi_incModerate,
-        low_income: datum.nsa_cc_inqi_incLow,
-        date: datum.date,
-        adjustment: 'Unadjusted',
-      });
-      newData.push({
-        high_income: datum.sa_cc_inqi_incHigh,
-        middle_income: datum.sa_cc_inqi_incMiddle,
-        moderate_income: datum.sa_cc_inqi_incModerate,
-        low_income: datum.sa_cc_inqi_incLow,
-        date: datum.date,
-        adjustment: 'Seasonally Adjusted',
-      });
-      return newData;
-    }, []);
-
-    return data.sort((a, b) => new Date(a.date) - new Date(b.date));
-  },
-
-  /* END of functions converting new CCT data sets for Credit Inquiries (MTG/AUTO/CC) */
 };
 
 export default hooks;
