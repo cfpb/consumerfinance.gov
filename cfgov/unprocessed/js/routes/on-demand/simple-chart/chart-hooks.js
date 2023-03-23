@@ -189,7 +189,7 @@ const hooks = {
     return data.sort((a, b) => new Date(a.date) - new Date(b.date));
   },
 
-  /* Convert Credit Tightness Index to allow filterable selection between Unadjusted and Seasonally Adjusted data sets (MTG/AUTO/CC) */
+  /* Convert Credit Tightness Index to allow filterable selection between Unadjusted and Seasonally Adjusted income data sets (MTG/AUTO/CC) */
   cct_crti_income_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
@@ -214,7 +214,7 @@ const hooks = {
     return data.sort((a, b) => new Date(a.date) - new Date(b.date));
   },
 
-  /* Convert Credit Inquiries to allow filterable selection between Unadjusted and Seasonally Adjusted data sets (MTG/AUTO/CC) */
+  /* Convert Credit Inquiries to allow filterable selection between Unadjusted and Seasonally Adjusted income data sets (MTG/AUTO/CC) */
   cct_inqi_income_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
@@ -230,6 +230,56 @@ const hooks = {
         moderate_income: datum.sa_auto_inqi_incModerate || datum.sa_mtg_inqi_incModerate || datum.sa_cc_inqi_incModerate,
         middle_income: datum.sa_auto_inqi_incMiddle || datum.sa_mtg_inqi_incMiddle || datum.sa_cc_inqi_incMiddle,
         low_income: datum.sa_auto_inqi_incLow || datum.sa_mtg_inqi_incLow || datum.sa_cc_inqi_incLow,
+        date: datum.date,
+        adjustment: 'Seasonally Adjusted',
+      });
+      return newData;
+    }, []);
+
+    return data.sort((a, b) => new Date(a.date) - new Date(b.date));
+  },
+
+  /* Convert Credit Tightness Index to allow filterable selection between Unadjusted and Seasonally Adjusted age data sets (MTG/AUTO/CC) */
+  cct_crti_age_filterable(data) {
+    data = data.reduce((newData, datum) => {
+      newData.push({
+        age_18_29: datum.nsa_auto_crti_age18to29 || datum.nsa_mtg_crti_age18to29 || datum.nsa_cc_crti_age18to29,
+        age_30_44: datum.nsa_auto_crti_age30to44 || datum.nsa_mtg_crti_age30to44 || datum.nsa_cc_crti_age30to44,
+        age_45_64: datum.nsa_auto_crti_age45to64 || datum.nsa_mtg_crti_age45to64 || datum.nsa_cc_crti_age45to64,
+        age_65_plus: datum.nsa_auto_crti_age65plus || datum.nsa_mtg_crti_age65plus || datum.nsa_cc_crti_age65plus,
+        date: datum.date,
+        adjustment: 'Unadjusted',
+      });
+      newData.push({
+        age_18_29: datum.sa_auto_crti_age18to29 || datum.sa_mtg_crti_age18to29 || datum.sa_cc_crti_age18to29,
+        age_30_44: datum.sa_auto_crti_age30to44 || datum.sa_mtg_crti_age30to44 || datum.sa_cc_crti_age30to44,
+        age_45_64: datum.sa_auto_crti_age45to64 || datum.sa_mtg_crti_age45to64 || datum.sa_cc_crti_age45to64,
+        age_65_plus: datum.sa_auto_crti_age65plus || datum.sa_mtg_crti_age65plus || datum.sa_cc_crti_age65plus,
+        date: datum.date,
+        adjustment: 'Seasonally Adjusted',
+      });
+      return newData;
+    }, []);
+
+    return data.sort((a, b) => new Date(a.date) - new Date(b.date));
+  },
+
+  /* Convert Credit Inquiries to allow filterable selection between Unadjusted and Seasonally Adjusted age data sets (MTG/AUTO/CC) */
+  cct_inqi_age_filterable(data) {
+    data = data.reduce((newData, datum) => {
+      newData.push({
+        age_18_29: datum.nsa_auto_inqi_age18to29 || datum.nsa_mtg_inqi_age18to29 || datum.nsa_cc_inqi_age18to29,
+        age_30_44: datum.nsa_auto_inqi_age30to44 || datum.nsa_mtg_inqi_age30to44 || datum.nsa_cc_inqi_age30to44,
+        age_45_64: datum.nsa_auto_inqi_age45to64 || datum.nsa_mtg_inqi_age45to64 || datum.nsa_cc_inqi_age45to64,
+        age_65_plus: datum.nsa_auto_inqi_age65plus || datum.nsa_mtg_inqi_age65plus || datum.nsa_cc_inqi_age65plus,
+        date: datum.date,
+        adjustment: 'Unadjusted',
+      });
+      newData.push({
+        age_18_29: datum.sa_auto_inqi_age18to29 || datum.sa_mtg_inqi_age18to29 || datum.sa_cc_inqi_age18to29,
+        age_30_44: datum.sa_auto_inqi_age30to44 || datum.sa_mtg_inqi_age30to44 || datum.sa_cc_inqi_age30to44,
+        age_45_64: datum.sa_auto_inqi_age45to64 || datum.sa_mtg_inqi_age45to64 || datum.sa_cc_inqi_age45to64,
+        age_65_plus: datum.sa_auto_inqi_age65plus || datum.sa_mtg_inqi_age65plus || datum.sa_cc_inqi_age65plus,
         date: datum.date,
         adjustment: 'Seasonally Adjusted',
       });
