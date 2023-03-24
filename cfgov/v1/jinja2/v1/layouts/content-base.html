@@ -9,7 +9,7 @@
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
             {% if breadcrumb_items | length > 0 %}
-                <div class="wrapper content_wrapper">
+                <div class="content_wrapper">
                 {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs -%}
                 {{ breadcrumbs.render(breadcrumb_items) }}
                 </div>

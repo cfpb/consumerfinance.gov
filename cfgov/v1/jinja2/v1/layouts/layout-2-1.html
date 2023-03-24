@@ -13,7 +13,7 @@
 {% endif %}
 
 {% block body_content scoped %}
-<div class="wrapper content_wrapper">
+<div class="content_wrapper">
     <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
         {%- import 'v1/includes/macros/accessible-languages.html' as accessible_languages with context-%}
         <section {{ accessible_languages.render() }}>
