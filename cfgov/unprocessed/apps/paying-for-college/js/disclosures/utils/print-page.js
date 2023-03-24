@@ -1,13 +1,12 @@
 // TODO: Remove jquery.
 import $ from 'jquery';
 
-import Analytics from './Analytics.js';
-const getDataLayerOptions = Analytics.getDataLayerOptions;
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 $(document).ready(function () {
   $('.next-steps_controls > button').on('click', function (evt) {
     evt.preventDefault();
     window.print();
-    Analytics.sendEvent(getDataLayerOptions('Step Completed', 'Print'));
+    analyticsSendEvent({ action: 'Step Completed', label: 'Print' });
   });
 });

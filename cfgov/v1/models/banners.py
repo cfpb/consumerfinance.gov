@@ -23,7 +23,12 @@ class Banner(models.Model):
         ),
         validators=[RegexValidator(regex=r"[A-Za-z0-9\-_.:/?&|\^$]")],
     )
-    content = StreamField([("content", Notification())], min_num=1, max_num=1)
+    content = StreamField(
+        [("content", Notification())],
+        min_num=1,
+        max_num=1,
+        use_json_field=True,
+    )
 
     enabled = models.BooleanField()
 

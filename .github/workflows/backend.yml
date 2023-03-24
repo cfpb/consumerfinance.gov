@@ -2,6 +2,7 @@ name: backend
 
 on:
   pull_request:
+  merge_group:
     paths:
       - '**.py'
       - 'requirements/**.txt'

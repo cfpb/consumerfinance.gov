@@ -268,54 +268,38 @@
 %}
 
 {% if event.speech_transcript or event.video_transcript or event.flickr_url %}
-<div class="block block__border-top">
-    <div class="event-archive_media-container
-                content-l
-                content-l__large-gutters">
-        {% if event.flickr_url %}
-        <section class="{{ col_classes }} block__padded-bottom">
-            <h4>Photography</h4>
-            <p class="u-flexible-container">
-                <img class="u-flexible-container_inner"
-                     src='{{ event.flickr_url }}' >
-            </p>
-            <p class="speech_link-container">
-                <a class="a-link
-                          a-link__jump
-                          a-link__external-link"
-                    href="{{ event.flickr_url }}">
-                    See the album for the Event
-                </a>
-            </p>
-        </section>
-        {% endif %}
-        <div class="{{ col_classes }}">
-            {% if event.speech_transcript %}
-            <section class="block block__flush-top">
-                <h4>Speech text</h4>
-                <p>
-                    <a href="{{ event.speech_transcript.url }}"
-                       class="a-link
-                              a-link__jump">
-                       Download speech
-                    </a>
-                </p>
-            </section>
-            {% endif %}
-            {% if event.video_transcript %}
-            <section class="block block__flush-bottom">
-                <h4>Video transcript</h4>
-                <p>
-                    <a href="{{ event.video_transcript.url }}"
-                       class="a-link
-                              a-link__jump">
-                       Download transcript
-                    </a>
-                </p>
-            </section>
-            {% endif %}
-        </div>
-    </div>
+<div class="block block__border-top block__padded-top">
+    {% if event.flickr_url %}
+    <p>
+        <h4>Photography</h4>
+        <a class="a-link
+                    a-link__jump
+                    a-link__external-link"
+            href="{{ event.flickr_url }}">
+            See the album for the event
+        </a>
+    </p>
+    {% endif %}
+    {% if event.speech_transcript %}
+    <p>
+        <h4>Speech text</h4>
+        <a href="{{ event.speech_transcript.url }}"
+            class="a-link
+                    a-link__jump">
+            Download speech
+        </a>
+    </p>
+    {% endif %}
+    {% if event.video_transcript %}
+    <p>
+        <h4>Video transcript</h4>
+        <a href="{{ event.video_transcript.url }}"
+            class="a-link
+                    a-link__jump">
+            Download transcript
+        </a>
+    </p>
+    {% endif %}
 </div>
 {% endif %}
 {% endmacro %}

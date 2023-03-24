@@ -114,6 +114,7 @@ class BrowsePage(AbstractBrowsePage):
             ("notification", molecules.Notification()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     share_and_print = models.BooleanField(
@@ -147,6 +148,7 @@ class BrowsePage(AbstractBrowsePage):
             ("faq_group", schema.FAQGroup()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     # General content tab

@@ -1,5 +1,3 @@
-/* eslint-disable complexity */
-
 import Highmaps from 'highcharts/highmaps';
 import tilemap from 'highcharts/modules/tilemap';
 import cloneDeep from 'lodash.clonedeep';
@@ -30,7 +28,7 @@ function makeTilemapOptions(data, dataAttributes) {
   const formattedSeries = formatSeries(data);
 
   if (formattedSeries.length !== 1) {
-    /* eslint-disable-next-line */
+    /* eslint-disable-next-line no-console */
     return console.error('Tilemap only supports a single data series.');
   }
 
@@ -48,7 +46,6 @@ function makeTilemapOptions(data, dataAttributes) {
     }</span>`;
   };
 
-  /* eslint-disable-next-line */
   defaultObj.title = { text: undefined };
   defaultObj.accessibility.description = description;
   defaultObj.yAxis.title.text = yAxisLabel;
@@ -159,7 +156,7 @@ function getShortCode(data) {
   for (let i = 0; i < keys.length; i++) {
     if (usLayout[data[keys[i]]]) return keys[i];
   }
-  /* eslint-disable-next-line */
+  /* eslint-disable-next-line no-console */
   return console.error(
     'Unable to determine state shortcode. Data is misformatted for simple-chart.'
   );
