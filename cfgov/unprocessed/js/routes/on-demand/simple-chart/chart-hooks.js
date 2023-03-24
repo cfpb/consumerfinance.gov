@@ -288,6 +288,60 @@ const hooks = {
 
     return data.sort((a, b) => new Date(a.date) - new Date(b.date));
   },
+
+  /* Convert Credit Tightness Index to allow filterable selection between Unadjusted and Seasonally Adjusted risk data sets (MTG/AUTO/CC) */
+  cct_crti_risk_filterable(data) {
+    data = data.reduce((newData, datum) => {
+      newData.push({
+        deep_subprime: datum.nsa_auto_crti_riskDeepSubprime || datum.nsa_mtg_crti_riskDeepSubprime || datum.nsa_cc_crti_riskDeepSubprime,
+        sub_prime: datum.nsa_auto_crti_riskSubprime || datum.nsa_mtg_crti_riskSubprime || datum.nsa_cc_crti_riskSubprime,
+        near_prime: datum.nsa_auto_crti_riskNearPrime || datum.nsa_mtg_crti_riskNearPrime || datum.nsa_cc_crti_riskNearPrime,
+        prime: datum.nsa_auto_crti_riskPrime || datum.nsa_mtg_crti_riskPrime  || datum.nsa_cc_crti_riskPrime,
+        super_prime: datum.nsa_auto_crti_riskSuperprime || datum.nsa_mtg_crti_riskSuperprime || datum.nsa_cc_crti_riskSuperprime,
+        date: datum.date,
+        adjustment: 'Unadjusted',
+      });
+      newData.push({
+        deep_subprime: datum.sa_auto_crti_riskDeepSubprime || datum.sa_mtg_crti_riskDeepSubprime || datum.sa_cc_crti_riskDeepSubprime,
+        sub_prime: datum.sa_auto_crti_riskSubprime || datum.sa_mtg_crti_riskSubprime || datum.sa_cc_crti_riskSubprime,
+        near_prime: datum.sa_auto_crti_riskNearPrime || datum.sa_mtg_crti_riskNearPrime || datum.sa_cc_crti_riskNearPrime,
+        prime: datum.sa_auto_crti_riskPrime || datum.sa_mtg_crti_riskPrime  || datum.sa_cc_crti_riskPrime,
+        super_prime: datum.sa_auto_crti_riskSuperprime || datum.sa_mtg_crti_riskSuperprime || datum.sa_cc_crti_riskSuperprime,
+        date: datum.date,
+        adjustment: 'Seasonally Adjusted',
+      });
+      return newData;
+    }, []);
+
+    return data.sort((a, b) => new Date(a.date) - new Date(b.date));
+  },
+
+  /* Convert Credit Inquiries to allow filterable selection between Unadjusted and Seasonally Adjusted risk data sets (MTG/AUTO/CC) */
+  cct_inqi_risk_filterable(data) {
+    data = data.reduce((newData, datum) => {
+      newData.push({
+        deep_subprime: datum.nsa_auto_inqi_riskDeepSubprime || datum.nsa_mtg_inqi_riskDeepSubprime || datum.nsa_cc_inqi_riskDeepSubprime,
+        sub_prime: datum.nsa_auto_inqi_riskSubprime || datum.nsa_mtg_inqi_riskSubprime || datum.nsa_cc_inqi_riskSubprime,
+        near_prime: datum.nsa_auto_inqi_riskNearPrime || datum.nsa_mtg_inqi_riskNearPrime || datum.nsa_cc_inqi_riskNearPrime,
+        prime: datum.nsa_auto_inqi_riskPrime || datum.nsa_mtg_inqi_riskPrime  || datum.nsa_cc_inqi_riskPrime,
+        super_prime: datum.nsa_auto_inqi_riskSuperprime || datum.nsa_mtg_inqi_riskSuperprime || datum.nsa_cc_inqi_riskSuperprime,
+        date: datum.date,
+        adjustment: 'Unadjusted',
+      });
+      newData.push({
+        deep_subprime: datum.sa_auto_inqi_riskDeepSubprime || datum.sa_mtg_inqi_riskDeepSubprime || datum.sa_cc_inqi_riskDeepSubprime,
+        sub_prime: datum.sa_auto_inqi_riskSubprime || datum.sa_mtg_inqi_riskSubprime || datum.sa_cc_inqi_riskSubprime,
+        near_prime: datum.sa_auto_inqi_riskNearPrime || datum.sa_mtg_inqi_riskNearPrime || datum.sa_cc_inqi_riskNearPrime,
+        prime: datum.sa_auto_inqi_riskPrime || datum.sa_mtg_inqi_riskPrime  || datum.sa_cc_inqi_riskPrime,
+        super_prime: datum.sa_auto_inqi_riskSuperprime || datum.sa_mtg_inqi_riskSuperprime || datum.sa_cc_inqi_riskSuperprime,
+        date: datum.date,
+        adjustment: 'Seasonally Adjusted',
+      });
+      return newData;
+    }, []);
+
+    return data.sort((a, b) => new Date(a.date) - new Date(b.date));
+  },
 };
 
 export default hooks;
