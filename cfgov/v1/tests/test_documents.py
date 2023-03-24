@@ -231,7 +231,7 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
     def test_index_updates_automatically(self, _):
         search = FilterablePagesDocumentSearch(self.page_tree[0])
         self.assertEqual(search.search(title="foo").count(), 0)
-        indexed_page = Page.objects.get(slug="child1")
+        indexed_page = Page.objects.get(slug="child1").specific
         indexed_page.title = "child1 foo"
         indexed_page.save_revision().publish()
         # wait for the index to update
