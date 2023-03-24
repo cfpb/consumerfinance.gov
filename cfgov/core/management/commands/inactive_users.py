@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.utils.formats import date_format
 
-from wagtail.models import PageRevision
+from wagtail.models import Revision
 
 
 User = get_user_model()
@@ -23,9 +23,7 @@ def _get_inactive_users(days_back):
         date_joined__lt=pivot_date,
     )
     for user in inactive_users:
-        revisions = PageRevision.objects.filter(user=user).order_by(
-            "-created_at"
-        )
+        revisions = Revision.objects.filter(user=user).order_by("-created_at")
         if revisions and revisions.first().created_at >= pivot_date:
             inactive_users = inactive_users.exclude(pk=user.pk)
     return inactive_users
