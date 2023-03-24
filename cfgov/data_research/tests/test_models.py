@@ -294,11 +294,11 @@ class MortgagePerformancePageTests(django.test.TestCase):
         page_stub_30 = MortgagePerformancePage(
             slug="mortgages-30-89-days-delinquent", title="Mortgage Charts"
         )
-        self.chart_page_30 = save_new_page(page_stub_30).as_page_object()
+        self.chart_page_30 = save_new_page(page_stub_30).as_object()
         page_stub_90 = MortgagePerformancePage(
             slug="mortgages-90-days-delinquent", title="Mortgage Maps"
         )
-        self.map_page_90 = save_new_page(page_stub_90).as_page_object()
+        self.map_page_90 = save_new_page(page_stub_90).as_object()
 
     def test_chart_page_get_mortgage_meta(self):
         page = self.chart_page_30
