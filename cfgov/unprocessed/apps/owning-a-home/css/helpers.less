@@ -2,35 +2,9 @@
    Helper Classes & Styles
    ========================================================================== */
 
-.alert-positive {
-  color: @green;
-}
-
-.alert-warning {
-  color: @red;
-}
-
-.alert-neutral {
-  color: @gray-40;
-}
-
 .a-form-alert {
   color: @gray-dark;
   font-size: 0.75em;
-}
-
-// alert containers have a background color but no border
-.alert-container {
-  padding: unit(20px / @base-font-size-px, em);
-  background: @gray-5;
-
-  p:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.block__bg {
-  background-color: @block__bg;
 }
 
 .clear {
@@ -42,17 +16,6 @@
 .highlight-dropdown {
   border-color: @gold;
   border-width: 2px;
-}
-
-/* add a margin above an element */
-.l-bump {
-  margin-top: 2em;
-}
-
-/* lead paragraphs are typically the first paragraph in a content area */
-.lead {
-  margin-bottom: unit(30px / @base-font-size-px, em);
-  font-size: 1.125em;
 }
 
 @keyframes fadein {
@@ -74,24 +37,6 @@
   opacity: 0.3;
 }
 
-/* notes are subtle call out boxes with top and bottom borders */
-.note {
-  color: @black;
-  padding: 20px 10px;
-  margin: 1em 0;
-  border-top: 1px solid @gray-10;
-  border-bottom: 1px solid @gray-10;
-
-  p:last-child {
-    .u-reset();
-  }
-
-  h4:first-child,
-  h5:first-child {
-    margin-top: 0;
-  }
-}
-
 .placeholder {
   min-height: 200px;
   background: @gray-10;
@@ -104,14 +49,6 @@
   strong {
     font-weight: 600;
   }
-}
-
-.u-hidden {
-  display: none !important;
-}
-
-.u-no-bg {
-  background-color: transparent;
 }
 
 .u-pb0 {
@@ -127,12 +64,6 @@
 .u-link-underline {
   border-bottom: 1px dotted;
 }
-
-.respond-to-min( 620p, {
-  .note {
-    padding: unit( 20px / @base-font-size-px, em ) 12%;
-  }
-} );
 
 .respond-to-max( 800px, {
   .mobi-no {
