@@ -848,7 +848,7 @@ body {
         }
 
         // A main nav label has been selected and the menu is expanded.
-        &[data-open="true"],
+        &[aria-expanded="true"],
         &:active {
           position: relative;
           top: 1px;
@@ -860,7 +860,7 @@ body {
         }
 
         // Do not show hover when menu is expanded.
-        &[data-open="true"]:hover,
+        &[aria-expanded="true"]:hover,
         &:active:hover {
           border-bottom: none;
           padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -870,15 +870,15 @@ body {
           outline-offset: 2px;
         }
 
-        &[data-open="true"]:focus {
+        &[aria-expanded="true"]:focus {
           outline: none;
           box-shadow: 0 -4px 5px 0 @pacific-40,
           -5px -2px 5px 0 @pacific-40,
           5px -2px 5px 0 @pacific-40;
         }
 
-        &[data-open="true"]:hover,
-        &[data-open="true"]:focus {
+        &[aria-expanded="true"]:hover,
+        &[aria-expanded="true"]:focus {
           &:after {
             position: absolute;
             bottom: -5px;
@@ -904,11 +904,11 @@ body {
           display: inline-block;
         }
 
-        &[data-open="true"] &-icon-open .cf-icon-svg {
+        &[aria-expanded="true"] &-icon-open .cf-icon-svg {
           display: inline-block;
         }
 
-        &[data-open="true"] &-icon-closed .cf-icon-svg {
+        &[aria-expanded="true"] &-icon-closed .cf-icon-svg {
           display: none;
         }
 
@@ -925,7 +925,7 @@ body {
           }
         }
 
-        &__current[data-open="true"]:after,
+        &__current[aria-expanded="true"]:after,
         &__current:active:after {
           background-color: transparent;
         }
