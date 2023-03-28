@@ -14,7 +14,7 @@
                 <div>
                     <span>{{ translation.language }}:</span>
                     {% if page_perms.can_edit %}
-                        <a href="{% url 'wagtailadmin_pages:edit' translation.id %}" title="{% trans 'Edit this page' %}">{{ translation.get_admin_display_title }}</a>
+                        <a href="{% url 'wagtailadmin_pages:edit' translation.id %}" title="{% translate 'Edit this page' %}">{{ translation.get_admin_display_title }}</a>
                     {% else %}
                         {{ translation.get_admin_display_title }}
                     {% endif %}
