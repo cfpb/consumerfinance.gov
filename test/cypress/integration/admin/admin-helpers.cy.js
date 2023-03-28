@@ -9,18 +9,6 @@ export class AdminPage {
     cy.get('form').submit();
   }
 
-  openMostRecentPage() {
-    cy.get('.listing-page a').first().click();
-  }
-
-  publishPage() {
-    cy.get('#page-edit-form').submit();
-  }
-
-  successBanner() {
-    return cy.get('.messages').find('.success');
-  }
-
   openImageGallery() {
     cy.visit('/admin/images/');
   }
