@@ -7,6 +7,7 @@ from wagtail.contrib.table_block.blocks import (
     TableInput,
     TableInputAdapter,
 )
+from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.telepath import register
 
 
@@ -99,3 +100,29 @@ class ConsumerReportingCompanyTable(blocks.StructBlock):
             "v1/includes/organisms/tables/consumer-reporting-company.html"
         )
         label = "Table (Consumer Reporting Company)"
+
+
+class CaseDocketEventAttachment(blocks.StructBlock):
+    id = blocks.CharBlock()
+    title = blocks.CharBlock()
+    document = DocumentChooserBlock(required=False)
+
+
+class CaseDocketEvent(blocks.StructBlock):
+    index = blocks.CharBlock()
+    date_filed = blocks.DateBlock()
+    document = DocumentChooserBlock(required=False)
+    description = blocks.CharBlock()
+    filed_by = blocks.CharBlock()
+    attachments = blocks.ListBlock(
+        CaseDocketEventAttachment, collapsed=True, default=[]
+    )
+
+
+class CaseDocketTable(blocks.StructBlock):
+    events = blocks.ListBlock(CaseDocketEvent, min_num=1)
+
+    class Meta:
+        icon = "table"
+        template = "v1/includes/organisms/tables/case-docket.html"
+        label = "Table (Case Docket)"
