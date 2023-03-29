@@ -44,4 +44,6 @@ class StoryPage(CFGOVPage):
         ]
     )
 
+    template = "v1/story_page.html"
+
     page_description = "For single-column, image- and narrative-focused pages."
