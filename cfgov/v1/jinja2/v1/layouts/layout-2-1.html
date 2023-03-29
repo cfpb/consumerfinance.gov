@@ -7,7 +7,7 @@
     TODO: convert layout-2-1 to a grid layout.
 #}
 
-{% if page.language == 'ar' %}
+{% if page and page.language == 'ar' %}
 
 {% extends 'v1/layouts/layout-2-1-rtl.html' %}
 
@@ -17,7 +17,7 @@
 
 {% block body_content scoped %}
 {{ super() }}
-{% if page.language != 'ar' %}
+{% if page and page.language != 'ar' %}
 <div class="wrapper content_wrapper">
     <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
         {%- import 'v1/includes/macros/accessible-languages.html' as accessible_languages with context-%}
