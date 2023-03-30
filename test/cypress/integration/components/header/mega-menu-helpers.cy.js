@@ -9,6 +9,18 @@ export class MegaMenuDesktop {
     return this.tabs().first();
   }
 
+  firstTabOpenIcon() {
+    return this.firstTab().find(
+      `${BASE_CLASS}_content-link-icon-open .cf-icon-svg`
+    );
+  }
+
+  firstTabCloseIcon() {
+    return this.firstTab().find(
+      `${BASE_CLASS}_content-link-icon-closed .cf-icon-svg`
+    );
+  }
+
   secondTab() {
     return this.tabs().eq(1);
   }

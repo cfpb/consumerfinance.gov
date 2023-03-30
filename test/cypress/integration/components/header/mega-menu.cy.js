@@ -24,10 +24,23 @@ describe('Mega-Menu organism for site navigation', () => {
       menuDesktop.secondPanel().should('not.be.visible');
     });
     it('on clicking a tab', () => {
+      menuDesktop
+        .firstTab()
+        .should('have.css', 'background-color', 'rgba(0, 0, 0, 0)');
+      menuDesktop.firstTab().should('have.css', 'outline-offset', '0px');
+      menuDesktop.firstTabOpenIcon().should('not.be.visible');
+      menuDesktop.firstTabCloseIcon().should('be.visible');
       // When the first tab is clicked to open.
       menuDesktop.firstTab().click();
       // Then the mega-menu organism should have expanded attributes.
+      menuDesktop.firstTab().should('have.css', 'outline-offset', '2px');
+      menuDesktop
+        .firstTab()
+        .should('have.css', 'background-color', 'rgb(247, 248, 249)');
       menuDesktop.firstTab().should('have.attr', 'aria-expanded', 'true');
+      // Then the first tab icons should flip.
+      menuDesktop.firstTabOpenIcon().should('be.visible');
+      menuDesktop.firstTabCloseIcon().should('not.be.visible');
       // Then the mega-menu organism should have correct CSS classes.
       menuDesktop.firstPanel().should('have.class', 'u-move-transition');
       menuDesktop.firstPanel().should('have.class', 'u-move-to-origin');

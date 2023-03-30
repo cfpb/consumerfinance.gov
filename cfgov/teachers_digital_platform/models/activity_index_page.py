@@ -76,6 +76,7 @@ class ActivityIndexPage(CFGOVPage):
             ("notification", molecules.Notification()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     header_sidebar = StreamField(
@@ -83,6 +84,7 @@ class ActivityIndexPage(CFGOVPage):
             ("image", TdpSearchHeroImage()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     results = {}

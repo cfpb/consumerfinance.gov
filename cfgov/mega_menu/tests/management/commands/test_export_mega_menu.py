@@ -12,17 +12,14 @@ class ExportMegaMenuTests(TestCase):
     def test_export(self):
         submenus = [
             {
-                "type": "submenu",
                 "id": str(uuid.uuid4()),
+                "type": "submenu",
                 "value": {
+                    "links": [
+                        {"url": "/foo/bar", "text": "A link"},
+                    ],
                     "title": "A submenu",
                     "overview_page": 123,
-                    "links": [
-                        {
-                            "text": "A link",
-                            "url": "/foo/bar",
-                        },
-                    ],
                 },
             }
         ]

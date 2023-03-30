@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import json
 from io import StringIO
 
 from django.core.management import call_command
@@ -33,7 +34,20 @@ class TestArchiveEvents(TestCase):
 
     def test_no_archive_page(self):
         events_page = BrowseFilterablePage(
-            title="Events", slug="events", content="Events", live=True
+            title="Events",
+            slug="events",
+            content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Events",
+                        },
+                    }
+                ]
+            ),
+            live=True,
         )
         self.root_page.add_child(instance=events_page)
 
@@ -42,11 +56,37 @@ class TestArchiveEvents(TestCase):
 
     def test_no_events(self):
         events_page = BrowseFilterablePage(
-            title="Events", slug="events", content="Events", live=True
+            title="Events",
+            slug="events",
+            content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Events",
+                        },
+                    }
+                ]
+            ),
+            live=True,
         )
         self.root_page.add_child(instance=events_page)
         archive_page = EventArchivePage(
-            title="Archive", slug="archive", content="archive", live=True
+            title="Archive",
+            slug="archive",
+            content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "archive",
+                        },
+                    }
+                ]
+            ),
+            live=True,
         )
         events_page.add_child(instance=archive_page)
 
@@ -55,11 +95,37 @@ class TestArchiveEvents(TestCase):
     @freeze_time("2020-02-02")
     def test_current_future_events_stay_in_place(self):
         events_page = BrowseFilterablePage(
-            title="Events", slug="events", content="Events", live=True
+            title="Events",
+            slug="events",
+            content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Events",
+                        },
+                    }
+                ]
+            ),
+            live=True,
         )
         self.root_page.add_child(instance=events_page)
         archive_page = EventArchivePage(
-            title="Archive", slug="archive", content="archive", live=True
+            title="Archive",
+            slug="archive",
+            content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Archive",
+                        },
+                    }
+                ]
+            ),
+            live=True,
         )
         events_page.add_child(instance=archive_page)
         current_event_page = EventPage(
@@ -81,11 +147,37 @@ class TestArchiveEvents(TestCase):
     @freeze_time("2020-02-02")
     def test_past_events_get_archived(self):
         events_page = BrowseFilterablePage(
-            title="Events", slug="events", content="Events", live=True
+            title="Events",
+            slug="events",
+            content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Events",
+                        },
+                    }
+                ]
+            ),
+            live=True,
         )
         self.root_page.add_child(instance=events_page)
         archive_page = EventArchivePage(
-            title="Archive", slug="archive", content="archive", live=True
+            title="Archive",
+            slug="archive",
+            content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Archive",
+                        },
+                    }
+                ]
+            ),
+            live=True,
         )
         events_page.add_child(instance=archive_page)
         single_day_event_page = EventPage(
@@ -115,11 +207,37 @@ class TestArchiveEvents(TestCase):
     @freeze_time("2020-02-02")
     def test_append_date_to_duplicate_slug(self):
         events_page = BrowseFilterablePage(
-            title="Events", slug="events", content="Events", live=True
+            title="Events",
+            slug="events",
+            content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Events",
+                        },
+                    }
+                ]
+            ),
+            live=True,
         )
         self.root_page.add_child(instance=events_page)
         archive_page = EventArchivePage(
-            title="Archive", slug="archive", content="archive", live=True
+            title="Archive",
+            slug="archive",
+            content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Archive",
+                        },
+                    }
+                ]
+            ),
+            live=True,
         )
         events_page.add_child(instance=archive_page)
         already_archived_event_page = EventPage(

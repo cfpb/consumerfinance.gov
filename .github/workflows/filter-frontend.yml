@@ -1,6 +1,7 @@
 name: filter-frontend
 on:
   pull_request:
+  merge_group:
     paths-ignore:
       - '**.js'
       - '**/package.json'

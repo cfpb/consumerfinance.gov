@@ -29,8 +29,16 @@ class CampaignContent(StreamBlock):
 
 
 class CampaignPage(CFGOVPage):
-    header = StreamField(CampaignHeader, blank=True)
-    content = StreamField(CampaignContent, blank=True)
+    header = StreamField(
+        CampaignHeader,
+        blank=True,
+        use_json_field=True,
+    )
+    content = StreamField(
+        CampaignContent,
+        blank=True,
+        use_json_field=True,
+    )
 
     content_panels = CFGOVPage.content_panels + [
         FieldPanel("header"),
@@ -43,6 +51,8 @@ class CampaignPage(CFGOVPage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
+
+    template = "v1/campaign_page.html"
 
     # Sets page to only be createable as the child of the homepage
     parent_page_types = ["v1.HomePage"]

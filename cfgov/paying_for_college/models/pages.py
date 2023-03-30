@@ -15,6 +15,7 @@ class PayingForCollegePage(CFGOVPage):
             ("featured_content", organisms.FeaturedContent()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     content_panels = CFGOVPage.content_panels + [
@@ -60,6 +61,7 @@ class CollegeCostsPage(PayingForCollegePage):
             ("featured_content", organisms.FeaturedContent()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     content_panels = CFGOVPage.content_panels + [
@@ -75,12 +77,20 @@ class CollegeCostsPage(PayingForCollegePage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
-    content = StreamField(PayingForCollegeContent, blank=True)
+    content = StreamField(
+        PayingForCollegeContent,
+        blank=True,
+        use_json_field=True,
+    )
     template = "paying-for-college/college-costs.html"
 
 
 class RepayingStudentDebtPage(PayingForCollegePage):
     """A page to serve static subpages in the paying-for-college suite."""
 
-    content = StreamField(PayingForCollegeContent, blank=True)
+    content = StreamField(
+        PayingForCollegeContent,
+        blank=True,
+        use_json_field=True,
+    )
     template = "paying-for-college/repaying-student-debt.html"

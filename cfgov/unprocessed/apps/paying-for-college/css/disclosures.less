@@ -1485,10 +1485,6 @@
     .respond-to-min( @bp-med-min, {
       .grid_column(4);
     } );
-
-    .header-slug {
-      margin-top: unit(45px / @base-font-size-px, em);
-    }
   }
 }
 
@@ -1717,30 +1713,6 @@
   .respond-to-min( @bp-sm-min, {
     padding-left: 2em;
   } );
-}
-
-/* ==========================================================================
-   About This Tool
-   ========================================================================== */
-
-.about-this-tool {
-  margin-bottom: unit(60px / @base-font-size-px, em);
-
-  .content_intro {
-    border: 0;
-    padding: unit(@grid_gutter-width / @base-font-size-px, em) 0;
-
-    .respond-to-min( @bp-sm-min, {
-      .grid_column(12);
-      border: 0;
-      padding: unit((@grid_gutter-width * 1.5) / @base-font-size-px, em)
-      unit((@grid_gutter-width / 2) / @base-font-size-px, em);
-    } );
-
-    .respond-to-min( @bp-med-min, {
-      border: 0 15px;
-    } );
-  }
 }
 
 /* ==========================================================================
