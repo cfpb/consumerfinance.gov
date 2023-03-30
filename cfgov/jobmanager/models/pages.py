@@ -215,6 +215,8 @@ class JobListingPage(CFGOVPage):
 
     objects = JobListingPageManager()
 
+    template = "jobmanager/job_listing_page.html"
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request)
 
