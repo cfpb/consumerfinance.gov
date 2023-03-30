@@ -238,6 +238,8 @@ class ActivityPage(CFGOVPage):
         ]
     )
 
+    template = "teachers_digital_platform/activity_page.html"
+
     def get_subtopic_ids(self):
         """Get a list of this activity's subtopic ids."""
         topic_ids = [topic.id for topic in self.topic.all()]
