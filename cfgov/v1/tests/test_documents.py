@@ -61,6 +61,7 @@ class FilterablePagesDocumentTest(TestCase):
                 "initial_filing_date",
                 "model_class",
                 "content",
+                "preview_title",
                 "preview_description",
                 "path",
                 "depth",
@@ -95,6 +96,7 @@ class FilterablePagesDocumentTest(TestCase):
     def test_prepare_content_exists(self):
         blog = BlogPage(
             title="Test Blog",
+            preview_title="Blog for Testing",
             content=json.dumps(
                 [
                     {
@@ -112,6 +114,7 @@ class FilterablePagesDocumentTest(TestCase):
         doc = FilterablePagesDocument()
         prepared_data = doc.prepare(blog)
         self.assertEqual(prepared_data["content"], "Blog Text")
+        print(prepared_data)
 
     def test_prepare_content_empty(self):
         blog = BlogPage(title="Test Blog", content=json.dumps([]))
@@ -153,7 +156,7 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
                 SublandingFilterablePage(title="search1"),
                 [
                     DocumentDetailPage(title="child1"),
-                    DocumentDetailPage(title="child2"),
+                    DocumentDetailPage(title="child2", preview_title="2child"),
                     (
                         SublandingFilterablePage(title="search2"),
                         [
@@ -192,6 +195,15 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
         self.assertEqual(search.search(title="child").count(), 4)
         self.assertEqual(search.search(title="child1").count(), 2)
         self.assertEqual(search.search(title="child3").count(), 0)
+
+    def test_search_by_preview_title(self):
+        search = FilterablePagesDocumentSearch(
+            self.page_tree[0], children_only=False
+        )
+        results_title = search.search(title="child2")
+        results_preview_title = search.search(title="2child")
+        self.assertEqual(results_title.count(), 2)
+        self.assertEqual(results_preview_title.count(), 1)
 
     def test_get_raw_results(self):
         search = FilterablePagesDocumentSearch(self.page_tree[0])
