@@ -39,6 +39,7 @@ class FilterablePagesDocument(Document):
     model_class = fields.KeywordField()
     content = fields.TextField()
     preview_title = fields.TextField()
+    preview_subheading = fields.TextField()
     preview_description = fields.TextField()
     path = fields.KeywordField()
     depth = fields.IntegerField()
@@ -86,9 +87,6 @@ class FilterablePagesDocument(Document):
             return None
         except IndexError:
             return None
-
-    def prepare_preview_title(self, instance):
-        return getattr(instance, "preview_title", None)
 
     def prepare_preview_description(self, instance):
         return unescape(strip_tags(instance.preview_description))
@@ -169,6 +167,7 @@ class FilterablePagesDocumentSearch:
                     "tags.name^10",
                     "content",
                     "preview_title",
+                    "preview_subheading",
                     "preview_description",
                 ],
                 type="phrase_prefix",

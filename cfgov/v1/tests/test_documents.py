@@ -62,6 +62,7 @@ class FilterablePagesDocumentTest(TestCase):
                 "model_class",
                 "content",
                 "preview_title",
+                "preview_subheading",
                 "preview_description",
                 "path",
                 "depth",
@@ -155,7 +156,11 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
                 SublandingFilterablePage(title="search1"),
                 [
                     DocumentDetailPage(title="child1"),
-                    DocumentDetailPage(title="child2", preview_title="2child"),
+                    DocumentDetailPage(
+                        title="child2",
+                        preview_title="2child",
+                        preview_subheading="2child2",
+                    ),
                     (
                         SublandingFilterablePage(title="search2"),
                         [
@@ -203,6 +208,13 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
         results_preview_title = search.search(title="2child")
         self.assertEqual(results_title.count(), 2)
         self.assertEqual(results_preview_title.count(), 1)
+
+    def test_search_by_preview_subheading(self):
+        search = FilterablePagesDocumentSearch(
+            self.page_tree[0], children_only=False
+        )
+        results_preview_subheading = search.search(title="2child2")
+        self.assertEqual(results_preview_subheading.count(), 1)
 
     def test_get_raw_results(self):
         search = FilterablePagesDocumentSearch(self.page_tree[0])
