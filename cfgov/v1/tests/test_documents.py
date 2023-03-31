@@ -114,7 +114,6 @@ class FilterablePagesDocumentTest(TestCase):
         doc = FilterablePagesDocument()
         prepared_data = doc.prepare(blog)
         self.assertEqual(prepared_data["content"], "Blog Text")
-        print(prepared_data)
 
     def test_prepare_content_empty(self):
         blog = BlogPage(title="Test Blog", content=json.dumps([]))
