@@ -158,8 +158,12 @@ class LoginFormTestCase(TestCase):
         """Ensure lockout if our failed logins are over our limit"""
         form = LoginForm(data={"username": "admin", "password": "badadmin"})
         self.assertFalse(form.is_valid())
+
+        user = User.objects.get(username="admin")
+        self.assertTrue(hasattr(user, "failedloginattempt"))
+
         with self.assertRaises(ValidationError):
-            form.check_for_lockout(User.objects.get(username="admin"))
+            form.check_for_lockout(user)
 
     def test_login_locked_out(self):
         """Ensure we get locked out"""
@@ -172,12 +176,9 @@ class LoginFormTestCase(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("temporarily locked", form.errors["__all__"][0])
 
-        # Ensure that a temporary lockout doesn't result in a failed loing
+        # Ensure that a temporary lockout doesn't result in a failed login
         user.refresh_from_db()
-        with self.assertRaises(
-            User.failedloginattempt.RelatedObjectDoesNotExist
-        ):
-            user.failedloginattempt
+        self.assertFalse(hasattr(user, "failedloginattempt"))
 
     def test_password_expired(self):
         """Ensure login is denied if our password is expired"""
@@ -193,12 +194,9 @@ class LoginFormTestCase(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("password has expired", form.errors["__all__"][0])
 
-        # Ensure that a password expiration doesn't result in a failed loing
+        # Ensure that a password expiration doesn't result in a failed login
         user.refresh_from_db()
-        with self.assertRaises(
-            User.failedloginattempt.RelatedObjectDoesNotExist
-        ):
-            user.failedloginattempt
+        self.assertFalse(hasattr(user, "failedloginattempt"))
 
     def test_clear_failed_login_attempts(self):
         """Ensure we can clear failed login attempts"""
@@ -212,7 +210,4 @@ class LoginFormTestCase(TestCase):
         form.clear_failed_login_attempts(user)
 
         user.refresh_from_db()
-        with self.assertRaises(
-            User.failedloginattempt.RelatedObjectDoesNotExist
-        ):
-            user.failedloginattempt
+        self.assertFalse(hasattr(user, "failedloginattempt"))
