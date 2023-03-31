@@ -52,5 +52,7 @@ class CampaignPage(CFGOVPage):
         ]
     )
 
+    template = "v1/campaign_page.html"
+
     # Sets page to only be createable as the child of the homepage
     parent_page_types = ["v1.HomePage"]
