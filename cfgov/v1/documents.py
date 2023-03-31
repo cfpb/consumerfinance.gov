@@ -88,7 +88,6 @@ class FilterablePagesDocument(Document):
             return None
 
     def prepare_preview_title(self, instance):
-        print("Preview Title", getattr(instance, "preview_title", None))
         return getattr(instance, "preview_title", None)
 
     def prepare_preview_description(self, instance):
