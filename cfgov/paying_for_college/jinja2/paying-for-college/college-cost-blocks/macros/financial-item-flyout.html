@@ -1,23 +1,23 @@
 {# ==========================================================================
 
-   Expandable
+   Costs Group (organism using flyout code)
 
    ==========================================================================
 
    Description:
 
-   Create a financial item expandable when given:
+   Create a financial item costs group flyout when given:
 
    value:                   Object with following properties:
 
-   value.label:             Label for expandable header.
+   value.label:             Label for costs group header.
 
-   value.value:             Value for expandable header.
+   value.value:             Value for costs group header.
 
-   value.is_editable:       Whether expandable contains form elements.
+   value.is_editable:       Whether costs group contains form elements.
                             Determines the open/close cues.
 
-   value.note:              Additional text for expandable header.
+   value.note:              Additional text for costs group header.
 
    value.data_attribute:    Data attribute for value element.
 
@@ -26,19 +26,20 @@
 
    ========================================================================== #}
 
-{% macro expandable(value) %}
-<div class="o-expandable
-            o-expandable__padded">
-    <button class="o-expandable_header
+{% macro flyout(value) %}
+<div class="o-costs-group" data-js-hook="behavior_flyout-menu">
+    <button class="o-costs-group_header
+                   o-costs-group_target
+                   o-costs-group_target__collapsed
                    financial-item
-                   financial-item__expandable
-                   {{ ('financial-item__' + value.status | safe ) if value.status else ''}}"
+                   financial-item__flyout
+                   {{ ('financial-item__' + value.status | safe ) if value.status else ''}}" data-js-hook="behavior_flyout-menu_trigger"
             type="button">
       <span class="flex-container">
-        <span class="h4 o-expandable_label">
+        <span class="h4 o-costs-group_label">
             {{ value.label }}
         </span>
-        <span class="o-expandable_link">
+        <span class="o-costs-group_link">
             <span class="financial-item_value" {{ value.data_attribute | safe if value.data_attribute else '' }} >
                {{ value.value }}
             </span>
@@ -56,7 +57,7 @@
             </span>
         {% endif %}
     </button>
-    <div class="o-expandable_content">
+    <div class="o-costs-group_content" data-js-hook="behavior_flyout-menu_content">
         {% if caller is defined %}
             {{ caller() }}
         {% endif %}
@@ -65,5 +66,5 @@
 {% endmacro %}
 
 {% if value %}
-    {{ expandable(value) }}
+    {{ flyout(value) }}
 {% endif %}
