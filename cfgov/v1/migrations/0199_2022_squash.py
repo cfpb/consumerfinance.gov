@@ -14,6 +14,7 @@ import wagtail.snippets.blocks
 import modelcluster.contrib.taggit
 import modelcluster.fields
 import wagtailmedia.blocks
+from taggit import VERSION as TAGGIT_VERSION
 
 import jobmanager.blocks
 import v1.atomic_elements.molecules
@@ -971,7 +972,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100, unique=True, verbose_name='name')),
-                ('slug', models.SlugField(max_length=100, unique=True, verbose_name='slug')),
+                ('slug', models.SlugField(max_length=100, unique=True, verbose_name='slug', allow_unicode=(TAGGIT_VERSION >= (3, 0, 0)))),
             ],
             options={
                 'verbose_name': 'Content Owner',
