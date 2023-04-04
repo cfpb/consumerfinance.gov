@@ -17,7 +17,7 @@
 
 {% block body_content scoped %}
 {{ super() }}
-{% if page and page.language != 'ar' %}
+{% if not page or (page and page.language != 'ar') %}
 <div class="wrapper content_wrapper">
     <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
         {%- import 'v1/includes/macros/accessible-languages.html' as accessible_languages with context-%}
