@@ -38,6 +38,8 @@ class FilterablePagesDocument(Document):
     initial_filing_date = fields.DateField()
     model_class = fields.KeywordField()
     content = fields.TextField()
+    preview_title = fields.TextField()
+    preview_subheading = fields.TextField()
     preview_description = fields.TextField()
     path = fields.KeywordField()
     depth = fields.IntegerField()
@@ -164,6 +166,8 @@ class FilterablePagesDocumentSearch:
                     "title^10",
                     "tags.name^10",
                     "content",
+                    "preview_title",
+                    "preview_subheading",
                     "preview_description",
                 ],
                 type="phrase_prefix",
