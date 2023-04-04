@@ -282,6 +282,28 @@
     - name: .u-layout-grid
 */
 
+.u-hero-background() {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: -50%;
+  width: 200vw;
+  height: 100%;
+  content: '';
+  // This CSS color variable is hardcoded in the hero.html template.
+  background: var(--m-hero-background-color);
+}
+
+.u-sidebar-background() {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  width: 100vw;
+  height: 100%;
+  content: '';
+  background: @gray-5;
+}
+
 // Establish the wrapper inside the grid container as the grid element.
 .u-layout-grid {
   &_wrapper {
@@ -352,15 +374,10 @@
     padding-left: unit(15px / @base-font-size-px, em);
     margin-left: unit(-15px / @base-font-size-px, em);
 
+    // This is the sidebar background, which bleeds to the edge.
     &:after {
-      position: absolute;
-      z-index: -1;
-      top: 0;
+      .u-sidebar-background();
       left: 0;
-      width: 100vw;
-      height: 100%;
-      content: '';
-      background: @gray-5;
     }
   }
 
@@ -380,15 +397,7 @@
 
       // Create the hero background bleed.
       &:after {
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        left: -50%;
-        width: 200vw;
-        height: 100%;
-        content: '';
-        // This CSS color variable is hardcoded in the hero.html template.
-        background: var(--m-hero-background-color);
+        .u-hero-background();
       }
     }
 
@@ -417,15 +426,9 @@
 
     // This is the sidebar background, which bleeds to the edge.
     &:after {
-      position: absolute;
-      z-index: -1;
-      top: 0;
+      .u-sidebar-background();
       right: 0;
       left: auto;
-      width: 100vw;
-      height: 100%;
-      content: '';
-      background: @gray-5;
     }
   }
 
@@ -453,15 +456,7 @@
 
       // Create the hero background bleed.
       &:after {
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        left: -50%;
-        width: 200vw;
-        height: 100%;
-        content: '';
-        // This CSS color variable is hardcoded in the hero.html template.
-        background: var(--m-hero-background-color);
+        .u-hero-background();
       }
     }
 
