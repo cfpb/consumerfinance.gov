@@ -8,7 +8,7 @@
           {% endif -%}>
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
-            {% if page and not breadcrumb_items %}
+            {% if not breadcrumb_items and page and page.get_breadcrumbs %}
                 {% set breadcrumb_items = page.get_breadcrumbs(request) %}
             {% endif %}
 
