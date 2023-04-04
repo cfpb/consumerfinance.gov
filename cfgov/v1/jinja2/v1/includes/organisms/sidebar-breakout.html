@@ -64,10 +64,8 @@
                             {% set photo = image(blocks.image.value, 'original') %}
                             <div class="o-sidebar-breakout_img-container
                                         {{ 'o-sidebar-breakout_img-container__round'
-                                           if blocks.is_round | string == 'True' else '' }}
-                                        u-centered-on-mobile">
-                              <div class="o-sidebar-breakout_img
-                                          u-centered-on-mobile"
+                                           if blocks.is_round | string == 'True' else '' }}">
+                              <div class="o-sidebar-breakout_img"
                                    style="background-image:url( {{ photo.url }} )">
                               </div>
                             </div>

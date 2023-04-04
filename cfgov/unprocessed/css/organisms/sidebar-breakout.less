@@ -69,26 +69,6 @@
 @o-sidebar-breakout_img-height: 170px;
 
 .o-sidebar-breakout {
-  .respond-to-max(@bp-xs-max, {
-    margin-bottom: @margin__em;
-  });
-
-  &_col {
-    .respond-to-max(@bp-sm-max, {
-      width: 100%;
-      &:last-child {
-        padding-top: @margin__em;
-        border-top: 1px solid @gray-40;
-      }
-    });
-
-    .respond-to-min(@bp-med-min, {
-      &:last-child {
-        padding-left: @margin__em;
-      }
-    });
-  }
-
   &_heading {
     margin-bottom: @margin__em;
   }
@@ -104,12 +84,6 @@
   &_img-container {
     max-width: @o-sidebar-breakout_img-width;
     max-height: @o-sidebar-breakout_img-height;
-
-    .respond-to-range(@bp-sm-min, @bp-sm-max, {
-      float: left;
-      width: @o-sidebar-breakout_img-width / @bp-sm-max * 100%;
-      margin-right: @margin__em;
-    });
   }
 
   &_img-container__round {
@@ -122,12 +96,6 @@
     }
   }
 
-  &_text-container {
-    .respond-to-range(@bp-sm-min, @bp-sm-max, {
-      overflow: auto;
-    });
-  }
-
   &_text-body {
     margin-bottom: @margin__em;
   }
@@ -135,19 +103,58 @@
   &_text-heading {
     margin-top: @margin__em;
     margin-bottom: @margin__em / 2;
-
-    .respond-to-range(@bp-sm-min, @bp-sm-max, {
-      margin-top: 0;
-    });
-  }
-
-  .m-related-posts_list .m-list_item {
-    .respond-to-range(@bp-sm-min, @bp-sm-max, {
-      border: 0;
-      width: 100%
-    });
   }
 }
+
+.respond-to-max(@bp-xs-max, {
+  .o-sidebar-breakout {
+
+    margin-bottom: @margin__em;
+
+    &_col {
+      width: 100%;
+      &:last-child {
+        padding-top: @margin__em;
+        border-top: 1px solid @gray-40;
+      }
+    }
+
+    &_img-container {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  }
+});
+
+.respond-to-min(@bp-med-min, {
+  .o-sidebar-breakout_col:last-child {
+    padding-left: @margin__em;
+  }
+});
+
+.respond-to-range(@bp-sm-min, @bp-sm-max, {
+  .o-sidebar-breakout {
+    &_img-container {
+      float: left;
+      width: @o-sidebar-breakout_img-width / @bp-sm-max * 100%;
+      margin-right: @margin__em;
+    }
+
+    &_text-container {
+      overflow: auto;
+    }
+
+    &_text-heading {
+      margin-top: 0;
+    }
+
+    .m-related-posts_list .m-list_item {
+      border: 0;
+      width: 100%
+    }
+  }
+});
 
 /* topdoc
     name: EOF
