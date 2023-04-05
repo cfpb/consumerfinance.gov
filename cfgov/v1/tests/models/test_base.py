@@ -313,6 +313,30 @@ class TestCFGOVPageContext(TestCase):
         self.assertEqual(True, result)
 
 
+class TestCFGOVPageTranslationActivation(TestCase):
+    def test_english_page_serves_in_english(self):
+        page = LandingPage(title="test", language="en")
+        request = RequestFactory().get("/")
+        response = page.serve(request)
+        self.assertContains(response, "Search")
+
+    def test_spanish_page_serves_in_spanish(self):
+        page = LandingPage(title="test", language="es")
+        request = RequestFactory().get("/")
+        response = page.serve(request)
+        self.assertContains(response, "Buscar")
+
+    def test_english_page_serves_preview_in_english(self):
+        page = LandingPage(title="test", language="en")
+        response = page.make_preview_request()
+        self.assertContains(response, "Search")
+
+    def test_spanish_page_serves_preview_in_spanish(self):
+        page = LandingPage(title="test", language="es")
+        response = page.make_preview_request()
+        self.assertContains(response, "Buscar")
+
+
 class TestCFGOVPageQuerySet(TestCase):
     def setUp(self):
         default_site = Site.objects.get(is_default_site=True)
