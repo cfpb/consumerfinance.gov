@@ -55,6 +55,12 @@
                 {{- meta_description if page else '' -}}
             {%- endblock -%}
           ">
+
+    {# Always open preview panel links in a new tab. #}
+    {% if request.in_preview_panel %}
+    <base target="_blank">
+    {% endif %}
+
     <link rel="canonical" href="{{ request.build_absolute_uri() | lower }}">
 
     {# Open Graph properties #}
@@ -164,6 +170,9 @@
   If you come across a script that makes a convincing case to be included in
   the head, then file an issue or PR to discuss including it.
 #}
+    {# Don't load certain scripts in the Wagtail preview panel. -#}
+    {% if not request.in_preview_panel %}
+
     {% if flag_enabled('AB_TESTING') %}
     {# Begin Google Optimize #}
     {# Optimize anti-flicker snippet. #}
@@ -193,6 +202,9 @@
     f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
     {# End Google Tag Manager #}
+
+    {# End: Don't load certain scripts in the Wagtail preview panel. #}
+    {% endif -%}
 
     {# Schema data in JSON-LD format #}
     {% if schema_json %}
@@ -229,10 +241,16 @@
 
     {% block analytics %}
 
+    {# Don't load certain scripts in the Wagtail preview panel. -#}
+    {% if not request.in_preview_panel %}
+
     {# Google Tag Manager (noscript) #}
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {# End Google Tag Manager (noscript) #}
+
+    {# End: Don't load certain scripts in the Wagtail preview panel. #}
+    {% endif -%}
 
     {% endblock analytics %}
 
