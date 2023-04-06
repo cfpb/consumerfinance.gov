@@ -709,7 +709,7 @@ CSRF_REQUIRED_PATHS = (
 # exempt beta from CSRF settings until it's converted to https
 SECURE_REFERRER_POLICY = "same-origin"  # 1
 SESSION_COOKIE_SAMESITE = "Strict"  # 3
-X_FRAME_OPTIONS = "DENY"  # 14
+X_FRAME_OPTIONS = "SAMEORIGIN"  # 13
 
 if DEPLOY_ENVIRONMENT and DEPLOY_ENVIRONMENT != "beta":
     SESSION_COOKIE_SECURE = True
