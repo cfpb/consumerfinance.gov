@@ -3,7 +3,6 @@ from django.contrib.auth import views as django_auth_views
 from django.urls import include, path, re_path, reverse_lazy
 from django.views.generic.base import RedirectView
 
-from login.forms import CFGOVPasswordChangeForm
 from login.views import CFGOVPasswordResetConfirmView, change_password
 
 
@@ -58,18 +57,14 @@ urlpatterns = urlpatterns + [
     # Override Wagtail and Django password views to enforce our password policy
     re_path(
         r"^django-admin/password_change",
-        change_password,
-        name="django_admin_account_change_password",
+        RedirectView.as_view(
+            url=reverse_lazy("wagtailadmin_password_reset"), query_string=True
+        ),
     ),
     path(
         "admin/password_reset/confirm/<uidb64>/<token>/",
         CFGOVPasswordResetConfirmView.as_view(),
         name="wagtailadmin_password_reset_confirm",
-    ),
-    re_path(
-        r"^django-admin/password_change",
-        django_auth_views.PasswordChangeView.as_view(),
-        {"password_change_form": CFGOVPasswordChangeForm},
     ),
     re_path(
         r"^password/change/done/$",
