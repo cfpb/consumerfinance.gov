@@ -42,7 +42,7 @@ else:
 
 urlpatterns = urlpatterns + [
     # Redirect root-level /login and /logout to Wagtail.
-    # If SSO is enabled, this will redirect from there to djangosaml2.
+    # If SSO is enabled, these will redirect from there to djangosaml2.
     re_path(
         r"^login/$",
         RedirectView.as_view(
