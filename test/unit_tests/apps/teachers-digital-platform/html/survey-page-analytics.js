@@ -1,6 +1,6 @@
 const HTML_SNIPPET = `
 <main class="content content__2-1 content__bleedbar" id="main">
-  <div data-tdp_grade_level="3-5" class="wrapper content_wrapper tdp-survey tdp-survey-layout">
+  <div data-tdp_grade_level="3-5" class="content_wrapper tdp-survey tdp-survey-layout">
     <div class="tdp-survey-page content_main" data-tdp-page="survey" data-grade-select-url="/consumer-tools/educator-tools/youth-financial-education/assess/survey/" data-page-idx="2" data-questions-by-page="[6, 2, 7, 3, 2]" data-item-separator="&quot;\u2023&quot;">
       <form action="" method="post">
         <input type="hidden" name="csrfmiddlewaretoken" value="CNHdAdwz338v2VILnD2SsDAeivdezIHdAyfCipAEoGZo6s7LwQD3x8osZiZSnRvg">
