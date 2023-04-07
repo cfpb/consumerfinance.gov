@@ -48,32 +48,53 @@ class TestParseLinksMiddleware(TestCase):
 
 
 class TestShouldParseLinks(TestCase):
+    def make_request(self, path):
+        return RequestFactory().get(path)
+
+    def make_response(self, content_type):
+        response = HttpResponse()
+        response["Content-Type"] = content_type
+        return response
+
     def test_should_not_parse_links_if_non_html(self):
         self.assertFalse(
             ParseLinksMiddleware.should_parse_links(
-                request_path="/foo/bar",
-                response_content_type="application/json",
+                request=self.make_request("/foo/bar"),
+                response=self.make_response("application/json"),
             )
         )
 
     def test_should_not_parse_links_if_empty(self):
         self.assertFalse(
             ParseLinksMiddleware.should_parse_links(
-                request_path="/foo/bar", response_content_type=""
+                request=self.make_request("/foo/bar"),
+                response=self.make_response(""),
             )
         )
 
     def test_should_parse_links_if_html(self):
         self.assertTrue(
             ParseLinksMiddleware.should_parse_links(
-                request_path="/foo/bar", response_content_type="text/html"
+                request=self.make_request("/foo/bar"),
+                response=self.make_response("text/html"),
+            )
+        )
+
+    def test_should_not_parse_links_if_links_already_parsed(self):
+        response = self.make_response("text/html")
+        setattr(response, ParseLinksMiddleware.response_flag, True)
+        self.assertFalse(
+            ParseLinksMiddleware.should_parse_links(
+                request=self.make_request("/foo/bar"),
+                response=response,
             )
         )
 
     def check_should_parse_links_for_path(self, path, expected):
         self.assertEqual(
             ParseLinksMiddleware.should_parse_links(
-                request_path=path, response_content_type="text/html"
+                request=self.make_request(path),
+                response=self.make_response("text/html"),
             ),
             expected,
         )
