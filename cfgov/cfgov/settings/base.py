@@ -402,21 +402,44 @@ WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get(
 
 PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
 
-
 # Password Policies
-# cfpb_common password rules
-CFPB_COMMON_PASSWORD_RULES = [
-    [r".{12,}", "Minimum allowed length is 12 characters"],
-    [r"[A-Z]", "Password must include at least one capital letter"],
-    [r"[a-z]", "Password must include at least one lowercase letter"],
-    [r"[0-9]", "Password must include at least one digit"],
-    [
-        r"[@#$%&!]",
-        "Password must include at least one special character (@#$%&!)",
-    ],
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {
+            "min_length": 12,
+        },
+    },
+    {
+        "NAME": "login.password_validation.ComplexityValidator",
+        "OPTIONS": {
+            "rules": [
+                [r".{12,}", "Minimum allowed length is 12 characters"],
+                [
+                    r"[A-Z]",
+                    "Password must include at least one capital letter",
+                ],
+                [
+                    r"[a-z]",
+                    "Password must include at least one lowercase letter",
+                ],
+                [r"[0-9]", "Password must include at least one digit"],
+                [
+                    r"[@#$%&!]",
+                    "Password must include at least one special character (@#$%&!)",
+                ],
+            ],
+        },
+    },
+    {
+        "NAME": "login.password_validation.HistoryValidator",
+    },
+    {
+        "NAME": "login.password_validation.AgeValidator",
+    },
 ]
 
-# Login Lockout rules using django-axes
+# Login lockout rules using django-axes
 AUTHENTICATION_BACKENDS = (
     "axes.backends.AxesStandaloneBackend",
     "django.contrib.auth.backends.ModelBackend",
