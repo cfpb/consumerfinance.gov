@@ -3,56 +3,57 @@ site_name: consumerfinance.gov
 repo_url: https://github.com/cfpb/consumerfinance.gov
 
 nav:
-- Introduction: index.md
-- Setup: installation.md
-- Running this Project:
-    - Running in a Virtual Environment: running-virtualenv.md
-    - Running in Docker: running-docker.md
-    - Debugging and Monitoring: debugging-monitoring.md
-    - Artifacts and Deployment: deployment.md
-- Pages and Components:
-    - Atomic Structure and Design: atomic-structure.md
-    - Creating and Editing Components: editing-components.md
-    - Debugging Templates: debugging-templates.md
-    - Django and Wagtail Migrations: migrations.md
-    - Wagtail Pages: wagtail-pages.md
-- Supporting Features:
-    - Caching: caching.md
-    - Feature Flags: feature-flags.md
-    - Filterable Lists: filterable-lists.md
-    - Page Search: page-search.md
-    - Site Search: site-search.md
-    - Translation: translation.md
-- Testing:
-    - JavaScript Unit Testing: javascript-unit-tests.md
-    - Python Unit Testing: python-unit-tests.md
-    - Functional Testing: functional-testing.md
-    - Profiling Django: profiling-django.md
-    - Other Front-end Testing: other-front-end-testing.md
-- Contributing:
-    - Branching and Merging: branching-merging.md
-    - Contributing to the Docs: contributing-docs.md
-    - Related Projects: related-projects.md
-    - Development Tips: development-tips.md
-    - How We Use GitHub Actions: github-actions.md
-- APIs and Data:
-    - Ask CFPB: ask-cfpb.md
-    - Consumer Complaints: consumer-complaint-database.md
-    - Find a Housing Counselor Tool: housing-counselor-tool.md
+  - Introduction: index.md
+  - Setup: installation.md
+  - Running this Project:
+      - Running in a Virtual Environment: running-virtualenv.md
+      - Running in Docker: running-docker.md
+      - Running documentation site locally: running-docs.md
+      - Debugging and Monitoring: debugging-monitoring.md
+      - Artifacts and Deployment: deployment.md
+  - Pages and Components:
+      - Atomic Structure and Design: atomic-structure.md
+      - Creating and Editing Components: editing-components.md
+      - Debugging Templates: debugging-templates.md
+      - Django and Wagtail Migrations: migrations.md
+      - Wagtail Pages: wagtail-pages.md
+  - Supporting Features:
+      - Caching: caching.md
+      - Feature Flags: feature-flags.md
+      - Filterable Lists: filterable-lists.md
+      - Page Search: page-search.md
+      - Site Search: site-search.md
+      - Translation: translation.md
+  - Testing:
+      - JavaScript Unit Testing: javascript-unit-tests.md
+      - Python Unit Testing: python-unit-tests.md
+      - Functional Testing: functional-testing.md
+      - Profiling Django: profiling-django.md
+      - Other Front-end Testing: other-front-end-testing.md
+  - Contributing:
+      - Branching and Merging: branching-merging.md
+      - Contributing to the Docs: contributing-docs.md
+      - Related Projects: related-projects.md
+      - Development Tips: development-tips.md
+      - How We Use GitHub Actions: github-actions.md
+  - APIs and Data:
+      - Ask CFPB: ask-cfpb.md
+      - Consumer Complaints: consumer-complaint-database.md
+      - Find a Housing Counselor Tool: housing-counselor-tool.md
 
 theme:
-    name: readthedocs
-    custom_dir: docs/theme-overrides/ # @TODO: We may be able to remove this custom template when MkDocs 1.1 is released
+  name: readthedocs
+  custom_dir: docs/theme-overrides/ # @TODO: We may be able to remove this custom template when MkDocs 1.1 is released
 extra_css:
-    - css/overrides.css
+  - css/overrides.css
 
 markdown_extensions:
-    - admonition
-    - pymdownx.betterem
-    - pymdownx.highlight
-    - pymdownx.magiclink
-    - pymdownx.superfences
-    - pymdownx.tilde
-    - tables
-    - toc:
-        permalink: "¶"
+  - admonition
+  - pymdownx.betterem
+  - pymdownx.highlight
+  - pymdownx.magiclink
+  - pymdownx.superfences
+  - pymdownx.tilde
+  - tables
+  - toc:
+      permalink: '¶'

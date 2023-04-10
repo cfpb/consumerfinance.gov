@@ -8,34 +8,27 @@ for writing and running JavaScript unit tests.
 If you’re not familiar with it,
 it would be a good idea to peruse their docs before diving in here.
 
-
-
-
 ## Table of contents
 
 1. [Running unit tests](#running-unit-tests)
-    1. [Running a single test file](#running-a-single-test-file)
-    1. [Run a directory of unit tests](#run-a-directory-of-unit-tests)
-    1. [Run all unit tests](#run-all-unit-tests)
+   1. [Running a single test file](#running-a-single-test-file)
+   1. [Run a directory of unit tests](#run-a-directory-of-unit-tests)
+   1. [Run all unit tests](#run-all-unit-tests)
 1. [Where to find tests](#where-to-find-tests)
 1. [Test-driven development](#test-driven-development)
 1. [Setting up tests](#setting-up-tests)
-    1. [New test file from sample](#new-test-file-from-sample)
-    1. [Folder structure (where to put your JavaScript and tests)](#folder-structure-where-to-put-your-javascript-and-tests)
-    1. [First test run](#first-test-run)
-    1. [File structure (basic layout of a test file)](#file-structure-basic-layout-of-a-test-file)
-    1. [Providing test data](#providing-test-data)
+   1. [New test file from sample](#new-test-file-from-sample)
+   1. [Folder structure (where to put your JavaScript and tests)](#folder-structure-where-to-put-your-javascript-and-tests)
+   1. [First test run](#first-test-run)
+   1. [File structure (basic layout of a test file)](#file-structure-basic-layout-of-a-test-file)
+   1. [Providing test data](#providing-test-data)
 1. [Common test patterns](#common-test-patterns)
-    1. [Testing a basic function](#testing-a-basic-function)
-    1. [Testing DOM manipulation](#testing-dom-manipulation)
-    1. [Testing browser state](#testing-browser-state)
-    1. [Testing user interaction](#testing-user-interaction)
-
-
-
+   1. [Testing a basic function](#testing-a-basic-function)
+   1. [Testing DOM manipulation](#testing-dom-manipulation)
+   1. [Testing browser state](#testing-browser-state)
+   1. [Testing user interaction](#testing-user-interaction)
 
 ## Running unit tests
-
 
 ### Run a single test file
 
@@ -86,9 +79,6 @@ The following links list out the main directories containing tests
 - [Tests for molecules](https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests/js/molecules)
 - [Tests for organisms](https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests/js/organisms)
 
-
-
-
 ## Test-driven development
 
 We recommend using test-driven development (TDD) when coding new JavaScript.
@@ -107,11 +97,7 @@ Then repeat that process until you have written all of the code you need.
 to learn more about how it differs from
 the typical approach to programming and unit tests.
 
-
-
-
 ## Setting up tests
-
 
 ### New test file from sample
 
@@ -132,19 +118,18 @@ then we will make it pass, following the principles of TDD.
 1. Copy the sample test file to a new location by
    running this command from the root of consumerfinance.gov:
 
-    ```bash
-    cp docs/samples/sample-spec.js test/unit_tests/js/modules/
-    ```
+   ```bash
+   cp docs/samples/sample-spec.js test/unit_tests/js/modules/
+   ```
 
 1. Copy the sample module file to a new location by running this command:
 
-    ```bash
-    cp docs/samples/sample.js cfgov/unprocessed/js/modules/
-    ```
+   ```bash
+   cp docs/samples/sample.js cfgov/unprocessed/js/modules/
+   ```
 
 Test file names should always match what they are testing,
 with the addition of a `-spec` suffix.
-
 
 ### Folder structure (where to put your JavaScript and tests)
 
@@ -166,12 +151,11 @@ so they can be placed into the uncategorized `modules` subfolders:
 `cfgov/unprocessed/js/modules` and `test/unit_tests/modules`, respectively.
 
 !!! note "Child apps"
-    If you’re working on something in a child app,
-    put it in `test/unit_test/appname/js/`.
-    Otherwise, if you’re working on something that
-    belongs to consumerfinance.gov generally,
-    it should go in the corresponding folder under `test/unit_test/js/`.
-
+If you’re working on something in a child app,
+put it in `test/unit_test/appname/js/`.
+Otherwise, if you’re working on something that
+belongs to consumerfinance.gov generally,
+it should go in the corresponding folder under `test/unit_test/js/`.
 
 ### First test run
 
@@ -184,46 +168,45 @@ to save and commit your changes.
 1. Edit line 6 of your spec file and remove the call to the `.skip` method.
    The line should now read:
 
-    ```js
-    it( 'should return a string with expected value', () => {
-      …
-    } );
-    ```
+   ```js
+   it( 'should return a string with expected value', () => {
+     …
+   } );
+   ```
 
 1. Run your sample test using
 
-    ```bash
-    yarn jest sample-spec.js
-    ```
+   ```bash
+   yarn jest sample-spec.js
+   ```
 
-    (substituting your own filename).
+   (substituting your own filename).
 
-    You should see output like this:
+   You should see output like this:
 
-    ![Console output for failing unit test: "sample should return a string with expected value"](img/js-unit-test-output-fail.png)
+   ![Console output for failing unit test: "sample should return a string with expected value"](img/js-unit-test-output-fail.png)
 
-    The test should fail – this is expected.
-    Remember, when doing TDD, we want to write our test to fail first,
-    then write the corresponding JavaScript that will make the test pass.
+   The test should fail – this is expected.
+   Remember, when doing TDD, we want to write our test to fail first,
+   then write the corresponding JavaScript that will make the test pass.
 
 1. Make the test pass by changing your script’s line 7
    ([see `sample.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/sample.js))
    to the following:
 
-    ```js
-    return 'Shredder';
-    ```
+   ```js
+   return 'Shredder';
+   ```
 
 1. Run the test again to confirm the test now passes.
    You should see output like this:
 
-    ![Console output for passing unit test: "PASS test/unit_tests/js/modules/sample-spec.js"](img/js-unit-test-output-pass.png)
+   ![Console output for passing unit test: "PASS test/unit_tests/js/modules/sample-spec.js"](img/js-unit-test-output-pass.png)
 
-    Doesn’t it feel good?
+   Doesn’t it feel good?
 
 [Refer back to the “Running unit tests” section](#running-unit-tests)
 for additional commands to run tests.
-
 
 ### File structure (basic layout of a test file)
 
@@ -303,30 +286,25 @@ For example, if we want to add more functionality to our sample JS,
 we could start by writing these tests in `sample-spec.js`:
 
 ```js
-describe( 'sample', () => {
-
-  describe( 'gimmeString()', () => {
-
-    it( 'should return a string with expected value', () => {
+describe('sample', () => {
+  describe('gimmeString()', () => {
+    it('should return a string with expected value', () => {
       const sampleString = 'Shredder';
-      expect( sample.gimmeString() ).toBe( sampleString );
-    } );
+      expect(sample.gimmeString()).toBe(sampleString);
+    });
+  });
 
-  } );
-
-  describe( 'gimmeObject()', () => {
-
-    it( 'should return an object with expected value', () => {
+  describe('gimmeObject()', () => {
+    it('should return an object with expected value', () => {
       const sampleObject = {
-        image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
-        caption: 'Krang portrait'
+        image:
+          'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
+        caption: 'Krang portrait',
       };
-      expect( sample.gimmeObject() ).toBe( sampleObject );
-    } );
-
-  } );
-
-} );
+      expect(sample.gimmeObject()).toBe(sampleObject);
+    });
+  });
+});
 ```
 
 (We’ll talk more about writing the individual tests in the next section.)
@@ -354,36 +332,31 @@ These are called [“matchers”](https://jestjs.io/docs/en/using-matchers)
 in Jest parlance, and they all follow this format:
 
 ```js
-expect( someValue ).someKindOfComparisonWith( someOtherValue );
+expect(someValue).someKindOfComparisonWith(someOtherValue);
 ```
 
 For example, let’s take another look at the sample tests we wrote above:
 
 ```js
-describe( 'sample', () => {
-
-  describe( 'gimmeString()', () => {
-
-    it( 'should return a string with expected value', () => {
+describe('sample', () => {
+  describe('gimmeString()', () => {
+    it('should return a string with expected value', () => {
       const sampleString = 'Shredder';
-      expect( sample.gimmeString() ).toBe( sampleString );
-    } );
+      expect(sample.gimmeString()).toBe(sampleString);
+    });
+  });
 
-  } );
-
-  describe( 'gimmeObject()', () => {
-
-    it( 'should return an object with expected value', () => {
+  describe('gimmeObject()', () => {
+    it('should return an object with expected value', () => {
       const sampleObject = {
-        image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
-        caption: 'Krang portrait'
+        image:
+          'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
+        caption: 'Krang portrait',
       };
-      expect( sample.gimmeObject() ).toBe( sampleObject );
-    } );
-
-  } );
-
-} );
+      expect(sample.gimmeObject()).toBe(sampleObject);
+    });
+  });
+});
 ```
 
 In these tests, we check _(`expect`)_ that
@@ -398,7 +371,6 @@ See [the Jest Using Matchers guide](https://jestjs.io/docs/en/using-matchers)
 for a primer on them and
 [the Jest `expect` API docs](https://jestjs.io/docs/en/expect)
 for the full list of its matchers.
-
 
 ### Providing test data
 
@@ -445,10 +417,7 @@ Use `beforeEach` to reset manipulated markup between tests, e.g., the tests in
 in the “Common test patterns” section of this page
 for a more in-depth discussion of this scenario.
 
-
-
 ## Common test patterns
-
 
 ### Testing a basic function
 
@@ -466,18 +435,18 @@ Here is a simple example from our
 (`cfgov/unprocessed/js/modules/util/array-helpers.js`):
 
 ```js
-function indexOfObject( array, key, val ) {
+function indexOfObject(array, key, val) {
   let match = -1;
 
-  if ( !array.length > 0 ) {
+  if (!array.length > 0) {
     return match;
   }
 
-  array.forEach( function( item, index ) {
-    if ( item[key] === val ) {
+  array.forEach(function (item, index) {
+    if (item[key] === val) {
       match = index;
     }
-  } );
+  });
 
   return match;
 }
@@ -487,37 +456,29 @@ Tests for that function, from
 [test/unit_tests/js/modules/util/array-helpers-spec.js](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/array-helpers-spec.js):
 
 ```js
-describe( 'indexOfObject()', () => {
-  it( 'should return -1 if the array is empty', () => {
+describe('indexOfObject()', () => {
+  it('should return -1 if the array is empty', () => {
     array = [];
-    index = arrayHelpers.indexOfObject( array, 'foo' );
+    index = arrayHelpers.indexOfObject(array, 'foo');
 
-    expect( index ).toBe( -1 );
-  } );
+    expect(index).toBe(-1);
+  });
 
-  it( 'should return -1 if there is no match', () => {
-    array = [
-      { value: 'bar' },
-      { value: 'baz' }
-    ];
-    index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
+  it('should return -1 if there is no match', () => {
+    array = [{ value: 'bar' }, { value: 'baz' }];
+    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
 
-    expect( index ).toBe( -1 );
-  } );
+    expect(index).toBe(-1);
+  });
 
-  it( 'should return the matched index', () => {
-    array = [
-      { value: 'foo' },
-      { value: 'bar' },
-      { value: 'baz' }
-    ];
-    index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
+  it('should return the matched index', () => {
+    array = [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }];
+    index = arrayHelpers.indexOfObject(array, 'value', 'foo');
 
-    expect( index ).toBe( 0 );
-  } );
-} );
+    expect(index).toBe(0);
+  });
+});
 ```
-
 
 ### Testing DOM manipulation
 
@@ -537,32 +498,29 @@ as a particular kind of notification (success, warning, etc.). In
 we have this function that sets the type of a notification before displaying it:
 
 ```js
-function _setType( type ) {
+function _setType(type) {
   // If type hasn't changed, return.
-  if ( _currentType === type ) {
+  if (_currentType === type) {
     return this;
   }
 
   // Remove existing type class
   const classList = _dom.classList;
-  classList.remove(  `${ BASE_CLASS }__${ _currentType }` );
+  classList.remove(`${BASE_CLASS}__${_currentType}`);
 
-
-  if ( type === SUCCESS ||
-       type === WARNING ||
-       type === ERROR ) {
+  if (type === SUCCESS || type === WARNING || type === ERROR) {
     // Add new type class and update the value of _currentType
-    classList.add(  `${ BASE_CLASS }__${ type }` );
+    classList.add(`${BASE_CLASS}__${type}`);
     _currentType = type;
 
     // Replace <svg> element with contents of type_ICON
-    const currentIcon = _dom.querySelector( '.cf-icon-svg' );
-    const newIconSetup = document.createElement( 'div' );
+    const currentIcon = _dom.querySelector('.cf-icon-svg');
+    const newIconSetup = document.createElement('div');
     newIconSetup.innerHTML = ICON[type];
     const newIcon = newIconSetup.firstChild;
-    _dom.replaceChild( newIcon, currentIcon );
+    _dom.replaceChild(newIcon, currentIcon);
   } else {
-    throw new Error( `${ type } is not a supported notification type!` );
+    throw new Error(`${type} is not a supported notification type!`);
   }
   return this;
 }
@@ -615,18 +573,18 @@ and assigns the component node to the `notificationElem` variable, and
 (2) creates a new instance of the Notification class.
 
 !!! note "A word about `HTML_SNIPPET`s"
-    Right now it’s possible to update a component’s Jinja template,
-    forget to update the corresponding JavaScript,
-    and the unit tests would still pass,
-    because they're using their own `HTML_SNIPPET`.
-    It would be preferable if we had a canonical component markup template
-    that is pulled in by the application, the unit tests, and the docs.
-    We haven’t yet figured out how to do this, since
-    our component templates contain Jinja tags that
-    the tests would have to reconcile
-    into a complete, finished chunk of markup.
-    For now, just be aware of this when
-    [editing a Wagtail component that includes JavaScript](../editing-components/).
+Right now it’s possible to update a component’s Jinja template,
+forget to update the corresponding JavaScript,
+and the unit tests would still pass,
+because they're using their own `HTML_SNIPPET`.
+It would be preferable if we had a canonical component markup template
+that is pulled in by the application, the unit tests, and the docs.
+We haven’t yet figured out how to do this, since
+our component templates contain Jinja tags that
+the tests would have to reconcile
+into a complete, finished chunk of markup.
+For now, just be aware of this when
+[editing a Wagtail component that includes JavaScript](../editing-components/).
 
 Further down, here are some of the tests that cover the `_setType` function
 (by way of the `setTypeAndContent` function that
@@ -664,7 +622,6 @@ This part mostly works like testing any other function.
 The notable distinction here is that the test invokes the function
 using the DOM nodes and class set up in `beforeEach`.
 
-
 ### Testing browser state
 
 Another common thing to test is code that interacts with
@@ -676,65 +633,6 @@ One way of doing this is to create a **spy**
 (a special kind of mocked function)
 that watches for browser API calls to be made
 a certain number of times or with a specific payload.
-One example is found in
-[the tests for our full-table-row-linking code](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/o-table-row-links-spec.js).
-
-In
-[the module code](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/o-table-row-links.js)
-(`o-table-row-links.js`),
-if an event listener detects a click anywhere on
-one of these special table rows,
-it invokes `window.location` to send the browser
-to the `href` of the first link in that row:
-
-```js
-window.location.assign( target.querySelector( 'a' ).getAttribute( 'href' ) );
-```
-
-To test this, in the aforementioned `o-table-row-links-spec.js` file, we first
-[set up a standard Jest mock](https://jestjs.io/docs/en/mock-functions)
-for `window.location.assign`, and then
-[create our spy](https://jestjs.io/docs/en/jest-object#jestspyonobject-methodname)
-to watch it:
-
-```js
-describe( 'o-table-row-links', () => {
-  beforeEach( () => {
-    window.location.assign = jest.fn();
-    locationSpy = jest.spyOn( window.location, 'assign' );
-    …
-  } );
-
-  …
-} );
-```
-
-A little further down (after finishing the DOM setup
-and initializing the module we’re testing),
-we have three tests that simulate clicks
-and then assert things that the spy can answer for us:
-whether it was called with a particular location parameter,
-and that it was called a specific number of times (zero).
-
-```js
-it( 'should navigate to new location when link row cell clicked', () => {
-  simulateEvent( 'click', linkRowCellDom );
-  expect( locationSpy ).toBeCalledWith( 'https://www.example.com' );
-} );
-
-it( 'should not set window location when link is clicked', () => {
-  simulateEvent( 'click', linkDom );
-  expect( locationSpy ).toHaveBeenCalledTimes( 0 );
-} );
-
-it( 'should not navigate to new location when non link row cell clicked',
-  () => {
-    simulateEvent( 'click', nonLinkRowCellDom );
-    expect( locationSpy ).toHaveBeenCalledTimes( 0 );
-  }
-);
-```
-
 
 ### Testing user interaction
 

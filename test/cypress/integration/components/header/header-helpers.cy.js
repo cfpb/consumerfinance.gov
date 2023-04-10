@@ -1,44 +1,27 @@
 export class Header {
-
   headerContent() {
-    return cy.get( '.o-header_content' );
+    return cy.get('.o-header_content');
   }
 
   headerLogo() {
-    return cy.get( '.o-header_logo-img' );
+    return cy.get('.o-header_logo-img');
   }
 
   /* Overlay is technically outside of the header,
-    but makes organizational sense to include here. */
+     but makes organizational sense to include here. */
   overlay() {
-    return cy.get( '.a-overlay' );
+    return cy.get('.a-overlay');
   }
 
-  globalHeaderElement( name ) {
-    return cy.get( `.m-global-header-${ name }` );
-  }
-
-  globalSearchElement( name ) {
-    return cy.get( `.m-global-search_${ name }` );
-  }
-
-  globalSearch() {
-    return cy.get( '.m-global-search' );
-  }
-
-  globalSearchTrigger() {
-    return this.globalSearchElement( 'trigger' );
-  }
-
-  globalSearchContent() {
-    return this.globalSearchElement( 'content' );
+  globalHeaderElement(name) {
+    return cy.get(`.m-global-header-${name}`);
   }
 
   globalHeaderCta() {
-    return this.globalHeaderElement( 'cta' );
+    return this.globalHeaderElement('cta');
   }
 
-  megaMenuHeader() {
-    return cy.get( '.o-header__o-mega-menu' );
+  globalEyebrowHorizontal() {
+    return cy.get('.m-global-eyebrow__horizontal');
   }
 }

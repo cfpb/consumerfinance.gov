@@ -46,8 +46,8 @@
 
    ========================================================================== #}
 
-{%- import 'macros/time.html' as time -%}
-{% import 'macros/util/format/datetime.html' as dt -%}
+{%- import 'v1/includes/macros/time.html' as time -%}
+{% import 'v1/includes/macros/util/format/datetime.html' as dt -%}
 
 {%- macro city_str( city ) -%}
     {{ city.name ~ ', ' ~ city.state_id }}

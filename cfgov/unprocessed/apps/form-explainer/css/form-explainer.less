@@ -2,34 +2,33 @@
    "Form explainer" custom styles
    ========================================================================== */
 
-@gold-dk: #FF9E1B; // gold
-@gold-md: #FFCE8D; // gold-60
-@gold-lt: #FFD8A3;
-@gold-bg: #FFF8F0;
+@gold-dk: #ff9e1b; // gold
+@gold-md: #ffce8d; // gold-60
+@gold-lt: #ffd8a3;
+@gold-bg: #fff8f0;
 
-@red-dk: #D486B2;
-@red-md: #DC9CBF;
-@red-lt: #F0D8E2;
-@red-bg: #F9F6F6;
+@red-dk: #d486b2;
+@red-md: #dc9cbf;
+@red-lt: #f0d8e2;
+@red-bg: #f9f6f6;
 
-@blue-dk: #6F88B2;
-@blue-md: #9DAECC;
-@blue-lt: #D3DAEB;
-@blue-bg: #F4F7FA;
+@blue-dk: #6f88b2;
+@blue-md: #9daecc;
+@blue-lt: #d3daeb;
+@blue-bg: #f4f7fa;
 
 @teal-dk: #579695; // teal-80
-@teal-md: #70A6A5;
-@teal-lt: #D4E7E6; // teal-20
-@teal-bg: #F2F8F8; 
+@teal-md: #70a6a5;
+@teal-lt: #d4e7e6; // teal-20
+@teal-bg: #f2f8f8;
 
 @colors: gold, red, blue, teal;
 
 .form-explainer {
-
   .image-map {
     display: block;
     box-sizing: border-box;
-    margin-bottom: unit( 30px / @base-font-size-px, em );
+    margin-bottom: unit(30px / @base-font-size-px, em);
     .u-clearfix();
   }
 
@@ -75,7 +74,6 @@
     }
   } );
 
-
   // Expandable overrides
 
   .o-expandable-group .o-expandable {
@@ -103,7 +101,7 @@
     }
 
     .o-expandable_label {
-      font-size: unit( 16 / @base-font-size-px, em );
+      font-size: unit(16 / @base-font-size-px, em);
     }
 
     each( @colors, {
@@ -140,26 +138,23 @@
     } );
 
     &.o-expandable__form-explainer + h3 {
-      margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+      margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
     }
   }
 
-  .o-expandable_header-left {
+  .o-expandable_label {
     max-width: 80%;
   }
 
-  .o-expandable_header-right {
+  .o-expandable_link {
     display: block;
     width: 20%;
     text-align: right;
-  }
-
-  .o-expandable_link {
     color: @gray-80;
   }
 
   .explain {
-    margin: 0 auto unit( 60px / @base-font-size-px, em );
+    margin: 0 auto unit(60px / @base-font-size-px, em);
 
     .respond-to-max( @bp-xs-max, {
       &_image-map {
@@ -207,21 +202,21 @@
   }
 
   .explain_pagination {
-    margin-top: unit( 15px / @base-font-size-px, em );
+    margin-top: unit(15px / @base-font-size-px, em);
     .u-clearfix();
   }
 
   .explain_pagination .pagination_form {
-    padding-top: unit( 11px / @base-font-size-px, em );
-    padding-bottom: unit( 10px / @base-font-size-px, em );
+    padding-top: unit(11px / @base-font-size-px, em);
+    padding-bottom: unit(10px / @base-font-size-px, em);
   }
 
   .form-explainer_page-buttons {
     button {
       position: absolute;
       top: 45%;
-      padding-left: unit( 10px / @btn-font-size, em );
-      padding-right: unit( 10px / @btn-font-size, em );
+      padding-left: unit(10px / @btn-font-size, em);
+      padding-right: unit(10px / @btn-font-size, em);
       z-index: 100;
       &.prev {
         left: -16px;
@@ -238,14 +233,17 @@
   }
 
   .form-explainer_page-links {
-    margin-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em ) !important;
+    margin-bottom: unit(
+      @grid_gutter-width / 3 / @base-font-size-px,
+      em
+    ) !important;
     float: left;
     li {
       float: left;
       a {
         float: left;
         display: block;
-        padding: 0 unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        padding: 0 unit(@grid_gutter-width / 2 / @base-font-size-px, em);
         cursor: pointer;
 
         .respond-to-min( @bp-sm-min, {

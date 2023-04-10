@@ -1,4 +1,4 @@
-import datetime
+import json
 import tempfile
 from unittest import mock
 
@@ -11,9 +11,7 @@ from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
 
-from wagtail.core.blocks import StreamValue
-from wagtail.core.models import Site
-from wagtail.tests.utils import WagtailTestUtils
+from wagtail.models import Site
 
 from model_bakery import baker
 
@@ -29,18 +27,11 @@ from ask_cfpb.models.pages import (
     REUSABLE_TEXT_TITLES,
     AnswerLandingPage,
     AnswerPage,
-    ArticlePage,
     PortalSearchPage,
-    get_standard_text,
     strip_html,
     validate_page_number,
 )
 from ask_cfpb.models.snippets import GlossaryTerm
-from ask_cfpb.scripts.export_ask_data import (
-    assemble_output,
-    clean_and_strip,
-    export_questions,
-)
 from v1.models import (
     CFGOVImage,
     HomePage,
@@ -48,7 +39,6 @@ from v1.models import (
     PortalTopic,
     SublandingPage,
 )
-from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import (
     get_free_path,
     get_or_create_page,
@@ -82,128 +72,7 @@ class AnswerStringTest(TestCase):
         self.assertEqual(test_answer.__str__(), test_answer.question)
 
 
-class ExportAskDataTests(TestCase, WagtailTestUtils):
-    def setUp(self):
-        self.mock_assemble_output_value = [
-            {
-                "ASK_ID": 123456,
-                "PAGE_ID": 56789,
-                "Question": "Question",
-                "ShortAnswer": "Short answer.",
-                "Answer": "Long answer.",
-                "URL": "fakeurl.com",
-                "PortalTopics": "Category 5 Hurricane",
-                "RelatedQuestions": "1 | 2 | 3",
-                "RelatedResources": "Owning a Home",
-            }
-        ]
-
-    def test_export_script_assemble_output(self):
-        answer = Answer(id=1234)
-        answer.save()
-        page = AnswerPage(
-            slug="mock-question1-en-1234", title="Mock question1"
-        )
-        page.answer_base = answer
-        page.question = "Mock question1"
-        page.answer_content = StreamValue(
-            page.answer_content.stream_block,
-            [{"type": "text", "value": {"content": "Mock answer"}}],
-            True,
-        )
-        helpers.publish_page(page)
-
-        output = assemble_output()[0]
-        self.assertEqual(output.get("ASK_ID"), 1234)
-        self.assertEqual(output.get("URL"), "/mock-question1-en-1234/")
-        self.assertEqual(output.get("Question"), "Mock question1")
-
-    def test_clean_and_strip(self):
-        html_data = "<p>If you have been scammed, file a complaint.</p>"
-        clean_data = "If you have been scammed, file a complaint."
-        self.assertEqual(clean_and_strip(html_data), clean_data)
-
-    @mock.patch("ask_cfpb.scripts.export_ask_data.assemble_output")
-    def test_export_questions(self, mock_output):
-        mock_output.return_value = self.mock_assemble_output_value
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
-        slug = "ask-cfpb-{}.csv".format(timestamp)
-        m = mock.mock_open()
-        with mock.patch("builtins.open", m, create=True):
-            export_questions()
-        self.assertEqual(mock_output.call_count, 1)
-        m.assert_called_once_with(
-            f"{TEMPDIR}/{slug}", "w", encoding="windows-1252"
-        )
-
-    @mock.patch("ask_cfpb.scripts.export_ask_data.assemble_output")
-    def test_export_from_admin_post(self, mock_output):
-        self.login()
-        mock_output.return_value = self.mock_assemble_output_value
-        response = self.client.post("/admin/export-ask/")
-        self.assertEqual(response.status_code, 200)
-        # Check that fields from the mock value are included
-        self.assertContains(response, "Category 5 Hurricane")
-        self.assertContains(response, "56789")
-        self.assertContains(response, "fakeurl.com")
-
-    def test_export_from_admin_get(self):
-        self.login()
-        response = self.client.get("/admin/export-ask/")
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Download a spreadsheet")
-
-
-class ArticlePageTest(TestCase):
-
-    fixtures = ["ask_tests"]
-
-    def setUp(self):
-        def create_page(model, title, slug, parent, language="en", **kwargs):
-            new_page = model(
-                live=False, language=language, title=title, slug=slug
-            )
-            for k, v in kwargs.items():
-                setattr(new_page, k, v)
-            parent.add_child(instance=new_page)
-            new_page.save()
-            new_page.save_revision(user=self.test_user).publish()
-            return new_page
-
-        self.test_user = User.objects.last()
-        self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
-        self.tools_parent = create_page(
-            SublandingPage, "Consumer Tools", "consumer-tools", self.ROOT_PAGE
-        )
-        self.article_page = create_page(
-            ArticlePage,
-            "Article title",
-            "article-title",
-            self.tools_parent,
-            category="basics",
-            heading="Article heading",
-            intro="Article itro.",
-        )
-
-    def test_article_page_str(self):
-        self.assertEqual(
-            self.article_page.title, "{}".format(self.article_page)
-        )
-
-    def test_article_page_response(self):
-        response = self.client.get(self.article_page.url)
-        self.assertEqual(response.status_code, 200)
-
-    def test_article_page_context(self):
-        response = self.client.get(self.article_page.url)
-        self.assertEqual(
-            get_standard_text(self.article_page.language, "about_us"),
-            response.context_data.get("about_us"),
-        )
-
-
 class PortalSearchPageTest(TestCase):
-
     fixtures = [
         "ask_tests",
         "portal_topics",
@@ -606,18 +475,27 @@ class PortalSearchPageTest(TestCase):
         self.assertContains(response, "Amortización")
 
     def test_landing_page_live_portal(self):
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 2)
+        portal_cards = self.english_ask_parent.get_portal_cards()
+
+        self.assertEqual(len(portal_cards), 2)
+
+        self.assertEqual(portal_cards[0]["title"], "Auto loans")
+        self.assertEqual(portal_cards[0]["icon"], "car")
+
+        self.assertEqual(portal_cards[1]["title"], "Bank accounts")
+        self.assertEqual(portal_cards[1]["icon"], "bank")
 
     def test_landing_page_draft_portal(self):
         self.english_portal.unpublish()
+        self.english_portal.save()
         self.assertFalse(self.english_portal.live)
-        self.english_ask_parent.refresh_from_db()
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 2)
+        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 1)
 
     def test_landing_page_draft_portals(self):
         for sl_page in SublandingPage.objects.all():
             sl_page.unpublish()
-        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 2)
+            sl_page.save()
+        self.assertEqual(len(self.english_ask_parent.get_portal_cards()), 0)
 
     def test_landing_page_draft_portals_draft_search(self):
         for sl_page in SublandingPage.objects.all():
@@ -630,7 +508,6 @@ class PortalSearchPageTest(TestCase):
 
 
 class AnswerPageTest(TestCase):
-
     fixtures = ["ask_tests", "portal_topics"]
 
     def create_answer_page(self, **kwargs):
@@ -725,7 +602,17 @@ class AnswerPageTest(TestCase):
             answer_base=self.answer1234,
             slug="mock-question-en-1234",
             title="Mock question1",
-            answer_content="Mock answer 1",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Mock answer 1",
+                        },
+                    }
+                ]
+            ),
             question="Mock question1",
             search_tags="hippodrome",
         )
@@ -736,7 +623,17 @@ class AnswerPageTest(TestCase):
             slug="mock-spanish-question1-es-1234",
             title="Mock Spanish question1",
             answer_base=self.answer1234,
-            answer_content="Mock Spanish answer",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Mock Spanish answer",
+                        },
+                    }
+                ]
+            ),
             question="Mock Spanish question1",
             search_tags="hipotecas",
         )
@@ -749,7 +646,17 @@ class AnswerPageTest(TestCase):
             slug="mock-question2-en-5678",
             title="Mock question2",
             answer_base=self.answer5678,
-            answer_content="Mock answer 2",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Mock answer 2",
+                        },
+                    }
+                ]
+            ),
             question="Mock question2",
             search_tags="hippodrome",
         )
@@ -860,8 +767,8 @@ class AnswerPageTest(TestCase):
 
     def test_get_meta_description(self):
         page = self.page1
-        # Defaults to empty string
-        self.assertEqual(page.get_meta_description(), "")
+        # Defaults to standard answer content
+        self.assertEqual(page.get_meta_description(), "Mock answer 1")
 
         # Second fallback is truncated answer_content text block
         data = [

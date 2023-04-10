@@ -1,6 +1,6 @@
 name: docker
 
-on: pull_request
+on: merge_group
 
 env:
   TEST_TAG: cfpb/consumerfinancegov:test

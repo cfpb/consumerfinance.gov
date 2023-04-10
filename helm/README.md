@@ -1,8 +1,9 @@
 # CFGOV Helm Chart
 
 # build-images.sh
+
 In the main `consumerfinance.gov` directory, there is [`build-images.sh`](../build-images.sh).
-This script will build the required images for Kubernetes. **You must run this
+This script will build the required images for Kubernetes. \*\*You must run this
 script as a pre-requisite to `helm-install.sh`. `build-images.sh` takes 1 argument,
 which is the tag. Valid values are `local` and `prod`.
 
@@ -13,7 +14,8 @@ which is the tag. Valid values are `local` and `prod`.
     ./build-images.sh prod
 
 # helm-install.sh
-**NOTE:** It is *highly* recommended to install `ingress-nginx` to gain
+
+**NOTE:** It is _highly_ recommended to install `ingress-nginx` to gain
 access to the application via `Ingress`. You can find instructions for this
 at the bottom of the document under [`ingress-nginx`](#ingress-nginx).
 
@@ -23,6 +25,7 @@ This script is built to inject environment variables into the provided
 override YAMLs in [`overrides`](overrides).
 
 ## Flags and Environment Variables
+
 `helm-install.sh` is quite flexible in what you can configure via
 Flags and Environment Variables.
 
@@ -45,12 +48,13 @@ You can clear a terminal session variable using `unset`
 If you have a variable set in `.env`, `unset` will not work for that variable.
 
 ### Flags
+
 Flags are treated as `True` if the corresponding
 Environment Variable is set to any value beyond empty string,
 including `False`. Use `unset VARIABLE` to clear a set variable.
 
 | Variable                | Description                                                                |
-|-------------------------|----------------------------------------------------------------------------|
+| ----------------------- | -------------------------------------------------------------------------- |
 | `ES_ENABLE_CHART_TESTS` | Enable ElasticSearch Chart Tests                                           |
 | `SKIP_WAIT`             | Skips `--wait`                                                             |
 | `CREATE_NAMESPACE`      | Create namespace if it doesn't exist. Used in conjunction with `NAMESPACE` |
@@ -58,17 +62,19 @@ including `False`. Use `unset VARIABLE` to clear a set variable.
 | `SKIP_DEP_UPDATE`       | Skip `helm dependency update` for faster iteration                         |
 
 ### Environment Variables
+
 Environment Variables **need** a valid value to be set.
 
-| Variable        | Description                                       |
-|-----------------|---------------------------------------------------|
-| `RELEASE`       | Set the release name.<br/>Default is `cfgov`.     |
-| `NAMESPACE`     | Override the namespace for the release.           |
-| `IMAGE`         | Set the `repository/image` for the release.       |
-| `TAG`           | Set the image `tag` for the release.              |
-| `WAIT_TIMEOUT`  | Set the `--wait` timeout.<br/>Default is `10m0s`  |
+| Variable       | Description                                      |
+| -------------- | ------------------------------------------------ |
+| `RELEASE`      | Set the release name.<br/>Default is `cfgov`.    |
+| `NAMESPACE`    | Override the namespace for the release.          |
+| `IMAGE`        | Set the `repository/image` for the release.      |
+| `TAG`          | Set the image `tag` for the release.             |
+| `WAIT_TIMEOUT` | Set the `--wait` timeout.<br/>Default is `10m0s` |
 
 ## Usage
+
 In all cases, make sure you have built images via `build-images.sh`.
 Arguments passed in to `helm-install.sh`, should be a spaced separated list
 of paths to override YAMLs or `--set` overrides.
@@ -79,6 +85,7 @@ If no arguments are provided, it includes
 [`services.yaml`](overrides/services.yaml).
 
 ### Default Execution
+
 The following commands are equivalent
 
     ./helm-install.sh
@@ -113,21 +120,22 @@ If you provide any arguments, it will only include those provided.
       ./helm/overrides/eks.yaml
 
 ## Remove Helm Release
+
 To remove a cfgov release installed with [`./helm-install`](../helm-install.sh),
 run the following command in the correct namespace
 
     helm uninstall cfgov
 
-
 ## Provided Overrides
-* [`local-dev.yaml`](overrides/local-dev.yaml) - Local dev stack (minus services)
-* [`local-prod.yaml`](overrides/local-prod.yaml) - Local Prod stack (minus services)
-* [`dev-vars.yaml`](overrides/dev-vars.yaml) - Dev Environment Variables
-* [`services.yaml`](overrides/services.yaml) - Services Stack (Postgres, ElasticSearch, Kibana)
-* [`cfgov-lb.yaml`](overrides/cfgov-lb.yaml) - Sets CFGOV Service to LoadBalancer with Port 8000
-* [`load-balancer.yaml`](overrides/load-balancer.yaml) - Sets all service types to `LoadBalancer` (includes services, if enabled)
-* [`init-sleep.yaml`](overrides/init-sleep.yaml) - Sleep cfgov initContainer to infinity (debug use)
-* [`sleep.yaml`](overrides/sleep.yaml) - Sleep cfgov container to infinity (debug use)
+
+- [`local-dev.yaml`](overrides/local-dev.yaml) - Local dev stack (minus services)
+- [`local-prod.yaml`](overrides/local-prod.yaml) - Local Prod stack (minus services)
+- [`dev-vars.yaml`](overrides/dev-vars.yaml) - Dev Environment Variables
+- [`services.yaml`](overrides/services.yaml) - Services Stack (Postgres, ElasticSearch, Kibana)
+- [`cfgov-lb.yaml`](overrides/cfgov-lb.yaml) - Sets CFGOV Service to LoadBalancer with Port 8000
+- [`load-balancer.yaml`](overrides/load-balancer.yaml) - Sets all service types to `LoadBalancer` (includes services, if enabled)
+- [`init-sleep.yaml`](overrides/init-sleep.yaml) - Sleep cfgov initContainer to infinity (debug use)
+- [`sleep.yaml`](overrides/sleep.yaml) - Sleep cfgov container to infinity (debug use)
 
 ### Debug Examples
 
@@ -137,57 +145,77 @@ run the following command in the correct namespace
     # Prod and Services Stack with CFGOV LoadBalancer bound to port 8000 (Local Prod Testing)
     ./helm-install.sh helm/overrides/local-prod.yaml helm/overrides/dev-vars.yaml helm/overrides/services.yaml helm/overrides/cfgov-lb.yaml helm/overrides/sleep.yaml
 
-
 # Chart Override Values
+
 The actual Chart Value overrides.
 TODO: Add Table with commonly overridden values.
 
-
 # CronJobs
+
 To make a new
 [Kubernetes CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)
 based on our [CronJob template](cfgov/templates/cronjob.yaml),
-add a new item to the cronJobs array in
+add a new item to the cronJobs mapping in
 [`cfgov/values.yaml`](cfgov/values.yaml).
 
 For example, our Django
 `clearsessions` management command runs in a cron job defined like this:
 
 ```yaml
-- name: "clearSessions"
-  schedule: "@daily"
+clear-sessions:
+  schedule: '@daily'
   command:
-    - "django-admin"
+    - 'django-admin'
   args:
-    - "clearsessions"
+    - 'clearsessions'
 ```
 
 The following shows the all the available values and default values
 for a cronJob object.
 
 ```yaml
-- name: ""  # There is no default for name, this is required
-  includeEnv: true  # includes the same volumes and environment variables as the main application container
-  image:  # ONLY define if different from cfgov_python
-    repository: cfogv_python  # default is the chart image repository
-    tag: ""  # default is the chart image tag
-  successfulJobsHistoryLimit: 1  # default
-  failedJobsHistoryLimit: 1  # default
-  schedule: "@daily"  # default
-  suspend: false  # default
-  restartPolicy: OnFailure  # default
-  command:  # there is no default for command, this is required
-    - "some-exec"
-  args:  # there is no default for args, this is required
-    - "space"
-    - "separated"
-    - "arguments"
-  env:  # default is empty (not defined), but can define extra cronjob only environment variables as follows
+example-job-name: # There is no default for name, this is required
+  enabled: true # default is true. If false, will not create the CronJob resource
+  includeEnv: true # includes the same volumes and environment variables as the main application container
+  image: # ONLY define if different from cfgov_python
+    repository: cfogv_python # default is the chart image repository
+    tag: '' # default is the chart image tag
+  successfulJobsHistoryLimit: 1 # default
+  failedJobsHistoryLimit: 1 # default
+  schedule: '@daily' # default
+  suspend: false # default
+  restartPolicy: OnFailure # default
+  command: # there is no default for command, this is required
+    - 'some-exec'
+  args: # there is no default for args, this is required
+    - 'space'
+    - 'separated'
+    - 'arguments'
+  env: # default is empty (not defined), but can define extra cronjob only environment variables as follows
     - name: MY_CRONJOB_ENV
-      value: "MY_CRONJOB_ENV_VALUE"
+      value: 'MY_CRONJOB_ENV_VALUE'
 ```
 
+To test out a new cronjob, you can use OpenLens to trigger a cronJob by clicking on the Workloads->CronJobs menu and selecting the cronJob from the list. This is great for testing the job without having to mess with the scheduling value in the cronJob. Do note that helm test command does not test the cronJobs so its up to the person adding/changing the job to make sure it works before merging.
+
+# OpenLens
+
+We like to use OpenLens to manage the Kubernetes stack.
+There is a more commonly known Lens app, but Lens requires an account to use.
+Lens is the commercialized version built on top of the OpenLens source.
+
+To install OpenLens, create an alias in your shell profile. For example,
+if using `zsh`, add it to `.zshrc`. This alias is used to install and to
+update OpenLens.
+
+    alias install_openlens="curl -o- https://gist.githubusercontent.com/jslay88/bf654c23eaaaed443bb8e8b41d02b2a9/raw/install_openlens.sh | bash"
+
+Source your shell profile or restart your terminal. Then run the alias.
+
+    install_openlens
+
 # Manually Loading Data
+
 To manually load data (such as `test.sql.gz`), deploy the Helm chart as normal.
 You can wait for it to finish deploying, or not. Scale the main deployment to 0.
 
@@ -221,8 +249,8 @@ The main container should be created, and skip migrations
 The main container should now be loaded with Postgres and ElasticSearch with
 your manually loaded data.
 
-
 # `ingress-nginx`
+
 We use `ingress-nginx` as a cluster wide proxy to be able to map
 `*.localhost` to multiple deployments (CFGOV, Grafana, etc) locally. To deploy
 `ingress-nginx` to your local Kubernetes, run the following (change the ports
@@ -238,15 +266,16 @@ This will allow us to access the application via
 [http://\<release\>.localhost](http://<release>.localhost).
 This enables ingress to mimic Ambassador `Mapping`'s locally.
 
-*NOTE:* You will need to add the http port to the URL if you change
+_NOTE:_ You will need to add the http port to the URL if you change
 from 80.
 
 Example:
-  * default -> [http://cfgov.localhost](http://cfgov.localhost)
-  * RELEASE=my-test -> [http://my-test.localhost](http://my-test.localhost)
 
+- default -> [http://cfgov.localhost](http://cfgov.localhost)
+- RELEASE=my-test -> [http://my-test.localhost](http://my-test.localhost)
 
 # AWS CLI
+
 To use the AWS CLI, the chart must be deployed with `$HOME/.aws` mounted,
 or with keys and tokens passed in via environment variables or mounted in
 the correct files within `/root/.aws` for `local` image, or `/var/www/.aws`
@@ -254,7 +283,7 @@ for the `prod` image. You can also mount the secrets to a different path
 and set `AWS_CONFIG_FILE` and `AWS_SHARED_CREDENTIALS_FILE` variables,
 pointing to the appropriate files. Additionally, you must have the
 `AWS_PROFILE` env variable set on your local AWS configuration in order for
-the CLI to use your credentials within the container.  More info on AWS CLI
+the CLI to use your credentials within the container. More info on AWS CLI
 Environment Variables can be found
 [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
 
@@ -285,8 +314,22 @@ More can be found on Helm Chart Tests
 [here](https://helm.sh/docs/topics/chart_tests/) or by running
 `helm test --help`.
 
+## Linting
+
+To test out the yaml files used to create Helm resources you can run the Helm lint command:
+`helm lint <PATH to chart.yaml file>`
+if there are any formatting issues in the yaml files or helm patterns that are not being fallowed this command will notfiy you.
+
+There is also the Helm template command that will take in the chart and return a json of all the kubernetes values that will be creared once the chart is installed/updated.
+`helm template <template file name> <PATH to chart.yaml file>`
+This command is usefull for making sure your yaml files will be accepted for a deployment without having to create a whole local cluster.
+
+## Linting in Github Actions
+
+To double check that all yaml files are formatted to helm standard we employ the Helm cli tool [chart-testing](https://github.com/helm/chart-testing) specificly the lint [command](https://github.com/helm/chart-testing/blob/main/doc/ct_lint.md), and its related [Github Action](https://github.com/helm/chart-testing-action). Chart Testing or ct is meant to be used for linting and testing pull requests. It automatically detects charts changed against the target branch. It uses the `ct.yaml` file to know where the helm charts are located and which git branch to compare the changes. Aditionally we use the github filter action to make sure the ct github action is only ran when there are changes to the helm directory yaml and tpl files.
 
 ## TODO
+
 In production, an AWS Service Account is used, and its credentials are
 mounted within the containers to `/var/run/secrets/.aws`, then
 `AWS_CONFIG_FILE` and `AWS_SHARED_CREDENTIALS_FILE` are set to the appropriate

@@ -4,8 +4,8 @@ from unittest import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from wagtail.core import blocks
-from wagtail.core.models import Site
+from wagtail import blocks
+from wagtail.models import Page, Site
 
 from v1.models import (
     AbstractFilterPage,
@@ -208,7 +208,7 @@ class TestCFGOVPageContext(TestCase):
         result = test_context["meta_description"]
         self.assertEqual(expected, result)
 
-    def test_get_context_sets_meta_description_from_header_item_introduction_paragraph(  # noqa: B950
+    def test_get_context_sets_meta_description_from_header_item_introduction_paragraph(  # noqa: E501
         self,
     ):
         expected = "Correct Meta Description"
@@ -373,9 +373,9 @@ class TestCFGOVPageMediaJSProperty(TestCase):
             True,
         )
 
-        # The page media should only include the default BrowsePage media, and
-        # shouldn't add any additional files because of the FullWithText.
-        self.assertEqual(page.media_js, ["secondary-navigation.js"])
+        # The page media shouldn't add any additional files because of the
+        # FullWidthText.
+        self.assertEqual(page.media_js, [])
 
 
 class TestCFGOVPageMediaCSSProperty(TestCase):
@@ -500,4 +500,127 @@ class TestCFGOVPageBreadcrumbs(TestCase):
         self.assertIn(
             "second",
             [p.slug for p in self.third_level_page.get_breadcrumbs(request)],
+        )
+
+
+class TestCFGOVPageTranslations(TestCase):
+    def setUp(self):
+        self.site_root = Site.objects.get(is_default_site=True).root_page
+
+    def make_page(self, **kwargs):
+        language = kwargs.pop("language", "en")
+        page = BrowsePage(
+            title="test",
+            slug=language,
+            language=language,
+            **kwargs,
+        )
+        self.site_root.add_child(instance=page)
+        return page
+
+    def test_pages_without_translations(self):
+        page_en = self.make_page(language="en")
+        self.assertEqual(page_en.get_translations().count(), 1)
+        self.assertEqual(page_en.get_translations()[0].pk, page_en.pk)
+        self.assertEqual(page_en.get_translations(inclusive=False).count(), 0)
+
+        page_es = self.make_page(language="es")
+        self.assertEqual(page_es.get_translations().count(), 1)
+        self.assertEqual(page_es.get_translations()[0].pk, page_es.pk)
+        self.assertEqual(page_es.get_translations(inclusive=False).count(), 0)
+
+    def test_pages_with_translations(self):
+        page_en = self.make_page(language="en")
+        page_es = self.make_page(language="es", english_page=page_en)
+
+        self.assertEqual(page_en.get_translations().count(), 2)
+        self.assertEqual(page_en.get_translations().first().pk, page_en.pk)
+        self.assertEqual(page_en.get_translations().last().pk, page_es.pk)
+
+        self.assertEqual(page_en.get_translations(inclusive=False).count(), 1)
+        self.assertEqual(
+            page_en.get_translations(inclusive=False).first().pk, page_es.pk
+        )
+
+        self.assertEqual(page_es.get_translations().count(), 2)
+        self.assertEqual(page_es.get_translations().first().pk, page_en.pk)
+        self.assertEqual(page_es.get_translations().last().pk, page_es.pk)
+
+        self.assertEqual(page_es.get_translations(inclusive=False).count(), 1)
+        self.assertEqual(
+            page_es.get_translations(inclusive=False).first().pk, page_en.pk
+        )
+
+    def test_page_translation_ordering(self):
+        page_en = self.make_page(language="en")
+        page_es = self.make_page(language="es", english_page=page_en)
+        self.make_page(language="ht", english_page=page_en)
+        self.make_page(language="ko", english_page=page_en)
+
+        self.assertSequenceEqual(
+            page_en.get_translations().values_list("language", flat=True),
+            ["en", "es", "ko", "ht"],
+        )
+        self.assertSequenceEqual(
+            page_es.get_translations().values_list("language", flat=True),
+            ["en", "es", "ko", "ht"],
+        )
+
+    def test_page_not_live_excluded(self):
+        page_en = self.make_page(language="en")
+        self.make_page(language="es", english_page=page_en, live=False)
+        self.assertEqual(page_en.get_translations().count(), 1)
+        self.assertEqual(page_en.get_translations().first().pk, page_en.pk)
+
+    def test_pages_not_in_site_excluded(self):
+        page_en = self.make_page(language="en")
+
+        page_es = BrowsePage(
+            title="test",
+            slug="es",
+            language="es",
+            english_page=page_en,
+        )
+        Page.get_first_root_node().add_child(instance=page_es)
+
+        # Pages in a site only return linked pages in the same site.
+        self.assertEqual(page_en.get_translations().count(), 1)
+        self.assertEqual(page_en.get_translations().first().pk, page_en.pk)
+
+        # Pages that are not in any site return all linked pages.
+        self.assertEqual(page_es.get_translations().count(), 2)
+        self.assertEqual(page_es.get_translations().first().pk, page_en.pk)
+        self.assertEqual(page_es.get_translations().last().pk, page_es.pk)
+
+    def test_page_get_translation_links(self):
+        page_en = self.make_page(language="en")
+        self.make_page(language="es", english_page=page_en)
+
+        request = RequestFactory().get("/")
+
+        self.assertEqual(
+            page_en.get_translation_links(request),
+            [
+                {
+                    "href": "/en/",
+                    "language": "en",
+                    "text": "English",
+                },
+                {
+                    "href": "/es/",
+                    "language": "es",
+                    "text": "Spanish",
+                },
+            ],
+        )
+
+        self.assertEqual(
+            page_en.get_translation_links(request, inclusive=False),
+            [
+                {
+                    "href": "/es/",
+                    "language": "es",
+                    "text": "Spanish",
+                },
+            ],
         )

@@ -4,7 +4,7 @@ from unittest import mock
 
 from django.test import RequestFactory, TestCase
 
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import FilterablePagesDocument
@@ -117,6 +117,15 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
         self.assertEqual(
             response.get("Edge-Cache-Tag"), self.filterable_page.slug
         )
+
+    def test_x_robots_tag(self):
+        response = self.client.get(
+            self.filterable_page.url, {"topics": "test1"}
+        )
+        self.assertIsNone(response.get("X-Robots-Tag"))
+
+        response = self.client.get(self.filterable_page.url, {"title": "test"})
+        self.assertEqual(response.get("X-Robots-Tag"), "noindex")
 
 
 class MockSearch:

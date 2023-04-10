@@ -1,21 +1,13 @@
-from django.db import models
-
-from wagtail.admin.edit_handlers import (
-    FieldPanel,
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core.blocks import StreamBlock
-from wagtail.core.fields import StreamField
-from wagtail.search import index
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.blocks import StreamBlock
+from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
     EventFilterablePagesDocumentSearch,
 )
-from v1.models.base import CFGOVPage
+from v1.models.browse_page import AbstractBrowsePage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.filterable_list_mixins import (
     CategoryFilterableMixin,
@@ -39,55 +31,46 @@ class BrowseFilterableContent(StreamBlock):
         }
 
 
-class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
+class BrowseFilterablePage(FilterableListMixin, AbstractBrowsePage):
     header = StreamField(
         [
             ("text_introduction", molecules.TextIntroduction()),
             ("featured_content", organisms.FeaturedContent()),
-        ]
+        ],
+        use_json_field=True,
     )
-    content = StreamField(BrowseFilterableContent)
-
-    secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
+    content = StreamField(
+        BrowseFilterableContent,
+        use_json_field=True,
+    )
 
     # General content tab
-    content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
-    ]
-
-    sidefoot_panels = CFGOVPage.sidefoot_panels + [
-        FieldPanel("secondary_nav_exclude_sibling_pages"),
+    content_panels = AbstractBrowsePage.content_panels + [
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     # Tab handler interface
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="General Content"),
-            ObjectList(sidefoot_panels, heading="SideFoot"),
-            ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
+            ObjectList(AbstractBrowsePage.sidefoot_panels, heading="SideFoot"),
+            ObjectList(
+                AbstractBrowsePage.settings_panels, heading="Configuration"
+            ),
         ]
     )
 
-    template = "browse-filterable/index.html"
+    template = "v1/browse-filterable/index.html"
 
     page_description = (
         "Left-hand navigation, no right-hand sidebar. Use if children should "
         "be searchable using standard search filters module."
     )
 
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
-
-    @property
-    def page_js(self):
-        return super().page_js + ["secondary-navigation.js"]
-
 
 class EnforcementActionsFilterPage(BrowseFilterablePage):
-    template = "browse-filterable/index.html"
+    template = "v1/browse-filterable/index.html"
 
     @staticmethod
     def get_form_class():
@@ -105,7 +88,7 @@ class EnforcementActionsFilterPage(BrowseFilterablePage):
 
 
 class EventArchivePage(BrowseFilterablePage):
-    template = "browse-filterable/index.html"
+    template = "v1/browse-filterable/index.html"
 
     @staticmethod
     def get_model_class():
@@ -123,5 +106,5 @@ class EventArchivePage(BrowseFilterablePage):
 
 
 class NewsroomLandingPage(CategoryFilterableMixin, BrowseFilterablePage):
-    template = "newsroom/index.html"
+    template = "v1/newsroom/index.html"
     filterable_categories = ["Newsroom"]

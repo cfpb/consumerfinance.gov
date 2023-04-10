@@ -10,10 +10,10 @@ const HTML_SNIPPET = `
             o-expandable__border">
 
     <button class="o-expandable_header o-expandable_target o-expandable_target__collapsed" type="button">
-        <span class="h4 o-expandable_header-left o-expandable_label">
+        <span class="h4 o-expandable_label">
             Filter posts
         </span>
-        <span class="o-expandable_header-right o-expandable_link">
+        <span class="o-expandable_link">
             <span class="o-expandable_cue o-expandable_cue-open">
                 <span class="u-visually-hidden-on-mobile">
                     Show
@@ -78,8 +78,8 @@ const HTML_SNIPPET = `
                         </li>
 
                         <li class="m-form-field m-form-field__checkbox">
-                            <input class="a-checkbox" type="checkbox" value="policy_compliance" id="filter_categories_policy_compliance" name="categories">
-                            <label class="a-label" for="filter_categories_policy_compliance">
+                            <input class="a-checkbox" type="checkbox" value="policy-compliance" id="filter_categories_policy-compliance" name="categories">
+                            <label class="a-label" for="filter_categories_policy-compliance">
                                 Policy and compliance
                             </label>
                         </li>
@@ -181,43 +181,45 @@ const HTML_SNIPPET = `
 </div>
 `;
 
-describe( 'FilterableListControls', () => {
+describe('FilterableListControls', () => {
   let filterableListControlsDom;
   let filterableListControls;
 
-  beforeEach( () => {
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-    filterableListControlsDom = document.querySelector( `.${ BASE_CLASS }` );
+    filterableListControlsDom = document.querySelector(`.${BASE_CLASS}`);
     filterableListControls = new FilterableListControls(
       filterableListControlsDom
     );
-  } );
+  });
 
-  describe( 'init()', () => {
-    it( 'should return the FormSubmit instance when initialized', () => {
-      expect( filterableListControlsDom.getAttribute( 'data-js-hook' ) ).toBeNull();
+  describe('init()', () => {
+    it('should return the FormSubmit instance when initialized', () => {
+      expect(filterableListControlsDom.getAttribute('data-js-hook')).toBeNull();
       filterableListControls.init();
-      expect( filterableListControlsDom.getAttribute( 'data-js-hook' ) ).toStrictEqual( 'state_atomic_init' );
-    } );
-  } );
+      expect(
+        filterableListControlsDom.getAttribute('data-js-hook')
+      ).toStrictEqual('state_atomic_init');
+    });
+  });
 
-  describe( 'error handling', () => {
-    it( 'should highlight text input fields with errors', done => {
+  describe('error handling', () => {
+    it('should highlight text input fields with errors', (done) => {
       const FIELD_ERROR_CLASS = 'a-text-input__error';
-      const form = document.querySelector( 'form' );
-      const field = document.querySelector( '#from_date' );
+      const form = document.querySelector('form');
+      const field = document.querySelector('#from_date');
 
       filterableListControls.init();
 
-      expect( field.classList.contains( FIELD_ERROR_CLASS ) ).toBeFalsy();
+      expect(field.classList.contains(FIELD_ERROR_CLASS)).toBeFalsy();
 
-      filterableListControls.addEventListener( 'fieldInvalid', () => {
-        expect( field.classList.contains( FIELD_ERROR_CLASS ) ).toBeTruthy();
+      filterableListControls.addEventListener('fieldinvalid', () => {
+        expect(field.classList.contains(FIELD_ERROR_CLASS)).toBeTruthy();
         done();
-      } );
+      });
 
       field.value = 'text that is not a valid date';
-      form.dispatchEvent( new Event( 'submit' ) );
-    } );
-  } );
-} );
+      form.dispatchEvent(new Event('submit'));
+    });
+  });
+});

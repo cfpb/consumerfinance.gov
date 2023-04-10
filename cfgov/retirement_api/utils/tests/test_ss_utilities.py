@@ -49,10 +49,12 @@ class UtilitiesTests(unittest.TestCase):
     if today.day == 29 and today.month == 2:  # pragma: no cover
         today = today.replace(day=today.day - 1)
 
+    sample_year = today.year - 61
+
     sample_params = {
         "dobmon": 1,
         "dobday": 5,
-        "yob": 1970,
+        "yob": sample_year,
         "earnings": 70000,
         "lastYearEarn": "",
         "lastEarn": "",
@@ -79,7 +81,7 @@ class UtilitiesTests(unittest.TestCase):
             "params": {
                 "dobmon": 1,
                 "dobday": 5,
-                "yob": 1970,
+                "yob": sample_year,
                 "earnings": 40000,
                 "lastYearEarn": "",
                 "lastEarn": "",
@@ -115,6 +117,28 @@ class UtilitiesTests(unittest.TestCase):
         "age70": 300600,
     }
 
+    data_keys = [
+        "early retirement age",
+        "full retirement age",
+        "lifetime",
+        "benefits",
+        "params",
+        "disability",
+        "months_past_birthday",
+        "survivor benefits",
+    ]
+    benefit_keys = [
+        "age 62",
+        "age 63",
+        "age 64",
+        "age 65",
+        "age 66",
+        "age 67",
+        "age 68",
+        "age 69",
+        "age 70",
+    ]
+
     def test_calculate_lifetime_benefits(self):
         results = copy.deepcopy(self.sample_results)
         results["data"]["benefits"] = {
@@ -131,7 +155,7 @@ class UtilitiesTests(unittest.TestCase):
         results["current_age"] = 59
         base_benefit = 1306
         fra_tuple = (66, 6)
-        dob = datetime.date(1957, 1, 3)
+        dob = datetime.date(self.sample_year - 13, 1, 3)
         past_fra = False
         test_results = calculate_lifetime_benefits(
             results, base_benefit, fra_tuple, dob, past_fra
@@ -163,7 +187,9 @@ class UtilitiesTests(unittest.TestCase):
             test_past_fra,
             test_results,
         ) = set_up_runvars(mock_params)
-        self.assertTrue(test_results["data"]["params"]["yob"] == 1970)
+        self.assertTrue(
+            test_results["data"]["params"]["yob"] == self.sample_year
+        )
         mock_params["dobday"] = 1
         (
             test_dob,
@@ -173,7 +199,9 @@ class UtilitiesTests(unittest.TestCase):
             test_past_fra,
             test_results2,
         ) = set_up_runvars(mock_params)
-        self.assertTrue(test_results2["data"]["params"]["yob"] == 1969)
+        self.assertTrue(
+            test_results2["data"]["params"]["yob"] == self.sample_year - 1
+        )
 
     def test_months_past_birthday(self):
         dob = self.today - timedelta(days=(365 * 20) + 6)
@@ -501,93 +529,58 @@ class UtilitiesTests(unittest.TestCase):
                   }
     """
 
-    def test_get_retire_data(self):
+    @mock.patch("retirement_api.utils.ss_calculator.requests.post")
+    def _get_retire_data(
+        self,
+        mock_request_post,
+        response_text=None,
+        param_overrides=None,
+    ):
         """given a birth date and annual pay value,
         return a dictionary of social security values
         """
+        if response_text is None:
+            response_text = """<div>
+                $<span id="ret_amount">2,035.00</span>
+            </div>"""
+        mock_request_post.return_value.text = response_text
+
         params = copy.copy(self.sample_params)
-        data_keys = [
-            "early retirement age",
-            "full retirement age",
-            "lifetime",
-            "benefits",
-            "params",
-            "disability",
-            "months_past_birthday",
-            "survivor benefits",
-        ]
-        benefit_keys = [
-            "age 62",
-            "age 63",
-            "age 64",
-            "age 65",
-            "age 66",
-            "age 67",
-            "age 68",
-            "age 69",
-            "age 70",
-        ]
-        data = get_retire_data(params, language="en")["data"]
-        self.assertEqual(data["params"]["yob"], 1970)
+        if param_overrides is not None:
+            params.update(param_overrides)
+
+        results = get_retire_data(params, language="en")
+        return results
+
+    def test_get_retire_data_base_sample(self):
+        data = self._get_retire_data()["data"]
+        self.assertEqual(data["params"]["yob"], self.sample_year)
+
         for each in data.keys():
-            self.assertTrue(each in data_keys)
+            self.assertTrue(each in self.data_keys)
         for each in data["benefits"].keys():
-            self.assertTrue(each in benefit_keys)
-        params["dobday"] = 1
-        params["dobmon"] = 6
-        data = get_retire_data(params, language="en")["data"]
-        self.assertEqual(data["params"]["yob"], 1970)
-        params["yob"] = self.today.year - 62
-        params["dobmon"] = self.today.month
-        params["dobday"] = self.today.day
-        data = get_retire_data(params, language="en")
-        self.assertTrue(data["data"]["benefits"]["age 62"] != 0)
-        params["yob"] = 1937
-        data = get_retire_data(params, language="en")
-        self.assertEqual(data["data"]["params"]["yob"], 1937)
-        self.assertTrue("70" in data["note"])
+            self.assertTrue(each in self.benefit_keys)
+
+    def test_get_retire_data_too_young(self):
+        params = {}
         params["yob"] = self.today.year - 21
-        data = get_retire_data(params, language="en")
-        self.assertTrue("22" in data["note"])
-        params["yob"] = self.today.year - 57
-        data = get_retire_data(params, language="en")
-        self.assertTrue(data["data"]["benefits"]["age 62"] != 0)
-        self.assertTrue(data["data"]["benefits"]["age 70"] != 0)
-        params["yob"] = self.today.year - 64
-        data = get_retire_data(params, language="en")
-        self.assertTrue(data["data"]["benefits"]["age 70"] != 0)
-        params["yob"] = self.today.year - 65
-        data = get_retire_data(params, language="en")
-        self.assertTrue(data["data"]["benefits"]["age 70"] != 0)
-        params["yob"] = self.today.year - 66
-        data = get_retire_data(params, language="en")
-        self.assertTrue(data["data"]["benefits"]["age 70"] != 0)
-        self.assertTrue(data["data"]["benefits"]["age 66"] != 0)
-        params["yob"] = self.today.year - 67
-        data = get_retire_data(params, language="en")
-        self.assertTrue(data["data"]["benefits"]["age 70"] != 0)
-        params["yob"] = self.today.year - 68
-        data = get_retire_data(params, language="en")
-        self.assertTrue(data["data"]["benefits"]["age 70"] != 0)
-        params["yob"] = self.today.year - 69
-        data = get_retire_data(params, language="en")
-        self.assertTrue(data["data"]["benefits"]["age 70"] != 0)
-        params["yob"] = self.today.year - 70
-        data = get_retire_data(params, language="en")
-        self.assertTrue(data["data"]["benefits"]["age 70"] != 0)
+        results = self._get_retire_data(param_overrides=params)
+        self.assertTrue("22" in results["note"])
+
+    def test_get_retire_data_too_old(self):
+        params = {}
+        params["yob"] = self.today.year - 71
+        results = self._get_retire_data(param_overrides=params)
+        self.assertTrue("older than 70" in results["note"])
+
+    def test_get_retire_data_insufficient_earnings(self):
+        params = {}
         params["earnings"] = 0
-        data = get_retire_data(params, language="en")
+        response_text = """<p>0 is insufficient to receive benefits.</p>"""
+        data = self._get_retire_data(
+            response_text=response_text, param_overrides=params
+        )
         self.assertTrue("zero" in data["error"])
-        params["yob"] = self.today.year - 45
-        data = get_retire_data(params, language="en")
-        self.assertTrue("zero" in data["error"] or "SSA" in data["error"])
-        params["earnings"] = 100000
-        params["yob"] = self.today.year - 68
-        data = get_retire_data(params, language="en")
-        self.assertTrue("past" in data["note"])
-        params["yob"] = self.today.year + 1
-        data = get_retire_data(params, language="en")
-        self.assertTrue("22" in data["note"])
 
     @mock.patch("retirement_api.utils.ss_calculator.requests.post")
     def test_bad_calculator_requests(self, mock_requests):

@@ -1,15 +1,13 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.template.response import TemplateResponse
 
 from wagtail.contrib.routable_page.models import route
-from wagtail.core.models import Site
+from wagtail.models import Site
 from wagtailsharing.models import ShareableRoutablePageMixin
 
 from v1.documents import FilterablePagesDocumentSearch
 from v1.feeds import FilterableFeed
 from v1.models.learn_page import AbstractFilterPage
 from v1.util.ref import get_category_children
-from v1.util.util import get_secondary_nav_items
 
 
 class FilterableListMixin(ShareableRoutablePageMixin):
@@ -92,7 +90,6 @@ class FilterableListMixin(ShareableRoutablePageMixin):
         context.update(
             {
                 "filter_data": filter_data,
-                "get_secondary_nav_items": get_secondary_nav_items,
                 "has_active_filters": has_active_filters,
                 "has_unfiltered_results": has_unfiltered_results,
             }
@@ -142,7 +139,7 @@ class FilterableListMixin(ShareableRoutablePageMixin):
                 "language",
                 "statuses",
                 "products",
-            ]:  # noqa: B950
+            ]:  # noqa: E501
                 value = request_dict.getlist(field, [])
             else:
                 value = request_dict.get(field, "")
@@ -152,16 +149,9 @@ class FilterableListMixin(ShareableRoutablePageMixin):
                 self.set_do_not_index(field, value)
         return form_data, has_active_filters
 
-    def render(self, request, *args, context_overrides=None, **kwargs):
-        """Render with optional context overrides."""
-        # TODO: the context-overriding and template rendering can be replaced
-        # with super().render() in Wagtail 2.11, where RoutablePageMixin gains
-        # the context_overrides functionality built-in.
-        context = self.get_context(request, *args, **kwargs)
-        context.update(context_overrides or {})
-        response = TemplateResponse(
-            request, self.get_template(request, *args, **kwargs), context
-        )
+    def render(self, request, *args, **kwargs):
+        """Render with optional X-Robots-Tag in response headers"""
+        response = super().render(request, *args, **kwargs)
 
         # Set noindex for crawlers if needed
         if self.do_not_index:

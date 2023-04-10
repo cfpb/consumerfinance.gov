@@ -1,4 +1,3 @@
-
 // TODO: Move the theme variables to /enhancements/ for CF.
 /* topdoc
   name: Theme variables
@@ -17,8 +16,8 @@
     - cf-core
 */
 
-@margin__em: unit( @grid_gutter-width / @base-font-size-px, em );
-@margin_half__em: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+@margin__em: unit(@grid_gutter-width / @base-font-size-px, em);
+@margin_half__em: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
 @mobile_trigger_ht__px: 54px;
 
 /* topdoc
@@ -34,7 +33,7 @@
                       <span class="u-hide-on-mobile">Search</span>
                   </span>
                   <span class="m-global-search_trigger-close-label">
-                      {{ svg_icon('delete') }}
+                      {{ svg_icon('error') }}
                       <span class="u-hide-on-mobile">Close</span>
                   </span>
               </button>
@@ -55,7 +54,7 @@
                                      class="input-contains-label_after
                                             input-contains-label_after__clear
                                             u-hidden">
-                                  {{ svg_icon('delete') }}
+                                  {{ svg_icon('error') }}
                                   <span class="u-visually-hidden">Clear search</span>
                               </label>
                               <input type="text"
@@ -91,7 +90,6 @@
 */
 
 .m-global-search {
-
   &_trigger {
     // Hide search unless we have JavaScript (JS).
     html.no-js & {
@@ -107,9 +105,9 @@
     box-sizing: border-box;
     border-left: 1px solid transparent;
 
-    .respond-to-max( @bp-xs-max, {
+    .respond-to-max(@bp-xs-max, {
       font-size: 18px;
-    } );
+    });
 
     &:focus {
       outline: 1px dotted @black;
@@ -142,20 +140,19 @@
       overflow-x: hidden;
     }
 
-    &[aria-expanded="true"] &-form {
+    &[data-open='true'] &-form {
       display: block;
     }
-
   }
 
   // Up to desktops.
-  .respond-to-max( @bp-sm-max, {
+  .respond-to-max(@bp-sm-max, {
 
     &_fallback {
       margin: @margin_half__em;
     }
 
-    &_trigger{
+    &_trigger {
       padding-top: 5px;
       height: @mobile_trigger_ht__px;
       min-width: @mobile_trigger_ht__px;
@@ -180,7 +177,7 @@
           border-left: 1px solid @gray-40;
 
           // Important needed to override background color in expanded state.
-          background: @gray-20 !important;
+          background: @gray-20  !important;
         }
       }
     }
@@ -193,9 +190,7 @@
 
         box-sizing: border-box;
         width: 100%;
-        padding: @margin__em
-        @margin_half__em
-        @margin_half__em;
+        padding: @margin__em @margin_half__em @margin_half__em;
 
         left: 0;
         z-index: 10;
@@ -205,34 +200,34 @@
         border-bottom: 1px solid @gray-40;
       }
     }
-  } );
+  });
 
   // Tablet size only.
-  .respond-to-range( @bp-sm-min, @bp-sm-max, {
+  .respond-to-range(@bp-sm-min, @bp-sm-max, {
     &_trigger {
       // Min-width sets open/close states to same size.
       min-width: 110px;
 
-      padding-left: unit( @grid_gutter-width / 2 / 18px, em );
-      padding-right: unit( @grid_gutter-width / 2 / 18px, em );
+      padding-left: unit(@grid_gutter-width / 2 / 18px, em);
+      padding-right: unit(@grid_gutter-width / 2 / 18px, em);
     }
 
-  } );
+  });
 
   // Tablet and above
-  .respond-to-min( @bp-sm-min, {
+  .respond-to-min(@bp-sm-min, {
 
     // Override for the .m-btn-inside-input class from the design system.
     // This is needed because we do not have an icon inside the input
     // at the desktop size (there is an icon at the mobile size).
     .m-btn-inside-input .a-text-input {
-      padding-right: unit( 14px / @base-font-size-px, em );
+      padding-right: unit(14px / @base-font-size-px, em);
     }
 
-  } );
+  });
 
   // Desktop and above
-  .respond-to-min( @bp-med-min, {
+  .respond-to-min(@bp-med-min, {
 
     // Center on the call to action (CTA) divider to right of search.
     padding-top: 6px;
@@ -263,42 +258,58 @@
       // the hidden overflow of the search container element.
       margin-left: 3px;
     }
-  } );
+  });
 
   // Mobile size.
-  .respond-to-min( 480px, {
+  .respond-to-min(480px, {
     &_content-form {
-      // Attach button to input.
-      .o-form__input-w-btn_input-container {
-        width: 75%;
 
-        [lang="es"] & {
-          width: 70%;
+      // The  search  button needs to be more flexible than in our usual
+      // input-w-btn element to accommodate longer translations of  search ,
+      // so we will make it flexbox
+      .o-form__input-w-btn {
+        display: flex;
+        padding-right: 0.25em;
+      }
+
+      .o-form__input-w-btn_input-container {
+        display: flex;
+        width: initial;
+        flex: 0 1 75%;
+
+        // Characters in some languages, like Chinese, have a larger x-height,
+        // which will make the button taller than the input. Fix that by making
+        // the input elements flex and stretch to fit the full height of the
+        // container (i.e. match the button height)
+        .m-btn-inside-input {
+          display: flex;
+          align-items: stretch;
+          flex-basis: 100%;
         }
       }
+
       .o-form__input-w-btn_btn-container {
-        width: 25%;
+        width: initial;
         border-left: 0;
+        flex: 1 1 25%;
 
         button {
+          padding-left: 1em;
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
-        }
-
-        [lang="es"] & {
-          width: 30%;
+          white-space: nowrap;
         }
       }
     }
-  } );
+  });
 
   // Hide on print.
-  .respond-to-print( {
+  .respond-to-print({
     & {
       // Important needed to override JS display settings.
       display: none !important;
     }
-  } );
+  });
 
   // Hide fallback by default.
   &_fallback {

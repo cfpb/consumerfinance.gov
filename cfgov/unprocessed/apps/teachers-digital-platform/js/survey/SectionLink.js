@@ -1,72 +1,72 @@
 class SectionLink {
   /**
-   * @param {HTMLButtonElement} root Section link button
+   * @param {HTMLButtonElement} root - Section link button
    */
-  constructor( root ) {
+  constructor(root) {
     this.root = root;
   }
 
   markPreviousPage() {
-    this.root.setAttribute( 'data-color', 'green' );
+    this.root.setAttribute('data-color', 'green');
     this.markEditable();
     this.markDone();
   }
 
   /**
-   * @param {boolean} done Is this section done?
+   * @param {boolean} done - Is this section done?
    */
-  markCurrentPage( done ) {
-    this.root.setAttribute( 'data-color', 'blue' );
-    if ( done ) {
-      this.setStatus( 'complete' );
+  markCurrentPage(done) {
+    this.root.setAttribute('data-color', 'blue');
+    if (done) {
+      this.setStatus('complete');
       this.markDone();
     } else {
-      this.setStatus( 'in progress' );
+      this.setStatus('in progress');
     }
   }
 
   /**
-   * @param {boolean} done Is this section done?
-   * @param {boolean} visited Has this section begun?
+   * @param {boolean} done - Is this section done?
+   * @param {boolean} visited - Has this section begun?
    */
-  markUpcomingPage( done, visited ) {
-    if ( done ) {
-      this.root.setAttribute( 'data-color', 'green' );
+  markUpcomingPage(done, visited) {
+    if (done) {
+      this.root.setAttribute('data-color', 'green');
       this.markDone();
-    } else if ( visited ) {
-      this.root.setAttribute( 'data-color', 'white' );
-      this.setStatus( 'in progress' );
+    } else if (visited) {
+      this.root.setAttribute('data-color', 'white');
+      this.setStatus('in progress');
     }
   }
 
   markDone() {
-    this.root.setAttribute( 'data-checked', '1' );
-    this.setStatus( 'complete' );
+    this.root.setAttribute('data-checked', '1');
+    this.setStatus('complete');
   }
 
   markEditable() {
-    this.root.setAttribute( 'data-editable', '1' );
+    this.root.setAttribute('data-editable', '1');
     this.root.tabIndex = 0;
   }
 
   /**
-   * @param {string} status Section status
+   * @param {string} status - Section status.
    */
-  setStatus( status ) {
-    const el = this.root.querySelector( '.tdp-survey-section__status' );
-    if ( el ) {
-      el.textContent = `(${ status })`;
+  setStatus(status) {
+    const el = this.root.querySelector('.tdp-survey-section__status');
+    if (el) {
+      el.textContent = `(${status})`;
     }
   }
 
   /**
-   * @param {number} from First question number
-   * @param {number} to Last question number
+   * @param {number} from - First question number.
+   * @param {number} to - Last question number.
    */
-  setRange( from, to ) {
-    const el = this.root.querySelector( '.tdp-survey-section__range' );
-    if ( el ) {
-      el.textContent = `Questions ${ from }–${ to }`;
+  setRange(from, to) {
+    const el = this.root.querySelector('.tdp-survey-section__range');
+    if (el) {
+      el.textContent = `Questions ${from}–${to}`;
     }
   }
 }
@@ -82,52 +82,55 @@ let checkThreshold = 0;
 let current = null;
 
 /**
- * @param {SurveyData} data Survey data
+ * @param {object} surveydata - The survey data.
+ * @param {number} surveydata.numAnswered - The number of survey items answered.
+ * @param {number} surveydata.pageIdx - The page ID.
+ * @param {object} surveydata.questionsByPage - Hash of the questions by page.
  */
-SectionLink.init = function( { numAnswered, pageIdx, questionsByPage } ) {
+SectionLink.init = function ({ numAnswered, pageIdx, questionsByPage }) {
   let questionsFound = 0;
-  const roots = document.querySelectorAll( '.tdp-survey-section' );
+  const roots = document.querySelectorAll('.tdp-survey-section');
 
-  [].forEach.call( roots, ( root, idx ) => {
+  [].forEach.call(roots, (root, idx) => {
     const questionsHere = questionsByPage[idx];
     const visited = numAnswered >= questionsFound;
-    const done = numAnswered >= ( questionsFound + questionsHere );
+    const done = numAnswered >= questionsFound + questionsHere;
 
-    const sl = new SectionLink( root );
-    sl.setRange( questionsFound + 1, questionsFound + questionsHere );
+    const sl = new SectionLink(root);
+    sl.setRange(questionsFound + 1, questionsFound + questionsHere);
 
-    if ( idx < pageIdx ) {
+    if (idx < pageIdx) {
       sl.markPreviousPage();
-    } else if ( pageIdx === idx ) {
+    } else if (pageIdx === idx) {
       // Set up for marking done later
       current = sl;
       checkThreshold = questionsFound + questionsHere;
 
-      sl.markCurrentPage( done );
+      sl.markCurrentPage(done);
     } else {
-      sl.markUpcomingPage( done, visited );
+      sl.markUpcomingPage(done, visited);
     }
 
     questionsFound += questionsHere;
 
-    root.addEventListener( 'click', event => {
-      if ( !root.dataset.editable ) {
+    root.addEventListener('click', (event) => {
+      if (!root.dataset.editable) {
         event.preventDefault();
         event.stopPropagation();
       }
-    } );
-  } );
+    });
+  });
 };
 
 /**
  * Update the current SectionLink
  *
- * @param {number} numAnswered Num answered questions
+ * @param {number} numAnswered - Num answered questions.
  */
-SectionLink.update = function( numAnswered ) {
-  if ( current && numAnswered >= checkThreshold ) {
+SectionLink.update = function (numAnswered) {
+  if (current && numAnswered >= checkThreshold) {
     current.markDone();
   }
 };
 
-module.exports = SectionLink;
+export default SectionLink;

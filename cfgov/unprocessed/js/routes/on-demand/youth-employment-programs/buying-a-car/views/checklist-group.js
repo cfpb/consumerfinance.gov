@@ -1,64 +1,89 @@
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
 
-const CLASSES = Object.freeze( {
-  CHECKLIST_GROUP_CONTAINER: 'm-checklist-group'
-} );
+const CLASSES = Object.freeze({
+  CHECKLIST_GROUP_CONTAINER: 'm-checklist-group',
+});
 
-function checklistGroup( element, { selectedItems } ) {
-  const _dom = checkDom( element, CLASSES.CHECKLIST_GROUP_CONTAINER );
+/**
+ *
+ * @param element
+ * @param root0
+ * @param root0.selectedItems
+ */
+function checklistGroup(element, { selectedItems }) {
+  const _dom = checkDom(element, CLASSES.CHECKLIST_GROUP_CONTAINER);
 
-  function _getChecklistItemNode( checkboxValue ) {
-    const selector = `input[value="${ checkboxValue }"]`;
-    return _dom.querySelector( selector );
+  /**
+   *
+   * @param checkboxValue
+   */
+  function _getChecklistItemNode(checkboxValue) {
+    const selector = `input[value="${checkboxValue}"]`;
+    return _dom.querySelector(selector);
   }
 
-  function _isInput( node ) {
+  /**
+   *
+   * @param node
+   */
+  function _isInput(node) {
     return node.tagName === 'INPUT';
   }
 
-  function _isChecked( checkbox ) {
+  /**
+   *
+   * @param checkbox
+   */
+  function _isChecked(checkbox) {
     return checkbox.checked;
   }
 
-  function _elementToUncheck( valueToUncheck ) {
+  /**
+   *
+   * @param valueToUncheck
+   */
+  function _elementToUncheck(valueToUncheck) {
     return function uncheckCheckbox() {
-      const inputToUncheck = _getChecklistItemNode( valueToUncheck );
+      const inputToUncheck = _getChecklistItemNode(valueToUncheck);
       inputToUncheck.checked = '';
     };
   }
 
-  function _handleChecklistItemSelect( event ) {
+  /**
+   *
+   * @param event
+   */
+  function _handleChecklistItemSelect(event) {
     const node = event.target;
 
-    if ( _isInput( node ) ) {
+    if (_isInput(node)) {
       const selectedItem = node.value;
 
-      if ( _isChecked( node ) ) {
-        if ( selectedItems.isMaxItemsSelected() ) {
+      if (_isChecked(node)) {
+        if (selectedItems.isMaxItemsSelected()) {
           const lastSelectedVal = selectedItems.getLast();
-          const uncheckCheckboxFn = _elementToUncheck( lastSelectedVal );
+          const uncheckCheckboxFn = _elementToUncheck(lastSelectedVal);
 
-          selectedItems.remove( lastSelectedVal );
+          selectedItems.remove(lastSelectedVal);
 
           /* the browser could schedule a repaint during uncheck op, so
              schedule the uncheck to happen at the beginning of the next
              stack frame */
-          setTimeout( uncheckCheckboxFn, 0 );
+          setTimeout(uncheckCheckboxFn, 0);
         }
-        selectedItems.add( selectedItem );
+        selectedItems.add(selectedItem);
       } else {
-        selectedItems.remove( selectedItem );
+        selectedItems.remove(selectedItem);
       }
     }
   }
 
-
   return {
     init() {
-      if ( setInitFlag( _dom ) ) {
-        _dom.addEventListener( 'click', _handleChecklistItemSelect );
+      if (setInitFlag(_dom)) {
+        _dom.addEventListener('click', _handleChecklistItemSelect);
       }
-    }
+    },
   };
 }
 

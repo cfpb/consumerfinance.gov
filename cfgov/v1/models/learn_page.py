@@ -8,21 +8,17 @@ from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.http import http_date
 
-from wagtail.admin.edit_handlers import (
+from wagtail import blocks
+from wagtail.admin.panels import (
     FieldPanel,
     FieldRowPanel,
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
-from wagtail.core import blocks
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
-from wagtail.documents.edit_handlers import DocumentChooserPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.search import index
+from wagtail.fields import RichTextField, StreamField
+from wagtail.models import Page
 
 from localflavor.us.models import USStateField
 
@@ -41,6 +37,7 @@ class AbstractFilterPage(CFGOVPage):
             ("notification", molecules.Notification()),
         ],
         blank=True,
+        use_json_field=True,
     )
     preview_title = models.CharField(max_length=255, null=True, blank=True)
     preview_subheading = models.CharField(
@@ -68,7 +65,7 @@ class AbstractFilterPage(CFGOVPage):
     settings_panels = [
         MultiFieldPanel(CFGOVPage.promote_panels, "Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
-        FieldPanel("tags", "Tags"),
+        FieldPanel("tags", heading="Tags"),
         MultiFieldPanel(
             [
                 FieldPanel("preview_title"),
@@ -76,14 +73,14 @@ class AbstractFilterPage(CFGOVPage):
                 FieldPanel("preview_description"),
                 FieldPanel("secondary_link_url"),
                 FieldPanel("secondary_link_text"),
-                ImageChooserPanel("preview_image"),
+                FieldPanel("preview_image"),
             ],
             heading="Page Preview Fields",
             classname="collapsible",
         ),
-        FieldPanel("schema_json", "Structured Data"),
-        FieldPanel("authors", "Authors"),
-        FieldPanel("content_owners", "Content Owners"),
+        FieldPanel("schema_json", heading="Structured Data"),
+        FieldPanel("authors", heading="Authors"),
+        FieldPanel("content_owners", heading="Content Owners"),
         MultiFieldPanel(
             [
                 FieldPanel("date_published"),
@@ -93,19 +90,23 @@ class AbstractFilterPage(CFGOVPage):
             "Relevant Dates",
             classname="collapsible",
         ),
-        MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
-        FieldPanel("language", "Language"),
+        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
+        MultiFieldPanel(
+            [
+                FieldPanel("language", heading="Language"),
+                FieldPanel("english_page"),
+            ],
+            "Translation",
+        ),
     ]
 
     # This page class cannot be created.
     is_creatable = False
 
-    search_fields = CFGOVPage.search_fields + [index.SearchField("header")]
-
     @classmethod
     def generate_edit_handler(self, content_panel):
         content_panels = [
-            StreamFieldPanel("header"),
+            FieldPanel("header"),
             content_panel,
         ]
         return TabbedInterface(
@@ -132,35 +133,33 @@ class LearnPage(AbstractFilterPage):
             ("full_width_text", organisms.FullWidthText()),
             ("info_unit_group", organisms.InfoUnitGroup()),
             ("expandable_group", organisms.ExpandableGroup()),
-            ("contact_expandable_group", organisms.ContactExpandableGroup()),
             ("expandable", organisms.Expandable()),
             ("well", organisms.Well()),
             ("call_to_action", molecules.CallToAction()),
+            ("video_player", organisms.VideoPlayer()),
+            ("audio_player", organisms.AudioPlayer()),
             (
                 "email_signup",
                 v1_blocks.EmailSignUpChooserBlock(),
             ),
-            ("video_player", organisms.VideoPlayer()),
-            ("audio_player", organisms.AudioPlayer()),
+            ("simple_chart", organisms.SimpleChart()),
             (
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
             ("faq_group", schema.FAQGroup()),
+            ("contact_us_table", organisms.ContactUsTable()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     edit_handler = AbstractFilterPage.generate_edit_handler(
-        content_panel=StreamFieldPanel("content")
+        content_panel=FieldPanel("content")
     )
-    template = "learn-page/index.html"
+    template = "v1/learn-page/index.html"
 
     page_description = "Right-hand sidebar, no left-hand sidebar."
-
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField("content")
-    ]
 
 
 class DocumentDetailPage(AbstractFilterPage):
@@ -170,21 +169,20 @@ class DocumentDetailPage(AbstractFilterPage):
             ("expandable", organisms.Expandable()),
             ("expandable_group", organisms.ExpandableGroup()),
             ("notification", molecules.Notification()),
+            ("simple_chart", organisms.SimpleChart()),
             (
                 "table_block",
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
+            ("crc_table", organisms.ConsumerReportingCompanyTable()),
         ],
         blank=True,
+        use_json_field=True,
     )
     edit_handler = AbstractFilterPage.generate_edit_handler(
-        content_panel=StreamFieldPanel("content")
+        content_panel=FieldPanel("content")
     )
-    template = "document-detail/index.html"
-
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField("content")
-    ]
+    template = "v1/document-detail/index.html"
 
 
 class AgendaItemBlock(blocks.StructBlock):
@@ -229,6 +227,7 @@ class EventPage(AbstractFilterPage):
             ),
         ],
         blank=True,
+        use_json_field=True,
     )
     start_dt = models.DateTimeField("Start")
     end_dt = models.DateTimeField("End", blank=True, null=True)
@@ -340,17 +339,9 @@ class EventPage(AbstractFilterPage):
     )
 
     # Agenda content fields
-    agenda_items = StreamField([("item", AgendaItemBlock())], blank=True)
-
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField("body"),
-        index.SearchField("archive_body"),
-        index.SearchField("live_video_id"),
-        index.SearchField("flickr_url"),
-        index.SearchField("archive_video_id"),
-        index.SearchField("future_body"),
-        index.SearchField("agenda_items"),
-    ]
+    agenda_items = StreamField(
+        [("item", AgendaItemBlock())], blank=True, use_json_field=True
+    )
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
@@ -364,9 +355,9 @@ class EventPage(AbstractFilterPage):
         MultiFieldPanel(
             [
                 FieldPanel("archive_body"),
-                ImageChooserPanel("archive_image"),
-                DocumentChooserPanel("video_transcript"),
-                DocumentChooserPanel("speech_transcript"),
+                FieldPanel("archive_image"),
+                FieldPanel("video_transcript"),
+                FieldPanel("speech_transcript"),
                 FieldPanel("flickr_url"),
                 FieldPanel("archive_video_id"),
             ],
@@ -374,7 +365,7 @@ class EventPage(AbstractFilterPage):
         ),
         FieldPanel("live_body"),
         FieldPanel("future_body"),
-        StreamFieldPanel("persistent_body"),
+        FieldPanel("persistent_body"),
         MultiFieldPanel(
             [
                 FieldPanel("live_stream_availability"),
@@ -400,21 +391,21 @@ class EventPage(AbstractFilterPage):
         MultiFieldPanel(
             [
                 FieldPanel("venue_image_type"),
-                ImageChooserPanel("venue_image"),
+                FieldPanel("venue_image"),
             ],
             heading="Venue Image",
         ),
         MultiFieldPanel(
             [
                 FieldPanel("post_event_image_type"),
-                ImageChooserPanel("post_event_image"),
+                FieldPanel("post_event_image"),
             ],
             heading="Post-event Image",
         ),
     ]
     # Agenda content tab
     agenda_panels = [
-        StreamFieldPanel("agenda_items"),
+        FieldPanel("agenda_items"),
     ]
     # Promotion panels
     promote_panels = [
@@ -435,7 +426,7 @@ class EventPage(AbstractFilterPage):
         ]
     )
 
-    template = "events/event.html"
+    template = "v1/events/event.html"
 
     @property
     def event_state(self):

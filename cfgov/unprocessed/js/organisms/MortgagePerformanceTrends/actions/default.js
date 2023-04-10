@@ -1,56 +1,52 @@
-import utils from '../utils';
+import utils from '../utils.js';
 
 const defaultActionCreators = () => {
-
   const actions = {
-
     /**
      * setGeo - Sets geographic location's info
      *
-     * @param {String} geoId   ID of location
-     * @param {String} geoName Name of location
-     * @param {String} geoType Type of location (state, metro, county)
-     *
-     * @returns {Object} Action to set geo
+     * @param {string} geoId - ID of location
+     * @param {string} geoName - Name of location
+     * @param {string} geoType - Type of location (state, metro, county)
+     * @returns {object} Action to set geo
      */
-    setGeo: ( geoId, geoName, geoType ) => ( {
+    setGeo: (geoId, geoName, geoType) => ({
       type: 'SET_GEO',
       geo: {
         type: geoType,
         id: geoId,
-        name: geoName
-      }
-    } ),
+        name: geoName,
+      },
+    }),
 
     /**
      * clearGeo - Clears geographic location's info
      *
-     * @returns {Object} Action to clear geo
+     * @returns {object} Action to clear geo
      */
-    clearGeo: () => ( {
-      type: 'CLEAR_GEO'
-    } ),
+    clearGeo: () => ({
+      type: 'CLEAR_GEO',
+    }),
 
     /**
      * updateChart - Action dispatched to redraw the chart/map
      *
-     * @param {String} geoId   ID of location
-     * @param {String} geoName Name of location
-     * @param {String} geoType Type of location (state, metro, county)
-     * @param {Boolean} includeComparison Include national comparison?
-     *
-     * @returns {Object} Action to update chart
+     * @param {string} geoId - ID of location
+     * @param {string} geoName - Name of location
+     * @param {string} geoType - Type of location (state, metro, county)
+     * @param {boolean} includeComparison - Include national comparison?
+     * @returns {object} Action to update chart
      */
-    updateChart: ( geoId, geoName, geoType, includeComparison ) => {
+    updateChart: (geoId, geoName, geoType, includeComparison) => {
       const action = {
         type: 'UPDATE_CHART',
         geo: {
           id: geoId,
-          name: geoName
+          name: geoName,
         },
-        includeComparison
+        includeComparison,
       };
-      if ( geoType ) {
+      if (geoType) {
         action.geo.type = geoType;
       }
       return action;
@@ -58,13 +54,14 @@ const defaultActionCreators = () => {
 
     /**
      * updateNational - Action dispatched when the national comparison is toggled
-     * @param {Boolean} includeComparison Include national comparison?
-     * @returns {Object} Action to include the national data in chart
+     *
+     * @param {boolean} includeComparison - Include national comparison?
+     * @returns {object} Action to include the national data in chart
      */
-    updateNational: includeComparison => {
+    updateNational: (includeComparison) => {
       const action = {
         type: 'UPDATE_CHART',
-        includeComparison
+        includeComparison,
       };
       return action;
     },
@@ -72,128 +69,138 @@ const defaultActionCreators = () => {
     /**
      * updateDate - Action dispatched when the month/year is changed
      *
-     * @param {String} date Date in format 2010-01
-     *
-     * @returns {Object} Action to update the data viz's date
+     * @param {string} date - Date in format 2010-01
+     * @returns {object} Action to update the data viz's date
      */
-    updateDate: date => ( {
+    updateDate: (date) => ({
       type: 'UPDATE_DATE',
-      date: date
-    } ),
+      date: date,
+    }),
 
     /**
      * requestCounties - Action indicating county names are being downloaded.
      *
-     * @returns {Object} Action with county loading state
+     * @returns {object} Action with county loading state
      */
-    requestCounties: () => ( {
+    requestCounties: () => ({
       type: 'REQUEST_COUNTIES',
-      isLoadingCounties: true
-    } ),
+      isLoadingCounties: true,
+    }),
 
     /**
      * requestMetros - Action indicating metro names are being downloaded.
      *
-     * @returns {Object} Action with metro loading state
+     * @returns {object} Action with metro loading state
      */
-    requestMetros: () => ( {
+    requestMetros: () => ({
       type: 'REQUEST_METROS',
-      isLoadingMetros: true
-    } ),
+      isLoadingMetros: true,
+    }),
 
     /**
      * requestNonMetros - Action indicating non metro names are being downloaded
      *
-     * @returns {Object} Action with non metro loading state
+     * @returns {object} Action with non metro loading state
      */
-    requestNonMetros: () => ( {
+    requestNonMetros: () => ({
       type: 'REQUEST_NON_METROS',
-      isLoadingNonMetros: true
-    } ),
+      isLoadingNonMetros: true,
+    }),
 
     /**
      * fetchNonMetros - Creates async action to fetch list of non-metros.
      *
-     * @param {String} nonMetroState Two-letter U.S. state abbreviation.
-     * @param {Boolean} includeComparison Include national comparison?
-     *
+     * @param {string} nonMetroState - Two-letter U.S. state abbreviation.
+     * @param {boolean} includeComparison - Include national comparison?
      * @returns {Function} Thunk called with non metros
      */
-    fetchNonMetros: ( nonMetroState, includeComparison ) => dispatch => {
-      dispatch( actions.requestNonMetros() );
-      return utils.getNonMetroData( data => {
-        let nonMetros = data.filter( nonMetro => nonMetro.valid );
+    fetchNonMetros: (nonMetroState, includeComparison) => (dispatch) => {
+      dispatch(actions.requestNonMetros());
+      return utils.getNonMetroData((data) => {
+        let nonMetros = data.filter((nonMetro) => nonMetro.valid);
         let currStateIndex = 0;
-        nonMetros.forEach( ( nonMetro, i ) => {
-          if ( nonMetro.abbr === nonMetroState ) {
+        nonMetros.forEach((nonMetro, i) => {
+          if (nonMetro.abbr === nonMetroState) {
             currStateIndex = i;
           }
-        } );
+        });
         // Alphabetical order
-        nonMetros = nonMetros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
-        dispatch( actions.setNonMetros( nonMetros ) );
-        dispatch( actions.setGeo( nonMetros[currStateIndex].fips, nonMetros[currStateIndex].name, 'non-metro' ) );
-        dispatch( actions.updateChart( nonMetros[currStateIndex].fips, nonMetros[currStateIndex].name, 'non-metro', includeComparison ) );
+        nonMetros = nonMetros.sort((a, b) => (a.name < b.name ? -1 : 1));
+        dispatch(actions.setNonMetros(nonMetros));
+        dispatch(
+          actions.setGeo(
+            nonMetros[currStateIndex].fips,
+            nonMetros[currStateIndex].name,
+            'non-metro'
+          )
+        );
+        dispatch(
+          actions.updateChart(
+            nonMetros[currStateIndex].fips,
+            nonMetros[currStateIndex].name,
+            'non-metro',
+            includeComparison
+          )
+        );
         return nonMetros;
-      } );
+      });
     },
 
     /**
      * setMetros - New metros to store in state.
      *
-     * @param {Array} metros List of metros.
-     * @returns {Object} Action with new metros.
+     * @param {Array} metros - List of metros.
+     * @returns {object} Action with new metros.
      */
-    setMetros: metros => ( {
+    setMetros: (metros) => ({
       type: 'SET_METROS',
-      metros: metros
-    } ),
+      metros: metros,
+    }),
 
     /**
      * setNonMetros - New non-metros to store in state.
      *
-     * @param {Array} nonMetros List of non-metros.
-     * @returns {Object} Action with new non-metros.
+     * @param {Array} nonMetros - List of non-metros.
+     * @returns {object} Action with new non-metros.
      */
-    setNonMetros: nonMetros => ( {
+    setNonMetros: (nonMetros) => ({
       type: 'SET_NON_METROS',
-      nonMetros: nonMetros
-    } ),
+      nonMetros: nonMetros,
+    }),
 
     /**
      * setCounties - New counties to store in state.
      *
-     * @param {Array} counties List of counties.
-     * @returns {Object} Action with new counties.
+     * @param {Array} counties - List of counties.
+     * @returns {object} Action with new counties.
      */
-    setCounties: counties => ( {
+    setCounties: (counties) => ({
       type: 'SET_COUNTIES',
-      counties: counties
-    } ),
+      counties: counties,
+    }),
 
     /**
      * startLoading - Set global loading state for the app.
      *
-     * @returns {Object} Action indicating the app is loading.
+     * @returns {object} Action indicating the app is loading.
      */
-    startLoading: () => ( {
+    startLoading: () => ({
       type: 'START_LOADING',
-      isLoading: true
-    } ),
+      isLoading: true,
+    }),
 
     /**
      * stopLoading - Set global loading state for the app.
      *
-     * @returns {Object} Action indicating the app is not loading.
+     * @returns {object} Action indicating the app is not loading.
      */
-    stopLoading: () => ( {
+    stopLoading: () => ({
       type: 'STOP_LOADING',
-      isLoading: false
-    } )
+      isLoading: false,
+    }),
   };
 
   return actions;
-
 };
 
 export default defaultActionCreators;

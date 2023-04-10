@@ -1,4 +1,4 @@
-{% extends 'layout-full.html' %}
+{% extends 'v1/layouts/layout-full.html' %}
 
 {# HEAD items #}
 
@@ -24,7 +24,7 @@
 {%- endblock %}
 
 {% block content_main scoped %}
-    {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
+    {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
     {% set breadcrumb_items = [{
         'href': '/data-research/prepaid-accounts/',
         'title': 'Prepaid Account Agreements'
@@ -82,7 +82,7 @@
                                    placeholder="Enter search term"
                                    value="{{ query }}"
                                    aria-label="The term to search for">
-                            <a class="a-btn a-btn__link" href="{{ remove_url_parameter(request, { 'q': [query] }) }}">{{ svg_icon('remove') }} Clear</a>
+                            <a class="a-btn a-btn__link" href="{{ remove_url_parameter(request, { 'q': [query] }) }}">{{ svg_icon('error') }} Clear</a>
                         </div>
                     </div>
                     <button class="a-btn flex-fixed">Search</button>

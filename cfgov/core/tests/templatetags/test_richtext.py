@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from wagtail.core.rich_text import RichText
+from wagtail.rich_text import RichText
 
 from core.templatetags.richtext import richtext_isempty
 

@@ -1,25 +1,112 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
+from wagtail import blocks
+from wagtail.admin.panels import (
     FieldPanel,
+    MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
-from wagtail.search import index
+from wagtail.fields import StreamField
 
 from data_research.blocks import MortgageDataDownloads
 from jobmanager.blocks import JobListingTable
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms, schema
 from v1.models.base import CFGOVPage
-from v1.util.util import get_secondary_nav_items
 from youth_employment.blocks import YESChecklist
 
 
-class BrowsePage(CFGOVPage):
+class AbstractBrowsePage(CFGOVPage):
+    navigation_label = models.CharField(
+        null=True,
+        blank=True,
+        max_length=100,
+        help_text="Optional short label for left navigation.",
+    )
+    secondary_nav_exclude_sibling_pages = models.BooleanField(
+        default=False,
+        help_text="Don't show siblings of this page in the left navigation.",
+    )
+
+    sidefoot_panels = CFGOVPage.sidefoot_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel("navigation_label"),
+                FieldPanel(
+                    "secondary_nav_exclude_sibling_pages",
+                    heading="Exclude siblings",
+                ),
+            ],
+            heading="Secondary navigation",
+        ),
+    ]
+
+    class Meta:
+        abstract = True
+
+    def get_secondary_nav_items(self, request):
+        nav_root = self
+
+        # If the parent page of the current page is an AbstractBrowsePage,
+        # we use it as the root page for the navigation sidebar.
+        # Otherwise, we treat the current page as the navigation root.
+        parent = self.get_parent().specific
+        if isinstance(parent, AbstractBrowsePage):
+            nav_root = parent
+
+        # Should we show siblings of the navigation root page or not?
+        if nav_root.secondary_nav_exclude_sibling_pages:
+            pages = [nav_root]
+        else:
+            pages = (
+                nav_root.get_siblings(inclusive=True)
+                .type(AbstractBrowsePage)
+                .live()
+                .specific()
+            )
+
+        nav_items = []
+
+        for page in pages:
+            nav_item = self._make_nav_item(page, request)
+
+            expanded = (page.pk == self.pk) or (page.pk == nav_root.pk)
+            nav_item["expanded"] = expanded
+
+            if expanded:
+                children = (
+                    page.get_children()
+                    .type(AbstractBrowsePage)
+                    .live()
+                    .specific()
+                )
+
+                child_items = [
+                    self._make_nav_item(child, request) for child in children
+                ]
+                if child_items:
+                    nav_item["children"] = child_items
+
+            nav_items.append(nav_item)
+
+        return nav_items
+
+    def _make_nav_item(self, page, request):
+        active = self.pk == page.pk
+
+        # Use self object to reflect draft/preview changes.
+        if active:
+            page = self
+
+        return {
+            "title": page.navigation_label or page.title,
+            "url": page.get_url(request),
+            "active": active,
+        }
+
+
+class BrowsePage(AbstractBrowsePage):
     header = StreamField(
         [
             ("text_introduction", molecules.TextIntroduction()),
@@ -27,6 +114,12 @@ class BrowsePage(CFGOVPage):
             ("notification", molecules.Notification()),
         ],
         blank=True,
+        use_json_field=True,
+    )
+
+    share_and_print = models.BooleanField(
+        default=False,
+        help_text="Include share and print buttons above page content.",
     )
 
     content = StreamField(
@@ -51,54 +144,31 @@ class BrowsePage(CFGOVPage):
             ("data_snapshot", organisms.DataSnapshot()),
             ("job_listing_table", JobListingTable()),
             ("yes_checklist", YESChecklist()),
-            ("erap_tool", v1_blocks.RAFToolBlock()),
             ("raf_tool", v1_blocks.RAFTBlock()),
             ("faq_group", schema.FAQGroup()),
         ],
         blank=True,
-    )
-
-    secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
-
-    share_and_print = models.BooleanField(
-        default=False,
-        help_text="Include share and print buttons above page content.",
+        use_json_field=True,
     )
 
     # General content tab
-    content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
+    content_panels = AbstractBrowsePage.content_panels + [
+        FieldPanel("header"),
         FieldPanel("share_and_print"),
-        StreamFieldPanel("content"),
-    ]
-
-    sidefoot_panels = CFGOVPage.sidefoot_panels + [
-        FieldPanel("secondary_nav_exclude_sibling_pages"),
+        FieldPanel("content"),
     ]
 
     # Tab handler interface
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="General Content"),
-            ObjectList(sidefoot_panels, heading="Sidebar"),
-            ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
+            ObjectList(AbstractBrowsePage.sidefoot_panels, heading="Sidebar"),
+            ObjectList(
+                AbstractBrowsePage.settings_panels, heading="Configuration"
+            ),
         ]
     )
 
-    template = "browse-basic/index.html"
+    template = "v1/browse-basic/index.html"
 
     page_description = "Left-hand navigation, no right-hand sidebar."
-
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
-
-    @property
-    def page_js(self):
-        return super().page_js + ["secondary-navigation.js"]
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context.update({"get_secondary_nav_items": get_secondary_nav_items})
-        return context

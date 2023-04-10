@@ -1,124 +1,61 @@
-export class MegaMenu {
+const BASE_CLASS = '.o-mega-menu';
 
-  megaMenu( name ) {
-    return cy.get( `.o-mega-menu_${ name }` );
+export class MegaMenuDesktop {
+  tabs() {
+    return cy.get(`${BASE_CLASS}_content-1-link__has-children`);
   }
 
-  megaMenuContent( name ) {
-    return this.megaMenu( `content-${ name }` );
+  firstTab() {
+    return this.tabs().first();
   }
 
-  content() {
-    return this.megaMenu( 'content' ).first();
+  firstTabOpenIcon() {
+    return this.firstTab().find(
+      `${BASE_CLASS}_content-link-icon-open .cf-icon-svg`
+    );
   }
 
-  trigger() {
-    return this.megaMenuContent( '2-alt-trigger' );
+  firstTabCloseIcon() {
+    return this.firstTab().find(
+      `${BASE_CLASS}_content-link-icon-closed .cf-icon-svg`
+    );
   }
 
-  triggerOpen() {
-    return this.megaMenu( 'trigger-open' );
+  secondTab() {
+    return this.tabs().eq(1);
   }
 
-  triggerClose() {
-    return this.megaMenu( 'trigger-close' );
+  firstPanelContainer() {
+    return cy.get(`${BASE_CLASS}_content-2`).first();
   }
 
-  focusFirstLink( value ) {
-    return this.megaMenuContent( `${ value }-link` ).first().focus();
+  firstPanel() {
+    return cy.get(`${BASE_CLASS}_content-2-wrapper`).first();
   }
 
-  focusLastLink( value ) {
-    return this.megaMenuContent( `${ value }-link` ).last().focus();
+  secondPanel() {
+    return cy.get(`${BASE_CLASS}_content-2-wrapper`).eq(1);
+  }
+}
+
+export class MegaMenuMobile {
+  rootTrigger() {
+    return cy.get(`${BASE_CLASS}_trigger`);
   }
 
-  clickLink( value ) {
-    return this.megaMenuContent( `${ value }-link` ).first().click( { force: true } );
+  firstLevelTrigger() {
+    return cy.get(`${BASE_CLASS}_content-1-link__has-children`).first();
   }
 
-  clickTriggerBtn() {
-    return this.megaMenu( 'trigger' ).click( { force: true } );
+  secondLevelFirstBackTrigger() {
+    return cy.get(`${BASE_CLASS}_content-2-alt-trigger`).first();
   }
 
-  focusTriggerBtn() {
-    return this.megaMenu( 'trigger' ).focus();
+  firstPanel() {
+    return cy.get(`${BASE_CLASS}_content-1`).first();
   }
 
-  contentElementItem() {
-    return this.megaMenuContent( 'item' );
-  }
-
-  contentElementLink() {
-    return this.megaMenuContent( 'link' );
-  }
-
-  contentElementLists() {
-    return this.megaMenuContent( 'lists' );
-  }
-
-  contentLink( value ) {
-    return this.megaMenuContent( `${ value }-link` );
-  }
-
-  contentItem( value ) {
-    return this.megaMenuContent( `${ value }-item` );
-  }
-
-  contentLists( value ) {
-    return this.megaMenuContent( `${ value }-lists` );
-  }
-
-  contentValueListGroup( value ) {
-    return this.megaMenuContent( `${ value }-list-group` );
-  }
-
-  contentOverview( value ) {
-    return this.megaMenuContent( `${ value }-overview` );
-  }
-
-  contentOverviewLink( value ) {
-    return this.megaMenuContent( `${ value }-overview-link` );
-  }
-
-  contentWrapper( value ) {
-    return this.megaMenuContent( `${ value }-wrapper` );
-  }
-
-  tagLine() {
-    return cy.get( 'a-tagline' );
-  }
-
-  globalEyebrowElement() {
-    return cy.get( '.m-global-eyebrow' );
-  }
-
-  globalEyebrow( name ) {
-    return cy.get( `.m-global-eyebrow_${ name }` );
-  }
-
-  globalEyebrowHorizontal() {
-    return this.globalEyebrow( '_horizontal' );
-  }
-
-  globalEyebrowList() {
-    return this.globalEyebrow( '_list' );
-  }
-
-  globalEyebrowLanguages() {
-    return this.globalEyebrow( 'languages' );
-  }
-
-  clickLanguage( name ) {
-    return this.globalEyebrowLanguages.type( `/language/${ name }/` ).click( { force: true } );
-  }
-
-  tabbing() {
-    /* changing focus from one link to another
-       is similar to tabbing between elements */
-    this.clickTriggerBtn();
-    this.focusFirstLink( '1' );
-    this.focusLastLink( '1' );
-    this.focusFirstLink( '2' );
-    this.focusLastLink( '2' );
+  secondPanel() {
+    return cy.get(`${BASE_CLASS}_content-2`).first();
   }
 }

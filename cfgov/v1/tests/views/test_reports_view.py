@@ -1,11 +1,15 @@
 import json
 from datetime import date
+from operator import itemgetter
 
-from django.test import TestCase
+from django.contrib.auth import get_user_model
+from django.test import SimpleTestCase, TestCase
+from django.urls import reverse
 from django.utils import timezone
 
-from wagtail.core.models import Site
 from wagtail.documents.models import Document
+from wagtail.models import Site
+from wagtail.test.utils import WagtailTestUtils
 
 from model_bakery import baker
 from taggit.models import Tag
@@ -13,6 +17,7 @@ from taggit.models import Tag
 from ask_cfpb.models import AnswerPage
 from v1.models import (
     BlogPage,
+    BrowsePage,
     CFGOVPageCategory,
     EnforcementActionPage,
     EnforcementActionProduct,
@@ -22,7 +27,9 @@ from v1.models.snippets import RelatedResource
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.ref import categories
 from v1.views.reports import (
+    ActiveUsersReportView,
     AskReportView,
+    CategoryIconReportView,
     DocumentsReportView,
     EnforcementActionsReportView,
     PageMetadataReportView,
@@ -238,3 +245,61 @@ class ServeViewTestCase(TestCase):
         self.assertEqual(ask_page_content, "Test content test")
         self.assertEqual(ask_page_schema_content, "How-to description")
         self.assertEqual(blank_ask_page_content, "")
+
+
+class TestCategoryIconsReport(SimpleTestCase):
+    def test_get_queryset(self):
+        self.assertEqual(
+            len(CategoryIconReportView().get_queryset()),
+            sum(map(len, map(itemgetter(1), categories))),
+        )
+
+
+class TestTranslatedPagesReport(TestCase, WagtailTestUtils):
+    def setUp(self):
+        self.site_root = Site.objects.get(is_default_site=True).root_page
+        self.url = reverse("translated_pages_report")
+
+        self.login()
+
+    def test_empty_report(self):
+        response = self.client.get(self.url)
+        self.assertContains(response, "Translated Pages")
+        self.assertContains(response, "No pages found.")
+
+    def test_report_with_results_and_filtering(self):
+        self.english_page = BrowsePage(title="en", slug="en", live=True)
+        self.site_root.add_child(instance=self.english_page)
+        self.spanish_page = BrowsePage(
+            title="es",
+            slug="es",
+            language="es",
+            live=True,
+            english_page=self.english_page,
+        )
+        self.site_root.add_child(instance=self.spanish_page)
+
+        response = self.client.get(self.url)
+        self.assertContains(response, "Translated Pages")
+        self.assertNotContains(response, "No pages found.")
+
+        response = self.client.get(self.url + "?language=es")
+        self.assertContains(response, "Translated Pages")
+        self.assertNotContains(response, "No pages found.")
+
+        response = self.client.get(self.url + "?language=ht")
+        self.assertContains(response, "Translated Pages")
+        self.assertContains(response, "No pages found.")
+
+
+class TestActiveUsersReport(TestCase):
+    def test_get_queryset(self):
+        User = get_user_model()
+        test_user = User(
+            username="test", email="test@example.com", is_active=False
+        )
+        test_user.save()
+
+        report_users = ActiveUsersReportView().get_queryset()
+        self.assertGreater(len(User.objects.all()), len(report_users))
+        self.assertNotIn(test_user, report_users)

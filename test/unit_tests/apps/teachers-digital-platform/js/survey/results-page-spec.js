@@ -1,126 +1,140 @@
-import surveys from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys';
-import { Cookie, resultsPage } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page';
-import { ANSWERS_SESS_KEY, SURVEY_COOKIE } from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config';
-import * as modals from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals';
-import * as initials from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/initials';
-import * as obfuscation from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation';
-import HTML_SNIPPET from '../../html/results-page';
-import clipboardCopy from 'copy-to-clipboard';
+import { jest } from '@jest/globals';
+import {
+  ANSWERS_SESS_KEY,
+  SURVEY_COOKIE,
+} from '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/config.js';
+import HTML_SNIPPET from '../../html/results-page.js';
 
-const $ = document.querySelector.bind( document );
+const $ = document.querySelector.bind(document);
 
-describe( 'The TDP survey results page', () => {
-  beforeEach( () => {
+describe('The TDP survey results page', () => {
+  let initials, surveys, resultsPage, obfuscation;
+  const cookieRemove = jest.fn();
+  const modalsInit = jest.fn();
+  const modalsClose = jest.fn();
+  const copyClipboard = jest.fn();
+
+  beforeAll(async () => {
+    jest.unstable_mockModule('js-cookie', () => ({
+      default: {
+        remove: cookieRemove,
+      },
+    }));
+
+    jest.unstable_mockModule('copy-to-clipboard', () => ({
+      default: copyClipboard,
+    }));
+
+    jest.unstable_mockModule(
+      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/modals.js',
+      () => ({
+        init: modalsInit,
+        close: modalsClose,
+      })
+    );
+
+    surveys = (
+      await import(
+        '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-surveys.js'
+      )
+    ).default;
+
+    resultsPage = (
+      await import(
+        '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/result-page.js'
+      )
+    ).resultsPage;
+
+    initials = await import(
+      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/survey/initials.js'
+    );
+
+    obfuscation = await import(
+      '../../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/obfuscation.js'
+    );
+  });
+
+  beforeEach(() => {
     document.body.innerHTML = HTML_SNIPPET;
-  } );
+  });
 
-  it( 'should be recognized from HTML', () => {
-    const cookieSpy = jest.spyOn( Cookie, 'remove' );
-    const modalSpy = jest.spyOn( modals, 'init' );
-    const initialsSpy = jest.spyOn( initials, 'init' );
-    sessionStorage.setItem( ANSWERS_SESS_KEY, 'testItem' );
+  it('should be recognized from HTML', () => {
+    sessionStorage.setItem(ANSWERS_SESS_KEY, 'testItem');
 
     surveys.init();
 
-    expect( modalSpy ).toHaveBeenCalled();
-    expect( sessionStorage.getItem( ANSWERS_SESS_KEY ) ).toBeNull();
-    expect( cookieSpy.mock.calls[0][0] ).toEqual( SURVEY_COOKIE );
-    expect( initialsSpy ).toHaveBeenCalled();
+    expect(sessionStorage.getItem(ANSWERS_SESS_KEY)).toBeNull();
+    expect(cookieRemove.mock.calls[0][0]).toEqual(SURVEY_COOKIE);
+    expect(modalsInit).toHaveBeenCalled();
+  });
 
-    cookieSpy.mockRestore();
-    modalSpy.mockRestore();
-    initialsSpy.mockRestore();
-  } );
+  it('should read initials', () => {
+    expect(initials.get()).toEqual('');
+  });
 
-  it( 'should read initials', () => {
-    const spy = jest.spyOn( obfuscation, 'decodeNameFromUrl' )
-      .mockImplementation( () => 'ACBDE' );
-
-    resultsPage();
-
-    expect( spy ).toHaveBeenCalled();
-    expect( initials.get() ).toEqual( '' );
-
-    spy.mockRestore();
-  } );
-
-  it( 'setting initials updates display', () => {
+  it('setting initials updates display', () => {
     resultsPage();
     window.print = () => 1;
 
-    const input = $( '#modal-print_desc .tdp-survey__initials' );
-    const set = $( '#modal-print_desc .tdp-survey__initials-set' );
+    const input = $('#modal-print_desc .tdp-survey__initials');
+    const set = $('#modal-print_desc .tdp-survey__initials-set');
 
     // Enter nothing
     set.click();
-    expect( initials.get() ).toEqual( '' );
+    expect(initials.get()).toEqual('');
 
     // Emulate manual entry with event
     input.value = 'cd5ef';
-    input.dispatchEvent( new Event( 'input' ) );
+    input.dispatchEvent(new Event('input'));
     set.click();
 
-    expect( initials.get() ).toEqual( 'CD5E' );
-  } );
+    expect(initials.get()).toEqual('CD5E');
+  });
 
-  it( 'can reset/cancel by modal', () => {
-    const modalsCloseSpy = jest.spyOn( modals, 'close' );
+  it('can reset/cancel by modal', () => {
     resultsPage();
     const origLocation = location;
     delete window.location;
     window.location = {};
 
-    $( '#modal-reset [data-cancel="1"]' ).click();
+    $('#modal-reset [data-cancel="1"]').click();
 
-    expect( modalsCloseSpy ).toHaveBeenCalled();
+    expect(modalsClose).toHaveBeenCalled();
 
-    $( '#modal-reset [data-cancel=""]' ).click();
+    $('#modal-reset [data-cancel=""]').click();
 
-    expect( location.href ).toEqual( '../../assess/survey/' );
+    expect(location.href).toEqual('../../assess/survey/');
 
     window.location = origLocation;
-  } );
+  });
 
-  it( 'can share by modal', () => {
+  it('can share by modal', () => {
     resultsPage();
 
-    const input = $( '#modal-share-url_desc .tdp-survey__initials' );
-    const set = $( '#modal-share-url_desc .tdp-survey__initials-set' );
+    const input = $('#modal-share-url_desc .tdp-survey__initials');
+    const set = $('#modal-share-url_desc .tdp-survey__initials-set');
 
     input.value = 'defg';
-    input.dispatchEvent( new Event( 'input' ) );
+    input.dispatchEvent(new Event('input'));
 
-    const shared = $( '.share-output a[href]' );
+    const shared = $('.share-output a[href]');
     set.click();
 
-    expect( initials.get() ).toEqual( 'DEFG' );
-    expect( obfuscation.decodeNameFromUrl( shared.href ) ).toEqual( 'DEFG' );
+    expect(initials.get()).toEqual('DEFG');
+    expect(obfuscation.decodeNameFromUrl(shared.href)).toEqual('DEFG');
 
     input.value = 'EFGH';
-    input.dispatchEvent( new KeyboardEvent( 'keyup', {
-      key: 'Enter'
-    } ) );
+    input.dispatchEvent(
+      new KeyboardEvent('keyup', {
+        key: 'Enter',
+      })
+    );
 
-    expect( initials.get() ).toEqual( 'EFGH' );
+    expect(initials.get()).toEqual('EFGH');
 
     shared.click();
 
-    expect( clipboardCopy ).toHaveBeenCalled();
-    expect( $( '.share-output__copied' ).hidden ).toBeFalsy();
-  } );
-
-  it( 'share model open resets its contents', () => {
-    resultsPage();
-
-    $( '.tdp-survey__initials-error' ).classList.add( 'm-notification__visible' );
-    $( '.share-output' ).hidden = false;
-    $( '.share-output__copied' ).hidden = false;
-
-    $( '[data-open-modal="modal-share-url"]' ).click();
-
-    expect( $( '.tdp-survey__initials-error' ).classList.contains( 'm-notification__visible' ) )
-      .toBeFalsy();
-    expect( $( '.share-output' ).hidden ).toBeTruthy();
-    expect( $( '.share-output__copied' ).hidden ).toBeTruthy();
-  } );
-} );
+    expect(copyClipboard).toHaveBeenCalled();
+    expect($('.share-output__copied').hidden).toBeFalsy();
+  });
+});

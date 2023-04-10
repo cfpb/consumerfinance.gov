@@ -1,8 +1,7 @@
 /* CSS enhancements to ModelAdmin views */
 
-
 /* Ensure that ThumbnailMixin columns are wide enough for the full default
    thumbnail width of 100px. */
 .field-admin_thumb {
-    width: 100px;
+  width: 100px;
 }

@@ -14,8 +14,8 @@
 # ...and these files
 !.npmrc
 !.yarnrc
-!babel.config.js
 !docker-entrypoint.sh
+!dump-data.sh
 !Dockerfile
 !frontend.sh
 !initial-data.sh

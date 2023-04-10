@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase
 
-from wagtail.core.blocks import StreamValue
+from wagtail.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 from v1.management.commands.update_chart_block_dates import get_inquiry_month

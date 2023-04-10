@@ -2,8 +2,9 @@ import html
 
 from django.utils.module_loading import import_string
 
-from jinja2 import Markup, contextfunction
+from jinja2 import pass_context
 from jinja2.ext import Extension
+from markupsafe import Markup
 
 from core.feature_flags import environment_is
 from v1.jinja2tags.datetimes import DatetimesExtension
@@ -150,18 +151,18 @@ class V1Extension(Extension):
                 "category_label": ref.category_label,
                 "choices_for_page_type": ref.choices_for_page_type,
                 "email_popup": email_popup,
+                "get_category_icon": ref.get_category_icon,
                 "get_model": get_model,
                 "get_unique_id": get_unique_id,
                 "image_alt_value": image_alt_value,
                 "is_blog": ref.is_blog,
-                "is_event": ref.is_event,
                 "is_report": ref.is_report,
-                "is_filter_selected": contextfunction(is_filter_selected),
-                "render_stream_child": contextfunction(render_stream_child),
-                "unique_id_in_context": contextfunction(unique_id_in_context),
+                "is_filter_selected": pass_context(is_filter_selected),
+                "render_stream_child": pass_context(render_stream_child),
+                "unique_id_in_context": pass_context(unique_id_in_context),
                 "app_url": app_url,
                 "app_page_url": app_page_url,
-                "search_gov_affiliate": contextfunction(search_gov_affiliate),
+                "search_gov_affiliate": pass_context(search_gov_affiliate),
             }
         )
 

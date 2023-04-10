@@ -1,5 +1,4 @@
-import ExpandableTransition from '@cfpb/cfpb-expandables/src/ExpandableTransition';
-
+const OPEN_DEFAULT = 'o-expandable_content__onload-open';
 const MOBILE_COLLAPSED_CLASS = 'o-expandable__mobile-collapsed';
 const MOBILE_WIDTH = 900;
 
@@ -15,11 +14,11 @@ function getInnerWidth() {
 }
 
 /**
- * Fix the output of getInnerWidth() for test purposes
+ * Fix the output of getInnerWidth() for test purposes.
  *
- * @param {number} width Width
+ * @param {number} width - Width.
  */
-function setInnerWidth( width ) {
+function setInnerWidth(width) {
   innerWidth = width;
 }
 
@@ -28,17 +27,17 @@ function setInnerWidth( width ) {
  * so some elements won't be expanded by default.
  */
 function beforeExpandableTransitionInit() {
-  const nodeList = document.querySelectorAll( '.' + MOBILE_COLLAPSED_CLASS );
+  const nodeList = document.querySelectorAll('.' + MOBILE_COLLAPSED_CLASS);
 
   // IE11 lacks NodeList.forEach
-  [].forEach.call( nodeList, el => {
-    if ( getInnerWidth() <= MOBILE_WIDTH ) {
-      el.classList.remove( ExpandableTransition.CLASSES.OPEN_DEFAULT );
+  [].forEach.call(nodeList, (el) => {
+    if (getInnerWidth() <= MOBILE_WIDTH) {
+      el.classList.remove(OPEN_DEFAULT);
     }
 
     // Always clean up this class, just used at init time
-    el.classList.remove( MOBILE_COLLAPSED_CLASS );
-  } );
+    el.classList.remove(MOBILE_COLLAPSED_CLASS);
+  });
 }
 
 export { setInnerWidth, MOBILE_COLLAPSED_CLASS };

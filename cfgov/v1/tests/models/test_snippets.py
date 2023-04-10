@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
 
-from wagtail.core.models import Site
-from wagtail.tests.testapp.models import SimplePage
+from wagtail.models import Site
+from wagtail.test.testapp.models import SimplePage
 
 from v1.blocks import ReusableTextChooserBlock
 from v1.models.snippets import (
@@ -22,7 +22,6 @@ class TestUnicodeCompatibility(TestCase):
 
 class TestTranslations(TestCase):
     def test_related_resource_translations(self):
-
         test_resource = RelatedResource(
             title="English title",
             title_es="Spanish title",

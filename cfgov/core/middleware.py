@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.utils import translation
 from django.utils.encoding import force_str
 
-from wagtail.core.rich_text import expand_db_html
+from wagtail.rich_text import expand_db_html
 
 from core.utils import add_link_markup, get_body_html, get_link_tags
 
@@ -53,35 +53,41 @@ def parse_links(html, request_path=None, encoding=None):
 
 
 class ParseLinksMiddleware:
+    response_flag = "links_parsed"
+
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
         response = self.get_response(request)
-        if self.should_parse_links(
-            request.path, response.get("Content-Type", "")
-        ):
+
+        if self.should_parse_links(request, response):
             response.content = parse_links(
                 response.content, request.path, encoding=response.charset
             )
+            setattr(response, self.response_flag, True)
         return response
 
     @classmethod
-    def should_parse_links(cls, request_path, response_content_type):
+    def should_parse_links(cls, request, response):
         """Determine if links should be parsed for a given request/response.
 
         Returns True if
 
-        1. The response has the settings.DEFAULT_CONTENT_TYPE (HTML) AND
-        2. The request path does not match settings.PARSE_LINKS_EXCLUSION_LIST
+        1. The response hasn't had this middleware applied before AND
+        2. The response has the settings.DEFAULT_CONTENT_TYPE (HTML) AND
+        3. The request path does not match settings.PARSE_LINKS_EXCLUSION_LIST
 
         Otherwise returns False.
         """
-        if "html" not in response_content_type:
+        if hasattr(response, cls.response_flag):
+            return False
+
+        if "html" not in response.get("Content-Type", ""):
             return False
 
         return not any(
-            re.search(regex, request_path)
+            re.search(regex, request.path)
             for regex in settings.PARSE_LINKS_EXCLUSION_LIST
         )
 

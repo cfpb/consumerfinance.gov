@@ -1,20 +1,22 @@
-const { closest } = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js' );
-const objectEntries = require( 'object.entries' );
-const Cookie = require( 'js-cookie' );
-const { ANSWERS_SESS_KEY, RESULT_COOKIE, SURVEY_COOKIE, SCORES_UNSET_KEY } = require( './config' );
-const modals = require( '../modals' );
-const ChoiceField = require( './ChoiceField' );
-const ProgressBar = require( './ProgressBar' );
-const SectionLink = require( './SectionLink' );
+import Cookies from 'js-cookie';
+import {
+  ANSWERS_SESS_KEY,
+  RESULT_COOKIE,
+  SURVEY_COOKIE,
+  SCORES_UNSET_KEY,
+} from './config.js';
+import { init as modalsInit, close as modalsClose } from '../modals.js';
+import ChoiceField from './ChoiceField.js';
+import ProgressBar from './ProgressBar.js';
+import SectionLink from './SectionLink.js';
 
-const $ = document.querySelector.bind( document );
-const $$ = document.querySelectorAll.bind( document );
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
 
 let progressBar;
 
 /**
- * @typedef {Object} SurveyData
- * @property {string} itemBullet
+ * @typedef {object} SurveyData
  * @property {number} numAnswered
  * @property {number} pageIdx
  * @property {number[]} questionsByPage
@@ -28,73 +30,73 @@ function surveyPage() {
   indentQuestionsByNumber();
   breakSeparatedAnswers();
 
-  if ( userTriedReentry() ) {
+  if (userTriedReentry()) {
     return;
   }
 
   const data = readSurveyData();
-  modals.init();
+  modalsInit();
   ChoiceField.init();
-  const store = ChoiceField.restoreFromSession( ANSWERS_SESS_KEY );
-  data.numAnswered = Object.keys( store ).length;
-  SectionLink.init( data );
+  const store = ChoiceField.restoreFromSession(ANSWERS_SESS_KEY);
+  data.numAnswered = Object.keys(store).length;
+  SectionLink.init(data);
 
-  if ( userSkippedAhead( data ) ) {
+  if (userSkippedAhead(data)) {
     return;
   }
 
   const totalQuestions = data.questionsByPage.reduce(
-    ( prev, curr ) => prev + curr,
+    (prev, curr) => prev + curr,
     0
   );
   initProgressListener();
-  progressBar = new ProgressBar( totalQuestions, data.numAnswered );
+  progressBar = new ProgressBar(totalQuestions, data.numAnswered);
 
-  handleNewSelections( data, store );
+  handleNewSelections(data, store);
 
   initErrorHandling();
   allowStartOver();
 
-  sessionStorage.setItem( SCORES_UNSET_KEY, '1' );
+  sessionStorage.setItem(SCORES_UNSET_KEY, '1');
 }
 
 /**
  * @returns {SurveyData} Survey data
  */
 function readSurveyData() {
-  const el = $( '[data-tdp-page="survey"]' );
+  const el = $('[data-tdp-page="survey"]');
 
   /**
    * @type {SurveyData}
    */
-  const data = Object.create( null );
-  objectEntries( el.dataset ).forEach( ( [ k, v ] ) => {
+  const data = Object.create(null);
+  Object.entries(el.dataset).forEach(([k, v]) => {
     try {
-      data[k] = JSON.parse( v );
-    } catch ( err ) {
+      data[k] = JSON.parse(v);
+    } catch (err) {
       data[k] = v;
     }
-  } );
+  });
   return data;
 }
 
 /**
  * If the user has skipped ahead, redirect and return true.
  *
- * @param {SurveyData} data Survey data
+ * @param {SurveyData} data - Survey data.
  * @returns {boolean} True if execution should halt.
  */
-function userSkippedAhead( data ) {
+function userSkippedAhead(data) {
   /**
    * Figure out if the user has answered enough questions in total
    * to be on this page without skipping.
    */
   let questionsOnEarlierPages = 0;
-  for ( let i = 0; i < data.pageIdx; i++ ) {
+  for (let i = 0; i < data.pageIdx; i++) {
     questionsOnEarlierPages += data.questionsByPage[i];
   }
 
-  if ( data.numAnswered < questionsOnEarlierPages ) {
+  if (data.numAnswered < questionsOnEarlierPages) {
     // User skipped a page, send them to first page
     location.href = '../p1/';
     return true;
@@ -107,19 +109,19 @@ function userSkippedAhead( data ) {
  * Make sure new selections are recorded in sessionStorage and that the
  * numAnswered data is updated for progress updates.
  *
- * @param {SurveyData} data Survey data
- * @param {Record<string, any>} store Store of selected answers
+ * @param {SurveyData} data - Survey data.
+ * @param {Record<string, any>} store - Store of selected answers.
  */
-function handleNewSelections( data, store ) {
+function handleNewSelections(data, store) {
   const onStoreUpdate = () => {
-    data.numAnswered = Object.keys( store ).length;
-    if ( progressBar ) {
-      progressBar.update( data.numAnswered );
+    data.numAnswered = Object.keys(store).length;
+    if (progressBar) {
+      progressBar.update(data.numAnswered);
     }
-    SectionLink.update( data.numAnswered );
+    SectionLink.update(data.numAnswered);
   };
 
-  ChoiceField.watchAndStore( ANSWERS_SESS_KEY, store, onStoreUpdate );
+  ChoiceField.watchAndStore(ANSWERS_SESS_KEY, store, onStoreUpdate);
 }
 
 /**
@@ -129,7 +131,7 @@ function handleNewSelections( data, store ) {
  * @returns {boolean} True if execution should halt
  */
 function userTriedReentry() {
-  if ( Cookie.get( RESULT_COOKIE ) ) {
+  if (Cookies.get(RESULT_COOKIE)) {
     // Has not cleared results.
     location.href = '../results/';
     return true;
@@ -142,65 +144,65 @@ function userTriedReentry() {
  * Allow the user to start a survey over completely.
  */
 function allowStartOver() {
-  document.addEventListener( 'click', event => {
-    const button = closest( event.target, '#modal-restart [data-cancel]' );
-    if ( button ) {
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('#modal-restart [data-cancel]');
+    if (button) {
       event.preventDefault();
-      if ( button.dataset.cancel ) {
-        modals.close();
+      if (button.dataset.cancel) {
+        modalsClose();
       } else {
-        sessionStorage.removeItem( ANSWERS_SESS_KEY );
-        Cookie.remove( SURVEY_COOKIE );
-        location.href = $( '[data-grade-select-url]' ).dataset.gradeSelectUrl;
+        sessionStorage.removeItem(ANSWERS_SESS_KEY);
+        Cookies.remove(SURVEY_COOKIE);
+        location.href = $('[data-grade-select-url]').dataset.gradeSelectUrl;
       }
     }
-  } );
+  });
 }
 
 /**
  * Keep UI in sync with ProgressBar updates
  */
 function initProgressListener() {
-  document.addEventListener( ProgressBar.UPDATE_EVT, event => {
+  document.addEventListener(ProgressBar.UPDATE_EVT, (event) => {
     /**
      * @type {ProgressBar}
      */
     const pb = event.detail.progressBar;
 
     // The heading is duplicated, so we must update both
-    const outOfEls = $$( '.tdp-survey-progress-out-of' );
+    const outOfEls = $$('.tdp-survey-progress-out-of');
 
-    const circle = $( '.tdp-survey-progress__circle' );
-    const svg = $( '.tdp-survey-progress__svg' );
-    const texts = [].slice.call( $$( '.tdp-survey-progress__svg text' ) );
-    const perc = `${ pb.getPercentage() }%`;
+    const circle = $('.tdp-survey-progress__circle');
+    const svg = $('.tdp-survey-progress__svg');
+    const texts = [].slice.call($$('.tdp-survey-progress__svg text'));
+    const perc = `${pb.getPercentage()}%`;
 
-    [].forEach.call( outOfEls, el => {
-      el.innerHTML = `<b>${ pb.numDone }</b> of <b>${ pb.totalNum }</b>`;
-    } );
+    [].forEach.call(outOfEls, (el) => {
+      el.innerHTML = `<b>${pb.numDone}</b> of <b>${pb.totalNum}</b>`;
+    });
 
     texts[0].textContent = perc;
-    texts[1].textContent = `${ pb.numDone }/${ pb.totalNum } questions`;
+    texts[1].textContent = `${pb.numDone}/${pb.totalNum} questions`;
 
-    const dashOffset = 1 - ( pb.numDone / pb.totalNum );
-    circle.setAttribute( 'stroke-dashoffset', dashOffset );
+    const dashOffset = 1 - pb.numDone / pb.totalNum;
+    circle.setAttribute('stroke-dashoffset', dashOffset);
 
-    svg.setAttribute( 'aria-label', `${ perc } complete` );
+    svg.setAttribute('aria-label', `${perc} complete`);
     svg.style.opacity = '1';
-  } );
+  });
 }
 
 /**
  * Error handling for form
  */
 function initErrorHandling() {
-  const form = $( '.tdp-survey-page form' );
-  const notification = $( '.tdp-survey-page .m-notification' );
-  const ul = $( '.tdp-survey-page .m-notification_explanation' );
-  if ( form && notification && ul ) {
-    form.addEventListener( 'submit', submitEvt => {
+  const form = $('.tdp-survey-page form');
+  const notification = $('.tdp-survey-page .m-notification');
+  const ul = $('.tdp-survey-page .m-notification_explanation');
+  if (form && notification && ul) {
+    form.addEventListener('submit', (submitEvt) => {
       const unsets = ChoiceField.findUnsets();
-      if ( !unsets.length ) {
+      if (!unsets.length) {
         return true;
       }
 
@@ -208,47 +210,47 @@ function initErrorHandling() {
       ul.textContent = '';
 
       ChoiceField.removeErrors();
-      unsets.forEach( cf => {
+      unsets.forEach((cf) => {
         cf.markError();
 
         const fieldset = cf.getUl().parentElement;
-        const link = document.createElement( 'a' );
+        const link = document.createElement('a');
         link.href = '#';
-        link.setAttribute( 'data-gtm_ignore', 'true' );
-        link.textContent = fieldset.querySelector( 'legend' ).textContent;
-        link.addEventListener( 'click', clickEvt => {
+        link.setAttribute('data-gtm_ignore', 'true');
+        link.textContent = fieldset.querySelector('legend').textContent;
+        link.addEventListener('click', (clickEvt) => {
           clickEvt.preventDefault();
-          scrollToEl( fieldset );
-        } );
-        const li = document.createElement( 'li' );
-        ul.appendChild( li );
-        li.appendChild( link );
-      } );
+          scrollToEl(fieldset);
+        });
+        const li = document.createElement('li');
+        ul.appendChild(li);
+        li.appendChild(link);
+      });
 
-      notification.classList.add( 'm-notification__visible' );
-      if ( !scrollToEl( notification ) ) {
+      notification.classList.add('m-notification__visible');
+      if (!scrollToEl(notification)) {
         // Can't scroll, jump up
         location.href = '#main';
       }
 
       return false;
-    } );
+    });
   }
 }
 
 /**
- * @param {Element} el Element
+ * @param {Element} el - Element.
  * @returns {boolean} Success?
  */
-function scrollToEl( el ) {
+function scrollToEl(el) {
   try {
-    el.scrollIntoView( { behavior: 'smooth' } );
+    el.scrollIntoView({ behavior: 'smooth' });
     return true;
-  } catch ( err1 ) {
+  } catch (err1) {
     try {
       el.scrollIntoView();
       return true;
-    } catch ( err2 ) {
+    } catch (err2) {
       return false;
     }
   }
@@ -262,14 +264,14 @@ function indentQuestionsByNumber() {
   /**
    * @type {HTMLElement[]}
    */
-  const strongs = [].slice.call( $$( '.tdp-question-legend > strong' ) );
-  strongs.forEach( strong => {
-    const offset = Math.round( strong.getBoundingClientRect().width + 3 );
+  const strongs = [].slice.call($$('.tdp-question-legend > strong'));
+  strongs.forEach((strong) => {
+    const offset = Math.round(strong.getBoundingClientRect().width + 3);
     const legend = strong.parentElement;
     const li = legend.parentElement;
-    li.style.paddingLeft = `${ offset }px`;
-    legend.style.textIndent = `-${ offset }px`;
-  } );
+    li.style.paddingLeft = `${offset}px`;
+    legend.style.textIndent = `-${offset}px`;
+  });
 }
 
 /**
@@ -277,66 +279,57 @@ function indentQuestionsByNumber() {
  *
  */
 function breakSeparatedAnswers() {
-  const convertToDivs = ( text, charCode ) => {
+  const convertToDivs = (text, charCode) => {
     // Convert text node into a set of div items
-    const wrap = document.createElement( 'div' );
+    const wrap = document.createElement('div');
     wrap.className = 'tdp-lines';
-    wrap.innerHTML = `<span>(${ String.fromCharCode( charCode ) }) </span>`;
+    wrap.innerHTML = `<span>(${String.fromCharCode(charCode)}) </span>`;
 
-    const ul = document.createElement( 'ul' );
+    const ul = document.createElement('ul');
 
     // HTML escape any chars as necessary when splitting
-    const htmlItems = text.split( ' ‣ ' ).map( item => {
+    const htmlItems = text.split(' ‣ ').map((item) => {
       ul.textContent = item;
       return ul.innerHTML;
-    } );
+    });
 
-    ul.innerHTML = '<li>' +
-      htmlItems.join( '</li><li>' ) + '</li>';
+    ul.innerHTML = '<li>' + htmlItems.join('</li><li>') + '</li>';
 
-    wrap.appendChild( ul );
+    wrap.appendChild(ul);
     return wrap;
   };
 
-  const isSeparated = str => str.indexOf( ' ‣ ' ) !== -1;
+  const isSeparated = (str) => str.indexOf(' ‣ ') !== -1;
   let charCode = 97;
 
   /**
    * @type {HTMLLabelElement[]}
    */
-  const labels = [].slice.call( $$( '.ChoiceField .a-label' ) );
-  labels.forEach( label => {
-    if ( closest( label, 'li:first-child' ) === label.parentElement ) {
+  const labels = [].slice.call($$('.ChoiceField .a-label'));
+  labels.forEach((label) => {
+    if (label.closest('li:first-child') === label.parentElement) {
       // Reset to "a"
       charCode = 97;
     }
 
-    if ( !isSeparated( label.textContent ) ) {
+    if (!isSeparated(label.textContent)) {
       charCode += 1;
       return;
     }
 
-    for ( let i = 0; i < label.childNodes.length; i++ ) {
+    for (let i = 0; i < label.childNodes.length; i++) {
       const node = label.childNodes[i];
-      if ( node.nodeType === Node.TEXT_NODE &&
-        isSeparated( node.textContent ) ) {
+      if (node.nodeType === Node.TEXT_NODE && isSeparated(node.textContent)) {
         node.parentNode.insertBefore(
-          convertToDivs( node.textContent, charCode ),
+          convertToDivs(node.textContent, charCode),
           node
         );
-        node.parentNode.removeChild( node );
+        node.parentNode.removeChild(node);
       }
     }
 
     charCode += 1;
-  } );
+  });
 }
 
-export {
-  surveyPage,
-  scrollToEl,
-  ChoiceField,
-  progressBar,
-  Cookie,
-  SectionLink
-};
+export { surveyPage, scrollToEl, ChoiceField, progressBar, SectionLink };

@@ -3,14 +3,11 @@
    Used by JavaScript build process and JavaScript test configuration.
    ========================================================================== */
 
-
 /**
  * Environment variable mappings in JavaScript from the project root .env file.
  */
 const envvars = {
-  /* eslint-disable no-process-env */
-  NODE_ENV: process.env.NODE_ENV
-  /* eslint-enable no-process-env */
+  NODE_ENV: process.env.NODE_ENV,
 };
 
 /**
@@ -18,12 +15,12 @@ const envvars = {
  */
 const paths = {
   unprocessed: './cfgov/unprocessed',
-  processed:   './cfgov/static_built',
-  modules:     './node_modules',
-  test:        './test'
+  processed: './cfgov/static_built',
+  modules: './node_modules',
+  test: './test',
 };
 
-module.exports = {
+export default {
   envvars,
-  paths
+  paths,
 };

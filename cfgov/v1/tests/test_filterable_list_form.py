@@ -4,7 +4,7 @@ from time import sleep
 
 from django.test import TestCase, override_settings
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from pytz import timezone
 
@@ -147,7 +147,7 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
                 "blog",
                 "at-the-cfpb",
                 "directors-notebook",
-                "policy_compliance",
+                "policy-compliance",
                 "data-research-reports",
                 "info-for-consumers",
             ],

@@ -1,4 +1,4 @@
-{% extends 'layout-2-1.html' %}
+{% extends 'v1/layouts/layout-2-1.html' %}
 
 {% import './privacy-styles.html' as styles %}
 
@@ -28,7 +28,7 @@
       the user can find them in the form.
     #}
     {% if form.errors %}
-        {% import 'molecules/notification.html' as notification %}
+        {% import 'v1/includes/molecules/notification.html' as notification %}
         <div class="u-mb15">
             {% for error in form.non_field_errors() %}
                 {{- notification.render( 'error', true, error | richtext ) }}
@@ -254,10 +254,12 @@
 
             <div class="o-form_group">
                 <div class="m-btn-group">
-                  <button id="submit-button" class="a-btn">
-                    Submit
-                    <span id ="submit-icon" class="a-btn_icon a-btn_icon__on-right">{{ svg_icon('updating') }}</span>
-                  </button>
+                    <button id="submit-button" class="a-btn">
+                        Submit
+                        <span id="submit-icon" class="a-btn_icon a-btn_icon__on-right">
+                            {{ svg_icon('updating') }}
+                        </span>
+                    </button>
                     <a class="a-btn a-btn__link"
                        href="/privacy/records-disclosure-privacy-act-statement/"
                        rel="noopener noreferrer"
@@ -277,13 +279,6 @@
 {% block javascript %}
     {{ super() }}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            '{{ static("js/routes/on-demand/privacy-forms.js") }}'
-          ];
-          jsl(s);
-        }();
-      }
+      jsl(['{{ static("js/routes/on-demand/privacy-forms.js") }}']);
     </script>
 {% endblock javascript %}

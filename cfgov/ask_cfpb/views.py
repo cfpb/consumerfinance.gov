@@ -6,7 +6,7 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
@@ -25,8 +25,8 @@ def annotate_links(answer_text):
     """
     try:
         _site = Site.objects.get(is_default_site=True)
-    except Site.DoesNotExist:
-        raise RuntimeError("no default wagtail site configured")
+    except Site.DoesNotExist as err:
+        raise RuntimeError("no default wagtail site configured") from err
 
     footnotes = []
     soup = bs(answer_text, "lxml")
@@ -194,7 +194,7 @@ def redirect_ask_search(request, language="en"):
             for facet in facets:
                 legacy_facet_validator(facet)
         except ValidationError:
-            raise Http404
+            raise Http404 from None
 
         def redirect_to_category(category, language):
             if language == "es":

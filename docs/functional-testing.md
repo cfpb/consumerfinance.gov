@@ -16,11 +16,11 @@ To run the desktop Cypress app execute `yarn cypress open` from the command line
 
 You can run functional tests from the command line with `yarn cypress run`. That will run all tests in the `test/cypress/integration/` directory with the default test configuration: headless, in Cypress's default Electron browser, and against `localhost:8000`. You might want to modify the test run with some common arguments:
 
-* `--spec test/cypress/integration/{path/to/test.js}` runs a single test suite
-* `--browser chrome` runs the tests in Chrome, which is what we use to run tests in our continuous integration pipeline
-* `--headed` shows the browser and Cypress output as the tests run, handy for watching what's happening during the tests
-* `--no-exit` will keep the browser and Cypress output open after the tests complete, handy to inspect any errors
-* `--config baseUrl={url}` will run the tests against a server other than `localhost:8000`
+- `--spec test/cypress/integration/{path/to/test.js}` runs a single test suite
+- `--browser chrome` runs the tests in Chrome, which is what we use to run tests in our continuous integration pipeline
+- `--headed` shows the browser and Cypress output as the tests run, handy for watching what's happening during the tests
+- `--no-exit` will keep the browser and Cypress output open after the tests complete, handy to inspect any errors
+- `--config baseUrl={url}` will run the tests against a server other than `localhost:8000`
 
 Cypress's [command line documentation](https://docs.cypress.io/guides/guides/command-line.html#Options) has the list of all the options you can set.
 
@@ -34,22 +34,21 @@ For example consider the `ConsumerTools` page "helper":
 
 ```javascript
 export default class ConsumerTools {
+  constructor() {}
 
-    constructor() {}
+  open() {
+    cy.visit('/consumer-tools/');
+  }
 
-    open() {
-        cy.visit('/consumer-tools/');
-    }
-
-    signUp(email) {
-        cy.get('.o-form__email-signup').within(() => {
-            cy.get('input:first').type(email);
-            cy.get('button:first').click();
-        });
-    }
-    successNotification() {
-        return cy.get('.m-notification_message');
-    }
+  signUp(email) {
+    cy.get('.o-form__email-signup').within(() => {
+      cy.get('input:first').type(email);
+      cy.get('button:first').click();
+    });
+  }
+  successNotification() {
+    return cy.get('.m-notification_message');
+  }
 }
 ```
 
@@ -61,19 +60,25 @@ import ConsumerTools from './consumer-tools-helpers';
 let page = new ConsumerTools();
 
 describe('Consumer Tools', () => {
-    it('Should have an email sign up', () => {
-        // Arrange
-        page.open();
-        // Act
-        page.signUp('testing@cfpb.gov');
-        // Assert
-        page.successNotification().should('exist');
-        page.successNotification().contains('Your submission was successfully received.')
-    });
+  it('Should have an email sign up', () => {
+    // Arrange
+    page.open();
+    // Act
+    page.signUp('testing@cfpb.gov');
+    // Assert
+    page.successNotification().should('exist');
+    page
+      .successNotification()
+      .contains('Your submission was successfully received.');
+  });
 });
 ```
 
 Overall it lets our tests show what is intended to be happening on a page without showing the more technical side of how we reference and interact with elements.
+
+### Skipping tests
+
+We use the [cypress-skip-test](https://github.com/cypress-io/cypress-skip-test/) plugin to define directly in the spec file under what conditions tests should run. The plugin lets you specify any tests that should not run or should only run in certain environments, on certain browsers, or at certain base URLs. While ideally we want all tests to run everywhere, skipping tests can be handy when you want to merge work-in-progress tests into `main` but skip them in CI/CD pipelines until they work is finished or when you want to temporarily skip a test that's failing while you debug it.
 
 ## Creating test data
 
@@ -85,6 +90,7 @@ the python container from the root folder:
 `from v1.tests.wagtail_pages import create_test_data`
 
 Currently supported page types:
+
 - blog_page
 - browse_filterable_page
 - browse_page
@@ -94,6 +100,7 @@ Currently supported page types:
 - sublanding_page
 
 To import "create a page" functions, import from:
+
 - v1.tests.wagtail_pages.helpers
 
 "Create a page" functions return a path to the created page or None if no page was created

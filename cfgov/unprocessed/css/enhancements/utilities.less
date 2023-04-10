@@ -47,43 +47,37 @@
     - cfgov-cf-enhancements
 */
 
-.u-w95pct  { width: 95%; }
-.u-w85pct  { width: 85%; }
-.u-w65pct  { width: 65%; }
-.u-w55pct  { width: 55%; }
-.u-w45pct  { width: 45%; }
-.u-w35pct  { width: 35%; }
-.u-w15pct  { width: 15%; }
-.u-w5pct   { width:  5%; }
+.u-w95pct {
+  width: 95%;
+}
 
-/* topdoc
-  name: Centered on mobile utility
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: .u-centered-on-mobile
-      markup: |
-        <div>
-            <div class="u-centered-on-mobile" style="width:100px;height:100px;background-color:green;">
-                Block centered on mobile
-            </div>
-            <p class="u-centered-on-mobile">Paragraph centered on mobile</p>
-        </div>
-      notes:
-        - "Sometimes content (parts/all of a media block, for example)
-           should be centered on mobile, but not on larger screen sizes."
-        - "This implementation conflates inline & block element centering,
-           though they could be made into separate classes."
-  tags:
-    - cfgov-cf-enhancements
-*/
+.u-w85pct {
+  width: 85%;
+}
 
-.respond-to-max(@bp-xs-max, {
-  .u-centered-on-mobile {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
-});
+.u-w65pct {
+  width: 65%;
+}
+
+.u-w55pct {
+  width: 55%;
+}
+
+.u-w45pct {
+  width: 45%;
+}
+
+.u-w35pct {
+  width: 35%;
+}
+
+.u-w15pct {
+  width: 15%;
+}
+
+.u-w5pct {
+  width: 5%;
+}
 
 /* topdoc
   name: Reset all

@@ -2,6 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Release metadata
+release:
+  autoDelete: true  # Auto delete release based off branch
+  autoUpgrade: true  # Autoupgrade release based off branch
+  branch: ""  # Ref this is deployed from (ex "<branch-name>" to track a branch, "release" to track release)
+  owner: ""  # Recognizable owner name (user/service account/etc)
+  gitSHA: ""  # Git commit SHA
+
 replicaCount: 1
 
 image:
@@ -14,9 +22,9 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-#commad:
+# commad:
 #  - "./docker-entrypoint.sh"
-#args:
+# args:
 #  - "some arg"
 
 initContainer:
@@ -177,14 +185,15 @@ docs:
 importDbPath: ""
 
 cronJobs:
-#  - name: "example"
+#  example-job:
+#    enabled: true  # default is true. If false, will not create the CronJob resource
 #    includeEnv: true  # includes the same volumes and environment variables as the main application container
 #    image:  # ONLY if different from chart image, default is chart image
 #      repository: "busybox"
 #      tag: "latest"
 #    schedule: "@daily"  # default
-#    successfulJobsHistoryLimit: 1
-#    failedJobsHistoryLimit: 1
+#    successfulJobsHistoryLimit: 1  # default
+#    failedJobsHistoryLimit: 1  # default
 #    suspend: false  # default
 #    restartPolicy: OnFailure  # default
 #    command:
@@ -197,26 +206,41 @@ cronJobs:
 #      - name: A_CRONJOB_ENV
 #        value: "A_CRONJOB_ENV_VALUE"
 
-  - name: "clearSessions"
+# archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
+  archive-wagtail-events:
+    schedule: '@daily'
+    command:
+      - "django-admin"
+    args:
+      - "archive_events"  # function found in cfgov/v1/management/commands/archive_events.py
+
+  clear-sessions:
     schedule: "@weekly"
     command:
       - "django-admin"
     args:
       - "clearsessions"
-  - name: "publish-scheduled-pages"
+
+  dump-db:
+    command:
+      - "bash"
+    args:
+      - "-c"
+      - |
+        ./dump-data.sh "${DB_DUMP_FILE:-test.sql.gz}" && \
+        if [ ! -z $S3_BUCKET ]; then \
+        aws s3 cp "${DB_DUMP_FILE:-test.sql.gz}" \
+        s3://$S3_BUCKET/; fi
+    suspend: true
+
+  publish-scheduled-pages:
     schedule: '* * * * *'  # every minute
     command:
       - "django-admin"
     args:
       - "publish_scheduled_pages"
-  - name: "archive-wagtail-events"  # archive cfpb events posted on https://www.consumerfinance.gov/about-us/events/
-    schedule: '23 * * * *'
-    command:
-      - "django-admin"
-    args:
-      - "archive_events"  # function found in cfgov/v1/management/commands/archive_events.py
-  - name: "elasticsearch-Rebuild-Index"
-    schedule: "@daily"
+
+  rebuild-search-index:
     command:
       - "bash"
     args:
@@ -224,14 +248,6 @@ cronJobs:
       - >-
         django-admin opensearch index --force rebuild &&
         django-admin opensearch document --force --refresh index
-    suspend: true
-  - name: "dump-Postgres-DB"
-    schedule: "@daily"
-    command:
-      - "bash"
-    args:
-      - "-c"
-      - "pg_dump --no-owner --no-privileges | gzip > test.sql.gz"
     suspend: true
 
 

@@ -96,25 +96,11 @@ urlpatterns = [
         ),
     ),
     re_path(
-        r"^owning-a-home/closing-disclosure/$",
-        TemplateView.as_view(
-            template_name="owning-a-home/closing-disclosure/index.html"
-        ),
-        name="closing-disclosure",
-    ),
-    re_path(
         r"^owning-a-home/explore-rates/",
         TemplateView.as_view(
             template_name="owning-a-home/explore-rates/index.html"
         ),
         name="explore-rates",
-    ),
-    re_path(
-        r"^owning-a-home/loan-estimate/$",
-        TemplateView.as_view(
-            template_name="owning-a-home/loan-estimate/index.html"
-        ),
-        name="loan-estimate",
     ),
     re_path(
         r"^know-before-you-owe/$",
@@ -190,7 +176,7 @@ urlpatterns = [
                     re_path(
                         r"^success/$",
                         TemplateView.as_view(
-                            template_name="govdelivery-subscribe/success/index.html"  # noqa: B950
+                            template_name="govdelivery-subscribe/success/index.html"  # noqa: E501
                         ),
                         name="success",
                     ),
@@ -204,7 +190,7 @@ urlpatterns = [
                     re_path(
                         r"^server-error/$",
                         TemplateView.as_view(
-                            template_name="govdelivery-subscribe/server-error/index.html"  # noqa: B950
+                            template_name="govdelivery-subscribe/server-error/index.html"  # noqa: E501
                         ),
                         name="server_error",
                     ),
@@ -243,7 +229,7 @@ urlpatterns = [
                         r"^how-to-apply-for-a-federal-job-with-the-cfpb/$",
                         TemplateView.as_view(
                             template_name="transcripts/how-to-apply-for-a-federal-job-with-the-cfpb/index.html"
-                        ),  # noqa: B950
+                        ),  # noqa: E501
                         name="how-to-apply-for-a-federal-job-with-the-cfpb",
                     ),
                 ],
@@ -336,7 +322,7 @@ urlpatterns = [
         r"^askcfpb/$", RedirectView.as_view(url="/ask-cfpb/", permanent=True)
     ),
     re_path(
-        r"^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$",  # noqa: B950
+        r"^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$",  # noqa: E501
         RedirectView.as_view(
             url="/es/obtener-respuestas/slug-es-%(ask_id)s", permanent=True
         ),
@@ -415,10 +401,6 @@ urlpatterns = [
     re_path(
         r"^consumer-tools/educator-tools/youth-financial-education/",
         include("teachers_digital_platform.urls"),
-    ),
-    re_path(
-        r"^consumer-tools/educator-tools/youth-financial-education/curriculum-review/",  # noqa: B950
-        include("crtool.urls"),
     ),
     re_path(
         r"^regulations3k-service-worker.js$",
@@ -512,28 +494,28 @@ category_redirects = [
     re_path(
         r"^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$",
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/prestamos-para-vehiculos/respuestas/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/prestamos-para-vehiculos/respuestas/",  # noqa: E501
             permanent=True,
         ),
     ),
     re_path(
-        r"^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$",  # noqa: B950
+        r"^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$",  # noqa: E501
         RedirectView.as_view(
             url="/es/herramientas-del-consumidor/cuentas-bancarias/",
             permanent=True,
         ),
     ),
     re_path(
-        r"^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$",  # noqa: B950
+        r"^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$",  # noqa: E501
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/",  # noqa: E501
             permanent=True,
         ),
     ),
     re_path(
         r"^es/obtener-respuestas/categoria-adquirir-credito/(.*)$",
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/",  # noqa: E501
             permanent=True,
         ),
     ),
@@ -553,7 +535,7 @@ category_redirects = [
     re_path(
         r"^es/obtener-respuestas/categoria-enviar-dinero/(.*)$",
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/transferencias-de-dinero/respuestas/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/transferencias-de-dinero/respuestas/",  # noqa: E501
             permanent=True,
         ),
     ),
@@ -566,21 +548,21 @@ category_redirects = [
     re_path(
         r"^es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$",
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/",  # noqa: E501
             permanent=True,
         ),
     ),
     re_path(
-        r"^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$",  # noqa: B950
+        r"^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$",  # noqa: E501
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/",  # noqa: E501
             permanent=True,
         ),
     ),
     re_path(
         r"^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$",
         RedirectView.as_view(
-            url="/es/herramientas-del-consumidor/prestamos-estudiantiles/",  # noqa: B950
+            url="/es/herramientas-del-consumidor/prestamos-estudiantiles/",  # noqa: E501
             permanent=True,
         ),
     ),
@@ -607,14 +589,14 @@ if settings.DEBUG:
     urlpatterns.append(
         re_path(
             r"^500/$",
-            TemplateView.as_view(template_name="500.html"),
+            TemplateView.as_view(template_name="v1/layouts/500.html"),
             name="500",
         )
     )
     urlpatterns.append(
         re_path(
             r"^404/$",
-            TemplateView.as_view(template_name="404.html"),
+            TemplateView.as_view(template_name="v1/layouts/404.html"),
             name="404",
         )
     )
@@ -636,7 +618,7 @@ def handle_error(code, request, exception=None):
     try:
         return render(
             request,
-            "%s.html" % code,
+            "v1/layouts/%s.html" % code,
             context={"request": request},
             status=code,
         )

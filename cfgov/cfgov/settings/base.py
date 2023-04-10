@@ -17,7 +17,9 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
 # This is the root of the Django project, 'cfgov'
 PROJECT_ROOT = REPOSITORY_ROOT.joinpath("cfgov")
-V1_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2", "v1")
+
+# Templates that are not scoped to specific Django apps will live here
+GLOBAL_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2")
 
 SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(32))
 
@@ -41,7 +43,7 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 # Application definition
 INSTALLED_APPS = (
     "permissions_viewer",
-    "wagtail.core",
+    "wagtail",
     "wagtailadmin_overrides",
     "wagtail.admin",
     "wagtail.documents",
@@ -59,6 +61,8 @@ INSTALLED_APPS = (
     "localflavor",
     "modelcluster",
     "taggit",
+    "dal",
+    "dal_select2",
     "wagtailinventory",
     "wagtailsharing",
     "flags",
@@ -107,37 +111,10 @@ INSTALLED_APPS = (
     # Satellites
     "complaint_search",
     "countylimits",
-    "crtool",
     "mptt",
     "ratechecker",
     "rest_framework",
 )
-
-WAGTAILSEARCH_BACKENDS = {
-    # The default search backend for Wagtail is the db backend, which does not
-    # support the custom search_fields defined on Page model descendents when
-    # using `Page.objects.search()`.
-    #
-    # Other backends *do* support those custom search_fields, so for now to
-    # preserve the current behavior of /admin/pages/search (which calls
-    # `Page.objects.search()`), the default backend will remain `db`.
-    #
-    # This also preserves the current behavior of our external link search,
-    # /admin/external-links/, which calls each page model's `objects.search()`
-    # explicitly to get results, but which returns fewer results with the
-    # Postgres full text backend.
-    #
-    # An upcoming effort to overhaul search within consumerfinance.gov and
-    # Wagtail should address these issues. In the meantime, Postgres full text
-    # search with the custom search_fields defined on our models is available
-    # with the "fulltext" backend defined below.
-    "default": {
-        "BACKEND": "wagtail.search.backends.db",
-    },
-    "fulltext": {
-        "BACKEND": "wagtail.search.backends.database",
-    },
-}
 
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -147,7 +124,6 @@ MIDDLEWARE = (
     "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "wagtailadmin_overrides.middleware.WagtailAdminViewOverrideMiddleware",
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "core.middleware.SelfHealingMiddleware",
@@ -169,7 +145,7 @@ ROOT_URLCONF = "cfgov.urls"
 # for an overview of how Django templates work.
 
 wagtail_extensions = [
-    "wagtail.core.jinja2tags.core",
+    "wagtail.jinja2tags.core",
     "wagtail.admin.jinja2tags.userbar",
     "wagtail.images.jinja2tags.images",
 ]
@@ -196,9 +172,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.jinja2.Jinja2",
         # Look for Jinja2 templates in these directories
         "DIRS": [
-            V1_TEMPLATE_ROOT,
-            V1_TEMPLATE_ROOT.joinpath("_includes"),
-            V1_TEMPLATE_ROOT.joinpath("_layouts"),
+            GLOBAL_TEMPLATE_ROOT,
             PROJECT_ROOT.joinpath("static_built"),
         ],
         # Look for Jinja2 templates in each app under a jinja2 subdirectory
@@ -212,6 +186,7 @@ TEMPLATES = [
                 "jinja2.ext.loopcontrols",
                 "flags.jinja2tags.flags",
                 "core.jinja2tags.filters",
+                "core.jinja2tags.language",
                 "agreements.jinja2tags.agreements",
                 "mega_menu.jinja2tags.MegaMenuExtension",
                 "prepaid_agreements.jinja2tags.prepaid_agreements",
@@ -255,9 +230,19 @@ LANGUAGE_CODE = "en-us"
 LANGUAGES = (
     ("en", _("English")),
     ("es", _("Spanish")),
+    ("zh-Hant", _("Chinese")),
+    ("vi", _("Vietnamese")),
+    ("ko", _("Korean")),
+    ("tl", _("Tagalog")),
+    ("ru", _("Russian")),
+    ("ar", _("Arabic")),
+    ("ht", _("Haitian Creole")),
 )
 
-LOCALE_PATHS = (os.path.join(PROJECT_ROOT, "locale"),)
+# Add the Django project cfgov/cfgov/locale/ directory to LOCALE_PATHS.
+# This will make the search order: cfgov/locale then APP/locale for every APP
+# in INSTALLED_APPS.
+LOCALE_PATHS = (os.path.join(PROJECT_ROOT, "cfgov", "locale"),)
 
 TIME_ZONE = "America/New_York"
 
@@ -301,7 +286,7 @@ ALLOWED_HOSTS = ["*"]
 EXTERNAL_URL_ALLOWLIST = (
     r"^https:\/\/facebook\.com\/cfpb$",
     r"^https:\/\/twitter\.com\/cfpb$",
-    r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa: B950
+    r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa: E501
     r"^https:\/\/www\.youtube\.com\/user\/cfpbvideo$",
     r"https:\/\/www\.flickr\.com\/photos\/cfpbphotos$",
 )
@@ -312,10 +297,21 @@ WAGTAILIMAGES_IMAGE_MODEL = "v1.CFGOVImage"
 WAGTAILIMAGES_IMAGE_FORM_BASE = "v1.forms.CFGOVImageForm"
 TAGGIT_CASE_INSENSITIVE = True
 
+WAGTAILADMIN_USER_LOGIN_FORM = "login.forms.LoginForm"
 WAGTAIL_USER_CREATION_FORM = "login.forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "login.forms.UserEditForm"
 
 WAGTAILDOCS_SERVE_METHOD = "direct"
+
+# This is needed to maintain autocomplete search behavior in the Wagtail admin.
+# See https://github.com/wagtail/wagtail/issues/7720.
+# TODO: Remove once we're on Wagtail 4.2, where this should be fixed in
+# https://github.com/wagtail/wagtail/pull/9900.
+WAGTAILSEARCH_BACKENDS = {
+    "default": {
+        "BACKEND": "wagtail.search.backends.database.fallback",
+    }
+}
 
 # LEGACY APPS
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
@@ -417,9 +413,11 @@ CFPB_COMMON_PASSWORD_RULES = [
 ]
 # cfpb_common login rules
 # in seconds
-LOGIN_FAIL_TIME_PERIOD = os.environ.get("LOGIN_FAIL_TIME_PERIOD", 120 * 60)
+LOGIN_FAIL_TIME_PERIOD = int(
+    os.environ.get("LOGIN_FAIL_TIME_PERIOD", 120 * 60)
+)
 # number of failed attempts
-LOGIN_FAILS_ALLOWED = os.environ.get("LOGIN_FAILS_ALLOWED", 5)
+LOGIN_FAILS_ALLOWED = int(os.environ.get("LOGIN_FAILS_ALLOWED", 5))
 LOGIN_REDIRECT_URL = "/admin/"
 LOGIN_URL = "/login/"
 
@@ -462,6 +460,17 @@ if ENABLE_CLOUDFRONT_CACHE_PURGE:
     }
 
 # CSP Allowlists
+#
+# Please note: Changing these lists will change the value of the
+# Content-Security-Policy header Django returns. Django does NOT include
+# header values when calculating the response hash returned in the ETag
+# header.
+# Our Akamai cache uses the ETag header to know whether a cached copy of a
+# page has been updated after it expires or after an invalidation purge.
+#
+# Together, this means that any changes to these CSP values WILL NOT BE
+# RETURNED by Akamai until a page's non-header content changes, or a
+# delete-purge is performed.
 
 # These specify what is allowed in <script> tags
 CSP_SCRIPT_SRC = (
@@ -469,22 +478,18 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "*.consumerfinance.gov",
+    "*.googleanalytics.com",
     "*.google-analytics.com",
     "*.googletagmanager.com",
     "*.googleoptimize.com",
-    "tagmanager.google.com",
     "optimize.google.com",
-    "search.usa.gov",
     "api.mapbox.com",
     "js-agent.newrelic.com",
-    "dnn506yrbagrg.cloudfront.net",
     "bam.nr-data.net",
     "gov-bam.nr-data.net",
     "*.youtube.com",
     "*.ytimg.com",
-    "cdn.mouseflow.com",
-    "n2.mouseflow.com",
-    "us.mouseflow.com",
+    "*.mouseflow.com",
     "*.geo.census.gov",
     "about:",
     "www.federalregister.gov",
@@ -496,8 +501,8 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     "*.consumerfinance.gov",
-    "tagmanager.google.com",
     "optimize.google.com",
+    "fonts.googleapis.com",
     "api.mapbox.com",
 )
 
@@ -509,13 +514,10 @@ CSP_IMG_SRC = (
     "s3.amazonaws.com",
     "img.youtube.com",
     "*.google-analytics.com",
-    "searchstats.usa.gov",
     "*.googletagmanager.com",
-    "tagmanager.google.com",
     "optimize.google.com",
     "api.mapbox.com",
     "*.tiles.mapbox.com",
-    "stats.search.usa.gov",
     "blob:",
     "data:",
     "www.gravatar.com",
@@ -534,10 +536,11 @@ CSP_FRAME_SRC = (
     "optimize.google.com",
     "www.youtube.com",
     "*.qualtrics.com",
+    "mailto:",
 )
 
 # These specify where we allow fonts to come from
-CSP_FONT_SRC = "'self'"
+CSP_FONT_SRC = ("'self'", "fonts.gstatic.com")
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to
 CSP_CONNECT_SRC = (
@@ -595,9 +598,8 @@ FLAGS = {
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
     "BETA_EXTERNAL_TESTING": [],
-    # Controls whether or not to include Qualtrics Web Intercept code for the
-    # Q42020 Ask CFPB customer satisfaction survey.
-    "ASK_SURVEY_INTERCEPT": [],
+    # Controls whether or not to include Qualtrics Web Intercept code
+    "PATH_MATCHES_FOR_QUALTRICS": [],
     # Whether robots.txt should block all robots, except for Search.gov.
     "ROBOTS_TXT_SEARCH_GOV_ONLY": [("environment is", "beta")],
 }
@@ -615,8 +617,8 @@ if DEPLOY_ENVIRONMENT == "beta":
 EMAIL_POPUP_URLS = {
     "debt": [
         "/ask-cfpb/what-is-a-statute-of-limitations-on-a-debt-en-1389/",
-        "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: B950
-        "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",  # noqa: B950
+        "/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/",  # noqa: E501
+        "/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/",  # noqa: E501
         "/consumer-tools/debt-collection/",
     ],
     "oah": ["/owning-a-home/", "/owning-a-home/mortgage-estimate/"],
@@ -672,27 +674,19 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
                 "h3",
                 "h4",
                 "h5",
-                "blockquote",
                 "hr",
                 "ol",
                 "ul",
                 "bold",
                 "italic",
+                "superscript",
+                "blockquote",
                 "link",
                 "document-link",
                 "image",
             ]
         },
     },
-}
-
-# Override certain Wagtail admin views with our own.
-#
-# See wagtailadmin_pages.middleware.WagtailAdminViewOverrideMiddleware.
-WAGTAILADMIN_OVERRIDDEN_VIEWS = {
-    "wagtailadmin_pages:add_subpage": (
-        "wagtailadmin_overrides.views.add_subpage"
-    ),
 }
 
 # Serialize Decimal(3.14) as 3.14, not "3.14"
@@ -754,3 +748,9 @@ except (TypeError, ValueError):
 # A list of domain names that are allowed to be linked to without adding the
 # interstitial page.
 ALLOWED_LINKS_WITHOUT_INTERSTITIAL = ("public.govdelivery.com",)
+
+# Base URL to use when referring to full URLs within the Wagtail admin backend -
+# e.g. in notification emails. Don't include '/admin' or a trailing slash
+WAGTAILADMIN_BASE_URL = os.getenv(
+    "WAGTAILADMIN_BASE_URL", "http://localhost:8000"
+)

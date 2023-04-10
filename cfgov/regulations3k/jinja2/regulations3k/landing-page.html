@@ -1,7 +1,7 @@
-{% extends 'layout-2-1.html' %}
+{% extends 'v1/layouts/layout-2-1.html' %}
 
-{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
-{% import 'templates/render_block.html' as render_block with context %}
+{% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% import 'v1/includes/templates/render_block.html' as render_block with context %}
 {% import 'recent-notices.html' as recent_notices with context %}
 
 {# HEAD items #}
@@ -48,14 +48,9 @@
 {% block javascript scoped %}
     {{ super() }}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            '{{ static('apps/regulations3k/js/index.js') }}',
-            '{{ static('apps/regulations3k/js/recent-notices.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
+      jsl([
+        '{{ static("apps/regulations3k/js/index.js") }}',
+        '{{ static("apps/regulations3k/js/recent-notices.js") }}'
+      ]);
     </script>
 {% endblock javascript %}

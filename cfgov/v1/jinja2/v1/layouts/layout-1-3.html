@@ -1,0 +1,24 @@
+{% extends 'v1/layouts/content-base.html' %}
+
+{% block skip_nav_target -%}
+    {# Overrides the default skip nav target of #main so that we skip over the
+       left side nav on pages that extend this template and go right to the
+       main content area. #}
+    #content_main
+{%- endblock %}
+
+{% block body_content scoped %}
+<div class="content_wrapper {% block content_wrapper_modifiers -%}{%- endblock %}">
+    <aside class="content_sidebar {% block content_sidebar_modifiers -%}{%- endblock %}">
+        {% block content_sidebar scoped -%}{%- endblock %}
+    </aside>
+    <div class="content_main {% block content_main_modifiers -%}{%- endblock %}"
+         id="content_main">
+        {% block content_main scoped -%}{%- endblock %}
+    </div>
+</div>
+{% endblock %}
+
+{% block content_modifiers -%}
+    content__1-3
+{%- endblock %}

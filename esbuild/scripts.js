@@ -1,60 +1,63 @@
-const esbuild = require( 'esbuild' );
+import { getAll } from './utils.js';
+import environment from '../config/environment.js';
+const { unprocessed } = environment.paths;
 
-const { getAll } = require( './utils.js' );
-const { unprocessed } = require( '../config/environment.js' ).paths;
-
-const routes = `${ unprocessed }/js/routes`;
-const apps = `${ unprocessed }/apps`;
-const onDemand = `${ unprocessed }/js/routes/on-demand`;
+const routes = `${unprocessed}/js/routes`;
+const apps = `${unprocessed}/apps`;
+const onDemand = `${unprocessed}/js/routes/on-demand`;
 
 const jsPaths = [
   // header and footer
-  `${ routes }/common.js`,
+  `${routes}/common.js`,
 
   // js for entire sub-paths
-  `${ routes }/ask-cfpb/single.js`,
-  `${ routes }/credit-cards/single.js`,
-  `${ routes }/es/single.js`,
-  `${ routes }/external-site.js`,
+  `${routes}/ask-cfpb/single.js`,
+  `${routes}/credit-cards/single.js`,
+  `${routes}/es/single.js`,
+  `${routes}/external-site.js`,
   // js for specific pages, based on url
-  `${ routes }/about-us/careers/current-openings/index.js`,
-  `${ routes }/consumer-tools/debt-collection/index.js`,
-  `${ routes }/data-research/prepaid-accounts/search-agreements/index.js`,
-  `${ routes }/owning-a-home/mortgage-estimate/index.js`,
-  `${ routes }/owning-a-home/index.js`,
+  `${routes}/consumer-tools/debt-collection/index.js`,
+  `${routes}/data-research/prepaid-accounts/search-agreements/index.js`,
+  `${routes}/owning-a-home/mortgage-estimate/index.js`,
+  `${routes}/owning-a-home/index.js`,
 
-  // on-demand: components included on a page via Wagtatil
-  ...getAll( onDemand ),
-  `${ onDemand }/simple-chart/simple-chart.js`,
-  `${ onDemand }/youth-employment-programs/buying-a-car/index.js`,
+  // on-demand: components included on a page via Wagtail
+  ...getAll(onDemand),
+  `${onDemand}/simple-chart/simple-chart.js`,
+  `${onDemand}/youth-employment-programs/buying-a-car/index.js`,
   // apps
-  ...getAll( `${ apps }/admin/js` ),
-  ...getAll( `${ apps }/analytics-gtm/js` ),
-  `${ apps }/ccdb-search/js/main.js`,
-  `${ apps }/financial-well-being/js/home.js`,
-  `${ apps }/financial-well-being/js/results.js`,
-  `${ apps }/find-a-housing-counselor/js/common.js`,
-  `${ apps }/form-explainer/js/index.js`,
-  `${ apps }/owning-a-home/js/common.js`,
-  `${ apps }/owning-a-home/js/explore-rates/index.js`,
-  `${ apps }/owning-a-home/js/mortgage-estimate/index.js`,
-  `${ apps }/owning-a-home/js/form-explainer/index.js`,
-  `${ apps }/paying-for-college/js/disclosures/index.js`,
-  `${ apps }/paying-for-college/js/college-costs.js`,
-  `${ apps }/regulations3k/js/index.js`,
-  `${ apps }/regulations3k/js/permalinks.js`,
-  `${ apps }/regulations3k/js/recent-notices.js`,
-  `${ apps }/regulations3k/js/search.js`,
-  `${ apps }/retirement/js/index.js`,
-  `${ apps }/rural-or-underserved-tool/js/common.js`,
-  `${ apps }/teachers-digital-platform/js/index.js`,
-  `${ apps }/filing-instruction-guide/js/fig-sidenav.js`
+  ...getAll(`${apps}/admin/js`),
+  ...getAll(`${apps}/analytics-gtm/js`),
+  `${apps}/ccdb-search/js/main.js`,
+  `${apps}/financial-well-being/js/home.js`,
+  `${apps}/financial-well-being/js/results.js`,
+  `${apps}/find-a-housing-counselor/js/common.js`,
+  `${apps}/form-explainer/js/index.js`,
+  `${apps}/owning-a-home/js/common.js`,
+  `${apps}/owning-a-home/js/explore-rates/index.js`,
+  `${apps}/owning-a-home/js/mortgage-estimate/index.js`,
+  `${apps}/paying-for-college/js/disclosures/index.js`,
+  `${apps}/paying-for-college/js/college-costs.js`,
+  `${apps}/regulations3k/js/index.js`,
+  `${apps}/regulations3k/js/permalinks.js`,
+  `${apps}/regulations3k/js/recent-notices.js`,
+  `${apps}/regulations3k/js/search.js`,
+  `${apps}/retirement/js/index.js`,
+  `${apps}/rural-or-underserved-tool/js/common.js`,
+  `${apps}/teachers-digital-platform/js/index.js`,
+  `${apps}/filing-instruction-guide/js/fig-init.js`,
 ];
 
-module.exports = function( baseConfig ) {
-  esbuild.build( {
+/**
+ * @param {object} baseConfig - The base esbuild configuration.
+ * @returns {object} The modified configuration object.
+ */
+function scripts(baseConfig) {
+  return {
     ...baseConfig,
     entryPoints: jsPaths,
-    target: 'es6'
-  } );
-};
+    target: 'es6',
+  };
+}
+
+export { scripts, jsPaths };

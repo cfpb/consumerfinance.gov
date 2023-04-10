@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% import "molecules/social-media.html" as social_media with context %}
+{% extends "v1/layouts/base.html" %}
+{% import "v1/includes/molecules/social-media.html" as social_media with context %}
 
 {% block title %}
     Find a Housing Counselor | Consumer Financial Protection Bureau
@@ -13,7 +13,7 @@
 
 {% block content %}
     <main class="content" id="main" lang="en">
-        <div class="wrapper content_wrapper">
+        <div class="content_wrapper">
             <div class="content_main">
                 <section>
 
@@ -45,7 +45,6 @@
                     </div><!-- end .hud_hca_api_print-header -->
 
                     <div class="block
-                                block__flush-top
                                 block__flush-top
                                 u-screen-only
                                 o-sidebar-breakout">
@@ -124,7 +123,7 @@
                                                 <div class="m-notification
                                                             m-notification__error
                                                             m-notification__visible">
-                                                    {{ svg_icon( 'warning-round' ) }}
+                                                    {{ svg_icon('warning-round') }}
                                                     <div class="m-notification_content" role="alert">
                                                         <div class="h4 m-notification_message">
                                                             {{ error_message }}
@@ -153,7 +152,7 @@
                                                     <a class="a-link a-link__icon"
                                                        href="https://data.hud.gov/housing_counseling.html">
                                                         <span class="a-link_text">HUD's</span>
-                                                        {{ svg_icon( 'external-link' ) }}</a>
+                                                        {{ svg_icon('external-link') }}</a>
                                                     official list of housing counselors.
                                                 </p>
                                                 <p>
@@ -201,7 +200,7 @@
                                        id="hud_print-page-link"
                                        href="#">
                                         <span class="a-link_text">Print list</span>
-                                        {{ svg_icon( 'print' ) }}
+                                        {{ svg_icon('print') }}
                                     </a>
                                 </li>
                                 <li class="m-list_item">
@@ -211,7 +210,7 @@
                                        target="_blank"
                                        rel="noopener noreferrer">
                                         <span class="a-link_text">Save list as <abbr title="Portable Document Format">PDF</abbr></span>
-                                        {{ svg_icon( 'download' ) }}
+                                        {{ svg_icon('download') }}
                                     </a>
                                 </li>
                             </ul>
@@ -248,7 +247,7 @@
                                                     <a class="a-link a-link__icon"
                                                        href="{{ counselor.weburl }}">
                                                         <span class="a-link_text"><b itemprop="name">{{ counselor.nme }}</b></span>
-                                                        {{ svg_icon( 'external-link' ) }}
+                                                        {{ svg_icon('external-link') }}
                                                     </a>
                                                     {% else %}
                                                     <b itemprop="name">{{ counselor.nme }}</b>
@@ -276,7 +275,7 @@
                                                        href="{{ counselor.weburl }}"
                                                        itemprop="url">
                                                         <span class="a-link_text">{{ counselor.weburl }}</span>
-                                                        {{ svg_icon( 'external-link' ) }}
+                                                        {{ svg_icon('external-link') }}
                                                     </a>
                                                     </dd>
                                                     {% endif %}
@@ -333,51 +332,6 @@
                     <div class="block
                                 block__flush-bottom
                                 u-screen-only">
-                        <div class="o-full-width-text-group">
-                            <div class="m-full-width-text">
-                                <h2 class="h3">
-                                    Paperwork Reduction Act statement
-                                </h2>
-                                <p class="block
-                                          block__flush-top
-                                          block__flush-bottom">
-                                    According to the Paperwork Reduction
-                                    Act of 1995, an agency may not conduct or
-                                    sponsor, and a person is not required to
-                                    respond to a collection of information
-                                    unless it displays a valid OMB control
-                                    number. The OMB control number for this
-                                    collection is
-                                    <a class="a-link a-link__icon"
-                                       href="https://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=3170-0025">
-                                        <span class="a-link_text" aria-label="The OMB control number for this collection is 3170-0025">3170-0025</span>
-                                        {{ svg_icon( 'external-link' ) }}</a>.
-                                    It expires on 04/30/2016. Using this tool
-                                    to generate a list of HUD-Approved Housing
-                                    Counseling Agencies is voluntary however,
-                                    if you are an entity subject to 12 CFR §
-                                    1024 (78 FR 6856 (Jan. 31, 2013)),
-                                    you are required to provide this list as
-                                    specified in the regulation.
-                                    Comments regarding this collection of
-                                    information, including suggestions for
-                                    improving the usefulness of the information,
-                                    or suggestions for reducing the burden to
-                                    respond to this collection should be
-                                    submitted to the
-                                    Consumer Financial Protection Bureau
-                                    (Attention: PRA Office), 1700 G Street NW,
-                                    Washington, DC 20552, or by email to
-                                    <a href="mailto:PRA@cfpb.gov">PRA@cfpb.gov</a>.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="block
-                                block__flush-top
-                                block__padded-top
-                                u-screen-only">
                         {{ social_media.render( {
                         "twitter_text": "Use the @CFPB’s interactive tool to find a housing counselor.",
                         "email_title": "Find a housing counselor tool from CFPB",
@@ -407,13 +361,6 @@
     </script>
 
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            '{{ static('apps/find-a-housing-counselor/js/common.js') }}'
-          ];
-          jsl(s);
-        }()
-      }
+      jsl(['{{ static("apps/find-a-housing-counselor/js/common.js") }}']);
     </script>
 {% endblock javascript %}

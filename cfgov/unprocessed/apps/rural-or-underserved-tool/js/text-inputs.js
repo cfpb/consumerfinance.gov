@@ -1,4 +1,11 @@
-import DT from './dom-tools';
+import {
+  applyAll,
+  addEl,
+  removeEl,
+  addClass,
+  removeClass,
+  getEl,
+} from './dom-tools.js';
 
 let count = 1;
 
@@ -8,17 +15,16 @@ let count = 1;
 function reset() {
   count = 1;
 
-  DT.applyAll( '.input-address', function( element, index ) {
-
-    if ( element.getAttribute( 'name' ) === 'address1' ) {
+  applyAll('.input-address', function (element) {
+    if (element.getAttribute('name') === 'address1') {
       element.value = '';
-      DT.removeClass( element, 'error' );
+      removeClass(element, 'error');
     } else {
-      DT.removeEl( element );
+      removeEl(element);
     }
-  } );
+  });
 
-  DT.removeClass( '#add-another', 'u-hidden' );
+  removeClass('#add-another', 'u-hidden');
 }
 
 /**
@@ -26,43 +32,39 @@ function reset() {
  */
 function add() {
   count++;
-  if ( count === 10 ) {
-    DT.addClass( '#add-another', 'u-hidden' );
+  if (count === 10) {
+    addClass('#add-another', 'u-hidden');
   }
 
   const previous = count - 1;
 
-  if ( DT.getEl( '#address' + previous ).value === '' ) {
-    DT.addClass( '#address' + previous, 'error' );
+  if (getEl('#address' + previous).value === '') {
+    addClass('#address' + previous, 'error');
   } else {
-    DT.removeClass( '#address' + previous, 'error' );
+    removeClass('#address' + previous, 'error');
   }
 
-  const addressElementContainer = DT.getEl( '#address1' ).cloneNode( true );
-  addressElementContainer.setAttribute( 'id', 'address' + count );
-  const addressElement = addressElementContainer.querySelector( 'input' );
-  addressElement.setAttribute( 'name', 'address' + count );
+  const addressElementContainer = getEl('#address1').cloneNode(true);
+  addressElementContainer.setAttribute('id', 'address' + count);
+  const addressElement = addressElementContainer.querySelector('input');
+  addressElement.setAttribute('name', 'address' + count);
   addressElement.value = '';
-  DT.addEl( '.input-container', addressElementContainer );
+  addEl('.input-container', addressElementContainer);
   addressElement.focus();
 }
 
 /**
  * Add an error class to an address input if it is empty.
- * @param {Object} evt - A blur event object.
+ *
+ * @param {object} evt - A blur event object.
  */
-function toggleError( evt ) {
+function toggleError(evt) {
   const target = evt.target;
-  if ( evt.target.value === '' ) {
-    DT.addClass( target, 'error' );
+  if (evt.target.value === '') {
+    addClass(target, 'error');
   } else {
-    DT.removeClass( target, 'error' );
+    removeClass(target, 'error');
   }
 }
 
-
-export default {
-  reset,
-  add,
-  toggleError
-};
+export { reset, add, toggleError };

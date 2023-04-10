@@ -40,6 +40,22 @@ helm.sh/chart: {{ include "cfgov.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+release.cfpb.gov/product: {{ .Chart.Name }}
+{{- if or (eq .Release.Name .Chart.Name) (eq .Release.Name "edge") }}
+release.cfpb.gov/auto-delete: "false"
+{{- else }}
+release.cfpb.gov/auto-delete: {{ .Values.release.autoDelete | quote }}
+{{- end }}
+release.cfpb.gov/auto-upgrade: {{ .Values.release.autoUpgrade | quote }}
+{{- if .Values.release.branch }}
+release.cfpb.gov/branch: {{ .Values.release.branch | quote }}
+{{- end }}
+{{- if .Values.release.owner }}
+release.cfpb.gov/owner: {{ .Values.release.owner | quote }}
+{{- end }}
+{{- if .Values.release.gitSHA }}
+release.cfpb.gov/git-sha: {{ .Values.release.gitSHA  | quote }}
+{{- end }}
 {{- end }}
 
 {{/*
@@ -191,6 +207,8 @@ Mapping/Ingress Hostname FQDN
 {{- define "cfgov.fqdn" -}}
 {{- if .Values.fqdnOverride }}
 {{- .Values.fqdnOverride }}
+{{- else if .Values.domainName }}
+{{- include "cfgov.fullname" . }}-eks.{{ .Values.domainName }}
 {{- else }}
 {{- include "cfgov.fullname" . }}-eks.{{ default "dev-internal" .Values.environmentName }}.aws.cfpb.gov
 {{- end }}

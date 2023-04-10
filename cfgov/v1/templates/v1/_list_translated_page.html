@@ -1,0 +1,25 @@
+{% extends 'wagtailadmin/reports/listing/_list_page_report.html' %}
+
+{% load i18n wagtailadmin_tags %}
+
+{% block extra_columns %}
+    <th>Translations</th>
+{% endblock %}
+
+{% block extra_page_data %}
+    <td valign="top">
+        {% for translation in page.get_translations|dictsort:"language" %}
+            {% if translation.language != "en" %}
+                {% page_permissions translation as page_perms %}
+                <div>
+                    <span>{{ translation.language }}:</span>
+                    {% if page_perms.can_edit %}
+                        <a href="{% url 'wagtailadmin_pages:edit' translation.id %}" title="{% translate 'Edit this page' %}">{{ translation.get_admin_display_title }}</a>
+                    {% else %}
+                        {{ translation.get_admin_display_title }}
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </td>
+{% endblock %}

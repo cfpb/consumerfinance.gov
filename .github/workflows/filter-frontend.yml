@@ -1,0 +1,12 @@
+name: filter-frontend
+on:
+  pull_request:
+  merge_group:
+    paths-ignore:
+      - '**.js'
+      - '**/package.json'
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "Skipping frontend build"'

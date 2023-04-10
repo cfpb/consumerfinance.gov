@@ -3,17 +3,15 @@ from django import forms
 from django.db import models
 from django.utils import timezone
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
     TabbedInterface,
 )
-from wagtail.core.fields import RichTextField
-from wagtail.core.models import Orderable, Page
-from wagtail.documents.edit_handlers import DocumentChooserPanel
-from wagtail.search import index
+from wagtail.fields import RichTextField
+from wagtail.models import Orderable
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 
@@ -36,7 +34,7 @@ class ActivityPageActivityDocuments(Orderable):
         verbose_name="Teacher guide",
     )
 
-    panels = [DocumentChooserPanel("documents")]
+    panels = [FieldPanel("documents")]
 
 
 class ActivityPageHandoutDocuments(Orderable):
@@ -53,7 +51,7 @@ class ActivityPageHandoutDocuments(Orderable):
         verbose_name="Student file",
     )
 
-    panels = [DocumentChooserPanel("documents")]
+    panels = [FieldPanel("documents")]
 
 
 class ActivityPage(CFGOVPage):
@@ -70,7 +68,13 @@ class ActivityPage(CFGOVPage):
     objectives = RichTextField("Objectives", blank=False)
     what_students_will_do = RichTextField(
         "What students will do", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
+    search_tags = models.TextField(
+        "Activity search tags",
+        blank=True,
+        help_text="These words will match for the site's internal"
+        + " Activities search. This content will not be visible by users.",
+    )
     activity_file = models.ForeignKey(
         "wagtaildocs.Document",
         null=True,
@@ -106,38 +110,38 @@ class ActivityPage(CFGOVPage):
     )
     building_block = ParentalManyToManyField(
         "teachers_digital_platform.ActivityBuildingBlock", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     school_subject = ParentalManyToManyField(
         "teachers_digital_platform.ActivitySchoolSubject", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     topic = ParentalTreeManyToManyField(
         "teachers_digital_platform.ActivityTopic", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     # Audience
     grade_level = ParentalManyToManyField(
         "teachers_digital_platform.ActivityGradeLevel", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     age_range = ParentalManyToManyField(
         "teachers_digital_platform.ActivityAgeRange", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     student_characteristics = ParentalManyToManyField(
         "teachers_digital_platform.ActivityStudentCharacteristics", blank=True
-    )  # noqa: B950
+    )  # noqa: E501
     # Activity Characteristics
     activity_type = ParentalManyToManyField(
         "teachers_digital_platform.ActivityType", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     teaching_strategy = ParentalManyToManyField(
         "teachers_digital_platform.ActivityTeachingStrategy", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     blooms_taxonomy_level = ParentalManyToManyField(
         "teachers_digital_platform.ActivityBloomsTaxonomyLevel", blank=False
-    )  # noqa: B950
+    )  # noqa: E501
     activity_duration = models.ForeignKey(
         "teachers_digital_platform.ActivityDuration",
         blank=False,
         on_delete=models.PROTECT,
-    )  # noqa: B950
+    )  # noqa: E501
     # Standards taught
     jump_start_coalition = ParentalManyToManyField(
         "teachers_digital_platform.ActivityJumpStartCoalition",
@@ -158,16 +162,16 @@ class ActivityPage(CFGOVPage):
         FieldPanel("what_students_will_do"),
         MultiFieldPanel(
             [
-                DocumentChooserPanel("activity_file"),
+                FieldPanel("activity_file"),
                 InlinePanel(
                     "activity_documents",
                     label="Additional activity files",
                     min_num=0,
                     max_num=5,
                 ),
-                DocumentChooserPanel("handout_file"),
-                DocumentChooserPanel("handout_file_2"),
-                DocumentChooserPanel("handout_file_3"),
+                FieldPanel("handout_file"),
+                FieldPanel("handout_file_2"),
+                FieldPanel("handout_file_3"),
                 InlinePanel(
                     "handout_documents",
                     label="Additional handout files",
@@ -177,6 +181,7 @@ class ActivityPage(CFGOVPage):
             ],
             heading="Download activity",
         ),
+        FieldPanel("search_tags"),
         FieldPanel("building_block", widget=forms.CheckboxSelectMultiple),
         FieldPanel("topic", widget=forms.CheckboxSelectMultiple),
         FieldPanel("school_subject", widget=forms.CheckboxSelectMultiple),
@@ -184,12 +189,12 @@ class ActivityPage(CFGOVPage):
             [
                 FieldPanel(
                     "grade_level", widget=forms.CheckboxSelectMultiple
-                ),  # noqa: B950
+                ),  # noqa: E501
                 FieldPanel("age_range", widget=forms.CheckboxSelectMultiple),
                 FieldPanel(
                     "student_characteristics",
                     widget=forms.CheckboxSelectMultiple,
-                ),  # noqa: B950
+                ),  # noqa: E501
             ],
             heading="Audience",
         ),
@@ -197,14 +202,14 @@ class ActivityPage(CFGOVPage):
             [
                 FieldPanel(
                     "activity_type", widget=forms.CheckboxSelectMultiple
-                ),  # noqa: B950
+                ),  # noqa: E501
                 FieldPanel(
                     "teaching_strategy", widget=forms.CheckboxSelectMultiple
-                ),  # noqa: B950
+                ),  # noqa: E501
                 FieldPanel(
                     "blooms_taxonomy_level",
                     widget=forms.CheckboxSelectMultiple,
-                ),  # noqa: B950
+                ),  # noqa: E501
                 FieldPanel("activity_duration"),
             ],
             heading="Activity characteristics",
@@ -233,27 +238,7 @@ class ActivityPage(CFGOVPage):
         ]
     )
 
-    # admin use only
-    search_fields = Page.search_fields + [
-        index.SearchField("summary"),
-        index.SearchField("big_idea"),
-        index.SearchField("essential_questions"),
-        index.SearchField("objectives"),
-        index.SearchField("what_students_will_do"),
-        index.FilterField("date"),
-        index.FilterField("building_block"),
-        index.FilterField("school_subject"),
-        index.FilterField("topic"),
-        index.FilterField("grade_level"),
-        index.FilterField("age_range"),
-        index.FilterField("student_characteristics"),
-        index.FilterField("activity_type"),
-        index.FilterField("teaching_strategy"),
-        index.FilterField("blooms_taxonomy_level"),
-        index.FilterField("activity_duration"),
-        index.FilterField("jump_start_coalition"),
-        index.FilterField("council_for_economic_education"),
-    ]
+    template = "teachers_digital_platform/activity_page.html"
 
     def get_subtopic_ids(self):
         """Get a list of this activity's subtopic ids."""

@@ -16,5 +16,6 @@
     "fastdom": "^1.0.6",
     "jsonp-p": "2.0.0",
     "papaparse": "5.3.2"
-  }
+  },
+  "type": "module"
 }

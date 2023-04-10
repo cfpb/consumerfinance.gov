@@ -17,11 +17,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             es = connections.get_connection(options["connection"])
-        except KeyError:
+        except KeyError as err:
             raise CommandError(
                 "Couldn't get an Elasticsearch connection named "
                 f"{options['connection']}"
-            )
+            ) from err
 
         health = es.cat.health(v=True)
         self.stdout.write(f"Health:\n{health}\n")

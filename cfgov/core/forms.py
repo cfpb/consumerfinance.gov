@@ -4,7 +4,6 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.signing import BadSignature, Signer
-from django.utils.translation import gettext_lazy as _
 
 
 EXTERNAL_URL_ALLOWLIST_RAW = getattr(settings, "EXTERNAL_URL_ALLOWLIST", ())
@@ -37,16 +36,13 @@ class ExternalURLForm(forms.Form):
             signed_url = "{ext_url}:{signature}".format(**cleaned_data)
             try:
                 cleaned_data["validated_url"] = signer.unsign(signed_url)
-            except BadSignature:
+            except BadSignature as err:
                 raise ValidationError(
-                    _("Signature validation failed"), code="invalid"
-                )
+                    "Signature validation failed", code="invalid"
+                ) from err
         else:
             raise ValidationError(
-                _(
-                    "URL must either be allowed by "
-                    "settings.EXTERNAL_URL_ALLOWLIST "
-                    "or have a valid signature"
-                ),
+                "URL must either be allowed by "
+                "settings.EXTERNAL_URL_ALLOWLIST or have a valid signature",
                 code="invalid",
             )

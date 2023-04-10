@@ -1,16 +1,15 @@
-// Required modules.
-import * as validators from '../modules/util/validators';
+import * as validators from '../modules/util/validators.js';
 import {
   checkDom,
   instantiateAll,
-  setInitFlag
-} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
-import Analytics from '../modules/Analytics';
-import ERROR_MESSAGES from '../config/error-messages-config';
-import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
-import FormModel from '../modules/util/FormModel';
-import Multiselect from '@cfpb/cfpb-forms/src/organisms/Multiselect';
+  setInitFlag,
+  EventObserver,
+} from '@cfpb/cfpb-atomic-component';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
+import ERROR_MESSAGES from '../config/error-messages-config.js';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import FormModel from '../modules/util/FormModel.js';
+import Multiselect from '@cfpb/cfpb-forms/src/organisms/Multiselect.js';
 
 const BASE_CLASS = 'o-filterable-list-controls';
 const FIELD_ERROR_CLASS = 'a-text-input__error';
@@ -18,17 +17,16 @@ let INVALID_FIELDS = [];
 
 /**
  * FilterableListControls
+ *
  * @class
- *
  * @classdesc Initializes a new FilterableListControls organism.
- *
- * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ * @param {HTMLElement} element - The DOM element within which to search
+ *   for the organism.
  * @returns {FilterableListControls} An instance.
  */
-function FilterableListControls( element ) {
-  const _dom = checkDom( element, BASE_CLASS );
-  const _form = _dom.querySelector( 'form' );
+function FilterableListControls(element) {
+  const _dom = checkDom(element, BASE_CLASS);
+  const _form = _dom.querySelector('form');
   let _expandable;
   let _expandableContent;
   let _formModel;
@@ -38,35 +36,40 @@ function FilterableListControls( element ) {
    *   or undefined if it was already initialized.
    */
   function init() {
-    if ( !setInitFlag( _dom ) ) {
+    if (!setInitFlag(_dom)) {
       let UNDEFINED;
       return UNDEFINED;
     }
 
-    _formModel = new FormModel( _form );
+    _formModel = new FormModel(_form);
 
     /* Instantiate multiselects before their containing expandable
        so height of any 'selected choice' buttons is included when
        expandable height is calculated initially. */
-    const multiSelectsSelector = `.${ BASE_CLASS } .${ Multiselect.BASE_CLASS }`;
-    const multiSelects = instantiateAll( multiSelectsSelector, Multiselect );
+    const multiSelectsSelector = `.${BASE_CLASS} .${Multiselect.BASE_CLASS}`;
+    const multiSelects = instantiateAll(multiSelectsSelector, Multiselect);
 
-    const _expandables = Expandable.init( _dom );
+    const _expandables = Expandable.init(_dom);
     _expandable = _expandables[0];
 
     // This is used for checking if the content is expanded.
-    _expandableContent = _expandable.element.querySelector( '.o-expandable_content' );
+    _expandableContent = _expandable.element.querySelector(
+      '.o-expandable_content'
+    );
 
     // If multiselects exist on the form, iterate over them.
-    multiSelects.forEach( multiSelect => {
-      multiSelect.addEventListener( 'expandBegin', _refreshExpandableHeight );
-      multiSelect.addEventListener( 'expandEnd', _refreshExpandableHeight );
-      multiSelect.addEventListener( 'selectionsUpdated', _refreshExpandableHeight );
-    } );
-    window.addEventListener( 'resize', _refreshExpandableHeight );
+    multiSelects.forEach((multiSelect) => {
+      multiSelect.addEventListener('expandbegin', _refreshExpandableHeight);
+      multiSelect.addEventListener('collapsebegin', _refreshExpandableHeight);
+      multiSelect.addEventListener(
+        'selectionsupdated',
+        _refreshExpandableHeight
+      );
+    });
+    window.addEventListener('resize', _refreshExpandableHeight);
 
     _formModel.init();
-    _initAnalyticsEvents.bind( this )();
+    _initAnalyticsEvents.bind(this)();
 
     return this;
   }
@@ -76,15 +79,40 @@ function FilterableListControls( element ) {
    * to ensure all its children are visible.
    */
   let timeout;
+  /**
+   *
+   */
   function _refreshExpandableHeight() {
-    window.clearTimeout( timeout );
+    window.clearTimeout(timeout);
     // TODO: Expandable itself should have an API to query if it is open or not.
-    if ( _expandableContent.classList.contains( 'o-expandable_content__expanded' ) ) {
+    if (
+      _expandableContent.classList.contains('o-expandable_content__expanded')
+    ) {
       timeout = window.setTimeout(
-        _expandable.transition.expand.bind( _expandable.transition ),
+        _expandable.transition.expand.bind(_expandable.transition),
         250
       );
     }
+  }
+
+  /**
+   * Get data layer object.
+   *
+   * @param {string} action - Name of event.
+   * @param {string} label - DOM element label.
+   * @param {string} event - Type of event.
+   * @param {Function} [callback=undefined] - Function to call on GTM submission.
+   * @param {number} [timeout=500] - Callback invocation fallback time.
+   * @returns {object} Data layer object.
+   */
+  function _getDataLayerOptions(action, label, event, callback, timeout) {
+    return {
+      event: event || 'Page Interaction',
+      action: action,
+      label: label || '',
+      eventCallback: callback,
+      eventTimeout: timeout || 500,
+    };
   }
 
   /**
@@ -92,47 +120,47 @@ function FilterableListControls( element ) {
    */
   function _initAnalyticsEvents() {
     const label = _expandable.getLabelText();
-    const getDataLayerOptions = Analytics.getDataLayerOptions;
     let dataLayerArray = [];
     const cachedFields = {};
 
     _expandable.transition.addEventListener(
-      'expandBegin',
-      function sendEvent() { Analytics.sendEvent( 'Filter:open', label ); }
+      'expandbegin',
+      function sendEvent() {
+        analyticsSendEvent({ action: 'Filter:open', label });
+      }
     );
 
     _expandable.transition.addEventListener(
-      'collapseBegin',
-      function sendEvent() { Analytics.sendEvent( 'Filter:close', label ); }
+      'collapsebegin',
+      function sendEvent() {
+        analyticsSendEvent({ action: 'Filter:close', label });
+      }
     );
 
-    _form.addEventListener( 'change', function sendEvent( event ) {
+    _form.addEventListener('change', function sendEvent(event) {
       const field = event.target;
 
-      if ( !field ) {
+      if (!field) {
         return;
       }
       const action = field.name + ':change';
-      cachedFields[field.name] = getDataLayerOptions( action, field.value );
-    } );
+      cachedFields[field.name] = _getDataLayerOptions(action, field.value);
+    });
 
-    const formSubmittedBinded = _formSubmitted.bind( this );
-    _form.addEventListener( 'submit', function sendEvent( event ) {
+    const formSubmittedBinded = _formSubmitted.bind(this);
+    _form.addEventListener('submit', function sendEvent(event) {
       event.preventDefault();
-      Object.keys( cachedFields ).forEach( function( key ) {
-        dataLayerArray.push( cachedFields[key] );
-      } );
+      Object.keys(cachedFields).forEach(function (key) {
+        dataLayerArray.push(cachedFields[key]);
+      });
       dataLayerArray.push(
-        getDataLayerOptions(
-          'Filter:submit',
-          label,
-          '',
-          formSubmittedBinded
-        )
+        _getDataLayerOptions('Filter:submit', label, '', formSubmittedBinded)
       );
-      Analytics.sendEvents( dataLayerArray );
+      dataLayerArray.forEach((payload) => {
+        analyticsSendEvent(payload);
+      });
       dataLayerArray = [];
-    } );
+    });
   }
 
   /**
@@ -140,14 +168,14 @@ function FilterableListControls( element ) {
    */
   function _formSubmitted() {
     const validatedFields = _validateFields(
-      _formModel.getModel().get( 'validateableElements' )
+      _formModel.getModel().get('validateableElements')
     );
 
-    if ( validatedFields.invalid.length > 0 ) {
-      _highlightInvalidFields( validatedFields );
-      this.dispatchEvent( 'fieldInvalid', {
-        message: _buildErrorMessage( validatedFields.invalid )
-      } );
+    if (validatedFields.invalid.length > 0) {
+      _highlightInvalidFields(validatedFields);
+      this.dispatchEvent('fieldinvalid', {
+        message: _buildErrorMessage(validatedFields.invalid),
+      });
     } else {
       _form.submit();
     }
@@ -155,72 +183,75 @@ function FilterableListControls( element ) {
 
   /**
    * Build the error message to display within the notification.
+   *
    * @param {Array} fields - A list of form fields.
    * @returns {string} A text to use for the error notification.
    */
-  function _buildErrorMessage( fields ) {
+  function _buildErrorMessage(fields) {
     let msg = '';
-    fields.forEach( validation => {
-      msg += `${ validation.label } ${ validation.msg }<br>`;
-    } );
+    fields.forEach((validation) => {
+      msg += `${validation.label} ${validation.msg}<br>`;
+    });
 
     return msg || ERROR_MESSAGES.DEFAULT;
   }
 
   /**
    * Highlight invalid text fields by giving them an error class.
+   *
    * @param {Array} fields - A list of form fields.
    * @returns {Array} An array of invalid fields.
    */
-  function _highlightInvalidFields( fields ) {
-    INVALID_FIELDS.forEach( field => {
-      field.classList.remove( FIELD_ERROR_CLASS );
-    } );
+  function _highlightInvalidFields(fields) {
+    INVALID_FIELDS.forEach((field) => {
+      field.classList.remove(FIELD_ERROR_CLASS);
+    });
 
     INVALID_FIELDS = [];
 
-    fields.invalid.forEach( validation => {
+    fields.invalid.forEach((validation) => {
       const field = validation.field;
-      if ( field.type === 'text' || field.type === 'date' ) {
-        validation.field.classList.add( FIELD_ERROR_CLASS );
-        INVALID_FIELDS.push( validation.field );
+      if (field.type === 'text' || field.type === 'date') {
+        validation.field.classList.add(FIELD_ERROR_CLASS);
+        INVALID_FIELDS.push(validation.field);
       }
-    } );
+    });
 
     return INVALID_FIELDS;
   }
 
   /**
    * Validate the fields of our form.
-   * @param {Array} fields A list of form fields.
-   * @returns {Object}
-   *   The tested list of fields broken into valid and invalid blocks.
+   *
+   * @param {Array} fields - A list of form fields.
+   * @returns {object} The tested list of fields broken into valid
+   *   and invalid blocks.
    */
-  function _validateFields( fields ) {
+  function _validateFields(fields) {
     const validatedFields = {
       invalid: [],
-      valid:   []
+      valid: [],
     };
     let validatedField;
 
-    fields.forEach( field => {
+    fields.forEach((field) => {
       let fieldIsValid = true;
 
-      validatedField = _validateField( field );
+      validatedField = _validateField(field);
 
       let prop;
-      for ( prop in validatedField.status ) {
-        if ( validatedField.status[prop] === false ) {
+      for (prop in validatedField.status) {
+        if (validatedField.status[prop] === false) {
           fieldIsValid = false;
         }
       }
 
-      if ( fieldIsValid ) {
-        validatedFields.valid.push( validatedField );
+      if (fieldIsValid) {
+        validatedFields.valid.push(validatedField);
       } else {
-        validatedFields.invalid.push( validatedField );
+        validatedFields.invalid.push(validatedField);
       }
-    } );
+    });
 
     return validatedFields;
   }
@@ -228,37 +259,41 @@ function FilterableListControls( element ) {
   // TODO: Reduce complexity
   /**
    * Validate the specific field types.
-   * @param {HTMLNode} field A form field.
-   * @param {string} type The type of field.
-   * @param {boolean} isInGroup A boolean that determines if field in a group.
-   * @returns {Object} An object with a status and message properties.
+   *
+   * @param {HTMLElement} field - A form field.
+   * @returns {object} An object with a status and message properties.
    */
-  function _validateField( field ) {
+  function _validateField(field) {
     let fieldset;
-    const fieldModel = _formModel.getModel().get( field );
+    const fieldModel = _formModel.getModel().get(field);
     const validation = {
-      field:  field,
+      field: field,
       // TODO: Change layout of field groups to use fieldset.
-      label:  fieldModel.label,
-      msg:    '',
-      status: null
+      label: fieldModel.label,
+      msg: '',
+      status: null,
     };
 
-    if ( fieldModel.isInGroup ) {
-      const groupName = field.getAttribute( 'data-group' ) ||
-                        field.getAttribute( 'name' );
-      const groupSelector = '[name=' + groupName + ']:checked,' +
-                            '[data-group=' + groupName + ']:checked';
-      fieldset = _form.querySelectorAll( groupSelector ) || [];
+    if (fieldModel.isInGroup) {
+      const groupName =
+        field.getAttribute('data-group') || field.getAttribute('name');
+      const groupSelector =
+        '[name=' +
+        groupName +
+        ']:checked,' +
+        '[data-group=' +
+        groupName +
+        ']:checked';
+      fieldset = _form.querySelectorAll(groupSelector) || [];
     }
 
-    if ( validators[fieldModel.type] ) {
-      validation.status = validators[fieldModel.type](
-        field, validation, fieldset
-      );
+    // eslint-disable-next-line import/namespace
+    const validatorsField = validators[fieldModel.type];
+    if (validatorsField) {
+      validation.status = validatorsField(field, validation, fieldset);
     }
 
-    return validators.empty( field, validation );
+    return validators.empty(field, validation);
   }
 
   this.init = init;

@@ -4,17 +4,13 @@ from django.db import models
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
-from wagtail.search import index
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from wagtail.fields import RichTextField, StreamField
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtailautocomplete.edit_handlers import AutocompletePanel
@@ -130,7 +126,10 @@ class AnswerPage(CFGOVPage):
         help_text="Optional answer intro",
     )
     answer_content = StreamField(
-        ask_blocks.AskAnswerContent(), blank=True, verbose_name="Answer"
+        ask_blocks.AskAnswerContent(),
+        blank=True,
+        verbose_name="Answer",
+        use_json_field=True,
     )
     answer_base = models.ForeignKey(
         Answer,
@@ -201,19 +200,16 @@ class AnswerPage(CFGOVPage):
         help_text="Include share and print buttons above answer.",
     )
 
-    # TODO: When we've updated to Wagtail 2.13.x remove the help_text
-    # and set the block_count for the notification to 1.
-    # See https://git.io/JODqS
     notification = StreamField(
         [
             (
                 "notification",
-                molecules.Notification(
-                    help_text="Include only one notification."
-                ),
+                molecules.Notification(),
             )
         ],
         blank=True,
+        max_num=1,
+        use_json_field=True,
     )
 
     content_panels = CFGOVPage.content_panels + [
@@ -228,11 +224,11 @@ class AnswerPage(CFGOVPage):
             classname="collapsible",
         ),
         FieldPanel("share_and_print"),
-        StreamFieldPanel("notification"),
-        StreamFieldPanel("answer_content"),
+        FieldPanel("notification"),
+        FieldPanel("answer_content"),
         MultiFieldPanel(
             [
-                SnippetChooserPanel("related_resource"),
+                FieldPanel("related_resource"),
                 AutocompletePanel(
                     "related_questions", target_model="ask_cfpb.AnswerPage"
                 ),
@@ -287,15 +283,11 @@ class AnswerPage(CFGOVPage):
             ),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     sidebar_panels = [
-        StreamFieldPanel("sidebar"),
-    ]
-
-    search_fields = Page.search_fields + [
-        index.SearchField("answer_content"),
-        index.SearchField("short_answer"),
+        FieldPanel("sidebar"),
     ]
 
     edit_handler = TabbedInterface(
@@ -375,29 +367,21 @@ class AnswerPage(CFGOVPage):
         return context
 
     def answer_text(self):
-        short_answer_field = self._meta.get_field("short_answer")
-        value = short_answer_field.value_from_object(self)
-        short_answer = short_answer_field.get_searchable_content(value)
-        # get_serachable_content returns a single-item list for a RichTextField
-        # so we want to pop out the one item to just get a regular string
-        short_answer = short_answer.pop()
+        strings = []
 
-        answer_content_field = self._meta.get_field("answer_content")
-        value = answer_content_field.value_from_object(self)
-        answer_content = answer_content_field.get_searchable_content(value)
-        # get_serachable_content returns a list of subblocks for a StreamField
-        # so we want to join them together with spaces
-        answer_content = " ".join(answer_content)
+        for fieldname in ("short_answer", "answer_content"):
+            field = self._meta.get_field(fieldname)
+            value = field.value_from_object(self)
+            strings.extend(field.get_searchable_content(value))
 
-        return f"{short_answer}\n\n{answer_content}"
+        return "\n".join(filter(None, strings))
 
     def answer_content_preview(self):
         answer_text = self.answer_text()
         return truncate_by_words_and_chars(answer_text)
 
     def text(self):
-        answer_text = self.answer_text()
-        return f"{self.question}\n\n{answer_text}"
+        return "\n".join([self.question, self.answer_text()])
 
     def __str__(self):
         if self.answer_base:

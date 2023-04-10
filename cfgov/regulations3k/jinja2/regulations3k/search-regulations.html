@@ -1,11 +1,11 @@
-{% extends 'layout-full.html' %}
-{% import 'atoms/checkbox.html' as checkbox %}
-{% import 'atoms/radio-button.html' as radio with context %}
-{% import 'atoms/tag.html' as tag %}
+{% extends 'v1/layouts/layout-full.html' %}
+{% import 'v1/includes/atoms/checkbox.html' as checkbox %}
+{% import 'v1/includes/atoms/radio-button.html' as radio with context %}
+{% import 'v1/includes/atoms/tag.html' as tag %}
 {% import 'regulations3k/regulations3k-search-bar.html' as search_bar %}
 {% import 'regulations3k/regulations3k-search-result-item.html' as search_item %}
-{% import 'molecules/pagination.html' as pagination with context %}
-{% from 'organisms/expandable.html' import expandable with context %}
+{% import 'v1/includes/molecules/pagination.html' as pagination with context %}
+{% from 'v1/includes/organisms/expandable.html' import expandable with context %}
 
 {# HEAD items #}
 
@@ -212,16 +212,12 @@
 {% block javascript scoped %}
     {{ super() }}
     <script>
-      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
-        !function() {
-          var s = [
-            '{{ static('apps/regulations3k/js/index.js') }}'
-            {% if page.results.search_query %}
-            ,'{{ static('apps/regulations3k/js/search.js') }}'
-            {% endif %}
-          ];
-          jsl(s);
-        }()
-      }
+      jsl([
+        '{{ static("apps/regulations3k/js/index.js") }}'
+        {%- if page.results.search_query -%}
+        ,
+        '{{ static("apps/regulations3k/js/search.js") }}'
+        {%- endif %}
+      ]);
     </script>
 {% endblock javascript %}

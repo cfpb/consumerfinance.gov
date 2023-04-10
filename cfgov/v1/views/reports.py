@@ -1,18 +1,24 @@
 import html
 from datetime import date
 from functools import partial
+from operator import itemgetter
 
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.utils import html as html_util
 
+from wagtail.admin.filters import WagtailFilterSet
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
 from wagtail.images import get_image_model
 
+import django_filters
 from bs4 import BeautifulSoup
 
 from ask_cfpb.models.answer_page import AnswerPage
 from v1.models import CFGOVPage
 from v1.models.enforcement_action_page import EnforcementActionPage
+from v1.util.ref import categories, get_category_icon
 
 
 def process_categories(queryset):
@@ -72,7 +78,7 @@ def generate_filename(type):
 
 class PageMetadataReportView(PageReportView):
     header_icon = "doc-empty-inverse"
-    title = "Metadata for live pages"
+    title = "Page Metadata (for Live Pages)"
 
     list_export = PageReportView.list_export + [
         "url",
@@ -118,7 +124,7 @@ class PageMetadataReportView(PageReportView):
 
 class DocumentsReportView(ReportView):
     header_icon = "doc-full"
-    title = "All documents"
+    title = "Documents"
 
     list_export = [
         "id",
@@ -157,7 +163,7 @@ class DocumentsReportView(ReportView):
 
 class ImagesReportView(ReportView):
     header_icon = "image"
-    title = "All images"
+    title = "Images"
 
     list_export = [
         "title",
@@ -197,8 +203,8 @@ class ImagesReportView(ReportView):
 
 
 class EnforcementActionsReportView(ReportView):
-    header_icon = "doc-full"
-    title = "Enforcement actions report"
+    header_icon = "form"
+    title = "Enforcement Actions"
 
     list_export = [
         "title",
@@ -243,7 +249,7 @@ class EnforcementActionsReportView(ReportView):
 
 class AskReportView(ReportView):
     header_icon = "help"
-    title = "Ask CFPB report"
+    title = "Ask CFPB"
 
     list_export = [
         "answer_base",
@@ -337,3 +343,82 @@ class AskReportView(ReportView):
             "portal_category",
             "related_questions",
         ).order_by("language", "-answer_base__id")
+
+
+class CategoryIconReportView(ReportView):
+    title = "Category Icons"
+    header_icon = "site"
+    template_name = "v1/category_icon_report.html"
+    paginate_by = 0
+
+    list_export = [
+        "subcategory",
+        "category_slug",
+        "category_name",
+        "icon",
+    ]
+
+    def get_queryset(self):
+        return [
+            {
+                "subcategory": subcategory,
+                "category_slug": category_slug,
+                "category_name": category_name,
+                "icon": get_category_icon(category_name),
+            }
+            for subcategory, subcategories in categories
+            for category_slug, category_name in subcategories
+        ]
+
+
+class TranslatedPagesReportFilterSet(WagtailFilterSet):
+    language = django_filters.MultipleChoiceFilter(
+        label="Translation",
+        method="filter_language",
+        choices=[
+            (code, name)
+            for code, name in sorted(settings.LANGUAGES, key=itemgetter(1))
+            if code != "en"
+        ],
+    )
+
+    def filter_language(self, queryset, name, value):
+        if value:
+            queryset = queryset.filter(non_english_pages__language__in=value)
+
+        return queryset
+
+
+class TranslatedPagesReportView(PageReportView):
+    title = "Translated Pages"
+    header_icon = "site"
+    template_name = "v1/translated_pages_report.html"
+    filterset_class = TranslatedPagesReportFilterSet
+
+    def get_queryset(self):
+        return CFGOVPage.objects.filter(
+            non_english_pages__isnull=False
+        ).distinct()
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["languages"] = settings.LANGUAGES
+        return context
+
+
+class ActiveUsersReportView(ReportView):
+    title = "Active Users"
+    header_icon = "user"
+    template_name = "v1/active_users_report.html"
+    paginate_by = 0
+
+    list_export = [
+        "first_name",
+        "last_name",
+        "username",
+        "email",
+        "last_login",
+    ]
+
+    def get_queryset(self):
+        return get_user_model().objects.filter(is_active=True)

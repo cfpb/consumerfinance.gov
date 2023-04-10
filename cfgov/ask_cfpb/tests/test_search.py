@@ -1,3 +1,4 @@
+import json
 import unittest
 from io import StringIO
 from unittest import mock
@@ -80,7 +81,17 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
         test_answer_page = AnswerPage(
             title="Money 101",
             question="What is money?",
-            answer_content="Money makes the world go round.",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Money makes the world go round.",
+                        },
+                    }
+                ]
+            ),
             slug="test-answer-page",
             live=True,
         )
@@ -93,13 +104,26 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
         test_answer_page_search_results = test_answer_page_search.search()[
             "results"
         ][0].text.rstrip()
-        self.assertEqual(test_answer_page_search_results, "What is money?")
+        self.assertEqual(
+            test_answer_page_search_results,
+            "What is money?\nMoney makes the world go round.",
+        )
 
     def test_AnswerPage_suggest(self):
         test_answer_page = AnswerPage(
             title="Money 101",
             question="What is money?",
-            answer_content="Money makes the world go round.",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Money makes the world go round.",
+                        },
+                    }
+                ]
+            ),
             slug="test-answer-page3",
             live=True,
         )
@@ -129,7 +153,6 @@ class TestAnswerPageSearch(ElasticsearchTestsMixin, TestCase):
 
     @mock.patch("ask_cfpb.forms.AutocompleteForm")
     def test_ask_search_autocomplete_honors_max_chars(self, mock_query):
-
         valid_term_1 = "Here is an ask_cfpb query that is exactly,"
         valid_term_2 = " like 100 percent, 75 characters."
         overage = " This is overage text that should not appear in the query"

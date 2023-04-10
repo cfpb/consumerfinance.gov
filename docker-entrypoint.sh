@@ -2,7 +2,7 @@
 
 set -e
 
-if [ -f '.env' ] && [ -d /var/run/secrets/kubernetes.io ]; then
+if [ -f '.env' ]; then
   . '.env'
 fi
 
@@ -20,7 +20,7 @@ if [ ! -z "$RUN_MIGRATIONS" ]; then
   # Check the DB if it needs refresh or migrations (initial-data.sh)
   if ! psql "postgres://${PGUSER:-cfpb}:${PGPASSWORD:-cfpb}@${PGHOST:-localhost}:${PGPORT:-5432}/${PGDATABASE:-cfgov}" -c 'SELECT COUNT(*) FROM auth_user' >/dev/null 2>&1 || [ ! -z $FORCE_DB_REBUILD ]; then
     echo "Doing first-time database and search index setup..."
-    if [ -n "$CFGOV_PROD_DB_LOCATION" ] || [ -n "$DB_DUMP_FILE" ]; then
+    if [ -n "$CFGOV_PROD_DB_LOCATION" ] || [ -n "$DB_DUMP_FILE" ] || [ -n "$DB_DUMP_URL" ]; then
       echo "Running refresh-data.sh... $DB_DUMP_FILE"
       ./refresh-data.sh "$DB_DUMP_FILE"
       echo "Create the cache table..."

@@ -10,26 +10,12 @@ from django.utils.text import slugify
 from django.utils.translation import activate, deactivate_all
 from django.utils.translation import gettext as _
 
-from wagtail.admin.edit_handlers import (
-    FieldPanel,
-    InlinePanel,
-    MultiFieldPanel,
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable
-
-from modelcluster.fields import ParentalKey
 
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models.answer_page import AnswerPage
 from ask_cfpb.models.search import AnswerPageSearch
-from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules
 from v1.models import (
     CFGOVPage,
     LandingPage,
@@ -38,6 +24,7 @@ from v1.models import (
     SublandingPage,
 )
 from v1.models.snippets import ReusableText
+from v1.util.ref import get_category_icon
 
 
 REUSABLE_TEXT_TITLES = {
@@ -140,7 +127,7 @@ class AnswerLandingPage(LandingPage):
     Page type for Ask CFPB's landing page.
     """
 
-    content_panels = CFGOVPage.content_panels + [StreamFieldPanel("header")]
+    content_panels = CFGOVPage.content_panels + [FieldPanel("header")]
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels, heading="Content"),
@@ -156,31 +143,22 @@ class AnswerLandingPage(LandingPage):
         portal_pages = SublandingPage.objects.filter(
             portal_topic_id__isnull=False,
             language=self.language,
+            live=True,
         ).order_by("portal_topic__heading")
         for portal_page in portal_pages:
             topic = portal_page.portal_topic
+            url = portal_page.url
             # Only include a portal if it has featured answers
             featured_answers = topic.featured_answers(self.language)
             if not featured_answers:
                 continue
-            # If the portal page is live, link to it
-            if portal_page.live:
-                url = portal_page.url
-            # Otherwise, link to the topic "see all" page if there is one
-            else:
-                topic_page = topic.portal_search_pages.filter(
-                    language=self.language, live=True
-                ).first()
-                if topic_page:
-                    url = topic_page.url
-                else:
-                    continue  # pragma: no cover
             portal_cards.append(
                 {
                     "topic": topic,
                     "title": topic.title(self.language),
                     "url": url,
                     "featured_answers": featured_answers,
+                    "icon": get_category_icon(topic.heading),
                 }
             )
         return portal_cards
@@ -193,20 +171,7 @@ class AnswerLandingPage(LandingPage):
         return context
 
 
-class SecondaryNavigationJSMixin:
-    """A page mixin that adds navigation JS for English pages."""
-
-    @property
-    def page_js(self):
-        js = super().page_js
-        if self.language == "en":
-            js += ["secondary-navigation.js"]
-        return js
-
-
-class PortalSearchPage(
-    RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage
-):
+class PortalSearchPage(RoutablePageMixin, CFGOVPage):
     """
     A routable page type for Ask CFPB portal search ("see-all") pages.
     """
@@ -302,30 +267,32 @@ class PortalSearchPage(
             deactivate_all()
         return super().get_context(request, *args, **kwargs)
 
-    def get_nav_items(self, request, page):
+    def get_secondary_nav_items(self, request):
         """Return sorted nav items for sidebar."""
+        url = self.get_url(request)
+
         sorted_categories = [
             {
                 "title": category.title(self.language),
-                "url": "{}{}/".format(page.url, slug),
+                "url": "{}{}/".format(url, slug),
                 "active": (
                     False
-                    if not page.portal_category
+                    if not self.portal_category
                     else category.title(self.language)
-                    == page.portal_category.title(self.language)
+                    == self.portal_category.title(self.language)
                 ),
             }
             for slug, category in self.category_map.items()
         ]
         return [
             {
-                "title": page.portal_topic.title(self.language),
-                "url": page.url,
-                "active": False if page.portal_category else True,
+                "title": self.portal_topic.title(self.language),
+                "url": url,
+                "active": False if self.portal_category else True,
                 "expanded": True,
                 "children": sorted_categories,
             }
-        ], True
+        ]
 
     def get_results(self, request):
         context = self.get_context(request)
@@ -351,7 +318,6 @@ class PortalSearchPage(
                 "pages": paginator.page(page_number),
                 "paginator": paginator,
                 "current_page": page_number,
-                "get_secondary_nav_items": self.get_nav_items,
             }
         )
         return TemplateResponse(request, "ask-cfpb/see-all.html", context)
@@ -385,9 +351,9 @@ class PortalSearchPage(
         )
         if self.portal_category.heading == "Key terms":
             self.glossary_terms = self.get_glossary_terms()
-            context = self.get_context(request)
-            context.update({"get_secondary_nav_items": self.get_nav_items})
-            return TemplateResponse(request, "ask-cfpb/see-all.html", context)
+            return TemplateResponse(
+                request, "ask-cfpb/see-all.html", self.get_context(request)
+            )
         self.query_base = (
             AnswerPageDocument.search()
             .filter("match", portal_topics=self.portal_topic.heading)
@@ -472,182 +438,3 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
         context["tag"] = tag
         context["paginator"] = paginator
         return TemplateResponse(request, self.template, context)
-
-
-class ArticleLink(Orderable, models.Model):
-    text = models.CharField(max_length=255)
-    url = models.CharField(max_length=255)
-
-    article_page = ParentalKey("ArticlePage", related_name="article_links")
-
-    panels = [
-        FieldPanel("text"),
-        FieldPanel("url"),
-    ]
-
-
-class ArticlePage(CFGOVPage):
-    """
-    General article page type.
-    """
-
-    category = models.CharField(
-        choices=[
-            ("basics", "Basics"),
-            ("common_issues", "Common issues"),
-            ("howto", "How to"),
-            ("know_your_rights", "Know your rights"),
-        ],
-        max_length=255,
-    )
-    heading = models.CharField(
-        max_length=255,
-        blank=False,
-    )
-    intro = models.TextField(blank=False)
-    inset_heading = models.CharField(
-        max_length=255, blank=True, verbose_name="Heading"
-    )
-    sections = StreamField(
-        [
-            (
-                "section",
-                blocks.StructBlock(
-                    [
-                        (
-                            "heading",
-                            blocks.CharBlock(
-                                max_length=255,
-                                required=True,
-                                label="Section heading",
-                            ),
-                        ),
-                        (
-                            "summary",
-                            blocks.TextBlock(
-                                required=False,
-                                blank=True,
-                                label="Section summary",
-                            ),
-                        ),
-                        (
-                            "link_text",
-                            blocks.CharBlock(
-                                required=False,
-                                blank=True,
-                                label="Section link text",
-                            ),
-                        ),
-                        (
-                            "url",
-                            blocks.CharBlock(
-                                required=False,
-                                blank=True,
-                                label="Section link URL",
-                                max_length=255,
-                            ),
-                        ),
-                        (
-                            "subsections",
-                            blocks.ListBlock(
-                                blocks.StructBlock(
-                                    [
-                                        (
-                                            "heading",
-                                            blocks.CharBlock(
-                                                max_length=255,
-                                                required=False,
-                                                blank=True,
-                                                label="Subsection heading",
-                                            ),
-                                        ),
-                                        (
-                                            "summary",
-                                            blocks.TextBlock(
-                                                required=False,
-                                                blank=True,
-                                                label="Subsection summary",
-                                            ),
-                                        ),
-                                        (
-                                            "link_text",
-                                            blocks.CharBlock(
-                                                required=True,
-                                                label="Subsection link text",
-                                            ),
-                                        ),
-                                        (
-                                            "url",
-                                            blocks.CharBlock(
-                                                required=True,
-                                                label="Subsection link URL",
-                                            ),
-                                        ),
-                                    ]
-                                )
-                            ),
-                        ),
-                    ]
-                ),
-            )
-        ]
-    )
-    content_panels = CFGOVPage.content_panels + [
-        MultiFieldPanel(
-            [
-                FieldPanel("category"),
-                FieldPanel("heading"),
-                FieldPanel("intro"),
-            ],
-            heading="Heading",
-            classname="collapsible",
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel("inset_heading"),
-                InlinePanel("article_links", label="Inset link", max_num=2),
-            ],
-            heading="Inset links",
-            classname="collapsible",
-        ),
-        StreamFieldPanel("sections"),
-    ]
-
-    sidebar = StreamField(
-        [
-            ("call_to_action", molecules.CallToAction()),
-            ("related_links", molecules.RelatedLinks()),
-            ("related_metadata", molecules.RelatedMetadata()),
-            (
-                "email_signup",
-                v1_blocks.EmailSignUpChooserBlock(),
-            ),
-            (
-                "reusable_text",
-                v1_blocks.ReusableTextChooserBlock(ReusableText),
-            ),
-        ],
-        blank=True,
-    )
-
-    sidebar_panels = [
-        StreamFieldPanel("sidebar"),
-    ]
-
-    edit_handler = TabbedInterface(
-        [
-            ObjectList(content_panels, heading="Content"),
-            ObjectList(sidebar_panels, heading="Sidebar"),
-            ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
-        ]
-    )
-
-    template = "ask-cfpb/article-page.html"
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request)
-        context["about_us"] = get_standard_text(self.language, "about_us")
-        return context
-
-    def __str__(self):
-        return self.title

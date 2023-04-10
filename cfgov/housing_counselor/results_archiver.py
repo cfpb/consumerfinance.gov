@@ -9,6 +9,7 @@ json_file_name = "HUD_approved_housing_counselors.json"
 # list of the full results we receive from the HUD API, in case of
 # future enforcement actions.
 
+
 # As an MVP, we're saving the complete JSON response, zipped. As a
 # future enhancement, we could consider improving the format of the
 # data, e.g. as CSV.

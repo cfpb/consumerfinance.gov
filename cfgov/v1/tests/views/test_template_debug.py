@@ -13,7 +13,7 @@ class TemplateDebugViewTests(SimpleTestCase):
             TemplateDebugView.as_view()(self.request)
 
     def test_renders_debug_template_name(self):
-        debug_template_name = "_includes/atoms/hyperlink.html"
+        debug_template_name = "v1/includes/atoms/hyperlink.html"
 
         view = TemplateDebugView.as_view(
             debug_template_name=debug_template_name, debug_test_cases={}
@@ -35,7 +35,7 @@ class TemplateDebugViewTests(SimpleTestCase):
         }
 
         view = TemplateDebugView.as_view(
-            debug_template_name="_includes/atoms/hyperlink.html",
+            debug_template_name="v1/includes/atoms/hyperlink.html",
             debug_test_cases=test_cases,
         )
 
@@ -47,7 +47,7 @@ class TemplateDebugViewTests(SimpleTestCase):
             self.assertContains(response, f'href="{test_case["url"]}"')
 
     def test_renders_extra_js(self):
-        debug_template_name = "_includes/atoms/hyperlink.html"
+        debug_template_name = "v1/includes/atoms/hyperlink.html"
 
         view = TemplateDebugView.as_view(
             debug_template_name=debug_template_name,

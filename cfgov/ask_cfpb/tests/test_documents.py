@@ -1,11 +1,12 @@
 # Based on https://github.com/django-es/django-elasticsearch-dsl/blob/master/tests/test_documents.py  # noqa
+import json
 from unittest.mock import patch
 
 from django.apps import apps
 from django.db import models
 from django.test import TestCase, override_settings
 
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from django_opensearch_dsl import fields
 from django_opensearch_dsl.documents import Document
@@ -78,7 +79,17 @@ class AnswerPageDocumentTest(TestCase):
             slug="test-english-question-en-1234",
             title="Test English question",
             answer_base=self.answer,
-            answer_content="Test English answer",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Test English answer",
+                        },
+                    }
+                ]
+            ),
             question="Test English question",
             search_tags="English",
         )
@@ -87,7 +98,17 @@ class AnswerPageDocumentTest(TestCase):
             slug="test-spanish-question-es-1234",
             title="Test Spanish question",
             answer_base=self.answer,
-            answer_content="Test Spanish answer",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Test Spanish answer",
+                        },
+                    }
+                ]
+            ),
             question="Test Spanish question",
             search_tags="Spanish",
         )
@@ -186,9 +207,9 @@ class AnswerPageDocumentTest(TestCase):
                     self.en_page
                 ),
                 "portal_topics": self.doc.prepare_portal_topics(self.en_page),
-                "preview": "",
+                "preview": "Test English answer",
                 "search_tags": self.doc.prepare_search_tags(self.en_page),
-                "text": "Test English question\n\n\n\n",
+                "text": "Test English question\nTest English answer",
                 "url": self.doc.prepare_url(self.en_page),
             },
         )
@@ -206,9 +227,9 @@ class AnswerPageDocumentTest(TestCase):
                     self.es_page
                 ),
                 "portal_topics": self.doc.prepare_portal_topics(self.es_page),
-                "preview": "",
+                "preview": "Test Spanish answer",
                 "search_tags": self.doc.prepare_search_tags(self.es_page),
-                "text": "Test Spanish question\n\n\n\n",
+                "text": "Test Spanish question\nTest Spanish answer",
                 "url": self.doc.prepare_url(self.es_page),
             },
         )

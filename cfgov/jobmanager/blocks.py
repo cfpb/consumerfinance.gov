@@ -1,4 +1,4 @@
-from wagtail.core import blocks
+from wagtail import blocks
 
 from jobmanager.models import JobListingPage
 
@@ -31,6 +31,9 @@ class JobListingList(blocks.StructBlock):
     class Meta:
         icon = "list-ul"
         template = "jobmanager/job_listing_list.html"
+
+    class Media:
+        css = ["job_listing_list.css"]
 
 
 class JobListingTable(blocks.StaticBlock):

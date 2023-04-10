@@ -1,11 +1,6 @@
-from wagtail.admin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core.blocks import StreamBlock
-from wagtail.core.fields import StreamField
-from wagtail.search import index
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.blocks import StreamBlock
+from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
@@ -38,13 +33,14 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
             ("hero", molecules.Hero()),
         ],
         blank=True,
+        use_json_field=True,
     )
-    content = StreamField(SublandingFilterableContent)
+    content = StreamField(SublandingFilterableContent, use_json_field=True)
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     # Tab handler interface
@@ -56,25 +52,20 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
         ]
     )
 
-    template = "sublanding-page/index.html"
+    template = "v1/sublanding-page/index.html"
 
     page_description = (
         "Right-hand sidebar, no left-hand sidebar. Use if children should be "
         "searchable using standard search filters module."
     )
 
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
-
 
 class ResearchHubPage(CategoryFilterableMixin, SublandingFilterablePage):
-    template = "sublanding-page/index.html"
+    template = "v1/sublanding-page/index.html"
     filterable_categories = ["Research Hub"]
 
 
 class ActivityLogPage(CategoryFilterableMixin, SublandingFilterablePage):
-    template = "activity-log/index.html"
+    template = "v1/activity-log/index.html"
     filterable_categories = ("Blog", "Newsroom", "Research Report")
     filterable_per_page_limit = 100

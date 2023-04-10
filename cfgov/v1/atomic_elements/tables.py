@@ -1,12 +1,13 @@
 from django import forms
 from django.utils.functional import cached_property
 
+from wagtail import blocks
 from wagtail.contrib.table_block.blocks import (
     TableBlock,
     TableInput,
     TableInputAdapter,
 )
-from wagtail.core.telepath import register
+from wagtail.telepath import register
 
 
 class RichTextTableInput(TableInput):
@@ -53,6 +54,8 @@ class AtomicTableBlock(TableBlock):
                     if cell:
                         has_data = True
                         break
+                if has_data:
+                    break
         return has_data
 
     def get_table_options(self, table_options=None):
@@ -66,8 +69,33 @@ class AtomicTableBlock(TableBlock):
     class Meta:
         default = None
         icon = "table"
-        template = "_includes/organisms/table.html"
+        template = "v1/includes/organisms/tables/base.html"
         label = "Table"
 
-    class Media:
-        js = ["table.js"]
+
+class ContactUsRow(blocks.StructBlock):
+    title = blocks.CharBlock()
+    body = blocks.RichTextBlock(features=["bold", "italic", "link"])
+
+
+class ContactUsTable(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    rows = blocks.ListBlock(ContactUsRow, collapsed=True, min_num=1)
+
+    class Meta:
+        icon = "table"
+        template = "v1/includes/organisms/tables/contact-us.html"
+        label = "Table (Contact Us)"
+
+
+class ConsumerReportingCompanyTable(blocks.StructBlock):
+    website = blocks.RichTextBlock(features=["bold", "italic", "link"])
+    phone = blocks.RichTextBlock(features=["bold", "italic", "link"])
+    mailing_address = blocks.RichTextBlock(features=["bold", "italic", "link"])
+
+    class Meta:
+        icon = "table"
+        template = (
+            "v1/includes/organisms/tables/consumer-reporting-company.html"
+        )
+        label = "Table (Consumer Reporting Company)"

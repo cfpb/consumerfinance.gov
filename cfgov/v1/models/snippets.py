@@ -1,12 +1,7 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
-    FieldPanel,
-    PageChooserPanel,
-    StreamFieldPanel,
-)
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.search import index
+from wagtail.admin.panels import FieldPanel
+from wagtail.fields import RichTextField, StreamField
 from wagtail.snippets.models import register_snippet
 
 from v1.atomic_elements import molecules
@@ -19,7 +14,7 @@ from v1.blocks import ReusableTextChooserBlock  # noqa
 
 
 @register_snippet
-class ReusableText(index.Indexed, models.Model):
+class ReusableText(models.Model):
     title = models.CharField(
         verbose_name="Snippet title (internal only)", max_length=255
     )
@@ -33,12 +28,6 @@ class ReusableText(index.Indexed, models.Model):
     )
     text = RichTextField()
 
-    search_fields = [
-        index.SearchField("title", partial_match=True),
-        index.SearchField("sidefoot_heading", partial_match=True),
-        index.SearchField("text", partial_match=True),
-    ]
-
     def __str__(self):
         return self.title
 
@@ -51,7 +40,6 @@ class Contact(models.Model):
         help_text=("The snippet heading"),
     )
     body = RichTextField(blank=True)
-    body_shown_in_expandables = models.BooleanField(default=False)
 
     contact_info = StreamField(
         [
@@ -61,13 +49,13 @@ class Contact(models.Model):
             ("hyperlink", molecules.ContactHyperlink()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     panels = [
         FieldPanel("heading"),
         FieldPanel("body"),
-        FieldPanel("body_shown_in_expandables"),
-        StreamFieldPanel("contact_info"),
+        FieldPanel("contact_info"),
     ]
 
     def __str__(self):
@@ -78,18 +66,11 @@ class Contact(models.Model):
 
 
 @register_snippet
-class RelatedResource(index.Indexed, models.Model):
+class RelatedResource(models.Model):
     title = models.CharField(max_length=255)
     title_es = models.CharField(max_length=255, blank=True, null=True)
     text = RichTextField(blank=True, null=True)
     text_es = RichTextField(blank=True, null=True)
-
-    search_fields = [
-        index.SearchField("title", partial_match=True),
-        index.SearchField("text", partial_match=True),
-        index.SearchField("title_es", partial_match=True),
-        index.SearchField("text_es", partial_match=True),
-    ]
 
     def trans_title(self, language="en"):
         if language == "es":
@@ -106,7 +87,7 @@ class RelatedResource(index.Indexed, models.Model):
 
 
 @register_snippet
-class EmailSignUp(index.Indexed, models.Model):
+class EmailSignUp(models.Model):
     topic = models.CharField(
         verbose_name="Topic name (internal only)",
         max_length=255,
@@ -165,19 +146,13 @@ class EmailSignUp(index.Indexed, models.Model):
         ),
     )
 
-    search_fields = [
-        index.SearchField("topic", partial_match=True),
-        index.SearchField("code", partial_match=True),
-        index.SearchField("url", partial_match=True),
-    ]
-
     panels = [
         FieldPanel("topic"),
         FieldPanel("code"),
         FieldPanel("url"),
         FieldPanel("heading"),
         FieldPanel("text"),
-        PageChooserPanel("disclaimer_page", "wagtailcore.Page"),
+        FieldPanel("disclaimer_page"),
     ]
 
     def __str__(self):

@@ -1,10 +1,6 @@
-from wagtail.admin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core.blocks import StreamBlock
-from wagtail.core.fields import StreamField
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.blocks import StreamBlock
+from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
@@ -29,15 +25,16 @@ class StoryContent(StreamBlock):
     info_unit_group = organisms.InfoUnitGroup()
     text_introduction = molecules.TextIntroduction()
     video_player = organisms.VideoPlayer()
+    simple_chart = organisms.SimpleChart()
 
 
 class StoryPage(CFGOVPage):
-    header = StreamField(StoryHeader, blank=True)
-    content = StreamField(StoryContent, blank=True)
+    header = StreamField(StoryHeader, blank=True, use_json_field=True)
+    content = StreamField(StoryContent, blank=True, use_json_field=True)
 
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     edit_handler = TabbedInterface(
@@ -46,5 +43,7 @@ class StoryPage(CFGOVPage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
+
+    template = "v1/story_page.html"
 
     page_description = "For single-column, image- and narrative-focused pages."

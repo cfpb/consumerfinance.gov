@@ -4,12 +4,8 @@ from collections import OrderedDict
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core.fields import StreamField
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.fields import StreamField
 
 from opensearch_dsl import Q
 
@@ -59,8 +55,10 @@ ALWAYS_EXPANDED = {"topic", "school_subject"}
 SEARCH_FIELDS = [
     "text",
     "related_text",
+    "file_titles",
     "title",
     "big_idea",
+    "search_tags",
     "essential_questions",
     "objectives",
     "what_students_will_do",
@@ -78,6 +76,7 @@ class ActivityIndexPage(CFGOVPage):
             ("notification", molecules.Notification()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     header_sidebar = StreamField(
@@ -85,13 +84,14 @@ class ActivityIndexPage(CFGOVPage):
             ("image", TdpSearchHeroImage()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     results = {}
     activity_setups = None
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("header_sidebar"),
+        FieldPanel("header"),
+        FieldPanel("header_sidebar"),
     ]
 
     edit_handler = TabbedInterface(
@@ -110,7 +110,7 @@ class ActivityIndexPage(CFGOVPage):
     def get_template(self, request):
         template = "teachers_digital_platform/activity_index_page.html"
         if "partial" in request.GET:
-            template = "teachers_digital_platform/activity_search_facets_and_results.html"  # noqa: B950
+            template = "teachers_digital_platform/activity_search_facets_and_results.html"  # noqa: E501
         return template
 
     def dsl_search(self, request, *args, **kwargs):

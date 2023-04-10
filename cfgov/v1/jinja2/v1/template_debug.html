@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "v1/layouts/base.html" %}
 
 {% block title %}Debugging template {{ debug_template_name }}{% endblock %}
 
@@ -29,7 +29,7 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-<div class="wrapper content_wrapper">
+<div class="content_wrapper">
     <div class="content_main">
         <h1>{{ debug_template_name }}</h1>
 
@@ -41,7 +41,7 @@
         </ul>
         {% endif %}
 
-        {% for name, rendered in debug_test_cases.items() %}
+        {% for name, rendered in debug_test_cases | items %}
         <div class="content_line"></div>
         <div id="{{ name | slugify }}" class="test-case">
             <h2>

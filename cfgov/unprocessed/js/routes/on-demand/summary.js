@@ -1,4 +1,3 @@
-import Summary from '../../organisms/Summary.js';
-import { instantiateAll } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import Summary from '@cfpb/cfpb-expandables/src/Summary.js';
 
-instantiateAll( `.${ Summary.BASE_CLASS }`, Summary );
+Summary.init();

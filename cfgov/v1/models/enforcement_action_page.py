@@ -1,17 +1,14 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
     ObjectList,
-    StreamFieldPanel,
     TabbedInterface,
 )
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Page
-from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.search import index
+from wagtail.fields import StreamField
+from wagtail.models import Page
 
 from modelcluster.fields import ParentalKey
 
@@ -229,9 +226,10 @@ class EnforcementActionPage(AbstractFilterPage):
             ),
         ],
         blank=True,
+        use_json_field=True,
     )
 
-    content_panels = [StreamFieldPanel("header"), StreamFieldPanel("content")]
+    content_panels = [FieldPanel("header"), FieldPanel("content")]
 
     metadata_panels = [
         FieldPanel("public_enforcement_action"),
@@ -257,12 +255,12 @@ class EnforcementActionPage(AbstractFilterPage):
                 FieldPanel("preview_description"),
                 FieldPanel("secondary_link_url"),
                 FieldPanel("secondary_link_text"),
-                ImageChooserPanel("preview_image"),
+                FieldPanel("preview_image"),
             ],
             heading="Page Preview Fields",
             classname="collapsible",
         ),
-        FieldPanel("authors", "Authors"),
+        FieldPanel("authors", heading="Authors"),
         MultiFieldPanel(
             [
                 FieldPanel("date_published"),
@@ -271,8 +269,14 @@ class EnforcementActionPage(AbstractFilterPage):
             "Relevant Dates",
             classname="collapsible",
         ),
-        MultiFieldPanel(Page.settings_panels, "Scheduled Publishing"),
-        FieldPanel("language", "Language"),
+        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
+        MultiFieldPanel(
+            [
+                FieldPanel("language", heading="Language"),
+                FieldPanel("english_page"),
+            ],
+            "Translation",
+        ),
     ]
 
     edit_handler = TabbedInterface(
@@ -287,11 +291,7 @@ class EnforcementActionPage(AbstractFilterPage):
         ]
     )
 
-    template = "enforcement-action/index.html"
-
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField("content")
-    ]
+    template = "v1/enforcement-action/index.html"
 
     @property
     def status_strings(self):

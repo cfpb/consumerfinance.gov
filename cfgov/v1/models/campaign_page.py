@@ -1,10 +1,6 @@
-from wagtail.admin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core.blocks import StreamBlock
-from wagtail.core.fields import StreamField
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.blocks import StreamBlock
+from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
@@ -33,12 +29,20 @@ class CampaignContent(StreamBlock):
 
 
 class CampaignPage(CFGOVPage):
-    header = StreamField(CampaignHeader, blank=True)
-    content = StreamField(CampaignContent, blank=True)
+    header = StreamField(
+        CampaignHeader,
+        blank=True,
+        use_json_field=True,
+    )
+    content = StreamField(
+        CampaignContent,
+        blank=True,
+        use_json_field=True,
+    )
 
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     edit_handler = TabbedInterface(
@@ -47,6 +51,8 @@ class CampaignPage(CFGOVPage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
+
+    template = "v1/campaign_page.html"
 
     # Sets page to only be createable as the child of the homepage
     parent_page_types = ["v1.HomePage"]

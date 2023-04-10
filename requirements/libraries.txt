@@ -2,6 +2,7 @@
 base36==0.1.1
 beautifulsoup4==4.8.2
 boto3==1.22.7
+django-autocomplete-light==3.9.4
 django-cors-headers==3.11.0
 django-csp==3.7
 django-opensearch-dsl==0.4.1
@@ -18,28 +19,24 @@ djangosaml2==1.5.0
 edgegrid-python==1.2.1
 elasticsearch<7.11  # Keep pinned to the deployed ES version
 govdelivery==1.4.0
-Jinja2==2.11.3
+Jinja2==3.1.2
 lxml==4.9.1
 opensearch-dsl==1.0.0
 opensearch-py==1.1.0
 psycopg2-binary==2.8.6
 python-dateutil==2.8.2
-regdown==1.0.5
+regdown==1.0.7
 requests==2.27.1
 requests-aws4auth==1.1.2
 s3transfer==0.5.2
-wagtail-autocomplete==0.8.0
-wagtail-flags==5.1.0
-wagtail-inventory==1.5
+wagtail-autocomplete==0.9.0
+wagtail-flags==5.2.0
+wagtail-inventory==2.0.0
 wagtail-placeholder-images==0.1.1
-wagtail-sharing==2.6
-wagtail-treemodeladmin==1.5.0
+wagtail-sharing==2.8
+wagtail-treemodeladmin==1.6.0
 wagtailmedia==0.9.0
 
 # These packages are installed from GitHub.
 https://github.com/cfpb/owning-a-home-api/releases/download/0.17.3/owning_a_home_api-0.17.3-py3-none-any.whl
-https://github.com/cfpb/ccdb5-api/releases/download/1.6.6/ccdb5_api-1.6.6-py3-none-any.whl
-https://github.com/cfpb/curriculum-review-tool/releases/download/2.2.0/crtool-2.2.0-py3-none-any.whl
-
-# Temporarily pin Jinja 2.11's MarkupSafe dependency.
-MarkupSafe==2.0.1
+https://github.com/cfpb/ccdb5-api/releases/download/1.7.0/ccdb5_api-1.7.0-py3-none-any.whl

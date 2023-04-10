@@ -1,4 +1,3 @@
-
 # TDP Survey System
 
 ## Overall design and technical stack
@@ -70,7 +69,7 @@ The survey will work after a standard installation of the CFPB site, though surv
 This gives an overview of template locations:
 
 | Desc               | URL                                           | Template in `jinja2/tea.../survey` | Script                                  |
-|--------------------|-----------------------------------------------|------------------------------------|-----------------------------------------|
+| ------------------ | --------------------------------------------- | ---------------------------------- | --------------------------------------- |
 | Entry page for 3-5 | ../survey/3-5/                                | grade-level-3-5.html               | survey/grade-level-page.js              |
 | Survey page        | ../survey/3-5/p1/<br>../survey/3-5/p2/<br>... | form-page.html                     | survey/survey-page.js                   |
 | Results page       | ../survey/3-5/results/                        | results-3-5.html                   | survey/result-page.js                   |
@@ -87,16 +86,16 @@ JavaScript is split into 3 top-level modules (`grade-level-page`, `survey-page`,
 
 The content is managed via files in the [survey-data](survey-data) folder. The CSV files can be imported by any spreadsheet software and re-exported to `.csv`.
 
-| Filename | Content |
-|---|---|
-| `answer-types.csv` | Defines the types of questions available (all multiple choice). Includes for each type:<br><br>The key; and the list of choices (separated by pipe characters). Also an unused "Column heading" column. |
-| `3-5.csv` | Questions for the Grades 3-5 survey. Includes for each question:<br><br>The page number; part (1, 2, or 3); a unique ID (the question number); the label text; answer type; and points awarded for each possible selection. Also an unused "Section" column. |
-| `6-8.csv` | Questions for the Grades 6-8 survey. |
-| `9-12.csv` | Questions for the Grades 9-12 survey. |
-| `results-content.csv` | Content for the results pages. This also includes some scoring logic as described below. |
-| `3-5-meta.json` | Name for the `3-5` survey key. |
-| `6-8-meta.json` | Name for the `6-8` survey key. |
-| `9-12-meta.json` | Name for the `9-12` survey key.<br><br>Also configuration to adjust the overall score by multiplying the total points by 2/3, so that all 3 surveys overall scores are out of 100. |
+| Filename              | Content                                                                                                                                                                                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `answer-types.csv`    | Defines the types of questions available (all multiple choice). Includes for each type:<br><br>The key; and the list of choices (separated by pipe characters). Also an unused "Column heading" column.                                                      |
+| `3-5.csv`             | Questions for the Grades 3-5 survey. Includes for each question:<br><br>The page number; part (1, 2, or 3); a unique ID (the question number); the label text; answer type; and points awarded for each possible selection. Also an unused "Section" column. |
+| `6-8.csv`             | Questions for the Grades 6-8 survey.                                                                                                                                                                                                                         |
+| `9-12.csv`            | Questions for the Grades 9-12 survey.                                                                                                                                                                                                                        |
+| `results-content.csv` | Content for the results pages. This also includes some scoring logic as described below.                                                                                                                                                                     |
+| `3-5-meta.json`       | Name for the `3-5` survey key.                                                                                                                                                                                                                               |
+| `6-8-meta.json`       | Name for the `6-8` survey key.                                                                                                                                                                                                                               |
+| `9-12-meta.json`      | Name for the `9-12` survey key.<br><br>Also configuration to adjust the overall score by multiplying the total points by 2/3, so that all 3 surveys overall scores are out of 100.                                                                           |
 
 After each CSV/JSON file change, the Python server must be restarted:
 
@@ -107,7 +106,7 @@ docker-compose restart python
 
 All surveys must have 3 parts ("1", "2", and "3") and each question must have an answer type that corresponds to the "Key" column of the "answer-types.csv" file.
 
-In "answer-types", the "Choices" column contains the answer options separated by ` | ` (the pipe character).
+In "answer-types", the "Choices" column contains the answer options separated by `|` (the pipe character).
 
 As seen in the `SellDrinks` answer type, answers can be references to above-defined answer types. The expression `[list:SellDrinks-A]` effectively embeds the list of choices for `SellDrinks-A` as one possible answer.
 

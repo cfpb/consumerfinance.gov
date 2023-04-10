@@ -12,12 +12,10 @@
         <nav class="o-expandable
                     o-secondary-navigation">
             <button class="o-expandable_header o-expandable_target">
-                <span class="h5
-                             o-expandable_header-left
-                             o-expandable_label">
+                <span class="h5 o-expandable_label">
                     Nav Button
                 </span>
-                <span class="o-expandable_header-right">
+                <span class="o-expandable_link">
                     <span class="o-expandable_cue-open">
                         {{ svg_icon('plus-round') }}
                     </span>
@@ -44,12 +42,10 @@
           -----------------------
           .o-expandable.o-secondary-navigation
             .o-expandable_header.o-expandable_target
-                .o-expandable_header-left
-                .o-expandable_header-right
-                  .o-expandable_cue-open
-                    .cf-icon-svg
-                  .o-expandable_cue-close
-                    .cf-icon-svg
+              .o-expandable_cue-open
+                .cf-icon-svg
+              .o-expandable_cue-close
+                .cf-icon-svg
             .o-expandable_content
               .o-secondary-navigation_list.o-secondary-navigation_list__parents
                 li
@@ -59,7 +55,6 @@
 */
 
 .o-secondary-navigation {
-
   // TODO: If secondary navigation is overriding o-expandables appearance,
   //       they are not atomic expandables anymore per the design spec.
   //       Secondary navigation should use FlyoutMenu for expandable-like
@@ -72,7 +67,7 @@
     }
 
     &_list__parents {
-      li[data-nav-is-active="False"]{
+      li[data-nav-is-active='False']{
         display: none;
       }
     }
@@ -82,7 +77,6 @@
       border-bottom: 1px solid @gray-40;
     }
   } );
-
 
   .respond-to-min( @bp-med-min, {
     .o-expandable {
@@ -109,12 +103,12 @@
   .o-expandable_label {
     .h5();
 
-    line-height: unit( 22 / @size-v );
+    line-height: unit(22 / @size-v);
     margin-bottom: 0;
   }
 
   &_list__children {
-    margin-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    margin-left: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
 
     .respond-to-min( @bp-med-min, {
       // Add 5px for the border to half the gutter

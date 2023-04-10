@@ -7,7 +7,6 @@ from search.elasticsearch_helpers import environment_specific_index
 
 @registry.register_document
 class SectionParagraphDocument(Document):
-
     text = fields.TextField(attr="paragraph", boost=10)
     title = fields.TextField()
     part = fields.KeywordField()

@@ -4,7 +4,7 @@ import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
-from wagtail.core.blocks import StreamValue
+from wagtail.blocks import StreamValue
 
 from treebeard.mp_tree import MP_Node
 
@@ -74,7 +74,7 @@ def get_or_create_page(
 
 def is_page(page_or_revision):
     """Return True if the page_or_revision is a Page object"""
-    return not hasattr(page_or_revision, "content_json")
+    return hasattr(page_or_revision, "live_revision")
 
 
 def get_streamfield_data(page_or_revision, field_name):
@@ -84,8 +84,7 @@ def get_streamfield_data(page_or_revision, field_name):
         field = getattr(page_or_revision, field_name)
         return field.raw_data
     else:
-        revision_content = json.loads(page_or_revision.content_json)
-        field = revision_content.get(field_name, "[]")
+        field = page_or_revision.content.get(field_name, "[]")
         return json.loads(field)
 
 
@@ -99,9 +98,7 @@ def set_streamfield_data(page_or_revision, field_name, data, commit=True):
         stream_value = StreamValue(stream_block, data, is_lazy=True)
         setattr(page_or_revision, field_name, stream_value)
     else:
-        revision_content = json.loads(page_or_revision.content_json)
-        revision_content[field_name] = json.dumps(data)
-        page_or_revision.content_json = json.dumps(revision_content)
+        page_or_revision.content[field_name] = json.dumps(data)
 
     if commit:
         page_or_revision.save()

@@ -1,10 +1,5 @@
-from wagtail.admin.edit_handlers import (
-    ObjectList,
-    StreamFieldPanel,
-    TabbedInterface,
-)
-from wagtail.core.fields import StreamField
-from wagtail.search import index
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
+from wagtail.fields import StreamField
 
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
@@ -17,6 +12,7 @@ class LandingPage(CFGOVPage):
             ("text_introduction", molecules.TextIntroduction()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     content = StreamField(
@@ -25,12 +21,13 @@ class LandingPage(CFGOVPage):
             ("well", organisms.Well()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel("header"),
-        StreamFieldPanel("content"),
+        FieldPanel("header"),
+        FieldPanel("content"),
     ]
 
     # Tab handler interface
@@ -42,9 +39,4 @@ class LandingPage(CFGOVPage):
         ]
     )
 
-    template = "landing-page/index.html"
-
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField("content"),
-        index.SearchField("header"),
-    ]
+    template = "v1/landing-page/index.html"

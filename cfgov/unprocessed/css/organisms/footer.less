@@ -18,36 +18,18 @@
 .o-footer {
   // Adding an extra 5px to the top to account for the absolute positioned
   // social media icons.
-  padding-top: unit( 50px / @base-font-size-px, em );
+  padding-top: unit(50px / @base-font-size-px, em);
   // There is a 10px margin-bottom on the  last .o-footer_list li's, plus the
   // 50px bottom padding = 60px of total padding at the bottom of the footer.
-  padding-bottom: unit( 50px / @base-font-size-px, em );
+  padding-bottom: unit(50px / @base-font-size-px, em);
   border-top: 5px solid @green;
   background: @gray-5;
-
-  // TODO: Determine if this is used and if not, delete it!
-  &_share-icon-list {
-    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-    .m-list__horizontal();
-
-    .respond-to-min( @bp-sm-min, {
-      margin-bottom: 0;
-    } );
-
-    .respond-to-min( @bp-med-min, {
-      margin-top: 0;
-      position: absolute;
-      // Aligns with the baseline of .o-footer_nav-list text.
-            top: -9px;
-      right: 0;
-    } );
-  }
 
   &_nav-list {
     .m-list__links();
 
     .m-list_link {
-      font-size: unit( 18px / @base-font-size-px, em );
+      font-size: unit(18px / @base-font-size-px, em);
       .u-link__colors( @black );
 
       .respond-to-min( @bp-sm-min, {
@@ -81,7 +63,7 @@
 
   &_pre {
     position: relative;
-    margin-bottom: unit( 45px / @base-font-size-px, em );
+    margin-bottom: unit(45px / @base-font-size-px, em);
 
     .o-footer_top-button {
       display: block;
@@ -189,7 +171,7 @@
   }
 
   &-post {
-    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
 
     .respond-to-min( @bp-sm-min, {
       padding-top: unit( @grid_gutter-width / @base-font-size-px, em );

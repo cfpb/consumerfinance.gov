@@ -90,10 +90,10 @@
      id="{{ id }}">
     <button class="o-expandable_header o-expandable_target"
             tabindex="0">
-        <span class="h4 o-expandable_header-left o-expandable_label">
+        <span class="h4 o-expandable_label">
             {{ item.heading }}
         </span>
-        <span class="o-expandable_header-right o-expandable_link">
+        <span class="o-expandable_link">
             <span class="o-expandable_cue-open" aria-label="Show">
                 {{ svg_icon('plus-round') }}
             </span>
@@ -147,6 +147,7 @@
 
 
 <div id="form-explainer" class="form-explainer">
+    {{ value.heading | safe if value.heading else '' }}
     <div class="explain" aria-controls="form-explainer">
 
         {% set page_count = value.pages | length %}

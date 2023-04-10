@@ -1,17 +1,13 @@
 export class ExploreRates {
-
   open() {
-    cy.visit( '/owning-a-home/explore-rates/' );
+    cy.visit('/owning-a-home/explore-rates/');
   }
 
-  selectState( state ) {
-    cy.get( '#location' )
-      .select( state );
+  selectState(state) {
+    cy.get('#location').select(state);
   }
 
   graph() {
-    return cy.get( '#chart-section' )
-      .within( () => cy.get( 'figure:first' ) );
+    return cy.get('#chart-section').within(() => cy.get('figure:first'));
   }
-
 }

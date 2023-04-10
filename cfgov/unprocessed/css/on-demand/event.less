@@ -1,0 +1,249 @@
+@import (reference) '../main.less';
+
+/* ==========================================================================
+   consumerfinance.gov
+   Page-specific styles for event post detail page.
+   These styles are only delivered to event pages
+   but are referenced from both event.html and _event-detail.html
+   ========================================================================== */
+
+/* Event template settings
+   ========================================================================== */
+.t-event_details {
+  .respond-to-min( @bp-sm-min, {
+    .modification-date {
+      float: right;
+    }
+  } );
+}
+
+/* Event-Agenda Table
+   ========================================================================== */
+.event-agenda_table {
+  h2 + & td[data-label]:before {
+    margin-top: 0;
+  }
+
+  th,
+  td {
+    font-size: 16px;
+  }
+
+  .respond-to-min(@bp-med-min, {
+    th {
+      width: 25%;
+    }
+  } );
+}
+
+/* Event-Post
+   ========================================================================== */
+
+.post__event {
+  > footer {
+    margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
+  }
+
+  .respond-to-min(@bp-med-min, {
+    padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
+  });
+}
+
+/* Event-Media-Container
+   ========================================================================== */
+
+.event-media_container {
+  border: 1px solid @gray-10;
+}
+
+/* Event-Meta
+   ========================================================================== */
+
+.event-meta_description {
+  text-transform: none;
+
+  &__block {
+    display: block;
+  }
+}
+
+.event-meta_address {
+  text-transform: capitalize;
+  display: inline-block;
+
+  .event-meta_street:not(:empty):after,
+  .event-meta_suite:not(:empty):after {
+    // Adding a linebreak after the street if it's contents
+    // aren't empty.
+    content: '\A';
+    white-space: pre;
+  }
+}
+
+.event-calendar_container .datetime {
+  letter-spacing: normal;
+}
+
+/* Event-Status
+   ========================================================================== */
+
+.event-status {
+  color: @black;
+
+  .event-meta {
+    color: @gray-40;
+  }
+}
+
+// The spacing for the RSVP/Livestream aside on the event details.
+// Spacing should follow a 1/2/1 ratio (15px/30px/15px).
+.event-status_rsvp {
+  p:first-child {
+    line-height: 1;
+    margin-bottom: unit(15px / @base-font-size-px, em);
+  }
+
+  p:last-child {
+    margin-bottom: unit(30px / @base-font-size-px, em);
+  }
+}
+
+.event-status_livestream p:first-child {
+  line-height: 1;
+  // The margin is kept at 10px to accommodate the line-height
+  // of the text so that the gap appears to be 15px.
+  margin-bottom: unit(10px / @base-font-size-px, em);
+}
+
+/* Event-Venue
+   ========================================================================== */
+
+.event-venue {
+  background: @gray-10;
+  border-top: 5px solid @green;
+}
+
+.event-venue_details {
+  padding: 1.5em 1.5em 0.5em;
+
+  .respond-to-max(@bp-xs-max, {
+    padding: 1.5em;
+  });
+
+  .datetime {
+    .h5();
+    text-transform: uppercase;
+  }
+
+  .event-meta_address {
+    .respond-to-max(@bp-xs-max, {
+      margin: 0;
+    });
+  }
+
+  .event-meta_venue {
+    display: block;
+  }
+}
+
+.event-venue_header {
+  margin-bottom: 10px;
+}
+
+.event-venue_live-btn {
+  margin-right: 10px;
+  background-color: @green;
+  color: @black;
+  text-transform: uppercase;
+  padding: 6px 15px 4px;
+}
+
+.event-venue_heading {
+  display: inline-block;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+.line-container {
+  margin: 0 0 unit(30px / @base-font-size-px, em);
+  border-top: 1px solid @gray-20;
+  border-bottom: 1px solid @gray-20;
+
+  &_body {
+    margin: unit(26px / @base-font-size-px, em) 0
+      unit(26px / @base-font-size-px, em);
+  }
+}
+
+.modification-date {
+  .h6();
+  background: @green-20;
+  color: @black;
+  letter-spacing: 0;
+  padding: unit(1px / @base-font-size-px, em)
+    unit(10px / @base-font-size-px, em);
+  text-align: center;
+}
+
+.post_heading {
+  .h2();
+  margin-bottom: unit(13px / @font-size, em);
+  .respond-to-min(@bp-sm-min, {
+    .h1();
+  });
+}
+
+.post_dek {
+  .h4();
+  margin-bottom: unit(20px / @font-size, em);
+}
+
+.post_body {
+  .u-clearfix();
+  margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
+
+  p ~ h1,
+  p ~ .h1 {
+    margin-top: unit(22px / @base-font-size-px, em);
+  }
+
+  p ~ h2,
+  p ~ .h2 {
+    margin-top: unit(31px / @base-font-size-px, em);
+  }
+
+  p ~ h3,
+  p ~ .h3 {
+    margin-top: unit(35px / @base-font-size-px, em);
+  }
+
+  p ~ h4,
+  p ~ .h4 {
+    margin-bottom: unit(7px / @base-font-size-px, em);
+  }
+
+  p ~ h5,
+  p ~ .h5 {
+    margin-bottom: unit(6px / @base-font-size-px, em);
+  }
+
+  p ~ h6,
+  p ~ .h6 {
+    margin-bottom: unit(5px / @base-font-size-px, em);
+  }
+}
+
+.post_inset {
+  margin: unit(30px / @base-font-size-px, em) 0;
+  color: @black;
+
+  &__right {
+    .respond-to-min(@bp-sm-min, {
+      float: right;
+      width: unit(250px / @base-font-size-px, em);
+      margin-top: unit(5px / @base-font-size-px, em);
+      margin-left: unit(@grid_gutter-width / @base-font-size-px, em);
+    });
+  }
+}

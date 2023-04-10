@@ -1,10 +1,10 @@
 import fastDom from 'fastdom';
 
-const NO_OP = function NO_OP( ) {
+const NO_OP = function NO_OP() {
   // Placeholder function meant to be overridden.
 };
 
-const _matches = ( function _getMatches( ) {
+const _matches = (function _getMatches() {
   const el = document.body;
   return (
     el.matches ||
@@ -12,96 +12,135 @@ const _matches = ( function _getMatches( ) {
     el.mozMatchesSelector ||
     el.msMatchesSelector
   );
-} )( );
+})();
 
-function _mutate( selector, callback ) {
-  applyAll( selector, function( element ) {
-    fastDom.mutate( callback.bind( null, element ) );
-  } );
+/**
+ * @param {string} selector - A CSS selector.
+ * @param {Function} callback - Function to call on queried element.
+ */
+function _mutate(selector, callback) {
+  applyAll(selector, function (element) {
+    fastDom.mutate(callback.bind(null, element));
+  });
 }
 
 /* Code copied from jQuery with minimal modifications.
    XHTML parsers do not magically insert elements in the
    same way that tag soup parsers do. So we cannot shorten
    this by omitting <tbody> or other required elements. */
-const firstTag = /<([a-z][^\/\0>\x20\t\r\n\f]+)/;
-const wrapMap = {
-  'col':     [ 2, '<table><colgroup>', '</colgroup></table>' ],
-  'default': [ 0, '', '' ],
-  'option':  [ 1, '<select multiple=\'multiple\'>', '</select>' ],
-  'td':      [ 3, '<table><tbody><tr>', '</tr></tbody></table>' ],
-  'thead':   [ 1, '<table>', '</table>' ],
-  'tr':      [ 2, '<table><tbody>', '</tbody></table>' ]
+const _firstTag = /<([a-z][^/\0>\x20\t\r\n\f]+)/;
+const _wrapMap = {
+  col: [2, '<table><colgroup>', '</colgroup></table>'],
+  default: [0, '', ''],
+  option: [1, "<select multiple='multiple'>", '</select>'],
+  td: [3, '<table><tbody><tr>', '</tr></tbody></table>'],
+  thead: [1, '<table>', '</table>'],
+  tr: [2, '<table><tbody>', '</tbody></table>'],
 };
 
-function applyAll( elements, applyFn ) {
-  if ( elements instanceof HTMLElement ) {
-    elements = [ elements ];
-  } else if ( typeof elements === 'string' ) {
-    elements = getEls( elements );
+/**
+ *
+ * @param {HTMLElement|string} elements - An HTML element or a selector.
+ * @param {Function} applyFn - Function to apply to each element.
+ */
+function applyAll(elements, applyFn) {
+  if (elements instanceof HTMLElement) {
+    elements = [elements];
+  } else if (typeof elements === 'string') {
+    elements = getEls(elements);
   }
 
-  return [].slice.call( elements || [] ).forEach( applyFn );
+  return [].slice.call(elements || []).forEach(applyFn);
 }
 
-function bindEvents( elements, events, callback ) {
-  if ( Array.isArray( events ) === false ) {
-    events = [ events ];
+/**
+ *
+ * @param {Array} elements - A list of HTML DOM nodes.
+ * @param {Array|string} events - A list or single event type.
+ * @param {Function} callback - A function to call at the end.
+ */
+function bindEvents(elements, events, callback) {
+  if (Array.isArray(events) === false) {
+    events = [events];
   }
 
-  applyAll( elements, function( element ) {
-    events.forEach( function( event ) {
-      element.addEventListener( event, callback || NO_OP );
-    } );
-  } );
+  applyAll(elements, function (element) {
+    events.forEach(function (event) {
+      element.addEventListener(event, callback || NO_OP);
+    });
+  });
 }
 
-function addEl( parent, child ) {
-  return fastDom.mutate( function( ) {
-    const el = createEl( child );
-    return getEl( parent ).appendChild( el );
-  } );
+/**
+ * @param {HTMLElement|string} parent - An HTML element node or CSS selector.
+ * @param {HTMLElement|string} child - An HTML element node or snippet.
+ */
+function addEl(parent, child) {
+  return fastDom.mutate(function () {
+    const el = createEl(child);
+    return getEl(parent).appendChild(el);
+  });
 }
 
-function getElData( selector, attributeName ) {
-  return getEl( selector )
-    .getAttribute( 'data-' + attributeName );
+/**
+ * @param {string} selector - A CSS selector.
+ * @param {string} attributeName - A value to add to a data- attribute.
+ */
+function getElData(selector, attributeName) {
+  return getEl(selector).getAttribute('data-' + attributeName);
 }
 
-function changeElText( selector, text ) {
-  _mutate( selector, function( element ) {
-    return ( element.textContent = text );
-  } );
+/**
+ * @param {string} selector - A CSS selector.
+ * @param {string} text - Some text content.
+ */
+function changeElText(selector, text) {
+  _mutate(selector, function (element) {
+    return (element.textContent = text);
+  });
 }
 
-function changeElHTML( selector, HTML ) {
-  _mutate( selector, function( element ) {
-    return ( element.innerHTML = HTML );
-  } );
+/**
+ * @param {string} selector - A CSS selector.
+ * @param {string} HTML - An HTML snippet.
+ */
+function changeElHTML(selector, HTML) {
+  _mutate(selector, function (element) {
+    return (element.innerHTML = HTML);
+  });
+}
+
+/**
+ * @param {HTMLElement} element - An element.
+ * @param {string} filterNode - The string to filter by.
+ */
+function getNextEls(element, filterNode) {
+  return _filter(element, 'nextElementSibling', filterNode);
 }
 
 /**
  * Code copied from jQuery with minimal modifications.
- * @param {HTMLNode} HTML - An HTML DOM node.
+ *
+ * @param {HTMLElement|string} HTML - An HTML DOM node or snippet.
  * @returns {DocumentFragment} The created document fragment node.
  */
-function createEl( HTML ) {
-  if ( isEl( HTML ) ) {
+function createEl(HTML) {
+  if (_isEl(HTML)) {
     return HTML;
   }
-  let container = document.createElement( 'div' );
-  const tag = ( firstTag.exec( HTML ) || [ '', '' ] )[1].toLowerCase();
-  const elWrapper = wrapMap[tag] || wrapMap.default;
+  let container = document.createElement('div');
+  const tag = (_firstTag.exec(HTML) || ['', ''])[1].toLowerCase();
+  const elWrapper = _wrapMap[tag] || _wrapMap.default;
   const docFrag = document.createDocumentFragment();
   container.innerHTML = elWrapper[1] + HTML + elWrapper[2];
   let wrapperCount = elWrapper[0];
-  while ( wrapperCount-- ) {
+  while (wrapperCount--) {
     container = container.firstChild;
   }
 
-  [].slice.call( container.childNodes ).forEach( function( node ) {
-    docFrag.appendChild( node );
-  } );
+  [].slice.call(container.childNodes).forEach(function (node) {
+    docFrag.appendChild(node);
+  });
 
   return docFrag;
 }
@@ -109,21 +148,21 @@ function createEl( HTML ) {
 /**
  * @param {string} selector - A CSS selector.
  */
-function removeEl( selector ) {
-  _mutate( selector, function( element ) {
-    return element.parentNode.removeChild( element );
-  } );
+function removeEl(selector) {
+  _mutate(selector, function (element) {
+    return element.parentNode.removeChild(element);
+  });
 }
 
 /**
  * @param {string} selector - A CSS selector.
  * @param {string} className - A CSS class to remove.
  */
-function addClass( selector, className ) {
-  _mutate( selector, function( element ) {
+function addClass(selector, className) {
+  _mutate(selector, function (element) {
     const _classList = element.classList;
-    return _classList.add( className );
-  } );
+    return _classList.add(className);
+  });
 }
 
 /**
@@ -131,13 +170,13 @@ function addClass( selector, className ) {
  * @param {string} className - A CSS class to remove.
  * @returns {boolean} True if the element has the CSS class, false otherwise.
  */
-function hasClass( selector, className ) {
+function hasClass(selector, className) {
   let _hasClass = false;
-  applyAll( selector, function( element ) {
-    if ( element.classList.contains( className ) ) {
+  applyAll(selector, function (element) {
+    if (element.classList.contains(className)) {
       _hasClass = true;
     }
-  } );
+  });
   return _hasClass;
 }
 
@@ -145,85 +184,72 @@ function hasClass( selector, className ) {
  * @param {string} selector - A CSS selector.
  * @param {string} className - A CSS class to remove.
  */
-function removeClass( selector, className ) {
-  _mutate( selector, function( element ) {
+function removeClass(selector, className) {
+  _mutate(selector, function (element) {
     const _classList = element.classList;
-    return _classList.remove( className );
-  } );
+    return _classList.remove(className);
+  });
 }
 
 /**
- * @param {string} selector - A CSS selector.
- * @param {string} className - A CSS class to remove.
+ * @param {HTMLElement} element - An element.
+ * @param {string} propName - An HTML element property to select for.
+ * @param {string} filter - The string to filter by.
  */
-function toggleClass( selector, className ) {
-  _mutate( selector, function( element ) {
-    return element.classList.toggle( className );
-  } );
-}
-
-function filter( element, propName, filter ) {
+function _filter(element, propName, filter) {
   const _propName = propName || '';
   const _filter = filter || '*';
 
   const nodes = [];
-  let node = element[propName];
+  let node = element[_propName];
 
-  while ( node && node !== document ) {
-    if ( _matches.call( node, _filter ) ) {
-      nodes.push( node );
+  while (node && node !== document) {
+    if (_matches.call(node, _filter)) {
+      nodes.push(node);
     }
-    node = node[propName];
+    node = node[_propName];
   }
   return nodes;
 }
 
 /**
- * @param {string} selector - A CSS selector.
- * @returns {HTMLNode} An HTML node returned by the passed selector,
+ * @param {HTMLElement|string} selector - An HTML element node or CSS selector.
+ * @returns {HTMLElement} An HTML node returned by the passed selector,
  *  or the selector passed into this method.
  */
-function getEl( selector ) {
-  if ( isEl( selector ) ) {
+function getEl(selector) {
+  if (_isEl(selector)) {
     return selector;
   }
-  return document.querySelector( selector );
+  return document.querySelector(selector);
 }
 
 /**
- * @param {string} selector - A CSS selector.
+ * @param {HTMLElement|string} selector - An HTML element node or CSS selector.
  * @returns {NodeList} A list of HTML nodes returned by the passed selector,
  *  or the selector passed into this method.
  */
-function getEls( selector ) {
-  if ( isEl( selector ) ) {
+function getEls(selector) {
+  if (_isEl(selector)) {
     return selector;
   }
-  return document.querySelectorAll( selector );
+  return document.querySelectorAll(selector);
 }
 
-function getChildEls( element, filter ) {
-  const firstChild = element.childNodes[0];
-  const elements = getNextEls( firstChild, filter );
-  if ( firstChild.matches( filter ) ) {
-    elements.unshift( firstChild );
-  }
-  return elements;
+/**
+ * @param {HTMLElement} element - An element.
+ * @param {string} filterNode - The string to filter by.
+ */
+function getParentEls(element, filterNode) {
+  return _filter(element, 'parentNode', filterNode);
 }
 
-function getParentEls( element, filterNode ) {
-  return filter( element, 'parentNode', filterNode );
-}
-
-function getPreviousEls( element, filterNode ) {
-  return filter( element, 'previousElementSibling', filterNode );
-}
-
-function getNextEls( element, filterNode ) {
-  return filter( element, 'nextElementSibling', filterNode );
-}
-
-function isEl( element ) {
+/**
+ * Check whether something is a NodeList, HTML element, or window.
+ *
+ * @param {*} element - An object to check for element-ness.
+ */
+function _isEl(element) {
   return (
     element instanceof NodeList ||
     element instanceof HTMLElement ||
@@ -233,75 +259,14 @@ function isEl( element ) {
 }
 
 /**
- * Check whether something is a NodeList, HTML element, or window.
- * @param {*} selector Something, possibly a list, element or window instance.
+ * @param {Function} callback - Function to pass to the wrapped call
+ *   to requestAnimationFrame.
  */
-function hide( selector ) {
-  _mutate( selector, function( element ) {
-    return ( element.style.display = 'block' );
-  } );
+function nextFrame(callback) {
+  fastDom.raf(callback);
 }
 
-/**
- * Check whether something is a NodeList, HTML element, or window.
- * @param {*} selector Something, possibly a list, element or window instance.
- */
-function show( selector ) {
-  _mutate( selector, function( element ) {
-    return ( element.style.display = 'block' );
-  } );
-}
-
-/**
- * @param {string} selector - A CSS selector for an element.
- * @param {number} time - When to call the callback.
- * @param {[Function]} callback - Function to call after delay.
- */
-function fadeIn( selector, time, callback ) {
-  const element = getEl( selector );
-  element.style.transition = 'opacity ' + time + 'ms ease-in-out';
-  element.style.opacity = 0.05;
-  element.style.display = 'block';
-
-  window.setTimeout( function( ) {
-    return ( element.style.opacity = 1 );
-  }, 100 );
-
-  window.setTimeout( function( ) {
-    element.style.display = 'block';
-    return ( callback || NO_OP )( );
-  }, time );
-}
-
-/**
- * @param {string} selector - A CSS selector for an element.
- * @param {number} time - When to call the callback.
- * @param {[Function]} callback - Function to call after delay.
- */
-function fadeOut( selector, time, callback ) {
-  const element = getEl( selector );
-  element.style.transition = 'opacity ' + time + 'ms ease-in-out';
-  element.style.opacity = 1;
-
-  window.setTimeout( function( ) {
-    return ( element.style.opacity = 0.05 );
-  }, 100 );
-
-  window.setTimeout( function( ) {
-    element.style.display = 'none';
-    return ( callback || NO_OP )( );
-  }, time );
-}
-
-function mutate( callback ) {
-  _mutate( callback );
-}
-
-function nextFrame( callback ) {
-  fastDom.raf( callback );
-}
-
-export default {
+export {
   applyAll,
   bindEvents,
   addEl,
@@ -313,19 +278,9 @@ export default {
   addClass,
   hasClass,
   removeClass,
-  toggleClass,
-  filter,
   getEl,
   getEls,
-  getChildEls,
   getParentEls,
-  getPreviousEls,
   getNextEls,
-  isEl,
-  hide,
-  show,
-  fadeIn,
-  fadeOut,
-  mutate,
-  nextFrame
+  nextFrame,
 };

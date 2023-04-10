@@ -1,7 +1,5 @@
 from django.apps import AppConfig
-from django.contrib.auth import get_user_model
 from django.contrib.staticfiles import storage
-from django.db.models.signals import post_save
 
 
 class V1AppConfig(AppConfig):
@@ -10,16 +8,11 @@ class V1AppConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
 
     def ready(self):
-        from v1.signals import user_save_callback
-
-        user_model = get_user_model()
-        post_save.connect(user_save_callback, sender=user_model)
         # Interesting situation: we use this pattern to account for
         # scrolling bugs in IE:
         # http://snipplr.com/view/518/
         # yet, url(null) trips up the ManifestStaticFilesStorage, so we
         # monkeypatch the regex so that url(null) is ignored
-
         storage.HashedFilesMixin.patterns = (
             (
                 "*.css",
