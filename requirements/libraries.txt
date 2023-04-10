@@ -3,6 +3,7 @@ base36==0.1.1
 beautifulsoup4==4.8.2
 boto3==1.22.7
 django-autocomplete-light==3.9.4
+django-axes==5.41.0
 django-cors-headers==3.11.0
 django-csp==3.7
 django-opensearch-dsl==0.4.1

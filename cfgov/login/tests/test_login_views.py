@@ -104,4 +104,3 @@ class PasswordResetViewTestCase(TestCase, WagtailTestUtils):
         updated_user = get_user_model().objects.get(email="test@email.com")
 
         self.assertTrue(updated_user.check_password("GoodPassword1!"))
-        self.assertEqual(len(updated_user.temporarylockout_set.all()), 0)

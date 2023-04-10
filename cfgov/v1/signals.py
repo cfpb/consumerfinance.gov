@@ -8,6 +8,8 @@ from django.utils import timezone
 
 from wagtail.signals import page_published, page_unpublished
 
+from axes.utils import reset as axes_reset
+
 from teachers_digital_platform.models.activity_index_page import (
     ActivityPage,
     ActivitySetUp,
@@ -36,7 +38,7 @@ def new_phi(user, expiration_days=90, locked_days=1):
     )
 
     password_history.save()
-    user.temporarylockout_set.all().delete()
+    axes_reset(username=user.username)
 
 
 def user_save_callback(sender, **kwargs):
