@@ -8,8 +8,12 @@
           {% endif -%}>
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
+            {% if not breadcrumb_items and page and page.get_breadcrumbs %}
+                {% set breadcrumb_items = page.get_breadcrumbs(request) %}
+            {% endif %}
+
             {% if breadcrumb_items | length > 0 %}
-                <div class="wrapper content_wrapper">
+                <div class="content_wrapper">
                 {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs -%}
                 {{ breadcrumbs.render(breadcrumb_items) }}
                 </div>
