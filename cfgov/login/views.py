@@ -3,6 +3,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 
 from wagtail.admin.views import account
 from wagtail.admin.views.account import PasswordResetConfirmView
@@ -16,7 +17,6 @@ class CFGOVPasswordResetConfirmView(PasswordResetConfirmView):
     form_class = CFGOVSetPasswordForm
 
     def form_valid(self, form):
-        self.user.temporarylockout_set.all().delete()
         return super().form_valid(form)
 
 
@@ -58,3 +58,8 @@ def change_password(request):
             "can_change_password": can_change_password,
         },
     )
+
+
+def lockout(request, credentials):
+    messages.error(request, "Account is locked.")
+    return redirect(reverse_lazy("wagtailadmin_login"))

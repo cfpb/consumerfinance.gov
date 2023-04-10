@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "axes",
     "wagtail.search",
     "storages",
     "data_research",
@@ -131,6 +132,9 @@ MIDDLEWARE = (
     "core.middleware.DeactivateTranslationsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # AxesMiddleware should be the last middleware in the MIDDLEWARE list
+    # that touches authentication.
+    "axes.middleware.AxesMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
@@ -411,15 +415,17 @@ CFPB_COMMON_PASSWORD_RULES = [
         "Password must include at least one special character (@#$%&!)",
     ],
 ]
-# cfpb_common login rules
-# in seconds
-LOGIN_FAIL_TIME_PERIOD = int(
-    os.environ.get("LOGIN_FAIL_TIME_PERIOD", 120 * 60)
+
+# Login Lockout rules using django-axes
+AUTHENTICATION_BACKENDS = (
+    "axes.backends.AxesStandaloneBackend",
+    "django.contrib.auth.backends.ModelBackend",
 )
-# number of failed attempts
-LOGIN_FAILS_ALLOWED = int(os.environ.get("LOGIN_FAILS_ALLOWED", 5))
-LOGIN_REDIRECT_URL = "/admin/"
-LOGIN_URL = "/login/"
+AXES_ENABLED = True
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = 2  # Hours
+AXES_ONLY_USER_FAILURES = True
+AXES_LOCKOUT_CALLABLE = "login.views.lockout"
 
 # Initialize our SAML_AUTH variable as false. Our production settings will
 # override this based on the SAML_AUTH environment variable.

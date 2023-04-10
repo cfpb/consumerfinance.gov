@@ -126,10 +126,7 @@ if SAML_AUTH:
     # Update built-in Django settings for SAML authetnication
     INSTALLED_APPS += ("djangosaml2",)
     MIDDLEWARE += ("djangosaml2.middleware.SamlSessionMiddleware",)
-    AUTHENTICATION_BACKENDS = (
-        "django.contrib.auth.backends.ModelBackend",
-        "djangosaml2.backends.Saml2Backend",
-    )
+    AUTHENTICATION_BACKENDS += ("djangosaml2.backends.Saml2Backend",)
     LOGIN_URL = "/saml2/login/"
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
