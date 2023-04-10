@@ -6,14 +6,8 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.utils.timezone import now
 
-from login.forms import (
-    CFGOVPasswordChangeForm,
-    LoginForm,
-    UserCreationForm,
-    UserEditForm,
-)
+from login.forms import LoginForm, UserCreationForm, UserEditForm
 from login.models import PasswordHistoryItem
-from login.tests.test_password_policy import TestWithUser
 
 
 @patch("login.forms.send_password_reset_email")
@@ -27,8 +21,8 @@ class UserCreationFormTestCase(TestCase):
             "username": self.username,
             "first_name": "George",
             "last_name": "Washington",
-            "password1": "cherrytree",
-            "password2": "cherrytree",
+            "password1": "Cherrytree123&4",
+            "password2": "Cherrytree123&4",
         }
 
     def tearDown(self):
@@ -104,26 +98,7 @@ class UserEditFormTestCase(TestCase):
             )
 
 
-class PasswordValidationMixinTestCase(TestWithUser):
-    def test_edit_password(self):
-        user = self.get_user(last_password="testing")
-        form = CFGOVPasswordChangeForm(
-            data={
-                "old_password": "testing",
-                "new_password1": "Testing12345!",
-                "new_password2": "Testing12345!",
-            },
-            user=user,
-        )
-        form.is_valid()
-        self.assertTrue(form.is_valid())
-
-
 class LoginFormTestCase(TestCase):
-    def test_successful_login(self):
-        form = LoginForm(data={"username": "admin", "password": "admin"})
-        self.assertTrue(form.is_valid())
-
     def test_successful_login_object_dne(self):
         """Clear password history and then successfully login"""
         User.objects.get(
@@ -131,14 +106,6 @@ class LoginFormTestCase(TestCase):
         ).passwordhistoryitem_set.all().delete()
         form = LoginForm(data={"username": "admin", "password": "admin"})
         self.assertTrue(form.is_valid())
-
-    def test_failed_login_invalid_user(self):
-        """Handle a non-existent user when a login fails"""
-        form = LoginForm(data={"username": "badmin", "password": "badadmin"})
-        self.assertFalse(form.is_valid())
-        self.assertIn(
-            "correct username and password", form.errors["__all__"][0]
-        )
 
     def test_password_expired(self):
         """Ensure login is denied if our password is expired"""

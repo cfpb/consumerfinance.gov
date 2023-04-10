@@ -1,54 +1,16 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import SetPasswordForm
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils import timezone
 
-from wagtail.admin.forms.auth import (
-    AuthenticationForm,
-    PasswordChangeForm,
-    PasswordResetForm,
-)
+from wagtail.admin.forms.auth import AuthenticationForm
 from wagtail.users import forms as wagtailforms
 
-import login.utils
 from login.email import send_password_reset_email
 
 
 class PasswordExpiredError(ValidationError):
     """A validation error due to password expiration"""
 
-    pass
-
-
-class PasswordValidationMixin:
-    password_key = "new_password"  # nosec
-    user_attribute = "user"
-
-    def clean(self):
-        cleaned_data = super().clean()
-        user = getattr(self, self.user_attribute)
-        key1, key2 = (self.password_key + "1", self.password_key + "2")
-        if key1 in cleaned_data and key2 in cleaned_data:
-            password = cleaned_data[key1]
-
-            login.utils._check_passwords(password, user, password_field=key1)
-        return cleaned_data
-
-
-class UserEditValidationMixin(PasswordValidationMixin):
-    password_key = "password"  # nosec
-    user_attribute = "instance"
-
-
-class CFGOVPasswordChangeForm(PasswordValidationMixin, PasswordChangeForm):
-    pass
-
-
-class CFGOVPasswordResetForm(PasswordValidationMixin, PasswordResetForm):
-    pass
-
-
-class CFGOVSetPasswordForm(PasswordValidationMixin, SetPasswordForm):
     pass
 
 
