@@ -11,6 +11,7 @@ from wagtail.admin.filters import WagtailFilterSet
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
 from wagtail.images import get_image_model
+from wagtail.models import Site
 
 import django_filters
 from bs4 import BeautifulSoup
@@ -157,7 +158,7 @@ class DraftReportView(PageReportView):
         return generate_filename("pages")
 
     def get_queryset(self):
-        default_site = CFGOVPage.objects.get(is_default_site=True)
+        default_site = Site.objects.get(is_default_site=True)
         return (
             CFGOVPage.objects.in_site(default_site)
             .not_live()
