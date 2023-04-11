@@ -43,6 +43,7 @@ from v1.views.reports import (
     AskReportView,
     CategoryIconReportView,
     DocumentsReportView,
+    DraftReportView,
     EnforcementActionsReportView,
     ImagesReportView,
     PageMetadataReportView,
@@ -205,6 +206,26 @@ def register_page_metadata_report_url():
             r"^reports/page-metadata/$",
             PageMetadataReportView.as_view(),
             name="page_metadata_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_page_drafts_report_menu_item():
+    return MenuItem(
+        "Draft Pages",
+        reverse("page_drafts_report"),
+        classnames="icon icon-" + DraftReportView.header_icon,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_page_drafts_report_url():
+    return [
+        re_path(
+            r"^reports/page-drafts/$",
+            DraftReportView.as_view(),
+            name="page_drafts_report",
         ),
     ]
 
