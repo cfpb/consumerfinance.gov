@@ -256,8 +256,8 @@ function getYourEstimates() {
   const loadIndDom = document.querySelector('#api-data-loading-indicator');
   loadIndDom.style.display = 'inline-block';
   fetchApiData(dates.concat, salary, dataLang).then((resp) => {
-    update.processApiData(resp);
     if (resp.error === '') {
+      update.processApiData(resp);
       SSData = getModelValues.benefits();
       $('.step-two .question').css('display', 'inline-block');
       $(
