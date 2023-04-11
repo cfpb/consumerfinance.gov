@@ -414,7 +414,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "login.password_validation.ComplexityValidator",
         "OPTIONS": {
             "rules": [
-                [r".{12,}", "Minimum allowed length is 12 characters"],
                 [
                     r"[A-Z]",
                     "Password must include at least one capital letter",
