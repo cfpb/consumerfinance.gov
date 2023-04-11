@@ -157,9 +157,11 @@ class DraftReportView(PageReportView):
         return generate_filename("pages")
 
     def get_queryset(self):
-        default_site = Site.objects.get(is_default_site=True)
-        return CFGOVPage.objects.in_site(default_site).not_live().prefetch_related(
-            "tags", "categories"
+        default_site = CFGOVPage.objects.get(is_default_site=True)
+        return (
+            CFGOVPage.objects.in_site(default_site)
+            .not_live()
+            .prefetch_related("tags", "categories")
         )
 
 
