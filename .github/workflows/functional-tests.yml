@@ -1,6 +1,8 @@
 name: functional
 
-on: pull_request
+on:
+  pull_request:
+  merge_group:
 
 jobs:
 
@@ -57,11 +59,12 @@ jobs:
       run: ./refresh-data.sh test.sql.gz
 
     - name: Run Cypress
-      uses: cypress-io/github-action@v4
-      env:
-          MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-          CYPRESS_ENVIRONMENT: github
+      uses: cypress-io/github-action@v5
       with:
         build: yarn build
         start: python cfgov/manage.py runserver 0.0.0.0:8000
         wait-on: 'http://localhost:8000'
+        auto-cancel-after-failures: 2
+      env:
+          MAPBOX_ACCESS_TOKEN:  ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          CYPRESS_ENVIRONMENT: github

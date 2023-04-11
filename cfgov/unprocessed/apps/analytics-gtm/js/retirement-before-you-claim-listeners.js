@@ -1,4 +1,4 @@
-import { analyticsLog, track } from './util/analytics-util';
+import { analyticsSendEvent, analyticsLog } from '@cfpb/cfpb-analytics';
 
 // Retirement - Before You Claim custom analytics file
 
@@ -43,20 +43,20 @@ import { analyticsLog, track } from './util/analytics-util';
     // Track birthdate.
     const month = document.querySelector('#bd-month').value;
     const day = document.querySelector('#bd-day').value;
-    track(
-      'Before You Claim Interaction',
-      'Get Your Estimates submit birthdate',
-      'Birthdate Month and Day - ' + month + '/' + day
-    );
+    analyticsSendEvent({
+      event: 'Before You Claim Interaction',
+      action: 'Get Your Estimates submit birthdate',
+      label: 'Birthdate Month and Day - ' + month + '/' + day,
+    });
 
     // Track age.
     const year = document.querySelector('#bd-year').value;
     const age = calculateAge(month, day, year);
-    track(
-      'Before You Claim Interaction',
-      'Get Your Estimates submit age',
-      'Age ' + age
-    );
+    analyticsSendEvent({
+      event: 'Before You Claim Interaction',
+      action: 'Get Your Estimates submit age',
+      label: 'Age ' + age,
+    });
 
     // Start mouseflow heatmap capture.
     if (window.mouseflow) {
@@ -72,11 +72,11 @@ import { analyticsLog, track } from './util/analytics-util';
       .addEventListener('mousedown', function (event) {
         if (event.target.classList.contains('graph__bar')) {
           const age = event.target.getAttribute('data-bar_age');
-          track(
-            'Before You Claim Interaction',
-            'Graph Age Bar clicked',
-            'Age ' + age
-          );
+          analyticsSendEvent({
+            event: 'Before You Claim Interaction',
+            action: 'Graph Age Bar clicked',
+            label: 'Age ' + age,
+          });
         }
       });
 
@@ -85,11 +85,11 @@ import { analyticsLog, track } from './util/analytics-util';
       .addEventListener('mousedown', function () {
         sliderIsActive = true;
         sliderClicks++;
-        track(
-          'Before You Claim Interaction',
-          'Slider clicked',
-          'Slider clicked ' + sliderClicks + ' times'
-        );
+        analyticsSendEvent({
+          event: 'Before You Claim Interaction',
+          action: 'Slider clicked',
+          label: 'Slider clicked ' + sliderClicks + ' times',
+        });
       });
 
     document
@@ -98,18 +98,22 @@ import { analyticsLog, track } from './util/analytics-util';
         const target = event.target.parentNode;
         if (target.classList.contains('age-text')) {
           const age = target.getAttribute('data-age-value');
-          track(
-            'Before You Claim Interaction',
-            'Age Text Box clicked',
-            'Age ' + age
-          );
+          analyticsSendEvent({
+            event: 'Before You Claim Interaction',
+            action: 'Age Text Box clicked',
+            label: 'Age ' + age,
+          });
         }
       });
 
     document.body.addEventListener('mouseup', function () {
       if (sliderIsActive === true) {
         const age = document.querySelector('.selected-age').innerText;
-        track('Before You Claim Interaction', 'Slider released', 'Age ' + age);
+        analyticsSendEvent({
+          event: 'Before You Claim Interaction',
+          action: 'Slider released',
+          label: 'Age ' + age,
+        });
         sliderIsActive = false;
       }
     });
@@ -125,17 +129,17 @@ import { analyticsLog, track } from './util/analytics-util';
           questionsAnswered.push(question);
         }
         if (questionsAnswered.length === 5) {
-          track(
-            'Before You Claim Interaction',
-            'All Lifestyle Buttons clicked',
-            'All button clicks'
-          );
+          analyticsSendEvent({
+            event: 'Before You Claim Interaction',
+            action: 'All Lifestyle Buttons clicked',
+            label: 'All button clicks',
+          });
         }
-        track(
-          'Before You Claim Interaction',
-          'Lifestyle Button clicked',
-          'Question: ' + question + ' - ' + value
-        );
+        analyticsSendEvent({
+          event: 'Before You Claim Interaction',
+          action: 'Lifestyle Button clicked',
+          label: 'Question: ' + question + ' - ' + value,
+        });
       });
     }
 
@@ -143,11 +147,14 @@ import { analyticsLog, track } from './util/analytics-util';
       'input[name="benefits-display"]'
     );
     for (let i = 0, len = benefitsRadios.length; i < len; i++) {
-      // eslint-disable-next-line no-loop-func
       benefitsRadios[i].addEventListener('click', function (event) {
         if (stepOneSubmitted) {
           const val = event.currentTarget.value;
-          track('Before You Claim Interaction', 'Benefits View clicked', val);
+          analyticsSendEvent({
+            event: 'Before You Claim Interaction',
+            action: 'Benefits View clicked',
+            label: val,
+          });
         }
       });
     }
@@ -157,22 +164,22 @@ import { analyticsLog, track } from './util/analytics-util';
       .addEventListener('change', function (event) {
         const target = event.currentTarget;
         const val = target[target.selectedIndex].value;
-        track(
-          'Before You Claim Interaction',
-          'Planned Retirement Age selected',
-          val
-        );
+        analyticsSendEvent({
+          event: 'Before You Claim Interaction',
+          action: 'Planned Retirement Age selected',
+          label: val,
+        });
       });
 
     document
       .querySelector('[data-tooltip-target]')
       .addEventListener('click', function (event) {
         const target = event.currentTarget.getAttribute('data-tooltip-target');
-        track(
-          'Before You Claim Interaction',
-          'Tooltip clicked',
-          'Target: ' + target
-        );
+        analyticsSendEvent({
+          event: 'Before You Claim Interaction',
+          action: 'Tooltip clicked',
+          label: 'Target: ' + target,
+        });
       });
   }
 })();

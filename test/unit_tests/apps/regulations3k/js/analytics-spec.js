@@ -6,7 +6,6 @@ import {
   sendEvent,
 } from '../../../../../cfgov/unprocessed/apps/regulations3k/js/analytics.js';
 
-/* eslint-disable max-lines-per-function, no-undefined */
 describe('The Regs3K analytics', () => {
   it('should send events', () => {
     const mockEvent = sendEvent('click', 'sidebar');
@@ -15,8 +14,6 @@ describe('The Regs3K analytics', () => {
       event: 'eRegs Event',
       action: 'click',
       label: 'sidebar',
-      eventCallback: undefined,
-      eventTimeout: 500,
     });
   });
 
@@ -27,8 +24,6 @@ describe('The Regs3K analytics', () => {
       event: 'eregs',
       action: 'click',
       label: 'sidebar',
-      eventCallback: undefined,
-      eventTimeout: 500,
     });
   });
 
@@ -76,8 +71,6 @@ describe('The Regs3K analytics', () => {
     expect(event).toEqual({
       action: 'toc:click',
       event: 'eRegs Event',
-      eventCallback: undefined,
-      eventTimeout: 500,
       label: '1002-11',
     });
   });
@@ -93,8 +86,6 @@ describe('The Regs3K analytics', () => {
     expect(mockEvent).toEqual({
       action: 'toc:click',
       event: 'eRegs Event',
-      eventCallback: undefined,
-      eventTimeout: 500,
       label: '1002-Interp-2',
     });
   });
@@ -132,8 +123,6 @@ describe('The Regs3K analytics', () => {
     expect(mockEvent).toEqual({
       action: 'interpexpandables:open',
       event: 'eRegs Event',
-      eventCallback: undefined,
-      eventTimeout: 500,
       label: 'Section 1',
     });
   });

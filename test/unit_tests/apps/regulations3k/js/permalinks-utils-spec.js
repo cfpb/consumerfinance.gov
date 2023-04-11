@@ -30,7 +30,7 @@ const HTML_SNIPPET2 = `
 const HTML_SNIPPET3 = `
   <div class="regulations3k">
     <div class="o-regulations-wayfinder" data-section="Comment for 1026.33 - Requirements for Reverse Mortgages">
-        <div class="wrapper content_wrapper">
+        <div class="content_wrapper">
             <div class="content_sidebar content__flush-top content__flush-bottom">
                 <span class="h4">
                     Regulation FOO

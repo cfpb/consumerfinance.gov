@@ -9,14 +9,12 @@
 
 /* Event template settings
    ========================================================================== */
-.t-event {
-  &_details {
-    .respond-to-min( @bp-sm-min, {
-      .date {
-        float: right;
-      }
-    } );
-  }
+.t-event_details {
+  .respond-to-min( @bp-sm-min, {
+    .modification-date {
+      float: right;
+    }
+  } );
 }
 
 /* Event-Agenda Table
@@ -62,12 +60,6 @@
 /* Event-Meta
    ========================================================================== */
 
-.event-meta {
-  &__medium {
-    font-weight: 500;
-  }
-}
-
 .event-meta_description {
   text-transform: none;
 
@@ -106,13 +98,15 @@
 
 // The spacing for the RSVP/Livestream aside on the event details.
 // Spacing should follow a 1/2/1 ratio (15px/30px/15px).
-.event-status_rsvp p:first-child {
-  line-height: 1;
-  margin-bottom: unit(15px / @base-font-size-px, em);
-}
+.event-status_rsvp {
+  p:first-child {
+    line-height: 1;
+    margin-bottom: unit(15px / @base-font-size-px, em);
+  }
 
-.event-status_rsvp p:last-child {
-  margin-bottom: unit(30px / @base-font-size-px, em);
+  p:last-child {
+    margin-bottom: unit(30px / @base-font-size-px, em);
+  }
 }
 
 .event-status_livestream p:first-child {
@@ -165,11 +159,6 @@
   padding: 6px 15px 4px;
 }
 
-.event-venu_live-btn_text {
-  font-size: 12px;
-  vertical-align: middle;
-}
-
 .event-venue_heading {
   display: inline-block;
   margin-bottom: 0;
@@ -184,13 +173,6 @@
   &_body {
     margin: unit(26px / @base-font-size-px, em) 0
       unit(26px / @base-font-size-px, em);
-  }
-
-  &__no-top {
-    border-top: 0;
-    .line-container_body {
-      margin-top: 0;
-    }
   }
 }
 
@@ -258,7 +240,7 @@
 
   &__right {
     .respond-to-min(@bp-sm-min, {
-      .u-right();
+      float: right;
       width: unit(250px / @base-font-size-px, em);
       margin-top: unit(5px / @base-font-size-px, em);
       margin-left: unit(@grid_gutter-width / @base-font-size-px, em);

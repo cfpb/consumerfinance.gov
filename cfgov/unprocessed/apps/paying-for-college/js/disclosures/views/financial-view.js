@@ -1,7 +1,7 @@
 // TODO: Remove jquery.
 import $ from 'jquery';
 
-import Analytics from '../utils/Analytics.js';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import getFinancial from '../dispatchers/get-financial-values.js';
 import getExpenses from '../dispatchers/get-expenses-values.js';
 import publish from '../dispatchers/publish-update.js';
@@ -17,8 +17,6 @@ import postVerification from '../dispatchers/post-verify.js';
 
 import stickyKit from '../utils/sticky-kit-esm.js';
 stickyKit($);
-
-const getDataLayerOptions = Analytics.getDataLayerOptions;
 
 const financialView = {
   $elements: $('[data-financial]'),
@@ -435,7 +433,7 @@ const financialView = {
       $container.find('[data-private-loan]:last .aid-form_input').val('0');
       publish.addPrivateLoan();
       financialView.updateView(getFinancial.values());
-      Analytics.sendEvent(getDataLayerOptions('Private Loan Changed', 'Added'));
+      analyticsSendEvent({ action: 'Private Loan Changed', label: 'Added' });
     });
   },
 
@@ -451,9 +449,7 @@ const financialView = {
       financialView.enumeratePrivateLoanIDs();
       publish.dropPrivateLoan(index);
       financialView.updateView(getFinancial.values());
-      Analytics.sendEvent(
-        getDataLayerOptions('Private Loan Changed', 'Removed')
-      );
+      analyticsSendEvent({ action: 'Private Loan Changed', label: 'Removed' });
     });
   },
 
@@ -593,13 +589,11 @@ const financialView = {
             }
           );
 
-        Analytics.sendEvent(
-          getDataLayerOptions(
-            'Years to Complete Program',
-            $programLengthElement.val()
-          )
-        );
-        Analytics.sendEvent(getDataLayerOptions('Step Completed', hrefText));
+        analyticsSendEvent({
+          action: 'Years to Complete Program',
+          label: $programLengthElement.val(),
+        });
+        analyticsSendEvent({ action: 'Step Completed', label: hrefText });
       } else {
         evt.preventDefault();
         financialView.$infoIncorrect.show();
@@ -617,7 +611,7 @@ const financialView = {
               financialView.$programLength.focus();
             }
           );
-        Analytics.sendEvent(getDataLayerOptions('Step Completed', hrefText));
+        analyticsSendEvent({ action: 'Step Completed', label: hrefText });
       }
       financialView.stickySummariesListener();
       financialView.$verifyControls.hide();
@@ -862,9 +856,10 @@ const financialView = {
             // Noop function.
           }
         );
-      Analytics.sendEvent(
-        getDataLayerOptions('Step Completed', 'Continue to Step 2')
-      );
+      analyticsSendEvent({
+        action: 'Step Completed',
+        label: 'Continue to Step 2',
+      });
     });
   },
 
@@ -913,12 +908,10 @@ const financialView = {
       $toggles.filter('[value="' + term + '"]').prop('checked', true);
       financialView.updateView(getFinancial.values());
       expensesView.updateView(getExpenses.values());
-      Analytics.sendEvent(
-        getDataLayerOptions(
-          'See how loan length affects your payments',
-          term + ' years'
-        )
-      );
+      analyticsSendEvent({
+        action: 'See how loan length affects your payments',
+        label: term + ' years',
+      });
     });
   },
 
@@ -941,7 +934,7 @@ const financialView = {
     $('[data-financial]').one('change', function () {
       const dataFinancial = $(this).data('financial');
       if (dataFinancial) {
-        Analytics.sendEvent(getDataLayerOptions('Value Edited', dataFinancial));
+        analyticsSendEvent({ action: 'Value Edited', label: dataFinancial });
       }
     });
   },

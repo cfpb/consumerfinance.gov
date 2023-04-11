@@ -1,10 +1,10 @@
 <div class="college-costs_intro-segment">
     {% if return_user %}
-        <div class="wrapper content_wrapper">
+        <div class="content_wrapper">
             <div class="content_main">
                 <div class="m-notification
                             m-notification__visible">
-                    {{ svg_icon('update') }}
+                    {{ svg_icon('updating') }}
                     <div class="m-notification_content">
                         <div class="h4 m-notification_message">The page is loading…</div>
                     </div>
@@ -17,7 +17,7 @@
                 {{ render_stream_child(block) }}
             {% endif %}
         {%- endfor %}
-        <div class="wrapper content_wrapper">
+        <div class="content_wrapper">
             <div class="content_main">
                {% for block in page.header -%}
                     {% if block.block_type != 'hero' %}

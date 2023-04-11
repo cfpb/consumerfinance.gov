@@ -1,3 +1,4 @@
+import json
 import tempfile
 from unittest import mock
 
@@ -26,9 +27,7 @@ from ask_cfpb.models.pages import (
     REUSABLE_TEXT_TITLES,
     AnswerLandingPage,
     AnswerPage,
-    ArticlePage,
     PortalSearchPage,
-    get_standard_text,
     strip_html,
     validate_page_number,
 )
@@ -71,53 +70,6 @@ class AnswerStringTest(TestCase):
         test_answer = Answer(question="Test question?")
         test_answer.save()
         self.assertEqual(test_answer.__str__(), test_answer.question)
-
-
-class ArticlePageTest(TestCase):
-    fixtures = ["ask_tests"]
-
-    def setUp(self):
-        def create_page(model, title, slug, parent, language="en", **kwargs):
-            new_page = model(
-                live=False, language=language, title=title, slug=slug
-            )
-            for k, v in kwargs.items():
-                setattr(new_page, k, v)
-            parent.add_child(instance=new_page)
-            new_page.save()
-            new_page.save_revision(user=self.test_user).publish()
-            return new_page
-
-        self.test_user = User.objects.last()
-        self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
-        self.tools_parent = create_page(
-            SublandingPage, "Consumer Tools", "consumer-tools", self.ROOT_PAGE
-        )
-        self.article_page = create_page(
-            ArticlePage,
-            "Article title",
-            "article-title",
-            self.tools_parent,
-            category="basics",
-            heading="Article heading",
-            intro="Article itro.",
-        )
-
-    def test_article_page_str(self):
-        self.assertEqual(
-            self.article_page.title, "{}".format(self.article_page)
-        )
-
-    def test_article_page_response(self):
-        response = self.client.get(self.article_page.url)
-        self.assertEqual(response.status_code, 200)
-
-    def test_article_page_context(self):
-        response = self.client.get(self.article_page.url)
-        self.assertEqual(
-            get_standard_text(self.article_page.language, "about_us"),
-            response.context_data.get("about_us"),
-        )
 
 
 class PortalSearchPageTest(TestCase):
@@ -650,7 +602,17 @@ class AnswerPageTest(TestCase):
             answer_base=self.answer1234,
             slug="mock-question-en-1234",
             title="Mock question1",
-            answer_content="Mock answer 1",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Mock answer 1",
+                        },
+                    }
+                ]
+            ),
             question="Mock question1",
             search_tags="hippodrome",
         )
@@ -661,7 +623,17 @@ class AnswerPageTest(TestCase):
             slug="mock-spanish-question1-es-1234",
             title="Mock Spanish question1",
             answer_base=self.answer1234,
-            answer_content="Mock Spanish answer",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Mock Spanish answer",
+                        },
+                    }
+                ]
+            ),
             question="Mock Spanish question1",
             search_tags="hipotecas",
         )
@@ -674,7 +646,17 @@ class AnswerPageTest(TestCase):
             slug="mock-question2-en-5678",
             title="Mock question2",
             answer_base=self.answer5678,
-            answer_content="Mock answer 2",
+            answer_content=json.dumps(
+                [
+                    {
+                        "type": "text",
+                        "value": {
+                            "anchor_tag": "",
+                            "content": "Mock answer 2",
+                        },
+                    }
+                ]
+            ),
             question="Mock question2",
             search_tags="hippodrome",
         )
@@ -785,8 +767,8 @@ class AnswerPageTest(TestCase):
 
     def test_get_meta_description(self):
         page = self.page1
-        # Defaults to empty string
-        self.assertEqual(page.get_meta_description(), "")
+        # Defaults to standard answer content
+        self.assertEqual(page.get_meta_description(), "Mock answer 1")
 
         # Second fallback is truncated answer_content text block
         data = [

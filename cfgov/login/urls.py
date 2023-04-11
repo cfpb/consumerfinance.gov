@@ -1,9 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import views as django_auth_views
-from django.urls import include, path, re_path
+from django.urls import include, path, re_path, reverse_lazy
 from django.views.generic.base import RedirectView
-
-from wagtail.admin.views.account import LoginView
 
 from login.forms import CFGOVPasswordChangeForm
 from login.views import CFGOVPasswordResetConfirmView, change_password
@@ -14,56 +12,60 @@ if settings.SAML_AUTH:  # pragma: no cover
         # If SAML2 auth is enabled, /login will redirect to /saml2/login,
         # which in turn will redirect to the configured identity provider.
         re_path(r"saml2/", include("djangosaml2.urls")),
-        # For backup/admin/emergency auth in the event that SSO is down,
-        # the Django login is available at /django-admin/login. Wagtail's
-        # /admin/login is redirected to /login for both SSO and non-SSO auth.
+        # Redirect the Wagtail login/logout views to djangosaml2.
+        # For admin authentication, /django-admin/login is preserved when SSO
+        # is enabled.
         re_path(
-            r"^login/$",
-            RedirectView.as_view(url="/saml2/login/", query_string=True),
+            r"^/admin/login/$",
+            RedirectView.as_view(
+                url=reverse_lazy("saml2_login"), query_string=True
+            ),
         ),
         re_path(
-            r"^logout/$",
+            r"^/admin/logout/$",
             RedirectView.as_view(
-                url="/saml2/logout/",
+                url=reverse_lazy("saml2_logout"),
                 query_string=True,
             ),
-            name="logout",
         ),
     ]
 else:
     urlpatterns = [
-        re_path(r"^login/$", LoginView.as_view(), name="cfpb_login"),
-        # When SSO is not enabled, the Django login should redirect to our
-        # /login URL, added above.
+        # When SSO is not enabled, the Django login should redirect to Wagtail
         re_path(
             r"^django-admin/login/$",
-            RedirectView.as_view(url="/login/", query_string=True),
-        ),
-        re_path(
-            r"^logout/$", django_auth_views.LogoutView.as_view(), name="logout"
+            RedirectView.as_view(
+                url=reverse_lazy("wagtailadmin_login"), query_string=True
+            ),
         ),
     ]
 
 urlpatterns = urlpatterns + [
-    # Wagtail will always redirect to /admin/login when login is required in
-    # the admin. This will redirect /admin/login to /login, which is handled
-    # by the SSO and non-SSO patterns above.
+    # Redirect root-level /login and /logout to Wagtail.
+    # If SSO is enabled, these will redirect from there to djangosaml2.
     re_path(
-        r"^admin/login/$",
-        RedirectView.as_view(url="/login/", permanent=True, query_string=True),
+        r"^login/$",
+        RedirectView.as_view(
+            url=reverse_lazy("wagtailadmin_login"), query_string=True
+        ),
     ),
+    re_path(
+        r"^logout/$",
+        RedirectView.as_view(
+            url=reverse_lazy("wagtailadmin_logout"), query_string=True
+        ),
+    ),
+    # Override Wagtail and Django password views to enforce our password policy
     re_path(
         r"^django-admin/password_change",
         change_password,
         name="django_admin_account_change_password",
     ),
-    # Override Wagtail password views with our password policy
     path(
         "admin/password_reset/confirm/<uidb64>/<token>/",
         CFGOVPasswordResetConfirmView.as_view(),
         name="wagtailadmin_password_reset_confirm",
     ),
-    # Override Django password change views
     re_path(
         r"^django-admin/password_change",
         django_auth_views.PasswordChangeView.as_view(),

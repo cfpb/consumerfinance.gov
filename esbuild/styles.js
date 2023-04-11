@@ -11,6 +11,7 @@ const apps = `${unprocessed}/apps`;
 
 const styledApps = [
   'ccdb-search',
+  'financial-well-being',
   'find-a-housing-counselor',
   'form-explainer',
   'know-before-you-owe',
@@ -32,6 +33,7 @@ const cssPaths = [
 
 /**
  * @param {object} baseConfig - The base esbuild configuration.
+ * @returns {object} The modified configuration object.
  */
 function styles(baseConfig) {
   return {

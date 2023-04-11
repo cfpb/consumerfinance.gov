@@ -1,5 +1,5 @@
 const HTML_SNIPPET = `
-  <div class="wrapper content_wrapper tdp-survey-layout">
+  <div class="content_wrapper tdp-survey-layout">
     <div class="tdp-survey-page content_main"
          data-tdp-page="survey"
          data-grade-select-url="../../../assess/survey/"

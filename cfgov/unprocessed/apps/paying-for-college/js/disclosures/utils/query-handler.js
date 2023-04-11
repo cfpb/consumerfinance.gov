@@ -109,7 +109,6 @@ function queryHandler(queryString) {
     queryString.split('+').join(' ');
 
     while ((pair = regex.exec(queryString))) {
-      // eslint-disable-line no-cond-assign
       const key = decodeURIComponent(pair[1]);
       let value = decodeURIComponent(pair[2]);
 

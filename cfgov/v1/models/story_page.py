@@ -29,8 +29,8 @@ class StoryContent(StreamBlock):
 
 
 class StoryPage(CFGOVPage):
-    header = StreamField(StoryHeader, blank=True)
-    content = StreamField(StoryContent, blank=True)
+    header = StreamField(StoryHeader, blank=True, use_json_field=True)
+    content = StreamField(StoryContent, blank=True, use_json_field=True)
 
     content_panels = CFGOVPage.content_panels + [
         FieldPanel("header"),
@@ -43,5 +43,7 @@ class StoryPage(CFGOVPage):
             ObjectList(CFGOVPage.settings_panels, heading="Configuration"),
         ]
     )
+
+    template = "v1/story_page.html"
 
     page_description = "For single-column, image- and narrative-focused pages."

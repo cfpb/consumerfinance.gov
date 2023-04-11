@@ -12,6 +12,7 @@ class LandingPage(CFGOVPage):
             ("text_introduction", molecules.TextIntroduction()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     content = StreamField(
@@ -20,6 +21,7 @@ class LandingPage(CFGOVPage):
             ("well", organisms.Well()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     # General content tab

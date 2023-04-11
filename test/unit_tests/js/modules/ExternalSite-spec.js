@@ -2,7 +2,7 @@ import ExternalSite from '../../../../cfgov/unprocessed/js/routes/external-site.
 
 const HTML_SNIPPET = `
 <main class="content">
-    <div class="wrapper content_wrapper">
+    <div class="content_wrapper">
         <div class="content_main ">
             <section>
                 <div class="external-site">

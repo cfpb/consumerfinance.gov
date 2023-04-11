@@ -20,7 +20,7 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-<div data-tdp_grade_level="{{ survey.key }}" class="wrapper content_wrapper tdp-survey tdp-survey-layout">
+<div data-tdp_grade_level="{{ survey.key }}" class="content_wrapper tdp-survey tdp-survey-layout">
     <div class="tdp-survey-page content_main"
          data-tdp-page="survey"
          data-grade-select-url="{{ gradeSelectUrl }}"
@@ -34,16 +34,20 @@
 
                 <div class="m-notification
                             m-notification__error">
-                    {% include 'icons/error-round.svg' %}
+                    {{ svg_icon('error-round') }}
                     <div class="m-notification_content">
-                        <div class="h4 m-notification_message">You've missed a question. Click the
-                            link(s) to jump to them.</div>
+                        <div class="h4 m-notification_message">
+                            You've missed a question.
+                            Click the link(s) to jump to them.
+                        </div>
                     </div>
                     <ul class="m-notification_explanation"></ul>
                 </div>
                 <div hidden class="a-form-alert a-form-alert__error tdp-survey-alert--clone" role="alert">
-                    {% include 'icons/error-round.svg' %}
-                    <span class="a-form-alert_text">You forgot to answer this question.</span>
+                    {{ svg_icon('error-round') }}
+                    <span class="a-form-alert_text">
+                        You forgot to answer this question.
+                    </span>
                 </div>
 
                 {# E.g. "./6-8/before-page-2.html" #}
@@ -68,19 +72,25 @@
                     <div class="m-btn-group">
                     {% if wizard.steps.prev %}
                         <a class="a-btn" href="../{{ wizard.steps.prev }}/">
-                            <span class="a-btn_icon a-btn_icon__on-left">{% include 'icons/left.svg' %}</span>
+                            <span class="a-btn_icon a-btn_icon__on-left">
+                                {{ svg_icon('left') }}
+                            </span>
                             <span class="a-btn_text">Back</span>
                         </a>
                     {% endif %}
                     {% if wizard.steps.next %}
                         <button class="a-btn" type="submit">
                             <span class="a-btn_text">Next</span>
-                            <span class="a-btn_icon a-btn_icon__on-right">{% include 'icons/right.svg' %}</span>
+                            <span class="a-btn_icon a-btn_icon__on-right">
+                                {{ svg_icon('right') }}
+                            </span>
                         </button>
                     {% else %}
                         <button class="a-btn" type="submit">
                             <span class="a-btn_text">Get my results</span>
-                            <span class="a-btn_icon a-btn_icon__on-right">{% include 'icons/right.svg' %}</span>
+                            <span class="a-btn_icon a-btn_icon__on-right">
+                                {{ svg_icon('right') }}
+                            </span>
                         </button>
                     {% endif %}
                     </div>
@@ -158,7 +168,7 @@
                             </div>
                             <div class="tdp-survey-section__edit"><span>edit</span></div>
                             <div class="tdp-survey-section__icon">
-                                {% include 'icons/approved-round.svg' %}
+                                {{ svg_icon('approved-round') }}
                             </div>
                         </a>
                     {% endfor %}

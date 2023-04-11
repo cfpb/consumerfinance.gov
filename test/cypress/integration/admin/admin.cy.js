@@ -103,9 +103,8 @@ describe('Admin', () => {
     });
   });
 
-  it('should use Block Inventory to search for blocks', () => {
+  it('should access the Block Inventory and verify results', () => {
     admin.openBlockInventory();
-    admin.searchBlocks();
     admin.searchResults().should('be.visible');
   });
 

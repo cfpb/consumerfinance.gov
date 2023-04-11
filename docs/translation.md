@@ -41,7 +41,7 @@ In Django templates:
 ```django
 {% load i18n %}
 
-{% trans "Hello World!" %}
+{% translate "Hello World!" %}
 ```
 
 In Python code:
@@ -62,14 +62,14 @@ To generate or update the portable object file for a specific language, like Spa
 
 ```shell
 cd cfgov
-django-admin.py makemessages -l es --ignore=tests
+./manage.py makemessages -l es --ignore=tests
 ```
 
 Or for all supported languages:
 
 ```shell
 cd cfgov
-django-admin.py makemessages --all --ignore=tests
+./manage.py makemessages --all --ignore=tests
 ```
 
 Using `--ignore=tests` will ignore any calls to gettext inside our unit tests.

@@ -63,12 +63,11 @@ const SERVICE_WORKER_CONFIG = {
 
 const ensureDirectoryExistence = (filePath) => {
   const dirname = path.dirname(filePath);
-  // eslint-disable-next-line no-sync
   if (fs.existsSync(dirname)) {
     return true;
   }
   ensureDirectoryExistence(dirname);
-  return fs.mkdirSync(dirname); // eslint-disable-line no-sync
+  return fs.mkdirSync(dirname);
 };
 
 /**

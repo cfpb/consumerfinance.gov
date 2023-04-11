@@ -1,4 +1,4 @@
-import Analytics from '../../../../../js/modules/Analytics.js';
+import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 /**
  * Sends an event to the dataLayer for Google Tag Manager
@@ -7,12 +7,11 @@ import Analytics from '../../../../../js/modules/Analytics.js';
  * @param {string} label - A value or label for the action
  */
 function sendAnalyticsEvent(action, label) {
-  const eventData = Analytics.getDataLayerOptions(
+  analyticsSendEvent({
     action,
     label,
-    'P4C Financial Path Interaction'
-  );
-  Analytics.sendEvent(eventData);
+    event: 'P4C Financial Path Interaction',
+  });
 }
 
 export { sendAnalyticsEvent };

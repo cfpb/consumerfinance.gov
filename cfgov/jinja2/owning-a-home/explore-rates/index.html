@@ -7,8 +7,6 @@
 
 {% import "v1/includes/molecules/social-media.html" as social_media with context %}
 {% set page={"search_description":"Use this tool throughout your homebuying process to see how your credit score, home price, down payment, and more can affect mortgage interest rates."} %}
-{% set active_page = "explore-rates" %}
-{% set page_js = "explore-rates" %}
 
 {% block title -%}
     Explore interest rates | Consumer Financial Protection Bureau
@@ -244,7 +242,7 @@ home price, down payment, and more can affect mortgage interest rates.
                             <span class="a-form-alert_text"></span>
                         </div>
                     </section>
-                    <section class="calc-loan-details wrapper">
+                    <section class="calc-loan-details">
                         <div class="upper rate-structure half-width-gt-1230">
                             <label for="rate-structure">Rate type</label>
                             <div class="select-content a-select">
@@ -333,7 +331,7 @@ home price, down payment, and more can affect mortgage interest rates.
                         <div class="chart-menu">
                             <button class="chart-menu_btn">
                                 Download chart
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 651.7 1200" class="cf-icon-svg"><path d="M507.1 692.8c-15.6-15.6-40.9-15.6-56.6 0l-85.1 85.1V466.6c0-22.1-17.9-40-40-40s-40 17.9-40 40V778l-85.1-85.1c-15.6-15.6-40.9-15.6-56.6 0-15.6 15.6-15.6 40.9 0 56.6L297 902.9c7.5 7.5 17.7 11.7 28.3 11.7s20.8-4.2 28.3-11.7l153.3-153.4c15.8-15.7 15.8-41 .2-56.7z"></path><path d="M30 161c-16.5 0-30 13.5-30 30v827.8c0 16.5 13.5 30 30 30h591.7c16.5 0 30-13.5 30-30V343.7L469 161H30zm389.6 60v134.8c0 19.9 16.3 36.2 36.2 36.2h135.9V988.8H60V221h359.6z"></path></svg>
+                                {{ svg_icon('download') }}
                             </button>
                             <ul class="chart-menu_options">
                                 <li>PNG</li>
@@ -392,7 +390,7 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
                     </section>
                     <p id="timestamp-p" class="data-enabled timestamp-message clear">These rates are current as of <strong id="timestamp">…</strong>.</p>
-                    <section class="compare wrapper data-enabled loading">
+                    <section class="compare data-enabled loading">
                         <h3>
                         Explore what a lower interest rate means for your wallet</h2>
                         <div id="rate-selects">
@@ -427,18 +425,15 @@ home price, down payment, and more can affect mortgage interest rates.
                         <div class="rc-comparison-section rc-comparison-short">
                             <h4 class="rc-comparison-subhead">Interest costs over the first <span class="loan-years">5</span> years</h4>
                             <div class="rc-comparison-subsection">
-                                <div class="wrapper">
-                                    <div class="interest-cost interest-cost-primary rc-comp-3">
-                                        <span class="new-cost">$150,000</span>
-                                    </div>
-                                    <div class="interest-cost interest-cost-secondary rc-comp-3-push">
-                                        <span class="new-cost">$150,000</span>
-                                    </div>
-                                    <div class="interest-summary rc-comp-5" id="rc-comparison-summary-short">
-                                        <p>Over the first <span class="comparison-term">5</span> years, an interest rate of <span class="higher-rate">1%</span> costs <strong class="rate-diff">$0</strong> more than an interest rate of <span class="lower-rate">1%</span>.</p>
-                                    </div>
+                                <div class="interest-cost interest-cost-primary rc-comp-3">
+                                    <span class="new-cost">$150,000</span>
                                 </div>
-                                <!-- /.wrapper -->
+                                <div class="interest-cost interest-cost-secondary rc-comp-3-push">
+                                    <span class="new-cost">$150,000</span>
+                                </div>
+                                <div class="interest-summary rc-comp-5" id="rc-comparison-summary-short">
+                                    <p>Over the first <span class="comparison-term">5</span> years, an interest rate of <span class="higher-rate">1%</span> costs <strong class="rate-diff">$0</strong> more than an interest rate of <span class="lower-rate">1%</span>.</p>
+                                </div>
                             </div>
                             <!-- /.rc-comparison-subsection -->
                         </div>
@@ -447,24 +442,21 @@ home price, down payment, and more can affect mortgage interest rates.
                             <h4 class="rc-comparison-subhead">
                             Interest costs over <span class="loan-years">30</span> years</h5>
                             <div class="rc-comparison-subsection">
-                                <div class="wrapper">
-                                    <div class="interest-cost interest-cost-primary rc-comp-3">
-                                        <span class="new-cost no-arm">$150,000</span>
-                                        <span class="arm-info u-hidden">Can change</span>
-                                    </div>
-                                    <div class="interest-cost interest-cost-secondary rc-comp-3-push">
-                                        <span class="new-cost no-arm">$150,000</span>
-                                        <span class="arm-info u-hidden">Can change</span>
-                                    </div>
-                                    <div class="interest-summary rc-comp-5" id="rc-comparison-summary-long">
-                                        <p class="no-arm">Over <span class="comparison-term">30</span> years, an interest rate of <span class="higher-rate">1%</span> costs <strong class="rate-diff">$0</strong> more than an interest rate of <span class="lower-rate">1%</span>.</p>
-                                        <p class="arm-info u-hidden">With the <strong>adjustable-rate mortgage</strong> you've chosen, the rate is only fixed for the <strong>first <span class="arm-comparison-term">5</span> years.</strong> Your interest costs in the future can change.</p>
-                                    </div>
+                                <div class="interest-cost interest-cost-primary rc-comp-3">
+                                    <span class="new-cost no-arm">$150,000</span>
+                                    <span class="arm-info u-hidden">Can change</span>
                                 </div>
-                                <!-- /.wrapper -->
+                                <div class="interest-cost interest-cost-secondary rc-comp-3-push">
+                                    <span class="new-cost no-arm">$150,000</span>
+                                    <span class="arm-info u-hidden">Can change</span>
+                                </div>
+                                <div class="interest-summary rc-comp-5" id="rc-comparison-summary-long">
+                                    <p class="no-arm">Over <span class="comparison-term">30</span> years, an interest rate of <span class="higher-rate">1%</span> costs <strong class="rate-diff">$0</strong> more than an interest rate of <span class="lower-rate">1%</span>.</p>
+                                    <p class="arm-info u-hidden">With the <strong>adjustable-rate mortgage</strong> you've chosen, the rate is only fixed for the <strong>first <span class="arm-comparison-term">5</span> years.</strong> Your interest costs in the future can change.</p>
+                                </div>
                             </div>
                             <!-- /.rc-comparison-subsection -->
-                            <p class="mobi-yes l-bump">Interest is only one of many costs associated with getting a mortgage. <a href="/askcfpb/153/what-costs-will-i-have-to-pay-as-part-of-taking-out-a-mortgage-loan.html" class="go-link" target="_blank" rel="noopener noreferrer">Learn more</a></p>
+                            <p class="mobi-yes u-mt30">Interest is only one of many costs associated with getting a mortgage. <a href="/askcfpb/153/what-costs-will-i-have-to-pay-as-part-of-taking-out-a-mortgage-loan.html" class="go-link" target="_blank" rel="noopener noreferrer">Learn more</a></p>
                         </div>
                         <!-- /.rc-comparison-section -->
                     </section>
@@ -473,9 +465,9 @@ home price, down payment, and more can affect mortgage interest rates.
                 <section class="next-steps tabs-layout">
                     <h2><strong>Next steps:</strong> How to get the best interest rate on your mortgage</h2>
                     <!-- put into a container to prevent long line length -->
-                    <div class="wrapper">
-                        <p class="sans">When you’re ready to get serious about buying, the best thing you can do to get a better interest rate on your mortgage is <strong>shop around</strong>. But if you don’t plan to buy for a few months, there are more things you can do to ensure you get a great rate on your mortgage.</p>
-                    </div>
+                    <p class="sans">
+                        When you’re ready to get serious about buying, the best thing you can do to get a better interest rate on your mortgage is <strong>shop around</strong>. But if you don’t plan to buy for a few months, there are more things you can do to ensure you get a great rate on your mortgage.
+                    </p>
                     <ul class="tabs">
                         <li class="tab-list active-tab">
                             <a id="plan-to-buy-tab"
@@ -519,7 +511,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                        target="_blank"
                                        rel="noopener noreferrer">
                                         <span class="a-link_text">Learn more about credit scores</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                        {{ svg_icon('right') }}
                                     </a>
                                 </p>
                             </li>
@@ -534,7 +526,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                        target="_blank"
                                        rel="noopener noreferrer">
                                         <span class="a-link_text">Learn about improving your credit scores</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                        {{ svg_icon('right') }}
                                     </a>
                                 </p>
                             </li>
@@ -549,7 +541,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                        target="_blank"
                                        rel="noopener noreferrer">
                                         <span class="a-link_text">Learn more about down payments</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                        {{ svg_icon('right') }}
                                     </a>
                                 </p>
                             </li>
@@ -585,17 +577,13 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
                     </div>
                 </div>
-                <section id="about" class="about wrapper">
-                    <div class="content-l">
-                        <div class="content-l_col content-l_col-1">
-                            <h3 class="subhead">About our data source for this tool</h3>
-                            <p>The lenders in our data include a mix of large banks, regional banks, and credit unions. The data is updated semiweekly every Wednesday and Friday at 7 a.m. In the event of a holiday, data will be refreshed on the next available business day.</p>
-                            <p>The data is provided by Informa Research Services, Inc., Calabasas, CA. <a id="informars" href="https://www.informars.com" target="_blank" rel="noopener noreferrer">www.informars.com</a>. Informa collects the data directly from lenders and every effort is made to collect the most accurate data possible, but they cannot guarantee the data’s accuracy.</p>
-                        </div>
+                <section id="about" class="content-l">
+                    <div class="content-l_col content-l_col-1">
+                        <h3 class="subhead">About our data source for this tool</h3>
+                        <p>The lenders in our data include a mix of large banks, regional banks, and credit unions. The data is updated semiweekly every Wednesday and Friday at 7 a.m. In the event of a holiday, data will be refreshed on the next available business day.</p>
+                        <p>The data is provided by Informa Research Services, Inc., Calabasas, CA. <a id="informars" href="https://www.informars.com" target="_blank" rel="noopener noreferrer">www.informars.com</a>. Informa collects the data directly from lenders and every effort is made to collect the most accurate data possible, but they cannot guarantee the data’s accuracy.</p>
                     </div>
-                    <!-- /.wrapper -->
                 </section>
-                <!-- /.about -->
             </div>
             <!-- END .rate-checker -->
         </div>

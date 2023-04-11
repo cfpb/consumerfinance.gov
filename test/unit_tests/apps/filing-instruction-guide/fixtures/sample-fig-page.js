@@ -1,5 +1,5 @@
 export default `<main class="content content__1-3 o-fig" id="main">
-  <div class="wrapper content_wrapper">
+  <div class="content_wrapper">
     <nav class="breadcrumbs" aria-label="Breadcrumbs">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
     </nav>
   </div>
 
-  <div class="wrapper content_wrapper">
+  <div class="content_wrapper">
     <aside
       class="content_sidebar content__flush-top-on-small content__flush-sides-on-small content__half-top-on-desk"
     >
@@ -34,7 +34,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
       >
         <h3 class="u-hide-on-mobile">Table of contents</h3>
 
-        <div 
+        <div
           class="o-expandable o-expandable__padded o-expandable__background"
           data-js-hook="state_atomic_init"
         >

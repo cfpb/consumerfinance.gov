@@ -27,7 +27,6 @@ describe('The Regs3K search page', () => {
 
   it('should process a notice', () => {
     const notice = {
-      // eslint-disable-next-line camelcase
       html_url: 'https://federalregister.gov/',
       title: 'Really great notice',
     };
@@ -40,7 +39,6 @@ describe('The Regs3K search page', () => {
   });
 
   it('should process notices', () => {
-    /* eslint-disable camelcase */
     const notices = [
       {
         html_url: 'https://federalregister.gov/1',
@@ -51,7 +49,6 @@ describe('The Regs3K search page', () => {
         title: 'Another really great notice',
       },
     ];
-    /* eslint-enable camelcase */
     const processedNotices = processNotices(notices);
     expect(processedNotices.querySelectorAll('li').length).toEqual(3);
     expect(processedNotices.querySelectorAll('a')[2].textContent).toContain(
