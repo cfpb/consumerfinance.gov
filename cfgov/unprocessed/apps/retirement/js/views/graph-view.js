@@ -1,5 +1,6 @@
-import fetch from '../wizards/fetch-api-data.js';
+import fetchApiData from '../wizards/fetch-api-data.js';
 import getModelValues from '../wizards/get-model-values.js';
+import update from '../wizards/update-model.js';
 import isElementInView from '../utils/is-element-in-view.js';
 import nextStepsView from './next-steps-view.js';
 import numToMoney from '../utils/num-to-money.js';
@@ -254,7 +255,8 @@ function getYourEstimates() {
   highlightAgeFields(false);
   const loadIndDom = document.querySelector('#api-data-loading-indicator');
   loadIndDom.style.display = 'inline-block';
-  $.when(fetch.apiData(dates.concat, salary, dataLang)).done(function (resp) {
+  fetchApiData(dates.concat, salary, dataLang).then((resp) => {
+    update.processApiData(resp);
     if (resp.error === '') {
       SSData = getModelValues.benefits();
       $('.step-two .question').css('display', 'inline-block');
