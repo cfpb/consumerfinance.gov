@@ -269,7 +269,7 @@ class APITests(django.test.TestCase):
         resp = self.client.get(url)
         self.assertIn(b"No expense", resp.content)
 
-    # /paying-for-college2/understanding-your-financial-aid-offer/api/program/408039_981/
+    # Tests API endpoint: /api/program/408039_981/
     def test_program_json(self):
         """api call for program details."""
 

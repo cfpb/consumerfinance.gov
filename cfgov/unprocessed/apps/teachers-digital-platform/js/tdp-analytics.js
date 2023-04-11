@@ -316,7 +316,7 @@ const handleSurveyChoiceChange = (event) => {
     return;
   }
   const action = 'Radio Button Clicked';
-  const wrapper = radio.closest('div.wrapper.tdp-survey');
+  const wrapper = radio.closest('div.content_wrapper.tdp-survey');
   const gradeLevel = wrapper.getAttribute('data-tdp_grade_level');
   const parentFieldset = radio.closest('fieldset');
   const question = parentFieldset.querySelector('legend.tdp-question-legend');
@@ -343,7 +343,7 @@ const handleSurveyErrorNoticeClick = (event) => {
     return;
   }
   const action = 'Anchor: Missed Question';
-  const wrapper = link.closest('div.wrapper.tdp-survey');
+  const wrapper = link.closest('div.content_wrapper.tdp-survey');
   const gradeLevel = wrapper.getAttribute('data-tdp_grade_level');
   const section =
     Number(
@@ -366,7 +366,7 @@ const handleSurveyRestartModalClick = (event) => {
   const link = event.target.closest(selector);
   let label = '';
   if (link && link.getAttribute('data-open-modal') === 'modal-restart') {
-    const wrapper = link.closest('div.wrapper.tdp-survey');
+    const wrapper = link.closest('div.content_wrapper.tdp-survey');
     const section =
       Number(
         wrapper
@@ -402,7 +402,7 @@ const handleSurveyExpandableClick = (event) => {
   const state =
     getExpandableState(expandable) === 'expand' ? 'Expand' : 'Collapse';
   const action = `Survey Progress Dropdown: ${state}`;
-  const wrapper = expandable.closest('div.wrapper.tdp-survey');
+  const wrapper = expandable.closest('div.content_wrapper.tdp-survey');
   const gradeLevel = wrapper.getAttribute('data-tdp_grade_level');
   const section =
     Number(
@@ -427,7 +427,7 @@ const handleSurveySectionClick = (event) => {
     return;
   }
   const action = 'Edit';
-  const wrapper = link.closest('div.wrapper.tdp-survey');
+  const wrapper = link.closest('div.content_wrapper.tdp-survey');
   const gradeLevel = wrapper.getAttribute('data-tdp_grade_level');
   const section = link
     .querySelector('.tdp-survey-section__title')
@@ -454,7 +454,7 @@ const handleSurveySubmitClick = (event) => {
   ) {
     return;
   }
-  const wrapper = link.closest('div.wrapper.tdp-survey');
+  const wrapper = link.closest('div.content_wrapper.tdp-survey');
   const gradeLevel = wrapper.getAttribute('data-tdp_grade_level');
   const section =
     Number(
