@@ -2,7 +2,7 @@
    Common application-wide scripts for rural-or-underserved-tool.
    ========================================================================== */
 
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { Expandable } from '@cfpb/cfpb-expandables';
 import * as addressUtils from './address-utils.js';
 import callCensus from './call-census.js';
 import contentControl from './content-control.js';

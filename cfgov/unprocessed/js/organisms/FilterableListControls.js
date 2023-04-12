@@ -7,9 +7,9 @@ import {
 } from '@cfpb/cfpb-atomic-component';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import ERROR_MESSAGES from '../config/error-messages-config.js';
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { Expandable } from '@cfpb/cfpb-expandables';
 import FormModel from '../modules/util/FormModel.js';
-import Multiselect from '@cfpb/cfpb-forms/src/organisms/Multiselect.js';
+import { Multiselect } from '@cfpb/cfpb-forms';
 
 const BASE_CLASS = 'o-filterable-list-controls';
 const FIELD_ERROR_CLASS = 'a-text-input__error';

@@ -9,7 +9,7 @@ import {
   updateUrl,
 } from './search-utils.js';
 import expandableFacets from './expandable-facets.js';
-import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { Expandable as cfExpandables } from '@cfpb/cfpb-expandables';
 import {
   handleClearAllClick,
   handleFetchSearchResults,

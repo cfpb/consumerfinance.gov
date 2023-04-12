@@ -2,5 +2,5 @@
    Scripts for Expandable Molecule.
    ========================================================================== */
 
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { Expandable } from '@cfpb/cfpb-expandables';
 Expandable.init();

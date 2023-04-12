@@ -1,6 +1,6 @@
 import { scrollIntoView } from '../../../js/modules/util/scroll';
 import DT from '../../owning-a-home/js/form-explainer/dom-tools';
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { Expandable } from '@cfpb/cfpb-expandables';
 
 const CSS = {
   HAS_ATTENTION: 'has-attention',

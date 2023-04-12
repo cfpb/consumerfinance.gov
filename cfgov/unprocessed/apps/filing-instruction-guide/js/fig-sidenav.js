@@ -3,7 +3,7 @@
 
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
 
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { Expandable } from '@cfpb/cfpb-expandables';
 import { addEventListenerToSelector } from '../../../apps/analytics-gtm/js/util/analytics-util';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import {
