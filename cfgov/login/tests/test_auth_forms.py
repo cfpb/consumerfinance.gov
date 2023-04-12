@@ -1,10 +1,10 @@
-from datetime import timedelta
 from unittest.mock import patch
 
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.test import TestCase
-from django.utils.timezone import now
+
+from freezegun import freeze_time
 
 from login.forms import LoginForm, UserCreationForm, UserEditForm
 from login.models import PasswordHistoryItem
@@ -99,28 +99,40 @@ class UserEditFormTestCase(TestCase):
 
 
 class LoginFormTestCase(TestCase):
-    def test_successful_login_object_dne(self):
-        """Clear password history and then successfully login"""
-        User.objects.get(
-            username="admin"
-        ).passwordhistoryitem_set.all().delete()
-        form = LoginForm(data={"username": "admin", "password": "admin"})
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="myuser", password="mypass"
+        )
+
+    def check_login_with_correct_credentials(self):
+        form = LoginForm(data={"username": "myuser", "password": "mypass"})
         self.assertTrue(form.is_valid())
 
-    def test_password_expired(self):
-        """Ensure login is denied if our password is expired"""
-        user = User.objects.get(username="admin")
-        PasswordHistoryItem(
-            user=user,
-            expires_at=now(),
-            locked_until=(now() + timedelta(hours=1)),
-            encrypted_password=make_password("admin"),
-        ).save()
+    def test_login_with_correct_credentials(self):
+        self.check_login_with_correct_credentials()
 
-        form = LoginForm(data={"username": "admin", "password": "admin"})
+    def test_login_successful_if_user_has_no_password_history(self):
+        self.user.password_history.all().delete()
+        self.check_login_with_correct_credentials()
+
+    def make_login_form_with_expired_password(self):
+        self.user.password_history.all().delete()
+
+        with freeze_time("1900-01-01"):
+            PasswordHistoryItem.objects.create(
+                user=self.user, encrypted_password=make_password("mypass")
+            )
+
+        return LoginForm(data={"username": "myuser", "password": "mypass"})
+
+    def test_login_fails_if_user_password_is_too_old(self):
+        form = self.make_login_form_with_expired_password()
         self.assertFalse(form.is_valid())
-        self.assertIn("password has expired", form.errors["__all__"][0])
+        self.assertIn("Your password has expired", form.errors["__all__"][0])
 
-        # Ensure that a password expiration doesn't result in a failed login
-        user.refresh_from_db()
-        self.assertFalse(hasattr(user, "failedloginattempt"))
+    def test_superuser_login_succeeds_even_if_password_is_too_old(self):
+        self.user.is_superuser = True
+        self.user.save()
+
+        form = self.make_login_form_with_expired_password()
+        self.assertTrue(form.is_valid())
