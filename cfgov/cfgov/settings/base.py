@@ -2,7 +2,6 @@ import json
 import os
 from pathlib import Path
 
-from django.conf import global_settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
@@ -36,9 +35,6 @@ USE_X_FORWARDED_HOST = True
 
 # in some environments, we want to respect X-Forwarded-Port
 USE_X_FORWARDED_PORT = os.environ.get("USE_X_FORWARDED_PORT") == "True"
-
-# Use the django default password hashing
-PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
 # Application definition
 INSTALLED_APPS = (
