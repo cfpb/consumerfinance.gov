@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
@@ -23,6 +24,42 @@ class TestComplexityValidator(TestCase):
         )
         with self.assertRaises(ValidationError):
             validator.validate("testing")
+
+    def test_complexity_validation_with_configured_rules(self):
+        rules = next(
+            validator_conf["OPTIONS"]["rules"]
+            for validator_conf in settings.AUTH_PASSWORD_VALIDATORS
+            if validator_conf["NAME"]
+            == "login.password_validation.ComplexityValidator"
+        )
+        validator = ComplexityValidator(rules=rules)
+
+        with self.assertRaises(ValidationError) as cm:
+            validator.validate("test")
+        self.assertEqual(
+            cm.exception.message,
+            "Password must include at least one capital letter",
+        )
+
+        with self.assertRaises(ValidationError) as cm:
+            validator.validate("TEST")
+        self.assertEqual(
+            cm.exception.message,
+            "Password must include at least one lowercase letter",
+        )
+
+        with self.assertRaises(ValidationError) as cm:
+            validator.validate("Test")
+        self.assertEqual(
+            cm.exception.message, "Password must include at least one digit"
+        )
+
+        with self.assertRaises(ValidationError) as cm:
+            validator.validate("Test1")
+        self.assertEqual(
+            cm.exception.message,
+            "Password must include at least one special character (@#$%&!)",
+        )
 
 
 class TestAgeValidator(TestCase):
