@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils import timezone
@@ -8,13 +10,9 @@ from wagtail.users import forms as wagtailforms
 from login.email import send_password_reset_email
 
 
-class PasswordExpiredError(ValidationError):
-    """A validation error due to password expiration"""
-
-    pass
-
-
 class LoginForm(AuthenticationForm):
+    PASSWORDS_EXPIRE_IN_DAYS = 90
+
     error_messages = {
         "password_expired": (
             "Your password has expired. Please "
@@ -31,17 +29,22 @@ class LoginForm(AuthenticationForm):
         self.check_for_password_expiration(user)
 
     def check_for_password_expiration(self, user):
-        dt_now = timezone.now()
-        try:
-            current_password_data = user.passwordhistoryitem_set.latest()
+        # Superuser passwords never expire.
+        if user.is_superuser:
+            return
 
-            if dt_now > current_password_data.expires_at:
-                raise PasswordExpiredError(
-                    self.error_messages["password_expired"],
-                    code="password_expired",
-                )
+        try:
+            latest_password = user.password_history.latest()
         except ObjectDoesNotExist:
-            pass
+            return
+
+        if timezone.now() - latest_password.created >= timedelta(
+            days=self.PASSWORDS_EXPIRE_IN_DAYS
+        ):
+            raise ValidationError(
+                self.error_messages["password_expired"],
+                code="password_expired",
+            )
 
 
 class UserCreationForm(wagtailforms.UserCreationForm):

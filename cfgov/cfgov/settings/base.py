@@ -428,9 +428,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         "NAME": "login.password_validation.HistoryValidator",
+        "OPTIONS": {
+            "count": 10,
+        },
     },
     {
         "NAME": "login.password_validation.AgeValidator",
+        "OPTIONS": {
+            "hours": 24,
+        },
     },
 ]
 
