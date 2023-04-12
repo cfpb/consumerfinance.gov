@@ -30,6 +30,7 @@ regdown==1.0.7
 requests==2.27.1
 requests-aws4auth==1.1.2
 s3transfer==0.5.2
+setuptools>=65.5.1
 wagtail-autocomplete==0.9.0
 wagtail-flags==5.2.0
 wagtail-inventory==2.0.0
