@@ -1,10 +1,10 @@
 import functools
 import re
+from datetime import timedelta
 
 from django.contrib.auth import hashers
 from django.core.exceptions import ValidationError
-
-from login.models import PasswordHistoryItem
+from django.utils import timezone
 
 
 class ComplexityValidator:
@@ -26,28 +26,47 @@ class ComplexityValidator:
 
 
 class AgeValidator:
-    """Validate that the password is more than 24 hours old"""
+    """Validate that the password hasn't been changed too recently"""
+
+    def __init__(self, hours):
+        self.hours = hours
 
     def validate(self, password, user=None):
         if user is None:  # pragma: no cover
             return
 
-        try:
-            current_password_data = user.passwordhistoryitem_set.latest()
-            if not current_password_data.can_change_password():
-                raise ValidationError(self.get_help_text())
-        except PasswordHistoryItem.DoesNotExist:
-            pass
+        # Superusers can always change their password.
+        if user.is_superuser:
+            return
+
+        # When a new user is created, they should be able to change their
+        # initial password right away.
+        if user.password_history.count() <= 1:
+            return
+
+        latest_password = user.password_history.latest()
+        if timezone.now() - latest_password.created <= timedelta(
+            hours=self.hours
+        ):
+            raise ValidationError(self.get_help_text())
 
     def get_help_text(self):
-        return "Password cannot be changed more than once in 24 hours."
+        return (
+            f"Password cannot be changed more than once in {self.hours} hours."
+        )
 
 
 class HistoryValidator:
-    """Validate that the password hasn't been one of the user's last 10"""
+    """Validate that the user doesn't repeat passwords"""
+
+    def __init__(self, count):
+        self.count = count
 
     def validate(self, password, user=None):
-        queryset = user.passwordhistoryitem_set.order_by("-created")[:10]
+        if user is None:  # pragma: no cover
+            return
+
+        queryset = user.password_history.order_by("-created")[: self.count]
         checker = functools.partial(hashers.check_password, password)
         if any(
             checker(pass_hist.encrypted_password) for pass_hist in queryset
@@ -55,4 +74,4 @@ class HistoryValidator:
             raise ValidationError(self.get_help_text())
 
     def get_help_text(self):
-        return "Password cannot be any of your last 10 passwords."
+        return f"Password cannot be any of your last {self.count} passwords."
