@@ -127,8 +127,8 @@ function makeRadioFilterDOM(buckets, chartNode, filter) {
     const id = Math.random() + bucket;
     const radioWrapper = document.createElement('div');
     radioWrapper.className = 'm-form-field m-form-field__radio u-mb5';
-    let radioGroupName = document.querySelectorAll( '.filter-wrapper' ).length;
-    radioGroupName = "radio-group_" + radioGroupName;
+    let radioGroupName = document.querySelectorAll('.filter-wrapper').length;
+    radioGroupName = 'radio-group_' + radioGroupName;
 
     const input = document.createElement('input');
     input.className = 'a-radio';
@@ -137,16 +137,16 @@ function makeRadioFilterDOM(buckets, chartNode, filter) {
     input.value = bucket;
     input.name = radioGroupName;
     if (i === 0) input.checked = true;
-    
+
     const label = document.createElement('label');
     label.className = 'a-label';
     label.htmlFor = id;
     label.innerText = bucket;
-    
+
     radioWrapper.appendChild(input);
     radioWrapper.appendChild(label);
     wrapper.appendChild(radioWrapper);
-    
+
     radios.push(input);
   }
 
