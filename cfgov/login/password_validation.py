@@ -30,7 +30,7 @@ class PasswordRegexValidator:
 class AgeValidator:
     """Validate that the password hasn't been changed too recently"""
 
-    def __init__(self, hours):
+    def __init__(self, hours=1):
         self.hours = hours
 
     def validate(self, password, user=None):
