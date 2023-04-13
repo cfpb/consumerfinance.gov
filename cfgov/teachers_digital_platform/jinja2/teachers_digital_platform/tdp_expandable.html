@@ -18,6 +18,11 @@
    value.is_bordered:     Whether the Expandable has a bottom border or not.
                           Default is false.
 
+   value.is_collapsed_for_mobile:
+                          Whether the Expandable is always initially
+                          collapsed below 800px.
+                          Default is false.
+
    value.is_midtone:      Whether the Expandable is gray or not.
                           Default is false.
 
@@ -33,7 +38,6 @@
    ========================================================================== #}
 
 {% macro expandable(value, expandable_cue_additional_text='') %}
-
 <div class="o-expandable
             o-expandable__padded
             {{ 'o-expandable__background' if value.is_midtone else '' }}
@@ -65,7 +69,9 @@
 
     <div class="o-expandable_content
                 {{ 'o-expandable_content__onload-open'
-                    if value.is_expanded else '' }}"
+                    if value.is_expanded else '' }}
+                {{ 'o-expandable__mobile-collapsed'
+                    if value.is_collapsed_for_mobile else '' }}"
           {{ 'itemprop="acceptedAnswer" itemscope="" itemtype="http://schema.org/Answer"'
         if value.is_faq else '' }}>
         {% if value.is_faq %}<div itemprop='text'>{% endif %}
