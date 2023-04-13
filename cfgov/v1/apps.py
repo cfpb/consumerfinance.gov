@@ -8,6 +8,8 @@ class V1AppConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
 
     def ready(self):
+        import v1.signals  # noqa
+
         # Interesting situation: we use this pattern to account for
         # scrolling bugs in IE:
         # http://snipplr.com/view/518/
