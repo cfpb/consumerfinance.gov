@@ -24,6 +24,8 @@ export let lifetime = {};
  * @returns {Promise} A promise that resolved to the parsed response
  */
 export function fetchApiData(birthdate, salary, dataLang) {
+  if (typeof birthdate !== 'string' || typeof salary !== 'number')
+    throw new Error('Invalid API call');
   let url = `../retirement-api/estimator/${birthdate}/${salary}/`;
 
   if (dataLang === 'es') {
@@ -38,16 +40,14 @@ export function fetchApiData(birthdate, salary, dataLang) {
  */
 export function updateDataFromApi(resp) {
   const data = resp.data;
-  let fullAge = Number(data['full retirement age'].substr(0, 2));
-  if (resp.currentAge > fullAge) {
-    fullAge = resp.currentAge;
+  let fullAge = Number(data['full retirement age']);
+  if (resp.current_age > fullAge) {
+    fullAge = resp.current_age;
   }
 
   Object.keys(resp.data.benefits).forEach((key) => {
-    if (key.substr(0, 3) === 'age') {
-      const prop = key.replace(' ', '');
-      benefits[prop] = resp.data.benefits[key];
-    }
+    const prop = key.replace(' ', '');
+    benefits[prop] = resp.data.benefits[key];
   });
 
   lifetime = resp.data.lifetime;
@@ -56,7 +56,7 @@ export function updateDataFromApi(resp) {
   benefits['past_fra'] = resp.past_fra;
   benefits['fullRetirementAge'] = data['full retirement age'];
   benefits['earlyRetirementAge'] = data['early retirement age'];
-  benefits['fullAge'] = fullAge;
-  benefits['earlyAge'] = Number(data['early retirement age'].substr(0, 2));
+  benefits['fullAge'] = Number(fullAge);
+  benefits['earlyAge'] = Number(data['early retirement age']);
   benefits['monthsPastBirthday'] = Number(data.months_past_birthday);
 }
