@@ -1,6 +1,4 @@
-import fetchApiData from '../wizards/fetch-api-data.js';
-import getModelValues from '../wizards/get-model-values.js';
-import update from '../wizards/update-model.js';
+import { benefits, lifetime, fetchApiData, updateDataFromApi } from '../data';
 import isElementInView from '../utils/is-element-in-view.js';
 import nextStepsView from './next-steps-view.js';
 import numToMoney from '../utils/num-to-money.js';
@@ -220,6 +218,8 @@ function highlightAgeFields(bool) {
 /**
  * This function validates the numbers in the date of birth fields as
  * valid dates.
+ *
+ * @returns {object} validated dates
  */
 function validateBirthdayFields() {
   const dayDom = document.querySelector('#bd-day');
@@ -246,7 +246,6 @@ function getYourEstimates() {
   const dates = validateBirthdayFields();
   const salaryInputElm = document.querySelector('#salary-input');
   const salary = convertStringToNumber(salaryInputElm.value);
-  let SSData;
 
   // Hide warnings, show loading indicator
   $('.m-notification').slideUp();
@@ -255,8 +254,7 @@ function getYourEstimates() {
   loadIndDom.style.display = 'inline-block';
   fetchApiData(dates.concat, salary, dataLang).then((resp) => {
     if (resp.error === '') {
-      update.processApiData(resp);
-      SSData = getModelValues.benefits();
+      updateDataFromApi(resp);
       $('.step-two .question').css('display', 'inline-block');
       $(
         '.step-one-hidden,' +
@@ -267,10 +265,10 @@ function getYourEstimates() {
           '.step-three .hidden-content'
       ).show();
 
-      textlets.currentAge = gettext(SSData.currentAge);
-      textlets.fullRetirementAge = gettext(SSData.fullRetirementAge);
-      questionsView.update(SSData.currentAge);
-      nextStepsView.init(SSData.currentAge, SSData.fullAge);
+      textlets.currentAge = gettext(benefits.currentAge);
+      textlets.fullRetirementAge = gettext(benefits.fullRetirementAge);
+      questionsView.update(benefits.currentAge);
+      nextStepsView.init(benefits.currentAge, benefits.fullAge);
       redrawGraph();
       resetView();
 
@@ -298,9 +296,8 @@ function getYourEstimates() {
  * This function updates the placement of the benfits text boxes
  */
 function placeBenefitsText() {
-  const SSData = getModelValues.benefits();
-  let fullAgeBenefitsValue = SSData['age' + SSData.fullAge];
-  let benefitsValue = SSData['age' + selectedAge];
+  let fullAgeBenefitsValue = benefits['age' + benefits.fullAge];
+  let benefitsValue = benefits['age' + selectedAge];
   let $selectedBar = 5;
   let benefitsTop;
   let benefitsLeft;
@@ -325,7 +322,7 @@ function placeBenefitsText() {
 
   // set text, position and visibility of #full-age-benefits-text
   $fullAgeBenefits.text(numToMoney(fullAgeBenefitsValue));
-  const $fullAgeBar = $('[data-bar_age="' + SSData.fullAge + '"]');
+  const $fullAgeBar = $('[data-bar_age="' + benefits.fullAge + '"]');
   fullAgeTop = parseInt($fullAgeBar.css('top'), 10);
   fullAgeTop -= $fullAgeBenefits.height() + 10;
   fullAgeLeft = parseInt($fullAgeBar.css('left'), 10);
@@ -338,20 +335,18 @@ function placeBenefitsText() {
  * This function changes the text of benefits elements based on selectedAge.
  */
 function setTextByAge() {
-  const SSData = getModelValues.benefits();
-  const lifetimeData = getModelValues.lifetime();
-  const lifetimeBenefits = numToMoney(lifetimeData['age' + selectedAge]);
-  const fullAgeValue = Number(SSData['age' + SSData.fullAge]);
-  const currentAgeValue = Number(SSData['age' + SSData.currentAge]);
-  const selectedAgeValue = Number(SSData['age' + selectedAge]);
+  const lifetimeBenefits = numToMoney(lifetime['age' + selectedAge]);
+  const fullAgeValue = Number(benefits['age' + benefits.fullAge]);
+  const currentAgeValue = Number(benefits['age' + benefits.currentAge]);
+  const selectedAgeValue = Number(benefits['age' + selectedAge]);
   let percent;
   let text;
-  const selectedBelowFRA = selectedAge < SSData.fullAge;
-  const selectedFRA = selectedAge === SSData.fullAge;
-  const selectedAboveFRA = selectedAge > SSData.fullAge;
-  const selectedCurrent = selectedAge === SSData.currentAge;
-  // const isFRA = SSData.currentAge === SSData.fullAge;
-  // const isYoungerThanFRA = SSData.currentAge < SSData.fullAge;
+  const selectedBelowFRA = selectedAge < benefits.fullAge;
+  const selectedFRA = selectedAge === benefits.fullAge;
+  const selectedAboveFRA = selectedAge > benefits.fullAge;
+  const selectedCurrent = selectedAge === benefits.currentAge;
+  // const isFRA = benefits.currentAge === benefits.fullAge;
+  // const isYoungerThanFRA = benefits.currentAge < benefits.fullAge;
   const $benefitsMod = $('.benefit-modification-text');
   const $selectedAgeText = $('#selected-retirement-age-value');
   const $fullAgeBenefits = $('#full-age-benefits-text');
@@ -374,7 +369,7 @@ function setTextByAge() {
   $selectedAgeText.text(selectedAge);
 
   // The user is older than FRA
-  if (SSData.past_fra) {
+  if (benefits.past_fra) {
     $fullAgeBenefits.hide();
   }
 
@@ -396,16 +391,16 @@ function setTextByAge() {
   }
 
   // The user has selected FRA, or current age if past FRA
-  if (selectedFRA || (selectedCurrent && SSData.past_fra)) {
+  if (selectedFRA || (selectedCurrent && benefits.past_fra)) {
     $fullAgeBenefits.hide();
     $selectedAgeText.html(textlets.fullRetirementAge);
     $('.graph-content .content-container.full-retirement').show();
     $benefitsMod.html(textlets.yourFull);
 
     // If the user is past FRA, display pastFull
-    if (SSData.past_fra) {
+    if (benefits.past_fra) {
       $benefitsMod.html(textlets.pastFull);
-      $selectedAgeText.html(SSData.currentAge);
+      $selectedAgeText.html(benefits.currentAge);
     }
 
     $comparedToFull.hide();
@@ -419,14 +414,14 @@ function setTextByAge() {
     percent = (fullAgeValue - selectedAgeValue) / fullAgeValue;
 
     // If user is past FRA, percent is compared to current Age instead
-    if (SSData.past_fra) {
+    if (benefits.past_fra) {
       percent = (currentAgeValue - selectedAgeValue) / currentAgeValue;
       text = textlets.comparedAt;
       // Text replace for Spanish version
       if (text.indexOf('XXX') === -1) {
-        text += ' ' + SSData.currentAge + '.';
+        text += ' ' + benefits.currentAge + '.';
       } else {
-        text = text.replace(/XXX/i, SSData.currentAge);
+        text = text.replace(/XXX/i, benefits.currentAge);
       }
     } else {
       text = textlets.comparedFull;
@@ -446,7 +441,7 @@ function setTextByAge() {
   }
 
   // If the user is 70, override other content
-  if (SSData.currentAge === 70) {
+  if (benefits.currentAge === 70) {
     $selectedAgeText.html(textlets.selectedAge);
     $benefitsMod.html(textlets.yourMax);
   }
@@ -457,13 +452,12 @@ function setTextByAge() {
  * @param {number} indicatorValue - Value of the range slider.
  */
 function setAgeWithIndicator(indicatorValue) {
-  const SSData = getModelValues.benefits();
   const $indicator = $('#graph_slider-input');
   selectedAge = indicatorValue;
   textlets.selectedAge = gettext(selectedAge);
   // Don't let the user select an age younger than they are now
-  if (selectedAge < SSData.currentAge) {
-    selectedAge = SSData.currentAge;
+  if (selectedAge < benefits.currentAge) {
+    selectedAge = benefits.currentAge;
     $indicator.val(selectedAge);
   }
   drawBars();
@@ -477,10 +471,9 @@ function setAgeWithIndicator(indicatorValue) {
  * @param {number} age - The age for the indicator to be set to.
  */
 function moveIndicatorToAge(age) {
-  const SSData = getModelValues.benefits();
   const indicatorDom = document.querySelector('#graph_slider-input');
-  if (age < SSData.currentAge) {
-    age = SSData.currentAge;
+  if (age < benefits.currentAge) {
+    age = benefits.currentAge;
   }
   age = Number(age);
   indicatorDom.value = age;
@@ -496,7 +489,6 @@ function setGraphDimensions() {
   let graphWidth;
   let graphHeight;
   let barOffset;
-  const SSData = getModelValues.benefits();
 
   // Update width settings
   canvasLeft = Number($('#claim-canvas').css('left').replace(/\D/g, ''));
@@ -528,7 +520,7 @@ function setGraphDimensions() {
 
   changeGraphSetting('barGut', barWidth + gutterWidth);
 
-  const heightRatio = (graphHeight - barOffset) / SSData.age70;
+  const heightRatio = (graphHeight - barOffset) / benefits.age70;
   changeGraphSetting('heightRatio', heightRatio);
 
   $('#claim-canvas, .x-axis-label').width(graphWidth);
@@ -540,13 +532,12 @@ function setGraphDimensions() {
  * This helper function draws and redraws the indicator bars for each age.
  */
 function drawBars() {
-  const SSData = getModelValues.benefits();
   let leftOffset = 0;
 
   $.each(ages, function (i, val) {
     const color = '#e3e4e5';
     const key = 'age' + val;
-    const height = graphSettings.heightRatio * SSData[key];
+    const height = graphSettings.heightRatio * benefits[key];
     const $bar = $('[data-bar_age="' + val + '"]');
     $bar.css({
       left: leftOffset,
@@ -557,7 +548,7 @@ function drawBars() {
     });
 
     leftOffset += graphSettings.barGut;
-    if (val >= SSData.fullAge) {
+    if (val >= benefits.fullAge) {
       $bar.css('background', '#aedb94');
     }
   });
@@ -631,10 +622,9 @@ function redrawGraph() {
  * after new data is received.
  */
 function resetView() {
-  const SSData = getModelValues.benefits();
   drawBars();
   setTextByAge();
-  moveIndicatorToAge(SSData.fullAge);
+  moveIndicatorToAge(benefits.fullAge);
   $('.benefit-selections-area').empty();
 }
 
