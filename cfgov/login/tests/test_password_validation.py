@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
@@ -9,59 +8,12 @@ from freezegun import freeze_time
 from login.models import PasswordHistoryItem
 from login.password_validation import (
     AgeValidator,
-    ComplexityValidator,
     HistoryValidator,
+    PasswordRegexValidator,
 )
 
 
 User = get_user_model()
-
-
-class TestComplexityValidator(TestCase):
-    def test_complexity_validation_error(self):
-        validator = ComplexityValidator(
-            rules=[
-                (r"[A-Z]", "Password require a capital letter"),
-            ],
-        )
-        with self.assertRaises(ValidationError):
-            validator.validate("testing")
-
-    def test_complexity_validation_with_configured_rules(self):
-        rules = next(
-            validator_conf["OPTIONS"]["rules"]
-            for validator_conf in settings.AUTH_PASSWORD_VALIDATORS
-            if validator_conf["NAME"]
-            == "login.password_validation.ComplexityValidator"
-        )
-        validator = ComplexityValidator(rules=rules)
-
-        with self.assertRaises(ValidationError) as cm:
-            validator.validate("test")
-        self.assertEqual(
-            cm.exception.message,
-            "Password must include at least one capital letter",
-        )
-
-        with self.assertRaises(ValidationError) as cm:
-            validator.validate("TEST")
-        self.assertEqual(
-            cm.exception.message,
-            "Password must include at least one lowercase letter",
-        )
-
-        with self.assertRaises(ValidationError) as cm:
-            validator.validate("Test")
-        self.assertEqual(
-            cm.exception.message, "Password must include at least one digit"
-        )
-
-        with self.assertRaises(ValidationError) as cm:
-            validator.validate("Test1")
-        self.assertEqual(
-            cm.exception.message,
-            "Password must include at least one special character (@#$%&!)",
-        )
 
 
 class ValidatorTests(TestCase):
@@ -69,6 +21,14 @@ class ValidatorTests(TestCase):
         self.user = User.objects.create_user(
             "test_user", email="test@example.com"
         )
+
+    def test_regex_validation_error(self):
+        validator = PasswordRegexValidator(
+            regex=r"[A-Z]",
+            message="Password require a capital letter",
+        )
+        with self.assertRaises(ValidationError):
+            validator.validate("testing")
 
     def test_age_validation_new_user(self):
         # New users can always reset their password.

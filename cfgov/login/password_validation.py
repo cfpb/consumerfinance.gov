@@ -7,22 +7,24 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 
-class ComplexityValidator:
-    """Validate that the password meets a set of complexity rules"""
+class PasswordRegexValidator:
+    """Validate that the password matches a given regex"""
 
-    def __init__(self, rules=None):
-        self.rules = rules or []
+    regex = ""
+    message = "Enter a valid password"
+
+    def __init__(self, regex=None, message=None):
+        if regex is not None:
+            self.regex = re.compile(regex)
+        if message is not None:
+            self.message = message
 
     def validate(self, password, user=None):
-        for rule_re, message in self.rules:
-            if not re.search(rule_re, password):
-                raise ValidationError(
-                    message,
-                    code="password_complexity",
-                )
+        if not self.regex.search(str(password)):
+            raise ValidationError(self.message)
 
     def get_help_text(self):
-        return "; ".join([m for r, m in self.rules])
+        return self.message
 
 
 class AgeValidator:
