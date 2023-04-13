@@ -107,3 +107,7 @@ if os.getenv("SKIP_DJANGO_MIGRATIONS"):
     MIGRATION_MODULES = _NoMigrations()
 
 DEPLOY_ENVIRONMENT = "test"
+
+# Axes requires a request for authentication, which breaks uses of Django's
+# test client .login() method. This disables it when running tests.
+AXES_ENABLED = False
