@@ -55,18 +55,6 @@ class ValidatorTests(TestCase):
 
             self.assertIn("once in 2 hours", e.exception.message)
 
-    def test_age_validation_superuser(self):
-        PasswordHistoryItem.objects.create(
-            user=self.user, encrypted_password=make_password("testing")
-        )
-
-        self.user.is_superuser = True
-
-        # AgeValidator with a 1 hour check will pass validation,
-        # even though password was last set less than an hour ago,
-        # because the user is a superuser.
-        AgeValidator(hours=1).validate("testing", user=self.user)
-
     def test_history_validation(self):
         # Make a history of 10 passwords, "testing0" ... "testing9".
         for i in range(10):

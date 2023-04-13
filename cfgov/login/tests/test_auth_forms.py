@@ -129,10 +129,3 @@ class LoginFormTestCase(TestCase):
         form = self.make_login_form_with_expired_password()
         self.assertFalse(form.is_valid())
         self.assertIn("Your password has expired", form.errors["__all__"][0])
-
-    def test_superuser_login_succeeds_even_if_password_is_too_old(self):
-        self.user.is_superuser = True
-        self.user.save()
-
-        form = self.make_login_form_with_expired_password()
-        self.assertTrue(form.is_valid())

@@ -37,10 +37,6 @@ class AgeValidator:
         if user is None:  # pragma: no cover
             return
 
-        # Superusers can always change their password.
-        if user.is_superuser:
-            return
-
         # When a new user is created, they should be able to change their
         # initial password right away.
         if user.password_history.count() <= 1:

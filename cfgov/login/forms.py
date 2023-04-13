@@ -29,10 +29,6 @@ class LoginForm(AuthenticationForm):
         self.check_for_password_expiration(user)
 
     def check_for_password_expiration(self, user):
-        # Superuser passwords never expire.
-        if user.is_superuser:
-            return
-
         try:
             latest_password = user.password_history.latest()
         except ObjectDoesNotExist:
