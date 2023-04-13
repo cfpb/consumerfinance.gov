@@ -1,3 +1,6 @@
+// TODO: Note that this is an older copy of AtomicComponent from the
+// design-system to isolate TDP expandable customizations.
+
 /* ==========================================================================
    AtomicComponent
    Base Atomic Component

@@ -1,3 +1,6 @@
+// TODO: Note that this is an older copy of BaseTransition from the
+// design-system to isolate TDP expandable customizations.
+
 // Required modules.
 import { EventObserver } from '@cfpb/cfpb-atomic-component';
 
