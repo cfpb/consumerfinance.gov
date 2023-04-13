@@ -4,13 +4,13 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils import timezone
 
-from wagtail.admin.forms.auth import AuthenticationForm
+from wagtail.admin.forms.auth import LoginForm as WagtailLoginForm
 from wagtail.users import forms as wagtailforms
 
 from login.email import send_password_reset_email
 
 
-class LoginForm(AuthenticationForm):
+class LoginForm(WagtailLoginForm):
     PASSWORDS_EXPIRE_IN_DAYS = 90
 
     error_messages = {
@@ -19,7 +19,7 @@ class LoginForm(AuthenticationForm):
             '<a href="/admin/password_reset/" style="color:white;font-weight:bold">'
             "reset your password</a>."
         ),
-        **AuthenticationForm.error_messages,
+        **WagtailLoginForm.error_messages,
     }
 
     def confirm_login_allowed(self, user):
