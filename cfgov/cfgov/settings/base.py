@@ -410,28 +410,28 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "login.password_validation.PasswordRegexValidator",
         "OPTIONS": {
             "regex": r"[A-Z]",
-            "message": "Password must include at least one capital letter. ",
+            "message": "Password must include at least one capital letter.",
         },
     },
     {
         "NAME": "login.password_validation.PasswordRegexValidator",
         "OPTIONS": {
             "regex": r"[a-z]",
-            "message": "Password must include at least one lowercase letter. ",
+            "message": "Password must include at least one lowercase letter.",
         },
     },
     {
         "NAME": "login.password_validation.PasswordRegexValidator",
         "OPTIONS": {
             "regex": r"[0-9]",
-            "message": "Password must include at least one digit. ",
+            "message": "Password must include at least one digit.",
         },
     },
     {
         "NAME": "login.password_validation.PasswordRegexValidator",
         "OPTIONS": {
             "regex": r"[@#$%&!]",
-            "message": "Password must include at least one special character (@#$%&!). ",
+            "message": "Password must include at least one special character (@#$%&!).",
         },
     },
     {

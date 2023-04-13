@@ -18,7 +18,7 @@ class TestLockoutView(TestCase):
         self.messages_middleware.process_request(request)
         response = lockout(request, None)
         # Because this response is from calling the view directly, not from
-        # Django's test client, we can';t use assertRedirects, which checks
+        # Django's test client, we can't use assertRedirects, which checks
         # for the client instance on the response object.
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
