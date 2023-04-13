@@ -1,34 +1,50 @@
+// Required modules.
 import BaseTransition from './BaseTransition.js';
 import { EventObserver } from '@cfpb/cfpb-atomic-component';
 
 // Exported constants.
 const CLASSES = {
   CSS_PROPERTY: 'max-height',
-  BASE_CLASS: 'o-expandable-facets_content__transition',
-  EXPANDED: 'o-expandable-facets_content__expanded',
-  COLLAPSED: 'o-expandable-facets_content__collapsed',
-  OPEN_DEFAULT: 'o-expandable-facets_content__onload-open',
+  BASE_CLASS: 'o-expandable_content__transition',
+  EXPANDED: 'o-expandable_content__expanded',
+  COLLAPSED: 'o-expandable_content__collapsed',
+  OPEN_DEFAULT: 'o-expandable_content__onload-open',
 };
 
+/* eslint-disable max-lines-per-function */
 /**
- * ExpandableFacetTransition
+ * ExpandableTransition
  *
  * @class
- * @classdesc Initializes new ExpandableFacetTransition behavior.
+ * @classdesc Initializes new ExpandableTransition behavior.
  * @param {HTMLElement} element - DOM element to apply move transition to.
- * @returns {ExpandableFacetTransition} An instance.
+ * @returns {ExpandableTransition} An instance.
  */
-function ExpandableFacetTransition(element) {
-  const _baseTransition = new BaseTransition(element, CLASSES, this);
+function ExpandableTransition(element) {
+  const _baseTransition = new BaseTransition(element, CLASSES);
   let previousHeight;
 
   /**
-   * @param {Function} initialClass - The initial state for this transition.
-   * @returns {ExpandableFacetTransition} An instance.
+   * Handle the end of a transition.
    */
-  function init(initialClass) {
-    _baseTransition.init(initialClass);
-    this.addEventListener(
+  function _transitionComplete() {
+    if (element.classList.contains(CLASSES.EXPANDED)) {
+      this.dispatchEvent('expandEnd', { target: this });
+
+      if (element.scrollHeight > previousHeight) {
+        element.style.maxHeight = element.scrollHeight + 'px';
+      }
+    } else if (element.classList.contains(CLASSES.COLLAPSED)) {
+      this.dispatchEvent('collapseEnd', { target: this });
+    }
+  }
+
+  /**
+   * @returns {ExpandableTransition} An instance.
+   */
+  function init() {
+    _baseTransition.init();
+    _baseTransition.addEventListener(
       BaseTransition.END_EVENT,
       _transitionComplete.bind(this)
     );
@@ -43,24 +59,9 @@ function ExpandableFacetTransition(element) {
   }
 
   /**
-   * Handle the end of a transition.
-   */
-  function _transitionComplete() {
-    if (element.classList.contains(CLASSES.EXPANDED)) {
-      this.dispatchEvent('expandend', { target: this });
-
-      if (element.scrollHeight > previousHeight) {
-        element.style.maxHeight = element.scrollHeight + 'px';
-      }
-    } else if (element.classList.contains(CLASSES.COLLAPSED)) {
-      this.dispatchEvent('collapseend', { target: this });
-    }
-  }
-
-  /**
    * Toggle the expandable
    *
-   * @returns {ExpandableFacetTransition} An instance.
+   * @returns {ExpandableTransition} An instance.
    */
   function toggleExpandable() {
     if (element.classList.contains(CLASSES.COLLAPSED)) {
@@ -75,10 +76,10 @@ function ExpandableFacetTransition(element) {
   /**
    * Collapses the expandable content
    *
-   * @returns {ExpandableFacetTransition} An instance.
+   * @returns {ExpandableTransition} An instance.
    */
   function collapse() {
-    this.dispatchEvent('collapsebegin', { target: this });
+    this.dispatchEvent('collapseBegin', { target: this });
 
     previousHeight = element.scrollHeight;
     element.style.maxHeight = '0';
@@ -90,10 +91,10 @@ function ExpandableFacetTransition(element) {
   /**
    * Expands the expandable content
    *
-   * @returns {ExpandableFacetTransition} An instance.
+   * @returns {ExpandableTransition} An instance.
    */
   function expand() {
-    this.dispatchEvent('expandbegin', { target: this });
+    this.dispatchEvent('expandBegin', { target: this });
 
     if (!previousHeight || element.scrollHeight > previousHeight) {
       previousHeight = element.scrollHeight;
@@ -108,8 +109,8 @@ function ExpandableFacetTransition(element) {
   // Attach public events.
   const eventObserver = new EventObserver();
   this.addEventListener = eventObserver.addEventListener;
-  this.removeEventListener = eventObserver.removeEventListener;
   this.dispatchEvent = eventObserver.dispatchEvent;
+  this.removeEventListener = eventObserver.removeEventListener;
 
   this.animateOff = _baseTransition.animateOff;
   this.animateOn = _baseTransition.animateOn;
@@ -128,6 +129,6 @@ function ExpandableFacetTransition(element) {
 /* eslint-enable max-lines-per-function */
 
 // Public static properties.
-ExpandableFacetTransition.CLASSES = CLASSES;
+ExpandableTransition.CLASSES = CLASSES;
 
-export default ExpandableFacetTransition;
+export default ExpandableTransition;
