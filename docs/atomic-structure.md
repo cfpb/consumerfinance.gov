@@ -172,8 +172,8 @@ expandable.init(_expandable.EXPANDED);
 or
 
 ```js
-import {instantiateAll} from '@cfpb/cfpb-atomic-component');
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { instantiateAll } from '@cfpb/cfpb-atomic-component';
+import { Expandable } from '@cfpb/cfpb-expandables';
 instantiateAll('.o-expandable', Expandable);
 ```
 
