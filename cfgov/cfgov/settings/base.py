@@ -458,6 +458,7 @@ AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = 2  # Hours
 AXES_ONLY_USER_FAILURES = True
 AXES_LOCKOUT_CALLABLE = "login.views.lockout"
+LOGOUT_REDIRECT_URL = "wagtailadmin_login"
 
 # Initialize our SAML_AUTH variable as false. Our production settings will
 # override this based on the SAML_AUTH environment variable.
