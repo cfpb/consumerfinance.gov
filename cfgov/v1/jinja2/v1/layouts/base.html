@@ -104,11 +104,6 @@
 
     {# End of Open Graph properties #}
 
-    {# Always open preview panel links in a new tab. #}
-    {% if request.in_preview_panel %}
-    <base target="_blank">
-    {% endif %}
-
     <link rel="icon" href="{{ static('favicon.ico') }}" sizes="any">
     <link rel="icon" href="{{ static('icon.svg') }}" type="image/svg+xml">
     <link rel="apple-touch-icon" href="{{ static('apple-touch-icon.png') }}">
