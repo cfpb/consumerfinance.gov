@@ -1,6 +1,6 @@
 {
-  "name": "owning-a-home",
-  "description": "The consumerfinance.gov/owning-a-home website.",
+  "name": "form-explainer",
+  "description": "The form explainers inside the consumerfinance.gov/owning-a-home website.",
   "homepage": "https://www.consumerfinance.gov/owning-a-home",
   "author": {
     "name": "Consumer Financial Protection Bureau",
@@ -13,15 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
-    "amortize": "1.1.0",
-    "date-format": "3.0.0",
-    "format-usd": "1.0.1",
-    "highcharts": "7.2.2",
-    "jquery": "3.6.0",
-    "jumbo-mortgage": "3.0.0",
-    "median": "0.0.2",
-    "rangeslider-js": "^3.0.2",
-    "unformat-usd": "0.1.1"
+    "fastdom": "1.0.10"
   },
   "type": "module"
 }
