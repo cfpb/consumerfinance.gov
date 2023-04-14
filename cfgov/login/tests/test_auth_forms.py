@@ -51,7 +51,7 @@ class UserEditFormTestCase(TestCase):
     def setUp(self):
         self.userdata = {
             "username": "george",
-            "email": "george@washington.com",
+            "email": "george@example.com",
             "first_name": "george",
             "last_name": "washington",
         }
