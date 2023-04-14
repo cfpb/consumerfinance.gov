@@ -1,5 +1,5 @@
-import { scrollIntoView } from '../../../js/modules/util/scroll';
-import DT from '../../owning-a-home/js/form-explainer/dom-tools';
+import { scrollIntoView } from '../../../js/modules/util/scroll.js';
+import DT from './dom-tools.js';
 import { Expandable } from '@cfpb/cfpb-expandables';
 
 const CSS = {
