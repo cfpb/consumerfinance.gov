@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Permission, User
 from django.core.exceptions import PermissionDenied
 from django.test import (
     RequestFactory,
@@ -6,6 +6,7 @@ from django.test import (
     TestCase,
     override_settings,
 )
+from django.urls import reverse
 
 from wagtail import hooks
 from wagtail.admin.views.pages.bulk_actions.delete import DeleteBulkAction
@@ -202,3 +203,27 @@ class TestDeleteProtections(TestCase):
             action.form_valid,
             None,
         )
+
+
+class TestDjangoAdminLink(TestCase, WagtailTestUtils):
+    def get_admin_response_for_user(self, is_staff):
+        credentials = {"username": "regular", "password": "regular"}
+        user = self.create_user(is_staff=is_staff, **credentials)
+
+        user.user_permissions.add(
+            Permission.objects.get(
+                content_type__app_label="wagtailadmin", codename="access_admin"
+            )
+        )
+        user.save()
+
+        self.login(**credentials)
+        return self.client.get(reverse(f"wagtailadmin_home"))
+
+    def test_staff_sees_django_admin_link(self):
+        response = self.get_admin_response_for_user(is_staff=True)
+        self.assertContains(response, "Django Admin")
+
+    def test_non_staff_doesnt_see_django_admin_link(self):
+        response = self.get_admin_response_for_user(is_staff=False)
+        self.assertNotContains(response, "Django Admin")
