@@ -138,25 +138,14 @@ def global_admin_css():
     return css_includes
 
 
-class PermissionCheckingMenuItem(MenuItem):
-    """
-    MenuItem that only displays if the user has a certain permission.
-
-    This subclassing approach is recommended by the Wagtail documentation:
-    https://docs.wagtail.io/en/stable/reference/hooks.html#register-admin-menu-item
-    """
-
-    def __init__(self, *args, **kwargs):
-        self.permission = kwargs.pop("permission")
-        super().__init__(*args, **kwargs)
-
+class StaffOnlyMenuItem(MenuItem):
     def is_shown(self, request):
-        return request.user.has_perm(self.permission)
+        return request.user.is_staff
 
 
 @hooks.register("register_admin_menu_item")
 def register_django_admin_menu_item():
-    return MenuItem(
+    return StaffOnlyMenuItem(
         "Django Admin",
         reverse("admin:index"),
         classnames="icon icon-redirect",
