@@ -218,7 +218,7 @@ class TestDjangoAdminLink(TestCase, WagtailTestUtils):
         user.save()
 
         self.login(**credentials)
-        return self.client.get(reverse(f"wagtailadmin_home"))
+        return self.client.get(reverse("wagtailadmin_home"))
 
     def test_staff_sees_django_admin_link(self):
         response = self.get_admin_response_for_user(is_staff=True)
