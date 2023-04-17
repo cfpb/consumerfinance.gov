@@ -2,7 +2,7 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
-from django.http import HttpResponseForbidden
+from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render
 
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
@@ -17,10 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 def cdn_is_configured():
-    return (
-        hasattr(settings, "WAGTAILFRONTENDCACHE")
-        and settings.WAGTAILFRONTENDCACHE
-    )
+    return bool(getattr(settings, "WAGTAILFRONTENDCACHE", None))
 
 
 def purge(url=None):
@@ -57,7 +54,7 @@ def purge(url=None):
 
 def manage_cdn(request):
     if not cdn_is_configured():
-        return render(request, "cdnadmin/disabled.html")
+        raise Http404
 
     user_can_purge = request.user.has_perm("v1.add_cdnhistory")
 
