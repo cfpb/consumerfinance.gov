@@ -28,7 +28,6 @@ function FilterableListControls(element) {
   const _dom = checkDom(element, BASE_CLASS);
   const _form = _dom.querySelector('form');
   let _expandable;
-  let _expandableContent;
   let _formModel;
 
   /**
@@ -43,19 +42,10 @@ function FilterableListControls(element) {
 
     _formModel = new FormModel(_form);
 
-    /* Instantiate multiselects before their containing expandable
-       so height of any 'selected choice' buttons is included when
-       expandable height is calculated initially. */
-    const multiSelectsSelector = `.${BASE_CLASS} .${Multiselect.BASE_CLASS}`;
-    const multiSelects = instantiateAll(multiSelectsSelector, Multiselect);
+    const multiSelects = Multiselect.init();
 
     const _expandables = Expandable.init(_dom);
     _expandable = _expandables[0];
-
-    // This is used for checking if the content is expanded.
-    _expandableContent = _expandable.element.querySelector(
-      '.o-expandable_content'
-    );
 
     // If multiselects exist on the form, iterate over them.
     multiSelects.forEach((multiSelect) => {
@@ -84,14 +74,8 @@ function FilterableListControls(element) {
    */
   function _refreshExpandableHeight() {
     window.clearTimeout(timeout);
-    // TODO: Expandable itself should have an API to query if it is open or not.
-    if (
-      _expandableContent.classList.contains('o-expandable_content__expanded')
-    ) {
-      timeout = window.setTimeout(
-        _expandable.transition.expand.bind(_expandable.transition),
-        250
-      );
+    if (_expandable.isExpanded()) {
+      timeout = window.setTimeout(_expandable.expand, 250);
     }
   }
 
@@ -123,21 +107,15 @@ function FilterableListControls(element) {
     let dataLayerArray = [];
     const cachedFields = {};
 
-    _expandable.transition.addEventListener(
-      'expandbegin',
-      function sendEvent() {
-        analyticsSendEvent({ action: 'Filter:open', label });
-      }
-    );
+    _expandable.addEventListener('expandbegin', () => {
+      analyticsSendEvent({ action: 'Filter:open', label });
+    });
 
-    _expandable.transition.addEventListener(
-      'collapsebegin',
-      function sendEvent() {
-        analyticsSendEvent({ action: 'Filter:close', label });
-      }
-    );
+    _expandable.addEventListener('collapsebegin', () => {
+      analyticsSendEvent({ action: 'Filter:close', label });
+    });
 
-    _form.addEventListener('change', function sendEvent(event) {
+    _form.addEventListener('change', (event) => {
       const field = event.target;
 
       if (!field) {
@@ -148,9 +126,9 @@ function FilterableListControls(element) {
     });
 
     const formSubmittedBinded = _formSubmitted.bind(this);
-    _form.addEventListener('submit', function sendEvent(event) {
+    _form.addEventListener('submit', (event) => {
       event.preventDefault();
-      Object.keys(cachedFields).forEach(function (key) {
+      Object.keys(cachedFields).forEach((key) => {
         dataLayerArray.push(cachedFields[key]);
       });
       dataLayerArray.push(
