@@ -2,7 +2,7 @@
    Common application-wide scripts for rural-or-underserved-tool.
    ========================================================================== */
 
-import { Expandable } from '@cfpb/cfpb-expandables';
+import { ExpandableGroup } from '@cfpb/cfpb-expandables';
 import * as addressUtils from './address-utils.js';
 import callCensus from './call-census.js';
 import contentControl from './content-control.js';
@@ -27,7 +27,7 @@ import callTiger from './call-tiger.js';
 
 import('./show-map.js');
 
-Expandable.init();
+ExpandableGroup.init();
 
 const MAX_CSV_ROWS = 250;
 

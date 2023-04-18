@@ -1,6 +1,6 @@
 import { scrollIntoView } from '../../../js/modules/util/scroll.js';
 import DT from './dom-tools.js';
-import { Expandable } from '@cfpb/cfpb-expandables';
+import { ExpandableGroup } from '@cfpb/cfpb-expandables';
 
 const CSS = {
   HAS_ATTENTION: 'has-attention',
@@ -62,7 +62,7 @@ class FormExplainer {
       }
     });
 
-    Expandable.init();
+    ExpandableGroup.init();
   }
 
   /**
