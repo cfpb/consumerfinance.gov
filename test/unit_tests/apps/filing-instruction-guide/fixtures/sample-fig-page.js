@@ -47,7 +47,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
             </span>
             <span class="o-expandable_link">
               <span class="o-expandable_cue o-expandable_cue-open">
-                <span class="u-visually-hidden-on-mobile"> Show </span>
+                <span class="u-visually-hidden">Show</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 17 20.4"
@@ -59,7 +59,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
                 </svg>
               </span>
               <span class="o-expandable_cue o-expandable_cue-close">
-                <span class="u-visually-hidden-on-mobile"> Hide </span>
+                <span class="u-visually-hidden">Hide</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 17 20.4"

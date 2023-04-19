@@ -41,7 +41,6 @@
             {%- for subpart in nav_items %}
                 {% set sec_nav_settings = {
                     'label': subpart.subpart_heading ~ ' ' ~ subpart.title ~ ' ' ~ subpart.section_range|safe,
-                    'hide_cue_label': true,
                     'is_expanded': nav_items[subpart].expanded
                 } %}
                 {% call() expandable(sec_nav_settings) %}

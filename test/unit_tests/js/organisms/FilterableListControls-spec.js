@@ -15,13 +15,13 @@ const HTML_SNIPPET = `
         </span>
         <span class="o-expandable_link">
             <span class="o-expandable_cue o-expandable_cue-open">
-                <span class="u-visually-hidden-on-mobile">
+                <span class="u-visually-hidden">
                     Show
                     filters
                 </span>
             </span>
             <span class="o-expandable_cue o-expandable_cue-close">
-                <span class="u-visually-hidden-on-mobile">
+                <span class="u-visually-hidden">
                     Hide
                     filters
                 </span>

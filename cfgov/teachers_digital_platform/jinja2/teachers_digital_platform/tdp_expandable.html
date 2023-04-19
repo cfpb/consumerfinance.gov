@@ -33,9 +33,6 @@ TODO: Note that this is a copy of our standard expandable for TDP,
    value.is_expanded:     Whether the Expandable is expanded or not.
                           Default is false.
 
-   value.hide_cue_label:  Whether the Expandable's cue label is hidden or not.
-                          Default is false. The plus/minus icon is always shown.
-
    ========================================================================== #}
 
 {% macro expandable(value, expandable_cue_additional_text='') %}
@@ -49,14 +46,14 @@ TODO: Note that this is a copy of our standard expandable for TDP,
         </span>
         <span class="o-expandable_link">
             <span class="o-expandable_cue o-expandable_cue-open">
-                <span class="{{ 'u-visually-hidden' if value.hide_cue_label else 'u-visually-hidden-on-mobile' }}">
+                <span class="u-visually-hidden">
                     {{ _('Show') }}
                     {{ expandable_cue_additional_text }}
                 </span>
                 {{ svg_icon('plus-round') }}
             </span>
             <span class="o-expandable_cue o-expandable_cue-close">
-                <span class="{{ 'u-visually-hidden' if value.hide_cue_label else 'u-visually-hidden-on-mobile' }}">
+                <span class="u-visually-hidden">
                     {{ _('Hide') }}
                     {{ expandable_cue_additional_text }}
                 </span>
