@@ -2,5 +2,5 @@
    Scripts for Expandable Group organism.
    ========================================================================== */
 
-import { Expandable } from '@cfpb/cfpb-expandables';
-Expandable.init();
+import { ExpandableGroup } from '@cfpb/cfpb-expandables';
+ExpandableGroup.init();
