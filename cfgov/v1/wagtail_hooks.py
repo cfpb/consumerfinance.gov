@@ -18,7 +18,7 @@ from wagtail.contrib.modeladmin.options import (
 )
 
 from ask_cfpb.models.snippets import GlossaryTerm
-from v1.admin_views import manage_cdn
+from v1.admin_views import cdn_is_configured, manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
@@ -153,9 +153,14 @@ def register_django_admin_menu_item():
     )
 
 
+class IfCDNEnabledMenuItem(MenuItem):
+    def is_shown(self, request):
+        return cdn_is_configured()
+
+
 @hooks.register("register_admin_menu_item")
-def register_frank_menu_item():
-    return MenuItem(
+def register_cdn_menu_item():
+    return IfCDNEnabledMenuItem(
         "CDN Tools",
         reverse("manage-cdn"),
         classnames="icon icon-cogs",
@@ -164,7 +169,7 @@ def register_frank_menu_item():
 
 
 @hooks.register("register_admin_urls")
-def register_admin_urls():
+def register_cdn_url():
     return [
         re_path(r"^cdn/$", manage_cdn, name="manage-cdn"),
     ]

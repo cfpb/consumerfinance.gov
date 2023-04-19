@@ -123,15 +123,8 @@ class TestCDNManagementView(TestCase):
         )
         self.assertContains(response, "url: Enter a valid URL.")
 
-
-class TestCDNManagerNotEnabled(TestCase):
-    def setUp(self):
-        self.superuser = User.objects.create_superuser(
-            username="superuser", email="", password="password"
-        )
-
+    @override_settings(WAGTAILFRONTENDCACHE=None)
     def test_cdnmanager_not_enabled(self):
-        self.client.login(username="superuser", password="password")
+        self.client.login(username="cdn", password="password")
         response = self.client.get(reverse("manage-cdn"))
-        expected_message = "CDN management is not currently enabled"
-        self.assertContains(response, expected_message)
+        self.assertEqual(response.status_code, 404)

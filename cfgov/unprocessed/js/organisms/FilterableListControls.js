@@ -42,11 +42,7 @@ function FilterableListControls(element) {
 
     _formModel = new FormModel(_form);
 
-    /* Instantiate multiselects before their containing expandable
-       so height of any 'selected choice' buttons is included when
-       expandable height is calculated initially. */
-    const multiSelectsSelector = `.${BASE_CLASS} .${Multiselect.BASE_CLASS}`;
-    const multiSelects = instantiateAll(multiSelectsSelector, Multiselect);
+    const multiSelects = Multiselect.init();
 
     const _expandables = Expandable.init(_dom);
     _expandable = _expandables[0];
@@ -107,15 +103,15 @@ function FilterableListControls(element) {
     let dataLayerArray = [];
     const cachedFields = {};
 
-    _expandable.addEventListener('expandbegin', function sendEvent() {
+    _expandable.addEventListener('expandbegin', () => {
       analyticsSendEvent({ action: 'Filter:open', label });
     });
 
-    _expandable.addEventListener('collapsebegin', function sendEvent() {
+    _expandable.addEventListener('collapsebegin', () => {
       analyticsSendEvent({ action: 'Filter:close', label });
     });
 
-    _form.addEventListener('change', function sendEvent(event) {
+    _form.addEventListener('change', (event) => {
       const field = event.target;
 
       if (!field) {
@@ -126,9 +122,9 @@ function FilterableListControls(element) {
     });
 
     const formSubmittedBinded = _formSubmitted.bind(this);
-    _form.addEventListener('submit', function sendEvent(event) {
+    _form.addEventListener('submit', (event) => {
       event.preventDefault();
-      Object.keys(cachedFields).forEach(function (key) {
+      Object.keys(cachedFields).forEach((key) => {
         dataLayerArray.push(cachedFields[key]);
       });
       dataLayerArray.push(
