@@ -24,12 +24,10 @@
             {{ heading|safe }}
         </h3>
         <span class="o-expandable_link">
-            <span class="o-expandable_cue o-expandable_cue-open">
-                <span class="u-visually-hidden">Show</span>
+            <span class="o-expandable_cue-open" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue o-expandable_cue-close">
-                <span class="u-visually-hidden">Hide</span>
+            <span class="o-expandable_cue-close" aria-label="{{ _('Hide') }}">
                 {{ svg_icon('minus-round') }}
             </span>
         </span>

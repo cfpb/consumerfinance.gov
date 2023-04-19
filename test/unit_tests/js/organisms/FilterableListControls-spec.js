@@ -14,17 +14,13 @@ const HTML_SNIPPET = `
             Filter posts
         </span>
         <span class="o-expandable_link">
-            <span class="o-expandable_cue o-expandable_cue-open">
-                <span class="u-visually-hidden">
-                    Show
-                    filters
-                </span>
+            <span class="o-expandable_cue-open" aria-label="Show">
+                Show
+                filters
             </span>
-            <span class="o-expandable_cue o-expandable_cue-close">
-                <span class="u-visually-hidden">
-                    Hide
-                    filters
-                </span>
+            <span class="o-expandable_cue-close" aria-label="Hide">
+                Hide
+                filters
             </span>
         </span>
     </button>

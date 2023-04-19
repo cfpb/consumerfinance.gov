@@ -12,11 +12,11 @@
           <button class="o-expandable_header o-expandable_target"
                   title="Expand content">
               <span class="o-expandable_link">
-                  <span class="o-expandable_cue o-expandable_cue-open">
+                  <span class="o-expandable_cue-open" aria-label="Read full answer">
                       Read full answer
                       {{ svg_icon('plus-round') }}
                   </span>
-                  <span class="o-expandable_cue o-expandable_cue-close">
+                  <span class="o-expandable_cue-close" aria-label="Hide full answer">
                       Hide full answer
                       {{ svg_icon('minus-round') }}
                   </span>
@@ -31,8 +31,8 @@
           .o-expandable_content
           .o-expandable_header.o-expandable_target
             .o-expandable_link
-              .o-expandable_cue.o-expandable_cue-open
-              .o-expandable_cue.o-expandable_cue-close
+              .o-expandable_cue-open
+              .o-expandable_cue-close
 
     notes:
       - "Displays an approximately 4-line preview of content. "
