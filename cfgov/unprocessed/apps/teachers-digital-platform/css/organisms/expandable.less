@@ -1,0 +1,211 @@
+// Import external dependencies
+@import (reference) '@cfpb/cfpb-core/src/cfpb-core.less';
+@import (reference) '@cfpb/cfpb-buttons/src/cfpb-buttons.less';
+@import (reference) '@cfpb/cfpb-icons/src/cfpb-icons.less';
+
+/* ==========================================================================
+   Design System
+   Expandable Styling
+   ========================================================================== */
+
+//
+// Theme variables
+//
+
+// .o-expandable
+@expandable-focus: @black;
+
+// .o-expandable_label
+@expandable_label-text: @black;
+
+// .o-expandable_link
+@expandable_link-text: @pacific;
+
+// .o-expandable modifiers
+@expandable__background: @gray-5;
+@expandable__border: @gray-40;
+
+// Sizing variables
+
+// .o-expandable_link
+@expandable_link-font-size: @btn-font-size;
+
+// Timing variables
+
+// .o-expandable_content__transition
+@expandable__transition-speed: 0.25s;
+
+//
+// Recommended expandable pattern
+//
+
+.o-expandable {
+  position: relative;
+
+  &_target {
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:focus {
+      outline: 1px dotted @expandable-focus;
+      outline-offset: 1px;
+    }
+
+    .o-expandable_cue-close,
+    .o-expandable_cue-open {
+      display: none;
+    }
+
+    &__expanded .o-expandable_cue-close {
+      display: block;
+    }
+
+    &__collapsed .o-expandable_cue-open {
+      display: block;
+    }
+  }
+
+  &_content {
+    // A clearfix prevents twitchy animations from occurring when margins
+    // collapse and extend past the bounds of the expandable.
+    .u-clearfix();
+
+    &__transition {
+      transition: max-height @expandable__transition-speed ease-in-out;
+    }
+
+    &__collapsed {
+      max-height: 0;
+    }
+
+    &__expanded {
+      max-height: 1000px;
+    }
+
+    &.u-is-animating {
+      overflow: hidden;
+    }
+  }
+
+  //
+  // Expandable text elements
+  //
+
+  &_label {
+    // Remove default h4 margin style
+    margin-bottom: 0;
+    color: @expandable_label-text;
+    font-weight: 500;
+  }
+
+  &_link {
+    min-width: 60px;
+    text-align: right;
+    color: @expandable_link-text;
+    font-size: unit((@expandable_link-font-size / @base-font-size-px), em);
+    line-height: unit((@base-line-height-px / @expandable_link-font-size));
+  }
+
+  //
+  // Header
+  //
+
+  &_header {
+    display: flex;
+    justify-content: space-between;
+
+    // Using the button element with .o-expandable_header requires setting
+    // an explicit width.
+    button& {
+      width: 100%;
+      text-align: left;
+    }
+
+    .o-expandable_label {
+      // Grow to available width.
+      flex-grow: 1;
+    }
+  }
+
+  //
+  // Padded expandable modifier
+  //
+
+  &__padded {
+    .o-expandable_header {
+      padding: unit((10px / @base-font-size-px), em)
+        unit((15px / @base-font-size-px), em);
+    }
+
+    .o-expandable_content {
+      padding: 0 unit((15px / @base-font-size-px), em);
+
+      // The divider between _header and _content.
+      &::before {
+        content: '';
+        display: block;
+        border-top: 1px solid @expandable__border;
+        padding-top: unit((15px / @base-font-size-px), em);
+      }
+
+      &::after {
+        padding-bottom: unit((15px / @base-font-size-px), em);
+        width: 100%;
+      }
+    }
+  }
+
+  //
+  // Expandable with a background color modifier
+  //
+
+  &__background {
+    background: @expandable__background;
+  }
+
+  //
+  // Expandable with a border modifier
+  //
+
+  &__border {
+    border: 1px solid @expandable__border;
+  }
+
+  //
+  // Expandable groups
+  //
+
+  &-group {
+    .o-expandable__padded {
+      border-bottom: 1px solid @expandable__border;
+
+      &:first-child {
+        border-top: 1px solid @expandable__border;
+      }
+    }
+  }
+
+  .respond-to-print( {
+    // Hide the interactive expandable cues when printing
+    &_target__expanded &_cue-close,
+    &_target__collapsed &_cue-open {
+      display: none;
+    }
+
+    // Ensure all expandables are expanded when printing.
+    // To accommodate print stylesheets that display the raw URL after links,
+    // set an enormous max height to accommodate expandables that have a lot of links.
+    &_content__collapsed {
+      display: block;
+      max-height: 99999px !important;
+    }
+  } );
+}
+
+// Used when the set language reads right-to-left
+div[dir='rtl'] .o-expandable_header {
+  width: 100%;
+  text-align: right;
+}

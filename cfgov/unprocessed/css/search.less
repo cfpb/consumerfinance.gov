@@ -24,28 +24,29 @@
     border: 1px solid @gray-40;
     background-color: #f7f8f9;
 
-    .o-expandable_content,
-    .o-expandable_target {
-      border: 0;
-      padding: 0;
-      &:before,
-      &:after {
-        border: 0;
-        padding: 0;
+    .o-expandable-group {
+      margin-bottom: 15px;
+
+      // TODO: The below customizations should be usurped by an expandable facet.
+      // See https://github.com/cfpb/design-system/pull/1628
+
+      // Override for top border in expandable group.
+      .o-expandable__padded:first-child {
+        border-top: 0;
+      }
+
+      // Override for left/right padding on the label and content.
+      .o-expandable_content,
+      .o-expandable_target {
+        padding-left: 0;
+        padding-right: 0;
       }
     }
+
     .num-results {
       float: right;
     }
-    .o-expandable {
-      padding-bottom: 15px;
-      border-bottom: 1px solid @gray-40;
-      margin-bottom: 15px;
-      &_label {
-        .h4;
-        margin-bottom: 0;
-      }
-    }
+
     .o-form_group {
       margin-bottom: 0;
     }
