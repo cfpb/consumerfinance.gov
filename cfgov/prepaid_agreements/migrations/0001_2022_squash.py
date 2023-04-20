@@ -6,8 +6,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('prepaid_agreements', '0001_add_prepaid_models'), ('prepaid_agreements', '0002_add_deleted_at'), ('prepaid_agreements', '0003_order_prepaid_agreements_by_effective_date')]
-
     initial = True
 
     dependencies = [

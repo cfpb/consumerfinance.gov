@@ -15,8 +15,6 @@ import v1.blocks
 
 class Migration(migrations.Migration):
 
-    replaces = [('regulations3k', '0031_abstracthero_and_add_jumbohero'), ('regulations3k', '0032_require_label_on_sections'), ('regulations3k', '0033_edit_validator_warnings'), ('regulations3k', '0034_design_system_links'), ('regulations3k', '0035_add_notification_type_option'), ('regulations3k', '0036_update_notification_default_type'), ('regulations3k', '0037_update_section_label_help_text'), ('regulations3k', '0038_add_story_page_with_image_bleeding'), ('regulations3k', '0039_add_aria_label_to_hyperlinks'), ('regulations3k', '0040_add_default_empty_list_for_213_prep'), ('regulations3k', '0041_update_help_text_on_info_unit_group_intro_text'), ('regulations3k', '0042_add_ask_search_max_length'), ('regulations3k', '0043_image_alt_no_limit')]
-
     dependencies = [
         ('regulations3k', '0030_recreated2'),
     ]

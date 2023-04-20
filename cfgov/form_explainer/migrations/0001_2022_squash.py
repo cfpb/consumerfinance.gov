@@ -12,12 +12,10 @@ import v1.blocks
 
 class Migration(migrations.Migration):
 
-    replaces = [('form_explainer', '0001_initial'), ('form_explainer', '0002_abstracthero_and_add_jumbohero'), ('form_explainer', '0003_design_system_links'), ('form_explainer', '0004_add_aria_label_to_hyperlinks'), ('form_explainer', '0005_add_default_empty_list_for_213_prep'), ('form_explainer', '0006_update_help_text_on_info_unit_group_intro_text'), ('form_explainer', '0007_image_alt_no_limit')]
-
     initial = True
 
     dependencies = [
-        ('v1', '0203_deprecate_spanish_home_page'),
+        ('v1', '0199_2022_squash'),
     ]
 
     operations = [
