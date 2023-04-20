@@ -33,7 +33,7 @@
             </select>
         </div>
 
-        <div class="filter-section">
+        <div class="o-expandable-group">
             {% set selections = filters['prepaid_type'] %}
             {% set expandable_settings = {
                 'label': 'Prepaid product type',
@@ -62,9 +62,7 @@
                 </fieldset>
             </div>
             {% endcall %}
-        </div>
 
-        <div class="filter-section">
             {% set selections = filters['status'] %}
             {% set expandable_settings = {
                 'label': 'Current status',
