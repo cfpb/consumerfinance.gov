@@ -6,25 +6,6 @@ from wagtail import fields as core_fields
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ('jobmanager', '0001_initial'),
-        ('jobmanager', '0002_auto_20160809_1619'),
-        ('jobmanager', '0003_auto_20160814_2044'),
-        ('jobmanager', '0004_auto_20160815_1008'),
-        ('jobmanager', '0005_auto_20160815_1457'),
-        ('jobmanager', '0006_auto_20160815_1705'),
-        ('jobmanager', '0007_create_careers_pages'),
-        ('jobmanager', '0008_migrate_job_pages'),
-        ('jobmanager', '0009_django_cleanup'),
-        ('jobmanager', '0010_cleanup_unused_fields'),
-        ('jobmanager', '0011_delete_fellowshipupdatelist'),
-        ('jobmanager', '0012_jobs_have_one_region'),
-        ('jobmanager', '0013_job_region_to_location'),
-        ('jobmanager', '0014_add_city_and_state'),
-        ('jobmanager', '0015_remove_tinymce'),
-        ('jobmanager', '0016_add_job_length_and_service_type'),
-    ]
-
     dependencies = [
     ]
 

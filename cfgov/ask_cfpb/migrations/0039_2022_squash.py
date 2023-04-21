@@ -15,8 +15,6 @@ import v1.models.snippets
 
 class Migration(migrations.Migration):
 
-    replaces = [('ask_cfpb', '0039_add_title_to_howto_block'), ('ask_cfpb', '0040_video_player'), ('ask_cfpb', '0041_answerpage_share_and_print'), ('ask_cfpb', '0042_share_and_print_help'), ('ask_cfpb', '0043_answerpage_notification'), ('ask_cfpb', '0044_add_aria_label_to_hyperlinks'), ('ask_cfpb', '0045_remove_category_sidebar')]
-
     dependencies = [
         ('ask_cfpb', '0038_recreated2'),
     ]
