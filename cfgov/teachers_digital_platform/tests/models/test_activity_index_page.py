@@ -7,7 +7,7 @@ from django.test import RequestFactory, TestCase
 from wagtail.blocks import StreamValue
 from wagtail.documents.models import Document
 from wagtail.models import Site
-from wagtail.test.utils import WagtailPageTests
+from wagtail.test.utils import WagtailPageTestCase
 
 from model_bakery import baker
 
@@ -38,10 +38,13 @@ from teachers_digital_platform.models.activity_index_page import (
 from v1.models import HomePage
 
 
-class ActivityIndexPageTests(WagtailPageTests):
+class ActivityIndexPageTests(WagtailPageTestCase):
     @classmethod
     def setUpClass(self):
         super().setUpClass()
+
+    def setUp(self):
+        self.login()
 
     def test_can_create_an_activity_page_under_activity_index_page(self):
         self.assertCanCreateAt(ActivityIndexPage, ActivityPage)

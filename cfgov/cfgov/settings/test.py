@@ -42,6 +42,7 @@ BAKER_CUSTOM_CLASS = "core.testutils.baker.ActualContentTypeBaker"
 
 INSTALLED_APPS += (
     "wagtail.contrib.settings",
+    "wagtail.test.snippets",
     "wagtail.test.testapp",
 )
 

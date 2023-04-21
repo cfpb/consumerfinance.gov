@@ -1,7 +1,6 @@
 import * as validators from '../modules/util/validators.js';
 import {
   checkDom,
-  instantiateAll,
   setInitFlag,
   EventObserver,
 } from '@cfpb/cfpb-atomic-component';

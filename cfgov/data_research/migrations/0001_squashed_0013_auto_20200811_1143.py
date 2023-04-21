@@ -7,8 +7,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('data_research', '0011_recreated'), ('data_research', '0012_recreated_2'), ('data_research', '0013_auto_20200811_1143')]
-
     initial = True
 
     dependencies = [

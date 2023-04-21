@@ -8,10 +8,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ('regulations3k', '0001_initial'),
-    ]
-
     dependencies = [
     ]
 

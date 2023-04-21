@@ -350,11 +350,17 @@ class CFGOVPage(Page):
         context["is_faq_page"] = self.is_faq_page()
         return context
 
-    def serve(self, request, *args, **kwargs):
-        # Force the page's language on the request
+    def _activate_translation(self, request):
         translation.activate(self.language)
         request.LANGUAGE_CODE = translation.get_language()
+
+    def serve(self, request, *args, **kwargs):
+        self._activate_translation(request)
         return super().serve(request, *args, **kwargs)
+
+    def serve_preview(self, request, *args, **kwargs):
+        self._activate_translation(request)
+        return super().serve_preview(request, *args, **kwargs)
 
     def streamfield_media(self, media_type):
         media = []

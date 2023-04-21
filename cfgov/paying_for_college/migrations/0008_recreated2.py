@@ -13,17 +13,9 @@ from wagtail.images import blocks as images_blocks
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ('paying_for_college', '0002_add_page_models'),
-        ('paying_for_college', '0003_expandable_group_heading_ids'),
-        ('paying_for_college', '0004_add_api_fields'),
-        ('paying_for_college', '0005_fix_monthly_debt_precision'),
-        ('paying_for_college', '0006_contact_updates'),
-    ]
-
     dependencies = [
         ('v1', '0198_recreated'),
-        ('paying_for_college', '0001_initial'),
+        ('paying_for_college', '0007_recreated'),
     ]
 
     operations = [

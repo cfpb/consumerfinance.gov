@@ -432,6 +432,10 @@ class TranslatedPagesReportFilterSet(WagtailFilterSet):
 
         return queryset
 
+    class Meta:
+        model = CFGOVPage
+        fields = ["language"]
+
 
 class TranslatedPagesReportView(PageReportView):
     title = "Translated Pages"
