@@ -12,16 +12,10 @@
             Official interpretation {% if section_title %}of {{ section_title }}{% endif %}
         </span>
         <span class="o-expandable_link">
-            <span class="o-expandable_cue o-expandable_cue-open">
-                <span class="u-visually-hidden-on-mobile">
-                    Show
-                </span>
+            <span class="o-expandable_cue-open" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue o-expandable_cue-close">
-                <span class="u-visually-hidden-on-mobile">
-                    Hide
-                </span>
+            <span class="o-expandable_cue-close" aria-label="{{ _('Hide') }}">
                 {{ svg_icon('minus-round') }}
             </span>
         </span>

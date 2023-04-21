@@ -63,18 +63,15 @@ function FilterableListControls(element) {
     return this;
   }
 
+  let timeout;
   /**
    * Refresh the height of the filterable list control's expandable
    * to ensure all its children are visible.
    */
-  let timeout;
-  /**
-   *
-   */
   function _refreshExpandableHeight() {
     window.clearTimeout(timeout);
     if (_expandable.isExpanded()) {
-      timeout = window.setTimeout(_expandable.expand, 250);
+      timeout = window.setTimeout(_expandable.refresh, 250);
     }
   }
 

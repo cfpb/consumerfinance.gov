@@ -20,18 +20,10 @@
                 Table of Contents
             </span>
             <span class="o-expandable_link">
-                <span class="o-expandable_cue o-expandable_cue-open">
-                    <span class="u-visually-hidden">
-                        Show
-                        {{ expandable_cue_additional_text }}
-                    </span>
+                <span class="o-expandable_cue-open" aria-label="{{ _('Show') }}">
                     {{ svg_icon('plus-round') }}
                 </span>
-                <span class="o-expandable_cue o-expandable_cue-close">
-                    <span class="u-visually-hidden">
-                        Hide
-                        {{ expandable_cue_additional_text }}
-                    </span>
+                <span class="o-expandable_cue-close" aria-label="{{ _('Hide') }}">
                     {{ svg_icon('minus-round') }}
                 </span>
             </span>
@@ -41,7 +33,6 @@
             {%- for subpart in nav_items %}
                 {% set sec_nav_settings = {
                     'label': subpart.subpart_heading ~ ' ' ~ subpart.title ~ ' ' ~ subpart.section_range|safe,
-                    'hide_cue_label': true,
                     'is_expanded': nav_items[subpart].expanded
                 } %}
                 {% call() expandable(sec_nav_settings) %}

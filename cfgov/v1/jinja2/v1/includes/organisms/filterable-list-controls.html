@@ -198,7 +198,7 @@
         {% endif %}
 
         {% set form_markup = _filters_form(value, form) %}
-        {% call() expandable(value, expandable_cue_additional_text='filters') %}
+        {% call() expandable(value) %}
             {{ form_markup | safe }}
         {% endcall %}
     </div>

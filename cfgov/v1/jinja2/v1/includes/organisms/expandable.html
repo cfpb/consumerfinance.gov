@@ -24,15 +24,12 @@
    value.is_expanded:     Whether the Expandable is expanded or not.
                           Default is false.
 
-   value.hide_cue_label:  Whether the Expandable's cue label is hidden or not.
-                          Default is false. The plus/minus icon is always shown.
-
    value.is_faq:          Whether the Expandable should be output with FAQ
                           schema attributes.
 
    ========================================================================== #}
 
-{% macro expandable(value, expandable_cue_additional_text='') %}
+{% macro expandable(value) %}
 
 <div class="o-expandable
             o-expandable__padded
@@ -47,18 +44,10 @@
             {{ value.label }}
         </span>
         <span class="o-expandable_link">
-            <span class="o-expandable_cue o-expandable_cue-open">
-                <span class="{{ 'u-visually-hidden' if value.hide_cue_label else 'u-visually-hidden-on-mobile' }}">
-                    {{ _('Show') }}
-                    {{ expandable_cue_additional_text }}
-                </span>
+            <span class="o-expandable_cue-open" aria-label="{{ _('Show') }}">
                 {{ svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue o-expandable_cue-close">
-                <span class="{{ 'u-visually-hidden' if value.hide_cue_label else 'u-visually-hidden-on-mobile' }}">
-                    {{ _('Hide') }}
-                    {{ expandable_cue_additional_text }}
-                </span>
+            <span class="o-expandable_cue-close" aria-label="{{ _('Hide') }}">
                 {{ svg_icon('minus-round') }}
             </span>
         </span>
