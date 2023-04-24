@@ -155,7 +155,11 @@ def register_django_admin_menu_item():
 
 class IfCDNEnabledMenuItem(MenuItem):
     def is_shown(self, request):
-        return cdn_is_configured()
+        return (
+            cdn_is_configured()
+            and request.user
+            and request.user.has_perm("v1.add_cdnhistory")
+        )
 
 
 @hooks.register("register_admin_menu_item")
