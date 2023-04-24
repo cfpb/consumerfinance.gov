@@ -80,7 +80,6 @@ INSTALLED_APPS = (
     "data_research",
     "v1",
     "core",
-    "legacy",
     "django_extensions",
     "jobmanager",
     "wellbeing",
