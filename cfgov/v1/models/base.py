@@ -21,6 +21,7 @@ from wagtail.models import Page, Site
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
+from modelcluster.queryset import FakeQuerySet
 from taggit.models import ItemBase, TagBase, TaggedItemBase
 from wagtailinventory.helpers import get_page_blocks
 
@@ -400,7 +401,7 @@ class CFGOVPage(Page):
         return "post_preview_{}".format(self.id)
 
     def get_translations(self, inclusive=True, live=True):
-        if self.language == "en":
+        if self.language == "en" and self.pk:
             query = Q(english_page=self)
         elif self.english_page:
             query = Q(english_page=self.english_page) | Q(
@@ -409,10 +410,11 @@ class CFGOVPage(Page):
         else:
             query = Q(pk__in=[])
 
-        if inclusive:
-            query = query | Q(pk=self.pk)
-        else:
-            query = query & ~Q(pk=self.pk)
+        if self.pk:
+            if inclusive:
+                query = query | Q(pk=self.pk)
+            else:
+                query = query & ~Q(pk=self.pk)
 
         pages = CFGOVPage.objects.filter(query)
 
@@ -423,14 +425,26 @@ class CFGOVPage(Page):
         if site:
             pages = pages.in_site(site)
 
-        pages = pages.annotate(
-            language_display_order=models.Case(
-                *[
-                    models.When(language=language, then=i)
-                    for i, language in enumerate(dict(settings.LANGUAGES))
-                ]
-            ),
-        ).order_by("language_display_order")
+        if inclusive and not self.pk:
+
+            def get_language_order(page):
+                return list(dict(settings.LANGUAGES).keys()).index(
+                    page.language
+                )
+
+            pages = FakeQuerySet(
+                type(self),
+                sorted(list(pages) + [self], key=get_language_order),
+            )
+        else:
+            pages = pages.annotate(
+                language_display_order=models.Case(
+                    *[
+                        models.When(language=language, then=i)
+                        for i, language in enumerate(dict(settings.LANGUAGES))
+                    ]
+                ),
+            ).order_by("language_display_order")
 
         return pages
 

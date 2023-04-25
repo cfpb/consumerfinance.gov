@@ -942,7 +942,7 @@ class VideoPlayer(blocks.StructBlock):
         value_class = VideoPlayerStructValue
 
     class Media:
-        js = ["video-player.js"]
+        js = ["video-player.js", "https://www.youtube.com/iframe_api"]
 
 
 class AudioPlayer(blocks.StructBlock):

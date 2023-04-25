@@ -26,6 +26,7 @@
 
    ========================================================================== #}
 
+{%- macro render(value) -%}
 <div class="m-related-links">
     {% if value.heading %}
         <header class="m-slug-header">
@@ -52,3 +53,8 @@
         </ul>
     {% endif %}
 </div>
+{% endmacro -%}
+
+{%- if value %}
+  {{- render(value) }}
+{%- endif %}
