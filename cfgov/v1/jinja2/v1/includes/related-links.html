@@ -14,43 +14,15 @@
                     Example link: ['/', 'Home']
                     Example related_links: [['/', 'Home'],['/login', 'Login']]
 
-   related_links_2: You can optionally pass in another array which will
-                    activate a two column layout where each array renders in
-                    its own column.
-
    ========================================================================== #}
 
-{%- macro render(related_links, related_links_2) -%}
+{%- macro render(related_links) -%}
 <div class="related-links">
     <header class="m-slug-header">
         <h2 class="a-heading">
             Related links
         </h2>
     </header>
-{%- if related_links_2 %}
-    <div class="content-l
-                content-l__main
-                content-l__large-gutters">
-        <div class="content-l_col content-l_col-1-2">
-            <ul class="m-list m-list__links">
-            {%- for link in related_links %}
-                <li class="m-list_item">
-                    {{- link_template(link) -}}
-                </li>
-            {%- endfor %}
-            </ul>
-        </div>
-        <div class="content-l_col content-l_col-1-2">
-            <ul class="m-list m-list__links">
-            {%- for link in related_links_2 %}
-                <li class="m-list_item">
-                    {{- link_template(link) -}}
-                </li>
-            {%- endfor %}
-            </ul>
-        </div>
-    </div><!-- END .content-l -->
-{%- else %}
     <ul class="m-list m-list__links">
     {%- for link in related_links %}
         <li class="m-list_item">
@@ -58,7 +30,6 @@
         </li>
     {%- endfor %}
     </ul>
-{%- endif %}
 </div>
 {% endmacro -%}
 
