@@ -38,16 +38,18 @@
 {% block content_sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
     <section class="block">
-        {%- import 'v1/includes/related-links.html' as related_links -%}
-        {{- related_links.render([
-            [
-                '/about-us/the-bureau/',
-                'About us'
-            ],
-            [
-                '/about-us/contact-us/',
-                'Contact us'
-            ],
-        ]) -}}
+        {% import 'v1/includes/molecules/related-content.html' as related_links %}
+        {{- related_links.render({
+            'heading': 'Related links',
+            'links': [
+            {
+                'url': '/about-us/the-bureau/',
+                'text': 'About us'
+            },
+            {
+                'url': '/about-us/contact-us/',
+                'text': 'Contact us'
+            }
+        ]}) -}}
     </section>
 {% endblock %}
