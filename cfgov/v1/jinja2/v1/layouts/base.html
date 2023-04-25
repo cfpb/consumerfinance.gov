@@ -341,7 +341,7 @@
           {% if page and page.media_js %}
             {% for js in page.media_js %}
                 {% if 'https://' in js %}
-                  s.push('{{ js}}');
+                  s.push('{{ js }}');
                 {% else %}
                   s.push( '{{ static('js/routes/on-demand/' + js) }}' );
                 {% endif %}
