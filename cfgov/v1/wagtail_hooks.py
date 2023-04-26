@@ -178,7 +178,7 @@ def register_cdn_url():
 @hooks.register("before_serve_page")
 def serve_latest_draft_page(page, request, args, kwargs):
     if page.pk in settings.SERVE_LATEST_DRAFT_PAGES:
-        latest_draft = page.get_latest_revision_as_page()
+        latest_draft = page.get_latest_revision_as_object()
         response = latest_draft.serve(request, *args, **kwargs)
         response["Serving-Wagtail-Draft"] = "1"
         return response
