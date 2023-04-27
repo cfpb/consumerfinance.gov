@@ -1,19 +1,6 @@
-@import (reference) '../main.less';
+@import (reference) 'cfpb-core.less';
 
-.pay-grade-link {
-  margin-top: 5px;
-  .respond-to-min( @bp-sm-min, {
-    margin: 0 0 0 unit( 5px / @base-font-size-px, em );
-  } );
-}
-
-.vacancy-announcement_details dt {
+dl.vacancy-announcement_details dt {
   margin-top: unit(12px / @base-font-size-px, em);
   margin-bottom: 0;
-}
-
-.vacancy-announcement_description .o-expandable_content__collapsed {
-  .respond-to-max( @bp-xs-max, {
-    max-height:  unit( @base-line-height-px * 10 / @base-font-size-px, em );
-  } );
 }
