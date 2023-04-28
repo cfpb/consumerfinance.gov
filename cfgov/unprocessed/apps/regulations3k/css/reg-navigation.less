@@ -17,6 +17,18 @@
     border-top: 1px solid @gray-40;
     margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
   } );
+
+  // TODO - this will be updated to data-open='true' in newer expandables.
+  .o-expandable_target__expanded {
+    .o-expandable_cue-close {
+      display: block;
+    }
+  }
+  .o-expandable_target__collapsed {
+    .o-expandable_cue-open {
+      display: block;
+    }
+  }
 }
 
 // Regs3K secondary nav sections
