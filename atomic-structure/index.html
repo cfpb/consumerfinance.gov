@@ -249,20 +249,18 @@ Prefixed with <code>o-</code> in class names.</p>
 <h3 id="html_2">HTML<a class="headerlink" href="#html_2" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code class="language-html">&lt;div
   class="o-expandable
-            o-expandable__borders
-            o-expandable__midtone
-            o-expandable__expanded"
-  data-js-hook="state_atomic_init"
+         o-expandable__padded
+         o-expandable__midtone"
 &gt;
-  &lt;button class="o-expandable_target" aria-pressed="true"&gt;
-    &lt;div class="o-expandable_header"&gt;…&lt;/div&gt;
+  &lt;button class="o-expandable_header"&gt;
+    &lt;div class="o-expandable_label"&gt;…&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;</code></pre>
 <h3 id="less_2">Less<a class="headerlink" href="#less_2" title="Permanent link">¶</a></h3>
 <pre class="highlight"><code class="language-css">.o-expandable {
     position: relative;
 
-    &amp;_target {
+    &amp;_header {
         padding: 0;
         border: 0;
         …
@@ -282,7 +280,7 @@ Prefixed with <code>o-</code> in class names.</p>
   // The Expandable element will directly be the Expandable
   // when used in an ExpandableGroup, otherwise it can be the parent container.
   const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  const _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
+  const _target = _dom.querySelector( '.' + BASE_CLASS + '_header' );
   const _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   …
 }</code></pre>
