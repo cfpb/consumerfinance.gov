@@ -109,6 +109,15 @@ Once activated, our Python CI requirements can be installed in the virtualenv:
 pip install -r requirements/ci.txt
 ```
 
+!!! note "Use local for application-specific python version"
+To set the virtualenv in the future for this project, run:
+
+```sh
+pyenv local consumerfinance.gov
+```
+
+This will set the python version in the project's hidden `.python-version` file.
+
 ### Configure VSCode formatters (optional)
 
 For developers who use [Visual Studio Code](https://code.visualstudio.com/)
