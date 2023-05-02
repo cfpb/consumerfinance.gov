@@ -259,10 +259,6 @@ form {
   }
 }
 
-#claiming-social-security .estimated-longevity {
-  display: block;
-}
-
 #claiming-social-security .lifetime-benefits-value {
   font-weight: bolder;
 }
@@ -304,10 +300,6 @@ form {
 
 #claiming-social-security #salary-input {
   width: 90%;
-}
-
-#claiming-social-security .benefits-comparison .annual-view {
-  display: none;
 }
 
 #claiming-social-security .step-one .estimate-info {
@@ -469,11 +461,6 @@ form {
   margin-bottom: 30px;
 }
 
-#claiming-social-security .step-three .cf-select {
-  min-width: 195px;
-  width: 16.6666666%;
-}
-
 #age-selector-response hr {
   margin-top: 40px;
   margin-bottom: 30px;
@@ -561,18 +548,6 @@ form {
   [lang='es'] #claiming-social-security .hero_image {
     display: none;
   }
-
-  #claiming-social-security .claiming-hero .hero_text {
-    width: 100%;
-  }
-
-  #claiming-social-security .claiming-hero p.hero_translation-link {
-    position: absolute;
-    width: auto;
-    top: 0;
-    right: 0;
-    padding: 15px 60px 30px 0;
-  }
 }
 
 /* ====================================================================
@@ -582,10 +557,6 @@ form {
 @media (max-width: 1190px) and (min-width: 1100px) {
   #claiming-social-security p.y-axis-label {
     top: 310px;
-  }
-
-  #claiming-social-security .claiming-hero p {
-    margin-bottom: 0px;
   }
 }
 
@@ -700,10 +671,6 @@ form {
     width: auto;
   }
 
-  #claiming-social-security .claiming-hero p {
-    margin-bottom: 0px;
-  }
-
   #claiming-social-security .step-one {
     padding-top: 30px;
   }
@@ -747,15 +714,6 @@ form {
   #claiming-social-security #estimated-benefits-input label:first-of-type {
     margin-top: 8px;
     margin-left: 0px;
-  }
-
-  #claiming-social-security
-    #graph-container
-    .content-l_col.benefits-comparison {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
   }
 
   #claiming-social-security #graph-container .content-l_col {
@@ -864,19 +822,6 @@ form {
   }
 }
 
-@media (max-width: 600px) {
-  #claiming-social-security .claiming-hero p.hero_translation-link {
-    position: absolute;
-    width: auto;
-    top: 0;
-    left: 15px;
-  }
-
-  #claiming-social-security .claiming-hero .hero_text {
-    padding-top: 30px;
-  }
-}
-
 /* TOOLTIPS */
 #claiming-social-security div[data-tooltip-name] {
   display: none;
@@ -946,61 +891,12 @@ form {
   text-decoration: none;
 }
 
-#claiming-social-security .selection-disabled {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
+// TODO: these are likely unused, but it needs further investigation.
 .reset {
   margin: 0;
   padding: 0;
 }
-/* Hide only visually, but have it available for screenreaders: h5bp.com/v */
-.visuallyhidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
 
 .hidden {
   display: none !important;
-}
-/* typography mixins */
-.allcaps-demi {
-  font-style: normal;
-  font-weight: bolder;
-  font-size: 0.75em;
-  text-transform: uppercase;
-}
-
-/* ====================================================================
-   About page
-==================================================================== */
-
-#claiming-social-security_about .content_wrapper {
-  margin-bottom: 0;
-
-  .respond-to-max( 800px, {
-    padding-left: 0;
-    padding-right: 0;
-  } );
-}
-
-#claiming-social-security_about .about-subhead {
-  .h2;
-  margin-bottom: unit(60px / @font-size, em);
-
-  .respond-to-max( @bp-sm-min, {
-    .h3;
-    margin-bottom: unit(45px / @font-size, em);
-  } );
 }
