@@ -144,22 +144,6 @@
   h4 {
     padding-left: unit(19px / @size-iv, em);
   }
-
-  .o-report-sidenav__appendix > li > a {
-    text-indent: unit(-20px / @base-font-size-px, em);
-  }
-
-  .parent-header {
-    .o-secondary-navigation_list__children {
-      display: block;
-      margin-top: 0;
-      margin-bottom: 0.5em;
-      .m-nav-link {
-        padding-top: 0.5em;
-        padding-bottom: 0.5em;
-      }
-    }
-  }
 }
 
 .research-report {
@@ -171,10 +155,6 @@
     margin: 30px 0 30px 0;
   }
 
-  .appendix-header {
-    margin: 0.83em 0;
-  }
-
   .report-header > a {
     color: black;
     &:visited {
@@ -182,21 +162,6 @@
     }
   }
 }
-
-.report-footnotes {
-  margin-left: 4px;
-}
-
-.report-global-footer {
-  position: relative;
-  z-index: 1;
-}
-
-.respond-to-print({
-  .o-report-sidenav {
-    display: none;
-  }
-});
 
 .u-hide-on-desktop {
   .respond-to-min( @bp-med-min, {
