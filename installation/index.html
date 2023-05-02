@@ -235,6 +235,12 @@ Activating the virtualenv is necessary before using it in the future as well:</p
 <pre class="highlight"><code class="language-sh">pyenv activate consumerfinance.gov</code></pre>
 <p>Once activated, our Python CI requirements can be installed in the virtualenv:</p>
 <pre class="highlight"><code class="language-sh">pip install -r requirements/ci.txt</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Use local for application-specific python version</p>
+</div>
+<p>To set the virtualenv in the future for this project, run:</p>
+<pre class="highlight"><code class="language-sh">pyenv local consumerfinance.gov</code></pre>
+<p>This will set the python version in the project's hidden <code>.python-version</code> file.</p>
 <h3 id="configure-vscode-formatters-optional">Configure VSCode formatters (optional)<a class="headerlink" href="#configure-vscode-formatters-optional" title="Permanent link">¶</a></h3>
 <p>For developers who use <a href="https://code.visualstudio.com/">Visual Studio Code</a>
 as their editor of choice, you may wish to install certain
