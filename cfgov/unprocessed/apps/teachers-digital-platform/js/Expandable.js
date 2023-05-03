@@ -93,7 +93,6 @@ function expandableClickHandler() {
 
 /**
  * Toggle an expandable to open or closed.
- *
  * @param {HTMLElement} element - The expandable target HTML DOM element.
  */
 function toggleTargetState(element) {
@@ -108,7 +107,6 @@ function toggleTargetState(element) {
 
 /**
  * Retrieve the label text of the expandable header.
- *
  * @returns {string} The text of the expandable's label.
  */
 function getLabelText() {

@@ -76,7 +76,6 @@ function expandableClickHandler() {
 
 /**
  * Toggle an expandable to open or closed.
- *
  * @param {HTMLElement} element - The expandable target HTML DOM element.
  */
 function toggleTargetState(element) {

@@ -23,7 +23,6 @@ const SUCCESS_CODES = {
 
 /**
  * FormSubmit
- *
  * @class
  * @classdesc Initializes the organism.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -97,7 +96,6 @@ function FormSubmit(element, baseClass, opts) {
 
   /**
    * Displays notification and scrolls it into view if offscreen
-   *
    * @param {type} type - of notification
    * @param {content} content - for notification.
    */

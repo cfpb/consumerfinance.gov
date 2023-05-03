@@ -46,7 +46,6 @@ const hideElement = (el) => el && el.classList.add('u-hide-on-desktop');
  * The native scrollIntoView() function is great but when there's a sticky header,
  * the target element gets hidden underneath. This lets us specify an offset for
  * the target element to scroll to.
- *
  * @param {HTMLElement} el - HTML element to scroll to.
  * @param {number} offset - number of pixels away from element.
  */
@@ -63,7 +62,6 @@ const scrollIntoViewWithOffset = (el, offset) => {
 /**
  * Update the sidenav by highlighting the current section and showing
  * parent nav items as needed.
- *
  * @param {string} target - `href` value of the nav item to highlight.
  */
 const updateNav = (target) => {
@@ -89,7 +87,6 @@ const updateNav = (target) => {
 
 /**
  * Callback for IntersectionObserver
- *
  * @param {IntersectionObserverEntry} entries - array of observer entries
  * See https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry
  */

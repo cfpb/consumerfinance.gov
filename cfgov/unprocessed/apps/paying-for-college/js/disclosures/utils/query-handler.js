@@ -2,7 +2,6 @@ import { convertStringToNumber } from '../../../../../js/modules/util/format.js'
 
 /**
  * Handles URL questy string to turn key-value pairs into an object.
- *
  * @param {string} queryString - The query string of a url (location.search)
  * @returns {object} - An object containing key-value pairs from the query
  */
@@ -82,7 +81,6 @@ function queryHandler(queryString) {
   /**
    * Helper function for checking that expected numeric values are indeed
    * numeric
-   *
    * @param {string} key - The key to be checked
    * @param {string|number} value - The value of the key
    * @returns {string|number} newValue - The corrected value of the key

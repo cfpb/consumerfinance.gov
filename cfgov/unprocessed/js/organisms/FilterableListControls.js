@@ -16,7 +16,6 @@ let INVALID_FIELDS = [];
 
 /**
  * FilterableListControls
- *
  * @class
  * @classdesc Initializes a new FilterableListControls organism.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -77,7 +76,6 @@ function FilterableListControls(element) {
 
   /**
    * Get data layer object.
-   *
    * @param {string} action - Name of event.
    * @param {string} label - DOM element label.
    * @param {string} event - Type of event.
@@ -157,7 +155,6 @@ function FilterableListControls(element) {
 
   /**
    * Build the error message to display within the notification.
-   *
    * @param {Array} fields - A list of form fields.
    * @returns {string} A text to use for the error notification.
    */
@@ -172,7 +169,6 @@ function FilterableListControls(element) {
 
   /**
    * Highlight invalid text fields by giving them an error class.
-   *
    * @param {Array} fields - A list of form fields.
    * @returns {Array} An array of invalid fields.
    */
@@ -196,7 +192,6 @@ function FilterableListControls(element) {
 
   /**
    * Validate the fields of our form.
-   *
    * @param {Array} fields - A list of form fields.
    * @returns {object} The tested list of fields broken into valid
    *   and invalid blocks.
@@ -233,7 +228,6 @@ function FilterableListControls(element) {
   // TODO: Reduce complexity
   /**
    * Validate the specific field types.
-   *
    * @param {HTMLElement} field - A form field.
    * @returns {object} An object with a status and message properties.
    */

@@ -21,7 +21,6 @@ const MODIFIER_VISIBLE = `${BASE_CLASS}__visible`;
 
 /**
  * Notification
- *
  * @class
  * @classdesc Initializes a new Notification molecule.
  * @param {HTMLElement} element - The DOM element within which to search

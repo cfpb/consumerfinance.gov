@@ -19,7 +19,6 @@ const HTML_SNIPPET = `
 
 /**
  * Mock window.scrollTo() method.
- *
  * @param {number} xCoord - An x coordinate.
  * @param {number} yCoord - A y coordinate.
  */

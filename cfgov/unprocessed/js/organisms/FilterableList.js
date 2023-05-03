@@ -6,7 +6,6 @@ const BASE_CLASS = 'o-filterable-list';
 
 /**
  * FilterableList
- *
  * @class
  * @classdesc Initializes a new FilterableList organism.
  *   A FilterableList contains a FilterableListControls organism for filtering a
@@ -56,7 +55,6 @@ function FilterableList(element) {
 
   /**
    * Handle a field marked as invalid in the FilterableListControl instance.
-   *
    * @param {object} event - Faux event object from EventObserver.
    */
   function _fieldInvalidHandler(event) {

@@ -12,7 +12,6 @@ import ERROR_MESSAGES from '../../config/error-messages-config.js';
 
 /**
  * date Determines if a field contains a valid date.
- *
  * @param {object} field - Field to test.
  * @param {object} currentStatus - A previous tested status for the field.
  * @returns {object} An empty object if the field passes,
@@ -58,7 +57,6 @@ function date(field, currentStatus) {
 
 /**
  * email Determines if a field contains a email date.
- *
  * @param {object} field - Field to test.
  * @param {object} currentStatus - A previous tested status for the field.
  * @param {object} options - Options object.
@@ -103,7 +101,6 @@ function email(field, currentStatus, options) {
 // TODO: Rename this so it's clearer it's checking a required attribute
 /**
  * empty Determines if a required field contains a value.
- *
  * @param {object} field - Field to test.
  * @param {object} currentStatus - A previous tested status for the field.
  * @returns {object} An empty object if the field passes,
@@ -123,7 +120,6 @@ function empty(field, currentStatus) {
 /**
  * checkbox
  * Determines if a field contains a required number of picked checkbox options.
- *
  * @param {object} field - Field to test.
  * @param {object} currentStatus - A previous tested status for the field.
  * @param {Array} fieldset - A list of fields related to the parent field.
@@ -137,7 +133,6 @@ function checkbox(field, currentStatus, fieldset) {
 
 /**
  * radio Determines if a field contains a picked radio option.
- *
  * @param {object} field - Field to test.
  * @param {object} currentStatus - A previous tested status for the field.
  * @param {Array} fieldset - A list of fields related to the parent field.
@@ -153,7 +148,6 @@ function radio(field, currentStatus, fieldset) {
  * _checkableInput
  * Determines if a field contains a required number of
  * picked checkbox or radio button options.
- *
  * @param {object} field - Field to test.
  * @param {object} currentStatus - A previous tested status for the field.
  * @param {Array} fieldset - A list of fields related to the parent field.

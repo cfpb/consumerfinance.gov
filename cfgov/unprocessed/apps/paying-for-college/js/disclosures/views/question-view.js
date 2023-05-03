@@ -33,7 +33,6 @@ const questionView = {
 
   /**
    * Show the appropriate content in Step 3 for settlement schools.
-   *
    * @param {boolean} isSettlementStatus - Flag if this is a settlement school.
    */
   displayOptions: function (isSettlementStatus) {
@@ -63,7 +62,6 @@ const questionView = {
 
   /**
    * Listener function for the "big question"/"moment of pause" buttons.
-   *
    * @param {boolean} isSettlementStatus - Flag if this is a settlement school.
    */
   bigQuestionListener: function (isSettlementStatus) {

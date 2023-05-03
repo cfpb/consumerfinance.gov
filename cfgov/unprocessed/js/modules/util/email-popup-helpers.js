@@ -50,7 +50,6 @@ function _getFutureDate(days) {
 
 /**
  * Record in local storage that the email popup has been viewed.
- *
  * @param {string} popupLabel - label for this popup.
  */
 function recordEmailPopupView(popupLabel) {
@@ -67,7 +66,6 @@ function recordEmailPopupView(popupLabel) {
 
 /**
  * Record in local storage that the email popup has been closed.
- *
  * @param {string} popupLabel - label for this popup.
  */
 function recordEmailPopupClosure(popupLabel) {
@@ -82,7 +80,6 @@ function recordEmailPopupClosure(popupLabel) {
 
 /**
  * Sets email popup key in local storage with a very long expiry date.
- *
  * @param {string} popupLabel - label for this popup.
  */
 function recordEmailRegistration(popupLabel) {
@@ -94,7 +91,6 @@ function recordEmailRegistration(popupLabel) {
 /**
  * Checks today's date against that in local storage for the purposes of
  * displaying a popup.
- *
  * @param {string} popupLabel - label for this popup.
  * @returns {boolean} True if the popup should display, false otherwise.
  */
@@ -108,7 +104,6 @@ function showEmailPopup(popupLabel) {
 
 /**
  * Show the popup when scrolling.
- *
  * @param {HTMLElement} elToShow - Element to check the height of.
  * @param {object} opts - Object with callback and target HTML element.
  */

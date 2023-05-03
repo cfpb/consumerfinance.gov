@@ -2,7 +2,6 @@
  * This function ensures ( min <= n <= max ) by setting n to the min
  * or the max if it falls outside the range. If min or max is set to
  * false, then that limit is not enforced.
- *
  * @param {number} n - The number to be forced into the range.
  * @param {number|boolean} min - The minimum value, or false if not enforced.
  * @param {number|boolean} max - The maximum value, or false if not enforced.

@@ -50,7 +50,6 @@ const metricView = {
 
   /**
    * Helper function which sets up metrics data
-   *
    * @param {object} metrics - An object of metrics
    * @returns {object} metrics with additional values added
    */
@@ -74,7 +73,6 @@ const metricView = {
   /**
    * Helper function that checks metric object to determine if they
    * are better or worse than the national metric
-   *
    * @param {object} metrics - the metrics object
    * @returns {string} the result of the check
    */
@@ -99,7 +97,6 @@ const metricView = {
 
   /**
    * Helper function that updates the value or text of an element
-   *
    * @param {object} $ele - jQuery object of the element to update
    * @param {number|string} value - The new value
    * @param {boolean} format - Type of number, for formatting
@@ -116,7 +113,6 @@ const metricView = {
 
   /**
    * Fixes overlapping points on a bar graph
-   *
    * @param {object} $graph - jQuery object of the graph containing the points
    */
   fixOverlap: function ($graph) {
@@ -167,7 +163,6 @@ const metricView = {
 
   /**
    * Sets text of each point on a bar graph (or a class if a point is missing)
-   *
    * @param {object} $graph - jQuery object of the graph containing the points
    */
   setGraphValues: function ($graph) {
@@ -189,7 +184,6 @@ const metricView = {
 
   /**
    * Sets the position of each point on a bar graph
-   *
    * @param {object} $graph - jQuery object of the graph containing the points
    */
   setGraphPositions: function ($graph) {
@@ -224,7 +218,6 @@ const metricView = {
 
   /**
    * Classifies school value in relation to the national average
-   *
    * @param {number|NaN} metricKey - metric to be checked
    * @returns {string} Classes to add to the notification box
    */
@@ -277,7 +270,6 @@ const metricView = {
 
   /**
    * Adds the correct classes to metric notification boxes.
-   *
    * @param {object} $notification - jQuery object of the notification box.
    * @param {string} notificationClasses - Classes to add to the notification.
    */
@@ -289,7 +281,6 @@ const metricView = {
 
   /**
    * Hides the metric notification boxes for settlement schools.
-   *
    * @param {object} $notification - jQuery object of the notification box.
    */
   hideNotificationClasses: function ($notification) {
@@ -320,7 +311,6 @@ const metricView = {
 
   /**
    * Calculates the student's debt burden.
-   *
    * @param {number} monthlyLoanPayment - Student's monthly loan payment after
    *   graduation.
    * @param {monthlySalary} monthlySalary - Student's estimated monthly salary
@@ -334,7 +324,6 @@ const metricView = {
 
   /**
    * Calculates a monthly salary from an annual salary.
-   *
    * @param {number} annualSalary - Annual salary.
    * @returns {number} Monthly salary.
    */
@@ -395,7 +384,6 @@ const metricView = {
 
   /**
    * Updates graph content with source - Program or School.
-   *
    * @param {object} $graph - jQuery object of the graph containing the points.
    */
   setGraphSources: function ($graph) {
@@ -415,7 +403,6 @@ const metricView = {
 
   /**
    * Updates view for settlement schools.
-   *
    * @param {object} $graph - jQuery object of the graph.
    */
   updateForSettlement: function ($graph) {

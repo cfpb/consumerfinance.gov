@@ -1,6 +1,5 @@
 /**
  * Converts a number to a money string.
- *
  * @param {number} num - A number to be converted.
  * @returns {string} money A string representing currency.
  */

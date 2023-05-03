@@ -10,7 +10,6 @@ const _requestAnimationFrame =
 
 /**
  * Easing.
- *
  * @param {number} currentTime - current time.
  * @param {number} startPosition - start position.
  * @param {number} distance - difference between start and end position.
@@ -33,7 +32,6 @@ function _easeInOutQuad(currentTime, startPosition, distance, duration) {
 
 /**
  * Calculate duration of scroll based on distance
- *
  * @param {number} distance - The distance that will be scrolled
  * @returns {number} scroll duration
  */
@@ -44,7 +42,6 @@ function _calculateDuration(distance) {
 
 /**
  * Animated scroll to a location in page.
- *
  * @param {number} to - The y-coordinate to scroll to
  * @param {object} opts - Optional parameters, including:
  *    duration: Duration of the scroll animation
@@ -60,7 +57,6 @@ function scrollTo(to, opts) {
   /**
    * Scroll the window for the duration
    * Trigger a callback after the duration has ended
-   *
    * @param {number} timestamp - the current time returned by
    *    requestAnimationFrame
    */
@@ -87,7 +83,6 @@ function scrollTo(to, opts) {
 /**
  * Checks whether element in viewport and if not,
  * scrolls it into view.
- *
  * @param {HTMLElement} elem - The DOM element to check for.
  * @param {object} opts - Optional parameters, including:
  *  offset: Distance from top of screen of element when scroll is complete.

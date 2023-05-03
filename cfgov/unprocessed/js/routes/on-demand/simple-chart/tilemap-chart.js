@@ -11,7 +11,6 @@ tilemap(Highmaps);
 
 /**
  * Overrides default chart options using provided Wagtail configurations
- *
  * @param {object} data - The data to provide to the chart
  * @param {object} dataAttributes - Data attributes passed to the chart target node
  * @returns {object} The configured style object
@@ -57,7 +56,6 @@ function makeTilemapOptions(data, dataAttributes) {
 
 /**
  * Builds the tilemap filter DOM
- *
  * @param {object} chartNode - The node where the chart lives
  * @param {object} chart - The chart object
  * @param {object} data - The data object
@@ -79,7 +77,6 @@ function makeTilemapSelect(chartNode, chart, data, transform) {
 
 /**
  * Extracts all dates from an object/csv formatted for tilemap display
- *
  * @param {object} data - The data object
  * @returns {Array} Extracted dates
  */
@@ -91,7 +88,6 @@ function getTilemapDates(data) {
 
 /**
  * Wires up the tilemap filter
- *
  * @param {object} select - The select node
  * @param {object} chart - The chart object
  * @param {object} data - The data object
@@ -112,7 +108,6 @@ function attachTilemapFilter(select, chart, data) {
 
 /**
  * Makes a legend for the tilemap
- *
  * @param {object} node - The chart node
  * @param {object} data - The data object
  * @param {string } legendTitle - The legend title
@@ -147,7 +142,6 @@ function updateTilemapLegend(node, data, legendTitle) {
 
 /**
  * Intuits the correct object key for state short codes
- *
  * @param {object} data - A row of data as an object with headers as keys
  * @returns {string} The intuited shortcode
  */
@@ -164,7 +158,6 @@ function getShortCode(data) {
 
 /**
  * Adds generates a config object to be added to the chart config
- *
  * @param {Array} series - The formatted series data
  * @param {string} date - The date to use
  * @returns {Array} series data with a geographic component added
@@ -229,7 +222,6 @@ function getMapConfig(series, date) {
 
 /**
  * Initializes a tilemap chart
- *
  * @param {object} chartNode - The DOM node of the current chart
  * @param {object} target - The node to initialize the chart in
  * @param {object} data - The data to provide to the chart
