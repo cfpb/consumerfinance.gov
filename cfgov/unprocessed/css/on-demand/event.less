@@ -89,7 +89,15 @@
    ========================================================================== */
 
 .event-status {
+  margin: unit(30px / @base-font-size-px, em) 0;
   color: @black;
+
+  .respond-to-min(@bp-sm-min, {
+    float: right;
+    width: unit(250px / @base-font-size-px, em);
+    margin-top: unit(5px / @base-font-size-px, em);
+    margin-left: unit(@grid_gutter-width / @base-font-size-px, em);
+  });
 
   .event-meta {
     color: @gray-40;
@@ -232,16 +240,4 @@
   p ~ .h6 {
     margin-bottom: unit(5px / @base-font-size-px, em);
   }
-}
-
-.post_inset {
-  margin: unit(30px / @base-font-size-px, em) 0;
-  color: @black;
-
-  .respond-to-min(@bp-sm-min, {
-    float: right;
-    width: unit(250px / @base-font-size-px, em);
-    margin-top: unit(5px / @base-font-size-px, em);
-    margin-left: unit(@grid_gutter-width / @base-font-size-px, em);
-  });
 }
