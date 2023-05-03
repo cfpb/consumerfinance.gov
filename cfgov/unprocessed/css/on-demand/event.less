@@ -238,12 +238,10 @@
   margin: unit(30px / @base-font-size-px, em) 0;
   color: @black;
 
-  &__right {
-    .respond-to-min(@bp-sm-min, {
-      float: right;
-      width: unit(250px / @base-font-size-px, em);
-      margin-top: unit(5px / @base-font-size-px, em);
-      margin-left: unit(@grid_gutter-width / @base-font-size-px, em);
-    });
-  }
+  .respond-to-min(@bp-sm-min, {
+    float: right;
+    width: unit(250px / @base-font-size-px, em);
+    margin-top: unit(5px / @base-font-size-px, em);
+    margin-left: unit(@grid_gutter-width / @base-font-size-px, em);
+  });
 }

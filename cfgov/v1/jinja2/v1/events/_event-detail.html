@@ -31,7 +31,7 @@
     </header>
     <div class="post_body">
         {% if event_state == 'future' and page.live_stream_availability %}
-        <aside class="post_inset post_inset__right line-container event-status">
+        <aside class="post_inset line-container event-status">
             <div class="line-container_body">
                 <h1 class="u-visually-hidden">Event viewing details</h1>
                 <div class="event-status_livestream">
@@ -49,7 +49,7 @@
             </div>
         </aside>
         {% elif ( event_state == 'present' and page.live_stream_availability ) %}
-        <aside class="post_inset post_inset__right line-container event-status">
+        <aside class="post_inset line-container event-status">
             <div class="line-container_body">
                 <div class="event-status_livestream">
                     <p>
