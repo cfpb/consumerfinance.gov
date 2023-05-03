@@ -13,7 +13,6 @@ function _handleModalClicks(event) {
 
 /**
  * See docs at https://handsontable.com/docs/7.2.2/tutorial-cell-editor.html
- *
  * @param {object} Handsontable - A handsontable instance.
  */
 function richTextTable(Handsontable) {
@@ -213,7 +212,6 @@ function richTextTable(Handsontable) {
  *  fields to the table block, and Wagtail's implementation does not provide
  *  hooks with which to do that.
  *  https://github.com/wagtail/wagtail/blob/773da59107b7cd0e072d3f8c3d5bb7287d47b9b8/client/src/entrypoints/contrib/table_block/table.js
- *
  * @param {string} id - An ID string for the editor container.
  * @param {object} tableOptions - Some options to pass in.
  */

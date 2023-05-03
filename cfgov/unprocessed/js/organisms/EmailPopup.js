@@ -10,7 +10,6 @@ import FormSubmit from './FormSubmit.js';
 
 /**
  * EmailPopup
- *
  * @class
  * @classdesc Initializes the organism.
  * @param {HTMLElement} element - The HTML DOM element.
@@ -34,7 +33,6 @@ function EmailPopup(element) {
 
   /**
    * Function used to hide popup by removing visible class.
-   *
    * @returns {EmailPopup} An instance.
    */
   function hidePopup() {
@@ -46,7 +44,6 @@ function EmailPopup(element) {
 
   /**
    * Function used to show popup by adding visible class.
-   *
    * @returns {boolean} True if the popup is shown, false otherwise.
    */
   function showPopup() {
@@ -61,7 +58,6 @@ function EmailPopup(element) {
 
   /**
    * Function used to validate email address.
-   *
    * @param {object} fields - An object containing form fields.
    * @returns {object} Validation status.
    */
@@ -78,7 +74,6 @@ function EmailPopup(element) {
 
   /**
    * Function used to instatiate and initialize components.
-   *
    * @returns {EmailPopup} An instance.
    */
   function init() {

@@ -165,7 +165,6 @@ function init() {
 
 /**
  * This method is the preferred way of changing the graphSettings property.
- *
  * @param {string} setting - The property name of the setting to be changed.
  * @param {string|number} value - The new value of the setting.
  */
@@ -207,7 +206,6 @@ function initIndicator() {
 
 /**
  * This function toggles the highlighting of the date of birth fields.
- *
  * @param {boolean} bool - Whether the fields should be highlighted (true|false)
  */
 function highlightAgeFields(bool) {
@@ -456,7 +454,6 @@ function setTextByAge() {
 
 /**
  * Sets an age on the graph when the indicator is moved.
- *
  * @param {number} indicatorValue - Value of the range slider.
  */
 function setAgeWithIndicator(indicatorValue) {
@@ -477,7 +474,6 @@ function setAgeWithIndicator(indicatorValue) {
  * Uses setAgeWithIndicator to move the indicator to age
  * NOTE: This function is all that's require to change the chart to a
  * different age.
- *
  * @param {number} age - The age for the indicator to be set to.
  */
 function moveIndicatorToAge(age) {

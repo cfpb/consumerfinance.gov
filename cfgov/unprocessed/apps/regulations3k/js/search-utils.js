@@ -1,6 +1,5 @@
 /**
  * Get the search form field's values.
- *
  * @param {HTMLElement} searchEl - HTML input of the search field.
  * @param {HTMLElement} filterEls - HTML inputs of the search filters.
  * @returns {Array} Array of objects of form field names and values.
@@ -22,7 +21,6 @@ function getSearchValues(searchEl, filterEls) {
 
 /**
  * Serializes form fields into GET-friendly string.
- *
  * @param {Array} fields - Array of objects of form field key-value pairs.
  * @returns {string} Serialized form fields.
  */
@@ -39,7 +37,6 @@ function serializeFormFields(fields) {
 
 /**
  * Creates search results URL to be fetched.
- *
  * @param {string} base - URL's base.
  * @param {string} params - URL's GET parameters.
  * @param {object} opts - Object of additional options for the URL.
@@ -53,7 +50,6 @@ function buildSearchResultsURL(base, params, opts) {
 
 /**
  * Modifies element to indicate it's loading.
- *
  * @param {HTMLElement} el - Element to show loading.
  * @returns {HTMLElement} Above element.
  */
@@ -65,7 +61,6 @@ function showLoading(el) {
 
 /**
  * Modifies element to indicate it's not loading.
- *
  * @param {HTMLElement} el - Element to stop loading.
  * @returns {HTMLElement} Above element.
  */
@@ -77,7 +72,6 @@ function hideLoading(el) {
 
 /**
  * Update the page's URL via replaceState
- *
  * @param {string} base - URL's base.
  * @param {string} params - URL's GET parameters.
  * @returns {string} New URL.
@@ -90,7 +84,6 @@ function updateUrl(base, params) {
 
 /**
  * Check error and do something with it
- *
  * @param {string} code - Error code
  * @returns {object} Error object to be handled by DOM.
  */

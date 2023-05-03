@@ -22,7 +22,6 @@ const expensesView = {
 
   /**
    * Helper function that updates the value or text of an element
-   *
    * @param {object} $ele - jQuery object of the element to update
    * @param {number|string} value - The new value
    * @param {boolean} currency - True if value is to be formatted as currency
@@ -47,7 +46,6 @@ const expensesView = {
 
   /**
    * Helper function that updates expenses elements
-   *
    * @param {object} values - expenses model values
    */
   updateExpenses: function (values) {
@@ -73,7 +71,6 @@ const expensesView = {
 
   /**
    * Function that updates the view with new values
-   *
    * @param {object} values - expense model values
    */
   updateView: function (values) {
@@ -83,7 +80,6 @@ const expensesView = {
 
   /**
    * Helper function for handling user entries in expenses model INPUT fields.
-   *
    * @param {string} id - The id attribute of the element to be handled.
    */
   inputHandler: function (id) {
@@ -97,7 +93,6 @@ const expensesView = {
   /**
    * Helper function to indicate that a offer summary line item has
    * successfully recalculated
-   *
    * @param {object} element - jQuery object of the recalculated summary element
    */
   addSummaryRecalculationMessage: function (element) {
@@ -107,7 +102,6 @@ const expensesView = {
 
   /**
    * Helper function to remove all indicators that data has recalculated
-   *
    * @param {object} element - jQuery object of the recalculated summary element
    * @param {string} value - the recalculated value of the element
    */

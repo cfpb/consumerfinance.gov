@@ -18,7 +18,6 @@ function init(ageRightNow = 0, fullRetirementAge = 0) {
 /**
  * This function updates the text in Step 3
  * based on the user's chosen retirement age.
- *
  * @param {number} fullAge - The user's full retirement age.
  */
 function chooseClaimingAge(fullAge) {
@@ -60,7 +59,6 @@ function chooseClaimingAge(fullAge) {
 /**
  * This function limits the age selector in Step 3 to
  * the user's current age or higher.
- *
  * @param {number} currentAge - The user's current age.
  */
 function limitAgeSelector(currentAge) {

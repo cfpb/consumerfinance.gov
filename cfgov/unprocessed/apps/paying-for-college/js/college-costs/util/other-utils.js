@@ -67,7 +67,6 @@ function getStateByCode(code) {
 /**
  * Search for support of the matches() method by looking at
  * browser prefixes.
- *
  * @param {HTMLElement} el - The element to check for support
  *   of matches() method.
  * @returns {Function} The appropriate matches() method of elem.
@@ -83,7 +82,6 @@ function _getMatchesMethod(el) {
 
 /**
  * Determine whether element matches a selector.
- *
  * @param {HTMLElement} el - DOM element to check.
  * @param {string} selector - a selector string.
  * @returns {boolean} True if element matches selector, false otherwise.

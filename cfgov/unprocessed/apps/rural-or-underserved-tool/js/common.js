@@ -409,7 +409,6 @@ function generateCSV() {
 
   /**
    * Process each cell in a table row.
-   *
    * @param {HTMLElement} element - A table data element to process.
    */
   function _loopHandler(element) {

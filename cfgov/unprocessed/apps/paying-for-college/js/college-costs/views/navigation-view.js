@@ -22,7 +22,6 @@ const navigationView = {
 
   /**
    * _handlePopState - handle popstate events
-   *
    * @param {object} event - the popstate event
    */
   _handlePopState: function (event) {
@@ -36,7 +35,6 @@ const navigationView = {
 
   /**
    * _updateSideNav - Update the side nav
-   *
    * @param {string} activeName - name of the active app section
    */
   _updateSideNav: function (activeName) {
@@ -74,7 +72,6 @@ const navigationView = {
 
   /**
    * _showAndHideSections - Hide all app sections, then show appropriate ones
-   *
    * @param {string} activeName - Name of the active section
    */
   _showAndHideSections: function (activeName) {
@@ -104,7 +101,6 @@ const navigationView = {
   /**
    * updateStateInDom - manages dataset for the MAIN element, which helps display UI elements
    * properly
-   *
    * @param {string} property - The state property to modify
    * @param {string} value - The new value of the property
    * NOTE: if the value is null or the Boolean 'false', the data attribute will be removed
@@ -122,7 +118,6 @@ const navigationView = {
 
   /**
    * init - Initialize the navigation view
-   *
    * @param {object} body - The body element of the page
    * @param { string } iped - String representing the chosen school.
    */
@@ -156,7 +151,6 @@ const navigationView = {
 
 /**
  * _addButtonListeners - Add event listeners for nav buttons
- *
  * @param { string } iped - String representing the chosen school.
  */
 function _addButtonListeners(iped) {
@@ -181,7 +175,6 @@ function _addButtonListeners(iped) {
 
 /**
  * _handleAffordingChoicesClick - Handle clicks on Affording Payment choices.
- *
  * @param {MouseEvent} event - The click event object.
  */
 function _handleAffordingChoicesClick(event) {
@@ -203,7 +196,6 @@ function _handleGetStartedBtnClick() {
 
 /**
  * _handleNavButtonClick - Handle click event for secondary nav.
- *
  * @param {MouseEvent} event - click event object.
  */
 function _handleNavButtonClick(event) {

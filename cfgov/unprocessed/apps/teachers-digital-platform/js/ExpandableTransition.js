@@ -14,7 +14,6 @@ const CLASSES = {
 /* eslint-disable max-lines-per-function */
 /**
  * ExpandableTransition
- *
  * @class
  * @classdesc Initializes new ExpandableTransition behavior.
  * @param {HTMLElement} element - DOM element to apply move transition to.
@@ -60,7 +59,6 @@ function ExpandableTransition(element) {
 
   /**
    * Toggle the expandable
-   *
    * @returns {ExpandableTransition} An instance.
    */
   function toggleExpandable() {
@@ -75,7 +73,6 @@ function ExpandableTransition(element) {
 
   /**
    * Collapses the expandable content
-   *
    * @returns {ExpandableTransition} An instance.
    */
   function collapse() {
@@ -90,7 +87,6 @@ function ExpandableTransition(element) {
 
   /**
    * Expands the expandable content
-   *
    * @returns {ExpandableTransition} An instance.
    */
   function expand() {

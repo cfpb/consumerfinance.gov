@@ -82,7 +82,6 @@ const financialView = {
 
   /**
    * Sets all the values for caps in the errors notifications
-   *
    * @param {object} financials - the financials model
    */
   setCaps: function (financials) {
@@ -121,7 +120,6 @@ const financialView = {
 
   /**
    * A better rounding function
-   *
    * @param {number} n - Number to be rounded
    * @param {number} decimals - Number of decimal places
    * @returns {number} rounded value
@@ -133,7 +131,6 @@ const financialView = {
 
   /**
    * Function that updates the view with new values
-   *
    * @param {object} values - financial model values
    */
   updateView: function (values) {
@@ -154,7 +151,6 @@ const financialView = {
 
   /**
    * Helper function that updates the value or text of an element
-   *
    * @param {object} $ele - jQuery object of the element to update
    * @param {number|string} value - The new value
    * @param {boolean} currency - True if value is to be formatted as currency
@@ -182,7 +178,6 @@ const financialView = {
 
   /**
    * Helper function that updates all percent elements in the financial view
-   *
    * @param {object} values - financial model values
    * @param {object} $percents - jQuery object of the percentage elements
    */
@@ -198,7 +193,6 @@ const financialView = {
   /**
    * Helper function that updates all non-percent, non-privateLoan elements
    * in the financial view
-   *
    * @param {object} values - financial model values
    * @param {object} $leftovers - jQuery object of the "leftover" elements
    */
@@ -219,7 +213,6 @@ const financialView = {
 
   /**
    * Helper function that updates all private loan values in the financial view
-   *
    * @param {object} values - financial model values
    * @param {object} $privateLoans - jQuery object of the private loan elements
    */
@@ -273,7 +266,6 @@ const financialView = {
    * This updates the programLength dropdown and visibility of
    * graduate program only content, Pell grants, subsidized loans, and
    * Grad PLUS loans.
-   *
    * @param {object} values - An object with program values
    * @param {object} urlValues - An object with url-derived values
    */
@@ -324,7 +316,6 @@ const financialView = {
    * Updates view based on URL values.
    * Updates the visibility of the anticipated total direct cost, Pell grants,
    * subsidized loans, Grad PLUS loans, and tuition payment plans.
-   *
    * @param {object} values - An object with program values
    * @param {object} urlvalues - An object with URL values
    */
@@ -350,7 +341,6 @@ const financialView = {
 
   /**
    * Update the view with calculation errors
-   *
    * @param {object} values - financial model values object
    */
   updateCalculationErrors: function (values) {
@@ -364,7 +354,6 @@ const financialView = {
 
   /**
    * Checks and shows OverCap errors
-   *
    * @param {object} errors - Errors object
    */
   checkOverCapErrors: function (errors) {
@@ -388,7 +377,6 @@ const financialView = {
 
   /**
    * Checks and shows over-borrowing errors
-   *
    * @param {object} errors - Errors object
    */
   checkOverBorrowingErrors: function (errors) {
@@ -486,7 +474,6 @@ const financialView = {
 
   /**
    * Helper function for handling user entries in financial model INPUT fields
-   *
    * @param {string} id - The id attribute of the element to be handled
    */
   inputHandler: function (id) {
@@ -538,7 +525,6 @@ const financialView = {
   /**
    * Helper function to indicate that a offer summary line item has
    * successfully recalculated
-   *
    * @param {object} element - jQuery object of the recalculated summary element
    */
   addSummaryRecalculationMessage: function (element) {
@@ -550,7 +536,6 @@ const financialView = {
 
   /**
    * Helper function to remove all indicators that data has recalculated
-   *
    * @param {object} element - jQuery object of the recalculated summary element
    * @param {string} value - the recalculated value of the element
    */
@@ -657,7 +642,6 @@ const financialView = {
   /**
    * Sets visibility of anticipated total direct cost section
    * Dependent on `totl` value being passed in URL
-   *
    * @param {boolean} visibility - Whether or not `values.totalCost` is not null
    */
   totalDirectCostVisible: function (visibility) {
@@ -670,7 +654,6 @@ const financialView = {
 
   /**
    * Sets visibility of Grad Plus loan section (only called for grad programs)
-   *
    * @param {boolean} visibility - Whether or not gradPlus was passed in the URL
    */
   gradPlusVisible: function (visibility) {
@@ -685,7 +668,6 @@ const financialView = {
   /**
    * Sets visibility of Perkins section. Hidden if school does not offer it or
    * it wasn't passed in the URL
-   *
    * @param {boolean} visibility - Value of `values.offerPerkins` or
    *                               whether or not perkins was passed in the URL
    */
@@ -701,7 +683,6 @@ const financialView = {
   /**
    * Sets visibility of Pell Grant section. Hidden if graduate program or
    * it wasn't passed in the URL
-   *
    * @param {boolean} visibility - If `values.level.Graduate` is defined or
    *                               whether or not gradPlus was passed in the URL
    */
@@ -717,7 +698,6 @@ const financialView = {
   /**
    * Sets visibility of Direct subsidized loan section. Hidden if graduate
    * program or it wasn't passed in the URL
-   *
    * @param {boolean} visibility - If `values.level.Graduate` is defined or
    *                               whether or not directSubsidized was passed
    *                               in the URL
@@ -734,7 +714,6 @@ const financialView = {
   /**
    * Sets visibility of tuition payment plan section. Hidden if it wasn't
    * passed in the URL
-   *
    * @param {boolean} visibility - Whether or not tuitionRepay was
    *                               passed in the URL
    */
@@ -751,7 +730,6 @@ const financialView = {
 
   /**
    * Sets visibility of graduation cohort content. Hidden if not available.
-   *
    * @param {boolean} isVisible - Whether or not a graduation cohort
    * was provided
    */
@@ -765,7 +743,6 @@ const financialView = {
 
   /**
    * Sets visibility of job placement values. Hidden if not available
-   *
    * @param {boolean} visibility - Whether or not we have a job placement rate
    */
   jobPlacementVisible: function (visibility) {
@@ -778,7 +755,6 @@ const financialView = {
 
   /**
    * Sets dynamic content for salary, based on what data we have
-   *
    * @param {boolean} source - The source of our salary figure (program, school,
    *                           or national)
    */
@@ -801,7 +777,6 @@ const financialView = {
 
   /**
    * Updates the text of the unsubsidized error
-   *
    * @param {boolean} isUndergrad - true if undergraduate program, false otherwise
    */
   unsubsidizedErrorText: function (isUndergrad) {
@@ -917,7 +892,6 @@ const financialView = {
 
   /**
    * Update view for bad school requests
-   *
    * @param {string} dataType - type of missing data, 'school' or 'program'
    */
   missingData: function (dataType) {

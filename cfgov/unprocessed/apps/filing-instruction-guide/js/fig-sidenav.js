@@ -20,7 +20,6 @@ import {
 
 /**
  * Default scroll into view with an 60 pixel offset.
- *
  * @param {HTMLElement} target - A link with an href attribute.
  */
 const defaultScrollOffset = (target) => {
@@ -33,7 +32,6 @@ const defaultScrollOffset = (target) => {
 /**
  * The sidenav is nested inside an expandable on smaller screens.
  * We have to close the expandable before sending the user to the appropriate section.
- *
  * @param {MouseEvent} event - Event from user clicking/tapping a nav item.
  */
 const handleMobileNav = (event) => {

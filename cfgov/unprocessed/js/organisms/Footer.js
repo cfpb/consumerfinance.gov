@@ -3,7 +3,6 @@ import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
 
 /**
  * Footer
- *
  * @class
  * @classdesc Initializes the organism.
  * @param {HTMLElement} element - The DOM element within which to search
