@@ -52,17 +52,4 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            partial(migrate_passwordhistoryitems, from_app='v1', to_app='login'),
-            partial(migrate_passwordhistoryitems, from_app='login', to_app='v1'),
-        ),
-        migrations.RunPython(
-            partial(migrate_failedloginattempts, from_app='v1', to_app='login'),
-            partial(migrate_failedloginattempts, from_app='login', to_app='v1'),
-        ),
-
-        migrations.RunPython(
-            partial(migrate_temporarylockouts, from_app='v1', to_app='login'),
-            partial(migrate_temporarylockouts, from_app='login', to_app='v1'),
-        )
     ]

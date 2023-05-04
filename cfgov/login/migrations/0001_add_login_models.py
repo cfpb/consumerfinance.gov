@@ -11,7 +11,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('v1', '0226_prepare_login_models_to_move'),
     ]
 
     operations = [
