@@ -46,7 +46,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
               Table of contents
             </span>
             <span class="o-expandable_link">
-              <span class="o-expandable_cue-open" aria-label="Show">
+              <span class="o-expandable_cue-open" role="img" aria-label="Show">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 17 20.4"
@@ -57,7 +57,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
                   ></path>
                 </svg>
               </span>
-              <span class="o-expandable_cue-close" aria-label="Hide">
+              <span class="o-expandable_cue-close" role="img" aria-label="Hide">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 17 20.4"
