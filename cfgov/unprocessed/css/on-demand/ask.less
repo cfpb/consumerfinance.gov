@@ -324,33 +324,11 @@
 }
 
 .ask-cfpb-page {
-  .o-search-bar {
-    .input-with-btn__bar .input-with-btn_btn button {
-      height: 35px;
-    }
-  }
-  .responsive-object {
-    position: relative;
-    margin-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
-    margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
-    clear: both;
-  }
-
-  .responsive-object iframe,
-  .responsive-object object,
-  .responsive-object embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .m-pagination {
-    .respond-to-max( @bp-xs-max, {
+  .respond-to-max( @bp-xs-max, {
+    .m-pagination {
       height: auto;
-    } );
-  }
+    }
+  } );
 
   .search-results {
     max-width: 41.875rem;
