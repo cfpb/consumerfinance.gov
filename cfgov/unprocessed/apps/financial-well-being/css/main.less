@@ -1,0 +1,197 @@
+.save-links {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #b4b5b6;
+  margin: 30px 0;
+  text-align: right;
+}
+
+.spectrum {
+  padding-top: 120px;
+  margin-top: 30px;
+  position: relative;
+  max-width: 770px;
+}
+
+.score-box {
+  height: 150px;
+  border-color: #101820;
+  border-style: solid;
+  position: absolute;
+  top: 0;
+}
+
+.score-box__left {
+  padding-left: 10px;
+  border-width: 0 0 0 1px;
+}
+
+.score-box__right {
+  padding-right: 10px;
+  border-width: 0 1px 0 0;
+  text-align: right;
+}
+
+.score-box__avg {
+  height: 70px;
+  top: 80px;
+}
+
+.score-box a {
+  border-bottom-width: 1px;
+}
+
+.spectrum_x-label {
+  padding-top: 5px;
+  padding-left: 5px;
+  border-left: 1px solid #b4b5b6;
+  position: absolute;
+  font-size: 0.75em;
+  list-style: none;
+}
+
+.spectrum_x-label__40 {
+  left: 32.0987654321%;
+}
+
+.spectrum_x-label__50 {
+  left: 44.4444444444%;
+}
+
+.spectrum_x-label__60 {
+  left: 56.7901234568%;
+}
+
+.spectrum_x-label__70 {
+  left: 69.1358024691%;
+}
+
+.spectrum_x-label__overall {
+  width: 100%;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.comparison-chart_toggle {
+  padding: 0;
+  border: none;
+  margin: 0;
+}
+
+.comparison-chart_toggle-button {
+  margin-bottom: 5px;
+  background-color: #d6e8fa;
+  color: #101820;
+  font-size: 0.875em;
+}
+
+.comparison-chart_toggle-button:hover,
+.comparison-chart_toggle-button:focus,
+.comparison-chart_toggle-button__selected {
+  background-color: #7eb7e8;
+}
+
+.comparison-chart_title {
+  margin-top: 30px;
+}
+
+.comparison-chart_list {
+  margin-top: 30px;
+  position: relative;
+}
+
+.comparison-chart_list dt,
+.comparison-chart_source dt {
+  font-size: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.comparison-chart_list dt {
+  width: 30%;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.comparison-chart_list dd {
+  width: 65%;
+  border-bottom: 1px solid #b4b5b6;
+  position: relative;
+  bottom: 0.25em;
+}
+
+.comparison-chart_list dd:not(.u-hidden) {
+  display: inline-block;
+}
+
+.comparison-chart_list dd span {
+  height: 30px;
+  padding-left: 5px;
+  border-left-width: 4px;
+  border-left-style: solid;
+  margin-left: -2px;
+  position: absolute;
+  bottom: -0.5em;
+  line-height: 1;
+}
+
+.comparison-chart_source {
+  padding-top: 15px;
+  border-top: 1px solid #b4b5b6;
+  margin-top: 30px;
+  color: #75787b;
+  font-size: 0.75em;
+}
+
+/* CF Enhancements */
+@media all and (max-width: 37.5em) {
+  .comparison-chart_toggle-button {
+    display: block;
+  }
+}
+
+@media print {
+  /* Force all these things back on when printing, regardless
+     of how the user has interacted with the page */
+  .js .comparison_data-point {
+    display: inline-block !important;
+  }
+
+  .o-expandable_content {
+    /* Using !important to work around IE not handling the
+         :not([aria-expanded="true"]) selector */
+    height: auto !important;
+  }
+
+  .o-expandable_content table {
+    height: 510px;
+  }
+
+  .o-expandable_content thead {
+    border-bottom: none;
+  }
+
+  .o-expandable_content th:last-child {
+    width: 25% !important;
+  }
+
+  .o-expandable_content tbody tr {
+    border-bottom: none;
+  }
+
+  .content_main {
+    display: block !important;
+  }
+
+  .content_main * {
+    overflow: visible !important;
+  }
+
+  /* Hide various things when printing */
+  .save-links,
+  .o-expandable_link,
+  .comparison-chart_toggle,
+  .content_sidebar,
+  .o-footer {
+    display: none !important;
+  }
+}

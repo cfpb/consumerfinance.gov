@@ -1,6 +1,6 @@
 {% import 'v1/includes/atoms/tag.html' as tag %}
 {% import 'v1/includes/molecules/pagination.html' as pagination with context %}
-{% from 'v1/includes/organisms/expandable.html' import expandable with context %}
+{% from 'teachers_digital_platform/tdp_expandable.html' import expandable with context %}
 
 {% macro build_nested_facets(facets, type, is_child=False) %}
     <ul class="m-list m-list__unstyled{% if not is_child %} u-mt15{% else %} o-expandable-facets_content{% endif %}">
@@ -15,16 +15,10 @@
                         </label><button class="a-btn a-btn__link u-hide-on-xs u-hide-on-sm o-expandable-facets_target" type="button">
                             <span class="u-visually-hidden">Expand children</span>
                             <span aria-hidden="true">{{ facet.title }}</span>
-                            <span class="o-expandable-facets_cue o-expandable-facets_cue-open">
-                                <span class="u-visually-hidden">
-                                    Show
-                                </span>
+                            <span class="o-expandable-facets_cue o-expandable-facets_cue-open" role="img" aria-label="{{ _('Show') }}">
                                 {{ svg_icon('down') }}
                             </span>
-                            <span class="o-expandable-facets_cue o-expandable-facets_cue-close">
-                                <span class="u-visually-hidden">
-                                    Hide
-                                </span>
+                            <span class="o-expandable-facets_cue o-expandable-facets_cue-close" role="img" aria-label="{{ _('Hide') }}">
                                 {{ svg_icon('up') }}
                             </span>
                         </button>
@@ -99,8 +93,7 @@
             {% set expandable_settings = {
                 'label': 'Topic',
                 'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
                 {{ build_nested_facets(facets.topic, 'topic') }}
@@ -117,8 +110,7 @@
                 'label': 'School subject',
                 'is_collapsed_for_mobile': true,
                 'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
             <div class="o-form_group u-mt15">
@@ -154,8 +146,7 @@
             {% set expandable_settings = {
                 'label': 'Grade level',
                 'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
             <div class="o-form_group u-mt15">
@@ -184,8 +175,7 @@
             {% set expandable_settings = {
                 'label': 'Age range',
                 'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
             <div class="o-form_group u-mt15">
@@ -215,8 +205,7 @@
             {% set expandable_settings = {
                 'label': 'Student characteristics',
                 'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
             <div class="o-form_group u-mt15">
@@ -255,8 +244,7 @@
             {% set expandable_settings = {
                 'label': 'Activity duration',
                 'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
             <div class="o-form_group u-mt15">
@@ -285,8 +273,7 @@
             {% set expandable_settings = {
                 'label': 'Activity type',
                 'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
             <div class="o-form_group u-mt15">
@@ -316,8 +303,7 @@
             {% set expandable_settings = {
                 'label': 'Bloom\'s Taxonomy level',
                 'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
             <div class="o-form_group u-mt15">
@@ -348,8 +334,7 @@
                 'label': 'Building block',
                 'is_collapsed_for_mobile': true,
                 'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
             <div class="o-form_group u-mt15">
@@ -378,8 +363,7 @@
             {% set expandable_settings = {
                 'label': 'National standards',
                 'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
             <div class="o-form_group u-mt15">
@@ -408,8 +392,7 @@
             {% set expandable_settings = {
                 'label': 'Teaching strategy',
                 'is_expanded': is_expanded,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
             <div class="o-form_group u-mt15">

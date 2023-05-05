@@ -14,6 +14,7 @@ import wagtail.snippets.blocks
 import modelcluster.contrib.taggit
 import modelcluster.fields
 import wagtailmedia.blocks
+from taggit import VERSION as TAGGIT_VERSION
 
 import jobmanager.blocks
 import v1.atomic_elements.molecules
@@ -24,8 +25,6 @@ import v1.util.ref
 
 
 class Migration(migrations.Migration):
-
-    replaces = [('v1', '0199_remove_old_enforcement_categories'), ('v1', '0200_expandable_group_help_text'), ('v1', '0201_cfgovimage_file_hash'), ('v1', '0202_cleanup_legacy_homepage'), ('v1', '0203_deprecate_spanish_home_page'), ('v1', '0204_remove_menu_item'), ('v1', '0205_bureau_structure_multiple_leads'), ('v1', '0206_add_enforcement_action_page'), ('v1', '0207_enforcement_action_docket'), ('v1', '0208_job_listing_block_refactor'), ('v1', '0209_add_enforcement_actions_filter_page'), ('v1', '0210_add_banner_model'), ('v1', '0211_add_schema_blocks_to_blogpage_content'), ('v1', '0212_contact_body_shown_in_expandables'), ('v1', '0213_abstracthero_and_add_jumbohero'), ('v1', '0214_add_campaignpage'), ('v1', '0215_add_schema_json_to_cfgovpage'), ('v1', '0216_add_title_to_howto_block'), ('v1', '0217_alter_taggit_fields'), ('v1', '0218_add_force_breadcrumbs'), ('v1', '0219_move_directors_notebook'), ('v1', '0220_video_player'), ('v1', '0221_featured_content'), ('v1', '0222_event_video_fields'), ('v1', '0223_fcm_required_fields'), ('v1', '0224_design_system_links'), ('v1', '0225_enforcement_status_filter'), ('v1', '0226_update_enforcement_action_data'), ('v1', '0227_indexedpagerevision'), ('v1', '0228_add_audio_player'), ('v1', '0229_browsepage_share_and_print'), ('v1', '0230_archive_fields'), ('v1', '0231_add_filterable_list_filter_options'), ('v1', '0232_set_filter_children_on_newsroom_activitylog'), ('v1', '0233_convert_is_archived_to_choices'), ('v1', '0234_remove_obsolete_block_option'), ('v1', '0235_fix_is_archived_default'), ('v1', '0236_use_yes_no_for_string_choices'), ('v1', '0237_update_is_archived_values'), ('v1', '0238_auto_20201116_1313'), ('v1', '0239_remove_bureau_structure'), ('v1', '0240_update_enforcement_metadata'), ('v1', '0241_sort_categories_by_name'), ('v1', '0242_final_enforcement_data'), ('v1', '0243_fcm_body_plain_text'), ('v1', '0244_auto_20210128_1022'), ('v1', '0245_homepage_content'), ('v1', '0246_add_enforcement_product_fair_lending'), ('v1', '0247_add_notification_type_option'), ('v1', '0248_add_notification_to_browse_and_learn_page'), ('v1', '0249_add_product_filter_to_enforcement_filter_control'), ('v1', '0250_add_fields_to_simplechart_block'), ('v1', '0251_update_notification_default_type'), ('v1', '0252_filterable_block_order_by'), ('v1', '0253_add_reusable_text_to_legacy_newsroom'), ('v1', '0254_delete_homepagecarouselitem'), ('v1', '0255_fix_wagtailembeds_constraint'), ('v1', '0256_remove_filter_sibling_choice'), ('v1', '0257_add_story_page_with_image_bleeding'), ('v1', '0258_simple_chart_updates'), ('v1', '0259_add_simplified_chinese_lang'), ('v1', '0260_rename_chinese_lang_to_traditional'), ('v1', '0261_fix_lang_typo_and_alphetize_list'), ('v1', '0262_add_aria_label_to_hyperlinks'), ('v1', '0263_add_default_empty_list_for_213_prep'), ('v1', '0264_add_filters_help_text'), ('v1', '0265_add_language_filter'), ('v1', '0266_update_help_text_on_info_unit_group_intro_text'), ('v1', '0267_add_raf_tool_to_browse_page'), ('v1', '0268_remove_category_sidebar'), ('v1', '0269_home_page_2021'), ('v1', '0270_filter_help_text'), ('v1', '0271_add_raf_tool_struct_block'), ('v1', '0272_add_ask_search_max_length'), ('v1', '0273_directors_statement'), ('v1', '0274_image_alt_no_limit'), ('v1', '0275_simple_chart_updates'), ('v1', '0276_consumer_advisories'), ('v1', '0277_remove_outdated_category_instances'), ('v1', '0278_remove_unused_categories'), ('v1', '0279_data_spotlight'), ('v1', '0280_content_owners'), ('v1', '0281_auto_20220303_1222'), ('v1', '0282_home_page_2022'), ('v1', '0283_removed_regs_gov_comment'), ('v1', '0284_simplify_home_page'), ('v1', '0285_add_expandables_to_sublandingpage')]
 
     dependencies = [
         ('contenttypes', '__first__'),
@@ -971,7 +970,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100, unique=True, verbose_name='name')),
-                ('slug', models.SlugField(max_length=100, unique=True, verbose_name='slug')),
+                ('slug', models.SlugField(max_length=100, unique=True, verbose_name='slug', allow_unicode=(TAGGIT_VERSION >= (3, 0, 0)))),
             ],
             options={
                 'verbose_name': 'Content Owner',

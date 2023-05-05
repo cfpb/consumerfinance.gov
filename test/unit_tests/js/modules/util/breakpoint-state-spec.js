@@ -9,7 +9,6 @@ import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
 
 /**
  * Change the viewport to width x height. Mocks window.resizeTo( w, h ).
- *
  * @param {number} width - width in pixels.
  * @param {number} height - height in pixels.
  */

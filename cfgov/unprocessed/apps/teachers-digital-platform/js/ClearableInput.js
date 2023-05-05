@@ -8,7 +8,6 @@ import { checkDom } from '@cfpb/cfpb-atomic-component';
 
 /**
  * ClearableInput
- *
  * @class
  * @classdesc Initializes a new ClearableInput molecule.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -36,7 +35,6 @@ function ClearableInput(element) {
 
   /**
    * Event handler for when the clear input label was clicked.
-   *
    * @param {MouseEvent} event - The event object for the mousedown event.
    */
   function _clearClicked(event) {

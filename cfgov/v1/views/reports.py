@@ -11,6 +11,7 @@ from wagtail.admin.filters import WagtailFilterSet
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
 from wagtail.images import get_image_model
+from wagtail.models import Site
 
 import django_filters
 from bs4 import BeautifulSoup
@@ -119,6 +120,49 @@ class PageMetadataReportView(PageReportView):
     def get_queryset(self):
         return CFGOVPage.objects.filter(live=True).prefetch_related(
             "tags", "categories"
+        )
+
+
+class DraftReportView(PageReportView):
+    header_icon = "doc-empty"
+    title = "Draft Pages"
+
+    list_export = PageReportView.list_export + [
+        "url",
+        "language",
+        "tags.names",
+        "categories.all",
+        "content_owners.names",
+    ]
+    export_headings = dict(
+        [
+            ("url", "URL"),
+            ("language", "Language"),
+            ("tags.names", "Tags"),
+            ("categories.all", "Categories"),
+            ("content_owners.names", "Content Owner(s)"),
+        ],
+        **PageReportView.export_headings,
+    )
+
+    custom_field_preprocess = {
+        "categories.all": {
+            "csv": process_categories,
+            "xlsx": process_categories,
+        }
+    }
+
+    template_name = "v1/page_draft_report.html"
+
+    def get_filename(self):
+        return generate_filename("pages")
+
+    def get_queryset(self):
+        default_site = Site.objects.get(is_default_site=True)
+        return (
+            CFGOVPage.objects.in_site(default_site)
+            .not_live()
+            .prefetch_related("tags", "categories")
         )
 
 
@@ -387,6 +431,10 @@ class TranslatedPagesReportFilterSet(WagtailFilterSet):
             queryset = queryset.filter(non_english_pages__language__in=value)
 
         return queryset
+
+    class Meta:
+        model = CFGOVPage
+        fields = ["language"]
 
 
 class TranslatedPagesReportView(PageReportView):

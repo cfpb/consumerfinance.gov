@@ -6,10 +6,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ('paying_for_college', '0001_initial'),
-    ]
-
     dependencies = [
     ]
 

@@ -1,36 +1,11 @@
-import update from './update-model.js';
+const fetchApiData = (birthdate, salary, dataLang) => {
+  let url = `../retirement-api/estimator/${birthdate}/${Number(salary)}/`;
 
-// TODO: remove jquery.
-import $ from 'jquery';
+  if (dataLang === 'es') {
+    url = `../${url}es/`;
+  }
 
-const fetch = {
-  apiData: function (birthdate, salary, dataLang) {
-    let url;
-    if (dataLang === 'es') {
-      url =
-        '../../retirement-api/estimator/' +
-        birthdate +
-        '/' +
-        Number(salary) +
-        '/es/';
-    } else {
-      url =
-        '../retirement-api/estimator/' + birthdate + '/' + Number(salary) + '/';
-    }
-
-    const apiDataRequest = $.ajax({
-      url: url,
-      dataType: 'json',
-      success: function (resp) {
-        if (resp.error === '') {
-          update.processApiData(resp);
-        }
-        return resp;
-      },
-    });
-
-    return apiDataRequest;
-  },
+  return fetch(url).then((v) => v.json());
 };
 
-export default fetch;
+export default fetchApiData;

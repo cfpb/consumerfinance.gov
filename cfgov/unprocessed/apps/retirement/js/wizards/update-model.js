@@ -4,7 +4,6 @@ import lifetimeModel from '../models/lifetime-model';
 const update = {
   /**
    * This function updates properties of the benefits model.
-   *
    * @param {string} prop - The property to be updated.
    * @param {number|string} val - The new value of the property.
    */
@@ -18,7 +17,6 @@ const update = {
   /**
    * This function takes a response from an AJAX call and processes
    * the response into the benefits model.
-   *
    * @param {object} resp - The AJAX response object.
    */
   processApiData: function (resp) {

@@ -1,15 +1,14 @@
 import * as validators from '../modules/util/validators.js';
 import {
   checkDom,
-  instantiateAll,
   setInitFlag,
   EventObserver,
 } from '@cfpb/cfpb-atomic-component';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import ERROR_MESSAGES from '../config/error-messages-config.js';
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { Expandable } from '@cfpb/cfpb-expandables';
 import FormModel from '../modules/util/FormModel.js';
-import Multiselect from '@cfpb/cfpb-forms/src/organisms/Multiselect.js';
+import { Multiselect } from '@cfpb/cfpb-forms';
 
 const BASE_CLASS = 'o-filterable-list-controls';
 const FIELD_ERROR_CLASS = 'a-text-input__error';
@@ -17,7 +16,6 @@ let INVALID_FIELDS = [];
 
 /**
  * FilterableListControls
- *
  * @class
  * @classdesc Initializes a new FilterableListControls organism.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -28,7 +26,6 @@ function FilterableListControls(element) {
   const _dom = checkDom(element, BASE_CLASS);
   const _form = _dom.querySelector('form');
   let _expandable;
-  let _expandableContent;
   let _formModel;
 
   /**
@@ -43,19 +40,10 @@ function FilterableListControls(element) {
 
     _formModel = new FormModel(_form);
 
-    /* Instantiate multiselects before their containing expandable
-       so height of any 'selected choice' buttons is included when
-       expandable height is calculated initially. */
-    const multiSelectsSelector = `.${BASE_CLASS} .${Multiselect.BASE_CLASS}`;
-    const multiSelects = instantiateAll(multiSelectsSelector, Multiselect);
+    const multiSelects = Multiselect.init();
 
     const _expandables = Expandable.init(_dom);
     _expandable = _expandables[0];
-
-    // This is used for checking if the content is expanded.
-    _expandableContent = _expandable.element.querySelector(
-      '.o-expandable_content'
-    );
 
     // If multiselects exist on the form, iterate over them.
     multiSelects.forEach((multiSelect) => {
@@ -74,30 +62,20 @@ function FilterableListControls(element) {
     return this;
   }
 
+  let timeout;
   /**
    * Refresh the height of the filterable list control's expandable
    * to ensure all its children are visible.
    */
-  let timeout;
-  /**
-   *
-   */
   function _refreshExpandableHeight() {
     window.clearTimeout(timeout);
-    // TODO: Expandable itself should have an API to query if it is open or not.
-    if (
-      _expandableContent.classList.contains('o-expandable_content__expanded')
-    ) {
-      timeout = window.setTimeout(
-        _expandable.transition.expand.bind(_expandable.transition),
-        250
-      );
+    if (_expandable.isExpanded()) {
+      timeout = window.setTimeout(_expandable.refresh, 250);
     }
   }
 
   /**
    * Get data layer object.
-   *
    * @param {string} action - Name of event.
    * @param {string} label - DOM element label.
    * @param {string} event - Type of event.
@@ -123,21 +101,15 @@ function FilterableListControls(element) {
     let dataLayerArray = [];
     const cachedFields = {};
 
-    _expandable.transition.addEventListener(
-      'expandbegin',
-      function sendEvent() {
-        analyticsSendEvent({ action: 'Filter:open', label });
-      }
-    );
+    _expandable.addEventListener('expandbegin', () => {
+      analyticsSendEvent({ action: 'Filter:open', label });
+    });
 
-    _expandable.transition.addEventListener(
-      'collapsebegin',
-      function sendEvent() {
-        analyticsSendEvent({ action: 'Filter:close', label });
-      }
-    );
+    _expandable.addEventListener('collapsebegin', () => {
+      analyticsSendEvent({ action: 'Filter:close', label });
+    });
 
-    _form.addEventListener('change', function sendEvent(event) {
+    _form.addEventListener('change', (event) => {
       const field = event.target;
 
       if (!field) {
@@ -148,9 +120,9 @@ function FilterableListControls(element) {
     });
 
     const formSubmittedBinded = _formSubmitted.bind(this);
-    _form.addEventListener('submit', function sendEvent(event) {
+    _form.addEventListener('submit', (event) => {
       event.preventDefault();
-      Object.keys(cachedFields).forEach(function (key) {
+      Object.keys(cachedFields).forEach((key) => {
         dataLayerArray.push(cachedFields[key]);
       });
       dataLayerArray.push(
@@ -183,7 +155,6 @@ function FilterableListControls(element) {
 
   /**
    * Build the error message to display within the notification.
-   *
    * @param {Array} fields - A list of form fields.
    * @returns {string} A text to use for the error notification.
    */
@@ -198,7 +169,6 @@ function FilterableListControls(element) {
 
   /**
    * Highlight invalid text fields by giving them an error class.
-   *
    * @param {Array} fields - A list of form fields.
    * @returns {Array} An array of invalid fields.
    */
@@ -222,7 +192,6 @@ function FilterableListControls(element) {
 
   /**
    * Validate the fields of our form.
-   *
    * @param {Array} fields - A list of form fields.
    * @returns {object} The tested list of fields broken into valid
    *   and invalid blocks.
@@ -259,7 +228,6 @@ function FilterableListControls(element) {
   // TODO: Reduce complexity
   /**
    * Validate the specific field types.
-   *
    * @param {HTMLElement} field - A form field.
    * @returns {object} An object with a status and message properties.
    */

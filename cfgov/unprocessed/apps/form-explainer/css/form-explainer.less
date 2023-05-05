@@ -75,6 +75,7 @@
   } );
 
   // Expandable overrides
+  // TODO: Make this its own component.
 
   .o-expandable-group .o-expandable {
     border: 4px solid transparent;
@@ -96,7 +97,7 @@
       }
     }
 
-    .o-expandable_content__expanded:before {
+    .o-expandable_content[data-open='true']:before {
       border: none;
     }
 

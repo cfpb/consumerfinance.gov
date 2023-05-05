@@ -9,7 +9,6 @@ const CLASSES = {
 
 /**
  * PrintButton
- *
  * @class
  * @classdesc Simple view for calling the system print dialog when the
  * user wants to print their final plan. Toggles visibility of elements

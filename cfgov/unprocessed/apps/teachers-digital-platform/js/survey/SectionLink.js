@@ -124,7 +124,6 @@ SectionLink.init = function ({ numAnswered, pageIdx, questionsByPage }) {
 
 /**
  * Update the current SectionLink
- *
  * @param {number} numAnswered - Num answered questions.
  */
 SectionLink.update = function (numAnswered) {

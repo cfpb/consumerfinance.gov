@@ -1,11 +1,5 @@
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
-import Multiselect from '@cfpb/cfpb-forms/src/organisms/Multiselect';
-import { instantiateAll } from '@cfpb/cfpb-atomic-component';
+import { SummaryMinimal } from '@cfpb/cfpb-expandables';
+import { Multiselect } from '@cfpb/cfpb-forms';
 
-const multiSelectsSelector = `.${Multiselect.BASE_CLASS}`;
-
-if (document.querySelector(multiSelectsSelector)) {
-  instantiateAll(multiSelectsSelector, Multiselect);
-}
-
-Expandable.init();
+Multiselect.init();
+SummaryMinimal.init();

@@ -12,7 +12,6 @@ const DISABLEABLE_ELEMENTS = [
  *
  * Note: This is a naive/simplified version adapted from jQuery UI
  * It does not support image maps, disabled fieldsets, among other things
- *
  * @param {string} $element - element name
  * @returns {boolean} true or false
  */

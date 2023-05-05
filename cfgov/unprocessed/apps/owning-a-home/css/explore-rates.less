@@ -5,6 +5,12 @@
 .rate-checker {
   position: relative;
 
+  /* lead paragraphs are typically the first paragraph in a content area */
+  .lead {
+    margin-bottom: unit(30px / @base-font-size-px, em);
+    font-size: 1.125em;
+  }
+
   .page-intro {
     border-bottom: 1px solid @gray-10;
   }
@@ -32,15 +38,11 @@
   .state-col,
   .form-intro {
     .grid_column( 3, 3 );
-
-    .wrapper {
-      padding: 0;
-    }
   }
 
   /*
         Sidebar with all the user input
-        --------------------------- */
+       --------------------------- */
   .calculator {
     .grid_column( 4 );
     .grid_push( 8 );
@@ -270,7 +272,7 @@
   .compare {
     margin-top: unit(30px / @base-font-size-px, em);
     label {
-      .u-visually-hidden;
+      .u-visually-hidden();
     }
   }
 
@@ -381,10 +383,6 @@
       box-sizing: border-box;
       margin-top: 2em;
     }
-
-    > p {
-      margin-bottom: 55px;
-    }
   }
 
   .next-steps-heading {
@@ -492,14 +490,6 @@
 
   .credit-alert {
     margin-top: 2em;
-  }
-
-  .about-data {
-    border-left-width: 0;
-  }
-
-  .related-links {
-    margin-top: @grid_gutter-width;
   }
 
   .credit-note-ctr {

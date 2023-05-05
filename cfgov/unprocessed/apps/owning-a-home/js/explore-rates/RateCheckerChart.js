@@ -6,7 +6,6 @@ import highchartsExport from 'highcharts/modules/exporting';
 
 /**
  * RateCheckerChart
- *
  * @class
  * @classdesc Creates the left-hand side chart on /owning-a-home/explore-rates/
  * @returns {RateCheckerChart} An instance.
@@ -46,7 +45,6 @@ function RateCheckerChart() {
 
   /**
    * Initialize and create highcharts-related instances.
-   *
    * @returns {RateCheckerChartMenu} A menu instance.
    */
   function _createHighcharts() {
@@ -144,7 +142,6 @@ function RateCheckerChart() {
 
   /**
    * Render (or update) the _highCharts chart.
-   *
    * @param {object} data - Data processed from the API.
    */
   function render(data) {
@@ -167,7 +164,6 @@ function RateCheckerChart() {
 
   /**
    * Set the state of the slider.
-   *
    * @param {number} state - 0 = okay, 1 = warning state.
    */
   function setStatus(state) {
@@ -198,7 +194,6 @@ function RateCheckerChart() {
 
   /**
    * Show an error alert.
-   *
    * @param {number} [state] - Pass RateCheckerChart.STATUS_WARNING
    *   or RateCheckerChart.STATUS_ERROR.
    */

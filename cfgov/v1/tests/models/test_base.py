@@ -313,6 +313,30 @@ class TestCFGOVPageContext(TestCase):
         self.assertEqual(True, result)
 
 
+class TestCFGOVPageTranslationActivation(TestCase):
+    def test_english_page_serves_in_english(self):
+        page = LandingPage(title="test", language="en")
+        request = RequestFactory().get("/")
+        response = page.serve(request)
+        self.assertContains(response, "Search")
+
+    def test_spanish_page_serves_in_spanish(self):
+        page = LandingPage(title="test", language="es")
+        request = RequestFactory().get("/")
+        response = page.serve(request)
+        self.assertContains(response, "Buscar")
+
+    def test_english_page_serves_preview_in_english(self):
+        page = LandingPage(title="test", language="en")
+        response = page.make_preview_request()
+        self.assertContains(response, "Search")
+
+    def test_spanish_page_serves_preview_in_spanish(self):
+        page = LandingPage(title="test", language="es")
+        response = page.make_preview_request()
+        self.assertContains(response, "Buscar")
+
+
 class TestCFGOVPageQuerySet(TestCase):
     def setUp(self):
         default_site = Site.objects.get(is_default_site=True)
@@ -591,6 +615,38 @@ class TestCFGOVPageTranslations(TestCase):
         self.assertEqual(page_es.get_translations().count(), 2)
         self.assertEqual(page_es.get_translations().first().pk, page_en.pk)
         self.assertEqual(page_es.get_translations().last().pk, page_es.pk)
+
+    def test_new_english_page_without_primary_key(self):
+        new_page_en = BrowsePage(language="en")
+        self.assertEqual(new_page_en.get_translations().count(), 1)
+        self.assertEqual(
+            new_page_en.get_translations().first().pk, new_page_en.pk
+        )
+        self.assertEqual(
+            new_page_en.get_translations(inclusive=False).count(), 0
+        )
+
+    def test_new_spanish_page_without_primary_key(self):
+        new_page_es = BrowsePage(language="es")
+        self.assertEqual(new_page_es.get_translations().count(), 1)
+        self.assertEqual(
+            new_page_es.get_translations().first().pk, new_page_es.pk
+        )
+        self.assertEqual(
+            new_page_es.get_translations(inclusive=False).count(), 0
+        )
+
+        page_en = self.make_page(language="en")
+        new_page_es.english_page = page_en
+        self.assertEqual(new_page_es.get_translations().count(), 2)
+        self.assertEqual(new_page_es.get_translations().first().pk, page_en.pk)
+        self.assertEqual(
+            new_page_es.get_translations().last().pk, new_page_es.pk
+        )
+        self.assertEqual(
+            new_page_es.get_translations(inclusive=False).count(), 1
+        )
+        self.assertEqual(new_page_es.get_translations().first().pk, page_en.pk)
 
     def test_page_get_translation_links(self):
         page_en = self.make_page(language="en")

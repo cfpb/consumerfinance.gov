@@ -16,7 +16,6 @@ import { convertStringToNumber } from '../../../../../js/modules/util/format.js'
 /**
  * Calculate direct unsubsidized federal loan total. This involves calculating a different
  * amount borrowed each year.
- *
  * @param {number} directSub - The amount of DIRECT subsidized borrowed the first year
  * @param {number} directUnsub - The amount of DIRECT unsubsidized borrowed the first year
  * @param {number} rateUnsub - The interest rate as a decimal

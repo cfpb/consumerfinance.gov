@@ -12,36 +12,6 @@ from wagtail.images import blocks as images_blocks
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ('regulations3k', '0002_rename_cfr_title'),
-        ('regulations3k', '0003_alter_regulationpage_header'),
-        ('regulations3k', '0004_add_acquired_and_draft_to_effectiveversion'),
-        ('regulations3k', '0005_add_sortable_label_subpart_type'),
-        ('regulations3k', '0006_set_sortable_label_subpart_type'),
-        ('regulations3k', '0007_make_sortable_label_required'),
-        ('regulations3k', '0008_regulationssearchpage'),
-        ('regulations3k', '0009_sectionparagraph'),
-        ('regulations3k', '0010_rename_acquired_field'),
-        ('regulations3k', '0011_add_header_content_to_regs_landing_page'),
-        ('regulations3k', '0012_add_regulation_page_content_organisms'),
-        ('regulations3k', '0013_add_image_to_fullwidthtext'),
-        ('regulations3k', '0014_rm_imageinset_and_media_from_fullwidthtext'),
-        ('regulations3k', '0015_rename_regpage_part_related_field'),
-        ('regulations3k', '0016_require_effective_date'),
-        ('regulations3k', '0017_set_default_created_date'),
-        ('regulations3k', '0018_add_notification_block'),
-        ('regulations3k', '0019_add_disclaimer_pagechooserblock_to_emailsignup'),
-        ('regulations3k', '0020_rm_formfieldwithbutton'),
-        ('regulations3k', '0021_rm_hero_links'),
-        ('regulations3k', '0022_update_help_cf_link'),
-        ('regulations3k', '0023_update_hero_labels_and_help_text'),
-        ('regulations3k', '0024_add_standard_notification_regs_landing'),
-        ('regulations3k', '0025_part_short_name'),
-        ('regulations3k', '0026_migrate_letter_code_to_short_name'),
-        ('regulations3k', '0027_remove_part_letter_code'),
-        ('regulations3k', '0028_add_ask_search')
-    ]
-
     dependencies = [
         ('v1', '0198_recreated'),
         ('regulations3k', '0029_recreated'),

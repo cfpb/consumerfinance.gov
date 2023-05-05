@@ -4,7 +4,6 @@ import MegaMenu from '../organisms/MegaMenu.js';
 
 /**
  * Header
- *
  * @class
  * @classdesc Initializes a new Header organism.
  * @param {HTMLElement} element - The DOM element within which to search

@@ -1,6 +1,5 @@
-import { getNewHash, isOldHash } from './regs3k-utils.js';
 import { handleContentClick, handleNavClick } from './analytics.js';
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { Expandable } from '@cfpb/cfpb-expandables';
 
 const navHeader = document.querySelector('.o-regs3k-navigation_header');
 const navItems = document.querySelector('.o-regs3k-sections');
@@ -46,9 +45,6 @@ const init = () => {
     navItems.classList.add('u-hide-on-stacked');
     bindSecondaryNav();
     bindAnalytics();
-  }
-  if (isOldHash(window.location.hash)) {
-    window.location.hash = getNewHash(window.location.hash);
   }
 };
 

@@ -13,14 +13,12 @@ import v1.blocks
 
 class Migration(migrations.Migration):
 
-    replaces = [('paying_for_college', '0009_expandable_group_help_text'), ('paying_for_college', '0010_program_median_monthly_debt'), ('paying_for_college', '0011_program_level_code'), ('paying_for_college', '0012_add_fields_for_intro_page'), ('paying_for_college', '0013_rename_program_level_code_to_level_name'), ('paying_for_college', '0014_featured_content'), ('paying_for_college', '0015_fcm_required_fields'), ('paying_for_college', '0016_design_system_links'), ('paying_for_college', '0017_fcm_body_plain_text'), ('paying_for_college', '0018_add_story_page_with_image_bleeding'), ('paying_for_college', '0019_add_aria_label_to_hyperlinks'), ('paying_for_college', '0020_add_default_empty_list_for_213_prep'), ('paying_for_college', '0021_update_help_text_on_info_unit_group_intro_text'), ('paying_for_college', '0022_add_ask_search_max_length'), ('paying_for_college', '0023_delete_studentloanquizpage'), ('paying_for_college', '0024_image_alt_no_limit'), ('paying_for_college', '0024_django_32_update'), ('paying_for_college', '0025_merge_0024_django_32_update_0024_image_alt_no_limit')]
-
     dependencies = [
         ('paying_for_college', '0008_recreated2'),
         ('wagtailinventory', '0001_initial'),
         ('wagtailforms', '0004_add_verbose_name_plural'),
         ('wagtailcore', '0060_fix_workflow_unique_constraint'),
-        ('v1', '0272_add_ask_search_max_length'),
+        ('v1', '0199_2022_squash'),
         ('wagtailredirects', '0006_redirect_increase_max_length'),
     ]
 

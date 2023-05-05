@@ -66,7 +66,6 @@ const HIGHCHARTS_SETTINGS = {
 
 /**
  * Apply theme settings to a Highcharts instance.
- *
  * @param {object} highcharts - A Highcharts instance.
  */
 function applyThemeTo(highcharts) {

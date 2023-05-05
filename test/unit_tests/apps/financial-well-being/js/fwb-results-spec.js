@@ -25,8 +25,8 @@ const HTML_SNIPPET = `
         <span class="o-expandable_label">
         </span>
         <span class="o-expandable_link">
-          <span class="o-expandable_cue o-expandable_cue-open"></span>
-          <span class="o-expandable_cue o-expandable_cue-close"></span>
+          <span class="o-expandable_cue-open" role="img" aria-label="Show"></span>
+          <span class="o-expandable_cue-close" role="img" aria-label="Hide"></span>
         </span>
       </div>
     </button>

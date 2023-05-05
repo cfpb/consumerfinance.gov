@@ -1,6 +1,6 @@
 // External modules
 const AOS = require('aos/dist/aos');
-import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable.js';
+import cfExpandables from './Expandable.js';
 import expandableFacets from './expandable-facets.js';
 import beforeExpandableTransitionInit from './expandable-mobile.js';
 

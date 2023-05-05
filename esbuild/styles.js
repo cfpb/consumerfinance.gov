@@ -11,6 +11,7 @@ const apps = `${unprocessed}/apps`;
 
 const styledApps = [
   'ccdb-search',
+  'financial-well-being',
   'find-a-housing-counselor',
   'form-explainer',
   'know-before-you-owe',

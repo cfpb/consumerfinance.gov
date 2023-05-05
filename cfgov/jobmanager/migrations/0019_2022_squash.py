@@ -8,8 +8,6 @@ import modelcluster.fields
 
 class Migration(migrations.Migration):
 
-    replaces = [('jobmanager', '0019_multiple_locations'), ('jobmanager', '0020_multiple_locations'), ('jobmanager', '0021_multiple_locations'), ('jobmanager', '0022_prep_for_deprecated_model_swapout')]
-
     dependencies = [
         ('jobmanager', '0018_recreated_2'),
     ]

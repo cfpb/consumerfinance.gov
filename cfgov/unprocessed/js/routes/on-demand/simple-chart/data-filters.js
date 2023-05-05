@@ -3,7 +3,6 @@ import { extractSeries, overrideStyles } from './utils.js';
 
 /**
  * Generates an array of filters, bucketed based on key if present
- *
  * @param {object} filter - Object with a filter key and possible label
  * @param {object} data - The raw chart data
  * @param {boolean} isDate - Whether the data should be stored as JS dates
@@ -127,13 +126,15 @@ function makeRadioFilterDOM(buckets, chartNode, filter) {
     const id = Math.random() + bucket;
     const radioWrapper = document.createElement('div');
     radioWrapper.className = 'm-form-field m-form-field__radio u-mb5';
+    let radioGroupName = document.querySelectorAll('.filter-wrapper').length;
+    radioGroupName = 'radio-group_' + radioGroupName;
 
     const input = document.createElement('input');
     input.className = 'a-radio';
     input.type = 'radio';
     input.id = id;
     input.value = bucket;
-    input.name = filter.key;
+    input.name = radioGroupName;
     if (i === 0) input.checked = true;
 
     const label = document.createElement('label');
@@ -177,7 +178,6 @@ function makeRadioFilterDOM(buckets, chartNode, filter) {
 
 /**
  * Filters raw or transformed data by a select prop.
- *
  * @param {Array} data - Transformed or raw chart data.
  * @param {object} filterProp - Key on which to filter.
  * @param {object} filterVal - Value of the selectNode against
@@ -196,7 +196,6 @@ function filterData(data, filterProp, filterVal) {
 
 /**
  * Wires up filter elements when provided filters
- *
  * @param {object} dataAttributes - Data passed via data-* tags
  * @param {object} chartNode - The DOM node of the current chart
  * @param {object} chart - The initialized chart

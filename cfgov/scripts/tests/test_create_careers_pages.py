@@ -34,7 +34,7 @@ class TestCreateCareersPages(TestCase):
     def test_assert_script_keeps_page_content_if_pages_already_exist(self):
         create_careers_pages.run()
 
-        careers = Page.objects.get(slug="careers")
+        careers = Page.objects.get(slug="careers").specific
         careers.title = "test title"
         save_page(careers)
 
