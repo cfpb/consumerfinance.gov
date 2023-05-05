@@ -171,7 +171,7 @@ const HTML_SNIPPET = `
             </p>
          </div>
          <div class="o-expandable-group">
-            <div class="o-expandable o-expandable__padded" data-js-hook="state_atomic_init">
+            <div class="o-expandable o-expandable__padded">
                <button class="o-expandable_header o-expandable_target__collapsed" title="Expand content">
                   <h3 class="o-expandable_label">
                      <img src="/static/apps/teachers-digital-platform/img/planning.svg" alt="planning icon"> Planning and self-control
@@ -240,7 +240,7 @@ const HTML_SNIPPET = `
                   </div>
                </div>
             </div>
-            <div class="o-expandable o-expandable__padded" data-js-hook="state_atomic_init">
+            <div class="o-expandable o-expandable__padded">
                <button class="o-expandable_header o-expandable_target__collapsed" title="Expand content">
                   <h3 class="o-expandable_label">
                      <img src="/static/apps/teachers-digital-platform/img/habits.svg" alt="habits icon"> Money habits and values
@@ -310,7 +310,7 @@ const HTML_SNIPPET = `
                   </div>
                </div>
             </div>
-            <div class="o-expandable o-expandable__padded" data-js-hook="state_atomic_init">
+            <div class="o-expandable o-expandable__padded">
                <button class="o-expandable_header o-expandable_target__collapsed" title="Expand content">
                   <h3 class="o-expandable_label">
                      <img src="/static/apps/teachers-digital-platform/img/knowledge.svg" alt="knowledge icon"> Money knowledge and choices
