@@ -126,3 +126,4 @@ class CaseDocketTable(blocks.StructBlock):
         icon = "table"
         template = "v1/includes/organisms/tables/case-docket.html"
         label = "Table (Case Docket)"
+        unescape = False
