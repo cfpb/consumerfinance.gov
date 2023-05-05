@@ -72,11 +72,11 @@ export class Filter {
   }
 
   expandableTarget() {
-    return cy.get('.o-expandable_target');
+    return cy.get('.o-expandable_header');
   }
 
   search() {
-    return cy.get('.o-expandable_header .o-expandable_target');
+    return expandableTarget();
   }
 
   open() {
