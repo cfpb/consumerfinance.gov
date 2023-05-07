@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=16.x"
+    "node": ">=18.x"
   },
   "browserslist": "> 0.5%, Chrome >= 76, Edge >= 98, Firefox >= 78, safari >= 12, not dead",
   "dependencies": {
@@ -77,7 +77,8 @@
     "styles": "yarn build styles",
     "scripts": "yarn build scripts",
     "watch": "yarn build watch",
-    "build": "node ./esbuild/build.js"
+    "build": "node ./esbuild/build.js",
+    "zip-artifact": "zip -q -r $(git rev-parse HEAD).zip ./cfgov/static_built"
   },
   "snyk": true,
   "type": "module"

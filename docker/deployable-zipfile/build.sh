@@ -3,7 +3,8 @@
 set -e
 
 if [ ! -f "$(git rev-parse HEAD).zip" ]; then
-  echo "build.sh requires a zip of the built static files named <current SHA>.zip. Aborting."
+  echo "build.sh requires a zip of the built static files named <current SHA>.zip."
+  echo "You can produce one with 'yarn zip-artifact'."
   exit
 fi
 
