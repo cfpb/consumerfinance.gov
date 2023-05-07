@@ -5,7 +5,6 @@ set -e
 
 # Echo commands.
 set -x
-
 # Set GIT_COMMITTER_NAME to enable us to `pip -e` from git URLs
 # git < 2.6.5 requires either these variables to be set or the user to exist
 # in passwd file.
@@ -24,9 +23,9 @@ if [ ! -d "$cfgov_refresh_volume" ]; then
     exit 1
 fi
 
-# Run the frontend build.
+# Unzip pre-built static assets
 pushd "$cfgov_refresh_volume"
-./frontend.sh production
+unzip -o "$(git rev-parse HEAD).zip"
 popd
 
 # Prepare arguments for the deployable zipfile build.

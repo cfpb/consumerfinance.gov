@@ -2,10 +2,6 @@ name: frontend
 
 on:
   pull_request:
-  merge_group:
-    paths:
-      - '**.js'
-      - '**package.json'
 
 jobs:
 
@@ -18,7 +14,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-            node-version: '16.x'
+            node-version: '18.x'
 
       - name: Install dependencies
         run: |
@@ -35,6 +31,21 @@ jobs:
 
       - name: Build Javascript
         run: yarn build
+
+      - name: Zip static files
+        uses: montudor/action-zip@v1
+        with:
+          zip -q -r ${{ github.sha}}.zip ./cfgov/static_built
+
+      - name: Store build results
+        uses: keithweaver/aws-s3-github-action@v1.0.0
+        with:
+          command: cp
+          source: ${{ github.sha }}.zip
+          destination: s3://cf.gov-build/frontend/${{ github.sha }}.zip
+          aws_access_key_id: ${{ secrets.BUILD_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.BUILD_SECRET_ACCESS_KEY }}
+          aws_region: us-east-1
 
   coverage:
     runs-on: ubuntu-latest
