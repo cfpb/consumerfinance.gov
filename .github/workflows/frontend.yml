@@ -35,7 +35,7 @@ jobs:
       - name: Zip static files
         uses: montudor/action-zip@v1
         with:
-          zip -q -r ${{ github.sha}}.zip ./cfgov/static_built
+          args: zip -q -r ${{ github.sha }}.zip ./cfgov/static_built
 
       - name: Store build results
         uses: keithweaver/aws-s3-github-action@v1.0.0
