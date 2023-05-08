@@ -35,11 +35,13 @@ jobs:
 
       - name: Zip static files
         uses: montudor/action-zip@v1
+        if: ${{ github.event_name == 'merge_group' }}
         with:
           args: zip -q -r ${{ github.sha }}.zip ./cfgov/static_built
 
       - name: Store build results
         uses: keithweaver/aws-s3-github-action@v1.0.0
+        if: ${{ github.event_name == 'merge_group' }}
         with:
           command: cp
           source: ${{ github.sha }}.zip
