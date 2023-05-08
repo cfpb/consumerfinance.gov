@@ -144,22 +144,24 @@
                                                    placeholder="Please enter a five-digit ZIP code">
                                         </div>
 
-                                        <div class="m-form-field-with-button_wrapper">
-                                            <button class="a-btn a-btn__full-on-xs" type="submit">Find a counselor</button>
-                                            <div class="m-form-field-with-button_info">
-                                                <p>
-                                                    This tool is powered by
-                                                    <a class="a-link a-link__icon"
-                                                       href="https://data.hud.gov/housing_counseling.html">
-                                                        <span class="a-link_text">HUD's</span>
-                                                        {{ svg_icon('external-link') }}</a>
-                                                    official list of housing counselors.
-                                                </p>
-                                                <p>
-                                                    If you notice errors in the housing counselor data,
-                                                    contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
-                                                </p>
-                                            </div>
+                                        <button class="a-btn a-btn__full-on-xs"
+                                                type="submit"
+                                                data-cy="btn-fahc-submit">
+                                            Find a counselor
+                                        </button>
+                                        <div class="m-form-field-with-button_info">
+                                            <p>
+                                                This tool is powered by
+                                                <a class="a-link a-link__icon"
+                                                    href="https://data.hud.gov/housing_counseling.html">
+                                                    <span class="a-link_text">HUD's</span>
+                                                    {{ svg_icon('external-link') }}</a>
+                                                official list of housing counselors.
+                                            </p>
+                                            <p>
+                                                If you notice errors in the housing counselor data,
+                                                contact <a href="mailto:housing.counseling@hud.gov">housing.counseling@hud.gov</a>.
+                                            </p>
                                         </div>
                                     </div>
                                 </form>
