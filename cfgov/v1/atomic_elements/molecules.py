@@ -35,11 +35,7 @@ class TextIntroduction(blocks.StructBlock):
         ),
         label="Pre-heading",
     )
-    heading = blocks.CharBlock(required=False)
-    intro = blocks.RichTextBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
-    links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
-    has_rule = blocks.BooleanBlock(
+    has_bottom_rule_line = blocks.BooleanBlock(
         required=False,
         label="Has bottom rule",
         help_text=(
@@ -47,6 +43,10 @@ class TextIntroduction(blocks.StructBlock):
             "text introduction."
         ),
     )
+    heading = blocks.CharBlock(required=False)
+    intro = blocks.RichTextBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+    links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
 
     def clean(self, value):
         cleaned = super().clean(value)
