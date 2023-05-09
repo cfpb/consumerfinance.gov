@@ -152,7 +152,7 @@ to assist developers with linting without thinking.
 ### Build the frontend
 
 !!! note
-Our frontend requires [Node.js 16](https://nodejs.org/en/)
+Our frontend requires [Node.js 18](https://nodejs.org/en/)
 with
 [Yarn](https://yarnpkg.com/).
 We prefer
@@ -164,16 +164,16 @@ nvm can be installed using:
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | sh
     ```
 
-    Node 16 must then be installed once nvm is installed:
+    Node 18 must then be installed once nvm is installed:
 
     ```sh
-    nvm install 16
+    nvm install 18
     ```
 
-    Node.js 16 can then be used in any sh using:
+    Node.js 18 can then be used in any sh using:
 
     ```sh
-    nvm use 16
+    nvm use 18
     ```
 
     Yarn must then be installed:
