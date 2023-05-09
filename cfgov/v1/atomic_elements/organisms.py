@@ -21,6 +21,7 @@ from v1.atomic_elements import atoms, molecules
 # Bring tables into this module to maintain import structure across the project.
 from v1.atomic_elements.tables import (  # noqa: F401
     AtomicTableBlock,
+    CaseDocketTable,
     ConsumerReportingCompanyTable,
     ContactUsTable,
 )
