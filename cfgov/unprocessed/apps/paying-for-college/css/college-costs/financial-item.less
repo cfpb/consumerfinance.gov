@@ -65,8 +65,8 @@
     }
   }
 
-  &.o-expandable_target {
-    &__collapsed {
+  &.o-expandable_header {
+    &[aria-expanded='false'] {
       .o-expandable_cue-close {
         display: none;
       }
@@ -76,7 +76,7 @@
       }
     }
 
-    &.o-expandable_target__expanded {
+    &[aria-expanded='true'] {
       .o-expandable_cue-open {
         display: none;
       }
