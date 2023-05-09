@@ -43,10 +43,10 @@
             <span class="financial-item_value" {{ value.data_attribute | safe if value.data_attribute else '' }} >
                {{ value.value }}
             </span>
-            <span class="o-expandable_cue-open" aria-label="{{ 'Edit' if value.is_editable else 'Show' }}">
+            <span class="o-expandable_cue-open" role="img" aria-label="{{ 'Edit' if value.is_editable else 'Show' }}">
                 {{ svg_icon('edit') if value.is_editable else svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue-close" aria-label="{{ 'Save' if value.is_editable else 'Hide' }}">
+            <span class="o-expandable_cue-close" role="img" aria-label="{{ 'Save' if value.is_editable else 'Hide' }}">
                 {{ svg_icon('approved-round') if value.is_editable else svg_icon('minus-round') }}
             </span>
         </span>
