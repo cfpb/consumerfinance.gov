@@ -39,7 +39,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
           data-js-hook="state_atomic_init"
         >
           <button
-            class="o-expandable_header o-expandable_target o-expandable_target__collapsed"
+            class="o-expandable_header o-expandable_target__collapsed"
             type="button"
           >
             <span class="h4 o-expandable_label">

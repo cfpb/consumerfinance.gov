@@ -128,7 +128,7 @@ export default function (label) {
     trackFormExplainerPageButtonClick
   );
   addEventListenerToSelector(
-    '.o-expandable_target',
+    '.o-expandable_header',
     'mouseup',
     trackExpandableTargetsClick
   );
