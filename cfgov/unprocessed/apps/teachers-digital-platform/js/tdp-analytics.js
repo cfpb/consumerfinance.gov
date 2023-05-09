@@ -449,9 +449,9 @@ const handleSurveySubmitClick = (event) => {
  * @returns {object} Event data.
  */
 const handleSurveyResultsExpandableClick = (event) => {
-  const selector = '.tdp-survey-results .o-expandable_target';
+  const selector = '.tdp-survey-results .o-expandable_header';
   const expandable = event.target.closest(selector);
-  if (!expandable || !expandable.classList.contains('o-expandable_target')) {
+  if (!expandable || !expandable.classList.contains('o-expandable_header')) {
     return;
   }
   const state =

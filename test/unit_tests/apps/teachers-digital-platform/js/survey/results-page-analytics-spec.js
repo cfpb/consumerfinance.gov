@@ -32,7 +32,7 @@ describe('Custom analytics for the TDP survey results page', () => {
 
   it('should send analytics event when an expandable is clicked', () => {
     const target = document.querySelector(
-      '.tdp-survey-results .o-expandable_target'
+      '.tdp-survey-results .o-expandable_header'
     );
     const spy = jest.fn();
 

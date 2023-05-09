@@ -20,7 +20,7 @@ const dataLayerEvent = {
 const HTML_SNIPPET = `
 <div class="content">
   <div class="o-expandable">
-    <button class="o-expandable_header o-expandable_target">
+    <button class="o-expandable_header">
       <span class="o-expandable_label">
       </span>
       <span class="o-expandable_link">

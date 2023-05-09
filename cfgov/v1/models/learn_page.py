@@ -175,9 +175,11 @@ class DocumentDetailPage(AbstractFilterPage):
                 organisms.AtomicTableBlock(table_options={"renderer": "html"}),
             ),
             ("crc_table", organisms.ConsumerReportingCompanyTable()),
+            ("case_docket_table", organisms.CaseDocketTable()),
         ],
         blank=True,
         use_json_field=True,
+        block_counts={"case_docket_table": {"max_num": 1}},
     )
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=FieldPanel("content")

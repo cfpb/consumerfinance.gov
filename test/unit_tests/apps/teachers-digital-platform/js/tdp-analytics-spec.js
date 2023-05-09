@@ -26,7 +26,7 @@ const HTML_SNIPPET = `
       <input type="hidden" name="q" value="{% if search_query: %}{{ search_query }}{% endif %}">
       <input type="hidden" name="page" inputmode="numeric" value="1">
       <div class="o-expandable o-expandable__padded o-expandable__background" data-bound="true">
-        <button class="o-expandable_header o-expandable_target o-expandable_target__expanded" type="button">
+        <button class="o-expandable_header o-expandable_target__expanded" type="button">
           <span class="h4 o-expandable_label">
             Building block
           </span>
@@ -68,7 +68,7 @@ const HTML_SNIPPET = `
       </div>
 
       <div class="o-expandable o-expandable__padded o-expandable__background" data-bound="true">
-        <button class="o-expandable_header o-expandable_target o-expandable_target__expanded" type="button">
+        <button class="o-expandable_header o-expandable_target__expanded" type="button">
           <span class="h4 o-expandable_label">Topic</span>
           <span class="o-expandable_link">
             <span class="o-expandable_cue-open" role="img" aria-label="Show">
