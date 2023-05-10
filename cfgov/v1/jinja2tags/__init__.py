@@ -67,7 +67,7 @@ def is_filter_selected(context, fieldname, value):
     return value in query_string_values
 
 
-def render_stream_child(context, stream_child):
+def render_stream_child(context, stream_child, unescape=True):
     # Use the django_jinja to get the template content based on its name
     try:
         template = context.environment.get_template(
@@ -88,9 +88,11 @@ def render_stream_child(context, stream_child):
 
     # Render the template with the context
     html_result = template.render(new_context)
-    unescaped = html.unescape(html_result)
-    # Return the rendered template as safe html
-    return Markup(unescaped)
+
+    if unescape:
+        html_result = html.unescape(html_result)
+
+    return Markup(html_result)
 
 
 def unique_id_in_context(context):
