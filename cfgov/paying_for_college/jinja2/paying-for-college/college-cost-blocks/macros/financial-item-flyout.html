@@ -27,12 +27,12 @@
    ========================================================================== #}
 
 {% macro flyout(value) %}
-<div class="o-costs-group" data-js-hook="behavior_flyout-menu">
+<div class="o-costs-group">
     <button class="o-costs-group_header
                    o-costs-group_header__collapsed
                    financial-item
                    financial-item__flyout
-                   {{ ('financial-item__' + value.status | safe ) if value.status else ''}}" data-js-hook="behavior_flyout-menu_trigger"
+                   {{ ('financial-item__' + value.status | safe ) if value.status else ''}}" 
             type="button">
       <span class="flex-container">
         <span class="h4 o-costs-group_label">
@@ -56,7 +56,7 @@
             </span>
         {% endif %}
     </button>
-    <div class="o-costs-group_content" data-js-hook="behavior_flyout-menu_content">
+    <div class="o-costs-group_content">
         {% if caller is defined %}
             {{ caller() }}
         {% endif %}
