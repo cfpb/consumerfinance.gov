@@ -29,8 +29,7 @@
 {% macro flyout(value) %}
 <div class="o-costs-group" data-js-hook="behavior_flyout-menu">
     <button class="o-costs-group_header
-                   o-costs-group_target
-                   o-costs-group_target__collapsed
+                   o-costs-group_header__collapsed
                    financial-item
                    financial-item__flyout
                    {{ ('financial-item__' + value.status | safe ) if value.status else ''}}" data-js-hook="behavior_flyout-menu_trigger"
@@ -43,10 +42,10 @@
             <span class="financial-item_value" {{ value.data_attribute | safe if value.data_attribute else '' }} >
                {{ value.value }}
             </span>
-            <span class="o-expandable_cue-open" role="img" aria-label="{{ 'Edit' if value.is_editable else 'Show' }}">
+            <span class="o-costs-group_cue-open" role="img" aria-label="{{ 'Edit' if value.is_editable else 'Show' }}">
                 {{ svg_icon('edit') if value.is_editable else svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue-close" role="img" aria-label="{{ 'Save' if value.is_editable else 'Hide' }}">
+            <span class="o-costs-group_cue-close" role="img" aria-label="{{ 'Save' if value.is_editable else 'Hide' }}">
                 {{ svg_icon('approved-round') if value.is_editable else svg_icon('minus-round') }}
             </span>
         </span>
