@@ -245,7 +245,7 @@ const updateParagraphPositions = () => {
   const visibleParagraphs = [];
   // IE doesn't support `forEach` w/ node lists
   for (let i = 0; i < paragraphs.length; i++) {
-    const hiddenParagraphContainer = paragraphs[i].closest('.u-hidden');
+    const hiddenParagraphContainer = paragraphs[i].closest('[hidden]');
     if (!hiddenParagraphContainer) {
       visibleParagraphs.push(paragraphs[i]);
     }
