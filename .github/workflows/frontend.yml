@@ -1,8 +1,8 @@
 name: frontend
 
 on:
-  pull_request:
   merge_group:
+  pull_request:
     paths:
       - '**.js'
       - '**package.json'
