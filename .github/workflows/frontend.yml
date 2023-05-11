@@ -36,6 +36,17 @@ jobs:
       - name: Build Javascript
         run: yarn build
 
+      - name: Zip static files
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -q -r frontend.zip ./cfgov/static_built
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend
+          path: frontend.zip
+
   coverage:
     runs-on: ubuntu-latest
     needs:
