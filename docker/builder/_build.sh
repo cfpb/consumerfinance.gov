@@ -24,9 +24,9 @@ if [ ! -d "$cfgov_refresh_volume" ]; then
     exit 1
 fi
 
-# Run the frontend build.
+# Unzip pre-built static assets
 pushd "$cfgov_refresh_volume"
-./frontend.sh production
+unzip -o "$(git rev-parse HEAD).zip"
 popd
 
 # Prepare arguments for the deployable zipfile build.

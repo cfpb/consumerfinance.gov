@@ -24,7 +24,7 @@ RUN mkdir -p ${HOME} && chmod 777 ${HOME}
 # Python 3 to be enabled at login.
 RUN yum -y update && \
     yum install -y centos-release-scl && \
-    yum install -y rh-python38 gcc git && \
+    yum install -y rh-python38 gcc git unzip && \
     echo "source scl_source enable rh-python38" > /etc/profile.d/scl_python.sh && \
     source /etc/profile && \
     pip install --no-cache-dir -U pip setuptools wheel && \
