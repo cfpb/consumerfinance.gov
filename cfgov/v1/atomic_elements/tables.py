@@ -118,9 +118,12 @@ class CaseDocketEvent(blocks.StructBlock):
         CaseDocketEventAttachment, collapsed=True, default=[]
     )
 
+    class Meta:
+        label_format = "{index} - {description}"
+
 
 class CaseDocketTable(blocks.StructBlock):
-    events = blocks.ListBlock(CaseDocketEvent, min_num=1)
+    events = blocks.ListBlock(CaseDocketEvent, collapsed=True, min_num=1)
 
     class Meta:
         icon = "table"
