@@ -55,7 +55,6 @@ Prefixed with `m-` in class names.
   class="m-notification
          m-notification__visible
          m-notification__error"
-  data-js-hook="state_atomic_init"
 >
   {{ svg_icon('error') }}
   <div class="m-notification_content" role="alert">
