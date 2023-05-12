@@ -1,10 +1,8 @@
 export class FilingInstructionGuide {
-  url() {
-    return Cypress.env('FIG_URL');
-  }
-
   open() {
-    cy.visit(this.url());
+    cy.visit(
+      '/data-research/small-business-lending/filing-instructions-guide/2024-guide/'
+    );
   }
 
   toc() {
