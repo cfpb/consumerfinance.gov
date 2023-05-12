@@ -29,21 +29,20 @@ export default `<main class="content content__1-3 o-fig" id="main">
       class="content_sidebar content__flush-top-on-small content__flush-sides-on-small content__half-top-on-desk"
     >
       <nav
-        class="o-fig_sidebar o-secondary-navigation"
+        class="o-fig_sidebar o-secondary-nav"
         aria-label="Table of contents"
       >
         <h3 class="u-hide-on-mobile">Table of contents</h3>
 
-        <div class="o-expandable o-expandable__padded o-expandable__background">
-          <button
-            class="o-expandable_header o-expandable_target__collapsed"
+        <button
+            class="o-secondary-nav_header"
             type="button"
           >
-            <span class="h4 o-expandable_label">
+            <span class="o-secondary-nav_label">
               Table of contents
             </span>
-            <span class="o-expandable_link">
-              <span class="o-expandable_cue-open" role="img" aria-label="Show">
+            <span class="o-secondary-nav_cues">
+              <span class="o-secondary-nav_cue-open" role="img" aria-label="Show">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 17 20.4"
@@ -54,7 +53,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
                   ></path>
                 </svg>
               </span>
-              <span class="o-expandable_cue-close" role="img" aria-label="Hide">
+              <span class="o-secondary-nav_cue-close" role="img" aria-label="Hide">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 17 20.4"
@@ -68,219 +67,216 @@ export default `<main class="content content__1-3 o-fig" id="main">
             </span>
           </button>
 
-          <div
-            class="o-expandable_content o-expandable_content__transition u-is-animating o-expandable_content__collapsed u-hidden"
-            style="max-height: 0px"
-          >
+          <div class="o-secondary-nav_content">
             <ul
-              class="m-list m-list__unstyled o-secondary-navigation_list o-secondary-navigation_list__parents"
+              class="o-secondary-nav_list o-secondary-nav_list__parents"
             >
-              <li class="m-list_item">
-                <a class="m-nav-link m-nav-link__parent" href="#1">
+              <li>
+                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#1">
                   1. What is the FIG?
                 </a>
               </li>
-              <li class="m-list_item">
-                <a class="m-nav-link m-nav-link__parent" href="#2">
+              <li>
+                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#2">
                   2. Filing Process Overview
                 </a>
 
                 <ul
-                  class="m-list m-list__unstyled o-secondary-navigation_list o-secondary-navigation_list__children u-hide-on-desktop"
+                  class="o-secondary-nav_list o-secondary-nav_list__children u-hide-on-desktop"
                 >
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#2.1">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#2.1">
                       2.1. About the 1071 platform
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#2.2">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#2.2">
                       2.2. Financial institution identifying information
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#2.3"> 2.3. Certification </a>
+                  <li>
+                    <a class="o-secondary-nav_link" href="#2.3"> 2.3. Certification </a>
                   </li>
                 </ul>
               </li>
-              <li class="m-list_item">
-                <a class="m-nav-link m-nav-link__parent" href="#3">
+              <li>
+                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#3">
                   3. Creating a 1071 submission file
                 </a>
 
                 <ul
-                  class="m-list m-list__unstyled o-secondary-navigation_list o-secondary-navigation_list__children u-hide-on-desktop"
+                  class="o-secondary-nav_list o-secondary-nav_list__children u-hide-on-desktop"
                 >
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#3.1">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#3.1">
                       3.1. Online data submission
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#3.2"> 3.2. File format </a>
+                  <li>
+                    <a class="o-secondary-nav_link" href="#3.2"> 3.2. File format </a>
                   </li>
                 </ul>
               </li>
-              <li class="m-list_item">
-                <a class="m-nav-link m-nav-link__parent" href="#4">
+              <li>
+                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#4">
                   4. Data points
                 </a>
 
                 <ul
-                  class="m-list m-list__unstyled o-secondary-navigation_list o-secondary-navigation_list__children"
+                  class="o-secondary-nav_list o-secondary-nav_list__children"
                 >
-                  <li class="m-list_item">
-                    <a class="m-nav-link m-nav-link__current" href="#4.1">
+                  <li>
+                    <a class="o-secondary-nav_link o-secondary-nav_link__current" href="#4.1">
                       4.1. Unique Loan Identifier
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.2">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.2">
                       4.2. Application Date
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.3">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.3">
                       4.3. Application Method
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.4">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.4">
                       4.4. Application Recipient
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.5"> 4.5. Credit Type </a>
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.5"> 4.5. Credit Type </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.6"> 4.6. Credit Purpose </a>
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.6"> 4.6. Credit Purpose </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.7">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.7">
                       4.7. Amount Applied For
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.8">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.8">
                       4.8. Amount Approved or Originated
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.9"> 4.9. Action Taken </a>
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.9"> 4.9. Action Taken </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.10">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.10">
                       4.10. Action Taken Date
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.11">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.11">
                       4.11. Denial Reasons
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.12">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.12">
                       4.12. Pricing information
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.13"> 4.13. Census Tract </a>
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.13"> 4.13. Census Tract </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.14">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.14">
                       4.14. Gross Annual Revenue
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.15">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.15">
                       4.15. North American Industry Classification System
                       (NAICS) Code
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.16">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.16">
                       4.16. Number of Workers
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.17">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.17">
                       4.17. Time in Business
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.18">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.18">
                       4.18. Minority-Owned Business Status
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.19">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.19">
                       4.19. Women-Owned Business Status
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.20">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.20">
                       4.20. Number of Principal Owners
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.21">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.21">
                       4.21. Visual Observation and/or Surname
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.22">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.22">
                       4.22. Previously Collected Data
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.23">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.23">
                       4.23. Ethnicity of Principal Owner(s)
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.24">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.24">
                       4.24. Race of Principal Owner(s)
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.25">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.25">
                       4.25. Sex of Principal Owner(s)
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#4.26">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#4.26">
                       4.26. Principal Owner 2
                     </a>
                   </li>
                 </ul>
               </li>
-              <li class="m-list_item">
-                <a class="m-nav-link m-nav-link__parent" href="#5">
+              <li>
+                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#5">
                   5. Data validation
                 </a>
 
                 <ul
-                  class="m-list m-list__unstyled o-secondary-navigation_list o-secondary-navigation_list__children u-hide-on-desktop"
+                  class="o-secondary-nav_list o-secondary-nav_list__children u-hide-on-desktop"
                 >
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#5.1">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#5.1">
                       5.1. Validations overview
                     </a>
                   </li>
-                  <li class="m-list_item">
-                    <a class="m-nav-link" href="#5.2">
+                  <li>
+                    <a class="o-secondary-nav_link" href="#5.2">
                       5.2. List of validations
                     </a>
                   </li>
                 </ul>
               </li>
-              <li class="m-list_item">
-                <a class="m-nav-link m-nav-link__parent" href="#6">
+              <li>
+                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#6">
                   6. Where to get help
                 </a>
               </li>
-              <li class="m-list_item">
-                <a class="m-nav-link m-nav-link__parent" href="#7">
+              <li>
+                <a class="o-secondary-nav_link o-secondary-nav_link__parent" href="#7">
                   7. Paperwork Reduction Act
                 </a>
               </li>
@@ -460,7 +456,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
               <div class="m-info-unit">
                 <div class="m-info-unit_content">
                   <ul class="m-list m-list__links u-mt15">
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.1.1"
                         >Unique Loan Identifier</a
                       >
@@ -534,7 +530,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
               <div class="m-info-unit">
                 <div class="m-info-unit_content">
                   <ul class="m-list m-list__links u-mt15">
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.2.1">Application Date</a>
                     </li>
                   </ul>
@@ -586,7 +582,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
               <div class="m-info-unit">
                 <div class="m-info-unit_content">
                   <ul class="m-list m-list__links u-mt15">
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.3.1"
                         >Application Method</a
                       >
@@ -690,7 +686,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
               <div class="m-info-unit">
                 <div class="m-info-unit_content">
                   <ul class="m-list m-list__links u-mt15">
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.4.1"
                         >Application Recipient</a
                       >
@@ -785,28 +781,28 @@ export default `<main class="content content__1-3 o-fig" id="main">
                 </a>
                 <div class="m-info-unit_content">
                   <ul class="m-list m-list__links u-mt15">
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.5.1">Credit Product</a>
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.5.2"
                         >Free Form Text Field for Other Credit Products</a
                       >
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.5.3">Type of Guarantee</a>
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.5.4"
                         >Free Form Text Field for Other Guarantee</a
                       >
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.5.5"
                         >Loan Term: N/A Flag</a
                       >
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.5.6">Loan Term</a>
                     </li>
                   </ul>
@@ -1292,10 +1288,10 @@ export default `<main class="content content__1-3 o-fig" id="main">
                 </a>
                 <div class="m-info-unit_content">
                   <ul class="m-list m-list__links u-mt15">
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.6.1">Credit Purpose</a>
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.6.2"
                         >Free Form Text Field for Other Credit Purpose</a
                       >
@@ -1940,10 +1936,10 @@ export default `<main class="content content__1-3 o-fig" id="main">
                 </div>
                 <div class="m-info-unit_content">
                   <ul class="m-list m-list__links u-mt15">
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.11.1">Denial Reason(s)</a>
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="#4.11.2"
                         >Other Free Form Text Field for Denial Reason(s)</a
                       >
@@ -2203,12 +2199,12 @@ export default `<main class="content content__1-3 o-fig" id="main">
                 </div>
                 <div class="m-info-unit_content">
                   <ul class="m-list m-list__links u-mt15">
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/"
                         >Interest rate: N/A flag</a
                       >
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/">Interest rate</a>
                     </li>
                   </ul>
@@ -2223,10 +2219,10 @@ export default `<main class="content content__1-3 o-fig" id="main">
                 </div>
                 <div class="m-info-unit_content">
                   <ul class="m-list m-list__links u-mt15">
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/">N/A flag</a>
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/"
                         >Total origination charges</a
                       >
@@ -2245,22 +2241,22 @@ export default `<main class="content content__1-3 o-fig" id="main">
                 </div>
                 <div class="m-info-unit_content">
                   <ul class="m-list m-list__links u-mt15">
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/">Margin: N/A flag</a>
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/">Margin</a>
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/">Index name</a>
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/">Index name: Other</a>
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/">Index value: N/A flag</a>
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/">Index value</a>
                     </li>
                   </ul>
@@ -2275,10 +2271,10 @@ export default `<main class="content content__1-3 o-fig" id="main">
                 </div>
                 <div class="m-info-unit_content">
                   <ul class="m-list m-list__links u-mt15">
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/">Broker fees</a>
                     </li>
-                    <li class="m-list_item">
+                    <li>
                       <a class="m-list_link" href="/"
                         >Non-interest charges to be imposed over the first
                         annual period</a

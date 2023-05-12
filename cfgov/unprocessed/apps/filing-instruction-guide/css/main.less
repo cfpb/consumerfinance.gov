@@ -107,14 +107,15 @@
   }
 }
 
+// TODO: convert FIG secondary nav override abuse to modifiers on secondary nav.
 .o-fig_sidebar {
-  .o-expandable_label {
+  .o-secondary-nav_label {
     width: 95%;
   }
 
   // When the sidebar collapses into an expandable,
   // make the expandable's content scrollable
-  .o-expandable_content[data-open='true'] {
+  .o-secondary-nav_content[data-open='true'] {
     overflow-y: auto;
     height: 100vh;
     &:after {
@@ -126,17 +127,17 @@
   }
 
   .respond-to-max( @bp-sm-max, {
-    .m-nav-link {
+    .o-secondary-nav_link {
       padding: unit( 10px / @base-font-size-px, em );
     }
   } );
 
-  .m-nav-link {
+  .o-secondary-nav_link {
     padding-left: unit(40px / @base-font-size-px, em);
     text-indent: unit(-30px / @base-font-size-px, em);
   }
 
-  .o-secondary-navigation_list__parents > li > a {
+  .o-secondary-nav_list__parents > .o-secondary-nav_link {
     padding-left: unit(30px / @base-font-size-px, em);
     text-indent: unit(-18px / @base-font-size-px, em);
   }

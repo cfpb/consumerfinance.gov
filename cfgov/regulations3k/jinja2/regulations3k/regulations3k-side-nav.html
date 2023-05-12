@@ -1,8 +1,8 @@
 {% extends 'v1/layouts/layout-side-nav.html' %}
 
 {% block content_sidebar %}
-    {% import 'regulations3k/regulations3k-secondary-navigation.html' as secondary_navigation with context %}
-    {{ secondary_navigation.render() }}
+    {% import 'regulations3k/regulations3k-secondary-nav.html' as secondary_nav with context %}
+    {{ secondary_nav.render() }}
 {% endblock %}
 
 {# Extra classes needed for .content_sidebar #}

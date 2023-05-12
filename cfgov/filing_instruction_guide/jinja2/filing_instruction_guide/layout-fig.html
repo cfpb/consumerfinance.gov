@@ -37,8 +37,8 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    {% import 'v1/includes/organisms/secondary-navigation-fig.html' as secondary_navigation with context %}
-    {{ secondary_navigation.render(version_status, effective_start_date, effective_end_date) }}
+    {% import 'v1/includes/organisms/secondary-nav-fig.html' as secondary_nav with context %}
+    {{ secondary_nav.render(version_status, effective_start_date, effective_end_date) }}
 {% endblock %}
 
 {# Extra classes needed for .content_sidebar #}
