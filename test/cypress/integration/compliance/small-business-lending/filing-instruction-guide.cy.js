@@ -49,10 +49,18 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
 
             it('should highlight the current section', () => {
               fig.goToSection(2);
-              fig.getNavItem(2).should('have.class', 'm-nav-link__current');
-              fig.getNavItem(1).should('not.have.class', 'm-nav-link__current');
-              fig.getNavItem(3).should('not.have.class', 'm-nav-link__current');
-              fig.getNavItem(4).should('not.have.class', 'm-nav-link__current');
+              fig
+                .getNavItem(2)
+                .should('have.class', 'o-secondary-nav_link__current');
+              fig
+                .getNavItem(1)
+                .should('not.have.class', 'o-secondary-nav_link__current');
+              fig
+                .getNavItem(3)
+                .should('not.have.class', 'o-secondary-nav_link__current');
+              fig
+                .getNavItem(4)
+                .should('not.have.class', 'o-secondary-nav_link__current');
             });
 
             it('should auto-expand subsections', () => {
@@ -83,31 +91,39 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
 
             it('should highlight correction section when clicking heading', () => {
               fig.clickSectionHeading(1);
-              fig.getNavItem(1).should('have.class', 'm-nav-link__current');
+              fig
+                .getNavItem(1)
+                .should('have.class', 'o-secondary-nav_link__current');
               fig.getNavItem('credit-type').should('not.be.visible');
 
               fig.clickSectionHeading(3);
-              fig.getNavItem(3).should('have.class', 'm-nav-link__current');
+              fig
+                .getNavItem(3)
+                .should('have.class', 'o-secondary-nav_link__current');
               fig.getNavItem('credit-type').should('be.visible');
 
               fig.clickSectionHeading('application-method');
               fig
                 .getNavItem('application-method')
-                .should('have.class', 'm-nav-link__current');
+                .should('have.class', 'o-secondary-nav_link__current');
               fig.getNavItem('credit-type').should('be.visible');
 
               fig.clickSectionHeading(5);
-              fig.getNavItem(5).should('have.class', 'm-nav-link__current');
+              fig
+                .getNavItem(5)
+                .should('have.class', 'o-secondary-nav_link__current');
               fig.getNavItem('credit-type').should('not.be.visible');
 
               fig.clickSectionHeading(3);
-              fig.getNavItem(3).should('have.class', 'm-nav-link__current');
+              fig
+                .getNavItem(3)
+                .should('have.class', 'o-secondary-nav_link__current');
               fig.getNavItem('credit-type').should('be.visible');
 
               fig.clickSectionHeading('action-taken');
               fig
                 .getNavItem('action-taken')
-                .should('have.class', 'm-nav-link__current');
+                .should('have.class', 'o-secondary-nav_link__current');
               fig.getNavItem('credit-type').should('be.visible');
             });
 

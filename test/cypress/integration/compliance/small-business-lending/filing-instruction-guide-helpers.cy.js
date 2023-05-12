@@ -56,7 +56,7 @@ export class FilingInstructionGuide {
   }
 
   getNavItem(section) {
-    return cy.get(`a.m-nav-link[href="#${section}"]`);
+    return cy.get(`a.o-secondary-nav_link[href="#${section}"]`);
   }
 
   clickNavItem(section) {

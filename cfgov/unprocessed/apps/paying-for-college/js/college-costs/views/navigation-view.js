@@ -51,7 +51,9 @@ const navigationView = {
       '[data-nav_item="' + activeName + '"]'
     );
     const activeElem = navItem.closest('li');
-    const activeParent = activeElem.closest('.m-list_item__parent');
+    const activeParent = activeElem.closest(
+      '.o-secondary-nav_list-item__parent'
+    );
 
     this._navListItems.forEach((elem) => {
       elem.setAttribute('data-nav-is-active', 'False');
@@ -63,9 +65,11 @@ const navigationView = {
     activeParent.setAttribute('data-nav-is-open', 'True');
     activeParent.setAttribute('data-nav-is-active', 'True');
     activeElem.setAttribute('aria-selected', true);
-    activeParent.querySelectorAll('.m-list_item').forEach((elem) => {
-      elem.setAttribute('data-nav-is-active', 'True');
-    });
+    activeParent
+      .querySelectorAll('.o-secondary-nav_list__children li')
+      .forEach((elem) => {
+        elem.setAttribute('data-nav-is-active', 'True');
+      });
 
     navItem.classList.add('active-section');
   },
@@ -122,9 +126,9 @@ const navigationView = {
    * @param { string } iped - String representing the chosen school.
    */
   init: function (body, iped) {
-    this._navMenu = body.querySelector('.o-secondary-navigation');
-    this._navButtons = body.querySelectorAll('.o-secondary-navigation a');
-    this._navListItems = body.querySelectorAll('.o-secondary-navigation li');
+    this._navMenu = body.querySelector('.o-secondary-nav');
+    this._navButtons = body.querySelectorAll('.o-secondary-nav a');
+    this._navListItems = body.querySelectorAll('.o-secondary-nav li');
     this._navItems = body.querySelectorAll('[data-nav_item]');
     this._nextButton = body.querySelector(
       '.college-costs_tool-section_buttons .btn__next-step'

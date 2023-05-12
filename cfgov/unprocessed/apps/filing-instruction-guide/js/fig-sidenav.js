@@ -3,7 +3,7 @@
 
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints.js';
 
-import { Expandable } from '@cfpb/cfpb-expandables';
+import { SecondaryNav } from '../../../js/organisms/SecondaryNav.js';
 import { addEventListenerToSelector } from '../../../apps/analytics-gtm/js/util/analytics-util';
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 import {
@@ -17,6 +17,8 @@ import {
   handleIntersect,
   scrollIntoViewWithOffset,
 } from './fig-sidenav-utils.js';
+
+let secondaryNav;
 
 /**
  * Default scroll into view with an 60 pixel offset.
@@ -36,8 +38,8 @@ const defaultScrollOffset = (target) => {
  */
 const handleMobileNav = (event) => {
   event.preventDefault();
-  if (event.target.matches('.m-nav-link')) {
-    document.querySelector('.o-fig_sidebar .o-expandable_header').click();
+  if (event.target.matches('.o-secondary-nav_link')) {
+    secondaryNav.collapse();
     // Scrolling before the expandable closes causes jitters on some devices.
     setTimeout(() => {
       defaultScrollOffset(event.target);
@@ -66,13 +68,13 @@ const init = () => {
       }
     });
 
-  Expandable.init();
+  secondaryNav = SecondaryNav.init()[0];
 
   /* Only proceed if IntersectionObserver is supported (everything except IE)
      See https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API */
   if ('IntersectionObserver' in window) {
     appRoot
-      .querySelectorAll('.o-secondary-navigation_list__children')
+      .querySelectorAll('.o-secondary-nav_list__children')
       .forEach((ul) => {
         hideElement(ul);
       });
@@ -96,13 +98,17 @@ const init = () => {
   }
 
   // Track clicks on the FIG sidebar nav links
-  addEventListenerToSelector('.o-fig_sidebar .m-nav-link', 'click', (event) => {
-    analyticsSendEvent({
-      event: 'Small Business Lending FIG event',
-      action: 'toc:click',
-      label: event.target?.innerText,
-    });
-  });
+  addEventListenerToSelector(
+    '.o-fig_sidebar .o-secondary-nav_link',
+    'click',
+    (event) => {
+      analyticsSendEvent({
+        event: 'Small Business Lending FIG event',
+        action: 'toc:click',
+        label: event.target?.innerText,
+      });
+    }
+  );
 };
 
 export { init };

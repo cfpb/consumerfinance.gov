@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-  secondary_navigation_fig.render()
+  secondary_nav_fig.render()
 
   ==========================================================================
 
@@ -17,7 +17,7 @@
   ========================================================================== #}
 
 {% macro render(version_status=none, effective_start_date=none, effective_end_date=none) %}
-<nav class="o-fig_sidebar o-secondary-navigation"
+<nav class="o-fig_sidebar o-secondary-nav"
     aria-label="{{ _('Table of contents') }}">
     {% set sec_nav_settings_label = _("Table of contents") %}
     {% set version_label = " (" + _(version_status) + ")" if version_status else '' %}
@@ -40,30 +40,41 @@
         {% endif %}
         <h3>Table of contents</h3>
     </div>
-    {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
-    {% call() expandable(sec_nav_settings) %}
-        {% import 'v1/includes/molecules/nav-link.html' as nav_link %}
+
+    <nav class="o-secondary-nav" aria-label="Section navigation">
+        <button class="o-secondary-nav_header" type="button" aria-expanded="false">
+            <span class="o-secondary-nav_label">
+                In this section
+            </span>
+            <span class="o-secondary-nav_cues">
+                <span class="o-secondary-nav_cue-open" aria-label="Show">
+                    {{ svg_icon('plus-round') }}
+                </span>
+                <span class="o-secondary-nav_cue-close" aria-label="Hide">
+                    {{ svg_icon('minus-round') }}
+                </span>
+            </span>
+        </button>
+
+        <div class="o-secondary-nav_content">
+
         {% if version_status %}
             <p class="u-hide-on-desktop">
                 Effective {{ effective_start_date }} to {{ effective_end_date }}
             </p>
         {% endif %}
         <div id="ctrl-f"></div>
-        <ul class="m-list
-                 m-list__unstyled
-                 o-secondary-navigation_list
-                 o-secondary-navigation_list__parents">
+        <ul class="o-secondary-nav_list
+                   o-secondary-nav_list__parents">
             {%- for item in toc_headers %}
-            <li class="m-list_item">
-                {{ nav_link.render(item.id + ". " + item.header, item.anchor, true) }}
+            <li>
+                {{ _navlink(item.id + ". " + item.header, item.anchor, true) }}
                 {% if item.children %}
-                <ul class="m-list
-                           m-list__unstyled
-                           o-secondary-navigation_list
-                           o-secondary-navigation_list__children">
+                <ul class="o-secondary-nav_list
+                           o-secondary-nav_list__children">
                     {%- for child in item.children %}
                     <li class="m-list_item">
-                        {{ nav_link.render(child.id + ". " + child.header, child.anchor, false) }}
+                        {{ _navlink(child.id + ". " + child.header, child.anchor, false) }}
                     </li>
                 {%- endfor %}
                 </ul>
@@ -71,6 +82,15 @@
             </li>
             {%- endfor %}
         </ul>
-    {% endcall %}
+    </div>
 </nav>
+{% endmacro %}
+
+{% macro _navlink(text, href, parent=true, current=false) %}
+<a class="o-secondary-nav_link
+          {{ 'o-secondary-nav_link__parent' if parent else '' }}
+          {{ 'o-secondary-nav_link__current' if current else '' }}"
+   {{ 'href=' ~ href | e if not current else '' }}>
+    {{ text | e }}
+</a>
 {% endmacro %}
