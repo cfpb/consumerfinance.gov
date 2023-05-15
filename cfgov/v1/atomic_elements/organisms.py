@@ -752,14 +752,15 @@ class FilterableList(BaseExpandable):
         required=True,
         help_text='Whether to include a "Topics" filter in the filter controls',
     )
-    order_by = blocks.ChoiceBlock(
+    DEFAULT_ORDERING = "-start_date"
+    ordering = blocks.ChoiceBlock(
         choices=[
-            ("-date_published", "Date Published"),
-            ("_score", "Relevance"),
+            ("-start_date", "Date"),
+            ("title.raw", "Alphabetical"),
         ],
         required=True,
         help_text="How to order results",
-        default="-date_published",
+        default=DEFAULT_ORDERING,
     )
     statuses = blocks.BooleanBlock(
         default=False,
