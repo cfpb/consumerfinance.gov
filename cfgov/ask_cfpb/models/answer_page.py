@@ -187,11 +187,6 @@ class AnswerPage(CFGOVPage):
     )
     portal_category = ParentalManyToManyField(PortalCategory, blank=True)
 
-    share_and_print = models.BooleanField(
-        default=False,
-        help_text="Include share and print buttons above answer.",
-    )
-
     notification = StreamField(
         [
             (
