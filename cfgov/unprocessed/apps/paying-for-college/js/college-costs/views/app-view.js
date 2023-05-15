@@ -7,6 +7,7 @@ import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { getStateValue } from '../dispatchers/get-model-values.js';
+import { CostsGroup } from '../CostsGroup.js';
 
 const HIDDEN_CLASS = 'u-hidden';
 const appView = {
@@ -123,7 +124,7 @@ const appView = {
     appView._includeParentPlusBtn = document.querySelector(
       '#plan__parentPlusFeeRepay'
     );
-
+    
     _addButtonListeners();
   },
 };
@@ -178,5 +179,13 @@ function _handleActionPlanClick(event) {
   const target = event.target;
   updateState.byProperty('actionPlan', target.value);
 }
+
+/**
+ * Initialize Costs Groups organism
+ */
+const collegeCosts = document.querySelector( '.college-costs' );
+CostsGroup.init( collegeCosts );
+
+
 
 export { appView };
