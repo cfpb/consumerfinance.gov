@@ -1,8 +1,10 @@
 export class FilingInstructionGuide {
+  url() {
+    return '/data-research/small-business-lending/filing-instructions-guide/2024-guide/';
+  }
+
   open() {
-    cy.visit(
-      '/data-research/small-business-lending/filing-instructions-guide/2024-guide/'
-    );
+    cy.visit(this.url());
   }
 
   toc() {
