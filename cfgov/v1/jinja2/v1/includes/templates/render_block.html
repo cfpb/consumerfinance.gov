@@ -19,9 +19,6 @@
 
    <div class="{{ block_classes | unique | join(' ') }}"
       {{- accessible_languages.render() -}}>
-      {{ render_stream_child(
-         block,
-         unescape=block.block.meta.unescape | default( true )
-      ) }}
+      {{ render_stream_child( block ) }}
    </div>
 {% endmacro %}
