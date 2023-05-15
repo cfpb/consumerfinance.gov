@@ -6,7 +6,7 @@ from django.apps import apps
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
 from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
@@ -812,12 +812,6 @@ class AnswerPageTest(TestCase):
     def test_spanish_page_sibling_url(self):
         self.assertEqual(self.page1_es.get_sibling_url(), self.page1.url)
 
-    def test_no_sibling_url_returned_for_redirected_page(self):
-        self.page1_es.redirect_to_page = self.page2
-        self.page1_es.save()
-        self.page1_es.save_revision(user=self.test_user).publish()
-        self.assertEqual(self.page1.get_sibling_url(), None)
-
     def test_no_sibling_url_returned_for_draft_page(self):
         self.page1.unpublish()
         self.assertEqual(self.page1_es.get_sibling_url(), None)
@@ -880,20 +874,6 @@ class AnswerPageTest(TestCase):
             reverse("ask-english-answer", args=["mock-slug", "en", 1234])
         )
         self.assertEqual(response.status_code, 301)
-
-    def test_view_answer_redirected(self):
-        page = self.page1
-        page.redirect_to = self.page2.answer_base
-        page.save()
-        revision = page.save_revision()
-        revision.publish()
-        response_302 = self.client.get(
-            reverse(
-                "ask-english-answer", args=["mocking-answer-page", "en", 1234]
-            )
-        )
-        self.assertTrue(isinstance(response_302, HttpResponse))
-        self.assertEqual(response_302.status_code, 301)
 
     def test_spanish_answer_page_handles_referrer_with_unicode_accents(self):
         referrer_unicode = (
@@ -996,16 +976,6 @@ class AnswerPageTest(TestCase):
         with translation.override("en"):
             page1 = self.page1
             self.assertEqual(page1.status_string, "live + draft")
-
-    def test_status_string_redirected(self):
-        with translation.override("en"):
-            page1 = self.page1
-            page1.redirect_to_page = self.page2
-            page1.save()
-            page1.get_latest_revision().publish()
-            self.assertEqual(page1.status_string, "redirected")
-            page1.unpublish()
-            self.assertEqual(page1.status_string, "redirected but not live")
 
     def test_get_ask_breadcrumbs(self):
         from ask_cfpb.models import get_ask_breadcrumbs
