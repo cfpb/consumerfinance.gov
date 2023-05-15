@@ -396,10 +396,6 @@ class AnswerPage(CFGOVPage):
     def clean_search_tags(self):
         return [tag.strip() for tag in self.search_tags.split(",")]
 
-    @property
-    def status_string(self):
-        return super().status_string
-
     # Returns an image for the page's meta Open Graph tag
     @property
     def meta_image(self):
