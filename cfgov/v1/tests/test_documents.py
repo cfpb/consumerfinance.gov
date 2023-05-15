@@ -48,24 +48,21 @@ class FilterablePagesDocumentTest(TestCase):
         self.assertCountEqual(
             mapping.properties.properties.to_dict().keys(),
             [
+                "model_class",
+                "path",
+                "depth",
+                "title",
+                "start_date",
+                "end_date",
+                "language",
                 "tags",
                 "categories",
-                "language",
-                "title",
-                "url",
-                "date_published",
-                "start_dt",
-                "end_dt",
                 "statuses",
                 "products",
-                "initial_filing_date",
-                "model_class",
                 "content",
                 "preview_title",
                 "preview_subheading",
                 "preview_description",
-                "path",
-                "depth",
             ],
         )
 
@@ -360,7 +357,7 @@ class EnforcementActionFilterableSearchFilteringTests(
 
     def test_no_filters(self):
         search = EnforcementActionFilterablePagesDocumentSearch(
-            self.page_tree[0]
+            self.page_tree[0], ordering="-start_date"
         )
         search.filter()
         results = search.search()
@@ -441,19 +438,27 @@ class EventFilterableSearchFilteringTests(
 
     def test_filter_by_date(self):
         search = EventFilterablePagesDocumentSearch(self.page_tree[0])
-        search.filter(from_date=self.one_day_ago, to_date=self.one_day_ago)
+        search.filter(from_date=self.one_day_ago)
+        self.assertEqual(search.count(), 2)
+
+        search = EventFilterablePagesDocumentSearch(self.page_tree[0])
+        search.filter(from_date=self.now + relativedelta(days=1))
         self.assertEqual(search.count(), 0)
 
         search = EventFilterablePagesDocumentSearch(self.page_tree[0])
-        search.filter(from_date=self.one_day_ago, to_date=self.one_hour_ago)
-        self.assertEqual(search.count(), 1)
+        search.filter(to_date=self.now)
+        self.assertEqual(search.count(), 2)
+
+        search = EventFilterablePagesDocumentSearch(self.page_tree[0])
+        search.filter(to_date=self.one_day_ago - relativedelta(days=1))
+        self.assertEqual(search.count(), 0)
 
         search = EventFilterablePagesDocumentSearch(self.page_tree[0])
         search.filter(from_date=self.one_day_ago, to_date=self.now)
         self.assertEqual(search.count(), 2)
 
         search = EventFilterablePagesDocumentSearch(self.page_tree[0])
-        search.filter(from_date=self.one_hour_ago, to_date=self.now)
+        search.filter(from_date=self.one_day_ago, to_date=self.one_day_ago)
         self.assertEqual(search.count(), 1)
 
 
