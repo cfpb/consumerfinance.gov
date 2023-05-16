@@ -133,6 +133,7 @@ class DraftReportView(PageReportView):
         "tags.names",
         "categories.all",
         "content_owners.names",
+        "first_published_at",
     ]
     export_headings = dict(
         [
@@ -141,6 +142,7 @@ class DraftReportView(PageReportView):
             ("tags.names", "Tags"),
             ("categories.all", "Categories"),
             ("content_owners.names", "Content Owner(s)"),
+            ("first_published_at", "Published?"),
         ],
         **PageReportView.export_headings,
     )
