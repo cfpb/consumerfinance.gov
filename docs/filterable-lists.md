@@ -21,7 +21,7 @@ The journey on how a page gets a filterable form is not necessarily a straight o
 
 ### FilterableListMixin
 
-The more common mixin that pages will extend is the [FilterableListMixin](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/filterable_list_mixins.py#L15). This class defines several important methods, such as `get_form_class`, which defines the form to use. We also have some methods that retrieve relevant information for the form to use, such as `get_filterable_list_wagtail_block`, `get_filterable_root`, and `get_filterable_queryset`. The bulk of the work is done in the `get_context` method, which is responsible for getting and populating the form, processing the form, and returning the results to the user.
+The more common mixin that pages will extend is the [FilterableListMixin](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/filterable_list_mixins.py#L15). This class defines several important methods, such as `get_form_class`, which defines the form to use. We also have some methods that retrieve relevant information for the form to use, such as `get_filterable_root` and `get_filterable_queryset`. The bulk of the work is done in the `get_context` method, which is responsible for getting and populating the form, processing the form, and returning the results to the user.
 
 ### CategoryFilterableMixin
 

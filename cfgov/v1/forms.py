@@ -1,4 +1,3 @@
-from collections import Counter
 from datetime import date
 from operator import itemgetter
 
@@ -11,6 +10,7 @@ from django.forms import widgets
 from wagtail.images.forms import BaseImageForm
 
 from dateutil import parser
+from taggit.models import Tag
 
 from v1.models import enforcement_action_page
 from v1.util import ERROR_MESSAGES, ref
@@ -127,7 +127,6 @@ class FilterableListForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.filterable_search = kwargs.pop("filterable_search")
-        self.wagtail_block = kwargs.pop("wagtail_block")
         self.filterable_categories = kwargs.pop("filterable_categories")
 
         # This cache key is used for caching the topics, page_ids,
@@ -217,30 +216,24 @@ class FilterableListForm(forms.Form):
 
         return min_start_date.date()
 
-    def prepare_options(self, arr):
-        """
-        Returns an ordered list of tuples of the format
-        ('tag-slug-name', 'Tag Display Name')
-        """
-        arr = Counter(arr).most_common()  # Order by most to least common
-        # Grab only the first tuple in the generated tuple,
-        # which includes a count we do not need
-        return [x[0] for x in arr]
+    @staticmethod
+    def get_filterable_topics(page_ids):
+        """Given a set of page IDs, return the list of filterable topics"""
+        tags = Tag.objects.filter(
+            v1_cfgovtaggedpages_items__content_object__id__in=page_ids
+        ).values_list("slug", "name")
 
-    # Populate Topics' choices
+        return tags.distinct().order_by("name")
+
     def set_topics(self, page_ids):
-        if self.wagtail_block:
-            # Cache the topics for this filterable list form to avoid
-            # repeated database lookups of the same data.
-            sentinel = object()
-            topics = cache.get(f"{self.cache_key_prefix}-topics")
-            if topics is None or topics is sentinel:
-                topics = self.wagtail_block.block.get_filterable_topics(
-                    page_ids, self.wagtail_block.value
-                )
-                cache.set(f"{self.cache_key_prefix}-topics", topics)
+        # Cache the topics for this filterable list form to avoid
+        # repeated database lookups of the same data.
+        topics = cache.get(f"{self.cache_key_prefix}-topics")
+        if not topics:
+            topics = self.get_filterable_topics(page_ids)
+            cache.set(f"{self.cache_key_prefix}-topics", topics)
 
-            self.fields["topics"].choices = topics
+        self.fields["topics"].choices = topics
 
     # Populate language choices
     def set_languages(self):
