@@ -177,14 +177,13 @@ class CFGOVPage(Page):
         FieldPanel("sidefoot"),
     ]
 
-    settings_panels = [
+    settings_panels = Page.settings_panels + [
         MultiFieldPanel(promote_panels, heading="Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
         FieldPanel("tags", heading="Tags"),
         FieldPanel("authors", heading="Authors"),
         FieldPanel("content_owners", heading="Content Owners"),
         FieldPanel("schema_json", heading="Structured Data"),
-        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
         MultiFieldPanel(
             [
                 FieldPanel("language", heading="Language"),
