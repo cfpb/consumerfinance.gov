@@ -190,12 +190,6 @@ class FilterableListForm(forms.Form):
                 return ref.get_category_children(self.filterable_categories)
         return categories
 
-    def get_order_by(self):
-        if self.wagtail_block is not None:
-            return self.wagtail_block.value.get("order_by", "-date_published")
-        else:
-            return "-date_published"
-
     def get_page_set(self):
         categories = self.get_categories()
 
@@ -207,16 +201,14 @@ class FilterableListForm(forms.Form):
             from_date=self.cleaned_data.get("from_date"),
         )
 
-        results = self.filterable_search.search(
-            title=self.cleaned_data.get("title"), order_by=self.get_order_by()
-        )
+        results = self.filterable_search.search(self.cleaned_data.get("title"))
 
         return results
 
     def first_page_date(self):
         if len(self.all_filterable_results) > 0:
             first_post = self.all_filterable_results[0]
-            return first_post.date_published.date()
+            return first_post.start_date.date()
         return date(2010, 1, 1)
 
     def prepare_options(self, arr):
@@ -394,7 +386,7 @@ class EventArchiveFilterForm(FilterableListForm):
             from_date=self.cleaned_data.get("from_date"),
         )
         results = self.filterable_search.search(
-            title=self.cleaned_data.get("title"), order_by=self.get_order_by()
+            title=self.cleaned_data.get("title")
         )
         return results
 
