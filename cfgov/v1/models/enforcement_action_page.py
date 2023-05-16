@@ -284,6 +284,7 @@ class EnforcementActionPage(AbstractFilterPage):
     )
 
     template = "v1/enforcement-action/index.html"
+    start_date_field = "initial_filing_date"
 
     @property
     def status_strings(self):
