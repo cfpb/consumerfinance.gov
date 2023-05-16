@@ -246,7 +246,7 @@ class EnforcementActionPage(AbstractFilterPage):
         InlinePanel("enforcement_dispositions", label="Final Disposition"),
     ]
 
-    settings_panels = [
+    settings_panels = Page.settings_panels + [
         MultiFieldPanel(CFGOVPage.promote_panels, "Settings"),
         MultiFieldPanel(
             [
@@ -261,15 +261,7 @@ class EnforcementActionPage(AbstractFilterPage):
             classname="collapsible",
         ),
         FieldPanel("authors", heading="Authors"),
-        MultiFieldPanel(
-            [
-                FieldPanel("date_published"),
-                FieldPanel("comments_close_by"),
-            ],
-            "Relevant Dates",
-            classname="collapsible",
-        ),
-        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
+        FieldPanel("date_published"),
         MultiFieldPanel(
             [
                 FieldPanel("language", heading="Language"),
@@ -292,6 +284,7 @@ class EnforcementActionPage(AbstractFilterPage):
     )
 
     template = "v1/enforcement-action/index.html"
+    start_date_field = "initial_filing_date"
 
     @property
     def status_strings(self):

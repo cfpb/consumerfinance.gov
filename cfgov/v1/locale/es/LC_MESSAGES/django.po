@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 12:05-0500\n"
+"POT-Creation-Date: 2023-05-16 10:36-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,10 +42,14 @@ msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
 
 #: v1/jinja2/v1/includes/atoms/tagline.html:18
+msgid "Official website of the"
+msgstr "Un sitio web oficial del"
+
+#: v1/jinja2/v1/includes/atoms/tagline.html:21
 msgid "An official website of the"
 msgstr "Un sitio web oficial del"
 
-#: v1/jinja2/v1/includes/atoms/tagline.html:19
+#: v1/jinja2/v1/includes/atoms/tagline.html:22
 msgid "United States government"
 msgstr "gobierno federal de los Estados Unidos"
 

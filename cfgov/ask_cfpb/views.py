@@ -63,10 +63,6 @@ def view_answer(request, slug, language, answer_id):
         else:
             return ServeView.serve(answer_page, request, [], {})
     # page is live
-    # redirect if so configured
-    if answer_page.redirect_to_page:
-        new_page = answer_page.redirect_to_page
-        return redirect(new_page.url, permanent=True)
     # handle pages that have unpublished revisions
     if answer_page.status_string == "live + draft":
         if sharing_site:

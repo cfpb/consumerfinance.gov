@@ -58,11 +58,9 @@ class AbstractFilterPage(CFGOVPage):
         related_name="+",
     )
     date_published = models.DateField(default=date.today)
-    date_filed = models.DateField(null=True, blank=True)
-    comments_close_by = models.DateField(null=True, blank=True)
 
     # Configuration tab panels
-    settings_panels = [
+    settings_panels = Page.settings_panels + [
         MultiFieldPanel(CFGOVPage.promote_panels, "Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
         FieldPanel("tags", heading="Tags"),
@@ -81,16 +79,7 @@ class AbstractFilterPage(CFGOVPage):
         FieldPanel("schema_json", heading="Structured Data"),
         FieldPanel("authors", heading="Authors"),
         FieldPanel("content_owners", heading="Content Owners"),
-        MultiFieldPanel(
-            [
-                FieldPanel("date_published"),
-                FieldPanel("date_filed"),
-                FieldPanel("comments_close_by"),
-            ],
-            "Relevant Dates",
-            classname="collapsible",
-        ),
-        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
+        FieldPanel("date_published"),
         MultiFieldPanel(
             [
                 FieldPanel("language", heading="Language"),
@@ -102,6 +91,7 @@ class AbstractFilterPage(CFGOVPage):
 
     # This page class cannot be created.
     is_creatable = False
+    start_date_field = "date_published"
 
     @classmethod
     def generate_edit_handler(self, content_panel):
@@ -429,6 +419,8 @@ class EventPage(AbstractFilterPage):
     )
 
     template = "v1/events/event.html"
+    start_date_field = "start_dt"
+    end_date_field = "end_dt"
 
     @property
     def event_state(self):
