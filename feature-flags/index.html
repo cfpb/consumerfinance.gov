@@ -207,7 +207,7 @@
 <p>See <a href="#enabling-a-flag">Enabling a flag</a> below for more on flag conditions.</p>
 <p>An example is <a href="https://github.com/cfpb/consumerfinance.gov/blob/d4879552d353198de4f24dd385fe8a48c04448d7/cfgov/v1/jinja2/v1/includes/organisms/header.html#L25-L38">the <code>BETA_NOTICE flag</code> as implemented in <code>header.html</code></a>:</p>
 <pre class="highlight"><code class="language-jinja">{% if flag_enabled('BETA_NOTICE') %}
-&lt;div class="m-global-banner"&gt;
+&lt;div class="o-banner"&gt;
     &lt;div class="wrapper
                 wrapper__match-content"&gt;
         &lt;div class="m-notification
@@ -230,7 +230,7 @@
 
 {% flag_enabled 'BETA_NOTICE' as beta_flag %}
 {% if beta_flag %}
-&lt;div class="m-global-banner"&gt;
+&lt;div class="o-banner"&gt;
     &lt;div class="wrapper
                 wrapper__match-content"&gt;
         &lt;div class="m-notification
