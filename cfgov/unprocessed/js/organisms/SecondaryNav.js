@@ -28,7 +28,6 @@ function SecondaryNav(element) {
   const _dom = checkDom(element, BASE_CLASS);
   let _targetDom;
   let _contentDom;
-  let _labelDom;
 
   // Animation vars.
   let _transition;
@@ -46,7 +45,6 @@ function SecondaryNav(element) {
 
     _targetDom = _dom.querySelector(`.${BASE_CLASS}_header`);
     _contentDom = _dom.querySelector(`.${BASE_CLASS}_content`);
-    _labelDom = _dom.querySelector(`.${BASE_CLASS}_label`);
 
     // Add behavior hooks.
     addDataHook(_dom, 'behavior_flyout-menu');
