@@ -3,9 +3,6 @@ name: frontend
 on:
   merge_group:
   pull_request:
-    #    paths:
-    # - '**.js'
-    # - '**package.json'
 
 jobs:
 
