@@ -1,6 +1,5 @@
 from collections import Counter
 from datetime import date
-from dateutil import parser
 from operator import attrgetter, itemgetter
 
 from django import forms
@@ -10,6 +9,8 @@ from django.core.exceptions import ValidationError
 from django.forms import widgets
 
 from wagtail.images.forms import BaseImageForm
+
+from dateutil import parser
 
 from v1.models import enforcement_action_page
 from v1.util import ERROR_MESSAGES, ref
