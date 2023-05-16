@@ -5,7 +5,6 @@ from django.utils.html import strip_tags
 
 from django_opensearch_dsl import Document, fields
 from django_opensearch_dsl.registries import registry
-from opensearch_dsl import A
 from opensearch_dsl.query import MultiMatch
 
 from search.elasticsearch_helpers import environment_specific_index
