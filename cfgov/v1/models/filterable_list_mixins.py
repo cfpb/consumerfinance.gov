@@ -4,6 +4,7 @@ from wagtail.contrib.routable_page.models import route
 from wagtail.models import Site
 from wagtailsharing.models import ShareableRoutablePageMixin
 
+from v1.atomic_elements.organisms import FilterableList
 from v1.documents import FilterablePagesDocumentSearch
 from v1.feeds import FilterableFeed
 from v1.models.learn_page import AbstractFilterPage
@@ -39,19 +40,19 @@ class FilterableListMixin(ShareableRoutablePageMixin):
 
     def get_filterable_list_wagtail_block(self):
         """Find a FilterableList StreamField block in a content field."""
-        return next(
-            (b for b in self.content if b.block_type == "filter_controls"),
-            None,
-        )
+        return self.content.first_block_by_name("filter_controls")
 
     def get_filterable_search(self):
+        block = self.get_filterable_list_wagtail_block()
+        value = block.value if block else {}
+
         # By default, filterable pages only search their direct children.
         # But this can be overriden by a setting on a FilterableList block
         # added to the page's content StreamField.
-        if filter_block := self.get_filterable_list_wagtail_block():
-            children_only = filter_block.value.get("filter_children", True)
-        else:
-            children_only = True
+        children_only = value.get("filter_children", True)
+
+        # Default filterable list ordering can also be overridden.
+        ordering = value.get("ordering", FilterableList.DEFAULT_ORDERING)
 
         # If searching globally, use the root page of this page's Wagtail
         # Site. If the page doesn't live under a Site (for example, it is
@@ -67,7 +68,9 @@ class FilterableListMixin(ShareableRoutablePageMixin):
             search_root = self
 
         search_cls = self.get_search_class()
-        return search_cls(search_root, children_only)
+        return search_cls(
+            search_root, children_only=children_only, ordering=ordering
+        )
 
     def get_cache_key_prefix(self):
         return self.url

@@ -91,6 +91,7 @@ class AbstractFilterPage(CFGOVPage):
 
     # This page class cannot be created.
     is_creatable = False
+    start_date_field = "date_published"
 
     @classmethod
     def generate_edit_handler(self, content_panel):
@@ -418,6 +419,8 @@ class EventPage(AbstractFilterPage):
     )
 
     template = "v1/events/event.html"
+    start_date_field = "start_dt"
+    end_date_field = "end_dt"
 
     @property
     def event_state(self):
