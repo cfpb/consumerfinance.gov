@@ -1,6 +1,6 @@
 from collections import Counter
 from datetime import date
-from operator import itemgetter
+from operator import attrgetter, itemgetter
 
 from django import forms
 from django.conf import settings
@@ -206,10 +206,12 @@ class FilterableListForm(forms.Form):
         return results
 
     def first_page_date(self):
-        if len(self.all_filterable_results) > 0:
-            first_post = self.all_filterable_results[0]
-            return first_post.start_date.date()
-        return date(2010, 1, 1)
+        if not self.all_filterable_results:
+            return date(2010, 1, 1)
+
+        return min(
+            map(attrgetter("start_date"), self.all_filterable_results)
+        ).date()
 
     def prepare_options(self, arr):
         """
