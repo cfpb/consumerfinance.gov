@@ -1,6 +1,6 @@
 from collections import Counter
 from datetime import date
-from operator import attrgetter, itemgetter
+from operator import itemgetter
 
 from django import forms
 from django.conf import settings
@@ -211,18 +211,9 @@ class FilterableListForm(forms.Form):
         if not self.all_filterable_results:
             return date(2010, 1, 1)
 
-        # TODO: The fallback case is only needed because we have a cache for
-        # all_filterable_results that may not contain the aggregation at
-        # the time this code goes live. Once all caches have been cleared and
-        # re-set with this aggegration, the fallback can be removed.
-        if min_start_date := getattr(
-            self.all_filterable_results.aggregations, "min_start_date", None
-        ):  # pragma: nocover
-            min_start_date = parser.parse(min_start_date.value_as_string)
-        else:
-            min_start_date = min(
-                map(attrgetter("start_date"), self.all_filterable_results)
-            )
+        min_start_date = parser.parse(
+            self.all_filterable_results.aggregations.min_start_date.value_as_string
+        )
 
         return min_start_date.date()
 
