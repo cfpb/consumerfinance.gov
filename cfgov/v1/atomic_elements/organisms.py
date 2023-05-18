@@ -1,4 +1,3 @@
-from collections import Counter
 from urllib.parse import urlencode
 
 from django.apps import apps
@@ -12,7 +11,6 @@ from wagtail.images import blocks as images_blocks
 from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
-from taggit.models import Tag
 from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 from v1 import blocks as v1_blocks
@@ -737,19 +735,9 @@ class FilterableList(BaseExpandable):
             ),
         ]
     )
-    topic_filtering = blocks.ChoiceBlock(
-        choices=[
-            ("no_filter", "Don't filter topics"),
-            (
-                "sort_alphabetically",
-                "Filter topics, sort topic list alphabetically",
-            ),
-            (
-                "sort_by_frequency",
-                "Filter topics, sort topic list by number of results",
-            ),
-        ],
-        required=True,
+    topics = blocks.BooleanBlock(
+        required=False,
+        label="Filter by Topics",
         help_text='Whether to include a "Topics" filter in the filter controls',
     )
     DEFAULT_ORDERING = "-start_date"
@@ -810,27 +798,9 @@ class FilterableList(BaseExpandable):
     class Media:
         js = ["filterable-list.js"]
 
-    @staticmethod
-    def get_filterable_topics(filterable_page_ids, value):
-        """Given a set of page IDs, return the list of filterable topics"""
-        tags = Tag.objects.filter(
-            v1_cfgovtaggedpages_items__content_object__id__in=filterable_page_ids  # noqa: E501
-        ).values_list("slug", "name")
-
-        sort_order = value.get("topic_filtering", "sort_by_frequency")
-        if sort_order == "sort_alphabetically":
-            return tags.distinct().order_by("name")
-        elif sort_order == "sort_by_frequency":
-            return [tag for (tag, _) in Counter(tags).most_common()]
-        else:
-            return []
-
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        show_topics = (
-            value["topic_filtering"] == "sort_by_frequency"
-            or value["topic_filtering"] == "sort_alphabetically"
-        )
+
         # Different instances of FilterableList need to render their post
         # previews differently depending on the page type they live on. By
         # default post dates and tags are always shown.
@@ -838,7 +808,6 @@ class FilterableList(BaseExpandable):
             {
                 "show_post_dates": True,
                 "show_post_tags": True,
-                "show_topic_filter": show_topics,
             }
         )
 

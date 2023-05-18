@@ -38,12 +38,9 @@ class FilterableListMixin(ShareableRoutablePageMixin):
     def get_search_class():
         return FilterablePagesDocumentSearch
 
-    def get_filterable_list_wagtail_block(self):
-        """Find a FilterableList StreamField block in a content field."""
-        return self.content.first_block_by_name("filter_controls")
-
     def get_filterable_search(self):
-        block = self.get_filterable_list_wagtail_block()
+        # Look for a FilterableList block in the content field.
+        block = self.content.first_block_by_name("filter_controls")
         value = block.value if block else {}
 
         # By default, filterable pages only search their direct children.
@@ -83,7 +80,6 @@ class FilterableListMixin(ShareableRoutablePageMixin):
         has_unfiltered_results = filterable_search.count() > 0
         form = self.get_form_class()(
             form_data,
-            wagtail_block=self.get_filterable_list_wagtail_block(),
             filterable_categories=self.filterable_categories,
             filterable_search=filterable_search,
             cache_key_prefix=self.get_cache_key_prefix(),
