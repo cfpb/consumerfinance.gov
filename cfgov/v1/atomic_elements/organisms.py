@@ -796,15 +796,6 @@ class FilterableList(BaseExpandable):
         help_text='Whether to include a set of "Date range" filters '
         "in the filter controls.",
     )
-    output_5050 = blocks.BooleanBlock(
-        default=False, required=False, label="Render preview items as 50-50s"
-    )
-    link_image_and_heading = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text="Add links to post preview images and"
-        " headings in filterable list results",
-    )
     filter_children = blocks.BooleanBlock(
         default=True,
         required=False,
