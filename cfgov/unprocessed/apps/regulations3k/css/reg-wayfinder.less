@@ -42,8 +42,12 @@
 
   // Desktop
   .respond-to-min( @bp-med-min, {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
+    &_wrapper {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      max-width: 1170px;
+      margin: 0 auto;
+    }
 
     &_sidebar {
       display: inline-block;
