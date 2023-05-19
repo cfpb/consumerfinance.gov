@@ -8,7 +8,7 @@
 {%- endblock %}
 
 {% block content_main %}
-    {% for block in page.header %}
+    {% for block in page.header -%}
         {% if 'featured_content' in block.block_type %}
             <div class="block
                         {{ 'u-mt0' if loop.first }}">
