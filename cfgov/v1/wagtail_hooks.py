@@ -18,14 +18,20 @@ from wagtail.contrib.modeladmin.options import (
 )
 
 from ask_cfpb.models.snippets import GlossaryTerm
-from v1.admin_views import cdn_is_configured, manage_cdn
-from v1.models.banners import Banner
-from v1.models.portal_topics import PortalCategory, PortalTopic
-from v1.models.resources import Resource
-from v1.models.snippets import (
+from v1.admin_views import (
+    cdn_is_configured,
+    manage_cdn,
+    redirect_to_cfpb_guide,
+)
+from v1.models import (
+    Banner,
+    CFPBGuideSettings,
     Contact,
     EmailSignUp,
+    PortalCategory,
+    PortalTopic,
     RelatedResource,
+    Resource,
     ReusableText,
 )
 from v1.template_debug import (
@@ -613,3 +619,31 @@ register_template_debug(
     video_player_test_cases,
     extra_js=["video-player.js"],
 )
+
+
+@hooks.register("register_admin_urls")
+def register_cfpb_guide_url():
+    return [
+        re_path(
+            r"^cfpb-guide/$",
+            redirect_to_cfpb_guide,
+            name="cfpb_guide",
+        ),
+    ]
+
+
+class CFPBGuideMenuItem(MenuItem):
+    def is_shown(self, request):
+        return bool(CFPBGuideSettings.load(request_or_site=request).url)
+
+
+@hooks.register("register_help_menu_item")
+def register_wagtail_guide_menu_item():
+    return CFPBGuideMenuItem(
+        "CFPB Guide",
+        reverse("cfpb_guide"),
+        icon_name="help",
+        order=1200,
+        attrs={"target": "_blank", "rel": "noreferrer"},
+        name="cfpb_guide_menu",
+    )
