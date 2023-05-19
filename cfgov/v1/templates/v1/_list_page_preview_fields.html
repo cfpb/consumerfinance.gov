@@ -1,0 +1,31 @@
+{% extends 'wagtailadmin/reports/listing/_list_page_report.html' %}
+
+{% block extra_columns %}
+    <th>URL</th>
+    <th>SEO Title</th>
+    <th>Search Description</th>
+    <th>Preview Title</th>
+    <th>Preview Subheading</th>
+    <th>Preview Description</th>
+{% endblock %}
+
+{% block extra_page_data %}
+    <td valign="top">
+        {{ page.url }}
+    </td>
+    <td valign="top">
+        {{ page.seo_title }}
+    </td>
+    <td valign="top">
+        {{ page.search_description }}
+    </td>
+    <td valign="top">
+        {{ page.preview_title }}
+    </td>
+    <td valign="top">
+        {{ page.preview_subheading }}
+    </td>
+    <td valign="top">
+        {{ page.preview_description }}
+    </td>
+{% endblock %}

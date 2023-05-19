@@ -5,6 +5,7 @@ from operator import itemgetter
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from django.utils import html as html_util
 
 from wagtail.admin.filters import WagtailFilterSet
@@ -17,7 +18,7 @@ import django_filters
 from bs4 import BeautifulSoup
 
 from ask_cfpb.models.answer_page import AnswerPage
-from v1.models import CFGOVPage
+from v1.models import AbstractFilterPage, CFGOVPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.util.ref import categories, get_category_icon
 
@@ -469,3 +470,36 @@ class ActiveUsersReportView(ReportView):
 
     def get_queryset(self):
         return get_user_model().objects.filter(is_active=True)
+
+
+class PagePreviewFieldsReportView(PageReportView):
+    title = "Page Preview Fields"
+    header_icon = "view"
+    template_name = "v1/page_preview_fields_report.html"
+
+    def get_queryset(self):
+        default_site = Site.objects.get(is_default_site=True)
+        return (
+            AbstractFilterPage.objects.in_site(default_site)
+            .exclude(
+                (Q(preview_title__isnull=True) | Q(preview_title=""))
+                & (
+                    Q(preview_subheading__isnull=True)
+                    | Q(preview_subheading="")
+                )
+                & (
+                    Q(preview_description__isnull=True)
+                    | Q(preview_description="")
+                )
+            )
+            .specific()
+        )
+
+    list_export = PageReportView.list_export + [
+        "url",
+        "seo_title",
+        "search_description",
+        "preview_title",
+        "preview_subheading",
+        "preview_description",
+    ]
