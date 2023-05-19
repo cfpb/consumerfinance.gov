@@ -7,6 +7,7 @@
     <th>Preview Title</th>
     <th>Preview Subheading</th>
     <th>Preview Description</th>
+    <th>Preview Image</th>
 {% endblock %}
 
 {% block extra_page_data %}
@@ -27,5 +28,12 @@
     </td>
     <td valign="top">
         {{ page.preview_description }}
+    </td>
+    <td valign="top">
+        {% if page.preview_image %}
+            {{ page.preview_image.filename }}
+        {% else %}
+            None
+        {% endif %}
     </td>
 {% endblock %}

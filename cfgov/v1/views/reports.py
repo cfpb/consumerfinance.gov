@@ -1,7 +1,7 @@
 import html
 from datetime import date
 from functools import partial
-from operator import itemgetter
+from operator import attrgetter, itemgetter
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -18,7 +18,7 @@ import django_filters
 from bs4 import BeautifulSoup
 
 from ask_cfpb.models.answer_page import AnswerPage
-from v1.models import AbstractFilterPage, CFGOVPage
+from v1.models import AbstractFilterPage, CFGOVImage, CFGOVPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.util.ref import categories, get_category_icon
 
@@ -491,6 +491,7 @@ class PagePreviewFieldsReportView(PageReportView):
                     Q(preview_description__isnull=True)
                     | Q(preview_description="")
                 )
+                & Q(preview_image__isnull=True)
             )
             .specific()
         )
@@ -502,4 +503,12 @@ class PagePreviewFieldsReportView(PageReportView):
         "preview_title",
         "preview_subheading",
         "preview_description",
+        "preview_image",
     ]
+
+    custom_value_preprocess = {
+        **PageReportView.custom_value_preprocess,
+        CFGOVImage: {
+            fmt: attrgetter("filename") for fmt in PageReportView.FORMATS
+        },
+    }
