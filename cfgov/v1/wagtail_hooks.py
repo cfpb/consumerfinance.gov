@@ -47,6 +47,7 @@ from v1.views.reports import (
     EnforcementActionsReportView,
     ImagesReportView,
     PageMetadataReportView,
+    PagePreviewFieldsReportView,
     TranslatedPagesReportView,
 )
 
@@ -360,6 +361,26 @@ def register_active_users_report_url():
             r"^reports/active-users/$",
             ActiveUsersReportView.as_view(),
             name="active_users_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_page_preview_fields_report_menu_item():
+    return MenuItem(
+        "Page Preview Fields",
+        reverse("page_preview_fields_report"),
+        classnames="icon icon-" + PagePreviewFieldsReportView.header_icon,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_page_preview_fields_report_url():
+    return [
+        re_path(
+            r"^reports/page-preview-fields/$",
+            PagePreviewFieldsReportView.as_view(),
+            name="page_preview_fields_report",
         ),
     ]
 
