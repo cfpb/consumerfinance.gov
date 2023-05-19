@@ -27,7 +27,7 @@
         {{ page.preview_subheading }}
     </td>
     <td valign="top">
-        {{ page.preview_description }}
+        {{ page.preview_description | striptags }}
     </td>
     <td valign="top">
         {% if page.preview_image %}

@@ -506,6 +506,12 @@ class PagePreviewFieldsReportView(PageReportView):
         "preview_image",
     ]
 
+    custom_field_preprocess = {
+        "preview_description": {
+            fmt: html_util.strip_tags for fmt in PageReportView.FORMATS
+        }
+    }
+
     custom_value_preprocess = {
         **PageReportView.custom_value_preprocess,
         CFGOVImage: {
