@@ -221,27 +221,18 @@ def migrate_page_types_and_fields(apps, page_types_and_fields, mapper):
     'field_name' is the field on the 'PageType' model.
     'block path' is a tuple containing block names to access the
     StreamBlock type to migrate."""
+    ContentType = apps.get_model("contenttypes", "ContentType")
+
     for app, page_type, field_name, block_path in page_types_and_fields:
         page_model = apps.get_model(app, page_type)
-
-        # We need to support both the pre-Wagtail 4 "PageRevision" model as
-        # well as the post-Wagtail 4 "Revision" model, because some of our
-        # data migrations run before Wagtail 4's migration from PageRevision
-        # to Revision.
-        # TODO: When we squash migrations replace this test with *just*
-        # "wagtailcore.Revision". Any of those migrations should already be
-        # applied to our database dumps, and it should be a noop on new
-        # database initialization.
-        try:
-            revision_model = apps.get_model("wagtailcore.Revision")
-        except LookupError:  # pragma: no cover
-            revision_model = apps.get_model("wagtailcore.PageRevision")
+        page_contenttype_id = ContentType.objects.get_for_model(page_model).id
+        revision_model = apps.get_model("wagtailcore.Revision")
 
         for page in page_model.objects.all():
             migrate_stream_field(page, field_name, block_path, mapper)
 
-            revisions = revision_model.page_revisions.filter(
-                object_id=page.id
+            revisions = revision_model.objects.filter(
+                content_type_id=page_contenttype_id, object_id=page.id
             ).order_by("-id")
             for revision in revisions:
                 migrate_stream_field(revision, field_name, block_path, mapper)

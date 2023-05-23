@@ -44,12 +44,6 @@ class AbstractFilterPage(CFGOVPage):
         max_length=255, null=True, blank=True
     )
     preview_description = RichTextField(null=True, blank=True)
-    secondary_link_url = models.CharField(
-        max_length=500, null=True, blank=True
-    )
-    secondary_link_text = models.CharField(
-        max_length=255, null=True, blank=True
-    )
     preview_image = models.ForeignKey(
         "v1.CFGOVImage",
         null=True,
@@ -69,8 +63,6 @@ class AbstractFilterPage(CFGOVPage):
                 FieldPanel("preview_title"),
                 FieldPanel("preview_subheading"),
                 FieldPanel("preview_description"),
-                FieldPanel("secondary_link_url"),
-                FieldPanel("secondary_link_text"),
                 FieldPanel("preview_image"),
             ],
             heading="Page Preview Fields",

@@ -54,7 +54,7 @@
     {% if value.categories.filter_category %}
         {% set filter_count = filter_count + 1 %}
     {% endif %}
-    {% if show_topic_filter %}
+    {% if value.topics %}
         {% set filter_count = filter_count + 1 %}
     {% endif %}
     {% if value.language and form.language %}
@@ -94,7 +94,7 @@
         </div>
     {% endif %}
 
-    {% if show_topic_filter and form.topics %}
+    {% if value.topics and form.topics %}
         {{ _filter_multiselect( 'Topics', form.topics, filter_count ) }}
     {% endif %}
 

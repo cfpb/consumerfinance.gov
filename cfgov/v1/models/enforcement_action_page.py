@@ -253,8 +253,6 @@ class EnforcementActionPage(AbstractFilterPage):
                 FieldPanel("preview_title"),
                 FieldPanel("preview_subheading"),
                 FieldPanel("preview_description"),
-                FieldPanel("secondary_link_url"),
-                FieldPanel("secondary_link_text"),
                 FieldPanel("preview_image"),
             ],
             heading="Page Preview Fields",
