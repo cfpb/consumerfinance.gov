@@ -60,8 +60,7 @@ describe('The Regs3K permalinks utils', () => {
     });
 
     it('should only call a function once within a given timespan', (done) => {
-      const event = document.createEvent('Event');
-      event.initEvent('resize', true, true);
+      const event = new Event('resize', { bubbles: true, cancelable: true });
       jest.spyOn(global, 'spy');
 
       debounce('resize', 100, global.spy);
@@ -79,8 +78,7 @@ describe('The Regs3K permalinks utils', () => {
     });
 
     it("should not call a function if the timespan hasn't passed", (done) => {
-      const event = document.createEvent('Event');
-      event.initEvent('scroll', true, true);
+      const event = new Event('scroll', { bubbles: true, cancelable: true });
       jest.spyOn(global, 'spy');
 
       debounce('scroll', 1000, global.spy);
