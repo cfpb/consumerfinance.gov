@@ -1,4 +1,4 @@
-FROM python:3.8-alpine as base
+FROM python:3.8-alpine AS base
 
 # Hard labels
 LABEL maintainer="tech@cfpb.gov"
@@ -22,7 +22,7 @@ RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> /etc/profile
 
 #######################################################################
 # Intermediate layer to build only prod deps
-FROM base as cfgov-python-builder
+FROM base AS cfgov-python-builder
 
 # .build-deps are required to build and test the application (pip, tox, etc.)
 RUN apk add --no-cache --virtual .build-deps gcc gettext git libffi-dev musl-dev postgresql-dev
@@ -57,7 +57,7 @@ CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
 #######################################################################
 # Build frontend assets using a Node base image
-FROM node:16-alpine as cfgov-node-builder
+FROM node:16-alpine AS cfgov-node-builder
 
 ENV APP_HOME /src/consumerfinance.gov
 WORKDIR ${APP_HOME}
@@ -80,7 +80,7 @@ RUN ./frontend.sh  ${FRONTEND_TARGET} && \
 
 #######################################################################
 # Intermediate layer to collect the frontend for the production-like image
-FROM cfgov-python-builder as cfgov-frontend-builder
+FROM cfgov-python-builder AS cfgov-frontend-builder
 
 ENV STATIC_PATH ${APP_HOME}/cfgov/static/
 ENV PYTHONPATH ${APP_HOME}/cfgov
