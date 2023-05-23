@@ -76,7 +76,7 @@ export class Filter {
   }
 
   search() {
-    return expandableTarget();
+    return this.expandableTarget();
   }
 
   open() {
