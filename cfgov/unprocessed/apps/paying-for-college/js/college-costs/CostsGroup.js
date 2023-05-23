@@ -12,7 +12,6 @@ const BASE_CLASS = 'o-costs-group';
 
 /**
  * CostsGroup
- *
  * @class
  * @classdesc Initializes a new CostsGroup organism.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -50,7 +49,7 @@ function CostsGroup(element) {
   function _configFlyout() {
     _flyout = new FlyoutMenu(_dom);
     _transition = new MaxHeightTransition(_contentDom);
-    _transition.init(MaxHeightTransition.CLASSES. MH_ZERO);
+    _transition.init(MaxHeightTransition.CLASSES.MH_ZERO);
     _flyout.setTransition(
       _transition,
       _transition.maxHeightZero,
@@ -73,6 +72,6 @@ function CostsGroup(element) {
 CostsGroup.BASE_CLASS = BASE_CLASS;
 CostsGroup.init = (scope) => {
   instantiateAll(`.${BASE_CLASS}`, CostsGroup, scope);
-}
+};
 
 export { CostsGroup };
