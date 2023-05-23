@@ -7,20 +7,34 @@
 function simulateEvent(eventType, target, eventOption = {}) {
   let event;
 
-  if (eventType === 'click') {
-    event = new MouseEvent('click', {
-      bubbles: true,
-      cancelable: true,
-      view: window,
-    });
-    // TODO: migrate to KeyBoardEvent, etc.
-  } else {
-    event = window.document.createEvent('Event', eventOption.currentTarget);
-    event.initEvent(eventType, true, true);
+  // Add more event types here as required by tests.
+  switch (eventType) {
+    case 'click' || 'mousedown' || 'mouseup':
+      event = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+      });
+      break;
+    case 'keypress' || 'keydown' || 'keyup':
+      event = new KeyboardEvent(eventType, {
+        bubbles: true,
+        cancelable: true,
+      });
 
-    if (eventOption && eventOption.key) {
-      event.key = eventOption.key;
-    }
+      if (eventOption && eventOption.key) {
+        event.key = eventOption.key;
+      }
+      break;
+    default:
+      event = new Event(eventType, {
+        bubbles: true,
+        cancelable: true,
+      });
+
+      if (eventOption && eventOption.key) {
+        event.key = eventOption.key;
+      }
   }
 
   return target.dispatchEvent(event);
