@@ -11,7 +11,8 @@ function formatTimestamp(totalSeconds) {
   if (hours < 10) {
     hours = '0' + hours;
   }
-  if (hours !== '00') {
+
+  if (String(hours) !== '00') {
     timestamp = hours + ':';
   }
 

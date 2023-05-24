@@ -194,9 +194,9 @@ function Autocomplete(element, opts) {
       const key = event.key;
       if (_isVisible) {
         if (key === UP) {
-          _prev(event);
+          _prev();
         } else if (key === DOWN) {
-          _next(event);
+          _next();
         } else if (key === ENTER && _selection > -1) {
           event.preventDefault();
           _settings.onSubmit(event, _suggestions[_selection]);

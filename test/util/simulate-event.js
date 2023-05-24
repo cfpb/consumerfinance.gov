@@ -9,14 +9,18 @@ function simulateEvent(eventType, target, eventOption = {}) {
 
   // Add more event types here as required by tests.
   switch (eventType) {
-    case 'click' || 'mousedown' || 'mouseup':
+    case 'click':
+    case 'mousedown':
+    case 'mouseup':
       event = new MouseEvent('click', {
         bubbles: true,
         cancelable: true,
         view: window,
       });
       break;
-    case 'keypress' || 'keydown' || 'keyup':
+    case 'keypress':
+    case 'keydown':
+    case 'keyup':
       event = new KeyboardEvent(eventType, {
         bubbles: true,
         cancelable: true,
