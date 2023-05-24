@@ -32,3 +32,11 @@
     display: none;
   }
 } );
+
+.respond-to-min(@bp-med-min, {
+  .story-page {
+    .breadcrumbs {
+      padding-bottom: unit(@grid_gutter-width / 14px, em);
+    }
+  }
+});
