@@ -21,24 +21,23 @@ function simulateEvent(eventType, target, eventOption = {}) {
     case 'keypress':
     case 'keydown':
     case 'keyup':
-      event = new KeyboardEvent(eventType, {
+      const opts = {
         bubbles: true,
         cancelable: true,
-      });
+      };
 
       if (eventOption && eventOption.key) {
-        event.key = eventOption.key;
+        opts.key = eventOption.key;
       }
+
+      event = new KeyboardEvent(eventType, opts);
+
       break;
     default:
       event = new Event(eventType, {
         bubbles: true,
         cancelable: true,
       });
-
-      if (eventOption && eventOption.key) {
-        event.key = eventOption.key;
-      }
   }
 
   return target.dispatchEvent(event);
