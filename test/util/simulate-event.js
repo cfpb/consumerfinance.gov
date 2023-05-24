@@ -12,7 +12,7 @@ function simulateEvent(eventType, target, eventOption = {}) {
     case 'click':
     case 'mousedown':
     case 'mouseup':
-      event = new MouseEvent('click', {
+      event = new MouseEvent(eventType, {
         bubbles: true,
         cancelable: true,
         view: window,
