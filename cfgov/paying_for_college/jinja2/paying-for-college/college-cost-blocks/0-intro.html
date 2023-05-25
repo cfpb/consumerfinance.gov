@@ -2,15 +2,7 @@
     {% if return_user %}
         <div class="content_wrapper">
             <div class="content_main">
-                <div class="u-hide-if-js">
-                    {% import 'v1/includes/molecules/notification.html' as notification with context %}
-                      {{ notification.render(
-                        'error',
-                        true,
-                        'This tool is not supported in your browser.
-                        Please try a newer browser or confirm that JavaScript is enabled.'
-                      ) }}
-                  </div>
+                {% include "_templates/no_js.html" %}
                 <div class="m-notification
                             m-notification__visible
                             u-js-only">
