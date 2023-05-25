@@ -17,9 +17,10 @@
         {% endif %}
     {% endfor %}
 {% endblock %}
+{% block pre_content -%}{%- endblock %}
 
 {% block content_modifiers -%}
-  {{ super() }} content__center-image-bleed content__supersize-headings story-page
+  {{ super() }} content__center-image-bleed content__supersize-headings
 {%- endblock %}
 
 {% block content_main %}

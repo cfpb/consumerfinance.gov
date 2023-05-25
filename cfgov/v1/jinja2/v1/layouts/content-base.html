@@ -6,6 +6,7 @@
           {%- if is_faq_page %}
             itemscope="" itemtype="http://schema.org/FAQPage"
           {% endif -%}>
+        {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
             {% if not breadcrumb_items and page and page.get_breadcrumbs %}
                 {% set breadcrumb_items = page.get_breadcrumbs(request) %}
@@ -18,7 +19,6 @@
                 </div>
             {% endif %}
         {%- endblock %}
-        {% block hero -%}{%- endblock %}
         {% block body_content scoped -%}{%- endblock %}
     </main>
 {% endblock %}
