@@ -2,16 +2,18 @@
     {% if return_user %}
         <div class="content_wrapper">
             <div class="content_main">
-                <div class=".js-is-hidden">
+                <div class="u-hide-if-js">
                     {% import 'v1/includes/molecules/notification.html' as notification with context %}
                       {{ notification.render(
                         'error',
                         true,
-                        'This interactive tool is not supported in your web browser. Please try a different browser or confirm Javascript is enabled.'
+                        'This tool is not supported in your browser.
+                        Please try a newer browser or confirm that JavaScript is enabled.'
                       ) }}
                   </div>
                 <div class="m-notification
-                            m-notification__visible">
+                            m-notification__visible
+                            u-js-only">
                     {{ svg_icon('updating') }}
                     <div class="m-notification_content">
                         <div class="h4 m-notification_message">The page is loading…</div>
