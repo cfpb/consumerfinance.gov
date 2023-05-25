@@ -44,7 +44,7 @@
         value.no_posts_explanation
     ) }}
 {% elif has_unfiltered_results %}
-    <div class="o-filterable-list">
+    <div>
         {% set form = filter_data.form %}
         {% set posts = filter_data.page_set %}
 
@@ -106,13 +106,13 @@
             {% endif %}
         {% endif %}
 
-        <div class="o-filterable-list_notification
-                    block
+        <div class="block
                     block__padded
                     block__sub
                     {%- if not has_active_filters %}
                     u-hidden
-                    {%- endif %}">
+                    {%- endif %}"
+             data-cy="filterable-list-notification">
             {{ notification.render(
                 notification_opts.type,
                 notification_opts.is_visible,
@@ -124,12 +124,12 @@
         {# ADD THE FILTER RESULTS, IF THERE ARE ANY. #}
 
         {% if count is defined and count > 0 %}
-            <section class="o-filterable-list_results
-                            block
+            <section class="block
                             block__sub
                             {%- if has_active_filters %}
                             block__flush-top
-                            {%- endif %}">
+                            {%- endif %}"
+                     data-cy="filterable-list-results">
                 {% if value.categories.page_type == 'activity-log' %}
                     {% import 'v1/activity-log/_activity-list.html' as activity_list with context %}
                     {{ activity_list.render(posts) }}
