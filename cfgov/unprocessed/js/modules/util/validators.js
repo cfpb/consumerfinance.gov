@@ -16,7 +16,7 @@ const ERROR_MESSAGES = {
 };
 
 /**
- * email Determines if a field contains a email date.
+ * email Determines if a field contains an email address.
  * @param {object} field - Field to test.
  * @param {object} currentStatus - A previous tested status for the field.
  * @param {object} options - Options object.
