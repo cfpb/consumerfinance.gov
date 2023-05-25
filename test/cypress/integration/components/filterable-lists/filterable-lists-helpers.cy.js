@@ -12,7 +12,7 @@ export class FilterableList {
   }
 
   filterNotification() {
-    return cy.get('.o-filterable-list_notification');
+    return cy.get('[data-cy=filterable-list-notification]');
   }
 
   clearFilters() {

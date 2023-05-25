@@ -7,9 +7,6 @@ from django.http import Http404, HttpResponseRedirect
 from django.urls import resolve
 
 
-# These messages are manually mirrored on the
-# Javascript side in error-messages-config.js
-
 ERROR_MESSAGES = {
     "CHECKBOX_ERRORS": {
         "required": 'Please select at least one of the "%s" options.'

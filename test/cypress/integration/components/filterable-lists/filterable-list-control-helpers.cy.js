@@ -27,48 +27,52 @@ export class FilterableListControl {
     return this.filterableListElement('to-date').type(date);
   }
 
+  getResults() {
+    return cy.get('[data-cy=filterable-list-results]');
+  }
+
   getResultCategoryHasTags() {
-    return cy
-      .get('.o-filterable-list_results .tags_tag')
+    return this.getResults()
+      .find('.tags_tag')
       .closest('.o-post-preview')
       .find('.m-meta-header_category:first');
   }
 
   getResultTagHasCategories() {
-    return cy
-      .get('.o-filterable-list_results .m-meta-header_category')
+    return this.getResults()
+      .find('.m-meta-header_category')
       .closest('.o-post-preview')
       .find('.tags_tag:first');
   }
 
   getResultTag() {
-    return cy.get('.o-filterable-list_results .tags_tag:first');
+    return this.getResults().find('.tags_tag:first');
   }
 
   getResultTitleHasTag() {
-    return cy
-      .get('.o-filterable-list_results .tags_tag:first')
+    return this.getResults()
+      .find('.tags_tag:first')
       .closest('.o-post-preview')
       .find('.o-post-preview_title:first');
   }
 
   getResultCategory() {
-    return cy.get('.o-filterable-list_results .m-meta-header_category:first');
+    return this.getResults().find('.m-meta-header_category:first');
   }
 
   getResultTitleHasCategory() {
-    return cy
-      .get('.o-filterable-list_results .m-meta-header_category:first')
+    return this.getResults()
+      .find('.m-meta-header_category:first')
       .closest('.o-post-preview')
       .find('.o-post-preview_title:first');
   }
 
   resultsHeaderContent() {
-    return cy.get('.o-filterable-list_results .m-meta-header');
+    return this.getResults().find('.m-meta-header');
   }
 
   resultsContent() {
-    return cy.get('.o-filterable-list_results .o-post-preview_content');
+    return this.getResults().find('.o-post-preview_content');
   }
 
   firstResultContent() {
@@ -104,7 +108,7 @@ export class FilterableListControl {
   }
 
   notification() {
-    return cy.get('.o-filterable-list_notification');
+    return cy.get('[data-cy=filterable-list-notification]');
   }
 
   open() {
