@@ -124,7 +124,7 @@ const appView = {
     appView._includeParentPlusBtn = document.querySelector(
       '#plan__parentPlusFeeRepay'
     );
-    
+
     _addButtonListeners();
   },
 };
@@ -183,9 +183,7 @@ function _handleActionPlanClick(event) {
 /**
  * Initialize Costs Groups organism
  */
-const collegeCosts = document.querySelector( '.college-costs' );
-CostsGroup.init( collegeCosts );
-
-
+const collegeCosts = document.querySelector('.college-costs');
+CostsGroup.init(collegeCosts);
 
 export { appView };
