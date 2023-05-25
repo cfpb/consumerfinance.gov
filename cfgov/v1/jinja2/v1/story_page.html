@@ -17,6 +17,7 @@
         {% endif %}
     {% endfor %}
 {% endblock %}
+{# Remove breadcrumbs from story_page by overriding with an empty block #}
 {% block pre_content -%}{%- endblock %}
 
 {% block content_modifiers -%}
