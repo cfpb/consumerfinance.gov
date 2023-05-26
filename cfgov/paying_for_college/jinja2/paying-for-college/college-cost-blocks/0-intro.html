@@ -2,8 +2,10 @@
     {% if return_user %}
         <div class="content_wrapper">
             <div class="content_main">
+                {% include "_templates/no_js.html" %}
                 <div class="m-notification
-                            m-notification__visible">
+                            m-notification__visible
+                            u-js-only">
                     {{ svg_icon('updating') }}
                     <div class="m-notification_content">
                         <div class="h4 m-notification_message">The page is loading…</div>
