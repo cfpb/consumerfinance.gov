@@ -796,7 +796,7 @@ class FilterableList(BaseExpandable):
         template = "v1/includes/organisms/filterable-list.html"
 
     class Media:
-        js = ["filterable-list.js"]
+        js = ["filterable-list-controls.js"]
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
