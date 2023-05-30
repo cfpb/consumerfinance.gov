@@ -4,7 +4,7 @@ import {
   recordEmailRegistration,
   recordEmailPopupClosure,
 } from '../modules/util/email-popup-helpers.js';
-import { email as validatorsEmail } from '../modules/util/validators.js';
+import { email as validateEmail } from '../modules/util/validators.js';
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
 import FormSubmit from './FormSubmit.js';
 
@@ -62,7 +62,7 @@ function EmailPopup(element) {
    * @returns {object} Validation status.
    */
   function emailValidation(fields) {
-    return validatorsEmail(fields.email, '', { language: _language }).msg;
+    return validateEmail(fields.email, '', { language: _language }).msg;
   }
 
   /**

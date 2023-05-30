@@ -1,6 +1,8 @@
 // Array that tracks paragraph positions
 let paragraphPositions;
-const regs3kMainContent = document.querySelector('.regulations3k');
+const regs3kMainContent = document.querySelector(
+  '.regulations3k #content_main'
+);
 const regs3kWayfinder = document.querySelector('.o-regulations-wayfinder');
 let wayfinderOffset = 0;
 if (regs3kWayfinder !== null) {
