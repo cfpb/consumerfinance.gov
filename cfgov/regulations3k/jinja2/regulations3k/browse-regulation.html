@@ -73,11 +73,7 @@
 {# BODY items #}
 
 {% block content_modifiers -%}
-    {{ super() }} content__hide-horizontal-overflow
-{%- endblock %}
-
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom regulations3k
+    {{ super() }} content__hide-horizontal-overflow regulations3k
 {%- endblock %}
 
 {% block content_main %}

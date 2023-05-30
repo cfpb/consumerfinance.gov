@@ -3,14 +3,15 @@
 
 .o-fig {
   // Make the side navigation sticky
-  .content_sidebar {
+  .o-fig_sidebar {
     position: sticky;
-    top: -1px;
+    top: unit(45px / @base-font-size-px, rem);
   }
 
+  // Desktop
   .respond-to-min( @bp-med-min, {
     // Expand it to full height on desktop with optional scrolling
-    .content_sidebar {
+    .o-fig_sidebar {
       max-height: 100vh;
       overflow-y: auto;
     }
@@ -67,6 +68,7 @@
     padding-top: unit(30px / @base-font-size-px, em);
   }
 
+  // Desktop
   .respond-to-min( @bp-med-min, {
     // Increase the sidebar border from 1px to 2px
     .content &:after {
