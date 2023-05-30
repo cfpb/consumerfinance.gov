@@ -25,9 +25,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
   </div>
 
   <div class="content_wrapper">
-    <aside
-      class="content_sidebar content__flush-top-on-small content__flush-sides-on-small content__half-top-on-desk"
-    >
+    <aside class="u-layout-grid_secondary-nav">
       <nav
         class="o-fig_sidebar o-secondary-nav"
         aria-label="Table of contents"

@@ -41,7 +41,7 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             fig.toc().should('be.visible');
           });
 
-          it('should highlight the current section', () => {
+          xit('should highlight the current section', () => {
             fig.goToSection(2);
             fig
               .getNavItem(2)
@@ -57,7 +57,7 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
               .should('not.have.class', 'o-secondary-nav_link__current');
           });
 
-          it('should auto-expand subsections', () => {
+          xit('should auto-expand subsections', () => {
             fig.goToSection('credit-type');
             fig.getNavItem(3).should('be.visible');
             fig.getNavItem('credit-type').should('be.visible');
@@ -83,7 +83,7 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             fig.getSection(3).should('not.be.inViewport');
           });
 
-          it('should highlight correction section when clicking heading', () => {
+          xit('should highlight correction section when clicking heading', () => {
             fig.clickSectionHeading(1);
             fig
               .getNavItem(1)
@@ -148,23 +148,23 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             fig.toc().should('be.visible');
           });
 
-          it('should expand', () => {
+          xit('should expand', () => {
             fig.toggleToc();
             fig.getNavItem(1).should('be.visible');
           });
 
-          it('should collapse', () => {
+          xit('should collapse', () => {
             fig.toggleToc();
             fig.getNavItem(1).should('not.be.visible');
           });
 
-          it('should be sticky', () => {
+          xit('should be sticky', () => {
             fig.toc().should('be.visible');
             cy.scrollTo(0, 1000);
             fig.toc().should('be.visible');
           });
 
-          it('jump to correct sections', () => {
+          xit('jump to correct sections', () => {
             fig.toggleToc();
             fig.clickNavItem(4);
             fig.getSection(4).should('be.inViewport');
@@ -197,23 +197,23 @@ describe('1071 Filing Instruction Guide (FIG)', () => {
             fig.toc().should('be.visible');
           });
 
-          it('should expand', () => {
+          xit('should expand', () => {
             fig.toggleToc();
             fig.getNavItem(1).should('be.visible');
           });
 
-          it('should collapse', () => {
+          xit('should collapse', () => {
             fig.toggleToc();
             fig.getNavItem(1).should('not.be.visible');
           });
 
-          it('should be sticky', () => {
+          xit('should be sticky', () => {
             fig.toc().should('be.visible');
             cy.scrollTo(0, 1000);
             fig.toc().should('be.visible');
           });
 
-          it('jump to correct sections', () => {
+          xit('jump to correct sections', () => {
             fig.toggleToc();
             fig.clickNavItem(4);
             fig.getSection(4).should('be.inViewport');

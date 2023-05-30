@@ -8,7 +8,7 @@ export class FilingInstructionGuide {
   }
 
   toc() {
-    return cy.get('.o-fig .content_sidebar');
+    return cy.get('.o-fig .o-fig_sidebar');
   }
 
   getSection(section) {
