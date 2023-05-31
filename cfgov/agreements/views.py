@@ -8,17 +8,22 @@ from agreements.models import Agreement, Issuer
 
 
 def index(request):
+    return render(
+        request,
+        "agreements/index.html",
+    )
+
+
+def archive(request):
     metadata = Metadata()
 
     return render(
         request,
-        "agreements/index.html",
+        "agreements/archive.html",
         {
             "agreements": metadata.get_sorted_agreements(),
             "flexibilities": metadata.flexibilities,
             "notes": metadata.notes,
-            "agreement_count": Agreement.objects.all().count(),
-            "pagetitle": "Credit card agreements",
         },
     )
 

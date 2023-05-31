@@ -50,37 +50,7 @@
                     for agreement submission instructions.
                 </p>
 
-                <ul class="m-list m-list__links u-mt15 cc-links">
-                  {% for agreement in agreements %}
-                    {% set year = agreement[-11:-7] %}
-                    {% set quarter = agreement[-6:-4] %}
-                    {% set name = quarter + "-" + year %}
-                    <li class="m-list m-list__links">
-                      <a href="https://files.consumerfinance.gov/{{agreement}}">
-                        {% if loop.index == 1 %}
-                        <span style="font-size: 22px; line-height:3">Download all most recent agreements ({{name}})</span>
-                        {% else %}
-                        Archived {{name}} agreements
-                        {% endif %}
-                      </a>
-                    {% if name in flexibilities %}
-                      <br/>
-                      <span style="font-size:14px">
-                        Agreements may include omissions due to the Bureau’s COVID-19
-                        <a href=" https://files.consumerfinance.gov/f/documents/cfpb_data-collection-statement_covid-19_2020-03.pdf">
-                          regulatory flexibility statement
-                        </a>
-                      </span>
-                    {% endif %}
-                    {% if notes[name] %}
-                      <br/>
-                      <span style="font-size:14px">
-                        {{notes[name]}}
-                      </span>
-                    {% endif %}
-                    </li>
-                  {% endfor %}
-                </ul>
+                <h3 class="block__sub"><a style="border-bottom-width:1px" href="./archive/">View the credit card agreement archive</a></h3>
 
                 <h3>Looking for your own credit card agreement?</h3>
                 <p>
