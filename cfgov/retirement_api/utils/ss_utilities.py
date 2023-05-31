@@ -30,7 +30,7 @@ TOO_OLD = """\
 your birthdate, {0}, means you are older than 70 and may already be receiving \
 benefits.</span> To check your benefits based on your actual \
 earnings record, contact the Social Security Administration or \
-open a <a href="https://www.socialsecurity.gov/myaccount/" \
+open a <a href="https://www.ssa.gov/myaccount/" \
 target="_blank" rel="noopener noreferrer">\
 <em>my</em> Social Security</a> account.\
 """
