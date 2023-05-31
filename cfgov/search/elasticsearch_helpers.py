@@ -17,7 +17,7 @@ from wagtail.signals import (
 )
 
 from django_opensearch_dsl.signals import BaseSignalProcessor
-from opensearch_dsl import analyzer, token_filter, tokenizer
+from opensearchpy import analyzer, token_filter, tokenizer
 
 from search.models import Synonym
 
