@@ -40,7 +40,6 @@ function getTimeStamp() {
 
 /**
  * [trackSpecificLocation description]
- *
  * @param {number} bottomPos - Number of pixels from the top of the page
  *   to current scroll top position.
  * @param {number} percent - Percent of the scrollable height to fire from.

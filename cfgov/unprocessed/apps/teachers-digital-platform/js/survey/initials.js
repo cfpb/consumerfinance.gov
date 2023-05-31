@@ -7,7 +7,6 @@ let value = '';
 
 /**
  * Update the initials in the page.
- *
  * @param {string } newValue - The new initials.
  */
 function update(newValue) {
@@ -29,7 +28,6 @@ function update(newValue) {
 
 /**
  * Get the initials set
- *
  * @returns {string} The initials
  */
 function get() {

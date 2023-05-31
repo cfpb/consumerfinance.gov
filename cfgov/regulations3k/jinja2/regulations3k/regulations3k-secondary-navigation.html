@@ -15,23 +15,15 @@
     {% from 'v1/includes/organisms/expandable.html' import expandable with context %}
     <nav class="o-regs3k-navigation o-expandable__padded"
          aria-label="Section navigation">
-        <button class="o-regs3k-navigation_header o-expandable_header o-expandable_target">
+        <button class="o-regs3k-navigation_header o-expandable_header">
             <span class="h4 o-expandable_label">
                 Table of Contents
             </span>
             <span class="o-expandable_link">
-                <span class="o-expandable_cue o-expandable_cue-open">
-                    <span class="u-visually-hidden">
-                        Show
-                        {{ expandable_cue_additional_text }}
-                    </span>
+                <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
                     {{ svg_icon('plus-round') }}
                 </span>
-                <span class="o-expandable_cue o-expandable_cue-close">
-                    <span class="u-visually-hidden">
-                        Hide
-                        {{ expandable_cue_additional_text }}
-                    </span>
+                <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
                     {{ svg_icon('minus-round') }}
                 </span>
             </span>
@@ -41,7 +33,6 @@
             {%- for subpart in nav_items %}
                 {% set sec_nav_settings = {
                     'label': subpart.subpart_heading ~ ' ' ~ subpart.title ~ ' ' ~ subpart.section_range|safe,
-                    'hide_cue_label': true,
                     'is_expanded': nav_items[subpart].expanded
                 } %}
                 {% call() expandable(sec_nav_settings) %}

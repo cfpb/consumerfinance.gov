@@ -5,11 +5,16 @@ import {
   BaseTransition,
   EventObserver,
 } from '@cfpb/cfpb-atomic-component';
-import ERROR_MESSAGES from '../config/error-messages-config.js';
 import Notification from '../molecules/Notification.js';
 import { scrollIntoView } from '../modules/util/scroll.js';
 
-const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
+const FORM_MESSAGES = {
+  ERROR: 'There was an error in your submission. Please try again later.',
+  ERROR_ES:
+    'Había un error en su presentación. ' + 'Por favor, inténtelo más tarde.',
+  SUCCESS: 'Your submission was successfully received.',
+  SUCCESS_ES: 'Su presentación fue recibido con éxito.',
+};
 const DONE_CODE = 4;
 const SUCCESS_CODES = {
   200: 'ok',
@@ -23,7 +28,6 @@ const SUCCESS_CODES = {
 
 /**
  * FormSubmit
- *
  * @class
  * @classdesc Initializes the organism.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -97,7 +101,6 @@ function FormSubmit(element, baseClass, opts) {
 
   /**
    * Displays notification and scrolls it into view if offscreen
-   *
    * @param {type} type - of notification
    * @param {content} content - for notification.
    */

@@ -117,7 +117,6 @@ function _addButtonListeners() {
 
 /**
  * Event handling for financial-item INPUT changes.
- *
  * @param {KeyboardEvent} event - The triggering keyboard event.
  */
 function _handleInputChange(event) {
@@ -147,7 +146,6 @@ function _handleInputChange(event) {
 
 /**
  * Event handling for input clicks.
- *
  * @param {MouseEvent} event - The triggering click event object.
  */
 function _handleInputClick(event) {

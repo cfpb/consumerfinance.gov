@@ -11,7 +11,6 @@ class RateCheckerChartMenu {
   /**
    * Set the initial state value and call
    * the appropriate instantiation methods.
-   *
    * @param {object} highCharts - HighCharts instance.
    */
   constructor(highCharts) {
@@ -23,7 +22,6 @@ class RateCheckerChartMenu {
 
   /**
    * Export the chart using the HighCharts API.
-   *
    * @param {string} exportType - Export type keyword.
    *                              May be an image type or print command.
    */
@@ -58,7 +56,6 @@ class RateCheckerChartMenu {
 
   /**
    * Call the appropriate methods based on the event.
-   *
    * @param {MouseEvent} event - Menu click event.
    */
   onClick(event) {
@@ -77,7 +74,6 @@ class RateCheckerChartMenu {
 
   /**
    * Render the menu UI changes.
-   *
    * @param {string} oldState - The previous state of the menu.
    * @param {string} newState - The current state of the menu.
    */
@@ -97,7 +93,6 @@ class RateCheckerChartMenu {
 
   /**
    * Set the state of the RateCheckerChartMenu.
-   *
    * @param {string} newState - The position of the menu.
    */
   _setState(newState) {

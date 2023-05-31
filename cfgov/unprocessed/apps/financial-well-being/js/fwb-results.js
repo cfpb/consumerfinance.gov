@@ -1,12 +1,11 @@
 import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { Expandable } from '@cfpb/cfpb-expandables';
 
 let buttonsDom;
 
 /**
  * Changes the visibility of the results by category
  * based on user input
- *
  * @param {string} category - The category to display
  */
 function switchComparisons(category) {
@@ -40,7 +39,6 @@ function switchComparisons(category) {
  * Grabs analytics event data from the passed element's data attributes.
  * Determines the state of the Analytics module and either passes the data
  * or waits for Analytics to report readiness, then passes the data.
- *
  * @param {HTMLElement} el - A dom element
  */
 function handleAnalytics(el) {

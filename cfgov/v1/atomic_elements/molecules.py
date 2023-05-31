@@ -345,7 +345,6 @@ class ContentImage(blocks.StructBlock):
             (470, "470px"),
             (270, "270px"),
             (170, "170px"),
-            ("bleed", "Bleed into left/right margins"),
         ],
         default="full",
     )

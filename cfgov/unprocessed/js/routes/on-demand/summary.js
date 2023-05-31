@@ -1,3 +1,3 @@
-import Summary from '@cfpb/cfpb-expandables/src/Summary.js';
+import { Summary } from '@cfpb/cfpb-expandables';
 
 Summary.init();

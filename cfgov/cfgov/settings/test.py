@@ -37,11 +37,13 @@ EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 TEST_RUNNER = os.environ.get(
     "TEST_RUNNER", "core.testutils.runners.TestRunner"
 )
+ALWAYS_GENERATE_SLOW_REPORT = True
 
 BAKER_CUSTOM_CLASS = "core.testutils.baker.ActualContentTypeBaker"
 
 INSTALLED_APPS += (
     "wagtail.contrib.settings",
+    "wagtail.test.snippets",
     "wagtail.test.testapp",
 )
 
@@ -107,3 +109,7 @@ if os.getenv("SKIP_DJANGO_MIGRATIONS"):
     MIGRATION_MODULES = _NoMigrations()
 
 DEPLOY_ENVIRONMENT = "test"
+
+# Axes requires a request for authentication, which breaks uses of Django's
+# test client .login() method. This disables it when running tests.
+AXES_ENABLED = False

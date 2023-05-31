@@ -1,5 +1,6 @@
-import fetch from '../wizards/fetch-api-data.js';
+import fetchApiData from '../wizards/fetch-api-data.js';
 import getModelValues from '../wizards/get-model-values.js';
+import update from '../wizards/update-model.js';
 import isElementInView from '../utils/is-element-in-view.js';
 import nextStepsView from './next-steps-view.js';
 import numToMoney from '../utils/num-to-money.js';
@@ -164,7 +165,6 @@ function init() {
 
 /**
  * This method is the preferred way of changing the graphSettings property.
- *
  * @param {string} setting - The property name of the setting to be changed.
  * @param {string|number} value - The new value of the setting.
  */
@@ -206,7 +206,6 @@ function initIndicator() {
 
 /**
  * This function toggles the highlighting of the date of birth fields.
- *
  * @param {boolean} bool - Whether the fields should be highlighted (true|false)
  */
 function highlightAgeFields(bool) {
@@ -254,8 +253,9 @@ function getYourEstimates() {
   highlightAgeFields(false);
   const loadIndDom = document.querySelector('#api-data-loading-indicator');
   loadIndDom.style.display = 'inline-block';
-  $.when(fetch.apiData(dates.concat, salary, dataLang)).done(function (resp) {
+  fetchApiData(dates.concat, salary, dataLang).then((resp) => {
     if (resp.error === '') {
+      update.processApiData(resp);
       SSData = getModelValues.benefits();
       $('.step-two .question').css('display', 'inline-block');
       $(
@@ -454,7 +454,6 @@ function setTextByAge() {
 
 /**
  * Sets an age on the graph when the indicator is moved.
- *
  * @param {number} indicatorValue - Value of the range slider.
  */
 function setAgeWithIndicator(indicatorValue) {
@@ -475,7 +474,6 @@ function setAgeWithIndicator(indicatorValue) {
  * Uses setAgeWithIndicator to move the indicator to age
  * NOTE: This function is all that's require to change the chart to a
  * different age.
- *
  * @param {number} age - The age for the indicator to be set to.
  */
 function moveIndicatorToAge(age) {

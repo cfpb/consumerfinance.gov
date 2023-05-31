@@ -7,6 +7,7 @@ from django.test import RequestFactory, TestCase
 from wagtail.models import Page, Site
 
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
+from v1.atomic_elements.organisms import FilterableList
 from v1.documents import FilterablePagesDocument
 from v1.models import BlogPage, BrowseFilterablePage
 from v1.models.filterable_list_mixins import FilterableListMixin
@@ -129,9 +130,10 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
 
 
 class MockSearch:
-    def __init__(self, search_root, children_only):
+    def __init__(self, search_root, children_only, ordering):
         self.search_root = search_root
         self.children_only = children_only
+        self.ordering = ordering
 
 
 @mock.patch(
@@ -144,6 +146,7 @@ class FilterableListSearchTestCase(TestCase):
         search = page.get_filterable_search()
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)
+        self.assertEqual(search.ordering, FilterableList.DEFAULT_ORDERING)
 
     def test_search_default_children_only(self, _):
         page = BrowseFilterablePage(
@@ -158,6 +161,7 @@ class FilterableListSearchTestCase(TestCase):
         search = page.get_filterable_search()
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)
+        self.assertEqual(search.ordering, FilterableList.DEFAULT_ORDERING)
 
     def test_search_children_only_true(self, _):
         page = BrowseFilterablePage(
@@ -177,6 +181,7 @@ class FilterableListSearchTestCase(TestCase):
         search = page.get_filterable_search()
         self.assertEqual(search.search_root, page)
         self.assertEqual(search.children_only, True)
+        self.assertEqual(search.ordering, FilterableList.DEFAULT_ORDERING)
 
     def test_search_children_only_false_uses_default_site_if_not_in_site(
         self, _
@@ -201,6 +206,7 @@ class FilterableListSearchTestCase(TestCase):
             Site.objects.get(is_default_site=True).root_page,
         )
         self.assertEqual(search.children_only, False)
+        self.assertEqual(search.ordering, FilterableList.DEFAULT_ORDERING)
 
     def test_search_children_only_false_uses_site_root(self, _):
         page = BrowseFilterablePage(
@@ -223,3 +229,24 @@ class FilterableListSearchTestCase(TestCase):
         search = page.get_filterable_search()
         self.assertEqual(search.search_root.specific, page)
         self.assertEqual(search.children_only, False)
+        self.assertEqual(search.ordering, FilterableList.DEFAULT_ORDERING)
+
+    def test_search_different_ordering(self, _):
+        page = BrowseFilterablePage(
+            title="test",
+            content=json.dumps(
+                [
+                    {
+                        "type": "filter_controls",
+                        "value": {
+                            "ordering": "title",
+                        },
+                    },
+                ]
+            ),
+        )
+
+        search = page.get_filterable_search()
+        self.assertEqual(search.search_root, page)
+        self.assertEqual(search.children_only, True)
+        self.assertEqual(search.ordering, "title")

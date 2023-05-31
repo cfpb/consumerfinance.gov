@@ -9,7 +9,6 @@ const base64UrlDecode = (val) =>
 
 /**
  * Encode string
- *
  * @param {string} input - Input
  * @returns {string} Encoded string
  */
@@ -20,7 +19,6 @@ function encode(input) {
 
 /**
  * Decode a string
- *
  * @param {string} encoded - Encoded string
  * @returns {string | null} Decoded string (or null)
  */
@@ -42,7 +40,6 @@ function decode(encoded) {
 
 /**
  * Encode name as a URL hash
- *
  * @param {string} url - URL
  * @param {string} name - Name
  * @returns {string} Output URL
@@ -53,7 +50,6 @@ function encodeNameInUrl(url, name) {
 
 /**
  * Decode name from a URL
- *
  * @param {string} url - URL
  * @returns {string | null} Name, if set and valid
  */
@@ -63,7 +59,6 @@ function decodeNameFromUrl(url) {
 
 /**
  * Decode a string with legacy strategy
- *
  * @param {string} encoded - Encoded string
  * @returns {string | null} Decoded string (or null)
  */
@@ -72,7 +67,6 @@ function legacyDecode(encoded) {
    * Create a hash code for a string
    *
    * Adapted from https://stackoverflow.com/a/7616484/3779
-   *
    * @param {string} str - String to hash
    * @returns {string} Hash code
    */
@@ -92,7 +86,6 @@ function legacyDecode(encoded) {
    * XOR a string
    *
    * Based on XOR Crypt v1.1.1 - http://github.com/RobLoach/xor-crypt
-   *
    * @license MIT
    *   http://opensource.org/licenses/MIT
    * @param {string} str - Input

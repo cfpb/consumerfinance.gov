@@ -49,7 +49,6 @@ function init() {
 
 /**
  * Generate a list of structured items to search
- *
  * @param {Array} sections - HTML elements containing FIG headings and
  * paragraphs of content
  * @returns {Array} Structured list of objects to be passed to search engine
@@ -77,7 +76,6 @@ const getSearchData = (sections) => {
  * Event listener that's fired after a user follows a search result.
  * On smaller screens we need to close the TOC before jumping the user
  * to the search result.
- *
  * @param {object} event - Search result follow event
  */
 const onFollow = (event) => {
@@ -106,7 +104,6 @@ const onFollow = (event) => {
 /**
  * Event listener that's fired after a user searches for something.
  * We're reporting the user's search terms to Google Analytics.
- *
  * @param {string} query - Search term that was submitted.
  */
 const onSubmit = (query) => {

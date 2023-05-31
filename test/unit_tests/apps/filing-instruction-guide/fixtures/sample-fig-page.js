@@ -34,20 +34,16 @@ export default `<main class="content content__1-3 o-fig" id="main">
       >
         <h3 class="u-hide-on-mobile">Table of contents</h3>
 
-        <div
-          class="o-expandable o-expandable__padded o-expandable__background"
-          data-js-hook="state_atomic_init"
-        >
+        <div class="o-expandable o-expandable__padded o-expandable__background">
           <button
-            class="o-expandable_header o-expandable_target o-expandable_target__collapsed"
+            class="o-expandable_header o-expandable_target__collapsed"
             type="button"
           >
             <span class="h4 o-expandable_label">
               Table of contents
             </span>
             <span class="o-expandable_link">
-              <span class="o-expandable_cue o-expandable_cue-open">
-                <span class="u-visually-hidden-on-mobile"> Show </span>
+              <span class="o-expandable_cue-open" role="img" aria-label="Show">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 17 20.4"
@@ -58,8 +54,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
                   ></path>
                 </svg>
               </span>
-              <span class="o-expandable_cue o-expandable_cue-close">
-                <span class="u-visually-hidden-on-mobile"> Hide </span>
+              <span class="o-expandable_cue-close" role="img" aria-label="Hide">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 17 20.4"
@@ -617,7 +612,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -723,7 +718,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -835,7 +830,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -1025,7 +1020,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
           </li>
         </ul>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -1211,7 +1206,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </h5>
         <p><b>Field type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -1337,7 +1332,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
           </li>
         </ul>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col" class="&quot;u-w10pct&quot;">
@@ -1635,7 +1630,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -1819,7 +1814,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
           code from the specified list.
         </p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -1986,7 +1981,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
           </li>
         </ul>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -2313,7 +2308,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         <p><b>Field type:</b> Choice</p>
         <p></p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -2426,7 +2421,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         <p><b>Field type:</b> Choice</p>
         <p></p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -2540,7 +2535,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
           from the specified list of values.
         </p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <tbody>
             <tr>
               <td>
@@ -2862,7 +2857,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -2979,7 +2974,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -3063,7 +3058,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -3152,7 +3147,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -3294,7 +3289,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -3406,7 +3401,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -3517,7 +3512,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -3621,7 +3616,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -3749,7 +3744,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -3831,7 +3826,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -3899,7 +3894,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -3981,7 +3976,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -4049,7 +4044,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -4161,7 +4156,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -4247,7 +4242,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
         </p>
         <p><b>Field Type:</b> Choice</p>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -4341,7 +4336,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
           </li>
         </ul>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -4535,7 +4530,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
           </li>
         </ul>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">
@@ -5037,7 +5032,7 @@ export default `<main class="content content__1-3 o-fig" id="main">
           <li>If Male and Female, enter 1;2 or 2;1</li>
         </ul>
 
-        <table class="o-table" data-js-hook="state_atomic_init">
+        <table class="o-table">
           <thead>
             <tr>
               <th scope="col">

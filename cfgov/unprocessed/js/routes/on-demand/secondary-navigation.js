@@ -1,7 +1,7 @@
 /* ==========================================================================
    Scripts for Secondary Navigation organism
    ========================================================================== */
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { Expandable } from '@cfpb/cfpb-expandables';
 
 const dom = document.querySelector('.o-secondary-navigation');
 

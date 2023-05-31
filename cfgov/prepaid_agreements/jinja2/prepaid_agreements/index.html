@@ -95,3 +95,12 @@
         {% include 'search_results.html' %}
     </div>
 {% endblock %}
+
+
+{% block javascript %}
+    {{ super() }}
+    <script>
+      jsl(['{{ static("apps/prepaid-agreements/js/common.js") }}']);
+    </script>
+{% endblock javascript %}
+

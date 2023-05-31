@@ -4,13 +4,12 @@ import {
   recordEmailRegistration,
   recordEmailPopupClosure,
 } from '../modules/util/email-popup-helpers.js';
-import { email as validatorsEmail } from '../modules/util/validators.js';
+import { email as validateEmail } from '../modules/util/validators.js';
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component';
 import FormSubmit from './FormSubmit.js';
 
 /**
  * EmailPopup
- *
  * @class
  * @classdesc Initializes the organism.
  * @param {HTMLElement} element - The HTML DOM element.
@@ -34,7 +33,6 @@ function EmailPopup(element) {
 
   /**
    * Function used to hide popup by removing visible class.
-   *
    * @returns {EmailPopup} An instance.
    */
   function hidePopup() {
@@ -46,7 +44,6 @@ function EmailPopup(element) {
 
   /**
    * Function used to show popup by adding visible class.
-   *
    * @returns {boolean} True if the popup is shown, false otherwise.
    */
   function showPopup() {
@@ -61,12 +58,11 @@ function EmailPopup(element) {
 
   /**
    * Function used to validate email address.
-   *
    * @param {object} fields - An object containing form fields.
    * @returns {object} Validation status.
    */
   function emailValidation(fields) {
-    return validatorsEmail(fields.email, '', { language: _language }).msg;
+    return validateEmail(fields.email, '', { language: _language }).msg;
   }
 
   /**
@@ -78,7 +74,6 @@ function EmailPopup(element) {
 
   /**
    * Function used to instatiate and initialize components.
-   *
    * @returns {EmailPopup} An instance.
    */
   function init() {

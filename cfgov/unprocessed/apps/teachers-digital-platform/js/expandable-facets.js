@@ -2,7 +2,7 @@
    Expandable Facets Organism
    ========================================================================== */
 
-import { AtomicComponent } from '@cfpb/cfpb-atomic-component/src/components/AtomicComponent.js';
+import AtomicComponent from './AtomicComponent.js';
 import ExpandableFacetTransition from './ExpandableFacetTransition.js';
 
 const ExpandableFacets = AtomicComponent.extend({
@@ -76,7 +76,6 @@ function expandableClickHandler() {
 
 /**
  * Toggle an expandable to open or closed.
- *
  * @param {HTMLElement} element - The expandable target HTML DOM element.
  */
 function toggleTargetState(element) {

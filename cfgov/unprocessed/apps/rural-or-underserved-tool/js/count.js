@@ -20,7 +20,6 @@ function reset() {
 
 /**
  * Update the count of addresses.
- *
  * @param {number} number - The number of this address.
  */
 function updateAddressCount(number) {
@@ -47,7 +46,6 @@ function incrementTotal() {
 
 /**
  * Update the address count by type.
- *
  * @param {string} type - The address type
  *   (duplicate, notFound, notRural, rural).
  */

@@ -75,6 +75,7 @@
   } );
 
   // Expandable overrides
+  // TODO: Make this its own component.
 
   .o-expandable-group .o-expandable {
     border: 4px solid transparent;
@@ -96,7 +97,7 @@
       }
     }
 
-    .o-expandable_content__expanded:before {
+    .o-expandable_content[data-open='true']:before {
       border: none;
     }
 
@@ -112,7 +113,7 @@
       &.o-expandable__form-explainer-category-@{index} {
         background-color: @@tint;
 
-        .o-expandable_target {
+        .o-expandable_header {
           background-color: @@light;
         }
 
@@ -124,13 +125,13 @@
         }
 
         &.has-attention {
-          .o-expandable_target {
+          .o-expandable_header {
             background-color: @@med;
           }
         }
 
         &.has-attention {
-          .o-expandable_target {
+          .o-expandable_header {
             background-color: @@med;
           }
         }
@@ -204,11 +205,6 @@
   .explain_pagination {
     margin-top: unit(15px / @base-font-size-px, em);
     .u-clearfix();
-  }
-
-  .explain_pagination .pagination_form {
-    padding-top: unit(11px / @base-font-size-px, em);
-    padding-bottom: unit(10px / @base-font-size-px, em);
   }
 
   .form-explainer_page-buttons {

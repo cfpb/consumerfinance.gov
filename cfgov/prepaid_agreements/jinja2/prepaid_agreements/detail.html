@@ -60,27 +60,23 @@
             <dd>
             {% if product.other_relevant_parties %}
                 {% if product.other_relevant_parties | length > 500 %}
-                    <div class="o-expandable
-                                o-expandable__read-more-toggle">
-                        <div class="o-expandable_content">
-                {% endif%}
-                {{ product.other_relevant_parties | replace('\n', '; ') }}
-                {% if product.other_relevant_parties | length > 500 %}
+                    <div class="o-summary-minimal">
+                        <div class="o-summary-minimal_content">
+                            {{ product.other_relevant_parties | replace('\n', '; ') }}
                         </div>
-                        <button class="o-expandable_header
-                                       o-expandable_target">
-                            <span class="o-expandable_link">
-                                <span class="o-expandable_cue o-expandable_cue-open">
-                                    Show full list of relevant parties
-                                    {{ svg_icon('plus-round') }}
-                                </span>
-                                <span class="o-expandable_cue o-expandable_cue-close">
-                                    Hide full list of relevant parties
-                                    {{ svg_icon('minus-round') }}
-                                </span>
+                        <button class="o-summary-minimal_btn">
+                            <span class="o-summary-minimal_cue-open">
+                                Show full list of relevant parties
+                                {{ svg_icon('plus-round') }}
+                            </span>
+                            <span class="o-summary-minimal_cue-close">
+                                Hide full list of relevant parties
+                                {{ svg_icon('minus-round') }}
                             </span>
                         </button>
                     </div>
+                {% else %}
+                    {{ product.other_relevant_parties | replace('\n', '; ') }}
                 {% endif %}
             {% else %}
                 {{ default_text }}

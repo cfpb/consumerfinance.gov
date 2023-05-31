@@ -21,11 +21,11 @@ The journey on how a page gets a filterable form is not necessarily a straight o
 
 ### FilterableListMixin
 
-The more common mixin that pages will extend is the [FilterableListMixin](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/filterable_list_mixins.py#L15). This class defines several important methods, such as `get_form_class`, which defines the form to use. We also have some methods that retrieve relevant information for the form to use, such as `get_filterable_list_wagtail_block`, `get_filterable_root`, and `get_filterable_queryset`. The bulk of the work is done in the `get_context` method, which is responsible for getting and populating the form, processing the form, and returning the results to the user.
+The more common mixin that pages will extend is the [FilterableListMixin](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/filterable_list_mixins.py#L15). This class defines several important methods, such as `get_form_class`, which defines the form to use. We also have some methods that retrieve relevant information for the form to use, such as `get_filterable_root` and `get_filterable_queryset`. The bulk of the work is done in the `get_context` method, which is responsible for getting and populating the form, processing the form, and returning the results to the user.
 
 ### CategoryFilterableMixin
 
-The [CategoryFilterableMixin](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/filterable_list_mixins.py#L199) is an extension of the base `FilterableListMixin` that exposes some new functionality. It modifies how `get_filterable_queryset` operates in that it gets an initial list of pages but limits them to only ones that are assigned a category within a set of initial categories, which is defined as the variable `filterable_categories` on a given page model. We can see this in action with both Newsroom (`NewsroomLandingPage`) and Recent Updates (`ActivityLogPage`) pages.
+The [CategoryFilterableMixin](https://github.com/cfpb/consumerfinance.gov/blob/3250275fdcca54a600859d8af3bcfde983200dfa/cfgov/v1/models/filterable_list_mixins.py#L183) is an extension of the base `FilterableListMixin` that exposes some new functionality. It modifies how `get_filterable_queryset` operates in that it gets an initial list of pages but limits them to only ones that are assigned a category within a set of initial categories, which is defined as the variable `filterable_categories` on a given page model. We can see this in action with both Newsroom (`NewsroomLandingPage`) and Recent Updates (`ActivityLogPage`) pages.
 
 ### Forms
 

@@ -7,7 +7,6 @@ cfgov/alerts/tests/json/
 cfgov/data_research/data/
 cfgov/retirement_api/data/
 cfgov/static_built/
-cfgov/legacy/static/nemo/_/js/
 **/fixtures/
 collectstatic/
 

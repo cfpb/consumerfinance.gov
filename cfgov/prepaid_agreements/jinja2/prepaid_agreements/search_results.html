@@ -33,13 +33,12 @@
             </select>
         </div>
 
-        <div class="filter-section">
+        <div class="o-expandable-group">
             {% set selections = filters['prepaid_type'] %}
             {% set expandable_settings = {
                 'label': 'Prepaid product type',
                 'is_expanded': selections | length > 0,
-                'is_midtone': true,
-                'hide_cue_label': true
+                'is_midtone': true
             } %}
             {% call() expandable(expandable_settings) %}
              <div class="o-form_group">
@@ -63,15 +62,12 @@
                 </fieldset>
             </div>
             {% endcall %}
-        </div>
 
-        <div class="filter-section">
             {% set selections = filters['status'] %}
             {% set expandable_settings = {
                 'label': 'Current status',
                 'is_expanded': selections | length > 0,
                 'is_midtone': true,
-                'hide_cue_label': true,
                 'paragraph': 'This will be either active or withdrawn.'
             } %}
             {% call() expandable(expandable_settings) %}

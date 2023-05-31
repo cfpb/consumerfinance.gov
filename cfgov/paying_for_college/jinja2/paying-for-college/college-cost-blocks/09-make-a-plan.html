@@ -34,8 +34,8 @@
 
         <p>From cheapest to most expensive, here are your options for closing that gap:</p>
 
-        <div class="o-expandable-group">
-            {% set expandable_settings = {
+        <div class="financial-item-group">
+            {% set flyout_settings = {
                 'label': 'Costs',
                 'value': '$0',
                 'is_editable': 'True',
@@ -43,7 +43,7 @@
                 'data_attribute': 'data-financial-item="total_costs"',
                 'note': '<strong>Minimize indirect costs:</strong> Can you reduce your indirect costs by living at home or buying a refurbished laptop?' | safe
             } %}
-            {% call() expandable(expandable_settings) %}
+            {% call() flyout(flyout_settings) %}
                 {{
                     input.render({
                         'label': 'Tuition and fees',
@@ -102,14 +102,14 @@
                 }}
             {% endcall %}
 
-            {% set expandable_settings = {
+            {% set flyout_settings = {
                 'label': 'Grants & scholarships',
                 'value': '$99,999',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_grantsScholarships"',
                 'note': '<strong>Apply for additional grants and scholarships:</strong> Ask the financial aid office and your school counselor (if you’re currently in high school) for help. <a href="https://studentaid.gov/understand-aid/types/scholarships" target="_blank" class="external-link" rel="noreferrer noopener">The Department of Education has more ideas here.</a>' | safe
             } %}
-            {% call() expandable(expandable_settings) %}
+            {% call() flyout(flyout_settings) %}
                 <div class="undergrad-content">
                     {{
                         input.render({
@@ -219,14 +219,14 @@
                     })
                 }}
             {% endcall %}
-            {% set expandable_settings = {
+            {% set flyout_settings = {
                 'label': 'Work-study<span class="graduate-content">, fellowships, and assistantships</span>' | safe,
                 'value': '$99,999',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_workStudyFellowAssist"',
                 'note': '<strong>Pursue a work-study position:</strong> Working can reduce borrowing and provide other benefits, as long as it doesn’t interfere with academic progress.' | safe
             } %}
-            {% call() expandable(expandable_settings) %}
+            {% call() flyout(flyout_settings) %}
                 {{
                     input.render({
                         'label': 'Work-study',
@@ -255,14 +255,14 @@
                 </div>
             {% endcall %}
 
-            {% set expandable_settings = {
+            {% set flyout_settings = {
                 'label': 'Other sources',
                 'value': '$99,999',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_otherResources"',
                 'note': '<span><strong>Find more cash:</strong> Can you contribute more from savings or work? Can anyone in your family help you?</span><span><strong>Ask about tuition payment plans:</strong> If the school offers a no-cost or low-cost installment plan, you and your family may be able to budget for paying your tuition gradually over time. Ask the financial aid office. </span>' | safe
             } %}
-            {% call() expandable(expandable_settings) %}
+            {% call() flyout(flyout_settings) %}
                 {{
                     input.render({
                         'label': 'Personal funds',
@@ -321,14 +321,14 @@
                 }}
             {% endcall %}
 
-            {% set expandable_settings = {
+            {% set flyout_settings = {
                 'label': 'Federal loans (minus loan fees)',
                 'value': '$99,999',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_fedLoans"',
                 'note': '<strong>Take out more federal loans:</strong> Generally, your financial aid offer includes the maximum amount of Direct Loans available to you. Contact the financial aid office to find out more.' | safe
             } %}
-            {% call() expandable(expandable_settings) %}
+            {% call() flyout(flyout_settings) %}
                 <div class="block block__mid block__flush-top financial-item-group undergrad-content">
                     {{
                         input.render({
@@ -384,14 +384,14 @@
                     }}
                 </div>
             {% endcall %}
-            {% set expandable_settings = {
+            {% set flyout_settings = {
                 'label': 'Other loans (minus loan fees)' | safe,
                 'value': '$99,999',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_publicLoans"',
                 'note': '<strong>Borrow more from the school:</strong> Contact the financial aid office to find out more. Remember, these loans may not offer the same protections as federal student loans.' | safe
             } %}
-            {% call() expandable(expandable_settings) %}
+            {% call() flyout(flyout_settings) %}
                 <div class="block block__mid block__flush-top financial-item-group">
                     {{
                         input.render({
@@ -510,14 +510,14 @@
                     </ul>' | safe
                 ) }}
 
-                <div class="plus-loan-expandable graduate-content">
-                    {% set expandable_settings = {
+                <div class="plus-loan-flyout graduate-content">
+                    {% set flyout_settings = {
                         'label': 'Direct PLUS (Grad PLUS) loan' | safe,
                         'value': '$0',
                         'is_editable': 'True',
                         'data_attribute': 'data-financial-item="total_plusLoans"'
                     } %}
-                    {% call() expandable(expandable_settings) %}
+                    {% call() flyout(flyout_settings) %}
                         <div class="plus-loan-form" >
                             {{
                                 input.render({
@@ -552,14 +552,14 @@
                         ) }}
                     {% endcall %}
                 </div>
-                <div class="plus-loan-expandable dependent-content">
-                    {% set expandable_settings = {
+                <div class="plus-loan-flyout dependent-content">
+                    {% set flyout_settings = {
                         'label': 'Parent PLUS loan' | safe,
                         'value': '$0',
                         'is_editable': 'True',
                         'data_attribute': 'data-financial-item="total_plusLoans"'
                     } %}
-                    {% call() expandable(expandable_settings) %}
+                    {% call() flyout(flyout_settings) %}
                          <div class="plus-loan-form">
                             {{
                                 input.render({
@@ -603,15 +603,15 @@
                         ) }}
                     {% endcall %}
                 </div>
-                 <div class="private-loan-expandable">
-                    {% set expandable_settings = {
+                 <div class="private-loan-flyout">
+                    {% set flyout_settings = {
                         'label': 'Private loans',
                         'value': '$0',
                         'is_editable': 'True',
                         'data_attribute': 'data-financial-item="total_privateLoans"',
                         'note': 'If you need a private loan, you\'ll have to apply directly to lenders. Shop around for the lowest interest rates and loan fees. Private lenders typically require a cosigner for these loans.'
                     } %}
-                    {% call() expandable(expandable_settings) %}
+                    {% call() flyout(flyout_settings) %}
                         <div class="private-loan-form">
                             <h4>Private Loan</h4>
                             {{

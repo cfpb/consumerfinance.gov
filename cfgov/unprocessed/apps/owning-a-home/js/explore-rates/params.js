@@ -35,7 +35,6 @@ function getAllParams() {
 
 /**
  * Retrieve a value from inside the params object.
- *
  * @param {string} key - The key for a property within the params object.
  * @returns {string|number|Array|undefined} The key on the params object to get.
  */
@@ -45,7 +44,6 @@ function getVal(key) {
 
 /**
  * Set a value inside the params object.
- *
  * @param {string} key - The key on the params object to set.
  * @param {string|number|Array|undefined} val - The value to set on `key`.
  */

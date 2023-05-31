@@ -70,7 +70,6 @@ const DESKTOP = 'desktop';
 
 /**
  * Checks whether the current breakpoint is in a particular breakpoint group.
- *
  * @param {string} breakpointGroup - Breakpoint group names.
  * @returns {boolean} True if in the breakpoint group, otherwise false.
  */

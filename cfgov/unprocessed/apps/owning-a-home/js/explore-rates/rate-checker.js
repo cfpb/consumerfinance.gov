@@ -211,7 +211,6 @@ function updateView() {
 
 /**
  * Updates the sentence above the chart.
- *
  * @param {Array} totalVals - List of interest rates.
  */
 function updateLanguage(totalVals) {
@@ -255,7 +254,6 @@ function updateLanguage(totalVals) {
 
 /**
  * Render the median percentage.
- *
  * @param {Array} totalVals - List of interest rates.
  */
 function renderMedian(totalVals) {
@@ -478,7 +476,6 @@ function processCounty() {
 /**
  * Store the loan amount and down payment, process the county data,
  * check if it's a jumbo loan.
- *
  * @param {HTMLElement} element - TODO: Add description.
  */
 function processLoanAmount(element) {
@@ -555,7 +552,6 @@ function hideSummary() {
 
 /**
  * Update the values in the dropdowns in the comparison section
- *
  * @param {object} data - Data object created by the updateView method.
  */
 function updateComparisons(data) {
@@ -625,7 +621,6 @@ function renderInterestAmounts() {
 
 /**
  * Calculate and display the plain language loan comparison summary.
- *
  * @param {Array} intVals - array with two objects containing rate, interest accrued, and term
  * @param {number} term - The term used in the HTML element's ID.
  */
@@ -753,7 +748,6 @@ function onSlideEndHandler() {
 
 /**
  * Initialize the rate checker app.
- *
  * @returns {undefined}
  */
 function init() {

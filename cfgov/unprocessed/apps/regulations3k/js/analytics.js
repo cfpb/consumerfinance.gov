@@ -2,7 +2,6 @@ import { analyticsSendEvent } from '@cfpb/cfpb-analytics';
 
 /**
  * Sends the user interaction to Analytics
- *
  * @param {string} action - The user's action
  * @param {string} label - The label associated with the action
  * @param {string} category - Optional category if it's not eRegs-related
@@ -17,7 +16,6 @@ const sendEvent = (action, label, category) => {
 
 /**
  * getExpandable - Find the expandable the user clicked.
- *
  * @param {event} event - Click event.
  * @returns {HTMLElement|null} The expandable or null if it's not an expandable
  */
@@ -31,7 +29,6 @@ const getExpandable = (event) => {
 
 /**
  * getExpandableState - TODO add description
- *
  * @param {HTMLElement} expandable - Expandable's HTML element.
  * @returns {string} Expandable's state, either `open` or `close`.
  */
@@ -46,7 +43,6 @@ const getExpandableState = (expandable) => {
 /**
  * handleNavClick - Listen for secondary nav clicks and report to GA if it's a
  * link to a reg section.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -66,7 +62,6 @@ const handleNavClick = (event) => {
 /**
  * handleContentClick - Listen for clicks within a reg section's content
  * and report to GA if they opened or closed an expandable.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */

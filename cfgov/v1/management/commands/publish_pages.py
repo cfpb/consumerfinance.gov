@@ -59,7 +59,7 @@ class Command(BaseCommand):
                 else:
                     raise
 
-            page = page.get_latest_revision_as_page()
+            page = page.get_latest_revision_as_object()
 
             if not options["dry_run"]:
                 page.save_revision().publish()

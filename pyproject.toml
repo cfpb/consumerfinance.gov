@@ -31,6 +31,7 @@ known_first_party = [
     "housing_counselor",
     "jobmanager",
     "legacy",
+    "login",
     "mega_menu",
     "paying_for_college",
     "permissions_viewer",

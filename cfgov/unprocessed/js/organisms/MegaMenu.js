@@ -20,7 +20,6 @@ const BASE_CLASS = 'o-mega-menu';
 
 /**
  * MegaMenu
- *
  * @class
  * @classdesc Initializes a new MegaMenu organism.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -115,7 +114,6 @@ function MegaMenu(element) {
   /**
    * Perform a recursive depth-first search of the DOM
    * and call a function for each node.
-   *
    * @param {HTMLElement} dom - A DOM element to search from.
    * @param {TreeNode} parentNode - Node in a tree from which
    *   to attach new nodes.
@@ -139,7 +137,6 @@ function MegaMenu(element) {
 
   /**
    * Create a new FlyoutMenu and attach it to a new tree node.
-   *
    * @param {HTMLElement} dom - A DOM element to check for a js
    *   data-* attribute hook.
    * @param {TreeNode} parentNode - The parent node in a tree on which
@@ -172,7 +169,6 @@ function MegaMenu(element) {
   /**
    * Handle events coming from menu,
    * and pass it to the desktop or mobile behaviors.
-   *
    * @param {object} event - A FlyoutMenu event object.
    */
   function _handleEvent(event) {
@@ -198,7 +194,6 @@ function MegaMenu(element) {
 
   /**
    * Close the mega menu.
-   *
    * @returns {MegaMenu} An instance.
    */
   function collapse() {
