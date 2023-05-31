@@ -1,7 +1,11 @@
 from django.conf import settings
 
 import boto3
-from botocore.exceptions import ClientError, ConnectionError
+from botocore.exceptions import (
+    ClientError,
+    ConnectionError,
+    ParamValidationError,
+)
 
 
 class Metadata:
@@ -29,5 +33,5 @@ class Metadata:
             agreements = [f.key for f in self.get_objects_by_prefix()]
             agreements.sort(reverse=reverse)
             return agreements
-        except (ClientError, ConnectionError):
+        except (ClientError, ConnectionError, ParamValidationError):
             return []
