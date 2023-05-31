@@ -5,7 +5,7 @@ from django.test import RequestFactory, TestCase
 from django.urls import reverse
 
 from agreements.models import Agreement, Issuer
-from agreements.views import index, issuer_search
+from agreements.views import archive, index, issuer_search
 
 
 class TestIssuerSearch(TestCase):
@@ -70,19 +70,31 @@ class TestIndexRender(TestCase):
     def setUp(self):
         self.request = RequestFactory().get("/")
 
-    @patch("agreements.views.Metadata")
     @patch("agreements.views.render")
-    def test_index(self, render, Metadata):
+    def test_index(self, render):
         index(self.request)
 
         render.assert_called_with(
             self.request,
             "agreements/index.html",
+        )
+
+
+class TestArchiveRender(TestCase):
+    def setUp(self):
+        self.request = RequestFactory().get(reverse("agreements_archive"))
+
+    @patch("agreements.views.Metadata")
+    @patch("agreements.views.render")
+    def test_archive(self, render, Metadata):
+        archive(self.request)
+
+        render.assert_called_with(
+            self.request,
+            "agreements/archive.html",
             {
                 "agreements": Metadata().get_sorted_agreements(),
                 "flexibilities": Metadata().flexibilities,
                 "notes": Metadata().notes,
-                "agreement_count": 0,
-                "pagetitle": "Credit card agreements",
             },
         )
