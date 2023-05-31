@@ -173,6 +173,7 @@ class AnswerPageDocumentTest(TestCase):
                     "autocomplete": {
                         "analyzer": "ngram_tokenizer",
                         "type": "text",
+                        "fields": {"raw": {"type": "keyword"}},
                     },
                     "language": {"type": "text"},
                     "portal_categories": {"type": "text"},
