@@ -13,14 +13,14 @@ TOO_YOUNG = """\
 <span class="h4">Sorry, our tool cannot provide an estimate \
 if you are under 22 years of age.</span> Please visit the \
 Social Security Administration's \
-<a href="https://www.ssa.gov/people/youngpeople/" \
+<a href="https://www.ssa.gov/people/students/" \
 target="_blank" rel="noopener noreferrer">advice page</a> \
 for students and younger workers.\
 """
 TOO_YOUNG_ES = """\
 Lo sentimos. No podemos estimar sus beneficios si usted \
 es menor de 22 años de edad.</span> \
-Visite <a href="https://www.ssa.gov/people/youngpeople/" \
+Visite <a href="https://www.ssa.gov/people/students/" \
 target="_blank" rel="noopener noreferrer">la página</a> \
 (en inglés) de la Administración \
 del Seguro Social para estudiantes y trabajadores jóvenes.\
