@@ -32,8 +32,6 @@
    post.preview_description:      A string with content of post summary.
    post.get_authors():            An array with authors of the post.
    post.tags:                     An array with the post tags for the post.
-   post.secondary_link_url:
-   post.secondary_link_text:
 
    post.event_start_dt:     A datetime object with the time of the event.
    post.event_stream_link:  A string with livestream link
@@ -201,12 +199,6 @@
             {% if show_tags and post.tags.exists() %}
                 {%- import 'v1/includes/tags.html' as tags %}
                 {{ tags.render(post.related_metadata_tags(), hide_heading=true) }}
-            {% endif %}
-
-            {% if post.secondary_link_url and post.secondary_link_text %}
-                <a href="{{ post.secondary_link_url }}" class="a-link a-link__jump">
-                    {{ post.secondary_link_text }}
-                </a>
             {% endif %}
         </div>
         {% endcache %}

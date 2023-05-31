@@ -17,7 +17,6 @@ export default function (label) {
 
   /**
    * Record state (expanded or collapsed) of expandables.
-   *
    * @param {string} id - The unique HTML ID of an expandable.
    */
   function recordExpandableState(id) {
@@ -31,7 +30,6 @@ export default function (label) {
 
   /**
    * Record state (expanded or collapsed) of expandables.
-   *
    * @param {HTMLElement} expandable - An expandable HTML element.
    * @returns {boolean} True if the expandable is animating, false otherwise.
    */
@@ -130,7 +128,7 @@ export default function (label) {
     trackFormExplainerPageButtonClick
   );
   addEventListenerToSelector(
-    '.o-expandable_target',
+    '.o-expandable_header',
     'mouseup',
     trackExpandableTargetsClick
   );

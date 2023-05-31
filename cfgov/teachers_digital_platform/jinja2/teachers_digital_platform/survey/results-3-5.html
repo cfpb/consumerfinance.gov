@@ -71,18 +71,16 @@
             {% set bb = 0 %}
             {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
             <div class="o-expandable o-expandable__padded">
-                <button class="o-expandable_header o-expandable_target"
+                <button class="o-expandable_header"
                         title="Expand content">
                     <h3 class="o-expandable_label">
                         <img src="{{ static('apps/teachers-digital-platform/img/planning.svg') }}" alt="planning icon"> {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_link">
-                <span class="o-expandable_cue o-expandable_cue-open">
-                    <span class="u-visually-hidden-on-mobile">Show</span>
+                <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
                     {{ svg_icon('plus-round') }}
                 </span>
-                <span class="o-expandable_cue o-expandable_cue-close">
-                    <span class="u-visually-hidden-on-mobile">Hide</span>
+                <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
                     {{ svg_icon('minus-round') }}
                 </span>
             </span>
@@ -110,18 +108,16 @@
             {% set bb = 1 %}
             {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
             <div class="o-expandable o-expandable__padded">
-                <button class="o-expandable_header o-expandable_target"
+                <button class="o-expandable_header"
                         title="Expand content">
                     <h3 class="o-expandable_label">
                         <img src="{{ static('apps/teachers-digital-platform/img/habits.svg') }}" alt="habits icon"> {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_link">
-                <span class="o-expandable_cue o-expandable_cue-open">
-                    <span class="u-visually-hidden-on-mobile">Show</span>
+                <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
                     {{ svg_icon('plus-round') }}
                 </span>
-                <span class="o-expandable_cue o-expandable_cue-close">
-                    <span class="u-visually-hidden-on-mobile">Hide</span>
+                <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
                     {{ svg_icon('minus-round') }}
                 </span>
             </span>
@@ -149,18 +145,16 @@
             {% set bb = 2 %}
             {% set progress = content.find_bb_progress(bb, subtotals[bb]) %}
             <div class="o-expandable o-expandable__padded">
-                <button class="o-expandable_header o-expandable_target"
+                <button class="o-expandable_header"
                         title="Expand content">
                     <h3 class="o-expandable_label">
                         <img src="{{ static('apps/teachers-digital-platform/img/knowledge.svg') }}" alt="knowledge icon"> {{ bbs[bb].title }}
                     </h3>
                     <span class="o-expandable_link">
-                <span class="o-expandable_cue o-expandable_cue-open">
-                    <span class="u-visually-hidden-on-mobile">Show</span>
+                <span class="o-expandable_cue-open" role="img" aria-label="{{ _('Show') }}">
                     {{ svg_icon('plus-round') }}
                 </span>
-                <span class="o-expandable_cue o-expandable_cue-close">
-                    <span class="u-visually-hidden-on-mobile">Hide</span>
+                <span class="o-expandable_cue-close" role="img" aria-label="{{ _('Hide') }}">
                     {{ svg_icon('minus-round') }}
                 </span>
             </span>

@@ -1,6 +1,6 @@
-import { scrollIntoView } from '../../../js/modules/util/scroll';
-import DT from '../../owning-a-home/js/form-explainer/dom-tools';
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { scrollIntoView } from '../../../js/modules/util/scroll.js';
+import DT from './dom-tools.js';
+import { ExpandableGroup } from '@cfpb/cfpb-expandables';
 
 const CSS = {
   HAS_ATTENTION: 'has-attention',
@@ -15,7 +15,6 @@ let UNDEFINED;
 
 /**
  * FormExplainer
- *
  * @class
  * @classdesc Initializes a new Form Explainer.
  * @param {HTMLElement} element - Base DOM element.
@@ -30,7 +29,6 @@ class FormExplainer {
 
   /**
    * Initialize the FormExplainer.
-   *
    * @returns {FormExplainer} An instance.
    */
   init() {
@@ -45,7 +43,6 @@ class FormExplainer {
 
   /**
    * Initialize the UI after instatiation.
-   *
    * @param {object} elements - Current page DOM elements.
    */
   initializeUI(elements) {
@@ -62,7 +59,7 @@ class FormExplainer {
       }
     });
 
-    Expandable.init();
+    ExpandableGroup.init();
   }
 
   /**
@@ -117,14 +114,13 @@ class FormExplainer {
 
   /**
    * Open the expandable and scroll into the viewport.
-   *
    * @param {HTMLElement} imageOverlay - Image overlay, which was clicked.
    * @param {HTMLElement} targetExpandable - Target expandable.
    * current focus.
    */
   openAndScrollToExpandable(imageOverlay, targetExpandable) {
     const targetExpandableTarget = targetExpandable.querySelector(
-      '.o-expandable_target'
+      '.o-expandable_header'
     );
 
     window.setTimeout(() => {
@@ -138,7 +134,6 @@ class FormExplainer {
 
   /**
    * Set the UI elements for the page
-   *
    * @returns {object} DOM elements for the page.
    */
   setUIElements() {
@@ -163,7 +158,6 @@ class FormExplainer {
 
   /**
    * Return explainer page element based on page number.
-   *
    * @param {number} pageNum - Number of explainer page.
    * @returns {object} Page DOM element.
    */
@@ -173,7 +167,6 @@ class FormExplainer {
 
   /**
    * Paginate through the various form pages.
-   *
    * @param {string} direction - 'next' or 'prev'.
    */
   paginate(direction) {
@@ -192,7 +185,6 @@ class FormExplainer {
 
   /**
    * Paginate through the various form pages.
-   *
    * @param {number} pageNum - Number of the current page.
    * @param {Function} callback - Function to invode after scroll.
    * @param {boolean} shouldScrollIntoView - Whether to scroll the page into view.
@@ -220,7 +212,6 @@ class FormExplainer {
 
   /**
    * Paginate through the various form pages.
-   *
    * @param {number} pageCount - Number of pages.
    */
   setPageCount(pageCount) {
@@ -231,7 +222,6 @@ class FormExplainer {
   /**
    * Switch pages by fading pages in / out and
    * updating the UI accordingly.
-   *
    * @param {number} currentPage - Current page Number.
    * @param {number} newPage - New page number.
    */
@@ -290,7 +280,7 @@ class FormExplainer {
     /* When a form explainer expandable target has the focus,
      * update the image overlay.
      */
-    DT.bindEvents('.o-expandable_target', 'focus', (event) => {
+    DT.bindEvents('.o-expandable_header', 'focus', (event) => {
       const expandable = event.target.closest('.o-expandable__form-explainer');
       this.updateAttention(expandable, CSS.HOVER_HAS_ATTENTION);
     });
@@ -312,7 +302,7 @@ class FormExplainer {
      * update the image overlay position and hover styles.
      */
     DT.bindEvents(
-      '.o-expandable__form-explainer .o-expandable_target',
+      '.o-expandable__form-explainer .o-expandable_header',
       ['click', 'keypress'],
       (event) => {
         if (event.which === 13 || event.type === 'click') {

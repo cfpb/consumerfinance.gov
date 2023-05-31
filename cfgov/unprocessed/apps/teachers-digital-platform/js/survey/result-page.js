@@ -32,7 +32,6 @@ function resultsPage() {
 
 /**
  * Handle initials validation and callback on valid entry.
- *
  * @param {HTMLDivElement} desc - Modal description DIV.
  * @param {Function} cb - Callback with valid initials.
  */

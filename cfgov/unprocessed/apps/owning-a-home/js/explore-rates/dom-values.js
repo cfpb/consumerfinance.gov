@@ -2,7 +2,6 @@ import { convertStringToNumber } from '../../../../js/modules/util/format.js';
 
 /**
  * Get value(s) of an individual HTML element in the control panel.
- *
  * @param {string} param - Name of parameter to get.
  *   Usually the HTML element's id attribute.
  * @returns {object} Hash of element id and its value(s).

@@ -8,7 +8,6 @@ import { checkDom } from '@cfpb/cfpb-atomic-component';
 
 /**
  * ClearableInput
- *
  * @class
  * @classdesc Initializes a new ClearableInput molecule.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -36,15 +35,13 @@ function ClearableInput(element) {
 
   /**
    * Event handler for when the clear input label was clicked.
-   *
    * @param {MouseEvent} event - The event object for the mousedown event.
    */
   function _clearClicked(event) {
     _inputDom.value = _setClearBtnState('');
     _inputDom.focus();
     // Create custom clear event so we can automatically reset results after clear.
-    const customEvent = document.createEvent('Event');
-    customEvent.initEvent('clear', true, true);
+    const customEvent = new Event('clear', { bubbles: true, cancelable: true });
     _clearBtnDom.dispatchEvent(customEvent);
     // Prevent event bubbling up to the input, which would blur otherwise.
     event.preventDefault();

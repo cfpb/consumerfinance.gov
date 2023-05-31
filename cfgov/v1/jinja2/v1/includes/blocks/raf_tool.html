@@ -15,15 +15,15 @@
 
 #rental-assistance-finder .result-item dd.status-accepting,
 #rental-assistance-finder .result-item dd.status-rolling {
-  background-color: #e2efd8;  
+  background-color: #e2efd8;
 }
 
 #rental-assistance-finder .result-item dd.status-waitlist {
-  background-color: #fff0dd;  
+  background-color: #fff0dd;
 }
 
 #rental-assistance-finder .result-item dd.status-unknown {
-  background-color: #d2d3d5;  
+  background-color: #d2d3d5;
 }
 </style>
 
@@ -38,7 +38,7 @@
 </div>
 
 
-<div class="js-is-hidden">
+<div class="u-hide-if-js">
   {% import 'v1/includes/molecules/notification.html' as notification with context %}
     {{ notification.render(
       'error',

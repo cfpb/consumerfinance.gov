@@ -82,7 +82,6 @@ function readSurveyData() {
 
 /**
  * If the user has skipped ahead, redirect and return true.
- *
  * @param {SurveyData} data - Survey data.
  * @returns {boolean} True if execution should halt.
  */
@@ -108,7 +107,6 @@ function userSkippedAhead(data) {
 /**
  * Make sure new selections are recorded in sessionStorage and that the
  * numAnswered data is updated for progress updates.
- *
  * @param {SurveyData} data - Survey data.
  * @param {Record<string, any>} store - Store of selected answers.
  */
@@ -127,7 +125,6 @@ function handleNewSelections(data, store) {
 /**
  * If the user has results, don't allow re-entry into the survey.
  * Redirect and return true.
- *
  * @returns {boolean} True if execution should halt
  */
 function userTriedReentry() {

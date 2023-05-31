@@ -83,6 +83,7 @@
            it from bleeding horizontally to the edges of the screen. #}
         .m-hero{%- if value.is_50_50 %}_wrapper{% endif %} {
             {%- if value.background_color %}
+                --m-hero-background-color: {{ value.background_color }};
                 background-color: {{ value.background_color }};
             {% endif -%}
             {%- if value.is_50_50 %}

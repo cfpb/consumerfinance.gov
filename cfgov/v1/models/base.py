@@ -21,6 +21,7 @@ from wagtail.models import Page, Site
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
+from modelcluster.queryset import FakeQuerySet
 from taggit.models import ItemBase, TagBase, TaggedItemBase
 from wagtailinventory.helpers import get_page_blocks
 
@@ -176,14 +177,13 @@ class CFGOVPage(Page):
         FieldPanel("sidefoot"),
     ]
 
-    settings_panels = [
+    settings_panels = Page.settings_panels + [
         MultiFieldPanel(promote_panels, heading="Settings"),
         InlinePanel("categories", label="Categories", max_num=2),
         FieldPanel("tags", heading="Tags"),
         FieldPanel("authors", heading="Authors"),
         FieldPanel("content_owners", heading="Content Owners"),
         FieldPanel("schema_json", heading="Structured Data"),
-        MultiFieldPanel(Page.settings_panels, heading="Scheduled Publishing"),
         MultiFieldPanel(
             [
                 FieldPanel("language", heading="Language"),
@@ -350,11 +350,17 @@ class CFGOVPage(Page):
         context["is_faq_page"] = self.is_faq_page()
         return context
 
-    def serve(self, request, *args, **kwargs):
-        # Force the page's language on the request
+    def _activate_translation(self, request):
         translation.activate(self.language)
         request.LANGUAGE_CODE = translation.get_language()
+
+    def serve(self, request, *args, **kwargs):
+        self._activate_translation(request)
         return super().serve(request, *args, **kwargs)
+
+    def serve_preview(self, request, *args, **kwargs):
+        self._activate_translation(request)
+        return super().serve_preview(request, *args, **kwargs)
 
     def streamfield_media(self, media_type):
         media = []
@@ -394,7 +400,7 @@ class CFGOVPage(Page):
         return "post_preview_{}".format(self.id)
 
     def get_translations(self, inclusive=True, live=True):
-        if self.language == "en":
+        if self.language == "en" and self.pk:
             query = Q(english_page=self)
         elif self.english_page:
             query = Q(english_page=self.english_page) | Q(
@@ -403,10 +409,11 @@ class CFGOVPage(Page):
         else:
             query = Q(pk__in=[])
 
-        if inclusive:
-            query = query | Q(pk=self.pk)
-        else:
-            query = query & ~Q(pk=self.pk)
+        if self.pk:
+            if inclusive:
+                query = query | Q(pk=self.pk)
+            else:
+                query = query & ~Q(pk=self.pk)
 
         pages = CFGOVPage.objects.filter(query)
 
@@ -417,14 +424,26 @@ class CFGOVPage(Page):
         if site:
             pages = pages.in_site(site)
 
-        pages = pages.annotate(
-            language_display_order=models.Case(
-                *[
-                    models.When(language=language, then=i)
-                    for i, language in enumerate(dict(settings.LANGUAGES))
-                ]
-            ),
-        ).order_by("language_display_order")
+        if inclusive and not self.pk:
+
+            def get_language_order(page):
+                return list(dict(settings.LANGUAGES).keys()).index(
+                    page.language
+                )
+
+            pages = FakeQuerySet(
+                type(self),
+                sorted(list(pages) + [self], key=get_language_order),
+            )
+        else:
+            pages = pages.annotate(
+                language_display_order=models.Case(
+                    *[
+                        models.When(language=language, then=i)
+                        for i, language in enumerate(dict(settings.LANGUAGES))
+                    ]
+                ),
+            ).order_by("language_display_order")
 
         return pages
 

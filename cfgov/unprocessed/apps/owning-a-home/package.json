@@ -15,7 +15,6 @@
   "dependencies": {
     "amortize": "1.1.0",
     "date-format": "3.0.0",
-    "fastdom": "1.0.10",
     "format-usd": "1.0.1",
     "highcharts": "7.2.2",
     "jquery": "3.6.0",

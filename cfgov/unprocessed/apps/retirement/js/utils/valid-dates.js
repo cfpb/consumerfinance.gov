@@ -2,7 +2,6 @@ import enforceRange from './enforce-range.js';
 
 /**
  * Checks if the given date is valid.
- *
  * @param {number} month - Month (1-12).
  * @param {number} day - Day (1-31).
  * @param {number} year - Year.

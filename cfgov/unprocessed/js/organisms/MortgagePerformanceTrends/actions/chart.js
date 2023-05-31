@@ -5,7 +5,6 @@ const chartActionCreators = defaultActionCreators();
 
 /**
  * fetchMetroStates - Creates async action to fetch list of valid metro states.
- *
  * @param {string} metroState - Two-letter U.S. state abbreviation.
  * @returns {Function} Thunk called with metro states.
  */
@@ -47,7 +46,6 @@ chartActionCreators.fetchMetroStates = (metroState) => (dispatch) =>
 /**
  * fetchNonMetroStates -
  * Creates async action to fetch list of valid non-metro states.
- *
  * @param {string} nonMetroState - Two-letter U.S. state abbreviation.
  * @returns {Function} Thunk called with metro states.
  */
@@ -75,7 +73,6 @@ chartActionCreators.fetchNonMetroStates = (nonMetroState) => (dispatch) =>
 /**
  * fetchCountyStates -
  * Creates async action to fetch list of valid counties in states.
- *
  * @param {string} countyState - Two-letter U.S. state abbreviation.
  * @returns {Function} Thunk called with county states.
  */
@@ -113,7 +110,6 @@ chartActionCreators.fetchCountyStates = (countyState) => (dispatch) =>
 
 /**
  * fetchStates - Creates async action to fetch list of valid states.
- *
  * @param {string} selectedState - Two-letter U.S. state abbreviation.
  * @param {boolean} includeComparison - Include national comparison?
  * @returns {Function} Thunk called with valid states.
@@ -157,7 +153,6 @@ chartActionCreators.fetchStates =
 
 /**
  * setStates - New U.S. states.
- *
  * @param {Array} states - List of U.S. states.
  * @returns {object} Action with new U.S. states.
  */
@@ -168,7 +163,6 @@ chartActionCreators.setStates = (states) => ({
 
 /**
  * fetchMetros - Creates async action to fetch list of metros
- *
  * @param {string} metroState - Two-letter U.S. state abbreviation.
  * @param {boolean} includeComparison - Include national comparison?
  * @returns {Function} Thunk called with new metros
@@ -212,7 +206,6 @@ chartActionCreators.fetchMetros =
 
 /**
  * fetchCounties - Creates async action to fetch list of counties
- *
  * @param {string} countyState - Two-letter U.S. state abbreviation.
  * @param {boolean} includeComparison - Include national comparison?
  * @returns {Function} Thunk called with new metros

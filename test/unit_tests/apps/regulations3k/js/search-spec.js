@@ -54,8 +54,7 @@ describe('The Regs3K search page', () => {
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
     // Fire `load` event
-    const event = document.createEvent('Event');
-    event.initEvent('load', true, true);
+    const event = new Event('load', { bubbles: true, cancelable: true });
     window.dispatchEvent(event);
   });
 

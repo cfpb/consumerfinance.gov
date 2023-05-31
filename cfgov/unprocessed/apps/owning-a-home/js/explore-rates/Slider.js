@@ -4,7 +4,6 @@ import rangesliderJs from 'rangeslider-js';
 
 /**
  * Slider
- *
  * @class
  * @classdesc Initializes the organism.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -98,7 +97,6 @@ function Slider(element) {
 
   /**
    * Set the state of the slider.
-   *
    * @param {number} state - 0 = okay, 1 = warning state.
    */
   function setState(state) {

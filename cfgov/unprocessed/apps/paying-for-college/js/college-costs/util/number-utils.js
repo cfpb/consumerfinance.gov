@@ -1,6 +1,5 @@
 /**
  * decimalToPercentString - Format decimal into a percentage string.
- *
  * @param {number} number - Number to be formatted.
  * @param {number} decimalPlaces - Number of decimal places to display,
  *   default 2.
@@ -16,7 +15,6 @@ function decimalToPercentString(number, decimalPlaces) {
 
 /**
  * enforceRange - Force a number between a range.
- *
  * @param {number} n - Number to be checked.
  * @param {number} min - Minimum value of n.
  * @param {number} max - Maximum value of n.
@@ -50,7 +48,6 @@ function enforceRange(n, min, max) {
 
 /**
  * isNumeric - Verify that a value contains only number or decimal characters.
- *
  * @param {*} value - Value to be checked.
  * @returns {boolean} True if value only contains numeric characters,
  *   false otherwise.

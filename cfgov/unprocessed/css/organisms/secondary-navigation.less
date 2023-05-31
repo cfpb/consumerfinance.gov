@@ -11,15 +11,15 @@
       markup: |
         <nav class="o-expandable
                     o-secondary-navigation">
-            <button class="o-expandable_header o-expandable_target">
+            <button class="o-expandable_header">
                 <span class="h5 o-expandable_label">
                     Nav Button
                 </span>
                 <span class="o-expandable_link">
-                    <span class="o-expandable_cue-open">
+                    <span class="o-expandable_cue-open" role="img" aria-label="Show">
                         {{ svg_icon('plus-round') }}
                     </span>
-                    <span class="o-expandable_cue-close">
+                    <span class="o-expandable_cue-close" role="img" aria-label="Hide">
                         {{ svg_icon('minus-round') }}
                     </span>
                 </span>
@@ -41,7 +41,7 @@
           Structural cheat sheet:
           -----------------------
           .o-expandable.o-secondary-navigation
-            .o-expandable_header.o-expandable_target
+            .o-expandable_header
               .o-expandable_cue-open
                 .cf-icon-svg
               .o-expandable_cue-close
@@ -83,7 +83,7 @@
       background: none;
     }
 
-    .o-expandable_target {
+    .o-expandable_header {
       display: none;
     }
 

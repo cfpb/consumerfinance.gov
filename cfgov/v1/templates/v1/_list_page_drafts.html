@@ -1,0 +1,33 @@
+{% extends 'wagtailadmin/reports/listing/_list_page_report.html' %}
+
+ 
+{% block extra_columns %}
+    <th>URL</th>
+    <th>Language</th>
+    <th>Tags</th>
+    <th>Categories</th>
+    <th>Content Owner(s)</th>
+    <th>Ever Published?</th>
+{% endblock %}
+
+{% block extra_page_data %}
+    <td valign="top">
+        {{ page.url }}
+    </td>
+    <td valign="top">
+        {{ page.language }}
+    </td>
+    <td valign="top">
+        {{ page.tags.names|join:", " }}
+    </td>
+    <td valign="top">
+        {% for cat in page.categories.all %}
+        {% if cat.get_name_display and not forloop.last %}
+        {{ cat.get_name_display }}, {% else %}{{ cat.get_name_display }}
+        {% endif %}{% endfor %}
+    </td>
+    <td>
+        {{ page.content_owners.names|join:", " }}
+    </td>
+{% endblock %}
+

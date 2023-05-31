@@ -6,7 +6,6 @@ const financialModel = {
 
   /**
    * Initiates the model
-   *
    * @param {object} apiData - Data received from the schoolData API
    */
   init: function (apiData) {
@@ -96,7 +95,6 @@ const financialModel = {
 
   /**
    * Updates the financial model with values from school and program data.
-   *
    * @param { object } schoolValues - contains school and program data values.
    */
   updateModelWithProgram: function (schoolValues) {
@@ -112,7 +110,6 @@ const financialModel = {
 
   /**
    * recalculates overborrowing so that it includes tuition payment plans
-   *
    * @returns {number} - Overborrowing value
    */
   recalcOverborrowing: function () {

@@ -14,18 +14,11 @@
 
    value.no_posts_explanation: More info to show in "no posts" state.
 
-   value.form_type: What type of form this is.
-
    value.categories.page_type: What kind of pages are being filtered,
                                e.g. 'final-rule', 'blog'.
                                This is used to determine what categories
                                to allow filtering on, as well as how the
                                post preview is displayed.
-
-   value.output_5050: Whether to render results as info-units or not.
-
-   value.link_image_and_heading: Whether to link the image and heading
-                                 in info-units.
 
    filter_data.form: Django form that carries the fields to be rendered.
 
@@ -51,7 +44,7 @@
         value.no_posts_explanation
     ) }}
 {% elif has_unfiltered_results %}
-    <div class="o-filterable-list">
+    <div>
         {% set form = filter_data.form %}
         {% set posts = filter_data.page_set %}
 
@@ -113,13 +106,13 @@
             {% endif %}
         {% endif %}
 
-        <div class="o-filterable-list_notification
-                    block
+        <div class="block
                     block__padded
                     block__sub
                     {%- if not has_active_filters %}
                     u-hidden
-                    {%- endif %}">
+                    {%- endif %}"
+             data-cy="filterable-list-notification">
             {{ notification.render(
                 notification_opts.type,
                 notification_opts.is_visible,
@@ -131,53 +124,15 @@
         {# ADD THE FILTER RESULTS, IF THERE ARE ANY. #}
 
         {% if count is defined and count > 0 %}
-            <section class="o-filterable-list_results
-                            block
+            <section class="block
                             block__sub
                             {%- if has_active_filters %}
                             block__flush-top
-                            {%- endif %}">
+                            {%- endif %}"
+                     data-cy="filterable-list-results">
                 {% if value.categories.page_type == 'activity-log' %}
                     {% import 'v1/activity-log/_activity-list.html' as activity_list with context %}
                     {{ activity_list.render(posts) }}
-                {% elif value.output_5050 %}
-                    {% from 'v1/includes/molecules/info-unit-2.html' import info_unit with context %}
-                    <div class="o-info-unit-group u-mb30">
-                        <div class="content-l">
-                            {% for post in posts %}
-                            <div class="content-l_col
-                                        content-l_col-1-2">
-                                {% set post_url = pageurl(post) %}
-                                {% if post.secondary_link_url and post.secondary_link_text %}
-                                    {% set links = [
-                                        {
-                                            'url': post.secondary_link_url,
-                                            'text': post.secondary_link_text
-                                        }
-                                    ] %}
-                                {% endif %}
-
-                                {{ info_unit(
-                                    {
-                                        'image': {
-                                            'upload': post.preview_image,
-                                            'alt': post.preview_image.alt if post.preview_image.alt else ''
-                                        } if post.preview_image else {},
-                                        'heading': {
-                                            'text': post.preview_title,
-                                            'level': 'h2',
-                                            'level_class': 'h3'
-                                        } if post.preview_title else null,
-                                        'body': post.preview_description,
-                                        'links': links or null,
-                                    },
-                                    '50-50',
-                                    value.link_image_and_heading
-                                 ) }}
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
                 {% else %}
                     {% import 'v1/includes/organisms/post-preview.html' as post_preview without context %}
                     {% for post in posts %}

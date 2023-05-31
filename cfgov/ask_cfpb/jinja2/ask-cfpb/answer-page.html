@@ -46,18 +46,6 @@
             </div>
         {% endif %}
 
-        {% if page.share_and_print %}
-            {% import "v1/includes/molecules/social-media.html" as social_media with context -%}
-            <div class="block block__flush-top block__flush-bottom block__padded-bottom">
-                {{ social_media.render(
-                    {
-                        'is_share_view': true,
-                        'is_printable': true
-                    }
-                ) }}
-            </div>
-        {% endif %}
-
         {% if page.notification %}
             <div class="block block__sub">
                 {{ page.notification }}

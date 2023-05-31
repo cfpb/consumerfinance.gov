@@ -186,7 +186,6 @@ function _addListeners() {
 
 /**
  * Convert JSON string of school search results into markup.
- *
  * @param {string} responseText - JSON string of school info.
  */
 function _formatSearchResults(responseText) {
@@ -238,7 +237,6 @@ function _handleInputChange() {
 
 /**
  * Graduate program selection has changed.
- *
  * @param {Event} event - change event object.
  */
 function _handleProgramSelectChange(event) {
@@ -265,7 +263,6 @@ function _handleProgramSelectChange(event) {
 
 /**
  * An item in the search results box was clicked.
- *
  * @param {MouseEvent} event - click event object.
  */
 function _handleResultButtonClick(event) {
@@ -299,7 +296,6 @@ function _handleResultButtonClick(event) {
 
 /**
  * A school program selection radio button was clicked.
- *
  * @param {MouseEvent} event - click event object.
  */
 function _handleProgramRadioClick(event) {

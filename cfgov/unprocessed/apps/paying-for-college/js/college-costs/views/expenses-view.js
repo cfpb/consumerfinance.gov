@@ -76,7 +76,6 @@ function _addInputListeners() {
 
 /**
  * Event handling for expenses-item INPUT changes.
- *
  * @param {KeyboardEvent} event - Triggering event.
  */
 function _handleInputChange(event) {

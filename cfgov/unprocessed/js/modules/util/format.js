@@ -2,7 +2,6 @@
  * Turns a string into a number.
  * Assumes each number in the string should be preserved (unlike parseInt)
  * Assumes the first instance of a decimal point is the intended one.
- *
  * @param  {string} numberString - A string representing a number.
  * @returns {number} The assumed numeric value of numberString
  */
@@ -33,7 +32,6 @@ function convertStringToNumber(numberString) {
 
 /**
  * Strip any periods after the first.
- *
  * @param {string} match - The matched substring.
  * @param {number} offset - The numeric offset of the matched substring.
  * @param {string} full - The full string to be matched against.

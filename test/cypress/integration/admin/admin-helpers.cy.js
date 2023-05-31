@@ -9,14 +9,6 @@ export class AdminPage {
     cy.get('form').submit();
   }
 
-  openMostRecentPage() {
-    cy.get('.listing-page a').first().click();
-  }
-
-  publishPage() {
-    cy.get('#page-edit-form').submit();
-  }
-
   successBanner() {
     return cy.get('.messages').find('.success');
   }
@@ -216,11 +208,9 @@ export class AdminPage {
   }
 
   addTable() {
+    cy.get('input[value="table_block"]', { timeout: 1000 }).should('not.exist');
     this.clickBlock('table_block');
-    cy.get('.c-sf-container__block-container', { timeout: 60000 }).should(
-      'be.visible'
-    );
-    cy.get('.c-sf-add-panel__grid', { timeout: 60000 }).should('be.visible');
+    cy.get('input[value="table_block"]', { timeout: 1000 }).should('exist');
   }
 
   getFirstTableCell() {
@@ -237,14 +227,19 @@ export class AdminPage {
   editFirstTableCell() {
     cy.get('.htCore td').first().as('firstTableCell');
 
-    /* We need to click near the top left of the cell, otherwise we'll click on
-    a link once a link has been inserted in the cell */
+    /* We need to click near the top left of the cell. */
     cy.get('@firstTableCell').dblclick(5, 5, { force: true });
     this.getTableEditor();
   }
 
   selectTableEditorButton(name) {
-    cy.get('@tableEditor').find(`[name="${name}"]`).click();
+    // Type a slash to open the popup menu.
+    cy.get('.public-DraftEditor-content:visible', { timeout: 1000 })
+      .clear()
+      .type('/');
+
+    // Then click on the item we want.
+    cy.get('.Draftail-ComboBox__option-text').contains(name).click();
   }
 
   searchFirstTableCell(name) {
@@ -267,20 +262,5 @@ export class AdminPage {
         // We need to wait for a bit or the typed text won't be captured
         .wait(500)
     );
-  }
-
-  selectInternalLink(text) {
-    cy.get('.choose-page').contains(text).click();
-  }
-
-  selectDocumentLink(text) {
-    cy.get('#id_q').invoke('val', text).trigger('change');
-    cy.get('#id_q').type(' ');
-    cy.get('#id_q').type('{enter}');
-    cy.wait(1000);
-    cy.get('.document-choice').should('contain', text);
-    cy.get('#search-results').should('contain', 'There is 1 match');
-    cy.get('#search-results', { timeout: 10000 }).contains(text).click();
-    cy.wait(1000);
   }
 }

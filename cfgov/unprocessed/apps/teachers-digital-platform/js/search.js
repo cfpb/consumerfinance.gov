@@ -9,7 +9,7 @@ import {
   updateUrl,
 } from './search-utils.js';
 import expandableFacets from './expandable-facets.js';
-import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable.js';
+import cfExpandables from './Expandable.js';
 import {
   handleClearAllClick,
   handleFetchSearchResults,
@@ -69,7 +69,6 @@ function addDataGtmIgnore() {
 
 /**
  * Remove a filter from the search results page.
- *
  * @param {Event} event - Click event
  */
 function clearFilter(event) {
@@ -92,7 +91,6 @@ function clearFilter(event) {
 /**
  * Remove a filter tag from the search results page.
  * node.remove() isn't supported by IE so we have to removeChild();
- *
  * @param {Node} tag - Filter tag HTML element
  */
 function removeTag(tag) {
@@ -103,7 +101,6 @@ function removeTag(tag) {
 
 /**
  * Remove all filters from the search results page.
- *
  * @param {Event} event - Click event
  */
 function clearFilters(event) {
@@ -125,7 +122,6 @@ function clearFilters(event) {
 
 /**
  * Trigger a form submit after Clear Search is clicked.
- *
  * @param {Event} event - Click event
  */
 function clearSearch(event) {
@@ -137,7 +133,6 @@ function clearSearch(event) {
 
 /**
  * Handle keyword search form submission.
- *
  * @param {Event} event - Click event
  * @returns {string} New page URL with search terms
  */
@@ -152,7 +147,6 @@ function handleSubmit(event) {
 
 /**
  * fetch search results based on filters and keywords.
- *
  * @param {NodeList} filters - List of filter checkboxes
  * @returns {string} New page URL with search terms
  */
@@ -197,7 +191,6 @@ function fetchSearchResults(filters = []) {
 
 /**
  * Handle filter change events.
- *
  * @param {Event} event - Click event
  * @param {HTMLElement} target - DOM element
  * @returns {string} New page URL with search terms
@@ -245,7 +238,6 @@ function handleFilter(event, target = null) {
 
 /**
  * Traverse parents and update their checkbox values.
- *
  * @param {HTMLElement} element - DOM element
  */
 function _updateParentFilter(element) {

@@ -1,6 +1,5 @@
 from datetime import date, datetime
 from io import StringIO
-from time import sleep
 
 from django.test import TestCase, override_settings
 
@@ -70,7 +69,6 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         site_root = Site.objects.get(is_default_site=True).root_page
         form = FilterableListForm(
             filterable_search=FilterablePagesDocumentSearch(site_root),
-            wagtail_block=None,
             filterable_categories=filterable_categories,
         )
         form.is_bound = True
@@ -186,6 +184,19 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         form.all_filterable_results = []
         self.assertEqual(form.first_page_date(), date(2010, 1, 1))
 
+    def test_get_topics_sorts_alphabetically(self):
+        form = self.setUpFilterableForm()
+
+        self.assertEqual(
+            list(form.get_filterable_topics([self.blog1.pk])),
+            [("foo", "foo")],
+        )
+
+        self.assertEqual(
+            list(form.get_filterable_topics([self.blog1.pk, self.blog2.pk])),
+            [("blah", "blah"), ("foo", "foo")],
+        )
+
 
 @override_settings(OPENSEARCH_DSL_AUTOSYNC=True)
 class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
@@ -206,13 +217,10 @@ class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
         site_root = Site.objects.get(is_default_site=True).root_page
         form = EventArchiveFilterForm(
             filterable_search=EventFilterablePagesDocumentSearch(site_root),
-            wagtail_block=None,
             filterable_categories=None,
         )
         form.is_bound = True
         form.cleaned_data = {"categories": []}
-        # wait for cleaned_data to be updated before we query it
-        sleep(1)
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.event)
@@ -235,7 +243,6 @@ class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
             filterable_search=EnforcementActionFilterablePagesDocumentSearch(
                 site_root
             ),
-            wagtail_block=None,
             filterable_categories=None,
         )
         form.is_bound = True

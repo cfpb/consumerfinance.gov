@@ -1,22 +1,24 @@
 import html
 from datetime import date
 from functools import partial
-from operator import itemgetter
+from operator import attrgetter, itemgetter
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from django.utils import html as html_util
 
 from wagtail.admin.filters import WagtailFilterSet
 from wagtail.admin.views.reports import PageReportView, ReportView
 from wagtail.documents.models import Document
 from wagtail.images import get_image_model
+from wagtail.models import Site
 
 import django_filters
 from bs4 import BeautifulSoup
 
 from ask_cfpb.models.answer_page import AnswerPage
-from v1.models import CFGOVPage
+from v1.models import AbstractFilterPage, CFGOVImage, CFGOVPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.util.ref import categories, get_category_icon
 
@@ -119,6 +121,51 @@ class PageMetadataReportView(PageReportView):
     def get_queryset(self):
         return CFGOVPage.objects.filter(live=True).prefetch_related(
             "tags", "categories"
+        )
+
+
+class DraftReportView(PageReportView):
+    header_icon = "doc-empty"
+    title = "Draft Pages"
+
+    list_export = PageReportView.list_export + [
+        "url",
+        "language",
+        "tags.names",
+        "categories.all",
+        "content_owners.names",
+        "first_published_at",
+    ]
+    export_headings = dict(
+        [
+            ("url", "URL"),
+            ("language", "Language"),
+            ("tags.names", "Tags"),
+            ("categories.all", "Categories"),
+            ("content_owners.names", "Content Owner(s)"),
+            ("first_published_at", "Published?"),
+        ],
+        **PageReportView.export_headings,
+    )
+
+    custom_field_preprocess = {
+        "categories.all": {
+            "csv": process_categories,
+            "xlsx": process_categories,
+        }
+    }
+
+    template_name = "v1/page_draft_report.html"
+
+    def get_filename(self):
+        return generate_filename("pages")
+
+    def get_queryset(self):
+        default_site = Site.objects.get(is_default_site=True)
+        return (
+            CFGOVPage.objects.in_site(default_site)
+            .not_live()
+            .prefetch_related("tags", "categories")
         )
 
 
@@ -262,7 +309,6 @@ class AskReportView(ReportView):
         "url",
         "live",
         "last_edited",
-        "redirect_to_page",
         "portal_topic.all",
         "portal_category.all",
         "related_questions.all",
@@ -280,7 +326,6 @@ class AskReportView(ReportView):
         "url": "URL",
         "live": "Live",
         "last_edited": "Last edited",
-        "redirect_to_page": "Redirect",
         "portal_topic.all": "Portal topics",
         "portal_category.all": "Portal categories",
         "related_questions.all": "Related questions",
@@ -317,7 +362,6 @@ class AskReportView(ReportView):
         "answer_base": {"csv": partial(process_related_item, key="id")},
         "short_answer": {"csv": strip_html},
         "answer_content": {"csv": process_answer_content},
-        "redirect_to_page": {"csv": partial(process_related_item, key="id")},
         "portal_topic.all": {
             "csv": partial(join_values_with_pipe, key="heading")
         },
@@ -388,6 +432,10 @@ class TranslatedPagesReportFilterSet(WagtailFilterSet):
 
         return queryset
 
+    class Meta:
+        model = CFGOVPage
+        fields = ["language"]
+
 
 class TranslatedPagesReportView(PageReportView):
     title = "Translated Pages"
@@ -422,3 +470,51 @@ class ActiveUsersReportView(ReportView):
 
     def get_queryset(self):
         return get_user_model().objects.filter(is_active=True)
+
+
+class PagePreviewFieldsReportView(PageReportView):
+    title = "Page Preview Fields"
+    header_icon = "view"
+    template_name = "v1/page_preview_fields_report.html"
+
+    def get_queryset(self):
+        default_site = Site.objects.get(is_default_site=True)
+        return (
+            AbstractFilterPage.objects.in_site(default_site)
+            .exclude(
+                (Q(preview_title__isnull=True) | Q(preview_title=""))
+                & (
+                    Q(preview_subheading__isnull=True)
+                    | Q(preview_subheading="")
+                )
+                & (
+                    Q(preview_description__isnull=True)
+                    | Q(preview_description="")
+                )
+                & Q(preview_image__isnull=True)
+            )
+            .specific()
+        )
+
+    list_export = PageReportView.list_export + [
+        "url",
+        "seo_title",
+        "search_description",
+        "preview_title",
+        "preview_subheading",
+        "preview_description",
+        "preview_image",
+    ]
+
+    custom_field_preprocess = {
+        "preview_description": {
+            fmt: html_util.strip_tags for fmt in PageReportView.FORMATS
+        }
+    }
+
+    custom_value_preprocess = {
+        **PageReportView.custom_value_preprocess,
+        CFGOVImage: {
+            fmt: attrgetter("filename") for fmt in PageReportView.FORMATS
+        },
+    }

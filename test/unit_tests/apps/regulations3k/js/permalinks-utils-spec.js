@@ -29,23 +29,21 @@ const HTML_SNIPPET2 = `
 
 const HTML_SNIPPET3 = `
   <div class="regulations3k">
-    <div class="o-regulations-wayfinder" data-section="Comment for 1026.33 - Requirements for Reverse Mortgages">
-        <div class="content_wrapper">
-            <div class="content_sidebar content__flush-top content__flush-bottom">
-                <span class="h4">
-                    Regulation FOO
-                </span>
-            </div>
-            <div class="content_main content__flush-top content__flush-bottom">
-                <div class="o-regulations-wayfinder__content">
-                    <div class="o-regulations-wayfinder__heading">
-                        <a href="#NOPE" class="h4 o-regulations-wayfinder_link">
-                            <span class="o-regulations-wayfinder_section-title"></span><span class="o-regulations-wayfinder_marker"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="content_main">
+      <div class="o-regulations-wayfinder" data-section="Comment for 1026.33 - Requirements for Reverse Mortgages">
+          <div class="o-regulations-wayfinder_sidebar">
+              <span class="h4">
+                  Regulation FOO
+              </span>
+          </div>
+          <div class="o-regulations-wayfinder_main">
+              <div class="o-regulations-wayfinder_content">
+                  <a href="#NOPE" class="h4 o-regulations-wayfinder_link">
+                      <span class="o-regulations-wayfinder_section-title"></span><span class="o-regulations-wayfinder_marker"></span>
+                  </a>
+              </div>
+          </div>
+      </div>
     </div>
   </div>
   <p class="regdown-block level-0" data-label="33-a-2-Interp-2" id="33-a-2-Interp-2">Foo.</p>
@@ -60,8 +58,7 @@ describe('The Regs3K permalinks utils', () => {
     });
 
     it('should only call a function once within a given timespan', (done) => {
-      const event = document.createEvent('Event');
-      event.initEvent('resize', true, true);
+      const event = new Event('resize', { bubbles: true, cancelable: true });
       jest.spyOn(global, 'spy');
 
       debounce('resize', 100, global.spy);
@@ -79,8 +76,7 @@ describe('The Regs3K permalinks utils', () => {
     });
 
     it("should not call a function if the timespan hasn't passed", (done) => {
-      const event = document.createEvent('Event');
-      event.initEvent('scroll', true, true);
+      const event = new Event('scroll', { bubbles: true, cancelable: true });
       jest.spyOn(global, 'spy');
 
       debounce('scroll', 1000, global.spy);
@@ -249,7 +245,9 @@ describe('The Regs3K permalinks utils', () => {
 
     it('should update the wayfinder', () => {
       updateParagraphPositions();
-      const mainContent = document.querySelector('.regulations3k');
+      const mainContent = document.querySelector(
+        '.regulations3k #content_main'
+      );
       const wayfinder = document.querySelector('.o-regulations-wayfinder');
 
       updateWayfinder(false, wayfinder, mainContent);

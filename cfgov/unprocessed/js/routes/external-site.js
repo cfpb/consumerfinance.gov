@@ -10,7 +10,6 @@ const INTERVAL = 1000;
 
 /**
  * ExternalSite
- *
  * @class
  * @classdesc Initializes a new ExternalSite instance.
  * @param {HTMLElement} element - DOM Element.
