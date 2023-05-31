@@ -1,6 +1,5 @@
 from datetime import date, datetime
 from io import StringIO
-from time import sleep
 
 from django.test import TestCase, override_settings
 
@@ -222,8 +221,6 @@ class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
         )
         form.is_bound = True
         form.cleaned_data = {"categories": []}
-        # wait for cleaned_data to be updated before we query it
-        sleep(1)
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.event)
