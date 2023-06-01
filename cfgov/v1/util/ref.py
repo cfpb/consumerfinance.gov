@@ -155,6 +155,7 @@ categories = [
             ("consumer-edu-empower", "Consumer education and empowerment"),
             ("to-congress", "To Congress"),
             ("data-spotlight", "Data spotlight"),
+            ("issue-spotlight", "Issue spotlight"),
         ),
     ),
     (

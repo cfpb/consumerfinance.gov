@@ -7,7 +7,7 @@ from django.db import models
 from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.fields import StreamField
 
-from opensearch_dsl import Q
+from opensearchpy import Q
 
 from teachers_digital_platform.documents import ActivityPageDocument
 from teachers_digital_platform.models.django import (
