@@ -35,7 +35,7 @@
           <a href=".." class="icon icon-home"> consumerfinance.gov
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -154,15 +154,14 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Setup</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+      <li>Setup</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/installation.md"
-          class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/installation.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
 </div>
-
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
@@ -226,8 +225,7 @@ Python 3.8 must then be installed once pyenv is installed:
 
 ```sh
 pyenv install 3.8.12
-```
-</code></pre>
+```</code></pre>
 <p>First we need to create a Python virtualenv for consumerfinance.gov:</p>
 <pre class="highlight"><code class="language-sh">pyenv virtualenv 3.8.12 consumerfinance.gov</code></pre>
 <p>Then we'll need to activate it.
@@ -294,8 +292,7 @@ Yarn must then be installed:
 
 ```sh
 curl -o- -L https://yarnpkg.com/install.sh | sh
-```
-</code></pre>
+```</code></pre>
 <p>We have a single script that will install our frontend dependencies for both
 building and
 <a href="/javascript-unit-tests/">unit testing/linting/etc</a>:</p>
