@@ -266,9 +266,9 @@ const HTML_SNIPPET = `
       </form>
     </div>
     <aside class="content_sidebar o-sidebar-content tdp-survey-sidebar">
-      <div class="o-expandable" data-js-hook="state_atomic_init">
+      <div class="o-expandable">
         <div class="tdp-survey-sidebar__mobile-control">
-          <button class="o-expandable_header o-expandable_target o-expandable_target__expanded" title="Expand content">
+          <button class="o-expandable_header o-expandable_target__expanded" title="Expand content">
             <span class="o-expandable_link">
               <span class="o-expandable_cue-open" role="img" aria-label="Show">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg">

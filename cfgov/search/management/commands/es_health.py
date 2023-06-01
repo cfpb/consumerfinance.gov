@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from opensearch_dsl import connections
+from opensearchpy import connections
 
 
 class Command(BaseCommand):

@@ -401,7 +401,7 @@ const HTML_SNIPPET = `
 
             <div class="o-expandable">
                 <div class="tdp-survey-sidebar__mobile-control">
-                    <button class="o-expandable_header o-expandable_target"
+                    <button class="o-expandable_header"
                             title="Expand content">
                         <span class="o-expandable_link">
                             <span class="o-expandable_cue-open" role="img" aria-label="Show">

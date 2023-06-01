@@ -1,6 +1,5 @@
 import json
 from io import StringIO
-from time import sleep
 from unittest.mock import patch
 
 from django.test import TestCase
@@ -48,24 +47,21 @@ class FilterablePagesDocumentTest(TestCase):
         self.assertCountEqual(
             mapping.properties.properties.to_dict().keys(),
             [
+                "model_class",
+                "path",
+                "depth",
+                "title",
+                "start_date",
+                "end_date",
+                "language",
                 "tags",
                 "categories",
-                "language",
-                "title",
-                "url",
-                "date_published",
-                "start_dt",
-                "end_dt",
                 "statuses",
                 "products",
-                "initial_filing_date",
-                "model_class",
                 "content",
                 "preview_title",
                 "preview_subheading",
                 "preview_description",
-                "path",
-                "depth",
             ],
         )
 
@@ -234,8 +230,6 @@ class FilterableSearchTests(ElasticsearchWagtailPageTreeTestCase):
         indexed_page = Page.objects.get(slug="child1").specific
         indexed_page.title = "child1 foo"
         indexed_page.save_revision().publish()
-        # wait for the index to update
-        sleep(1)
         self.assertEqual(search.search(title="foo").count(), 1)
 
 
@@ -360,7 +354,7 @@ class EnforcementActionFilterableSearchFilteringTests(
 
     def test_no_filters(self):
         search = EnforcementActionFilterablePagesDocumentSearch(
-            self.page_tree[0]
+            self.page_tree[0], ordering="-start_date"
         )
         search.filter()
         results = search.search()
@@ -441,19 +435,27 @@ class EventFilterableSearchFilteringTests(
 
     def test_filter_by_date(self):
         search = EventFilterablePagesDocumentSearch(self.page_tree[0])
-        search.filter(from_date=self.one_day_ago, to_date=self.one_day_ago)
+        search.filter(from_date=self.one_day_ago)
+        self.assertEqual(search.count(), 2)
+
+        search = EventFilterablePagesDocumentSearch(self.page_tree[0])
+        search.filter(from_date=self.now + relativedelta(days=1))
         self.assertEqual(search.count(), 0)
 
         search = EventFilterablePagesDocumentSearch(self.page_tree[0])
-        search.filter(from_date=self.one_day_ago, to_date=self.one_hour_ago)
-        self.assertEqual(search.count(), 1)
+        search.filter(to_date=self.now)
+        self.assertEqual(search.count(), 2)
+
+        search = EventFilterablePagesDocumentSearch(self.page_tree[0])
+        search.filter(to_date=self.one_day_ago - relativedelta(days=1))
+        self.assertEqual(search.count(), 0)
 
         search = EventFilterablePagesDocumentSearch(self.page_tree[0])
         search.filter(from_date=self.one_day_ago, to_date=self.now)
         self.assertEqual(search.count(), 2)
 
         search = EventFilterablePagesDocumentSearch(self.page_tree[0])
-        search.filter(from_date=self.one_hour_ago, to_date=self.now)
+        search.filter(from_date=self.one_day_ago, to_date=self.one_day_ago)
         self.assertEqual(search.count(), 1)
 
 
@@ -493,7 +495,6 @@ class TestThatWagtailPageSignalsUpdateIndex(ElasticsearchTestsMixin, TestCase):
             # Moving a page out of the parent should update the index so that
             # a search there now returns only 2 results.
             blog2.move(root)
-            sleep(1)
             results = search.search(title="foo")
             self.assertEqual(results.count(), 2)
 
@@ -501,7 +502,6 @@ class TestThatWagtailPageSignalsUpdateIndex(ElasticsearchTestsMixin, TestCase):
             # now returns only 1 result.
             blog3.title = "bar"
             blog3.save_revision().publish()
-            sleep(1)
             results = search.search(title="foo")
             self.assertEqual(results.count(), 1)
 

@@ -1,6 +1,8 @@
 // Array that tracks paragraph positions
 let paragraphPositions;
-const regs3kMainContent = document.querySelector('.regulations3k');
+const regs3kMainContent = document.querySelector(
+  '.regulations3k #content_main'
+);
 const regs3kWayfinder = document.querySelector('.o-regulations-wayfinder');
 let wayfinderOffset = 0;
 if (regs3kWayfinder !== null) {
@@ -245,7 +247,7 @@ const updateParagraphPositions = () => {
   const visibleParagraphs = [];
   // IE doesn't support `forEach` w/ node lists
   for (let i = 0; i < paragraphs.length; i++) {
-    const hiddenParagraphContainer = paragraphs[i].closest('.u-hidden');
+    const hiddenParagraphContainer = paragraphs[i].closest('[hidden]');
     if (!hiddenParagraphContainer) {
       visibleParagraphs.push(paragraphs[i]);
     }

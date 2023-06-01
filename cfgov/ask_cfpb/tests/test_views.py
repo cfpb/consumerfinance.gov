@@ -157,16 +157,6 @@ class AnswerPagePreviewTestCase(TestCase):
         view_answer(test_request, "test-question1", "en", self.test_answer.pk)
         self.assertEqual(mock_serve.call_count, 1)
 
-    def test_page_redirected(self):
-        page = self.english_answer_page
-        page.get_latest_revision().publish()
-        page.redirect_to_page = self.english_answer_page2
-        page.save()
-        page.save_revision().publish()
-        response = self.client.get(page.url)
-        self.assertEqual(response.status_code, 301)
-        self.assertEqual(response.url, self.english_answer_page2.url)
-
     def test_redirect_view_with_no_recognized_facet(self):
         response = self.client.get("/askcfpb/search/?selected_facets=hoodoo")
         self.assertEqual(response.status_code, 404)
