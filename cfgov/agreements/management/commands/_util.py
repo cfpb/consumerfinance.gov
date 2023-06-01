@@ -20,14 +20,8 @@ def s3_safe_key(path, prefix=""):
 
 def upload_to_s3(pdf_obj, s3_key):
     AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
-    AWS_S3_ACCESS_KEY_ID = os.environ.get("AWS_S3_ACCESS_KEY_ID")
-    AWS_S3_SECRET_ACCESS_KEY = os.environ.get("AWS_S3_SECRET_ACCESS_KEY")
 
-    s3_client = boto3.client(
-        "s3",
-        aws_access_key_id=AWS_S3_ACCESS_KEY_ID,
-        aws_secret_access_key=AWS_S3_SECRET_ACCESS_KEY,
-    )
+    s3_client = boto3.client("s3")
 
     s3_client.upload_fileobj(pdf_obj, AWS_STORAGE_BUCKET_NAME, s3_key)
 
