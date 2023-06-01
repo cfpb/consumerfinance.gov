@@ -6,15 +6,19 @@
 
    Description:
 
-   Creates markup for secondary navigation.
-
-   nav_items:     The secondary navigation item structure.
+   Creates markup for Secondary Navigation organism.
 
    ========================================================================== #}
 
-{% macro render( nav_items ) %}
-<nav class="o-secondary-nav"
-     aria-label="Section navigation">
+{% macro render() %}
+{%- set nav_items = page.get_secondary_nav_items( request ) -%}
+
+{%- set any_children = nav_items | map( attribute="children" ) | reject( "undefined" ) | list -%}
+
+<nav class="o-secondary-nav
+            {{ '' if any_children else 'o-secondary-nav__no-children' }}"
+     aria-label="{{ _('Section navigation') }}">
+
     <button class="o-secondary-nav_header" type="button" aria-expanded="false">
         <span class="o-secondary-nav_label">
             {{ _('In this section') }}
@@ -31,40 +35,32 @@
 
     <div class="o-secondary-nav_content">
         <ul class="o-secondary-nav_list
-                   o-secondary-nav_list__parents" role="tablist">
+                   o-secondary-nav_list__parents">
         {%- for item in nav_items %}
-            {# TODO: refactor JS to rid of custom `o-secondary-nav_li__parent` #}
-            <li class="o-secondary-nav_list-item__parent"
-                data-nav-is-active="{{item.current if item.current else 'False'}}"
-                data-nav-is-open="False"
-                role="tab">
-                <a class="o-secondary-nav_link
-                          o-secondary-nav_link__parent"
-                    href="#"
-                    data-gtm_ignore="true"
-                    data-nav_section="{{ item.data }}">
-                    {{ item.title }}
-                </a>
+            <li data-nav-is-active="{{ item.expanded }}">
+                {{ _navlink(item.title, item.url, true, item.active) }}
             {%- if item.children -%}
                 <ul class="o-secondary-nav_list
-                           o-secondary-nav_list__children"
-                    role="tablist">
+                           o-secondary-nav_list__children">
                 {%- for child in item.children -%}
-                    <li role="tab">
-                        <a class="o-secondary-nav_link"
-                           href="#"
-                           data-gtm_ignore="true"
-                           data-nav_item="{{ child.data }}">
-                          {{ child.title }}
-                        </a>
+                    <li>
+                        {{ _navlink(child.title, child.url, false, child.active) }}
                     </li>
                 {%- endfor %}
                 </ul>
             {%- endif -%}
             </li>
-
         {%- endfor %}
         </ul>
     </div>
 </nav>
+{% endmacro %}
+
+{% macro _navlink(text, href, parent=true, current=false) %}
+<a class="o-secondary-nav_link
+          {{ 'o-secondary-nav_link__parent' if parent else '' }}
+          {{ 'o-secondary-nav_link__current' if current else '' }}"
+   {{ 'href=' ~ href | e if not current else '' }}>
+    {{ text | e }}
+</a>
 {% endmacro %}

@@ -1,4 +1,4 @@
-import { Expandable } from '@cfpb/cfpb-expandables';
+import { SecondaryNav } from '../../../js/organisms/SecondaryNav.js';
 import { appView } from './college-costs/views/app-view.js';
 import { chartView } from './college-costs/views/chart-view.js';
 import { constantsModel } from './college-costs/models/constants-model.js';
@@ -27,7 +27,7 @@ function init() {
   navigationView.init(body, query.iped);
   chartView.init(body);
   appView.init();
-  Expandable.init();
+  SecondaryNav.init();
 
   financialView.updateFinancialItems();
   appView.updateUI();

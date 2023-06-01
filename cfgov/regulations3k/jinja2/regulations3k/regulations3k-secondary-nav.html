@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   secondary_navigation.render()
+   secondary_nav.render()
 
    ==========================================================================
 
@@ -29,7 +29,6 @@
             </span>
         </button>
         <div class="o-regs3k-sections">
-            {% import 'v1/includes/molecules/nav-link.html' as nav_link %}
             {%- for subpart in nav_items %}
                 {% set sec_nav_settings = {
                     'label': subpart.subpart_heading ~ ' ' ~ subpart.title ~ ' ' ~ subpart.section_range|safe,
@@ -37,10 +36,19 @@
                 } %}
                 {% call() expandable(sec_nav_settings) %}
                 {% for section in nav_items[subpart].sections %}
-                    {{ nav_link.render(section.title, section.url, true, section.active) }}
+                    {{ _navlink(section.title, section.url, section.active) }}
                 {%- endfor %}
                 {% endcall %}
             {%- endfor %}
         </div>
     </nav>
+{% endmacro %}
+
+{% macro _navlink(text, href, current=false) %}
+<a class="o-secondary-nav_link
+          o-secondary-nav_link__parent
+          {{ 'o-secondary-nav_link__current' if current else '' }}"
+   {{ 'href=' ~ href | e if not current else '' }}>
+    {{ text | e }}
+</a>
 {% endmacro %}
