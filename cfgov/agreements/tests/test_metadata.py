@@ -4,6 +4,7 @@ from django.test import TestCase, override_settings
 
 import boto3
 import moto
+from botocore.exceptions import ClientError
 
 from agreements.metadata import Metadata
 
@@ -54,7 +55,7 @@ class MetadataTests(TestCase):
         self.assertEqual(m.get_sorted_agreements(), [3, 2, 1])
 
     def _raise(ex):
-        raise Exception(ex)
+        raise ClientError(ex)
 
     @moto.mock_s3
     @patch.object(Metadata, "get_objects_by_prefix", _raise)
