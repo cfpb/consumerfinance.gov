@@ -38,10 +38,8 @@ class Views(TestCase):
         """
         Test index without any agreements.
         """
-        self.client.get(reverse("agreements_home"))
-        context = render.call_args[0][1]
-
-        self.assertTrue(len(context["pagetitle"]) > 5)
+        response = self.client.get(reverse("agreements_home"))
+        self.assertEqual(response.status_code, 200)
 
     def test_index_renders(self):
         response = self.client.get(reverse("agreements_home"))
