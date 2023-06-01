@@ -11,7 +11,7 @@ class ESHealthTestCase(TestCase):
         with self.assertRaises(CommandError):
             call_command("es_health", "notarealconnection", stdout=StringIO())
 
-    @mock.patch("opensearch_dsl.connections.get_connection")
+    @mock.patch("opensearchpy.connections.get_connection")
     def test_foo(self, mock_es_get_connection):
         mock_elasticsearch = mock.MagicMock()
         mock_elasticsearch.cat.health.return_value = "health table"

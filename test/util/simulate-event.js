@@ -11,16 +11,17 @@ function simulateEvent(eventType, target, eventOption = {}) {
   switch (eventType) {
     case 'click':
     case 'mousedown':
-    case 'mouseup':
+    case 'mouseup': {
       event = new MouseEvent(eventType, {
         bubbles: true,
         cancelable: true,
         view: window,
       });
       break;
+    }
     case 'keypress':
     case 'keydown':
-    case 'keyup':
+    case 'keyup': {
       const opts = {
         bubbles: true,
         cancelable: true,
@@ -33,11 +34,13 @@ function simulateEvent(eventType, target, eventOption = {}) {
       event = new KeyboardEvent(eventType, opts);
 
       break;
-    default:
+    }
+    default: {
       event = new Event(eventType, {
         bubbles: true,
         cancelable: true,
       });
+    }
   }
 
   return target.dispatchEvent(event);

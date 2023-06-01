@@ -325,13 +325,13 @@
   dependencies:
     ftdomdelegate "3.1.0"
 
-"@cfpb/cfpb-buttons@0.26.1", "@cfpb/cfpb-buttons@^0.26.1":
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-buttons/-/cfpb-buttons-0.26.1.tgz#5a4bf40391f7249634c49244f68ab385a14fed5d"
-  integrity sha512-/UjUWblT3FONjW8+xhCwQm9SBOp/2QuydTFoPDUTDueIt6GejET5XxJSkBrOF0vQAC+qHq0NBC+JSs/WPJ5QZA==
+"@cfpb/cfpb-buttons@0.26.2", "@cfpb/cfpb-buttons@^0.26.2":
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-buttons/-/cfpb-buttons-0.26.2.tgz#206b89895fe0a733c8c04a4cb83cf459fb52afbf"
+  integrity sha512-vhVieWI6xAEo7nSpdTBXeQmdG5Hxw6w5BBCyfomYNsLOz4PxzzGH6wD7Lp28BD86fs1ieTg8qd8sCmU+bcJwHQ==
   dependencies:
     "@cfpb/cfpb-core" "^0.26.1"
-    "@cfpb/cfpb-icons" "^0.26.0"
+    "@cfpb/cfpb-icons" "^0.26.2"
 
 "@cfpb/cfpb-core@0.26.1", "@cfpb/cfpb-core@^0.26.1":
   version "0.26.1"
@@ -348,24 +348,24 @@
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-expandables@0.26.1":
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.26.1.tgz#865ff94aa654a5cf452eea14a657459e2173354b"
-  integrity sha512-ojexXpSbqmWC6Aw6HtOkFkalcD7A2DkUAqlF1BWl7N4CbMA2d/DMitUYIhtQ2DG942JnH9sYgbN2S6L0jNizVg==
+"@cfpb/cfpb-expandables@0.26.2":
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.26.2.tgz#b40c69604b4127d51cb7f64d88509765eb98ffb4"
+  integrity sha512-rOFWeyINk1/nf9n+6ylShPs09OVRG5CJgG76V6T2rL2oTOknTYT8Z8HbHfPoQkZbJTFfNGNLx3r1bGWUH5r+tw==
   dependencies:
     "@cfpb/cfpb-atomic-component" "^0.26.0"
     "@cfpb/cfpb-core" "^0.26.1"
-    "@cfpb/cfpb-icons" "^0.26.0"
+    "@cfpb/cfpb-icons" "^0.26.2"
 
-"@cfpb/cfpb-forms@0.26.1":
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-0.26.1.tgz#5cf3928feb5c194a97fb8d1f0781e427469bd9f9"
-  integrity sha512-lBM9ndhwTzPb1JKPBWTmvusbqdypUlSbMzo6ugBey+5sKh6PrrJB5zG4Ud4msXak6JQO8Upm12eSQ2wU8v7GaA==
+"@cfpb/cfpb-forms@0.26.2":
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-0.26.2.tgz#c4d7e8ddc5f305bf9d08e45eb548531337f8b67b"
+  integrity sha512-Wj449NPcdcgu6jVdSD6U8L+lu2VkIe2c2cOMu2kCzQa/ToTPZ2rQy3RXy2/yMlP86gqFmMN77HhHsb1GDoZ0CQ==
   dependencies:
-    "@cfpb/cfpb-buttons" "^0.26.1"
+    "@cfpb/cfpb-buttons" "^0.26.2"
     "@cfpb/cfpb-core" "^0.26.1"
     "@cfpb/cfpb-grid" "^0.26.0"
-    "@cfpb/cfpb-icons" "^0.26.0"
+    "@cfpb/cfpb-icons" "^0.26.2"
 
 "@cfpb/cfpb-grid@0.26.0", "@cfpb/cfpb-grid@^0.26.0":
   version "0.26.0"
@@ -382,10 +382,15 @@
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-icons@0.26.0", "@cfpb/cfpb-icons@^0.26.0":
+"@cfpb/cfpb-icons@0.26.0":
   version "0.26.0"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-icons/-/cfpb-icons-0.26.0.tgz#7739d7789e107557ba5e4fdb6e7a0b5a6e21cc82"
   integrity sha512-ZlB2CTjVFW1vmHQEi1VA86HTK53MroWAJr2fA9Dkcfpi73guKTCQd59aIaBVNZ8z954Zxk1CBmRvUL5Ex+lzSg==
+
+"@cfpb/cfpb-icons@^0.26.2":
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-icons/-/cfpb-icons-0.26.2.tgz#207c8254991aa15fbd298ba255470a7d66a465e7"
+  integrity sha512-UOHeQGeFEDbL+PLm6lyoVIMEtXMdapiAQV6lIrziQx+VpYdx0aEUeinDklXGgJh6Z5MgYXBjM/CNsHKULzwO4w==
 
 "@cfpb/cfpb-icons@^0.3.2":
   version "0.3.2"
@@ -408,22 +413,22 @@
     "@cfpb/cfpb-core" "^0.3.1"
     "@cfpb/cfpb-grid" "^0.3.1"
 
-"@cfpb/cfpb-notifications@0.26.1":
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-notifications/-/cfpb-notifications-0.26.1.tgz#350e31e842fe0c4dd08462e2bb6315c9f033c10a"
-  integrity sha512-gb2AmbPWHl9iL9qd6AM2vfolciiHpGQnR39rf3X/18Sr4V0JVw+l0/cMH8rufFyVpxtwIiwd7Xba9wk1gVxFYQ==
+"@cfpb/cfpb-notifications@0.26.2":
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-notifications/-/cfpb-notifications-0.26.2.tgz#11dc8b8f401849c5a7f699d6d1a5a7d3aad324ef"
+  integrity sha512-GFHOvAXZ5cKbV42yEe/dJAlgFrfrFoPb+Ee7bQ1bERxWZzbGPAk+gsEVtG3RI9zYa3wyFbTAj/FJ6iRKhLfkRg==
   dependencies:
     "@cfpb/cfpb-core" "^0.26.1"
-    "@cfpb/cfpb-icons" "^0.26.0"
+    "@cfpb/cfpb-icons" "^0.26.2"
 
-"@cfpb/cfpb-pagination@0.26.1":
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-pagination/-/cfpb-pagination-0.26.1.tgz#afbc5f7b28c0c57025527379846df5c56f9c010b"
-  integrity sha512-lJVddOgRmLGYXkpYwEyewQCmVkl3pfMyHza5sBVrZeFrxiYUu9klOxu11ud+E2wIo5Fkv+tObh5yIAaHUHdEfw==
+"@cfpb/cfpb-pagination@0.26.2":
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-pagination/-/cfpb-pagination-0.26.2.tgz#677e463bf81fd9a5b11bd961410fce29c50691a2"
+  integrity sha512-JdSinZ3k2erwgxusj3TTc8i8aselwVnrTw29aOnPjRoK4w3c1ahx+YsbtLaCkfid8R6UYbx3czL+r2BCe3VEMw==
   dependencies:
-    "@cfpb/cfpb-buttons" "^0.26.1"
+    "@cfpb/cfpb-buttons" "^0.26.2"
     "@cfpb/cfpb-core" "^0.26.1"
-    "@cfpb/cfpb-icons" "^0.26.0"
+    "@cfpb/cfpb-icons" "^0.26.2"
 
 "@cfpb/cfpb-tables@0.26.1":
   version "0.26.1"
@@ -433,13 +438,13 @@
     "@cfpb/cfpb-atomic-component" "^0.26.0"
     "@cfpb/cfpb-core" "^0.26.1"
 
-"@cfpb/cfpb-typography@0.26.1":
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.26.1.tgz#99822d2499e6d3301ef961d38801f3aaec84c5e7"
-  integrity sha512-VRXoYiSUm793aAQqvLCAFmDKrxGlQjrW4X0bDPhmrfY/eivms+5pMchSO1Gy+l1VGvZzeLpaq6A8re4ivKkuPw==
+"@cfpb/cfpb-typography@0.26.2":
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.26.2.tgz#1b457dd3c89c449cd51ba9f8eafbb6b4a2ec9905"
+  integrity sha512-Zgf3qTliQW3WveswgzKS5/dIPUf+/pEpOBdjZb1hVvZ2eRQEK+bfqsO0VPbyy/EyL+SPBzM5VmpDSTVg27Q95Q==
   dependencies:
     "@cfpb/cfpb-core" "^0.26.1"
-    "@cfpb/cfpb-icons" "^0.26.0"
+    "@cfpb/cfpb-icons" "^0.26.2"
 
 "@cfpb/cfpb-typography@0.3.2":
   version "0.3.2"
@@ -2329,10 +2334,10 @@ eslint-plugin-import@2.27.5:
     semver "^6.3.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-jsdoc@44.2.5:
-  version "44.2.5"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-44.2.5.tgz#f3186f57f112a230b3b7af34bf236d207bc8d5d7"
-  integrity sha512-KtuhaYy2GmdY2IQE5t+1lup8O4P05c+V4gKcj45PCxFM0OxmRq2uQlfOS1AgYVgPYIBKGE86DxrbKP24HKpORA==
+eslint-plugin-jsdoc@46.1.0:
+  version "46.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-46.1.0.tgz#3ff932b70bc25f3745049f525a789faed7c948da"
+  integrity sha512-NpjpSuWR+Wwxzmssji7AVty1Vu0JvI7v+cTj+Rw1nKVjGv2eMvLGM/SI4VpgTXp82JbLtFOsA2QYLHT3YSmASA==
   dependencies:
     "@es-joy/jsdoccomment" "~0.39.4"
     are-docs-informative "^0.0.2"
@@ -4643,10 +4648,10 @@ postcss-value-parser@4.2.0, postcss-value-parser@^4.2.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@8.4.23:
-  version "8.4.23"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.23.tgz#df0aee9ac7c5e53e1075c24a3613496f9e6552ab"
-  integrity sha512-bQ3qMcpF6A/YjR55xtoTr0jGOlnPOKAIMdOWiv0EIT6HVPEaJiJB4NLljSbiHoC2RX7DN5Uvjtpbg1NPdwv1oA==
+postcss@8.4.24:
+  version "8.4.24"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.24.tgz#f714dba9b2284be3cc07dbd2fc57ee4dc972d2df"
+  integrity sha512-M0RzbcI0sO/XJNucsGjvWU9ERWxb/ytp1w6dKtxTKgixdtQDq4rmx/g8W1hnaheq9jgwL/oyEdH5Bc4WwJKMqg==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"
@@ -5062,10 +5067,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-snyk@1.1161.0:
-  version "1.1161.0"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1161.0.tgz#954de7d04a566e0b2e86fb9460729d0a2d49eb05"
-  integrity sha512-aWtkaTKv8nTDgaBUpWi7di1LXDDQILod5DtPCHzlFv+78ZLlXHF4tGwHasa4+oUutgXvyWyRxGqNFIGNmciNRg==
+snyk@1.1171.0:
+  version "1.1171.0"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.1171.0.tgz#577648eddfd95ecb63d6ea3e4cc5a3cf88709c72"
+  integrity sha512-QzxLXrnAgrKEbTn6LRx03mSiTffjMGZLESNctBaYhvKZjXu3SySL2PBbkcq49e9moka+VER4hX0jIFMJjGHW3Q==
   dependencies:
     "@sentry/node" "^7.36.0"
     global-agent "^3.0.0"

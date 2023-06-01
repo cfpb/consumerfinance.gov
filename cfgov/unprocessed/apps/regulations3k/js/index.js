@@ -3,7 +3,7 @@ import { Expandable } from '@cfpb/cfpb-expandables';
 
 const navHeader = document.querySelector('.o-regs3k-navigation_header');
 const navItems = document.querySelector('.o-regs3k-sections');
-const regContent = document.querySelector('.content_main.regulations3k');
+const regContent = document.querySelector('.regulations3k #content_main');
 
 /**
  * toggleSecondaryNav - Show/hide the secondary nav on smaller screens
