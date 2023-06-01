@@ -55,7 +55,7 @@ class MetadataTests(TestCase):
         self.assertEqual(m.get_sorted_agreements(), [3, 2, 1])
 
     def _raise(ex):
-        raise ClientError
+        raise ClientError("", "")
 
     @moto.mock_s3
     @patch.object(Metadata, "get_objects_by_prefix", _raise)
