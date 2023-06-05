@@ -12,9 +12,14 @@ fetchMock.enableMocks();
 describe('fetchApiData', function () {
   it('fetches data', function () {
     fetch.mockResponseOnce(JSON.stringify({ data: '12345' }));
-    fetchApiData('11-11-1965', 34567).then((res) => {
-      expect(res.data).toEqual('12345');
-    });
+    fetchApiData('11-11-1965', 34567).then(
+      (res) => {
+        expect(res.data).toEqual('12345');
+      },
+      () => {
+        throw new Error('It should not reject a valid call');
+      }
+    );
   });
   it('throws on bad data types', function () {
     expect(() => fetchApiData(Date.now(), '$34567')).toThrow();
