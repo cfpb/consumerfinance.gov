@@ -110,8 +110,8 @@ class EmailSignUp(models.Model):
         blank=True,
         help_text=(
             "URL for the GovDelivery signup page people will be linked to "
-            "in order to signup. Provide either this or the signup "
-            "URL, but not both."
+            "in order to signup. Provide either this or the GovDelivery code, "
+            "but not both."
         ),
     )
     heading = models.TextField(blank=True, default="Stay informed")

@@ -126,7 +126,6 @@ def create_sublanding_filterable_page(
                     "value": {
                         "is_expanded": filter_is_expanded,
                         "categories": {"page_type": "blog"},
-                        "topic_filtering": "sort_alphabetically",
                         "language": True,
                     },
                 }
@@ -225,7 +224,6 @@ def create_browse_filterable_page(
                     "value": {
                         "is_expanded": filter_is_expanded,
                         "categories": {"page_type": "research-reports"},
-                        "topic_filtering": "sort_alphabetically",
                         "language": True,
                     },
                 }

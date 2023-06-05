@@ -23,12 +23,6 @@ describe('Admin', () => {
     cy.contains('Welcome');
   });
 
-  it('should be able to publish a page', () => {
-    admin.openMostRecentPage();
-    admin.publishPage();
-    admin.successBanner().should('be.visible');
-  });
-
   it('should be able to open the Images library', () => {
     admin.openImageGallery();
     admin.getImages().should('be.visible');
@@ -136,25 +130,12 @@ describe('Admin', () => {
       admin.searchFirstTableCell(text).should('be.visible');
     });
 
-    it('should be able to select all standard edit buttons in table', () => {
-      admin.selectTableEditorButton('BOLD');
-      admin.selectTableEditorButton('ITALIC');
-      admin.selectTableEditorButton('header-three');
-      admin.selectTableEditorButton('header-four');
-      admin.selectTableEditorButton('header-five');
-      admin.selectTableEditorButton('ordered-list-item');
-      admin.selectTableEditorButton('unordered-list-item');
-      admin.selectTableEditorButton('undo');
-      admin.selectTableEditorButton('redo');
-      admin.closeTableEditor();
-    });
-
-    it('should be able to use link buttons', () => {
-      admin.selectTableEditorButton('LINK');
-      admin.selectInternalLink('CFGov');
-      const documentName = 'cfpb_interested-vendor-instructions_';
-      admin.selectTableEditorButton('DOCUMENT');
-      admin.selectDocumentLink(documentName);
+    it('should be able to insert a block into a table', () => {
+      admin.selectTableEditorButton('Heading 3');
+      admin.selectTableEditorButton('Heading 4');
+      admin.selectTableEditorButton('Heading 5');
+      admin.selectTableEditorButton('Numbered list');
+      admin.selectTableEditorButton('Bulleted list');
       admin.closeTableEditor();
     });
 

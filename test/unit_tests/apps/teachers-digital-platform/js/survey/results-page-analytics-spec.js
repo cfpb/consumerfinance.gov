@@ -15,8 +15,7 @@ describe('Custom analytics for the TDP survey results page', () => {
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
     // Fire `load` event
-    const event = document.createEvent('Event');
-    event.initEvent('load', true, true);
+    const event = new Event('load', { bubbles: true, cancelable: true });
     window.dispatchEvent(event);
 
     const mockXHR = {
@@ -32,7 +31,7 @@ describe('Custom analytics for the TDP survey results page', () => {
 
   it('should send analytics event when an expandable is clicked', () => {
     const target = document.querySelector(
-      '.tdp-survey-results .o-expandable_target'
+      '.tdp-survey-results .o-expandable_header'
     );
     const spy = jest.fn();
 

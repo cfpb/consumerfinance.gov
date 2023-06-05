@@ -38,7 +38,6 @@ const financialModel = {
 
   /**
    * extendValues - Update multiple values at once using an Object
-   *
    * @param {object} data - an Object of new financial values
    */
   extendValues: (data) => {
@@ -84,7 +83,6 @@ const financialModel = {
 
   /**
    * setValue - Used to set a value
-   *
    * @param {string} name - Property name
    * @param {number} value - New value of property
    * @param {boolean} updateView - (defaults true) should view be updated?
@@ -178,7 +176,6 @@ const financialModel = {
    * Check and enforce various limits on federal loans and grants
    * NOTE: an error indicates the number went over "max", we don't log errors when
    * a value is below 0.
-   *
    * @returns {object} An object of errors found during enforcement
    */
   _enforceLimits: () => {
@@ -270,7 +267,6 @@ const financialModel = {
   /**
    * _amountAfterFee - return net loan amount, after fee has been removed. Also, add
    * a value to the Object of this net amount.
-   *
    * @param {string} prop - Property name of the loan
    * @returns {number} net value of loan after fee
    */

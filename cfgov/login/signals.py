@@ -1,38 +1,21 @@
-from datetime import timedelta
+from axes.utils import reset as axes_reset
 
-from django.utils import timezone
-
-
-def new_password_history_item(user, expiration_days=90, locked_days=1):
-    now = timezone.now()
-    locked_until = now + timedelta(days=locked_days)
-    expires_at = now + timedelta(days=expiration_days)
-
-    from login.models import PasswordHistoryItem
-
-    password_history = PasswordHistoryItem(
-        user=user,
-        encrypted_password=user.password,
-        locked_until=locked_until,
-        expires_at=expires_at,
-    )
-
-    password_history.save()
-    user.temporarylockout_set.all().delete()
+from login.models import PasswordHistoryItem
 
 
 def user_save_callback(sender, **kwargs):
     user = kwargs["instance"]
 
-    if kwargs["created"]:
-        if user.is_superuser:
-            # If a superuser was created, don't expire its password.
-            new_password_history_item(user, locked_days=0)
-        else:
-            # If a regular user was just created, force a new password to be
-            # set right away by expiring the password and unlocking it.
-            new_password_history_item(user, locked_days=0, expiration_days=0)
-    else:
-        current_password_history = user.passwordhistoryitem_set.latest()
-        if user.password != current_password_history.encrypted_password:
-            new_password_history_item(user)
+    # If a new user was just created or a user changed their password,
+    # record the user's password in their password history.
+    if (
+        kwargs["created"]
+        or user.password_history.latest().encrypted_password != user.password
+    ):
+        PasswordHistoryItem.objects.create(
+            user=user, encrypted_password=user.password
+        )
+
+        # Since the user's password has just been changed successfully,
+        # also reset any login lockout if one is associated with the user.
+        axes_reset(username=user.username)

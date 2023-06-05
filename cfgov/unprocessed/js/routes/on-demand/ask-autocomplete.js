@@ -18,7 +18,6 @@ const submitButton = document.querySelector(
 
 /**
  * Disable the submit button if the query character limit is reached
- *
  * @param {object} event - The maxCharacterChange event object dispatched from
  *   the autocomplete.
  */

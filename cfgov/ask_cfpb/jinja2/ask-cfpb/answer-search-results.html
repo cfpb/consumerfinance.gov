@@ -38,9 +38,9 @@
 
                 <div>
                 {% for question in results %}
-                    <article class="question_summary question_summary__full">
-                        <p class="question_title"><a href="{{ question[0] }}" class="kbq">{{ question[1]|safe }}</a></p>
-                        <p class="qans">{{ question[2] }}</p>
+                    <article class="question_summary">
+                        <p class="question_title"><a href="{{ question[0] }}">{{ question[1]|safe }}</a></p>
+                        <p>{{ question[2] }}</p>
                     </article>
                 {% endfor %}
 
@@ -61,9 +61,10 @@
 
         {% elif not results and page.query %}
 
-        <section class="search-results block
+        <section class="search-results
+                        block
                         block__flush-top">
-            <div class="no-results-message" data-gtm_ask-no-results="true">
+            <div data-gtm_ask-no-results="true">
                 {% if tag %}
                     <h3 class="results-header">{{ _('No results found for') }} “{{ tag }}”</h3>
                 {% else %}
@@ -79,7 +80,8 @@
 
         {% else %}
 
-        <section class="search-results block
+        <section class="search-results
+                        block
                         block__flush-top">
             <h4>
                 {{ _('Please enter a search term in the box above.') }}

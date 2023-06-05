@@ -55,7 +55,6 @@ Prefixed with `m-` in class names.
   class="m-notification
          m-notification__visible
          m-notification__error"
-  data-js-hook="state_atomic_init"
 >
   {{ svg_icon('error') }}
   <div class="m-notification_content" role="alert">
@@ -114,13 +113,11 @@ Prefixed with `o-` in class names.
 ```html
 <div
   class="o-expandable
-            o-expandable__borders
-            o-expandable__midtone
-            o-expandable__expanded"
-  data-js-hook="state_atomic_init"
+         o-expandable__padded
+         o-expandable__midtone"
 >
-  <button class="o-expandable_target" aria-pressed="true">
-    <div class="o-expandable_header">…</div>
+  <button class="o-expandable_header">
+    <div class="o-expandable_label">…</div>
   </button>
 </div>
 ```
@@ -131,7 +128,7 @@ Prefixed with `o-` in class names.
 .o-expandable {
     position: relative;
 
-    &_target {
+    &_header {
         padding: 0;
         border: 0;
         …
@@ -155,7 +152,7 @@ Prefixed with `o-` in class names.
   // The Expandable element will directly be the Expandable
   // when used in an ExpandableGroup, otherwise it can be the parent container.
   const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  const _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
+  const _target = _dom.querySelector( '.' + BASE_CLASS + '_header' );
   const _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   …
 }
@@ -172,8 +169,8 @@ expandable.init(_expandable.EXPANDED);
 or
 
 ```js
-import {instantiateAll} from '@cfpb/cfpb-atomic-component');
-import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
+import { instantiateAll } from '@cfpb/cfpb-atomic-component';
+import { Expandable } from '@cfpb/cfpb-expandables';
 instantiateAll('.o-expandable', Expandable);
 ```
 

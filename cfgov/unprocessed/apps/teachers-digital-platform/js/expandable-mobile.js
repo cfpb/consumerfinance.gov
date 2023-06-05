@@ -6,7 +6,6 @@ let innerWidth;
 
 /**
  * Get the viewport width
- *
  * @returns {number} The viewport width
  */
 function getInnerWidth() {
@@ -15,7 +14,6 @@ function getInnerWidth() {
 
 /**
  * Fix the output of getInnerWidth() for test purposes.
- *
  * @param {number} width - Width.
  */
 function setInnerWidth(width) {

@@ -44,7 +44,6 @@ try {
 
   /**
    * Get the navigation path to a tab.
-   *
    * @returns {string} The navigation type.
    */
   function getBackForwardNavigation() {

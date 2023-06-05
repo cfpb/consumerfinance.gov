@@ -97,8 +97,8 @@ class TestMetaImage(TestCase):
 
     @override_settings(
         AWS_LOCATION="root",
-        AWS_S3_ACCESS_KEY_ID="test",
-        AWS_S3_SECRET_ACCESS_KEY="test",
+        AWS_ACCESS_KEY_ID="test",
+        AWS_SECRET_ACCESS_KEY="test",
         AWS_STORAGE_BUCKET_NAME="test_s3_bucket",
         DEFAULT_FILE_STORAGE="storages.backends.s3boto3.S3Boto3Storage",
     )

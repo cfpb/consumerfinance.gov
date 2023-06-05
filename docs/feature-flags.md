@@ -48,19 +48,17 @@ Most of consumerfinance.gov's templates are Jinja2. In these templates, two temp
 
 See [Enabling a flag](#enabling-a-flag) below for more on flag conditions.
 
-An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_includes/organisms/header.html#L28-L41):
+An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/consumerfinance.gov/blob/d4879552d353198de4f24dd385fe8a48c04448d7/cfgov/v1/jinja2/v1/includes/organisms/header.html#L25-L38):
 
 ```jinja
 {% if flag_enabled('BETA_NOTICE') %}
-<div class="m-global-banner">
+<div class="o-banner">
     <div class="wrapper
-                wrapper__match-content
-                o-expandable
-                o-expandable__expanded">
-        <div class="m-global-banner_head">
-            <span class="cf-icon
-                         cf-icon-error-round
-                         m-global-banner_icon"></span>
+                wrapper__match-content">
+        <div class="m-notification
+                    m-notification__warning
+                    m-notification__visible">
+            …
             This beta site is a work in progress.
         </div>
         …
@@ -86,15 +84,13 @@ The `BETA_NOTICE` [Jinja2](#jinja2) example above when implemented with Django t
 
 {% flag_enabled 'BETA_NOTICE' as beta_flag %}
 {% if beta_flag %}
-<div class="m-global-banner">
+<div class="o-banner">
     <div class="wrapper
-                wrapper__match-content
-                o-expandable
-                o-expandable__expanded">
-        <div class="m-global-banner_head">
-            <span class="cf-icon
-                         cf-icon-error-round
-                         m-global-banner_icon"></span>
+                wrapper__match-content">
+        <div class="m-notification
+                    m-notification__warning
+                    m-notification__visible">
+            …
             This beta site is a work in progress.
         </div>
         …

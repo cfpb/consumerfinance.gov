@@ -1,13 +1,9 @@
-{% extends 'v1/layouts/layout-side-nav.html' %}
+{% extends 'v1/layouts/layout-1-3.html' %}
 
 {% import 'v1/includes/templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
-{%- endblock %}
-
 {% block content_main %}
-    {% for block in page.header %}
+    {% for block in page.header -%}
         {% if 'featured_content' in block.block_type %}
             <div class="block
                         {{ 'u-mt0' if loop.first }}">
@@ -45,17 +41,19 @@
                                 block__flush-top
                                 content-l_col
                                 content-l_col-1-2">
-                    {% import 'v1/includes/related-links.html' as related_links %}
-                    {{- related_links.render([
-                        [
-                            '/about-us/blog/',
-                            'The blog'
-                        ],
-                        [
-                            '/about-us/the-bureau/',
-                            'About us'
-                        ]
-                    ]) -}}
+                    {% import 'v1/includes/molecules/related-content.html' as related_links %}
+                    {{- related_links.render({
+                        'heading': 'Related links',
+                        'links': [
+                        {
+                            'url': '/about-us/blog/',
+                            'text': 'The blog'
+                        },
+                        {
+                            'url': '/about-us/the-bureau/',
+                            'text': 'About us'
+                        }
+                    ]}) -}}
                 </section>
                 <section class="block content-l_col content-l_col-1-2">
                     {% include 'v1/includes/templates/upcoming-events.html' %}

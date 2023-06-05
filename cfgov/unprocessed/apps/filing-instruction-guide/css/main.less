@@ -3,14 +3,15 @@
 
 .o-fig {
   // Make the side navigation sticky
-  .content_sidebar {
+  .o-fig_sidebar {
     position: sticky;
-    top: -1px;
+    top: unit(45px / @base-font-size-px, rem);
   }
 
+  // Desktop
   .respond-to-min( @bp-med-min, {
     // Expand it to full height on desktop with optional scrolling
-    .content_sidebar {
+    .o-fig_sidebar {
       max-height: 100vh;
       overflow-y: auto;
     }
@@ -67,6 +68,7 @@
     padding-top: unit(30px / @base-font-size-px, em);
   }
 
+  // Desktop
   .respond-to-min( @bp-med-min, {
     // Increase the sidebar border from 1px to 2px
     .content &:after {
@@ -107,14 +109,15 @@
   }
 }
 
+// TODO: convert FIG secondary nav override abuse to modifiers on secondary nav.
 .o-fig_sidebar {
-  .o-expandable_label {
+  .o-secondary-nav_label {
     width: 95%;
   }
 
   // When the sidebar collapses into an expandable,
   // make the expandable's content scrollable
-  .o-expandable_content__expanded {
+  .o-secondary-nav_content[data-open='true'] {
     overflow-y: auto;
     height: 100vh;
     &:after {
@@ -126,39 +129,23 @@
   }
 
   .respond-to-max( @bp-sm-max, {
-    .m-nav-link {
+    .o-secondary-nav_link {
       padding: unit( 10px / @base-font-size-px, em );
     }
   } );
 
-  .m-nav-link {
+  .o-secondary-nav_link {
     padding-left: unit(40px / @base-font-size-px, em);
     text-indent: unit(-30px / @base-font-size-px, em);
   }
 
-  .o-secondary-navigation_list__parents > li > a {
+  .o-secondary-nav_list__parents > .o-secondary-nav_link {
     padding-left: unit(30px / @base-font-size-px, em);
     text-indent: unit(-18px / @base-font-size-px, em);
   }
 
   h4 {
     padding-left: unit(19px / @size-iv, em);
-  }
-
-  .o-report-sidenav__appendix > li > a {
-    text-indent: unit(-20px / @base-font-size-px, em);
-  }
-
-  .parent-header {
-    .o-secondary-navigation_list__children {
-      display: block;
-      margin-top: 0;
-      margin-bottom: 0.5em;
-      .m-nav-link {
-        padding-top: 0.5em;
-        padding-bottom: 0.5em;
-      }
-    }
   }
 }
 
@@ -171,10 +158,6 @@
     margin: 30px 0 30px 0;
   }
 
-  .appendix-header {
-    margin: 0.83em 0;
-  }
-
   .report-header > a {
     color: black;
     &:visited {
@@ -182,21 +165,6 @@
     }
   }
 }
-
-.report-footnotes {
-  margin-left: 4px;
-}
-
-.report-global-footer {
-  position: relative;
-  z-index: 1;
-}
-
-.respond-to-print({
-  .o-report-sidenav {
-    display: none;
-  }
-});
 
 .u-hide-on-desktop {
   .respond-to-min( @bp-med-min, {

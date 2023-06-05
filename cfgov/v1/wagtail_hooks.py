@@ -18,7 +18,7 @@ from wagtail.contrib.modeladmin.options import (
 )
 
 from ask_cfpb.models.snippets import GlossaryTerm
-from v1.admin_views import manage_cdn
+from v1.admin_views import cdn_is_configured, manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
@@ -47,6 +47,7 @@ from v1.views.reports import (
     EnforcementActionsReportView,
     ImagesReportView,
     PageMetadataReportView,
+    PagePreviewFieldsReportView,
     TranslatedPagesReportView,
 )
 
@@ -138,25 +139,14 @@ def global_admin_css():
     return css_includes
 
 
-class PermissionCheckingMenuItem(MenuItem):
-    """
-    MenuItem that only displays if the user has a certain permission.
-
-    This subclassing approach is recommended by the Wagtail documentation:
-    https://docs.wagtail.io/en/stable/reference/hooks.html#register-admin-menu-item
-    """
-
-    def __init__(self, *args, **kwargs):
-        self.permission = kwargs.pop("permission")
-        super().__init__(*args, **kwargs)
-
+class StaffOnlyMenuItem(MenuItem):
     def is_shown(self, request):
-        return request.user.has_perm(self.permission)
+        return request.user.is_staff
 
 
 @hooks.register("register_admin_menu_item")
 def register_django_admin_menu_item():
-    return MenuItem(
+    return StaffOnlyMenuItem(
         "Django Admin",
         reverse("admin:index"),
         classnames="icon icon-redirect",
@@ -164,9 +154,14 @@ def register_django_admin_menu_item():
     )
 
 
+class IfCDNEnabledMenuItem(MenuItem):
+    def is_shown(self, request):
+        return cdn_is_configured()
+
+
 @hooks.register("register_admin_menu_item")
-def register_frank_menu_item():
-    return MenuItem(
+def register_cdn_menu_item():
+    return IfCDNEnabledMenuItem(
         "CDN Tools",
         reverse("manage-cdn"),
         classnames="icon icon-cogs",
@@ -175,7 +170,7 @@ def register_frank_menu_item():
 
 
 @hooks.register("register_admin_urls")
-def register_admin_urls():
+def register_cdn_url():
     return [
         re_path(r"^cdn/$", manage_cdn, name="manage-cdn"),
     ]
@@ -184,7 +179,7 @@ def register_admin_urls():
 @hooks.register("before_serve_page")
 def serve_latest_draft_page(page, request, args, kwargs):
     if page.pk in settings.SERVE_LATEST_DRAFT_PAGES:
-        latest_draft = page.get_latest_revision_as_page()
+        latest_draft = page.get_latest_revision_as_object()
         response = latest_draft.serve(request, *args, **kwargs)
         response["Serving-Wagtail-Draft"] = "1"
         return response
@@ -366,6 +361,26 @@ def register_active_users_report_url():
             r"^reports/active-users/$",
             ActiveUsersReportView.as_view(),
             name="active_users_report",
+        ),
+    ]
+
+
+@hooks.register("register_reports_menu_item")
+def register_page_preview_fields_report_menu_item():
+    return MenuItem(
+        "Page Preview Fields",
+        reverse("page_preview_fields_report"),
+        classnames="icon icon-" + PagePreviewFieldsReportView.header_icon,
+    )
+
+
+@hooks.register("register_admin_urls")
+def register_page_preview_fields_report_url():
+    return [
+        re_path(
+            r"^reports/page-preview-fields/$",
+            PagePreviewFieldsReportView.as_view(),
+            name="page_preview_fields_report",
         ),
     ]
 

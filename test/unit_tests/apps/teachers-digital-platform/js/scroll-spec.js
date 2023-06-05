@@ -12,7 +12,6 @@ const HTML_SNIPPET = `
 
 /**
  * Helper function to simulate events
- *
  * @param eventType - {string} - The type of event to dispatch.
  * @param target - {HTMLElement} - The element to dispatch from.
  */

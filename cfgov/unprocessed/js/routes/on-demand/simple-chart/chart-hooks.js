@@ -193,18 +193,42 @@ const hooks = {
   cct_crti_income_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
-        high_income: datum.nsa_auto_crti_incHigh || datum.nsa_mtg_crti_incHigh || datum.nsa_cc_crti_incHigh,
-        moderate_income: datum.nsa_auto_crti_incModerate || datum.nsa_mtg_crti_incModerate || datum.nsa_cc_crti_incModerate,
-        middle_income: datum.nsa_auto_crti_incMiddle || datum.nsa_mtg_crti_incMiddle || datum.nsa_cc_crti_incMiddle,
-        low_income: datum.nsa_auto_crti_incLow || datum.nsa_mtg_crti_incLow || datum.nsa_cc_crti_incLow,
+        high_income:
+          datum.nsa_auto_crti_incHigh ||
+          datum.nsa_mtg_crti_incHigh ||
+          datum.nsa_cc_crti_incHigh,
+        moderate_income:
+          datum.nsa_auto_crti_incModerate ||
+          datum.nsa_mtg_crti_incModerate ||
+          datum.nsa_cc_crti_incModerate,
+        middle_income:
+          datum.nsa_auto_crti_incMiddle ||
+          datum.nsa_mtg_crti_incMiddle ||
+          datum.nsa_cc_crti_incMiddle,
+        low_income:
+          datum.nsa_auto_crti_incLow ||
+          datum.nsa_mtg_crti_incLow ||
+          datum.nsa_cc_crti_incLow,
         date: datum.date,
         adjustment: 'Unadjusted',
       });
       newData.push({
-        high_income: datum.sa_auto_crti_incHigh || datum.sa_mtg_crti_incHigh || datum.sa_cc_crti_incHigh,
-        moderate_income: datum.sa_auto_crti_incModerate || datum.sa_mtg_crti_incModerate || datum.sa_cc_crti_incModerate,
-        middle_income: datum.sa_auto_crti_incMiddle || datum.sa_mtg_crti_incMiddle || datum.sa_cc_crti_incMiddle,
-        low_income: datum.sa_auto_crti_incLow || datum.sa_mtg_crti_incLow || datum.sa_cc_crti_incLow,
+        high_income:
+          datum.sa_auto_crti_incHigh ||
+          datum.sa_mtg_crti_incHigh ||
+          datum.sa_cc_crti_incHigh,
+        moderate_income:
+          datum.sa_auto_crti_incModerate ||
+          datum.sa_mtg_crti_incModerate ||
+          datum.sa_cc_crti_incModerate,
+        middle_income:
+          datum.sa_auto_crti_incMiddle ||
+          datum.sa_mtg_crti_incMiddle ||
+          datum.sa_cc_crti_incMiddle,
+        low_income:
+          datum.sa_auto_crti_incLow ||
+          datum.sa_mtg_crti_incLow ||
+          datum.sa_cc_crti_incLow,
         date: datum.date,
         adjustment: 'Seasonally Adjusted',
       });
@@ -218,18 +242,42 @@ const hooks = {
   cct_inqi_income_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
-        high_income: datum.nsa_auto_inqi_incHigh || datum.nsa_mtg_inqi_incHigh || datum.nsa_cc_inqi_incHigh,
-        moderate_income: datum.nsa_auto_inqi_incModerate || datum.nsa_mtg_inqi_incModerate || datum.nsa_cc_inqi_incModerate,
-        middle_income: datum.nsa_auto_inqi_incMiddle || datum.nsa_mtg_inqi_incMiddle || datum.nsa_cc_inqi_incMiddle,
-        low_income: datum.nsa_auto_inqi_incLow || datum.nsa_mtg_inqi_incLow || datum.nsa_cc_inqi_incLow,
+        high_income:
+          datum.nsa_auto_inqi_incHigh ||
+          datum.nsa_mtg_inqi_incHigh ||
+          datum.nsa_cc_inqi_incHigh,
+        moderate_income:
+          datum.nsa_auto_inqi_incModerate ||
+          datum.nsa_mtg_inqi_incModerate ||
+          datum.nsa_cc_inqi_incModerate,
+        middle_income:
+          datum.nsa_auto_inqi_incMiddle ||
+          datum.nsa_mtg_inqi_incMiddle ||
+          datum.nsa_cc_inqi_incMiddle,
+        low_income:
+          datum.nsa_auto_inqi_incLow ||
+          datum.nsa_mtg_inqi_incLow ||
+          datum.nsa_cc_inqi_incLow,
         date: datum.date,
         adjustment: 'Unadjusted',
       });
       newData.push({
-        high_income: datum.sa_auto_inqi_incHigh || datum.sa_mtg_inqi_incHigh || datum.sa_cc_inqi_incHigh,
-        moderate_income: datum.sa_auto_inqi_incModerate || datum.sa_mtg_inqi_incModerate || datum.sa_cc_inqi_incModerate,
-        middle_income: datum.sa_auto_inqi_incMiddle || datum.sa_mtg_inqi_incMiddle || datum.sa_cc_inqi_incMiddle,
-        low_income: datum.sa_auto_inqi_incLow || datum.sa_mtg_inqi_incLow || datum.sa_cc_inqi_incLow,
+        high_income:
+          datum.sa_auto_inqi_incHigh ||
+          datum.sa_mtg_inqi_incHigh ||
+          datum.sa_cc_inqi_incHigh,
+        moderate_income:
+          datum.sa_auto_inqi_incModerate ||
+          datum.sa_mtg_inqi_incModerate ||
+          datum.sa_cc_inqi_incModerate,
+        middle_income:
+          datum.sa_auto_inqi_incMiddle ||
+          datum.sa_mtg_inqi_incMiddle ||
+          datum.sa_cc_inqi_incMiddle,
+        low_income:
+          datum.sa_auto_inqi_incLow ||
+          datum.sa_mtg_inqi_incLow ||
+          datum.sa_cc_inqi_incLow,
         date: datum.date,
         adjustment: 'Seasonally Adjusted',
       });
@@ -243,18 +291,42 @@ const hooks = {
   cct_crti_age_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
-        age_18_29: datum.nsa_auto_crti_age18to29 || datum.nsa_mtg_crti_age18to29 || datum.nsa_cc_crti_age18to29,
-        age_30_44: datum.nsa_auto_crti_age30to44 || datum.nsa_mtg_crti_age30to44 || datum.nsa_cc_crti_age30to44,
-        age_45_64: datum.nsa_auto_crti_age45to64 || datum.nsa_mtg_crti_age45to64 || datum.nsa_cc_crti_age45to64,
-        age_65_plus: datum.nsa_auto_crti_age65plus || datum.nsa_mtg_crti_age65plus || datum.nsa_cc_crti_age65plus,
+        age_18_29:
+          datum.nsa_auto_crti_age18to29 ||
+          datum.nsa_mtg_crti_age18to29 ||
+          datum.nsa_cc_crti_age18to29,
+        age_30_44:
+          datum.nsa_auto_crti_age30to44 ||
+          datum.nsa_mtg_crti_age30to44 ||
+          datum.nsa_cc_crti_age30to44,
+        age_45_64:
+          datum.nsa_auto_crti_age45to64 ||
+          datum.nsa_mtg_crti_age45to64 ||
+          datum.nsa_cc_crti_age45to64,
+        age_65_plus:
+          datum.nsa_auto_crti_age65plus ||
+          datum.nsa_mtg_crti_age65plus ||
+          datum.nsa_cc_crti_age65plus,
         date: datum.date,
         adjustment: 'Unadjusted',
       });
       newData.push({
-        age_18_29: datum.sa_auto_crti_age18to29 || datum.sa_mtg_crti_age18to29 || datum.sa_cc_crti_age18to29,
-        age_30_44: datum.sa_auto_crti_age30to44 || datum.sa_mtg_crti_age30to44 || datum.sa_cc_crti_age30to44,
-        age_45_64: datum.sa_auto_crti_age45to64 || datum.sa_mtg_crti_age45to64 || datum.sa_cc_crti_age45to64,
-        age_65_plus: datum.sa_auto_crti_age65plus || datum.sa_mtg_crti_age65plus || datum.sa_cc_crti_age65plus,
+        age_18_29:
+          datum.sa_auto_crti_age18to29 ||
+          datum.sa_mtg_crti_age18to29 ||
+          datum.sa_cc_crti_age18to29,
+        age_30_44:
+          datum.sa_auto_crti_age30to44 ||
+          datum.sa_mtg_crti_age30to44 ||
+          datum.sa_cc_crti_age30to44,
+        age_45_64:
+          datum.sa_auto_crti_age45to64 ||
+          datum.sa_mtg_crti_age45to64 ||
+          datum.sa_cc_crti_age45to64,
+        age_65_plus:
+          datum.sa_auto_crti_age65plus ||
+          datum.sa_mtg_crti_age65plus ||
+          datum.sa_cc_crti_age65plus,
         date: datum.date,
         adjustment: 'Seasonally Adjusted',
       });
@@ -268,18 +340,42 @@ const hooks = {
   cct_inqi_age_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
-        age_18_29: datum.nsa_auto_inqi_age18to29 || datum.nsa_mtg_inqi_age18to29 || datum.nsa_cc_inqi_age18to29,
-        age_30_44: datum.nsa_auto_inqi_age30to44 || datum.nsa_mtg_inqi_age30to44 || datum.nsa_cc_inqi_age30to44,
-        age_45_64: datum.nsa_auto_inqi_age45to64 || datum.nsa_mtg_inqi_age45to64 || datum.nsa_cc_inqi_age45to64,
-        age_65_plus: datum.nsa_auto_inqi_age65plus || datum.nsa_mtg_inqi_age65plus || datum.nsa_cc_inqi_age65plus,
+        age_18_29:
+          datum.nsa_auto_inqi_age18to29 ||
+          datum.nsa_mtg_inqi_age18to29 ||
+          datum.nsa_cc_inqi_age18to29,
+        age_30_44:
+          datum.nsa_auto_inqi_age30to44 ||
+          datum.nsa_mtg_inqi_age30to44 ||
+          datum.nsa_cc_inqi_age30to44,
+        age_45_64:
+          datum.nsa_auto_inqi_age45to64 ||
+          datum.nsa_mtg_inqi_age45to64 ||
+          datum.nsa_cc_inqi_age45to64,
+        age_65_plus:
+          datum.nsa_auto_inqi_age65plus ||
+          datum.nsa_mtg_inqi_age65plus ||
+          datum.nsa_cc_inqi_age65plus,
         date: datum.date,
         adjustment: 'Unadjusted',
       });
       newData.push({
-        age_18_29: datum.sa_auto_inqi_age18to29 || datum.sa_mtg_inqi_age18to29 || datum.sa_cc_inqi_age18to29,
-        age_30_44: datum.sa_auto_inqi_age30to44 || datum.sa_mtg_inqi_age30to44 || datum.sa_cc_inqi_age30to44,
-        age_45_64: datum.sa_auto_inqi_age45to64 || datum.sa_mtg_inqi_age45to64 || datum.sa_cc_inqi_age45to64,
-        age_65_plus: datum.sa_auto_inqi_age65plus || datum.sa_mtg_inqi_age65plus || datum.sa_cc_inqi_age65plus,
+        age_18_29:
+          datum.sa_auto_inqi_age18to29 ||
+          datum.sa_mtg_inqi_age18to29 ||
+          datum.sa_cc_inqi_age18to29,
+        age_30_44:
+          datum.sa_auto_inqi_age30to44 ||
+          datum.sa_mtg_inqi_age30to44 ||
+          datum.sa_cc_inqi_age30to44,
+        age_45_64:
+          datum.sa_auto_inqi_age45to64 ||
+          datum.sa_mtg_inqi_age45to64 ||
+          datum.sa_cc_inqi_age45to64,
+        age_65_plus:
+          datum.sa_auto_inqi_age65plus ||
+          datum.sa_mtg_inqi_age65plus ||
+          datum.sa_cc_inqi_age65plus,
         date: datum.date,
         adjustment: 'Seasonally Adjusted',
       });
@@ -293,20 +389,50 @@ const hooks = {
   cct_crti_risk_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
-        deep_subprime: datum.nsa_auto_crti_riskDeepSubprime || datum.nsa_mtg_crti_riskDeepSubprime || datum.nsa_cc_crti_riskDeepSubprime,
-        sub_prime: datum.nsa_auto_crti_riskSubprime || datum.nsa_mtg_crti_riskSubprime || datum.nsa_cc_crti_riskSubprime,
-        near_prime: datum.nsa_auto_crti_riskNearPrime || datum.nsa_mtg_crti_riskNearPrime || datum.nsa_cc_crti_riskNearPrime,
-        prime: datum.nsa_auto_crti_riskPrime || datum.nsa_mtg_crti_riskPrime  || datum.nsa_cc_crti_riskPrime,
-        super_prime: datum.nsa_auto_crti_riskSuperprime || datum.nsa_mtg_crti_riskSuperprime || datum.nsa_cc_crti_riskSuperprime,
+        deep_subprime:
+          datum.nsa_auto_crti_riskDeepSubprime ||
+          datum.nsa_mtg_crti_riskDeepSubprime ||
+          datum.nsa_cc_crti_riskDeepSubprime,
+        sub_prime:
+          datum.nsa_auto_crti_riskSubprime ||
+          datum.nsa_mtg_crti_riskSubprime ||
+          datum.nsa_cc_crti_riskSubprime,
+        near_prime:
+          datum.nsa_auto_crti_riskNearPrime ||
+          datum.nsa_mtg_crti_riskNearPrime ||
+          datum.nsa_cc_crti_riskNearPrime,
+        prime:
+          datum.nsa_auto_crti_riskPrime ||
+          datum.nsa_mtg_crti_riskPrime ||
+          datum.nsa_cc_crti_riskPrime,
+        super_prime:
+          datum.nsa_auto_crti_riskSuperprime ||
+          datum.nsa_mtg_crti_riskSuperprime ||
+          datum.nsa_cc_crti_riskSuperprime,
         date: datum.date,
         adjustment: 'Unadjusted',
       });
       newData.push({
-        deep_subprime: datum.sa_auto_crti_riskDeepSubprime || datum.sa_mtg_crti_riskDeepSubprime || datum.sa_cc_crti_riskDeepSubprime,
-        sub_prime: datum.sa_auto_crti_riskSubprime || datum.sa_mtg_crti_riskSubprime || datum.sa_cc_crti_riskSubprime,
-        near_prime: datum.sa_auto_crti_riskNearPrime || datum.sa_mtg_crti_riskNearPrime || datum.sa_cc_crti_riskNearPrime,
-        prime: datum.sa_auto_crti_riskPrime || datum.sa_mtg_crti_riskPrime  || datum.sa_cc_crti_riskPrime,
-        super_prime: datum.sa_auto_crti_riskSuperprime || datum.sa_mtg_crti_riskSuperprime || datum.sa_cc_crti_riskSuperprime,
+        deep_subprime:
+          datum.sa_auto_crti_riskDeepSubprime ||
+          datum.sa_mtg_crti_riskDeepSubprime ||
+          datum.sa_cc_crti_riskDeepSubprime,
+        sub_prime:
+          datum.sa_auto_crti_riskSubprime ||
+          datum.sa_mtg_crti_riskSubprime ||
+          datum.sa_cc_crti_riskSubprime,
+        near_prime:
+          datum.sa_auto_crti_riskNearPrime ||
+          datum.sa_mtg_crti_riskNearPrime ||
+          datum.sa_cc_crti_riskNearPrime,
+        prime:
+          datum.sa_auto_crti_riskPrime ||
+          datum.sa_mtg_crti_riskPrime ||
+          datum.sa_cc_crti_riskPrime,
+        super_prime:
+          datum.sa_auto_crti_riskSuperprime ||
+          datum.sa_mtg_crti_riskSuperprime ||
+          datum.sa_cc_crti_riskSuperprime,
         date: datum.date,
         adjustment: 'Seasonally Adjusted',
       });
@@ -320,20 +446,50 @@ const hooks = {
   cct_inqi_risk_filterable(data) {
     data = data.reduce((newData, datum) => {
       newData.push({
-        deep_subprime: datum.nsa_auto_inqi_riskDeepSubprime || datum.nsa_mtg_inqi_riskDeepSubprime || datum.nsa_cc_inqi_riskDeepSubprime,
-        sub_prime: datum.nsa_auto_inqi_riskSubprime || datum.nsa_mtg_inqi_riskSubprime || datum.nsa_cc_inqi_riskSubprime,
-        near_prime: datum.nsa_auto_inqi_riskNearPrime || datum.nsa_mtg_inqi_riskNearPrime || datum.nsa_cc_inqi_riskNearPrime,
-        prime: datum.nsa_auto_inqi_riskPrime || datum.nsa_mtg_inqi_riskPrime  || datum.nsa_cc_inqi_riskPrime,
-        super_prime: datum.nsa_auto_inqi_riskSuperprime || datum.nsa_mtg_inqi_riskSuperprime || datum.nsa_cc_inqi_riskSuperprime,
+        deep_subprime:
+          datum.nsa_auto_inqi_riskDeepSubprime ||
+          datum.nsa_mtg_inqi_riskDeepSubprime ||
+          datum.nsa_cc_inqi_riskDeepSubprime,
+        sub_prime:
+          datum.nsa_auto_inqi_riskSubprime ||
+          datum.nsa_mtg_inqi_riskSubprime ||
+          datum.nsa_cc_inqi_riskSubprime,
+        near_prime:
+          datum.nsa_auto_inqi_riskNearPrime ||
+          datum.nsa_mtg_inqi_riskNearPrime ||
+          datum.nsa_cc_inqi_riskNearPrime,
+        prime:
+          datum.nsa_auto_inqi_riskPrime ||
+          datum.nsa_mtg_inqi_riskPrime ||
+          datum.nsa_cc_inqi_riskPrime,
+        super_prime:
+          datum.nsa_auto_inqi_riskSuperprime ||
+          datum.nsa_mtg_inqi_riskSuperprime ||
+          datum.nsa_cc_inqi_riskSuperprime,
         date: datum.date,
         adjustment: 'Unadjusted',
       });
       newData.push({
-        deep_subprime: datum.sa_auto_inqi_riskDeepSubprime || datum.sa_mtg_inqi_riskDeepSubprime || datum.sa_cc_inqi_riskDeepSubprime,
-        sub_prime: datum.sa_auto_inqi_riskSubprime || datum.sa_mtg_inqi_riskSubprime || datum.sa_cc_inqi_riskSubprime,
-        near_prime: datum.sa_auto_inqi_riskNearPrime || datum.sa_mtg_inqi_riskNearPrime || datum.sa_cc_inqi_riskNearPrime,
-        prime: datum.sa_auto_inqi_riskPrime || datum.sa_mtg_inqi_riskPrime  || datum.sa_cc_inqi_riskPrime,
-        super_prime: datum.sa_auto_inqi_riskSuperprime || datum.sa_mtg_inqi_riskSuperprime || datum.sa_cc_inqi_riskSuperprime,
+        deep_subprime:
+          datum.sa_auto_inqi_riskDeepSubprime ||
+          datum.sa_mtg_inqi_riskDeepSubprime ||
+          datum.sa_cc_inqi_riskDeepSubprime,
+        sub_prime:
+          datum.sa_auto_inqi_riskSubprime ||
+          datum.sa_mtg_inqi_riskSubprime ||
+          datum.sa_cc_inqi_riskSubprime,
+        near_prime:
+          datum.sa_auto_inqi_riskNearPrime ||
+          datum.sa_mtg_inqi_riskNearPrime ||
+          datum.sa_cc_inqi_riskNearPrime,
+        prime:
+          datum.sa_auto_inqi_riskPrime ||
+          datum.sa_mtg_inqi_riskPrime ||
+          datum.sa_cc_inqi_riskPrime,
+        super_prime:
+          datum.sa_auto_inqi_riskSuperprime ||
+          datum.sa_mtg_inqi_riskSuperprime ||
+          datum.sa_cc_inqi_riskSuperprime,
         date: datum.date,
         adjustment: 'Seasonally Adjusted',
       });

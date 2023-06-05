@@ -23,7 +23,6 @@ const schoolModel = {
 
   /**
    * Fixes certain API values for use in this app
-   *
    * @param {object} values - object containing unformatted API values
    * @returns {object} object with reformatted values
    */

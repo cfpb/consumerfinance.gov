@@ -1,4 +1,3 @@
-from collections import Counter
 from urllib.parse import urlencode
 
 from django.apps import apps
@@ -12,7 +11,6 @@ from wagtail.images import blocks as images_blocks
 from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
-from taggit.models import Tag
 from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 from v1 import blocks as v1_blocks
@@ -21,6 +19,7 @@ from v1.atomic_elements import atoms, molecules
 # Bring tables into this module to maintain import structure across the project.
 from v1.atomic_elements.tables import (  # noqa: F401
     AtomicTableBlock,
+    CaseDocketTable,
     ConsumerReportingCompanyTable,
     ContactUsTable,
 )
@@ -736,29 +735,20 @@ class FilterableList(BaseExpandable):
             ),
         ]
     )
-    topic_filtering = blocks.ChoiceBlock(
-        choices=[
-            ("no_filter", "Don't filter topics"),
-            (
-                "sort_alphabetically",
-                "Filter topics, sort topic list alphabetically",
-            ),
-            (
-                "sort_by_frequency",
-                "Filter topics, sort topic list by number of results",
-            ),
-        ],
-        required=True,
+    topics = blocks.BooleanBlock(
+        required=False,
+        label="Filter by Topics",
         help_text='Whether to include a "Topics" filter in the filter controls',
     )
-    order_by = blocks.ChoiceBlock(
+    DEFAULT_ORDERING = "-start_date"
+    ordering = blocks.ChoiceBlock(
         choices=[
-            ("-date_published", "Date Published"),
-            ("_score", "Relevance"),
+            ("-start_date", "Date"),
+            ("title.raw", "Alphabetical"),
         ],
         required=True,
         help_text="How to order results",
-        default="-date_published",
+        default=DEFAULT_ORDERING,
     )
     statuses = blocks.BooleanBlock(
         default=False,
@@ -794,15 +784,6 @@ class FilterableList(BaseExpandable):
         help_text='Whether to include a set of "Date range" filters '
         "in the filter controls.",
     )
-    output_5050 = blocks.BooleanBlock(
-        default=False, required=False, label="Render preview items as 50-50s"
-    )
-    link_image_and_heading = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text="Add links to post preview images and"
-        " headings in filterable list results",
-    )
     filter_children = blocks.BooleanBlock(
         default=True,
         required=False,
@@ -815,29 +796,11 @@ class FilterableList(BaseExpandable):
         template = "v1/includes/organisms/filterable-list.html"
 
     class Media:
-        js = ["filterable-list.js"]
-
-    @staticmethod
-    def get_filterable_topics(filterable_page_ids, value):
-        """Given a set of page IDs, return the list of filterable topics"""
-        tags = Tag.objects.filter(
-            v1_cfgovtaggedpages_items__content_object__id__in=filterable_page_ids  # noqa: E501
-        ).values_list("slug", "name")
-
-        sort_order = value.get("topic_filtering", "sort_by_frequency")
-        if sort_order == "sort_alphabetically":
-            return tags.distinct().order_by("name")
-        elif sort_order == "sort_by_frequency":
-            return [tag for (tag, _) in Counter(tags).most_common()]
-        else:
-            return []
+        js = ["filterable-list-controls.js"]
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        show_topics = (
-            value["topic_filtering"] == "sort_by_frequency"
-            or value["topic_filtering"] == "sort_alphabetically"
-        )
+
         # Different instances of FilterableList need to render their post
         # previews differently depending on the page type they live on. By
         # default post dates and tags are always shown.
@@ -845,7 +808,6 @@ class FilterableList(BaseExpandable):
             {
                 "show_post_dates": True,
                 "show_post_tags": True,
-                "show_topic_filter": show_topics,
             }
         )
 
@@ -942,7 +904,7 @@ class VideoPlayer(blocks.StructBlock):
         value_class = VideoPlayerStructValue
 
     class Media:
-        js = ["video-player.js"]
+        js = ["video-player.js", "https://www.youtube.com/iframe_api"]
 
 
 class AudioPlayer(blocks.StructBlock):

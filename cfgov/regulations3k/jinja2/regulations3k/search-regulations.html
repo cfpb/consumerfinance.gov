@@ -87,8 +87,7 @@
                 {% set expandable_settings = {
                     'label': 'Regulation',
                     'is_expanded': true,
-                    'is_midtone': true,
-                    'hide_cue_label': true
+                    'is_midtone': true
                 } %}
                 {% call() expandable(expandable_settings) %}
                 <div class="o-form_group">
@@ -119,8 +118,7 @@
                 {% set expandable_settings = {
                     'label': 'Results per page',
                     'is_expanded': false,
-                    'is_midtone': true,
-                    'hide_cue_label': true
+                    'is_midtone': true
                 } %}
                 {% call() expandable(expandable_settings) %}
                 <div class="o-form_group">
@@ -156,8 +154,7 @@
                 {% set expandable_settings = {
                     'label': 'Order',
                     'is_expanded': false,
-                    'is_midtone': true,
-                    'hide_cue_label': true
+                    'is_midtone': true
                 } %}
                 {% call() expandable(expandable_settings) %}
                 <div class="o-form_group">
@@ -182,14 +179,10 @@
                     </fieldset>
                 </div>
                 {% endcall %}
-                <div class="o-form_group regs3k-js">
-                    <fieldset class="o-form_fieldset u-mt20">
-                        <div class="input-with-btn_btn">
-                            <button class="a-btn" type="submit">
-                                Update
-                            </button>
-                        </div>
-                    </fieldset>
+                <div class="regs3k-js u-mb20">
+                    <button class="a-btn" type="submit">
+                        Update
+                    </button>
                 </div>
             </form>
         </aside>

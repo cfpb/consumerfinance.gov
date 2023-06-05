@@ -11,7 +11,6 @@ import { stateModel } from '../models/state-model.js';
 const updateState = {
   /**
    * activeSection - Update the app's active section
-   *
    * @param {*} value - the value to be assigned
    * @param {boolean} popState - true if the update is the result of a popState event
    */
@@ -28,7 +27,6 @@ const updateState = {
 
   /**
    * getStarted - Indicate that the app has been started
-   *
    * @param {boolean} bool - true, if the app has started
    */
   getStarted: (bool) => {
@@ -51,7 +49,6 @@ const updateState = {
 
   /**
    * Update the stateModel's property to be equal to value
-   *
    * @param {string} prop - The property to update
    * @param {*} value - The value to assign
    */
@@ -68,7 +65,6 @@ const updateState = {
 
   /**
    * replaceStateInHistory - Replace current application state in window.history
-   *
    * @param {string} queryString - The queryString to put in the history object
    */
   replaceStateInHistory: (queryString) => {

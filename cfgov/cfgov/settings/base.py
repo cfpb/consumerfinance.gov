@@ -2,7 +2,6 @@ import json
 import os
 from pathlib import Path
 
-from django.conf import global_settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
@@ -36,9 +35,6 @@ USE_X_FORWARDED_HOST = True
 
 # in some environments, we want to respect X-Forwarded-Port
 USE_X_FORWARDED_PORT = os.environ.get("USE_X_FORWARDED_PORT") == "True"
-
-# Use the django default password hashing
-PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
 # Application definition
 INSTALLED_APPS = (
@@ -78,12 +74,12 @@ INSTALLED_APPS = (
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "axes",
     "wagtail.search",
     "storages",
     "data_research",
     "v1",
     "core",
-    "legacy",
     "django_extensions",
     "jobmanager",
     "wellbeing",
@@ -131,6 +127,9 @@ MIDDLEWARE = (
     "core.middleware.DeactivateTranslationsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # AxesMiddleware should be the last middleware in the MIDDLEWARE list
+    # that touches authentication.
+    "axes.middleware.AxesMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
@@ -373,10 +372,10 @@ AWS_DEFAULT_ACL = None  # Default to using the ACL of the bucket
 if os.environ.get("S3_ENABLED", "False") == "True":
     AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
     AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-    if os.environ.get("AWS_S3_CUSTOM_DOMAIN"):
-        AWS_S3_CUSTOM_DOMAIN = os.environ["AWS_S3_CUSTOM_DOMAIN"]
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    MEDIA_URL = os.path.join(os.environ.get("AWS_S3_URL"), AWS_LOCATION, "")
+    MEDIA_URL = os.path.join(
+        AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com", AWS_LOCATION, ""
+    )
 
 
 # GovDelivery
@@ -398,28 +397,67 @@ WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get(
 
 PRIVACY_EMAIL_TARGET = os.environ.get("PRIVACY_EMAIL_TARGET", "test@localhost")
 
-
 # Password Policies
-# cfpb_common password rules
-CFPB_COMMON_PASSWORD_RULES = [
-    [r".{12,}", "Minimum allowed length is 12 characters"],
-    [r"[A-Z]", "Password must include at least one capital letter"],
-    [r"[a-z]", "Password must include at least one lowercase letter"],
-    [r"[0-9]", "Password must include at least one digit"],
-    [
-        r"[@#$%&!]",
-        "Password must include at least one special character (@#$%&!)",
-    ],
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {
+            "min_length": 12,
+        },
+    },
+    {
+        "NAME": "login.password_validation.PasswordRegexValidator",
+        "OPTIONS": {
+            "regex": r"[A-Z]",
+            "message": "Password must include at least one capital letter.",
+        },
+    },
+    {
+        "NAME": "login.password_validation.PasswordRegexValidator",
+        "OPTIONS": {
+            "regex": r"[a-z]",
+            "message": "Password must include at least one lowercase letter.",
+        },
+    },
+    {
+        "NAME": "login.password_validation.PasswordRegexValidator",
+        "OPTIONS": {
+            "regex": r"[0-9]",
+            "message": "Password must include at least one digit.",
+        },
+    },
+    {
+        "NAME": "login.password_validation.PasswordRegexValidator",
+        "OPTIONS": {
+            "regex": r"[@#$%&!]",
+            "message": "Password must include at least one special character (@#$%&!).",
+        },
+    },
+    {
+        "NAME": "login.password_validation.HistoryValidator",
+        "OPTIONS": {
+            "count": 10,
+        },
+    },
+    {
+        "NAME": "login.password_validation.AgeValidator",
+        "OPTIONS": {
+            "hours": 24,
+        },
+    },
 ]
-# cfpb_common login rules
-# in seconds
-LOGIN_FAIL_TIME_PERIOD = int(
-    os.environ.get("LOGIN_FAIL_TIME_PERIOD", 120 * 60)
+
+# Login lockout rules using django-axes
+AUTHENTICATION_BACKENDS = (
+    "axes.backends.AxesStandaloneBackend",
+    "django.contrib.auth.backends.ModelBackend",
 )
-# number of failed attempts
-LOGIN_FAILS_ALLOWED = int(os.environ.get("LOGIN_FAILS_ALLOWED", 5))
-LOGIN_REDIRECT_URL = "/admin/"
-LOGIN_URL = "/login/"
+AXES_ENABLED = True
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = 2  # Hours
+AXES_ONLY_USER_FAILURES = True
+AXES_LOCKOUT_CALLABLE = "login.views.lockout"
+LOGOUT_REDIRECT_URL = "wagtailadmin_login"
 
 # Initialize our SAML_AUTH variable as false. Our production settings will
 # override this based on the SAML_AUTH environment variable.
@@ -709,7 +747,7 @@ CSRF_REQUIRED_PATHS = (
 # exempt beta from CSRF settings until it's converted to https
 SECURE_REFERRER_POLICY = "same-origin"  # 1
 SESSION_COOKIE_SAMESITE = "Strict"  # 3
-X_FRAME_OPTIONS = "DENY"  # 14
+X_FRAME_OPTIONS = "SAMEORIGIN"  # 13
 
 if DEPLOY_ENVIRONMENT and DEPLOY_ENVIRONMENT != "beta":
     SESSION_COOKIE_SECURE = True

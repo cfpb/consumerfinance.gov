@@ -7,6 +7,7 @@ import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { getStateValue } from '../dispatchers/get-model-values.js';
+import { CostsGroup } from '../CostsGroup.js';
 
 const HIDDEN_CLASS = 'u-hidden';
 const appView = {
@@ -22,7 +23,6 @@ const appView = {
 
   /**
    * Handle the click of the Include Parent Plus checkbox
-   *
    * @param {object} event - Click event object
    */
   _handleIncludeParentPlusBtn: (event) => {
@@ -35,7 +35,6 @@ const appView = {
 
   /**
    * Handle clicks of the restart button
-   *
    * @param {object} event - The event object
    */
   _handleRestartBtn: (event) => {
@@ -161,7 +160,6 @@ function _addButtonListeners() {
 
 /**
  * Handle the click of buttons on final page.
- *
  * @param {MouseEvent} event - Click event object.
  */
 function _handleDidThisHelpClick(event) {
@@ -175,12 +173,17 @@ function _handleDidThisHelpClick(event) {
 
 /**
  * Event handling for action-plan choice clicks.
- *
  * @param {MouseEvent} event - Triggering event.
  */
 function _handleActionPlanClick(event) {
   const target = event.target;
   updateState.byProperty('actionPlan', target.value);
 }
+
+/**
+ * Initialize Costs Groups organism
+ */
+const collegeCosts = document.querySelector('.college-costs');
+CostsGroup.init(collegeCosts);
 
 export { appView };

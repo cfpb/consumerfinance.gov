@@ -184,16 +184,16 @@ msgstr ""
 msgid "USA.gov"
 msgstr ""
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation-fig.html:21
-#: v1/jinja2/v1/includes/organisms/secondary-navigation-fig.html:22
+#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:21
+#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:22
 msgid "Table of contents"
 msgstr ""
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation.html:17
+#: v1/jinja2/v1/includes/organisms/secondary-nav.html:17
 msgid "Section navigation"
 msgstr ""
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation.html:18
+#: v1/jinja2/v1/includes/organisms/secondary-nav.html:18
 msgid "In this section"
 msgstr ""
 
@@ -241,7 +241,7 @@ msgstr ""
 msgid "password"
 msgstr ""
 
-#: v1/templates/cdnadmin/disabled.html:3 v1/templates/cdnadmin/index.html:5
+#: v1/templates/cdnadmin/index.html:5
 msgid "CDN Manager"
 msgstr ""
 

@@ -1,4 +1,5 @@
-import { BaseTransition, EventObserver } from '@cfpb/cfpb-atomic-component';
+import BaseTransition from './BaseTransition.js';
+import { EventObserver } from '@cfpb/cfpb-atomic-component';
 
 // Exported constants.
 const CLASSES = {
@@ -11,7 +12,6 @@ const CLASSES = {
 
 /**
  * ExpandableFacetTransition
- *
  * @class
  * @classdesc Initializes new ExpandableFacetTransition behavior.
  * @param {HTMLElement} element - DOM element to apply move transition to.
@@ -58,7 +58,6 @@ function ExpandableFacetTransition(element) {
 
   /**
    * Toggle the expandable
-   *
    * @returns {ExpandableFacetTransition} An instance.
    */
   function toggleExpandable() {
@@ -73,7 +72,6 @@ function ExpandableFacetTransition(element) {
 
   /**
    * Collapses the expandable content
-   *
    * @returns {ExpandableFacetTransition} An instance.
    */
   function collapse() {
@@ -88,7 +86,6 @@ function ExpandableFacetTransition(element) {
 
   /**
    * Expands the expandable content
-   *
    * @returns {ExpandableFacetTransition} An instance.
    */
   function expand() {

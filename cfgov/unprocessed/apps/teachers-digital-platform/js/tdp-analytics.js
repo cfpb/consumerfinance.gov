@@ -3,7 +3,6 @@ import { SCORES_UNSET_KEY } from './survey/config.js';
 
 /**
  * Sends the user interaction to Analytics
- *
  * @param {string} action - The user's action
  * @param {string} label - The label associated with the action
  * @param {string} category - Optional category if it's not eRegs-related
@@ -18,7 +17,6 @@ let sendEvent = (action, label, category) => {
 
 /**
  * Sends the user survey interaction to Analytics
- *
  * @param {string} action - The user's action
  * @param {string} label - The label associated with the action
  * @returns {object} Event data
@@ -32,7 +30,6 @@ let sendSurveyEvent = (action, label) => {
 
 /**
  * getExpandable - Find the expandable the user clicked.
- *
  * @param {event} event - Click event
  * @returns {HTMLElement|null} The expandable or null if it's not an expandable
  */
@@ -52,7 +49,6 @@ const getExpandable = (event) => {
 
 /**
  * getExpandableState - Description
- *
  * @param {HTMLElement} expandable - Expandable's HTML element
  * @returns {string} Expandable's state, either `open` or `close`
  */
@@ -70,7 +66,6 @@ const getExpandableState = (expandable) => {
 /**
  * handleExpandableClick - Listen for clicks within a search page's content
  * and report to GA if they opened or closed an expandable.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -92,7 +87,6 @@ const handleExpandableClick = (event) => {
 
 /**
  * handleFilterClick - Listen for filter clicks and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -109,7 +103,6 @@ const handleFilterClick = (event) => {
 
 /**
  * handleClearFilterClick - Listen for clear filter clicks and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -132,7 +125,6 @@ const handleClearFilterClick = (event) => {
 
 /**
  * getPaginator - Find the paginator the user clicked.
- *
  * @param {event} event - Click event
  * @returns {HTMLElement|null} The checkbox div or null if it's not a checkbox
  */
@@ -146,7 +138,6 @@ const getPaginator = (event) => {
 
 /**
  * handlePaginationClick - Listen for pagination clicks and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -177,7 +168,6 @@ const handlePaginationClick = (event) => {
 
 /**
  * getClearBtn - Find the clear all filters button.
- *
  * @param {event} event - Click event
  * @returns {HTMLElement|null} The checkbox div or null if it's not a checkbox
  */
@@ -191,7 +181,6 @@ const getClearBtn = (event) => {
 
 /**
  * handleClearAllClick - Listen for clear all filters clicks and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -222,7 +211,6 @@ const handleClearAllClick = (event) => {
 /**
  * handleFetchSearchResults - Listen for AJAX fetchSearchResults
  * and report to GA.
- *
  * @param {string} searchTerm - string.
  */
 const handleFetchSearchResults = (searchTerm) => {
@@ -254,7 +242,6 @@ const handleFetchSearchResults = (searchTerm) => {
 
 /**
  * handleSurveySwitchGradeClick - Listen for Switch grades click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -271,7 +258,6 @@ const handleSurveySwitchGradeClick = (event) => {
 
 /**
  * handleSurveyPrivacyModalClick - Listen for Privacy statement click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -289,7 +275,6 @@ const handleSurveyPrivacyModalClick = (event) => {
 
 /**
  * handleSurveyLetsDoThisClick - Listen for Let's do this click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -306,7 +291,6 @@ const handleSurveyLetsDoThisClick = (event) => {
 
 /**
  * handleSurveyChoiceChange - Listen for radio button value change and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -333,7 +317,6 @@ const handleSurveyChoiceChange = (event) => {
 
 /**
  * handleSurveyErrorNoticeClick - Listen for error notification click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -356,7 +339,6 @@ const handleSurveyErrorNoticeClick = (event) => {
 
 /**
  * handleSurveyRestartModalClick - Listen for Restart survey click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -389,7 +371,6 @@ const handleSurveyRestartModalClick = (event) => {
 
 /**
  * handleSurveyExpandableClick - Listen for opening or closing of an expandable and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -414,7 +395,6 @@ const handleSurveyExpandableClick = (event) => {
 
 /**
  * handleSurveySectionClick - Listen for Edit Section click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -439,7 +419,6 @@ const handleSurveySectionClick = (event) => {
 
 /**
  * handleSurveySubmitClick - Listen for Submit click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -466,14 +445,13 @@ const handleSurveySubmitClick = (event) => {
 
 /**
  * handleSurveyResultsExpandableClick - Listen for opening or closing of an expandable and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
 const handleSurveyResultsExpandableClick = (event) => {
-  const selector = '.tdp-survey-results .o-expandable_target';
+  const selector = '.tdp-survey-results .o-expandable_header';
   const expandable = event.target.closest(selector);
-  if (!expandable || !expandable.classList.contains('o-expandable_target')) {
+  if (!expandable || !expandable.classList.contains('o-expandable_header')) {
     return;
   }
   const state =
@@ -494,7 +472,6 @@ const handleSurveyResultsExpandableClick = (event) => {
 
 /**
  * handleSurveyDownloadClick - Listen for Download link click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -510,7 +487,6 @@ const handleSurveyDownloadClick = (event) => {
 
 /**
  * handleSurveyResultsModalClick - Listen for Results page Modal click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -532,7 +508,6 @@ const handleSurveyResultsModalClick = (event) => {
 /**
  * handleSurveyResultsModalClose -
  * Listen for Results page Modal click and report to GA.
- *
  * @param {HTMLElement} modal - element
  * @returns {object} Event data
  */
@@ -553,7 +528,6 @@ const handleSurveyResultsModalClose = (modal) => {
 
 /**
  * handleSurveyResultsSavePdfClick - Listen for save as PDF click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -575,7 +549,6 @@ const handleSurveyResultsSavePdfClick = (event) => {
 
 /**
  * handleSurveyResultsGetLinkClick - Listen for Results page Modal Get link click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -600,7 +573,6 @@ const handleSurveyResultsGetLinkClick = (event) => {
 
 /**
  * handleSurveyResultsGetLinkClick - Listen for Results page Modal Copy link click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -621,7 +593,6 @@ const handleSurveyResultsCopyLinkClick = (event) => {
 
 /**
  * handleSurveyResultsPrintClick - Listen for Results page Modal Print click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -670,7 +641,6 @@ const surveyResultsPageLoad = () => {
 
 /**
  * handleSurveyViewPrintClick - Listen for Results page Modal Print click and report to GA.
- *
  * @param {event} event - Click event.
  * @returns {object} Event data.
  */
@@ -692,7 +662,6 @@ const handleSurveyViewPrintClick = (event) => {
 
 /**
  * bindAnalytics - Set up analytics reporting.
- *
  * @param {Function} spyMethod - optional spy method.
  */
 const bindAnalytics = (spyMethod) => {

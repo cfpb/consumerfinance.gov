@@ -11,7 +11,9 @@ from search.elasticsearch_helpers import (
 
 @registry.register_document
 class AnswerPageDocument(Document):
-    autocomplete = fields.TextField(analyzer=ngram_tokenizer)
+    autocomplete = fields.TextField(
+        analyzer=ngram_tokenizer, fields={"raw": fields.KeywordField()}
+    )
     portal_topics = fields.KeywordField()
     portal_categories = fields.TextField()
     text = fields.TextField(attr="text", analyzer=synonym_analyzer)
@@ -19,8 +21,7 @@ class AnswerPageDocument(Document):
     preview = fields.TextField(attr="answer_content_preview")
 
     def get_queryset(self, *args, **kwargs):
-        query_set = super().get_queryset(*args, **kwargs)
-        return query_set.filter(live=True, redirect_to_page=None)
+        return super().get_queryset(*args, **kwargs).live()
 
     def prepare_autocomplete(self, instance):
         return instance.question

@@ -5,60 +5,18 @@
 
 // Required Modules
 import { isEmpty } from '@cfpb/cfpb-atomic-component';
-import ERROR_MESSAGES from '../../config/error-messages-config.js';
 
-/* TODO: Update all the validators to return both passed and failed states
-   instead of returning an empty object if the value passed */
-
-/**
- * date Determines if a field contains a valid date.
- *
- * @param {object} field - Field to test.
- * @param {object} currentStatus - A previous tested status for the field.
- * @returns {object} An empty object if the field passes,
- *   otherwise an object with msg and type properties if it failed.
- */
-function date(field, currentStatus) {
-  const status = currentStatus || {};
-  let valueToEval = field.value;
-
-  /* TODO: Merge this into the regex checks.
-           This converts numbers from any other format to MM/DD/YYYY */
-  if (!isNaN(field.valueAsNumber)) {
-    const date = new Date(field.valueAsNumber);
-    valueToEval = `${
-      date.getUTCMonth() + 1
-    }/${date.getUTCDate()}/${date.getUTCFullYear()}`;
-  }
-
-  /* Date regexes match the date patterns that are
-     allowed in cfgov/v1/forms.py FilterableDateField */
-
-  // https://regex101.com/r/M0ipdX/1
-  const yearRegex = /^\d{4}$/;
-  // https://regex101.com/r/PEa2se/1
-  const monthYearRegex = /^(?:\d{1}|\d{2})(?:-|\/)(?:\d{4}|\d{2})$/;
-  // https://regex101.com/r/1SGTLF/1
-  const dayMonthYearRegex =
-    /^(?:\d{1}|\d{2})(?:-|\/)(?:\d{1}|\d{2})(?:-|\/)(?:\d{4}|\d{2})$/;
-
-  const inputIsValid =
-    yearRegex.test(valueToEval) ||
-    monthYearRegex.test(valueToEval) ||
-    dayMonthYearRegex.test(valueToEval);
-
-  if (valueToEval && !inputIsValid) {
-    status.msg = status.msg || '';
-    status.msg += ERROR_MESSAGES.DATE.INVALID;
-    status.date = false;
-  }
-
-  return status;
-}
+const ERROR_MESSAGES = {
+  EMAIL: {
+    INVALID: 'You have entered an invalid email address.',
+    INVALID_ES: 'La dirección de correo electrónico introducida no es válida.',
+    REQUIRED: 'Please enter an email address.',
+    REQUIRED_ES: 'Por favor, introduzca una dirección de correo electrónico.',
+  },
+};
 
 /**
- * email Determines if a field contains a email date.
- *
+ * email Determines if a field contains an email address.
  * @param {object} field - Field to test.
  * @param {object} currentStatus - A previous tested status for the field.
  * @param {object} options - Options object.
@@ -73,7 +31,7 @@ function email(field, currentStatus, options) {
     "\u007F-\uffff!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9]" +
     '(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z]{2,}$';
   const emailRegex = new RegExp(regex, 'i');
-  const emptyValidation = empty(field);
+  const emptyValidation = _empty(field);
   const isFilled =
     typeof emptyValidation.required === 'undefined'
       ? true
@@ -103,13 +61,12 @@ function email(field, currentStatus, options) {
 // TODO: Rename this so it's clearer it's checking a required attribute
 /**
  * empty Determines if a required field contains a value.
- *
  * @param {object} field - Field to test.
  * @param {object} currentStatus - A previous tested status for the field.
  * @returns {object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
-function empty(field, currentStatus) {
+function _empty(field, currentStatus) {
   const status = currentStatus || {};
   const isRequired = field.getAttribute('required') !== null;
   if (isRequired && isEmpty(field.value)) {
@@ -120,59 +77,4 @@ function empty(field, currentStatus) {
   return status;
 }
 
-/**
- * checkbox
- * Determines if a field contains a required number of picked checkbox options.
- *
- * @param {object} field - Field to test.
- * @param {object} currentStatus - A previous tested status for the field.
- * @param {Array} fieldset - A list of fields related to the parent field.
- * @returns {object} An empty object if the field passes,
- *   otherwise an object with msg and type properties if it failed.
- */
-function checkbox(field, currentStatus, fieldset) {
-  const status = currentStatus || {};
-  return _checkableInput(field, status, fieldset, 'checkbox');
-}
-
-/**
- * radio Determines if a field contains a picked radio option.
- *
- * @param {object} field - Field to test.
- * @param {object} currentStatus - A previous tested status for the field.
- * @param {Array} fieldset - A list of fields related to the parent field.
- * @returns {object} An empty object if the field passes,
- *   otherwise an object with msg and type properties if it failed.
- */
-function radio(field, currentStatus, fieldset) {
-  const status = currentStatus || {};
-  return _checkableInput(field, status, fieldset, 'radio');
-}
-
-/**
- * _checkableInput
- * Determines if a field contains a required number of
- * picked checkbox or radio button options.
- *
- * @param {object} field - Field to test.
- * @param {object} currentStatus - A previous tested status for the field.
- * @param {Array} fieldset - A list of fields related to the parent field.
- * @param {string} type - Should be "radio" or "checkbox".
- * @returns {object} An empty object if the field passes,
- *   otherwise an object with msg and type properties if it failed.
- */
-function _checkableInput(field, currentStatus, fieldset, type) {
-  let statusMsg = currentStatus.msg || '';
-  const required = parseInt(field.getAttribute('data-required') || 0, 10);
-  const groupFieldsLength = fieldset.length;
-
-  if (groupFieldsLength < required) {
-    statusMsg += ERROR_MESSAGES.CHECKBOX.REQUIRED.replace('%s', required);
-    currentStatus.msg = statusMsg;
-    currentStatus[type] = false;
-  }
-
-  return currentStatus;
-}
-
-export { date, email, empty, checkbox, radio };
+export { email };

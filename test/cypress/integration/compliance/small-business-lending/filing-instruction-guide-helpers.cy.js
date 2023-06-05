@@ -1,6 +1,6 @@
 export class FilingInstructionGuide {
   url() {
-    return Cypress.env('FIG_URL');
+    return '/data-research/small-business-lending/filing-instructions-guide/2024-guide/';
   }
 
   open() {
@@ -8,7 +8,7 @@ export class FilingInstructionGuide {
   }
 
   toc() {
-    return cy.get('.o-fig .content_sidebar');
+    return cy.get('.o-fig .o-fig_sidebar');
   }
 
   getSection(section) {
@@ -56,7 +56,7 @@ export class FilingInstructionGuide {
   }
 
   getNavItem(section) {
-    return cy.get(`a.m-nav-link[href="#${section}"]`);
+    return cy.get(`a.o-secondary-nav_link[href="#${section}"]`);
   }
 
   clickNavItem(section) {

@@ -38,6 +38,7 @@ const jsPaths = [
   `${apps}/owning-a-home/js/mortgage-estimate/index.js`,
   `${apps}/paying-for-college/js/disclosures/index.js`,
   `${apps}/paying-for-college/js/college-costs.js`,
+  `${apps}/prepaid-agreements/js/common.js`,
   `${apps}/regulations3k/js/index.js`,
   `${apps}/regulations3k/js/permalinks.js`,
   `${apps}/regulations3k/js/recent-notices.js`,

@@ -33,7 +33,6 @@ import { analyticsSendEvent, analyticsLog } from '@cfpb/cfpb-analytics';
 
   /**
    * Handle submission of the form.
-   *
    * @param {Event} evt - Form submit event object.
    */
   function formSubmitted(evt) {

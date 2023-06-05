@@ -13,7 +13,6 @@ const BASE_CLASS = 'm-global-search';
 
 /**
  * GlobalSearch
- *
  * @class
  * @classdesc Initializes a new GlobalSearch molecule.
  * @param {HTMLElement} element - The DOM element within which to search
@@ -98,7 +97,6 @@ function GlobalSearch(element) {
   /**
    * Event handler for when there's a click on the page's body.
    * Used to close the global search, if needed.
-   *
    * @param {MouseEvent} event - The event object for the mousedown event.
    */
   function _handleBodyClick(event) {
@@ -115,7 +113,6 @@ function GlobalSearch(element) {
 
   /**
    * Whether a target is one of the ones that appear in the desktop view.
-   *
    * @param {HTMLElement} target - The target of a mouse event (most likely).
    * @returns {boolean} True if the passed target is in the desktop view.
    */
@@ -129,7 +126,6 @@ function GlobalSearch(element) {
 
   /**
    * Whether a target is one of the ones that appear in the mobile view.
-   *
    * @param {HTMLElement} target - The target of a mouse event (most likely).
    * @returns {boolean} True if the passed target is in the mobile view.
    */
@@ -186,7 +182,6 @@ function GlobalSearch(element) {
 
   /**
    * Close the search box.
-   *
    * @returns {object} An GlobalSearch instance.
    */
   function collapse() {

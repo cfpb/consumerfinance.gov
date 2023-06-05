@@ -2,7 +2,6 @@
 
 /**
  * promiseRequest - A handy function for returning XHR Promises
- *
  * @param {string} method - The method, ex. POST or GET
  * @param {string} url - The url to be requested
  * @returns {object} Promise of the XHR request

@@ -1,7 +1,6 @@
 /**
  * Constructs a search query to append to a link to College Scorecard that looks
  * for schools that offer a given program near a given ZIP.
- *
  * @param {string} pcip - The given program's two-digit PCIP code.
  * @param {string} zip - A five-digit ZIP code to search near.
  * @param {string} radius - Radius in miles to search around the given ZIP.

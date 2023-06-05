@@ -2,7 +2,6 @@ import { promiseRequest } from '../util/promise-request.js';
 
 /**
  * getApi - Make an API request to the endpoint specified with parameters specified
- *
  * @param {string} url - URL of API endpoint
  * @returns {object} Promise
  */
@@ -20,7 +19,6 @@ function getApi(url) {
 
 /**
  * schoolSearch - search for schools based on searchTerm
- *
  * @param {string} searchTerm - Term to be searched for
  * @returns {object} Promise
  */
@@ -38,7 +36,6 @@ function schoolSearch(searchTerm) {
 
 /**
  * getConstants - retrieve constants from our API
- *
  * @returns {object} Promise
  */
 function getConstants() {
@@ -50,7 +47,6 @@ function getConstants() {
 
 /**
  * getExpenses - retrieve expense data from our API
- *
  * @returns {object} Promise
  */
 function getExpenses() {
@@ -62,7 +58,6 @@ function getExpenses() {
 
 /**
  * getSchoolData - retrieve school data from our API
- *
  * @param {string} iped - The school's identification number
  * @returns {object} Promise
  */

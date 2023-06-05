@@ -165,20 +165,18 @@ const HTML_SNIPPET = `
             </p>
          </div>
          <div class="o-expandable-group">
-            <div class="o-expandable o-expandable__padded" data-js-hook="state_atomic_init">
-               <button class="o-expandable_header o-expandable_target o-expandable_target__expanded" title="Expand content">
+            <div class="o-expandable o-expandable__padded">
+               <button class="o-expandable_header o-expandable_target__expanded" title="Expand content">
                   <h3 class="o-expandable_label">
                      <img src="/static/apps/teachers-digital-platform/img/planning.svg" alt="planning icon"> Planning and self-control
                   </h3>
                   <span class="o-expandable_link">
-                     <span class="o-expandable_cue o-expandable_cue-open">
-                        <span class="u-visually-hidden-on-mobile">Show</span>
+                     <span class="o-expandable_cue-open" role="img" aria-label="Show">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg">
                            <path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V6.12a.792.792 0 1 0-1.583 0V9.5H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 0 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791z"></path>
                         </svg>
                      </span>
-                     <span class="o-expandable_cue o-expandable_cue-close">
-                        <span class="u-visually-hidden-on-mobile">Hide</span>
+                     <span class="o-expandable_cue-close" role="img" aria-label="Hide">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg">
                            <path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H4.32a.792.792 0 0 0 0 1.583h8.346a.792.792 0 0 0 .792-.791z"></path>
                         </svg>
@@ -236,20 +234,18 @@ const HTML_SNIPPET = `
                   </div>
                </div>
             </div>
-            <div class="o-expandable o-expandable__padded" data-js-hook="state_atomic_init">
-               <button class="o-expandable_header o-expandable_target o-expandable_target__expanded" title="Expand content">
+            <div class="o-expandable o-expandable__padded">
+               <button class="o-expandable_header o-expandable_target__expanded" title="Expand content">
                   <h3 class="o-expandable_label">
                      <img src="/static/apps/teachers-digital-platform/img/habits.svg" alt="habits icon"> Money habits and values
                   </h3>
                   <span class="o-expandable_link">
-                     <span class="o-expandable_cue o-expandable_cue-open">
-                        <span class="u-visually-hidden-on-mobile">Show</span>
+                     <span class="o-expandable_cue-open" role="img" aria-label="Show">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg">
                            <path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V6.12a.792.792 0 1 0-1.583 0V9.5H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 0 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791z"></path>
                         </svg>
                      </span>
-                     <span class="o-expandable_cue o-expandable_cue-close">
-                        <span class="u-visually-hidden-on-mobile">Hide</span>
+                     <span class="o-expandable_cue-close" role="img" aria-label="Hide">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg">
                            <path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H4.32a.792.792 0 0 0 0 1.583h8.346a.792.792 0 0 0 .792-.791z"></path>
                         </svg>
@@ -308,20 +304,18 @@ const HTML_SNIPPET = `
                   </div>
                </div>
             </div>
-            <div class="o-expandable o-expandable__padded" data-js-hook="state_atomic_init">
-               <button class="o-expandable_header o-expandable_target o-expandable_target__expanded" title="Expand content">
+            <div class="o-expandable o-expandable__padded">
+               <button class="o-expandable_header o-expandable_target__expanded" title="Expand content">
                   <h3 class="o-expandable_label">
                      <img src="/static/apps/teachers-digital-platform/img/knowledge.svg" alt="knowledge icon"> Money knowledge and choices
                   </h3>
                   <span class="o-expandable_link">
-                     <span class="o-expandable_cue o-expandable_cue-open">
-                        <span class="u-visually-hidden-on-mobile">Show</span>
+                     <span class="o-expandable_cue-open" role="img" aria-label="Show">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg">
                            <path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H9.284V6.12a.792.792 0 1 0-1.583 0V9.5H4.32a.792.792 0 0 0 0 1.584H7.7v3.382a.792.792 0 0 0 1.583 0v-3.382h3.382a.792.792 0 0 0 .792-.791z"></path>
                         </svg>
                      </span>
-                     <span class="o-expandable_cue o-expandable_cue-close">
-                        <span class="u-visually-hidden-on-mobile">Hide</span>
+                     <span class="o-expandable_cue-close" role="img" aria-label="Hide">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 20.4" class="cf-icon-svg">
                            <path d="M16.416 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.916 7.917zm-2.958.01a.792.792 0 0 0-.792-.792H4.32a.792.792 0 0 0 0 1.583h8.346a.792.792 0 0 0 .792-.791z"></path>
                         </svg>
