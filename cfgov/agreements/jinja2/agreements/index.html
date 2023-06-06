@@ -7,10 +7,13 @@
 {% block content %}
 <main class="content content__2-1 content__bleedbar">
     <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            <a href="/">Home</a>
-            <a href="/data-research/credit-card-data/">Credit cards</a>
-        </nav>
+      {% set breadcrumb_items = [
+        ({'href':'/','title':'Home'}),
+        ({'href':'/data-research/credit-card-data/','title':'Credit cards'}),
+      ] %}
+
+      {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
+      {{ breadcrumbs.render(breadcrumb_items) }}
     </div>
     <div class="content_wrapper">
         <div class="content_main">
