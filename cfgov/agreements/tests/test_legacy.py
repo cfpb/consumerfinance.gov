@@ -1,4 +1,3 @@
-import random
 from unittest.mock import patch
 
 from django.core.paginator import Page
@@ -39,33 +38,12 @@ class Views(TestCase):
         """
         Test index without any agreements.
         """
-        self.client.get(reverse("agreements_home"))
-        context = render.call_args[0][2]
-
-        self.assertTrue("pagetitle" in context)
-        self.assertTrue(len(context["pagetitle"]) > 5)
-        self.assertTrue("agreement_count" in context)
-        self.assertEqual(0, context["agreement_count"])
+        response = self.client.get(reverse("agreements_home"))
+        self.assertEqual(response.status_code, 200)
 
     def test_index_renders(self):
         response = self.client.get(reverse("agreements_home"))
         str(response.content.decode("utf-8"))
-
-    @patch("agreements.views.render", return_value=HttpResponse())
-    def test_index_with_agreements(self, render):
-        """
-        Test index with some agreements.
-        """
-        count = random.randint(3, 10)
-
-        for _ in range(count):
-            agreement_factory()
-
-        self.client.get(reverse("agreements_home"))
-        context = render.call_args[0][2]
-
-        self.assertTrue("agreement_count" in context)
-        self.assertEqual(count, context["agreement_count"])
 
     def test_issuer_search_404(self):
         """

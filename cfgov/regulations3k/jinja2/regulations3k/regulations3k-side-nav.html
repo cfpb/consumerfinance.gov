@@ -28,8 +28,8 @@
         {%- endblock %}
         {% block body_content scoped %}
         <aside class="u-layout-grid_secondary-nav o-regs3k-sidebar">
-            {% import 'regulations3k/regulations3k-secondary-navigation.html' as secondary_navigation with context %}
-            {{ secondary_navigation.render() }}
+            {% import 'regulations3k/regulations3k-secondary-nav.html' as secondary_nav with context %}
+            {{ secondary_nav.render() }}
         </aside>
         <div class="u-layout-grid_main"
                 id="content_main">
@@ -43,6 +43,6 @@
 {% block javascript scoped %}
     {{ super() }}
     <script>
-      jsl(['{{ static("js/routes/on-demand/secondary-navigation.js") }}']);
+      jsl(['{{ static("js/routes/on-demand/secondary-nav.js") }}']);
     </script>
 {% endblock javascript %}

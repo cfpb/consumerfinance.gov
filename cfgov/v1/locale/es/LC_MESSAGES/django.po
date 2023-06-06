@@ -189,18 +189,18 @@ msgstr "https://gobiernousa.gov/"
 msgid "USA.gov"
 msgstr "GobiernoUSA.gov"
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation-fig.html:21
-#: v1/jinja2/v1/includes/organisms/secondary-navigation-fig.html:22
+#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:21
+#: v1/jinja2/v1/includes/organisms/secondary-nav-fig.html:22
 #, fuzzy
 #| msgid "Featured content"
 msgid "Table of contents"
 msgstr "Ítem destacado"
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation.html:17
+#: v1/jinja2/v1/includes/organisms/secondary-nav.html:17
 msgid "Section navigation"
 msgstr "Navegación de la sección"
 
-#: v1/jinja2/v1/includes/organisms/secondary-navigation.html:18
+#: v1/jinja2/v1/includes/organisms/secondary-nav.html:18
 msgid "In this section"
 msgstr "En esta sección"
 
