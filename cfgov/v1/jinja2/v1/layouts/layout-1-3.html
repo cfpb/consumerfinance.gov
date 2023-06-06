@@ -21,7 +21,7 @@
         {% block pre_content scoped -%}
             {% if breadcrumb_items | length > 0 %}
                 <div class="u-layout-grid_breadcrumbs">
-                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs -%}
+                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
                 {{ breadcrumbs.render(breadcrumb_items) }}
                 </div>
             {% endif %}

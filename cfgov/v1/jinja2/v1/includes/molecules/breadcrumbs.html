@@ -24,6 +24,13 @@
             {% else %}
                 <span class="breadcrumbs_text">{{ crumb.title | e }}</span>
             {% endif %}
+            {% if not loop.last %}
+                {% if language == 'ar' %}
+                \
+                {% else %}
+                /
+                {% endif %}
+            {% endif %}
         {% endfor %}
     </nav>
 {% endmacro %}
