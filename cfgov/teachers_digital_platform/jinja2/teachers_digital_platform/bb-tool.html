@@ -18,15 +18,13 @@
     <div class="o-tour">
         <div class="o-tour_screen o-tour_screen__intro">
             <div class="content_wrapper">
-                <nav class="breadcrumbs" aria-label="Breadcrumbs">
-                    {{ svg_icon('left') }}
-                    <a class="breadcrumbs_link" href="/consumer-tools/educator-tools/youth-financial-education/">
-                        Youth financial education
-                    </a>
-                    <a class="breadcrumbs_link" href="/consumer-tools/educator-tools/youth-financial-education/learn/">
-                        Learn about the building blocks
-                    </a>
-                </nav>
+                {% set breadcrumb_items = [
+                  ({'href':'/consumer-tools/educator-tools/youth-financial-education/','title':'Youth financial education'}),
+                  ({'href':'/consumer-tools/educator-tools/youth-financial-education/learn/','title':'Learn about the building blocks'}),
+                ] %}
+
+                {%- import 'v1/includes/molecules/breadcrumbs.html' as breadcrumbs with context -%}
+                {{ breadcrumbs.render(breadcrumb_items) }}
             </div>
             <div class="content_wrapper">
                 <div class="o-tour_content">
